@@ -1,31 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
+using System.Windows.Input;
 using System.Linq;
+using System.Text;
 using System.Threading;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Threading;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
-using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.Image;
+using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
-using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.VisualStudio.Threading;
-using System.Text;
-using System.Threading.Channels;
-using ISavable = Flow.Launcher.Plugin.ISavable;
-using CommunityToolkit.Mvvm.Input;
-using System.Globalization;
-using System.Windows.Input;
-using System.ComponentModel;
-using Flow.Launcher.Infrastructure.Image;
-using System.Windows.Media;
-using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -47,8 +45,6 @@ namespace Flow.Launcher.ViewModel
 
         private CancellationTokenSource _updateSource;
         private CancellationToken _updateToken;
-
-        private readonly Internationalization _translator = InternationalizationManager.Instance;
 
         private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
         private Task _resultsViewUpdateTask;
@@ -141,7 +137,6 @@ namespace Flow.Launcher.ViewModel
             _userSelectedRecord = _userSelectedRecordStorage.Load();
             _topMostRecord = _topMostRecordStorage.Load();
 
-
             ContextMenu = new ResultsViewModel(Settings)
             {
                 LeftClickResultCommand = OpenResultCommand,
@@ -182,9 +177,9 @@ namespace Flow.Launcher.ViewModel
             var resultUpdateChannel = Channel.CreateUnbounded<ResultsForUpdate>();
             _resultsUpdateChannelWriter = resultUpdateChannel.Writer;
             _resultsViewUpdateTask =
-                Task.Run(updateAction).ContinueWith(continueAction, TaskContinuationOptions.OnlyOnFaulted);
+                Task.Run(UpdateActionAsync).ContinueWith(continueAction, CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.Default);
 
-            async Task updateAction()
+            async Task UpdateActionAsync()
             {
                 var queue = new Dictionary<string, ResultsForUpdate>();
                 var channelReader = resultUpdateChannel.Reader;
@@ -213,7 +208,7 @@ namespace Flow.Launcher.ViewModel
 #else
                 Log.Error($"Error happen in task dealing with viewupdate for results. {t.Exception}");
                 _resultsViewUpdateTask =
-                    Task.Run(updateAction).ContinueWith(continueAction, TaskContinuationOptions.OnlyOnFaulted);
+                    Task.Run(UpdateActionAsync).ContinueWith(continueAction, CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.Default);
 #endif
             }
         }
@@ -245,14 +240,27 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        private async Task RegisterClockAndDateUpdateAsync()
+        {
+            var timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
+            // ReSharper disable once MethodSupportsCancellation
+            while (await timer.WaitForNextTickAsync().ConfigureAwait(false))
+            {
+                if (Settings.UseClock)
+                    ClockText = DateTime.Now.ToString(Settings.TimeFormat, CultureInfo.CurrentCulture);
+                if (Settings.UseDate)
+                    DateText = DateTime.Now.ToString(Settings.DateFormat, CultureInfo.CurrentCulture);
+            }
+        }
+
         [RelayCommand]
         private async Task ReloadPluginDataAsync()
         {
             Hide();
 
             await PluginManager.ReloadDataAsync().ConfigureAwait(false);
-            Notification.Show(InternationalizationManager.Instance.GetTranslation("success"),
-                InternationalizationManager.Instance.GetTranslation("completedSuccessfully"));
+            Notification.Show(App.API.GetTranslation("success"),
+                App.API.GetTranslation("completedSuccessfully"));
         }
 
         [RelayCommand]
@@ -274,14 +282,14 @@ namespace Flow.Launcher.ViewModel
         {
             if (SelectedIsFromQueryResults())
             {
-                QueryResults(isReQuery: true);
+                _ = QueryResultsAsync(isReQuery: true);
             }
         }
 
         public void ReQuery(bool reselect)
         {
             BackToQueryResults();
-            QueryResults(isReQuery: true, reSelect: reselect);
+            _ = QueryResultsAsync(isReQuery: true, reSelect: reselect);
         }
 
         [RelayCommand]
@@ -289,7 +297,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (_history.Items.Count > 0)
             {
-                ChangeQueryText(_history.Items[_history.Items.Count - lastHistoryIndex].Query.ToString());
+                ChangeQueryText(_history.Items[^lastHistoryIndex].Query.ToString());
                 if (lastHistoryIndex < _history.Items.Count)
                 {
                     lastHistoryIndex++;
@@ -302,7 +310,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (_history.Items.Count > 0)
             {
-                ChangeQueryText(_history.Items[_history.Items.Count - lastHistoryIndex].Query.ToString());
+                ChangeQueryText(_history.Items[^lastHistoryIndex].Query.ToString());
                 if (lastHistoryIndex > 1)
                 {
                     lastHistoryIndex--;
@@ -353,12 +361,12 @@ namespace Flow.Launcher.ViewModel
                 }
                 else if (!string.IsNullOrEmpty(SelectedResults.SelectedItem?.QuerySuggestionText))
                 {
-                    var defaultSuggestion = SelectedResults.SelectedItem.QuerySuggestionText;
-                    // check if result.actionkeywordassigned is empty
-                    if (!string.IsNullOrEmpty(result.ActionKeywordAssigned))
-                    {
-                        autoCompleteText = $"{result.ActionKeywordAssigned} {defaultSuggestion}";
-                    }
+                    //var defaultSuggestion = SelectedResults.SelectedItem.QuerySuggestionText;
+                    //// check if result.actionkeywordassigned is empty
+                    //if (!string.IsNullOrEmpty(result.ActionKeywordAssigned))
+                    //{
+                    //    autoCompleteText = $"{result.ActionKeywordAssigned} {defaultSuggestion}";
+                    //}
 
                     autoCompleteText = SelectedResults.SelectedItem.QuerySuggestionText;
                 }
@@ -389,11 +397,11 @@ namespace Flow.Launcher.ViewModel
             }
 
             var hideWindow = await result.ExecuteAsync(new ActionContext
-                {
-                    // not null means pressing modifier key + number, should ignore the modifier key
-                    SpecialKeyState = index is not null ? SpecialKeyState.Default : GlobalHotkey.CheckModifiers()
-                })
-                .ConfigureAwait(false);
+            {
+                // not null means pressing modifier key + number, should ignore the modifier key
+                SpecialKeyState = index is not null ? SpecialKeyState.Default : GlobalHotkey.CheckModifiers()
+            })
+            .ConfigureAwait(false);
 
             if (SelectedIsFromQueryResults())
             {
@@ -457,7 +465,6 @@ namespace Flow.Launcher.ViewModel
             SelectedResults.SelectLastResult();
         }
 
-
         [RelayCommand]
         private void SelectPrevPage()
         {
@@ -484,7 +491,6 @@ namespace Flow.Launcher.ViewModel
             {
                 SelectedResults.SelectPrevResult();
             }
-
         }
 
         [RelayCommand]
@@ -539,19 +545,6 @@ namespace Flow.Launcher.ViewModel
         public string ClockText { get; private set; }
         public string DateText { get; private set; }
 
-        private async Task RegisterClockAndDateUpdateAsync()
-        {
-            var timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
-            // ReSharper disable once MethodSupportsCancellation
-            while (await timer.WaitForNextTickAsync().ConfigureAwait(false))
-            {
-                if (Settings.UseClock)
-                    ClockText = DateTime.Now.ToString(Settings.TimeFormat, CultureInfo.CurrentCulture);
-                if (Settings.UseDate)
-                    DateText = DateTime.Now.ToString(Settings.DateFormat, CultureInfo.CurrentCulture);
-            }
-        }
-
         public ResultsViewModel Results { get; private set; }
 
         public ResultsViewModel ContextMenu { get; private set; }
@@ -561,7 +554,6 @@ namespace Flow.Launcher.ViewModel
         public bool GameModeStatus { get; set; } = false;
 
         private string _queryText;
-
         public string QueryText
         {
             get => _queryText;
@@ -683,7 +675,6 @@ namespace Flow.Launcher.ViewModel
                     Results.Visibility = Visibility.Collapsed;
                     _queryTextBeforeLeaveResults = QueryText;
 
-
                     // Because of Fody's optimization
                     // setter won't be called when property value is not changed.
                     // so we need manually call Query()
@@ -760,7 +751,7 @@ namespace Flow.Launcher.ViewModel
 
         public string OpenResultCommandModifiers => Settings.OpenResultModifiers;
 
-        public string VerifyOrSetDefaultHotkey(string hotkey, string defaultHotkey)
+        private static string VerifyOrSetDefaultHotkey(string hotkey, string defaultHotkey)
         {
             try
             {
@@ -789,9 +780,6 @@ namespace Flow.Launcher.ViewModel
         public string CycleHistoryUpHotkey => VerifyOrSetDefaultHotkey(Settings.CycleHistoryUpHotkey, "Alt+Up");
         public string CycleHistoryDownHotkey => VerifyOrSetDefaultHotkey(Settings.CycleHistoryDownHotkey, "Alt+Down");
 
-
-        public string Image => Constant.QueryTextBoxIconImagePath;
-
         public bool StartWithEnglishMode => Settings.AlwaysStartEn;
 
         #endregion
@@ -811,8 +799,8 @@ namespace Flow.Launcher.ViewModel
                 throw new NotImplementedException("ResultAreaColumn should match ResultAreaColumnPreviewShown/ResultAreaColumnPreviewHidden value");
 #else
                 Log.Error("MainViewModel", "ResultAreaColumnPreviewHidden/ResultAreaColumnPreviewShown int value not implemented", "InternalPreviewVisible");
-#endif
                 return false;
+#endif
             }
         }
 
@@ -876,18 +864,6 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private void ToggleInternalPreview()
-        {
-            if (!InternalPreviewVisible)
-            {
-                ShowInternalPreview();
-            }
-            else
-            {
-                HideInternalPreview();
-            }
-        }
-
         private void OpenExternalPreview(string path, bool sendFailToast = true)
         {
             _ = PluginManager.OpenExternalPreviewAsync(path, sendFailToast).ConfigureAwait(false);
@@ -900,7 +876,7 @@ namespace Flow.Launcher.ViewModel
             ExternalPreviewVisible = false;
         }
 
-        private void SwitchExternalPreview(string path, bool sendFailToast = true)
+        private static void SwitchExternalPreview(string path, bool sendFailToast = true)
         {
             _ = PluginManager.SwitchExternalPreviewAsync(path,sendFailToast).ConfigureAwait(false);
         }
@@ -982,7 +958,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (SelectedIsFromQueryResults())
             {
-                QueryResults(isReQuery);
+                _ = QueryResultsAsync(isReQuery);
             }
             else if (ContextMenuSelected())
             {
@@ -1045,8 +1021,8 @@ namespace Flow.Launcher.ViewModel
             var results = new List<Result>();
             foreach (var h in _history.Items)
             {
-                var title = _translator.GetTranslation("executeQuery");
-                var time = _translator.GetTranslation("lastExecuteTime");
+                var title = App.API.GetTranslation("executeQuery");
+                var time = App.API.GetTranslation("lastExecuteTime");
                 var result = new Result
                 {
                     Title = string.Format(title, h.Query),
@@ -1080,7 +1056,7 @@ namespace Flow.Launcher.ViewModel
 
         private readonly IReadOnlyList<Result> _emptyResult = new List<Result>();
 
-        private async void QueryResults(bool isReQuery = false, bool reSelect = true)
+        private async Task QueryResultsAsync(bool isReQuery = false, bool reSelect = true)
         {
             _updateSource?.Cancel();
 
@@ -1100,8 +1076,7 @@ namespace Flow.Launcher.ViewModel
 
             var currentUpdateSource = new CancellationTokenSource();
             _updateSource = currentUpdateSource;
-            var currentCancellationToken = _updateSource.Token;
-            _updateToken = currentCancellationToken;
+            _updateToken = _updateSource.Token;
 
             ProgressBarVisibility = Visibility.Hidden;
             _isQueryRunning = true;
@@ -1109,7 +1084,7 @@ namespace Flow.Launcher.ViewModel
             // Switch to ThreadPool thread
             await TaskScheduler.Default;
 
-            if (currentCancellationToken.IsCancellationRequested)
+            if (_updateSource.Token.IsCancellationRequested)
                 return;
 
             // Update the query's IsReQuery property to true if this is a re-query
@@ -1135,33 +1110,31 @@ namespace Flow.Launcher.ViewModel
                 SearchIconVisibility = Visibility.Visible;
             }
 
-
             if (query.ActionKeyword == Plugin.Query.GlobalPluginWildcardSign)
             {
                 // Wait 45 millisecond for query change in global query
                 // if query changes, return so that it won't be calculated
-                await Task.Delay(45, currentCancellationToken);
-                if (currentCancellationToken.IsCancellationRequested)
+                await Task.Delay(45, _updateSource.Token);
+                if (_updateSource.Token.IsCancellationRequested)
                     return;
             }
 
-            _ = Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
+            _ = Task.Delay(200, _updateSource.Token).ContinueWith(_ =>
             {
                 // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
-                if (!currentCancellationToken.IsCancellationRequested && _isQueryRunning)
+                if (!_updateSource.Token.IsCancellationRequested && _isQueryRunning)
                 {
                     ProgressBarVisibility = Visibility.Visible;
                 }
-            }, currentCancellationToken, TaskContinuationOptions.NotOnCanceled, TaskScheduler.Default);
+            }, _updateSource.Token, TaskContinuationOptions.NotOnCanceled, TaskScheduler.Default);
 
             // plugins is ICollection, meaning LINQ will get the Count and preallocate Array
 
             var tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
             {
-                false => QueryTask(plugin, reSelect),
+                false => QueryTaskAsync(plugin, reSelect),
                 true => Task.CompletedTask
             }).ToArray();
-
 
             try
             {
@@ -1173,29 +1146,29 @@ namespace Flow.Launcher.ViewModel
                 // nothing to do here
             }
 
-            if (currentCancellationToken.IsCancellationRequested)
+            if (_updateSource.Token.IsCancellationRequested)
                 return;
 
             // this should happen once after all queries are done so progress bar should continue
             // until the end of all querying
             _isQueryRunning = false;
-            if (!currentCancellationToken.IsCancellationRequested)
+            if (!_updateSource.Token.IsCancellationRequested)
             {
                 // update to hidden if this is still the current query
                 ProgressBarVisibility = Visibility.Hidden;
             }
 
             // Local function
-            async Task QueryTask(PluginPair plugin, bool reSelect = true)
+            async Task QueryTaskAsync(PluginPair plugin, bool reSelect = true)
             {
                 // Since it is wrapped within a ThreadPool Thread, the synchronous context is null
                 // Task.Yield will force it to run in ThreadPool
                 await Task.Yield();
 
                 IReadOnlyList<Result> results =
-                    await PluginManager.QueryForPluginAsync(plugin, query, currentCancellationToken);
+                    await PluginManager.QueryForPluginAsync(plugin, query, _updateSource.Token);
 
-                currentCancellationToken.ThrowIfCancellationRequested();
+                _updateSource.Token.ThrowIfCancellationRequested();
 
                 IReadOnlyList<Result> resultsCopy;
                 if (results == null)
@@ -1209,7 +1182,7 @@ namespace Flow.Launcher.ViewModel
                 }
 
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
-                        currentCancellationToken, reSelect)))
+                    _updateSource.Token, reSelect)))
                 {
                     Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
                 }
@@ -1285,13 +1258,13 @@ namespace Flow.Launcher.ViewModel
             {
                 menu = new Result
                 {
-                    Title = InternationalizationManager.Instance.GetTranslation("cancelTopMostInThisQuery"),
+                    Title = App.API.GetTranslation("cancelTopMostInThisQuery"),
                     IcoPath = "Images\\down.png",
                     PluginDirectory = Constant.ProgramDirectory,
                     Action = _ =>
                     {
                         _topMostRecord.Remove(result);
-                        App.API.ShowMsg(InternationalizationManager.Instance.GetTranslation("success"));
+                        App.API.ShowMsg(App.API.GetTranslation("success"));
                         App.API.ReQuery();
                         return false;
                     }
@@ -1301,14 +1274,14 @@ namespace Flow.Launcher.ViewModel
             {
                 menu = new Result
                 {
-                    Title = InternationalizationManager.Instance.GetTranslation("setAsTopMostInThisQuery"),
+                    Title = App.API.GetTranslation("setAsTopMostInThisQuery"),
                     IcoPath = "Images\\up.png",
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xeac2"),
                     PluginDirectory = Constant.ProgramDirectory,
                     Action = _ =>
                     {
                         _topMostRecord.AddOrUpdate(result);
-                        App.API.ShowMsg(InternationalizationManager.Instance.GetTranslation("success"));
+                        App.API.ShowMsg(App.API.GetTranslation("success"));
                         App.API.ReQuery();
                         return false;
                     }
@@ -1318,10 +1291,10 @@ namespace Flow.Launcher.ViewModel
             return menu;
         }
 
-        private Result ContextMenuPluginInfo(string id)
+        private static Result ContextMenuPluginInfo(string id)
         {
             var metadata = PluginManager.GetPluginForId(id).Metadata;
-            var translator = InternationalizationManager.Instance;
+            var translator = App.API;
 
             var author = translator.GetTranslation("author");
             var website = translator.GetTranslation("website");
@@ -1384,70 +1357,108 @@ namespace Flow.Launcher.ViewModel
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
+                if (Application.Current.MainWindow is MainWindow mainWindow)
+                {
+                    // 📌 Remove DWM Cloak (Make the window visible normally)
+                    Win32Helper.DWMSetCloakForWindow(mainWindow, false);
+
+                    // 📌 Restore UI elements
+                    mainWindow.ClockPanel.Visibility = Visibility.Visible;
+                    //mainWindow.SearchIcon.Visibility = Visibility.Visible;
+                    SearchIconVisibility = Visibility.Visible;
+                }
+
+                // Update WPF properties
                 MainWindowVisibility = Visibility.Visible;
-
                 MainWindowOpacity = 1;
-
                 MainWindowVisibilityStatus = true;
                 VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
             });
         }
 
+#pragma warning disable VSTHRD100 // Avoid async void methods
+
         public async void Hide()
         {
             lastHistoryIndex = 1;
-            // Trick for no delay
-            MainWindowOpacity = 0;
 
             if (ExternalPreviewVisible)
+            {
                 CloseExternalPreview();
+            }
 
             if (!SelectedIsFromQueryResults())
             {
                 SelectedResults = Results;
             }
 
+            // 📌 Immediately apply text reset + force UI update
+            if (Settings.LastQueryMode == LastQueryMode.Empty)
+            {
+                ChangeQueryText(string.Empty);
+                await Task.Delay(1); // Wait for one frame to ensure UI reflects changes
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    Application.Current.MainWindow.UpdateLayout(); // Force UI update
+                });
+            }
+
             switch (Settings.LastQueryMode)
             {
-                case LastQueryMode.Empty:
-                    ChangeQueryText(string.Empty);
-                    await Task.Delay(100); //Time for change to opacity
-                    break;
                 case LastQueryMode.Preserved:
-                    if (Settings.UseAnimation)
-                        await Task.Delay(100);
-                    LastQuerySelected = true;
-                    break;
                 case LastQueryMode.Selected:
-                    if (Settings.UseAnimation)
-                        await Task.Delay(100);
-                    LastQuerySelected = false;
+                    LastQuerySelected = (Settings.LastQueryMode == LastQueryMode.Preserved);
                     break;
-                case LastQueryMode.ActionKeywordPreserved or LastQueryMode.ActionKeywordSelected:
+
+                case LastQueryMode.ActionKeywordPreserved:
+                case LastQueryMode.ActionKeywordSelected:
                     var newQuery = _lastQuery.ActionKeyword;
                     if (!string.IsNullOrEmpty(newQuery))
                         newQuery += " ";
                     ChangeQueryText(newQuery);
-                    if (Settings.UseAnimation)
-                        await Task.Delay(100);
+
                     if (Settings.LastQueryMode == LastQueryMode.ActionKeywordSelected)
                         LastQuerySelected = false;
                     break;
-                default:
-                    throw new ArgumentException($"wrong LastQueryMode: <{Settings.LastQueryMode}>");
             }
 
+            if (Application.Current.MainWindow is MainWindow mainWindow)
+            {
+                // 📌 Set Opacity of icon and clock to 0 and apply Visibility.Hidden
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    mainWindow.ClockPanel.Opacity = 0;
+                    mainWindow.SearchIcon.Opacity = 0;
+                    mainWindow.ClockPanel.Visibility = Visibility.Hidden;
+                    //mainWindow.SearchIcon.Visibility = Visibility.Hidden;
+                    SearchIconVisibility = Visibility.Hidden;
+
+                    // Force UI update
+                    mainWindow.ClockPanel.UpdateLayout();
+                    mainWindow.SearchIcon.UpdateLayout();
+                }, DispatcherPriority.Render);
+
+                // 📌 Apply DWM Cloak (Completely hide the window)
+                Win32Helper.DWMSetCloakForWindow(mainWindow, true);
+            }
+            
+            await Task.Delay(50);
+
+            // Update WPF properties
+            //MainWindowOpacity = 0;
             MainWindowVisibilityStatus = false;
             MainWindowVisibility = Visibility.Collapsed;
             VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = false });
         }
+
+#pragma warning restore VSTHRD100 // Avoid async void methods
 
         /// <summary>
         /// Checks if Flow Launcher should ignore any hotkeys
         /// </summary>
         public bool ShouldIgnoreHotkeys()
         {
-            return Settings.IgnoreHotkeysOnFullscreen && WindowsInteropHelper.IsWindowFullscreen() || GameModeStatus;
+            return Settings.IgnoreHotkeysOnFullscreen && Win32Helper.IsForegroundWindowFullscreen() || GameModeStatus;
         }
 
         #endregion

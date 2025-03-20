@@ -13,6 +13,7 @@
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Không thể đăng ký phím nóng &quot;{0}&quot;. Phím nóng có thể được sử dụng bởi một chương trình khác. Chuyển sang phím nóng khác hoặc thoát khỏi chương trình khác.</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Không thể khởi động {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Định dạng tệp plugin Flow Launcher không chính xác</system:String>
@@ -44,6 +45,8 @@
     <system:String x:Key="portableMode">Chế độ Portabler</system:String>
     <system:String x:Key="portableModeToolTIp">Lưu trữ tất cả cài đặt và dữ liệu người dùng trong một thư mục (hữu ích khi sử dụng với thiết bị lưu trữ di động hoặc dịch vụ đám mây).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Khởi động Flow Launcher khi khởi động hệ thống</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
     <system:String x:Key="setAutoStartFailed">Không lưu được tính năng tự khởi động khi khởi động hệ thống</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ẩn Flow Launcher khi mất tiêu điểm</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Không hiển thị thông báo khi có phiên bản mới</system:String>
@@ -126,7 +129,8 @@
     <system:String x:Key="plugin_query_version">Phiên bản</system:String>
     <system:String x:Key="plugin_query_web">Trang web</system:String>
     <system:String x:Key="plugin_uninstall">Gỡ cài đặt</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Tải tiện ích mở rộng</system:String>
@@ -142,8 +146,6 @@
     <system:String x:Key="LabelNew">Phiên bản mới</system:String>
     <system:String x:Key="LabelNewToolTip">Plugin này đã được cập nhật trong vòng 7 ngày qua</system:String>
     <system:String x:Key="LabelUpdateToolTip">Đã có bản cập nhật mới</system:String>
-
-
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Giao Diện</system:String>
@@ -193,7 +195,6 @@
     <system:String x:Key="Date">Ngày</system:String>
     <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
-
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Phím tắt</system:String>
@@ -299,6 +300,9 @@
     <system:String x:Key="userdatapath">Vị trí dữ liệu người dùng</system:String>
     <system:String x:Key="userdatapathToolTip">Thiết đặt người dùng và plugin đã cài đặt sẽ được lưu trong thư mục dữ liệu người dùng. Vị trí này có thể thay đổi tùy thuộc vào việc nó có ở chế độ di động hay không.</system:String>
     <system:String x:Key="userdatapathButton">Mở thư mục</system:String>
+    <system:String x:Key="logLevel">Log Level</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Chọn trình quản lý tệp</system:String>
@@ -371,6 +375,7 @@
     <system:String x:Key="commonOK">OK</system:String>
     <system:String x:Key="commonYes">Có</system:String>
     <system:String x:Key="commonNo">Không</system:String>
+    <system:String x:Key="commonBackground">Nền</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Phiên bản</system:String>
@@ -387,6 +392,9 @@
     <system:String x:Key="reportWindow_report_succeed">Đã gửi báo cáo thành công</system:String>
     <system:String x:Key="reportWindow_report_failed">Báo cáo lỗi</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Trình khởi chạy luồng có lỗi</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
+    <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
+    <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Cảnh báo nhỏ...</system:String>

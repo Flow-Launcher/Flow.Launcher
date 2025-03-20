@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 using System.Windows;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
@@ -75,6 +76,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
         public bool UseDropShadowEffect { get; set; } = true;
+        public BackdropTypes BackdropType{ get; set; } = BackdropTypes.None;
 
         /* Appearance Settings. It should be separated from the setting later.*/
         public double WindowHeightSize { get; set; } = 42;
@@ -198,6 +200,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 Editable = false
             }
         };
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public LOGLEVEL LogLevel { get; set; } = LOGLEVEL.INFO;
 
         /// <summary>
         /// when false Alphabet static service will always return empty results
@@ -425,5 +430,13 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         Medium,
         Fast,
         Custom
+    }
+
+    public enum BackdropTypes
+    {
+        None,    
+        Acrylic,
+        Mica,
+        MicaAlt
     }
 }

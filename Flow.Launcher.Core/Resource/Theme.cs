@@ -3,22 +3,29 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Shell;
+using System.Windows.Threading;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Plugin;
+using Microsoft.Win32;
+using TextBox = System.Windows.Controls.TextBox;
 
 namespace Flow.Launcher.Core.Resource
 {
     public class Theme
     {
+        #region Properties & Fields
+
+        public bool BlurEnabled { get; set; }
+
         private const string ThemeMetadataNamePrefix = "Name:";
         private const string ThemeMetadataIsDarkPrefix = "IsDark:";
         private const string ThemeMetadataHasBlurPrefix = "HasBlur:";
@@ -32,12 +39,12 @@ namespace Flow.Launcher.Core.Resource
         private string _oldTheme;
         private const string Folder = Constant.Themes;
         private const string Extension = ".xaml";
-        private string DirectoryPath => Path.Combine(Constant.ProgramDirectory, Folder);
-        private string UserDirectoryPath => Path.Combine(DataLocation.DataDirectory(), Folder);
+        private static string DirectoryPath => Path.Combine(Constant.ProgramDirectory, Folder);
+        private static string UserDirectoryPath => Path.Combine(DataLocation.DataDirectory(), Folder);
 
-        public bool BlurEnabled { get; set; }
+        #endregion
 
-        private double mainWindowWidth;
+        #region Constructor
 
         public Theme(IPublicAPI publicAPI, Settings settings)
         {
@@ -65,6 +72,15 @@ namespace Flow.Launcher.Core.Resource
             _oldTheme = Path.GetFileNameWithoutExtension(_oldResource.Source.AbsolutePath);
         }
 
+        #endregion
+
+        #region Theme Resources
+
+        public string GetCurrentTheme()
+        {
+            return _settings.Theme;
+        }
+
         private void MakeSureThemeDirectoriesExist()
         {
             foreach (var dir in _themeDirectories.Where(dir => !Directory.Exists(dir)))
@@ -78,59 +94,6 @@ namespace Flow.Launcher.Core.Resource
                     Log.Exception($"|Theme.MakesureThemeDirectoriesExist|Exception when create directory <{dir}>", e);
                 }
             }
-        }
-
-        public bool ChangeTheme(string theme)
-        {
-            const string defaultTheme = Constant.DefaultTheme;
-
-            string path = GetThemePath(theme);
-            try
-            {
-                if (string.IsNullOrEmpty(path))
-                    throw new DirectoryNotFoundException("Theme path can't be found <{path}>");
-
-                // reload all resources even if the theme itself hasn't changed in order to pickup changes
-                // to things like fonts
-                UpdateResourceDictionary(GetResourceDictionary(theme));
-
-                _settings.Theme = theme;
-
-
-                //always allow re-loading default theme, in case of failure of switching to a new theme from default theme
-                if (_oldTheme != theme || theme == defaultTheme)
-                {
-                    _oldTheme = Path.GetFileNameWithoutExtension(_oldResource.Source.AbsolutePath);
-                }
-
-                BlurEnabled = Win32Helper.IsBlurTheme();
-
-                if (_settings.UseDropShadowEffect && !BlurEnabled)
-                    AddDropShadowEffectToCurrentTheme();
-
-                Win32Helper.SetBlurForWindow(Application.Current.MainWindow, BlurEnabled);
-            }
-            catch (DirectoryNotFoundException)
-            {
-                Log.Error($"|Theme.ChangeTheme|Theme <{theme}> path can't be found");
-                if (theme != defaultTheme)
-                {
-                    _api.ShowMsgBox(string.Format(InternationalizationManager.Instance.GetTranslation("theme_load_failure_path_not_exists"), theme));
-                    ChangeTheme(defaultTheme);
-                }
-                return false;
-            }
-            catch (XamlParseException)
-            {
-                Log.Error($"|Theme.ChangeTheme|Theme <{theme}> fail to parse");
-                if (theme != defaultTheme)
-                {
-                    _api.ShowMsgBox(string.Format(InternationalizationManager.Instance.GetTranslation("theme_load_failure_parse_error"), theme));
-                    ChangeTheme(defaultTheme);
-                }
-                return false;
-            }
-            return true;
         }
 
         private void UpdateResourceDictionary(ResourceDictionary dictionaryToUpdate)
@@ -153,9 +116,7 @@ namespace Flow.Launcher.Core.Resource
             return dict;
         }
 
-        private ResourceDictionary CurrentThemeResourceDictionary() => GetThemeResourceDictionary(_settings.Theme);
-
-        public ResourceDictionary GetResourceDictionary(string theme)
+        private ResourceDictionary GetResourceDictionary(string theme)
         {
             var dict = GetThemeResourceDictionary(theme);
 
@@ -212,7 +173,7 @@ namespace Flow.Launcher.Core.Resource
 
                 Setter[] setters = { fontFamily, fontStyle, fontWeight, fontStretch };
                 Array.ForEach(
-                    new[] {  resultSubItemStyle,resultSubItemSelectedStyle}, o
+                    new[] { resultSubItemStyle, resultSubItemSelectedStyle }, o
                     => Array.ForEach(setters, p => o.Setters.Add(p)));
             }
 
@@ -220,28 +181,12 @@ namespace Flow.Launcher.Core.Resource
             var windowStyle = dict["WindowStyle"] as Style;
             var width = _settings.WindowSize;
             windowStyle.Setters.Add(new Setter(Window.WidthProperty, width));
-            mainWindowWidth = (double)width;
             return dict;
         }
 
-        private ResourceDictionary GetCurrentResourceDictionary( )
+        private ResourceDictionary GetCurrentResourceDictionary()
         {
-            return  GetResourceDictionary(_settings.Theme);
-        }
-
-        public List<ThemeData> LoadAvailableThemes()
-        {
-            List<ThemeData> themes = new List<ThemeData>();
-            foreach (var themeDirectory in _themeDirectories)
-            {
-                var filePaths = Directory
-                    .GetFiles(themeDirectory)
-                    .Where(filePath => filePath.EndsWith(Extension) && !filePath.EndsWith("Base.xaml"))
-                    .Select(GetThemeDataFromPath);
-                themes.AddRange(filePaths);
-            }
-
-            return themes.OrderBy(o => o.Name).ToList();
+            return GetResourceDictionary(GetCurrentTheme());
         }
 
         private ThemeData GetThemeDataFromPath(string path)
@@ -263,15 +208,15 @@ namespace Flow.Launcher.Core.Resource
             {
                 if (line.StartsWith(ThemeMetadataNamePrefix, StringComparison.OrdinalIgnoreCase))
                 {
-                    name = line.Remove(0, ThemeMetadataNamePrefix.Length).Trim();
+                    name = line[ThemeMetadataNamePrefix.Length..].Trim();
                 }
                 else if (line.StartsWith(ThemeMetadataIsDarkPrefix, StringComparison.OrdinalIgnoreCase))
                 {
-                    isDark = bool.Parse(line.Remove(0, ThemeMetadataIsDarkPrefix.Length).Trim());
+                    isDark = bool.Parse(line[ThemeMetadataIsDarkPrefix.Length..].Trim());
                 }
                 else if (line.StartsWith(ThemeMetadataHasBlurPrefix, StringComparison.OrdinalIgnoreCase))
                 {
-                    hasBlur = bool.Parse(line.Remove(0, ThemeMetadataHasBlurPrefix.Length).Trim());
+                    hasBlur = bool.Parse(line[ThemeMetadataHasBlurPrefix.Length..].Trim());
                 }
             }
 
@@ -292,6 +237,81 @@ namespace Flow.Launcher.Core.Resource
             return string.Empty;
         }
 
+        #endregion
+
+        #region Load & Change
+
+        public List<ThemeData> LoadAvailableThemes()
+        {
+            List<ThemeData> themes = new List<ThemeData>();
+            foreach (var themeDirectory in _themeDirectories)
+            {
+                var filePaths = Directory
+                    .GetFiles(themeDirectory)
+                    .Where(filePath => filePath.EndsWith(Extension) && !filePath.EndsWith("Base.xaml"))
+                    .Select(GetThemeDataFromPath);
+                themes.AddRange(filePaths);
+            }
+
+            return themes.OrderBy(o => o.Name).ToList();
+        }
+
+        public bool ChangeTheme(string theme = null)
+        {
+            if (string.IsNullOrEmpty(theme))
+                theme = GetCurrentTheme();
+
+            string path = GetThemePath(theme);
+            try
+            {
+                if (string.IsNullOrEmpty(path))
+                    throw new DirectoryNotFoundException("Theme path can't be found <{path}>");
+
+                // reload all resources even if the theme itself hasn't changed in order to pickup changes
+                // to things like fonts
+                UpdateResourceDictionary(GetResourceDictionary(theme));
+
+                _settings.Theme = theme;
+
+                //always allow re-loading default theme, in case of failure of switching to a new theme from default theme
+                if (_oldTheme != theme || theme == Constant.DefaultTheme)
+                {
+                    _oldTheme = Path.GetFileNameWithoutExtension(_oldResource.Source.AbsolutePath);
+                }
+
+                BlurEnabled = IsBlurTheme();
+                //if (_settings.UseDropShadowEffect)
+                // AddDropShadowEffectToCurrentTheme();
+                //Win32Helper.SetBlurForWindow(Application.Current.MainWindow, BlurEnabled);
+                _ = SetBlurForWindowAsync();
+            }
+            catch (DirectoryNotFoundException)
+            {
+                Log.Error($"|Theme.ChangeTheme|Theme <{theme}> path can't be found");
+                if (theme != Constant.DefaultTheme)
+                {
+                    _api.ShowMsgBox(string.Format(_api.GetTranslation("theme_load_failure_path_not_exists"), theme));
+                    ChangeTheme(Constant.DefaultTheme);
+                }
+                return false;
+            }
+            catch (XamlParseException)
+            {
+                Log.Error($"|Theme.ChangeTheme|Theme <{theme}> fail to parse");
+                if (theme != Constant.DefaultTheme)
+                {
+                    _api.ShowMsgBox(string.Format(_api.GetTranslation("theme_load_failure_parse_error"), theme));
+                    ChangeTheme(Constant.DefaultTheme);
+                }
+                return false;
+            }
+            return true;
+        }
+
+        #endregion
+
+        #region Shadow Effect
+
         public void AddDropShadowEffectToCurrentTheme()
         {
             var dict = GetCurrentResourceDictionary();
@@ -310,8 +330,7 @@ namespace Flow.Launcher.Core.Resource
                 }
             };
 
-            var marginSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.MarginProperty) as Setter;
-            if (marginSetter == null)
+            if (windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.MarginProperty) is not Setter marginSetter)
             {
                 var margin = new Thickness(ShadowExtraMargin, 12, ShadowExtraMargin, ShadowExtraMargin);
                 marginSetter = new Setter()
@@ -346,14 +365,12 @@ namespace Flow.Launcher.Core.Resource
             var dict = GetCurrentResourceDictionary();
             var windowBorderStyle = dict["WindowBorderStyle"] as Style;
 
-            var effectSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.EffectProperty) as Setter;
-            var marginSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.MarginProperty) as Setter;
-
-            if (effectSetter != null)
+            if (windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.EffectProperty) is Setter effectSetter)
             {
                 windowBorderStyle.Setters.Remove(effectSetter);
             }
-            if (marginSetter != null)
+
+            if (windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.MarginProperty) is Setter marginSetter)
             {
                 var currentMargin = (Thickness)marginSetter.Value;
                 var newMargin = new Thickness(
@@ -394,6 +411,343 @@ namespace Flow.Launcher.Core.Resource
             }
         }
 
+        #endregion
+
+        #region Blur Handling
+
+        /// <summary>
+        /// Refreshes the frame to apply the current theme settings.
+        /// </summary>
+        public async Task RefreshFrameAsync()
+        {
+            await Application.Current.Dispatcher.InvokeAsync(() =>
+            {
+                // Get the actual backdrop type and drop shadow effect settings
+                var (backdropType, useDropShadowEffect) = GetActualValue();
+
+                // Remove OS minimizing/maximizing animation
+                // Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_TRANSITIONS_FORCEDISABLED, 3);
+
+                // The timing of adding the shadow effect should vary depending on whether the theme is transparent.
+                if (BlurEnabled)
+                {
+                    AutoDropShadow(useDropShadowEffect);
+                }
+                SetBlurForWindow(GetCurrentTheme(), backdropType);
+
+                if (!BlurEnabled)
+                {
+                    AutoDropShadow(useDropShadowEffect);
+                }
+            }, DispatcherPriority.Normal);
+        }
+
+        /// <summary>
+        /// Sets the blur for a window via SetWindowCompositionAttribute
+        /// </summary>
+        public async Task SetBlurForWindowAsync()
+        {
+            await Application.Current.Dispatcher.InvokeAsync(() =>
+            {
+                // Get the actual backdrop type and drop shadow effect settings
+                var (backdropType, _) = GetActualValue();
+
+                SetBlurForWindow(GetCurrentTheme(), backdropType);
+            }, DispatcherPriority.Normal);
+        }
+
+        /// <summary>
+        /// Gets the actual backdrop type and drop shadow effect settings based on the current theme status.
+        /// </summary>
+        public (BackdropTypes BackdropType, bool UseDropShadowEffect) GetActualValue()
+        {
+            var backdropType = _settings.BackdropType;
+            var useDropShadowEffect = _settings.UseDropShadowEffect;
+
+            // When changed non-blur theme, change to backdrop to none
+            if (!BlurEnabled)
+            {
+                backdropType = BackdropTypes.None;
+            }
+
+            // Dropshadow on and control disabled.(user can't change dropshadow with blur theme)
+            if (BlurEnabled)
+            {
+                useDropShadowEffect = true;
+            }
+
+            return (backdropType, useDropShadowEffect);
+        }
+
+        private void SetBlurForWindow(string theme, BackdropTypes backdropType)
+        {
+            var dict = GetThemeResourceDictionary(theme);
+            if (dict == null)
+                return;
+
+            var windowBorderStyle = dict.Contains("WindowBorderStyle") ? dict["WindowBorderStyle"] as Style : null;
+            if (windowBorderStyle == null)
+                return;
+
+            Window mainWindow = Application.Current.MainWindow;
+            if (mainWindow == null)
+                return;
+
+            // Check if the theme supports blur
+            bool hasBlur = dict.Contains("ThemeBlurEnabled") && dict["ThemeBlurEnabled"] is bool b && b;
+            if (BlurEnabled && hasBlur && Win32Helper.IsBackdropSupported())
+            {
+                // If the BackdropType is Mica or MicaAlt, set the windowborderstyle's background to transparent
+                if (backdropType == BackdropTypes.Mica || backdropType == BackdropTypes.MicaAlt)
+                {
+                    windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
+                    windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Color.FromArgb(1, 0, 0, 0))));
+                }
+                else if (backdropType == BackdropTypes.Acrylic)
+                {
+                    windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
+                    windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Colors.Transparent)));
+                }
+
+                // Apply the blur effect
+                Win32Helper.DWMSetBackdropForWindow(mainWindow, backdropType);
+                ColorizeWindow(theme, backdropType);
+            }
+            else
+            {
+                // Apply default style when Blur is disabled
+                Win32Helper.DWMSetBackdropForWindow(mainWindow, BackdropTypes.None);
+                ColorizeWindow(theme, backdropType);
+            }
+
+            UpdateResourceDictionary(dict);
+        }
+
+        private void AutoDropShadow(bool useDropShadowEffect)
+        {
+            SetWindowCornerPreference("Default");
+            RemoveDropShadowEffectFromCurrentTheme();
+            if (useDropShadowEffect)
+            {
+                if (BlurEnabled && Win32Helper.IsBackdropSupported())
+                {
+                    SetWindowCornerPreference("Round");
+                }
+                else
+                {
+                    SetWindowCornerPreference("Default");
+                    AddDropShadowEffectToCurrentTheme();
+                }
+            }
+            else
+            {
+                if (BlurEnabled && Win32Helper.IsBackdropSupported())
+                {
+                    SetWindowCornerPreference("Default");
+                }
+                else
+                {
+                    RemoveDropShadowEffectFromCurrentTheme();
+                }
+            }
+        }
+
+        private static void SetWindowCornerPreference(string cornerType)
+        {
+            Window mainWindow = Application.Current.MainWindow;
+            if (mainWindow == null)
+                return;
+
+            Win32Helper.DWMSetCornerPreferenceForWindow(mainWindow, cornerType);
+        }
+
+        // Get Background Color from WindowBorderStyle when there not color for BG.
+        // for theme has not "LightBG" or "DarkBG" case.
+        private Color GetWindowBorderStyleBackground(string theme)
+        {
+            var Resources = GetThemeResourceDictionary(theme);
+            var windowBorderStyle = (Style)Resources["WindowBorderStyle"];
+
+            var backgroundSetter = windowBorderStyle.Setters
+                .OfType<Setter>()
+                .FirstOrDefault(s => s.Property == Border.BackgroundProperty);
+
+            if (backgroundSetter != null)
+            {
+                // Background's Value is DynamicColor Case
+                var backgroundValue = backgroundSetter.Value;
+
+                if (backgroundValue is SolidColorBrush solidColorBrush)
+                {
+                    return solidColorBrush.Color; // Return SolidColorBrush's Color
+                }
+                else if (backgroundValue is DynamicResourceExtension dynamicResource)
+                {
+                    // When DynamicResource Extension it is, Key is resource's name.
+                    var resourceKey = backgroundSetter.Value.ToString();
+
+                    // find key in resource and return color.
+                    if (Resources.Contains(resourceKey))
+                    {
+                        var colorResource = Resources[resourceKey];
+                        if (colorResource is SolidColorBrush colorBrush)
+                        {
+                            return colorBrush.Color;
+                        }
+                        else if (colorResource is Color color)
+                        {
+                            return color;
+                        }
+                    }
+                }
+            }
+
+            return Colors.Transparent; // Default is transparent
+        }
+
+        private void ApplyPreviewBackground(Color? bgColor = null)
+        {
+            if (bgColor == null) return;
+
+            // Copy the existing WindowBorderStyle
+            var previewStyle = new Style(typeof(Border));
+            if (Application.Current.Resources.Contains("WindowBorderStyle"))
+            {
+                if (Application.Current.Resources["WindowBorderStyle"] is Style originalStyle)
+                {
+                    foreach (var setter in originalStyle.Setters.OfType<Setter>())
+                    {
+                        previewStyle.Setters.Add(new Setter(setter.Property, setter.Value));
+                    }
+                }
+            }
+
+            // Apply background color (remove transparency in color)
+            // WPF does not allow the use of an acrylic brush within the window's internal area,
+            // so transparency effects are not applied to the preview.
+            Color backgroundColor = Color.FromRgb(bgColor.Value.R, bgColor.Value.G, bgColor.Value.B);
+            previewStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(backgroundColor)));
+
+            // The blur theme keeps the corner round fixed (applying DWM code to modify it causes rendering issues).
+            // The non-blur theme retains the previously set WindowBorderStyle.
+            if (BlurEnabled)
+            {
+                previewStyle.Setters.Add(new Setter(Border.CornerRadiusProperty, new CornerRadius(5)));
+                previewStyle.Setters.Add(new Setter(Border.BorderThicknessProperty, new Thickness(1)));
+            }
+            Application.Current.Resources["PreviewWindowBorderStyle"] = previewStyle;
+        }
+
+        private void ColorizeWindow(string theme, BackdropTypes backdropType)
+        {
+            var dict = GetThemeResourceDictionary(theme);
+            if (dict == null) return;
+
+            var mainWindow = Application.Current.MainWindow;
+            if (mainWindow == null) return;
+
+            // Check if the theme supports blur
+            bool hasBlur = dict.Contains("ThemeBlurEnabled") && dict["ThemeBlurEnabled"] is bool b && b;
+
+            // SystemBG value check (Auto, Light, Dark)
+            string systemBG = dict.Contains("SystemBG") ? dict["SystemBG"] as string : "Auto"; // 기본값 Auto
+
+            // Check the user's ColorScheme setting
+            string colorScheme = _settings.ColorScheme;
+
+            // Check system dark mode setting (read AppsUseLightTheme value)
+            int themeValue = (int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 1);
+            bool isSystemDark = themeValue == 0;
+
+            // Final decision on whether to use dark mode
+            bool useDarkMode = false;
+
+            // If systemBG is not "Auto", prioritize it over ColorScheme and set the mode based on systemBG value
+            if (systemBG == "Dark")
+            {
+                useDarkMode = true;  // Dark
+            }
+            else if (systemBG == "Light")
+            {
+                useDarkMode = false; // Light
+            }
+            else if (systemBG == "Auto")
+            {
+                // If systemBG is "Auto", decide based on ColorScheme
+                if (colorScheme == "Dark")
+                    useDarkMode = true;
+                else if (colorScheme == "Light")
+                    useDarkMode = false;
+                else
+                    useDarkMode = isSystemDark;  // Auto (based on system setting)
+            }
+
+            // Apply DWM Dark Mode
+            Win32Helper.DWMSetDarkModeForWindow(mainWindow, useDarkMode);
+
+            Color LightBG;
+            Color DarkBG;
+
+            // Retrieve LightBG value (fallback to WindowBorderStyle background color if not found)
+            try
+            {
+                LightBG = dict.Contains("LightBG") ? (Color)dict["LightBG"] : GetWindowBorderStyleBackground(theme);
+            }
+            catch (Exception)
+            {
+                LightBG = GetWindowBorderStyleBackground(theme);
+            }
+
+            // Retrieve DarkBG value (fallback to LightBG if not found)
+            try
+            {
+                DarkBG = dict.Contains("DarkBG") ? (Color)dict["DarkBG"] : LightBG;
+            }
+            catch (Exception)
+            {
+                DarkBG = LightBG;
+            }
+
+            // Select background color based on ColorScheme and SystemBG
+            Color selectedBG = useDarkMode ? DarkBG : LightBG;
+            ApplyPreviewBackground(selectedBG);
+
+            bool isBlurAvailable = hasBlur && Win32Helper.IsBackdropSupported(); // Windows 11 미만이면 hasBlur를 강제 false
+
+            if (!isBlurAvailable)
+            {
+                mainWindow.Background = Brushes.Transparent;
+            }
+            else
+            {
+                // Only set the background to transparent if the theme supports blur
+                if (backdropType == BackdropTypes.Mica || backdropType == BackdropTypes.MicaAlt)
+                {
+                    mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
+                }
+                else
+                {
+                    mainWindow.Background = new SolidColorBrush(selectedBG);
+                }
+            }
+        }
+
+        private static bool IsBlurTheme()
+        {
+            if (!Win32Helper.IsBackdropSupported()) // Windows 11 미만이면 무조건 false
+                return false;
+
+            var resource = Application.Current.TryFindResource("ThemeBlurEnabled");
+
+            return resource is bool b && b;
+        }
+
+        #endregion
+
+        #region Classes
+
         public record ThemeData(string FileNameWithoutExtension, string Name, bool? IsDark = null, bool? HasBlur = null);
+
+        #endregion
     }
 }

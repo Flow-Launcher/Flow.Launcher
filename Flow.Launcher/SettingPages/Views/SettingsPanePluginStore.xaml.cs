@@ -1,10 +1,11 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Navigation;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.SettingPages.ViewModels;
 using Flow.Launcher.ViewModel;
+using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.SettingPages.Views;
 
@@ -16,8 +17,7 @@ public partial class SettingsPanePluginStore
     {
         if (!IsInitialized)
         {
-            if (e.ExtraData is not SettingWindow.PaneData { Settings: { } settings })
-                throw new ArgumentException($"Settings are required for {nameof(SettingsPanePluginStore)}.");
+            var settings = Ioc.Default.GetRequiredService<Settings>();
             _viewModel = new SettingsPanePluginStoreViewModel();
             DataContext = _viewModel;
             InitializeComponent();

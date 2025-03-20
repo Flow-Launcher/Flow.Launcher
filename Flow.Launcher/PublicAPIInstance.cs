@@ -1,46 +1,48 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Squirrel;
+using Flow.Launcher.Core;
 using Flow.Launcher.Core.Plugin;
-using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Image;
-using Flow.Launcher.Plugin;
-using Flow.Launcher.ViewModel;
-using Flow.Launcher.Plugin.SharedModels;
-using Flow.Launcher.Plugin.SharedCommands;
-using System.Threading;
-using System.IO;
-using Flow.Launcher.Infrastructure.Http;
-using JetBrains.Annotations;
-using System.Runtime.CompilerServices;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
-using System.Collections.Concurrent;
-using System.Diagnostics;
-using System.Collections.Specialized;
-using CommunityToolkit.Mvvm.DependencyInjection;
-using Flow.Launcher.Core;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedModels;
+using Flow.Launcher.Plugin.SharedCommands;
+using Flow.Launcher.ViewModel;
+using JetBrains.Annotations;
+using Flow.Launcher.Core.Resource;
 
 namespace Flow.Launcher
 {
     public class PublicAPIInstance : IPublicAPI
     {
         private readonly Settings _settings;
+        private readonly Internationalization _translater;
         private readonly MainViewModel _mainVM;
 
         #region Constructor
 
-        public PublicAPIInstance(Settings settings, MainViewModel mainVM)
+        public PublicAPIInstance(Settings settings, Internationalization translater, MainViewModel mainVM)
         {
             _settings = settings;
+            _translater = translater;
             _mainVM = mainVM;
             GlobalHotkey.hookedKeyboardCallback = KListener_hookedKeyboardCallback;
             WebRequest.RegisterPrefix("data", new DataWebRequestFactory());
@@ -207,17 +209,17 @@ namespace Flow.Launcher
 
         public void StopLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Collapsed;
 
-        public string GetTranslation(string key) => InternationalizationManager.Instance.GetTranslation(key);
+        public string GetTranslation(string key) => _translater.GetTranslation(key);
 
         public List<PluginPair> GetAllPlugins() => PluginManager.AllPlugins.ToList();
 
         public MatchResult FuzzySearch(string query, string stringToCompare) =>
             StringMatcher.FuzzySearch(query, stringToCompare);
 
-        public Task<string> HttpGetStringAsync(string url, CancellationToken token = default) => Http.GetAsync(url);
+        public Task<string> HttpGetStringAsync(string url, CancellationToken token = default) => Http.GetAsync(url, token);
 
         public Task<Stream> HttpGetStreamAsync(string url, CancellationToken token = default) =>
-            Http.GetStreamAsync(url);
+            Http.GetStreamAsync(url, token);
 
         public Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath, Action<double> reportProgress = null,
             CancellationToken token = default) => Http.DownloadAsync(url, filePath, reportProgress, token);

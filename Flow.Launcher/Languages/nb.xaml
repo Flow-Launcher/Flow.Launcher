@@ -13,6 +13,7 @@
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Kan ikke registrere hurtigtasten &quot;{0}&quot;. Hurtigtasten kan være i bruk av et annet program. Endre til en annen hurtigtast, eller avslutt et annet program.</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Kunne ikke starte {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Ugyldig Flow Launcher programtillegg filformat</system:String>
@@ -44,6 +45,8 @@
     <system:String x:Key="portableMode">Portabel modus</system:String>
     <system:String x:Key="portableModeToolTIp">Lagre alle innstillinger og brukerdata i en mappe (nyttig når man bruker flyttbare stasjoner eller skytjenester).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Start Flow Launcher ved systemoppstart</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
     <system:String x:Key="setAutoStartFailed">Feil ved å sette kjør ved oppstart</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Skjul Flow Launcher når fokus forsvinner</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Ikke vis varsler om nye versjoner</system:String>
@@ -126,7 +129,8 @@
     <system:String x:Key="plugin_query_version">Versjon</system:String>
     <system:String x:Key="plugin_query_web">Nettsted</system:String>
     <system:String x:Key="plugin_uninstall">Avinstaller</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Programtillegg butikk</system:String>
@@ -142,8 +146,6 @@
     <system:String x:Key="LabelNew">Ny versjon</system:String>
     <system:String x:Key="LabelNewToolTip">Dette programtillegget er oppdatert i løpet av de siste 7 dagene</system:String>
     <system:String x:Key="LabelUpdateToolTip">Ny oppdatering er tilgjengelig</system:String>
-
-
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Drakt</system:String>
@@ -193,7 +195,6 @@
     <system:String x:Key="Date">Dato</system:String>
     <system:String x:Key="TypeIsDarkToolTip">Dette temaet støtter to (lys/mørk) moduser.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Dette temaet støtter uskarp gjennomsiktig bakgrunn.</system:String>
-
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Hurtigtast</system:String>
@@ -297,6 +298,9 @@
     <system:String x:Key="userdatapath">Plassering av brukerdata</system:String>
     <system:String x:Key="userdatapathToolTip">Brukerinnstillinger og installerte programtillegg lagres i brukerens datamappe. Denne plasseringen kan variere avhengig av om den er i portabel modus eller ikke.</system:String>
     <system:String x:Key="userdatapathButton">Åpne mappe</system:String>
+    <system:String x:Key="logLevel">Log Level</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Velg filbehandler</system:String>
@@ -367,6 +371,7 @@ Hvis du legger til et @-prefiks mens du legger inn en snarvei, samsvarer det med
     <system:String x:Key="commonOK">OK</system:String>
     <system:String x:Key="commonYes">Ja</system:String>
     <system:String x:Key="commonNo">Nei</system:String>
+    <system:String x:Key="commonBackground">Bakgrunn</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Versjon</system:String>
@@ -383,6 +388,9 @@ Hvis du legger til et @-prefiks mens du legger inn en snarvei, samsvarer det med
     <system:String x:Key="reportWindow_report_succeed">Rapporten ble sendt</system:String>
     <system:String x:Key="reportWindow_report_failed">Kunne ikke sende rapport</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher fikk en feil</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
+    <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
+    <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Vennligst vent...</system:String>
