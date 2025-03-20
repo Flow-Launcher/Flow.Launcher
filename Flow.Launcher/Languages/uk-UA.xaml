@@ -340,9 +340,10 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Не вдалося знайти вказаний плагін</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Нова гаряча клавіша не може бути порожньою</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Нова гаряча клавіша вже використовується іншим плагіном. Будь ласка, вкажіть нову</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
     <system:String x:Key="success">Успішно</system:String>
     <system:String x:Key="completedSuccessfully">Успішно завершено</system:String>
-    <system:String x:Key="actionkeyword_tips">Введіть гарячу клавішу, яку ви хочете використовувати для запуску плагіна. Використовуйте * у разі, якщо ви не хочете ставити конкретну гарячу клавішу.</system:String>
+    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Задані гарячі клавіші для запитів</system:String>
