@@ -102,6 +102,11 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="AlwaysPreview">Zawsze podgląd</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Zawsze otwieraj panel podglądu, gdy aktywowany jest Flow. Naciśnij {0}, aby przełączyć podgląd.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Efekt cienia jest niedozwolony, gdy bieżący motyw ma włączony efekt rozmycia</system:String>
+    <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropTypesNone">Brak</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
+    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Szukaj wtyczek</system:String>
