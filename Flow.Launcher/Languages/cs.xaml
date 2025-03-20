@@ -102,6 +102,11 @@
     <system:String x:Key="AlwaysPreview">Vždy zobrazit náhled</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Při aktivaci služby Flow vždy otevřete panel náhledu. Stisknutím klávesy {0} přepnete náhled.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Stínový efekt není povolen, pokud je aktivní efekt rozostření</system:String>
+    <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropTypesNone">None</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
+    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Vyhledat plugin</system:String>
