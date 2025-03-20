@@ -102,9 +102,9 @@
     <system:String x:Key="AlwaysPreview">Toujours prévisualiser</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Toujours ouvrir le panneau d'aperçu lorsque Flow s'active. Appuyez sur {0} pour activer/désactiver l'aperçu.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">L'effet d'ombre n'est pas autorisé lorsque le thème actuel à un effet de flou activé</system:String>
-    <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropType">Type d'arrière-plan</system:String>
     <system:String x:Key="BackdropTypesNone">Aucun</system:String>
-    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrylique</system:String>
     <system:String x:Key="BackdropTypesMica">Mica</system:String>
     <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
 
@@ -339,10 +339,10 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Impossible de trouver le module spécifi</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Le nouveau mot-clé d'action doit être spécifi</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Le nouveau mot-clé d'action a été assigné à un autre module, veuillez en choisir un autre</system:String>
-    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">Ce nouveau mot-clé d'action est identique à l'ancien, veuillez en choisir un autre</system:String>
     <system:String x:Key="success">Ajout</system:String>
     <system:String x:Key="completedSuccessfully">Terminé avec succès</system:String>
-    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
+    <system:String x:Key="actionkeyword_tips">Saisissez les mots-clés d'action que vous souhaitez utiliser pour lancer le plugin et séparez-les par des espaces. Utilisez * si vous ne voulez en spécifier aucun, et le plugin sera déclenché sans aucun mot-clé d'action.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Requêtes personnalisées</system:String>
