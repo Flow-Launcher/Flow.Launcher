@@ -340,9 +340,10 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Nepodařilo se najít zadaný plugin</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Nový aktivační příkaz nemůže být prázdný</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Nový aktivační příkaz byl již přiřazen jinému pluginu, vyberte jiný aktivační příkaz</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
     <system:String x:Key="success">Úspěšné</system:String>
     <system:String x:Key="completedSuccessfully">Úspěšně dokončeno</system:String>
-    <system:String x:Key="actionkeyword_tips">Zadejte aktivační příkaz, který je nutný ke spuštění pluginu. Pokud nechcete zadávat aktivační příkaz, použijte * a plugin bude spuštěn bez aktivačního příkazu.</system:String>
+    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Vlastní klávesová zkratka pro vyhledávání</system:String>
