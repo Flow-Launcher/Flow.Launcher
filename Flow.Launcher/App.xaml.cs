@@ -101,15 +101,15 @@ namespace Flow.Launcher
         {
             if (SingleInstance<App>.InitializeAsFirstInstance(Unique))
             {
-                using (var application = new App())
-                {
-                    application.InitializeComponent();
-                    application.Run();
-                }
+                using var application = new App();
+                application.InitializeComponent();
+                application.Run();
             }
         }
 
-        private async void OnStartupAsync(object sender, StartupEventArgs e)
+#pragma warning disable VSTHRD100 // Avoid async void methods
+
+        private async void OnStartup(object sender, StartupEventArgs e)
         {
             await Stopwatch.NormalAsync("|App.OnStartup|Startup cost", async () =>
             {
@@ -128,7 +128,7 @@ namespace Flow.Launcher
                 AbstractPluginEnvironment.PreStartPluginExecutablePathUpdate(_settings);
 
                 // TODO: Clean InternationalizationManager.Instance and InternationalizationManager.Instance.GetTranslation in future
-                InternationalizationManager.Instance.ChangeLanguage(_settings.Language);
+                Ioc.Default.GetRequiredService<Internationalization>().ChangeLanguage(_settings.Language);
 
                 PluginManager.LoadPlugins(_settings.PluginSettings);
 
@@ -137,8 +137,7 @@ namespace Flow.Launcher
                 await PluginManager.InitializePluginsAsync();
                 await imageLoadertask;
 
-                var mainVM = Ioc.Default.GetRequiredService<MainViewModel>();
-                var window = new MainWindow(_settings, mainVM);
+                var window = new MainWindow();
 
                 Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
 
@@ -149,7 +148,7 @@ namespace Flow.Launcher
 
                 // main windows needs initialized before theme change because of blur settings
                 // TODO: Clean ThemeManager.Instance in future
-                ThemeManager.Instance.ChangeTheme(_settings.Theme);
+                Ioc.Default.GetRequiredService<Theme>().ChangeTheme();
 
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
@@ -163,6 +162,8 @@ namespace Flow.Launcher
                     "|App.OnStartup|End Flow Launcher startup ----------------------------------------------------  ");
             });
         }
+
+#pragma warning restore VSTHRD100 // Avoid async void methods
 
         private void AutoStartup()
         {
@@ -186,8 +187,7 @@ namespace Flow.Launcher
                     // but if it fails (permissions, etc) then don't keep retrying
                     // this also gives the user a visual indication in the Settings widget
                     _settings.StartFlowLauncherOnSystemStartup = false;
-                    Notification.Show(InternationalizationManager.Instance.GetTranslation("setAutoStartFailed"),
-                        e.Message);
+                    API.ShowMsg(API.GetTranslation("setAutoStartFailed"), e.Message);
                 }
             }
         }

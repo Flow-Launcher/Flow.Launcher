@@ -303,7 +303,7 @@
                                 Width="400"
                                 Margin="40 30 0 30"
                                 SnapsToDevicePixels="True"
-                                Style="{DynamicResource WindowBorderStyle}">
+                                Style="{DynamicResource PreviewWindowBorderStyle}">
                                 <Border BorderThickness="0" Style="{DynamicResource WindowRadius}">
                                     <Grid>
                                         <Grid.RowDefinitions>
@@ -370,17 +370,6 @@
                     </DockPanel>
                 </Border>
             </Grid>
-            <!--  Drop shadow effect  -->
-            <cc:Card
-                Title="{DynamicResource queryWindowShadowEffect}"
-                Margin="0 8 0 0"
-                Icon="&#xeb91;"
-                Sub="{DynamicResource shadowEffectCPUUsage}">
-                <ui:ToggleSwitch
-                    IsOn="{Binding DropShadowEffect}"
-                    OffContent="{DynamicResource disable}"
-                    OnContent="{DynamicResource enable}" />
-            </cc:Card>
 
             <!--  Theme  -->
             <cc:ExCard
@@ -469,11 +458,45 @@
                     </ListBox.Template>
                 </ListBox>
             </cc:ExCard>
+
+            <cc:CardGroup Margin="0 10 0 0">
+                <!--  Backdrop effect  -->
+                <cc:Card
+                    Title="{DynamicResource BackdropType}"
+                    Margin="0 0 0 0"
+                    Icon="&#xeb42;">
+                    <ComboBox
+                        MinWidth="160"
+                        VerticalAlignment="Center"
+                        DisplayMemberPath="Display"
+                        FontSize="14"
+                        IsEnabled="{Binding IsBackdropEnabled}"
+                        ItemsSource="{Binding BackdropTypesList}"
+                        SelectedValue="{Binding BackdropType, Mode=TwoWay}"
+                        SelectedValuePath="Value" />
+                    <!--  ✅ 추가  -->
+                </cc:Card>
+
+
+                <!--  Drop shadow effect  -->
+                <cc:Card
+                    Title="{DynamicResource queryWindowShadowEffect}"
+                    Margin="0 0 0 0"
+                    Icon="&#xeb91;">
+                    <ui:ToggleSwitch
+                        IsEnabled="{Binding IsDropShadowEnabled}"
+                        IsOn="{Binding DropShadowEffect}"
+                        OffContent="{DynamicResource disable}"
+                        OnContent="{DynamicResource enable}" />
+                </cc:Card>
+            </cc:CardGroup>
             <cc:HyperLink
                 Margin="10"
                 HorizontalAlignment="Right"
                 Text="{DynamicResource browserMoreThemes}"
                 Uri="{Binding LinkThemeGallery}" />
+
+
 
             <!--  Fixed Height  -->
             <cc:CardGroup Margin="0 20 0 0">
@@ -667,9 +690,8 @@
                     DisplayMemberPath="Display"
                     FontSize="14"
                     ItemsSource="{Binding ColorSchemes}"
-                    SelectedValue="{Binding Settings.ColorScheme}"
-                    SelectedValuePath="Value"
-                    SelectionChanged="Selector_OnSelectionChanged" />
+                    SelectedValue="{Binding ColorScheme, Mode=TwoWay}"
+                    SelectedValuePath="Value" />
             </cc:Card>
 
             <!--  Theme folder  -->
