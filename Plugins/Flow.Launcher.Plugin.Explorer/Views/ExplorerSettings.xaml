@@ -166,9 +166,12 @@
     </UserControl.Resources>
 
     <Grid Margin="{StaticResource SettingPanelMargin}">
+        <!--  Here Margin="-25 0" for TabControl and Margin="25 0" for content in TabItem are trick to force left alignment  -->
+        <!--  Since head items in TabControl have additional left-right spacing  -->
         <TabControl
             x:Name="TabView"
             MinHeight="0"
+            Margin="-25 0"
             Background="{DynamicResource Color00B}"
             BorderThickness="0"
             SelectedIndex="0"
@@ -182,7 +185,7 @@
                 Width="Auto"
                 Header="{DynamicResource plugin_explorer_generalsetting_header}"
                 Style="{DynamicResource ExplorerTabItem}">
-                <Grid>
+                <Grid Margin="25 0">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
@@ -399,7 +402,7 @@
                 Width="Auto"
                 Header="{DynamicResource plugin_explorer_native_context_menu_header}"
                 Style="{DynamicResource ExplorerTabItem}">
-                <Grid>
+                <Grid Margin="25 0">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
@@ -465,7 +468,7 @@
                 Width="Auto"
                 Header="{DynamicResource plugin_explorer_previewpanel_setting_header}"
                 Style="{DynamicResource ExplorerTabItem}">
-                <Grid>
+                <Grid Margin="25 0">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
@@ -554,7 +557,7 @@
                 Width="Auto"
                 Header="{DynamicResource plugin_explorer_everything_setting_header}"
                 Style="{DynamicResource ExplorerTabItem}">
-                <Grid>
+                <Grid Margin="25 0">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
@@ -642,7 +645,7 @@
                 Width="Auto"
                 Header="{DynamicResource plugin_explorer_manageactionkeywords_header}"
                 Style="{DynamicResource ExplorerTabItem}">
-                <Grid>
+                <Grid Margin="25 0">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
@@ -685,7 +688,7 @@
                 Width="Auto"
                 Header="{DynamicResource plugin_explorer_quickaccesslinks_header}"
                 Style="{DynamicResource ExplorerTabItem}">
-                <Grid>
+                <Grid Margin="25 0">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
@@ -746,7 +749,7 @@
                 Width="Auto"
                 Header="{DynamicResource plugin_explorer_indexsearchexcludedpaths_header}"
                 Style="{DynamicResource ExplorerTabItem}">
-                <Grid>
+                <Grid Margin="25 0">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
