@@ -102,6 +102,11 @@
     <system:String x:Key="AlwaysPreview">Mostra Sempre Anteprima</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Apri sempre il pannello di anteprima quando Flow si attiva. Premi {0} per attivare l'anteprima.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">L'effetto ombra non è consentito mentre il tema corrente ha un effetto di sfocatura abilitato</system:String>
+    <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropTypesNone">Vuoto</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
+    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Plugin di ricerca</system:String>
