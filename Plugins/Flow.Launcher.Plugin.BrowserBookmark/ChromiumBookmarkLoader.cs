@@ -171,21 +171,21 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
                         cmd.Parameters.AddWithValue("@url", $"%{domain}%");
 
                         using var reader = cmd.ExecuteReader();
-                        if (reader.Read() && !reader.IsDBNull(1))
-                        {
-                            var iconId = reader.GetInt64(0).ToString();
-                            var imageData = (byte[])reader["image_data"];
+                        if (!reader.Read() || reader.IsDBNull(1))
+                            continue;
 
-                            if (imageData != null && imageData.Length > 0)
-                            {
-                                var faviconPath = Path.Combine(_faviconCacheDir, $"{domain}_{iconId}.png");
-                                if (!File.Exists(faviconPath))
-                                {
-                                    SaveBitmapData(imageData, faviconPath);
-                                }
-                                bookmark.FaviconPath = faviconPath;
-                            }
+                        var iconId = reader.GetInt64(0).ToString();
+                        var imageData = (byte[])reader["image_data"];
+
+                        if (imageData is not { Length: > 0 })
+                            continue;
+
+                        var faviconPath = Path.Combine(_faviconCacheDir, $"{domain}_{iconId}.png");
+                        if (!File.Exists(faviconPath))
+                        {
+                            SaveBitmapData(imageData, faviconPath);
                         }
+                        bookmark.FaviconPath = faviconPath;
                     }
                     catch (Exception ex)
                     {

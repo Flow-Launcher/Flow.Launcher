@@ -145,22 +145,23 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
                     cmd.Parameters.AddWithValue("@url", $"%{domain}%");
 
                     using var reader = cmd.ExecuteReader();
-                    if (reader.Read() && !reader.IsDBNull(0))
+                    if (!reader.Read() || reader.IsDBNull(0))
+                        continue;
+
+                    var imageData = (byte[])reader["data"];
+
+                    if (imageData is not { Length: > 0 })
+                        continue;
+
+                    var ext = IsSvgData(imageData) ? "svg" : "png";
+                    var faviconPath = Path.Combine(_faviconCacheDir, $"firefox_{domain}.{ext}");
+
+                    if (!File.Exists(faviconPath))
                     {
-                        var imageData = (byte[])reader["data"];
-
-                        if (imageData != null && imageData.Length > 0)
-                        {
-                            var ext = IsSvgData(imageData) ? "svg" : "png";
-                            var faviconPath = Path.Combine(_faviconCacheDir, $"firefox_{domain}.{ext}");
-
-                            if (!File.Exists(faviconPath))
-                            {
-                                SaveBitmapData(imageData, faviconPath);
-                            }
-                            bookmark.FaviconPath = faviconPath;
-                        }
+                        SaveBitmapData(imageData, faviconPath);
                     }
+
+                    bookmark.FaviconPath = faviconPath;
                 }
                 catch (Exception ex)
                 {
