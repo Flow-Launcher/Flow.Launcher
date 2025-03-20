@@ -44,17 +44,16 @@ namespace Flow.Launcher.Core.Plugin
                 // we need to convert it to the correct type
                 foreach (var (key, value) in Settings)
                 {
-                    if (value is JsonElement jsonElement)
+                    if (value is not JsonElement jsonElement) continue;
+
+                    Settings[key] = jsonElement.ValueKind switch
                     {
-                        Settings[key] = jsonElement.ValueKind switch
-                        {
-                            JsonValueKind.String => jsonElement.GetString() ?? value,
-                            JsonValueKind.True => jsonElement.GetBoolean(),
-                            JsonValueKind.False => jsonElement.GetBoolean(),
-                            JsonValueKind.Null => null,
-                            _ => value
-                        };
-                    }
+                        JsonValueKind.String => jsonElement.GetString() ?? value,
+                        JsonValueKind.True => jsonElement.GetBoolean(),
+                        JsonValueKind.False => jsonElement.GetBoolean(),
+                        JsonValueKind.Null => null,
+                        _ => value
+                    };
                 }
             }
 
