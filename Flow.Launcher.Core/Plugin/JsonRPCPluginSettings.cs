@@ -448,7 +448,7 @@ namespace Flow.Launcher.Core.Plugin
 
                             break;
                         }
-                    case "seperator":
+                    case "separator":
                         {
                             var sep = new Separator();
 
