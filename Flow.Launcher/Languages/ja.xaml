@@ -340,9 +340,10 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">プラグインが見つかりません</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">新しいアクションキーボードを空にすることはできません</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">新しいアクションキーボードは他のプラグインに割り当てられています。他のアクションキーボードを指定してください</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
     <system:String x:Key="success">成功しました</system:String>
     <system:String x:Key="completedSuccessfully">Completed successfully</system:String>
-    <system:String x:Key="actionkeyword_tips">アクションキーボードを指定しない場合、* を使用してください</system:String>
+    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle"></system:String>
