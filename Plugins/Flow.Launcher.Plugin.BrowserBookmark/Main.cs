@@ -22,6 +22,16 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
     private static Settings _settings;
 
     private static bool _initialized = false;
+    
+    public static PluginInitContext GetContext()
+    {
+        return _context;
+    }
+    
+    public static string GetPluginDirectory()
+    {
+        return _context?.CurrentPluginMetadata?.PluginDirectory;
+    }
 
     public void Init(PluginInitContext context)
     {

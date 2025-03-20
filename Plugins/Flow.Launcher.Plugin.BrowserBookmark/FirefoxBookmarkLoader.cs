@@ -106,89 +106,131 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
     }
 
     private void LoadFaviconsFromDb(string faviconDbPath, List<Bookmark> bookmarks)
+{
+    try
     {
-        try
+        // Use a copy to avoid lock issues with the original file
+        var tempDbPath = Path.Combine(_faviconCacheDir, $"tempfavicons_{Guid.NewGuid()}.sqlite");
+        File.Copy(faviconDbPath, tempDbPath, true);
+
+        string dbPath = string.Format(DbPathFormat, tempDbPath);
+        using var connection = new SqliteConnection(dbPath);
+        connection.Open();
+
+        // Get favicons based on bookmark URLs
+        foreach (var bookmark in bookmarks)
         {
-            // Use a copy to avoid lock issues with the original file
-            var tempDbPath = Path.Combine(_faviconCacheDir, $"tempfavicons_{Guid.NewGuid()}.sqlite");
-            File.Copy(faviconDbPath, tempDbPath, true);
-
-            string dbPath = string.Format(DbPathFormat, tempDbPath);
-            using var connection = new SqliteConnection(dbPath);
-            connection.Open();
-
-            // Get favicons based on bookmark URLs
-            foreach (var bookmark in bookmarks)
-            {
-                try
-                {
-                    if (string.IsNullOrEmpty(bookmark.Url))
-                        continue;
-
-                    // Extract domain from URL
-                    if (!Uri.TryCreate(bookmark.Url, UriKind.Absolute, out Uri uri))
-                        continue;
-
-                    var domain = uri.Host;
-
-                    // Query for latest Firefox version favicon structure
-                    using var cmd = connection.CreateCommand();
-                    cmd.CommandText = @"
-                        SELECT i.data
-                        FROM moz_icons i
-                        JOIN moz_icons_to_pages ip ON i.id = ip.icon_id
-                        JOIN moz_pages_w_icons p ON ip.page_id = p.id
-                        WHERE p.page_url LIKE @url
-                        AND i.data IS NOT NULL
-                        ORDER BY i.width DESC  -- Select largest icon available
-                        LIMIT 1";
-
-                    cmd.Parameters.AddWithValue("@url", $"%{domain}%");
-
-                    using var reader = cmd.ExecuteReader();
-                    if (!reader.Read() || reader.IsDBNull(0))
-                        continue;
-
-                    var imageData = (byte[])reader["data"];
-
-                    if (imageData is not { Length: > 0 })
-                        continue;
-
-                    var ext = IsSvgData(imageData) ? "svg" : "png";
-                    var faviconPath = Path.Combine(_faviconCacheDir, $"firefox_{domain}.{ext}");
-
-                    if (!File.Exists(faviconPath))
-                    {
-                        SaveBitmapData(imageData, faviconPath);
-                    }
-
-                    bookmark.FaviconPath = faviconPath;
-                }
-                catch (Exception ex)
-                {
-                    Log.Exception($"Failed to extract Firefox favicon: {bookmark.Url}", ex);
-                }
-            }
-
-            // https://github.com/dotnet/efcore/issues/26580
-            SqliteConnection.ClearPool(connection);
-            connection.Close();
-
-            // Delete temporary file
             try
             {
-                File.Delete(tempDbPath);
+                if (string.IsNullOrEmpty(bookmark.Url))
+                    continue;
+
+                // Extract domain from URL
+                if (!Uri.TryCreate(bookmark.Url, UriKind.Absolute, out Uri uri))
+                    continue;
+
+                var domain = uri.Host;
+
+                // Query for latest Firefox version favicon structure
+                using var cmd = connection.CreateCommand();
+                cmd.CommandText = @"
+                    SELECT i.data
+                    FROM moz_icons i
+                    JOIN moz_icons_to_pages ip ON i.id = ip.icon_id
+                    JOIN moz_pages_w_icons p ON ip.page_id = p.id
+                    WHERE p.page_url LIKE @url
+                    AND i.data IS NOT NULL
+                    ORDER BY i.width DESC  -- Select largest icon available
+                    LIMIT 1";
+
+                cmd.Parameters.AddWithValue("@url", $"%{domain}%");
+
+                using var reader = cmd.ExecuteReader();
+                if (!reader.Read() || reader.IsDBNull(0))
+                    continue;
+
+                var imageData = (byte[])reader["data"];
+
+                if (imageData is not { Length: > 0 })
+                    continue;
+
+                var faviconPath = Path.Combine(_faviconCacheDir, $"firefox_{domain}.png");
+
+                if (!File.Exists(faviconPath))
+                {
+                    if (IsSvgData(imageData))
+                    {
+                        // SVG를 PNG로 변환
+                        var pngData = ConvertSvgToPng(imageData);
+                        if (pngData != null)
+                        {
+                            SaveBitmapData(pngData, faviconPath);
+                        }
+                        else
+                        {
+                            // 변환 실패 시 빈 문자열 설정 (기본 아이콘 사용)
+                            bookmark.FaviconPath = string.Empty;
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        // PNG는 그대로 저장
+                        SaveBitmapData(imageData, faviconPath);
+                    }
+                }
+
+                bookmark.FaviconPath = faviconPath;
             }
             catch (Exception ex)
             {
-                Log.Exception($"Failed to delete temporary favicon DB: {tempDbPath}", ex);
+                Log.Exception($"Failed to extract Firefox favicon: {bookmark.Url}", ex);
             }
+        }
+
+        // https://github.com/dotnet/efcore/issues/26580
+        SqliteConnection.ClearPool(connection);
+        connection.Close();
+
+        // Delete temporary file
+        try
+        {
+            File.Delete(tempDbPath);
         }
         catch (Exception ex)
         {
-            Log.Exception($"Failed to load Firefox favicon DB: {faviconDbPath}", ex);
+            Log.Exception($"Failed to delete temporary favicon DB: {tempDbPath}", ex);
         }
     }
+    catch (Exception ex)
+    {
+        Log.Exception($"Failed to load Firefox favicon DB: {faviconDbPath}", ex);
+    }
+}
+
+private byte[] ConvertSvgToPng(byte[] svgData)
+{
+    try
+    {
+        using var memoryStream = new MemoryStream();
+        // 메모리에 SVG 데이터 로드
+        using (var image = new ImageMagick.MagickImage(svgData))
+        {
+            // 적절한 크기로 리사이징 (32x32가 일반적인 파비콘 크기)
+            image.Resize(32, 32);
+            // PNG 형식으로 변환하여 메모리 스트림에 저장
+            image.Format = ImageMagick.MagickFormat.Png;
+            image.Write(memoryStream);
+        }
+        
+        return memoryStream.ToArray();
+    }
+    catch (Exception ex)
+    {
+        Log.Exception("SVG to PNG conversion failed", ex);
+        return null;
+    }
+}
 
     private static bool IsSvgData(byte[] data)
     {
