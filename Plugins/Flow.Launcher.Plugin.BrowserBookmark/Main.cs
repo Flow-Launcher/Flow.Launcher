@@ -58,7 +58,6 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
         // Should top results be returned? (true if no search parameters have been passed)
         var topResults = string.IsNullOrEmpty(param);
 
-
         if (!topResults)
         {
             // Since we mixed chrome and firefox bookmarks, we should order them again
@@ -68,9 +67,9 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
                     {
                         Title = c.Name,
                         SubTitle = c.Url,
-                         IcoPath = !string.IsNullOrEmpty(c.FaviconPath) && File.Exists(c.FaviconPath)
-                                        ? c.FaviconPath
-                                        : @"Images\bookmark.png",
+                        IcoPath = !string.IsNullOrEmpty(c.FaviconPath) && File.Exists(c.FaviconPath)
+                            ? c.FaviconPath
+                            : @"Images\bookmark.png",
                         Score = BookmarkLoader.MatchProgram(c, param).Score,
                         Action = _ =>
                         {
@@ -92,9 +91,9 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
                     {
                         Title = c.Name,
                         SubTitle = c.Url,
-                         IcoPath = !string.IsNullOrEmpty(c.FaviconPath) && File.Exists(c.FaviconPath)
-                                        ? c.FaviconPath
-                                        : @"Images\bookmark.png",
+                        IcoPath = !string.IsNullOrEmpty(c.FaviconPath) && File.Exists(c.FaviconPath)
+                            ? c.FaviconPath
+                            : @"Images\bookmark.png",
                         Score = 5,
                         Action = _ =>
                         {
@@ -107,7 +106,6 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
                 .ToList();
         }
     }
-
 
     private static Channel<byte> _refreshQueue = Channel.CreateBounded<byte>(1);
 
