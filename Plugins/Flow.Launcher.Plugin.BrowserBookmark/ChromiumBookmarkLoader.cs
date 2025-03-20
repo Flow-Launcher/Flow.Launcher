@@ -192,6 +192,9 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
                         Log.Exception($"Failed to extract bookmark favicon: {bookmark.Url}", ex);
                     }
                 }
+
+                // https://github.com/dotnet/efcore/issues/26580
+                SqliteConnection.ClearPool(connection);
             }
             catch (Exception ex)
             {
@@ -201,8 +204,6 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
             // Delete temporary file
             try
             {
-                // https://github.com/dotnet/efcore/issues/26580
-                SqliteConnection.ClearAllPools();
                 File.Delete(tempDbPath);
             }
             catch (Exception ex)

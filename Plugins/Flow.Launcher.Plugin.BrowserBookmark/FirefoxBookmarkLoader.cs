@@ -83,11 +83,12 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
                 LoadFaviconsFromDb(faviconDbPath, bookmarks);
             }
 
+            // https://github.com/dotnet/efcore/issues/26580
+            SqliteConnection.ClearPool(dbConnection);
+
             // Delete temporary file
             try
             {
-                // https://github.com/dotnet/efcore/issues/26580
-                SqliteConnection.ClearAllPools();
                 File.Delete(tempDbPath);
             }
             catch (Exception ex)
@@ -165,13 +166,14 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
                 {
                     Log.Exception($"Failed to extract Firefox favicon: {bookmark.Url}", ex);
                 }
+
+                // https://github.com/dotnet/efcore/issues/26580
+                SqliteConnection.ClearPool(connection);
             }
 
             // Delete temporary file
             try
             {
-                // https://github.com/dotnet/efcore/issues/26580
-                SqliteConnection.ClearAllPools();
                 File.Delete(tempDbPath);
             }
             catch (Exception ex)
