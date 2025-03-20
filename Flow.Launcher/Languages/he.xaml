@@ -340,9 +340,10 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">לא ניתן למצוא את התוסף שצוין</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">מילת הפעולה החדשה לא יכולה להיות ריקה</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">מילת הפעולה החדשה כבר מוקצה לתוסף אחר, אנא בחר אחת שונה</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
     <system:String x:Key="success">הצליח</system:String>
     <system:String x:Key="completedSuccessfully">הושלם בהצלחה</system:String>
-    <system:String x:Key="actionkeyword_tips">הזן את מילת הפעולה שברצונך להשתמש בה להפעלת התוסף. השתמש ב-* אם אינך רוצה לציין מילה כלשהי, והתוסף יופעל ללא צורך במילת פעולה.</system:String>
+    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">מקש קיצור לשאילתה מותאמת אישית</system:String>
