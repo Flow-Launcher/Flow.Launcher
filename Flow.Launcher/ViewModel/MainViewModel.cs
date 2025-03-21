@@ -1136,7 +1136,10 @@ namespace Flow.Launcher.ViewModel
                 {
                     ProgressBarVisibility = Visibility.Visible;
                 }
-            }, _updateSource.Token, TaskContinuationOptions.NotOnCanceled, TaskScheduler.Default);
+                },
+                _updateSource.Token,
+                TaskContinuationOptions.NotOnCanceled,
+                TaskScheduler.Default);
 
             // plugins is ICollection, meaning LINQ will get the Count and preallocate Array
 
