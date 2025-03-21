@@ -243,23 +243,23 @@ namespace Flow.Launcher
 
         private void RegisterExitEvents()
         {
-            AppDomain.CurrentDomain.ProcessExit += (s, e) =>
+            AppDomain.CurrentDomain.ProcessExit += async (s, e) =>
             {
                 Log.Info("|App.RegisterExitEvents|Process Exit");
-                _ = DisposeAsync();
+                await DisposeAsync();
             };
 
-            Current.Exit += (s, e) =>
+            Current.Exit += async (s, e) =>
             {
                 NativeThreadCTS.Cancel();
                 Log.Info("|App.RegisterExitEvents|Application Exit");
-                _ = DisposeAsync();
+                await DisposeAsync();
             };
 
-            Current.SessionEnding += (s, e) =>
+            Current.SessionEnding += async (s, e) =>
             {
                 Log.Info("|App.RegisterExitEvents|Session Ending");
-                _ = DisposeAsync();
+                await DisposeAsync();
             };
         }
 
@@ -303,6 +303,8 @@ namespace Flow.Launcher
                 _disposed = true;
             }
 
+            await Task.Delay(10000);
+
             await Stopwatch.NormalAsync("|App.Dispose|Dispose cost", async () =>
             {
                 Log.Info("|App.Dispose|Begin Flow Launcher dispose ----------------------------------------------------");
@@ -313,7 +315,7 @@ namespace Flow.Launcher
                     await PluginManager.DisposePluginsAsync();
 
                     // Dispose needs to be called on the main Windows thread, since some resources owned by the thread need to be disposed.
-                    await _mainWindow?.Dispatcher.InvokeAsync(DisposeAsync);
+                    await _mainWindow?.Dispatcher.InvokeAsync(_mainWindow.Dispose);
                     _mainVM?.Dispose();
                 }
 
