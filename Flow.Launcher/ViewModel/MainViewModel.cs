@@ -1204,16 +1204,20 @@ namespace Flow.Launcher.ViewModel
             }
 
             // Local function
-            async Task QueryTaskAsync(PluginPair plugin, bool reSelect = true)
+            async ValueTask QueryTaskAsync(PluginPair plugin, bool reSelect = true)
             {
                 // Since it is wrapped within a ThreadPool Thread, the synchronous context is null
                 // Task.Yield will force it to run in ThreadPool
                 await Task.Yield();
 
+                if (_updateSource.Token.IsCancellationRequested)
+                    return;
+
                 IReadOnlyList<Result> results =
                     await PluginManager.QueryForPluginAsync(plugin, query, _updateSource.Token);
 
-                _updateSource.Token.ThrowIfCancellationRequested();
+                if (_updateSource.Token.IsCancellationRequested)
+                    return;
 
                 IReadOnlyList<Result> resultsCopy;
                 if (results == null)
