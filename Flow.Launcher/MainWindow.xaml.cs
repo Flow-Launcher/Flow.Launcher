@@ -27,7 +27,7 @@ using Screen = System.Windows.Forms.Screen;
 
 namespace Flow.Launcher
 {
-    public partial class MainWindow
+    public partial class MainWindow : IDisposable
     {
         #region Private Fields
 
@@ -50,13 +50,17 @@ namespace Flow.Launcher
         private SoundPlayer animationSoundWPF;
 
         // Window WndProc
+        private HwndSource _hwndSource;
         private int _initialWidth;
         private int _initialHeight;
 
         // Window Animation
         private const double DefaultRightMargin = 66; //* this value from base.xaml
         private bool _animating;
-        private bool _isClockPanelAnimating = false; // 애니메이션 실행 중인지 여부
+        private bool _isClockPanelAnimating = false;
+
+        // IDisposable
+        private bool _disposedValue = false;
 
         #endregion
 
@@ -85,8 +89,8 @@ namespace Flow.Launcher
         private void OnSourceInitialized(object sender, EventArgs e)
         {
             var handle = Win32Helper.GetWindowHandle(this, true);
-            var win = HwndSource.FromHwnd(handle);
-            win.AddHook(WndProc);
+            _hwndSource = HwndSource.FromHwnd(handle);
+            _hwndSource.AddHook(WndProc);
             Win32Helper.HideFromAltTab(this);
             Win32Helper.DisableControlBox(this);
         }
@@ -227,20 +231,31 @@ namespace Flow.Launcher
                 .AddValueChanged(History, (s, e) => UpdateClockPanelVisibility());
         }
 
-        private async void OnClosing(object sender, CancelEventArgs e)
+        private void OnClosing(object sender, CancelEventArgs e)
         {
+            _viewModel.Save();
             _notifyIcon.Visible = false;
-            App.API.SaveAppAllSettings();
-            e.Cancel = true;
-            await PluginManager.DisposePluginsAsync();
             Notification.Uninstall();
-            Environment.Exit(0);
+        }
+
+        private void OnClosed(object sender, EventArgs e)
+        {
+            try
+            {
+                _hwndSource.RemoveHook(WndProc);
+            }
+            catch (Exception)
+            {
+                // Ignored
+            }
+
+            _hwndSource = null;
         }
 
         private void OnLocationChanged(object sender, EventArgs e)
         {
-            if (_animating)
-                return;
+            if (_animating) return;
+
             if (_settings.SearchWindowScreen == SearchWindowScreens.RememberLastLaunchLocation)
             {
                 _settings.WindowLeft = Left;
@@ -987,6 +1002,30 @@ namespace Flow.Launcher
         private void QueryTextBox_OnPreviewDragOver(object sender, DragEventArgs e)
         {
             e.Handled = true;
+        }
+
+        #endregion
+
+        #region IDisposable
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposedValue)
+            {
+                if (disposing)
+                {
+                    _hwndSource?.Dispose();
+                }
+
+                _disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
 
         #endregion

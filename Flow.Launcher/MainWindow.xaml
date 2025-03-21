@@ -17,6 +17,7 @@
     AllowDrop="True"
     AllowsTransparency="True"
     Background="Transparent"
+    Closed="OnClosed"
     Closing="OnClosing"
     Deactivated="OnDeactivated"
     Icon="Images/app.png"
