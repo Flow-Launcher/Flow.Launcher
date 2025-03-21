@@ -1207,19 +1207,19 @@ namespace Flow.Launcher.ViewModel
             }
 
             // Local function
-            async ValueTask QueryTaskAsync(PluginPair plugin, bool reSelect = true)
+            async Task QueryTaskAsync(bool searchDelay, PluginPair plugin, bool reSelect, CancellationToken token)
+            {
+                if (!searchDelay)
             {
                 // Since it is wrapped within a ThreadPool Thread, the synchronous context is null
                 // Task.Yield will force it to run in ThreadPool
                 await Task.Yield();
-
-                if (_updateSource.Token.IsCancellationRequested)
-                    return;
+                }
 
                 IReadOnlyList<Result> results =
-                    await PluginManager.QueryForPluginAsync(plugin, query, _updateSource.Token);
+                    await PluginManager.QueryForPluginAsync(plugin, query, token);
 
-                if (_updateSource.Token.IsCancellationRequested)
+                if (token.IsCancellationRequested)
                     return;
 
                 IReadOnlyList<Result> resultsCopy;
@@ -1230,11 +1230,11 @@ namespace Flow.Launcher.ViewModel
                 else
                 {
                     // make a copy of results to avoid possible issue that FL changes some properties of the records, like score, etc.
-                    resultsCopy = DeepCloneResults(results);
+                    resultsCopy = DeepCloneResults(results, token);
                 }
 
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
-                    _updateSource.Token, reSelect)))
+                    token, reSelect)))
                 {
                     Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
                 }
