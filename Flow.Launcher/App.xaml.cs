@@ -127,11 +127,14 @@ namespace Flow.Launcher
 
                 AbstractPluginEnvironment.PreStartPluginExecutablePathUpdate(_settings);
 
+                PluginManager.LoadPlugins(_settings.PluginSettings);
+
+                // Register ResultsUpdated event after all plugins are loaded
+                Ioc.Default.GetRequiredService<MainViewModel>().RegisterResultsUpdatedEvent();
+
+                // Change language after all plugins are initialized
                 // TODO: Clean InternationalizationManager.Instance and InternationalizationManager.Instance.GetTranslation in future
                 Ioc.Default.GetRequiredService<Internationalization>().ChangeLanguage(_settings.Language);
-
-                PluginManager.LoadPlugins(_settings.PluginSettings);
-                Ioc.Default.GetRequiredService<MainViewModel>().RegisterResultsUpdatedEvent();
 
                 Http.Proxy = _settings.Proxy;
 
