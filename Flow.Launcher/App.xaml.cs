@@ -28,7 +28,6 @@ namespace Flow.Launcher
     public partial class App : IDisposable, ISingleInstanceApp
     {
         public static IPublicAPI API { get; private set; }
-        private const string Unique = "Flow.Launcher_Unique_Application_Mutex";
         private static bool _disposed;
         private readonly Settings _settings;
 
@@ -99,7 +98,7 @@ namespace Flow.Launcher
         [STAThread]
         public static void Main()
         {
-            if (SingleInstance<App>.InitializeAsFirstInstance(Unique))
+            if (SingleInstance<App>.InitializeAsFirstInstance())
             {
                 using var application = new App();
                 application.InitializeComponent();
