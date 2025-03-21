@@ -131,6 +131,7 @@ namespace Flow.Launcher
                 Ioc.Default.GetRequiredService<Internationalization>().ChangeLanguage(_settings.Language);
 
                 PluginManager.LoadPlugins(_settings.PluginSettings);
+                Ioc.Default.GetRequiredService<MainViewModel>().RegisterResultsUpdatedEvent();
 
                 Http.Proxy = _settings.Proxy;
 
