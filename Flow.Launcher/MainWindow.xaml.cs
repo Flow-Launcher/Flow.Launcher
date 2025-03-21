@@ -59,7 +59,10 @@ namespace Flow.Launcher
         // Window Animation
         private const double DefaultRightMargin = 66; //* this value from base.xaml
         private bool _animating;
-        private bool _isClockPanelAnimating = false; // 애니메이션 실행 중인지 여부
+        private bool _isClockPanelAnimating = false;
+
+        // Search Delay
+        private IDisposable _reactiveSubscription;
 
         #endregion
 
@@ -96,6 +99,9 @@ namespace Flow.Launcher
 
         private async void OnLoaded(object sender, RoutedEventArgs _)
         {
+            // Setup search text box reactiveness
+            SetupSearchTextBoxReactiveness(_settings.SearchQueryResultsWithDelay);
+
             // Check first launch
             if (_settings.FirstLaunch)
             {
@@ -144,6 +150,7 @@ namespace Flow.Launcher
             // Since the default main window visibility is visible, so we need set focus during startup
             QueryTextBox.Focus();
 
+            // View model property changed event
             _viewModel.PropertyChanged += (o, e) =>
             {
                 switch (e.PropertyName)
@@ -194,6 +201,7 @@ namespace Flow.Launcher
                 }
             };
 
+            // Settings property changed event
             _settings.PropertyChanged += (o, e) =>
             {
                 switch (e.PropertyName)
@@ -917,7 +925,6 @@ namespace Flow.Launcher
             }
         }
 
-
         private static double GetOpacityFromStyle(Style style, double defaultOpacity = 1.0)
         {
             if (style == null)
@@ -1001,8 +1008,6 @@ namespace Flow.Launcher
 
         // Edited from: https://github.com/microsoft/PowerToys
 
-        private IDisposable _reactiveSubscription;
-
         private void SetupSearchTextBoxReactiveness(bool showResultsWithDelay)
         {
             if (_reactiveSubscription != null)
@@ -1020,17 +1025,7 @@ namespace Flow.Launcher
                     add => QueryTextBox.TextChanged += add,
                     remove => QueryTextBox.TextChanged -= remove)
                     .Throttle(TimeSpan.FromMilliseconds(_settings.SearchDelay * 10))
-                    .Do(@event => Dispatcher.Invoke(() => PerformSearchQuery(0, (TextBox)@event.Sender)))
-                    .Throttle(TimeSpan.FromMilliseconds(Settings.SearchDelayInterval))
-                    .Do(@event => Dispatcher.Invoke(() => PerformSearchQuery(30, (TextBox)@event.Sender)))
-                    .Throttle(TimeSpan.FromMilliseconds(Settings.SearchDelayInterval))
-                    .Do(@event => Dispatcher.Invoke(() => PerformSearchQuery(60, (TextBox)@event.Sender)))
-                    .Throttle(TimeSpan.FromMilliseconds(Settings.SearchDelayInterval))
-                    .Do(@event => Dispatcher.Invoke(() => PerformSearchQuery(90, (TextBox)@event.Sender)))
-                    .Throttle(TimeSpan.FromMilliseconds(Settings.SearchDelayInterval))
-                    .Do(@event => Dispatcher.Invoke(() => PerformSearchQuery(120, (TextBox)@event.Sender)))
-                    .Throttle(TimeSpan.FromMilliseconds(Settings.SearchDelayInterval))
-                    .Do(@event => Dispatcher.Invoke(() => PerformSearchQuery(150, (TextBox)@event.Sender)))
+                    .Do(@event => Dispatcher.Invoke(() => PerformSearchQuery(true, (TextBox)@event.Sender)))
                     .Subscribe();
             }
             else
@@ -1042,18 +1037,13 @@ namespace Flow.Launcher
         private void QueryTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var textBox = (TextBox)sender;
-            PerformSearchQuery(null, textBox);
+            PerformSearchQuery(false, textBox);
         }
 
-        // If delayInputTime is null, we will query plugins with all plugin search delay times
-        private void PerformSearchQuery(int? searchDelay, TextBox textBox)
+        private void PerformSearchQuery(bool searchDelay, TextBox textBox)
         {
-            // Only update query text when search delay is null or 0
-            if (searchDelay.GetValueOrDefault(0) == 0)
-            {
-                var text = textBox.Text;
-                _viewModel.QueryText = text;
-            }
+            var text = textBox.Text;
+            _viewModel.QueryText = text;
             _viewModel.Query(searchDelay);
         }
 

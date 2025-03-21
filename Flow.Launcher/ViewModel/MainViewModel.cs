@@ -282,14 +282,14 @@ namespace Flow.Launcher.ViewModel
         {
             if (SelectedIsFromQueryResults())
             {
-                _ = QueryResultsAsync(null, isReQuery: true);
+                _ = QueryResultsAsync(false, isReQuery: true);
             }
         }
 
         public void ReQuery(bool reselect)
         {
             BackToQueryResults();
-            _ = QueryResultsAsync(null, isReQuery: true, reSelect: reselect);
+            _ = QueryResultsAsync(false, isReQuery: true, reSelect: reselect);
         }
 
         [RelayCommand]
@@ -622,14 +622,14 @@ namespace Flow.Launcher.ViewModel
                 {
                     // re-query is done in QueryText's setter method
                     QueryText = queryText;
-                    Query(null);
+                    Query(false);
                     // set to false so the subsequent set true triggers
                     // PropertyChanged and MoveQueryTextToEnd is called
                     QueryTextCursorMovedToEnd = false;
                 }
                 else if (isReQuery)
                 {
-                    Query(null, isReQuery: true);
+                    Query(false, isReQuery: true);
                 }
 
                 QueryTextCursorMovedToEnd = true;
@@ -679,15 +679,8 @@ namespace Flow.Launcher.ViewModel
                     // setter won't be called when property value is not changed.
                     // so we need manually call Query()
                     // http://stackoverflow.com/posts/25895769/revisions
-                    if (string.IsNullOrEmpty(QueryText))
-                    {
-                        Query(null);
-                    }
-                    else
-                    {
-                        QueryText = string.Empty;
-                        Query(null);
-                    }
+                    QueryText = string.Empty;
+                    Query(false);
                 }
 
                 _selectedResults.Visibility = Visibility.Visible;
@@ -955,7 +948,7 @@ namespace Flow.Launcher.ViewModel
 
         #region Query
 
-        public void Query(int? searchDelay, bool isReQuery = false)
+        public void Query(bool searchDelay, bool isReQuery = false)
         {
             if (SelectedIsFromQueryResults())
             {
@@ -963,19 +956,11 @@ namespace Flow.Launcher.ViewModel
             }
             else if (ContextMenuSelected())
             {
-                // Only query history when search delay is null or 0
-                if (searchDelay.GetValueOrDefault(0) == 0)
-                {
-                    QueryContextMenu();
-                }
+                QueryContextMenu();
             }
             else if (HistorySelected())
             {
-                // Only query history when search delay is null or 0
-                if (searchDelay.GetValueOrDefault(0) == 0)
-                {
-                    QueryHistory();
-                }
+                QueryHistory();
             }
         }
 
@@ -1065,8 +1050,9 @@ namespace Flow.Launcher.ViewModel
 
         private readonly IReadOnlyList<Result> _emptyResult = new List<Result>();
         
-        private async Task QueryResultsAsync(int? searchDelay, bool isReQuery = false, bool reSelect = true)
+        private async Task QueryResultsAsync(bool searchDelay, bool isReQuery = false, bool reSelect = true)
         {
+            // TODO: Remove debug codes.
             System.Diagnostics.Debug.WriteLine("!!!QueryResults");
 
             _updateSource?.Cancel();
@@ -1130,12 +1116,12 @@ namespace Flow.Launcher.ViewModel
             }
 
             _ = Task.Delay(200, _updateSource.Token).ContinueWith(_ =>
-            {
-                // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
-                if (!_updateSource.Token.IsCancellationRequested && _isQueryRunning)
                 {
-                    ProgressBarVisibility = Visibility.Visible;
-                }
+                    // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
+                    if (!_updateSource.Token.IsCancellationRequested && _isQueryRunning)
+                    {
+                        ProgressBarVisibility = Visibility.Visible;
+                    }
                 },
                 _updateSource.Token,
                 TaskContinuationOptions.NotOnCanceled,
@@ -1143,47 +1129,23 @@ namespace Flow.Launcher.ViewModel
 
             // plugins is ICollection, meaning LINQ will get the Count and preallocate Array
 
-            Task[] tasks;
-            if (searchDelay.HasValue)
+            var tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
             {
-                var searchDelayValue = searchDelay.Value;
-                tasks = plugins.Select(plugin => (plugin.Metadata.Disabled || plugin.Metadata.SearchDelay != searchDelayValue) switch
-                {
-                    false => QueryTaskAsync(plugin, reSelect),
-                    true => Task.CompletedTask
-                }).ToArray();
+                false => QueryTaskAsync(plugin, searchDelay, reSelect, _updateSource.Token),
+                true => Task.CompletedTask
+            }).ToArray();
 
-                // TODO: Remove debug codes.
-                System.Diagnostics.Debug.Write($"!!!{query.RawQuery} Querying {searchDelayValue}ms");
-                foreach (var plugin in plugins)
-                {
-                    if (!(plugin.Metadata.Disabled || plugin.Metadata.SearchDelay != searchDelayValue))
-                    {
-                        System.Diagnostics.Debug.Write($"{plugin.Metadata.Name}");
-                    }
-                }
-                System.Diagnostics.Debug.Write("\n");
-            }
-            else
+            // TODO: Remove debug codes.
+            System.Diagnostics.Debug.Write($"!!!Querying {query.RawQuery}: search dalay {searchDelay}");
+            foreach (var plugin in plugins)
             {
-                tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
+                if (!plugin.Metadata.Disabled)
                 {
-                    false => QueryTaskAsync(plugin, reSelect),
-                    true => Task.CompletedTask
-                }).ToArray();
-
-                // TODO: Remove debug codes.
-                System.Diagnostics.Debug.Write($"!!!{query.RawQuery} Querying null ms");
-                foreach (var plugin in plugins)
-                {
-                    if (!plugin.Metadata.Disabled)
-                    {
-                        System.Diagnostics.Debug.Write($"{plugin.Metadata.Name}");
-                    }
+                    System.Diagnostics.Debug.Write($"{plugin.Metadata.Name}, ");
                 }
-                System.Diagnostics.Debug.Write("\n");
             }
-            
+            System.Diagnostics.Debug.Write("\n");
+
             try
             {
                 // Check the code, WhenAll will translate all type of IEnumerable or Collection to Array, so make an array at first
@@ -1207,15 +1169,29 @@ namespace Flow.Launcher.ViewModel
             }
 
             // Local function
-            async Task QueryTaskAsync(bool searchDelay, PluginPair plugin, bool reSelect, CancellationToken token)
+            async Task QueryTaskAsync(PluginPair plugin, bool searchDelay, bool reSelect, CancellationToken token)
             {
-                if (!searchDelay)
-            {
+                if (searchDelay)
+                {
+                    // TODO: Remove debug codes.
+                    System.Diagnostics.Debug.WriteLine($"!!!{plugin.Metadata.Name} Waiting {plugin.Metadata.SearchDelay} ms");
+
+                    // TODO: Remove debug codes.
+                    await Task.Delay(plugin.Metadata.SearchDelay * 60, token);
+
+                    // TODO: Remove debug codes.
+                    System.Diagnostics.Debug.WriteLine($"!!!{plugin.Metadata.Name} Waited {plugin.Metadata.SearchDelay} ms");
+
+                    if (token.IsCancellationRequested)
+                        return;
+                }
+
                 // Since it is wrapped within a ThreadPool Thread, the synchronous context is null
                 // Task.Yield will force it to run in ThreadPool
                 await Task.Yield();
-                }
 
+                // TODO: Remove debug codes.
+                System.Diagnostics.Debug.WriteLine($"!!!{query.RawQuery} Querying {plugin.Metadata.Name}");
                 IReadOnlyList<Result> results =
                     await PluginManager.QueryForPluginAsync(plugin, query, token);
 

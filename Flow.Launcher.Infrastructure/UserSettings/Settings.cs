@@ -288,9 +288,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
         public int SearchDelay { get; set; } = 120;
 
-        // TODO: Remove debug codes.
-        public const int SearchDelayInterval = 30 * 60;
-
         [JsonIgnore]
         public List<int> SearchDelayRange { get; } = new()
         {
