@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace Flow.Launcher.Helper;
 
@@ -20,17 +20,15 @@ public static class KeyboardLayoutHelper
     [DllImport("user32.dll")]
     private static extern int GetKeyboardLayoutList(int nBuff, [Out] IntPtr[] lpList);
 
-    [DllImport("kernel32.dll")]
-    private static extern int GetLocaleInfoA(uint Locale, uint LCType, StringBuilder lpLCData, int cchData);
-
     [DllImport("user32.dll")]
     private static extern IntPtr GetForegroundWindow();
 
-    // Used to get the language name of the keyboard layout
-    private const uint LOCALE_SLANGUAGE = 0x00000002;
-
-    // The string to search for in the language name of a keyboard layout
-    private const string LAYOUT_ENGLISH_SEARCH = "english";
+    // https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-lcid/70feba9f-294e-491e-b6eb-56532684c37f
+    private static readonly uint[] EnglishLanguageIds =
+    {
+        0x0009, 0x0409, 0x0809, 0x0C09, 0x1000, 0x1009, 0x1409, 0x1809, 0x1C09, 0x2009, 0x2409, 0x2809, 0x2C09,
+        0x3009, 0x3409, 0x3C09, 0x4009, 0x4409, 0x4809, 0x4C09,
+    };
 
     private static IntPtr FindEnglishKeyboardLayout()
     {
@@ -48,13 +46,8 @@ public static class KeyboardLayoutHelper
             // The lower word contains the language identifier
             var langId = (uint)layout.ToInt32() & 0xFFFF;
 
-            // Get language name for the layout
-            var sb = new StringBuilder(256);
-            GetLocaleInfoA(langId, LOCALE_SLANGUAGE, sb, sb.Capacity);
-            var langName = sb.ToString().ToLowerInvariant();
-
             // Check if it's an English layout
-            if (langName.Contains(LAYOUT_ENGLISH_SEARCH))
+            if (EnglishLanguageIds.Contains(langId))
             {
                 return layout;
             }
