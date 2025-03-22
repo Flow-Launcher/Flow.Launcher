@@ -98,6 +98,9 @@ namespace Flow.Launcher
             {
                 _settings.FirstLaunch = false;
                 App.API.SaveAppAllSettings();
+                /* Set Backdrop Type to Acrylic for Windows 11 when First Launch. Default is None. */
+                if (OperatingSystem.IsWindowsVersionAtLeast(10, 0, 22000))
+                    _settings.BackdropType = BackdropTypes.Acrylic;
                 var WelcomeWindow = new WelcomeWindow();
                 WelcomeWindow.Show();
             }
