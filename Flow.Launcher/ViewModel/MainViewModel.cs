@@ -698,16 +698,6 @@ namespace Flow.Launcher.ViewModel
                     Results.Visibility = Visibility.Collapsed;
                     _queryTextBeforeLeaveResults = QueryText;
 
-                    if(HistorySelected())
-                    {
-                        // If we are returning from query results and we have not set select item yet,
-                        // we need to clear the preview selected item
-                        if (isReturningFromQueryResults && _selectedItemFromQueryResults.HasValue && _selectedItemFromQueryResults.Value)
-                        {
-                            PreviewSelectedItem = null;
-                        }
-                    }
-
                     // Because of Fody's optimization
                     // setter won't be called when property value is not changed.
                     // so we need manually call Query()
@@ -719,6 +709,16 @@ namespace Flow.Launcher.ViewModel
                     else
                     {
                         QueryText = string.Empty;
+                    }
+
+                    if (HistorySelected())
+                    {
+                        // If we are returning from query results and we have not set select item yet,
+                        // we need to clear the preview selected item
+                        if (isReturningFromQueryResults && _selectedItemFromQueryResults.HasValue && _selectedItemFromQueryResults.Value)
+                        {
+                            PreviewSelectedItem = null;
+                        }
                     }
                 }
 
