@@ -330,6 +330,13 @@ namespace Flow.Launcher.Infrastructure
             0x3009, 0x3409, 0x3C09, 0x4009, 0x4409, 0x4809, 0x4C09,
         };
 
+        private static readonly uint[] ImeLanguageIds =
+        {
+            0x0004, 0x7804, 0x0804, 0x1004, 0x7C04, 0x0C04, 0x1404, 0x0404, 0x0011, 0x0411, 0x0012, 0x0412,
+        };
+
+        private const uint KeyboardLayoutLoWord = 0xFFFF;
+
         // Store the previous keyboard layout
         private static HKL _previousLayout;
 
@@ -350,7 +357,7 @@ namespace Flow.Launcher.Infrastructure
             foreach (var hkl in handles)
             {
                 // The lower word contains the language identifier
-                var langId = (uint)hkl.Value & 0xFFFF;
+                var langId = (uint)hkl.Value & KeyboardLayoutLoWord;
 
                 // Check if it's an English layout
                 if (EnglishLanguageIds.Contains(langId))
@@ -374,10 +381,18 @@ namespace Flow.Launcher.Infrastructure
             var threadId = PInvoke.GetWindowThreadProcessId(PInvoke.GetForegroundWindow());
             if (threadId == 0) throw new Win32Exception(Marshal.GetLastWin32Error());
 
+            // If the current layout has an IME mode, disable it without switching to another layout
+            var currentLayout = PInvoke.GetKeyboardLayout(threadId);
+            var currentLayoutCode = (uint)currentLayout.Value & KeyboardLayoutLoWord;
+            if (ImeLanguageIds.Contains(currentLayoutCode))
+            {
+                return;
+            }
+
             // Backup current keyboard layout
             if (backupPrevious)
             {
-                _previousLayout = PInvoke.GetKeyboardLayout(threadId);
+                _previousLayout = currentLayout;
             }
 
             // Switch to English layout
