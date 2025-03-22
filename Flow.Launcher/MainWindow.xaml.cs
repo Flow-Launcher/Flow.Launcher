@@ -42,7 +42,7 @@ namespace Flow.Launcher
         private readonly ContextMenu contextMenu = new();
         private readonly MainViewModel _viewModel;
 
-        // Window Event : Key Event
+        // Window Event: Key Event
         private bool isArrowKeyPressed = false;
 
         // Window Sound Effects
@@ -233,7 +233,6 @@ namespace Flow.Launcher
 
         private void OnClosing(object sender, CancelEventArgs e)
         {
-            _viewModel.Save();
             _notifyIcon.Visible = false;
             Notification.Uninstall();
         }

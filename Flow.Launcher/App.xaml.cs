@@ -25,7 +25,7 @@ using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher
 {
-    public partial class App : IAsyncDisposable, ISingleInstanceApp
+    public partial class App : IDisposable, ISingleInstanceApp
     {
         #region Public Properties
 
@@ -122,10 +122,9 @@ namespace Flow.Launcher
         {
             if (SingleInstance<App>.InitializeAsFirstInstance())
             {
-                var application = new App();
+                using var application = new App();
                 application.InitializeComponent();
                 application.Run();
-                application.DisposeAsync().AsTask().GetAwaiter().GetResult();
             }
         }
 
@@ -240,22 +239,22 @@ namespace Flow.Launcher
 
         private void RegisterExitEvents()
         {
-            AppDomain.CurrentDomain.ProcessExit += async (s, e) =>
+            AppDomain.CurrentDomain.ProcessExit += (s, e) =>
             {
                 Log.Info("|App.RegisterExitEvents|Process Exit");
-                await DisposeAsync();
+                Dispose();
             };
 
-            Current.Exit += async (s, e) =>
+            Current.Exit += (s, e) =>
             {
                 Log.Info("|App.RegisterExitEvents|Application Exit");
-                await DisposeAsync();
+                Dispose();
             };
 
-            Current.SessionEnding += async (s, e) =>
+            Current.SessionEnding += (s, e) =>
             {
                 Log.Info("|App.RegisterExitEvents|Session Ending");
-                await DisposeAsync();
+                Dispose();
             };
         }
 
@@ -279,9 +278,9 @@ namespace Flow.Launcher
 
         #endregion
 
-        #region IAsyncDisposable
+        #region IDisposable
 
-        protected virtual async ValueTask DisposeAsync(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             // Prevent two disposes at the same time.
             lock (_disposingLock)
@@ -299,9 +298,7 @@ namespace Flow.Launcher
                 _disposed = true;
             }
 
-            await Task.Delay(10000);
-
-            await Stopwatch.NormalAsync("|App.Dispose|Dispose cost", async () =>
+            Stopwatch.Normal("|App.Dispose|Dispose cost", async () =>
             {
                 Log.Info("|App.Dispose|Begin Flow Launcher dispose ----------------------------------------------------");
 
@@ -310,8 +307,9 @@ namespace Flow.Launcher
                     API?.SaveAppAllSettings();
                     await PluginManager.DisposePluginsAsync();
 
-                    // Dispose needs to be called on the main Windows thread, since some resources owned by the thread need to be disposed.
-                    await _mainWindow?.Dispatcher.InvokeAsync(_mainWindow.Dispose);
+                    // Dispose needs to be called on the main Windows thread,
+                    // since some resources owned by the thread need to be disposed.
+                    _mainWindow?.Dispatcher.Invoke(_mainWindow.Dispose);
                     _mainVM?.Dispose();
                 }
 
@@ -319,10 +317,9 @@ namespace Flow.Launcher
             });
         }
 
-        public async ValueTask DisposeAsync()
+        public void Dispose()
         {
-            // Do not change this code. Put cleanup code in 'DisposeAsync(bool disposing)' method
-            await DisposeAsync(disposing: true);
+            Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
 
