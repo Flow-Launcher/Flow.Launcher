@@ -162,7 +162,20 @@ namespace Flow.Launcher.ViewModel
                 switch (args.PropertyName)
                 {
                     case nameof(Results.SelectedItem):
-                        SelectedItem = Results.SelectedItem;
+                        _selectedItemFromQueryResults = true;
+                        PreviewSelectedItem = Results.SelectedItem;
+                        UpdatePreview();
+                        break;
+                }
+            };
+
+            History.PropertyChanged += (_, args) =>
+            {
+                switch (args.PropertyName)
+                {
+                    case nameof(History.SelectedItem):
+                        _selectedItemFromQueryResults = false;
+                        PreviewSelectedItem = History.SelectedItem;
                         UpdatePreview();
                         break;
                 }
@@ -646,10 +659,12 @@ namespace Flow.Launcher.ViewModel
 
         private ResultsViewModel SelectedResults
         {
-            get { return _selectedResults; }
+            get => _selectedResults;
             set
             {
+                var isReturningFromQueryResults = SelectedIsFromQueryResults();
                 var isReturningFromContextMenu = ContextMenuSelected();
+                var isReturningFromHistory = HistorySelected();
                 _selectedResults = value;
                 if (SelectedIsFromQueryResults())
                 {
@@ -670,11 +685,29 @@ namespace Flow.Launcher.ViewModel
                     {
                         ChangeQueryText(_queryTextBeforeLeaveResults);
                     }
+
+                    // If we are returning from history and we have not set select item yet,
+                    // we need to clear the preview selected item
+                    if (isReturningFromHistory && _selectedItemFromQueryResults.HasValue && (!_selectedItemFromQueryResults.Value))
+                    {
+                        PreviewSelectedItem = null;
+                    }
                 }
                 else
                 {
                     Results.Visibility = Visibility.Collapsed;
+                    History.Visibility = Visibility.Collapsed;
                     _queryTextBeforeLeaveResults = QueryText;
+
+                    if(HistorySelected())
+                    {
+                        // If we are returning from query results and we have not set select item yet,
+                        // we need to clear the preview selected item
+                        if (isReturningFromQueryResults && _selectedItemFromQueryResults.HasValue && _selectedItemFromQueryResults.Value)
+                        {
+                            PreviewSelectedItem = null;
+                        }
+                    }
 
                     // Because of Fody's optimization
                     // setter won't be called when property value is not changed.
@@ -787,9 +820,11 @@ namespace Flow.Launcher.ViewModel
 
         #region Preview
 
+        private bool? _selectedItemFromQueryResults;
+
         private ResultViewModel _selectedItem;
 
-        public ResultViewModel SelectedItem
+        public ResultViewModel PreviewSelectedItem
         {
             get => _selectedItem;
             set
@@ -897,7 +932,7 @@ namespace Flow.Launcher.ViewModel
         private void ShowInternalPreview()
         {
             ResultAreaColumn = ResultAreaColumnPreviewShown;
-            SelectedItem?.LoadPreviewImage();
+            PreviewSelectedItem?.LoadPreviewImage();
         }
 
         private void HideInternalPreview()
@@ -952,14 +987,14 @@ namespace Flow.Launcher.ViewModel
 
                 case false
                     when InternalPreviewVisible:
-                    SelectedItem?.LoadPreviewImage();
+                    PreviewSelectedItem?.LoadPreviewImage();
                     break;
             }
         }
 
         private bool CanExternalPreviewSelectedResult(out string path)
         {
-            path = SelectedItem?.Result?.Preview.FilePath;
+            path = PreviewSelectedItem == Results.SelectedItem ? Results.SelectedItem?.Result?.Preview.FilePath : string.Empty;
             return !string.IsNullOrEmpty(path);
         }
 

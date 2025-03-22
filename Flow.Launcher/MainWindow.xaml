@@ -441,7 +441,7 @@
                         <Border
                             MinHeight="380"
                             d:DataContext="{d:DesignInstance vm:ResultViewModel}"
-                            DataContext="{Binding SelectedItem, Mode=OneWay}"
+                            DataContext="{Binding PreviewSelectedItem, Mode=OneWay}"
                             Visibility="{Binding ShowDefaultPreview}">
                             <Grid
                                 Margin="0 0 10 5"
@@ -518,7 +518,7 @@
                             MaxHeight="{Binding ElementName=ResultListBox, Path=ActualHeight}"
                             Padding="0 0 10 10"
                             d:DataContext="{d:DesignInstance vm:ResultViewModel}"
-                            DataContext="{Binding SelectedItem, Mode=OneWay}"
+                            DataContext="{Binding PreviewSelectedItem, Mode=OneWay}"
                             Visibility="{Binding ShowCustomizedPreview}">
                             <ContentControl Content="{Binding Result.PreviewPanel.Value}" />
                         </Border>
