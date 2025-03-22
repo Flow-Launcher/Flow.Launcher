@@ -989,6 +989,22 @@ namespace Flow.Launcher
             e.Handled = true;
         }
 
+        private void QueryTextBox_OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            if (_viewModel.StartWithEnglishMode)
+            {
+                Win32Helper.SwitchToEnglishKeyboardLayout(true);
+            }
+        }
+
+        private void QueryTextBox_OnPreviewLostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            if (_viewModel.StartWithEnglishMode)
+            {
+                Win32Helper.RestorePreviousKeyboardLayout();
+            }
+        }
+
         #endregion
     }
 }

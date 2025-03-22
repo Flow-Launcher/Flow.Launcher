@@ -242,6 +242,8 @@
                             InputMethod.PreferredImeState="{Binding StartWithEnglishMode, Converter={StaticResource BoolToIMEStateConverter}}"
                             PreviewDragOver="QueryTextBox_OnPreviewDragOver"
                             PreviewKeyUp="QueryTextBox_KeyUp"
+                            GotKeyboardFocus="QueryTextBox_OnGotKeyboardFocus"
+                            PreviewLostKeyboardFocus="QueryTextBox_OnPreviewLostKeyboardFocus"
                             Style="{DynamicResource QueryBoxStyle}"
                             Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             Visibility="Visible"

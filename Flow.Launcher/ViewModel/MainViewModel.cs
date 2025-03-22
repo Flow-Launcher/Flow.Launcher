@@ -1373,11 +1373,6 @@ namespace Flow.Launcher.ViewModel
                 MainWindowOpacity = 1;
                 MainWindowVisibilityStatus = true;
                 VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
-
-                if (StartWithEnglishMode)
-                {
-                    Win32Helper.SwitchToEnglishKeyboardLayout(true);
-                }
             });
         }
 
@@ -1445,11 +1440,6 @@ namespace Flow.Launcher.ViewModel
 
                 // 📌 Apply DWM Cloak (Completely hide the window)
                 Win32Helper.DWMSetCloakForWindow(mainWindow, true);
-            }
-
-            if (StartWithEnglishMode)
-            {
-                Win32Helper.RestorePreviousKeyboardLayout();
             }
 
             await Task.Delay(50);
