@@ -696,7 +696,6 @@ namespace Flow.Launcher.ViewModel
                 else
                 {
                     Results.Visibility = Visibility.Collapsed;
-                    History.Visibility = Visibility.Collapsed;
                     _queryTextBeforeLeaveResults = QueryText;
 
                     if(HistorySelected())
