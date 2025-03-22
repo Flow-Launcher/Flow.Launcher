@@ -219,15 +219,15 @@ namespace Flow.Launcher
                 }
             };
 
-            // ✅ QueryTextBox.Text 변경 감지 (글자 수 1 이상일 때만 동작하도록 수정)
+            // QueryTextBox.Text change detection (modified to only work when character count is 1 or higher)
             QueryTextBox.TextChanged += (sender, e) => UpdateClockPanelVisibility();
 
-            // ✅ ContextMenu.Visibility 변경 감지
+            // Detecting ContextMenu.Visibility changes
             DependencyPropertyDescriptor
                 .FromProperty(VisibilityProperty, typeof(ContextMenu))
                 .AddValueChanged(ContextMenu, (s, e) => UpdateClockPanelVisibility());
 
-            // ✅ History.Visibility 변경 감지
+            // Detect History.Visibility changes
             DependencyPropertyDescriptor
                 .FromProperty(VisibilityProperty, typeof(StackPanel)) // History는 StackPanel이라고 가정
                 .AddValueChanged(History, (s, e) => UpdateClockPanelVisibility());
@@ -242,6 +242,7 @@ namespace Flow.Launcher
                 e.Cancel = true;
                 await PluginManager.DisposePluginsAsync();
                 Notification.Uninstall();
+                // After plugins are all disposed, we can close the main window
                 _canClose = true;
                 Close();
             }
