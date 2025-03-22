@@ -1385,11 +1385,6 @@ namespace Flow.Launcher.ViewModel
 
         public async void Hide()
         {
-
-            if (StartWithEnglishMode)
-            {
-                Win32Helper.RestorePreviousKeyboardLayout();
-            }
             lastHistoryIndex = 1;
 
             if (ExternalPreviewVisible)
@@ -1450,6 +1445,11 @@ namespace Flow.Launcher.ViewModel
 
                 // 📌 Apply DWM Cloak (Completely hide the window)
                 Win32Helper.DWMSetCloakForWindow(mainWindow, true);
+            }
+
+            if (StartWithEnglishMode)
+            {
+                Win32Helper.RestorePreviousKeyboardLayout();
             }
 
             await Task.Delay(50);
