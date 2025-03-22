@@ -1554,6 +1554,8 @@ namespace Flow.Launcher.ViewModel
                 if (disposing)
                 {
                     _updateSource?.Dispose();
+                    _resultsUpdateChannelWriter?.Complete();
+                    _resultsViewUpdateTask?.Dispose();
                     _disposed = true;
                 }
             }
