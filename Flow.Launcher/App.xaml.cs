@@ -30,7 +30,6 @@ namespace Flow.Launcher
         #region Public Properties
 
         public static IPublicAPI API { get; private set; }
-        public static CancellationTokenSource NativeThreadCTS { get; private set; }
 
         #endregion
 
@@ -121,8 +120,6 @@ namespace Flow.Launcher
         [STAThread]
         public static void Main()
         {
-            NativeThreadCTS = new CancellationTokenSource();
-
             if (SingleInstance<App>.InitializeAsFirstInstance())
             {
                 var application = new App();
@@ -251,7 +248,6 @@ namespace Flow.Launcher
 
             Current.Exit += async (s, e) =>
             {
-                NativeThreadCTS.Cancel();
                 Log.Info("|App.RegisterExitEvents|Application Exit");
                 await DisposeAsync();
             };
