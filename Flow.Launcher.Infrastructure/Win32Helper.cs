@@ -66,7 +66,7 @@ namespace Flow.Launcher.Infrastructure
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="window"></param>
         /// <param name="cornerType">DoNotRound, Round, RoundSmall, Default</param>
@@ -362,7 +362,7 @@ namespace Flow.Launcher.Infrastructure
             return HKL.Null;
         }
 
-        public static unsafe void SetEnglishKeyboardLayout(bool backupPrevious)
+        public static unsafe void SwitchToEnglishKeyboardLayout(bool backupPrevious)
         {
             // Find an installed English layout
             var enHKL = FindEnglishKeyboardLayout();
@@ -384,14 +384,12 @@ namespace Flow.Launcher.Infrastructure
             PInvoke.ActivateKeyboardLayout(enHKL, 0);
         }
 
-        public static void SetPreviousKeyboardLayout()
+        public static void RestorePreviousKeyboardLayout()
         {
-            if (_previousLayout != HKL.Null)
-            {
-                PInvoke.ActivateKeyboardLayout(_previousLayout, 0);
+            if (_previousLayout == HKL.Null) return;
 
-                _previousLayout = HKL.Null;
-            }
+            PInvoke.ActivateKeyboardLayout(_previousLayout, 0);
+            _previousLayout = HKL.Null;
         }
 
         #endregion

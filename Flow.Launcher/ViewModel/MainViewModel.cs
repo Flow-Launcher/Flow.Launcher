@@ -1376,7 +1376,7 @@ namespace Flow.Launcher.ViewModel
 
                 if (StartWithEnglishMode)
                 {
-                    Win32Helper.SetEnglishKeyboardLayout(true);
+                    Win32Helper.SwitchToEnglishKeyboardLayout(true);
                 }
             });
         }
@@ -1385,6 +1385,11 @@ namespace Flow.Launcher.ViewModel
 
         public async void Hide()
         {
+
+            if (StartWithEnglishMode)
+            {
+                Win32Helper.RestorePreviousKeyboardLayout();
+            }
             lastHistoryIndex = 1;
 
             if (ExternalPreviewVisible)
@@ -1445,11 +1450,6 @@ namespace Flow.Launcher.ViewModel
 
                 // 📌 Apply DWM Cloak (Completely hide the window)
                 Win32Helper.DWMSetCloakForWindow(mainWindow, true);
-            }
-
-            if (StartWithEnglishMode)
-            {
-                Win32Helper.SetPreviousKeyboardLayout();
             }
 
             await Task.Delay(50);
