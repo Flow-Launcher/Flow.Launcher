@@ -39,11 +39,13 @@ namespace Flow.Launcher
         private NotifyIcon _notifyIcon;
 
         // Window Context Menu
-        private readonly ContextMenu contextMenu = new();
+        private readonly ContextMenu _contextMenu = new();
         private readonly MainViewModel _viewModel;
 
+        // Window Event: Close Event
+        private bool _canClose = false;
         // Window Event: Key Event
-        private bool isArrowKeyPressed = false;
+        private bool _isArrowKeyPressed = false;
 
         // Window Sound Effects
         private MediaPlayer animationSoundWMP;
@@ -60,7 +62,7 @@ namespace Flow.Launcher
         private bool _isClockPanelAnimating = false;
 
         // IDisposable
-        private bool _disposedValue = false;
+        private bool _disposed = false;
 
         #endregion
 
@@ -231,10 +233,18 @@ namespace Flow.Launcher
                 .AddValueChanged(History, (s, e) => UpdateClockPanelVisibility());
         }
 
-        private void OnClosing(object sender, CancelEventArgs e)
+        private async void OnClosing(object sender, CancelEventArgs e)
         {
-            _notifyIcon.Visible = false;
-            Notification.Uninstall();
+            if (!_canClose)
+            {
+                _notifyIcon.Visible = false;
+                App.API.SaveAppAllSettings();
+                e.Cancel = true;
+                await PluginManager.DisposePluginsAsync();
+                Notification.Uninstall();
+                _canClose = true;
+                Close();
+            }
         }
 
         private void OnClosed(object sender, EventArgs e)
@@ -292,12 +302,12 @@ namespace Flow.Launcher
             switch (e.Key)
             {
                 case Key.Down:
-                    isArrowKeyPressed = true;
+                    _isArrowKeyPressed = true;
                     _viewModel.SelectNextItemCommand.Execute(null);
                     e.Handled = true;
                     break;
                 case Key.Up:
-                    isArrowKeyPressed = true;
+                    _isArrowKeyPressed = true;
                     _viewModel.SelectPrevItemCommand.Execute(null);
                     e.Handled = true;
                     break;
@@ -355,13 +365,13 @@ namespace Flow.Launcher
         {
             if (e.Key == Key.Up || e.Key == Key.Down)
             {
-                isArrowKeyPressed = false;
+                _isArrowKeyPressed = false;
             }
         }
 
         private void OnPreviewMouseMove(object sender, MouseEventArgs e)
         {
-            if (isArrowKeyPressed)
+            if (_isArrowKeyPressed)
             {
                 e.Handled = true; // Ignore Mouse Hover when press Arrowkeys
             }
@@ -531,11 +541,11 @@ namespace Flow.Launcher
             gamemode.ToolTip = App.API.GetTranslation("GameModeToolTip");
             positionreset.ToolTip = App.API.GetTranslation("PositionResetToolTip");
 
-            contextMenu.Items.Add(open);
-            contextMenu.Items.Add(gamemode);
-            contextMenu.Items.Add(positionreset);
-            contextMenu.Items.Add(settings);
-            contextMenu.Items.Add(exit);
+            _contextMenu.Items.Add(open);
+            _contextMenu.Items.Add(gamemode);
+            _contextMenu.Items.Add(positionreset);
+            _contextMenu.Items.Add(settings);
+            _contextMenu.Items.Add(exit);
 
             _notifyIcon.MouseClick += (o, e) =>
             {
@@ -546,14 +556,14 @@ namespace Flow.Launcher
                         break;
                     case MouseButtons.Right:
 
-                        contextMenu.IsOpen = true;
+                        _contextMenu.IsOpen = true;
                         // Get context menu handle and bring it to the foreground
-                        if (PresentationSource.FromVisual(contextMenu) is HwndSource hwndSource)
+                        if (PresentationSource.FromVisual(_contextMenu) is HwndSource hwndSource)
                         {
                             Win32Helper.SetForegroundWindow(hwndSource.Handle);
                         }
 
-                        contextMenu.Focus();
+                        _contextMenu.Focus();
                         break;
                 }
             };
@@ -561,7 +571,7 @@ namespace Flow.Launcher
 
         private void UpdateNotifyIconText()
         {
-            var menu = contextMenu;
+            var menu = _contextMenu;
             ((MenuItem)menu.Items[0]).Header = App.API.GetTranslation("iconTrayOpen") +
                                                " (" + _settings.Hotkey + ")";
             ((MenuItem)menu.Items[1]).Header = App.API.GetTranslation("GameMode");
@@ -757,7 +767,7 @@ namespace Flow.Launcher
             if (_animating)
                 return;
 
-            isArrowKeyPressed = true;
+            _isArrowKeyPressed = true;
             _animating = true;
             UpdatePosition(false);
 
@@ -835,7 +845,7 @@ namespace Flow.Launcher
 
             clocksb.Completed += (_, _) => _animating = false;
             _settings.WindowLeft = Left;
-            isArrowKeyPressed = false;
+            _isArrowKeyPressed = false;
 
             if (QueryTextBox.Text.Length == 0)
             {
@@ -1009,14 +1019,15 @@ namespace Flow.Launcher
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!_disposedValue)
+            if (!_disposed)
             {
                 if (disposing)
                 {
                     _hwndSource?.Dispose();
+                    _notifyIcon?.Dispose();
                 }
 
-                _disposedValue = true;
+                _disposed = true;
             }
         }
 

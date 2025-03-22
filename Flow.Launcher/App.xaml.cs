@@ -298,15 +298,12 @@ namespace Flow.Launcher
                 _disposed = true;
             }
 
-            Stopwatch.Normal("|App.Dispose|Dispose cost", async () =>
+            Stopwatch.Normal("|App.Dispose|Dispose cost", () =>
             {
                 Log.Info("|App.Dispose|Begin Flow Launcher dispose ----------------------------------------------------");
 
                 if (disposing)
                 {
-                    API?.SaveAppAllSettings();
-                    await PluginManager.DisposePluginsAsync();
-
                     // Dispose needs to be called on the main Windows thread,
                     // since some resources owned by the thread need to be disposed.
                     _mainWindow?.Dispatcher.Invoke(_mainWindow.Dispose);
@@ -319,6 +316,7 @@ namespace Flow.Launcher
 
         public void Dispose()
         {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
