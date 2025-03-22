@@ -989,7 +989,7 @@ namespace Flow.Launcher.ViewModel
             var query = QueryText.ToLower().Trim();
             ContextMenu.Clear();
 
-            var selected = SelectedItem?.Result;
+            var selected = Results.SelectedItem?.Result;
 
             if (selected != null) // SelectedItem returns null if selection is empty.
             {
