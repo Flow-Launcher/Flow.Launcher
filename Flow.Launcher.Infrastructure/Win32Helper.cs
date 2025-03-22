@@ -371,9 +371,8 @@ namespace Flow.Launcher.Infrastructure
             if (enHKL == HKL.Null) return;
 
             // Get the current window thread ID
-            uint threadId = 0;
-            var result = PInvoke.GetWindowThreadProcessId(PInvoke.GetForegroundWindow(), &threadId);
-            if (result == 0 || threadId == 0) throw new Win32Exception(Marshal.GetLastWin32Error());
+            var threadId = PInvoke.GetWindowThreadProcessId(PInvoke.GetForegroundWindow());
+            if (threadId == 0) throw new Win32Exception(Marshal.GetLastWin32Error());
 
             // Backup current keyboard layout
             if (backupPrevious)
