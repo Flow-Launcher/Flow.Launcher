@@ -162,6 +162,7 @@ namespace Flow.Launcher.ViewModel
                 switch (args.PropertyName)
                 {
                     case nameof(Results.SelectedItem):
+                        SelectedItem = Results.SelectedItem;
                         UpdatePreview();
                         break;
                 }
@@ -786,6 +787,18 @@ namespace Flow.Launcher.ViewModel
 
         #region Preview
 
+        private ResultViewModel _selectedItem;
+
+        public ResultViewModel SelectedItem
+        {
+            get => _selectedItem;
+            set
+            {
+                _selectedItem = value;
+                OnPropertyChanged();
+            }
+        }
+
         public bool InternalPreviewVisible
         {
             get
@@ -884,7 +897,7 @@ namespace Flow.Launcher.ViewModel
         private void ShowInternalPreview()
         {
             ResultAreaColumn = ResultAreaColumnPreviewShown;
-            Results.SelectedItem?.LoadPreviewImage();
+            SelectedItem?.LoadPreviewImage();
         }
 
         private void HideInternalPreview()
@@ -939,14 +952,14 @@ namespace Flow.Launcher.ViewModel
 
                 case false
                     when InternalPreviewVisible:
-                    Results.SelectedItem?.LoadPreviewImage();
+                    SelectedItem?.LoadPreviewImage();
                     break;
             }
         }
 
         private bool CanExternalPreviewSelectedResult(out string path)
         {
-            path = Results.SelectedItem?.Result?.Preview.FilePath;
+            path = SelectedItem?.Result?.Preview.FilePath;
             return !string.IsNullOrEmpty(path);
         }
 
@@ -976,7 +989,7 @@ namespace Flow.Launcher.ViewModel
             var query = QueryText.ToLower().Trim();
             ContextMenu.Clear();
 
-            var selected = Results.SelectedItem?.Result;
+            var selected = SelectedItem?.Result;
 
             if (selected != null) // SelectedItem returns null if selection is empty.
             {

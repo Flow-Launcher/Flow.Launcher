@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
@@ -6,16 +9,13 @@ using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using System.IO;
-using System.Drawing.Text;
-using System.Collections.Generic;
 
 namespace Flow.Launcher.ViewModel
 {
     public class ResultViewModel : BaseModel
     {
-        private static PrivateFontCollection fontCollection = new();
-        private static Dictionary<string, string> fonts = new();
+        private static readonly PrivateFontCollection fontCollection = new();
+        private static readonly Dictionary<string, string> fonts = new();
 
         public ResultViewModel(Result result, Settings settings)
         {
@@ -39,11 +39,11 @@ namespace Flow.Launcher.ViewModel
                         fontFamilyPath = Path.Combine(Result.PluginDirectory, fontFamilyPath);
                     }
 
-                    if (fonts.ContainsKey(fontFamilyPath))
+                    if (fonts.TryGetValue(fontFamilyPath, out var value))
                     {
                         Glyph = glyph with
                         {
-                            FontFamily = fonts[fontFamilyPath]
+                            FontFamily = value
                         };
                     }
                     else
@@ -171,7 +171,16 @@ namespace Flow.Launcher.ViewModel
 
         public ImageSource PreviewImage
         {
-            get => previewImage;
+            get
+            {
+                if (!PreviewImageLoaded)
+                {
+                    PreviewImageLoaded = true;
+                    _ = LoadPreviewImageAsync();
+                }
+
+                return previewImage;
+            }
             private set => previewImage = value;
         }
 
