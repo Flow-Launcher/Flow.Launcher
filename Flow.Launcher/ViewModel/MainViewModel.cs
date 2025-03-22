@@ -14,7 +14,6 @@ using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
-using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Image;
@@ -1377,7 +1376,7 @@ namespace Flow.Launcher.ViewModel
 
                 if (StartWithEnglishMode)
                 {
-                    KeyboardLayoutHelper.SetEnglishKeyboardLayout();
+                    Win32Helper.SetEnglishKeyboardLayout(true);
                 }
             });
         }
@@ -1450,7 +1449,7 @@ namespace Flow.Launcher.ViewModel
 
             if (StartWithEnglishMode)
             {
-                KeyboardLayoutHelper.SetPreviousKeyboardLayout();
+                Win32Helper.SetPreviousKeyboardLayout();
             }
 
             await Task.Delay(50);

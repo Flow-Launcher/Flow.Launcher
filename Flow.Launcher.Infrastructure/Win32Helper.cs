@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
@@ -7,8 +8,10 @@ using System.Windows.Media;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Dwm;
+using Windows.Win32.UI.Input.KeyboardAndMouse;
 using Windows.Win32.UI.WindowsAndMessaging;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Point = System.Windows.Point;
 
 namespace Flow.Launcher.Infrastructure
 {
@@ -314,6 +317,82 @@ namespace Flow.Launcher.Infrastructure
                 windowHelper.EnsureHandle();
             }
             return new(windowHelper.Handle);
+        }
+
+        #endregion
+
+        #region Keyboard Layout
+
+        // https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-lcid/70feba9f-294e-491e-b6eb-56532684c37f
+        private static readonly uint[] EnglishLanguageIds =
+        {
+            0x0009, 0x0409, 0x0809, 0x0C09, 0x1000, 0x1009, 0x1409, 0x1809, 0x1C09, 0x2009, 0x2409, 0x2809, 0x2C09,
+            0x3009, 0x3409, 0x3C09, 0x4009, 0x4409, 0x4809, 0x4C09,
+        };
+
+        // Store the previous keyboard layout
+        private static HKL _previousLayout;
+
+        private static unsafe HKL FindEnglishKeyboardLayout()
+        {
+            // Get the number of keyboard layouts
+            int count = PInvoke.GetKeyboardLayoutList(0, null);
+            if (count <= 0) return HKL.Null;
+
+            // Get all keyboard layouts
+            var handles = new HKL[count];
+            fixed (HKL* h = handles)
+            {
+                _ = PInvoke.GetKeyboardLayoutList(count, h);
+            }
+
+            // Look for any English keyboard layout
+            foreach (var hkl in handles)
+            {
+                // The lower word contains the language identifier
+                var langId = (uint)hkl.Value & 0xFFFF;
+
+                // Check if it's an English layout
+                if (EnglishLanguageIds.Contains(langId))
+                {
+                    return hkl;
+                }
+            }
+
+            return HKL.Null;
+        }
+
+        public static unsafe void SetEnglishKeyboardLayout(bool backupPrevious)
+        {
+            // Find an installed English layout
+            var enHKL = FindEnglishKeyboardLayout();
+
+            // No installed English layout found
+            if (enHKL == HKL.Null) return;
+
+            // Get the current window thread ID
+            uint threadId = 0;
+            var result = PInvoke.GetWindowThreadProcessId(PInvoke.GetForegroundWindow(), &threadId);
+            if (result == 0 || threadId == 0) throw new Win32Exception(Marshal.GetLastWin32Error());
+
+            // Backup current keyboard layout
+            if (backupPrevious)
+            {
+                _previousLayout = PInvoke.GetKeyboardLayout(threadId);
+            }
+
+            // Switch to English layout
+            PInvoke.ActivateKeyboardLayout(enHKL, 0);
+        }
+
+        public static void SetPreviousKeyboardLayout()
+        {
+            if (_previousLayout != HKL.Null)
+            {
+                PInvoke.ActivateKeyboardLayout(_previousLayout, 0);
+
+                _previousLayout = HKL.Null;
+            }
         }
 
         #endregion

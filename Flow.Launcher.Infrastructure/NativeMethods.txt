@@ -47,3 +47,8 @@ MONITORINFOEXW
 
 WM_ENTERSIZEMOVE
 WM_EXITSIZEMOVE
+
+GetKeyboardLayout
+GetWindowThreadProcessId
+ActivateKeyboardLayout
+GetKeyboardLayoutList
