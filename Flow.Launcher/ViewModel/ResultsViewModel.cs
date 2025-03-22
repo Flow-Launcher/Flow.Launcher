@@ -28,6 +28,7 @@ namespace Flow.Launcher.ViewModel
             Results = new ResultCollection();
             BindingOperations.EnableCollectionSynchronization(Results, _collectionLock);
         }
+
         public ResultsViewModel(Settings settings) : this()
         {
             _settings = settings;

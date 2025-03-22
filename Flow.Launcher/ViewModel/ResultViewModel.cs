@@ -21,10 +21,8 @@ namespace Flow.Launcher.ViewModel
         {
             Settings = settings;
 
-            if (result == null)
-            {
-                return;
-            }
+            if (result == null) return;
+
             Result = result;
 
             if (Result.Glyph is { FontFamily: not null } glyph)
@@ -61,7 +59,6 @@ namespace Flow.Launcher.ViewModel
                     Glyph = glyph;
                 }
             }
-
         }
 
         public Settings Settings { get; }
