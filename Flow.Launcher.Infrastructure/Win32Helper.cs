@@ -403,7 +403,11 @@ namespace Flow.Launcher.Infrastructure
         {
             if (_previousLayout == HKL.Null) return;
 
-            PInvoke.ActivateKeyboardLayout(_previousLayout, 0);
+            PInvoke.PostMessage(HWND.HWND_BROADCAST,
+                PInvoke.WM_INPUTLANGCHANGEREQUEST,
+                PInvoke.INPUTLANGCHANGE_FORWARD,
+                _previousLayout.Value
+            );
             _previousLayout = HKL.Null;
         }
 
