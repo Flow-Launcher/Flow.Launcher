@@ -350,7 +350,11 @@ namespace Flow.Launcher.Infrastructure
             var handles = new HKL[count];
             fixed (HKL* h = handles)
             {
-                _ = PInvoke.GetKeyboardLayoutList(count, h);
+                var result = PInvoke.GetKeyboardLayoutList(count, h);
+                if (result != 0)
+                {
+                    throw new Win32Exception(Marshal.GetLastWin32Error());
+                }
             }
 
             // Look for any English keyboard layout
@@ -369,6 +373,11 @@ namespace Flow.Launcher.Infrastructure
             return HKL.Null;
         }
 
+        /// <summary>
+        /// Switches the keyboard layout to English if available.
+        /// </summary>
+        /// <param name="backupPrevious">If true, the current keyboard layout will be stored for later restoration.</param>
+        /// <exception cref="Win32Exception">Thrown when there's an error getting the window thread process ID.</exception>
         public static unsafe void SwitchToEnglishKeyboardLayout(bool backupPrevious)
         {
             // Find an installed English layout
@@ -401,11 +410,17 @@ namespace Flow.Launcher.Infrastructure
             PInvoke.ActivateKeyboardLayout(enHKL, 0);
         }
 
+        /// <summary>
+        /// Restores the previously backed-up keyboard layout.
+        /// If it wasn't backed up or has already been restored, this method does nothing.
+        /// </summary>
         public static void RestorePreviousKeyboardLayout()
         {
             if (_previousLayout == HKL.Null) return;
 
             var hwnd = PInvoke.GetForegroundWindow();
+            if (hwnd == HWND.Null) return;
+
             PInvoke.PostMessage(
                 hwnd,
                 PInvoke.WM_INPUTLANGCHANGEREQUEST,
