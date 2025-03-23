@@ -403,7 +403,9 @@ namespace Flow.Launcher.Infrastructure
         {
             if (_previousLayout == HKL.Null) return;
 
-            PInvoke.PostMessage(HWND.HWND_BROADCAST,
+            var hwnd = PInvoke.GetForegroundWindow();
+            PInvoke.PostMessage(
+                hwnd,
                 PInvoke.WM_INPUTLANGCHANGEREQUEST,
                 PInvoke.INPUTLANGCHANGE_FORWARD,
                 _previousLayout.Value
