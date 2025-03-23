@@ -168,7 +168,6 @@ namespace Flow.Launcher.ViewModel
             };
 
             RegisterViewUpdate();
-            RegisterResultsUpdatedEvent();
             _ = RegisterClockAndDateUpdateAsync();
         }
 
@@ -213,7 +212,7 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private void RegisterResultsUpdatedEvent()
+        public void RegisterResultsUpdatedEvent()
         {
             foreach (var pair in PluginManager.GetPluginsForInterface<IResultUpdated>())
             {
