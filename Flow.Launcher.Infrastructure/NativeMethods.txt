@@ -52,7 +52,6 @@ GetKeyboardLayout
 GetWindowThreadProcessId
 ActivateKeyboardLayout
 GetKeyboardLayoutList
-
 PostMessage
 WM_INPUTLANGCHANGEREQUEST
 INPUTLANGCHANGE_FORWARD
