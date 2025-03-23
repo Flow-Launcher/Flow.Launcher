@@ -159,26 +159,12 @@ namespace Flow.Launcher.Core.Plugin
             _metadatas = PluginConfig.Parse(Directories);
             Settings = settings;
             Settings.UpdatePluginSettings(_metadatas);
-            // Update Json RPC plugin directory before loading plugins so that we can pass the correct plugin directory
-            UpdateJsonRPCPluginDirectory(_metadatas);
             AllPlugins = PluginsLoader.Plugins(_metadatas, Settings);
-            // Update dotnet plugin directory after loading plugins because we need to get assembly name first
-            UpdateNotNetPluginDirectory(_metadatas);
+            // Since dotnet plugins need to get assembly name first, we should update plugin directory after loading plugins
+            UpdatePluginDirectory(_metadatas);
         }
 
-        private static void UpdateJsonRPCPluginDirectory(List<PluginMetadata> metadatas)
-        {
-            foreach (var metadata in metadatas)
-            {
-                if (!AllowedLanguage.IsDotNet(metadata.Language))
-                {
-                    metadata.PluginSettingsDirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, metadata.Name);
-                    metadata.PluginCacheDirectoryPath = Path.Combine(DataLocation.PluginCacheDirectory, metadata.Name);
-                }
-            }
-        }
-
-        private static void UpdateNotNetPluginDirectory(List<PluginMetadata> metadatas)
+        private static void UpdatePluginDirectory(List<PluginMetadata> metadatas)
         {
             foreach (var metadata in metadatas)
             {
@@ -186,6 +172,11 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     metadata.PluginSettingsDirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, metadata.AssemblyName);
                     metadata.PluginCacheDirectoryPath = Path.Combine(DataLocation.PluginCacheDirectory, metadata.AssemblyName);
+                }
+                else
+                {
+                    metadata.PluginSettingsDirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, metadata.Name);
+                    metadata.PluginCacheDirectoryPath = Path.Combine(DataLocation.PluginCacheDirectory, metadata.Name);
                 }
             }
         }
