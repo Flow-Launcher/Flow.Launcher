@@ -381,7 +381,9 @@ namespace Flow.Launcher.Infrastructure
             var threadId = PInvoke.GetWindowThreadProcessId(PInvoke.GetForegroundWindow());
             if (threadId == 0) throw new Win32Exception(Marshal.GetLastWin32Error());
 
-            // If the current layout has an IME mode, disable it without switching to another layout
+            // If the current layout has an IME mode, disable it without switching to another layout.
+            // This is needed because for languages with IME mode, Flow Launcher just temporarily disables
+            // the IME mode instead of switching to another layout.
             var currentLayout = PInvoke.GetKeyboardLayout(threadId);
             var currentLayoutCode = (uint)currentLayout.Value & KeyboardLayoutLoWord;
             if (ImeLanguageIds.Contains(currentLayoutCode))
