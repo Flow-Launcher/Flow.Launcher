@@ -351,7 +351,7 @@ namespace Flow.Launcher.Infrastructure
             fixed (HKL* h = handles)
             {
                 var result = PInvoke.GetKeyboardLayoutList(count, h);
-                if (result != 0)
+                if (result == 0)
                 {
                     throw new Win32Exception(Marshal.GetLastWin32Error());
                 }
