@@ -14,8 +14,8 @@ namespace Flow.Launcher.ViewModel
 {
     public class ResultViewModel : BaseModel
     {
-        private static readonly PrivateFontCollection fontCollection = new();
-        private static readonly Dictionary<string, string> fonts = new();
+        private static readonly PrivateFontCollection FontCollection = new();
+        private static readonly Dictionary<string, string> Fonts = new();
 
         public ResultViewModel(Result result, Settings settings)
         {
@@ -37,7 +37,7 @@ namespace Flow.Launcher.ViewModel
                         fontFamilyPath = Path.Combine(Result.PluginDirectory, fontFamilyPath);
                     }
 
-                    if (fonts.TryGetValue(fontFamilyPath, out var value))
+                    if (Fonts.TryGetValue(fontFamilyPath, out var value))
                     {
                         Glyph = glyph with
                         {
@@ -46,11 +46,11 @@ namespace Flow.Launcher.ViewModel
                     }
                     else
                     {
-                        fontCollection.AddFontFile(fontFamilyPath);
-                        fonts[fontFamilyPath] = $"{Path.GetDirectoryName(fontFamilyPath)}/#{fontCollection.Families[^1].Name}";
+                        FontCollection.AddFontFile(fontFamilyPath);
+                        Fonts[fontFamilyPath] = $"{Path.GetDirectoryName(fontFamilyPath)}/#{FontCollection.Families[^1].Name}";
                         Glyph = glyph with
                         {
-                            FontFamily = fonts[fontFamilyPath]
+                            FontFamily = Fonts[fontFamilyPath]
                         };
                     }
                 }
@@ -92,14 +92,10 @@ namespace Flow.Launcher.ViewModel
             get
             {
                 if (PreviewImageAvailable)
-                {
                     return Visibility.Visible;
-                }
-                else
-                {
-                    // Fall back to icon
-                    return ShowIcon;
-                }
+                
+                // Fall back to icon
+                return ShowIcon;
             }
         }
 
@@ -108,9 +104,8 @@ namespace Flow.Launcher.ViewModel
             get
             {
                 if (Result.RoundedIcon)
-                {
                     return IconXY / 2;
-                }
+                
                 return IconXY;
             }
 
@@ -145,40 +140,40 @@ namespace Flow.Launcher.ViewModel
             ? Result.SubTitle
             : Result.SubTitleToolTip;
 
-        private volatile bool ImageLoaded;
-        private volatile bool PreviewImageLoaded;
+        private volatile bool _imageLoaded;
+        private volatile bool _previewImageLoaded;
 
-        private ImageSource image = ImageLoader.LoadingImage;
-        private ImageSource previewImage = ImageLoader.LoadingImage;
+        private ImageSource _image = ImageLoader.LoadingImage;
+        private ImageSource _previewImage = ImageLoader.LoadingImage;
 
         public ImageSource Image
         {
             get
             {
-                if (!ImageLoaded)
+                if (!_imageLoaded)
                 {
-                    ImageLoaded = true;
+                    _imageLoaded = true;
                     _ = LoadImageAsync();
                 }
 
-                return image;
+                return _image;
             }
-            private set => image = value;
+            private set => _image = value;
         }
 
         public ImageSource PreviewImage
         {
             get
             {
-                if (!PreviewImageLoaded)
+                if (!_previewImageLoaded)
                 {
-                    PreviewImageLoaded = true;
+                    _previewImageLoaded = true;
                     _ = LoadPreviewImageAsync();
                 }
 
-                return previewImage;
+                return _previewImage;
             }
-            private set => previewImage = value;
+            private set => _previewImage = value;
         }
 
         /// <summary>
@@ -194,8 +189,7 @@ namespace Flow.Launcher.ViewModel
             {
                 try
                 {
-                    var image = icon();
-                    return image;
+                    return icon();
                 }
                 catch (Exception e)
                 {
@@ -214,7 +208,7 @@ namespace Flow.Launcher.ViewModel
             var iconDelegate = Result.Icon;
             if (ImageLoader.TryGetValue(imagePath, false, out ImageSource img))
             {
-                image = img;
+                _image = img;
             }
             else
             {
@@ -229,7 +223,7 @@ namespace Flow.Launcher.ViewModel
             var iconDelegate = Result.Preview.PreviewDelegate ?? Result.Icon;
             if (ImageLoader.TryGetValue(imagePath, true, out ImageSource img))
             {
-                previewImage = img;
+                _previewImage = img;
             }
             else
             {
@@ -240,13 +234,10 @@ namespace Flow.Launcher.ViewModel
 
         public void LoadPreviewImage()
         {
-            if (ShowDefaultPreview == Visibility.Visible)
+            if (ShowDefaultPreview == Visibility.Visible && !_previewImageLoaded && ShowPreviewImage == Visibility.Visible)
             {
-                if (!PreviewImageLoaded && ShowPreviewImage == Visibility.Visible)
-                {
-                    PreviewImageLoaded = true;
-                    _ = LoadPreviewImageAsync();
-                }
+                _previewImageLoaded = true;
+                _ = LoadPreviewImageAsync();
             }
         }
 
