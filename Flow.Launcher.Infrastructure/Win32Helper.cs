@@ -351,10 +351,7 @@ namespace Flow.Launcher.Infrastructure
             fixed (HKL* h = handles)
             {
                 var result = PInvoke.GetKeyboardLayoutList(count, h);
-                if (result == 0)
-                {
-                    throw new Win32Exception(Marshal.GetLastWin32Error());
-                }
+                if (result == 0) throw new Win32Exception(Marshal.GetLastWin32Error());
             }
 
             // Look for any English keyboard layout
@@ -364,10 +361,7 @@ namespace Flow.Launcher.Infrastructure
                 var langId = (uint)hkl.Value & KeyboardLayoutLoWord;
 
                 // Check if it's an English layout
-                if (EnglishLanguageIds.Contains(langId))
-                {
-                    return hkl;
-                }
+                if (EnglishLanguageIds.Contains(langId)) return hkl;
             }
 
             return HKL.Null;
@@ -399,16 +393,10 @@ namespace Flow.Launcher.Infrastructure
             // the IME mode instead of switching to another layout.
             var currentLayout = PInvoke.GetKeyboardLayout(threadId);
             var currentLayoutCode = (uint)currentLayout.Value & KeyboardLayoutLoWord;
-            if (ImeLanguageIds.Contains(currentLayoutCode))
-            {
-                return;
-            }
+            if (ImeLanguageIds.Contains(currentLayoutCode)) return;
 
             // Backup current keyboard layout
-            if (backupPrevious)
-            {
-                _previousLayout = currentLayout;
-            }
+            if (backupPrevious) _previousLayout = currentLayout;
 
             // Switch to English layout
             PInvoke.ActivateKeyboardLayout(enHKL, 0);
@@ -431,6 +419,7 @@ namespace Flow.Launcher.Infrastructure
                 PInvoke.INPUTLANGCHANGE_FORWARD,
                 _previousLayout.Value
             );
+
             _previousLayout = HKL.Null;
         }
 
