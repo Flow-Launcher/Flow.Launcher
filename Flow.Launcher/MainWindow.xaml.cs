@@ -250,11 +250,21 @@ namespace Flow.Launcher
 
         private async void OnDeactivated(object sender, EventArgs e)
         {
+            // When window is deactivated, FL cannot set keyboard correctly
+            // This is a workaround to restore the keyboard layout
+            if (_settings.HideWhenDeactivated && _viewModel.StartWithEnglishMode)
+            {
+                Activate();
+                QueryTextBox.Focus();
+                Win32Helper.RestorePreviousKeyboardLayout();
+            }
+
             _settings.WindowLeft = Left;
             _settings.WindowTop = Top;
             ClockPanel.Opacity = 0;
             SearchIcon.Opacity = 0;
-            //This condition stops extra hide call when animator is on,
+
+            // This condition stops extra hide call when animator is on,
             // which causes the toggling to occasional hide instead of show.
             if (_viewModel.MainWindowVisibilityStatus)
             {
@@ -262,8 +272,9 @@ namespace Flow.Launcher
                 // This also stops the mainwindow from flickering occasionally after Settings window is opened
                 // and always after Settings window is closed.
                 if (_settings.UseAnimation)
- 
+                {
                     await Task.Delay(100);
+                }
 
                 if (_settings.HideWhenDeactivated && !_viewModel.ExternalPreviewVisible)
                 {
