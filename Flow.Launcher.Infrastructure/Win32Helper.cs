@@ -386,8 +386,12 @@ namespace Flow.Launcher.Infrastructure
             // No installed English layout found
             if (enHKL == HKL.Null) return;
 
-            // Get the current window thread ID
-            var threadId = PInvoke.GetWindowThreadProcessId(PInvoke.GetForegroundWindow());
+            // Get the current foreground window
+            var hwnd = PInvoke.GetForegroundWindow();
+            if (hwnd == HWND.Null) return;
+
+            // Get the current foreground window thread ID
+            var threadId = PInvoke.GetWindowThreadProcessId(hwnd);
             if (threadId == 0) throw new Win32Exception(Marshal.GetLastWin32Error());
 
             // If the current layout has an IME mode, disable it without switching to another layout.
