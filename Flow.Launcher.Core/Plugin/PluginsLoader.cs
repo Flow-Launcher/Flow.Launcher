@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -139,15 +138,11 @@ namespace Flow.Launcher.Core.Plugin
                 .Where(o => o.Language.Equals(AllowedLanguage.Executable, StringComparison.OrdinalIgnoreCase))
                 .Select(metadata =>
                 {
-                    var plugin = new PluginPair
+                    return new PluginPair
                     {
                         Plugin = new ExecutablePlugin(metadata.ExecuteFilePath),
                         Metadata = metadata
                     };
-
-                    plugin.Metadata.AssemblyName = string.Empty;
-
-                    return plugin;
                 });
         }
 
@@ -157,15 +152,11 @@ namespace Flow.Launcher.Core.Plugin
                 .Where(o => o.Language.Equals(AllowedLanguage.ExecutableV2, StringComparison.OrdinalIgnoreCase))
                 .Select(metadata =>
                 {
-                    var plugin = new PluginPair
+                    return new PluginPair
                     {
                         Plugin = new ExecutablePlugin(metadata.ExecuteFilePath),
                         Metadata = metadata
                     };
-
-                    plugin.Metadata.AssemblyName = string.Empty;
-
-                    return plugin;
                 });
         }
     }
