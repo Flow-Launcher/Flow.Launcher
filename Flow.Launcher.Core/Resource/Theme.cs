@@ -6,6 +6,7 @@ using System.Xml;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
@@ -16,8 +17,6 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Microsoft.Win32;
-using TextBox = System.Windows.Controls.TextBox;
-using System.Diagnostics;
 
 namespace Flow.Launcher.Core.Resource
 {
@@ -59,8 +58,7 @@ namespace Flow.Launcher.Core.Resource
             var dicts = Application.Current.Resources.MergedDictionaries;
             _oldResource = dicts.FirstOrDefault(d =>
             {
-                if (d.Source == null)
-                    return false;
+                if (d.Source == null) return false;
 
                 var p = d.Source.AbsolutePath;
                 return p.Contains(Folder) && Path.GetExtension(p) == Extension;
@@ -103,19 +101,19 @@ namespace Flow.Launcher.Core.Resource
 
         private void UpdateResourceDictionary(ResourceDictionary dictionaryToUpdate)
         {
-            // Add the new theme resource first
+            // Add new resources
             if (!Application.Current.Resources.MergedDictionaries.Contains(dictionaryToUpdate))
             {
                 Application.Current.Resources.MergedDictionaries.Add(dictionaryToUpdate);
             }
-    
-            // Then remove the old theme resource
-            if (_oldResource != null && 
-                _oldResource != dictionaryToUpdate && 
+
+            // Remove old resources
+            if (_oldResource != null && _oldResource != dictionaryToUpdate &&
                 Application.Current.Resources.MergedDictionaries.Contains(_oldResource))
             {
                 Application.Current.Resources.MergedDictionaries.Remove(_oldResource);
             }
+
             _oldResource = dictionaryToUpdate;
         }
 
@@ -190,7 +188,7 @@ namespace Flow.Launcher.Core.Resource
         /// <summary>
         /// Applies font properties to a Style.
         /// </summary>
-        private void SetFontProperties(Style style, FontFamily fontFamily, FontStyle fontStyle, FontWeight fontWeight, FontStretch fontStretch, bool isTextBox)
+        private static void SetFontProperties(Style style, FontFamily fontFamily, FontStyle fontStyle, FontWeight fontWeight, FontStretch fontStretch, bool isTextBox)
         {
             // Remove existing font-related setters  
             if (isTextBox)
@@ -199,10 +197,10 @@ namespace Flow.Launcher.Core.Resource
                 var settersToRemove = style.Setters
                     .OfType<Setter>()
                     .Where(setter => 
-                        setter.Property == TextBox.FontFamilyProperty ||
-                        setter.Property == TextBox.FontStyleProperty ||
-                        setter.Property == TextBox.FontWeightProperty ||
-                        setter.Property == TextBox.FontStretchProperty)
+                        setter.Property == Control.FontFamilyProperty ||
+                        setter.Property == Control.FontStyleProperty ||
+                        setter.Property == Control.FontWeightProperty ||
+                        setter.Property == Control.FontStretchProperty)
                     .ToList();
 
                 // Remove each found setter one by one  
@@ -212,17 +210,17 @@ namespace Flow.Launcher.Core.Resource
                 }
 
                 // Add New font setter
-                style.Setters.Add(new Setter(TextBox.FontFamilyProperty, fontFamily));
-                style.Setters.Add(new Setter(TextBox.FontStyleProperty, fontStyle));
-                style.Setters.Add(new Setter(TextBox.FontWeightProperty, fontWeight));
-                style.Setters.Add(new Setter(TextBox.FontStretchProperty, fontStretch));
+                style.Setters.Add(new Setter(Control.FontFamilyProperty, fontFamily));
+                style.Setters.Add(new Setter(Control.FontStyleProperty, fontStyle));
+                style.Setters.Add(new Setter(Control.FontWeightProperty, fontWeight));
+                style.Setters.Add(new Setter(Control.FontStretchProperty, fontStretch));
 
                 //  Set caret brush (retain existing logic)
                 var caretBrushPropertyValue = style.Setters.OfType<Setter>().Any(x => x.Property.Name == "CaretBrush");
                 var foregroundPropertyValue = style.Setters.OfType<Setter>().Where(x => x.Property.Name == "Foreground")
                     .Select(x => x.Value).FirstOrDefault();
                 if (!caretBrushPropertyValue && foregroundPropertyValue != null)
-                    style.Setters.Add(new Setter(TextBox.CaretBrushProperty, foregroundPropertyValue));
+                    style.Setters.Add(new Setter(TextBoxBase.CaretBrushProperty, foregroundPropertyValue));
             }
             else
             {
@@ -246,6 +244,7 @@ namespace Flow.Launcher.Core.Resource
                 style.Setters.Add(new Setter(TextBlock.FontStretchProperty, fontStretch));
             }
         }
+
         private ResourceDictionary GetThemeResourceDictionary(string theme)
         {
             var uri = GetThemePath(theme);
@@ -269,22 +268,22 @@ namespace Flow.Launcher.Core.Resource
                 var fontWeight = FontHelper.GetFontWeightFromInvariantStringOrNormal(_settings.QueryBoxFontWeight);
                 var fontStretch = FontHelper.GetFontStretchFromInvariantStringOrNormal(_settings.QueryBoxFontStretch);
 
-                queryBoxStyle.Setters.Add(new Setter(TextBox.FontFamilyProperty, fontFamily));
-                queryBoxStyle.Setters.Add(new Setter(TextBox.FontStyleProperty, fontStyle));
-                queryBoxStyle.Setters.Add(new Setter(TextBox.FontWeightProperty, fontWeight));
-                queryBoxStyle.Setters.Add(new Setter(TextBox.FontStretchProperty, fontStretch));
+                queryBoxStyle.Setters.Add(new Setter(Control.FontFamilyProperty, fontFamily));
+                queryBoxStyle.Setters.Add(new Setter(Control.FontStyleProperty, fontStyle));
+                queryBoxStyle.Setters.Add(new Setter(Control.FontWeightProperty, fontWeight));
+                queryBoxStyle.Setters.Add(new Setter(Control.FontStretchProperty, fontStretch));
 
                 var caretBrushPropertyValue = queryBoxStyle.Setters.OfType<Setter>().Any(x => x.Property.Name == "CaretBrush");
                 var foregroundPropertyValue = queryBoxStyle.Setters.OfType<Setter>().Where(x => x.Property.Name == "Foreground")
                     .Select(x => x.Value).FirstOrDefault();
                 if (!caretBrushPropertyValue && foregroundPropertyValue != null) //otherwise BaseQueryBoxStyle will handle styling
-                    queryBoxStyle.Setters.Add(new Setter(TextBox.CaretBrushProperty, foregroundPropertyValue));
+                    queryBoxStyle.Setters.Add(new Setter(TextBoxBase.CaretBrushProperty, foregroundPropertyValue));
 
                 // Query suggestion box's font style is aligned with query box
-                querySuggestionBoxStyle.Setters.Add(new Setter(TextBox.FontFamilyProperty, fontFamily));
-                querySuggestionBoxStyle.Setters.Add(new Setter(TextBox.FontStyleProperty, fontStyle));
-                querySuggestionBoxStyle.Setters.Add(new Setter(TextBox.FontWeightProperty, fontWeight));
-                querySuggestionBoxStyle.Setters.Add(new Setter(TextBox.FontStretchProperty, fontStretch));
+                querySuggestionBoxStyle.Setters.Add(new Setter(Control.FontFamilyProperty, fontFamily));
+                querySuggestionBoxStyle.Setters.Add(new Setter(Control.FontStyleProperty, fontStyle));
+                querySuggestionBoxStyle.Setters.Add(new Setter(Control.FontWeightProperty, fontWeight));
+                querySuggestionBoxStyle.Setters.Add(new Setter(Control.FontStretchProperty, fontStretch));
             }
 
             if (dict["ItemTitleStyle"] is Style resultItemStyle &&
@@ -321,7 +320,7 @@ namespace Flow.Launcher.Core.Resource
             /* Ignore Theme Window Width and use setting */
             var windowStyle = dict["WindowStyle"] as Style;
             var width = _settings.WindowSize;
-            windowStyle.Setters.Add(new Setter(Window.WidthProperty, width));
+            windowStyle.Setters.Add(new Setter(FrameworkElement.WidthProperty, width));
             return dict;
         }
 
@@ -423,7 +422,7 @@ namespace Flow.Launcher.Core.Resource
 
                 BlurEnabled = IsBlurTheme();
 
-                // 블러 및 그림자 효과 적용을 위한 비동기 처리
+                // Apply blur and drop shadow effects
                 _ = RefreshFrameAsync();
         
                 return true;
@@ -623,17 +622,14 @@ namespace Flow.Launcher.Core.Resource
 
         private void SetBlurForWindow(string theme, BackdropTypes backdropType)
         {
-            var dict = GetResourceDictionary(theme);  // GetThemeResourceDictionary 대신 GetResourceDictionary 사용
-            if (dict == null)
-                return;
+            var dict = GetResourceDictionary(theme);
+            if (dict == null) return;
 
             var windowBorderStyle = dict.Contains("WindowBorderStyle") ? dict["WindowBorderStyle"] as Style : null;
-            if (windowBorderStyle == null)
-                return;
+            if (windowBorderStyle == null) return;
 
-            Window mainWindow = Application.Current.MainWindow;
-            if (mainWindow == null)
-                return;
+            var mainWindow = Application.Current.MainWindow;
+            if (mainWindow == null) return;
 
             // Check if the theme supports blur
             bool hasBlur = dict.Contains("ThemeBlurEnabled") && dict["ThemeBlurEnabled"] is bool b && b;
