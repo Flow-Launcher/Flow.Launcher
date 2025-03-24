@@ -75,7 +75,6 @@ namespace Flow.Launcher.Core.Resource
                 Log.Error("Current theme resource not found. Initializing with default theme.");
                 _oldTheme = Constant.DefaultTheme;
             };
-            _oldTheme = Path.GetFileNameWithoutExtension(_oldResource.Source.AbsolutePath);
         }
 
         #endregion
