@@ -144,6 +144,21 @@ namespace Flow.Launcher.Core.Resource
             _settings.Language = isSystem ? Constant.SystemLanguageCode : language.LanguageCode;
         }
 
+        private Language GetLanguageByLanguageCode(string languageCode)
+        {
+            var lowercase = languageCode.ToLower();
+            var language = AvailableLanguages.GetAvailableLanguages().FirstOrDefault(o => o.LanguageCode.ToLower() == lowercase);
+            if (language == null)
+            {
+                Log.Error($"|Internationalization.GetLanguageByLanguageCode|Language code can't be found <{languageCode}>");
+                return AvailableLanguages.English;
+            }
+            else
+            {
+                return language;
+            }
+        }
+
         private async Task ChangeLanguageAsync(Language language)
         {
             // Remove old language files and load language
@@ -160,21 +175,6 @@ namespace Flow.Launcher.Core.Resource
 
             // Raise event for plugins after culture is set
             await Task.Run(UpdatePluginMetadataTranslations);
-        }
-
-        private static Language GetLanguageByLanguageCode(string languageCode)
-        {
-            var lowercase = languageCode.ToLower();
-            var language = AvailableLanguages.GetAvailableLanguages().FirstOrDefault(o => o.LanguageCode.ToLower() == lowercase);
-            if (language == null)
-            {
-                Log.Error($"|Internationalization.GetLanguageByLanguageCode|Language code can't be found <{languageCode}>");
-                return AvailableLanguages.English;
-            }
-            else
-            {
-                return language;
-            }
         }
 
         public bool PromptShouldUsePinyin(string languageCodeToSet)
