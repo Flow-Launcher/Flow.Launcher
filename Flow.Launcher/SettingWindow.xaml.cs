@@ -36,9 +36,9 @@ public partial class SettingWindow
         RefreshMaximizeRestoreButton();
         // Fix (workaround) for the window freezes after lock screen (Win+L) or sleep
         // https://stackoverflow.com/questions/4951058/software-rendering-mode-wpf
-        HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
-        HwndTarget hwndTarget = hwndSource.CompositionTarget;
-        hwndTarget.RenderMode = RenderMode.SoftwareOnly;  // Must use software only render mode here
+        //HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
+        //HwndTarget hwndTarget = hwndSource.CompositionTarget;
+        //hwndTarget.RenderMode = RenderMode.SoftwareOnly;  // Must use software only render mode here
 
         InitializePosition();
     }

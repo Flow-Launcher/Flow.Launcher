@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Media;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,6 +21,7 @@ using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
+using Microsoft.Win32;
 using ModernWpf.Controls;
 using MouseButtons = System.Windows.Forms.MouseButtons;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
@@ -31,6 +33,11 @@ namespace Flow.Launcher
     {
         #region Private Fields
 
+        // Win32 상수 및 구조체 정의
+        private const int WM_WTSSESSION_CHANGE = 0x02B1;
+        private const int WTS_SESSION_LOCK = 0x7;
+        private const int WTS_SESSION_UNLOCK = 0x8;
+        
         // Dependency Injection
         private readonly Settings _settings;
         private readonly Theme _theme;
@@ -74,8 +81,18 @@ namespace Flow.Launcher
 
             InitSoundEffects();
             DataObject.AddPastingHandler(QueryTextBox, QueryTextBox_OnPaste);
+            
+            SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
+            SystemEvents.SessionEnding += SystemEvents_SessionEnding;
         }
-
+        private void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
+        {
+            _viewModel.Show(); 
+        }
+        private void SystemEvents_PowerModeChanged(object sender, PowerModeChangedEventArgs e)
+        {
+            _viewModel.Show();
+        }
         #endregion
 
         #region Window Event
@@ -89,8 +106,10 @@ namespace Flow.Launcher
             win.AddHook(WndProc);
             Win32Helper.HideFromAltTab(this);
             Win32Helper.DisableControlBox(this);
+            // 세션 변경 알림 등록 (Windows 잠금 감지)
+            WTSRegisterSessionNotification(handle, 0);
         }
-
+        
         private async void OnLoaded(object sender, RoutedEventArgs _)
         {
             // Check first launch
@@ -234,6 +253,14 @@ namespace Flow.Launcher
 
         private async void OnClosing(object sender, CancelEventArgs e)
         {
+            // 세션 변경 알림 등록 해제
+            var handle = Win32Helper.GetWindowHandle(this, false);
+            WTSUnRegisterSessionNotification(handle);
+            
+            // 기존 이벤트 구독 해제
+            SystemEvents.PowerModeChanged -= SystemEvents_PowerModeChanged;
+            SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
+            
             _notifyIcon.Visible = false;
             App.API.SaveAppAllSettings();
             e.Cancel = true;
@@ -241,6 +268,13 @@ namespace Flow.Launcher
             Notification.Uninstall();
             Environment.Exit(0);
         }
+        
+        // Win32 API 함수 정의
+        [DllImport("wtsapi32.dll", SetLastError = true)]
+        private static extern bool WTSRegisterSessionNotification(IntPtr hWnd, int dwFlags);
+
+        [DllImport("wtsapi32.dll", SetLastError = true)]
+        private static extern bool WTSUnRegisterSessionNotification(IntPtr hWnd);
 
         private void OnLocationChanged(object sender, EventArgs e)
         {
@@ -434,6 +468,31 @@ namespace Flow.Launcher
                 }
 
                 handled = true;
+            }
+            // Windows 잠금(Win+L) 이벤트 처리
+            else if (msg == WM_WTSSESSION_CHANGE)
+            {
+                int reason = wParam.ToInt32();
+                if (reason == WTS_SESSION_LOCK)
+                {
+                    // Windows 잠금 발생 시 메시지 박스 표시
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        _viewModel.Show();
+                    });
+
+                    handled = true;
+                }
+                else if (reason == WTS_SESSION_UNLOCK)
+                {
+                    // Windows 잠금 해제 시 메시지 박스 표시 (선택적)
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        _viewModel.Show();
+                    });
+
+                    handled = true;
+                }
             }
 
             return IntPtr.Zero;
