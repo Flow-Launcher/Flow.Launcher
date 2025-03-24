@@ -17,6 +17,7 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Microsoft.Win32;
 using TextBox = System.Windows.Controls.TextBox;
+using System.Diagnostics;
 
 namespace Flow.Launcher.Core.Resource
 {
@@ -56,19 +57,24 @@ namespace Flow.Launcher.Core.Resource
             MakeSureThemeDirectoriesExist();
 
             var dicts = Application.Current.Resources.MergedDictionaries;
-            _oldResource = dicts.First(d =>
+            _oldResource = dicts.FirstOrDefault(d =>
             {
                 if (d.Source == null)
                     return false;
 
                 var p = d.Source.AbsolutePath;
-                var dir = Path.GetDirectoryName(p).NonNull();
-                var info = new DirectoryInfo(dir);
-                var f = info.Name;
-                var e = Path.GetExtension(p);
-                var found = f == Folder && e == Extension;
-                return found;
+                return p.Contains(Folder) && Path.GetExtension(p) == Extension;
             });
+
+            if (_oldResource != null)
+            {
+                _oldTheme = Path.GetFileNameWithoutExtension(_oldResource.Source.AbsolutePath);
+            }
+            else
+            {
+                Log.Error("현재 테마 리소스를 찾을 수 없습니다. 기본 테마로 초기화합니다.");
+                _oldTheme = Constant.DefaultTheme;
+            };
             _oldTheme = Path.GetFileNameWithoutExtension(_oldResource.Source.AbsolutePath);
         }
 
@@ -98,11 +104,24 @@ namespace Flow.Launcher.Core.Resource
 
         private void UpdateResourceDictionary(ResourceDictionary dictionaryToUpdate)
         {
-            var dicts = Application.Current.Resources.MergedDictionaries;
-
-            dicts.Remove(_oldResource);
-            dicts.Add(dictionaryToUpdate);
+            // 새 테마 리소스를 먼저 추가하고
+            if (!Application.Current.Resources.MergedDictionaries.Contains(dictionaryToUpdate))
+            {
+                Application.Current.Resources.MergedDictionaries.Add(dictionaryToUpdate);
+            }
+    
+            // 그 다음 이전 테마 리소스 제거
+            if (_oldResource != null && 
+                _oldResource != dictionaryToUpdate && 
+                Application.Current.Resources.MergedDictionaries.Contains(_oldResource))
+            {
+                Application.Current.Resources.MergedDictionaries.Remove(_oldResource);
+            }
+    
             _oldResource = dictionaryToUpdate;
+    
+            // 리소스 변경 후 문제가 없는지 검증
+            Debug.WriteLine($"테마 변경 후 리소스 딕셔너리 수: {Application.Current.Resources.MergedDictionaries.Count}");
         }
 
         private ResourceDictionary GetThemeResourceDictionary(string theme)
