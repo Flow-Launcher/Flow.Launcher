@@ -342,7 +342,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         set
         {
             Settings.QueryBoxFont = value.ToString();
-            _theme.ChangeTheme();
+            _theme.UpdateFonts(); 
         }
     }
 
@@ -364,7 +364,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             Settings.QueryBoxFontStretch = value.Stretch.ToString();
             Settings.QueryBoxFontWeight = value.Weight.ToString();
             Settings.QueryBoxFontStyle = value.Style.ToString();
-            _theme.ChangeTheme();
+            _theme.UpdateFonts(); 
         }
     }
 
@@ -386,7 +386,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         set
         {
             Settings.ResultFont = value.ToString();
-            _theme.ChangeTheme();
+            _theme.UpdateFonts(); 
         }
     }
 
@@ -408,7 +408,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             Settings.ResultFontStretch = value.Stretch.ToString();
             Settings.ResultFontWeight = value.Weight.ToString();
             Settings.ResultFontStyle = value.Style.ToString();
-            _theme.ChangeTheme();
+            _theme.UpdateFonts(); 
         }
     }
 
@@ -432,7 +432,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         set
         {
             Settings.ResultSubFont = value.ToString();
-            _theme.ChangeTheme();
+            _theme.UpdateFonts(); 
         }
     }
 
@@ -453,7 +453,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             Settings.ResultSubFontStretch = value.Stretch.ToString();
             Settings.ResultSubFontWeight = value.Weight.ToString();
             Settings.ResultSubFontStyle = value.Style.ToString();
-            _theme.ChangeTheme();
+            _theme.UpdateFonts(); 
         }
     }
 
