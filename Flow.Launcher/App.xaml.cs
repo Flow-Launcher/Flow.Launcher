@@ -132,13 +132,14 @@ namespace Flow.Launcher
                 // Register ResultsUpdated event after all plugins are loaded
                 Ioc.Default.GetRequiredService<MainViewModel>().RegisterResultsUpdatedEvent();
 
-                // Change language after all plugins are initialized
-                // TODO: Clean InternationalizationManager.Instance and InternationalizationManager.Instance.GetTranslation in future
-                Ioc.Default.GetRequiredService<Internationalization>().ChangeLanguage(_settings.Language);
-
                 Http.Proxy = _settings.Proxy;
 
                 await PluginManager.InitializePluginsAsync();
+
+                // Change language after all plugins are initialized because we need to update plugin title based on their api
+                // TODO: Clean InternationalizationManager.Instance and InternationalizationManager.Instance.GetTranslation in future
+                await Ioc.Default.GetRequiredService<Internationalization>().InitializeLanguageAsync();
+
                 await imageLoadertask;
 
                 var window = new MainWindow();

@@ -67,9 +67,9 @@ namespace Flow.Launcher.Core.Resource
             return DefaultLanguageCode;
         }
 
-        internal void AddPluginLanguageDirectories(IEnumerable<PluginPair> plugins)
+        private void AddPluginLanguageDirectories()
         {
-            foreach (var plugin in plugins)
+            foreach (var plugin in PluginManager.GetPluginsForInterface<IPluginI18n>())
             {
                 var location = Assembly.GetAssembly(plugin.Plugin.GetType()).Location;
                 var dir = Path.GetDirectoryName(location);
@@ -96,6 +96,32 @@ namespace Flow.Launcher.Core.Resource
             _oldResources.Clear();
         }
 
+        /// <summary>
+        /// Initialize language. Will change app language and plugin language based on settings.
+        /// </summary>
+        public async Task InitializeLanguageAsync()
+        {
+            // Get actual language
+            var languageCode = _settings.Language;
+            if (languageCode == Constant.SystemLanguageCode)
+            {
+                languageCode = SystemLanguageCode;
+            }
+
+            // Get language by language code and change language
+            var language = GetLanguageByLanguageCode(languageCode);
+
+            // Add plugin language directories first so that we can load language files from plugins
+            AddPluginLanguageDirectories();
+
+            // Change language
+            await ChangeLanguageAsync(language);
+        }
+
+        /// <summary>
+        /// Change language during runtime. Will change app language and plugin language & save settings.
+        /// </summary>
+        /// <param name="languageCode"></param>
         public void ChangeLanguage(string languageCode)
         {
             languageCode = languageCode.NonNull();
@@ -110,10 +136,33 @@ namespace Flow.Launcher.Core.Resource
 
             // Get language by language code and change language
             var language = GetLanguageByLanguageCode(languageCode);
-            ChangeLanguage(language, isSystem);
+
+            // Change language
+            _ = ChangeLanguageAsync(language);
+
+            // Save settings
+            _settings.Language = isSystem ? Constant.SystemLanguageCode : language.LanguageCode;
         }
 
-        private Language GetLanguageByLanguageCode(string languageCode)
+        private async Task ChangeLanguageAsync(Language language)
+        {
+            // Remove old language files and load language
+            RemoveOldLanguageFiles();
+            if (language != AvailableLanguages.English)
+            {
+                LoadLanguage(language);
+            }
+
+            // Culture of main thread
+            // Use CreateSpecificCulture to preserve possible user-override settings in Windows, if Flow's language culture is the same as Windows's
+            CultureInfo.CurrentCulture = CultureInfo.CreateSpecificCulture(language.LanguageCode);
+            CultureInfo.CurrentUICulture = CultureInfo.CurrentCulture;
+
+            // Raise event for plugins after culture is set
+            await Task.Run(UpdatePluginMetadataTranslations);
+        }
+
+        private static Language GetLanguageByLanguageCode(string languageCode)
         {
             var lowercase = languageCode.ToLower();
             var language = AvailableLanguages.GetAvailableLanguages().FirstOrDefault(o => o.LanguageCode.ToLower() == lowercase);
@@ -126,28 +175,6 @@ namespace Flow.Launcher.Core.Resource
             {
                 return language;
             }
-        }
-
-        private void ChangeLanguage(Language language, bool isSystem)
-        {
-            language = language.NonNull();
-
-            RemoveOldLanguageFiles();
-            if (language != AvailableLanguages.English)
-            {
-                LoadLanguage(language);
-            }
-            // Culture of main thread
-            // Use CreateSpecificCulture to preserve possible user-override settings in Windows, if Flow's language culture is the same as Windows's
-            CultureInfo.CurrentCulture = CultureInfo.CreateSpecificCulture(language.LanguageCode);
-            CultureInfo.CurrentUICulture = CultureInfo.CurrentCulture;
-
-            // Raise event after culture is set
-            _settings.Language = isSystem ? Constant.SystemLanguageCode : language.LanguageCode;
-            _ = Task.Run(() =>
-            {
-                UpdatePluginMetadataTranslations();
-            });
         }
 
         public bool PromptShouldUsePinyin(string languageCodeToSet)
