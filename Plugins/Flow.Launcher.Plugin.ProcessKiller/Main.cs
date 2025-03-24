@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Flow.Launcher.Infrastructure;
 
@@ -63,7 +63,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
         private List<Result> CreateResultsFromQuery(Query query)
         {
             string termToSearch = query.Search;
-            var processlist = processHelper.GetMatchingProcesses(termToSearch);
+            var processlist = processHelper.GetMatchingProcesses(termToSearch, _context);
             
             if (!processlist.Any())
             {
@@ -79,7 +79,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                 results.Add(new Result()
                 {
                     IcoPath = path,
-                    Title = p.ProcessName + " - " + p.Id,
+                    Title = $"{p.ProcessName} - {p.Id}" + (pr.Port != 0 ? $" - [{pr.Port}]" : ""),
                     SubTitle = path,
                     TitleHighlightData = StringMatcher.FuzzySearch(termToSearch, p.ProcessName).MatchData,
                     Score = pr.Score,

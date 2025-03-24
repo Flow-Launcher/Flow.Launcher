@@ -36,14 +36,25 @@ namespace Flow.Launcher.Plugin.ProcessKiller
         /// <summary>
         /// Returns a ProcessResult for evey running non-system process whose name matches the given searchTerm
         /// </summary>
-        public List<ProcessResult> GetMatchingProcesses(string searchTerm)
+        public List<ProcessResult> GetMatchingProcesses(string searchTerm, PluginInitContext context)
         {
             var processlist = new List<ProcessResult>();
+
+            bool canConvert = int.TryParse(searchTerm, out var portNum);
+            bool portResult = false;
+            PortDetail portDetail = new();
+            if (canConvert)
+            {
+                (portResult, portDetail) = PortHelper.GetPortDetails(portNum, context);
+            }
 
             foreach (var p in Process.GetProcesses())
             {
                 if (IsSystemProcess(p)) continue;
-
+                if (portResult && portDetail.Process.Id == p.Id)
+                {
+                    continue;
+                }
                 if (string.IsNullOrWhiteSpace(searchTerm))
                 {
                     // show all non-system processes
@@ -59,6 +70,11 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                 }
             }
 
+            if (portResult)
+            {
+                var p = portDetail.Process;
+                processlist.Add(new ProcessResult(p, StringMatcher.FuzzySearch(searchTerm, p.ProcessName + p.Id).Score, portNum));
+            }
             return processlist;
         }
 
@@ -83,6 +99,26 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             catch (Exception e)
             {
                 Log.Exception($"{nameof(ProcessHelper)}", $"Failed to kill process {p.ProcessName}", e);
+                TryKillRunAs(p);
+            }
+        }
+
+        public void TryKillRunAs(Process p)
+        {
+            try
+            {
+                Process process = new Process();
+                ProcessStartInfo startInfo = new ProcessStartInfo();
+                startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                startInfo.FileName = "powershell.exe";
+                startInfo.Arguments = $"Start cmd.exe -ArgumentList \"/k\",\"taskkill\",\"/f\",\"/pid\", \"{p.Id}\" -Verb Runas";
+                startInfo.UseShellExecute = false;
+                process.StartInfo = startInfo;
+                process.Start();
+            }
+            catch(Exception e)
+            {
+                Log.Exception($"{nameof(ProcessHelper)}", $"Failed to kill process again of run as admin {p.ProcessName}", e);
             }
         }
 
