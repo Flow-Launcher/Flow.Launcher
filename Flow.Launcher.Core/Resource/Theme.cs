@@ -124,13 +124,15 @@ namespace Flow.Launcher.Core.Resource
         {
             try
             {
-                // Loads a ResourceDictionary for the specified theme.
+                // Load a ResourceDictionary for the specified theme.
                 var themeName = GetCurrentTheme();
                 var dict = GetThemeResourceDictionary(themeName);
                 
-                // Applies font settings to the theme resource.
+                // Apply font settings to the theme resource.
                 ApplyFontSettings(dict);
                 UpdateResourceDictionary(dict);
+
+                // Must apply blur and drop shadow effects
                 _ = RefreshFrameAsync();
             }
             catch (Exception e)
@@ -405,7 +407,7 @@ namespace Flow.Launcher.Core.Resource
             try
             {
                 if (string.IsNullOrEmpty(path))
-                    throw new DirectoryNotFoundException("Theme path can't be found <{path}>");
+                    throw new DirectoryNotFoundException($"Theme path can't be found <{path}>");
 
                 // Retrieve theme resource – always use the resource with font settings applied.
                 var resourceDict = GetResourceDictionary(theme);
@@ -422,9 +424,9 @@ namespace Flow.Launcher.Core.Resource
 
                 BlurEnabled = IsBlurTheme();
 
-                // Apply blur and drop shadow effects
+                // Can only apply blur but here also apply drop shadow effect to avoid possible drop shadow effect issues
                 _ = RefreshFrameAsync();
-        
+
                 return true;
             }
             catch (DirectoryNotFoundException)

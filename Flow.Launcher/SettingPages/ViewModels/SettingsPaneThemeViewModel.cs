@@ -229,6 +229,8 @@ public partial class SettingsPaneThemeViewModel : BaseModel
 
             Settings.BackdropType = value;
 
+            // Can only apply blur because drop shadow effect is not supported with backdrop
+            // So drop shadow effect has been disabled
             _ = _theme.SetBlurForWindowAsync();
 
             OnPropertyChanged(nameof(IsDropShadowEnabled));
