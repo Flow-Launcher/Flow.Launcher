@@ -1392,12 +1392,10 @@ namespace Flow.Launcher.ViewModel
                         mainWindow.Show();
                         mainWindow.Activate();
                         mainWindow.Focus();
-                
-                        // Win32 메서드로 강제 활성화
+                        
                         var hwnd = new WindowInteropHelper(mainWindow).Handle;
                         Win32Helper.SetForegroundWindow(hwnd);
-                
-                        // 잠시 후 Topmost 해제
+                        
                         Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
                         {
                             mainWindow.Topmost = false;
