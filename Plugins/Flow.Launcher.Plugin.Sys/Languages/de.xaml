@@ -51,7 +51,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">Besuchen Sie die Dokumentation von Flow Launcher für mehr Hilfe und Tipps zur Verwendung</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Den Ort öffnen, an dem die Einstellungen von Flow Launcher gespeichert sind</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode">Spielmodus umschalten</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_theme_selector">Quickly change the Flow Launcher theme</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector">Das Flow-Launcher-Theme schnell ändern</system:String>
 
     <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">Erfolg</system:String>
@@ -64,7 +64,7 @@
 
     <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Befehls-Schlüsselwort-Einstellung</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Benutzerdefiniertes Befehls-Schlüsselwort</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword_tip">Enter a keyword to search for command: {0}. This keyword is used to match your query.</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword_tip">Geben Sie ein Schlüsselwort ein, um nach dem Befehl zu suchen: {0}. Dieses Schlüsselwort wird verwendet, um Ihre Anfrage abzugleichen.</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_command_keyword">Befehls-Schlüsselwort</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_reset">Zurücksetzen</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_confirm">Bestätigen</system:String>
