@@ -668,6 +668,7 @@ namespace Flow.Launcher.ViewModel
                 _selectedResults = value;
                 if (SelectedIsFromQueryResults())
                 {
+                    Results.Visibility = Visibility.Visible;
                     ContextMenu.Visibility = Visibility.Collapsed;
                     History.Visibility = Visibility.Collapsed;
 
@@ -696,6 +697,16 @@ namespace Flow.Launcher.ViewModel
                 else
                 {
                     Results.Visibility = Visibility.Collapsed;
+                    if (HistorySelected())
+                    {
+                        ContextMenu.Visibility = Visibility.Collapsed;
+                        History.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        ContextMenu.Visibility = Visibility.Visible;
+                        History.Visibility = Visibility.Collapsed;
+                    }
                     _queryTextBeforeLeaveResults = QueryText;
 
                     // Because of Fody's optimization
