@@ -1376,7 +1376,7 @@ namespace Flow.Launcher.ViewModel
                 {
                     if (Application.Current.MainWindow is MainWindow mainWindow)
                     {
-                        Win32Helper.DWMSetCloakForWindow(mainWindow, false);
+                        Win32Helper.DWMSetCloakForWindow(mainWindow, true);
                         mainWindow.ClockPanel.Visibility = Visibility.Visible;
                         SearchIconVisibility = Visibility.Visible;
                         
