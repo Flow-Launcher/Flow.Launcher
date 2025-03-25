@@ -175,11 +175,6 @@ namespace Flow.Launcher
                             {
                                 if (_viewModel.MainWindowVisibilityStatus)
                                 {
-                                    if (_settings.UseSound)
-                                    {
-                                        SoundPlay();
-                                    }
-
                                     UpdatePosition(false);
                                     _viewModel.ResetPreview();
                                     Activate();
@@ -269,7 +264,6 @@ namespace Flow.Launcher
             Environment.Exit(0);
         }
         
-        // Win32 API 함수 정의
         [DllImport("wtsapi32.dll", SetLastError = true)]
         private static extern bool WTSRegisterSessionNotification(IntPtr hWnd, int dwFlags);
 
@@ -469,26 +463,24 @@ namespace Flow.Launcher
 
                 handled = true;
             }
-            // Windows 잠금(Win+L) 이벤트 처리
+            // Windows (Win+L) Event
             else if (msg == WM_WTSSESSION_CHANGE)
             {
                 int reason = wParam.ToInt32();
                 if (reason == WTS_SESSION_LOCK)
                 {
-                    // Windows 잠금 발생 시 메시지 박스 표시
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        _viewModel.Show();
+                        _viewModel.SystemWakeUpShow();
                     });
 
                     handled = true;
                 }
                 else if (reason == WTS_SESSION_UNLOCK)
                 {
-                    // Windows 잠금 해제 시 메시지 박스 표시 (선택적)
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        _viewModel.Show();
+                        _viewModel.SystemWakeUpShow();
                     });
 
                     handled = true;
@@ -515,7 +507,7 @@ namespace Flow.Launcher
             }
         }
 
-        private void SoundPlay()
+        public void SoundPlay()
         {
             if (_settings.WMPInstalled)
             {

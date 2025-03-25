@@ -1352,12 +1352,39 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public void SystemWakeUpShow()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                if (Application.Current.MainWindow is MainWindow mainWindow)
+                {
+                    // 📌 Remove DWM Cloak (Make the window visible normally)
+                    Win32Helper.DWMSetCloakForWindow(mainWindow, false);
+
+                    // 📌 Restore UI elements
+                    mainWindow.ClockPanel.Visibility = Visibility.Visible;
+                    //mainWindow.SearchIcon.Visibility = Visibility.Visible;
+                    SearchIconVisibility = Visibility.Visible;
+                }
+
+                // Update WPF properties
+                MainWindowOpacity = 0.01;
+                MainWindowVisibility = Visibility.Visible;
+                MainWindowVisibilityStatus = true;
+                VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
+                Hide();
+            });
+        }
         public void Show()
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
                 if (Application.Current.MainWindow is MainWindow mainWindow)
                 {
+                    if (Settings.UseSound)
+                    {
+                        mainWindow.SoundPlay();
+                    }
                     // 📌 Remove DWM Cloak (Make the window visible normally)
                     Win32Helper.DWMSetCloakForWindow(mainWindow, false);
 
