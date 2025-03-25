@@ -215,7 +215,7 @@
 
     <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">
         <StackPanel Orientation="Vertical">
-            <Grid>
+            <Grid x:Name="QueryBoxArea">
                 <Border MinHeight="30" Style="{DynamicResource QueryBoxBgStyle}">
                     <Grid>
                         <TextBox
@@ -338,7 +338,7 @@
                     Y2="0" />
             </Grid>
 
-            <Grid ClipToBounds="True">
+            <Grid x:Name="MiddleSeparatorArea" ClipToBounds="True">
                 <ContentControl>
                     <ContentControl.Style>
                         <Style TargetType="ContentControl">
@@ -378,7 +378,7 @@
                 </ContentControl>
             </Grid>
 
-            <Border Style="{DynamicResource WindowRadius}">
+            <Border x:Name="ResultPreviewArea" Style="{DynamicResource WindowRadius}">
                 <Border.Clip>
                     <MultiBinding Converter="{StaticResource BorderClipConverter}">
                         <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
