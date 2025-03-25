@@ -9,11 +9,11 @@
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Bitte wählen Sie die ausführbare Datei {0} aus</system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Der Pfad zur ausführbaren Datei {0} kann nicht festgelegt werden. Bitte versuchen Sie es in den Einstellungen von Flow (scrollen Sie nach unten).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Plug-ins können nicht initialisiert werden</system:String>
-    <system:String x:Key="failedToInitializePluginsMessage">Plug-ins: {0} - nicht geladen werden und wird deaktiviert, bitte kontaktiere Sie den Ersteller des Plug-ins für Hilfe</system:String>
+    <system:String x:Key="failedToInitializePluginsMessage">Plug-ins: {0} - nicht geladen werden und wird deaktiviert, bitte kontaktieren Sie den Ersteller des Plug-ins für Hilfe</system:String>
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Hotkey &quot;{0}&quot; konnte nicht registriert werden. Der Hotkey ist möglicherweise von einem anderen Programm in Verwendung. Wechseln Sie zu einem anderen Hotkey oder beenden Sie das andere Programm.</system:String>
-    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Registrierung des Hotkeys &quot;{0}&quot; konnte nicht aufgehoben werden. Bitte versuchen Sie es erneut oder lesen Sie das Log für Details</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Konnte nicht gestartet werden {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Flow Launcher Plug-in-Dateiformat ungültig</system:String>
@@ -45,9 +45,9 @@
     <system:String x:Key="portableMode">Portabler Modus</system:String>
     <system:String x:Key="portableModeToolTIp">Speichern Sie alle Einstellungen und Benutzerdaten in einem Ordner (nützlich bei Verwendung von Wechsellaufwerken oder Cloud-Diensten).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Flow Launcher bei Systemstart starten</system:String>
-    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
-    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
-    <system:String x:Key="setAutoStartFailed">Fehler bei Einstellungsstart bei Start</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Log-on-Aufgabe anstelle des Starteintrags für schnelleres Startup-Erfahrung verwenden</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">Nach der Deinstallation müssen Sie diese Aufgabe (Flow.Launcher Startup) via Task-Scheduler manuell entfernen</system:String>
+    <system:String x:Key="setAutoStartFailed">Fehler bei Einstellungsstart beim Start</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Flow Launcher ausblenden, wenn Fokus verloren geht</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Versionsbenachrichtigungen nicht zeigen</system:String>
     <system:String x:Key="SearchWindowPosition">Position des Suchfensters</system:String>
@@ -102,7 +102,7 @@
     <system:String x:Key="AlwaysPreview">Immer Vorschau</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Vorschau-Panel immer öffnen, wenn Flow aktiviert ist. Drücken Sie {0}, um Vorschau umzuschalten.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Schatteneffekt ist nicht erlaubt, während das aktuelle Theme den Unschärfe-Effekt aktiviert hat</system:String>
-    <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropType">Backdrop-Typ</system:String>
     <system:String x:Key="BackdropTypesNone">Keine</system:String>
     <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
     <system:String x:Key="BackdropTypesMica">Mica</system:String>
@@ -134,8 +134,8 @@
     <system:String x:Key="plugin_query_version">Version</system:String>
     <system:String x:Key="plugin_query_web">Website</system:String>
     <system:String x:Key="plugin_uninstall">Deinstallieren</system:String>
-    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
-    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Plug-in-Einstellungen können nicht entfernt werden</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Plug-ins: {0} - Plug-in-Einstellungsdateien können nicht entfernt werden, bitte entfernen Sie diese manuell</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Plug-in-Store</system:String>
@@ -303,7 +303,7 @@
     <system:String x:Key="userdatapath">Speicherort für Benutzerdaten</system:String>
     <system:String x:Key="userdatapathToolTip">Benutzereinstellungen und installierte Plug-ins werden im Ordner für Benutzerdaten gespeichert. Dieser Speicherort kann variieren, je nachdem, ob sich das Programm im portablen Modus befindet oder nicht.</system:String>
     <system:String x:Key="userdatapathButton">Ordner öffnen</system:String>
-    <system:String x:Key="logLevel">Log Level</system:String>
+    <system:String x:Key="logLevel">Log-Ebene</system:String>
     <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="LogLevelINFO">Info</system:String>
 
@@ -340,10 +340,10 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Das angegebene Plug-in kann nicht gefunden werden</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Neues Aktions-Schlüsselwort darf nicht leer sein</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Dieses neue Aktions-Schlüsselwort ist bereits einem anderen Plug-in zugewiesen, bitte wählen Sie ein anderes</system:String>
-    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">Dieses neue Aktions-Schlüsselwort ist dasselbe wie das alte, bitte wählen Sie ein anderes</system:String>
     <system:String x:Key="success">Erfolg</system:String>
     <system:String x:Key="completedSuccessfully">Erfolgreich abgeschlossen</system:String>
-    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
+    <system:String x:Key="actionkeyword_tips">Geben Sie die Aktions-Schlüsselwörter ein, die Sie zum Starten des Plug-ins verwenden möchten, und trennen Sie sie durch Leerzeichen voneinander ab. Verwenden Sie *, wenn Sie keine spezifizieren möchten, und das Plug-in wird ohne jegliche Aktions-Schlüsselwörter ausgelöst.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Benutzerdefinierter Abfrage-Hotkey</system:String>
@@ -394,9 +394,9 @@ Wenn Sie bei der Eingabe eines Shortcuts ein '@'-Präfix hinzufügen, stimmt die
     <system:String x:Key="reportWindow_report_succeed">Bericht erfolgreich gesendet</system:String>
     <system:String x:Key="reportWindow_report_failed">Bericht konnte nicht gesendet werden</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher hat einen Fehler</system:String>
-    <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
-    <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
-    <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">Bitte öffnen Sie einen neuen Fall in</system:String>
+    <system:String x:Key="reportWindow_upload_log">1. Logdatei hochladen: {0}</system:String>
+    <system:String x:Key="reportWindow_copy_below">2. Kopieren Sie die Ausnahmemeldung unterhalb</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Bitte warten Sie ...</system:String>
