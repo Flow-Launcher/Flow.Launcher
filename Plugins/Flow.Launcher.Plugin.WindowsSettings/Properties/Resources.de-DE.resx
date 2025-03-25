@@ -275,7 +275,7 @@
     <value>Hardware und Sound</value>
   </data>
   <data name="AreaHomePage" xml:space="preserve">
-    <value>Startseite</value>
+    <value>Homepage</value>
   </data>
   <data name="AreaMixedReality" xml:space="preserve">
     <value>Mixed Reality</value>
@@ -2416,7 +2416,7 @@
     <value>Erweiterte Sharing-Einstellungen verwalten</value>
   </data>
   <data name="ChangeBatterySettings" xml:space="preserve">
-    <value>Change battery settings</value>
+    <value>Akku-Einstellungen ändern</value>
   </data>
   <data name="RenameThisComputer" xml:space="preserve">
     <value>Diesen Computer umbenennen</value>
@@ -2479,7 +2479,7 @@
     <value>Find and fix bluescreen problems</value>
   </data>
   <data name="HearAToneWhenKeysArePressed" xml:space="preserve">
-    <value>Hear a tone when keys are pressed</value>
+    <value>Einen Ton hören, wenn Tasten gedrückt werden</value>
   </data>
   <data name="DeleteBrowsingHistory" xml:space="preserve">
     <value>Browsing-Historie löschen</value>
