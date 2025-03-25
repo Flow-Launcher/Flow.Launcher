@@ -438,7 +438,6 @@
                     <Grid
                         x:Name="Preview"
                         Grid.Column="2"
-                        Height="380"
                         VerticalAlignment="Stretch"
                         Style="{DynamicResource PreviewArea}"
                         Visibility="{Binding InternalPreviewVisible, Converter={StaticResource BoolToVisibilityConverter}}">
