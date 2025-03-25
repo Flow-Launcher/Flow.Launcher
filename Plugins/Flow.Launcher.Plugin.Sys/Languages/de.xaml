@@ -26,7 +26,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips_cmd">Flow Launcher-Tipps</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location_cmd">Flow Launcher UserData-Ordner</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode_cmd">Spielmodus umschalten</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_theme_selector_cmd">Set the Flow Launcher Theme</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector_cmd">Flow Launcher-Theme festlegen</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_edit">Bearbeiten</system:String>
 
@@ -59,17 +59,17 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Alle anwendbaren Plug-in-Daten neu geladen</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_shutdown_computer">Sind Sie sicher, dass Sie den Computer herunterfahren wollen?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">Sind Sie sicher, dass Sie den Computer neu starten wollen?</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Soll der Computer wirklich mit erweiterten Startoptionen neu gestartet werden?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Sind Sie sicher, dass Sie den Computer mit erweiterten Boot-Optionen neu starten wollen?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Sind Sie sicher, dass Sie sich ausloggen wollen?</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Command Keyword Setting</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Custom Command Keyword</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Befehls-Schlüsselwort-Einstellung</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Benutzerdefiniertes Befehls-Schlüsselwort</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword_tip">Enter a keyword to search for command: {0}. This keyword is used to match your query.</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_command_keyword">Command Keyword</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_command_keyword">Befehls-Schlüsselwort</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_reset">Zurücksetzen</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_confirm">Bestätigen</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_cancel">Abbrechen</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_input_command_keyword">Please enter a non-empty command keyword</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_input_command_keyword">Bitte geben Sie ein nicht-leeres Befehls-Schlüsselwort ein</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">Systembefehle</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Bietet systembezogene Befehle, z. B. Herunterfahren, Sperren, Einstellungen etc.</system:String>
