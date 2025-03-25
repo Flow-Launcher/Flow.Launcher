@@ -105,165 +105,109 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
     }
 
     private void LoadFaviconsFromDb(string faviconDbPath, List<Bookmark> bookmarks)
-{
-    try
     {
-        // Use a copy to avoid lock issues with the original file
-        var tempDbPath = Path.Combine(_faviconCacheDir, $"tempfavicons_{Guid.NewGuid()}.sqlite");
-        File.Copy(faviconDbPath, tempDbPath, true);
-
-        string dbPath = string.Format(DbPathFormat, tempDbPath);
-        using var connection = new SqliteConnection(dbPath);
-        connection.Open();
-
-        // Get favicons based on bookmark URLs
-        foreach (var bookmark in bookmarks)
+        try
         {
-            try
+            // Use a copy to avoid lock issues with the original file
+            var tempDbPath = Path.Combine(_faviconCacheDir, $"tempfavicons_{Guid.NewGuid()}.sqlite");
+            File.Copy(faviconDbPath, tempDbPath, true);
+            
+            var defaultIconPath = Path.Combine(
+                Path.GetDirectoryName(typeof(FirefoxBookmarkLoaderBase).Assembly.Location),
+                "bookmark.png");
+
+            string dbPath = string.Format(DbPathFormat, tempDbPath);
+            using var connection = new SqliteConnection(dbPath);
+            connection.Open();
+
+            // Get favicons based on bookmark URLs
+            foreach (var bookmark in bookmarks)
             {
-                if (string.IsNullOrEmpty(bookmark.Url))
-                    continue;
-
-                // Extract domain from URL
-                if (!Uri.TryCreate(bookmark.Url, UriKind.Absolute, out Uri uri))
-                    continue;
-
-                var domain = uri.Host;
-
-                // Query for latest Firefox version favicon structure
-                using var cmd = connection.CreateCommand();
-                cmd.CommandText = @"
-                    SELECT i.data
-                    FROM moz_icons i
-                    JOIN moz_icons_to_pages ip ON i.id = ip.icon_id
-                    JOIN moz_pages_w_icons p ON ip.page_id = p.id
-                    WHERE p.page_url LIKE @url
-                    AND i.data IS NOT NULL
-                    ORDER BY i.width DESC  -- Select largest icon available
-                    LIMIT 1";
-
-                cmd.Parameters.AddWithValue("@url", $"%{domain}%");
-
-                using var reader = cmd.ExecuteReader();
-                if (!reader.Read() || reader.IsDBNull(0))
-                    continue;
-
-                var imageData = (byte[])reader["data"];
-
-                if (imageData is not { Length: > 0 })
-                    continue;
-
-                var faviconPath = Path.Combine(_faviconCacheDir, $"firefox_{domain}.png");
-
-                if (!File.Exists(faviconPath))
+                try
                 {
-                    if (IsSvgData(imageData))
+                    if (string.IsNullOrEmpty(bookmark.Url))
+                        continue;
+
+                    // Extract domain from URL
+                    if (!Uri.TryCreate(bookmark.Url, UriKind.Absolute, out Uri uri))
+                        continue;
+
+                    var domain = uri.Host;
+
+                    // Query for latest Firefox version favicon structure
+                    using var cmd = connection.CreateCommand();
+                    cmd.CommandText = @"
+                        SELECT i.data
+                        FROM moz_icons i
+                        JOIN moz_icons_to_pages ip ON i.id = ip.icon_id
+                        JOIN moz_pages_w_icons p ON ip.page_id = p.id
+                        WHERE p.page_url LIKE @url
+                        AND i.data IS NOT NULL
+                        ORDER BY i.width DESC  -- Select largest icon available
+                        LIMIT 1";
+
+                    cmd.Parameters.AddWithValue("@url", $"%{domain}%");
+
+                    using var reader = cmd.ExecuteReader();
+                    if (!reader.Read() || reader.IsDBNull(0))
+                        continue;
+
+                    var imageData = (byte[])reader["data"];
+
+                    if (imageData is not { Length: > 0 })
+                        continue;
+
+                    var faviconPath = Path.Combine(_faviconCacheDir, $"firefox_{domain}.png");
+
+                    if (!File.Exists(faviconPath))
                     {
-                        // SVG를 PNG로 변환
-                        var pngData = ConvertSvgToPng(imageData);
-                        if (pngData != null)
+                        // SVG 파일인지 확인
+                        if (IsSvgData(imageData))
                         {
-                            SaveBitmapData(pngData, faviconPath);
+                            bookmark.FaviconPath = defaultIconPath;
+                            continue;
                         }
                         else
                         {
-                            // Set empty string on conversion failure (will use default icon)
-                            bookmark.FaviconPath = string.Empty;
-                            continue;
+                            SaveBitmapData(imageData, faviconPath);
                         }
                     }
-                    else
-                    {
-                        // Save PNG directly
-                        SaveBitmapData(imageData, faviconPath);
-                    }
-                }
 
-                bookmark.FaviconPath = faviconPath;
+                    bookmark.FaviconPath = faviconPath;
+                }
+                catch (Exception ex)
+                {
+                    Log.Exception($"Failed to extract Firefox favicon: {bookmark.Url}", ex);
+                }
+            }
+
+            // https://github.com/dotnet/efcore/issues/26580
+            SqliteConnection.ClearPool(connection);
+            connection.Close();
+
+            // Delete temporary file
+            try
+            {
+                File.Delete(tempDbPath);
             }
             catch (Exception ex)
             {
-                Log.Exception($"Failed to extract Firefox favicon: {bookmark.Url}", ex);
+                Log.Exception($"Failed to delete temporary favicon DB: {tempDbPath}", ex);
             }
         }
-
-        // https://github.com/dotnet/efcore/issues/26580
-        SqliteConnection.ClearPool(connection);
-        connection.Close();
-
-        // Delete temporary file
-        try
-        {
-            File.Delete(tempDbPath);
-        }
         catch (Exception ex)
         {
-            Log.Exception($"Failed to delete temporary favicon DB: {tempDbPath}", ex);
-        }
-    }
-    catch (Exception ex)
-    {
-        Log.Exception($"Failed to load Firefox favicon DB: {faviconDbPath}", ex);
-    }
-}
-
-    private byte[] ConvertSvgToPng(byte[] svgData)
-    {
-        try
-        {
-            // Create SKSvg object from SVG data
-            using var stream = new MemoryStream(svgData);
-            var svg = new SkiaSharp.Extended.Svg.SKSvg();
-            svg.Load(stream);
-
-            // Set default values if SVG size is invalid or missing
-            float width = svg.Picture.CullRect.Width > 0 ? svg.Picture.CullRect.Width : 32;
-            float height = svg.Picture.CullRect.Height > 0 ? svg.Picture.CullRect.Height : 32;
-        
-            // Calculate scale for 32x32 favicon size
-            float scaleX = 32 / width;
-            float scaleY = 32 / height;
-            float scale = Math.Min(scaleX, scaleY);
-        
-            // Calculate final image dimensions (maintaining aspect ratio)
-            int finalWidth = (int)(width * scale);
-            int finalHeight = (int)(height * scale);
-        
-            // Render to PNG
-            using var surface = SkiaSharp.SKSurface.Create(new SkiaSharp.SKImageInfo(finalWidth, finalHeight));
-            var canvas = surface.Canvas;
-        
-            // Set transparent background
-            canvas.Clear(SkiaSharp.SKColors.Transparent);
-        
-            // Draw SVG (scaled to fit)
-            canvas.Scale(scale);
-            canvas.DrawPicture(svg.Picture);
-        
-            // Extract image data
-            using var image = surface.Snapshot();
-            using var data = image.Encode(SkiaSharp.SKEncodedImageFormat.Png, 100);
-            return data.ToArray();
-        }
-        catch (Exception ex)
-        {
-            Log.Exception("SVG to PNG conversion failed", ex);
-            return null;
+            Log.Exception($"Failed to load Firefox favicon DB: {faviconDbPath}", ex);
         }
     }
 
     private static bool IsSvgData(byte[] data)
     {
-        if (data == null || data.Length < 5)
+        if (data.Length < 5)
             return false;
-
-        // Check SVG file signature
-        // Verify SVG XML header starting with ASCII
-        string header = System.Text.Encoding.ASCII.GetString(data, 0, Math.Min(data.Length, 200)).ToLower();
-
-        return header.Contains("<svg") ||
-               header.StartsWith("<?xml") && header.Contains("<svg") ||
-               header.Contains("image/svg+xml");
+        string start = System.Text.Encoding.ASCII.GetString(data, 0, Math.Min(100, data.Length));
+        return start.Contains("<svg") || 
+               (start.StartsWith("<?xml") && start.Contains("<svg"));
     }
 
     private static void SaveBitmapData(byte[] imageData, string outputPath)
