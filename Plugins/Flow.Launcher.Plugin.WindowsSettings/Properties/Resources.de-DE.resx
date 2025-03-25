@@ -2161,7 +2161,7 @@
     <value>Erweiterte Druckereinrichtung</value>
   </data>
   <data name="ChangeDefaultPrinter" xml:space="preserve">
-    <value>Change default printer</value>
+    <value>Standard-Drucker ändern</value>
   </data>
   <data name="EditEnvironmentVariablesForYourAccount" xml:space="preserve">
     <value>Edit environment variables for your account</value>
