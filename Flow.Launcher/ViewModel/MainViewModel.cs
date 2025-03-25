@@ -1075,6 +1075,11 @@ namespace Flow.Launcher.ViewModel
                     Title = string.Format(title, h.Query),
                     SubTitle = string.Format(time, h.ExecutedDateTime),
                     IcoPath = "Images\\history.png",
+                    Preview = new Result.PreviewInfo
+                    {
+                        PreviewImagePath = Constant.HistoryIcon,
+                        Description = string.Format(time, h.ExecutedDateTime)
+                    },
                     OriginQuery = new Query { RawQuery = h.Query },
                     Action = _ =>
                     {
