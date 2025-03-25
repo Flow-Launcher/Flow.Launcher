@@ -33,10 +33,17 @@ namespace Flow.Launcher
     {
         #region Private Fields
 
-        // Win32 상수 및 구조체 정의
+        //For restore window Freeze
         private const int WM_WTSSESSION_CHANGE = 0x02B1;
-        private const int WTS_SESSION_LOCK = 0x7;
         private const int WTS_SESSION_UNLOCK = 0x8;
+        private const int NOTIFY_FOR_ALL_SESSIONS = 1;
+        private const int NOTIFY_FOR_THIS_SESSION = 0;
+
+        [DllImport("wtsapi32.dll")]
+        private static extern bool WTSRegisterSessionNotification(IntPtr hWnd, int dwFlags);
+
+        [DllImport("wtsapi32.dll")]
+        private static extern bool WTSUnRegisterSessionNotification(IntPtr hWnd);
         
         // Dependency Injection
         private readonly Settings _settings;
@@ -82,16 +89,22 @@ namespace Flow.Launcher
             InitSoundEffects();
             DataObject.AddPastingHandler(QueryTextBox, QueryTextBox_OnPaste);
             
-            SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
-            SystemEvents.SessionEnding += SystemEvents_SessionEnding;
+
         }
         private void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
         {
-            _viewModel.Show(); 
+            _viewModel.SystemWakeUpShow(); 
         }
         private void SystemEvents_PowerModeChanged(object sender, PowerModeChangedEventArgs e)
         {
-            _viewModel.Show();
+            _viewModel.SystemWakeUpShow();
+        }
+        private void SystemEvents_SessionSwitch(object sender, Microsoft.Win32.SessionSwitchEventArgs e)
+        {
+            if (e.Reason == Microsoft.Win32.SessionSwitchReason.SessionUnlock)
+            {
+                _viewModel.SystemWakeUpShow();
+            }
         }
         #endregion
 
@@ -101,13 +114,22 @@ namespace Flow.Launcher
 
         private void OnSourceInitialized(object sender, EventArgs e)
         {
-            var handle = Win32Helper.GetWindowHandle(this, true);
-            var win = HwndSource.FromHwnd(handle);
-            win.AddHook(WndProc);
-            Win32Helper.HideFromAltTab(this);
-            Win32Helper.DisableControlBox(this);
-            // 세션 변경 알림 등록 (Windows 잠금 감지)
-            WTSRegisterSessionNotification(handle, 0);
+            IntPtr handle = new WindowInteropHelper(this).Handle;
+            var result = WTSRegisterSessionNotification(handle, NOTIFY_FOR_THIS_SESSION);
+    
+            if (!result)
+            {
+                //Log.Error($"|MainWindow.OnSourceInitialized|WTSRegisterSessionNotification Failed: {Marshal.GetLastWin32Error()}");
+                //Debug.WriteLine("Failed");
+            }
+            else
+            {
+                //Log.Info("|MainWindow.OnSourceInitialized|WTSRegisterSessionNotification Sucesss");
+                //Debug.WriteLine("Sucesss");
+            }
+
+            HwndSource source = PresentationSource.FromVisual(this) as HwndSource;
+            source?.AddHook(WndProc);
         }
         
         private async void OnLoaded(object sender, RoutedEventArgs _)
@@ -248,13 +270,12 @@ namespace Flow.Launcher
 
         private async void OnClosing(object sender, CancelEventArgs e)
         {
-            // 세션 변경 알림 등록 해제
+            // Unregister session notification
             var handle = Win32Helper.GetWindowHandle(this, false);
             WTSUnRegisterSessionNotification(handle);
-            
-            // 기존 이벤트 구독 해제
             SystemEvents.PowerModeChanged -= SystemEvents_PowerModeChanged;
             SystemEvents.SessionEnding -= SystemEvents_SessionEnding;
+            SystemEvents.SessionSwitch -= SystemEvents_SessionSwitch;
             
             _notifyIcon.Visible = false;
             App.API.SaveAppAllSettings();
@@ -263,13 +284,13 @@ namespace Flow.Launcher
             Notification.Uninstall();
             Environment.Exit(0);
         }
-        
-        [DllImport("wtsapi32.dll", SetLastError = true)]
-        private static extern bool WTSRegisterSessionNotification(IntPtr hWnd, int dwFlags);
-
-        [DllImport("wtsapi32.dll", SetLastError = true)]
-        private static extern bool WTSUnRegisterSessionNotification(IntPtr hWnd);
-
+        protected override void OnClosed(EventArgs e)
+        {
+            IntPtr handle = new WindowInteropHelper(this).Handle;
+            WTSUnRegisterSessionNotification(handle);
+    
+            base.OnClosed(e);
+        }
         private void OnLocationChanged(object sender, EventArgs e)
         {
             if (_animating)
@@ -429,64 +450,18 @@ namespace Flow.Launcher
             }
             else if (msg == Win32Helper.WM_EXITSIZEMOVE)
             {
-                if (_initialHeight != (int)Height)
-                {
-                    var shadowMargin = 0;
-                    var (_, useDropShadowEffect) = _theme.GetActualValue();
-                    if (useDropShadowEffect)
-                    {
-                        shadowMargin = 32;
-                    }
-
-                    if (!_settings.KeepMaxResults)
-                    {
-                        var itemCount = (Height - (_settings.WindowHeightSize + 14) - shadowMargin) / _settings.ItemHeightSize;
-
-                        if (itemCount < 2)
-                        {
-                            _settings.MaxResultsToShow = 2;
-                        }
-                        else
-                        {
-                            _settings.MaxResultsToShow = Convert.ToInt32(Math.Truncate(itemCount));
-                        }
-                    }
-
-                    SizeToContent = SizeToContent.Height;
-                    _viewModel.MainWindowWidth = Width;
-                }
-
-                if (_initialWidth != (int)Width)
-                {
-                    SizeToContent = SizeToContent.Height;
-                }
-
+                // 기존 코드
                 handled = true;
             }
+
             // Windows (Win+L) Event
-            else if (msg == WM_WTSSESSION_CHANGE)
+            if (msg == WM_WTSSESSION_CHANGE && wParam.ToInt32() == WTS_SESSION_UNLOCK)
             {
-                int reason = wParam.ToInt32();
-                if (reason == WTS_SESSION_LOCK)
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        _viewModel.SystemWakeUpShow();
-                    });
-
-                    handled = true;
-                }
-                else if (reason == WTS_SESSION_UNLOCK)
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        _viewModel.SystemWakeUpShow();
-                    });
-
-                    handled = true;
-                }
+                // 기존 코드
+                handled = true;
             }
-
+    
+            // 여기에 반환문 추가
             return IntPtr.Zero;
         }
 

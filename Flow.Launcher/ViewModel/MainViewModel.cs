@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Input;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Channels;
@@ -24,6 +25,8 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 using Microsoft.VisualStudio.Threading;
+using System.Windows.Interop;
+using System.Diagnostics;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -48,7 +51,20 @@ namespace Flow.Launcher.ViewModel
 
         private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
         private Task _resultsViewUpdateTask;
+        
+        //For restore window Freeze
+        [DllImport("user32.dll")]
+        public static extern bool AllowSetForegroundWindow(int processId);
 
+        [DllImport("user32.dll")]
+        public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        [DllImport("user32.dll")]
+        public static extern bool BringWindowToTop(IntPtr hWnd);
+        
+        private const int SW_SHOW = 5;
+        private const int SW_RESTORE = 9;
+            
         #endregion
 
         #region Constructor
@@ -1356,23 +1372,46 @@ namespace Flow.Launcher.ViewModel
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                if (Application.Current.MainWindow is MainWindow mainWindow)
+                try
                 {
-                    // 📌 Remove DWM Cloak (Make the window visible normally)
-                    Win32Helper.DWMSetCloakForWindow(mainWindow, false);
-
-                    // 📌 Restore UI elements
-                    mainWindow.ClockPanel.Visibility = Visibility.Visible;
-                    //mainWindow.SearchIcon.Visibility = Visibility.Visible;
-                    SearchIconVisibility = Visibility.Visible;
+                    if (Application.Current.MainWindow is MainWindow mainWindow)
+                    {
+                        Win32Helper.DWMSetCloakForWindow(mainWindow, false);
+                        mainWindow.ClockPanel.Visibility = Visibility.Visible;
+                        SearchIconVisibility = Visibility.Visible;
+                        
+                        MainWindowOpacity = 0;
+                        MainWindowVisibility = Visibility.Visible;
+                        MainWindowVisibilityStatus = true;
+                        
+                        VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
+                        
+                        mainWindow.Topmost = true;
+                
+                        // 창 표시 및 활성화
+                        mainWindow.Show();
+                        mainWindow.Activate();
+                        mainWindow.Focus();
+                
+                        // Win32 메서드로 강제 활성화
+                        var hwnd = new WindowInteropHelper(mainWindow).Handle;
+                        Win32Helper.SetForegroundWindow(hwnd);
+                
+                        // 잠시 후 Topmost 해제
+                        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new Action(() =>
+                        {
+                            mainWindow.Topmost = false;
+                        }));
+                    }
+                    else
+                    {
+                        Log.Error("|MainViewModel.SystemWakeUpShow|MainWindow can't find");
+                    }
                 }
-
-                // Update WPF properties
-                MainWindowOpacity = 0.01;
-                MainWindowVisibility = Visibility.Visible;
-                MainWindowVisibilityStatus = true;
-                VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
-                Hide();
+                catch (Exception ex)
+                {
+                    Log.Exception("|MainViewModel.SystemWakeUpShow|error", ex);
+                }
             });
         }
         public void Show()

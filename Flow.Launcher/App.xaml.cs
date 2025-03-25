@@ -165,9 +165,32 @@ namespace Flow.Launcher
                 API.SaveAppAllSettings();
                 Log.Info(
                     "|App.OnStartup|End Flow Launcher startup ----------------------------------------------------  ");
+                Microsoft.Win32.SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
+                Microsoft.Win32.SystemEvents.SessionEnding += SystemEvents_SessionEnding;
+                Microsoft.Win32.SystemEvents.SessionSwitch += SystemEvents_SessionSwitch;
             });
         }
-
+        private void SystemEvents_PowerModeChanged(object sender, Microsoft.Win32.PowerModeChangedEventArgs e)
+        {
+            if (e.Mode == Microsoft.Win32.PowerModes.Resume)
+            {
+                var mainViewModel = Ioc.Default.GetRequiredService<MainViewModel>();
+                mainViewModel.SystemWakeUpShow();
+            }
+        }
+        private void SystemEvents_SessionEnding(object sender, Microsoft.Win32.SessionEndingEventArgs e)
+        {
+            var mainViewModel = Ioc.Default.GetRequiredService<MainViewModel>();
+            mainViewModel.SystemWakeUpShow();
+        }
+        private void SystemEvents_SessionSwitch(object sender, Microsoft.Win32.SessionSwitchEventArgs e)
+        {
+            if (e.Reason == Microsoft.Win32.SessionSwitchReason.SessionUnlock)
+            {
+                var mainViewModel = Ioc.Default.GetRequiredService<MainViewModel>();
+                mainViewModel.SystemWakeUpShow();
+            }
+        }
 #pragma warning restore VSTHRD100 // Avoid async void methods
 
         private void AutoStartup()
