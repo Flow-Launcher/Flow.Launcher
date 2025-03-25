@@ -97,7 +97,7 @@
     <system:String x:Key="SearchPrecisionNone">ללא</system:String>
     <system:String x:Key="SearchPrecisionLow">נמוך</system:String>
     <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
-    <system:String x:Key="ShouldUsePinyin">Search with Pinyin</system:String>
+    <system:String x:Key="ShouldUsePinyin">חפש באמצעות Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Allows using Pinyin to search. Pinyin is the standard system of romanized spelling for translating Chinese.</system:String>
     <system:String x:Key="AlwaysPreview">הצג תמיד תצוגה מקדימה</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">פתח תמיד את לוח התצוגה המקדימה כאשר Flow מופעל. הקש על {0} כדי להחליף את התצוגה המקדימה.</system:String>
@@ -294,7 +294,7 @@
     </system:String>
     <system:String x:Key="releaseNotes">הערות שחרור</system:String>
     <system:String x:Key="documentation">טיפים לשימוש</system:String>
-    <system:String x:Key="devtool">DevTools</system:String>
+    <system:String x:Key="devtool">כלי פיתוח</system:String>
     <system:String x:Key="settingfolder">תיקיית ההגדרות</system:String>
     <system:String x:Key="logfolder">תיקיית יומני רישום</system:String>
     <system:String x:Key="clearlogfolder">נקה יומני רישום</system:String>
@@ -304,8 +304,8 @@
     <system:String x:Key="userdatapathToolTip">הגדרות המשתמש והתוספים המותקנים נשמרים בתיקיית נתוני המשתמש. מיקום זה עשוי להשתנות אם התוכנה במצב נייד.</system:String>
     <system:String x:Key="userdatapathButton">פתח תיקיה</system:String>
     <system:String x:Key="logLevel">Log Level</system:String>
-    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
-    <system:String x:Key="LogLevelINFO">Info</system:String>
+    <system:String x:Key="LogLevelDEBUG">ניפוי שגיאות</system:String>
+    <system:String x:Key="LogLevelINFO">מידע</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">בחר מנהל קבצים</system:String>
