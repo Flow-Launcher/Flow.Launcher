@@ -1,10 +1,9 @@
-﻿using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Logger;
-using Microsoft.Win32.SafeHandles;
+﻿using Microsoft.Win32.SafeHandles;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.System.Threading;
@@ -13,7 +12,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
 {
     internal class ProcessHelper
     {
-        private readonly HashSet<string> _systemProcessList = new HashSet<string>()
+        private readonly HashSet<string> _systemProcessList = new()
         {
             "conhost",
             "svchost",
@@ -31,35 +30,85 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             "explorer" 
         };
 
-        private bool IsSystemProcess(Process p) => _systemProcessList.Contains(p.ProcessName.ToLower());
+        private const string FlowLauncherProcessName = "Flow.Launcher";
+
+        private bool IsSystemProcessOrFlowLauncher(Process p) => 
+            _systemProcessList.Contains(p.ProcessName.ToLower()) ||
+            string.Equals(p.ProcessName, FlowLauncherProcessName, StringComparison.OrdinalIgnoreCase);
 
         /// <summary>
-        /// Returns a ProcessResult for evey running non-system process whose name matches the given searchTerm
+        /// Get title based on process name and id
         /// </summary>
-        public List<ProcessResult> GetMatchingProcesses(string searchTerm)
+        public static string GetProcessNameIdTitle(Process p)
         {
-            var processlist = new List<ProcessResult>();
+            var sb = new StringBuilder();
+            sb.Append(p.ProcessName);
+            sb.Append(" - ");
+            sb.Append(p.Id);
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Returns a Process for evey running non-system process
+        /// </summary>
+        public List<Process> GetMatchingProcesses()
+        {
+            var processlist = new List<Process>();
 
             foreach (var p in Process.GetProcesses())
             {
-                if (IsSystemProcess(p)) continue;
+                if (IsSystemProcessOrFlowLauncher(p)) continue;
 
-                if (string.IsNullOrWhiteSpace(searchTerm))
-                {
-                    // show all non-system processes
-                    processlist.Add(new ProcessResult(p, 0));
-                }
-                else
-                {
-                    var score = StringMatcher.FuzzySearch(searchTerm, p.ProcessName + p.Id).Score;
-                    if (score > 0)
-                    {
-                        processlist.Add(new ProcessResult(p, score));
-                    }
-                }
+                processlist.Add(p);
             }
 
             return processlist;
+        }
+
+        /// <summary>
+        /// Returns a dictionary of process IDs and their window titles for processes that have a visible main window with a non-empty title.
+        /// </summary>
+        public static unsafe Dictionary<int, string> GetProcessesWithNonEmptyWindowTitle()
+        {
+            var processDict = new Dictionary<int, string>();
+            PInvoke.EnumWindows((hWnd, _) =>
+            {
+                var windowTitle = GetWindowTitle(hWnd);
+                if (!string.IsNullOrWhiteSpace(windowTitle) && PInvoke.IsWindowVisible(hWnd))
+                {
+                    uint processId = 0;
+                    var result = PInvoke.GetWindowThreadProcessId(hWnd, &processId);
+                    if (result == 0u || processId == 0u)
+                    {
+                        return false;
+                    }
+
+                    var process = Process.GetProcessById((int)processId);
+                    if (!processDict.ContainsKey((int)processId))
+                    {
+                        processDict.Add((int)processId, windowTitle);
+                    }
+                }
+
+                return true;
+            }, IntPtr.Zero);
+
+            return processDict;
+        }
+
+        private static unsafe string GetWindowTitle(HWND hwnd)
+        {
+            var capacity = PInvoke.GetWindowTextLength(hwnd) + 1;
+            int length;
+            Span<char> buffer = capacity < 1024 ? stackalloc char[capacity] : new char[capacity];
+            fixed (char* pBuffer = buffer)
+            {
+                // If the window has no title bar or text, if the title bar is empty,
+                // or if the window or control handle is invalid, the return value is zero.
+                length = PInvoke.GetWindowText(hwnd, pBuffer, capacity);
+            }
+
+            return buffer[..length].ToString();
         }
 
         /// <summary>
@@ -67,10 +116,10 @@ namespace Flow.Launcher.Plugin.ProcessKiller
         /// </summary>
         public IEnumerable<Process> GetSimilarProcesses(string processPath)
         {
-            return Process.GetProcesses().Where(p => !IsSystemProcess(p) && TryGetProcessFilename(p) == processPath);
+            return Process.GetProcesses().Where(p => !IsSystemProcessOrFlowLauncher(p) && TryGetProcessFilename(p) == processPath);
         }
 
-        public void TryKill(Process p)
+        public void TryKill(PluginInitContext context, Process p)
         {
             try
             {
@@ -82,7 +131,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             }
             catch (Exception e)
             {
-                Log.Exception($"{nameof(ProcessHelper)}", $"Failed to kill process {p.ProcessName}", e);
+                context.API.LogException($"{nameof(ProcessHelper)}", $"Failed to kill process {p.ProcessName}", e);
             }
         }
 
