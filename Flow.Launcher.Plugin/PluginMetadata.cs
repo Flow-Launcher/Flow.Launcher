@@ -133,7 +133,6 @@ namespace Flow.Launcher.Plugin
         /// When plugin is deleted, FL will ask users whether to keep its settings.
         /// If users do not want to keep, this directory will be deleted.
         /// </summary>
-        [JsonIgnore]
         public string PluginSettingsDirectoryPath { get; internal set; }
 
         /// <summary>
@@ -141,7 +140,6 @@ namespace Flow.Launcher.Plugin
         /// It is used to store cache files.
         /// When plugin is deleted, this directory will be deleted as well.
         /// </summary>
-        [JsonIgnore]
         public string PluginCacheDirectoryPath { get; internal set; }
 
         /// <summary>
