@@ -1009,7 +1009,7 @@ namespace Flow.Launcher.ViewModel
 
         #region Query
 
-        private void Query(bool searchDelay, bool isReQuery = false)
+        public void Query(bool searchDelay, bool isReQuery = false)
         {
             if (QueryResultsSelected())
             {
