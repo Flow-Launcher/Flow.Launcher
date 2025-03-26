@@ -378,7 +378,7 @@
                 </ContentControl>
             </Grid>
 
-            <Border x:Name="ResultPreviewArea" Style="{DynamicResource WindowRadius}">
+            <Border x:Name="ResultPreviewAreaBoarder" Style="{DynamicResource WindowRadius}">
                 <Border.Clip>
                     <MultiBinding Converter="{StaticResource BorderClipConverter}">
                         <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
@@ -386,12 +386,14 @@
                         <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}" />
                     </MultiBinding>
                 </Border.Clip>
-                <Grid>
+
+                <Grid x:Name="ResultPreviewArea">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" MinWidth="80" />
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="0.85*" MinWidth="244" />
                     </Grid.ColumnDefinitions>
+
                     <StackPanel
                         x:Name="ResultArea"
                         Grid.Column="0"
@@ -418,7 +420,9 @@
                                 RightClickResultCommand="{Binding RightClickResultCommand}" />
                         </ContentControl>
                     </StackPanel>
+
                     <GridSplitter
+                        x:Name="PreviewMiddleSeparator"
                         Grid.Column="1"
                         Margin="0"
                         HorizontalAlignment="Center"
@@ -432,6 +436,7 @@
                             </ControlTemplate>
                         </GridSplitter.Template>
                     </GridSplitter>
+
                     <Grid
                         x:Name="Preview"
                         Grid.Column="2"
