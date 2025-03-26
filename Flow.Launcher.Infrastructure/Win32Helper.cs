@@ -1,14 +1,18 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
+using Flow.Launcher.Infrastructure.UserSettings;
+using Microsoft.Win32;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Dwm;
+using Windows.Win32.UI.Input.KeyboardAndMouse;
 using Windows.Win32.UI.WindowsAndMessaging;
-using Flow.Launcher.Infrastructure.UserSettings;
+using Point = System.Windows.Point;
 
 namespace Flow.Launcher.Infrastructure
 {
@@ -63,7 +67,7 @@ namespace Flow.Launcher.Infrastructure
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="window"></param>
         /// <param name="cornerType">DoNotRound, Round, RoundSmall, Default</param>
@@ -314,6 +318,173 @@ namespace Flow.Launcher.Infrastructure
                 windowHelper.EnsureHandle();
             }
             return new(windowHelper.Handle);
+        }
+
+        #endregion
+
+        #region Keyboard Layout
+
+        private const string UserProfileRegistryPath = @"Control Panel\International\User Profile";
+
+        // https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-lcid/70feba9f-294e-491e-b6eb-56532684c37f
+        private const string EnglishLanguageTag = "en";
+
+        private static readonly string[] ImeLanguageTags =
+        {
+            "zh", // Chinese
+            "ja", // Japanese
+            "ko", // Korean
+        };
+
+        private const uint KeyboardLayoutLoWord = 0xFFFF;
+
+        // Store the previous keyboard layout
+        private static HKL _previousLayout;
+
+        /// <summary>
+        /// Switches the keyboard layout to English if available.
+        /// </summary>
+        /// <param name="backupPrevious">If true, the current keyboard layout will be stored for later restoration.</param>
+        /// <exception cref="Win32Exception">Thrown when there's an error getting the window thread process ID.</exception>
+        public static unsafe void SwitchToEnglishKeyboardLayout(bool backupPrevious)
+        {
+            // Find an installed English layout
+            var enHKL = FindEnglishKeyboardLayout();
+
+            // No installed English layout found
+            if (enHKL == HKL.Null) return;
+
+            // Get the current foreground window
+            var hwnd = PInvoke.GetForegroundWindow();
+            if (hwnd == HWND.Null) return;
+
+            // Get the current foreground window thread ID
+            var threadId = PInvoke.GetWindowThreadProcessId(hwnd);
+            if (threadId == 0) throw new Win32Exception(Marshal.GetLastWin32Error());
+
+            // If the current layout has an IME mode, disable it without switching to another layout.
+            // This is needed because for languages with IME mode, Flow Launcher just temporarily disables
+            // the IME mode instead of switching to another layout.
+            var currentLayout = PInvoke.GetKeyboardLayout(threadId);
+            var currentLangId = (uint)currentLayout.Value & KeyboardLayoutLoWord;
+            foreach (var langTag in ImeLanguageTags)
+            {
+                if (GetLanguageTag(currentLangId).StartsWith(langTag, StringComparison.OrdinalIgnoreCase))
+                {
+                    return;
+                }
+            }
+
+            // Backup current keyboard layout
+            if (backupPrevious) _previousLayout = currentLayout;
+
+            // Switch to English layout
+            PInvoke.ActivateKeyboardLayout(enHKL, 0);
+        }
+
+        /// <summary>
+        /// Restores the previously backed-up keyboard layout.
+        /// If it wasn't backed up or has already been restored, this method does nothing.
+        /// </summary>
+        public static void RestorePreviousKeyboardLayout()
+        {
+            if (_previousLayout == HKL.Null) return;
+
+            var hwnd = PInvoke.GetForegroundWindow();
+            if (hwnd == HWND.Null) return;
+
+            PInvoke.PostMessage(
+                hwnd,
+                PInvoke.WM_INPUTLANGCHANGEREQUEST,
+                PInvoke.INPUTLANGCHANGE_FORWARD,
+                _previousLayout.Value
+            );
+
+            _previousLayout = HKL.Null;
+        }
+
+        /// <summary>
+        /// Finds an installed English keyboard layout.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Win32Exception"></exception>
+        private static unsafe HKL FindEnglishKeyboardLayout()
+        {
+            // Get the number of keyboard layouts
+            int count = PInvoke.GetKeyboardLayoutList(0, null);
+            if (count <= 0) return HKL.Null;
+
+            // Get all keyboard layouts
+            var handles = new HKL[count];
+            fixed (HKL* h = handles)
+            {
+                var result = PInvoke.GetKeyboardLayoutList(count, h);
+                if (result == 0) throw new Win32Exception(Marshal.GetLastWin32Error());
+            }
+
+            // Look for any English keyboard layout
+            foreach (var hkl in handles)
+            {
+                // The lower word contains the language identifier
+                var langId = (uint)hkl.Value & KeyboardLayoutLoWord;
+                var langTag = GetLanguageTag(langId);
+
+                // Check if it's an English layout
+                if (langTag.StartsWith(EnglishLanguageTag, StringComparison.OrdinalIgnoreCase))
+                {
+                    return hkl;
+                }
+            }
+
+            return HKL.Null;
+        }
+
+        /// <summary>
+        ///  Returns the
+        ///  <see href="https://learn.microsoft.com/globalization/locale/standard-locale-names">
+        ///   BCP 47 language tag
+        ///  </see>
+        ///  of the current input language.
+        /// </summary>
+        /// <remarks>
+        /// Edited from: https://github.com/dotnet/winforms
+        /// </remarks>
+        private static string GetLanguageTag(uint langId)
+        {
+            // We need to convert the language identifier to a language tag, because they are deprecated and may have a
+            // transient value.
+            // https://learn.microsoft.com/globalization/locale/other-locale-names#lcid
+            // https://learn.microsoft.com/windows/win32/winmsg/wm-inputlangchange#remarks
+            //
+            // It turns out that the LCIDToLocaleName API, which is used inside CultureInfo, may return incorrect
+            // language tags for transient language identifiers. For example, it returns "nqo-GN" and "jv-Java-ID"
+            // instead of the "nqo" and "jv-Java" (as seen in the Get-WinUserLanguageList PowerShell cmdlet).
+            //
+            // Try to extract proper language tag from registry as a workaround approved by a Windows team.
+            // https://github.com/dotnet/winforms/pull/8573#issuecomment-1542600949
+            //
+            // NOTE: this logic may break in future versions of Windows since it is not documented.
+            if (langId is PInvoke.LOCALE_TRANSIENT_KEYBOARD1
+                or PInvoke.LOCALE_TRANSIENT_KEYBOARD2
+                or PInvoke.LOCALE_TRANSIENT_KEYBOARD3
+                or PInvoke.LOCALE_TRANSIENT_KEYBOARD4)
+            {
+                using var key = Registry.CurrentUser.OpenSubKey(UserProfileRegistryPath);
+                if (key?.GetValue("Languages") is string[] languages)
+                {
+                    foreach (string language in languages)
+                    {
+                        using var subKey = key.OpenSubKey(language);
+                        if (subKey?.GetValue("TransientLangId") is int transientLangId
+                            && transientLangId == langId)
+                        {
+                            return language;
+                        }
+                    }
+                }
+            }
+
+            return CultureInfo.GetCultureInfo((int)langId).Name;
         }
 
         #endregion

@@ -104,6 +104,9 @@ namespace Flow.Launcher
             {
                 _settings.FirstLaunch = false;
                 App.API.SaveAppAllSettings();
+                /* Set Backdrop Type to Acrylic for Windows 11 when First Launch. Default is None. */
+                if (OperatingSystem.IsWindowsVersionAtLeast(10, 0, 22000))
+                    _settings.BackdropType = BackdropTypes.Acrylic;
                 var WelcomeWindow = new WelcomeWindow();
                 WelcomeWindow.Show();
             }
@@ -146,7 +149,9 @@ namespace Flow.Launcher
 
             // Since the default main window visibility is visible, so we need set focus during startup
             QueryTextBox.Focus();
-
+            // Set the initial state of the QueryTextBoxCursorMovedToEnd property
+            // Without this part, when shown for the first time, switching the context menu does not move the cursor to the end.
+            _viewModel.QueryTextCursorMovedToEnd = false;
             _viewModel.PropertyChanged += (o, e) =>
             {
                 switch (e.PropertyName)
