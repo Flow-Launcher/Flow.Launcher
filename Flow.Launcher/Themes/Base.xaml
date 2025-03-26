@@ -394,6 +394,7 @@
         <Style.Triggers>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />
                     <Condition Binding="{Binding ElementName=ResultListBox, Path=Items.Count}" Value="0" />
                 </MultiDataTrigger.Conditions>
                 <MultiDataTrigger.Setters>
@@ -435,12 +436,12 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
+
     <Style
         x:Key="PreviewBorderStyle"
         BasedOn="{StaticResource BasePreviewBorderStyle}"
         TargetType="{x:Type Border}">
         <Setter Property="BorderBrush" Value="Gray" />
-
     </Style>
 
     <Style x:Key="PreviewArea" TargetType="{x:Type Grid}">
