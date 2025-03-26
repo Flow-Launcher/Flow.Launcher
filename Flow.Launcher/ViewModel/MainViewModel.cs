@@ -49,6 +49,8 @@ namespace Flow.Launcher.ViewModel
         private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
         private Task _resultsViewUpdateTask;
 
+        private readonly IReadOnlyList<Result> _emptyResult = new List<Result>();
+
         #endregion
 
         #region Constructor
@@ -162,7 +164,21 @@ namespace Flow.Launcher.ViewModel
                 switch (args.PropertyName)
                 {
                     case nameof(Results.SelectedItem):
-                        UpdatePreview();
+                        _selectedItemFromQueryResults = true;
+                        PreviewSelectedItem = Results.SelectedItem;
+                        _ = UpdatePreviewAsync();
+                        break;
+                }
+            };
+
+            History.PropertyChanged += (_, args) =>
+            {
+                switch (args.PropertyName)
+                {
+                    case nameof(History.SelectedItem):
+                        _selectedItemFromQueryResults = false;
+                        PreviewSelectedItem = History.SelectedItem;
+                        _ = UpdatePreviewAsync();
                         break;
                 }
             };
@@ -265,7 +281,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void LoadHistory()
         {
-            if (SelectedIsFromQueryResults())
+            if (QueryResultsSelected())
             {
                 SelectedResults = History;
                 History.SelectedIndex = _history.Items.Count - 1;
@@ -279,7 +295,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         public void ReQuery()
         {
-            if (SelectedIsFromQueryResults())
+            if (QueryResultsSelected())
             {
                 _ = QueryResultsAsync(isReQuery: true);
             }
@@ -320,7 +336,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void LoadContextMenu()
         {
-            if (SelectedIsFromQueryResults())
+            if (QueryResultsSelected())
             {
                 // When switch to ContextMenu from QueryResults, but no item being chosen, should do nothing
                 // i.e. Shift+Enter/Ctrl+O right after Alt + Space should do nothing
@@ -350,7 +366,7 @@ namespace Flow.Launcher.ViewModel
         private void AutocompleteQuery()
         {
             var result = SelectedResults.SelectedItem?.Result;
-            if (result != null && SelectedIsFromQueryResults()) // SelectedItem returns null if selection is empty.
+            if (result != null && QueryResultsSelected()) // SelectedItem returns null if selection is empty.
             {
                 var autoCompleteText = result.Title;
 
@@ -402,7 +418,7 @@ namespace Flow.Launcher.ViewModel
             })
             .ConfigureAwait(false);
 
-            if (SelectedIsFromQueryResults())
+            if (QueryResultsSelected())
             {
                 _userSelectedRecord.Add(result);
                 // origin query is null when user select the context menu item directly of one item from query list
@@ -481,7 +497,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (_history.Items.Count > 0
                 && QueryText == string.Empty
-                && SelectedIsFromQueryResults())
+                && QueryResultsSelected())
             {
                 lastHistoryIndex = 1;
                 ReverseHistory();
@@ -501,7 +517,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void Esc()
         {
-            if (!SelectedIsFromQueryResults())
+            if (!QueryResultsSelected())
             {
                 SelectedResults = Results;
             }
@@ -513,7 +529,7 @@ namespace Flow.Launcher.ViewModel
 
         public void BackToQueryResults()
         {
-            if (!SelectedIsFromQueryResults())
+            if (!QueryResultsSelected())
             {
                 SelectedResults = Results;
             }
@@ -644,13 +660,16 @@ namespace Flow.Launcher.ViewModel
 
         private ResultsViewModel SelectedResults
         {
-            get { return _selectedResults; }
+            get => _selectedResults;
             set
             {
+                var isReturningFromQueryResults = QueryResultsSelected();
                 var isReturningFromContextMenu = ContextMenuSelected();
+                var isReturningFromHistory = HistorySelected();
                 _selectedResults = value;
-                if (SelectedIsFromQueryResults())
+                if (QueryResultsSelected())
                 {
+                    Results.Visibility = Visibility.Visible;
                     ContextMenu.Visibility = Visibility.Collapsed;
                     History.Visibility = Visibility.Collapsed;
 
@@ -668,10 +687,27 @@ namespace Flow.Launcher.ViewModel
                     {
                         ChangeQueryText(_queryTextBeforeLeaveResults);
                     }
+
+                    // If we are returning from history and we have not set select item yet,
+                    // we need to clear the preview selected item
+                    if (isReturningFromHistory && _selectedItemFromQueryResults.HasValue && (!_selectedItemFromQueryResults.Value))
+                    {
+                        PreviewSelectedItem = null;
+                    }
                 }
                 else
                 {
                     Results.Visibility = Visibility.Collapsed;
+                    if (HistorySelected())
+                    {
+                        ContextMenu.Visibility = Visibility.Collapsed;
+                        History.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        ContextMenu.Visibility = Visibility.Visible;
+                        History.Visibility = Visibility.Collapsed;
+                    }
                     _queryTextBeforeLeaveResults = QueryText;
 
                     // Because of Fody's optimization
@@ -685,6 +721,16 @@ namespace Flow.Launcher.ViewModel
                     else
                     {
                         QueryText = string.Empty;
+                    }
+
+                    if (HistorySelected())
+                    {
+                        // If we are returning from query results and we have not set select item yet,
+                        // we need to clear the preview selected item
+                        if (isReturningFromQueryResults && _selectedItemFromQueryResults.HasValue && _selectedItemFromQueryResults.Value)
+                        {
+                            PreviewSelectedItem = null;
+                        }
                     }
                 }
 
@@ -785,6 +831,22 @@ namespace Flow.Launcher.ViewModel
 
         #region Preview
 
+        private static readonly int ResultAreaColumnPreviewShown = 1;
+        private static readonly int ResultAreaColumnPreviewHidden = 3;
+
+        private bool? _selectedItemFromQueryResults;
+
+        private ResultViewModel _previewSelectedItem;
+        public ResultViewModel PreviewSelectedItem
+        {
+            get => _previewSelectedItem;
+            set
+            {
+                _previewSelectedItem = value;
+                OnPropertyChanged();
+            }
+        }
+
         public bool InternalPreviewVisible
         {
             get
@@ -803,18 +865,14 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private static readonly int ResultAreaColumnPreviewShown = 1;
-
-        private static readonly int ResultAreaColumnPreviewHidden = 3;
-
         public int ResultAreaColumn { get; set; } = ResultAreaColumnPreviewShown;
 
         // This is not a reliable indicator of whether external preview is visible due to the
         // ability of manually closing/exiting the external preview program which, does not inform flow that
         // preview is no longer available.
-        public bool ExternalPreviewVisible { get; set; } = false;
+        public bool ExternalPreviewVisible { get; private set; }
 
-        private void ShowPreview()
+        private async Task ShowPreviewAsync()
         {
             var useExternalPreview = PluginManager.UseExternalPreview();
 
@@ -825,13 +883,15 @@ namespace Flow.Launcher.ViewModel
                     // Internal preview may still be on when user switches to external
                     if (InternalPreviewVisible)
                         HideInternalPreview();
-                    OpenExternalPreview(path);
+
+                    _ = OpenExternalPreviewAsync(path);
                     break;
 
                 case true
                     when !CanExternalPreviewSelectedResult(out var _):
                     if (ExternalPreviewVisible)
-                        CloseExternalPreview();
+                        await CloseExternalPreviewAsync();
+
                     ShowInternalPreview();
                     break;
 
@@ -844,7 +904,7 @@ namespace Flow.Launcher.ViewModel
         private void HidePreview()
         {
             if (PluginManager.UseExternalPreview())
-                CloseExternalPreview();
+                _ = CloseExternalPreviewAsync();
 
             if (InternalPreviewVisible)
                 HideInternalPreview();
@@ -859,31 +919,31 @@ namespace Flow.Launcher.ViewModel
             }
             else
             {
-                ShowPreview();
+                _ = ShowPreviewAsync();
             }
         }
 
-        private void OpenExternalPreview(string path, bool sendFailToast = true)
+        private async Task OpenExternalPreviewAsync(string path, bool sendFailToast = true)
         {
-            _ = PluginManager.OpenExternalPreviewAsync(path, sendFailToast).ConfigureAwait(false);
+            await PluginManager.OpenExternalPreviewAsync(path, sendFailToast).ConfigureAwait(false);
             ExternalPreviewVisible = true;
         }
 
-        private void CloseExternalPreview()
+        private async Task CloseExternalPreviewAsync()
         {
-            _ = PluginManager.CloseExternalPreviewAsync().ConfigureAwait(false);
+            await PluginManager.CloseExternalPreviewAsync().ConfigureAwait(false);
             ExternalPreviewVisible = false;
         }
 
-        private static void SwitchExternalPreview(string path, bool sendFailToast = true)
+        private static async Task SwitchExternalPreviewAsync(string path, bool sendFailToast = true)
         {
-            _ = PluginManager.SwitchExternalPreviewAsync(path,sendFailToast).ConfigureAwait(false);
+            await PluginManager.SwitchExternalPreviewAsync(path, sendFailToast).ConfigureAwait(false);
         }
 
         private void ShowInternalPreview()
         {
             ResultAreaColumn = ResultAreaColumnPreviewShown;
-            Results.SelectedItem?.LoadPreviewImage();
+            PreviewSelectedItem?.LoadPreviewImage();
         }
 
         private void HideInternalPreview()
@@ -897,20 +957,18 @@ namespace Flow.Launcher.ViewModel
             {
                 case true
                     when PluginManager.AllowAlwaysPreview() && CanExternalPreviewSelectedResult(out var path):
-                    OpenExternalPreview(path);
+                    _ = OpenExternalPreviewAsync(path);
                     break;
-
                 case true:
                     ShowInternalPreview();
                     break;
-
                 case false:
                     HidePreview();
                     break;
             }
         }
 
-        private void UpdatePreview()
+        private async Task UpdatePreviewAsync()
         {
             switch (PluginManager.UseExternalPreview())
             {
@@ -918,44 +976,48 @@ namespace Flow.Launcher.ViewModel
                     when CanExternalPreviewSelectedResult(out var path):
                     if (ExternalPreviewVisible)
                     {
-                        SwitchExternalPreview(path, false);
+                        _ = SwitchExternalPreviewAsync(path, false);
                     }
                     else if (InternalPreviewVisible)
                     {
                         HideInternalPreview();
-                        OpenExternalPreview(path);
+                        _ = OpenExternalPreviewAsync(path);
                     }
                     break;
-
                 case true
                     when !CanExternalPreviewSelectedResult(out var _):
                     if (ExternalPreviewVisible)
                     {
-                        CloseExternalPreview();
+                        await CloseExternalPreviewAsync();
                         ShowInternalPreview();
                     }
                     break;
-
                 case false
                     when InternalPreviewVisible:
-                    Results.SelectedItem?.LoadPreviewImage();
+                    PreviewSelectedItem?.LoadPreviewImage();
                     break;
             }
         }
 
         private bool CanExternalPreviewSelectedResult(out string path)
         {
-            path = Results.SelectedItem?.Result?.Preview.FilePath;
+            path = QueryResultsPreviewed() ? Results.SelectedItem?.Result?.Preview.FilePath : string.Empty;
             return !string.IsNullOrEmpty(path);
+        }
+        
+        private bool QueryResultsPreviewed()
+        {
+            var previewed = PreviewSelectedItem == Results.SelectedItem;
+            return previewed;
         }
 
         #endregion
 
         #region Query
 
-        public void Query(bool isReQuery = false)
+        private void Query(bool isReQuery = false)
         {
-            if (SelectedIsFromQueryResults())
+            if (QueryResultsSelected())
             {
                 _ = QueryResultsAsync(isReQuery);
             }
@@ -1027,6 +1089,11 @@ namespace Flow.Launcher.ViewModel
                     Title = string.Format(title, h.Query),
                     SubTitle = string.Format(time, h.ExecutedDateTime),
                     IcoPath = "Images\\history.png",
+                    Preview = new Result.PreviewInfo
+                    {
+                        PreviewImagePath = Constant.HistoryIcon,
+                        Description = string.Format(time, h.ExecutedDateTime)
+                    },
                     OriginQuery = new Query { RawQuery = h.Query },
                     Action = _ =>
                     {
@@ -1052,8 +1119,6 @@ namespace Flow.Launcher.ViewModel
                 History.AddResults(results, id);
             }
         }
-
-        private readonly IReadOnlyList<Result> _emptyResult = new List<Result>();
 
         private async Task QueryResultsAsync(bool isReQuery = false, bool reSelect = true)
         {
@@ -1318,7 +1383,7 @@ namespace Flow.Launcher.ViewModel
             return menu;
         }
 
-        internal bool SelectedIsFromQueryResults()
+        internal bool QueryResultsSelected()
         {
             var selected = SelectedResults == Results;
             return selected;
@@ -1351,6 +1416,18 @@ namespace Flow.Launcher.ViewModel
                 Hide();
             }
         }
+
+        /// <summary>
+        /// Checks if Flow Launcher should ignore any hotkeys
+        /// </summary>
+        public bool ShouldIgnoreHotkeys()
+        {
+            return Settings.IgnoreHotkeysOnFullscreen && Win32Helper.IsForegroundWindowFullscreen() || GameModeStatus;
+        }
+
+        #endregion
+
+        #region Public Methods
 
         public void Show()
         {
@@ -1388,10 +1465,10 @@ namespace Flow.Launcher.ViewModel
 
             if (ExternalPreviewVisible)
             {
-                CloseExternalPreview();
+                await CloseExternalPreviewAsync();
             }
 
-            if (!SelectedIsFromQueryResults())
+            if (!QueryResultsSelected())
             {
                 SelectedResults = Results;
             }
@@ -1401,10 +1478,7 @@ namespace Flow.Launcher.ViewModel
             {
                 ChangeQueryText(string.Empty);
                 await Task.Delay(1); // Wait for one frame to ensure UI reflects changes
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    Application.Current.MainWindow.UpdateLayout(); // Force UI update
-                });
+                Application.Current.Dispatcher.Invoke(Application.Current.MainWindow.UpdateLayout); // Force UI update
             }
 
             switch (Settings.LastQueryMode)
@@ -1463,17 +1537,8 @@ namespace Flow.Launcher.ViewModel
 #pragma warning restore VSTHRD100 // Avoid async void methods
 
         /// <summary>
-        /// Checks if Flow Launcher should ignore any hotkeys
+        /// Save history, user selected records and top most records
         /// </summary>
-        public bool ShouldIgnoreHotkeys()
-        {
-            return Settings.IgnoreHotkeysOnFullscreen && Win32Helper.IsForegroundWindowFullscreen() || GameModeStatus;
-        }
-
-        #endregion
-
-        #region Public Methods
-
         public void Save()
         {
             _historyItemsStorage.Save();

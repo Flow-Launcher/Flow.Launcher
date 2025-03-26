@@ -326,7 +326,7 @@ namespace Flow.Launcher
                     e.Handled = true;
                     break;
                 case Key.Right:
-                    if (_viewModel.SelectedIsFromQueryResults()
+                    if (_viewModel.QueryResultsSelected()
                         && QueryTextBox.CaretIndex == QueryTextBox.Text.Length
                         && !string.IsNullOrEmpty(QueryTextBox.Text))
                     {
@@ -336,7 +336,7 @@ namespace Flow.Launcher
 
                     break;
                 case Key.Left:
-                    if (!_viewModel.SelectedIsFromQueryResults() && QueryTextBox.CaretIndex == 0)
+                    if (!_viewModel.QueryResultsSelected() && QueryTextBox.CaretIndex == 0)
                     {
                         _viewModel.EscCommand.Execute(null);
                         e.Handled = true;
@@ -346,7 +346,7 @@ namespace Flow.Launcher
                 case Key.Back:
                     if (specialKeyState.CtrlPressed)
                     {
-                        if (_viewModel.SelectedIsFromQueryResults()
+                        if (_viewModel.QueryResultsSelected()
                             && QueryTextBox.Text.Length > 0
                             && QueryTextBox.CaretIndex == QueryTextBox.Text.Length)
                         {
