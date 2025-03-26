@@ -6,6 +6,7 @@ using System.Xml;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
@@ -16,7 +17,6 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Microsoft.Win32;
-using TextBox = System.Windows.Controls.TextBox;
 
 namespace Flow.Launcher.Core.Resource
 {
@@ -56,20 +56,23 @@ namespace Flow.Launcher.Core.Resource
             MakeSureThemeDirectoriesExist();
 
             var dicts = Application.Current.Resources.MergedDictionaries;
-            _oldResource = dicts.First(d =>
+            _oldResource = dicts.FirstOrDefault(d =>
             {
-                if (d.Source == null)
-                    return false;
+                if (d.Source == null) return false;
 
                 var p = d.Source.AbsolutePath;
-                var dir = Path.GetDirectoryName(p).NonNull();
-                var info = new DirectoryInfo(dir);
-                var f = info.Name;
-                var e = Path.GetExtension(p);
-                var found = f == Folder && e == Extension;
-                return found;
+                return p.Contains(Folder) && Path.GetExtension(p) == Extension;
             });
-            _oldTheme = Path.GetFileNameWithoutExtension(_oldResource.Source.AbsolutePath);
+
+            if (_oldResource != null)
+            {
+                _oldTheme = Path.GetFileNameWithoutExtension(_oldResource.Source.AbsolutePath);
+            }
+            else
+            {
+                Log.Error("Current theme resource not found. Initializing with default theme.");
+                _oldTheme = Constant.DefaultTheme;
+            };
         }
 
         #endregion
@@ -98,11 +101,150 @@ namespace Flow.Launcher.Core.Resource
 
         private void UpdateResourceDictionary(ResourceDictionary dictionaryToUpdate)
         {
-            var dicts = Application.Current.Resources.MergedDictionaries;
+            // Add new resources
+            if (!Application.Current.Resources.MergedDictionaries.Contains(dictionaryToUpdate))
+            {
+                Application.Current.Resources.MergedDictionaries.Add(dictionaryToUpdate);
+            }
 
-            dicts.Remove(_oldResource);
-            dicts.Add(dictionaryToUpdate);
+            // Remove old resources
+            if (_oldResource != null && _oldResource != dictionaryToUpdate &&
+                Application.Current.Resources.MergedDictionaries.Contains(_oldResource))
+            {
+                Application.Current.Resources.MergedDictionaries.Remove(_oldResource);
+            }
+
             _oldResource = dictionaryToUpdate;
+        }
+
+        /// <summary>
+        /// Updates only the font settings and refreshes the UI.
+        /// </summary>
+        public void UpdateFonts()
+        {
+            try
+            {
+                // Load a ResourceDictionary for the specified theme.
+                var themeName = GetCurrentTheme();
+                var dict = GetThemeResourceDictionary(themeName);
+                
+                // Apply font settings to the theme resource.
+                ApplyFontSettings(dict);
+                UpdateResourceDictionary(dict);
+
+                // Must apply blur and drop shadow effects
+                _ = RefreshFrameAsync();
+            }
+            catch (Exception e)
+            {
+                Log.Exception("Error occurred while updating theme fonts", e);
+            }
+        }
+
+        /// <summary>
+        /// Loads and applies font settings to the theme resource.
+        /// </summary>
+        private void ApplyFontSettings(ResourceDictionary dict)
+        {
+            if (dict["QueryBoxStyle"] is Style queryBoxStyle &&
+                dict["QuerySuggestionBoxStyle"] is Style querySuggestionBoxStyle)
+            {
+                var fontFamily = new FontFamily(_settings.QueryBoxFont);
+                var fontStyle = FontHelper.GetFontStyleFromInvariantStringOrNormal(_settings.QueryBoxFontStyle);
+                var fontWeight = FontHelper.GetFontWeightFromInvariantStringOrNormal(_settings.QueryBoxFontWeight);
+                var fontStretch = FontHelper.GetFontStretchFromInvariantStringOrNormal(_settings.QueryBoxFontStretch);
+                
+                SetFontProperties(queryBoxStyle, fontFamily, fontStyle, fontWeight, fontStretch, true);
+                SetFontProperties(querySuggestionBoxStyle, fontFamily, fontStyle, fontWeight, fontStretch, false);
+            }
+            
+            if (dict["ItemTitleStyle"] is Style resultItemStyle &&
+                dict["ItemTitleSelectedStyle"] is Style resultItemSelectedStyle &&
+                dict["ItemHotkeyStyle"] is Style resultHotkeyItemStyle &&
+                dict["ItemHotkeySelectedStyle"] is Style resultHotkeyItemSelectedStyle)
+            {
+                var fontFamily = new FontFamily(_settings.ResultFont);
+                var fontStyle = FontHelper.GetFontStyleFromInvariantStringOrNormal(_settings.ResultFontStyle);
+                var fontWeight = FontHelper.GetFontWeightFromInvariantStringOrNormal(_settings.ResultFontWeight);
+                var fontStretch = FontHelper.GetFontStretchFromInvariantStringOrNormal(_settings.ResultFontStretch);
+
+                SetFontProperties(resultItemStyle, fontFamily, fontStyle, fontWeight, fontStretch, false);
+                SetFontProperties(resultItemSelectedStyle, fontFamily, fontStyle, fontWeight, fontStretch, false);
+                SetFontProperties(resultHotkeyItemStyle, fontFamily, fontStyle, fontWeight, fontStretch, false);
+                SetFontProperties(resultHotkeyItemSelectedStyle, fontFamily, fontStyle, fontWeight, fontStretch, false);
+            }
+            
+            if (dict["ItemSubTitleStyle"] is Style resultSubItemStyle &&
+                dict["ItemSubTitleSelectedStyle"] is Style resultSubItemSelectedStyle)
+            {
+                var fontFamily = new FontFamily(_settings.ResultSubFont);
+                var fontStyle = FontHelper.GetFontStyleFromInvariantStringOrNormal(_settings.ResultSubFontStyle);
+                var fontWeight = FontHelper.GetFontWeightFromInvariantStringOrNormal(_settings.ResultSubFontWeight);
+                var fontStretch = FontHelper.GetFontStretchFromInvariantStringOrNormal(_settings.ResultSubFontStretch);
+
+                SetFontProperties(resultSubItemStyle, fontFamily, fontStyle, fontWeight, fontStretch, false);
+                SetFontProperties(resultSubItemSelectedStyle, fontFamily, fontStyle, fontWeight, fontStretch, false);
+            }
+        }
+
+        /// <summary>
+        /// Applies font properties to a Style.
+        /// </summary>
+        private static void SetFontProperties(Style style, FontFamily fontFamily, FontStyle fontStyle, FontWeight fontWeight, FontStretch fontStretch, bool isTextBox)
+        {
+            // Remove existing font-related setters  
+            if (isTextBox)
+            {
+                //  First, find the setters to remove and store them in a list  
+                var settersToRemove = style.Setters
+                    .OfType<Setter>()
+                    .Where(setter => 
+                        setter.Property == Control.FontFamilyProperty ||
+                        setter.Property == Control.FontStyleProperty ||
+                        setter.Property == Control.FontWeightProperty ||
+                        setter.Property == Control.FontStretchProperty)
+                    .ToList();
+
+                // Remove each found setter one by one  
+                foreach (var setter in settersToRemove)
+                {
+                    style.Setters.Remove(setter);
+                }
+
+                // Add New font setter
+                style.Setters.Add(new Setter(Control.FontFamilyProperty, fontFamily));
+                style.Setters.Add(new Setter(Control.FontStyleProperty, fontStyle));
+                style.Setters.Add(new Setter(Control.FontWeightProperty, fontWeight));
+                style.Setters.Add(new Setter(Control.FontStretchProperty, fontStretch));
+
+                //  Set caret brush (retain existing logic)
+                var caretBrushPropertyValue = style.Setters.OfType<Setter>().Any(x => x.Property.Name == "CaretBrush");
+                var foregroundPropertyValue = style.Setters.OfType<Setter>().Where(x => x.Property.Name == "Foreground")
+                    .Select(x => x.Value).FirstOrDefault();
+                if (!caretBrushPropertyValue && foregroundPropertyValue != null)
+                    style.Setters.Add(new Setter(TextBoxBase.CaretBrushProperty, foregroundPropertyValue));
+            }
+            else
+            {
+                var settersToRemove = style.Setters
+                    .OfType<Setter>()
+                    .Where(setter => 
+                        setter.Property == TextBlock.FontFamilyProperty ||
+                        setter.Property == TextBlock.FontStyleProperty ||
+                        setter.Property == TextBlock.FontWeightProperty ||
+                        setter.Property == TextBlock.FontStretchProperty)
+                    .ToList();
+                
+                foreach (var setter in settersToRemove)
+                {
+                    style.Setters.Remove(setter);
+                }
+                
+                style.Setters.Add(new Setter(TextBlock.FontFamilyProperty, fontFamily));
+                style.Setters.Add(new Setter(TextBlock.FontStyleProperty, fontStyle));
+                style.Setters.Add(new Setter(TextBlock.FontWeightProperty, fontWeight));
+                style.Setters.Add(new Setter(TextBlock.FontStretchProperty, fontStretch));
+            }
         }
 
         private ResourceDictionary GetThemeResourceDictionary(string theme)
@@ -128,22 +270,22 @@ namespace Flow.Launcher.Core.Resource
                 var fontWeight = FontHelper.GetFontWeightFromInvariantStringOrNormal(_settings.QueryBoxFontWeight);
                 var fontStretch = FontHelper.GetFontStretchFromInvariantStringOrNormal(_settings.QueryBoxFontStretch);
 
-                queryBoxStyle.Setters.Add(new Setter(TextBox.FontFamilyProperty, fontFamily));
-                queryBoxStyle.Setters.Add(new Setter(TextBox.FontStyleProperty, fontStyle));
-                queryBoxStyle.Setters.Add(new Setter(TextBox.FontWeightProperty, fontWeight));
-                queryBoxStyle.Setters.Add(new Setter(TextBox.FontStretchProperty, fontStretch));
+                queryBoxStyle.Setters.Add(new Setter(Control.FontFamilyProperty, fontFamily));
+                queryBoxStyle.Setters.Add(new Setter(Control.FontStyleProperty, fontStyle));
+                queryBoxStyle.Setters.Add(new Setter(Control.FontWeightProperty, fontWeight));
+                queryBoxStyle.Setters.Add(new Setter(Control.FontStretchProperty, fontStretch));
 
                 var caretBrushPropertyValue = queryBoxStyle.Setters.OfType<Setter>().Any(x => x.Property.Name == "CaretBrush");
                 var foregroundPropertyValue = queryBoxStyle.Setters.OfType<Setter>().Where(x => x.Property.Name == "Foreground")
                     .Select(x => x.Value).FirstOrDefault();
                 if (!caretBrushPropertyValue && foregroundPropertyValue != null) //otherwise BaseQueryBoxStyle will handle styling
-                    queryBoxStyle.Setters.Add(new Setter(TextBox.CaretBrushProperty, foregroundPropertyValue));
+                    queryBoxStyle.Setters.Add(new Setter(TextBoxBase.CaretBrushProperty, foregroundPropertyValue));
 
                 // Query suggestion box's font style is aligned with query box
-                querySuggestionBoxStyle.Setters.Add(new Setter(TextBox.FontFamilyProperty, fontFamily));
-                querySuggestionBoxStyle.Setters.Add(new Setter(TextBox.FontStyleProperty, fontStyle));
-                querySuggestionBoxStyle.Setters.Add(new Setter(TextBox.FontWeightProperty, fontWeight));
-                querySuggestionBoxStyle.Setters.Add(new Setter(TextBox.FontStretchProperty, fontStretch));
+                querySuggestionBoxStyle.Setters.Add(new Setter(Control.FontFamilyProperty, fontFamily));
+                querySuggestionBoxStyle.Setters.Add(new Setter(Control.FontStyleProperty, fontStyle));
+                querySuggestionBoxStyle.Setters.Add(new Setter(Control.FontWeightProperty, fontWeight));
+                querySuggestionBoxStyle.Setters.Add(new Setter(Control.FontStretchProperty, fontStretch));
             }
 
             if (dict["ItemTitleStyle"] is Style resultItemStyle &&
@@ -180,7 +322,7 @@ namespace Flow.Launcher.Core.Resource
             /* Ignore Theme Window Width and use setting */
             var windowStyle = dict["WindowStyle"] as Style;
             var width = _settings.WindowSize;
-            windowStyle.Setters.Add(new Setter(Window.WidthProperty, width));
+            windowStyle.Setters.Add(new Setter(FrameworkElement.WidthProperty, width));
             return dict;
         }
 
@@ -265,11 +407,12 @@ namespace Flow.Launcher.Core.Resource
             try
             {
                 if (string.IsNullOrEmpty(path))
-                    throw new DirectoryNotFoundException("Theme path can't be found <{path}>");
+                    throw new DirectoryNotFoundException($"Theme path can't be found <{path}>");
 
-                // reload all resources even if the theme itself hasn't changed in order to pickup changes
-                // to things like fonts
-                UpdateResourceDictionary(GetResourceDictionary(theme));
+                // Retrieve theme resource – always use the resource with font settings applied.
+                var resourceDict = GetResourceDictionary(theme);
+                
+                UpdateResourceDictionary(resourceDict);
 
                 _settings.Theme = theme;
 
@@ -280,10 +423,11 @@ namespace Flow.Launcher.Core.Resource
                 }
 
                 BlurEnabled = IsBlurTheme();
-                //if (_settings.UseDropShadowEffect)
-                // AddDropShadowEffectToCurrentTheme();
-                //Win32Helper.SetBlurForWindow(Application.Current.MainWindow, BlurEnabled);
-                _ = SetBlurForWindowAsync();
+
+                // Can only apply blur but here also apply drop shadow effect to avoid possible drop shadow effect issues
+                _ = RefreshFrameAsync();
+
+                return true;
             }
             catch (DirectoryNotFoundException)
             {
@@ -305,7 +449,6 @@ namespace Flow.Launcher.Core.Resource
                 }
                 return false;
             }
-            return true;
         }
 
         #endregion
@@ -481,17 +624,14 @@ namespace Flow.Launcher.Core.Resource
 
         private void SetBlurForWindow(string theme, BackdropTypes backdropType)
         {
-            var dict = GetThemeResourceDictionary(theme);
-            if (dict == null)
-                return;
+            var dict = GetResourceDictionary(theme);
+            if (dict == null) return;
 
             var windowBorderStyle = dict.Contains("WindowBorderStyle") ? dict["WindowBorderStyle"] as Style : null;
-            if (windowBorderStyle == null)
-                return;
+            if (windowBorderStyle == null) return;
 
-            Window mainWindow = Application.Current.MainWindow;
-            if (mainWindow == null)
-                return;
+            var mainWindow = Application.Current.MainWindow;
+            if (mainWindow == null) return;
 
             // Check if the theme supports blur
             bool hasBlur = dict.Contains("ThemeBlurEnabled") && dict["ThemeBlurEnabled"] is bool b && b;

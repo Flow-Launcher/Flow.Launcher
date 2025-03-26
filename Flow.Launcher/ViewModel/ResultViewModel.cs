@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
@@ -6,25 +9,20 @@ using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using System.IO;
-using System.Drawing.Text;
-using System.Collections.Generic;
 
 namespace Flow.Launcher.ViewModel
 {
     public class ResultViewModel : BaseModel
     {
-        private static PrivateFontCollection fontCollection = new();
-        private static Dictionary<string, string> fonts = new();
+        private static readonly PrivateFontCollection FontCollection = new();
+        private static readonly Dictionary<string, string> Fonts = new();
 
         public ResultViewModel(Result result, Settings settings)
         {
             Settings = settings;
 
-            if (result == null)
-            {
-                return;
-            }
+            if (result == null) return;
+
             Result = result;
 
             if (Result.Glyph is { FontFamily: not null } glyph)
@@ -39,20 +37,20 @@ namespace Flow.Launcher.ViewModel
                         fontFamilyPath = Path.Combine(Result.PluginDirectory, fontFamilyPath);
                     }
 
-                    if (fonts.ContainsKey(fontFamilyPath))
+                    if (Fonts.TryGetValue(fontFamilyPath, out var value))
                     {
                         Glyph = glyph with
                         {
-                            FontFamily = fonts[fontFamilyPath]
+                            FontFamily = value
                         };
                     }
                     else
                     {
-                        fontCollection.AddFontFile(fontFamilyPath);
-                        fonts[fontFamilyPath] = $"{Path.GetDirectoryName(fontFamilyPath)}/#{fontCollection.Families[^1].Name}";
+                        FontCollection.AddFontFile(fontFamilyPath);
+                        Fonts[fontFamilyPath] = $"{Path.GetDirectoryName(fontFamilyPath)}/#{FontCollection.Families[^1].Name}";
                         Glyph = glyph with
                         {
-                            FontFamily = fonts[fontFamilyPath]
+                            FontFamily = Fonts[fontFamilyPath]
                         };
                     }
                 }
@@ -61,7 +59,6 @@ namespace Flow.Launcher.ViewModel
                     Glyph = glyph;
                 }
             }
-
         }
 
         public Settings Settings { get; }
@@ -95,14 +92,10 @@ namespace Flow.Launcher.ViewModel
             get
             {
                 if (PreviewImageAvailable)
-                {
                     return Visibility.Visible;
-                }
-                else
-                {
-                    // Fall back to icon
-                    return ShowIcon;
-                }
+                
+                // Fall back to icon
+                return ShowIcon;
             }
         }
 
@@ -111,9 +104,8 @@ namespace Flow.Launcher.ViewModel
             get
             {
                 if (Result.RoundedIcon)
-                {
                     return IconXY / 2;
-                }
+                
                 return IconXY;
             }
 
@@ -148,31 +140,40 @@ namespace Flow.Launcher.ViewModel
             ? Result.SubTitle
             : Result.SubTitleToolTip;
 
-        private volatile bool ImageLoaded;
-        private volatile bool PreviewImageLoaded;
+        private volatile bool _imageLoaded;
+        private volatile bool _previewImageLoaded;
 
-        private ImageSource image = ImageLoader.LoadingImage;
-        private ImageSource previewImage = ImageLoader.LoadingImage;
+        private ImageSource _image = ImageLoader.LoadingImage;
+        private ImageSource _previewImage = ImageLoader.LoadingImage;
 
         public ImageSource Image
         {
             get
             {
-                if (!ImageLoaded)
+                if (!_imageLoaded)
                 {
-                    ImageLoaded = true;
+                    _imageLoaded = true;
                     _ = LoadImageAsync();
                 }
 
-                return image;
+                return _image;
             }
-            private set => image = value;
+            private set => _image = value;
         }
 
         public ImageSource PreviewImage
         {
-            get => previewImage;
-            private set => previewImage = value;
+            get
+            {
+                if (!_previewImageLoaded)
+                {
+                    _previewImageLoaded = true;
+                    _ = LoadPreviewImageAsync();
+                }
+
+                return _previewImage;
+            }
+            private set => _previewImage = value;
         }
 
         /// <summary>
@@ -188,8 +189,7 @@ namespace Flow.Launcher.ViewModel
             {
                 try
                 {
-                    var image = icon();
-                    return image;
+                    return icon();
                 }
                 catch (Exception e)
                 {
@@ -208,7 +208,7 @@ namespace Flow.Launcher.ViewModel
             var iconDelegate = Result.Icon;
             if (ImageLoader.TryGetValue(imagePath, false, out ImageSource img))
             {
-                image = img;
+                _image = img;
             }
             else
             {
@@ -223,7 +223,7 @@ namespace Flow.Launcher.ViewModel
             var iconDelegate = Result.Preview.PreviewDelegate ?? Result.Icon;
             if (ImageLoader.TryGetValue(imagePath, true, out ImageSource img))
             {
-                previewImage = img;
+                _previewImage = img;
             }
             else
             {
@@ -234,13 +234,10 @@ namespace Flow.Launcher.ViewModel
 
         public void LoadPreviewImage()
         {
-            if (ShowDefaultPreview == Visibility.Visible)
+            if (ShowDefaultPreview == Visibility.Visible && !_previewImageLoaded && ShowPreviewImage == Visibility.Visible)
             {
-                if (!PreviewImageLoaded && ShowPreviewImage == Visibility.Visible)
-                {
-                    PreviewImageLoaded = true;
-                    _ = LoadPreviewImageAsync();
-                }
+                _previewImageLoaded = true;
+                _ = LoadPreviewImageAsync();
             }
         }
 
