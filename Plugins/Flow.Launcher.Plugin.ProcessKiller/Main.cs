@@ -154,8 +154,9 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                     Action = (c) =>
                     {
                         processHelper.TryKill(_context, p);
+                        // Re-query to refresh process list
                         _context.API.ReQuery();
-                        return false;
+                        return true;
                     }
                 });
             }
@@ -180,8 +181,9 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                         {
                             processHelper.TryKill(_context, p.Process);
                         }
+                        // Re-query to refresh process list
                         _context.API.ReQuery();
-                        return false;
+                        return true;
                     }
                 });
             }
