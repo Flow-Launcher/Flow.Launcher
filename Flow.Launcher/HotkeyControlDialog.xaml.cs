@@ -4,9 +4,11 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using ChefKeys;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using ModernWpf.Controls;
 
@@ -16,7 +18,7 @@ namespace Flow.Launcher;
 
 public partial class HotkeyControlDialog : ContentDialog
 {
-    private IHotkeySettings _hotkeySettings;
+    private static readonly IHotkeySettings _hotkeySettings = Ioc.Default.GetRequiredService<Settings>();
     private Action? _overwriteOtherHotkey;
     private string DefaultHotkey { get; }
     public string WindowTitle { get; }
@@ -36,7 +38,7 @@ public partial class HotkeyControlDialog : ContentDialog
 
     private static bool isOpenFlowHotkey;
 
-    public HotkeyControlDialog(string hotkey, string defaultHotkey, IHotkeySettings hotkeySettings, string windowTitle = "")
+    public HotkeyControlDialog(string hotkey, string defaultHotkey, string windowTitle = "")
     {
         WindowTitle = windowTitle switch
         {
@@ -45,7 +47,6 @@ public partial class HotkeyControlDialog : ContentDialog
         };
         DefaultHotkey = defaultHotkey;
         CurrentHotkey = new HotkeyModel(hotkey);
-        _hotkeySettings = hotkeySettings;
         SetKeysToDisplay(CurrentHotkey);
 
         InitializeComponent();

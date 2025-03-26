@@ -29,8 +29,8 @@
         W ten sposób ogólna formuła wyszukiwania na Netflix to https://www.netflix.com/search?q={q}
     </system:String>
 
-    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">Copy URL</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">Copy search URL to clipboard</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">Kopiuj adres URL</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">Skopiuj adres URL wyszukiwania do schowka</system:String>
 
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">Tytuł</system:String>

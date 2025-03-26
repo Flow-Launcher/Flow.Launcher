@@ -13,6 +13,7 @@
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">فشل في تسجيل مفتاح التشغيل السريع &quot;{0}&quot;. قد يكون المفتاح مستخدمًا من قبل برنامج آخر. قم بتغيير المفتاح، أو قم بإغلاق البرنامج الآخر.</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">تعذر بدء {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">تنسيق ملف إضافة Flow Launcher غير صالح</system:String>
@@ -44,6 +45,8 @@
     <system:String x:Key="portableMode">وضع المحمول</system:String>
     <system:String x:Key="portableModeToolTIp">تخزين جميع الإعدادات وبيانات المستخدم في مجلد واحد (مفيد عند استخدام الأقراص القابلة للإزالة أو الخدمات السحابية).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">تشغيل Flow Launcher عند بدء تشغيل النظام</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
     <system:String x:Key="setAutoStartFailed">خطأ في إعداد التشغيل عند بدء التشغيل</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">إخفاء Flow Launcher عند فقدان التركيز</system:String>
     <system:String x:Key="dontPromptUpdateMsg">عدم عرض إشعارات الإصدار الجديد</system:String>
@@ -126,7 +129,8 @@
     <system:String x:Key="plugin_query_version">الإصدار</system:String>
     <system:String x:Key="plugin_query_web">الموقع الإلكتروني</system:String>
     <system:String x:Key="plugin_uninstall">إلغاء التثبيت</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">متجر الإضافات</system:String>
@@ -142,8 +146,6 @@
     <system:String x:Key="LabelNew">إصدار جديد</system:String>
     <system:String x:Key="LabelNewToolTip">تم تحديث هذه الإضافة في آخر 7 أيام</system:String>
     <system:String x:Key="LabelUpdateToolTip">يتوفر تحديث جديد</system:String>
-
-
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">السمة</system:String>
@@ -193,7 +195,6 @@
     <system:String x:Key="Date">التاريخ</system:String>
     <system:String x:Key="TypeIsDarkToolTip">هذه السمة تدعم الوضعين (فاتح/داكن).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">هذه السمة تدعم الخلفية الضبابية الشفافة.</system:String>
-
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">مفتاح الاختصار</system:String>
@@ -297,6 +298,9 @@
     <system:String x:Key="userdatapath">موقع بيانات المستخدم</system:String>
     <system:String x:Key="userdatapathToolTip">يتم حفظ إعدادات المستخدم والإضافات المثبتة في مجلد بيانات المستخدم. قد يختلف هذا الموقع اعتمادًا على ما إذا كان في وضع النقل أم لا.</system:String>
     <system:String x:Key="userdatapathButton">فتح المجلد</system:String>
+    <system:String x:Key="logLevel">Log Level</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">اختر مدير الملفات</system:String>
@@ -367,6 +371,7 @@
     <system:String x:Key="commonOK">حسناً</system:String>
     <system:String x:Key="commonYes">نعم</system:String>
     <system:String x:Key="commonNo">لا</system:String>
+    <system:String x:Key="commonBackground">الخلفية</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">الإصدار</system:String>
@@ -383,6 +388,9 @@
     <system:String x:Key="reportWindow_report_succeed">تم إرسال التقرير بنجاح</system:String>
     <system:String x:Key="reportWindow_report_failed">فشل في إرسال التقرير</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">حدث خطأ في Flow Launcher</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
+    <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
+    <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">يرجى الانتظار...</system:String>

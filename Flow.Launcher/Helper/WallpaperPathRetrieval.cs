@@ -2,19 +2,16 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Flow.Launcher.Infrastructure;
 using Microsoft.Win32;
-using Windows.Win32;
-using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace Flow.Launcher.Helper;
 
 public static class WallpaperPathRetrieval
 {
-    private static readonly int MAX_PATH = 260;
     private static readonly int MAX_CACHE_SIZE = 3;
 
     private static readonly Dictionary<(string, DateTime), ImageBrush> wallpaperCache = new();
@@ -29,7 +26,7 @@ public static class WallpaperPathRetrieval
 
         try
         {
-            var wallpaperPath = GetWallpaperPath();
+            var wallpaperPath = Win32Helper.GetWallpaperPath();
             if (wallpaperPath is not null && File.Exists(wallpaperPath))
             {
                 // Since the wallpaper file name can be the same (TranscodedWallpaper),
@@ -76,17 +73,6 @@ public static class WallpaperPathRetrieval
             App.API.LogException(nameof(WallpaperPathRetrieval), "Error retrieving wallpaper", ex);
             return new SolidColorBrush(Colors.Transparent);
         }
-    }
-
-    private static unsafe string GetWallpaperPath()
-    {
-        var wallpaperPtr = stackalloc char[MAX_PATH];
-        PInvoke.SystemParametersInfo(SYSTEM_PARAMETERS_INFO_ACTION.SPI_GETDESKWALLPAPER, (uint)MAX_PATH,
-            wallpaperPtr,
-            0);
-        var wallpaper = MemoryMarshal.CreateReadOnlySpanFromNullTerminated(wallpaperPtr);
-        
-        return wallpaper.ToString();
     }
 
     private static Color GetWallpaperColor()
