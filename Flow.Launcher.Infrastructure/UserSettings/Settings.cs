@@ -111,7 +111,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public double SettingWindowHeight { get; set; } = 700;
         public double? SettingWindowTop { get; set; } = null;
         public double? SettingWindowLeft { get; set; } = null;
-        public System.Windows.WindowState SettingWindowState { get; set; } = WindowState.Normal;
+        public WindowState SettingWindowState { get; set; } = WindowState.Normal;
 
         public int CustomExplorerIndex { get; set; } = 0;
 
@@ -245,7 +245,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public int MaxResultsToShow { get; set; } = 5;
         public int ActivateTimes { get; set; }
 
-
         public ObservableCollection<CustomPluginHotkey> CustomPluginHotkeys { get; set; } = new ObservableCollection<CustomPluginHotkey>();
 
         public ObservableCollection<CustomShortcutModel> CustomShortcuts { get; set; } = new ObservableCollection<CustomShortcutModel>();
@@ -266,7 +265,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         bool _hideNotifyIcon { get; set; }
         public bool HideNotifyIcon
         {
-            get { return _hideNotifyIcon; }
+            get => _hideNotifyIcon;
             set
             {
                 _hideNotifyIcon = value;
@@ -321,7 +320,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         [JsonIgnore]
         public bool WMPInstalled { get; set; } = true;
-
 
         // This needs to be loaded last by staying at the bottom
         public PluginsSettings PluginSettings { get; set; } = new PluginsSettings();
