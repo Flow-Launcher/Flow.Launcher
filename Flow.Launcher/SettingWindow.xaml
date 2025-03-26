@@ -18,6 +18,8 @@
     Loaded="OnLoaded"
     MouseDown="window_MouseDown"
     ResizeMode="CanResize"
+    SnapsToDevicePixels="True"
+    UseLayoutRounding="True"
     StateChanged="Window_StateChanged"
     Top="{Binding SettingWindowTop, Mode=TwoWay}"
     WindowStartupLocation="Manual"
