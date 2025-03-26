@@ -1,18 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Controls;
+using Flow.Launcher.Plugin.ProcessKiller.ViewModels;
+using Flow.Launcher.Plugin.ProcessKiller.Views;
 
 namespace Flow.Launcher.Plugin.ProcessKiller
 {
-    public class Main : IPlugin, IPluginI18n, IContextMenu
+    public class Main : IPlugin, IPluginI18n, IContextMenu, ISettingProvider
     {
         private readonly ProcessHelper processHelper = new();
 
         private static PluginInitContext _context;
 
+        internal Settings Settings;
+
+        private SettingsViewModel _viewModel;
+
         public void Init(PluginInitContext context)
         {
             _context = context;
+            Settings = context.API.LoadSettingJsonStorage<Settings>();
+            _viewModel = new SettingsViewModel(Settings);
         }
 
         public List<Result> Query(Query query)
@@ -83,7 +92,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                     {
                         // Add score to prioritize processes with visible windows
                         // And use window title for those processes
-                        processlist.Add(new ProcessResult(p, 200, windowTitle, null, progressNameIdTitle));
+                        processlist.Add(new ProcessResult(p, Settings.PutVisibleWindowProcessesTop ? 200 : 0, windowTitle, null, progressNameIdTitle));
                     }
                     else
                     {
@@ -107,7 +116,10 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                         {
                             // Add score to prioritize processes with visible windows
                             // And use window title for those processes
-                            score += 200;
+                            if (Settings.PutVisibleWindowProcessesTop)
+                            {
+                                score += 200;
+                            }
                             processlist.Add(new ProcessResult(p, score, windowTitle, 
                                 score == windowTitleMatch.Score ? windowTitleMatch : null, progressNameIdTitle));
                         }
@@ -175,6 +187,11 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             }
 
             return sortedResults;
+        }
+
+        public Control CreateSettingPanel()
+        {
+            return new SettingsControl(_viewModel);
         }
     }
 }
