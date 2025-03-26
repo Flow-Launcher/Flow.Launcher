@@ -96,7 +96,7 @@ namespace Flow.Launcher
             Win32Helper.HideFromAltTab(this);
             Win32Helper.DisableControlBox(this);
         }
-
+        
         private async void OnLoaded(object sender, RoutedEventArgs _)
         {
             // Check first launch
@@ -236,6 +236,7 @@ namespace Flow.Launcher
             DependencyPropertyDescriptor
                 .FromProperty(VisibilityProperty, typeof(StackPanel)) // History는 StackPanel이라고 가정
                 .AddValueChanged(History, (s, e) => UpdateClockPanelVisibility());
+            _viewModel.ClearAllCacheModes(this);
         }
 
         private async void OnClosing(object sender, CancelEventArgs e)
