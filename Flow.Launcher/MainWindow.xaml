@@ -432,9 +432,6 @@
                             </ControlTemplate>
                         </GridSplitter.Template>
                     </GridSplitter>
-                    <!--  // TODO: Check Height Issue  -->
-                    <!--  I do not know why Preview grid height will be 0 when selected item is from history  -->
-                    <!--  So I add Height="380" to force its height to be set  -->
                     <Grid
                         x:Name="Preview"
                         Grid.Column="2"
