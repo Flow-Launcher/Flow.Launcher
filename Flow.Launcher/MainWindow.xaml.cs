@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Media;
 using System.Threading.Tasks;
@@ -58,7 +59,6 @@ namespace Flow.Launcher
 
         // Window Animation
         private const double DefaultRightMargin = 66; //* this value from base.xaml
-        private bool _animating;
         private bool _isClockPanelAnimating = false;
 
         // IDisposable
@@ -234,7 +234,7 @@ namespace Flow.Launcher
 
             // Detect History.Visibility changes
             DependencyPropertyDescriptor
-                .FromProperty(VisibilityProperty, typeof(StackPanel)) // History는 StackPanel이라고 가정
+                .FromProperty(VisibilityProperty, typeof(StackPanel))
                 .AddValueChanged(History, (s, e) => UpdateClockPanelVisibility());
         }
 
@@ -269,7 +269,6 @@ namespace Flow.Launcher
 
         private void OnLocationChanged(object sender, EventArgs e)
         {
-            if (_animating) return;
 
             if (_settings.SearchWindowScreen == SearchWindowScreens.RememberLastLaunchLocation)
             {
@@ -592,7 +591,7 @@ namespace Flow.Launcher
 
         private void UpdatePosition(bool force)
         {
-            if (_animating && !force)
+            if (!force)
             {
                 return;
             }
@@ -768,18 +767,20 @@ namespace Flow.Launcher
             _viewModel.ProgressBarVisibility = Visibility.Hidden;
         }
 
-        private void WindowAnimation()
+        public void WindowAnimation()
         {
-            if (_animating)
-                return;
-
             _isArrowKeyPressed = true;
-            _animating = true;
             UpdatePosition(false);
-
-            ClockPanel.Opacity = 0;
-            SearchIcon.Opacity = 0;
-            
+            if(_settings.UseAnimation)
+            {
+                    ClockPanel.Opacity = 0;
+                    SearchIcon.Opacity = 0;
+            }
+            else
+            {
+                ClockPanel.Opacity = 1;
+                SearchIcon.Opacity = 1;
+            }
             var clocksb = new Storyboard();
             var iconsb = new Storyboard();
             CircleEase easing = new CircleEase { EasingMode = EasingMode.EaseInOut };
@@ -848,16 +849,11 @@ namespace Flow.Launcher
             clocksb.Children.Add(ClockOpacity);
             iconsb.Children.Add(IconMotion);
             iconsb.Children.Add(IconOpacity);
-
-            clocksb.Completed += (_, _) => _animating = false;
+            
             _settings.WindowLeft = Left;
             _isArrowKeyPressed = false;
-
-            if (QueryTextBox.Text.Length == 0)
-            {
-                clocksb.Begin(ClockPanel);
-            }
-
+            
+            clocksb.Begin(ClockPanel);
             iconsb.Begin(SearchIcon);
         }
 

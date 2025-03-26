@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Windows.Input;
 using System.Linq;
@@ -1437,11 +1438,43 @@ namespace Flow.Launcher.ViewModel
                 {
                     // 📌 Remove DWM Cloak (Make the window visible normally)
                     Win32Helper.DWMSetCloakForWindow(mainWindow, false);
+                    
+                    //Clock and SearchIcon hide when show situation
+                    if(Settings.UseAnimation)
+                    {
+                        mainWindow.ClockPanel.Opacity = 0;
+                        mainWindow.SearchIcon.Opacity = 0;
+                    }
+                    else
+                    {
+                        mainWindow.ClockPanel.Opacity = 1;
+                        mainWindow.SearchIcon.Opacity = 1;   
+                    }
 
+                    if (mainWindow.QueryTextBox.Text.Length != 0)
+                    {
+                        mainWindow.ClockPanel.Visibility = Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        mainWindow.ClockPanel.Visibility = Visibility.Visible;
+                    }
+                    if (PluginIconSource != null)
+                    {
+                        mainWindow.SearchIcon.Opacity = 0;
+                    }
+                    else
+                    {
+                        SearchIconVisibility = Visibility.Visible;
+                    }
                     // 📌 Restore UI elements
-                    mainWindow.ClockPanel.Visibility = Visibility.Visible;
                     //mainWindow.SearchIcon.Visibility = Visibility.Visible;
-                    SearchIconVisibility = Visibility.Visible;
+                    if (Settings.UseAnimation)
+                    {
+                        Application.Current.Dispatcher.BeginInvoke(() => 
+                            mainWindow.WindowAnimation());
+                        Debug.WriteLine("Call Animation");
+                    }
                 }
 
                 // Update WPF properties
@@ -1474,15 +1507,19 @@ namespace Flow.Launcher.ViewModel
             }
 
             // 📌 Immediately apply text reset + force UI update
-            if (Settings.LastQueryMode == LastQueryMode.Empty)
+            /*if (Settings.LastQueryMode == LastQueryMode.Empty)
             {
                 ChangeQueryText(string.Empty);
                 await Task.Delay(1); // Wait for one frame to ensure UI reflects changes
                 Application.Current.Dispatcher.Invoke(Application.Current.MainWindow.UpdateLayout); // Force UI update
-            }
+            }*/
 
             switch (Settings.LastQueryMode)
             {
+                case LastQueryMode.Empty:
+                    ChangeQueryText(string.Empty);
+                    await Task.Delay(1);
+                    break;
                 case LastQueryMode.Preserved:
                 case LastQueryMode.Selected:
                     LastQuerySelected = (Settings.LastQueryMode == LastQueryMode.Preserved);
@@ -1505,17 +1542,25 @@ namespace Flow.Launcher.ViewModel
                 // 📌 Set Opacity of icon and clock to 0 and apply Visibility.Hidden
                 Application.Current.Dispatcher.Invoke(() =>
                 {
+         
+                }, DispatcherPriority.Render);
+                if(Settings.UseAnimation)
+                {
                     mainWindow.ClockPanel.Opacity = 0;
                     mainWindow.SearchIcon.Opacity = 0;
-                    mainWindow.ClockPanel.Visibility = Visibility.Hidden;
-                    //mainWindow.SearchIcon.Visibility = Visibility.Hidden;
-                    SearchIconVisibility = Visibility.Hidden;
+                }
+                else
+                {
+                    mainWindow.ClockPanel.Opacity = 1;
+                    mainWindow.SearchIcon.Opacity = 1;   
+                }
+                mainWindow.ClockPanel.Visibility = Visibility.Hidden;
+                //mainWindow.SearchIcon.Visibility = Visibility.Hidden;
+                SearchIconVisibility = Visibility.Hidden;
 
-                    // Force UI update
-                    mainWindow.ClockPanel.UpdateLayout();
-                    mainWindow.SearchIcon.UpdateLayout();
-                }, DispatcherPriority.Render);
-
+                // Force UI update
+                mainWindow.ClockPanel.UpdateLayout();
+                mainWindow.SearchIcon.UpdateLayout();
                 // 📌 Apply DWM Cloak (Completely hide the window)
                 Win32Helper.DWMSetCloakForWindow(mainWindow, true);
             }
