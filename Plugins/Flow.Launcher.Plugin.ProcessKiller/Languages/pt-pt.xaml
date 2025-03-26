@@ -8,4 +8,6 @@
     <system:String x:Key="flowlauncher_plugin_processkiller_kill_all_count">terminar {0} processos</system:String>
     <system:String x:Key="flowlauncher_plugin_processkiller_kill_instances">terminar todas as instâncias</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_processkiller_put_visible_window_process_top">Put processes with visible windows on the top</system:String>
+
 </ResourceDictionary>
