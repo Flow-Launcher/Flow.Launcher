@@ -5,13 +5,12 @@ namespace Flow.Launcher.Plugin.ProcessKiller.Views;
 
 public partial class SettingsControl : UserControl
 {
-    private readonly SettingsViewModel _viewModel;
-
+    /// <summary>
+    /// Interaction logic for SettingsControl.xaml
+    /// </summary>
     public SettingsControl(SettingsViewModel viewModel)
     {
         InitializeComponent();
-
-        _viewModel = viewModel;
 
         DataContext = viewModel;
     }
