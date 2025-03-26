@@ -49,6 +49,8 @@ namespace Flow.Launcher.ViewModel
         private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
         private Task _resultsViewUpdateTask;
 
+        private readonly IReadOnlyList<Result> _emptyResult = new List<Result>();
+
         #endregion
 
         #region Constructor
@@ -830,16 +832,18 @@ namespace Flow.Launcher.ViewModel
 
         #region Preview
 
+        private static readonly int ResultAreaColumnPreviewShown = 1;
+        private static readonly int ResultAreaColumnPreviewHidden = 3;
+
         private bool? _selectedItemFromQueryResults;
 
-        private ResultViewModel _selectedItem;
-
+        private ResultViewModel _previewSelectedItem;
         public ResultViewModel PreviewSelectedItem
         {
-            get => _selectedItem;
+            get => _previewSelectedItem;
             set
             {
-                _selectedItem = value;
+                _previewSelectedItem = value;
                 OnPropertyChanged();
             }
         }
@@ -861,10 +865,6 @@ namespace Flow.Launcher.ViewModel
 #endif
             }
         }
-
-        private static readonly int ResultAreaColumnPreviewShown = 1;
-
-        private static readonly int ResultAreaColumnPreviewHidden = 3;
 
         public int ResultAreaColumn { get; set; } = ResultAreaColumnPreviewShown;
 
@@ -1016,7 +1016,7 @@ namespace Flow.Launcher.ViewModel
 
         #region Query
 
-        public void Query(bool isReQuery = false)
+        private void Query(bool isReQuery = false)
         {
             if (QueryResultsSelected())
             {
@@ -1120,8 +1120,6 @@ namespace Flow.Launcher.ViewModel
                 History.AddResults(results, id);
             }
         }
-
-        private readonly IReadOnlyList<Result> _emptyResult = new List<Result>();
 
         private async Task QueryResultsAsync(bool isReQuery = false, bool reSelect = true)
         {
@@ -1420,6 +1418,18 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        /// <summary>
+        /// Checks if Flow Launcher should ignore any hotkeys
+        /// </summary>
+        public bool ShouldIgnoreHotkeys()
+        {
+            return Settings.IgnoreHotkeysOnFullscreen && Win32Helper.IsForegroundWindowFullscreen() || GameModeStatus;
+        }
+
+        #endregion
+
+        #region Public Methods
+
         public void Show()
         {
             Application.Current.Dispatcher.Invoke(() =>
@@ -1505,7 +1515,7 @@ namespace Flow.Launcher.ViewModel
                 // 📌 Apply DWM Cloak (Completely hide the window)
                 Win32Helper.DWMSetCloakForWindow(mainWindow, true);
             }
-            
+
             await Task.Delay(50);
 
             // Update WPF properties
@@ -1518,17 +1528,8 @@ namespace Flow.Launcher.ViewModel
 #pragma warning restore VSTHRD100 // Avoid async void methods
 
         /// <summary>
-        /// Checks if Flow Launcher should ignore any hotkeys
+        /// Save history, user selected records and top most records
         /// </summary>
-        public bool ShouldIgnoreHotkeys()
-        {
-            return Settings.IgnoreHotkeysOnFullscreen && Win32Helper.IsForegroundWindowFullscreen() || GameModeStatus;
-        }
-
-        #endregion
-
-        #region Public Methods
-
         public void Save()
         {
             _historyItemsStorage.Save();
