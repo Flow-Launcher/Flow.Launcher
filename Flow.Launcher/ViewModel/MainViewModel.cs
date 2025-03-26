@@ -1473,7 +1473,6 @@ namespace Flow.Launcher.ViewModel
                     {
                         Application.Current.Dispatcher.BeginInvoke(() => 
                             mainWindow.WindowAnimation());
-                        Debug.WriteLine("Call Animation");
                     }
                 }
 
@@ -1540,10 +1539,6 @@ namespace Flow.Launcher.ViewModel
             if (Application.Current.MainWindow is MainWindow mainWindow)
             {
                 // 📌 Set Opacity of icon and clock to 0 and apply Visibility.Hidden
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-         
-                }, DispatcherPriority.Render);
                 if(Settings.UseAnimation)
                 {
                     mainWindow.ClockPanel.Opacity = 0;
@@ -1555,7 +1550,6 @@ namespace Flow.Launcher.ViewModel
                     mainWindow.SearchIcon.Opacity = 1;   
                 }
                 mainWindow.ClockPanel.Visibility = Visibility.Hidden;
-                //mainWindow.SearchIcon.Visibility = Visibility.Hidden;
                 SearchIconVisibility = Visibility.Hidden;
 
                 // Force UI update
