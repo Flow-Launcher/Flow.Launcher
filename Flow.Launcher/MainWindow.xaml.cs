@@ -27,7 +27,7 @@ using Screen = System.Windows.Forms.Screen;
 
 namespace Flow.Launcher
 {
-    public partial class MainWindow
+    public partial class MainWindow : IDisposable
     {
         #region Private Fields
 
@@ -39,24 +39,29 @@ namespace Flow.Launcher
         private NotifyIcon _notifyIcon;
 
         // Window Context Menu
-        private readonly ContextMenu contextMenu = new();
+        private readonly ContextMenu _contextMenu = new();
         private readonly MainViewModel _viewModel;
 
-        // Window Event : Key Event
-        private bool isArrowKeyPressed = false;
+        // Window Event: Close Event
+        private bool _canClose = false;
+        // Window Event: Key Event
+        private bool _isArrowKeyPressed = false;
 
         // Window Sound Effects
         private MediaPlayer animationSoundWMP;
         private SoundPlayer animationSoundWPF;
 
         // Window WndProc
+        private HwndSource _hwndSource;
         private int _initialWidth;
         private int _initialHeight;
 
         // Window Animation
         private const double DefaultRightMargin = 66; //* this value from base.xaml
-        private bool _animating;
-        private bool _isClockPanelAnimating = false; // 애니메이션 실행 중인지 여부
+        private bool _isClockPanelAnimating = false;
+
+        // IDisposable
+        private bool _disposed = false;
 
         #endregion
 
@@ -70,7 +75,7 @@ namespace Flow.Launcher
             DataContext = _viewModel;
 
             InitializeComponent();
-            UpdatePosition(true);
+            UpdatePosition();
 
             InitSoundEffects();
             DataObject.AddPastingHandler(QueryTextBox, QueryTextBox_OnPaste);
@@ -85,8 +90,8 @@ namespace Flow.Launcher
         private void OnSourceInitialized(object sender, EventArgs e)
         {
             var handle = Win32Helper.GetWindowHandle(this, true);
-            var win = HwndSource.FromHwnd(handle);
-            win.AddHook(WndProc);
+            _hwndSource = HwndSource.FromHwnd(handle);
+            _hwndSource.AddHook(WndProc);
             Win32Helper.HideFromAltTab(this);
             Win32Helper.DisableControlBox(this);
         }
@@ -98,12 +103,15 @@ namespace Flow.Launcher
             {
                 _settings.FirstLaunch = false;
                 App.API.SaveAppAllSettings();
+                /* Set Backdrop Type to Acrylic for Windows 11 when First Launch. Default is None. */
+                if (OperatingSystem.IsWindowsVersionAtLeast(10, 0, 22000))
+                    _settings.BackdropType = BackdropTypes.Acrylic;
                 var WelcomeWindow = new WelcomeWindow();
                 WelcomeWindow.Show();
             }
 
             // Hide window if need
-            UpdatePosition(true);
+            UpdatePosition();
             if (_settings.HideOnStartup)
             {
                 _viewModel.Hide();
@@ -130,7 +138,7 @@ namespace Flow.Launcher
             InitProgressbarAnimation();
 
             // Force update position
-            UpdatePosition(true);
+            UpdatePosition();
 
             // Refresh frame
             await Ioc.Default.GetRequiredService<Theme>().RefreshFrameAsync();
@@ -140,7 +148,9 @@ namespace Flow.Launcher
 
             // Since the default main window visibility is visible, so we need set focus during startup
             QueryTextBox.Focus();
-
+            // Set the initial state of the QueryTextBoxCursorMovedToEnd property
+            // Without this part, when shown for the first time, switching the context menu does not move the cursor to the end.
+            _viewModel.QueryTextCursorMovedToEnd = false;
             _viewModel.PropertyChanged += (o, e) =>
             {
                 switch (e.PropertyName)
@@ -156,7 +166,7 @@ namespace Flow.Launcher
                                         SoundPlay();
                                     }
 
-                                    UpdatePosition(false);
+                                    UpdatePosition();
                                     _viewModel.ResetPreview();
                                     Activate();
                                     QueryTextBox.Focus();
@@ -213,34 +223,51 @@ namespace Flow.Launcher
                 }
             };
 
-            // ✅ QueryTextBox.Text 변경 감지 (글자 수 1 이상일 때만 동작하도록 수정)
+            // QueryTextBox.Text change detection (modified to only work when character count is 1 or higher)
             QueryTextBox.TextChanged += (sender, e) => UpdateClockPanelVisibility();
 
-            // ✅ ContextMenu.Visibility 변경 감지
+            // Detecting ContextMenu.Visibility changes
             DependencyPropertyDescriptor
                 .FromProperty(VisibilityProperty, typeof(ContextMenu))
                 .AddValueChanged(ContextMenu, (s, e) => UpdateClockPanelVisibility());
 
-            // ✅ History.Visibility 변경 감지
+            // Detect History.Visibility changes
             DependencyPropertyDescriptor
-                .FromProperty(VisibilityProperty, typeof(StackPanel)) // History는 StackPanel이라고 가정
+                .FromProperty(VisibilityProperty, typeof(StackPanel))
                 .AddValueChanged(History, (s, e) => UpdateClockPanelVisibility());
         }
 
         private async void OnClosing(object sender, CancelEventArgs e)
         {
-            _notifyIcon.Visible = false;
-            App.API.SaveAppAllSettings();
-            e.Cancel = true;
-            await PluginManager.DisposePluginsAsync();
-            Notification.Uninstall();
-            Environment.Exit(0);
+            if (!_canClose)
+            {
+                _notifyIcon.Visible = false;
+                App.API.SaveAppAllSettings();
+                e.Cancel = true;
+                await PluginManager.DisposePluginsAsync();
+                Notification.Uninstall();
+                // After plugins are all disposed, we can close the main window
+                _canClose = true;
+                Close();
+            }
+        }
+
+        private void OnClosed(object sender, EventArgs e)
+        {
+            try
+            {
+                _hwndSource.RemoveHook(WndProc);
+            }
+            catch (Exception)
+            {
+                // Ignored
+            }
+
+            _hwndSource = null;
         }
 
         private void OnLocationChanged(object sender, EventArgs e)
         {
-            if (_animating)
-                return;
             if (_settings.SearchWindowScreen == SearchWindowScreens.RememberLastLaunchLocation)
             {
                 _settings.WindowLeft = Left;
@@ -252,9 +279,11 @@ namespace Flow.Launcher
         {
             _settings.WindowLeft = Left;
             _settings.WindowTop = Top;
+
             ClockPanel.Opacity = 0;
             SearchIcon.Opacity = 0;
-            //This condition stops extra hide call when animator is on,
+
+            // This condition stops extra hide call when animator is on,
             // which causes the toggling to occasional hide instead of show.
             if (_viewModel.MainWindowVisibilityStatus)
             {
@@ -262,7 +291,6 @@ namespace Flow.Launcher
                 // This also stops the mainwindow from flickering occasionally after Settings window is opened
                 // and always after Settings window is closed.
                 if (_settings.UseAnimation)
- 
                     await Task.Delay(100);
 
                 if (_settings.HideWhenDeactivated && !_viewModel.ExternalPreviewVisible)
@@ -278,12 +306,12 @@ namespace Flow.Launcher
             switch (e.Key)
             {
                 case Key.Down:
-                    isArrowKeyPressed = true;
+                    _isArrowKeyPressed = true;
                     _viewModel.SelectNextItemCommand.Execute(null);
                     e.Handled = true;
                     break;
                 case Key.Up:
-                    isArrowKeyPressed = true;
+                    _isArrowKeyPressed = true;
                     _viewModel.SelectPrevItemCommand.Execute(null);
                     e.Handled = true;
                     break;
@@ -296,7 +324,7 @@ namespace Flow.Launcher
                     e.Handled = true;
                     break;
                 case Key.Right:
-                    if (_viewModel.SelectedIsFromQueryResults()
+                    if (_viewModel.QueryResultsSelected()
                         && QueryTextBox.CaretIndex == QueryTextBox.Text.Length
                         && !string.IsNullOrEmpty(QueryTextBox.Text))
                     {
@@ -306,7 +334,7 @@ namespace Flow.Launcher
 
                     break;
                 case Key.Left:
-                    if (!_viewModel.SelectedIsFromQueryResults() && QueryTextBox.CaretIndex == 0)
+                    if (!_viewModel.QueryResultsSelected() && QueryTextBox.CaretIndex == 0)
                     {
                         _viewModel.EscCommand.Execute(null);
                         e.Handled = true;
@@ -316,7 +344,7 @@ namespace Flow.Launcher
                 case Key.Back:
                     if (specialKeyState.CtrlPressed)
                     {
-                        if (_viewModel.SelectedIsFromQueryResults()
+                        if (_viewModel.QueryResultsSelected()
                             && QueryTextBox.Text.Length > 0
                             && QueryTextBox.CaretIndex == QueryTextBox.Text.Length)
                         {
@@ -341,13 +369,13 @@ namespace Flow.Launcher
         {
             if (e.Key == Key.Up || e.Key == Key.Down)
             {
-                isArrowKeyPressed = false;
+                _isArrowKeyPressed = false;
             }
         }
 
         private void OnPreviewMouseMove(object sender, MouseEventArgs e)
         {
-            if (isArrowKeyPressed)
+            if (_isArrowKeyPressed)
             {
                 e.Handled = true; // Ignore Mouse Hover when press Arrowkeys
             }
@@ -517,11 +545,11 @@ namespace Flow.Launcher
             gamemode.ToolTip = App.API.GetTranslation("GameModeToolTip");
             positionreset.ToolTip = App.API.GetTranslation("PositionResetToolTip");
 
-            contextMenu.Items.Add(open);
-            contextMenu.Items.Add(gamemode);
-            contextMenu.Items.Add(positionreset);
-            contextMenu.Items.Add(settings);
-            contextMenu.Items.Add(exit);
+            _contextMenu.Items.Add(open);
+            _contextMenu.Items.Add(gamemode);
+            _contextMenu.Items.Add(positionreset);
+            _contextMenu.Items.Add(settings);
+            _contextMenu.Items.Add(exit);
 
             _notifyIcon.MouseClick += (o, e) =>
             {
@@ -532,14 +560,14 @@ namespace Flow.Launcher
                         break;
                     case MouseButtons.Right:
 
-                        contextMenu.IsOpen = true;
+                        _contextMenu.IsOpen = true;
                         // Get context menu handle and bring it to the foreground
-                        if (PresentationSource.FromVisual(contextMenu) is HwndSource hwndSource)
+                        if (PresentationSource.FromVisual(_contextMenu) is HwndSource hwndSource)
                         {
                             Win32Helper.SetForegroundWindow(hwndSource.Handle);
                         }
 
-                        contextMenu.Focus();
+                        _contextMenu.Focus();
                         break;
                 }
             };
@@ -547,7 +575,7 @@ namespace Flow.Launcher
 
         private void UpdateNotifyIconText()
         {
-            var menu = contextMenu;
+            var menu = _contextMenu;
             ((MenuItem)menu.Items[0]).Header = App.API.GetTranslation("iconTrayOpen") +
                                                " (" + _settings.Hotkey + ")";
             ((MenuItem)menu.Items[1]).Header = App.API.GetTranslation("GameMode");
@@ -560,13 +588,8 @@ namespace Flow.Launcher
 
         #region Window Position
 
-        private void UpdatePosition(bool force)
+        private void UpdatePosition()
         {
-            if (_animating && !force)
-            {
-                return;
-            }
-
             // Initialize call twice to work around multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
             InitializePosition();
             InitializePosition();
@@ -740,19 +763,17 @@ namespace Flow.Launcher
 
         private void WindowAnimation()
         {
-            if (_animating)
-                return;
+            _isArrowKeyPressed = true;
 
-            isArrowKeyPressed = true;
-            _animating = true;
-            UpdatePosition(false);
+            UpdatePosition();
 
-            ClockPanel.Opacity = 0;
-            SearchIcon.Opacity = 0;
-            
+            var opacity = _settings.UseAnimation ? 0.0 : 1.0;
+            ClockPanel.Opacity = opacity;
+            SearchIcon.Opacity = opacity;
+
             var clocksb = new Storyboard();
             var iconsb = new Storyboard();
-            CircleEase easing = new CircleEase { EasingMode = EasingMode.EaseInOut };
+            var easing = new CircleEase { EasingMode = EasingMode.EaseInOut };
 
             var animationLength = _settings.AnimationSpeed switch
             {
@@ -780,7 +801,7 @@ namespace Flow.Launcher
                 FillBehavior = FillBehavior.HoldEnd
             };
 
-            double TargetIconOpacity = GetOpacityFromStyle(SearchIcon.Style, 1.0);
+            var TargetIconOpacity = GetOpacityFromStyle(SearchIcon.Style, 1.0);
 
             var IconOpacity = new DoubleAnimation
             {
@@ -791,7 +812,7 @@ namespace Flow.Launcher
                 FillBehavior = FillBehavior.HoldEnd
             };
             
-            double rightMargin = GetThicknessFromStyle(ClockPanel.Style, new Thickness(0, 0, DefaultRightMargin, 0)).Right;
+            var rightMargin = GetThicknessFromStyle(ClockPanel.Style, new Thickness(0, 0, DefaultRightMargin, 0)).Right;
 
             var thicknessAnimation = new ThicknessAnimation
             {
@@ -818,16 +839,11 @@ namespace Flow.Launcher
             clocksb.Children.Add(ClockOpacity);
             iconsb.Children.Add(IconMotion);
             iconsb.Children.Add(IconOpacity);
-
-            clocksb.Completed += (_, _) => _animating = false;
+            
             _settings.WindowLeft = Left;
-            isArrowKeyPressed = false;
-
-            if (QueryTextBox.Text.Length == 0)
-            {
-                clocksb.Begin(ClockPanel);
-            }
-
+            _isArrowKeyPressed = false;
+            
+            clocksb.Begin(ClockPanel);
             iconsb.Begin(SearchIcon);
         }
 
@@ -987,6 +1003,31 @@ namespace Flow.Launcher
         private void QueryTextBox_OnPreviewDragOver(object sender, DragEventArgs e)
         {
             e.Handled = true;
+        }
+
+        #endregion
+
+        #region IDisposable
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    _hwndSource?.Dispose();
+                    _notifyIcon?.Dispose();
+                }
+
+                _disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
 
         #endregion
