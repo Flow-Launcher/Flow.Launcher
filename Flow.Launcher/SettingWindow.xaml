@@ -18,6 +18,8 @@
     Loaded="OnLoaded"
     MouseDown="window_MouseDown"
     ResizeMode="CanResize"
+    SnapsToDevicePixels="True"
+    UseLayoutRounding="True"
     StateChanged="Window_StateChanged"
     Top="{Binding SettingWindowTop, Mode=TwoWay}"
     WindowStartupLocation="Manual"
@@ -54,6 +56,7 @@
                     Width="16"
                     Height="16"
                     Margin="10 4 4 4"
+                    RenderOptions.BitmapScalingMode="HighQuality"
                     Source="/Images/app.png" />
                 <TextBlock
                     Grid.Row="0"

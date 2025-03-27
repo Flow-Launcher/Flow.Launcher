@@ -115,6 +115,8 @@
     <SolidColorBrush x:Key="InfoBarWarningIcon" Color="#FCE100" />
     <SolidColorBrush x:Key="InfoBarWarningBG" Color="#433519" />
     <SolidColorBrush x:Key="InfoBarBD" Color="#19000000" />
+    
+    <SolidColorBrush x:Key="MouseOverWindowCloseButtonForegroundBrush" Color="#ffffff" />
 
     <SolidColorBrush x:Key="ButtonOutBorder" Color="Transparent" />
     <SolidColorBrush x:Key="ButtonInsideBorder" Color="#3f3f3f" />
