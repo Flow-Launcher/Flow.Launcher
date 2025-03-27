@@ -42,7 +42,7 @@
         }
 
         /// <summary>
-        /// Get hash coode
+        /// Get hash code
         /// </summary>
         /// <returns></returns>
         public override int GetHashCode()
