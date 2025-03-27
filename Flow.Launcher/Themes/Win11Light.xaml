@@ -156,11 +156,11 @@
     </Style>
 
     <Style x:Key="ItemHotkeyStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontSize" Value="10" />
         <Setter Property="Foreground" Value="{DynamicResource HotkeyForeground}" />
     </Style>
     <Style x:Key="ItemHotkeySelectedStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontSize" Value="10" />
         <Setter Property="Foreground" Value="{DynamicResource HotkeySelectedForeground}" />
     </Style>
     <Style x:Key="ItemGlyphSelectedStyle" TargetType="{x:Type TextBlock}">
