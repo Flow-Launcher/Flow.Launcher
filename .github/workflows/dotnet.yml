@@ -41,7 +41,7 @@ jobs:
       - name: Install vpk
         run: dotnet tool install -g vpk
       - name: Restore dependencies
-        run: dotnet restore
+        run: nuget restore
       - name: Build
         run: dotnet build --no-restore -c Release
       - name: Initialize Service
