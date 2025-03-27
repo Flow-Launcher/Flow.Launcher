@@ -1478,10 +1478,6 @@ namespace Flow.Launcher.ViewModel
 
                     // 📌 Restore UI elements
                     //mainWindow.SearchIcon.Visibility = Visibility.Visible;
-                    if (Settings.UseAnimation)
-                    {
-                        mainWindow.WindowAnimation();
-                    }
                 }
             }, DispatcherPriority.Render);
 

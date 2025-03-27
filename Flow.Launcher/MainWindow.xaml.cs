@@ -761,7 +761,7 @@ namespace Flow.Launcher
             _viewModel.ProgressBarVisibility = Visibility.Hidden;
         }
 
-        public void WindowAnimation()
+        private void WindowAnimation()
         {
             _isArrowKeyPressed = true;
 
