@@ -1458,7 +1458,8 @@ namespace Flow.Launcher.ViewModel
                     mainWindow.ClockPanel.Opacity = opacity;
                     mainWindow.SearchIcon.Opacity = opacity;
 
-                    if (QueryText.Length != 0)
+                    // QueryText sometimes is null when it is just initialized
+                    if (QueryText != null && QueryText.Length != 0)
                     {
                         mainWindow.ClockPanel.Visibility = Visibility.Collapsed;
                     }
@@ -1553,8 +1554,6 @@ namespace Flow.Launcher.ViewModel
             {
                 Win32Helper.RestorePreviousKeyboardLayout();
             }
-
-            await Task.Delay(50);
 
             // Update WPF properties
             //MainWindowOpacity = 0;
