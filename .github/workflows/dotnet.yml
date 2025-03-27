@@ -51,7 +51,7 @@ jobs:
       - name: Test
         run: dotnet test --no-build --verbosity normal -c Release
       - name: Perform post_build tasks
-        shell: pwsh
+        shell: powershell
         run: .\Scripts\post_build.ps1
       - name: Upload Plugin Nupkg
         uses: actions/upload-artifact@v4
