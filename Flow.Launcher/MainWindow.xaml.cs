@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Media;
 using System.Threading.Tasks;
@@ -76,7 +75,7 @@ namespace Flow.Launcher
             DataContext = _viewModel;
 
             InitializeComponent();
-            UpdatePosition(true);
+            UpdatePosition();
 
             InitSoundEffects();
             DataObject.AddPastingHandler(QueryTextBox, QueryTextBox_OnPaste);
@@ -112,7 +111,7 @@ namespace Flow.Launcher
             }
 
             // Hide window if need
-            UpdatePosition(true);
+            UpdatePosition();
             if (_settings.HideOnStartup)
             {
                 _viewModel.Hide();
@@ -139,7 +138,7 @@ namespace Flow.Launcher
             InitProgressbarAnimation();
 
             // Force update position
-            UpdatePosition(true);
+            UpdatePosition();
 
             // Refresh frame
             await Ioc.Default.GetRequiredService<Theme>().RefreshFrameAsync();
@@ -167,7 +166,7 @@ namespace Flow.Launcher
                                         SoundPlay();
                                     }
 
-                                    UpdatePosition(false);
+                                    UpdatePosition();
                                     _viewModel.ResetPreview();
                                     Activate();
                                     QueryTextBox.Focus();
@@ -269,7 +268,6 @@ namespace Flow.Launcher
 
         private void OnLocationChanged(object sender, EventArgs e)
         {
-
             if (_settings.SearchWindowScreen == SearchWindowScreens.RememberLastLaunchLocation)
             {
                 _settings.WindowLeft = Left;
@@ -281,9 +279,11 @@ namespace Flow.Launcher
         {
             _settings.WindowLeft = Left;
             _settings.WindowTop = Top;
+
             ClockPanel.Opacity = 0;
             SearchIcon.Opacity = 0;
-            //This condition stops extra hide call when animator is on,
+
+            // This condition stops extra hide call when animator is on,
             // which causes the toggling to occasional hide instead of show.
             if (_viewModel.MainWindowVisibilityStatus)
             {
@@ -291,7 +291,6 @@ namespace Flow.Launcher
                 // This also stops the mainwindow from flickering occasionally after Settings window is opened
                 // and always after Settings window is closed.
                 if (_settings.UseAnimation)
- 
                     await Task.Delay(100);
 
                 if (_settings.HideWhenDeactivated && !_viewModel.ExternalPreviewVisible)
@@ -589,13 +588,8 @@ namespace Flow.Launcher
 
         #region Window Position
 
-        private void UpdatePosition(bool force)
+        private void UpdatePosition()
         {
-            if (!force)
-            {
-                return;
-            }
-
             // Initialize call twice to work around multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
             InitializePosition();
             InitializePosition();
@@ -770,20 +764,16 @@ namespace Flow.Launcher
         public void WindowAnimation()
         {
             _isArrowKeyPressed = true;
-            UpdatePosition(false);
-            if(_settings.UseAnimation)
-            {
-                    ClockPanel.Opacity = 0;
-                    SearchIcon.Opacity = 0;
-            }
-            else
-            {
-                ClockPanel.Opacity = 1;
-                SearchIcon.Opacity = 1;
-            }
+
+            UpdatePosition();
+
+            var opacity = _settings.UseAnimation ? 0.0 : 1.0;
+            ClockPanel.Opacity = opacity;
+            SearchIcon.Opacity = opacity;
+
             var clocksb = new Storyboard();
             var iconsb = new Storyboard();
-            CircleEase easing = new CircleEase { EasingMode = EasingMode.EaseInOut };
+            var easing = new CircleEase { EasingMode = EasingMode.EaseInOut };
 
             var animationLength = _settings.AnimationSpeed switch
             {
@@ -811,7 +801,7 @@ namespace Flow.Launcher
                 FillBehavior = FillBehavior.HoldEnd
             };
 
-            double TargetIconOpacity = GetOpacityFromStyle(SearchIcon.Style, 1.0);
+            var TargetIconOpacity = GetOpacityFromStyle(SearchIcon.Style, 1.0);
 
             var IconOpacity = new DoubleAnimation
             {
@@ -822,7 +812,7 @@ namespace Flow.Launcher
                 FillBehavior = FillBehavior.HoldEnd
             };
             
-            double rightMargin = GetThicknessFromStyle(ClockPanel.Style, new Thickness(0, 0, DefaultRightMargin, 0)).Right;
+            var rightMargin = GetThicknessFromStyle(ClockPanel.Style, new Thickness(0, 0, DefaultRightMargin, 0)).Right;
 
             var thicknessAnimation = new ThicknessAnimation
             {
