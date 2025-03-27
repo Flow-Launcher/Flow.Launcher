@@ -8,10 +8,10 @@ using System.Windows;
 // modified to allow single instace restart
 namespace Flow.Launcher.Helper
 {
-    public interface ISingleInstanceApp 
-    { 
-         void OnSecondAppStarted(); 
-    } 
+    public interface ISingleInstanceApp
+    {
+        void OnSecondAppStarted();
+    }
 
     /// <summary>
     /// This class checks to make sure that only one instance of 
@@ -24,9 +24,7 @@ namespace Flow.Launcher.Helper
     /// running as Administrator, can activate it with command line arguments.
     /// For most apps, this will not be much of an issue.
     /// </remarks>
-    public static class SingleInstance<TApplication>  
-                where   TApplication: Application ,  ISingleInstanceApp 
-                                    
+    public static class SingleInstance<TApplication> where TApplication : Application, ISingleInstanceApp
     {
         #region Private Fields
 
@@ -39,11 +37,12 @@ namespace Flow.Launcher.Helper
         /// Suffix to the channel name.
         /// </summary>
         private const string ChannelNameSuffix = "SingeInstanceIPCChannel";
+        private const string InstanceMutexName = "Flow.Launcher_Unique_Application_Mutex";
 
         /// <summary>
         /// Application mutex.
         /// </summary>
-        internal static Mutex singleInstanceMutex;
+        internal static Mutex SingleInstanceMutex { get; set; }
 
         #endregion
 
@@ -54,24 +53,23 @@ namespace Flow.Launcher.Helper
         /// If not, activates the first instance.
         /// </summary>
         /// <returns>True if this is the first instance of the application.</returns>
-        public static bool InitializeAsFirstInstance( string uniqueName )
+        public static bool InitializeAsFirstInstance()
         {
             // Build unique application Id and the IPC channel name.
-            string applicationIdentifier = uniqueName + Environment.UserName;
+            string applicationIdentifier = InstanceMutexName + Environment.UserName;
 
-            string channelName = String.Concat(applicationIdentifier, Delimiter, ChannelNameSuffix);
+            string channelName = string.Concat(applicationIdentifier, Delimiter, ChannelNameSuffix);
 
             // Create mutex based on unique application Id to check if this is the first instance of the application. 
-            bool firstInstance;
-            singleInstanceMutex = new Mutex(true, applicationIdentifier, out firstInstance);
+            SingleInstanceMutex = new Mutex(true, applicationIdentifier, out var firstInstance);
             if (firstInstance)
             {
-                _ = CreateRemoteService(channelName);
+                _ = CreateRemoteServiceAsync(channelName);
                 return true;
             }
             else
             {
-                _ = SignalFirstInstance(channelName);
+                _ = SignalFirstInstanceAsync(channelName);
                 return false;
             }
         }
@@ -81,7 +79,7 @@ namespace Flow.Launcher.Helper
         /// </summary>
         public static void Cleanup()
         {
-            singleInstanceMutex?.ReleaseMutex();
+            SingleInstanceMutex?.ReleaseMutex();
         }
 
         #endregion
@@ -93,22 +91,19 @@ namespace Flow.Launcher.Helper
         /// Once receives signal from client, will activate first instance.
         /// </summary>
         /// <param name="channelName">Application's IPC channel name.</param>
-        private static async Task CreateRemoteService(string channelName)
+        private static async Task CreateRemoteServiceAsync(string channelName)
         {
-            using (NamedPipeServerStream pipeServer = new NamedPipeServerStream(channelName, PipeDirection.In))
+            using NamedPipeServerStream pipeServer = new NamedPipeServerStream(channelName, PipeDirection.In);
+            while (true)
             {
-                while(true)
-                {
-                    // Wait for connection to the pipe
-                    await pipeServer.WaitForConnectionAsync();
-                    if (Application.Current != null)
-                    {
-                        // Do an asynchronous call to ActivateFirstInstance function
-                        Application.Current.Dispatcher.Invoke(ActivateFirstInstance);
-                    }
-                    // Disconect client
-                    pipeServer.Disconnect();
-                }
+                // Wait for connection to the pipe
+                await pipeServer.WaitForConnectionAsync();
+
+                // Do an asynchronous call to ActivateFirstInstance function
+                Application.Current?.Dispatcher.Invoke(ActivateFirstInstance);
+
+                // Disconect client
+                pipeServer.Disconnect();
             }
         }
 
@@ -119,25 +114,13 @@ namespace Flow.Launcher.Helper
         /// <param name="args">
         /// Command line arguments for the second instance, passed to the first instance to take appropriate action.
         /// </param>
-        private static async Task SignalFirstInstance(string channelName)
+        private static async Task SignalFirstInstanceAsync(string channelName)
         {
             // Create a client pipe connected to server
-            using (NamedPipeClientStream pipeClient = new NamedPipeClientStream(".", channelName, PipeDirection.Out))
-            {
-                // Connect to the available pipe
-                await pipeClient.ConnectAsync(0);
-            }
-        }
+            using NamedPipeClientStream pipeClient = new NamedPipeClientStream(".", channelName, PipeDirection.Out);
 
-        /// <summary>
-        /// Callback for activating first instance of the application.
-        /// </summary>
-        /// <param name="arg">Callback argument.</param>
-        /// <returns>Always null.</returns>
-        private static object ActivateFirstInstanceCallback(object o)
-        {
-            ActivateFirstInstance();
-            return null;
+            // Connect to the available pipe
+            await pipeClient.ConnectAsync(0);
         }
 
         /// <summary>

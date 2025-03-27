@@ -27,10 +27,25 @@ namespace Flow.Launcher
 {
     public partial class App : IDisposable, ISingleInstanceApp
     {
+        #region Public Properties
+
         public static IPublicAPI API { get; private set; }
-        private const string Unique = "Flow.Launcher_Unique_Application_Mutex";
+
+        #endregion
+
+        #region Private Fields
+
         private static bool _disposed;
+        private MainWindow _mainWindow;
+        private readonly MainViewModel _mainVM;
         private readonly Settings _settings;
+
+        // To prevent two disposals running at the same time.
+        private static readonly object _disposingLock = new();
+
+        #endregion
+
+        #region Constructor
 
         public App()
         {
@@ -79,33 +94,43 @@ namespace Flow.Launcher
             {
                 API = Ioc.Default.GetRequiredService<IPublicAPI>();
                 _settings.Initialize();
+                _mainVM = Ioc.Default.GetRequiredService<MainViewModel>();
             }
             catch (Exception e)
             {
                 ShowErrorMsgBoxAndFailFast("Cannot initialize api and settings, please open new issue in Flow.Launcher", e);
                 return;
             }
+
+            // Local function
+            static void ShowErrorMsgBoxAndFailFast(string message, Exception e)
+            {
+                // Firstly show users the message
+                MessageBox.Show(e.ToString(), message, MessageBoxButton.OK, MessageBoxImage.Error);
+
+                // Flow cannot construct its App instance, so ensure Flow crashes w/ the exception info.
+                Environment.FailFast(message, e);
+            }
         }
 
-        private static void ShowErrorMsgBoxAndFailFast(string message, Exception e)
-        {
-            // Firstly show users the message
-            MessageBox.Show(e.ToString(), message, MessageBoxButton.OK, MessageBoxImage.Error);
+        #endregion
 
-            // Flow cannot construct its App instance, so ensure Flow crashes w/ the exception info.
-            Environment.FailFast(message, e);
-        }
+        #region Main
 
         [STAThread]
         public static void Main()
         {
-            if (SingleInstance<App>.InitializeAsFirstInstance(Unique))
+            if (SingleInstance<App>.InitializeAsFirstInstance())
             {
                 using var application = new App();
                 application.InitializeComponent();
                 application.Run();
             }
         }
+
+        #endregion
+
+        #region App Events
 
 #pragma warning disable VSTHRD100 // Avoid async void methods
 
@@ -132,20 +157,21 @@ namespace Flow.Launcher
                 // Register ResultsUpdated event after all plugins are loaded
                 Ioc.Default.GetRequiredService<MainViewModel>().RegisterResultsUpdatedEvent();
 
-                // Change language after all plugins are initialized
-                // TODO: Clean InternationalizationManager.Instance and InternationalizationManager.Instance.GetTranslation in future
-                Ioc.Default.GetRequiredService<Internationalization>().ChangeLanguage(_settings.Language);
-
                 Http.Proxy = _settings.Proxy;
 
                 await PluginManager.InitializePluginsAsync();
+
+                // Change language after all plugins are initialized because we need to update plugin title based on their api
+                // TODO: Clean InternationalizationManager.Instance and InternationalizationManager.Instance.GetTranslation in future
+                await Ioc.Default.GetRequiredService<Internationalization>().InitializeLanguageAsync();
+
                 await imageLoadertask;
 
-                var window = new MainWindow();
+                _mainWindow = new MainWindow();
 
                 Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
 
-                Current.MainWindow = window;
+                Current.MainWindow = _mainWindow;
                 Current.MainWindow.Title = Constant.FlowLauncher;
 
                 HotKeyMapper.Initialize();
@@ -162,8 +188,7 @@ namespace Flow.Launcher
                 AutoUpdates();
 
                 API.SaveAppAllSettings();
-                Log.Info(
-                    "|App.OnStartup|End Flow Launcher startup ----------------------------------------------------  ");
+                Log.Info("|App.OnStartup|End Flow Launcher startup ----------------------------------------------------");
             });
         }
 
@@ -196,7 +221,6 @@ namespace Flow.Launcher
             }
         }
 
-        //[Conditional("RELEASE")]
         private void AutoUpdates()
         {
             _ = Task.Run(async () =>
@@ -214,11 +238,29 @@ namespace Flow.Launcher
             });
         }
 
+        #endregion
+
+        #region Register Events
+
         private void RegisterExitEvents()
         {
-            AppDomain.CurrentDomain.ProcessExit += (s, e) => Dispose();
-            Current.Exit += (s, e) => Dispose();
-            Current.SessionEnding += (s, e) => Dispose();
+            AppDomain.CurrentDomain.ProcessExit += (s, e) =>
+            {
+                Log.Info("|App.RegisterExitEvents|Process Exit");
+                Dispose();
+            };
+
+            Current.Exit += (s, e) =>
+            {
+                Log.Info("|App.RegisterExitEvents|Application Exit");
+                Dispose();
+            };
+
+            Current.SessionEnding += (s, e) =>
+            {
+                Log.Info("|App.RegisterExitEvents|Session Ending");
+                Dispose();
+            };
         }
 
         /// <summary>
@@ -239,20 +281,60 @@ namespace Flow.Launcher
             AppDomain.CurrentDomain.UnhandledException += ErrorReporting.UnhandledExceptionHandle;
         }
 
-        public void Dispose()
+        #endregion
+
+        #region IDisposable
+
+        protected virtual void Dispose(bool disposing)
         {
-            // if sessionending is called, exit proverbially be called when log off / shutdown
-            // but if sessionending is not called, exit won't be called when log off / shutdown
-            if (!_disposed)
+            // Prevent two disposes at the same time.
+            lock (_disposingLock)
             {
-                API.SaveAppAllSettings();
+                if (!disposing)
+                {
+                    return;
+                }
+
+                if (_disposed)
+                {
+                    return;
+                }
+
                 _disposed = true;
             }
+
+            Stopwatch.Normal("|App.Dispose|Dispose cost", () =>
+            {
+                Log.Info("|App.Dispose|Begin Flow Launcher dispose ----------------------------------------------------");
+
+                if (disposing)
+                {
+                    // Dispose needs to be called on the main Windows thread,
+                    // since some resources owned by the thread need to be disposed.
+                    _mainWindow?.Dispatcher.Invoke(_mainWindow.Dispose);
+                    _mainVM?.Dispose();
+                }
+
+                Log.Info("|App.Dispose|End Flow Launcher dispose ----------------------------------------------------");
+            });
         }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
+        #endregion
+
+        #region ISingleInstanceApp
 
         public void OnSecondAppStarted()
         {
             Ioc.Default.GetRequiredService<MainViewModel>().Show();
         }
+
+        #endregion
     }
 }

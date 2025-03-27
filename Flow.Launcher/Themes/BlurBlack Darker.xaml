@@ -54,7 +54,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
     <Style
         x:Key="SeparatorStyle"
         BasedOn="{StaticResource BaseSeparatorStyle}"
