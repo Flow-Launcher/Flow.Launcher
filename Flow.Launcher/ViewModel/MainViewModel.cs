@@ -1554,8 +1554,6 @@ namespace Flow.Launcher.ViewModel
                 Win32Helper.RestorePreviousKeyboardLayout();
             }
 
-            await Task.Delay(50);
-
             // Update WPF properties
             //MainWindowOpacity = 0;
             MainWindowVisibilityStatus = false;
