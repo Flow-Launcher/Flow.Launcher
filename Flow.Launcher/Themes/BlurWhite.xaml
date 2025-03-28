@@ -14,6 +14,8 @@
     <system:String x:Key="SystemBG">Light</system:String>
     <Color x:Key="LightBG">#BFFAFAFA</Color>
     <Color x:Key="DarkBG">#BFFAFAFA</Color>
+    <Thickness x:Key="ResultMargin">0 0 0 8</Thickness>
+    
     <Style
         x:Key="ItemGlyph"
         BasedOn="{StaticResource BaseGlyphStyle}"

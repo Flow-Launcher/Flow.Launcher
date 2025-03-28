@@ -15,6 +15,7 @@
     <system:String x:Key="SystemBG">Dark</system:String>
     <Color x:Key="LightBG">#C7000000</Color>
     <Color x:Key="DarkBG">#C7000000</Color>
+    <Thickness x:Key="ResultMargin">0 0 0 8</Thickness>
 
     <Style x:Key="WindowRadius" TargetType="{x:Type Border}">
         <Setter Property="CornerRadius" Value="0" />
