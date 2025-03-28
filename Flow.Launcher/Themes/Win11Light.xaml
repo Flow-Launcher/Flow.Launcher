@@ -156,13 +156,26 @@
     </Style>
 
     <Style x:Key="ItemHotkeyStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="10" />
-        <Setter Property="Foreground" Value="{DynamicResource HotkeyForeground}" />
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="Foreground" Value="{DynamicResource NewHotkeyForeground}" />
     </Style>
     <Style x:Key="ItemHotkeySelectedStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="10" />
-        <Setter Property="Foreground" Value="{DynamicResource HotkeySelectedForeground}" />
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="Foreground" Value="{DynamicResource NewHotkeyForeground}" />
     </Style>
+    <Style
+        x:Key="ItemHotkeyBGStyle"
+        BasedOn="{StaticResource BaseItemHotkeyBGStyle}"
+        TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="{DynamicResource BasicHotkeyBGColor}" />
+    </Style>
+    <Style
+        x:Key="ItemHotkeyBGSelectedStyle"
+        BasedOn="{StaticResource BaseItemHotkeyBGSelectedStyle}"
+        TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="{DynamicResource BasicHotkeyBGColor}" />
+    </Style>
+
     <Style x:Key="ItemGlyphSelectedStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
         <Setter Property="VerticalAlignment" Value="Center" />

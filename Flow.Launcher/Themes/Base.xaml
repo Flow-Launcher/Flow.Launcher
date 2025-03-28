@@ -351,23 +351,41 @@
         <Setter Property="Inline.FontWeight" Value="Bold" />
     </Style>
     <Style x:Key="BaseItemHotkeyStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="10" />
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="Foreground" Value="#8f8f8f" />
     </Style>
     <Style x:Key="BaseItemHotkeySelectedStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="10" />
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="Foreground" Value="#8f8f8f" />
     </Style>
-    <Style x:Key="ItemHotkeyBGStyle" TargetType="{x:Type Border}">
+    <Style x:Key="BaseItemHotkeyBGStyle" TargetType="{x:Type Border}">
         <Setter Property="Margin" Value="12 0 12 0" />
         <Setter Property="Padding" Value="6 4 6 4" />
         <Setter Property="Background" Value="#138A8A8A" />
         <Setter Property="CornerRadius" Value="4" />
     </Style>
+    <Style x:Key="BaseItemHotkeyBGSelectedStyle" TargetType="{x:Type Border}">
+        <Setter Property="Margin" Value="12 0 12 0" />
+        <Setter Property="Padding" Value="6 4 6 4" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="Background" Value="#138A8A8A" />
+    </Style>
+    <Style
+        x:Key="ItemHotkeyBGStyle"
+        BasedOn="{StaticResource BaseItemHotkeyBGStyle}"
+        TargetType="{x:Type Border}">
+        <Setter Property="Margin" Value="12 0 12 0" />
+        <Setter Property="Padding" Value="6 4 6 4" />
+        <Setter Property="CornerRadius" Value="4" />
+    </Style>
+    <Style
+        x:Key="ItemHotkeyBGSelectedStyle"
+        BasedOn="{StaticResource BaseItemHotkeyBGSelectedStyle}"
+        TargetType="{x:Type Border}" />
 
     <!--  DO NOT USE THIS KEY. this key for themes with wrong typo. This key should be removed. Right key is BaseItemHotkeySelectedStyle.  -->
     <Style x:Key="BaseItemHotkeySelecetedStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="15" />
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="Foreground" Value="#8f8f8f" />
     </Style>
 
@@ -494,7 +512,6 @@
         x:Key="ItemHotkeyStyle"
         BasedOn="{StaticResource BaseItemHotkeyStyle}"
         TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="15" />
         <Setter Property="Foreground" Value="#8f8f8f" />
         <Setter Property="Opacity" Value="0.5" />
     </Style>
@@ -502,7 +519,6 @@
         x:Key="ItemHotkeySelectedStyle"
         BasedOn="{StaticResource BaseItemHotkeySelectedStyle}"
         TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="15" />
         <Setter Property="Foreground" Value="#8f8f8f" />
         <Setter Property="Opacity" Value="0.5" />
     </Style>

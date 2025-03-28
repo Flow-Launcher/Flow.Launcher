@@ -215,6 +215,7 @@
                     <Setter TargetName="Title" Property="Style" Value="{DynamicResource ItemTitleSelectedStyle}" />
                     <Setter TargetName="SubTitle" Property="Style" Value="{DynamicResource ItemSubTitleSelectedStyle}" />
                     <Setter TargetName="Hotkey" Property="Style" Value="{DynamicResource ItemHotkeySelectedStyle}" />
+                    <Setter TargetName="HotkeyBG" Property="Style" Value="{DynamicResource ItemHotkeyBGSelectedStyle}" />
                     <Setter TargetName="GlyphIcon" Property="Style" Value="{DynamicResource ItemGlyphSelectedStyle}" />
                 </DataTrigger>
             </DataTemplate.Triggers>

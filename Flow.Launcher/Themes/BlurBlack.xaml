@@ -142,13 +142,17 @@
         <Setter Property="Height" Value="30" />
         <Setter Property="Opacity" Value="0.5" />
     </Style>
-    <Style x:Key="ItemHotkeyStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="14" />
+    <Style
+        x:Key="ItemHotkeyStyle"
+        BasedOn="{StaticResource BaseItemHotkeyStyle}"
+        TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#ffffff" />
         <Setter Property="Opacity" Value="0.5" />
     </Style>
-    <Style x:Key="ItemHotkeySelectedStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="14" />
+    <Style
+        x:Key="ItemHotkeySelectedStyle"
+        BasedOn="{StaticResource BaseItemHotkeySelectedStyle}"
+        TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#ffffff" />
         <Setter Property="Opacity" Value="0.5" />
     </Style>
