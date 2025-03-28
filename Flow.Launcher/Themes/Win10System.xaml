@@ -113,15 +113,18 @@
     <Style x:Key="HighlightStyle">
         <Setter Property="Inline.FontWeight" Value="SemiBold" />
     </Style>
-    <Style x:Key="ItemHotkeyStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="13" />
+    <Style
+        x:Key="ItemHotkeyStyle"
+        BasedOn="{StaticResource BaseItemHotkeyStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="11" />
         <Setter Property="Foreground" Value="{DynamicResource HotkeyForeground}" />
     </Style>
     <Style
         x:Key="ItemHotkeySelectedStyle"
         BasedOn="{StaticResource BaseItemHotkeySelectedStyle}"
         TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontSize" Value="11" />
         <Setter Property="Foreground" Value="{DynamicResource HotkeySelectedForeground}" />
     </Style>
     <!--  button style in the middle of the scrollbar  -->
