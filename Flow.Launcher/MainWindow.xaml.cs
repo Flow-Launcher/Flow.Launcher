@@ -296,7 +296,8 @@ namespace Flow.Launcher
                 Notification.Uninstall();
                 // After plugins are all disposed, we can close the main window
                 _canClose = true;
-                Close();
+                // Use this instead of Close() to avoid InvalidOperationException when calling Close() in OnClosing event
+                Application.Current.Shutdown();
             }
         }
 
