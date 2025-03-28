@@ -111,8 +111,8 @@ namespace Flow.Launcher
                 App.API.SaveAppAllSettings();
 
                 // Show Welcome Window
-                var WelcomeWindow = new WelcomeWindow();
-                WelcomeWindow.Show();
+                var welcomeWindow = new WelcomeWindow();
+                welcomeWindow.Show();
             }
 
             // Hide window if need
