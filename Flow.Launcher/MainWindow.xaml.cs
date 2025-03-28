@@ -948,6 +948,7 @@ namespace Flow.Launcher
 
                 ClockPanel.BeginAnimation(OpacityProperty, fadeOut);
             }
+
             // ✅ 4. When showing ClockPanel (apply fade-in animation)
             else if (shouldShowClock && ClockPanel.Visibility != Visibility.Visible && !_isClockPanelAnimating)
             {
@@ -970,7 +971,6 @@ namespace Flow.Launcher
                 }, DispatcherPriority.Render);
             }
         }
-
 
         private static double GetOpacityFromStyle(Style style, double defaultOpacity = 1.0)
         {
