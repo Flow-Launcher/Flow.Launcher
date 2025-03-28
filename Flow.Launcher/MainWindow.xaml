@@ -24,7 +24,6 @@
     Left="{Binding Settings.WindowLeft, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     Loaded="OnLoaded"
     LocationChanged="OnLocationChanged"
-    Opacity="{Binding MainWindowOpacity, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
     PreviewKeyDown="OnKeyDown"
     PreviewKeyUp="OnKeyUp"
     PreviewMouseMove="OnPreviewMouseMove"

@@ -753,8 +753,7 @@ namespace Flow.Launcher.ViewModel
 
         public Visibility ProgressBarVisibility { get; set; }
         public Visibility MainWindowVisibility { get; set; }
-        public double MainWindowOpacity { get; set; } = 1;
-
+        
         // This is to be used for determining the visibility status of the mainwindow instead of MainWindowVisibility
         // because it is more accurate and reliable representation than using Visibility as a condition check
         public bool MainWindowVisibilityStatus { get; set; } = true;
@@ -1454,9 +1453,11 @@ namespace Flow.Launcher.ViewModel
 
         public void Show()
         {
+            // Invoke on UI thread
             Application.Current.Dispatcher.Invoke(() =>
             {
-                if (Application.Current.MainWindow is MainWindow mainWindow)
+                // When application is exitting, the Application.Current will be null
+                if (Application.Current?.MainWindow is MainWindow mainWindow)
                 {
                     // 📌 Remove DWM Cloak (Make the window visible normally)
                     Win32Helper.DWMSetCloakForWindow(mainWindow, false);
@@ -1481,10 +1482,10 @@ namespace Flow.Launcher.ViewModel
 
             // Update WPF properties
             MainWindowVisibility = Visibility.Visible;
-            MainWindowOpacity = 1;
             MainWindowVisibilityStatus = true;
             VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
 
+            // Switch keyboard layout
             if (StartWithEnglishMode)
             {
                 Win32Helper.SwitchToEnglishKeyboardLayout(true);
@@ -1527,9 +1528,11 @@ namespace Flow.Launcher.ViewModel
                     break;
             }
 
+            // Invoke on UI thread
             Application.Current.Dispatcher.Invoke(() =>
             {
-                if (Application.Current.MainWindow is MainWindow mainWindow)
+                // When application is exitting, the Application.Current will be null
+                if (Application.Current?.MainWindow is MainWindow mainWindow)
                 {
                     // Set clock and search icon opacity
                     var opacity = Settings.UseAnimation ? 0.0 : 1.0;
@@ -1549,6 +1552,7 @@ namespace Flow.Launcher.ViewModel
                 }
             }, DispatcherPriority.Render);
 
+            // Switch keyboard layout
             if (StartWithEnglishMode)
             {
                 Win32Helper.RestorePreviousKeyboardLayout();
@@ -1558,7 +1562,6 @@ namespace Flow.Launcher.ViewModel
             await Task.Delay(50);
 
             // Update WPF properties
-            //MainWindowOpacity = 0;
             MainWindowVisibilityStatus = false;
             MainWindowVisibility = Visibility.Collapsed;
             VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = false });
