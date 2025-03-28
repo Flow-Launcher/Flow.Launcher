@@ -152,7 +152,7 @@
     <Thickness x:Key="ResultMargin">0 0 0 10</Thickness>
     <Style
         x:Key="ClockPanel"
-        BasedOn="{StaticResource ClockPanel}"
+        BasedOn="{StaticResource BaseClockPanel}"
         TargetType="{x:Type StackPanel}">
         <Setter Property="Margin" Value="0 0 54 0" />
     </Style>
