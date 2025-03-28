@@ -290,7 +290,9 @@
                 <StackPanel
                     x:Name="ClockPanel"
                     IsHitTestVisible="False"
-                    Style="{DynamicResource ClockPanel}">
+                    Opacity="{Binding ClockPanelOpacity}"
+                    Style="{DynamicResource ClockPanel}"
+                    Visibility="{Binding ClockPanelVisibility}">
                     <TextBlock
                         x:Name="ClockBox"
                         Style="{DynamicResource ClockBox}"
@@ -318,6 +320,7 @@
                                 Name="SearchIcon"
                                 Margin="0"
                                 Data="{DynamicResource SearchIconImg}"
+                                Opacity="{Binding SearchIconOpacity}"
                                 Stretch="Fill"
                                 Style="{DynamicResource SearchIconStyle}"
                                 Visibility="{Binding SearchIconVisibility}" />
