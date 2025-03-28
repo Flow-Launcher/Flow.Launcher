@@ -101,11 +101,16 @@ namespace Flow.Launcher
             // Check first launch
             if (_settings.FirstLaunch)
             {
+                // Set First Launch to false
                 _settings.FirstLaunch = false;
+
+                // Set Backdrop Type to Acrylic for Windows 11 when First Launch. Default is None
+                if (Win32Helper.IsBackdropSupported()) _settings.BackdropType = BackdropTypes.Acrylic;
+
+                // Save settings
                 App.API.SaveAppAllSettings();
-                /* Set Backdrop Type to Acrylic for Windows 11 when First Launch. Default is None. */
-                if (OperatingSystem.IsWindowsVersionAtLeast(10, 0, 22000))
-                    _settings.BackdropType = BackdropTypes.Acrylic;
+
+                // Show Welcome Window
                 var WelcomeWindow = new WelcomeWindow();
                 WelcomeWindow.Show();
             }
@@ -161,24 +166,68 @@ namespace Flow.Launcher
                             {
                                 if (_viewModel.MainWindowVisibilityStatus)
                                 {
+                                    // Set clock and search icon opacity
+                                    var opacity = _settings.UseAnimation ? 0.0 : 1.0;
+                                    ClockPanel.Opacity = opacity;
+                                    SearchIcon.Opacity = opacity;
+
+                                    // Set clock and search icon visibility
+                                    ClockPanel.Visibility = string.IsNullOrEmpty(_viewModel.QueryText) ? Visibility.Visible : Visibility.Collapsed;
+                                    if (_viewModel.PluginIconSource != null)
+                                    {
+                                        SearchIcon.Opacity = 0.0;
+                                    }
+                                    else
+                                    {
+                                        _viewModel.SearchIconVisibility = Visibility.Visible;
+                                    }
+
+                                    // Play sound effect before activing the window
                                     if (_settings.UseSound)
                                     {
                                         SoundPlay();
                                     }
 
+                                    // Update position & Activate
                                     UpdatePosition();
-                                    _viewModel.ResetPreview();
                                     Activate();
-                                    QueryTextBox.Focus();
-                                    _settings.ActivateTimes++;
+
+                                    // Reset preview
+                                    _viewModel.ResetPreview();
+
+                                    // Select last query if need
                                     if (!_viewModel.LastQuerySelected)
                                     {
                                         QueryTextBox.SelectAll();
                                         _viewModel.LastQuerySelected = true;
                                     }
 
+                                    // Focus query box
+                                    QueryTextBox.Focus();
+
+                                    // Play window animation
                                     if (_settings.UseAnimation)
+                                    {
                                         WindowAnimation();
+                                    }
+
+                                    // Update activate times
+                                    _settings.ActivateTimes++;
+                                }
+                                else
+                                {
+                                    // Set clock and search icon opacity
+                                    var opacity = _settings.UseAnimation ? 0.0 : 1.0;
+                                    ClockPanel.Opacity = opacity;
+                                    SearchIcon.Opacity = opacity;
+
+                                    // Set clock and search icon visibility
+                                    ClockPanel.Visibility = Visibility.Hidden;
+                                    _viewModel.SearchIconVisibility = Visibility.Hidden;
+
+                                    // Force UI update
+                                    ClockPanel.UpdateLayout();
+                                    SearchIcon.UpdateLayout();
                                 }
                             });
                             break;
@@ -191,7 +240,6 @@ namespace Flow.Launcher
                             Dispatcher.Invoke(() => QueryTextBox.CaretIndex = QueryTextBox.Text.Length);
                             _viewModel.QueryTextCursorMovedToEnd = false;
                         }
-
                         break;
                     case nameof(MainViewModel.GameModeStatus):
                         _notifyIcon.Icon = _viewModel.GameModeStatus
@@ -248,7 +296,8 @@ namespace Flow.Launcher
                 Notification.Uninstall();
                 // After plugins are all disposed, we can close the main window
                 _canClose = true;
-                Close();
+                // Use this instead of Close() to avoid InvalidOperationException when calling Close() in OnClosing event
+                Application.Current.Shutdown();
             }
         }
 
@@ -280,8 +329,8 @@ namespace Flow.Launcher
             _settings.WindowLeft = Left;
             _settings.WindowTop = Top;
 
-            ClockPanel.Opacity = 0;
-            SearchIcon.Opacity = 0;
+            ClockPanel.Opacity = 0.0;
+            SearchIcon.Opacity = 0.0;
 
             // This condition stops extra hide call when animator is on,
             // which causes the toggling to occasional hide instead of show.
@@ -291,7 +340,9 @@ namespace Flow.Launcher
                 // This also stops the mainwindow from flickering occasionally after Settings window is opened
                 // and always after Settings window is closed.
                 if (_settings.UseAnimation)
+                {
                     await Task.Delay(100);
+                }
 
                 if (_settings.HideWhenDeactivated && !_viewModel.ExternalPreviewVisible)
                 {
@@ -765,12 +816,6 @@ namespace Flow.Launcher
         {
             _isArrowKeyPressed = true;
 
-            UpdatePosition();
-
-            var opacity = _settings.UseAnimation ? 0.0 : 1.0;
-            ClockPanel.Opacity = opacity;
-            SearchIcon.Opacity = opacity;
-
             var clocksb = new Storyboard();
             var iconsb = new Storyboard();
             var easing = new CircleEase { EasingMode = EasingMode.EaseInOut };
@@ -904,6 +949,7 @@ namespace Flow.Launcher
 
                 ClockPanel.BeginAnimation(OpacityProperty, fadeOut);
             }
+
             // ✅ 4. When showing ClockPanel (apply fade-in animation)
             else if (shouldShowClock && ClockPanel.Visibility != Visibility.Visible && !_isClockPanelAnimating)
             {
@@ -926,7 +972,6 @@ namespace Flow.Launcher
                 }, DispatcherPriority.Render);
             }
         }
-
 
         private static double GetOpacityFromStyle(Style style, double defaultOpacity = 1.0)
         {
