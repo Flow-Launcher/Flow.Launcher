@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
@@ -645,22 +644,22 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
-                BackToQueryResults();
+            BackToQueryResults();
 
-                if (QueryText != queryText)
-                {
-                    // re-query is done in QueryText's setter method
-                    QueryText = queryText;
-                    // set to false so the subsequent set true triggers
-                    // PropertyChanged and MoveQueryTextToEnd is called
-                    QueryTextCursorMovedToEnd = false;
-                }
-                else if (isReQuery)
-                {
-                    await QueryAsync(isReQuery: true);
-                }
+            if (QueryText != queryText)
+            {
+                // re-query is done in QueryText's setter method
+                QueryText = queryText;
+                // set to false so the subsequent set true triggers
+                // PropertyChanged and MoveQueryTextToEnd is called
+                QueryTextCursorMovedToEnd = false;
+            }
+            else if (isReQuery)
+            {
+                await QueryAsync(isReQuery: true);
+            }
 
-                QueryTextCursorMovedToEnd = true;
+            QueryTextCursorMovedToEnd = true;
         }
 
         public bool LastQuerySelected { get; set; }
@@ -1448,43 +1447,10 @@ namespace Flow.Launcher.ViewModel
 
 #pragma warning disable VSTHRD100 // Avoid async void methods
 
-        public async void Show()
+        public void Show()
         {
-            await Application.Current.Dispatcher.InvokeAsync(() =>
-            {
-                if (Application.Current.MainWindow is MainWindow mainWindow)
-                {
-                    // 📌 Remove DWM Cloak (Make the window visible normally)
-                    Win32Helper.DWMSetCloakForWindow(mainWindow, false);
-
-                    // Clock and SearchIcon hide when show situation
-                    var opacity = Settings.UseAnimation ? 0.0 : 1.0;
-                    mainWindow.ClockPanel.Opacity = opacity;
-                    mainWindow.SearchIcon.Opacity = opacity;
-
-                    // QueryText sometimes is null when it is just initialized
-                    if (QueryText != null && QueryText.Length != 0)
-                    {
-                        mainWindow.ClockPanel.Visibility = Visibility.Collapsed;
-                    }
-                    else
-                    {
-                        mainWindow.ClockPanel.Visibility = Visibility.Visible;
-                    }
-
-                    if (PluginIconSource != null)
-                    {
-                        mainWindow.SearchIcon.Opacity = 0;
-                    }
-                    else
-                    {
-                        SearchIconVisibility = Visibility.Visible;
-                    }
-
-                    // 📌 Restore UI elements
-                    //mainWindow.SearchIcon.Visibility = Visibility.Visible;
-                }
-            }, DispatcherPriority.Render);
+            // 📌 Remove DWM Cloak (Make the window visible normally)
+            Win32Helper.DWMSetCloakForWindow(Application.Current.MainWindow, false);
 
             // Update WPF properties
             MainWindowVisibility = Visibility.Visible;
@@ -1500,6 +1466,9 @@ namespace Flow.Launcher.ViewModel
 
         public async void Hide()
         {
+            // 📌 Apply DWM Cloak (Completely hide the window)
+            Win32Helper.DWMSetCloakForWindow(Application.Current.MainWindow, true);
+
             lastHistoryIndex = 1;
 
             if (ExternalPreviewVisible)
@@ -1533,26 +1502,6 @@ namespace Flow.Launcher.ViewModel
                         LastQuerySelected = false;
                     break;
             }
-
-            await Application.Current.Dispatcher.InvokeAsync(() =>
-            {
-                if (Application.Current.MainWindow is MainWindow mainWindow)
-                {
-                    // 📌 Set Opacity of icon and clock to 0 and apply Visibility.Hidden
-                    var opacity = Settings.UseAnimation ? 0.0 : 1.0;
-                    mainWindow.ClockPanel.Opacity = opacity;
-                    mainWindow.SearchIcon.Opacity = opacity;
-                    mainWindow.ClockPanel.Visibility = Visibility.Hidden;
-                    SearchIconVisibility = Visibility.Hidden;
-
-                    // Force UI update
-                    mainWindow.ClockPanel.UpdateLayout();
-                    mainWindow.SearchIcon.UpdateLayout();
-
-                    // 📌 Apply DWM Cloak (Completely hide the window)
-                    Win32Helper.DWMSetCloakForWindow(mainWindow, true);
-                }
-            });
 
             if (StartWithEnglishMode)
             {
