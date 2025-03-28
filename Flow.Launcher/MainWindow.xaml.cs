@@ -241,7 +241,7 @@ namespace Flow.Launcher
             };
 
             // QueryTextBox.Text change detection (modified to only work when character count is 1 or higher)
-            QueryTextBox.TextChanged += (sender, e) => UpdateClockPanelVisibility();
+            QueryTextBox.TextChanged += (s, e) => UpdateClockPanelVisibility();
 
             // Detecting ContextMenu.Visibility changes
             DependencyPropertyDescriptor
@@ -351,7 +351,6 @@ namespace Flow.Launcher
                         _viewModel.LoadContextMenuCommand.Execute(null);
                         e.Handled = true;
                     }
-
                     break;
                 case Key.Left:
                     if (!_viewModel.QueryResultsSelected() && QueryTextBox.CaretIndex == 0)
@@ -359,7 +358,6 @@ namespace Flow.Launcher
                         _viewModel.EscCommand.Execute(null);
                         e.Handled = true;
                     }
-
                     break;
                 case Key.Back:
                     if (specialKeyState.CtrlPressed)
@@ -378,7 +376,6 @@ namespace Flow.Launcher
                             }
                         }
                     }
-
                     break;
                 default:
                     break;
@@ -864,8 +861,11 @@ namespace Flow.Launcher
         private void UpdateClockPanelVisibility()
         {
             if (QueryTextBox == null || ContextMenu == null || History == null || ClockPanel == null)
+            {
                 return;
+            }
 
+            // ✅ Initialize animation length & duration
             var animationLength = _settings.AnimationSpeed switch
             {
                 AnimationSpeeds.Slow => 560,
@@ -873,7 +873,6 @@ namespace Flow.Launcher
                 AnimationSpeeds.Fast => 160,
                 _ => _settings.CustomAnimationLength
             };
-
             var animationDuration = TimeSpan.FromMilliseconds(animationLength * 2 / 3);
 
             // ✅ Conditions for showing ClockPanel (No query input & ContextMenu, History are closed)
@@ -890,15 +889,21 @@ namespace Flow.Launcher
             }
 
             // ✅ 2. When ContextMenu is closed, keep it Hidden if there's text in the query (remember previous state)
-            if (ContextMenu.Visibility != Visibility.Visible && QueryTextBox.Text.Length > 0)
+            else if (QueryTextBox.Text.Length > 0)
             {
                 _viewModel.ClockPanelVisibility = Visibility.Hidden;
                 _viewModel.ClockPanelOpacity = 0.0;
                 return;
             }
 
+            // ✅ Prevent multiple animations
+            if (_isClockPanelAnimating)
+            {
+                return;
+            }
+
             // ✅ 3. When hiding ClockPanel (apply fade-out animation)
-            if ((!shouldShowClock) && _viewModel.ClockPanelVisibility == Visibility.Visible && !_isClockPanelAnimating)
+            if ((!shouldShowClock) && _viewModel.ClockPanelVisibility == Visibility.Visible)
             {
                 _isClockPanelAnimating = true;
 
@@ -920,32 +925,32 @@ namespace Flow.Launcher
             }
 
             // ✅ 4. When showing ClockPanel (apply fade-in animation)
-            else if (shouldShowClock && _viewModel.ClockPanelVisibility != Visibility.Visible && !_isClockPanelAnimating)
+            else if (shouldShowClock && _viewModel.ClockPanelVisibility != Visibility.Visible)
             {
                 _isClockPanelAnimating = true;
 
-                Application.Current.Dispatcher.Invoke(() =>
+                _viewModel.ClockPanelVisibility = Visibility.Visible;  // ✅ Set Visibility to Visible first
+
+                var fadeIn = new DoubleAnimation
                 {
-                    _viewModel.ClockPanelVisibility = Visibility.Visible;  // ✅ Set Visibility to Visible first
+                    From = 0.0,
+                    To = 1.0,
+                    Duration = animationDuration,
+                    FillBehavior = FillBehavior.HoldEnd
+                };
 
-                    var fadeIn = new DoubleAnimation
-                    {
-                        From = 0.0,
-                        To = 1.0,
-                        Duration = animationDuration,
-                        FillBehavior = FillBehavior.HoldEnd
-                    };
+                fadeIn.Completed += (s, e) => _isClockPanelAnimating = false;
 
-                    fadeIn.Completed += (s, e) => _isClockPanelAnimating = false;
-                    ClockPanel.BeginAnimation(OpacityProperty, fadeIn);
-                }, DispatcherPriority.Render);
+                ClockPanel.BeginAnimation(OpacityProperty, fadeIn);
             }
         }
 
         private static double GetOpacityFromStyle(Style style, double defaultOpacity = 1.0)
         {
             if (style == null)
+            {
                 return defaultOpacity;
+            }
 
             foreach (Setter setter in style.Setters.Cast<Setter>())
             {
@@ -961,7 +966,9 @@ namespace Flow.Launcher
         private static Thickness GetThicknessFromStyle(Style style, Thickness defaultThickness)
         {
             if (style == null)
+            {
                 return defaultThickness;
+            }
 
             foreach (Setter setter in style.Setters.Cast<Setter>())
             {
