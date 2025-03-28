@@ -166,22 +166,6 @@ namespace Flow.Launcher
                             {
                                 if (_viewModel.MainWindowVisibilityStatus)
                                 {
-                                    // Set clock and search icon opacity
-                                    var opacity = _settings.UseAnimation ? 0.0 : 1.0;
-                                    ClockPanel.Opacity = opacity;
-                                    SearchIcon.Opacity = opacity;
-
-                                    // Set clock and search icon visibility
-                                    ClockPanel.Visibility = string.IsNullOrEmpty(_viewModel.QueryText) ? Visibility.Visible : Visibility.Collapsed;
-                                    if (_viewModel.PluginIconSource != null)
-                                    {
-                                        SearchIcon.Opacity = 0.0;
-                                    }
-                                    else
-                                    {
-                                        _viewModel.SearchIconVisibility = Visibility.Visible;
-                                    }
-
                                     // Play sound effect before activing the window
                                     if (_settings.UseSound)
                                     {
@@ -213,21 +197,6 @@ namespace Flow.Launcher
 
                                     // Update activate times
                                     _settings.ActivateTimes++;
-                                }
-                                else
-                                {
-                                    // Set clock and search icon opacity
-                                    var opacity = _settings.UseAnimation ? 0.0 : 1.0;
-                                    ClockPanel.Opacity = opacity;
-                                    SearchIcon.Opacity = opacity;
-
-                                    // Set clock and search icon visibility
-                                    ClockPanel.Visibility = Visibility.Hidden;
-                                    _viewModel.SearchIconVisibility = Visibility.Hidden;
-
-                                    // Force UI update
-                                    ClockPanel.UpdateLayout();
-                                    SearchIcon.UpdateLayout();
                                 }
                             });
                             break;
@@ -329,8 +298,8 @@ namespace Flow.Launcher
             _settings.WindowLeft = Left;
             _settings.WindowTop = Top;
 
-            ClockPanel.Opacity = 0.0;
-            SearchIcon.Opacity = 0.0;
+            _viewModel.ClockPanelOpacity = 0.0;
+            _viewModel.SearchIconOpacity = 0.0;
 
             // This condition stops extra hide call when animator is on,
             // which causes the toggling to occasional hide instead of show.
@@ -908,28 +877,28 @@ namespace Flow.Launcher
             var animationDuration = TimeSpan.FromMilliseconds(animationLength * 2 / 3);
 
             // ✅ Conditions for showing ClockPanel (No query input & ContextMenu, History are closed)
-            bool shouldShowClock = QueryTextBox.Text.Length == 0 &&
+            var shouldShowClock = QueryTextBox.Text.Length == 0 &&
                 ContextMenu.Visibility != Visibility.Visible &&
                 History.Visibility != Visibility.Visible;
 
             // ✅ 1. When ContextMenu opens, immediately set Visibility.Hidden (force hide without animation)
             if (ContextMenu.Visibility == Visibility.Visible)
             {
-                ClockPanel.Visibility = Visibility.Hidden;
-                ClockPanel.Opacity = 0.0;  // Set to 0 in case Opacity animation affects it
+                _viewModel.ClockPanelVisibility = Visibility.Hidden;
+                _viewModel.ClockPanelOpacity = 0.0;  // Set to 0 in case Opacity animation affects it
                 return;
             }
 
             // ✅ 2. When ContextMenu is closed, keep it Hidden if there's text in the query (remember previous state)
             if (ContextMenu.Visibility != Visibility.Visible && QueryTextBox.Text.Length > 0)
             {
-                ClockPanel.Visibility = Visibility.Hidden;
-                ClockPanel.Opacity = 0.0;
+                _viewModel.ClockPanelVisibility = Visibility.Hidden;
+                _viewModel.ClockPanelOpacity = 0.0;
                 return;
             }
 
             // ✅ 3. When hiding ClockPanel (apply fade-out animation)
-            if ((!shouldShowClock) && ClockPanel.Visibility == Visibility.Visible && !_isClockPanelAnimating)
+            if ((!shouldShowClock) && _viewModel.ClockPanelVisibility == Visibility.Visible && !_isClockPanelAnimating)
             {
                 _isClockPanelAnimating = true;
 
@@ -943,7 +912,7 @@ namespace Flow.Launcher
 
                 fadeOut.Completed += (s, e) =>
                 {
-                    ClockPanel.Visibility = Visibility.Hidden; // ✅ Completely hide after animation
+                    _viewModel.ClockPanelVisibility = Visibility.Hidden; // ✅ Completely hide after animation
                     _isClockPanelAnimating = false;
                 };
 
@@ -951,13 +920,13 @@ namespace Flow.Launcher
             }
 
             // ✅ 4. When showing ClockPanel (apply fade-in animation)
-            else if (shouldShowClock && ClockPanel.Visibility != Visibility.Visible && !_isClockPanelAnimating)
+            else if (shouldShowClock && _viewModel.ClockPanelVisibility != Visibility.Visible && !_isClockPanelAnimating)
             {
                 _isClockPanelAnimating = true;
 
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    ClockPanel.Visibility = Visibility.Visible;  // ✅ Set Visibility to Visible first
+                    _viewModel.ClockPanelVisibility = Visibility.Visible;  // ✅ Set Visibility to Visible first
 
                     var fadeIn = new DoubleAnimation
                     {

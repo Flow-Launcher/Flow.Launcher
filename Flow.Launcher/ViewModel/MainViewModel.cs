@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
@@ -1453,8 +1454,30 @@ namespace Flow.Launcher.ViewModel
 
         public void Show()
         {
-            // 📌 Remove DWM Cloak (Make the window visible normally)
-            Win32Helper.DWMSetCloakForWindow(Application.Current.MainWindow, false);
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                if (Application.Current.MainWindow is MainWindow mainWindow)
+                {
+                    // 📌 Remove DWM Cloak (Make the window visible normally)
+                    Win32Helper.DWMSetCloakForWindow(mainWindow, false);
+
+                    // Set clock and search icon opacity
+                    var opacity = Settings.UseAnimation ? 0.0 : 1.0;
+                    ClockPanelOpacity = opacity;
+                    SearchIconOpacity = opacity;
+
+                    // Set clock and search icon visibility
+                    ClockPanelVisibility = string.IsNullOrEmpty(QueryText) ? Visibility.Visible : Visibility.Collapsed;
+                    if (PluginIconSource != null)
+                    {
+                        SearchIconOpacity = 0.0;
+                    }
+                    else
+                    {
+                        SearchIconVisibility = Visibility.Visible;
+                    }
+                }
+            }, DispatcherPriority.Render);
 
             // Update WPF properties
             MainWindowVisibility = Visibility.Visible;
@@ -1470,9 +1493,6 @@ namespace Flow.Launcher.ViewModel
 
         public async void Hide()
         {
-            // 📌 Apply DWM Cloak (Completely hide the window)
-            Win32Helper.DWMSetCloakForWindow(Application.Current.MainWindow, true);
-
             lastHistoryIndex = 1;
 
             if (ExternalPreviewVisible)
@@ -1507,10 +1527,35 @@ namespace Flow.Launcher.ViewModel
                     break;
             }
 
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                if (Application.Current.MainWindow is MainWindow mainWindow)
+                {
+                    // Set clock and search icon opacity
+                    var opacity = Settings.UseAnimation ? 0.0 : 1.0;
+                    ClockPanelOpacity = opacity;
+                    SearchIconOpacity = opacity;
+
+                    // Set clock and search icon visibility
+                    ClockPanelVisibility = Visibility.Hidden;
+                    SearchIconVisibility = Visibility.Hidden;
+
+                    // Force UI update
+                    mainWindow.ClockPanel.UpdateLayout();
+                    mainWindow.SearchIcon.UpdateLayout();
+
+                    // 📌 Apply DWM Cloak (Completely hide the window)
+                    Win32Helper.DWMSetCloakForWindow(mainWindow, true);
+                }
+            }, DispatcherPriority.Render);
+
             if (StartWithEnglishMode)
             {
                 Win32Helper.RestorePreviousKeyboardLayout();
             }
+
+            // Delay for a while to make sure clock will not flicker
+            await Task.Delay(50);
 
             // Update WPF properties
             //MainWindowOpacity = 0;
