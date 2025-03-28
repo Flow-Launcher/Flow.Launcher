@@ -638,8 +638,13 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         private async Task ChangeQueryTextAsync(string queryText, bool isReQuery = false)
         {
-            await Application.Current.Dispatcher.InvokeAsync(async () =>
+            // Must check access so that we will not block the UI thread which cause window visibility issue
+            if (!Application.Current.Dispatcher.CheckAccess())
             {
+                await Application.Current.Dispatcher.InvokeAsync(() => ChangeQueryText(queryText, isReQuery));
+                return;
+            }
+
                 BackToQueryResults();
 
                 if (QueryText != queryText)
@@ -656,7 +661,6 @@ namespace Flow.Launcher.ViewModel
                 }
 
                 QueryTextCursorMovedToEnd = true;
-            });
         }
 
         public bool LastQuerySelected { get; set; }
