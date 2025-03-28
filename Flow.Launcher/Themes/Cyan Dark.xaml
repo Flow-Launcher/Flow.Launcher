@@ -56,7 +56,7 @@
         BasedOn="{StaticResource BaseWindowBorderStyle}"
         TargetType="{x:Type Border}">
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="BorderBrush" Value="#09181e" />
+        <Setter Property="BorderBrush" Value="#1e292f" />
         <Setter Property="Background" Value="#0f1f26" />
         <Setter Property="CornerRadius" Value="6" />
         <Setter Property="UseLayoutRounding" Value="True" />
