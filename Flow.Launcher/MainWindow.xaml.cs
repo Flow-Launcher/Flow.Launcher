@@ -101,11 +101,16 @@ namespace Flow.Launcher
             // Check first launch
             if (_settings.FirstLaunch)
             {
+                // Set First Launch to false
                 _settings.FirstLaunch = false;
+
+                // Set Backdrop Type to Acrylic for Windows 11 when First Launch. Default is None
+                if (Win32Helper.IsBackdropSupported()) _settings.BackdropType = BackdropTypes.Acrylic;
+
+                // Save settings
                 App.API.SaveAppAllSettings();
-                /* Set Backdrop Type to Acrylic for Windows 11 when First Launch. Default is None. */
-                if (OperatingSystem.IsWindowsVersionAtLeast(10, 0, 22000))
-                    _settings.BackdropType = BackdropTypes.Acrylic;
+
+                // Show Welcome Window
                 var WelcomeWindow = new WelcomeWindow();
                 WelcomeWindow.Show();
             }
@@ -206,6 +211,7 @@ namespace Flow.Launcher
                                         WindowAnimation();
                                     }
 
+                                    // Update activate times
                                     _settings.ActivateTimes++;
                                 }
                                 else
