@@ -101,13 +101,18 @@ namespace Flow.Launcher
             // Check first launch
             if (_settings.FirstLaunch)
             {
+                // Set First Launch to false
                 _settings.FirstLaunch = false;
+
+                // Set Backdrop Type to Acrylic for Windows 11 when First Launch. Default is None
+                if (Win32Helper.IsBackdropSupported()) _settings.BackdropType = BackdropTypes.Acrylic;
+
+                // Save settings
                 App.API.SaveAppAllSettings();
-                /* Set Backdrop Type to Acrylic for Windows 11 when First Launch. Default is None. */
-                if (OperatingSystem.IsWindowsVersionAtLeast(10, 0, 22000))
-                    _settings.BackdropType = BackdropTypes.Acrylic;
-                var WelcomeWindow = new WelcomeWindow();
-                WelcomeWindow.Show();
+
+                // Show Welcome Window
+                var welcomeWindow = new WelcomeWindow();
+                welcomeWindow.Show();
             }
 
             // Hide window if need
@@ -161,24 +166,37 @@ namespace Flow.Launcher
                             {
                                 if (_viewModel.MainWindowVisibilityStatus)
                                 {
+                                    // Play sound effect before activing the window
                                     if (_settings.UseSound)
                                     {
                                         SoundPlay();
                                     }
 
+                                    // Update position & Activate
                                     UpdatePosition();
-                                    _viewModel.ResetPreview();
                                     Activate();
-                                    QueryTextBox.Focus();
-                                    _settings.ActivateTimes++;
+
+                                    // Reset preview
+                                    _viewModel.ResetPreview();
+
+                                    // Select last query if need
                                     if (!_viewModel.LastQuerySelected)
                                     {
                                         QueryTextBox.SelectAll();
                                         _viewModel.LastQuerySelected = true;
                                     }
 
+                                    // Focus query box
+                                    QueryTextBox.Focus();
+
+                                    // Play window animation
                                     if (_settings.UseAnimation)
+                                    {
                                         WindowAnimation();
+                                    }
+
+                                    // Update activate times
+                                    _settings.ActivateTimes++;
                                 }
                             });
                             break;
@@ -191,7 +209,6 @@ namespace Flow.Launcher
                             Dispatcher.Invoke(() => QueryTextBox.CaretIndex = QueryTextBox.Text.Length);
                             _viewModel.QueryTextCursorMovedToEnd = false;
                         }
-
                         break;
                     case nameof(MainViewModel.GameModeStatus):
                         _notifyIcon.Icon = _viewModel.GameModeStatus
@@ -224,7 +241,7 @@ namespace Flow.Launcher
             };
 
             // QueryTextBox.Text change detection (modified to only work when character count is 1 or higher)
-            QueryTextBox.TextChanged += (sender, e) => UpdateClockPanelVisibility();
+            QueryTextBox.TextChanged += (s, e) => UpdateClockPanelVisibility();
 
             // Detecting ContextMenu.Visibility changes
             DependencyPropertyDescriptor
@@ -248,7 +265,8 @@ namespace Flow.Launcher
                 Notification.Uninstall();
                 // After plugins are all disposed, we can close the main window
                 _canClose = true;
-                Close();
+                // Use this instead of Close() to avoid InvalidOperationException when calling Close() in OnClosing event
+                Application.Current.Shutdown();
             }
         }
 
@@ -280,8 +298,8 @@ namespace Flow.Launcher
             _settings.WindowLeft = Left;
             _settings.WindowTop = Top;
 
-            ClockPanel.Opacity = 0;
-            SearchIcon.Opacity = 0;
+            _viewModel.ClockPanelOpacity = 0.0;
+            _viewModel.SearchIconOpacity = 0.0;
 
             // This condition stops extra hide call when animator is on,
             // which causes the toggling to occasional hide instead of show.
@@ -291,7 +309,9 @@ namespace Flow.Launcher
                 // This also stops the mainwindow from flickering occasionally after Settings window is opened
                 // and always after Settings window is closed.
                 if (_settings.UseAnimation)
+                {
                     await Task.Delay(100);
+                }
 
                 if (_settings.HideWhenDeactivated && !_viewModel.ExternalPreviewVisible)
                 {
@@ -331,7 +351,6 @@ namespace Flow.Launcher
                         _viewModel.LoadContextMenuCommand.Execute(null);
                         e.Handled = true;
                     }
-
                     break;
                 case Key.Left:
                     if (!_viewModel.QueryResultsSelected() && QueryTextBox.CaretIndex == 0)
@@ -339,7 +358,6 @@ namespace Flow.Launcher
                         _viewModel.EscCommand.Execute(null);
                         e.Handled = true;
                     }
-
                     break;
                 case Key.Back:
                     if (specialKeyState.CtrlPressed)
@@ -358,7 +376,6 @@ namespace Flow.Launcher
                             }
                         }
                     }
-
                     break;
                 default:
                     break;
@@ -765,12 +782,6 @@ namespace Flow.Launcher
         {
             _isArrowKeyPressed = true;
 
-            UpdatePosition();
-
-            var opacity = _settings.UseAnimation ? 0.0 : 1.0;
-            ClockPanel.Opacity = opacity;
-            SearchIcon.Opacity = opacity;
-
             var clocksb = new Storyboard();
             var iconsb = new Storyboard();
             var easing = new CircleEase { EasingMode = EasingMode.EaseInOut };
@@ -850,8 +861,11 @@ namespace Flow.Launcher
         private void UpdateClockPanelVisibility()
         {
             if (QueryTextBox == null || ContextMenu == null || History == null || ClockPanel == null)
+            {
                 return;
+            }
 
+            // ✅ Initialize animation length & duration
             var animationLength = _settings.AnimationSpeed switch
             {
                 AnimationSpeeds.Slow => 560,
@@ -859,32 +873,37 @@ namespace Flow.Launcher
                 AnimationSpeeds.Fast => 160,
                 _ => _settings.CustomAnimationLength
             };
-
             var animationDuration = TimeSpan.FromMilliseconds(animationLength * 2 / 3);
 
             // ✅ Conditions for showing ClockPanel (No query input & ContextMenu, History are closed)
-            bool shouldShowClock = QueryTextBox.Text.Length == 0 &&
+            var shouldShowClock = QueryTextBox.Text.Length == 0 &&
                 ContextMenu.Visibility != Visibility.Visible &&
                 History.Visibility != Visibility.Visible;
 
             // ✅ 1. When ContextMenu opens, immediately set Visibility.Hidden (force hide without animation)
             if (ContextMenu.Visibility == Visibility.Visible)
             {
-                ClockPanel.Visibility = Visibility.Hidden;
-                ClockPanel.Opacity = 0.0;  // Set to 0 in case Opacity animation affects it
+                _viewModel.ClockPanelVisibility = Visibility.Hidden;
+                _viewModel.ClockPanelOpacity = 0.0;  // Set to 0 in case Opacity animation affects it
                 return;
             }
 
             // ✅ 2. When ContextMenu is closed, keep it Hidden if there's text in the query (remember previous state)
-            if (ContextMenu.Visibility != Visibility.Visible && QueryTextBox.Text.Length > 0)
+            else if (QueryTextBox.Text.Length > 0)
             {
-                ClockPanel.Visibility = Visibility.Hidden;
-                ClockPanel.Opacity = 0.0;
+                _viewModel.ClockPanelVisibility = Visibility.Hidden;
+                _viewModel.ClockPanelOpacity = 0.0;
+                return;
+            }
+
+            // ✅ Prevent multiple animations
+            if (_isClockPanelAnimating)
+            {
                 return;
             }
 
             // ✅ 3. When hiding ClockPanel (apply fade-out animation)
-            if ((!shouldShowClock) && ClockPanel.Visibility == Visibility.Visible && !_isClockPanelAnimating)
+            if ((!shouldShowClock) && _viewModel.ClockPanelVisibility == Visibility.Visible)
             {
                 _isClockPanelAnimating = true;
 
@@ -898,40 +917,40 @@ namespace Flow.Launcher
 
                 fadeOut.Completed += (s, e) =>
                 {
-                    ClockPanel.Visibility = Visibility.Hidden; // ✅ Completely hide after animation
+                    _viewModel.ClockPanelVisibility = Visibility.Hidden; // ✅ Completely hide after animation
                     _isClockPanelAnimating = false;
                 };
 
                 ClockPanel.BeginAnimation(OpacityProperty, fadeOut);
             }
+
             // ✅ 4. When showing ClockPanel (apply fade-in animation)
-            else if (shouldShowClock && ClockPanel.Visibility != Visibility.Visible && !_isClockPanelAnimating)
+            else if (shouldShowClock && _viewModel.ClockPanelVisibility != Visibility.Visible)
             {
                 _isClockPanelAnimating = true;
 
-                Application.Current.Dispatcher.Invoke(() =>
+                _viewModel.ClockPanelVisibility = Visibility.Visible;  // ✅ Set Visibility to Visible first
+
+                var fadeIn = new DoubleAnimation
                 {
-                    ClockPanel.Visibility = Visibility.Visible;  // ✅ Set Visibility to Visible first
+                    From = 0.0,
+                    To = 1.0,
+                    Duration = animationDuration,
+                    FillBehavior = FillBehavior.HoldEnd
+                };
 
-                    var fadeIn = new DoubleAnimation
-                    {
-                        From = 0.0,
-                        To = 1.0,
-                        Duration = animationDuration,
-                        FillBehavior = FillBehavior.HoldEnd
-                    };
+                fadeIn.Completed += (s, e) => _isClockPanelAnimating = false;
 
-                    fadeIn.Completed += (s, e) => _isClockPanelAnimating = false;
-                    ClockPanel.BeginAnimation(OpacityProperty, fadeIn);
-                }, DispatcherPriority.Render);
+                ClockPanel.BeginAnimation(OpacityProperty, fadeIn);
             }
         }
-
 
         private static double GetOpacityFromStyle(Style style, double defaultOpacity = 1.0)
         {
             if (style == null)
+            {
                 return defaultOpacity;
+            }
 
             foreach (Setter setter in style.Setters.Cast<Setter>())
             {
@@ -947,7 +966,9 @@ namespace Flow.Launcher
         private static Thickness GetThicknessFromStyle(Style style, Thickness defaultThickness)
         {
             if (style == null)
+            {
                 return defaultThickness;
+            }
 
             foreach (Setter setter in style.Setters.Cast<Setter>())
             {
