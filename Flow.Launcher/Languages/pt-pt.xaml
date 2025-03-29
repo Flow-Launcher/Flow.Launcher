@@ -37,7 +37,7 @@
     <system:String x:Key="GameMode">Modo de jogo</system:String>
     <system:String x:Key="GameModeToolTip">Suspender utilização das teclas de atalho</system:String>
     <system:String x:Key="PositionReset">Repor posição</system:String>
-    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Escreva aqui para pesquisar</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Definições</system:String>
@@ -198,12 +198,12 @@
     <system:String x:Key="BackdropTypesMicaAlt">Mica alternativo</system:String>
     <system:String x:Key="TypeIsDarkToolTip">Este tema tem suporte a dois modos (claro/escuro).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Este tema tem suporte a fundo transparente desfocado.</system:String>
-    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
-    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
-    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
-    <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
-    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
+    <system:String x:Key="ShowPlaceholder">Mostrar marcador de posição</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Mostrar marcador de posição se a consulta estiver vazia</system:String>
+    <system:String x:Key="PlaceholderText">Texto do marcador</system:String>
+    <system:String x:Key="PlaceholderTextTip">O texto do marcador de posição. Se vazio, será utilizado: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Janela com tamanho fixo</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">Não pode ajustar o tamanho da janela por arrasto.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Tecla de atalho</system:String>
