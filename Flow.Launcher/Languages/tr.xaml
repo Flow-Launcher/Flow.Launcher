@@ -37,7 +37,7 @@
     <system:String x:Key="GameMode">Oyun Modu</system:String>
     <system:String x:Key="GameModeToolTip">Kısayol tuşlarının kullanımını durdurun.</system:String>
     <system:String x:Key="PositionReset">Pencere Konumunu Sıfırla</system:String>
-    <system:String x:Key="PositionResetToolTip">Arama penceresinin konumunu sıfırla</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Ayarlar</system:String>
@@ -70,8 +70,6 @@
     <system:String x:Key="LastQueryEmpty">Sorgu Kutusunu Temizle</system:String>
     <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
     <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
-    <system:String x:Key="KeepMaxResults">Sabit Pencere Yükseliği</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">Pencere yüksekliği sürükleme ile ayarlanamaz.</system:String>
     <system:String x:Key="maxShowResults">Maksimum Sonuç Sayısı</system:String>
     <system:String x:Key="maxShowResultsToolTip">Bunu CTRL + ve CTRL - kısayollarıyla da ayarlayabilirsiniz.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Tam Ekran Modunda Kısayol Tuşunu Gözardı Et</system:String>
@@ -102,11 +100,6 @@
     <system:String x:Key="AlwaysPreview">Önizleme</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Önizleme panelini her zaman aç. Önizlemeyi bu ayardan bağımsız {0} kısayolu ile açıp kapatabilirsiniz.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Mevcut temada bulanıklık efekti etkinken gölgelendirme efektine izin verilmez</system:String>
-    <system:String x:Key="BackdropType">Backdrop Type</system:String>
-    <system:String x:Key="BackdropTypesNone">Hiçbiri</system:String>
-    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
-    <system:String x:Key="BackdropTypesMica">Mica</system:String>
-    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Eklenti Ara</system:String>
@@ -198,8 +191,19 @@
     <system:String x:Key="AnimationSpeedCustom">Özel</system:String>
     <system:String x:Key="Clock">Saat</system:String>
     <system:String x:Key="Date">Tarih</system:String>
+    <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropTypesNone">Hiçbiri</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
+    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
     <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
+    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
+    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
+    <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Kısayol Tuşu</system:String>
