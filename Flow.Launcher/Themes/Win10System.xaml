@@ -36,7 +36,7 @@
         <Setter Property="FontSize" Value="22" />
         <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
         <Setter Property="CaretBrush" Value="{DynamicResource Color05B}" />
-        <Setter Property="Padding" Value="0 4 66 0" />
+        <Setter Property="Padding" Value="0 0 66 0" />
         <Setter Property="Height" Value="42" />
     </Style>
     <Style
@@ -45,7 +45,7 @@
         TargetType="{x:Type TextBox}">
         <Setter Property="Foreground" Value="{DynamicResource QuerySuggestionBoxForeground}" />
         <Setter Property="FontSize" Value="22" />
-        <Setter Property="Padding" Value="0 4 66 0" />
+        <Setter Property="Padding" Value="0 0 66 0" />
         <Setter Property="Height" Value="42" />
     </Style>
     <Style
