@@ -565,7 +565,7 @@ namespace Flow.Launcher.Core.Resource
                 }
 
                 // Apply the resize border thickness to the window chrome
-                SetResizeBoarderThickness(windowChrome, _settings.KeepMaxResults);
+                SetResizeBorderThickness(windowChrome, _settings.KeepMaxResults);
             }
         }
 

@@ -1097,7 +1097,7 @@ namespace Flow.Launcher
             ResizeMode = _settings.KeepMaxResults ? ResizeMode.NoResize : ResizeMode.CanResize;
             if (WindowChrome.GetWindowChrome(this) is WindowChrome windowChrome)
             {
-                _theme.SetResizeBoarderThickness(windowChrome, _settings.KeepMaxResults);
+                _theme.SetResizeBorderThickness(windowChrome, _settings.KeepMaxResults);
             }
         }
 
