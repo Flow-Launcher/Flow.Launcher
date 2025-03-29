@@ -72,8 +72,6 @@
     <system:String x:Key="LastQueryEmpty">Empty last Query</system:String>
     <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
     <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
-    <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">The window height is not adjustable by dragging.</system:String>
     <system:String x:Key="maxShowResults">Maximum results shown</system:String>
     <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignore hotkeys in fullscreen mode</system:String>
@@ -206,8 +204,8 @@
     <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
     <system:String x:Key="PlaceholderText">Placeholder text</system:String>
     <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: Type here to search</system:String>
-    <system:String x:Key="ResizeWindow">Allow window size change</system:String>
-    <system:String x:Key="ResizeWindowTip">Allow dragging the search window edges to change its size</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Hotkey</system:String>

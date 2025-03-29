@@ -499,28 +499,20 @@
                 Text="{DynamicResource browserMoreThemes}"
                 Uri="{Binding LinkThemeGallery}" />
 
-            <!--  Resize window  -->
-            <cc:Card
-                Title="{DynamicResource ResizeWindow}"
-                Margin="0 14 0 0"
-                Icon="&#xE744;"
-                Sub="{DynamicResource ResizeWindowTip}">
-                <ui:ToggleSwitch
-                    IsOn="{Binding ResizeWindow}"
-                    OffContent="{DynamicResource disable}"
-                    OnContent="{DynamicResource enable}" />
-            </cc:Card>
-
-            <!--  Fixed height  -->
+            <!--  Fixed size  -->
             <cc:CardGroup Margin="0 20 0 0">
                 <cc:Card
                     Title="{DynamicResource KeepMaxResults}"
-                    Icon="&#xe8fd;"
+                    Icon="&#xE744;"
                     Sub="{DynamicResource KeepMaxResultsToolTip}">
-                    <ui:ToggleSwitch IsOn="{Binding KeepMaxResults}" />
+                    <ui:ToggleSwitch
+                        IsOn="{Binding KeepMaxResults}"
+                        OffContent="{DynamicResource disable}"
+                        OnContent="{DynamicResource enable}" />
                 </cc:Card>
                 <cc:Card
                     Title="{DynamicResource maxShowResults}"
+                    Icon="&#xe8fd;"
                     Sub="{DynamicResource maxShowResultsToolTip}"
                     Visibility="{Binding KeepMaxResults, Converter={StaticResource BoolToVisibilityConverter}}">
                     <ComboBox

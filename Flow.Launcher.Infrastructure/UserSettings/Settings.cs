@@ -68,11 +68,12 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             get => _theme;
             set
             {
-                if (value == _theme)
-                    return;
-                _theme = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(MaxResultsToShow));
+                if (value != _theme)
+                {
+                    _theme = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(MaxResultsToShow));
+                }
             }
         }
         public bool UseDropShadowEffect { get; set; } = true;
@@ -113,25 +114,17 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public double? SettingWindowLeft { get; set; } = null;
         public System.Windows.WindowState SettingWindowState { get; set; } = WindowState.Normal;
 
-        bool _resizeWindow { get; set; } = true;
-        public bool ResizeWindow
-        {
-            get => _resizeWindow;
-            set
-            {
-                _resizeWindow = value;
-                OnPropertyChanged();
-            }
-        }
-
         bool _showPlaceholder { get; set; } = false;
         public bool ShowPlaceholder
         {
             get => _showPlaceholder;
             set
             {
-                _showPlaceholder = value;
-                OnPropertyChanged();
+                if (_showPlaceholder != value)
+                {
+                    _showPlaceholder = value;
+                    OnPropertyChanged();
+                }
             }
         }
         string _placeholderText { get; set; } = string.Empty;
@@ -140,8 +133,11 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             get => _placeholderText;
             set
             {
-                _placeholderText = value;
-                OnPropertyChanged();
+                if (_placeholderText != value)
+                {
+                    _placeholderText = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -273,10 +269,26 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /// </summary>
         public double CustomWindowTop { get; set; } = 0;
 
-        public bool KeepMaxResults { get; set; } = false;
-        public int MaxResultsToShow { get; set; } = 5;
-        public int ActivateTimes { get; set; }
+        /// <summary>
+        /// Fixed window size
+        /// </summary>
+        private bool _keepMaxResults { get; set; } = false;
+        public bool KeepMaxResults
+        {
+            get => _keepMaxResults;
+            set
+            {
+                if (_keepMaxResults != value)
+                {
+                    _keepMaxResults = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
+        public int MaxResultsToShow { get; set; } = 5;
+
+        public int ActivateTimes { get; set; }
 
         public ObservableCollection<CustomPluginHotkey> CustomPluginHotkeys { get; set; } = new ObservableCollection<CustomPluginHotkey>();
 

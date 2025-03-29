@@ -531,15 +531,15 @@ namespace Flow.Launcher.Core.Resource
             UpdateResourceDictionary(dict);
         }
 
-        public void SetResizeBoarderThickness(WindowChrome windowChrome, bool resizeWindow)
+        public void SetResizeBoarderThickness(WindowChrome windowChrome, bool fixedWindowSize)
         {
-            if (resizeWindow)
+            if (fixedWindowSize)
             {
-                windowChrome.ResizeBorderThickness = _themeResizeBorderThickness;
+                windowChrome.ResizeBorderThickness = new Thickness(0);
             }
             else
             {
-                windowChrome.ResizeBorderThickness = new Thickness(0);
+                windowChrome.ResizeBorderThickness = _themeResizeBorderThickness;
             }
         }
 
@@ -565,7 +565,7 @@ namespace Flow.Launcher.Core.Resource
                 }
 
                 // Apply the resize border thickness to the window chrome
-                SetResizeBoarderThickness(windowChrome, _settings.ResizeWindow);
+                SetResizeBoarderThickness(windowChrome, _settings.KeepMaxResults);
             }
         }
 

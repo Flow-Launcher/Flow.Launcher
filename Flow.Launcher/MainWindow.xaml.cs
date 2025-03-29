@@ -252,7 +252,7 @@ namespace Flow.Launcher
                     case nameof(Settings.PlaceholderText):
                         _viewModel.PlaceholderText = _settings.PlaceholderText;
                         break;
-                    case nameof(Settings.ResizeWindow):
+                    case nameof(Settings.KeepMaxResults):
                         SetupResizeMode();
                         break;
                 }
@@ -1087,10 +1087,10 @@ namespace Flow.Launcher
 
         private void SetupResizeMode()
         {
-            ResizeMode = _settings.ResizeWindow ? ResizeMode.CanResize : ResizeMode.NoResize;
+            ResizeMode = _settings.KeepMaxResults ? ResizeMode.NoResize : ResizeMode.CanResize;
             if (WindowChrome.GetWindowChrome(this) is WindowChrome windowChrome)
             {
-                _theme.SetResizeBoarderThickness(windowChrome, _settings.ResizeWindow);
+                _theme.SetResizeBoarderThickness(windowChrome, _settings.KeepMaxResults);
             }
         }
 
