@@ -584,7 +584,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void IncreaseWidth()
         {
-            Settings.WindowSize += 100;
+            MainWindowWidth += 100;
             Settings.WindowLeft -= 50;
             OnPropertyChanged(nameof(MainWindowWidth));
         }
@@ -592,14 +592,14 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void DecreaseWidth()
         {
-            if (MainWindowWidth - 100 < 400 || Settings.WindowSize == 400)
+            if (MainWindowWidth - 100 < 400 || MainWindowWidth == 400)
             {
-                Settings.WindowSize = 400;
+                MainWindowWidth = 400;
             }
             else
             {
+                MainWindowWidth -= 100;
                 Settings.WindowLeft += 50;
-                Settings.WindowSize -= 100;
             }
 
             OnPropertyChanged(nameof(MainWindowWidth));
@@ -764,6 +764,17 @@ namespace Flow.Launcher.ViewModel
         public Visibility SearchIconVisibility { get; set; }
         public double ClockPanelOpacity { get; set; } = 1;
         public double SearchIconOpacity { get; set; } = 1;
+
+        private string _placeholderText;
+        public string PlaceholderText
+        {
+            get => string.IsNullOrEmpty(_placeholderText) ? App.API.GetTranslation("queryTextBoxPlaceholder") : _placeholderText;
+            set
+            {
+                _placeholderText = value;
+                OnPropertyChanged();
+            }
+        }
 
         public double MainWindowWidth
         {
