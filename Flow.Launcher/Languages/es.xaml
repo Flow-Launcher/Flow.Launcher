@@ -37,7 +37,7 @@
     <system:String x:Key="GameMode">Modo Juego</system:String>
     <system:String x:Key="GameModeToolTip">Suspende el uso de atajos de teclado.</system:String>
     <system:String x:Key="PositionReset">Restablecer posición</system:String>
-    <system:String x:Key="PositionResetToolTip">Restablece la posición de la ventana de búsqueda</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Configuración</system:String>
@@ -70,8 +70,6 @@
     <system:String x:Key="LastQueryEmpty">Limpiar la última consulta</system:String>
     <system:String x:Key="LastQueryActionKeywordPreserved">Conservar última palabra clave de acción</system:String>
     <system:String x:Key="LastQueryActionKeywordSelected">Seleccionar última palabra clave de acción</system:String>
-    <system:String x:Key="KeepMaxResults">Altura de la ventana fija</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">La altura de la ventana no se puede ajustar arrastrando el ratón.</system:String>
     <system:String x:Key="maxShowResults">Número máximo de resultados mostrados</system:String>
     <system:String x:Key="maxShowResultsToolTip">También puede ajustarse rápidamente usando Ctrl+Más(+) y Ctrl+Menos(-).</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorar atajos de teclado en modo pantalla completa</system:String>
@@ -102,11 +100,6 @@
     <system:String x:Key="AlwaysPreview">Mostrar siempre vista previa</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Muestra siempre el panel de vista previa al iniciar Flow. Pulsar {0} para mostrar/ocultar la vista previa.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">El efecto de sombra no está permitido si el tema actual tiene activado el efecto de desenfoque</system:String>
-    <system:String x:Key="BackdropType">Tipo de telón de fondo</system:String>
-    <system:String x:Key="BackdropTypesNone">Ninguno</system:String>
-    <system:String x:Key="BackdropTypesAcrylic">Acrílico</system:String>
-    <system:String x:Key="BackdropTypesMica">Mica</system:String>
-    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Buscar complemento</system:String>
@@ -198,8 +191,19 @@
     <system:String x:Key="AnimationSpeedCustom">Personalizada</system:String>
     <system:String x:Key="Clock">Reloj</system:String>
     <system:String x:Key="Date">Fecha</system:String>
+    <system:String x:Key="BackdropType">Tipo de telón de fondo</system:String>
+    <system:String x:Key="BackdropTypesNone">Ninguno</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrílico</system:String>
+    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
     <system:String x:Key="TypeIsDarkToolTip">Este tema soporta dos modos (claro/oscuro).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Este tema soporta fondo transparente desenfocado.</system:String>
+    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
+    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
+    <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Atajo de teclado</system:String>
