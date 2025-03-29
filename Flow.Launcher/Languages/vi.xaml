@@ -37,7 +37,7 @@
     <system:String x:Key="GameMode">Chế độ trò chơi</system:String>
     <system:String x:Key="GameModeToolTip">Tạm dừng sử dụng phím nóng.</system:String>
     <system:String x:Key="PositionReset">Đặt lại vị trí</system:String>
-    <system:String x:Key="PositionResetToolTip">Đặt lại vị trí của cửa sổ tìm kiếm</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Cài đặt</system:String>
@@ -70,8 +70,6 @@
     <system:String x:Key="LastQueryEmpty">Trống truy vấn cuối cùng</system:String>
     <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
     <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
-    <system:String x:Key="KeepMaxResults">Giữ nguyên chiều cao cửa sổ</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">Chiều cao cửa sổ không thể thay đổi bằng cách kéo.</system:String>
     <system:String x:Key="maxShowResults">Số kết quả tối đa</system:String>
     <system:String x:Key="maxShowResultsToolTip">Có thể thiết lập nhanh chóng bằng CTRL+Plus và CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Bỏ qua phím nóng khi cửa sổ ở chế độ toàn màn hình</system:String>
@@ -102,11 +100,6 @@
     <system:String x:Key="AlwaysPreview">Luôn xem trước</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Luôn mở bảng xem trước khi Flow kích hoạt. Nhấn {0} để chuyển đổi chế độ xem trước.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Hiệu ứng đổ bóng không được phép nếu chủ đề hiện tại bật hiệu ứng làm mờ</system:String>
-    <system:String x:Key="BackdropType">Backdrop Type</system:String>
-    <system:String x:Key="BackdropTypesNone">Không</system:String>
-    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
-    <system:String x:Key="BackdropTypesMica">Mica</system:String>
-    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Plugin tìm kiếm</system:String>
@@ -198,8 +191,19 @@
     <system:String x:Key="AnimationSpeedCustom">Tùy chỉnh</system:String>
     <system:String x:Key="Clock">Giờ</system:String>
     <system:String x:Key="Date">Ngày</system:String>
+    <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropTypesNone">Không</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
+    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
     <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
+    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
+    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
+    <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Phím tắt</system:String>
