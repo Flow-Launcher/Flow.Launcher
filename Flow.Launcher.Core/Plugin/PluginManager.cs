@@ -205,9 +205,6 @@ namespace Flow.Launcher.Core.Plugin
                 }
             }
 
-            InternationalizationManager.Instance.AddPluginLanguageDirectories(GetPluginsForInterface<IPluginI18n>());
-            InternationalizationManager.Instance.ChangeLanguage(Ioc.Default.GetRequiredService<Settings>().Language);
-
             if (failedPlugins.Any())
             {
                 var failed = string.Join(",", failedPlugins.Select(x => x.Metadata.Name));
@@ -230,7 +227,6 @@ namespace Flow.Launcher.Core.Plugin
 
             if (!NonGlobalPlugins.ContainsKey(query.ActionKeyword))
                 return GlobalPlugins;
-
 
             var plugin = NonGlobalPlugins[query.ActionKeyword];
             return new List<PluginPair>
@@ -367,7 +363,16 @@ namespace Flow.Launcher.Core.Plugin
                 NonGlobalPlugins[newActionKeyword] = plugin;
             }
 
+            // Update action keywords and action keyword in plugin metadata
             plugin.Metadata.ActionKeywords.Add(newActionKeyword);
+            if (plugin.Metadata.ActionKeywords.Count > 0)
+            {
+                plugin.Metadata.ActionKeyword = plugin.Metadata.ActionKeywords[0];
+            }
+            else
+            {
+                plugin.Metadata.ActionKeyword = string.Empty;
+            }
         }
 
         /// <summary>
@@ -388,16 +393,15 @@ namespace Flow.Launcher.Core.Plugin
             if (oldActionkeyword != Query.GlobalPluginWildcardSign)
                 NonGlobalPlugins.Remove(oldActionkeyword);
 
-
+            // Update action keywords and action keyword in plugin metadata
             plugin.Metadata.ActionKeywords.Remove(oldActionkeyword);
-        }
-
-        public static void ReplaceActionKeyword(string id, string oldActionKeyword, string newActionKeyword)
-        {
-            if (oldActionKeyword != newActionKeyword)
+            if (plugin.Metadata.ActionKeywords.Count > 0)
             {
-                AddActionKeyword(id, newActionKeyword);
-                RemoveActionKeyword(id, oldActionKeyword);
+                plugin.Metadata.ActionKeyword = plugin.Metadata.ActionKeywords[0];
+            }
+            else
+            {
+                plugin.Metadata.ActionKeyword = string.Empty;
             }
         }
 

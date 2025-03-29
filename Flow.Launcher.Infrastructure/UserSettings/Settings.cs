@@ -68,14 +68,16 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             get => _theme;
             set
             {
-                if (value == _theme)
-                    return;
-                _theme = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(MaxResultsToShow));
+                if (value != _theme)
+                {
+                    _theme = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(MaxResultsToShow));
+                }
             }
         }
         public bool UseDropShadowEffect { get; set; } = true;
+        public BackdropTypes BackdropType{ get; set; } = BackdropTypes.None;
 
         /* Appearance Settings. It should be separated from the setting later.*/
         public double WindowHeightSize { get; set; } = 42;
@@ -111,6 +113,33 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public double? SettingWindowTop { get; set; } = null;
         public double? SettingWindowLeft { get; set; } = null;
         public System.Windows.WindowState SettingWindowState { get; set; } = WindowState.Normal;
+
+        bool _showPlaceholder { get; set; } = false;
+        public bool ShowPlaceholder
+        {
+            get => _showPlaceholder;
+            set
+            {
+                if (_showPlaceholder != value)
+                {
+                    _showPlaceholder = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        string _placeholderText { get; set; } = string.Empty;
+        public string PlaceholderText
+        {
+            get => _placeholderText;
+            set
+            {
+                if (_placeholderText != value)
+                {
+                    _placeholderText = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public int CustomExplorerIndex { get; set; } = 0;
 
@@ -240,10 +269,26 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /// </summary>
         public double CustomWindowTop { get; set; } = 0;
 
-        public bool KeepMaxResults { get; set; } = false;
-        public int MaxResultsToShow { get; set; } = 5;
-        public int ActivateTimes { get; set; }
+        /// <summary>
+        /// Fixed window size
+        /// </summary>
+        private bool _keepMaxResults { get; set; } = false;
+        public bool KeepMaxResults
+        {
+            get => _keepMaxResults;
+            set
+            {
+                if (_keepMaxResults != value)
+                {
+                    _keepMaxResults = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
+        public int MaxResultsToShow { get; set; } = 5;
+
+        public int ActivateTimes { get; set; }
 
         public ObservableCollection<CustomPluginHotkey> CustomPluginHotkeys { get; set; } = new ObservableCollection<CustomPluginHotkey>();
 
@@ -429,5 +474,13 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         Medium,
         Fast,
         Custom
+    }
+
+    public enum BackdropTypes
+    {
+        None,    
+        Acrylic,
+        Mica,
+        MicaAlt
     }
 }
