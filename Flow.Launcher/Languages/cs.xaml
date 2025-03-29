@@ -37,7 +37,7 @@
     <system:String x:Key="GameMode">Herní režim</system:String>
     <system:String x:Key="GameModeToolTip">Potlačit užívání klávesových zkratek.</system:String>
     <system:String x:Key="PositionReset">Obnovit pozici</system:String>
-    <system:String x:Key="PositionResetToolTip">Obnovit pozici vyhledávacího okna</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Nastavení</system:String>
@@ -70,8 +70,6 @@
     <system:String x:Key="LastQueryEmpty">Smazat poslední dotaz</system:String>
     <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
     <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
-    <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">The window height is not adjustable by dragging.</system:String>
     <system:String x:Key="maxShowResults">Počet zobrazených výsledků</system:String>
     <system:String x:Key="maxShowResultsToolTip">Toto nastavení můžete také rychle upravit pomocí CTRL + Plus a CTRL + Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorovat klávesové zkratky v režimu celé obrazovky</system:String>
@@ -102,11 +100,6 @@
     <system:String x:Key="AlwaysPreview">Vždy zobrazit náhled</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Při aktivaci služby Flow vždy otevřete panel náhledu. Stisknutím klávesy {0} přepnete náhled.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Stínový efekt není povolen, pokud je aktivní efekt rozostření</system:String>
-    <system:String x:Key="BackdropType">Backdrop Type</system:String>
-    <system:String x:Key="BackdropTypesNone">None</system:String>
-    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
-    <system:String x:Key="BackdropTypesMica">Mica</system:String>
-    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Vyhledat plugin</system:String>
@@ -198,8 +191,19 @@
     <system:String x:Key="AnimationSpeedCustom">Vlastní</system:String>
     <system:String x:Key="Clock">Hodiny</system:String>
     <system:String x:Key="Date">Datum</system:String>
+    <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropTypesNone">None</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
+    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
     <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
+    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
+    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
+    <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Klávesová zkratka</system:String>
