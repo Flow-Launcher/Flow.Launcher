@@ -11,6 +11,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Windows.Shell;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.Plugin;
@@ -115,9 +116,6 @@ namespace Flow.Launcher
                 welcomeWindow.Show();
             }
 
-            // Initialize resize mode
-            SetupResizeMode();
-
             // Initialize place holder
             SetupPlaceholderText();
 
@@ -152,13 +150,17 @@ namespace Flow.Launcher
             UpdatePosition();
 
             // Refresh frame
-            await Ioc.Default.GetRequiredService<Theme>().RefreshFrameAsync();
+            await _theme.RefreshFrameAsync();
+
+            // Initialize resize mode after refreshing frame
+            SetupResizeMode();
 
             // Reset preview
             _viewModel.ResetPreview();
 
             // Since the default main window visibility is visible, so we need set focus during startup
             QueryTextBox.Focus();
+
             // Set the initial state of the QueryTextBoxCursorMovedToEnd property
             // Without this part, when shown for the first time, switching the context menu does not move the cursor to the end.
             _viewModel.QueryTextCursorMovedToEnd = false;
@@ -1082,6 +1084,10 @@ namespace Flow.Launcher
         private void SetupResizeMode()
         {
             ResizeMode = _settings.ResizeWindow ? ResizeMode.CanResize : ResizeMode.NoResize;
+            if (WindowChrome.GetWindowChrome(this) is WindowChrome windowChrome)
+            {
+                _theme.SetResizeBoarderThickness(windowChrome, _settings.ResizeWindow);
+            }
         }
 
         #endregion
