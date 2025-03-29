@@ -37,7 +37,7 @@
     <system:String x:Key="GameMode">وضع اللعب</system:String>
     <system:String x:Key="GameModeToolTip">تعليق استخدام مفاتيح التشغيل السريع.</system:String>
     <system:String x:Key="PositionReset">إعادة تعيين الموقع</system:String>
-    <system:String x:Key="PositionResetToolTip">إعادة تعيين موضع نافذة البحث</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">الإعدادات</system:String>
@@ -70,8 +70,6 @@
     <system:String x:Key="LastQueryEmpty">تفريغ الاستعلام الأخير</system:String>
     <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
     <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
-    <system:String x:Key="KeepMaxResults">ارتفاع ثابت للنافذة</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">ارتفاع النافذة غير قابل للتعديل عن طريق السحب.</system:String>
     <system:String x:Key="maxShowResults">الحد الأقصى للنتائج المعروضة</system:String>
     <system:String x:Key="maxShowResultsToolTip">يمكنك أيضًا تعديل هذا بسرعة باستخدام CTRL+Plus وCTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">تجاهل مفاتيح التشغيل السريع في وضع ملء الشاشة</system:String>
@@ -102,11 +100,6 @@
     <system:String x:Key="AlwaysPreview">دائمًا معاينة</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">فتح لوحة المعاينة دائمًا عند تنشيط Flow. اضغط على {0} للتبديل بين المعاينة وعدمها.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">تأثير الظل غير مسموح به بينما يتم تمكين تأثير التمويه في السمة الحالية</system:String>
-    <system:String x:Key="BackdropType">Backdrop Type</system:String>
-    <system:String x:Key="BackdropTypesNone">بلا</system:String>
-    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
-    <system:String x:Key="BackdropTypesMica">Mica</system:String>
-    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">البحث عن إضافة</system:String>
@@ -198,8 +191,19 @@
     <system:String x:Key="AnimationSpeedCustom">مخصص</system:String>
     <system:String x:Key="Clock">الساعة</system:String>
     <system:String x:Key="Date">التاريخ</system:String>
+    <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropTypesNone">بلا</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
+    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
     <system:String x:Key="TypeIsDarkToolTip">هذه السمة تدعم الوضعين (فاتح/داكن).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">هذه السمة تدعم الخلفية الضبابية الشفافة.</system:String>
+    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
+    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
+    <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">مفتاح الاختصار</system:String>
