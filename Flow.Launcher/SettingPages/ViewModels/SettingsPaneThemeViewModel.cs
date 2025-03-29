@@ -265,6 +265,11 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         set => Settings.ShowPlaceholder = value;
     }
 
+    public string PlaceholderTextTip
+    {
+        get => string.Format(App.API.GetTranslation("PlaceholderTextTip"), App.API.GetTranslation("queryTextBoxPlaceholder"));
+    }
+
     public string PlaceholderText
     {
         get => Settings.PlaceholderText;

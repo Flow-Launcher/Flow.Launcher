@@ -549,9 +549,9 @@
                 <cc:Card
                     Title="{DynamicResource PlaceholderText}"
                     Icon="&#xED59;"
-                    Sub="{DynamicResource PlaceholderTextTip}">
+                    Sub="{Binding PlaceholderTextTip}">
                     <TextBox
-                        MinWidth="80"
+                        MinWidth="150"
                         Text="{Binding PlaceholderText}"
                         TextWrapping="NoWrap" />
                 </cc:Card>
