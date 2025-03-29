@@ -531,7 +531,7 @@ namespace Flow.Launcher.Core.Resource
             UpdateResourceDictionary(dict);
         }
 
-        public void SetResizeBoarderThickness(WindowChrome windowChrome, bool fixedWindowSize)
+        public void SetResizeBorderThickness(WindowChrome windowChrome, bool fixedWindowSize)
         {
             if (fixedWindowSize)
             {
