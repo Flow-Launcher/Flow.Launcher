@@ -37,7 +37,7 @@
     <system:String x:Key="GameMode">Herný režim</system:String>
     <system:String x:Key="GameModeToolTip">Pozastaviť používanie klávesových skratiek.</system:String>
     <system:String x:Key="PositionReset">Resetovať pozíciu</system:String>
-    <system:String x:Key="PositionResetToolTip">Resetovať pozíciu vyhľadávacieho okna</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Nastavenia</system:String>
@@ -70,8 +70,6 @@
     <system:String x:Key="LastQueryEmpty">Vymazať</system:String>
     <system:String x:Key="LastQueryActionKeywordPreserved">Ponechať posledný akčný príkaz</system:String>
     <system:String x:Key="LastQueryActionKeywordSelected">Označiť posledný akčný príkaz</system:String>
-    <system:String x:Key="KeepMaxResults">Pevná výška okna</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">Výška okna sa nedá nastaviť ťahaním.</system:String>
     <system:String x:Key="maxShowResults">Maximum výsledkov</system:String>
     <system:String x:Key="maxShowResultsToolTip">Túto hodnotu môžete rýchlo upraviť aj pomocou klávesových skratiek CTRL + znamienko plus (+) a CTRL + znamienko mínus (-).</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorovať klávesové skratky v režime na celú obrazovku</system:String>
@@ -102,11 +100,6 @@
     <system:String x:Key="AlwaysPreview">Vždy zobraziť náhľad</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Pri aktivácii Flowu vždy otvoriť panel s náhľadom. Stlačením klávesu {0} prepnete náhľad.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Efekt tieňa nie je povolený, kým má aktuálny motív povolený efekt rozostrenia</system:String>
-    <system:String x:Key="BackdropType">Typ pozadia</system:String>
-    <system:String x:Key="BackdropTypesNone">Žiadna</system:String>
-    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
-    <system:String x:Key="BackdropTypesMica">Mica</system:String>
-    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Vyhľadať plugin</system:String>
@@ -198,8 +191,19 @@
     <system:String x:Key="AnimationSpeedCustom">Vlastné</system:String>
     <system:String x:Key="Clock">Hodiny</system:String>
     <system:String x:Key="Date">Dátum</system:String>
+    <system:String x:Key="BackdropType">Typ pozadia</system:String>
+    <system:String x:Key="BackdropTypesNone">Žiadna</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
+    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
     <system:String x:Key="TypeIsDarkToolTip">Tento motív podporuje 2 režimy (svetlý/tmavý).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Tento motív podporuje rozostrenie priehľadného pozadia.</system:String>
+    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
+    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
+    <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Klávesové skratky</system:String>
