@@ -455,23 +455,25 @@ namespace Flow.Launcher
             {
                 _initialWidth = (int)Width;
                 _initialHeight = (int)Height;
+
                 handled = true;
             }
             else if (msg == Win32Helper.WM_EXITSIZEMOVE)
             {
                 if (_initialHeight != (int)Height)
                 {
-                    var shadowMargin = 0;
-                    var (_, useDropShadowEffect) = _theme.GetActualValue();
-                    if (useDropShadowEffect)
-                    {
-                        shadowMargin = 32;
-                    }
-
                     if (!_settings.KeepMaxResults)
                     {
-                        var itemCount = (Height - (_settings.WindowHeightSize + 14) - shadowMargin) / _settings.ItemHeightSize;
+                        // Get shadow margin
+                        var shadowMargin = 0;
+                        var (_, useDropShadowEffect) = _theme.GetActualValue();
+                        if (useDropShadowEffect)
+                        {
+                            shadowMargin = 32;
+                        }
 
+                        // Calculate max results to show
+                        var itemCount = (Height - (_settings.WindowHeightSize + 14) - shadowMargin) / _settings.ItemHeightSize;
                         if (itemCount < 2)
                         {
                             _settings.MaxResultsToShow = 2;
@@ -483,11 +485,16 @@ namespace Flow.Launcher
                     }
 
                     SizeToContent = SizeToContent.Height;
-                    _viewModel.MainWindowWidth = Width;
                 }
 
                 if (_initialWidth != (int)Width)
                 {
+                    if (!_settings.KeepMaxResults)
+                    {
+                        // Update width
+                        _viewModel.MainWindowWidth = Width;
+                    }
+
                     SizeToContent = SizeToContent.Height;
                 }
 
