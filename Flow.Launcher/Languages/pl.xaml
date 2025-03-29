@@ -37,7 +37,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="GameMode">Tryb grania</system:String>
     <system:String x:Key="GameModeToolTip">Wstrzymaj używanie skrótów.</system:String>
     <system:String x:Key="PositionReset">Resetowanie pozycji</system:String>
-    <system:String x:Key="PositionResetToolTip">Zresetuj pozycję okna wyszukiwania</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Ustawienia</system:String>
@@ -70,8 +70,6 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="LastQueryEmpty">Puste ostatnie zapytanie</system:String>
     <system:String x:Key="LastQueryActionKeywordPreserved">Zachowaj ostatnie słowo kluczowe akcji</system:String>
     <system:String x:Key="LastQueryActionKeywordSelected">Wybierz ostatnie słowo kluczowe akcji</system:String>
-    <system:String x:Key="KeepMaxResults">Stała wysokość okna</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">Wysokość okna nie jest regulowana poprzez przeciąganie.</system:String>
     <system:String x:Key="maxShowResults">Maksymalna liczba wyników</system:String>
     <system:String x:Key="maxShowResultsToolTip">Możesz to również szybko dostosować używając CTRL+Plus i CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignoruj skróty klawiszowe w trybie pełnoekranowym</system:String>
@@ -102,11 +100,6 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="AlwaysPreview">Zawsze podgląd</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Zawsze otwieraj panel podglądu, gdy aktywowany jest Flow. Naciśnij {0}, aby przełączyć podgląd.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Efekt cienia jest niedozwolony, gdy bieżący motyw ma włączony efekt rozmycia</system:String>
-    <system:String x:Key="BackdropType">Backdrop Type</system:String>
-    <system:String x:Key="BackdropTypesNone">Brak</system:String>
-    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
-    <system:String x:Key="BackdropTypesMica">Mica</system:String>
-    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Szukaj wtyczek</system:String>
@@ -198,8 +191,19 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="AnimationSpeedCustom">Niestandardowa</system:String>
     <system:String x:Key="Clock">Zegar</system:String>
     <system:String x:Key="Date">Data</system:String>
+    <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropTypesNone">Brak</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
+    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
     <system:String x:Key="TypeIsDarkToolTip">Ten motyw obsługuje dwa tryby (jasny/ciemny).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Ten motyw obsługuje rozmyte przezroczyste tło.</system:String>
+    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
+    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
+    <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Skrót klawiszowy</system:String>
