@@ -113,7 +113,18 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public double? SettingWindowLeft { get; set; } = null;
         public System.Windows.WindowState SettingWindowState { get; set; } = WindowState.Normal;
 
-        bool _showPlaceholder { get; set; } = true;
+        bool _resizeWindow { get; set; } = true;
+        public bool ResizeWindow
+        {
+            get => _resizeWindow;
+            set
+            {
+                _resizeWindow = value;
+                OnPropertyChanged();
+            }
+        }
+
+        bool _showPlaceholder { get; set; } = false;
         public bool ShowPlaceholder
         {
             get => _showPlaceholder;

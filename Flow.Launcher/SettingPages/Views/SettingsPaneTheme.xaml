@@ -30,6 +30,7 @@
         VirtualizingStackPanel.IsVirtualizing="True"
         VirtualizingStackPanel.ScrollUnit="Pixel">
         <StackPanel>
+
             <!--  Page title  -->
             <TextBlock
                 Margin="5 23 0 5"
@@ -38,6 +39,7 @@
                 Text="{DynamicResource appearance}"
                 TextAlignment="left"
                 Visibility="Collapsed" />
+
             <!--  Theme Preview and Editor  -->
             <Grid>
                 <Grid.Style>
@@ -260,7 +262,8 @@
                         </StackPanel>
                     </ScrollViewer>
                 </Border>
-                <!--  Theme Preview  -->
+
+                <!--  Theme preview  -->
                 <Border
                     Grid.Column="0"
                     Background="{Binding PreviewBackground}"
@@ -495,7 +498,19 @@
                 Text="{DynamicResource browserMoreThemes}"
                 Uri="{Binding LinkThemeGallery}" />
 
-            <!--  Fixed Height  -->
+            <!--  Resize window  -->
+            <cc:Card
+                Title="{DynamicResource ResizeWindow}"
+                Margin="0 14 0 0"
+                Icon="&#xE744;"
+                Sub="{DynamicResource ResizeWindowTip}">
+                <ui:ToggleSwitch
+                    IsOn="{Binding ResizeWindow}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
+            </cc:Card>
+
+            <!--  Fixed height  -->
             <cc:CardGroup Margin="0 20 0 0">
                 <cc:Card
                     Title="{DynamicResource KeepMaxResults}"

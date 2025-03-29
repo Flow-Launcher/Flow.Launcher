@@ -259,6 +259,12 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         set => Settings.SoundVolume = value;
     }
 
+    public bool ResizeWindow
+    {
+        get => Settings.ResizeWindow;
+        set => Settings.ResizeWindow = value;
+    }
+
     public bool ShowPlaceholder
     {
         get => Settings.ShowPlaceholder;

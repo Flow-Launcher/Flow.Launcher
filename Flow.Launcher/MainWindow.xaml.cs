@@ -115,6 +115,9 @@ namespace Flow.Launcher
                 welcomeWindow.Show();
             }
 
+            // Initialize resize mode
+            SetupResizeMode();
+
             // Initialize place holder
             SetupPlaceholderText();
 
@@ -242,6 +245,9 @@ namespace Flow.Launcher
                         break;
                     case nameof(Settings.ShowPlaceholder):
                         SetupPlaceholderText();
+                        break;
+                    case nameof(Settings.ResizeWindow):
+                        SetupResizeMode();
                         break;
                 }
             };
@@ -1067,6 +1073,15 @@ namespace Flow.Launcher
             var queryText = QueryTextBox.Text;
             var suggestionText = QueryTextSuggestionBox.Text;
             QueryTextPlaceholderBox.Visibility = string.IsNullOrEmpty(queryText) && string.IsNullOrEmpty(suggestionText) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        #endregion
+
+        #region Resize Mode
+
+        private void SetupResizeMode()
+        {
+            ResizeMode = _settings.ResizeWindow ? ResizeMode.CanResize : ResizeMode.NoResize;
         }
 
         #endregion
