@@ -37,7 +37,7 @@
     <system:String x:Key="GameMode">Modo de jogo</system:String>
     <system:String x:Key="GameModeToolTip">Suspender utilização das teclas de atalho</system:String>
     <system:String x:Key="PositionReset">Repor posição</system:String>
-    <system:String x:Key="PositionResetToolTip">Repor posição da janela de pesquisa</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Definições</system:String>
@@ -70,8 +70,6 @@
     <system:String x:Key="LastQueryEmpty">Limpar última consulta</system:String>
     <system:String x:Key="LastQueryActionKeywordPreserved">Manter palavra-chave da última ação</system:String>
     <system:String x:Key="LastQueryActionKeywordSelected">Selecionar palavra-chave da última ação</system:String>
-    <system:String x:Key="KeepMaxResults">Altura fixa de janela</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">Não é possível ajustar o tamanho da janela por arrasto.</system:String>
     <system:String x:Key="maxShowResults">Número máximo de resultados</system:String>
     <system:String x:Key="maxShowResultsToolTip">Também pode ajustar rapidamente através do atalho Ctrl+ e Ctrl-.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorar teclas de atalho se em ecrã completo</system:String>
@@ -102,11 +100,6 @@
     <system:String x:Key="AlwaysPreview">Pré-visualizar sempre</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Abrir painel de pré-visualização ao ativar Flow Launcher. Prima {0} para comutar a pré-visualização.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">O efeito sombra não é permitido com este tema porque o efeito desfocar está ativo</system:String>
-    <system:String x:Key="BackdropType">Tipo de fundo</system:String>
-    <system:String x:Key="BackdropTypesNone">Nenhuma</system:String>
-    <system:String x:Key="BackdropTypesAcrylic">Acrílico</system:String>
-    <system:String x:Key="BackdropTypesMica">Mica</system:String>
-    <system:String x:Key="BackdropTypesMicaAlt">Mica alternativo</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Pesquisar plugins</system:String>
@@ -198,8 +191,19 @@
     <system:String x:Key="AnimationSpeedCustom">Personalizada</system:String>
     <system:String x:Key="Clock">Relógio</system:String>
     <system:String x:Key="Date">Data</system:String>
+    <system:String x:Key="BackdropType">Tipo de fundo</system:String>
+    <system:String x:Key="BackdropTypesNone">Nenhuma</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrílico</system:String>
+    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica alternativo</system:String>
     <system:String x:Key="TypeIsDarkToolTip">Este tema tem suporte a dois modos (claro/escuro).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Este tema tem suporte a fundo transparente desfocado.</system:String>
+    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
+    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
+    <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Tecla de atalho</system:String>
