@@ -37,7 +37,7 @@
     <system:String x:Key="GameMode">מצב משחק</system:String>
     <system:String x:Key="GameModeToolTip">השהה את השימוש במקשי קיצור.</system:String>
     <system:String x:Key="PositionReset">איפוס מיקום</system:String>
-    <system:String x:Key="PositionResetToolTip">אפס את מיקום חלון החיפוש</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">הגדרות</system:String>
@@ -70,8 +70,6 @@
     <system:String x:Key="LastQueryEmpty">נקה שאילתא אחרונה</system:String>
     <system:String x:Key="LastQueryActionKeywordPreserved">שמור מילת מפתח לפעולה האחרונה</system:String>
     <system:String x:Key="LastQueryActionKeywordSelected">בחר מילת מפתח לפעולה האחרונה</system:String>
-    <system:String x:Key="KeepMaxResults">גובה חלון קבוע</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">גובה החלון אינו ניתן להתאמה באמצעות גרירה.</system:String>
     <system:String x:Key="maxShowResults">כמות תוצאות מרבית</system:String>
     <system:String x:Key="maxShowResultsToolTip">ניתן גם להתאים במהירות באמצעות CTRL+פלוס ו-CTRL+מינוס.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">התעלם מקיצורי מקשים במצב מסך מלא</system:String>
@@ -102,11 +100,6 @@
     <system:String x:Key="AlwaysPreview">הצג תמיד תצוגה מקדימה</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">פתח תמיד את לוח התצוגה המקדימה כאשר Flow מופעל. הקש על {0} כדי להחליף את התצוגה המקדימה.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">לא ניתן להחיל אפקט צל כאשר העיצוב הנוכחי מוגדר לאפקט טשטוש</system:String>
-    <system:String x:Key="BackdropType">סוג רקע</system:String>
-    <system:String x:Key="BackdropTypesNone">ללא</system:String>
-    <system:String x:Key="BackdropTypesAcrylic">אקריליק</system:String>
-    <system:String x:Key="BackdropTypesMica">מיקה</system:String>
-    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">חפש תוסף</system:String>
@@ -198,8 +191,19 @@
     <system:String x:Key="AnimationSpeedCustom">מותאם אישית</system:String>
     <system:String x:Key="Clock">שעון</system:String>
     <system:String x:Key="Date">תאריך</system:String>
+    <system:String x:Key="BackdropType">סוג רקע</system:String>
+    <system:String x:Key="BackdropTypesNone">ללא</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">אקריליק</system:String>
+    <system:String x:Key="BackdropTypesMica">מיקה</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
     <system:String x:Key="TypeIsDarkToolTip">ערכת נושא זאת תומך בשני מצבים (בהיר/כהה).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">ערכת נושא זו תומכת בטשטוש רקע שקוף.</system:String>
+    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
+    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
+    <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">מקש קיצור</system:String>
