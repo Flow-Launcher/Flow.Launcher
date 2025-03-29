@@ -37,7 +37,7 @@
     <system:String x:Key="GameMode">מצב משחק</system:String>
     <system:String x:Key="GameModeToolTip">השהה את השימוש במקשי קיצור.</system:String>
     <system:String x:Key="PositionReset">איפוס מיקום</system:String>
-    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">הקלד כאן כדי לחפש</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">הגדרות</system:String>
@@ -154,7 +154,7 @@
     <system:String x:Key="SampleTitleExplorer">סייר</system:String>
     <system:String x:Key="SampleSubTitleExplorer">חפש קבצים, תיקיות ובתוכן הקבצים</system:String>
     <system:String x:Key="SampleTitleWebSearch">חיפוש באינטרנט</system:String>
-    <system:String x:Key="SampleSubTitleWebSearch">Search the web with different search engine support</system:String>
+    <system:String x:Key="SampleSubTitleWebSearch">חפש באינטרנט עם תמיכה במנועי חיפוש שונים</system:String>
     <system:String x:Key="SampleTitleProgram">תוכנה</system:String>
     <system:String x:Key="SampleSubTitleProgram">הפעל תוכנות כמנהל או כמשתמש אחר</system:String>
     <system:String x:Key="SampleTitleProcessKiller">ProcessKiller</system:String>
@@ -198,12 +198,12 @@
     <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
     <system:String x:Key="TypeIsDarkToolTip">ערכת נושא זאת תומך בשני מצבים (בהיר/כהה).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">ערכת נושא זו תומכת בטשטוש רקע שקוף.</system:String>
-    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
-    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
-    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
-    <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
-    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
+    <system:String x:Key="ShowPlaceholder">הצג מציין מיקום</system:String>
+    <system:String x:Key="ShowPlaceholderTip">הצג מציין מיקום כאשר השאילתה ריקה</system:String>
+    <system:String x:Key="PlaceholderText">טקסט מציין מיקום</system:String>
+    <system:String x:Key="PlaceholderTextTip">שנה את טקסט מציין המיקום. אם הקלט ריק, ייעשה שימוש ב: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">גודל חלון קבוע</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">לא ניתן להתאים את גודל החלון באמצעות גרירה.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">מקש קיצור</system:String>
