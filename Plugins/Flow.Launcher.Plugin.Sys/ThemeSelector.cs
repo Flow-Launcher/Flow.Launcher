@@ -2,7 +2,6 @@
 using System.Linq;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.Resource;
-using FLSettings = Flow.Launcher.Infrastructure.UserSettings.Settings;
 
 namespace Flow.Launcher.Plugin.Sys
 {
@@ -10,7 +9,6 @@ namespace Flow.Launcher.Plugin.Sys
     {
         public const string Keyword = "fltheme";
 
-        private readonly FLSettings _settings;
         private readonly Theme _theme;
         private readonly PluginInitContext _context;
 
@@ -19,19 +17,15 @@ namespace Flow.Launcher.Plugin.Sys
         // Theme select codes simplified from SettingsPaneThemeViewModel.cs
 
         private Theme.ThemeData _selectedTheme;
-        private Theme.ThemeData SelectedTheme
+        public Theme.ThemeData SelectedTheme
         {
-            get => _selectedTheme ??= Themes.Find(v => v.FileNameWithoutExtension == _theme.CurrentTheme);
+            get => _selectedTheme ??= Themes.Find(v => v.FileNameWithoutExtension == _theme.GetCurrentTheme());
             set
             {
                 _selectedTheme = value;
                 _theme.ChangeTheme(value.FileNameWithoutExtension);
 
-                if (_theme.BlurEnabled && _settings.UseDropShadowEffect)
-                {
-                    _theme.RemoveDropShadowEffectFromCurrentTheme();
-                    _settings.UseDropShadowEffect = false;
-                }
+                _ = _theme.RefreshFrameAsync();
             }
         }
 
@@ -43,7 +37,6 @@ namespace Flow.Launcher.Plugin.Sys
         {
             _context = context;
             _theme = Ioc.Default.GetRequiredService<Theme>();
-            _settings = Ioc.Default.GetRequiredService<FLSettings>();
         }
 
         public List<Result> Query(Query query)

@@ -110,8 +110,8 @@
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0 0" EndPoint="1 1">
                         <LinearGradientBrush.GradientStops>
-                            <GradientStop Offset="0.0" Color="#1494df" />
-                            <GradientStop Offset="1.0" Color="#1073bd" />
+                            <GradientStop Offset="0.0" Color="#2A4D8C" />
+                            <GradientStop Offset="1.0" Color="#1E3160" />
                         </LinearGradientBrush.GradientStops>
                     </LinearGradientBrush>
                 </Border.Background>

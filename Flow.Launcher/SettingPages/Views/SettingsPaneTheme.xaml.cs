@@ -1,4 +1,3 @@
-﻿using System.Windows.Controls;
 using System.Windows.Navigation;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.SettingPages.ViewModels;
@@ -22,10 +21,5 @@ public partial class SettingsPaneTheme : Page
         }
 
         base.OnNavigatedTo(e);
-    }
-
-    private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        _viewModel.UpdateColorScheme();
     }
 }

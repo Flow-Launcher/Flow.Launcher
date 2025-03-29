@@ -84,7 +84,7 @@ namespace Flow.Launcher
             nameof(Type),
             typeof(HotkeyType),
             typeof(HotkeyControl),
-            new FrameworkPropertyMetadata(HotkeyType.Hotkey, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnHotkeyChanged)
+            new FrameworkPropertyMetadata(HotkeyType.None, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnHotkeyChanged)
         );
 
         public HotkeyType Type
@@ -95,6 +95,10 @@ namespace Flow.Launcher
 
         public enum HotkeyType
         {
+            None,
+            // Custom query hotkeys
+            CustomQueryHotkey,
+            // Settings hotkeys
             Hotkey,
             PreviewHotkey,
             OpenContextMenuHotkey,
@@ -115,12 +119,16 @@ namespace Flow.Launcher
         // and it will not construct settings instances twice
         private static readonly Settings _settings = Ioc.Default.GetRequiredService<Settings>();
 
+        private string hotkey = string.Empty;
         public string Hotkey
         {
             get
             {
                 return Type switch
                 {
+                    // Custom query hotkeys
+                    HotkeyType.CustomQueryHotkey => hotkey,
+                    // Settings hotkeys
                     HotkeyType.Hotkey => _settings.Hotkey,
                     HotkeyType.PreviewHotkey => _settings.PreviewHotkey,
                     HotkeyType.OpenContextMenuHotkey => _settings.OpenContextMenuHotkey,
@@ -135,13 +143,20 @@ namespace Flow.Launcher
                     HotkeyType.SelectPrevItemHotkey2 => _settings.SelectPrevItemHotkey2,
                     HotkeyType.SelectNextItemHotkey => _settings.SelectNextItemHotkey,
                     HotkeyType.SelectNextItemHotkey2 => _settings.SelectNextItemHotkey2,
-                    _ => string.Empty
+                    _ => throw new System.NotImplementedException("Hotkey type not set")
                 };
             }
             set
             {
                 switch (Type)
                 {
+                    // Custom query hotkeys
+                    case HotkeyType.CustomQueryHotkey:
+                        // We just need to store it in a local field
+                        // because we will save to settings in other place
+                        hotkey = value;
+                        break;
+                    // Settings hotkeys
                     case HotkeyType.Hotkey:
                         _settings.Hotkey = value;
                         break;
@@ -185,7 +200,7 @@ namespace Flow.Launcher
                         _settings.SelectNextItemHotkey2 = value;
                         break;
                     default:
-                        return;
+                        throw new System.NotImplementedException("Hotkey type not set");
                 }
 
                 // After setting the hotkey, we need to refresh the interface
@@ -199,13 +214,14 @@ namespace Flow.Launcher
 
             HotkeyList.ItemsSource = KeysToDisplay;
 
-            RefreshHotkeyInterface(Hotkey);
+            // We should not call RefreshHotkeyInterface here because DependencyProperty is not set yet
+            // And it will be called in OnHotkeyChanged event or Hotkey setter later
         }
 
         private void RefreshHotkeyInterface(string hotkey)
         {
-            SetKeysToDisplay(new HotkeyModel(Hotkey));
-            CurrentHotkey = new HotkeyModel(Hotkey);
+            SetKeysToDisplay(new HotkeyModel(hotkey));
+            CurrentHotkey = new HotkeyModel(hotkey);
         }
 
         private static bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture) =>
