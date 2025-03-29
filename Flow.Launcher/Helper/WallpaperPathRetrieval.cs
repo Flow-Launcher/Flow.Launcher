@@ -12,8 +12,9 @@ namespace Flow.Launcher.Helper;
 
 public static class WallpaperPathRetrieval
 {
-    private static readonly int MAX_CACHE_SIZE = 3;
-    private static readonly Dictionary<(string, DateTime), ImageBrush> wallpaperCache = new();
+    private const int MaxCacheSize = 3;
+    private static readonly Dictionary<(string, DateTime), ImageBrush> WallpaperCache = new();
+    private static readonly object CacheLock = new();
 
     public static Brush GetWallpaperBrush()
     {
@@ -36,42 +37,38 @@ public static class WallpaperPathRetrieval
             // Since the wallpaper file name can be the same (TranscodedWallpaper),
             // we need to add the last modified date to differentiate them
             var dateModified = File.GetLastWriteTime(wallpaperPath);
-            wallpaperCache.TryGetValue((wallpaperPath, dateModified), out var cachedWallpaper);
-            if (cachedWallpaper != null)
+            lock (CacheLock)
             {
-                App.API.LogInfo(nameof(WallpaperPathRetrieval), "Using cached wallpaper");
-                return cachedWallpaper;
+                WallpaperCache.TryGetValue((wallpaperPath, dateModified), out var cachedWallpaper);
+                if (cachedWallpaper != null)
+                {
+                    return cachedWallpaper;
+                }
             }
+            
+            using var fileStream = File.OpenRead(wallpaperPath);
+            var decoder = BitmapDecoder.Create(fileStream, BitmapCreateOptions.DelayCreation, BitmapCacheOption.None);
+            var frame = decoder.Frames[0];
+            var originalWidth = frame.PixelWidth;
+            var originalHeight = frame.PixelHeight;
 
-            // We should not dispose the memory stream since the bitmap is still in use
-            var memStream = new MemoryStream(File.ReadAllBytes(wallpaperPath));
-            var bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.StreamSource = memStream;
-            bitmap.EndInit();
-
-            if (bitmap.PixelWidth == 0 || bitmap.PixelHeight == 0)
+            if (originalWidth == 0 || originalHeight == 0)
             {
-                App.API.LogInfo(nameof(WallpaperPathRetrieval), $"Failed to load bitmap: Width={bitmap.PixelWidth}, Height={bitmap.PixelHeight}");
+                App.API.LogInfo(nameof(WallpaperPathRetrieval), $"Failed to load bitmap: Width={originalWidth}, Height={originalHeight}");
                 return new SolidColorBrush(Colors.Transparent);
             }
 
-            var originalWidth = bitmap.PixelWidth;
-            var originalHeight = bitmap.PixelHeight;
-
             // Calculate the scaling factor to fit the image within 800x600 while preserving aspect ratio
-            double widthRatio = 800.0 / originalWidth;
-            double heightRatio = 600.0 / originalHeight;
-            double scaleFactor = Math.Min(widthRatio, heightRatio);
-
-            int decodedPixelWidth = (int)(originalWidth * scaleFactor);
-            int decodedPixelHeight = (int)(originalHeight * scaleFactor);
+            var widthRatio = 800.0 / originalWidth;
+            var heightRatio = 600.0 / originalHeight;
+            var scaleFactor = Math.Min(widthRatio, heightRatio);
+            var decodedPixelWidth = (int)(originalWidth * scaleFactor);
+            var decodedPixelHeight = (int)(originalHeight * scaleFactor);
 
             // Set DecodePixelWidth and DecodePixelHeight to resize the image while preserving aspect ratio
-            bitmap = new BitmapImage();
+            var bitmap = new BitmapImage();
             bitmap.BeginInit();
-            memStream.Seek(0, SeekOrigin.Begin); // Reset stream position
-            bitmap.StreamSource = memStream;
+            bitmap.UriSource = new Uri(wallpaperPath);
             bitmap.DecodePixelWidth = decodedPixelWidth;
             bitmap.DecodePixelHeight = decodedPixelHeight;
             bitmap.EndInit();
@@ -80,19 +77,21 @@ public static class WallpaperPathRetrieval
             wallpaperBrush.Freeze(); // Make the brush thread-safe
 
             // Manage cache size
-            if (wallpaperCache.Count >= MAX_CACHE_SIZE)
+            lock (CacheLock)
             {
-                // Remove the oldest wallpaper from the cache
-                var oldestCache = wallpaperCache.Keys.OrderBy(k => k.Item2).FirstOrDefault();
-                if (oldestCache != default)
+                if (WallpaperCache.Count >= MaxCacheSize)
                 {
-                    wallpaperCache.Remove(oldestCache);
+                    // Remove the oldest wallpaper from the cache
+                    var oldestCache = WallpaperCache.Keys.OrderBy(k => k.Item2).FirstOrDefault();
+                    if (oldestCache != default)
+                    {
+                        WallpaperCache.Remove(oldestCache);
+                    }
                 }
+
+                WallpaperCache.Add((wallpaperPath, dateModified), wallpaperBrush);
+                return wallpaperBrush;
             }
-
-            wallpaperCache.Add((wallpaperPath, dateModified), wallpaperBrush);
-            return wallpaperBrush;
-
         }
         catch (Exception ex)
         {
@@ -103,7 +102,7 @@ public static class WallpaperPathRetrieval
 
     private static Color GetWallpaperColor()
     {
-        RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Colors", true);
+        RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Colors", false);
         var result = key?.GetValue("Background", null);
         if (result is string strResult)
         {
@@ -114,7 +113,7 @@ public static class WallpaperPathRetrieval
             }
             catch (Exception ex)
             {
-                 App.API.LogException(nameof(WallpaperPathRetrieval), "Error parsing wallpaper color", ex);
+                App.API.LogException(nameof(WallpaperPathRetrieval), "Error parsing wallpaper color", ex);
             }
         }
 
