@@ -37,7 +37,7 @@
     <system:String x:Key="GameMode">Spillmodus</system:String>
     <system:String x:Key="GameModeToolTip">Stopp bruken av hurtigtaster.</system:String>
     <system:String x:Key="PositionReset">Tilbakestilling av posisjon</system:String>
-    <system:String x:Key="PositionResetToolTip">Tilbakestill posisjonen til søkevinduet</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Innstillinger</system:String>
@@ -70,8 +70,6 @@
     <system:String x:Key="LastQueryEmpty">Tøm siste spørring</system:String>
     <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
     <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
-    <system:String x:Key="KeepMaxResults">Fast vindushøyde</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">Vindushøyden kan ikke justeres ved å dra.</system:String>
     <system:String x:Key="maxShowResults">Maksimalt antall resultater vist</system:String>
     <system:String x:Key="maxShowResultsToolTip">Du kan også raskt justere dette ved å bruke CTRL+Plus og CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorer hurtigtaster i fullskjermmodus</system:String>
@@ -102,11 +100,6 @@
     <system:String x:Key="AlwaysPreview">Alltid forhåndsvisning</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Åpne alltid forhåndsvisningspanel når Flow aktiveres. Trykk på {0} for å velge forhåndsvisning.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Skyggeeffekt er ikke tillatt mens gjeldende tema har uskarphet-effekt aktivert</system:String>
-    <system:String x:Key="BackdropType">Backdrop Type</system:String>
-    <system:String x:Key="BackdropTypesNone">Ingen</system:String>
-    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
-    <system:String x:Key="BackdropTypesMica">Mica</system:String>
-    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Søk etter programtillegg</system:String>
@@ -198,8 +191,19 @@
     <system:String x:Key="AnimationSpeedCustom">Egendefinert</system:String>
     <system:String x:Key="Clock">Klokke</system:String>
     <system:String x:Key="Date">Dato</system:String>
+    <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropTypesNone">Ingen</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
+    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
     <system:String x:Key="TypeIsDarkToolTip">Dette temaet støtter to (lys/mørk) moduser.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Dette temaet støtter uskarp gjennomsiktig bakgrunn.</system:String>
+    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
+    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
+    <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Hurtigtast</system:String>
