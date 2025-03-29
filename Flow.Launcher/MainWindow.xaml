@@ -224,7 +224,7 @@
                             FontSize="{Binding QueryBoxFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             IsEnabled="False"
                             Style="{DynamicResource QuerySuggestionBoxStyle}"
-                            Text="{DynamicResource queryTextBoxSuggestion}"
+                            Text="{Binding PlaceholderText, Mode=OneWay}"
                             Visibility="Collapsed" />
                         <TextBox
                             x:Name="QueryTextSuggestionBox"

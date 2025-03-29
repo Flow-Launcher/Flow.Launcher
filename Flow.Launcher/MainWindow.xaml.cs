@@ -118,6 +118,7 @@ namespace Flow.Launcher
 
             // Initialize place holder
             SetupPlaceholderText();
+            _viewModel.PlaceholderText = _settings.PlaceholderText;
 
             // Hide window if need
             UpdatePosition();
@@ -247,6 +248,9 @@ namespace Flow.Launcher
                         break;
                     case nameof(Settings.ShowPlaceholder):
                         SetupPlaceholderText();
+                        break;
+                    case nameof(Settings.PlaceholderText):
+                        _viewModel.PlaceholderText = _settings.PlaceholderText;
                         break;
                     case nameof(Settings.ResizeWindow):
                         SetupResizeMode();

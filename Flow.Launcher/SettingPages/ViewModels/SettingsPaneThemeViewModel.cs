@@ -271,6 +271,12 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         set => Settings.ShowPlaceholder = value;
     }
 
+    public string PlaceholderText
+    {
+        get => Settings.PlaceholderText;
+        set => Settings.PlaceholderText = value;
+    }
+
     public bool UseClock
     {
         get => Settings.UseClock;

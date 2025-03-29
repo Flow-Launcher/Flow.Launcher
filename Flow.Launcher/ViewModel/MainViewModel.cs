@@ -765,6 +765,24 @@ namespace Flow.Launcher.ViewModel
         public double ClockPanelOpacity { get; set; } = 1;
         public double SearchIconOpacity { get; set; } = 1;
 
+        private string _placeholderText;
+        public string PlaceholderText
+        {
+            get => _placeholderText;
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    _placeholderText = App.API.GetTranslation("queryTextBoxSuggestion");
+                }
+                else
+                {
+                    _placeholderText = value;
+                }
+                OnPropertyChanged();
+            }
+        }
+
         public double MainWindowWidth
         {
             get => Settings.WindowSize;

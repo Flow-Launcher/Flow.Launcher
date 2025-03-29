@@ -134,6 +134,16 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 OnPropertyChanged();
             }
         }
+        string _placeholderText { get; set; } = string.Empty;
+        public string PlaceholderText
+        {
+            get => _placeholderText;
+            set
+            {
+                _placeholderText = value;
+                OnPropertyChanged();
+            }
+        }
 
         public int CustomExplorerIndex { get; set; } = 0;
 
