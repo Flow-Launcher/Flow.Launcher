@@ -768,17 +768,10 @@ namespace Flow.Launcher.ViewModel
         private string _placeholderText;
         public string PlaceholderText
         {
-            get => _placeholderText;
+            get => string.IsNullOrEmpty(_placeholderText) ? App.API.GetTranslation("queryTextBoxPlaceholder") : _placeholderText;
             set
             {
-                if (string.IsNullOrEmpty(value))
-                {
-                    _placeholderText = App.API.GetTranslation("queryTextBoxSuggestion");
-                }
-                else
-                {
-                    _placeholderText = value;
-                }
+                _placeholderText = value;
                 OnPropertyChanged();
             }
         }
