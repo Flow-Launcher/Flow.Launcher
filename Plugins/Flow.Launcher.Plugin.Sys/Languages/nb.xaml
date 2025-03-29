@@ -25,6 +25,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips_cmd">Flow Launcher Tips</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location_cmd">Brukerdatamappe for Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode_cmd">Vis/Skjul spillmodus</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector_cmd">Set the Flow Launcher Theme</system:String>
 
     <!--  Command Descriptions  -->
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">Slår av datamaskin</system:String>
@@ -47,8 +48,9 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">Besøk Flow Launcher sin dokumentasjon for mer hjelp og hvordan du bruker tips</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Åpne plasseringen hvor Flow Launcher sine innstillinger er lagret</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode">Vis/Skjul spillmodus</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector">Quickly change the Flow Launcher theme</system:String>
 
-        <!--  Dialogs  -->
+    <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">Vellykket</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">Alle innstillinger for Flow Launcher er lagret</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Lastet inn alle gjeldende programtilleggdata på nytt</system:String>

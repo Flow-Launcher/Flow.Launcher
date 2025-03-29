@@ -60,7 +60,7 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
-                        <Border Width="450" Style="{DynamicResource WindowBorderStyle}">
+                        <Border Width="450" Style="{DynamicResource PreviewWindowBorderStyle}">
                             <Border Style="{DynamicResource WindowRadius}">
                                 <Grid>
                                     <Grid.RowDefinitions>
@@ -114,8 +114,7 @@
                         Margin="0,8,0,0"
                         ChangeHotkey="{Binding SetTogglingHotkeyCommand}"
                         DefaultHotkey="Alt+Space"
-                        Hotkey="{Binding Settings.Hotkey}"
-                        HotkeySettings="{Binding Settings}"
+                        Type="Hotkey"
                         ValidateKeyGesture="True"
                         WindowTitle="{DynamicResource flowlauncherHotkey}" />
                 </StackPanel>

@@ -5585,4 +5585,31 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!--  Settings Panel  -->
+    <Thickness x:Key="SettingPanelMargin">70,13.5,18,13.5</Thickness>
+
+    <Thickness x:Key="SettingPanelItemLeftMargin">9,0,0,0</Thickness>
+    <Thickness x:Key="SettingPanelItemRightMargin">0,0,9,0</Thickness>
+    <Thickness x:Key="SettingPanelItemTopBottomMargin">0,4.5,0,4.5</Thickness>
+
+    <Thickness x:Key="SettingPanelItemLeftTopBottomMargin">9,4.5,0,4.5</Thickness>
+    <Thickness x:Key="SettingPanelItemRightTopBottomMargin">0,4.5,9,4.5</Thickness>
+
+    <Style x:Key="SettingPanelSeparatorStyle" TargetType="Separator">
+        <Setter Property="Margin" Value="-70 13.5 -18 13.5" />
+        <Setter Property="Height" Value="1" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Background" Value="{DynamicResource Color03B}" />
+    </Style>
+
+    <system:Double x:Key="SettingPanelTextBoxMinWidth">180</system:Double>
+    <system:Double x:Key="SettingPanelPathTextBoxWidth">240</system:Double>
+    <system:Double x:Key="SettingPanelAreaTextBoxMinHeight">150</system:Double>
+
+    <Style x:Key="SettingPanelTextBlockDescriptionStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Margin" Value="0 2 0 0" />
+        <Setter Property="Foreground" Value="{DynamicResource Color04B}" />
+    </Style>
 </ResourceDictionary>

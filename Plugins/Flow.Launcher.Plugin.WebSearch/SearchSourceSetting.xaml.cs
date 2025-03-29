@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using Microsoft.Win32;
-using Flow.Launcher.Core.Plugin;
 
 namespace Flow.Launcher.Plugin.WebSearch
 {
@@ -15,7 +14,6 @@ namespace Flow.Launcher.Plugin.WebSearch
         private IPublicAPI _api;
         private SearchSourceViewModel _viewModel;
         private string selectedNewIconImageFullPath;
-
 
         public SearchSourceSettingWindow(IList<SearchSource> sources, PluginInitContext context, SearchSource old)
         {
@@ -80,10 +78,10 @@ namespace Flow.Launcher.Plugin.WebSearch
         private void AddSearchSource()
         {
             var keyword = _searchSource.ActionKeyword;
-            if (!PluginManager.ActionKeywordRegistered(keyword))
+            if (!_context.API.ActionKeywordAssigned(keyword))
             {
                 var id = _context.CurrentPluginMetadata.ID;
-                PluginManager.AddActionKeyword(id, keyword);
+                _context.API.AddActionKeyword(id, keyword);
 
                 _searchSources.Add(_searchSource);
 
@@ -100,10 +98,11 @@ namespace Flow.Launcher.Plugin.WebSearch
         {
             var newKeyword = _searchSource.ActionKeyword;
             var oldKeyword = _oldSearchSource.ActionKeyword;
-            if (!PluginManager.ActionKeywordRegistered(newKeyword) || oldKeyword == newKeyword)
+            if (!_context.API.ActionKeywordAssigned(newKeyword) || oldKeyword == newKeyword)
             {
                 var id = _context.CurrentPluginMetadata.ID;
-                PluginManager.ReplaceActionKeyword(id, oldKeyword, newKeyword);
+                _context.API.RemoveActionKeyword(id, oldKeyword);
+                _context.API.AddActionKeyword(id, newKeyword);
 
                 var index = _searchSources.IndexOf(_oldSearchSource);
                 _searchSources[index] = _searchSource;

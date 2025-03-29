@@ -4,9 +4,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using Flow.Launcher.Core;
-using Flow.Launcher.Core.Configuration;
-using Flow.Launcher.Helper;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.SettingPages.Views;
@@ -18,8 +16,6 @@ namespace Flow.Launcher;
 
 public partial class SettingWindow
 {
-    private readonly Updater _updater;
-    private readonly IPortable _portable;
     private readonly IPublicAPI _api;
     private readonly Settings _settings;
     private readonly SettingWindowViewModel _viewModel;
@@ -30,8 +26,6 @@ public partial class SettingWindow
         _settings = Ioc.Default.GetRequiredService<Settings>();
         DataContext = viewModel;
         _viewModel = viewModel;
-        _updater = Ioc.Default.GetRequiredService<Updater>();
-        _portable = Ioc.Default.GetRequiredService<Portable>();
         _api = Ioc.Default.GetRequiredService<IPublicAPI>();
         InitializePosition();
         InitializeComponent();
@@ -98,13 +92,13 @@ public partial class SettingWindow
     {
         if (WindowState == WindowState.Maximized)
         {
-            MaximizeButton.Visibility = Visibility.Collapsed;
+            MaximizeButton.Visibility = Visibility.Hidden;
             RestoreButton.Visibility = Visibility.Visible;
         }
         else
         {
             MaximizeButton.Visibility = Visibility.Visible;
-            RestoreButton.Visibility = Visibility.Collapsed;
+            RestoreButton.Visibility = Visibility.Hidden;
         }
     }
 
@@ -149,8 +143,8 @@ public partial class SettingWindow
     private double WindowLeft()
     {
         var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
-        var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
-        var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
+        var dip1 = Win32Helper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
+        var dip2 = Win32Helper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
         var left = (dip2.X - ActualWidth) / 2 + dip1.X;
         return left;
     }
@@ -158,18 +152,17 @@ public partial class SettingWindow
     private double WindowTop()
     {
         var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
-        var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
-        var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Height);
+        var dip1 = Win32Helper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
+        var dip2 = Win32Helper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Height);
         var top = (dip2.Y - ActualHeight) / 2 + dip1.Y - 20;
         return top;
     }
 
     private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
     {
-        var paneData = new PaneData(_settings, _updater, _portable);
         if (args.IsSettingsSelected)
         {
-            ContentFrame.Navigate(typeof(SettingsPaneGeneral), paneData);
+            ContentFrame.Navigate(typeof(SettingsPaneGeneral));
         }
         else
         {
@@ -191,7 +184,7 @@ public partial class SettingWindow
                 nameof(About) => typeof(SettingsPaneAbout),
                 _ => typeof(SettingsPaneGeneral)
             };
-            ContentFrame.Navigate(pageType, paneData);
+            ContentFrame.Navigate(pageType);
         }
     }
 
@@ -211,6 +204,4 @@ public partial class SettingWindow
     {
         NavView.SelectedItem ??= NavView.MenuItems[0]; /* Set First Page */
     }
-
-    public record PaneData(Settings Settings, Updater Updater, IPortable Portable);
 }
