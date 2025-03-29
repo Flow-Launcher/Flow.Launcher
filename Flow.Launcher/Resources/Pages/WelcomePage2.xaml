@@ -60,7 +60,7 @@
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
-                        <Border Width="450" Style="{DynamicResource WindowBorderStyle}">
+                        <Border Width="450" Style="{DynamicResource PreviewWindowBorderStyle}">
                             <Border Style="{DynamicResource WindowRadius}">
                                 <Grid>
                                     <Grid.RowDefinitions>
