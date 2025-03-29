@@ -219,6 +219,14 @@
                 <Border MinHeight="30" Style="{DynamicResource QueryBoxBgStyle}">
                     <Grid>
                         <TextBox
+                            x:Name="QueryTextPlaceholderBox"
+                            Height="{Binding MainWindowHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            FontSize="{Binding QueryBoxFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            IsEnabled="False"
+                            Style="{DynamicResource QuerySuggestionBoxStyle}"
+                            Text="{DynamicResource queryTextBoxSuggestion}"
+                            Visibility="Collapsed" />
+                        <TextBox
                             x:Name="QueryTextSuggestionBox"
                             Height="{Binding MainWindowHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             FontSize="{Binding QueryBoxFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

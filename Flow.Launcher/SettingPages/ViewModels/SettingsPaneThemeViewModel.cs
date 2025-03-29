@@ -259,6 +259,12 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         set => Settings.SoundVolume = value;
     }
 
+    public bool ShowPlaceholder
+    {
+        get => Settings.ShowPlaceholder;
+        set => Settings.ShowPlaceholder = value;
+    }
+
     public bool UseClock
     {
         get => Settings.UseClock;

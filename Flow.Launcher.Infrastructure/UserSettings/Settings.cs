@@ -113,6 +113,17 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public double? SettingWindowLeft { get; set; } = null;
         public System.Windows.WindowState SettingWindowState { get; set; } = WindowState.Normal;
 
+        bool _showPlaceholder { get; set; } = true;
+        public bool ShowPlaceholder
+        {
+            get => _showPlaceholder;
+            set
+            {
+                _showPlaceholder = value;
+                OnPropertyChanged();
+            }
+        }
+
         public int CustomExplorerIndex { get; set; } = 0;
 
         [JsonIgnore]
