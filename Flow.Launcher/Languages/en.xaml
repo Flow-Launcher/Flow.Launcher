@@ -39,7 +39,7 @@
     <system:String x:Key="GameMode">Game Mode</system:String>
     <system:String x:Key="GameModeToolTip">Suspend the use of Hotkeys.</system:String>
     <system:String x:Key="PositionReset">Position Reset</system:String>
-    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Settings</system:String>
@@ -72,8 +72,6 @@
     <system:String x:Key="LastQueryEmpty">Empty last Query</system:String>
     <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
     <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
-    <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">The window height is not adjustable by dragging.</system:String>
     <system:String x:Key="maxShowResults">Maximum results shown</system:String>
     <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignore hotkeys in fullscreen mode</system:String>
@@ -104,11 +102,6 @@
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
-    <system:String x:Key="BackdropType">Backdrop Type</system:String>
-    <system:String x:Key="BackdropTypesNone">None</system:String>
-    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
-    <system:String x:Key="BackdropTypesMica">Mica</system:String>
-    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Search Plugin</system:String>
@@ -200,8 +193,19 @@
     <system:String x:Key="AnimationSpeedCustom">Custom</system:String>
     <system:String x:Key="Clock">Clock</system:String>
     <system:String x:Key="Date">Date</system:String>
+    <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropTypesNone">None</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
+    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
     <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
+    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
+    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
+    <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Hotkey</system:String>

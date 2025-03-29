@@ -11,6 +11,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Windows.Shell;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.Plugin;
@@ -115,6 +116,10 @@ namespace Flow.Launcher
                 welcomeWindow.Show();
             }
 
+            // Initialize place holder
+            SetupPlaceholderText();
+            _viewModel.PlaceholderText = _settings.PlaceholderText;
+
             // Hide window if need
             UpdatePosition();
             if (_settings.HideOnStartup)
@@ -146,13 +151,17 @@ namespace Flow.Launcher
             UpdatePosition();
 
             // Refresh frame
-            await Ioc.Default.GetRequiredService<Theme>().RefreshFrameAsync();
+            await _theme.RefreshFrameAsync();
+
+            // Initialize resize mode after refreshing frame
+            SetupResizeMode();
 
             // Reset preview
             _viewModel.ResetPreview();
 
             // Since the default main window visibility is visible, so we need set focus during startup
             QueryTextBox.Focus();
+
             // Set the initial state of the QueryTextBoxCursorMovedToEnd property
             // Without this part, when shown for the first time, switching the context menu does not move the cursor to the end.
             _viewModel.QueryTextCursorMovedToEnd = false;
@@ -236,6 +245,15 @@ namespace Flow.Launcher
                         break;
                     case nameof(Settings.WindowTop):
                         Top = _settings.WindowTop;
+                        break;
+                    case nameof(Settings.ShowPlaceholder):
+                        SetupPlaceholderText();
+                        break;
+                    case nameof(Settings.PlaceholderText):
+                        _viewModel.PlaceholderText = _settings.PlaceholderText;
+                        break;
+                    case nameof(Settings.KeepMaxResults):
+                        SetupResizeMode();
                         break;
                 }
             };
@@ -437,23 +455,25 @@ namespace Flow.Launcher
             {
                 _initialWidth = (int)Width;
                 _initialHeight = (int)Height;
+
                 handled = true;
             }
             else if (msg == Win32Helper.WM_EXITSIZEMOVE)
             {
                 if (_initialHeight != (int)Height)
                 {
-                    var shadowMargin = 0;
-                    var (_, useDropShadowEffect) = _theme.GetActualValue();
-                    if (useDropShadowEffect)
-                    {
-                        shadowMargin = 32;
-                    }
-
                     if (!_settings.KeepMaxResults)
                     {
-                        var itemCount = (Height - (_settings.WindowHeightSize + 14) - shadowMargin) / _settings.ItemHeightSize;
+                        // Get shadow margin
+                        var shadowMargin = 0;
+                        var (_, useDropShadowEffect) = _theme.GetActualValue();
+                        if (useDropShadowEffect)
+                        {
+                            shadowMargin = 32;
+                        }
 
+                        // Calculate max results to show
+                        var itemCount = (Height - (_settings.WindowHeightSize + 14) - shadowMargin) / _settings.ItemHeightSize;
                         if (itemCount < 2)
                         {
                             _settings.MaxResultsToShow = 2;
@@ -465,11 +485,16 @@ namespace Flow.Launcher
                     }
 
                     SizeToContent = SizeToContent.Height;
-                    _viewModel.MainWindowWidth = Width;
                 }
 
                 if (_initialWidth != (int)Width)
                 {
+                    if (!_settings.KeepMaxResults)
+                    {
+                        // Update width
+                        _viewModel.MainWindowWidth = Width;
+                    }
+
                     SizeToContent = SizeToContent.Height;
                 }
 
@@ -1024,6 +1049,56 @@ namespace Flow.Launcher
         private void QueryTextBox_OnPreviewDragOver(object sender, DragEventArgs e)
         {
             e.Handled = true;
+        }
+
+        #endregion
+
+        #region Placeholder
+
+        private void SetupPlaceholderText()
+        {
+            if (_settings.ShowPlaceholder)
+            {
+                QueryTextBox.TextChanged += QueryTextBox_TextChanged;
+                QueryTextSuggestionBox.TextChanged += QueryTextSuggestionBox_TextChanged;
+                SetPlaceholderText();
+            }
+            else
+            {
+                QueryTextBox.TextChanged -= QueryTextBox_TextChanged;
+                QueryTextSuggestionBox.TextChanged -= QueryTextSuggestionBox_TextChanged;
+                QueryTextPlaceholderBox.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void QueryTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            SetPlaceholderText();
+        }
+
+        private void QueryTextSuggestionBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            SetPlaceholderText();
+        }
+
+        private void SetPlaceholderText()
+        {
+            var queryText = QueryTextBox.Text;
+            var suggestionText = QueryTextSuggestionBox.Text;
+            QueryTextPlaceholderBox.Visibility = string.IsNullOrEmpty(queryText) && string.IsNullOrEmpty(suggestionText) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        #endregion
+
+        #region Resize Mode
+
+        private void SetupResizeMode()
+        {
+            ResizeMode = _settings.KeepMaxResults ? ResizeMode.NoResize : ResizeMode.CanResize;
+            if (WindowChrome.GetWindowChrome(this) is WindowChrome windowChrome)
+            {
+                _theme.SetResizeBorderThickness(windowChrome, _settings.KeepMaxResults);
+            }
         }
 
         #endregion

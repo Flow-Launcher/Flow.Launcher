@@ -30,6 +30,7 @@
         VirtualizingStackPanel.IsVirtualizing="True"
         VirtualizingStackPanel.ScrollUnit="Pixel">
         <StackPanel>
+
             <!--  Page title  -->
             <TextBlock
                 Margin="5 23 0 5"
@@ -38,6 +39,7 @@
                 Text="{DynamicResource appearance}"
                 TextAlignment="left"
                 Visibility="Collapsed" />
+
             <!--  Theme Preview and Editor  -->
             <Grid>
                 <Grid.Style>
@@ -68,6 +70,7 @@
                     <ColumnDefinition Width="8*" />
                     <ColumnDefinition MaxWidth="250" Style="{StaticResource SecondColumnStyle}" />
                 </Grid.ColumnDefinitions>
+
                 <!--  Theme Size Editor  -->
                 <Border
                     Grid.Column="1"
@@ -260,7 +263,8 @@
                         </StackPanel>
                     </ScrollViewer>
                 </Border>
-                <!--  Theme Preview  -->
+
+                <!--  Theme preview  -->
                 <Border
                     Grid.Column="0"
                     Background="{Binding PreviewBackground}"
@@ -477,7 +481,6 @@
                     <!--  ✅ 추가  -->
                 </cc:Card>
 
-
                 <!--  Drop shadow effect  -->
                 <cc:Card
                     Title="{DynamicResource queryWindowShadowEffect}"
@@ -496,18 +499,20 @@
                 Text="{DynamicResource browserMoreThemes}"
                 Uri="{Binding LinkThemeGallery}" />
 
-
-
-            <!--  Fixed Height  -->
+            <!--  Fixed size  -->
             <cc:CardGroup Margin="0 20 0 0">
                 <cc:Card
                     Title="{DynamicResource KeepMaxResults}"
-                    Icon="&#xe8fd;"
+                    Icon="&#xE744;"
                     Sub="{DynamicResource KeepMaxResultsToolTip}">
-                    <ui:ToggleSwitch IsOn="{Binding KeepMaxResults}" />
+                    <ui:ToggleSwitch
+                        IsOn="{Binding KeepMaxResults}"
+                        OffContent="{DynamicResource disable}"
+                        OnContent="{DynamicResource enable}" />
                 </cc:Card>
                 <cc:Card
                     Title="{DynamicResource maxShowResults}"
+                    Icon="&#xe8fd;"
                     Sub="{DynamicResource maxShowResultsToolTip}"
                     Visibility="{Binding KeepMaxResults, Converter={StaticResource BoolToVisibilityConverter}}">
                     <ComboBox
@@ -528,6 +533,29 @@
                     OffContent="{DynamicResource disable}"
                     OnContent="{DynamicResource enable}" />
             </cc:Card>
+
+            <!--  Placeholder text  -->
+            <cc:CardGroup Margin="0 14 0 0">
+                <cc:Card
+                    Title="{DynamicResource ShowPlaceholder}"
+                    Icon="&#xE82F;"
+                    Sub="{DynamicResource ShowPlaceholderTip}">
+                    <ui:ToggleSwitch
+                        IsOn="{Binding ShowPlaceholder}"
+                        OffContent="{DynamicResource disable}"
+                        OnContent="{DynamicResource enable}" />
+                </cc:Card>
+
+                <cc:Card
+                    Title="{DynamicResource PlaceholderText}"
+                    Icon="&#xED59;"
+                    Sub="{Binding PlaceholderTextTip}">
+                    <TextBox
+                        MinWidth="150"
+                        Text="{Binding PlaceholderText}"
+                        TextWrapping="NoWrap" />
+                </cc:Card>
+            </cc:CardGroup>
 
             <!--  Time and date  -->
             <cc:CardGroup Margin="0 14 0 0">

@@ -24,7 +24,7 @@ namespace Flow.Launcher.Core.Resource
     {
         #region Properties & Fields
 
-        public bool BlurEnabled { get; set; }
+        public bool BlurEnabled { get; private set; }
 
         private const string ThemeMetadataNamePrefix = "Name:";
         private const string ThemeMetadataIsDarkPrefix = "IsDark:";
@@ -41,6 +41,8 @@ namespace Flow.Launcher.Core.Resource
         private const string Extension = ".xaml";
         private static string DirectoryPath => Path.Combine(Constant.ProgramDirectory, Folder);
         private static string UserDirectoryPath => Path.Combine(DataLocation.DataDirectory(), Folder);
+
+        private Thickness _themeResizeBorderThickness;
 
         #endregion
 
@@ -463,7 +465,7 @@ namespace Flow.Launcher.Core.Resource
 
             var effectSetter = new Setter
             {
-                Property = Border.EffectProperty,
+                Property = UIElement.EffectProperty,
                 Value = new DropShadowEffect
                 {
                     Opacity = 0.3,
@@ -473,12 +475,12 @@ namespace Flow.Launcher.Core.Resource
                 }
             };
 
-            if (windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.MarginProperty) is not Setter marginSetter)
+            if (windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == FrameworkElement.MarginProperty) is not Setter marginSetter)
             {
                 var margin = new Thickness(ShadowExtraMargin, 12, ShadowExtraMargin, ShadowExtraMargin);
                 marginSetter = new Setter()
                 {
-                    Property = Border.MarginProperty,
+                    Property = FrameworkElement.MarginProperty,
                     Value = margin,
                 };
                 windowBorderStyle.Setters.Add(marginSetter);
@@ -508,12 +510,12 @@ namespace Flow.Launcher.Core.Resource
             var dict = GetCurrentResourceDictionary();
             var windowBorderStyle = dict["WindowBorderStyle"] as Style;
 
-            if (windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.EffectProperty) is Setter effectSetter)
+            if (windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == UIElement.EffectProperty) is Setter effectSetter)
             {
                 windowBorderStyle.Setters.Remove(effectSetter);
             }
 
-            if (windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.MarginProperty) is Setter marginSetter)
+            if (windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == FrameworkElement.MarginProperty) is Setter marginSetter)
             {
                 var currentMargin = (Thickness)marginSetter.Value;
                 var newMargin = new Thickness(
@@ -529,28 +531,41 @@ namespace Flow.Launcher.Core.Resource
             UpdateResourceDictionary(dict);
         }
 
+        public void SetResizeBorderThickness(WindowChrome windowChrome, bool fixedWindowSize)
+        {
+            if (fixedWindowSize)
+            {
+                windowChrome.ResizeBorderThickness = new Thickness(0);
+            }
+            else
+            {
+                windowChrome.ResizeBorderThickness = _themeResizeBorderThickness;
+            }
+        }
+
         // because adding drop shadow effect will change the margin of the window,
         // we need to update the window chrome thickness to correct set the resize border
-        private static void SetResizeBoarderThickness(Thickness? effectMargin)
+        private void SetResizeBoarderThickness(Thickness? effectMargin)
         {
             var window = Application.Current.MainWindow;
             if (WindowChrome.GetWindowChrome(window) is WindowChrome windowChrome)
             {
-                Thickness thickness;
+                // Save the theme resize border thickness so that we can restore it if we change ResizeWindow setting
                 if (effectMargin == null)
                 {
-                    thickness = SystemParameters.WindowResizeBorderThickness;
+                    _themeResizeBorderThickness = SystemParameters.WindowResizeBorderThickness;
                 }
                 else
                 {
-                    thickness = new Thickness(
+                    _themeResizeBorderThickness = new Thickness(
                         effectMargin.Value.Left + SystemParameters.WindowResizeBorderThickness.Left,
                         effectMargin.Value.Top + SystemParameters.WindowResizeBorderThickness.Top,
                         effectMargin.Value.Right + SystemParameters.WindowResizeBorderThickness.Right,
                         effectMargin.Value.Bottom + SystemParameters.WindowResizeBorderThickness.Bottom);
                 }
 
-                windowChrome.ResizeBorderThickness = thickness;
+                // Apply the resize border thickness to the window chrome
+                SetResizeBorderThickness(windowChrome, _settings.KeepMaxResults);
             }
         }
 
@@ -582,7 +597,7 @@ namespace Flow.Launcher.Core.Resource
                 {
                     AutoDropShadow(useDropShadowEffect);
                 }
-            }, DispatcherPriority.Normal);
+            }, DispatcherPriority.Render);
         }
 
         /// <summary>
@@ -596,7 +611,7 @@ namespace Flow.Launcher.Core.Resource
                 var (backdropType, _) = GetActualValue();
 
                 SetBlurForWindow(GetCurrentTheme(), backdropType);
-            }, DispatcherPriority.Normal);
+            }, DispatcherPriority.Render);
         }
 
         /// <summary>
