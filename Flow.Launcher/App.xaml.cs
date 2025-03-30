@@ -177,7 +177,6 @@ namespace Flow.Launcher
                 HotKeyMapper.Initialize();
 
                 // main windows needs initialized before theme change because of blur settings
-                // TODO: Clean ThemeManager.Instance in future
                 Ioc.Default.GetRequiredService<Theme>().ChangeTheme();
 
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);

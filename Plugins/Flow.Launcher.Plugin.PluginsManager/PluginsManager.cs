@@ -341,7 +341,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                 }
                                 else
                                 {
-                                    PluginManager.UpdatePlugin(x.PluginExistingMetadata, x.PluginNewUserPlugin,
+                                    await PluginManager.UpdatePluginAsync(x.PluginExistingMetadata, x.PluginNewUserPlugin,
                                         downloadToFilePath);
 
                                     if (Settings.AutoRestartAfterChanging)
@@ -433,7 +433,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                 if (cts.IsCancellationRequested)
                                     return;
                                 else
-                                    PluginManager.UpdatePlugin(plugin.PluginExistingMetadata, plugin.PluginNewUserPlugin,
+                                    await PluginManager.UpdatePluginAsync(plugin.PluginExistingMetadata, plugin.PluginNewUserPlugin,
                                         downloadToFilePath);
                             }
                             catch (Exception ex)
@@ -684,7 +684,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                         Title = $"{x.Metadata.Name} by {x.Metadata.Author}",
                         SubTitle = x.Metadata.Description,
                         IcoPath = x.Metadata.IcoPath,
-                        Action = e =>
+                        AsyncAction = async e =>
                         {
                             string message;
                             if (Settings.AutoRestartAfterChanging)
@@ -707,7 +707,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                     MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                             {
                                 Context.API.HideMainWindow();
-                                Uninstall(x.Metadata);
+                                await UninstallAsync(x.Metadata);
                                 if (Settings.AutoRestartAfterChanging)
                                 {
                                     Context.API.RestartApp();
@@ -732,7 +732,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             return Search(results, search);
         }
 
-        private void Uninstall(PluginMetadata plugin)
+        private async Task UninstallAsync(PluginMetadata plugin)
         {
             try
             {
@@ -740,7 +740,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     Context.API.GetTranslation("plugin_pluginsmanager_keep_plugin_settings_subtitle"),
                     Context.API.GetTranslation("plugin_pluginsmanager_keep_plugin_settings_title"),
                     button: MessageBoxButton.YesNo) == MessageBoxResult.No;
-                PluginManager.UninstallPlugin(plugin, removePluginFromSettings: true, removePluginSettings: removePluginSettings);
+                await PluginManager.UninstallPluginAsync(plugin, removePluginFromSettings: true, removePluginSettings: removePluginSettings);
             }
             catch (ArgumentException e)
             {
