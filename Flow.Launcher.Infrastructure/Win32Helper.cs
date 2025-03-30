@@ -364,6 +364,9 @@ namespace Flow.Launcher.Infrastructure
             // No installed English layout found
             if (enHKL == HKL.Null) return;
 
+            // When application is exiting, the Application.Current will be null
+            if (Application.Current == null) return;
+
             // Get the FL main window
             var hwnd = GetWindowHandle(Application.Current.MainWindow, true);
             if (hwnd == HWND.Null) return;
