@@ -649,14 +649,14 @@ namespace Flow.Launcher.ViewModel
             {
                 // re-query is done in QueryText's setter method
                 QueryText = queryText;
-                await QueryAsync(isReQuery: false);
+                await QueryAsync(searchDelay: false, isReQuery: false);
                 // set to false so the subsequent set true triggers
                 // PropertyChanged and MoveQueryTextToEnd is called
                 QueryTextCursorMovedToEnd = false;
             }
             else if (isReQuery)
             {
-                await QueryAsync(isReQuery: true);
+                await QueryAsync(searchDelay: false, isReQuery: true);
             }
 
             QueryTextCursorMovedToEnd = true;
@@ -1035,10 +1035,10 @@ namespace Flow.Launcher.ViewModel
 
         public void Query(bool searchDelay, bool isReQuery = false)
         {
-            _ = QueryAsync(isReQuery);
+            _ = QueryAsync(searchDelay, isReQuery);
         }
 
-        private async Task QueryAsync(bool isReQuery = false)
+        private async Task QueryAsync(bool searchDelay, bool isReQuery = false)
         {
             if (QueryResultsSelected())
             {

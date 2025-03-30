@@ -266,6 +266,7 @@ namespace Flow.Launcher
                         break;
                     case nameof(Settings.KeepMaxResults):
                         SetupResizeMode();
+                        break;
                     case nameof(Settings.SearchQueryResultsWithDelay):
                         SetupSearchTextBoxReactiveness(_settings.SearchQueryResultsWithDelay);
                         break;
