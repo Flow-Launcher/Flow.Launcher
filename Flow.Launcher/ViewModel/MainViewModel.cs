@@ -298,6 +298,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (QueryResultsSelected())
             {
+                // When we are requerying, we should not delay the query
                 _ = QueryResultsAsync(false, isReQuery: true);
             }
         }
@@ -305,6 +306,7 @@ namespace Flow.Launcher.ViewModel
         public void ReQuery(bool reselect)
         {
             BackToQueryResults();
+            // When we are requerying, we should not delay the query
             _ = QueryResultsAsync(false, isReQuery: true, reSelect: reselect);
         }
 
@@ -649,14 +651,16 @@ namespace Flow.Launcher.ViewModel
             {
                 // re-query is done in QueryText's setter method
                 QueryText = queryText;
-                await QueryAsync(searchDelay: false, isReQuery: false);
+                // When we are changing query from codes, we should not delay the query
+                await QueryAsync(false, isReQuery: false);
                 // set to false so the subsequent set true triggers
                 // PropertyChanged and MoveQueryTextToEnd is called
                 QueryTextCursorMovedToEnd = false;
             }
             else if (isReQuery)
             {
-                await QueryAsync(searchDelay: false, isReQuery: true);
+                // When we are requerying, we should not delay the query
+                await QueryAsync(false, isReQuery: true);
             }
 
             QueryTextCursorMovedToEnd = true;
@@ -726,6 +730,7 @@ namespace Flow.Launcher.ViewModel
                     // so we need manually call Query()
                     // http://stackoverflow.com/posts/25895769/revisions
                     QueryText = string.Empty;
+                    // When we are changing query from selected results, we should not delay the query
                     Query(false);
 
                     if (HistorySelected())
