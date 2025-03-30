@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
@@ -27,17 +28,32 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
-        private Dictionary<string, Plugin> Plugins { get; set; } = new();
+        /// <summary>
+        /// Only used for serialization
+        /// </summary>
+        public Dictionary<string, Plugin> Plugins { get; set; } = new();
 
+        /// <summary>
+        /// Update plugin settings with metadata.
+        /// FL will get default values from metadata first and then load settings to metadata
+        /// </summary>
+        /// <param name="metadatas">Parsed plugin metadatas</param>
         public void UpdatePluginSettings(List<PluginMetadata> metadatas)
         {
             foreach (var metadata in metadatas)
             {
                 if (Plugins.TryGetValue(metadata.ID, out var settings))
                 {
+                    // If settings exist, update settings & metadata value
+                    // update settings values with metadata
                     if (string.IsNullOrEmpty(settings.Version))
+                    {
                         settings.Version = metadata.Version;
+                    }
+                    settings.DefaultActionKeywords = metadata.ActionKeywords; // metadata provides default values
+                    settings.DefaultSearchDelay = metadata.SearchDelay; // metadata provides default values
 
+                    // update metadata values with settings
                     if (settings.ActionKeywords?.Count > 0)
                     {
                         metadata.ActionKeywords = settings.ActionKeywords;
@@ -54,15 +70,18 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 }
                 else
                 {
+                    // If settings does not exist, create a new one
                     Plugins[metadata.ID] = new Plugin
                     {
                         ID = metadata.ID,
                         Name = metadata.Name,
                         Version = metadata.Version,
-                        ActionKeywords = metadata.ActionKeywords,
+                        DefaultActionKeywords = metadata.ActionKeywords, // metadata provides default values
+                        ActionKeywords = metadata.ActionKeywords, // use default value
                         Disabled = metadata.Disabled,
                         Priority = metadata.Priority,
-                        SearchDelay = metadata.SearchDelay,
+                        DefaultSearchDelay = metadata.SearchDelay, // metadata provides default values
+                        SearchDelay = metadata.SearchDelay, // use default value
                     };
                 }
             }
@@ -73,7 +92,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             if (Plugins.TryGetValue(id, out var plugin))
             {
                 return plugin;
-    }
+            }
             return null;
         }
 
@@ -91,8 +110,18 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string Name { get; set; }
 
         public string Version { get; set; }
-        public List<string> ActionKeywords { get; set; } // a reference of the action keywords from plugin manager
+
+        [JsonIgnore]
+        public List<string> DefaultActionKeywords { get; set; }
+
+        // a reference of the action keywords from plugin manager
+        public List<string> ActionKeywords { get; set; }
+
         public int Priority { get; set; }
+
+        [JsonIgnore]
+        public int DefaultSearchDelay { get; set; }
+
         public int SearchDelay { get; set; }
 
         /// <summary>
