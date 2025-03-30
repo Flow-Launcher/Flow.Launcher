@@ -331,21 +331,26 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
-        int searchDelay { get; set; } = 120;
-        public int SearchDelay
+        SearchDelaySpeeds searchDelaySpeed { get; set; } = SearchDelaySpeeds.Medium;
+        public SearchDelaySpeeds SearchDelaySpeed
         {
-            get => searchDelay;
+            get => searchDelaySpeed;
             set
             {
-                searchDelay = value;
+                searchDelaySpeed = value;
                 OnPropertyChanged();
             }
         }
 
         [JsonIgnore]
-        public List<int> SearchDelayRange { get; } = new()
+        public int SearchDelay => SearchDelaySpeed switch
         {
-            30, 60, 90, 120, 150, 180, 210, 240, 270, 300
+            SearchDelaySpeeds.Slow => 250,
+            SearchDelaySpeeds.ModeratelySlow => 200,
+            SearchDelaySpeeds.Medium => 150,
+            SearchDelaySpeeds.ModeratelyFast => 100,
+            SearchDelaySpeeds.Fast => 50,
+            _ => 150
         };
 
         [JsonIgnore]
@@ -515,5 +520,14 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         Acrylic,
         Mica,
         MicaAlt
+    }
+
+    public enum SearchDelaySpeeds
+    {
+        Slow,
+        ModeratelySlow,
+        Medium,
+        ModeratelyFast,
+        Fast
     }
 }

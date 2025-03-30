@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core;
@@ -30,6 +31,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public class SearchWindowAlignData : DropdownDataGeneric<SearchWindowAligns> { }
     public class SearchPrecisionData : DropdownDataGeneric<SearchPrecisionScore> { }
     public class LastQueryModeData : DropdownDataGeneric<LastQueryMode> { }
+    public class SearchDelaySpeedData : DropdownDataGeneric<SearchDelaySpeeds> { }
 
     public bool StartFlowLauncherOnSystemStartup
     {
@@ -139,10 +141,23 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         }
     }
 
-    public IEnumerable<int> SearchDelayRange => Settings.SearchDelayRange;
-
     public List<LastQueryModeData> LastQueryModes { get; } =
         DropdownDataGeneric<LastQueryMode>.GetValues<LastQueryModeData>("LastQuery");
+
+    public List<SearchDelaySpeedData> SearchDelaySpeeds { get; } =
+        DropdownDataGeneric<SearchDelaySpeeds>.GetValues<SearchDelaySpeedData>("SearchDelaySpeed");
+
+    public SearchDelaySpeedData SearchDelaySpeed
+    {
+        get => SearchDelaySpeeds.First(x => x.Value == Settings.SearchDelaySpeed);
+        set
+        {
+            if (Settings.SearchDelaySpeed != value.Value)
+            {
+                Settings.SearchDelaySpeed = value.Value;
+            }
+        }
+    }
 
     private void UpdateEnumDropdownLocalizations()
     {
@@ -150,6 +165,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         DropdownDataGeneric<SearchWindowAligns>.UpdateLabels(SearchWindowAligns);
         DropdownDataGeneric<SearchPrecisionScore>.UpdateLabels(SearchPrecisionScores);
         DropdownDataGeneric<LastQueryMode>.UpdateLabels(LastQueryModes);
+        DropdownDataGeneric<SearchDelaySpeeds>.UpdateLabels(SearchDelaySpeeds);
     }
 
     public string Language

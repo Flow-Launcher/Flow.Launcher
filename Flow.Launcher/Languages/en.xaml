@@ -92,10 +92,6 @@
     <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
     <system:String x:Key="hideNotifyIcon">Hide tray icon</system:String>
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
-    <system:String x:Key="searchDelay">Search Delay</system:String>
-    <system:String x:Key="searchDelayToolTip">Delay for a while to search when typing. This reduces interface jumpiness and result load.</system:String>
-    <system:String x:Key="searchDelayTime">Search Delay Time</system:String>
-    <system:String x:Key="searchDelayTimeToolTip">Delay time after which search results appear when typing is stopped. Default is 120ms.</system:String>
     <system:String x:Key="querySearchPrecision">Query Search Precision</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Changes minimum match score required for results.</system:String>
     <system:String x:Key="SearchPrecisionNone">None</system:String>
@@ -106,6 +102,15 @@
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
+    <system:String x:Key="searchDelay">Search Delay</system:String>
+    <system:String x:Key="searchDelayToolTip">Delay for a while to search when typing. This reduces interface jumpiness and result load.</system:String>
+    <system:String x:Key="searchDelayTime">Search Delay Speed</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Delay time speed after which search results appear when typing is stopped. Default is medium.</system:String>
+    <system:String x:Key="SearchDelaySpeedSlow">Slow</system:String>
+    <system:String x:Key="SearchDelaySpeedModeratelySlow">Moderately slow</system:String>
+    <system:String x:Key="SearchDelaySpeedMedium">Medium</system:String>
+    <system:String x:Key="SearchDelaySpeedModeratelyFast">Moderately fast</system:String>
+    <system:String x:Key="SearchDelaySpeedFast">Fast</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Search Plugin</system:String>

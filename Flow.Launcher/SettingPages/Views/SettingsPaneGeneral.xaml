@@ -188,9 +188,11 @@
                     Icon="&#xE916;"
                     Sub="{DynamicResource searchDelayTimeToolTip}">
                     <ComboBox
-                        Width="100"
-                        ItemsSource="{Binding SearchDelayRange}"
-                        SelectedItem="{Binding Settings.SearchDelay}" />
+                        MaxWidth="200"
+                        DisplayMemberPath="Display"
+                        ItemsSource="{Binding SearchDelaySpeeds}"
+                        SelectedItem="{Binding SearchDelaySpeed}"
+                        SelectedValuePath="Value" />
                 </cc:Card>
             </cc:CardGroup>
 

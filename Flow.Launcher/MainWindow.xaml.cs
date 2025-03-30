@@ -270,7 +270,7 @@ namespace Flow.Launcher
                     case nameof(Settings.SearchQueryResultsWithDelay):
                         SetupSearchTextBoxReactiveness(_settings.SearchQueryResultsWithDelay, _settings.SearchDelay);
                         break;
-                    case nameof(Settings.SearchDelay):
+                    case nameof(Settings.SearchDelaySpeed):
                         if (_settings.SearchQueryResultsWithDelay)
                         {
                             SetupSearchTextBoxReactiveness(_settings.SearchQueryResultsWithDelay, _settings.SearchDelay);
