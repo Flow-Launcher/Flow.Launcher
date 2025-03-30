@@ -11,29 +11,32 @@
     mc:Ignorable="d">
     <Border
         Width="Auto"
-        Height="52"
+        Height="Auto"
         Margin="0"
         Padding="0"
         BorderThickness="0 1 0 0"
         CornerRadius="0"
         Style="{DynamicResource SettingGroupBox}">
-        <DockPanel Margin="22 0 18 0" VerticalAlignment="Center">
+        <DockPanel Margin="{StaticResource SettingPanelMargin}">
             <TextBlock
-                Margin="48 0 10 0"
+                Margin="{StaticResource SettingPanelItemRightMargin}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
                 DockPanel.Dock="Left"
                 Style="{StaticResource Glyph}">
                 &#xE916;
             </TextBlock>
             <TextBlock
+                Margin="{StaticResource SettingPanelItemRightMargin}"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 DockPanel.Dock="Left"
                 Style="{DynamicResource SettingTitleLabel}"
                 Text="{DynamicResource searchDelayTime}" />
+            <!--  Here Margin="0 -4.5 0 -4.5" is to remove redundant top bottom margin from Margin="{StaticResource SettingPanelMargin}"  -->
             <ComboBox
                 Width="100"
-                Height="34"
-                Margin="5 0 0 0"
+                Margin="0 -4.5 0 -4.5"
                 HorizontalAlignment="Right"
                 Cursor="Hand"
                 DockPanel.Dock="Right"
