@@ -649,10 +649,11 @@ namespace Flow.Launcher.ViewModel
 
             if (QueryText != queryText)
             {
-                // re-query is done in QueryText's setter method
+                // Change query text first
                 QueryText = queryText;
                 // When we are changing query from codes, we should not delay the query
                 await QueryAsync(false, isReQuery: false);
+
                 // set to false so the subsequent set true triggers
                 // PropertyChanged and MoveQueryTextToEnd is called
                 QueryTextCursorMovedToEnd = false;
@@ -730,7 +731,8 @@ namespace Flow.Launcher.ViewModel
                     // so we need manually call Query()
                     // http://stackoverflow.com/posts/25895769/revisions
                     QueryText = string.Empty;
-                    // When we are changing query from selected results, we should not delay the query
+                    // When we are changing query because selected results are changed to history or context menu,
+                    // we should not delay the query
                     Query(false);
 
                     if (HistorySelected())
