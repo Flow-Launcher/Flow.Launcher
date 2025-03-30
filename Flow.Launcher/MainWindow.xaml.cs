@@ -123,7 +123,7 @@ namespace Flow.Launcher
             }
 
             // Initialize search delay
-            SetupSearchTextBoxReactiveness(_settings.SearchQueryResultsWithDelay);
+            SetupSearchTextBoxReactiveness(_settings.SearchQueryResultsWithDelay, _settings.SearchDelay);
 
             // Initialize place holder
             SetupPlaceholderText();
@@ -268,7 +268,13 @@ namespace Flow.Launcher
                         SetupResizeMode();
                         break;
                     case nameof(Settings.SearchQueryResultsWithDelay):
-                        SetupSearchTextBoxReactiveness(_settings.SearchQueryResultsWithDelay);
+                        SetupSearchTextBoxReactiveness(_settings.SearchQueryResultsWithDelay, _settings.SearchDelay);
+                        break;
+                    case nameof(Settings.SearchDelay):
+                        if (_settings.SearchQueryResultsWithDelay)
+                        {
+                            SetupSearchTextBoxReactiveness(_settings.SearchQueryResultsWithDelay, _settings.SearchDelay);
+                        }
                         break;
                 }
             };
@@ -1122,7 +1128,7 @@ namespace Flow.Launcher
 
         // Edited from: https://github.com/microsoft/PowerToys
 
-        private void SetupSearchTextBoxReactiveness(bool showResultsWithDelay)
+        private void SetupSearchTextBoxReactiveness(bool showResultsWithDelay, int searchDelay)
         {
             if (_reactiveSubscription != null)
             {

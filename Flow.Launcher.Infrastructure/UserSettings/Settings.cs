@@ -330,7 +330,17 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 OnPropertyChanged();
             }
         }
-        public int SearchDelay { get; set; } = 120;
+
+        int searchDelay { get; set; } = 120;
+        public int SearchDelay
+        {
+            get => searchDelay;
+            set
+            {
+                searchDelay = value;
+                OnPropertyChanged();
+            }
+        }
 
         [JsonIgnore]
         public List<int> SearchDelayRange { get; } = new()
