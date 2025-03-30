@@ -1155,7 +1155,7 @@ namespace Flow.Launcher.ViewModel
         {
             _updateSource?.Cancel();
 
-            var query = ConstructQuery(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
+            var query = await ConstructQueryAsync(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
 
             if (query == null) // shortcut expanded
             {
@@ -1284,8 +1284,8 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private Query ConstructQuery(string queryText, IEnumerable<CustomShortcutModel> customShortcuts,
-            IEnumerable<BuiltinShortcutModel> builtInShortcuts)
+        private async Task<Query> ConstructQueryAsync(string queryText, IEnumerable<CustomShortcutModel> customShortcuts,
+            IEnumerable<BaseBuiltinShortcutModel> builtInShortcuts)
         {
             if (string.IsNullOrWhiteSpace(queryText))
             {
@@ -1306,36 +1306,48 @@ namespace Flow.Launcher.ViewModel
                 queryBuilder.Replace('@' + shortcut.Key, shortcut.Expand());
             }
 
-            string customExpanded = queryBuilder.ToString();
+            var customExpanded = queryBuilder.ToString();
+            var queryChanged = false;
 
-            Application.Current.Dispatcher.Invoke(() =>
+            foreach (var shortcut in builtInShortcuts)
             {
-                foreach (var shortcut in builtInShortcuts)
+                string expansion;
+                if (shortcut is BuiltinShortcutModel syncShortcut)
                 {
-                    try
+                    expansion = syncShortcut.Expand();
+                }
+                else if (shortcut is AsyncBuiltinShortcutModel asyncShortcut)
+                {
+                    expansion = await asyncShortcut.ExpandAsync();
+                }
+                else
+                {
+                    continue;
+                }
+                try
+                {
+                    if (customExpanded.Contains(shortcut.Key))
                     {
-                        if (customExpanded.Contains(shortcut.Key))
-                        {
-                            var expansion = shortcut.Expand();
-                            queryBuilder.Replace(shortcut.Key, expansion);
-                            queryBuilderTmp.Replace(shortcut.Key, expansion);
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Exception(
-                            $"{nameof(MainViewModel)}.{nameof(ConstructQuery)}|Error when expanding shortcut {shortcut.Key}",
-                            e);
+                        queryBuilder.Replace(shortcut.Key, expansion);
+                        queryBuilderTmp.Replace(shortcut.Key, expansion);
+                        queryChanged = true;
                     }
                 }
-            });
+                catch (Exception e)
+                {
+                    App.API.LogException(nameof(MainViewModel), $"Error when expanding shortcut {shortcut.Key}", e);
+                }
+            }
 
-            // show expanded builtin shortcuts
-            // use private field to avoid infinite recursion
-            _queryText = queryBuilderTmp.ToString();
+            if (queryChanged)
+            {
+                // show expanded builtin shortcuts
+                // use private field to avoid infinite recursion
+                _queryText = queryBuilderTmp.ToString();
+                OnPropertyChanged(nameof(QueryText));
+            }
 
-            var query = QueryBuilder.Build(queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
-            return query;
+            return QueryBuilder.Build(queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
         }
 
         private void RemoveOldQueryResults(Query query)
