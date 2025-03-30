@@ -4,6 +4,7 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
@@ -116,7 +117,10 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             foreach (var metadata in PluginMetadataList)
             {
                 if (metadata.Language.Equals(languageToSet, StringComparison.OrdinalIgnoreCase))
+                {
+                    metadata.AssemblyName = string.Empty;
                     pluginPairs.Add(CreatePluginPair(filePath, metadata));
+                }
             }
 
             return pluginPairs;

@@ -12,6 +12,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Windows.Shell;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.Plugin;
@@ -61,7 +62,6 @@ namespace Flow.Launcher
 
         // Window Animation
         private const double DefaultRightMargin = 66; //* this value from base.xaml
-        private bool _animating;
         private bool _isClockPanelAnimating = false;
 
         // Search Delay
@@ -82,7 +82,7 @@ namespace Flow.Launcher
             DataContext = _viewModel;
 
             InitializeComponent();
-            UpdatePosition(true);
+            UpdatePosition();
 
             InitSoundEffects();
             DataObject.AddPastingHandler(QueryTextBox, QueryTextBox_OnPaste);
@@ -111,17 +111,26 @@ namespace Flow.Launcher
             // Check first launch
             if (_settings.FirstLaunch)
             {
+                // Set First Launch to false
                 _settings.FirstLaunch = false;
+
+                // Set Backdrop Type to Acrylic for Windows 11 when First Launch. Default is None
+                if (Win32Helper.IsBackdropSupported()) _settings.BackdropType = BackdropTypes.Acrylic;
+
+                // Save settings
                 App.API.SaveAppAllSettings();
-                /* Set Backdrop Type to Acrylic for Windows 11 when First Launch. Default is None. */
-                if (OperatingSystem.IsWindowsVersionAtLeast(10, 0, 22000))
-                    _settings.BackdropType = BackdropTypes.Acrylic;
-                var WelcomeWindow = new WelcomeWindow();
-                WelcomeWindow.Show();
+
+                // Show Welcome Window
+                var welcomeWindow = new WelcomeWindow();
+                welcomeWindow.Show();
             }
 
+            // Initialize place holder
+            SetupPlaceholderText();
+            _viewModel.PlaceholderText = _settings.PlaceholderText;
+
             // Hide window if need
-            UpdatePosition(true);
+            UpdatePosition();
             if (_settings.HideOnStartup)
             {
                 _viewModel.Hide();
@@ -148,17 +157,20 @@ namespace Flow.Launcher
             InitProgressbarAnimation();
 
             // Force update position
-            UpdatePosition(true);
+            UpdatePosition();
 
             // Refresh frame
-            await Ioc.Default.GetRequiredService<Theme>().RefreshFrameAsync();
+            await _theme.RefreshFrameAsync();
+
+            // Initialize resize mode after refreshing frame
+            SetupResizeMode();
 
             // Reset preview
             _viewModel.ResetPreview();
             
             // Since the default main window visibility is visible, so we need set focus during startup
             QueryTextBox.Focus();
-            
+
             // Set the initial state of the QueryTextBoxCursorMovedToEnd property
             // Without this part, when shown for the first time, switching the context menu does not move the cursor to the end.
             _viewModel.QueryTextCursorMovedToEnd = false;
@@ -174,24 +186,37 @@ namespace Flow.Launcher
                             {
                                 if (_viewModel.MainWindowVisibilityStatus)
                                 {
+                                    // Play sound effect before activing the window
                                     if (_settings.UseSound)
                                     {
                                         SoundPlay();
                                     }
-                                    
-                                    UpdatePosition(false);
-                                    _viewModel.ResetPreview();
+
+                                    // Update position & Activate
+                                    UpdatePosition();
                                     Activate();
-                                    QueryTextBox.Focus();
-                                    _settings.ActivateTimes++;
+
+                                    // Reset preview
+                                    _viewModel.ResetPreview();
+
+                                    // Select last query if need
                                     if (!_viewModel.LastQuerySelected)
                                     {
                                         QueryTextBox.SelectAll();
                                         _viewModel.LastQuerySelected = true;
                                     }
 
+                                    // Focus query box
+                                    QueryTextBox.Focus();
+
+                                    // Play window animation
                                     if (_settings.UseAnimation)
+                                    {
                                         WindowAnimation();
+                                    }
+
+                                    // Update activate times
+                                    _settings.ActivateTimes++;
                                 }
                             });
                             break;
@@ -204,7 +229,6 @@ namespace Flow.Launcher
                             Dispatcher.Invoke(() => QueryTextBox.CaretIndex = QueryTextBox.Text.Length);
                             _viewModel.QueryTextCursorMovedToEnd = false;
                         }
-
                         break;
                     case nameof(MainViewModel.GameModeStatus):
                         _notifyIcon.Icon = _viewModel.GameModeStatus
@@ -234,6 +258,14 @@ namespace Flow.Launcher
                     case nameof(Settings.WindowTop):
                         Top = _settings.WindowTop;
                         break;
+                    case nameof(Settings.ShowPlaceholder):
+                        SetupPlaceholderText();
+                        break;
+                    case nameof(Settings.PlaceholderText):
+                        _viewModel.PlaceholderText = _settings.PlaceholderText;
+                        break;
+                    case nameof(Settings.KeepMaxResults):
+                        SetupResizeMode();
                     case nameof(Settings.SearchQueryResultsWithDelay):
                         SetupSearchTextBoxReactiveness(_settings.SearchQueryResultsWithDelay);
                         break;
@@ -241,7 +273,7 @@ namespace Flow.Launcher
             };
 
             // QueryTextBox.Text change detection (modified to only work when character count is 1 or higher)
-            QueryTextBox.TextChanged += (sender, e) => UpdateClockPanelVisibility();
+            QueryTextBox.TextChanged += (s, e) => UpdateClockPanelVisibility();
 
             // Detecting ContextMenu.Visibility changes
             DependencyPropertyDescriptor
@@ -250,7 +282,7 @@ namespace Flow.Launcher
 
             // Detect History.Visibility changes
             DependencyPropertyDescriptor
-                .FromProperty(VisibilityProperty, typeof(StackPanel)) // History는 StackPanel이라고 가정
+                .FromProperty(VisibilityProperty, typeof(StackPanel))
                 .AddValueChanged(History, (s, e) => UpdateClockPanelVisibility());
         }
 
@@ -265,7 +297,8 @@ namespace Flow.Launcher
                 Notification.Uninstall();
                 // After plugins are all disposed, we can close the main window
                 _canClose = true;
-                Close();
+                // Use this instead of Close() to avoid InvalidOperationException when calling Close() in OnClosing event
+                Application.Current.Shutdown();
             }
         }
 
@@ -285,8 +318,6 @@ namespace Flow.Launcher
 
         private void OnLocationChanged(object sender, EventArgs e)
         {
-            if (_animating) return;
-
             if (_settings.SearchWindowScreen == SearchWindowScreens.RememberLastLaunchLocation)
             {
                 _settings.WindowLeft = Left;
@@ -298,9 +329,11 @@ namespace Flow.Launcher
         {
             _settings.WindowLeft = Left;
             _settings.WindowTop = Top;
-            ClockPanel.Opacity = 0;
-            SearchIcon.Opacity = 0;
-            //This condition stops extra hide call when animator is on,
+
+            _viewModel.ClockPanelOpacity = 0.0;
+            _viewModel.SearchIconOpacity = 0.0;
+
+            // This condition stops extra hide call when animator is on,
             // which causes the toggling to occasional hide instead of show.
             if (_viewModel.MainWindowVisibilityStatus)
             {
@@ -308,8 +341,9 @@ namespace Flow.Launcher
                 // This also stops the mainwindow from flickering occasionally after Settings window is opened
                 // and always after Settings window is closed.
                 if (_settings.UseAnimation)
- 
+                {
                     await Task.Delay(100);
+                }
 
                 if (_settings.HideWhenDeactivated && !_viewModel.ExternalPreviewVisible)
                 {
@@ -349,7 +383,6 @@ namespace Flow.Launcher
                         _viewModel.LoadContextMenuCommand.Execute(null);
                         e.Handled = true;
                     }
-
                     break;
                 case Key.Left:
                     if (!_viewModel.QueryResultsSelected() && QueryTextBox.CaretIndex == 0)
@@ -357,7 +390,6 @@ namespace Flow.Launcher
                         _viewModel.EscCommand.Execute(null);
                         e.Handled = true;
                     }
-
                     break;
                 case Key.Back:
                     if (specialKeyState.CtrlPressed)
@@ -376,7 +408,6 @@ namespace Flow.Launcher
                             }
                         }
                     }
-
                     break;
                 default:
                     break;
@@ -438,23 +469,25 @@ namespace Flow.Launcher
             {
                 _initialWidth = (int)Width;
                 _initialHeight = (int)Height;
+
                 handled = true;
             }
             else if (msg == Win32Helper.WM_EXITSIZEMOVE)
             {
                 if (_initialHeight != (int)Height)
                 {
-                    var shadowMargin = 0;
-                    var (_, useDropShadowEffect) = _theme.GetActualValue();
-                    if (useDropShadowEffect)
-                    {
-                        shadowMargin = 32;
-                    }
-
                     if (!_settings.KeepMaxResults)
                     {
-                        var itemCount = (Height - (_settings.WindowHeightSize + 14) - shadowMargin) / _settings.ItemHeightSize;
+                        // Get shadow margin
+                        var shadowMargin = 0;
+                        var (_, useDropShadowEffect) = _theme.GetActualValue();
+                        if (useDropShadowEffect)
+                        {
+                            shadowMargin = 32;
+                        }
 
+                        // Calculate max results to show
+                        var itemCount = (Height - (_settings.WindowHeightSize + 14) - shadowMargin) / _settings.ItemHeightSize;
                         if (itemCount < 2)
                         {
                             _settings.MaxResultsToShow = 2;
@@ -466,11 +499,16 @@ namespace Flow.Launcher
                     }
 
                     SizeToContent = SizeToContent.Height;
-                    _viewModel.MainWindowWidth = Width;
                 }
 
                 if (_initialWidth != (int)Width)
                 {
+                    if (!_settings.KeepMaxResults)
+                    {
+                        // Update width
+                        _viewModel.MainWindowWidth = Width;
+                    }
+
                     SizeToContent = SizeToContent.Height;
                 }
 
@@ -606,13 +644,8 @@ namespace Flow.Launcher
 
         #region Window Position
 
-        private void UpdatePosition(bool force)
+        private void UpdatePosition()
         {
-            if (_animating && !force)
-            {
-                return;
-            }
-
             // Initialize call twice to work around multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
             InitializePosition();
             InitializePosition();
@@ -786,19 +819,11 @@ namespace Flow.Launcher
 
         private void WindowAnimation()
         {
-            if (_animating)
-                return;
-
             _isArrowKeyPressed = true;
-            _animating = true;
-            UpdatePosition(false);
 
-            ClockPanel.Opacity = 0;
-            SearchIcon.Opacity = 0;
-            
             var clocksb = new Storyboard();
             var iconsb = new Storyboard();
-            CircleEase easing = new CircleEase { EasingMode = EasingMode.EaseInOut };
+            var easing = new CircleEase { EasingMode = EasingMode.EaseInOut };
 
             var animationLength = _settings.AnimationSpeed switch
             {
@@ -826,7 +851,7 @@ namespace Flow.Launcher
                 FillBehavior = FillBehavior.HoldEnd
             };
 
-            double TargetIconOpacity = GetOpacityFromStyle(SearchIcon.Style, 1.0);
+            var TargetIconOpacity = GetOpacityFromStyle(SearchIcon.Style, 1.0);
 
             var IconOpacity = new DoubleAnimation
             {
@@ -837,7 +862,7 @@ namespace Flow.Launcher
                 FillBehavior = FillBehavior.HoldEnd
             };
             
-            double rightMargin = GetThicknessFromStyle(ClockPanel.Style, new Thickness(0, 0, DefaultRightMargin, 0)).Right;
+            var rightMargin = GetThicknessFromStyle(ClockPanel.Style, new Thickness(0, 0, DefaultRightMargin, 0)).Right;
 
             var thicknessAnimation = new ThicknessAnimation
             {
@@ -864,24 +889,22 @@ namespace Flow.Launcher
             clocksb.Children.Add(ClockOpacity);
             iconsb.Children.Add(IconMotion);
             iconsb.Children.Add(IconOpacity);
-
-            clocksb.Completed += (_, _) => _animating = false;
+            
             _settings.WindowLeft = Left;
             _isArrowKeyPressed = false;
-
-            if (QueryTextBox.Text.Length == 0)
-            {
-                clocksb.Begin(ClockPanel);
-            }
-
+            
+            clocksb.Begin(ClockPanel);
             iconsb.Begin(SearchIcon);
         }
 
         private void UpdateClockPanelVisibility()
         {
             if (QueryTextBox == null || ContextMenu == null || History == null || ClockPanel == null)
+            {
                 return;
+            }
 
+            // ✅ Initialize animation length & duration
             var animationLength = _settings.AnimationSpeed switch
             {
                 AnimationSpeeds.Slow => 560,
@@ -889,32 +912,37 @@ namespace Flow.Launcher
                 AnimationSpeeds.Fast => 160,
                 _ => _settings.CustomAnimationLength
             };
-
             var animationDuration = TimeSpan.FromMilliseconds(animationLength * 2 / 3);
 
             // ✅ Conditions for showing ClockPanel (No query input & ContextMenu, History are closed)
-            bool shouldShowClock = QueryTextBox.Text.Length == 0 &&
+            var shouldShowClock = QueryTextBox.Text.Length == 0 &&
                 ContextMenu.Visibility != Visibility.Visible &&
                 History.Visibility != Visibility.Visible;
 
             // ✅ 1. When ContextMenu opens, immediately set Visibility.Hidden (force hide without animation)
             if (ContextMenu.Visibility == Visibility.Visible)
             {
-                ClockPanel.Visibility = Visibility.Hidden;
-                ClockPanel.Opacity = 0.0;  // Set to 0 in case Opacity animation affects it
+                _viewModel.ClockPanelVisibility = Visibility.Hidden;
+                _viewModel.ClockPanelOpacity = 0.0;  // Set to 0 in case Opacity animation affects it
                 return;
             }
 
             // ✅ 2. When ContextMenu is closed, keep it Hidden if there's text in the query (remember previous state)
-            if (ContextMenu.Visibility != Visibility.Visible && QueryTextBox.Text.Length > 0)
+            else if (QueryTextBox.Text.Length > 0)
             {
-                ClockPanel.Visibility = Visibility.Hidden;
-                ClockPanel.Opacity = 0.0;
+                _viewModel.ClockPanelVisibility = Visibility.Hidden;
+                _viewModel.ClockPanelOpacity = 0.0;
+                return;
+            }
+
+            // ✅ Prevent multiple animations
+            if (_isClockPanelAnimating)
+            {
                 return;
             }
 
             // ✅ 3. When hiding ClockPanel (apply fade-out animation)
-            if ((!shouldShowClock) && ClockPanel.Visibility == Visibility.Visible && !_isClockPanelAnimating)
+            if ((!shouldShowClock) && _viewModel.ClockPanelVisibility == Visibility.Visible)
             {
                 _isClockPanelAnimating = true;
 
@@ -928,39 +956,40 @@ namespace Flow.Launcher
 
                 fadeOut.Completed += (s, e) =>
                 {
-                    ClockPanel.Visibility = Visibility.Hidden; // ✅ Completely hide after animation
+                    _viewModel.ClockPanelVisibility = Visibility.Hidden; // ✅ Completely hide after animation
                     _isClockPanelAnimating = false;
                 };
 
                 ClockPanel.BeginAnimation(OpacityProperty, fadeOut);
             }
+
             // ✅ 4. When showing ClockPanel (apply fade-in animation)
-            else if (shouldShowClock && ClockPanel.Visibility != Visibility.Visible && !_isClockPanelAnimating)
+            else if (shouldShowClock && _viewModel.ClockPanelVisibility != Visibility.Visible)
             {
                 _isClockPanelAnimating = true;
 
-                Application.Current.Dispatcher.Invoke(() =>
+                _viewModel.ClockPanelVisibility = Visibility.Visible;  // ✅ Set Visibility to Visible first
+
+                var fadeIn = new DoubleAnimation
                 {
-                    ClockPanel.Visibility = Visibility.Visible;  // ✅ Set Visibility to Visible first
+                    From = 0.0,
+                    To = 1.0,
+                    Duration = animationDuration,
+                    FillBehavior = FillBehavior.HoldEnd
+                };
 
-                    var fadeIn = new DoubleAnimation
-                    {
-                        From = 0.0,
-                        To = 1.0,
-                        Duration = animationDuration,
-                        FillBehavior = FillBehavior.HoldEnd
-                    };
+                fadeIn.Completed += (s, e) => _isClockPanelAnimating = false;
 
-                    fadeIn.Completed += (s, e) => _isClockPanelAnimating = false;
-                    ClockPanel.BeginAnimation(OpacityProperty, fadeIn);
-                }, DispatcherPriority.Render);
+                ClockPanel.BeginAnimation(OpacityProperty, fadeIn);
             }
         }
 
         private static double GetOpacityFromStyle(Style style, double defaultOpacity = 1.0)
         {
             if (style == null)
+            {
                 return defaultOpacity;
+            }
 
             foreach (Setter setter in style.Setters.Cast<Setter>())
             {
@@ -976,7 +1005,9 @@ namespace Flow.Launcher
         private static Thickness GetThicknessFromStyle(Style style, Thickness defaultThickness)
         {
             if (style == null)
+            {
                 return defaultThickness;
+            }
 
             foreach (Setter setter in style.Setters.Cast<Setter>())
             {
@@ -1035,6 +1066,56 @@ namespace Flow.Launcher
         }
         
         #endregion
+
+        #region Placeholder
+
+        private void SetupPlaceholderText()
+        {
+            if (_settings.ShowPlaceholder)
+            {
+                QueryTextBox.TextChanged += QueryTextBox_TextChanged;
+                QueryTextSuggestionBox.TextChanged += QueryTextSuggestionBox_TextChanged;
+                SetPlaceholderText();
+            }
+            else
+            {
+                QueryTextBox.TextChanged -= QueryTextBox_TextChanged;
+                QueryTextSuggestionBox.TextChanged -= QueryTextSuggestionBox_TextChanged;
+                QueryTextPlaceholderBox.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void QueryTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            SetPlaceholderText();
+        }
+
+        private void QueryTextSuggestionBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            SetPlaceholderText();
+        }
+
+        private void SetPlaceholderText()
+        {
+            var queryText = QueryTextBox.Text;
+            var suggestionText = QueryTextSuggestionBox.Text;
+            QueryTextPlaceholderBox.Visibility = string.IsNullOrEmpty(queryText) && string.IsNullOrEmpty(suggestionText) ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        #endregion
+
+        #region Resize Mode
+
+        private void SetupResizeMode()
+        {
+            ResizeMode = _settings.KeepMaxResults ? ResizeMode.NoResize : ResizeMode.CanResize;
+            if (WindowChrome.GetWindowChrome(this) is WindowChrome windowChrome)
+            {
+                _theme.SetResizeBorderThickness(windowChrome, _settings.KeepMaxResults);
+            }
+        }
+
+        #endregion
         
         #region Search Delay
 
@@ -1048,7 +1129,7 @@ namespace Flow.Launcher
                 _reactiveSubscription = null;
             }
 
-            QueryTextBox.TextChanged -= QueryTextBox_TextChanged;
+            QueryTextBox.TextChanged -= QueryTextBox_TextChanged1;
 
             if (showResultsWithDelay)
             {
@@ -1062,11 +1143,11 @@ namespace Flow.Launcher
             }
             else
             {
-                QueryTextBox.TextChanged += QueryTextBox_TextChanged;
+                QueryTextBox.TextChanged += QueryTextBox_TextChanged1;
             }
         }
 
-        private void QueryTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void QueryTextBox_TextChanged1(object sender, TextChangedEventArgs e)
         {
             var textBox = (TextBox)sender;
             PerformSearchQuery(false, textBox);

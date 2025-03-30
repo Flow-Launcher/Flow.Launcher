@@ -32,10 +32,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         {
             foreach (var metadata in metadatas)
             {
-                if (Plugins.ContainsKey(metadata.ID))
+                if (Plugins.TryGetValue(metadata.ID, out var settings))
                 {
-                    var settings = Plugins[metadata.ID];
-
                     if (string.IsNullOrEmpty(settings.Version))
                         settings.Version = metadata.Version;
 

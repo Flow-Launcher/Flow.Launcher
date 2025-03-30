@@ -74,9 +74,11 @@ namespace Flow.Launcher.Core.Plugin
                                 typeof(IAsyncPlugin));
 
                             plugin = Activator.CreateInstance(type) as IAsyncPlugin;
+
+                            metadata.AssemblyName = assembly.GetName().Name;
                         }
 #if DEBUG
-                        catch (Exception e)
+                        catch (Exception)
                         {
                             throw;
                         }
@@ -112,7 +114,7 @@ namespace Flow.Launcher.Core.Plugin
 
             if (erroredPlugins.Count > 0)
             {
-                var errorPluginString = String.Join(Environment.NewLine, erroredPlugins);
+                var errorPluginString = string.Join(Environment.NewLine, erroredPlugins);
 
                 var errorMessage = "The following "
                                    + (erroredPlugins.Count > 1 ? "plugins have " : "plugin has ")
@@ -134,9 +136,13 @@ namespace Flow.Launcher.Core.Plugin
         {
             return source
                 .Where(o => o.Language.Equals(AllowedLanguage.Executable, StringComparison.OrdinalIgnoreCase))
-                .Select(metadata => new PluginPair
+                .Select(metadata =>
                 {
-                    Plugin = new ExecutablePlugin(metadata.ExecuteFilePath), Metadata = metadata
+                    return new PluginPair
+                    {
+                        Plugin = new ExecutablePlugin(metadata.ExecuteFilePath),
+                        Metadata = metadata
+                    };
                 });
         }
 
@@ -144,9 +150,13 @@ namespace Flow.Launcher.Core.Plugin
         {
             return source
                 .Where(o => o.Language.Equals(AllowedLanguage.ExecutableV2, StringComparison.OrdinalIgnoreCase))
-                .Select(metadata => new PluginPair
+                .Select(metadata =>
                 {
-                    Plugin = new ExecutablePluginV2(metadata.ExecuteFilePath), Metadata = metadata
+                    return new PluginPair
+                    {
+                        Plugin = new ExecutablePlugin(metadata.ExecuteFilePath),
+                        Metadata = metadata
+                    };
                 });
         }
     }

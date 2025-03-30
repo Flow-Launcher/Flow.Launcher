@@ -6,6 +6,9 @@ using System.Linq;
 
 namespace Flow.Launcher.Plugin.SharedCommands
 {
+    /// <summary>
+    /// Contains methods to open a search in a new browser window or tab.
+    /// </summary>
     public static class SearchWeb
     {
         private static string GetDefaultBrowserPath()

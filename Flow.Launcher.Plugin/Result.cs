@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -13,7 +12,6 @@ namespace Flow.Launcher.Plugin
     /// </summary>
     public class Result
     {
-
         private string _pluginDirectory;
 
         private string _icoPath;

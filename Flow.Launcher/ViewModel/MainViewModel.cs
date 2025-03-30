@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.Windows.Input;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -213,7 +213,8 @@ namespace Flow.Launcher.ViewModel
                     queue.Clear();
                 }
 
-                Log.Error("MainViewModel", "Unexpected ResultViewUpdate ends");
+                if (!_disposed)
+                    Log.Error("MainViewModel", "Unexpected ResultViewUpdate ends");
             }
 
             void continueAction(Task t)
@@ -582,7 +583,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void IncreaseWidth()
         {
-            Settings.WindowSize += 100;
+            MainWindowWidth += 100;
             Settings.WindowLeft -= 50;
             OnPropertyChanged(nameof(MainWindowWidth));
         }
@@ -590,14 +591,14 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void DecreaseWidth()
         {
-            if (MainWindowWidth - 100 < 400 || Settings.WindowSize == 400)
+            if (MainWindowWidth - 100 < 400 || MainWindowWidth == 400)
             {
-                Settings.WindowSize = 400;
+                MainWindowWidth = 400;
             }
             else
             {
+                MainWindowWidth -= 100;
                 Settings.WindowLeft += 50;
-                Settings.WindowSize -= 100;
             }
 
             OnPropertyChanged(nameof(MainWindowWidth));
@@ -629,26 +630,36 @@ namespace Flow.Launcher.ViewModel
         /// <param name="isReQuery">Force query even when Query Text doesn't change</param>
         public void ChangeQueryText(string queryText, bool isReQuery = false)
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            _ = ChangeQueryTextAsync(queryText, isReQuery);
+        }
+
+        /// <summary>
+        /// Async version of <see cref="ChangeQueryText"/>
+        /// </summary>
+        private async Task ChangeQueryTextAsync(string queryText, bool isReQuery = false)
+        {
+            // Must check access so that we will not block the UI thread which cause window visibility issue
+            if (!Application.Current.Dispatcher.CheckAccess())
             {
-                BackToQueryResults();
+                await Application.Current.Dispatcher.InvokeAsync(() => ChangeQueryText(queryText, isReQuery));
+                return;
+            }
 
-                if (QueryText != queryText)
-                {
-                    // re-query is done in QueryText's setter method
-                    QueryText = queryText;
-                    Query(false);
-                    // set to false so the subsequent set true triggers
-                    // PropertyChanged and MoveQueryTextToEnd is called
-                    QueryTextCursorMovedToEnd = false;
-                }
-                else if (isReQuery)
-                {
-                    Query(false, isReQuery: true);
-                }
+            if (QueryText != queryText)
+            {
+                // re-query is done in QueryText's setter method
+                QueryText = queryText;
+                await QueryAsync(isReQuery: false);
+                // set to false so the subsequent set true triggers
+                // PropertyChanged and MoveQueryTextToEnd is called
+                QueryTextCursorMovedToEnd = false;
+            }
+            else if (isReQuery)
+            {
+                await QueryAsync(isReQuery: true);
+            }
 
-                QueryTextCursorMovedToEnd = true;
-            });
+            QueryTextCursorMovedToEnd = true;
         }
 
         public bool LastQuerySelected { get; set; }
@@ -734,15 +745,28 @@ namespace Flow.Launcher.ViewModel
 
         public Visibility ProgressBarVisibility { get; set; }
         public Visibility MainWindowVisibility { get; set; }
-        public double MainWindowOpacity { get; set; } = 1;
-
+        
         // This is to be used for determining the visibility status of the mainwindow instead of MainWindowVisibility
         // because it is more accurate and reliable representation than using Visibility as a condition check
         public bool MainWindowVisibilityStatus { get; set; } = true;
 
         public event VisibilityChangedEventHandler VisibilityChanged;
 
+        public Visibility ClockPanelVisibility { get; set; }
         public Visibility SearchIconVisibility { get; set; }
+        public double ClockPanelOpacity { get; set; } = 1;
+        public double SearchIconOpacity { get; set; } = 1;
+
+        private string _placeholderText;
+        public string PlaceholderText
+        {
+            get => string.IsNullOrEmpty(_placeholderText) ? App.API.GetTranslation("queryTextBoxPlaceholder") : _placeholderText;
+            set
+            {
+                _placeholderText = value;
+                OnPropertyChanged();
+            }
+        }
 
         public double MainWindowWidth
         {
@@ -1011,9 +1035,14 @@ namespace Flow.Launcher.ViewModel
 
         public void Query(bool searchDelay, bool isReQuery = false)
         {
+            _ = QueryAsync(isReQuery);
+        }
+
+        private async Task QueryAsync(bool isReQuery = false)
+        {
             if (QueryResultsSelected())
             {
-                _ = QueryResultsAsync(searchDelay, isReQuery);
+                await QueryResultsAsync(searchDelay, isReQuery);
             }
             else if (ContextMenuSelected())
             {
@@ -1047,10 +1076,10 @@ namespace Flow.Launcher.ViewModel
                     (
                         r =>
                         {
-                            var match = StringMatcher.FuzzySearch(query, r.Title);
+                            var match = App.API.FuzzySearch(query, r.Title);
                             if (!match.IsSearchPrecisionScoreMet())
                             {
-                                match = StringMatcher.FuzzySearch(query, r.SubTitle);
+                                match = App.API.FuzzySearch(query, r.SubTitle);
                             }
 
                             if (!match.IsSearchPrecisionScoreMet()) return false;
@@ -1092,7 +1121,7 @@ namespace Flow.Launcher.ViewModel
                     Action = _ =>
                     {
                         SelectedResults = Results;
-                        ChangeQueryText(h.Query);
+                        App.API.ChangeQuery(h.Query);
                         return false;
                     }
                 };
@@ -1103,8 +1132,8 @@ namespace Flow.Launcher.ViewModel
             {
                 var filtered = results.Where
                 (
-                    r => StringMatcher.FuzzySearch(query, r.Title).IsSearchPrecisionScoreMet() ||
-                         StringMatcher.FuzzySearch(query, r.SubTitle).IsSearchPrecisionScoreMet()
+                    r => App.API.FuzzySearch(query, r.Title).IsSearchPrecisionScoreMet() ||
+                         App.API.FuzzySearch(query, r.SubTitle).IsSearchPrecisionScoreMet()
                 ).ToList();
                 History.AddResults(filtered, id);
             }
@@ -1457,35 +1486,48 @@ namespace Flow.Launcher.ViewModel
 
         #region Public Methods
 
+#pragma warning disable VSTHRD100 // Avoid async void methods
+
         public void Show()
         {
+            // Invoke on UI thread
             Application.Current.Dispatcher.Invoke(() =>
             {
-                if (Application.Current.MainWindow is MainWindow mainWindow)
+                // When application is exitting, the Application.Current will be null
+                if (Application.Current?.MainWindow is MainWindow mainWindow)
                 {
                     // 📌 Remove DWM Cloak (Make the window visible normally)
                     Win32Helper.DWMSetCloakForWindow(mainWindow, false);
 
-                    // 📌 Restore UI elements
-                    mainWindow.ClockPanel.Visibility = Visibility.Visible;
-                    //mainWindow.SearchIcon.Visibility = Visibility.Visible;
-                    SearchIconVisibility = Visibility.Visible;
-                }
+                    // Set clock and search icon opacity
+                    var opacity = Settings.UseAnimation ? 0.0 : 1.0;
+                    ClockPanelOpacity = opacity;
+                    SearchIconOpacity = opacity;
 
-                // Update WPF properties
-                MainWindowVisibility = Visibility.Visible;
-                MainWindowOpacity = 1;
-                MainWindowVisibilityStatus = true;
-                VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
-
-                if (StartWithEnglishMode)
-                {
-                    Win32Helper.SwitchToEnglishKeyboardLayout(true);
+                    // Set clock and search icon visibility
+                    ClockPanelVisibility = string.IsNullOrEmpty(QueryText) ? Visibility.Visible : Visibility.Collapsed;
+                    if (PluginIconSource != null)
+                    {
+                        SearchIconOpacity = 0.0;
+                    }
+                    else
+                    {
+                        SearchIconVisibility = Visibility.Visible;
+                    }
                 }
-            });
+            }, DispatcherPriority.Render);
+
+            // Update WPF properties
+            MainWindowVisibility = Visibility.Visible;
+            MainWindowVisibilityStatus = true;
+            VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
+
+            // Switch keyboard layout
+            if (StartWithEnglishMode)
+            {
+                Win32Helper.SwitchToEnglishKeyboardLayout(true);
+            }
         }
-
-#pragma warning disable VSTHRD100 // Avoid async void methods
 
         public async void Hide()
         {
@@ -1501,62 +1543,62 @@ namespace Flow.Launcher.ViewModel
                 SelectedResults = Results;
             }
 
-            // 📌 Immediately apply text reset + force UI update
-            if (Settings.LastQueryMode == LastQueryMode.Empty)
-            {
-                ChangeQueryText(string.Empty);
-                await Task.Delay(1); // Wait for one frame to ensure UI reflects changes
-                Application.Current.Dispatcher.Invoke(Application.Current.MainWindow.UpdateLayout); // Force UI update
-            }
-
             switch (Settings.LastQueryMode)
             {
+                case LastQueryMode.Empty:
+                    await ChangeQueryTextAsync(string.Empty);
+                    break;
                 case LastQueryMode.Preserved:
                 case LastQueryMode.Selected:
-                    LastQuerySelected = (Settings.LastQueryMode == LastQueryMode.Preserved);
+                    LastQuerySelected = Settings.LastQueryMode == LastQueryMode.Preserved;
                     break;
-
                 case LastQueryMode.ActionKeywordPreserved:
                 case LastQueryMode.ActionKeywordSelected:
                     var newQuery = _lastQuery.ActionKeyword;
+
                     if (!string.IsNullOrEmpty(newQuery))
                         newQuery += " ";
-                    ChangeQueryText(newQuery);
+                    await ChangeQueryTextAsync(newQuery);
 
                     if (Settings.LastQueryMode == LastQueryMode.ActionKeywordSelected)
                         LastQuerySelected = false;
                     break;
             }
 
-            if (Application.Current.MainWindow is MainWindow mainWindow)
+            // Invoke on UI thread
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                // 📌 Set Opacity of icon and clock to 0 and apply Visibility.Hidden
-                Application.Current.Dispatcher.Invoke(() =>
+                // When application is exitting, the Application.Current will be null
+                if (Application.Current?.MainWindow is MainWindow mainWindow)
                 {
-                    mainWindow.ClockPanel.Opacity = 0;
-                    mainWindow.SearchIcon.Opacity = 0;
-                    mainWindow.ClockPanel.Visibility = Visibility.Hidden;
-                    //mainWindow.SearchIcon.Visibility = Visibility.Hidden;
+                    // Set clock and search icon opacity
+                    var opacity = Settings.UseAnimation ? 0.0 : 1.0;
+                    ClockPanelOpacity = opacity;
+                    SearchIconOpacity = opacity;
+
+                    // Set clock and search icon visibility
+                    ClockPanelVisibility = Visibility.Hidden;
                     SearchIconVisibility = Visibility.Hidden;
 
                     // Force UI update
                     mainWindow.ClockPanel.UpdateLayout();
                     mainWindow.SearchIcon.UpdateLayout();
-                }, DispatcherPriority.Render);
 
-                // 📌 Apply DWM Cloak (Completely hide the window)
-                Win32Helper.DWMSetCloakForWindow(mainWindow, true);
-            }
+                    // 📌 Apply DWM Cloak (Completely hide the window)
+                    Win32Helper.DWMSetCloakForWindow(mainWindow, true);
+                }
+            }, DispatcherPriority.Render);
 
+            // Switch keyboard layout
             if (StartWithEnglishMode)
             {
                 Win32Helper.RestorePreviousKeyboardLayout();
             }
 
+            // Delay for a while to make sure clock will not flicker
             await Task.Delay(50);
 
             // Update WPF properties
-            //MainWindowOpacity = 0;
             MainWindowVisibilityStatus = false;
             MainWindowVisibility = Visibility.Collapsed;
             VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = false });
