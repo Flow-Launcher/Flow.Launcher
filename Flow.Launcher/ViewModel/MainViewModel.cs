@@ -1276,8 +1276,7 @@ namespace Flow.Launcher.ViewModel
                     // TODO: Remove debug codes.
                     System.Diagnostics.Debug.WriteLine($"!!!{plugin.Metadata.Name} Waiting {plugin.Metadata.SearchDelay} ms");
 
-                    // TODO: Remove debug codes.
-                    await Task.Delay(plugin.Metadata.SearchDelay * 60, token);
+                    await Task.Delay(plugin.Metadata.SearchDelay, token);
 
                     // TODO: Remove debug codes.
                     System.Diagnostics.Debug.WriteLine($"!!!{plugin.Metadata.Name} Waited {plugin.Metadata.SearchDelay} ms");
