@@ -27,7 +27,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
-        public Dictionary<string, Plugin> Plugins { get; set; } = new Dictionary<string, Plugin>();
+        private Dictionary<string, Plugin> Plugins { get; set; } = new();
 
         public void UpdatePluginSettings(List<PluginMetadata> metadatas)
         {
@@ -66,6 +66,21 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                     };
                 }
             }
+        }
+
+        public Plugin GetPluginSettings(string id)
+        {
+            if (Plugins.TryGetValue(id, out var plugin))
+            {
+                return plugin;
+    }
+            return null;
+        }
+
+        public Plugin RemovePluginSettings(string id)
+        {
+            Plugins.Remove(id, out var plugin);
+            return plugin;
         }
     }
 

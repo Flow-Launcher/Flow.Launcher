@@ -622,7 +622,7 @@ namespace Flow.Launcher.Core.Plugin
                     API.ShowMsg(API.GetTranslation("failedToRemovePluginCacheTitle"),
                         string.Format(API.GetTranslation("failedToRemovePluginCacheMessage"), plugin.Name));
                 }
-                Settings.Plugins.Remove(plugin.ID);
+                Settings.RemovePluginSettings(plugin.ID);
                 AllPlugins.RemoveAll(p => p.Metadata.ID == plugin.ID);
             }
 
