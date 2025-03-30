@@ -486,7 +486,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     [RelayCommand]
     private void OpenThemesFolder()
     {
-        App.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Themes));
+        App.API.OpenDirectory(DataLocation.ThemesDirectory);
     }
 
     [RelayCommand]

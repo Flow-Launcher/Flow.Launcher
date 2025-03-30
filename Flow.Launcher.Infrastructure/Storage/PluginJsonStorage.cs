@@ -13,7 +13,7 @@ namespace Flow.Launcher.Infrastructure.Storage
             // C# related, add python related below
             var dataType = typeof(T);
             AssemblyName = dataType.Assembly.GetName().Name;
-            DirectoryPath = Path.Combine(DataLocation.DataDirectory(), DirectoryName, Constant.Plugins, AssemblyName);
+            DirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, AssemblyName);
             Helper.ValidateDirectory(DirectoryPath);
 
             FilePath = Path.Combine(DirectoryPath, $"{dataType.Name}{FileSuffix}");
@@ -22,14 +22,6 @@ namespace Flow.Launcher.Infrastructure.Storage
         public PluginJsonStorage(T data) : this()
         {
             Data = data;
-        }
-
-        public void DeleteDirectory()
-        {
-            if (Directory.Exists(DirectoryPath))
-            {
-                Directory.Delete(DirectoryPath, true);
-            }
         }
     }
 }

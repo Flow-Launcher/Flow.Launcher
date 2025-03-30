@@ -16,7 +16,7 @@ namespace Flow.Launcher.Infrastructure.Storage
         protected T? Data;
 
         // need a new directory name
-        public const string DirectoryName = "Settings";
+        public const string DirectoryName = Constant.Settings;
         public const string FileSuffix = ".json";
 
         protected string FilePath { get; init; } = null!;
