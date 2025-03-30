@@ -159,7 +159,7 @@ namespace Flow.Launcher.ViewModel
             };
             _selectedResults = Results;
 
-            Results.PropertyChanged += (_, args) =>
+            Results.PropertyChanged += (o, args) =>
             {
                 switch (args.PropertyName)
                 {
@@ -171,7 +171,7 @@ namespace Flow.Launcher.ViewModel
                 }
             };
 
-            History.PropertyChanged += (_, args) =>
+            History.PropertyChanged += (o, args) =>
             {
                 switch (args.PropertyName)
                 {
@@ -298,7 +298,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (QueryResultsSelected())
             {
-                // When we are requerying, we should not delay the query
+                // When we are requiring, we should not delay the query
                 _ = QueryResultsAsync(false, isReQuery: true);
             }
         }
@@ -306,7 +306,7 @@ namespace Flow.Launcher.ViewModel
         public void ReQuery(bool reselect)
         {
             BackToQueryResults();
-            // When we are requerying, we should not delay the query
+            // When we are requiring, we should not delay the query
             _ = QueryResultsAsync(false, isReQuery: true, reSelect: reselect);
         }
 
@@ -315,7 +315,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (_history.Items.Count > 0)
             {
-                ChangeQueryText(_history.Items[^lastHistoryIndex].Query.ToString());
+                ChangeQueryText(_history.Items[^lastHistoryIndex].Query);
                 if (lastHistoryIndex < _history.Items.Count)
                 {
                     lastHistoryIndex++;
@@ -328,7 +328,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (_history.Items.Count > 0)
             {
-                ChangeQueryText(_history.Items[^lastHistoryIndex].Query.ToString());
+                ChangeQueryText(_history.Items[^lastHistoryIndex].Query);
                 if (lastHistoryIndex > 1)
                 {
                     lastHistoryIndex--;
@@ -660,7 +660,7 @@ namespace Flow.Launcher.ViewModel
             }
             else if (isReQuery)
             {
-                // When we are requerying, we should not delay the query
+                // When we are requiring, we should not delay the query
                 await QueryAsync(false, isReQuery: true);
             }
 
@@ -753,7 +753,7 @@ namespace Flow.Launcher.ViewModel
         public Visibility ProgressBarVisibility { get; set; }
         public Visibility MainWindowVisibility { get; set; }
         
-        // This is to be used for determining the visibility status of the mainwindow instead of MainWindowVisibility
+        // This is to be used for determining the visibility status of the main window instead of MainWindowVisibility
         // because it is more accurate and reliable representation than using Visibility as a condition check
         public bool MainWindowVisibilityStatus { get; set; } = true;
 
@@ -1071,9 +1071,7 @@ namespace Flow.Launcher.ViewModel
 
             if (selected != null) // SelectedItem returns null if selection is empty.
             {
-                List<Result> results;
-
-                results = PluginManager.GetContextMenusForPlugin(selected);
+                var results = PluginManager.GetContextMenusForPlugin(selected);
                 results.Add(ContextMenuTopMost(selected));
                 results.Add(ContextMenuPluginInfo(selected.PluginID));
 
@@ -1227,16 +1225,16 @@ namespace Flow.Launcher.ViewModel
                 TaskContinuationOptions.NotOnCanceled,
                 TaskScheduler.Default);
 
-            // plugins is ICollection, meaning LINQ will get the Count and preallocate Array
+            // plugins are ICollection, meaning LINQ will get the Count and preallocate Array
 
             var tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
             {
-                false => QueryTaskAsync(plugin, searchDelay, reSelect, _updateSource.Token),
+                false => QueryTaskAsync(plugin, _updateSource.Token),
                 true => Task.CompletedTask
             }).ToArray();
 
             // TODO: Remove debug codes.
-            System.Diagnostics.Debug.Write($"!!!Querying {query.RawQuery}: search dalay {searchDelay}");
+            System.Diagnostics.Debug.Write($"!!!Querying {query.RawQuery}: search delay {searchDelay}");
             foreach (var plugin in plugins)
             {
                 if (!plugin.Metadata.Disabled)
@@ -1269,7 +1267,7 @@ namespace Flow.Launcher.ViewModel
             }
 
             // Local function
-            async Task QueryTaskAsync(PluginPair plugin, bool searchDelay, bool reSelect, CancellationToken token)
+            async Task QueryTaskAsync(PluginPair plugin, CancellationToken token)
             {
                 if (searchDelay)
                 {
@@ -1623,7 +1621,7 @@ namespace Flow.Launcher.ViewModel
         }
 
         /// <summary>
-        /// To avoid deadlock, this method should not called from main thread
+        /// To avoid deadlock, this method should not be called from main thread
         /// </summary>
         public void UpdateResultView(ICollection<ResultsForUpdate> resultsForUpdates)
         {
