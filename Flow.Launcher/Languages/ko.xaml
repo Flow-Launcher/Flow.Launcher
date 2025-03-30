@@ -37,7 +37,7 @@
     <system:String x:Key="GameMode">게임 모드</system:String>
     <system:String x:Key="GameModeToolTip">단축키 사용을 일시중단합니다.</system:String>
     <system:String x:Key="PositionReset">창 위치 초기화</system:String>
-    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">검색어 입력</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">설정</system:String>
@@ -87,7 +87,7 @@
     <system:String x:Key="autoUpdates">자동 업데이트</system:String>
     <system:String x:Key="select">선택</system:String>
     <system:String x:Key="hideOnStartup">시작 시 Flow Launcher 숨김</system:String>
-    <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
+    <system:String x:Key="hideOnStartupToolTip">Flowr Launcher가 트레이에 숨겨진 상태로 시작합니다.</system:String>
     <system:String x:Key="hideNotifyIcon">트레이 아이콘 숨기기</system:String>
     <system:String x:Key="hideNotifyIconToolTip">트레이에서 아이콘을 숨길 경우, 검색창 우클릭으로 설정창을 열 수 있습니다.</system:String>
     <system:String x:Key="querySearchPrecision">쿼리 검색 정밀도</system:String>
@@ -193,17 +193,17 @@
     <system:String x:Key="AnimationSpeedCustom">사용자 정의</system:String>
     <system:String x:Key="Clock">시계</system:String>
     <system:String x:Key="Date">날짜</system:String>
-    <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropType">배경 효과 타입</system:String>
     <system:String x:Key="BackdropTypesNone">없음</system:String>
-    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">아크릴</system:String>
     <system:String x:Key="BackdropTypesMica">Mica</system:String>
     <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
     <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
-    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
-    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
-    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
-    <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
+    <system:String x:Key="ShowPlaceholder">안내 텍스트 표시</system:String>
+    <system:String x:Key="ShowPlaceholderTip">입력 내용이 없을때 입력창 위치를 알 수 있는 텍스트를 표시합니다</system:String>
+    <system:String x:Key="PlaceholderText">안내 텍스트</system:String>
+    <system:String x:Key="PlaceholderTextTip">안내 텍스트를 변경하세요. 아무것도 입력하지 않으면 다음을 사용합니다: &quot;{0}&quot;</system:String>
     <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
 
