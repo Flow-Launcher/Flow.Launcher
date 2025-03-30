@@ -37,7 +37,7 @@
     <system:String x:Key="GameMode">Mode jeu</system:String>
     <system:String x:Key="GameModeToolTip">Suspend l'utilisation des raccourcis claviers.</system:String>
     <system:String x:Key="PositionReset">Réinitialiser la position</system:String>
-    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Tapez ici pour rechercher</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Paramètres</system:String>
@@ -129,8 +129,8 @@
     <system:String x:Key="plugin_uninstall">Désinstaller</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Échec de la suppression des paramètres du plugin</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins : {0} - Échec de la suppression des fichiers de configuration des plugins, veuillez les supprimer manuellement</system:String>
-    <system:String x:Key="failedToRemovePluginCacheTitle">Fail to remove plugin cache</system:String>
-    <system:String x:Key="failedToRemovePluginCacheMessage">Plugins: {0} - Fail to remove plugin cache files, please remove them manually</system:String>
+    <system:String x:Key="failedToRemovePluginCacheTitle">Échec de la suppression du cache du plugin</system:String>
+    <system:String x:Key="failedToRemovePluginCacheMessage">Plugins : {0} - Échec de la suppression des fichiers cache des plugins, veuillez les supprimer manuellement</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Magasin des Plugins</system:String>
@@ -200,9 +200,9 @@
     <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
     <system:String x:Key="TypeIsDarkToolTip">Ce thème prend en charge deux modes (clair/sombre).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Ce thème prend en charge l'arrière-plan flou et transparent.</system:String>
-    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
-    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
-    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
+    <system:String x:Key="ShowPlaceholder">Afficher l'espace réservé</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Afficher un espace réservé lorsque la requête est vide</system:String>
+    <system:String x:Key="PlaceholderText">Texte de l'espace réservé</system:String>
     <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
     <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
