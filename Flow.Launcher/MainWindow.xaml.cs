@@ -105,9 +105,6 @@ namespace Flow.Launcher
 
         private async void OnLoaded(object sender, RoutedEventArgs _)
         {
-            // Setup search text box reactiveness
-            SetupSearchTextBoxReactiveness(_settings.SearchQueryResultsWithDelay);
-
             // Check first launch
             if (_settings.FirstLaunch)
             {
@@ -124,6 +121,9 @@ namespace Flow.Launcher
                 var welcomeWindow = new WelcomeWindow();
                 welcomeWindow.Show();
             }
+
+            // Initialize search delay
+            SetupSearchTextBoxReactiveness(_settings.SearchQueryResultsWithDelay);
 
             // Initialize place holder
             SetupPlaceholderText();
@@ -167,7 +167,7 @@ namespace Flow.Launcher
 
             // Reset preview
             _viewModel.ResetPreview();
-            
+
             // Since the default main window visibility is visible, so we need set focus during startup
             QueryTextBox.Focus();
 
@@ -1060,7 +1060,7 @@ namespace Flow.Launcher
                 be.UpdateSource();
             }
         }
-        
+
         private void QueryTextBox_OnPreviewDragOver(object sender, DragEventArgs e)
         {
             e.Handled = true;
