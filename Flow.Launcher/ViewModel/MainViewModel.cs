@@ -1464,10 +1464,10 @@ namespace Flow.Launcher.ViewModel
 
         public void Show()
         {
-            // Invoke on UI thread
-            Application.Current.Dispatcher.Invoke(() =>
+            // When application is exiting, the Application.Current will be null
+            Application.Current?.Dispatcher.Invoke(() =>
             {
-                // When application is exitting, the Application.Current will be null
+                // When application is exiting, the Application.Current will be null
                 if (Application.Current?.MainWindow is MainWindow mainWindow)
                 {
                     // 📌 Remove DWM Cloak (Make the window visible normally)
@@ -1539,10 +1539,10 @@ namespace Flow.Launcher.ViewModel
                     break;
             }
 
-            // Invoke on UI thread
-            Application.Current.Dispatcher.Invoke(() =>
+            // When application is exiting, the Application.Current will be null
+            Application.Current?.Dispatcher.Invoke(() =>
             {
-                // When application is exitting, the Application.Current will be null
+                // When application is exiting, the Application.Current will be null
                 if (Application.Current?.MainWindow is MainWindow mainWindow)
                 {
                     // Set clock and search icon opacity
