@@ -129,6 +129,8 @@
     <system:String x:Key="plugin_uninstall">Désinstaller</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Échec de la suppression des paramètres du plugin</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins : {0} - Échec de la suppression des fichiers de configuration des plugins, veuillez les supprimer manuellement</system:String>
+    <system:String x:Key="failedToRemovePluginCacheTitle">Fail to remove plugin cache</system:String>
+    <system:String x:Key="failedToRemovePluginCacheMessage">Plugins: {0} - Fail to remove plugin cache files, please remove them manually</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Magasin des Plugins</system:String>
