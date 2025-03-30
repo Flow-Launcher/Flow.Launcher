@@ -129,6 +129,8 @@
     <system:String x:Key="plugin_uninstall">Deinstallieren</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Plug-in-Einstellungen können nicht entfernt werden</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plug-ins: {0} - Plug-in-Einstellungsdateien können nicht entfernt werden, bitte entfernen Sie diese manuell</system:String>
+    <system:String x:Key="failedToRemovePluginCacheTitle">Fail to remove plugin cache</system:String>
+    <system:String x:Key="failedToRemovePluginCacheMessage">Plugins: {0} - Fail to remove plugin cache files, please remove them manually</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Plug-in-Store</system:String>
