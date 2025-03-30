@@ -51,7 +51,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                         settings.Version = metadata.Version;
                     }
                     settings.DefaultActionKeywords = metadata.ActionKeywords; // metadata provides default values
-                    settings.DefaultSearchDelay = metadata.SearchDelay; // metadata provides default values
+                    settings.DefaultSearchDelaySpeed = metadata.SearchDelaySpeed; // metadata provides default values
 
                     // update metadata values with settings
                     if (settings.ActionKeywords?.Count > 0)
@@ -66,7 +66,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                     }
                     metadata.Disabled = settings.Disabled;
                     metadata.Priority = settings.Priority;
-                    metadata.SearchDelay = settings.SearchDelay;
+                    metadata.SearchDelaySpeed = settings.SearchDelaySpeed;
                 }
                 else
                 {
@@ -80,8 +80,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                         ActionKeywords = metadata.ActionKeywords, // use default value
                         Disabled = metadata.Disabled,
                         Priority = metadata.Priority,
-                        DefaultSearchDelay = metadata.SearchDelay, // metadata provides default values
-                        SearchDelay = metadata.SearchDelay, // use default value
+                        DefaultSearchDelaySpeed = metadata.SearchDelaySpeed, // metadata provides default values
+                        SearchDelaySpeed = metadata.SearchDelaySpeed, // use default value
                     };
                 }
             }
@@ -120,9 +120,10 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public int Priority { get; set; }
 
         [JsonIgnore]
-        public int DefaultSearchDelay { get; set; }
+        public SearchDelaySpeeds? DefaultSearchDelaySpeed { get; set; }
 
-        public int SearchDelay { get; set; }
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public SearchDelaySpeeds? SearchDelaySpeed { get; set; }
 
         /// <summary>
         /// Used only to save the state of the plugin in settings

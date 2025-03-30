@@ -99,9 +99,10 @@ namespace Flow.Launcher.Plugin
         public bool HideActionKeywordPanel { get; set; }
 
         /// <summary>
-        /// Plugin search delay in ms.
+        /// Plugin search delay speed. Null means use default search delay.
         /// </summary>
-        public int SearchDelay { get; set; }
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public SearchDelaySpeeds? SearchDelaySpeed { get; set; } = null;
 
         /// <summary>
         /// Plugin icon path.

@@ -1,14 +1,11 @@
 ﻿using System.Linq;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure.Image;
-using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Resources.Controls;
 
@@ -63,6 +60,7 @@ namespace Flow.Launcher.ViewModel
             }
             set => _image = value;
         }
+
         public bool PluginState
         {
             get => !PluginPair.Metadata.Disabled;
@@ -72,6 +70,7 @@ namespace Flow.Launcher.ViewModel
                 PluginSettingsObject.Disabled = !value;
             }
         }
+
         public bool IsExpanded
         {
             get => _isExpanded;
@@ -84,16 +83,13 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public IEnumerable<int> PluginSearchDelayRange { get; } =
-            Ioc.Default.GetRequiredService<Settings>().PluginSearchDelayRange;
-
-        public int PluginSearchDelay
+        public SearchDelaySpeeds? PluginSearchDelay
         {
-            get => PluginPair.Metadata.SearchDelay;
+            get => PluginPair.Metadata.SearchDelaySpeed;
             set
             {
-                PluginPair.Metadata.SearchDelay = value;
-                PluginSettingsObject.SearchDelay = value;
+                PluginPair.Metadata.SearchDelaySpeed = value;
+                PluginSettingsObject.SearchDelaySpeed = value;
             }
         }
 
@@ -131,6 +127,7 @@ namespace Flow.Launcher.ViewModel
             PluginPair.Metadata.AvgQueryTime + "ms";
         public string ActionKeywordsText => string.Join(Query.ActionKeywordSeparator, PluginPair.Metadata.ActionKeywords);
         public int Priority => PluginPair.Metadata.Priority;
+        public string SearchDelaySpeedText => PluginPair.Metadata.SearchDelaySpeed == null ? App.API.GetTranslation("default") : App.API.GetTranslation($"SearchDelaySpeed{PluginPair.Metadata.SearchDelaySpeed}");
         public Infrastructure.UserSettings.Plugin PluginSettingsObject{ get; init; }
 
         public void OnActionKeywordsChanged()
@@ -178,6 +175,13 @@ namespace Flow.Launcher.ViewModel
         {
             ActionKeywords changeKeywordsWindow = new ActionKeywords(this);
             changeKeywordsWindow.ShowDialog();
+        }
+
+        [RelayCommand]
+        private void SetSearchDelaySpeed()
+        {
+            /*SearchDelaySpeedWindow searchDelaySpeedWindow = new SearchDelaySpeedWindow(this);
+            searchDelaySpeedWindow.ShowDialog();*/
         }
     }
 }

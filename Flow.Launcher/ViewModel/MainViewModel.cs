@@ -1271,13 +1271,24 @@ namespace Flow.Launcher.ViewModel
             {
                 if (searchDelay)
                 {
-                    // TODO: Remove debug codes.
-                    System.Diagnostics.Debug.WriteLine($"!!!{plugin.Metadata.Name} Waiting {plugin.Metadata.SearchDelay} ms");
+                    var searchDelaySpeed = plugin.Metadata.SearchDelaySpeed ?? Settings.SearchDelaySpeed;
+                    var searchDelayTime = searchDelaySpeed switch
+                    {
+                        SearchDelaySpeeds.Slow => 250,
+                        SearchDelaySpeeds.ModeratelySlow => 200,
+                        SearchDelaySpeeds.Medium => 150,
+                        SearchDelaySpeeds.ModeratelyFast => 100,
+                        SearchDelaySpeeds.Fast => 50,
+                        _ => 150
+                    };
 
-                    await Task.Delay(plugin.Metadata.SearchDelay, token);
+                    // TODO: Remove debug codes.
+                    System.Diagnostics.Debug.WriteLine($"!!!{plugin.Metadata.Name} Waiting {searchDelayTime} ms");
+
+                    await Task.Delay(searchDelayTime, token);
 
                     // TODO: Remove debug codes.
-                    System.Diagnostics.Debug.WriteLine($"!!!{plugin.Metadata.Name} Waited {plugin.Metadata.SearchDelay} ms");
+                    System.Diagnostics.Debug.WriteLine($"!!!{plugin.Metadata.Name} Waited {searchDelayTime} ms");
 
                     if (token.IsCancellationRequested)
                         return;

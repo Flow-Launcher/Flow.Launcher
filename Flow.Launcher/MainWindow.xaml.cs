@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Media;
-using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -64,9 +63,6 @@ namespace Flow.Launcher
         private const double DefaultRightMargin = 66; //* this value from base.xaml
         private bool _isClockPanelAnimating = false;
 
-        // Search Delay
-        private IDisposable _reactiveSubscription;
-
         // IDisposable
         private bool _disposed = false;
 
@@ -121,9 +117,6 @@ namespace Flow.Launcher
                 var welcomeWindow = new WelcomeWindow();
                 welcomeWindow.Show();
             }
-
-            // Initialize search delay
-            SetupSearchTextBoxReactiveness(_settings.SearchQueryResultsWithDelay, _settings.SearchDelay);
 
             // Initialize place holder
             SetupPlaceholderText();
@@ -266,15 +259,6 @@ namespace Flow.Launcher
                         break;
                     case nameof(Settings.KeepMaxResults):
                         SetupResizeMode();
-                        break;
-                    case nameof(Settings.SearchQueryResultsWithDelay):
-                        SetupSearchTextBoxReactiveness(_settings.SearchQueryResultsWithDelay, _settings.SearchDelay);
-                        break;
-                    case nameof(Settings.SearchDelaySpeed):
-                        if (_settings.SearchQueryResultsWithDelay)
-                        {
-                            SetupSearchTextBoxReactiveness(_settings.SearchQueryResultsWithDelay, _settings.SearchDelay);
-                        }
                         break;
                 }
             };
@@ -1126,46 +1110,11 @@ namespace Flow.Launcher
         
         #region Search Delay
 
-        // Edited from: https://github.com/microsoft/PowerToys
-
-        private void SetupSearchTextBoxReactiveness(bool showResultsWithDelay, int searchDelay)
-        {
-            if (_reactiveSubscription != null)
-            {
-                _reactiveSubscription.Dispose();
-                _reactiveSubscription = null;
-            }
-
-            QueryTextBox.TextChanged -= QueryTextBox_TextChanged1;
-
-            if (showResultsWithDelay)
-            {
-                _reactiveSubscription = Observable.FromEventPattern<TextChangedEventHandler, TextChangedEventArgs>(
-                    conversion => (sender, eventArg) => conversion(sender, eventArg),
-                    add => QueryTextBox.TextChanged += add,
-                    remove => QueryTextBox.TextChanged -= remove)
-                    // TODO: Remove debug codes.
-                    .Throttle(TimeSpan.FromMilliseconds(_settings.SearchDelay * 10))
-                    .Do(@event => Dispatcher.Invoke(() => PerformSearchQuery(true, (TextBox)@event.Sender)))
-                    .Subscribe();
-            }
-            else
-            {
-                QueryTextBox.TextChanged += QueryTextBox_TextChanged1;
-            }
-        }
-
         private void QueryTextBox_TextChanged1(object sender, TextChangedEventArgs e)
         {
             var textBox = (TextBox)sender;
-            PerformSearchQuery(false, textBox);
-        }
-
-        private void PerformSearchQuery(bool searchDelay, TextBox textBox)
-        {
-            var text = textBox.Text;
-            _viewModel.QueryText = text;
-            _viewModel.Query(searchDelay);
+            _viewModel.QueryText = textBox.Text;
+            _viewModel.Query(_settings.SearchQueryResultsWithDelay);
         }
 
         #endregion
@@ -1180,7 +1129,6 @@ namespace Flow.Launcher
                 {
                     _hwndSource?.Dispose();
                     _notifyIcon?.Dispose();
-                    _reactiveSubscription?.Dispose();
                 }
 
                 _disposed = true;

@@ -330,8 +330,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 OnPropertyChanged();
             }
         }
-
+        
         SearchDelaySpeeds searchDelaySpeed { get; set; } = SearchDelaySpeeds.Medium;
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public SearchDelaySpeeds SearchDelaySpeed
         {
             get => searchDelaySpeed;
@@ -341,23 +342,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 OnPropertyChanged();
             }
         }
-
-        [JsonIgnore]
-        public int SearchDelay => SearchDelaySpeed switch
-        {
-            SearchDelaySpeeds.Slow => 250,
-            SearchDelaySpeeds.ModeratelySlow => 200,
-            SearchDelaySpeeds.Medium => 150,
-            SearchDelaySpeeds.ModeratelyFast => 100,
-            SearchDelaySpeeds.Fast => 50,
-            _ => 150
-        };
-
-        [JsonIgnore]
-        public List<int> PluginSearchDelayRange { get; } = new()
-        {
-            0, 30, 60, 90, 120, 150
-        };
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public SearchWindowScreens SearchWindowScreen { get; set; } = SearchWindowScreens.Cursor;
@@ -520,14 +504,5 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         Acrylic,
         Mica,
         MicaAlt
-    }
-
-    public enum SearchDelaySpeeds
-    {
-        Slow,
-        ModeratelySlow,
-        Medium,
-        ModeratelyFast,
-        Fast
     }
 }

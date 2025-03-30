@@ -32,18 +32,18 @@
                 VerticalAlignment="Center"
                 DockPanel.Dock="Left"
                 Style="{DynamicResource SettingTitleLabel}"
-                Text="{DynamicResource searchDelayTime}" />
+                Text="{DynamicResource pluginSearchDelaySpeed}" />
             <!--  Here Margin="0 -4.5 0 -4.5" is to remove redundant top bottom margin from Margin="{StaticResource SettingPanelMargin}"  -->
-            <ComboBox
+            <Button
                 Width="100"
                 Margin="0 -4.5 0 -4.5"
                 HorizontalAlignment="Right"
+                Command="{Binding SetSearchDelaySpeedCommand}"
+                Content="{Binding SearchDelaySpeedText}"
                 Cursor="Hand"
                 DockPanel.Dock="Right"
                 FontWeight="Bold"
-                ItemsSource="{Binding PluginSearchDelayRange}"
-                SelectedItem="{Binding PluginSearchDelay}"
-                ToolTip="{DynamicResource pluginSearchDelayTooltip}" />
+                ToolTip="{DynamicResource pluginSearchDelaySpeedTooltip}" />
         </DockPanel>
     </Border>
 </UserControl>

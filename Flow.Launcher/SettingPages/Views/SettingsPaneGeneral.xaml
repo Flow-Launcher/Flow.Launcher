@@ -184,9 +184,9 @@
                 </cc:Card>
 
                 <cc:Card
-                    Title="{DynamicResource searchDelayTime}"
+                    Title="{DynamicResource searchDelaySpeed}"
                     Icon="&#xE916;"
-                    Sub="{DynamicResource searchDelayTimeToolTip}">
+                    Sub="{DynamicResource searchDelaySpeedToolTip}">
                     <ComboBox
                         MaxWidth="200"
                         DisplayMemberPath="Display"
