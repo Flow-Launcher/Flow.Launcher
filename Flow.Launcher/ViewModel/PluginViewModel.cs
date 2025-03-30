@@ -131,7 +131,7 @@ namespace Flow.Launcher.ViewModel
             PluginPair.Metadata.AvgQueryTime + "ms";
         public string ActionKeywordsText => string.Join(Query.ActionKeywordSeparator, PluginPair.Metadata.ActionKeywords);
         public int Priority => PluginPair.Metadata.Priority;
-        public Infrastructure.UserSettings.Plugin PluginSettingsObject { get; set; }
+        public Infrastructure.UserSettings.Plugin PluginSettingsObject{ get; init; }
 
         public void OnActionKeywordsChanged()
         {

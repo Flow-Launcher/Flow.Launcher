@@ -6,8 +6,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
     public class PluginsSettings : BaseModel
     {
         private string pythonExecutablePath = string.Empty;
-        public string PythonExecutablePath {
-            get { return pythonExecutablePath; }
+        public string PythonExecutablePath
+        {
+            get => pythonExecutablePath;
             set
             {
                 pythonExecutablePath = value;
@@ -18,7 +19,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         private string nodeExecutablePath = string.Empty;
         public string NodeExecutablePath
         {
-            get { return nodeExecutablePath; }
+            get => nodeExecutablePath;
             set 
             {
                 nodeExecutablePath = value;
@@ -67,10 +68,13 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
     }
+
     public class Plugin
     {
         public string ID { get; set; }
+
         public string Name { get; set; }
+
         public string Version { get; set; }
         public List<string> ActionKeywords { get; set; } // a reference of the action keywords from plugin manager
         public int Priority { get; set; }

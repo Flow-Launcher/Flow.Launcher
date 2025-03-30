@@ -50,7 +50,7 @@ namespace Flow.Launcher.Core.Plugin
             return plugins;
         }
 
-        public static IEnumerable<PluginPair> DotNetPlugins(List<PluginMetadata> source)
+        private static IEnumerable<PluginPair> DotNetPlugins(List<PluginMetadata> source)
         {
             var erroredPlugins = new List<string>();
 
@@ -132,7 +132,7 @@ namespace Flow.Launcher.Core.Plugin
             return plugins;
         }
 
-        public static IEnumerable<PluginPair> ExecutablePlugins(IEnumerable<PluginMetadata> source)
+        private static IEnumerable<PluginPair> ExecutablePlugins(IEnumerable<PluginMetadata> source)
         {
             return source
                 .Where(o => o.Language.Equals(AllowedLanguage.Executable, StringComparison.OrdinalIgnoreCase))
@@ -146,7 +146,7 @@ namespace Flow.Launcher.Core.Plugin
                 });
         }
 
-        public static IEnumerable<PluginPair> ExecutableV2Plugins(IEnumerable<PluginMetadata> source)
+        private static IEnumerable<PluginPair> ExecutableV2Plugins(IEnumerable<PluginMetadata> source)
         {
             return source
                 .Where(o => o.Language.Equals(AllowedLanguage.ExecutableV2, StringComparison.OrdinalIgnoreCase))
