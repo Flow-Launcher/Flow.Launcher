@@ -126,7 +126,7 @@ namespace Flow.Launcher.Infrastructure
 
         public static bool IsForegroundWindow(Window window)
         {
-            return GetWindowHandle(window).Equals(PInvoke.GetForegroundWindow());
+            return IsForegroundWindow(GetWindowHandle(window));
         }
 
         internal static bool IsForegroundWindow(HWND handle)
