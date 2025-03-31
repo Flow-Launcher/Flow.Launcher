@@ -32,5 +32,5 @@
   "Website": "https://github.com/Flow-Launcher/Flow.Launcher",
   "ExecuteFileName": "Flow.Launcher.Plugin.WebSearch.dll",
   "IcoPath": "Images\\web_search.png",
-  "SearchDelay": 120
+  "SearchDelaySpeed": "Slow"
 }
