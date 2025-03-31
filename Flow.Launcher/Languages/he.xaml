@@ -206,7 +206,7 @@
     <system:String x:Key="Clock">שעון</system:String>
     <system:String x:Key="Date">תאריך</system:String>
     <system:String x:Key="BackdropType">סוג רקע</system:String>
-    <system:String x:Key="BackdropTypeDisabledToolTip">Backdrop supported starting from Windows 11 build 22000 and above</system:String>
+    <system:String x:Key="BackdropTypeDisabledToolTip">התמיכה ב-Backdrop קיימת החל מ-Windows 11 build 22000 ומעלה</system:String>
     <system:String x:Key="BackdropTypesNone">ללא</system:String>
     <system:String x:Key="BackdropTypesAcrylic">אקריליק</system:String>
     <system:String x:Key="BackdropTypesMica">מיקה</system:String>
