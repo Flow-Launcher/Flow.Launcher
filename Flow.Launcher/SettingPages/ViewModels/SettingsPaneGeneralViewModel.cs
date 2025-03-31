@@ -149,9 +149,14 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
 
     public SearchDelaySpeedData SearchDelaySpeed
     {
-        get => SearchDelaySpeeds.First(x => x.Value == Settings.SearchDelaySpeed);
+        get => SearchDelaySpeeds.FirstOrDefault(x => x.Value == Settings.SearchDelaySpeed) ?? 
+               SearchDelaySpeeds.FirstOrDefault(x => x.Value == SearchDelaySpeeds.Medium) ?? 
+               SearchDelaySpeeds.FirstOrDefault();
         set
         {
+            if (value == null)
+                return;
+                
             if (Settings.SearchDelaySpeed != value.Value)
             {
                 Settings.SearchDelaySpeed = value.Value;
