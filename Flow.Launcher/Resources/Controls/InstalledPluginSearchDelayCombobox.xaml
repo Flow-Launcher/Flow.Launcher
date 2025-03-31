@@ -1,0 +1,39 @@
+﻿<UserControl
+    x:Class="Flow.Launcher.Resources.Controls.InstalledPluginSearchDelayCombobox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="clr-namespace:Flow.Launcher.ViewModel"
+    d:DataContext="{d:DesignInstance viewModel:PluginViewModel}"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    mc:Ignorable="d">
+    <Border
+        Width="Auto"
+        Height="Auto"
+        Margin="0"
+        Padding="0"
+        BorderThickness="0"
+        CornerRadius="0">
+        <DockPanel>
+            <TextBlock Visibility="Collapsed"
+                Margin="0 0 8 0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                DockPanel.Dock="Left"
+                Text="{DynamicResource pluginSearchDelayTime}"
+                FontSize="13"
+                Foreground="{DynamicResource Color08B}" />
+            <ComboBox
+                x:Name="cbDelay"
+                Width="100"
+                HorizontalAlignment="Right"
+                DisplayMemberPath="Display"
+                SelectedValuePath="Value"
+                SelectionChanged="CbDelay_SelectionChanged"
+                DockPanel.Dock="Right"
+                ToolTip="{DynamicResource pluginSearchDelayTimeTooltip}" />
+        </DockPanel>
+    </Border>
+</UserControl>

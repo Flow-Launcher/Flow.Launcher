@@ -92,7 +92,7 @@
                         <!--#endregion-->
                         <!--
                         </Button>-->
-                        <StackPanel
+                        <StackPanel VerticalAlignment="Center"
                             x:Name="PriorityControl"
                             Orientation="Horizontal"
                             Visibility="{Binding DataContext.CurrentDisplayMode, 
@@ -116,11 +116,12 @@
                         <StackPanel
                             x:Name="SearchDelayControl"
                             Orientation="Horizontal"
+                            VerticalAlignment="Center"
                             Visibility="{Binding DataContext.CurrentDisplayMode, 
               RelativeSource={RelativeSource AncestorType=ListBox}, 
               Converter={StaticResource StringEqualityToVisibilityConverter}, 
               ConverterParameter=SearchDelay}">
-                            <cc:InstalledPluginSearchDelay
+                            <cc:InstalledPluginSearchDelayCombobox
                                 Margin="0 0 8 0" />
                         </StackPanel>
 
