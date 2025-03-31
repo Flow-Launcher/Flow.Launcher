@@ -206,7 +206,7 @@
     <system:String x:Key="Clock">Heure</system:String>
     <system:String x:Key="Date">Date</system:String>
     <system:String x:Key="BackdropType">Type d'arrière-plan</system:String>
-    <system:String x:Key="BackdropTypeDisabledToolTip">Backdrop supported starting from Windows 11 build 22000 and above</system:String>
+    <system:String x:Key="BackdropTypeDisabledToolTip">Arrière-plan pris en charge à partir de Windows 11 version 22000 et plus</system:String>
     <system:String x:Key="BackdropTypesNone">Aucun</system:String>
     <system:String x:Key="BackdropTypesAcrylic">Acrylique</system:String>
     <system:String x:Key="BackdropTypesMica">Mica</system:String>
