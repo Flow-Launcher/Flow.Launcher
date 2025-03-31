@@ -118,7 +118,7 @@ namespace Flow.Launcher.ViewModel
 
         public Visibility ActionKeywordsVisibility => PluginPair.Metadata.HideActionKeywordPanel ?
             Visibility.Collapsed : Visibility.Visible;
-        public string InitilizaTime => PluginPair.Metadata.InitTime + "ms";
+        public string InitializeTime => PluginPair.Metadata.InitTime + "ms";
         public string QueryTime => PluginPair.Metadata.AvgQueryTime + "ms";
         public string Version => App.API.GetTranslation("plugin_query_version") + " " + PluginPair.Metadata.Version;
         public string InitAndQueryTime =>

@@ -65,8 +65,8 @@
                     </StackPanel>
                     <StackPanel>
                         <TextBlock
+                            x:Name="tbSearchDelayTimeTips"
                             FontSize="14"
-                            Text="{DynamicResource searchDelayTime_tips}"
                             TextAlignment="Left"
                             TextWrapping="WrapWithOverflow" />
                     </StackPanel>
@@ -99,7 +99,7 @@
                             FontSize="14"
                             Text="{DynamicResource newSearchDelayTime}" />
                         <ComboBox
-                            x:Name="tbDelay"
+                            x:Name="cbDelay"
                             MaxWidth="200"
                             Margin="10 10 15 10"
                             HorizontalAlignment="Left"

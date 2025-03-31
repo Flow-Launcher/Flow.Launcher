@@ -19,6 +19,8 @@ public partial class SearchDelayTimeWindow : Window
 
     private void SearchDelayTimeWindow_OnLoaded(object sender, RoutedEventArgs e)
     {
+        tbSearchDelayTimeTips.Text = string.Format(App.API.GetTranslation("searchDelayTime_tips"),
+            App.API.GetTranslation("default"));
         tbOldSearchDelayTime.Text = _pluginViewModel.SearchDelayTimeText;
         var searchDelayTimes = DropdownDataGeneric<SearchDelayTime>.GetValues<SearchDelayTimeData>("SearchDelayTime");
         SearchDelayTimeData selected = null;
@@ -31,9 +33,9 @@ public partial class SearchDelayTimeWindow : Window
         // When _pluginViewModel.PluginSearchDelayTime equals null, we will select this
         searchDelayTimes.Insert(0, new SearchDelayTimeData { Display = App.API.GetTranslation("default"), LocalizationKey = "default" });
         selected ??= searchDelayTimes.FirstOrDefault();
-        tbDelay.ItemsSource = searchDelayTimes;
-        tbDelay.SelectedItem = selected;
-        tbDelay.Focus();
+        cbDelay.ItemsSource = searchDelayTimes;
+        cbDelay.SelectedItem = selected;
+        cbDelay.Focus();
     }
 
     private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
@@ -44,7 +46,7 @@ public partial class SearchDelayTimeWindow : Window
     private void btnDone_OnClick(object sender, RoutedEventArgs _)
     {
         // Update search delay time
-        var selected = tbDelay.SelectedItem as SearchDelayTimeData;
+        var selected = cbDelay.SelectedItem as SearchDelayTimeData;
         SearchDelayTime? changedValue = selected?.LocalizationKey != "default" ? selected.Value : null;
         _pluginViewModel.PluginSearchDelayTime = changedValue;
 
