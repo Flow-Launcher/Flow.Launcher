@@ -1230,15 +1230,6 @@ namespace Flow.Launcher.ViewModel
                 true => Task.CompletedTask
             }).ToArray();
 
-            foreach (var plugin in plugins)
-            {
-                if (!plugin.Metadata.Disabled)
-                {
-                    System.Diagnostics.Debug.Write($"{plugin.Metadata.Name}, ");
-                }
-            }
-            System.Diagnostics.Debug.Write("\n");
-
             try
             {
                 // Check the code, WhenAll will translate all type of IEnumerable or Collection to Array, so make an array at first
