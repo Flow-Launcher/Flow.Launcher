@@ -320,28 +320,10 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool LeaveCmdOpen { get; set; }
         public bool HideWhenDeactivated { get; set; } = true;
 
-        bool _searchQueryResultsWithDelay { get; set; }
-        public bool SearchQueryResultsWithDelay
-        {
-            get => _searchQueryResultsWithDelay;
-            set
-            {
-                _searchQueryResultsWithDelay = value;
-                OnPropertyChanged();
-            }
-        }
-        
-        SearchDelaySpeeds searchDelaySpeed { get; set; } = SearchDelaySpeeds.Medium;
+        public bool SearchQueryResultsWithDelay { get; set; }
+
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public SearchDelaySpeeds SearchDelaySpeed
-        {
-            get => searchDelaySpeed;
-            set
-            {
-                searchDelaySpeed = value;
-                OnPropertyChanged();
-            }
-        }
+        public SearchDelaySpeeds SearchDelaySpeed { get; set; } = SearchDelaySpeeds.Medium;
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public SearchWindowScreens SearchWindowScreen { get; set; } = SearchWindowScreens.Cursor;
