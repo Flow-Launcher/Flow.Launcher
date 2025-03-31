@@ -1150,9 +1150,6 @@ namespace Flow.Launcher.ViewModel
 
         private async Task QueryResultsAsync(bool searchDelay, bool isReQuery = false, bool reSelect = true)
         {
-            // TODO: Remove debug codes.
-            System.Diagnostics.Debug.WriteLine("!!!QueryResults");
-
             _updateSource?.Cancel();
 
             var query = ConstructQuery(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
@@ -1233,17 +1230,6 @@ namespace Flow.Launcher.ViewModel
                 true => Task.CompletedTask
             }).ToArray();
 
-            // TODO: Remove debug codes.
-            System.Diagnostics.Debug.Write($"!!!Querying {query.RawQuery}: search delay {searchDelay}");
-            foreach (var plugin in plugins)
-            {
-                if (!plugin.Metadata.Disabled)
-                {
-                    System.Diagnostics.Debug.Write($"{plugin.Metadata.Name}, ");
-                }
-            }
-            System.Diagnostics.Debug.Write("\n");
-
             try
             {
                 // Check the code, WhenAll will translate all type of IEnumerable or Collection to Array, so make an array at first
@@ -1281,13 +1267,7 @@ namespace Flow.Launcher.ViewModel
                         _ => 150
                     };
 
-                    // TODO: Remove debug codes.
-                    System.Diagnostics.Debug.WriteLine($"!!!{plugin.Metadata.Name} Waiting {searchDelayTime} ms");
-
                     await Task.Delay(searchDelayTime, token);
-
-                    // TODO: Remove debug codes.
-                    System.Diagnostics.Debug.WriteLine($"!!!{plugin.Metadata.Name} Waited {searchDelayTime} ms");
 
                     if (token.IsCancellationRequested)
                         return;
@@ -1297,8 +1277,6 @@ namespace Flow.Launcher.ViewModel
                 // Task.Yield will force it to run in ThreadPool
                 await Task.Yield();
 
-                // TODO: Remove debug codes.
-                System.Diagnostics.Debug.WriteLine($"!!!{query.RawQuery} Querying {plugin.Metadata.Name}");
                 IReadOnlyList<Result> results =
                     await PluginManager.QueryForPluginAsync(plugin, query, token);
 
