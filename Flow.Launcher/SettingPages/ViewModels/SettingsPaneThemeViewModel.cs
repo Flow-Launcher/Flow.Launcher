@@ -21,6 +21,7 @@ namespace Flow.Launcher.SettingPages.ViewModels;
 public partial class SettingsPaneThemeViewModel : BaseModel
 {
     private const string DefaultFont = "Segoe UI";
+    public string BackdropSubText => !Win32Helper.IsBackdropSupported() ? App.API.GetTranslation("BackdropTypeDisabledToolTip") : ""; 
     public Settings Settings { get; }
     private readonly Theme _theme = Ioc.Default.GetRequiredService<Theme>();
 

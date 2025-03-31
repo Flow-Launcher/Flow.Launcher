@@ -468,7 +468,8 @@
                 <cc:Card
                     Title="{DynamicResource BackdropType}"
                     Margin="0 0 0 0"
-                    Icon="&#xeb42;">
+                    Icon="&#xeb42;"
+                    Sub="{Binding BackdropSubText}">
                     <ComboBox
                         MinWidth="160"
                         VerticalAlignment="Center"
@@ -478,7 +479,6 @@
                         ItemsSource="{Binding BackdropTypesList}"
                         SelectedValue="{Binding BackdropType, Mode=TwoWay}"
                         SelectedValuePath="Value" />
-                    <!--  ✅ 추가  -->
                 </cc:Card>
 
                 <!--  Drop shadow effect  -->
