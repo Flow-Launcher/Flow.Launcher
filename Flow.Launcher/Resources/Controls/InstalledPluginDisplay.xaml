@@ -120,9 +120,7 @@
               RelativeSource={RelativeSource AncestorType=ListBox}, 
               Converter={StaticResource StringEqualityToVisibilityConverter}, 
               ConverterParameter=SearchDelay}">
-                            <TextBox
-                                Width="120"
-                                Height="34"
+                            <cc:InstalledPluginSearchDelay
                                 Margin="0 0 8 0" />
                         </StackPanel>
 
