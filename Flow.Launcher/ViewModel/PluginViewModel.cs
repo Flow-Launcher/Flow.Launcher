@@ -145,7 +145,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void EditPluginPriority()
         {
-            PriorityChangeWindow priorityChangeWindow = new PriorityChangeWindow(PluginPair. Metadata.ID, this);
+            var priorityChangeWindow = new PriorityChangeWindow(PluginPair. Metadata.ID, this);
             priorityChangeWindow.ShowDialog();
         }
 
@@ -173,14 +173,14 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void SetActionKeywords()
         {
-            ActionKeywords changeKeywordsWindow = new ActionKeywords(this);
+            var changeKeywordsWindow = new ActionKeywords(this);
             changeKeywordsWindow.ShowDialog();
         }
 
         [RelayCommand]
         private void SetSearchDelaySpeed()
         {
-            /*SearchDelaySpeedWindow searchDelaySpeedWindow = new SearchDelaySpeedWindow(this);
+            /*var searchDelaySpeedWindow = new SearchDelaySpeedWindow(this);
             searchDelaySpeedWindow.ShowDialog();*/
         }
     }
