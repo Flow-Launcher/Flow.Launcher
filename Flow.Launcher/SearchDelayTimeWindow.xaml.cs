@@ -24,7 +24,7 @@ public partial class SearchDelayTimeWindow : Window
         tbOldSearchDelayTime.Text = _pluginViewModel.SearchDelayTimeText;
         var searchDelayTimes = DropdownDataGeneric<SearchDelayTime>.GetValues<SearchDelayTimeData>("SearchDelayTime");
         SearchDelayTimeData selected = null;
-        // Because default value is SearchDelayTime.Slow, we need to get selected value before adding default value
+        // Because default value is SearchDelayTime.VeryShort, we need to get selected value before adding default value
         if (_pluginViewModel.PluginSearchDelayTime != null)
         {
             selected = searchDelayTimes.FirstOrDefault(x => x.Value == _pluginViewModel.PluginSearchDelayTime);

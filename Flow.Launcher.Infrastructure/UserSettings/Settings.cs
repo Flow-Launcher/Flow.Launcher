@@ -323,7 +323,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool SearchQueryResultsWithDelay { get; set; }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public SearchDelayTime SearchDelayTime { get; set; } = SearchDelayTime.Medium;
+        public SearchDelayTime SearchDelayTime { get; set; } = SearchDelayTime.Normal;
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public SearchWindowScreens SearchWindowScreen { get; set; } = SearchWindowScreens.Cursor;

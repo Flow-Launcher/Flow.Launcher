@@ -105,12 +105,12 @@
     <system:String x:Key="searchDelay">Search Delay</system:String>
     <system:String x:Key="searchDelayToolTip">Delay for a while to search when typing. This reduces interface jumpiness and result load.</system:String>
     <system:String x:Key="searchDelayTime">Default Search Delay Time</system:String>
-    <system:String x:Key="searchDelayTimeToolTip">Plugin default delay time after which search results appear when typing is stopped. Default is "Medium".</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Plugin default delay time after which search results appear when typing is stopped.</system:String>
+    <system:String x:Key="SearchDelayTimeVeryLong">Very long</system:String>
     <system:String x:Key="SearchDelayTimeLong">Long</system:String>
-    <system:String x:Key="SearchDelayTimeModeratelyLong">Moderately long</system:String>
-    <system:String x:Key="SearchDelayTimeMedium">Medium</system:String>
-    <system:String x:Key="SearchDelayTimeModeratelyShort">Moderately short</system:String>
+    <system:String x:Key="SearchDelayTimeNormal">Normal</system:String>
     <system:String x:Key="SearchDelayTimeShort">Short</system:String>
+    <system:String x:Key="SearchDelayTimeVeryShort">Very short</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Search Plugin</system:String>

@@ -6,27 +6,27 @@
 public enum SearchDelayTime
 {
     /// <summary>
-    /// Long search delay time. 250ms.
+    /// Very long search delay time. 250ms.
+    /// </summary>
+    VeryLong,
+
+    /// <summary>
+    /// Long search delay time. 200ms.
     /// </summary>
     Long,
 
     /// <summary>
-    /// Moderately long search delay time. 200ms.
+    /// Normal search delay time. 150ms. Default value.
     /// </summary>
-    ModeratelyLong,
+    Normal,
 
     /// <summary>
-    /// Medium search delay time. 150ms. Default value.
+    /// Short search delay time. 100ms.
     /// </summary>
-    Medium,
+    Short,
 
     /// <summary>
-    /// Moderately short search delay time. 100ms.
+    /// Very short search delay time. 50ms.
     /// </summary>
-    ModeratelyShort,
-
-    /// <summary>
-    /// Short search delay time. 50ms.
-    /// </summary>
-    Short
+    VeryShort
 }

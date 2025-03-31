@@ -150,7 +150,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public SearchDelayTimeData SearchDelayTime
     {
         get => SearchDelayTimes.FirstOrDefault(x => x.Value == Settings.SearchDelayTime) ?? 
-               SearchDelayTimes.FirstOrDefault(x => x.Value == Plugin.SearchDelayTime.Medium) ?? 
+               SearchDelayTimes.FirstOrDefault(x => x.Value == Plugin.SearchDelayTime.Normal) ?? 
                SearchDelayTimes.FirstOrDefault();
         set
         {
