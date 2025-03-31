@@ -7,10 +7,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     xmlns:viewModel="clr-namespace:Flow.Launcher.ViewModel"
+    xmlns:converters="clr-namespace:Flow.Launcher.Converters"
     d:DataContext="{d:DesignInstance viewModel:PluginViewModel}"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <converters:StringEqualityToVisibilityConverter x:Key="StringEqualityToVisibilityConverter" />
+    </UserControl.Resources>
     <Expander
         Padding="0"
         BorderThickness="0"
@@ -91,36 +95,48 @@
                         <StackPanel
                             x:Name="PriorityControl"
                             Orientation="Horizontal"
-                            Visibility="Visible">
+                            Visibility="{Binding DataContext.CurrentDisplayMode, 
+              RelativeSource={RelativeSource AncestorType=ListBox}, 
+              Converter={StaticResource StringEqualityToVisibilityConverter}, 
+              ConverterParameter=Priority}">
                             <TextBlock
-                                Margin="0 0 8 0"
-                                VerticalAlignment="Center"
-                                FontSize="13"
-                                Foreground="{DynamicResource Color08B}"
-                                Text="{DynamicResource priority}" />
+                                 Margin="0 0 8 0"
+                                 VerticalAlignment="Center"
+                                 FontSize="13"
+                                 Foreground="{DynamicResource Color08B}"
+                                 Text="{DynamicResource priority}" />
                             <ui:NumberBox
                                 Margin="0 0 8 0"
                                 Maximum="999"
                                 Minimum="0"
+                                Value="{Binding Priority, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                 SpinButtonPlacementMode="Inline" />
                         </StackPanel>
+
                         <StackPanel
                             x:Name="SearchDelayControl"
                             Orientation="Horizontal"
-                            Visibility="Collapsed">
+                            Visibility="{Binding DataContext.CurrentDisplayMode, 
+              RelativeSource={RelativeSource AncestorType=ListBox}, 
+              Converter={StaticResource StringEqualityToVisibilityConverter}, 
+              ConverterParameter=SearchDelay}">
                             <TextBox
                                 Width="120"
                                 Height="34"
                                 Margin="0 0 8 0" />
                         </StackPanel>
+
                         <ui:ToggleSwitch
                             x:Name="OnOffControl"
                             Margin="0 0 8 0"
                             IsOn="{Binding PluginState}"
                             OffContent="{DynamicResource disable}"
                             OnContent="{DynamicResource enable}"
-                            Visibility="Collapsed" />
-                    </StackPanel>
+                            Visibility="{Binding DataContext.CurrentDisplayMode, 
+              RelativeSource={RelativeSource AncestorType=ListBox}, 
+              Converter={StaticResource StringEqualityToVisibilityConverter}, 
+              ConverterParameter=OnOff}" />
+                        </StackPanel>
                 </Grid>
             </Border>
         </Expander.Header>

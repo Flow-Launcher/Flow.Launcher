@@ -14,6 +14,75 @@ public class SettingsPanePluginsViewModel : BaseModel
 {
     private readonly Settings _settings;
 
+    private bool _isOnOffSelected = true;
+    public bool IsOnOffSelected
+    {
+        get => _isOnOffSelected;
+        set
+        {
+            if (_isOnOffSelected != value)
+            {
+                _isOnOffSelected = value;
+                OnPropertyChanged(nameof(IsOnOffSelected));
+                UpdateDisplayMode();
+            }
+        }
+    }
+
+    private bool _isPrioritySelected;
+    public bool IsPrioritySelected
+    {
+        get => _isPrioritySelected;
+        set
+        {
+            if (_isPrioritySelected != value)
+            {
+                _isPrioritySelected = value;
+                OnPropertyChanged(nameof(IsPrioritySelected));
+                UpdateDisplayMode();
+            }
+        }
+    }
+
+    private bool _isSearchDelaySelected;
+    public bool IsSearchDelaySelected
+    {
+        get => _isSearchDelaySelected;
+        set
+        {
+            if (_isSearchDelaySelected != value)
+            {
+                _isSearchDelaySelected = value;
+                OnPropertyChanged(nameof(IsSearchDelaySelected));
+                UpdateDisplayMode();
+            }
+        }
+    }
+
+    private string _currentDisplayMode = "OnOff";
+    public string CurrentDisplayMode
+    {
+        get => _currentDisplayMode;
+        set
+        {
+            if (_currentDisplayMode != value)
+            {
+                _currentDisplayMode = value;
+                OnPropertyChanged(nameof(CurrentDisplayMode));
+            }
+        }
+    }
+
+    private void UpdateDisplayMode()
+    {
+        if (IsOnOffSelected)
+            CurrentDisplayMode = "OnOff";
+        else if (IsPrioritySelected)
+            CurrentDisplayMode = "Priority";
+        else if (IsSearchDelaySelected)
+            CurrentDisplayMode = "SearchDelay";
+    }
+
     public SettingsPanePluginsViewModel(Settings settings)
     {
         _settings = settings;
