@@ -48,7 +48,7 @@
                         Grid.Column="2"
                         HorizontalAlignment="Right"
                         Orientation="Horizontal">
-                        <TextBlock
+                        <!--<TextBlock
                             Margin="0 0 8 0"
                             VerticalAlignment="Center"
                             FontSize="12"
@@ -62,7 +62,9 @@
                             Content="{Binding Priority}"
                             Cursor="Hand"
                             ToolTip="{DynamicResource priorityToolTip}">
-                            <!--#region Priority Button Style-->
+                        -->
+                        <!--#region Priority Button Style-->
+                        <!--
                             <Button.Resources>
                                 <Style TargetType="Border">
                                     <Setter Property="CornerRadius" Value="2" />
@@ -82,14 +84,42 @@
                                     </Style.Triggers>
                                 </Style>
                             </Button.Style>
-                            <!--#endregion-->
-                        </Button>
-
+                        -->
+                        <!--#endregion-->
+                        <!--
+                        </Button>-->
+                        <StackPanel
+                            x:Name="PriorityControl"
+                            Orientation="Horizontal"
+                            Visibility="Visible">
+                            <TextBlock
+                                Margin="0 0 8 0"
+                                VerticalAlignment="Center"
+                                FontSize="13"
+                                Foreground="{DynamicResource Color08B}"
+                                Text="{DynamicResource priority}" />
+                            <ui:NumberBox
+                                Margin="0 0 8 0"
+                                Maximum="999"
+                                Minimum="0"
+                                SpinButtonPlacementMode="Inline" />
+                        </StackPanel>
+                        <StackPanel
+                            x:Name="SearchDelayControl"
+                            Orientation="Horizontal"
+                            Visibility="Collapsed">
+                            <TextBox
+                                Width="120"
+                                Height="34"
+                                Margin="0 0 8 0" />
+                        </StackPanel>
                         <ui:ToggleSwitch
+                            x:Name="OnOffControl"
                             Margin="0 0 8 0"
                             IsOn="{Binding PluginState}"
                             OffContent="{DynamicResource disable}"
-                            OnContent="{DynamicResource enable}" />
+                            OnContent="{DynamicResource enable}"
+                            Visibility="Collapsed" />
                     </StackPanel>
                 </Grid>
             </Border>
