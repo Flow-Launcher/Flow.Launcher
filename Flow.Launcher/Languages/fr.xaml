@@ -100,6 +100,15 @@
     <system:String x:Key="AlwaysPreview">Toujours prévisualiser</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Toujours ouvrir le panneau d'aperçu lorsque Flow s'active. Appuyez sur {0} pour activer/désactiver l'aperçu.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">L'effet d'ombre n'est pas autorisé lorsque le thème actuel à un effet de flou activé</system:String>
+    <system:String x:Key="searchDelay">Search Delay</system:String>
+    <system:String x:Key="searchDelayToolTip">Delay for a while to search when typing. This reduces interface jumpiness and result load.</system:String>
+    <system:String x:Key="searchDelayTime">Default Search Delay Time</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Plugin default delay time after which search results appear when typing is stopped.</system:String>
+    <system:String x:Key="SearchDelayTimeVeryLong">Very long</system:String>
+    <system:String x:Key="SearchDelayTimeLong">Long</system:String>
+    <system:String x:Key="SearchDelayTimeNormal">Normal</system:String>
+    <system:String x:Key="SearchDelayTimeShort">Short</system:String>
+    <system:String x:Key="SearchDelayTimeVeryShort">Very short</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Rechercher des plugins</system:String>
@@ -116,6 +125,8 @@
     <system:String x:Key="currentActionKeywords">Mot-clé d'action actuel</system:String>
     <system:String x:Key="newActionKeyword">Nouveau mot-clé d'action</system:String>
     <system:String x:Key="actionKeywordsTooltip">Changer les mots-clés d'action</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Plugin seach delay time</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Seach Delay Time</system:String>
     <system:String x:Key="currentPriority">Priorité actuelle</system:String>
     <system:String x:Key="newPriority">Nouvelle priorité</system:String>
     <system:String x:Key="priority">Priorité</system:String>
@@ -131,6 +142,7 @@
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins : {0} - Échec de la suppression des fichiers de configuration des plugins, veuillez les supprimer manuellement</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Échec de la suppression du cache du plugin</system:String>
     <system:String x:Key="failedToRemovePluginCacheMessage">Plugins : {0} - Échec de la suppression des fichiers cache des plugins, veuillez les supprimer manuellement</system:String>
+    <system:String x:Key="default">Default</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Magasin des Plugins</system:String>
@@ -349,6 +361,12 @@
     <system:String x:Key="success">Ajout</system:String>
     <system:String x:Key="completedSuccessfully">Terminé avec succès</system:String>
     <system:String x:Key="actionkeyword_tips">Saisissez les mots-clés d'action que vous souhaitez utiliser pour lancer le plugin et séparez-les par des espaces. Utilisez * si vous ne voulez en spécifier aucun, et le plugin sera déclenché sans aucun mot-clé d'action.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="searchDelayTimeTitle">Search Delay Time Setting</system:String>
+    <system:String x:Key="searchDelayTime_tips">Select the search delay time you like to use for the plugin. Select &quot;{0}&quot; if you don't want to specify any, and the plugin will use default search delay time.</system:String>
+    <system:String x:Key="currentSearchDelayTime">Current search delay time</system:String>
+    <system:String x:Key="newSearchDelayTime">New search delay time</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Requêtes personnalisées</system:String>
