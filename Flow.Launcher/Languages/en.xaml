@@ -365,6 +365,12 @@
     <system:String x:Key="completedSuccessfully">Completed successfully</system:String>
     <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
 
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="searchDelaySpeedTitle">Search Delay Speed Setting</system:String>
+    <system:String x:Key="searchDelaySpeed_tips">Select the search delay speed you like to use for the plugin. Select Default if you don't want to specify any, and the plugin will use default search delay speed.</system:String>
+    <system:String x:Key="currentSearchDelaySpeed">Current search delay speed</system:String>
+    <system:String x:Key="newSearchDelaySpeed">New search delay speed</system:String>
+
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Custom Query Hotkey</system:String>
     <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Launcher and input the specified query automatically.</system:String>

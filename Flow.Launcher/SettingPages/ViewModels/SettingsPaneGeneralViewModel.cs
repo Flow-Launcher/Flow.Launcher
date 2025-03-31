@@ -150,7 +150,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public SearchDelaySpeedData SearchDelaySpeed
     {
         get => SearchDelaySpeeds.FirstOrDefault(x => x.Value == Settings.SearchDelaySpeed) ?? 
-               SearchDelaySpeeds.FirstOrDefault(x => x.Value == Flow.Launcher.Plugin.SearchDelaySpeeds.Medium) ?? 
+               SearchDelaySpeeds.FirstOrDefault(x => x.Value == Plugin.SearchDelaySpeeds.Medium) ?? 
                SearchDelaySpeeds.FirstOrDefault();
         set
         {

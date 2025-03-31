@@ -13,6 +13,8 @@ namespace Flow.Launcher.ViewModel
 {
     public partial class PluginViewModel : BaseModel
     {
+        public const string DefaultLocalizationKey = "default";
+
         private readonly PluginPair _pluginPair;
         public PluginPair PluginPair
         {
@@ -127,12 +129,17 @@ namespace Flow.Launcher.ViewModel
             PluginPair.Metadata.AvgQueryTime + "ms";
         public string ActionKeywordsText => string.Join(Query.ActionKeywordSeparator, PluginPair.Metadata.ActionKeywords);
         public int Priority => PluginPair.Metadata.Priority;
-        public string SearchDelaySpeedText => PluginPair.Metadata.SearchDelaySpeed == null ? App.API.GetTranslation("default") : App.API.GetTranslation($"SearchDelaySpeed{PluginPair.Metadata.SearchDelaySpeed}");
+        public string SearchDelaySpeedText => PluginPair.Metadata.SearchDelaySpeed == null ? App.API.GetTranslation(DefaultLocalizationKey) : App.API.GetTranslation($"SearchDelaySpeed{PluginPair.Metadata.SearchDelaySpeed}");
         public Infrastructure.UserSettings.Plugin PluginSettingsObject{ get; init; }
 
         public void OnActionKeywordsChanged()
         {
             OnPropertyChanged(nameof(ActionKeywordsText));
+        }
+
+        public void OnSearchDelaySpeedChanged()
+        {
+            OnPropertyChanged(nameof(SearchDelaySpeedText));
         }
 
         public void ChangePriority(int newPriority)
@@ -180,8 +187,8 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void SetSearchDelaySpeed()
         {
-            /*var searchDelaySpeedWindow = new SearchDelaySpeedWindow(this);
-            searchDelaySpeedWindow.ShowDialog();*/
+            var searchDelaySpeedWindow = new SearchDelaySpeedWindow(this);
+            searchDelaySpeedWindow.ShowDialog();
         }
     }
 }
