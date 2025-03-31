@@ -298,7 +298,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (QueryResultsSelected())
             {
-                // When we are requiring, we should not delay the query
+                // When we are re-querying, we should not delay the query
                 _ = QueryResultsAsync(false, isReQuery: true);
             }
         }
@@ -306,7 +306,7 @@ namespace Flow.Launcher.ViewModel
         public void ReQuery(bool reselect)
         {
             BackToQueryResults();
-            // When we are requiring, we should not delay the query
+            // When we are re-querying, we should not delay the query
             _ = QueryResultsAsync(false, isReQuery: true, reSelect: reselect);
         }
 
@@ -660,7 +660,7 @@ namespace Flow.Launcher.ViewModel
             }
             else if (isReQuery)
             {
-                // When we are requiring, we should not delay the query
+                // When we are re-querying, we should not delay the query
                 await QueryAsync(false, isReQuery: true);
             }
 
