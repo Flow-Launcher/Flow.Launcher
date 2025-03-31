@@ -105,7 +105,8 @@ namespace Flow.Launcher.ViewModel
         private Control _bottomPart3;
         public Control BottomPart3 => IsExpanded ? _bottomPart3 ??= new InstalledPluginDisplayBottomData() : null;
 
-        public bool HasSettingControl => PluginPair.Plugin is ISettingProvider && (PluginPair.Plugin is not JsonRPCPluginBase jsonRPCPluginBase || jsonRPCPluginBase.NeedCreateSettingPanel());
+        public bool HasSettingControl => PluginPair.Plugin is ISettingProvider &&
+            (PluginPair.Plugin is not JsonRPCPluginBase jsonRPCPluginBase || jsonRPCPluginBase.NeedCreateSettingPanel());
         public Control SettingControl
             => IsExpanded
                 ? _settingControl
@@ -127,7 +128,9 @@ namespace Flow.Launcher.ViewModel
             PluginPair.Metadata.AvgQueryTime + "ms";
         public string ActionKeywordsText => string.Join(Query.ActionKeywordSeparator, PluginPair.Metadata.ActionKeywords);
         public int Priority => PluginPair.Metadata.Priority;
-        public string SearchDelayTimeText => PluginPair.Metadata.SearchDelayTime == null ? App.API.GetTranslation("default") : App.API.GetTranslation($"SearchDelayTime{PluginPair.Metadata.SearchDelayTime}");
+        public string SearchDelayTimeText => PluginPair.Metadata.SearchDelayTime == null ?
+            App.API.GetTranslation("default") :
+            App.API.GetTranslation($"SearchDelayTime{PluginPair.Metadata.SearchDelayTime}");
         public Infrastructure.UserSettings.Plugin PluginSettingsObject{ get; init; }
 
         public void OnActionKeywordsChanged()
