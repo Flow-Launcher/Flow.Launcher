@@ -104,13 +104,13 @@
     <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
     <system:String x:Key="searchDelay">Search Delay</system:String>
     <system:String x:Key="searchDelayToolTip">Delay for a while to search when typing. This reduces interface jumpiness and result load.</system:String>
-    <system:String x:Key="searchDelaySpeed">Default Search Delay Speed</system:String>
-    <system:String x:Key="searchDelaySpeedToolTip">Plugins default delay time after which search results appear when typing is stopped. Default is medium.</system:String>
-    <system:String x:Key="SearchDelaySpeedSlow">Slow</system:String>
-    <system:String x:Key="SearchDelaySpeedModeratelySlow">Moderately slow</system:String>
-    <system:String x:Key="SearchDelaySpeedMedium">Medium</system:String>
-    <system:String x:Key="SearchDelaySpeedModeratelyFast">Moderately fast</system:String>
-    <system:String x:Key="SearchDelaySpeedFast">Fast</system:String>
+    <system:String x:Key="searchDelayTime">Default Search Delay Time</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Plugin default delay time after which search results appear when typing is stopped. Default is "Medium".</system:String>
+    <system:String x:Key="SearchDelayTimeLong">Long</system:String>
+    <system:String x:Key="SearchDelayTimeModeratelyLong">Moderately long</system:String>
+    <system:String x:Key="SearchDelayTimeMedium">Medium</system:String>
+    <system:String x:Key="SearchDelayTimeModeratelyShort">Moderately short</system:String>
+    <system:String x:Key="SearchDelayTimeShort">Short</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Search Plugin</system:String>
@@ -127,8 +127,8 @@
     <system:String x:Key="currentActionKeywords">Current action keyword</system:String>
     <system:String x:Key="newActionKeyword">New action keyword</system:String>
     <system:String x:Key="actionKeywordsTooltip">Change Action Keywords</system:String>
-    <system:String x:Key="pluginSearchDelaySpeed">Plugin seach delay speed</system:String>
-    <system:String x:Key="pluginSearchDelaySpeedTooltip">Change Plugin Seach Delay Speed</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Plugin seach delay time</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Seach Delay Time</system:String>
     <system:String x:Key="currentPriority">Current Priority</system:String>
     <system:String x:Key="newPriority">New Priority</system:String>
     <system:String x:Key="priority">Priority</system:String>
@@ -366,10 +366,10 @@
     <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
-    <system:String x:Key="searchDelaySpeedTitle">Search Delay Speed Setting</system:String>
-    <system:String x:Key="searchDelaySpeed_tips">Select the search delay speed you like to use for the plugin. Select Default if you don't want to specify any, and the plugin will use default search delay speed.</system:String>
-    <system:String x:Key="currentSearchDelaySpeed">Current search delay speed</system:String>
-    <system:String x:Key="newSearchDelaySpeed">New search delay speed</system:String>
+    <system:String x:Key="searchDelayTimeTitle">Search Delay Time Setting</system:String>
+    <system:String x:Key="searchDelayTime_tips">Select the search delay time you like to use for the plugin. Select "{0}" if you don't want to specify any, and the plugin will use default search delay time.</system:String>
+    <system:String x:Key="currentSearchDelayTime">Current search delay time</system:String>
+    <system:String x:Key="newSearchDelayTime">New search delay time</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Custom Query Hotkey</system:String>

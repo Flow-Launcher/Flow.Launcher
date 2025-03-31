@@ -1,13 +1,13 @@
 ﻿<Window
-    x:Class="Flow.Launcher.SearchDelaySpeedWindow"
+    x:Class="Flow.Launcher.SearchDelayTimeWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="{DynamicResource searchDelaySpeedTitle}"
+    Title="{DynamicResource searchDelayTimeTitle}"
     Width="450"
     Background="{DynamicResource PopuBGColor}"
     Foreground="{DynamicResource PopupTextColor}"
     Icon="Images\app.png"
-    Loaded="SearchDelaySpeed_OnLoaded"
+    Loaded="SearchDelayTimeWindow_OnLoaded"
     ResizeMode="NoResize"
     SizeToContent="Height"
     WindowStartupLocation="CenterScreen">
@@ -60,13 +60,13 @@
                             Margin="0 0 0 0"
                             FontSize="20"
                             FontWeight="SemiBold"
-                            Text="{DynamicResource searchDelaySpeedTitle}"
+                            Text="{DynamicResource searchDelayTimeTitle}"
                             TextAlignment="Left" />
                     </StackPanel>
                     <StackPanel>
                         <TextBlock
                             FontSize="14"
-                            Text="{DynamicResource searchDelaySpeed_tips}"
+                            Text="{DynamicResource searchDelayTime_tips}"
                             TextAlignment="Left"
                             TextWrapping="WrapWithOverflow" />
                     </StackPanel>
@@ -78,9 +78,9 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             FontSize="14"
-                            Text="{DynamicResource currentSearchDelaySpeed}" />
+                            Text="{DynamicResource currentSearchDelayTime}" />
                         <TextBlock
-                            x:Name="tbOldSearchDelaySpeed"
+                            x:Name="tbOldSearchDelayTime"
                             Grid.Row="0"
                             Grid.Column="1"
                             Margin="14 10 10 10"
@@ -97,7 +97,7 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             FontSize="14"
-                            Text="{DynamicResource newSearchDelaySpeed}" />
+                            Text="{DynamicResource newSearchDelayTime}" />
                         <ComboBox
                             x:Name="tbDelay"
                             MaxWidth="200"

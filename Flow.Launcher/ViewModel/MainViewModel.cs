@@ -1271,14 +1271,13 @@ namespace Flow.Launcher.ViewModel
             {
                 if (searchDelay)
                 {
-                    var searchDelaySpeed = plugin.Metadata.SearchDelaySpeed ?? Settings.SearchDelaySpeed;
-                    var searchDelayTime = searchDelaySpeed switch
+                    var searchDelayTime = (plugin.Metadata.SearchDelayTime ?? Settings.SearchDelayTime) switch
                     {
-                        SearchDelaySpeeds.Slow => 250,
-                        SearchDelaySpeeds.ModeratelySlow => 200,
-                        SearchDelaySpeeds.Medium => 150,
-                        SearchDelaySpeeds.ModeratelyFast => 100,
-                        SearchDelaySpeeds.Fast => 50,
+                        SearchDelayTime.Long => 250,
+                        SearchDelayTime.ModeratelyLong => 200,
+                        SearchDelayTime.Medium => 150,
+                        SearchDelayTime.ModeratelyShort => 100,
+                        SearchDelayTime.Short => 50,
                         _ => 150
                     };
 

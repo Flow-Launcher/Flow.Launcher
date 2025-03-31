@@ -13,8 +13,6 @@ namespace Flow.Launcher.ViewModel
 {
     public partial class PluginViewModel : BaseModel
     {
-        public const string DefaultLocalizationKey = "default";
-
         private readonly PluginPair _pluginPair;
         public PluginPair PluginPair
         {
@@ -85,13 +83,13 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public SearchDelaySpeeds? PluginSearchDelay
+        public SearchDelayTime? PluginSearchDelayTime
         {
-            get => PluginPair.Metadata.SearchDelaySpeed;
+            get => PluginPair.Metadata.SearchDelayTime;
             set
             {
-                PluginPair.Metadata.SearchDelaySpeed = value;
-                PluginSettingsObject.SearchDelaySpeed = value;
+                PluginPair.Metadata.SearchDelayTime = value;
+                PluginSettingsObject.SearchDelayTime = value;
             }
         }
 
@@ -129,7 +127,7 @@ namespace Flow.Launcher.ViewModel
             PluginPair.Metadata.AvgQueryTime + "ms";
         public string ActionKeywordsText => string.Join(Query.ActionKeywordSeparator, PluginPair.Metadata.ActionKeywords);
         public int Priority => PluginPair.Metadata.Priority;
-        public string SearchDelaySpeedText => PluginPair.Metadata.SearchDelaySpeed == null ? App.API.GetTranslation(DefaultLocalizationKey) : App.API.GetTranslation($"SearchDelaySpeed{PluginPair.Metadata.SearchDelaySpeed}");
+        public string SearchDelayTimeText => PluginPair.Metadata.SearchDelayTime == null ? App.API.GetTranslation("default") : App.API.GetTranslation($"SearchDelayTime{PluginPair.Metadata.SearchDelayTime}");
         public Infrastructure.UserSettings.Plugin PluginSettingsObject{ get; init; }
 
         public void OnActionKeywordsChanged()
@@ -137,9 +135,9 @@ namespace Flow.Launcher.ViewModel
             OnPropertyChanged(nameof(ActionKeywordsText));
         }
 
-        public void OnSearchDelaySpeedChanged()
+        public void OnSearchDelayTimeChanged()
         {
-            OnPropertyChanged(nameof(SearchDelaySpeedText));
+            OnPropertyChanged(nameof(SearchDelayTimeText));
         }
 
         public void ChangePriority(int newPriority)
@@ -185,10 +183,10 @@ namespace Flow.Launcher.ViewModel
         }
 
         [RelayCommand]
-        private void SetSearchDelaySpeed()
+        private void SetSearchDelayTime()
         {
-            var searchDelaySpeedWindow = new SearchDelaySpeedWindow(this);
-            searchDelaySpeedWindow.ShowDialog();
+            var searchDelayTimeWindow = new SearchDelayTimeWindow(this);
+            searchDelayTimeWindow.ShowDialog();
         }
     }
 }

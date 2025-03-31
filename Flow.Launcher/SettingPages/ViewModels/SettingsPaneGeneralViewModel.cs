@@ -31,7 +31,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public class SearchWindowAlignData : DropdownDataGeneric<SearchWindowAligns> { }
     public class SearchPrecisionData : DropdownDataGeneric<SearchPrecisionScore> { }
     public class LastQueryModeData : DropdownDataGeneric<LastQueryMode> { }
-    public class SearchDelaySpeedData : DropdownDataGeneric<SearchDelaySpeeds> { }
+    public class SearchDelayTimeData : DropdownDataGeneric<SearchDelayTime> { }
 
     public bool StartFlowLauncherOnSystemStartup
     {
@@ -144,22 +144,22 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public List<LastQueryModeData> LastQueryModes { get; } =
         DropdownDataGeneric<LastQueryMode>.GetValues<LastQueryModeData>("LastQuery");
 
-    public List<SearchDelaySpeedData> SearchDelaySpeeds { get; } =
-        DropdownDataGeneric<SearchDelaySpeeds>.GetValues<SearchDelaySpeedData>("SearchDelaySpeed");
+    public List<SearchDelayTimeData> SearchDelayTimes { get; } =
+        DropdownDataGeneric<SearchDelayTime>.GetValues<SearchDelayTimeData>("SearchDelayTime");
 
-    public SearchDelaySpeedData SearchDelaySpeed
+    public SearchDelayTimeData SearchDelayTime
     {
-        get => SearchDelaySpeeds.FirstOrDefault(x => x.Value == Settings.SearchDelaySpeed) ?? 
-               SearchDelaySpeeds.FirstOrDefault(x => x.Value == Plugin.SearchDelaySpeeds.Medium) ?? 
-               SearchDelaySpeeds.FirstOrDefault();
+        get => SearchDelayTimes.FirstOrDefault(x => x.Value == Settings.SearchDelayTime) ?? 
+               SearchDelayTimes.FirstOrDefault(x => x.Value == Plugin.SearchDelayTime.Medium) ?? 
+               SearchDelayTimes.FirstOrDefault();
         set
         {
             if (value == null)
                 return;
                 
-            if (Settings.SearchDelaySpeed != value.Value)
+            if (Settings.SearchDelayTime != value.Value)
             {
-                Settings.SearchDelaySpeed = value.Value;
+                Settings.SearchDelayTime = value.Value;
             }
         }
     }
@@ -170,7 +170,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         DropdownDataGeneric<SearchWindowAligns>.UpdateLabels(SearchWindowAligns);
         DropdownDataGeneric<SearchPrecisionScore>.UpdateLabels(SearchPrecisionScores);
         DropdownDataGeneric<LastQueryMode>.UpdateLabels(LastQueryModes);
-        DropdownDataGeneric<SearchDelaySpeeds>.UpdateLabels(SearchDelaySpeeds);
+        DropdownDataGeneric<SearchDelayTime>.UpdateLabels(SearchDelayTimes);
     }
 
     public string Language
