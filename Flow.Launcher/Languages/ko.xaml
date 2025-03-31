@@ -206,6 +206,7 @@
     <system:String x:Key="Clock">시계</system:String>
     <system:String x:Key="Date">날짜</system:String>
     <system:String x:Key="BackdropType">배경 효과 타입</system:String>
+    <system:String x:Key="BackdropTypeDisabledToolTip">Backdrop supported starting from Windows 11 build 22000 and above</system:String>
     <system:String x:Key="BackdropTypesNone">없음</system:String>
     <system:String x:Key="BackdropTypesAcrylic">아크릴</system:String>
     <system:String x:Key="BackdropTypesMica">Mica</system:String>
