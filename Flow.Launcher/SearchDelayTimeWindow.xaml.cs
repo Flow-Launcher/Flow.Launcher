@@ -28,7 +28,7 @@ public partial class SearchDelayTimeWindow : Window
             selected = searchDelayTimes.FirstOrDefault(x => x.Value == _pluginViewModel.PluginSearchDelayTime);
         }
         // Add default value to the beginning of the list
-        // When _pluginViewModel.PluginSearchDelay equals null, we will select this
+        // When _pluginViewModel.PluginSearchDelayTime equals null, we will select this
         searchDelayTimes.Insert(0, new SearchDelayTimeData { Display = App.API.GetTranslation("default"), LocalizationKey = "default" });
         selected ??= searchDelayTimes.FirstOrDefault();
         tbDelay.ItemsSource = searchDelayTimes;
