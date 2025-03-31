@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core;
@@ -30,6 +31,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public class SearchWindowAlignData : DropdownDataGeneric<SearchWindowAligns> { }
     public class SearchPrecisionData : DropdownDataGeneric<SearchPrecisionScore> { }
     public class LastQueryModeData : DropdownDataGeneric<LastQueryMode> { }
+    public class SearchDelayTimeData : DropdownDataGeneric<SearchDelayTime> { }
 
     public bool StartFlowLauncherOnSystemStartup
     {
@@ -142,12 +144,33 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public List<LastQueryModeData> LastQueryModes { get; } =
         DropdownDataGeneric<LastQueryMode>.GetValues<LastQueryModeData>("LastQuery");
 
+    public List<SearchDelayTimeData> SearchDelayTimes { get; } =
+        DropdownDataGeneric<SearchDelayTime>.GetValues<SearchDelayTimeData>("SearchDelayTime");
+
+    public SearchDelayTimeData SearchDelayTime
+    {
+        get => SearchDelayTimes.FirstOrDefault(x => x.Value == Settings.SearchDelayTime) ?? 
+               SearchDelayTimes.FirstOrDefault(x => x.Value == Plugin.SearchDelayTime.Normal) ?? 
+               SearchDelayTimes.FirstOrDefault();
+        set
+        {
+            if (value == null)
+                return;
+                
+            if (Settings.SearchDelayTime != value.Value)
+            {
+                Settings.SearchDelayTime = value.Value;
+            }
+        }
+    }
+
     private void UpdateEnumDropdownLocalizations()
     {
         DropdownDataGeneric<SearchWindowScreens>.UpdateLabels(SearchWindowScreens);
         DropdownDataGeneric<SearchWindowAligns>.UpdateLabels(SearchWindowAligns);
         DropdownDataGeneric<SearchPrecisionScore>.UpdateLabels(SearchPrecisionScores);
         DropdownDataGeneric<LastQueryMode>.UpdateLabels(LastQueryModes);
+        DropdownDataGeneric<SearchDelayTime>.UpdateLabels(SearchDelayTimes);
     }
 
     public string Language
