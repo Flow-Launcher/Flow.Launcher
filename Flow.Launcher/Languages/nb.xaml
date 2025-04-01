@@ -7,6 +7,11 @@
         Klikk nei hvis det allerede er installert, og du vil bli bedt om å velge mappen som inneholder {1} kjørbar fil
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Velg den kjørbare filen for {0}</system:String>
+    <system:String x:Key="runtimeExecutableInvalidChooseDownload">
+        Your selected {0} executable is invalid.
+        {2}{2}
+        Click yes if you would like select the {0} executable agian. Click no if you would like to download {1}
+    </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Kan ikke angi {0} kjørbar bane, prøv fra Flows innstillinger (bla ned til bunnen).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Mislykkes i å initialisere programtillegg</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">Programtillegg: {0} - mislykkes å lastes inn og vil bli deaktivert, vennligst kontakt utvikleren av programtillegget for hjelp</system:String>
