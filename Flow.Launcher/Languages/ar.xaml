@@ -7,6 +7,11 @@
         انقر فوق لا إذا كان مثبتاً بالفعل، وسوف يطلب منك تحديد المجلد الذي يحتوي على {1} القابل للتنفيذ
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">الرجاء اختيار الملف التنفيذي لـ {0}</system:String>
+    <system:String x:Key="runtimeExecutableInvalidChooseDownload">
+        Your selected {0} executable is invalid.
+        {2}{2}
+        Click yes if you would like select the {0} executable agian. Click no if you would like to download {1}
+    </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">تعذر تعيين مسار الملف التنفيذي لـ {0}، يرجى المحاولة من إعدادات Flow (قم بالتمرير إلى الأسفل).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">فشل في تهيئة الإضافات</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">الإضافات: {0} - فشل في التحميل وسيتم تعطيلها، يرجى الاتصال بمطور الإضافة للحصول على المساعدة</system:String>
