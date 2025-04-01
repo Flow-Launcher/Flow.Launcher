@@ -8,9 +8,9 @@
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Por favor, seleccione el ejecutable {0}</system:String>
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
-        Your selected {0} executable is invalid.
+        El ejecutable {0} seleccionado no es válido.
         {2}{2}
-        Click yes if you would like select the {0} executable agian. Click no if you would like to download {1}
+        Pulsar Sí, si desea seleccionar de nuevo el ejecutable {0}. Pulsar No, si desea descargar {1}
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">No se puede establecer la ruta del ejecutable {0}, por favor inténtelo desde la configuración de Flow (desplácese hacia abajo).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Fallo al iniciar los complementos</system:String>
@@ -42,7 +42,7 @@
     <system:String x:Key="GameMode">Modo Juego</system:String>
     <system:String x:Key="GameModeToolTip">Suspende el uso de atajos de teclado.</system:String>
     <system:String x:Key="PositionReset">Restablecer posición</system:String>
-    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Escribir aquí para buscar</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Configuración</system:String>
@@ -105,15 +105,15 @@
     <system:String x:Key="AlwaysPreview">Mostrar siempre vista previa</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Muestra siempre el panel de vista previa al iniciar Flow. Pulsar {0} para mostrar/ocultar la vista previa.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">El efecto de sombra no está permitido si el tema actual tiene activado el efecto de desenfoque</system:String>
-    <system:String x:Key="searchDelay">Search Delay</system:String>
-    <system:String x:Key="searchDelayToolTip">Delay for a while to search when typing. This reduces interface jumpiness and result load.</system:String>
-    <system:String x:Key="searchDelayTime">Default Search Delay Time</system:String>
-    <system:String x:Key="searchDelayTimeToolTip">Plugin default delay time after which search results appear when typing is stopped.</system:String>
-    <system:String x:Key="SearchDelayTimeVeryLong">Very long</system:String>
-    <system:String x:Key="SearchDelayTimeLong">Long</system:String>
+    <system:String x:Key="searchDelay">Retardo de búsqueda</system:String>
+    <system:String x:Key="searchDelayToolTip">Retrasa un poco la búsqueda al escribir. Esto reduce los saltos en la interfaz y la carga de resultados.</system:String>
+    <system:String x:Key="searchDelayTime">Tiempo de retardo de búsqueda predeterminado</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Tiempo de retardo predeterminado del complemento tras el que aparecerán los resultados de la búsqueda cuando se deje de escribir.</system:String>
+    <system:String x:Key="SearchDelayTimeVeryLong">Muy largo</system:String>
+    <system:String x:Key="SearchDelayTimeLong">Largo</system:String>
     <system:String x:Key="SearchDelayTimeNormal">Normal</system:String>
-    <system:String x:Key="SearchDelayTimeShort">Short</system:String>
-    <system:String x:Key="SearchDelayTimeVeryShort">Very short</system:String>
+    <system:String x:Key="SearchDelayTimeShort">Corto</system:String>
+    <system:String x:Key="SearchDelayTimeVeryShort">Muy corto</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Buscar complemento</system:String>
@@ -130,8 +130,8 @@
     <system:String x:Key="currentActionKeywords">Palabra clave de acción actual</system:String>
     <system:String x:Key="newActionKeyword">Nueva palabra clave de acción</system:String>
     <system:String x:Key="actionKeywordsTooltip">Cambia la palabra clave de acción</system:String>
-    <system:String x:Key="pluginSearchDelayTime">Plugin seach delay time</system:String>
-    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Seach Delay Time</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Tiempo de retardo de la búsqueda del complemento</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Cambiar tiempo de retardo de la búsqueda del complemento</system:String>
     <system:String x:Key="currentPriority">Prioridad actual</system:String>
     <system:String x:Key="newPriority">Nueva prioridad</system:String>
     <system:String x:Key="priority">Prioridad</system:String>
@@ -145,9 +145,9 @@
     <system:String x:Key="plugin_uninstall">Desinstalar</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Fallo al eliminar la configuración del complemento</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Complementos: {0} - Fallo al eliminar los archivos de configuración del complemento, por favor elimínelos manualmente</system:String>
-    <system:String x:Key="failedToRemovePluginCacheTitle">Fail to remove plugin cache</system:String>
-    <system:String x:Key="failedToRemovePluginCacheMessage">Plugins: {0} - Fail to remove plugin cache files, please remove them manually</system:String>
-    <system:String x:Key="default">Default</system:String>
+    <system:String x:Key="failedToRemovePluginCacheTitle">Fallo al eliminar la caché del complemento</system:String>
+    <system:String x:Key="failedToRemovePluginCacheMessage">Complementos: {0} - Fallo al eliminar los archivos de caché del complemento, por favor elimínelos manualmente</system:String>
+    <system:String x:Key="default">Predeterminado</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Tienda complementos</system:String>
@@ -211,19 +211,19 @@
     <system:String x:Key="Clock">Reloj</system:String>
     <system:String x:Key="Date">Fecha</system:String>
     <system:String x:Key="BackdropType">Tipo de telón de fondo</system:String>
-    <system:String x:Key="BackdropTypeDisabledToolTip">Backdrop supported starting from Windows 11 build 22000 and above</system:String>
+    <system:String x:Key="BackdropTypeDisabledToolTip">Telón de fondo compatible a partir de Windows 11 build 22000 y superiores</system:String>
     <system:String x:Key="BackdropTypesNone">Ninguno</system:String>
     <system:String x:Key="BackdropTypesAcrylic">Acrílico</system:String>
     <system:String x:Key="BackdropTypesMica">Mica</system:String>
     <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
     <system:String x:Key="TypeIsDarkToolTip">Este tema soporta dos modos (claro/oscuro).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Este tema soporta fondo transparente desenfocado.</system:String>
-    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
-    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
-    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
-    <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
-    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
+    <system:String x:Key="ShowPlaceholder">Mostrar marcador de posición</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Mostrar marcador de posición cuando la consulta esté vacía</system:String>
+    <system:String x:Key="PlaceholderText">Texto del marcador de posición</system:String>
+    <system:String x:Key="PlaceholderTextTip">Cambiar el texto del marcador de posición. La entrada vacía utilizará: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Tamaño fijo de la ventana</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">El tamaño de la ventana no se puede ajustar mediante arrastre.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Atajo de teclado</system:String>
@@ -370,10 +370,10 @@
     <system:String x:Key="actionkeyword_tips">Introduzca las palabras clave de acción que desea utilizar para iniciar el complemento y utilice espacios en blanco para separarlas. Utilice * si no desea especificar ninguna, para que el complemento se inicie sin ninguna palabra clave de acción.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
-    <system:String x:Key="searchDelayTimeTitle">Search Delay Time Setting</system:String>
-    <system:String x:Key="searchDelayTime_tips">Select the search delay time you like to use for the plugin. Select &quot;{0}&quot; if you don't want to specify any, and the plugin will use default search delay time.</system:String>
-    <system:String x:Key="currentSearchDelayTime">Current search delay time</system:String>
-    <system:String x:Key="newSearchDelayTime">New search delay time</system:String>
+    <system:String x:Key="searchDelayTimeTitle">Ajuste del tiempo de retardo de búsqueda</system:String>
+    <system:String x:Key="searchDelayTime_tips">Seleccionar el tiempo de retardo de búsqueda que se desea utilizar para el complemento. Seleccionar &quot;{0}&quot; si no se desea especificar nada, y el complemento utilizará el tiempo de retardo de búsqueda predeterminado.</system:String>
+    <system:String x:Key="currentSearchDelayTime">Tiempo de retardo de búsqueda actual</system:String>
+    <system:String x:Key="newSearchDelayTime">Nuevo tiempo de retardo de búsqueda</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Atajo de teclado de consulta personalizada</system:String>
