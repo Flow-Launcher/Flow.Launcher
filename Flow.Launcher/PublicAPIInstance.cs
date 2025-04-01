@@ -187,6 +187,9 @@ namespace Flow.Launcher
         public void LogWarn(string className, string message, [CallerMemberName] string methodName = "") =>
             Log.Warn(className, message, methodName);
 
+        public void LogError(string className, string message, [CallerMemberName] string methodName = "") =>
+            Log.Error(className, message, methodName);
+
         public void LogException(string className, string message, Exception e,
             [CallerMemberName] string methodName = "") => Log.Exception(className, message, e, methodName);
 

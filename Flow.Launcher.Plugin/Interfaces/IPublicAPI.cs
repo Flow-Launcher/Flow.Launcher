@@ -228,6 +228,11 @@ namespace Flow.Launcher.Plugin
         void LogWarn(string className, string message, [CallerMemberName] string methodName = "");
 
         /// <summary>
+        /// Log error message
+        /// </summary>
+        void LogError(string className, string message, [CallerMemberName] string methodName = "");
+
+        /// <summary>
         /// Log an Exception. Will throw if in debug mode so developer will be aware, 
         /// otherwise logs the eror message. This is the primary logging method used for Flow 
         /// </summary>
