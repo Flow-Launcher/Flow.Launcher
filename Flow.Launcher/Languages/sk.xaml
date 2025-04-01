@@ -7,6 +7,11 @@
         Ak už ho máte nainštalovaný, kliknite na nie, a budete vyzvaný na zadanie cesty k priečinku spustiteľného súboru {1}
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Vyberte spustiteľný súbor {0}</system:String>
+    <system:String x:Key="runtimeExecutableInvalidChooseDownload">
+        Your selected {0} executable is invalid.
+        {2}{2}
+        Click yes if you would like select the {0} executable agian. Click no if you would like to download {1}
+    </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Nie je možné nastaviť cestu ku spustiteľnému súboru {0}, skúste to v nastaveniach Flowu (prejdite nadol).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Nepodarilo sa inicializovať pluginy</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">Pluginy: {0} – nepodarilo sa načítať a mal by byť zakázaný, na pomoc kontaktujte autora pluginu</system:String>
