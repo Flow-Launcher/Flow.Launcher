@@ -18,8 +18,8 @@ namespace Flow.Launcher.Plugin.Program.Views
     /// </summary>
     public partial class ProgramSetting : UserControl
     {
-        private PluginInitContext context;
-        private Settings _settings;
+        private readonly PluginInitContext context;
+        private readonly Settings _settings;
         private GridViewColumnHeader _lastHeaderClicked;
         private ListSortDirection _lastDirection;
 
@@ -109,7 +109,7 @@ namespace Flow.Launcher.Plugin.Program.Views
 
         public bool ShowUWPCheckbox => UWPPackage.SupportUWP();
 
-        public ProgramSetting(PluginInitContext context, Settings settings, Win32[] win32s, UWPApp[] uwps)
+        public ProgramSetting(PluginInitContext context, Settings settings)
         {
             this.context = context;
             _settings = settings;

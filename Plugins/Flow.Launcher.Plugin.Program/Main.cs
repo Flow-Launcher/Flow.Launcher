@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.Program.Programs;
 using Flow.Launcher.Plugin.Program.Views;
@@ -19,18 +18,16 @@ using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher.Plugin.Program
 {
-    public class Main : ISettingProvider, IAsyncPlugin, IPluginI18n, IContextMenu, ISavable, IAsyncReloadable,
-        IDisposable
+    public class Main : ISettingProvider, IAsyncPlugin, IPluginI18n, IContextMenu, IAsyncReloadable, IDisposable
     {
-        internal static Win32[] _win32s { get; set; }
-        internal static UWPApp[] _uwps { get; set; }
-        internal static Settings _settings { get; set; }
+        private const string Win32CacheName = "Win32";
+        private const string UwpCacheName = "UWP";
 
+        internal static List<Win32> _win32s { get; private set; }
+        internal static List<UWPApp> _uwps { get; private set; }
+        internal static Settings _settings { get; private set; }
 
         internal static PluginInitContext Context { get; private set; }
-
-        private static BinaryStorage<Win32[]> _win32Storage;
-        private static BinaryStorage<UWPApp[]> _uwpStorage;
 
         private static readonly List<Result> emptyResults = new();
 
@@ -79,12 +76,6 @@ namespace Flow.Launcher.Plugin.Program
 
         static Main()
         {
-        }
-
-        public void Save()
-        {
-            _win32Storage.SaveAsync(_win32s);
-            _uwpStorage.SaveAsync(_uwps);
         }
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
@@ -191,7 +182,9 @@ namespace Flow.Launcher.Plugin.Program
 
             await Stopwatch.NormalAsync("|Flow.Launcher.Plugin.Program.Main|Preload programs cost", async () =>
             {
-                Helper.ValidateDirectory(Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
+                var pluginCachePath = Context.CurrentPluginMetadata.PluginCacheDirectoryPath;
+
+                Helper.ValidateDirectory(pluginCachePath);
 
                 static void MoveFile(string sourcePath, string destinationPath)
                 {
@@ -236,20 +229,18 @@ namespace Flow.Launcher.Plugin.Program
                 }
 
                 // Move old cache files to the new cache directory
-                var oldWin32CacheFile = Path.Combine(DataLocation.CacheDirectory, $"Win32.cache");
-                var newWin32CacheFile = Path.Combine(Context.CurrentPluginMetadata.PluginCacheDirectoryPath, $"Win32.cache");
+                var oldWin32CacheFile = Path.Combine(DataLocation.CacheDirectory, $"{Win32CacheName}.cache");
+                var newWin32CacheFile = Path.Combine(pluginCachePath, $"{Win32CacheName}.cache");
                 MoveFile(oldWin32CacheFile, newWin32CacheFile);
-                var oldUWPCacheFile = Path.Combine(DataLocation.CacheDirectory, $"UWP.cache");
-                var newUWPCacheFile = Path.Combine(Context.CurrentPluginMetadata.PluginCacheDirectoryPath, $"UWP.cache");
+                var oldUWPCacheFile = Path.Combine(DataLocation.CacheDirectory, $"{UwpCacheName}.cache");
+                var newUWPCacheFile = Path.Combine(pluginCachePath, $"{UwpCacheName}.cache");
                 MoveFile(oldUWPCacheFile, newUWPCacheFile);
 
-                _win32Storage = new BinaryStorage<Win32[]>("Win32", Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
-                _win32s = await _win32Storage.TryLoadAsync(Array.Empty<Win32>());
-                _uwpStorage = new BinaryStorage<UWPApp[]>("UWP", Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
-                _uwps = await _uwpStorage.TryLoadAsync(Array.Empty<UWPApp>());
+                _win32s = await context.API.LoadCacheBinaryStorageAsync(Win32CacheName, pluginCachePath, new List<Win32>());
+                _uwps = await context.API.LoadCacheBinaryStorageAsync(UwpCacheName, pluginCachePath, new List<UWPApp>());
             });
-            Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload win32 programs <{_win32s.Length}>");
-            Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload uwps <{_uwps.Length}>");
+            Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload win32 programs <{_win32s.Count}>");
+            Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload uwps <{_uwps.Count}>");
 
             bool cacheEmpty = !_win32s.Any() || !_uwps.Any();
 
@@ -273,36 +264,45 @@ namespace Flow.Launcher.Plugin.Program
             }
         }
 
-        public static void IndexWin32Programs()
+        public static async Task IndexWin32ProgramsAsync()
         {
             var win32S = Win32.All(_settings);
-            _win32s = win32S;
+            _win32s.Clear();
+            foreach (var win32 in win32S)
+            {
+                _win32s.Add(win32);
+            }
             ResetCache();
-            _win32Storage.SaveAsync(_win32s);
+            await Context.API.SaveCacheBinaryStorageAsync<List<Win32>>(Win32CacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
             _settings.LastIndexTime = DateTime.Now;
         }
 
-        public static void IndexUwpPrograms()
+        public static async Task IndexUwpProgramsAsync()
         {
-            var applications = UWPPackage.All(_settings);
-            _uwps = applications;
+            var uwps = UWPPackage.All(_settings);
+            _uwps.Clear();
+            foreach (var uwp in uwps)
+            {
+                _uwps.Add(uwp);
+            }
             ResetCache();
-            _uwpStorage.SaveAsync(_uwps);
+            await Context.API.SaveCacheBinaryStorageAsync<List<UWPApp>>(UwpCacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
             _settings.LastIndexTime = DateTime.Now;
         }
 
         public static async Task IndexProgramsAsync()
         {
-            var a = Task.Run(() =>
+            var win32Task = Task.Run(async () =>
             {
-                Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Win32Program index cost", IndexWin32Programs);
+                await Stopwatch.NormalAsync("|Flow.Launcher.Plugin.Program.Main|Win32Program index cost", IndexWin32ProgramsAsync);
             });
 
-            var b = Task.Run(() =>
+            var uwpTask = Task.Run(async () =>
             {
-                Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|UWPProgram index cost", IndexUwpPrograms);
+                await Stopwatch.NormalAsync("|Flow.Launcher.Plugin.Program.Main|UWPProgram index cost", IndexUwpProgramsAsync);
             });
-            await Task.WhenAll(a, b).ConfigureAwait(false);
+
+            await Task.WhenAll(win32Task, uwpTask).ConfigureAwait(false);
         }
 
         internal static void ResetCache()
@@ -314,7 +314,7 @@ namespace Flow.Launcher.Plugin.Program
 
         public Control CreateSettingPanel()
         {
-            return new ProgramSetting(Context, _settings, _win32s, _uwps);
+            return new ProgramSetting(Context, _settings);
         }
 
         public string GetTranslatedPluginTitle()
@@ -370,7 +370,7 @@ namespace Flow.Launcher.Plugin.Program
                 _settings.DisabledProgramSources.Add(new ProgramSource(program));
                 _ = Task.Run(() =>
                 {
-                    IndexUwpPrograms();
+                    _ = IndexUwpProgramsAsync();
                 });
             }
             else if (_win32s.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
@@ -380,7 +380,7 @@ namespace Flow.Launcher.Plugin.Program
                 _settings.DisabledProgramSources.Add(new ProgramSource(program));
                 _ = Task.Run(() =>
                 {
-                    IndexWin32Programs();
+                    _ = IndexWin32ProgramsAsync();
                 });
             }
         }
