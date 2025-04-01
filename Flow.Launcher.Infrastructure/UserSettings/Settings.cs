@@ -298,7 +298,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public ObservableCollection<BuiltinShortcutModel> BuiltinShortcuts { get; set; } = new()
         {
             new BuiltinShortcutModel("{clipboard}", "shortcut_clipboard_description", Clipboard.GetText),
-            new BuiltinShortcutModel("{active_explorer_path}", "shortcut_active_explorer_path", FileExplorerHelper.GetActiveExplorerPath)
+            new BuiltinShortcutModel("{active_explorer_path}", "shortcut_active_explorer_path", FileExplorerHelper.GetActiveExplorerPath),
+            new BuiltinShortcutModel("{active_office_file}", "shortcut_active_office_file", Helper.GetActiveOfficeFilePath)
         };
 
         public bool DontPromptUpdateMsg { get; set; }
