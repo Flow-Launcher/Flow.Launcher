@@ -7,6 +7,11 @@
         Cliquez sur non s'il est déjà installé, et vous serez invité à sélectionner le dossier qui contient l'exécutable {1}
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Veuillez sélectionner l'exécutable {0}</system:String>
+    <system:String x:Key="runtimeExecutableInvalidChooseDownload">
+        Your selected {0} executable is invalid.
+        {2}{2}
+        Click yes if you would like select the {0} executable agian. Click no if you would like to download {1}
+    </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Impossible de définir {0} comme chemin d'accès vers l'exécutable. Veuillez essayer à partir des paramètres de Flow (défiler vers le bas).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Échec de l'initialisation des plugins</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">Plugins : {0} - n'ont pas pu être chargés et doivent être désactivés, veuillez contacter le créateur du plugin pour obtenir de l'aide</system:String>
