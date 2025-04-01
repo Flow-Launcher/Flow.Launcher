@@ -1,5 +1,4 @@
-﻿
-using Flow.Launcher.Plugin.PluginsManager.ViewModels;
+﻿using Flow.Launcher.Plugin.PluginsManager.ViewModels;
 
 namespace Flow.Launcher.Plugin.PluginsManager.Views
 {
@@ -8,15 +7,11 @@ namespace Flow.Launcher.Plugin.PluginsManager.Views
     /// </summary>
     public partial class PluginsManagerSettings
     {
-        private readonly SettingsViewModel viewModel;
-
         internal PluginsManagerSettings(SettingsViewModel viewModel)
         {
             InitializeComponent();
 
-            this.viewModel = viewModel;
-
-            this.DataContext = viewModel;
+            DataContext = viewModel;
         }
     }
 }

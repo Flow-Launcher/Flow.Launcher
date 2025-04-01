@@ -51,6 +51,9 @@
     <SolidColorBrush x:Key="PluginInfoColor" Color="#8f8f8f" />
     <SolidColorBrush x:Key="BasicLabelColor" Color="#1b1b1b" />
 
+    <SolidColorBrush x:Key="NewHotkeyForeground" Color="#5E000000" />
+    <SolidColorBrush x:Key="BasicHotkeyBGColor" Color="#0A000000" />
+
     <SolidColorBrush x:Key="ThemeHoverButton" Color="#f6f6f6" />
     <!--  Typo  -->
     <SolidColorBrush x:Key="PopuBGColor" Color="#ffffff" />
@@ -107,6 +110,7 @@
     <SolidColorBrush x:Key="InfoBarWarningBG" Color="#FFF4CE" />
     <SolidColorBrush x:Key="InfoBarBD" Color="#0F000000" />
 
+    <SolidColorBrush x:Key="MouseOverWindowCloseButtonForegroundBrush" Color="#ffffff" />
 
     <SolidColorBrush x:Key="ButtonOutBorder" Color="#e5e5e5" />
     <SolidColorBrush x:Key="ButtonInsideBorder" Color="#d3d3d3" />

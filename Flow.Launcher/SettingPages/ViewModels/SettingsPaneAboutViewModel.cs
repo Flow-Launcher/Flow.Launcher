@@ -102,13 +102,13 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     [RelayCommand]
     private void OpenSettingsFolder()
     {
-        App.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Settings));
+        App.API.OpenDirectory(DataLocation.SettingsDirectory);
     }
 
     [RelayCommand]
     private void OpenParentOfSettingsFolder(object parameter)
     {
-        string settingsFolderPath = Path.Combine(DataLocation.DataDirectory(), Constant.Settings);
+        string settingsFolderPath = Path.Combine(DataLocation.SettingsDirectory);
         string parentFolderPath = Path.GetDirectoryName(settingsFolderPath);
         App.API.OpenDirectory(parentFolderPath);
     }
@@ -140,7 +140,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
 
     private static DirectoryInfo GetLogDir(string version = "")
     {
-        return new DirectoryInfo(Path.Combine(DataLocation.DataDirectory(), Constant.Logs, version));
+        return new DirectoryInfo(Path.Combine(DataLocation.LogDirectory, version));
     }
 
     private static List<FileInfo> GetLogFiles(string version = "")

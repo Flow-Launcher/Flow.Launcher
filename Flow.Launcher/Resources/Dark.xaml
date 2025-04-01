@@ -58,6 +58,9 @@
     <SolidColorBrush x:Key="BasicSeparatorColor" Color="#cecece" />
     <SolidColorBrush x:Key="BasicLineColor" Color="#cecece" />
 
+    <SolidColorBrush x:Key="NewHotkeyForeground" Color="#44FFFFFF" />
+    <SolidColorBrush x:Key="BasicHotkeyBGColor" Color="#13FFFFFF" />
+
     <SolidColorBrush x:Key="ThemeHoverButton" Color="#3c3c3c" />
     <SolidColorBrush x:Key="PopuBGColor" Color="#202020" />
     <SolidColorBrush x:Key="PopupBGColor" Color="#202020" />
@@ -115,6 +118,8 @@
     <SolidColorBrush x:Key="InfoBarWarningIcon" Color="#FCE100" />
     <SolidColorBrush x:Key="InfoBarWarningBG" Color="#433519" />
     <SolidColorBrush x:Key="InfoBarBD" Color="#19000000" />
+
+    <SolidColorBrush x:Key="MouseOverWindowCloseButtonForegroundBrush" Color="#ffffff" />
 
     <SolidColorBrush x:Key="ButtonOutBorder" Color="Transparent" />
     <SolidColorBrush x:Key="ButtonInsideBorder" Color="#3f3f3f" />

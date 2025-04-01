@@ -24,7 +24,6 @@
     Left="{Binding Settings.WindowLeft, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     Loaded="OnLoaded"
     LocationChanged="OnLocationChanged"
-    Opacity="{Binding MainWindowOpacity, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
     PreviewKeyDown="OnKeyDown"
     PreviewKeyUp="OnKeyUp"
     PreviewMouseMove="OnPreviewMouseMove"
@@ -220,6 +219,14 @@
                 <Border MinHeight="30" Style="{DynamicResource QueryBoxBgStyle}">
                     <Grid>
                         <TextBox
+                            x:Name="QueryTextPlaceholderBox"
+                            Height="{Binding MainWindowHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            FontSize="{Binding QueryBoxFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            IsEnabled="False"
+                            Style="{DynamicResource QuerySuggestionBoxStyle}"
+                            Text="{Binding PlaceholderText, Mode=OneWay}"
+                            Visibility="Collapsed" />
+                        <TextBox
                             x:Name="QueryTextSuggestionBox"
                             Height="{Binding MainWindowHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             FontSize="{Binding QueryBoxFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -244,7 +251,8 @@
                             PreviewDragOver="QueryTextBox_OnPreviewDragOver"
                             PreviewKeyUp="QueryTextBox_KeyUp"
                             Style="{DynamicResource QueryBoxStyle}"
-                            Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Text="{Binding QueryText, Mode=OneWay}"
+                            TextChanged="QueryTextBox_TextChanged1"
                             Visibility="Visible"
                             WindowChrome.IsHitTestVisibleInChrome="True">
                             <TextBox.CommandBindings>
@@ -290,7 +298,9 @@
                 <StackPanel
                     x:Name="ClockPanel"
                     IsHitTestVisible="False"
-                    Style="{DynamicResource ClockPanel}">
+                    Opacity="{Binding ClockPanelOpacity}"
+                    Style="{DynamicResource ClockPanel}"
+                    Visibility="{Binding ClockPanelVisibility}">
                     <TextBlock
                         x:Name="ClockBox"
                         Style="{DynamicResource ClockBox}"
@@ -318,6 +328,7 @@
                                 Name="SearchIcon"
                                 Margin="0"
                                 Data="{DynamicResource SearchIconImg}"
+                                Opacity="{Binding SearchIconOpacity}"
                                 Stretch="Fill"
                                 Style="{DynamicResource SearchIconStyle}"
                                 Visibility="{Binding SearchIconVisibility}" />

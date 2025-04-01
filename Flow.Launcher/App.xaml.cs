@@ -138,6 +138,11 @@ namespace Flow.Launcher
         {
             await Stopwatch.NormalAsync("|App.OnStartup|Startup cost", async () =>
             {
+                // Because new message box api uses MessageBoxEx window,
+                // if it is created and closed before main window is created, it will cause the application to exit.
+                // So set to OnExplicitShutdown to prevent the application from shutting down before main window is created
+                Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+
                 Log.SetLogLevel(_settings.LogLevel);
 
                 Ioc.Default.GetRequiredService<Portable>().PreStartCleanUpAfterPortabilityUpdate();
@@ -177,7 +182,6 @@ namespace Flow.Launcher
                 HotKeyMapper.Initialize();
 
                 // main windows needs initialized before theme change because of blur settings
-                // TODO: Clean ThemeManager.Instance in future
                 Ioc.Default.GetRequiredService<Theme>().ChangeTheme();
 
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
