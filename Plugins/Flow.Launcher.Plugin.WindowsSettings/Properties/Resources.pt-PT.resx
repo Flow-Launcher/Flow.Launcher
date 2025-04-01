@@ -2254,31 +2254,31 @@
     <value>Ver status de rede e tarefas</value>
   </data>
   <data name="TurnMagnifierOnOrOff" xml:space="preserve">
-    <value>Turn Magnifier on or off</value>
+    <value>Ativar ou desativar a lupa</value>
   </data>
   <data name="SeeTheNameOfThisComputer" xml:space="preserve">
-    <value>See the name of this computer</value>
+    <value>Ver o nome deste computador</value>
   </data>
   <data name="ViewNetworkConnections" xml:space="preserve">
     <value>Ver ligações de rede</value>
   </data>
   <data name="PerformRecommendedMaintenanceTasksAutomatically" xml:space="preserve">
-    <value>Perform recommended maintenance tasks automatically</value>
+    <value>Executar tarefas recomendadas de manutenção automaticamente</value>
   </data>
   <data name="ManageDiskSpaceUsedByYourOfflineFiles" xml:space="preserve">
-    <value>Manage disk space used by your offline files</value>
+    <value>Gerir espaço de disco utilizado pelos ficheiros locais</value>
   </data>
   <data name="TurnHighContrastOnOrOff" xml:space="preserve">
-    <value>Turn High Contrast on or off</value>
+    <value>Ativar ou desativar modo de alto contraste</value>
   </data>
   <data name="ChangeTheWayTimeIsDisplayed" xml:space="preserve">
-    <value>Change the way time is displayed</value>
+    <value>Alterar modo de exibição da hora</value>
   </data>
   <data name="ChangeHowWebPagesAreDisplayedInTabs" xml:space="preserve">
-    <value>Change how web pages are displayed in tabs</value>
+    <value>Alterar modo de exibição das páginas web nos separadores</value>
   </data>
   <data name="ChangeTheWayDatesAndListsAreDisplayed" xml:space="preserve">
-    <value>Change the way dates and lists are displayed</value>
+    <value>Alterar modo de exibição das datas e das listas</value>
   </data>
   <data name="ManageAudioDevices" xml:space="preserve">
     <value>Gerir dispositivos de áudio</value>
@@ -2293,37 +2293,37 @@
     <value>Apagar cookies ou ficheiros temporários</value>
   </data>
   <data name="SpecifyWhichHandYouWriteWith" xml:space="preserve">
-    <value>Specify which hand you write with</value>
+    <value>Especificar a mão com a qual escreve</value>
   </data>
   <data name="ChangeTouchInputSettings" xml:space="preserve">
-    <value>Change touch input settings</value>
+    <value>Alterar definições do painel de toque</value>
   </data>
   <data name="HowToChangeTheSizeOfVirtualMemory" xml:space="preserve">
-    <value>How to change the size of virtual memory</value>
+    <value>Como alterar tamanho da memória virtual</value>
   </data>
   <data name="HearTextReadAloudWithNarrator" xml:space="preserve">
-    <value>Hear text read aloud with Narrator</value>
+    <value>Utilizar Narrador para ouvir os textos</value>
   </data>
   <data name="SetUpUSBGameControllers" xml:space="preserve">
-    <value>Set up USB game controllers</value>
+    <value>Configurar controladores de jogos USB</value>
   </data>
   <data name="ShowWhichDomainYourComputerIsOn" xml:space="preserve">
-    <value>Show which domain your computer is on</value>
+    <value>Mostrar o domínio ao qual o computador pertence</value>
   </data>
   <data name="ViewAllProblemReports" xml:space="preserve">
-    <value>View all problem reports</value>
+    <value>Ver todos os relatórios de erro</value>
   </data>
   <data name="16BitApplicationSupport" xml:space="preserve">
-    <value>16-Bit Application Support</value>
+    <value>Suporte a aplicações 16-bit</value>
   </data>
   <data name="SetUpDiallingRules" xml:space="preserve">
-    <value>Set up dialling rules</value>
+    <value>Configurar regras de marcação</value>
   </data>
   <data name="EnableOrDisableSessionCookies" xml:space="preserve">
     <value>Ativar ou desativar cookies da sessão</value>
   </data>
   <data name="GiveAdministrativeRightsToADomainUser" xml:space="preserve">
-    <value>Give administrative rights to a domain user</value>
+    <value>Conceder direitos de administrador a um domínio</value>
   </data>
   <data name="ChooseWhenToTurnOffDisplay" xml:space="preserve">
     <value>Choose when to turn off display</value>
