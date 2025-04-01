@@ -7,6 +7,11 @@
         Clique &quot;Não&quot; se já tiver instalado e, de seguida, ser-lhe-á solicitada a pasta que contém o executável {1}.
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Por favor, selecione o executável {0}</system:String>
+    <system:String x:Key="runtimeExecutableInvalidChooseDownload">
+        Your selected {0} executable is invalid.
+        {2}{2}
+        Click yes if you would like select the {0} executable agian. Click no if you would like to download {1}
+    </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Não foi possível definir o caminho do executável {0}. Experimente definir o caminho nas definições (desloque até ao fundo).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Falha ao iniciar os plugins</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">Plugin: {0} - não foi possível iniciar e será desativado. Contacte o criador do plugin para obter ajuda.</system:String>
