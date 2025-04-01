@@ -4,6 +4,8 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using MemoryPack;
 
+#nullable enable
+
 namespace Flow.Launcher.Infrastructure.Storage
 {
     /// <summary>
@@ -15,40 +17,53 @@ namespace Flow.Launcher.Infrastructure.Storage
     /// </remarks>
     public class BinaryStorage<T>
     {
+        protected T? Data;
+
         public const string FileSuffix = ".cache";
 
-        // Let the derived class to set the file path
-        public BinaryStorage(string filename, string directoryPath = null)
-        {
-            directoryPath ??= DataLocation.CacheDirectory;
-            Helper.ValidateDirectory(directoryPath);
+        protected string FilePath { get; init; } = null!;
 
-            FilePath = Path.Combine(directoryPath, $"{filename}{FileSuffix}");
+        protected string DirectoryPath { get; init; } = null!;
+
+        // Let the derived class to set the file path
+        protected BinaryStorage()
+        {
         }
 
-        public string FilePath { get; }
+        public BinaryStorage(string filename)
+        {
+            DirectoryPath = DataLocation.CacheDirectory;
+            Helper.ValidateDirectory(DirectoryPath);
+
+            FilePath = Path.Combine(DirectoryPath, $"{filename}{FileSuffix}");
+        }
 
         public async ValueTask<T> TryLoadAsync(T defaultData)
         {
+            if (Data != null)
+                return Data;
+
             if (File.Exists(FilePath))
             {
                 if (new FileInfo(FilePath).Length == 0)
                 {
                     Log.Error($"|BinaryStorage.TryLoad|Zero length cache file <{FilePath}>");
-                    await SaveAsync(defaultData);
-                    return defaultData;
+                    Data = defaultData;
+                    await SaveAsync();
                 }
 
                 await using var stream = new FileStream(FilePath, FileMode.Open);
                 var d = await DeserializeAsync(stream, defaultData);
-                return d;
+                Data = d;
             }
             else
             {
                 Log.Info("|BinaryStorage.TryLoad|Cache file not exist, load default data");
-                await SaveAsync(defaultData);
-                return defaultData;
+                Data = defaultData;
+                await SaveAsync();
             }
+
+            return Data;
         }
 
         private static async ValueTask<T> DeserializeAsync(Stream stream, T defaultData)
@@ -56,7 +71,7 @@ namespace Flow.Launcher.Infrastructure.Storage
             try
             {
                 var t = await MemoryPackSerializer.DeserializeAsync<T>(stream);
-                return t;
+                return t ?? defaultData;
             }
             catch (System.Exception)
             {
@@ -65,6 +80,27 @@ namespace Flow.Launcher.Infrastructure.Storage
             }
         }
 
+        public async ValueTask SaveAsync()
+        {
+            await using var stream = new FileStream(FilePath, FileMode.Create);
+            await MemoryPackSerializer.SerializeAsync(stream, Data);
+        }
+
+        // For SavePluginSettings function
+        public void Save()
+        {
+            var serialized = MemoryPackSerializer.Serialize(Data);
+
+            File.WriteAllBytes(FilePath, serialized);
+        }
+
+        // ImageCache need to be converted into concurrent dictionary, so it does not need to cache loading results into Data
+        public void ClearData()
+        {
+            Data = default;
+        }
+
+        // ImageCache storages data in its class, so it needs to pass it to SaveAsync
         public async ValueTask SaveAsync(T data)
         {
             await using var stream = new FileStream(FilePath, FileMode.Create);
