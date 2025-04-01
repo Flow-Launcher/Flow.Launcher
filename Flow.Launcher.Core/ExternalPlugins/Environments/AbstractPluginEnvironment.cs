@@ -249,8 +249,8 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             var index = filePath.IndexOf(DataLocation.PluginEnvironments);
             
             // get the substring after "Environments" because we can not determine it dynamically
-            var ExecutablePathSubstring = filePath[(index + DataLocation.PluginEnvironments.Length)..];
-            return $"{DataLocation.PluginEnvironmentsPath}{ExecutablePathSubstring}";
+            var executablePathSubstring = filePath[(index + DataLocation.PluginEnvironments.Length)..];
+            return $"{DataLocation.PluginEnvironmentsPath}{executablePathSubstring}";
         }
     }
 }
