@@ -27,6 +27,15 @@ public partial class SettingsPaneAboutViewModel : BaseModel
         }
     }
 
+    public string CacheFolderSize
+    {
+        get
+        {
+            var size = GetCacheFiles().Sum(file => file.Length);
+            return $"{App.API.GetTranslation("clearcachefolder")} ({BytesToReadableString(size)})";
+        }
+    }
+
     public string Website => Constant.Website;
     public string SponsorPage => Constant.SponsorPage;
     public string ReleaseNotes => _updater.GitHubRepository + "/releases/latest";
@@ -99,6 +108,21 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     }
 
     [RelayCommand]
+    private void AskClearCacheFolderConfirmation()
+    {
+        var confirmResult = App.API.ShowMsgBox(
+            App.API.GetTranslation("clearcachefolderMessage"),
+            App.API.GetTranslation("clearcachefolder"),
+            MessageBoxButton.YesNo
+        );
+
+        if (confirmResult == MessageBoxResult.Yes)
+        {
+            ClearCacheFolder();
+        }
+    }
+
+    [RelayCommand]
     private void OpenSettingsFolder()
     {
         App.API.OpenDirectory(DataLocation.SettingsDirectory);
@@ -111,7 +135,6 @@ public partial class SettingsPaneAboutViewModel : BaseModel
         string parentFolderPath = Path.GetDirectoryName(settingsFolderPath);
         App.API.OpenDirectory(parentFolderPath);
     }
-
 
     [RelayCommand]
     private void OpenLogsFolder()
@@ -145,6 +168,30 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     private static List<FileInfo> GetLogFiles(string version = "")
     {
         return GetLogDir(version).EnumerateFiles("*", SearchOption.AllDirectories).ToList();
+    }
+
+    private void ClearCacheFolder()
+    {
+        var cacheDirectory = GetCacheDir();
+        var cacheFiles = GetCacheFiles();
+
+        cacheFiles.ForEach(f => f.Delete());
+
+        cacheDirectory.EnumerateDirectories("*", SearchOption.TopDirectoryOnly)
+            .ToList()
+            .ForEach(dir => dir.Delete(true));
+
+        OnPropertyChanged(nameof(CacheFolderSize));
+    }
+
+    private static DirectoryInfo GetCacheDir()
+    {
+        return new DirectoryInfo(DataLocation.CacheDirectory);
+    }
+
+    private static List<FileInfo> GetCacheFiles()
+    {
+        return GetCacheDir().EnumerateFiles("*", SearchOption.AllDirectories).ToList();
     }
 
     private static string BytesToReadableString(long bytes)
