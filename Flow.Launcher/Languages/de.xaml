@@ -7,6 +7,11 @@
         Klicken Sie auf „Nein“, wenn es bereits installiert ist, und Sie werden aufgefordert, den Ordner auszuwählen, der die ausführbare Datei {1} enthält
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Bitte wählen Sie die ausführbare Datei {0} aus</system:String>
+    <system:String x:Key="runtimeExecutableInvalidChooseDownload">
+        Your selected {0} executable is invalid.
+        {2}{2}
+        Click yes if you would like select the {0} executable agian. Click no if you would like to download {1}
+    </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Der Pfad zur ausführbaren Datei {0} kann nicht festgelegt werden. Bitte versuchen Sie es in den Einstellungen von Flow (scrollen Sie nach unten).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Plug-ins können nicht initialisiert werden</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">Plug-ins: {0} - nicht geladen werden und wird deaktiviert, bitte kontaktieren Sie den Ersteller des Plug-ins für Hilfe</system:String>
