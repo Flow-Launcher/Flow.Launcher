@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.InteropServices;
@@ -485,6 +486,57 @@ namespace Flow.Launcher.Infrastructure
             }
 
             return CultureInfo.GetCultureInfo((int)langId).Name;
+        }
+
+        #endregion
+
+        #region Window Freeze
+
+        public static Dictionary<UIElement, CacheMode> ClearAllCacheModes(DependencyObject parent)
+        {
+            Dictionary<UIElement, CacheMode> cacheModes = new();
+
+            foreach (var element in FindVisualChildren<UIElement>(parent))
+            {
+                if (element.CacheMode is null) continue;
+
+                System.Diagnostics.Debug.WriteLine($"CacheMode Changed: {GetElementName(element)}{element.CacheMode.GetType().Name}");
+
+                // Store the previous CacheMode value
+                cacheModes[element] = element.CacheMode.Clone();
+
+                // Set the CacheMode to null
+                element.CacheMode = null;
+            }
+
+            return cacheModes;
+        }
+
+        private static string GetElementName(UIElement element)
+        {
+            if (element is FrameworkElement fe && !string.IsNullOrEmpty(fe.Name)) return fe.Name;
+            return element.GetType().Name;
+        }
+
+        private static IEnumerable<T> FindVisualChildren<T>(DependencyObject parent) where T : DependencyObject
+        {
+            if (parent != null)
+            {
+                for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+                {
+                    var child = VisualTreeHelper.GetChild(parent, i);
+
+                    if (child is T t)
+                    {
+                        yield return t;
+                    }
+
+                    foreach (var childOfChild in FindVisualChildren<T>(child))
+                    {
+                        yield return childOfChild;
+                    }
+                }
+            }
         }
 
         #endregion

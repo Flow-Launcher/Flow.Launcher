@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Interop;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
@@ -34,6 +33,7 @@ public partial class SettingWindow
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
         RefreshMaximizeRestoreButton();
+
         // Fix (workaround) for the window freezes after lock screen (Win+L) or sleep
         // https://stackoverflow.com/questions/4951058/software-rendering-mode-wpf
         //HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;

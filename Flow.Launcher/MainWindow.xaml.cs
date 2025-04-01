@@ -275,7 +275,6 @@ namespace Flow.Launcher
             DependencyPropertyDescriptor
                 .FromProperty(VisibilityProperty, typeof(StackPanel))
                 .AddValueChanged(History, (s, e) => UpdateClockPanelVisibility());
-            _viewModel.ClearAllCacheModes(this);
         }
 
         private async void OnClosing(object sender, CancelEventArgs e)

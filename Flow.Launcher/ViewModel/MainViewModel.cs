@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -1479,38 +1478,6 @@ namespace Flow.Launcher.ViewModel
 
         #region Public Methods
 
-        public void ClearAllCacheModes(DependencyObject element)
-        {
-            if (element == null)
-                return;
-
-            // 현재 요소의 CacheMode를 확인하고 제거
-            if (element is UIElement uiElement && uiElement.CacheMode != null)
-            {
-                string elementName = GetElementName(uiElement);
-                Debug.WriteLine($"CacheMode 제거: {elementName} - CacheMode 타입: {uiElement.CacheMode.GetType().Name}");
-                uiElement.CacheMode = null;
-            }
-
-            // 모든 자식 요소에 대해 재귀적으로 CacheMode 제거
-            int childCount = VisualTreeHelper.GetChildrenCount(element);
-            for (int i = 0; i < childCount; i++)
-            {
-                DependencyObject child = VisualTreeHelper.GetChild(element, i);
-                ClearAllCacheModes(child);
-            }
-        }
-
-        private string GetElementName(UIElement element)
-        {
-            // 요소의 이름 가져오기 시도
-            if (element is FrameworkElement fe && !string.IsNullOrEmpty(fe.Name))
-                return fe.Name;
-    
-            // 이름이 없으면 타입 반환
-            return element.GetType().Name;
-        }
-
 #pragma warning disable VSTHRD100 // Avoid async void methods
 
         public void Show()
@@ -1539,9 +1506,6 @@ namespace Flow.Launcher.ViewModel
                     {
                         SearchIconVisibility = Visibility.Visible;
                     }
-
-                    // Clear all cache modes
-                    ClearAllCacheModes(mainWindow);
                 }
             }, DispatcherPriority.Render);
 
