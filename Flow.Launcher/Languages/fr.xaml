@@ -8,9 +8,9 @@
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Veuillez sélectionner l'exécutable {0}</system:String>
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
-        Your selected {0} executable is invalid.
+        L'exécutable {0} que vous avez sélectionné est invalide.
         {2}{2}
-        Click yes if you would like select the {0} executable agian. Click no if you would like to download {1}
+        Cliquez sur oui si vous souhaitez sélectionner l'exécutable {0} à nouveau. Cliquez sur non si vous souhaitez télécharger {1}.
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Impossible de définir {0} comme chemin d'accès vers l'exécutable. Veuillez essayer à partir des paramètres de Flow (défiler vers le bas).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Échec de l'initialisation des plugins</system:String>
