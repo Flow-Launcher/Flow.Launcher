@@ -201,7 +201,7 @@ namespace Flow.Launcher
                 var name = value.GetType().GetField("AssemblyName")?.GetValue(value)?.ToString();
                 if (name == assemblyName)
                 {
-                    _pluginJsonStorages.Remove(key, out var pluginJsonStorage);
+                    _pluginJsonStorages.TryRemove(key, out var pluginJsonStorage);
                 }
             }
         }
@@ -344,7 +344,7 @@ namespace Flow.Launcher
                 var currentCacheDirectory = key.Item2;
                 if (cacheDirectory == currentCacheDirectory)
                 {
-                    _pluginBinaryStorages.Remove(key, out var _);
+                    _pluginBinaryStorages.TryRemove(key, out var _);
                 }
             }
         }
