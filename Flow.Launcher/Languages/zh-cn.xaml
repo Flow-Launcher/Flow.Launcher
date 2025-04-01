@@ -7,6 +7,11 @@
         如果已安装，请单击“否”，系统将提示您选择包含 {1} 可执行文件的文件夹
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">请选择 {0} 可执行文件</system:String>
+    <system:String x:Key="runtimeExecutableInvalidChooseDownload">
+        Your selected {0} executable is invalid.
+        {2}{2}
+        Click yes if you would like select the {0} executable agian. Click no if you would like to download {1}
+    </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">无法设置 {0} 可执行路径，请尝试从 Flow 的设置中设置（向下滚动到底部）。</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">无法初始化插件</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">插件：{0} - 无法加载并将被禁用，请联系插件创建者寻求帮助</system:String>
