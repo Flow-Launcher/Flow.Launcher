@@ -66,6 +66,7 @@ namespace Flow.Launcher.Core.Plugin
             }
 
             API.SavePluginSettings();
+            API.SavePluginCaches();
         }
 
         public static async ValueTask DisposePluginsAsync()
@@ -587,11 +588,13 @@ namespace Flow.Launcher.Core.Plugin
 
             if (removePluginSettings)
             {
-                // For dotnet plugins, we need to remove their PluginJsonStorage instance
+                // For dotnet plugins, we need to remove their PluginJsonStorage and PluginBinaryStorage instances
                 if (AllowedLanguage.IsDotNet(plugin.Language))
                 {
                     var method = API.GetType().GetMethod("RemovePluginSettings");
                     method?.Invoke(API, new object[] { plugin.AssemblyName });
+                    var method1 = API.GetType().GetMethod("RemovePluginCache");
+                    method1?.Invoke(API, new object[] { plugin.PluginCacheDirectoryPath });
                 }
 
                 try

@@ -236,14 +236,6 @@ namespace Flow.Launcher
             ((PluginJsonStorage<T>)_pluginJsonStorages[type]).Save();
         }
 
-        public void SaveJsonStorage<T>(T settings) where T : new()
-        {
-            var type = typeof(T);
-            _pluginJsonStorages[type] = new PluginJsonStorage<T>(settings);
-
-            ((PluginJsonStorage<T>)_pluginJsonStorages[type]).Save();
-        }
-
         public void OpenDirectory(string DirectoryPath, string FileNameOrFilePath = null)
         {
             using var explorer = new Process();
@@ -341,6 +333,51 @@ namespace Flow.Launcher
             MessageBoxEx.Show(messageBoxText, caption, button, icon, defaultResult);
 
         public Task ShowProgressBoxAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action cancelProgress = null) => ProgressBoxEx.ShowAsync(caption, reportProgressAsync, cancelProgress);
+
+        private readonly ConcurrentDictionary<(string, string, Type), object> _pluginBinaryStorages = new();
+
+        public void RemovePluginCache(string cacheDirectory)
+        {
+            foreach (var keyValuePair in _pluginBinaryStorages)
+            {
+                var key = keyValuePair.Key;
+                var currentCacheDirectory = key.Item2;
+                if (cacheDirectory == currentCacheDirectory)
+                {
+                    _pluginBinaryStorages.Remove(key, out var _);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Save plugin caches.
+        /// </summary>
+        public void SavePluginCaches()
+        {
+            foreach (var value in _pluginBinaryStorages.Values)
+            {
+                var method = value.GetType().GetMethod("Save");
+                method?.Invoke(value, null);
+            }
+        }
+
+        public async Task<T> LoadCacheBinaryStorageAsync<T>(string cacheName, string cacheDirectory, T defaultData) where T : new()
+        {
+            var type = typeof(T);
+            if (!_pluginBinaryStorages.ContainsKey((cacheName, cacheDirectory, type)))
+                _pluginBinaryStorages[(cacheName, cacheDirectory, type)] = new PluginBinaryStorage<T>(cacheName, cacheDirectory);
+
+            return await ((PluginBinaryStorage<T>)_pluginBinaryStorages[(cacheName, cacheDirectory, type)]).TryLoadAsync(defaultData);
+        }
+
+        public async Task SaveCacheBinaryStorageAsync<T>(string cacheName, string cacheDirectory) where T : new()
+        {
+            var type = typeof(T);
+            if (!_pluginBinaryStorages.ContainsKey((cacheName, cacheDirectory, type)))
+                _pluginBinaryStorages[(cacheName, cacheDirectory, type)] = new PluginBinaryStorage<T>(cacheName, cacheDirectory);
+
+            await ((PluginBinaryStorage<T>)_pluginBinaryStorages[(cacheName, cacheDirectory, type)]).SaveAsync();
+        }
 
         #endregion
 

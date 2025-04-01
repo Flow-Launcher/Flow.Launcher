@@ -344,5 +344,38 @@ namespace Flow.Launcher.Plugin
         /// Stop the loading bar in main window
         /// </summary>
         public void StopLoadingBar();
+
+        /// <summary>
+        /// Save all Flow's plugins caches
+        /// </summary>
+        void SavePluginCaches();
+
+        /// <summary>
+        /// Load BinaryStorage for current plugin's cache. This is the method used to load cache from binary in Flow.
+        /// When the file is not exist, it will create a new instance for the specific type.
+        /// </summary>
+        /// <typeparam name="T">Type for deserialization</typeparam>
+        /// <param name="cacheName">Cache file name</param>
+        /// <param name="cacheDirectory">Cache directory from plugin metadata</param>
+        /// <param name="defaultData">Default data to return</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// BinaryStorage utilize MemoryPack, which means the object must be MemoryPackSerializable <see href="https://github.com/Cysharp/MemoryPack"/>
+        /// </remarks>
+        Task<T> LoadCacheBinaryStorageAsync<T>(string cacheName, string cacheDirectory, T defaultData) where T : new();
+
+        /// <summary>
+        /// Save BinaryStorage for current plugin's cache. This is the method used to save cache to binary in Flow.Launcher
+        /// This method will save the original instance loaded with LoadCacheBinaryStorageAsync.
+        /// This API call is for manually Save. Flow will automatically save all cache type that has called LoadCacheBinaryStorageAsync or SaveCacheBinaryStorageAsync previously.
+        /// </summary>
+        /// <typeparam name="T">Type for Serialization</typeparam>
+        /// <param name="cacheName">Cache file name</param>
+        /// <param name="cacheDirectory">Cache directory from plugin metadata</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// BinaryStorage utilize MemoryPack, which means the object must be MemoryPackSerializable <see href="https://github.com/Cysharp/MemoryPack"/>
+        /// </remarks>
+        Task SaveCacheBinaryStorageAsync<T>(string cacheName, string cacheDirectory) where T : new();
     }
 }

@@ -185,5 +185,10 @@ namespace Flow.Launcher.Core.Plugin.JsonRPCV2Models
         {
             _api.StopLoadingBar();
         }
+
+        public void SavePluginCaches()
+        {
+            _api.SavePluginCaches();
+        }
     }
 }
