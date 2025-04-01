@@ -103,7 +103,15 @@ public partial class SettingsPaneAboutViewModel : BaseModel
 
         if (confirmResult == MessageBoxResult.Yes)
         {
-            ClearLogFolder();
+            try
+            {
+                ClearLogFolder();
+            }
+            catch (Exception e)
+            {
+                App.API.LogException(nameof(SettingsPaneAboutViewModel), "Failed to clear log folder", e);
+                App.API.ShowMsgBox(App.API.GetTranslation("clearfolderfailMessage"));
+            }
         }
     }
 
@@ -118,7 +126,15 @@ public partial class SettingsPaneAboutViewModel : BaseModel
 
         if (confirmResult == MessageBoxResult.Yes)
         {
-            ClearCacheFolder();
+            try
+            {
+                ClearCacheFolder();
+            }
+            catch (Exception e)
+            {
+                App.API.LogException(nameof(SettingsPaneAboutViewModel), "Failed to clear cache folder", e);
+                App.API.ShowMsgBox(App.API.GetTranslation("clearfolderfailMessage"));
+            }
         }
     }
 
@@ -202,8 +218,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
 
         foreach (string order in orders)
         {
-            if (bytes > max)
-                return $"{decimal.Divide(bytes, max):##.##} {order}";
+            if (bytes > max) return $"{decimal.Divide(bytes, max):##.##} {order}";
 
             max /= scale;
         }
