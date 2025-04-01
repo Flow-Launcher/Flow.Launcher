@@ -69,10 +69,44 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
                 var selectedFile = GetFileFromDialog(msg, FileDialogFilter);
 
-                if (!string.IsNullOrEmpty(selectedFile)) PluginsSettingsFilePath = selectedFile;
-
+                if (!string.IsNullOrEmpty(selectedFile))
+                {
+                    PluginsSettingsFilePath = selectedFile;
+                }
                 // Nothing selected because user pressed cancel from the file dialog window
-                if (string.IsNullOrEmpty(selectedFile)) InstallEnvironment();
+                else
+                {
+                    var forceDownloadMessage = string.Format(
+                        API.GetTranslation("runtimeExecutableInvalidChooseDownload"),
+                        Language,
+                        EnvName,
+                        Environment.NewLine
+                    );
+
+                    // Let users select valid path or choose to download
+                    while (string.IsNullOrEmpty(selectedFile))
+                    {
+                        if (API.ShowMsgBox(forceDownloadMessage, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        {
+                            // Continue select file
+                            selectedFile = GetFileFromDialog(msg, FileDialogFilter);
+                        }
+                        else
+                        {
+                            // User selected no, break the loop
+                            break;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(selectedFile))
+                    {
+                        PluginsSettingsFilePath = selectedFile;
+                    }
+                    else
+                    {
+                        InstallEnvironment();
+                    }
+                }
             }
             else
             {
