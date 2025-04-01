@@ -7,6 +7,11 @@
         אם זה כבר מותקן, לחץ על 'לא' ותתבקש לבחור את התיקיה המכילה את קובץ ההפעלה {1}
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">אנא בחר את קובץ ההפעלה {0}</system:String>
+    <system:String x:Key="runtimeExecutableInvalidChooseDownload">
+        Your selected {0} executable is invalid.
+        {2}{2}
+        Click yes if you would like select the {0} executable agian. Click no if you would like to download {1}
+    </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">לא ניתן להגדיר נתיב הפעלה {0}, אנא נסה שוב בהגדרות Flow (גלול עד למטה).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">נכשל בהפעלת תוספים</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">תוספים: {0} - נכשלו בטעינה ויושבתו, אנא צור קשר עם יוצרי התוספים לקבלת עזרה</system:String>
