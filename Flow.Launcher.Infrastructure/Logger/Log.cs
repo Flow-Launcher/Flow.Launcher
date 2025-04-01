@@ -135,6 +135,15 @@ namespace Flow.Launcher.Infrastructure.Logger
             return className;
         }
 
+#if !DEBUG
+        private static void ExceptionInternal(string classAndMethod, string message, System.Exception e)
+        {
+            var logger = LogManager.GetLogger(classAndMethod);
+
+            logger.Error(e, message);
+        }
+#endif
+
         private static void LogInternal(string message, LogLevel level)
         {
             if (FormatValid(message))
