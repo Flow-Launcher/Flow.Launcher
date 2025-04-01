@@ -8,9 +8,9 @@
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Por favor, selecione o executável {0}</system:String>
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
-        Your selected {0} executable is invalid.
+        O executável {0} é inválido.
         {2}{2}
-        Click yes if you would like select the {0} executable agian. Click no if you would like to download {1}
+        Clique Sim se quiser escolher o novo executável {0}. Clique Não se quiser descarregar {1}.
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Não foi possível definir o caminho do executável {0}. Experimente definir o caminho nas definições (desloque até ao fundo).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Falha ao iniciar os plugins</system:String>
