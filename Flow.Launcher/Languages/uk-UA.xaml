@@ -323,6 +323,9 @@
     <system:String x:Key="logfolder">Тека журналу</system:String>
     <system:String x:Key="clearlogfolder">Очистити журнали</system:String>
     <system:String x:Key="clearlogfolderMessage">Ви впевнені, що хочете видалити всі журнали?</system:String>
+    <system:String x:Key="clearcachefolder">Clear Caches</system:String>
+    <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
+    <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
     <system:String x:Key="welcomewindow">Чаклун</system:String>
     <system:String x:Key="userdatapath">Розташування даних користувача</system:String>
     <system:String x:Key="userdatapathToolTip">Налаштування користувача та встановлені плагіни зберігаються у теці даних користувача. Це місце може змінюватися залежно від того, чи перебуває програма в портативному режимі, чи ні.</system:String>
