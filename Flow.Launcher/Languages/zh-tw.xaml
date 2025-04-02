@@ -323,6 +323,9 @@
     <system:String x:Key="logfolder">日誌資料夾</system:String>
     <system:String x:Key="clearlogfolder">清除日誌</system:String>
     <system:String x:Key="clearlogfolderMessage">請確認要刪除所有日誌嗎？</system:String>
+    <system:String x:Key="clearcachefolder">Clear Caches</system:String>
+    <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
+    <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
     <system:String x:Key="welcomewindow">嚮導</system:String>
     <system:String x:Key="userdatapath">User Data Location</system:String>
     <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
