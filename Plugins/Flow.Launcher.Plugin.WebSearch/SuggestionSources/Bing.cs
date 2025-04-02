@@ -33,7 +33,7 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
             }
             catch (Exception e) when (e is HttpRequestException or { InnerException: TimeoutException })
             {
-                Main._context.API.LogException(nameof(Bing), "Can't get suggestion from baidu", e);
+                Main._context.API.LogException(nameof(Bing), "Can't get suggestion from Bing", e);
                 return null;
             }
             catch (JsonException e)
