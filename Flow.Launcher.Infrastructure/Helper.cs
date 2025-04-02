@@ -1,7 +1,6 @@
 ﻿#nullable enable
 
 using System;
-using System.IO;
 
 namespace Flow.Launcher.Infrastructure
 {
@@ -27,41 +26,6 @@ namespace Flow.Launcher.Infrastructure
             if (obj == null)
             {
                 throw new NullReferenceException();
-            }
-        }
-
-        public static void ValidateDataDirectory(string bundledDataDirectory, string dataDirectory)
-        {
-            if (!Directory.Exists(dataDirectory))
-            {
-                Directory.CreateDirectory(dataDirectory);
-            }
-
-            foreach (var bundledDataPath in Directory.GetFiles(bundledDataDirectory))
-            {
-                var data = Path.GetFileName(bundledDataPath);
-                var dataPath = Path.Combine(dataDirectory, data.NonNull());
-                if (!File.Exists(dataPath))
-                {
-                    File.Copy(bundledDataPath, dataPath);
-                }
-                else
-                {
-                    var time1 = new FileInfo(bundledDataPath).LastWriteTimeUtc;
-                    var time2 = new FileInfo(dataPath).LastWriteTimeUtc;
-                    if (time1 != time2)
-                    {
-                        File.Copy(bundledDataPath, dataPath, true);
-                    }
-                }
-            }
-        }
-
-        public static void ValidateDirectory(string path)
-        {
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
             }
         }
     }
