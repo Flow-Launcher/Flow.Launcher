@@ -323,9 +323,9 @@
     <system:String x:Key="logfolder">Priečinok s logmi</system:String>
     <system:String x:Key="clearlogfolder">Vymazať logy</system:String>
     <system:String x:Key="clearlogfolderMessage">Naozaj chcete odstrániť všetky logy?</system:String>
-    <system:String x:Key="clearcachefolder">Clear Caches</system:String>
-    <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
-    <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
+    <system:String x:Key="clearcachefolder">Vymazať vyrovnávaciu pamäť</system:String>
+    <system:String x:Key="clearcachefolderMessage">Naozaj chcete vymazať všetky vyrovnávacie pamäte?</system:String>
+    <system:String x:Key="clearfolderfailMessage">Nepodarilo sa odstrániť niektoré priečinky a súbory. Pre viac informácií si pozrite súbor logu</system:String>
     <system:String x:Key="welcomewindow">Sprievodca</system:String>
     <system:String x:Key="userdatapath">Cesta k používateľskému priečinku</system:String>
     <system:String x:Key="userdatapathToolTip">Nastavenia používateľa a nainštalované pluginy sa ukladajú do používateľského priečinka. Toto umiestnenie sa môže líšiť v závislosti od toho, či je v prenosnom režime alebo nie.</system:String>
