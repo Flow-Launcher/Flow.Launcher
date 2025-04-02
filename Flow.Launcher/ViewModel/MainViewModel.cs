@@ -1168,7 +1168,7 @@ namespace Flow.Launcher.ViewModel
             else if (plugins.Count == 1)
             {
                 PluginIconPath = plugins.Single().Metadata.IcoPath;
-                PluginIconSource = await ImageLoader.LoadAsync(PluginIconPath);
+                PluginIconSource = await App.API.LoadImageAsync(PluginIconPath);
                 SearchIconVisibility = Visibility.Hidden;
             }
             else
