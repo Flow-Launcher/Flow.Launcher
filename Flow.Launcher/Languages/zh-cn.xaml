@@ -323,6 +323,9 @@
     <system:String x:Key="logfolder">日志目录</system:String>
     <system:String x:Key="clearlogfolder">清除日志</system:String>
     <system:String x:Key="clearlogfolderMessage">你确定要删除所有的日志吗？</system:String>
+    <system:String x:Key="clearcachefolder">Clear Caches</system:String>
+    <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
+    <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
     <system:String x:Key="welcomewindow">向导</system:String>
     <system:String x:Key="userdatapath">用户数据位置</system:String>
     <system:String x:Key="userdatapathToolTip">用户设置和已安装的插件保存在用户数据文件夹中。此位置可能因是否处于便携模式而异。</system:String>
