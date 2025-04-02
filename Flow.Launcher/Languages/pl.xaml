@@ -323,6 +323,9 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="logfolder">Folder dziennika</system:String>
     <system:String x:Key="clearlogfolder">Wyczyść logi</system:String>
     <system:String x:Key="clearlogfolderMessage">Czy na pewno chcesz usunąć wszystkie logi?</system:String>
+    <system:String x:Key="clearcachefolder">Clear Caches</system:String>
+    <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
+    <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
     <system:String x:Key="welcomewindow">Kreator</system:String>
     <system:String x:Key="userdatapath">Lokalizacja danych użytkownika</system:String>
     <system:String x:Key="userdatapathToolTip">Ustawienia użytkownika i zainstalowane wtyczki są zapisywane w folderze danych użytkownika. Ta lokalizacja może się różnić w zależności od tego, czy aplikacja jest w trybie przenośnym, czy nie.</system:String>
