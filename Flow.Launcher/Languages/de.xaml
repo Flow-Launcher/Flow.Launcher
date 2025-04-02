@@ -323,6 +323,9 @@
     <system:String x:Key="logfolder">Ordner »Logs«</system:String>
     <system:String x:Key="clearlogfolder">Logs löschen</system:String>
     <system:String x:Key="clearlogfolderMessage">Sind Sie sicher, dass Sie alle Logs löschen wollen?</system:String>
+    <system:String x:Key="clearcachefolder">Clear Caches</system:String>
+    <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
+    <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
     <system:String x:Key="welcomewindow">Assistent</system:String>
     <system:String x:Key="userdatapath">Speicherort für Benutzerdaten</system:String>
     <system:String x:Key="userdatapathToolTip">Benutzereinstellungen und installierte Plug-ins werden im Ordner für Benutzerdaten gespeichert. Dieser Speicherort kann variieren, je nachdem, ob sich das Programm im portablen Modus befindet oder nicht.</system:String>
