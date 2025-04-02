@@ -180,7 +180,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
             {
                 try
                 {
-                    dir.Delete();
+                    dir.Delete(true);
                 }
                 catch (Exception e)
                 {
