@@ -3,13 +3,6 @@ using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using System.Windows.Input;
 using System.ComponentModel;
 using System.Threading.Tasks;
-using System;
-using System.IO;
-using System.Windows;
-using System.Windows.Input;
-using System.ComponentModel;
-using System.Threading.Tasks;
-using Flow.Launcher.Plugin.BrowserBookmark.Models;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Views;
 
@@ -23,6 +16,7 @@ public partial class SettingsControl : INotifyPropertyChanged
         Settings = settings;
         InitializeComponent();
     }
+
     public bool LoadChromeBookmark
     {
         get => Settings.LoadChromeBookmark;
@@ -62,6 +56,7 @@ public partial class SettingsControl : INotifyPropertyChanged
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(OpenInNewBrowserWindow)));
         }
     }
+
     public event PropertyChangedEventHandler PropertyChanged;
 
     private void NewCustomBrowser(object sender, RoutedEventArgs e)
