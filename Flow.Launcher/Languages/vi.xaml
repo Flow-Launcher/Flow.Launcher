@@ -325,6 +325,9 @@
     <system:String x:Key="logfolder">Thư mục nhật ký</system:String>
     <system:String x:Key="clearlogfolder">Xóa tệp nhật ký</system:String>
     <system:String x:Key="clearlogfolderMessage">Bạn có chắc chắn muốn xóa tất cả nhật ký không?</system:String>
+    <system:String x:Key="clearcachefolder">Clear Caches</system:String>
+    <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
+    <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
     <system:String x:Key="welcomewindow">Wizard</system:String>
     <system:String x:Key="userdatapath">Vị trí dữ liệu người dùng</system:String>
     <system:String x:Key="userdatapathToolTip">Thiết đặt người dùng và plugin đã cài đặt sẽ được lưu trong thư mục dữ liệu người dùng. Vị trí này có thể thay đổi tùy thuộc vào việc nó có ở chế độ di động hay không.</system:String>
