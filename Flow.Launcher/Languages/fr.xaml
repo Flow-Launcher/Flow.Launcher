@@ -322,6 +322,9 @@
     <system:String x:Key="logfolder">Répertoire des journaux</system:String>
     <system:String x:Key="clearlogfolder">Effacer le journal</system:String>
     <system:String x:Key="clearlogfolderMessage">Êtes-vous sûr de vouloir supprimer tous les journaux ?</system:String>
+    <system:String x:Key="clearcachefolder">Vider les caches</system:String>
+    <system:String x:Key="clearcachefolderMessage">Êtes-vous sûr de vouloir supprimer tous les caches ?</system:String>
+    <system:String x:Key="clearfolderfailMessage">Échec de l'effacement d'une partie des dossiers et des fichiers. Veuillez consulter le fichier journal pour plus d'informations</system:String>
     <system:String x:Key="welcomewindow">Assistant</system:String>
     <system:String x:Key="userdatapath">Emplacement des données utilisateur</system:String>
     <system:String x:Key="userdatapathToolTip">Les paramètres utilisateur et les plugins installés sont enregistrés dans le dossier des données utilisateur. Cet emplacement peut varier selon que vous soyez en mode portable ou non.</system:String>
