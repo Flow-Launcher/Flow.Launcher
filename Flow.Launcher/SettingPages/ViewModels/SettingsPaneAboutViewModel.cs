@@ -15,6 +15,8 @@ namespace Flow.Launcher.SettingPages.ViewModels;
 
 public partial class SettingsPaneAboutViewModel : BaseModel
 {
+    private static readonly string ClassName = nameof(SettingsPaneAboutViewModel);
+
     private readonly Settings _settings;
     private readonly Updater _updater;
 
@@ -103,13 +105,8 @@ public partial class SettingsPaneAboutViewModel : BaseModel
 
         if (confirmResult == MessageBoxResult.Yes)
         {
-            try
+            if (!ClearLogFolder())
             {
-                ClearLogFolder();
-            }
-            catch (Exception e)
-            {
-                App.API.LogException(nameof(SettingsPaneAboutViewModel), "Failed to clear log folder", e);
                 App.API.ShowMsgBox(App.API.GetTranslation("clearfolderfailMessage"));
             }
         }
@@ -126,13 +123,8 @@ public partial class SettingsPaneAboutViewModel : BaseModel
 
         if (confirmResult == MessageBoxResult.Yes)
         {
-            try
+            if (!ClearCacheFolder())
             {
-                ClearCacheFolder();
-            }
-            catch (Exception e)
-            {
-                App.API.LogException(nameof(SettingsPaneAboutViewModel), "Failed to clear cache folder", e);
                 App.API.ShowMsgBox(App.API.GetTranslation("clearfolderfailMessage"));
             }
         }
@@ -161,19 +153,45 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     [RelayCommand]
     private Task UpdateAppAsync() => _updater.UpdateAppAsync(false);
 
-    private void ClearLogFolder()
+    private bool ClearLogFolder()
     {
+        var success = true;
         var logDirectory = GetLogDir();
         var logFiles = GetLogFiles();
 
-        logFiles.ForEach(f => f.Delete());
+        logFiles.ForEach(f =>
+        {
+            try
+            {
+                f.Delete();
+            }
+            catch (Exception e)
+            {
+                App.API.LogException(ClassName, $"Failed to delete log file: {f.Name}", e);
+                success = false;
+            }
+        });
 
         logDirectory.EnumerateDirectories("*", SearchOption.TopDirectoryOnly)
+            // Do not clean log files of current version
             .Where(dir => !Constant.Version.Equals(dir.Name))
             .ToList()
-            .ForEach(dir => dir.Delete());
+            .ForEach(dir =>
+            {
+                try
+                {
+                    dir.Delete();
+                }
+                catch (Exception e)
+                {
+                    App.API.LogException(ClassName, $"Failed to delete log directory: {dir.Name}", e);
+                    success = false;
+                }
+            });
 
         OnPropertyChanged(nameof(LogFolderSize));
+
+        return success;
     }
 
     private static DirectoryInfo GetLogDir(string version = "")
@@ -186,18 +204,43 @@ public partial class SettingsPaneAboutViewModel : BaseModel
         return GetLogDir(version).EnumerateFiles("*", SearchOption.AllDirectories).ToList();
     }
 
-    private void ClearCacheFolder()
+    private bool ClearCacheFolder()
     {
+        var success = true;
         var cacheDirectory = GetCacheDir();
         var cacheFiles = GetCacheFiles();
 
-        cacheFiles.ForEach(f => f.Delete());
+        cacheFiles.ForEach(f =>
+        {
+            try
+            {
+                f.Delete();
+            }
+            catch (Exception e)
+            {
+                App.API.LogException(ClassName, $"Failed to delete cache file: {f.Name}", e);
+                success = false;
+            }
+        });
 
         cacheDirectory.EnumerateDirectories("*", SearchOption.TopDirectoryOnly)
             .ToList()
-            .ForEach(dir => dir.Delete(true));
+            .ForEach(dir =>
+            {
+                try
+                {
+                    dir.Delete(true);
+                }
+                catch (Exception e)
+                {
+                    App.API.LogException(ClassName, $"Failed to delete cache directory: {dir.Name}", e);
+                    success = false;
+                }
+            });
 
         OnPropertyChanged(nameof(CacheFolderSize));
+
+        return success;
     }
 
     private static DirectoryInfo GetCacheDir()
