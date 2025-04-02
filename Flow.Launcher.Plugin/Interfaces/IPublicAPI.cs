@@ -348,7 +348,7 @@ namespace Flow.Launcher.Plugin
 
         /// <summary>
         /// Load image from path. Support local, remote and data:image url.
-        /// If image path is missing, it will retun a missing icon.
+        /// If image path is missing, it will return a missing icon.
         /// </summary>
         /// <param name="path">The path of the image.</param>
         /// <param name="loadFullImage">
