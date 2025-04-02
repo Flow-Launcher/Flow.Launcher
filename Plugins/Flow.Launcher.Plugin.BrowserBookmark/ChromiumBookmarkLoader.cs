@@ -1,15 +1,17 @@
-﻿using Flow.Launcher.Plugin.BrowserBookmark.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using Flow.Launcher.Infrastructure.Logger;
 using System;
+using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using Microsoft.Data.Sqlite;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark;
 
 public abstract class ChromiumBookmarkLoader : IBookmarkLoader
 {
+    private readonly static string ClassName = nameof(ChromiumBookmarkLoader);
+
     private readonly string _faviconCacheDir;
 
     protected ChromiumBookmarkLoader()
@@ -44,7 +46,7 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
             }
             catch (Exception ex)
             {
-                Log.Exception($"Failed to register bookmark file monitoring: {bookmarkPath}", ex);
+                Main._context.API.LogException(ClassName, $"Failed to register bookmark file monitoring: {bookmarkPath}", ex);
             }
 
             var source = name + (Path.GetFileName(profile) == "Default" ? "" : $" ({Path.GetFileName(profile)})");
@@ -136,7 +138,7 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
             }
             catch (Exception ex)
             {
-                Log.Exception($"Failed to copy favicon DB: {dbPath}", ex);
+                Main._context.API.LogException(ClassName, $"Failed to copy favicon DB: {dbPath}", ex);
                 return;
             }
 
@@ -189,7 +191,7 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
                     }
                     catch (Exception ex)
                     {
-                        Log.Exception($"Failed to extract bookmark favicon: {bookmark.Url}", ex);
+                        Main._context.API.LogException(ClassName, $"Failed to extract bookmark favicon: {bookmark.Url}", ex);
                     }
                 }
 
@@ -199,7 +201,7 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
             }
             catch (Exception ex)
             {
-                Log.Exception($"Failed to connect to SQLite: {tempDbPath}", ex);
+                Main._context.API.LogException(ClassName, $"Failed to connect to SQLite: {tempDbPath}", ex);
             }
 
             // Delete temporary file
@@ -209,12 +211,12 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
             }
             catch (Exception ex)
             {
-                Log.Exception($"Failed to delete temporary favicon DB: {tempDbPath}", ex);
+                Main._context.API.LogException(ClassName, $"Failed to delete temporary favicon DB: {tempDbPath}", ex);
             }
         }
         catch (Exception ex)
         {
-            Log.Exception($"Failed to load favicon DB: {dbPath}", ex);
+            Main._context.API.LogException(ClassName, $"Failed to load favicon DB: {dbPath}", ex);
         }
     }
 
@@ -226,7 +228,7 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
         }
         catch (Exception ex)
         {
-            Log.Exception($"Failed to save image: {outputPath}", ex);
+            Main._context.API.LogException(ClassName, $"Failed to save image: {outputPath}", ex);
         }
     }
 }
