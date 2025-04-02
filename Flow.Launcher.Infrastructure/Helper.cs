@@ -2,18 +2,11 @@
 
 using System;
 using System.IO;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Flow.Launcher.Infrastructure
 {
     public static class Helper
     {
-        static Helper()
-        {
-            jsonFormattedSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-        }
-
         /// <summary>
         /// http://www.yinwang.org/blog-cn/2015/11/21/programming-philosophy
         /// </summary>
@@ -70,21 +63,6 @@ namespace Flow.Launcher.Infrastructure
             {
                 Directory.CreateDirectory(path);
             }
-        }
-
-        private static readonly JsonSerializerOptions jsonFormattedSerializerOptions = new JsonSerializerOptions
-        {
-            WriteIndented = true
-        };
-
-        public static string Formatted<T>(this T t)
-        {
-            var formatted = JsonSerializer.Serialize(t, new JsonSerializerOptions
-            {
-                WriteIndented = true
-            });
-
-            return formatted;
         }
     }
 }
