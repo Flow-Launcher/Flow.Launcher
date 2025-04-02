@@ -10,16 +10,13 @@ namespace Flow.Launcher.Plugin.BrowserBookmark;
 
 public abstract class ChromiumBookmarkLoader : IBookmarkLoader
 {
-    private readonly static string ClassName = nameof(ChromiumBookmarkLoader);
+    private static readonly string ClassName = nameof(ChromiumBookmarkLoader);
 
     private readonly string _faviconCacheDir;
 
     protected ChromiumBookmarkLoader()
     {
-        _faviconCacheDir = Path.Combine(
-            Path.GetDirectoryName(typeof(ChromiumBookmarkLoader).Assembly.Location),
-            "FaviconCache");
-        Directory.CreateDirectory(_faviconCacheDir);
+        _faviconCacheDir = Main._faviconCacheDir;
     }
 
     public abstract List<Bookmark> GetBookmarks();

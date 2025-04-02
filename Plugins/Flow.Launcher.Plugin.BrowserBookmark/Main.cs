@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.BrowserBookmark.Commands;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using Flow.Launcher.Plugin.BrowserBookmark.Views;
@@ -14,6 +15,8 @@ namespace Flow.Launcher.Plugin.BrowserBookmark;
 
 public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContextMenu, IDisposable
 {
+    internal static string _faviconCacheDir;
+
     internal static PluginInitContext _context;
 
     private static List<Bookmark> _cachedBookmarks = new();
@@ -27,6 +30,12 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
         _context = context;
 
         _settings = context.API.LoadSettingJsonStorage<Settings>();
+
+        _faviconCacheDir = Path.Combine(
+            _context.CurrentPluginMetadata.PluginCacheDirectoryPath,
+            "FaviconCache");
+
+        Helper.ValidateDirectory(_faviconCacheDir);
 
         LoadBookmarksIfEnabled();
     }

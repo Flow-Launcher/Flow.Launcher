@@ -15,10 +15,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
 
     protected FirefoxBookmarkLoaderBase()
     {
-        _faviconCacheDir = Path.Combine(
-            Path.GetDirectoryName(typeof(FirefoxBookmarkLoaderBase).Assembly.Location),
-            "FaviconCache");
-        Directory.CreateDirectory(_faviconCacheDir);
+        _faviconCacheDir = Main._faviconCacheDir;
     }
 
     public abstract List<Bookmark> GetBookmarks();
