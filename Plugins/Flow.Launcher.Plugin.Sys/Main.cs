@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -191,8 +190,6 @@ namespace Flow.Launcher.Plugin.Sys
         private List<Result> Commands()
         {
             var results = new List<Result>();
-            var logPath = Path.Combine(DataLocation.DataDirectory(), "Logs", Constant.Version);
-            var userDataPath = DataLocation.DataDirectory();
             var recycleBinFolder = "shell:RecycleBinFolder";
             results.AddRange(new[]
             {
@@ -302,7 +299,7 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Hibernate",
-                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe945"),
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe8be"),
                     IcoPath = "Images\\hibernate.png",
                     Action= c =>
                     {
@@ -325,7 +322,7 @@ namespace Flow.Launcher.Plugin.Sys
                 {
                     Title = "Empty Recycle Bin",
                     IcoPath = "Images\\recyclebin.png",
-                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe74d"),
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xea99"),
                     Action = c =>
                     {
                         // http://www.pinvoke.net/default.aspx/shell32/SHEmptyRecycleBin.html
@@ -361,6 +358,7 @@ namespace Flow.Launcher.Plugin.Sys
                 {
                     Title = "Exit",
                     IcoPath = "Images\\app.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe89f"),
                     Action = c =>
                     {
                         Application.Current.MainWindow.Close();
@@ -370,6 +368,7 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Save Settings",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xea35"),
                     IcoPath = "Images\\app.png",
                     Action = c =>
                     {
@@ -381,6 +380,7 @@ namespace Flow.Launcher.Plugin.Sys
                 },
                 new Result
                 {
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe72c"),
                     Title = "Restart Flow Launcher",
                     IcoPath = "Images\\app.png",
                     Action = c =>
@@ -392,6 +392,7 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Settings",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xf210"),
                     IcoPath = "Images\\app.png",
                     Action = c =>
                     {
@@ -403,6 +404,7 @@ namespace Flow.Launcher.Plugin.Sys
                 {
                     Title = "Reload Plugin Data",
                     IcoPath = "Images\\app.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe72c"),
                     Action = c =>
                     {
                         // Hide the window first then show msg after done because sometimes the reload could take a while, so not to make user think it's frozen. 
@@ -421,6 +423,7 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Check For Update",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xede4"),
                     IcoPath = "Images\\checkupdate.png",
                     Action = c =>
                     {
@@ -431,19 +434,21 @@ namespace Flow.Launcher.Plugin.Sys
                 },
                 new Result
                 {
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xf12b"),
                     Title = "Open Log Location",
                     IcoPath = "Images\\app.png",
-                    CopyText = logPath,
-                    AutoCompleteText = logPath,
+                    CopyText = DataLocation.VersionLogDirectory,
+                    AutoCompleteText = DataLocation.VersionLogDirectory,
                     Action = c =>
                     {
-                        _context.API.OpenDirectory(logPath);
+                        _context.API.OpenDirectory(DataLocation.VersionLogDirectory);
                         return true;
                     }
                 },
                 new Result
                 {
                     Title = "Flow Launcher Tips",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe897"),
                     IcoPath = "Images\\app.png",
                     CopyText = Constant.Documentation,
                     AutoCompleteText = Constant.Documentation,
@@ -456,12 +461,13 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Flow Launcher UserData Folder",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xf12b"),
                     IcoPath = "Images\\app.png",
-                    CopyText = userDataPath,
-                    AutoCompleteText = userDataPath,
+                    CopyText = DataLocation.DataDirectory(),
+                    AutoCompleteText = DataLocation.DataDirectory(),
                     Action = c =>
                     {
-                        _context.API.OpenDirectory(userDataPath);
+                        _context.API.OpenDirectory(DataLocation.DataDirectory());
                         return true;
                     }
                 },
@@ -480,7 +486,7 @@ namespace Flow.Launcher.Plugin.Sys
                 {
                     Title = "Set Flow Launcher Theme",
                     IcoPath = "Images\\app.png",
-                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\ue7fc"),
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\ue790"),
                     Action = c =>
                     {
                         _context.API.ChangeQuery($"{ThemeSelector.Keyword} ");

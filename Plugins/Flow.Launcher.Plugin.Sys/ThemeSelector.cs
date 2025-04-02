@@ -2,7 +2,6 @@
 using System.Linq;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.Resource;
-using FLSettings = Flow.Launcher.Infrastructure.UserSettings.Settings;
 
 namespace Flow.Launcher.Plugin.Sys
 {
@@ -10,40 +9,37 @@ namespace Flow.Launcher.Plugin.Sys
     {
         public const string Keyword = "fltheme";
 
-        private readonly FLSettings _settings;
-        private readonly Theme _theme;
         private readonly PluginInitContext _context;
+
+        // Do not initialize it in the constructor, because it will cause null reference in
+        // var dicts = Application.Current.Resources.MergedDictionaries; line of Theme
+        private Theme theme = null;
+        private Theme Theme => theme ??= Ioc.Default.GetRequiredService<Theme>();
 
         #region Theme Selection
 
         // Theme select codes simplified from SettingsPaneThemeViewModel.cs
 
         private Theme.ThemeData _selectedTheme;
-        private Theme.ThemeData SelectedTheme
+        public Theme.ThemeData SelectedTheme
         {
-            get => _selectedTheme ??= Themes.Find(v => v.FileNameWithoutExtension == _theme.CurrentTheme);
+            get => _selectedTheme ??= Themes.Find(v => v.FileNameWithoutExtension == Theme.GetCurrentTheme());
             set
             {
                 _selectedTheme = value;
-                _theme.ChangeTheme(value.FileNameWithoutExtension);
+                Theme.ChangeTheme(value.FileNameWithoutExtension);
 
-                if (_theme.BlurEnabled && _settings.UseDropShadowEffect)
-                {
-                    _theme.RemoveDropShadowEffectFromCurrentTheme();
-                    _settings.UseDropShadowEffect = false;
-                }
+                _ = Theme.RefreshFrameAsync();
             }
         }
 
-        private List<Theme.ThemeData> Themes => _theme.LoadAvailableThemes();
+        private List<Theme.ThemeData> Themes => Theme.LoadAvailableThemes();
 
         #endregion
 
         public ThemeSelector(PluginInitContext context)
         {
             _context = context;
-            _theme = Ioc.Default.GetRequiredService<Theme>();
-            _settings = Ioc.Default.GetRequiredService<FLSettings>();
         }
 
         public List<Result> Query(Query query)

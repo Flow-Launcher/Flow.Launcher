@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
+using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.Program.Programs;
 using Flow.Launcher.Plugin.Program.Views;
 using Flow.Launcher.Plugin.Program.Views.Models;
@@ -188,9 +191,61 @@ namespace Flow.Launcher.Plugin.Program
 
             await Stopwatch.NormalAsync("|Flow.Launcher.Plugin.Program.Main|Preload programs cost", async () =>
             {
-                _win32Storage = new BinaryStorage<Win32[]>("Win32");
+                Helper.ValidateDirectory(Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
+
+                static void MoveFile(string sourcePath, string destinationPath)
+                {
+                    if (!File.Exists(sourcePath))
+                    {
+                        return;
+                    }
+
+                    if (File.Exists(destinationPath))
+                    {
+                        try
+                        {
+                            File.Delete(sourcePath);
+                        }
+                        catch (Exception)
+                        {
+                            // Ignore, we will handle next time we start the plugin
+                        }
+                        return;
+                    }
+
+                    var destinationDirectory = Path.GetDirectoryName(destinationPath);
+                    if (!Directory.Exists(destinationDirectory) && (!string.IsNullOrEmpty(destinationDirectory)))
+                    {
+                        try
+                        {
+                            Directory.CreateDirectory(destinationDirectory);
+                        }
+                        catch (Exception)
+                        {
+                            // Ignore, we will handle next time we start the plugin
+                        }
+                    }
+                    try
+                    {
+                        File.Move(sourcePath, destinationPath);
+                    }
+                    catch (Exception)
+                    {
+                        // Ignore, we will handle next time we start the plugin
+                    }
+                }
+
+                // Move old cache files to the new cache directory
+                var oldWin32CacheFile = Path.Combine(DataLocation.CacheDirectory, $"Win32.cache");
+                var newWin32CacheFile = Path.Combine(Context.CurrentPluginMetadata.PluginCacheDirectoryPath, $"Win32.cache");
+                MoveFile(oldWin32CacheFile, newWin32CacheFile);
+                var oldUWPCacheFile = Path.Combine(DataLocation.CacheDirectory, $"UWP.cache");
+                var newUWPCacheFile = Path.Combine(Context.CurrentPluginMetadata.PluginCacheDirectoryPath, $"UWP.cache");
+                MoveFile(oldUWPCacheFile, newUWPCacheFile);
+
+                _win32Storage = new BinaryStorage<Win32[]>("Win32", Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
                 _win32s = await _win32Storage.TryLoadAsync(Array.Empty<Win32>());
-                _uwpStorage = new BinaryStorage<UWPApp[]>("UWP");
+                _uwpStorage = new BinaryStorage<UWPApp[]>("UWP", Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
                 _uwps = await _uwpStorage.TryLoadAsync(Array.Empty<UWPApp>());
             });
             Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload win32 programs <{_win32s.Length}>");

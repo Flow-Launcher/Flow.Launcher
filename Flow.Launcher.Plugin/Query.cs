@@ -2,10 +2,11 @@
 
 namespace Flow.Launcher.Plugin
 {
+    /// <summary>
+    /// Represents a query that is sent to a plugin.
+    /// </summary>
     public class Query
     {
-        public Query() { }
-
         /// <summary>
         /// Raw query, this includes action keyword if it has
         /// We didn't recommend use this property directly. You should always use Search property.
@@ -39,10 +40,9 @@ namespace Flow.Launcher.Plugin
         public const string TermSeparator = " ";
 
         /// <summary>
-        /// User can set multiple action keywords seperated by ';'
+        /// User can set multiple action keywords seperated by whitespace
         /// </summary>
-        public const string ActionKeywordSeparator = ";";
-
+        public const string ActionKeywordSeparator = TermSeparator;
 
         /// <summary>
         /// Wildcard action keyword. Plugins using this value will be queried on every search.
@@ -55,13 +55,13 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         public string ActionKeyword { get; init; }
 
-        [JsonIgnore]
         /// <summary>
         /// Splits <see cref="SearchTerms"/> by spaces and returns the first item.
         /// </summary>
         /// <remarks>
         /// returns an empty string when <see cref="SearchTerms"/> does not have enough items.
         /// </remarks>
+        [JsonIgnore]
         public string FirstSearch => SplitSearch(0);
         
         [JsonIgnore]
