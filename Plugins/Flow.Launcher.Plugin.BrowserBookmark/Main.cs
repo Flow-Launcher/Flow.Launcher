@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin.BrowserBookmark.Commands;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using Flow.Launcher.Plugin.BrowserBookmark.Views;
@@ -15,7 +14,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark;
 
 public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContextMenu, IDisposable
 {
-    private static PluginInitContext _context;
+    internal static PluginInitContext _context;
 
     private static List<Bookmark> _cachedBookmarks = new();
 
@@ -23,16 +22,6 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
 
     private static bool _initialized = false;
     
-    public static PluginInitContext GetContext()
-    {
-        return _context;
-    }
-    
-    public static string GetPluginDirectory()
-    {
-        return _context?.CurrentPluginMetadata?.PluginDirectory;
-    }
-
     public void Init(PluginInitContext context)
     {
         _context = context;
@@ -223,7 +212,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
                     catch (Exception e)
                     {
                         var message = "Failed to set url in clipboard";
-                        Log.Exception("Main", message, e, "LoadContextMenus");
+                        _context.API.LogException(nameof(Main), message, e);
 
                         _context.API.ShowMsg(message);
 

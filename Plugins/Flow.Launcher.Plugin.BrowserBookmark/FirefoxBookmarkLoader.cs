@@ -1,15 +1,16 @@
-﻿using Flow.Launcher.Plugin.BrowserBookmark.Models;
-using Microsoft.Data.Sqlite;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Plugin.BrowserBookmark.Models;
+using Microsoft.Data.Sqlite;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark;
 
 public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
 {
+    private static readonly string ClassName = nameof(FirefoxBookmarkLoaderBase);
+
     private readonly string _faviconCacheDir;
 
     protected FirefoxBookmarkLoaderBase()
@@ -52,7 +53,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
             }
             catch (Exception ex)
             {
-                Log.Exception($"Failed to register Firefox bookmark file monitoring: {placesPath}", ex);
+                Main._context.API.LogException(ClassName, $"Failed to register Firefox bookmark file monitoring: {placesPath}", ex);
             }
 
             // Use a copy to avoid lock issues with the original file
@@ -93,12 +94,12 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
             }
             catch (Exception ex)
             {
-                Log.Exception($"Failed to delete temporary favicon DB: {tempDbPath}", ex);
+                Main._context.API.LogException(ClassName, $"Failed to delete temporary favicon DB: {tempDbPath}", ex);
             }
         }
         catch (Exception ex)
         {
-            Log.Exception($"Failed to load Firefox bookmarks: {placesPath}", ex);
+            Main._context.API.LogException(ClassName, $"Failed to load Firefox bookmarks: {placesPath}", ex);
         }
 
         return bookmarks;
@@ -177,7 +178,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
                 }
                 catch (Exception ex)
                 {
-                    Log.Exception($"Failed to extract Firefox favicon: {bookmark.Url}", ex);
+                    Main._context.API.LogException(ClassName, $"Failed to extract Firefox favicon: {bookmark.Url}", ex);
                 }
             }
 
@@ -192,12 +193,12 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
             }
             catch (Exception ex)
             {
-                Log.Exception($"Failed to delete temporary favicon DB: {tempDbPath}", ex);
+                Main._context.API.LogException(ClassName, $"Failed to delete temporary favicon DB: {tempDbPath}", ex);
             }
         }
         catch (Exception ex)
         {
-            Log.Exception($"Failed to load Firefox favicon DB: {faviconDbPath}", ex);
+            Main._context.API.LogException(ClassName, $"Failed to load Firefox favicon DB: {faviconDbPath}", ex);
         }
     }
 
@@ -218,7 +219,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
         }
         catch (Exception ex)
         {
-            Log.Exception($"Failed to save image: {outputPath}", ex);
+            Main._context.API.LogException(ClassName, $"Failed to save image: {outputPath}", ex);
         }
     }
 }
