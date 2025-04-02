@@ -323,6 +323,9 @@
     <system:String x:Key="logfolder">תיקיית יומני רישום</system:String>
     <system:String x:Key="clearlogfolder">נקה יומני רישום</system:String>
     <system:String x:Key="clearlogfolderMessage">האם אתה בטוח שברצונך למחוק את כל היומנים?</system:String>
+    <system:String x:Key="clearcachefolder">Clear Caches</system:String>
+    <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
+    <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
     <system:String x:Key="welcomewindow">אשף</system:String>
     <system:String x:Key="userdatapath">מיקום נתוני משתמש</system:String>
     <system:String x:Key="userdatapathToolTip">הגדרות המשתמש והתוספים המותקנים נשמרים בתיקיית נתוני המשתמש. מיקום זה עשוי להשתנות אם התוכנה במצב נייד.</system:String>
