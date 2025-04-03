@@ -169,7 +169,7 @@ namespace Flow.Launcher.Core.Configuration
                 {
                     FilesFolders.OpenPath(Constant.RootDirectory, (s) => API.ShowMsgBox(s));
 
-                    Environment.Exit(0);
+                    Application.Current.Shutdown();
                 }
             }
             // Otherwise, if the portable data folder is marked for deletion,
