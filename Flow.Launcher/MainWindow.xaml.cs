@@ -32,6 +32,13 @@ namespace Flow.Launcher
 {
     public partial class MainWindow : IDisposable
     {
+        #region Public Property
+
+        // Window Event: Close Event
+        public bool CanClose { get; set; } = false;
+
+        #endregion
+
         #region Private Fields
 
         // Dependency Injection
@@ -45,8 +52,6 @@ namespace Flow.Launcher
         private readonly ContextMenu _contextMenu = new();
         private readonly MainViewModel _viewModel;
 
-        // Window Event: Close Event
-        private bool _canClose = false;
         // Window Event: Key Event
         private bool _isArrowKeyPressed = false;
 
@@ -279,7 +284,7 @@ namespace Flow.Launcher
 
         private async void OnClosing(object sender, CancelEventArgs e)
         {
-            if (!_canClose)
+            if (!CanClose)
             {
                 _notifyIcon.Visible = false;
                 App.API.SaveAppAllSettings();
@@ -287,7 +292,7 @@ namespace Flow.Launcher
                 await PluginManager.DisposePluginsAsync();
                 Notification.Uninstall();
                 // After plugins are all disposed, we can close the main window
-                _canClose = true;
+                CanClose = true;
                 // Use this instead of Close() to avoid InvalidOperationException when calling Close() in OnClosing event
                 Application.Current.Shutdown();
             }

@@ -304,6 +304,14 @@ namespace Flow.Launcher
                     return;
                 }
 
+                // If we call Environment.Exit(0), the application dispose will be called before _mainWindow.Close()
+                // Accessing _mainWindow?.Dispatcher will cause the application stuck
+                // So here we need to check it and just return so that we will not acees _mainWindow?.Dispatcher
+                if (!_mainWindow.CanClose)
+                {
+                    return;
+                }
+
                 _disposed = true;
             }
 
