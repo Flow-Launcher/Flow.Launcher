@@ -18,7 +18,7 @@ public class ThemeData
     public string Name { get; private init; }
 
     /// <summary>
-    /// Theme file path
+    /// Indicates whether the theme supports dark mode
     /// </summary>
     public bool? IsDark { get; private init; }
 
