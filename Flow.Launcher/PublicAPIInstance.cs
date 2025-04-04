@@ -358,7 +358,18 @@ namespace Flow.Launcher
         public Task<bool> UpdatePluginManifestAsync(bool usePrimaryUrlOnly = false, CancellationToken token = default) =>
             PluginsManifest.UpdateManifestAsync(usePrimaryUrlOnly, token);
 
-        public IReadOnlyList<UserPlugin> GetUserPlugins() => PluginsManifest.UserPlugins;
+        public IReadOnlyList<UserPlugin> GetPluginManifest() => PluginsManifest.UserPlugins;
+
+        public bool PluginModified(string id) => PluginManager.PluginModified(id);
+
+        public Task UpdatePluginAsync(PluginMetadata pluginMetadata, UserPlugin plugin, string zipFilePath) =>
+            PluginManager.UpdatePluginAsync(pluginMetadata, plugin, zipFilePath);
+
+        public void InstallPlugin(UserPlugin plugin, string zipFilePath) =>
+            PluginManager.InstallPlugin(plugin, zipFilePath);
+
+        public Task UninstallPluginAsync(PluginMetadata pluginMetadata, bool removePluginSettings = false) =>
+            PluginManager.UninstallPluginAsync(pluginMetadata, removePluginSettings);
 
         #endregion
 

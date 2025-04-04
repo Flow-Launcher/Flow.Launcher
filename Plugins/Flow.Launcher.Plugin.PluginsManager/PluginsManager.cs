@@ -1,6 +1,4 @@
-﻿using Flow.Launcher.Core.Plugin;
-using Flow.Launcher.Plugin.SharedCommands;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,6 +6,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.PluginsManager
 {
@@ -49,7 +48,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
         {
             return new List<Result>()
             {
-                new Result()
+                new()
                 {
                     Title = Settings.InstallCommand,
                     IcoPath = icoPath,
@@ -61,7 +60,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                         return false;
                     }
                 },
-                new Result()
+                new()
                 {
                     Title = Settings.UninstallCommand,
                     IcoPath = icoPath,
@@ -73,7 +72,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                         return false;
                     }
                 },
-                new Result()
+                new()
                 {
                     Title = Settings.UpdateCommand,
                     IcoPath = icoPath,
@@ -248,7 +247,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             }
 
             var updateSource = !updateFromLocalPath
-                ? Context.API.GetUserPlugins()
+                ? Context.API.GetPluginManifest()
                 : new List<UserPlugin> { pluginFromLocalPath };
 
             var resultsForUpdate = (
@@ -258,7 +257,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 where string.Compare(existingPlugin.Metadata.Version, pluginUpdateSource.Version,
                           StringComparison.InvariantCulture) <
                       0 // if current version precedes version of the plugin from update source (e.g. PluginsManifest)
-                      && !PluginManager.PluginModified(existingPlugin.Metadata.ID)
+                      && !Context.API.PluginModified(existingPlugin.Metadata.ID)
                 select
                     new
                     {
@@ -274,7 +273,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             if (!resultsForUpdate.Any())
                 return new List<Result>
                 {
-                    new Result
+                    new()
                     {
                         Title = Context.API.GetTranslation("plugin_pluginsmanager_update_noresult_title"),
                         SubTitle = Context.API.GetTranslation("plugin_pluginsmanager_update_noresult_subtitle"),
@@ -339,7 +338,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                 }
                                 else
                                 {
-                                    await PluginManager.UpdatePluginAsync(x.PluginExistingMetadata, x.PluginNewUserPlugin,
+                                    await Context.API.UpdatePluginAsync(x.PluginExistingMetadata, x.PluginNewUserPlugin,
                                         downloadToFilePath);
 
                                     if (Settings.AutoRestartAfterChanging)
@@ -431,7 +430,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                 if (cts.IsCancellationRequested)
                                     return;
                                 else
-                                    await PluginManager.UpdatePluginAsync(plugin.PluginExistingMetadata, plugin.PluginNewUserPlugin,
+                                    await Context.API.UpdatePluginAsync(plugin.PluginExistingMetadata, plugin.PluginNewUserPlugin,
                                         downloadToFilePath);
                             }
                             catch (Exception ex)
@@ -550,7 +549,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             return new List<Result>
             {
-                new Result
+                new()
                 {
                     Title = $"{plugin.Name} by {plugin.Author}",
                     SubTitle = plugin.Description,
@@ -610,8 +609,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 return InstallFromLocalPath(search);
 
             var results =
-                Context.API.GetUserPlugins()
-                    .Where(x => !PluginExists(x.ID) && !PluginManager.PluginModified(x.ID))
+                Context.API.GetPluginManifest()
+                    .Where(x => !PluginExists(x.ID) && !Context.API.PluginModified(x.ID))
                     .Select(x =>
                         new Result
                         {
@@ -644,7 +643,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             try
             {
-                PluginManager.InstallPlugin(plugin, downloadedFilePath);
+                Context.API.InstallPlugin(plugin, downloadedFilePath);
 
                 if (!plugin.IsFromLocalInstallPath)
                     File.Delete(downloadedFilePath);
@@ -737,7 +736,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     Context.API.GetTranslation("plugin_pluginsmanager_keep_plugin_settings_subtitle"),
                     Context.API.GetTranslation("plugin_pluginsmanager_keep_plugin_settings_title"),
                     button: MessageBoxButton.YesNo) == MessageBoxResult.No;
-                await PluginManager.UninstallPluginAsync(plugin, removePluginFromSettings: true, removePluginSettings: removePluginSettings);
+                await Context.API.UninstallPluginAsync(plugin, removePluginSettings);
             }
             catch (ArgumentException e)
             {

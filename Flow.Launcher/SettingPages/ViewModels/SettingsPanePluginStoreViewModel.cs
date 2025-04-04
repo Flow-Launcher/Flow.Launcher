@@ -13,7 +13,7 @@ public partial class SettingsPanePluginStoreViewModel : BaseModel
     public string FilterText { get; set; } = string.Empty;
 
     public IList<PluginStoreItemViewModel> ExternalPlugins => 
-        App.API.GetUserPlugins()?.Select(p => new PluginStoreItemViewModel(p))
+        App.API.GetPluginManifest()?.Select(p => new PluginStoreItemViewModel(p))
         .OrderByDescending(p => p.Category == PluginStoreItemViewModel.NewRelease)
         .ThenByDescending(p => p.Category == PluginStoreItemViewModel.RecentlyUpdated)
         .ThenByDescending(p => p.Category == PluginStoreItemViewModel.None)
