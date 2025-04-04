@@ -37,6 +37,9 @@ namespace Flow.Launcher
         private readonly Internationalization _translater;
         private readonly MainViewModel _mainVM;
 
+        private Theme _theme;
+        private Theme Theme => _theme ??= Ioc.Default.GetRequiredService<Theme>();
+
         private readonly object _saveSettingsLock = new();
 
         #region Constructor
@@ -353,6 +356,16 @@ namespace Flow.Launcher
             MessageBoxEx.Show(messageBoxText, caption, button, icon, defaultResult);
 
         public Task ShowProgressBoxAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action cancelProgress = null) => ProgressBoxEx.ShowAsync(caption, reportProgressAsync, cancelProgress);
+
+        public List<ThemeData> GetAvailableThemes() => Theme.GetAvailableThemes();
+
+        public ThemeData GetCurrentTheme() => Theme.GetCurrentTheme();
+
+        public void SetCurrentTheme(ThemeData theme)
+        {
+            Theme.ChangeTheme(theme.FileNameWithoutExtension);
+            _ = _theme.RefreshFrameAsync();
+        }
 
         #endregion
 

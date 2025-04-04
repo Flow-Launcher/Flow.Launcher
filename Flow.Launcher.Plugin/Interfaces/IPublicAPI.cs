@@ -344,5 +344,24 @@ namespace Flow.Launcher.Plugin
         /// Stop the loading bar in main window
         /// </summary>
         public void StopLoadingBar();
+
+        /// <summary>
+        /// Get all available themes
+        /// </summary>
+        /// <returns></returns>
+        public List<ThemeData> GetAvailableThemes();
+
+        /// <summary>
+        /// Get the current theme
+        /// </summary>
+        /// <returns></returns>
+        public ThemeData GetCurrentTheme();
+
+        /// <summary>
+        /// Set the current theme
+        /// </summary>
+        /// <param name="theme"></param>
+        /// <returns></returns>
+        public void SetCurrentTheme(ThemeData theme);
     }
 }
