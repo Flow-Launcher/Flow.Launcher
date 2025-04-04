@@ -28,25 +28,23 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     public static string LinkHowToCreateTheme => @"https://www.flowlauncher.com/theme-builder/";
     public static string LinkThemeGallery => "https://github.com/Flow-Launcher/Flow.Launcher/discussions/1438";
 
-    private List<Theme.ThemeData> _themes;
-    public List<Theme.ThemeData> Themes => _themes ??= _theme.LoadAvailableThemes();
+    private List<ThemeData> _themes;
+    public List<ThemeData> Themes => _themes ??= App.API.GetAvailableThemes();
 
-    private Theme.ThemeData _selectedTheme;
-    public Theme.ThemeData SelectedTheme
+    private ThemeData _selectedTheme;
+    public ThemeData SelectedTheme
     {
-        get => _selectedTheme ??= Themes.Find(v => v.FileNameWithoutExtension == _theme.GetCurrentTheme());
+        get => _selectedTheme ??= Themes.Find(v => v == App.API.GetCurrentTheme());
         set
         {
             _selectedTheme = value;
-            _theme.ChangeTheme(value.FileNameWithoutExtension);
+            App.API.SetCurrentTheme(value);
 
             // Update UI state
             OnPropertyChanged(nameof(BackdropType));
             OnPropertyChanged(nameof(IsBackdropEnabled));
             OnPropertyChanged(nameof(IsDropShadowEnabled));
             OnPropertyChanged(nameof(DropShadowEffect));
-
-            _ = _theme.RefreshFrameAsync();
         }
     }
 
