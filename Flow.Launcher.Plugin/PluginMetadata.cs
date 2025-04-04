@@ -92,11 +92,17 @@ namespace Flow.Launcher.Plugin
         /// All action keywords of plugin.
         /// </summary>
         public List<string> ActionKeywords { get; set; }
-        
+
         /// <summary>
         /// Hide plugin keyword setting panel.
         /// </summary>
         public bool HideActionKeywordPanel { get; set; }
+
+        /// <summary>
+        /// Plugin search delay time. Null means use default search delay time.
+        /// </summary>
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public SearchDelayTime? SearchDelayTime { get; set; } = null;
 
         /// <summary>
         /// Plugin icon path.

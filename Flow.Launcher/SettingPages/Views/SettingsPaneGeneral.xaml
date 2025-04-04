@@ -28,21 +28,26 @@
                 Style="{StaticResource PageTitle}"
                 Text="{DynamicResource general}"
                 TextAlignment="left" />
-
-            <cc:Card Title="{DynamicResource startFlowLauncherOnSystemStartup}" Icon="&#xe8fc;">
-                <ui:ToggleSwitch
-                    IsOn="{Binding StartFlowLauncherOnSystemStartup}"
-                    OffContent="{DynamicResource disable}"
-                    OnContent="{DynamicResource enable}" />
-            </cc:Card>
-
-            <cc:Card Title="{DynamicResource useLogonTaskForStartup}" Sub="{DynamicResource useLogonTaskForStartupTooltip}">
-                <ui:ToggleSwitch
-                    IsOn="{Binding UseLogonTaskForStartup}"
-                    OffContent="{DynamicResource disable}"
-                    OnContent="{DynamicResource enable}" />
-            </cc:Card>
-
+            <cc:ExCard
+                Title="{DynamicResource startFlowLauncherOnSystemStartup}"
+                Margin="0 8 0 0"
+                Icon="&#xe8fc;">
+                <cc:ExCard.SideContent>
+                    <ui:ToggleSwitch
+                        IsOn="{Binding StartFlowLauncherOnSystemStartup}"
+                        OffContent="{DynamicResource disable}"
+                        OnContent="{DynamicResource enable}" />
+                </cc:ExCard.SideContent>
+                <cc:Card
+                    Title="{DynamicResource useLogonTaskForStartup}"
+                    Sub="{DynamicResource useLogonTaskForStartupTooltip}"
+                    Type="InsideFit">
+                    <ui:ToggleSwitch
+                        IsOn="{Binding UseLogonTaskForStartup}"
+                        OffContent="{DynamicResource disable}"
+                        OnContent="{DynamicResource enable}" />
+                </cc:Card>
+            </cc:ExCard>
             <cc:Card
                 Title="{DynamicResource hideOnStartup}"
                 Icon="&#xed1a;"

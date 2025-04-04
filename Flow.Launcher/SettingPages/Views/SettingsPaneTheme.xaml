@@ -468,7 +468,8 @@
                 <cc:Card
                     Title="{DynamicResource BackdropType}"
                     Margin="0 0 0 0"
-                    Icon="&#xeb42;">
+                    Icon="&#xeb42;"
+                    Sub="{Binding BackdropSubText}">
                     <ComboBox
                         MinWidth="160"
                         VerticalAlignment="Center"
@@ -478,7 +479,6 @@
                         ItemsSource="{Binding BackdropTypesList}"
                         SelectedValue="{Binding BackdropType, Mode=TwoWay}"
                         SelectedValuePath="Value" />
-                    <!--  ✅ 추가  -->
                 </cc:Card>
 
                 <!--  Drop shadow effect  -->
@@ -500,62 +500,29 @@
                 Uri="{Binding LinkThemeGallery}" />
 
             <!--  Fixed size  -->
-            <cc:CardGroup Margin="0 20 0 0">
-                <cc:Card
-                    Title="{DynamicResource KeepMaxResults}"
-                    Icon="&#xE744;"
-                    Sub="{DynamicResource KeepMaxResultsToolTip}">
-                    <ui:ToggleSwitch
-                        IsOn="{Binding KeepMaxResults}"
-                        OffContent="{DynamicResource disable}"
-                        OnContent="{DynamicResource enable}" />
-                </cc:Card>
+            <cc:ExCard
+                Title="{DynamicResource KeepMaxResults}"
+                Margin="0 20 0 0"
+                Icon="&#xE744;"
+                Sub="{DynamicResource KeepMaxResultsToolTip}">
+                <cc:ExCard.SideContent>
+                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                        <ui:ToggleSwitch
+                            IsOn="{Binding KeepMaxResults}"
+                            OffContent="{DynamicResource disable}"
+                            OnContent="{DynamicResource enable}" />
+                    </StackPanel>
+                </cc:ExCard.SideContent>
                 <cc:Card
                     Title="{DynamicResource maxShowResults}"
-                    Icon="&#xe8fd;"
                     Sub="{DynamicResource maxShowResultsToolTip}"
-                    Visibility="{Binding KeepMaxResults, Converter={StaticResource BoolToVisibilityConverter}}">
+                    Type="InsideFit">
                     <ComboBox
                         Width="100"
                         ItemsSource="{Binding MaxResultsRange}"
                         SelectedItem="{Binding Settings.MaxResultsToShow}" />
                 </cc:Card>
-            </cc:CardGroup>
-
-            <!--  Fonts and icons  -->
-            <cc:Card
-                Title="{DynamicResource useGlyphUI}"
-                Margin="0 14 0 0"
-                Icon="&#xf6b8;"
-                Sub="{DynamicResource useGlyphUIEffect}">
-                <ui:ToggleSwitch
-                    IsOn="{Binding UseGlyphIcons}"
-                    OffContent="{DynamicResource disable}"
-                    OnContent="{DynamicResource enable}" />
-            </cc:Card>
-
-            <!--  Placeholder text  -->
-            <cc:CardGroup Margin="0 14 0 0">
-                <cc:Card
-                    Title="{DynamicResource ShowPlaceholder}"
-                    Icon="&#xE82F;"
-                    Sub="{DynamicResource ShowPlaceholderTip}">
-                    <ui:ToggleSwitch
-                        IsOn="{Binding ShowPlaceholder}"
-                        OffContent="{DynamicResource disable}"
-                        OnContent="{DynamicResource enable}" />
-                </cc:Card>
-
-                <cc:Card
-                    Title="{DynamicResource PlaceholderText}"
-                    Icon="&#xED59;"
-                    Sub="{Binding PlaceholderTextTip}">
-                    <TextBox
-                        MinWidth="150"
-                        Text="{Binding PlaceholderText}"
-                        TextWrapping="NoWrap" />
-                </cc:Card>
-            </cc:CardGroup>
+            </cc:ExCard>
 
             <!--  Time and date  -->
             <cc:CardGroup Margin="0 14 0 0">
@@ -602,22 +569,45 @@
                 </cc:Card>
             </cc:CardGroup>
 
-            <!--  Animation  -->
-            <cc:CardGroup Margin="0 14 0 0">
+            <!--  Placeholder text  -->
+            <cc:ExCard
+                Title="{DynamicResource ShowPlaceholder}"
+                Margin="0 4 0 0"
+                Icon="&#xea80;"
+                Sub="{DynamicResource ShowPlaceholderTip}">
+                <cc:ExCard.SideContent>
+                    <ui:ToggleSwitch
+                        IsOn="{Binding ShowPlaceholder}"
+                        OffContent="{DynamicResource disable}"
+                        OnContent="{DynamicResource enable}" />
+                </cc:ExCard.SideContent>
                 <cc:Card
-                    Title="{DynamicResource Animation}"
-                    Icon="&#xedb5;"
-                    Sub="{DynamicResource AnimationTip}">
+                    Title="{DynamicResource PlaceholderText}"
+                    Sub="{Binding PlaceholderTextTip}"
+                    Type="InsideFit">
+                    <TextBox
+                        MinWidth="150"
+                        Text="{Binding PlaceholderText}"
+                        TextWrapping="NoWrap" />
+                </cc:Card>
+            </cc:ExCard>
+
+            <!--  Animation  -->
+            <cc:ExCard
+                Title="{DynamicResource Animation}"
+                Margin="0 18 0 0"
+                Icon="&#xedb5;"
+                Sub="{DynamicResource AnimationTip}">
+                <cc:ExCard.SideContent>
                     <ui:ToggleSwitch
                         IsOn="{Binding UseAnimation}"
                         OffContent="{DynamicResource disable}"
                         OnContent="{DynamicResource enable}" />
-                </cc:Card>
+                </cc:ExCard.SideContent>
                 <cc:Card
                     Title="{DynamicResource AnimationSpeed}"
-                    Icon="&#xe916;"
                     Sub="{DynamicResource AnimationSpeedTip}"
-                    Visibility="{Binding UseAnimation, Converter={StaticResource BoolToVisibilityConverter}}">
+                    Type="InsideFit">
                     <StackPanel Orientation="Horizontal">
                         <ComboBox
                             MinWidth="160"
@@ -637,25 +627,25 @@
                                                          IsEqualTo={x:Static userSettings:AnimationSpeeds.Custom}}" />
                     </StackPanel>
                 </cc:Card>
-            </cc:CardGroup>
+            </cc:ExCard>
 
             <!--  SFX  -->
-            <cc:CardGroup Margin="0 14 0 0">
-                <cc:Card
-                    Title="{DynamicResource SoundEffect}"
-                    Icon="&#xe7f5;"
-                    Sub="{DynamicResource SoundEffectTip}">
+            <cc:ExCard
+                Title="{DynamicResource SoundEffect}"
+                Margin="0 4 0 0"
+                Icon="&#xe7f5;"
+                Sub="{DynamicResource SoundEffectTip}">
+                <cc:ExCard.SideContent>
                     <ui:ToggleSwitch
                         IsOn="{Binding UseSound}"
                         OffContent="{DynamicResource disable}"
                         OnContent="{DynamicResource enable}" />
-                </cc:Card>
+                </cc:ExCard.SideContent>
                 <cc:Card
                     Title="{DynamicResource SoundEffectVolume}"
-                    Icon="&#xe994;"
                     IsEnabled="{Binding EnableVolumeAdjustment}"
                     Sub="{DynamicResource SoundEffectVolumeTip}"
-                    Visibility="{Binding UseSound, Converter={StaticResource BoolToVisibilityConverter}}">
+                    Type="InsideFit">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock
                             Margin="0 0 8 0"
@@ -672,7 +662,7 @@
                             Value="{Binding SoundEffectVolume}" />
                     </StackPanel>
                 </cc:Card>
-            </cc:CardGroup>
+            </cc:ExCard>
             <Border
                 Name="WMPWarning"
                 Padding="0 10"
@@ -708,6 +698,18 @@
                 </Grid>
             </Border>
 
+
+            <!--  Fonts and icons  -->
+            <cc:Card
+                Title="{DynamicResource useGlyphUI}"
+                Margin="0 0 0 0"
+                Icon="&#xf6b8;"
+                Sub="{DynamicResource useGlyphUIEffect}">
+                <ui:ToggleSwitch
+                    IsOn="{Binding UseGlyphIcons}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
+            </cc:Card>
             <!--  Settings color scheme  -->
             <cc:Card
                 Title="{DynamicResource ColorScheme}"

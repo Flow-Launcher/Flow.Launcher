@@ -16,7 +16,7 @@
         x:Key="QueryBoxStyle"
         BasedOn="{StaticResource BaseQueryBoxStyle}"
         TargetType="{x:Type TextBox}">
-        <Setter Property="Padding" Value="0,4,50,0" />
+        <Setter Property="Padding" Value="0 0 50 0" />
         <Setter Property="Foreground" Value="#fbfdff" />
         <Setter Property="FontSize" Value="18" />
         <Setter Property="Height" Value="38" />
@@ -26,7 +26,7 @@
         x:Key="QuerySuggestionBoxStyle"
         BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}"
         TargetType="{x:Type TextBox}">
-        <Setter Property="Padding" Value="0,4,50,0" />
+        <Setter Property="Padding" Value="0 0 50 0" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Height" Value="38" />
         <Setter Property="FontSize" Value="18" />
@@ -38,7 +38,7 @@
         BasedOn="{StaticResource BaseWindowBorderStyle}"
         TargetType="{x:Type Border}">
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="BorderBrush" Value="#111828" />
+        <Setter Property="BorderBrush" Value="#202938" />
         <Setter Property="Background" Value="#111828" />
         <Setter Property="CornerRadius" Value="8" />
         <Setter Property="UseLayoutRounding" Value="True" />
@@ -71,7 +71,7 @@
         TargetType="{x:Type Rectangle}">
         <Setter Property="Fill" Value="#202938" />
         <Setter Property="Height" Value="1" />
-        <Setter Property="Margin" Value="0,0,0,8" />
+        <Setter Property="Margin" Value="0 0 0 8" />
     </Style>
     <Style x:Key="HighlightStyle" />
     <Style
@@ -122,7 +122,7 @@
         <Setter Property="Background" Value="#111828" />
         <Setter Property="Width" Value="32" />
         <Setter Property="Height" Value="32" />
-        <Setter Property="Margin" Value="0,8,8,0" />
+        <Setter Property="Margin" Value="0 8 8 0" />
         <Setter Property="HorizontalAlignment" Value="Right" />
     </Style>
 
@@ -149,7 +149,7 @@
         x:Key="ClockPanel"
         BasedOn="{StaticResource ClockPanel}"
         TargetType="{x:Type StackPanel}">
-        <Setter Property="Margin" Value="0,0,54,0" />
+        <Setter Property="Margin" Value="0 0 54 0" />
     </Style>
     <Style
         x:Key="ClockBox"
@@ -167,7 +167,7 @@
         x:Key="PreviewBorderStyle"
         BasedOn="{StaticResource BasePreviewBorderStyle}"
         TargetType="{x:Type Border}">
-        <Setter Property="Margin" Value="0,0,10,8" />
+        <Setter Property="Margin" Value="0 0 10 8" />
         <Setter Property="BorderBrush" Value="#202938" />
     </Style>
     <Style
