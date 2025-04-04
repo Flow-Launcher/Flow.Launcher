@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.WebSearch
@@ -180,7 +179,7 @@ namespace Flow.Launcher.Plugin.WebSearch
 
                 // Default images directory is in the WebSearch's application folder  
                 DefaultImagesDirectory = Path.Combine(pluginDirectory, Images);
-                Helper.ValidateDataDirectory(bundledImagesDirectory, DefaultImagesDirectory);
+                FilesFolders.ValidateDataDirectory(bundledImagesDirectory, DefaultImagesDirectory);
 
                 // Custom images directory is in the WebSearch's data location folder
                 CustomImagesDirectory = Path.Combine(_context.CurrentPluginMetadata.PluginSettingsDirectoryPath, "CustomIcons");
