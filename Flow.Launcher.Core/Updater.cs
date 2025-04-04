@@ -4,10 +4,12 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using JetBrains.Annotations;
-using Squirrel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Infrastructure;
@@ -15,9 +17,8 @@ using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using System.Text.Json.Serialization;
-using System.Threading;
-using System.Text.Json;
+using JetBrains.Annotations;
+using Squirrel;
 
 namespace Flow.Launcher.Core
 {
@@ -71,7 +72,7 @@ namespace Flow.Launcher.Core
 
                 if (DataLocation.PortableDataLocationInUse())
                 {
-                    var targetDestination = updateManager.RootAppDirectory + $"\\app-{newReleaseVersion.ToString()}\\{DataLocation.PortableFolderName}";
+                    var targetDestination = updateManager.RootAppDirectory + $"\\app-{newReleaseVersion}\\{DataLocation.PortableFolderName}";
                     FilesFolders.CopyAll(DataLocation.PortableDataPath, targetDestination, (s) => _api.ShowMsgBox(s));
                     if (!FilesFolders.VerifyBothFolderFilesEqual(DataLocation.PortableDataPath, targetDestination, (s) => _api.ShowMsgBox(s)))
                         _api.ShowMsgBox(string.Format(_api.GetTranslation("update_flowlauncher_fail_moving_portable_user_profile_data"),
@@ -123,7 +124,7 @@ namespace Flow.Launcher.Core
         }
 
         // https://github.com/Squirrel/Squirrel.Windows/blob/master/src/Squirrel/UpdateManager.Factory.cs
-        private async Task<UpdateManager> GitHubUpdateManagerAsync(string repository)
+        private static async Task<UpdateManager> GitHubUpdateManagerAsync(string repository)
         {
             var uri = new Uri(repository);
             var api = $"https://api.github.com/repos{uri.AbsolutePath}/releases";
@@ -145,9 +146,9 @@ namespace Flow.Launcher.Core
             return manager;
         }
 
-        public string NewVersionTips(string version)
+        private static string NewVersionTips(string version)
         {
-            var translator = InternationalizationManager.Instance;
+            var translator = Ioc.Default.GetRequiredService<Internationalization>();
             var tips = string.Format(translator.GetTranslation("newVersionTips"), version);
 
             return tips;
