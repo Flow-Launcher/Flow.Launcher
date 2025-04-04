@@ -28,6 +28,7 @@ using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
 using JetBrains.Annotations;
 using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Core.ExternalPlugins;
 
 namespace Flow.Launcher
 {
@@ -353,6 +354,11 @@ namespace Flow.Launcher
             MessageBoxEx.Show(messageBoxText, caption, button, icon, defaultResult);
 
         public Task ShowProgressBoxAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action cancelProgress = null) => ProgressBoxEx.ShowAsync(caption, reportProgressAsync, cancelProgress);
+
+        public Task<bool> UpdatePluginManifestAsync(bool usePrimaryUrlOnly = false, CancellationToken token = default) =>
+            PluginsManifest.UpdateManifestAsync(usePrimaryUrlOnly, token);
+
+        public IReadOnlyList<UserPlugin> GetUserPlugins() => PluginsManifest.UserPlugins;
 
         #endregion
 

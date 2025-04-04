@@ -1,5 +1,4 @@
-﻿using Flow.Launcher.Core.ExternalPlugins;
-using Flow.Launcher.Core.Plugin;
+﻿using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Collections.Generic;
@@ -236,7 +235,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
         internal async ValueTask<List<Result>> RequestUpdateAsync(string search, CancellationToken token,
             bool usePrimaryUrlOnly = false)
         {
-            await PluginsManifest.UpdateManifestAsync(usePrimaryUrlOnly, token);
+            await Context.API.UpdatePluginManifestAsync(usePrimaryUrlOnly, token);
 
             var pluginFromLocalPath = null as UserPlugin;
             var updateFromLocalPath = false;
@@ -249,7 +248,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             }
 
             var updateSource = !updateFromLocalPath
-                ? PluginsManifest.UserPlugins
+                ? Context.API.GetUserPlugins()
                 : new List<UserPlugin> { pluginFromLocalPath };
 
             var resultsForUpdate = (
@@ -601,7 +600,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
         internal async ValueTask<List<Result>> RequestInstallOrUpdateAsync(string search, CancellationToken token,
             bool usePrimaryUrlOnly = false)
         {
-            await PluginsManifest.UpdateManifestAsync(usePrimaryUrlOnly, token);
+            await Context.API.UpdatePluginManifestAsync(usePrimaryUrlOnly, token);
 
             if (Uri.IsWellFormedUriString(search, UriKind.Absolute)
                 && search.Split('.').Last() == ZipSuffix)
@@ -611,8 +610,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 return InstallFromLocalPath(search);
 
             var results =
-                PluginsManifest
-                    .UserPlugins
+                Context.API.GetUserPlugins()
                     .Where(x => !PluginExists(x.ID) && !PluginManager.PluginModified(x.ID))
                     .Select(x =>
                         new Result

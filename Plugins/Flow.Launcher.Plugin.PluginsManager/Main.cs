@@ -3,7 +3,6 @@ using System.Linq;
 using System.Windows.Controls;
 using System.Threading.Tasks;
 using System.Threading;
-using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Plugin.PluginsManager.ViewModels;
 using Flow.Launcher.Plugin.PluginsManager.Views;
 
@@ -34,7 +33,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             contextMenu = new ContextMenu(Context);
             pluginManager = new PluginsManager(Context, Settings);
 
-            await PluginsManifest.UpdateManifestAsync();
+            await Context.API.UpdatePluginManifestAsync();
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)

@@ -344,5 +344,23 @@ namespace Flow.Launcher.Plugin
         /// Stop the loading bar in main window
         /// </summary>
         public void StopLoadingBar();
+
+        /// <summary>
+        /// Update the plugin manifest
+        /// </summary>
+        /// <param name="usePrimaryUrlOnly">
+        /// FL has multiple urls to download the plugin manifest. Set this to true to only use the primary url.
+        /// </param>
+        /// <param name="token"></param>
+        /// <returns>
+        /// True if the manifest is updated successfully, false otherwise.
+        /// </returns>
+        public Task<bool> UpdatePluginManifestAsync(bool usePrimaryUrlOnly = false, CancellationToken token = default);
+
+        /// <summary>
+        /// Get the plugin manifest
+        /// </summary>
+        /// <returns></returns>
+        public IReadOnlyList<UserPlugin> GetUserPlugins();
     }
 }
