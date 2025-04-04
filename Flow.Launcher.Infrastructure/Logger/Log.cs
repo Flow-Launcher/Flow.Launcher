@@ -12,13 +12,13 @@ namespace Flow.Launcher.Infrastructure.Logger
 {
     public static class Log
     {
-        public const string DirectoryName = "Logs";
+        public const string DirectoryName = Constant.Logs;
 
         public static string CurrentLogDirectory { get; }
 
         static Log()
         {
-            CurrentLogDirectory = Path.Combine(DataLocation.DataDirectory(), DirectoryName, Constant.Version);
+            CurrentLogDirectory = DataLocation.VersionLogDirectory;
             if (!Directory.Exists(CurrentLogDirectory))
             {
                 Directory.CreateDirectory(CurrentLogDirectory);

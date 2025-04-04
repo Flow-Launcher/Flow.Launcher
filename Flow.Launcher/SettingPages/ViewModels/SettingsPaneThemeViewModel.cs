@@ -21,10 +21,11 @@ namespace Flow.Launcher.SettingPages.ViewModels;
 public partial class SettingsPaneThemeViewModel : BaseModel
 {
     private const string DefaultFont = "Segoe UI";
+    public string BackdropSubText => !Win32Helper.IsBackdropSupported() ? App.API.GetTranslation("BackdropTypeDisabledToolTip") : ""; 
     public Settings Settings { get; }
     private readonly Theme _theme = Ioc.Default.GetRequiredService<Theme>();
 
-    public static string LinkHowToCreateTheme => @"https://flowlauncher.com/docs/#/how-to-create-a-theme";
+    public static string LinkHowToCreateTheme => @"https://www.flowlauncher.com/theme-builder/";
     public static string LinkThemeGallery => "https://github.com/Flow-Launcher/Flow.Launcher/discussions/1438";
 
     private List<Theme.ThemeData> _themes;
@@ -259,6 +260,23 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         set => Settings.SoundVolume = value;
     }
 
+    public bool ShowPlaceholder
+    {
+        get => Settings.ShowPlaceholder;
+        set => Settings.ShowPlaceholder = value;
+    }
+
+    public string PlaceholderTextTip
+    {
+        get => string.Format(App.API.GetTranslation("PlaceholderTextTip"), App.API.GetTranslation("queryTextBoxPlaceholder"));
+    }
+
+    public string PlaceholderText
+    {
+        get => Settings.PlaceholderText;
+        set => Settings.PlaceholderText = value;
+    }
+
     public bool UseClock
     {
         get => Settings.UseClock;
@@ -469,7 +487,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     [RelayCommand]
     private void OpenThemesFolder()
     {
-        App.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Themes));
+        App.API.OpenDirectory(DataLocation.ThemesDirectory);
     }
 
     [RelayCommand]

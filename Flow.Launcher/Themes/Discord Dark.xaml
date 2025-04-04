@@ -21,26 +21,25 @@
         <Setter Property="SelectionBrush" Value="#0a68d8" />
         <Setter Property="Height" Value="42" />
         <Setter Property="FontSize" Value="24" />
-        <Setter Property="Padding" Value="0,0,66,0" />
+        <Setter Property="Padding" Value="0 0 66 0" />
     </Style>
     <Style
         x:Key="QuerySuggestionBoxStyle"
         BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}"
         TargetType="{x:Type TextBox}">
         <Setter Property="Foreground" Value="#72767d" />
-        <Setter Property="Background" Value="#36393f" />
         <Setter Property="Height" Value="42" />
         <Setter Property="FontSize" Value="24" />
-        <Setter Property="Padding" Value="0,0,66,0" />
+        <Setter Property="Padding" Value="0 0 66 0" />
     </Style>
     <Style
         x:Key="WindowBorderStyle"
         BasedOn="{StaticResource BaseWindowBorderStyle}"
         TargetType="{x:Type Border}">
         <Setter Property="BorderThickness" Value="2" />
-        <Setter Property="BorderBrush" Value="#2f3136" />
+        <Setter Property="BorderBrush" Value="#3a3a41" />
         <Setter Property="CornerRadius" Value="4" />
-        <Setter Property="Background" Value="#36393f" />
+        <Setter Property="Background" Value="#2e2e34" />
     </Style>
     <Style
         x:Key="WindowStyle"
@@ -91,23 +90,25 @@
         <Setter Property="Cursor" Value="Arrow" />
         <Setter Property="Foreground" Value="#72767d" />
     </Style>
-    <SolidColorBrush x:Key="ItemSelectedBackgroundColor">#49443c</SolidColorBrush>
+    <SolidColorBrush x:Key="ItemSelectedBackgroundColor">#36363d</SolidColorBrush>
     <Style
         x:Key="ItemImageSelectedStyle"
         BasedOn="{StaticResource BaseItemImageSelectedStyle}"
         TargetType="{x:Type Image}">
         <Setter Property="Cursor" Value="Arrow" />
     </Style>
-    <Style x:Key="HighlightStyle">
-        <Setter Property="Inline.FontWeight" Value="Bold" />
-    </Style>
-    <Style x:Key="ItemHotkeyStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="15" />
+    <Style x:Key="HighlightStyle" />
+    <Style
+        x:Key="ItemHotkeyStyle"
+        BasedOn="{StaticResource BaseItemHotkeyStyle}"
+        TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#72767d" />
         <Setter Property="Opacity" Value="0.8" />
     </Style>
-    <Style x:Key="ItemHotkeySelectedStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="15" />
+    <Style
+        x:Key="ItemHotkeySelectedStyle"
+        BasedOn="{StaticResource BaseItemHotkeySelectedStyle}"
+        TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#72767d" />
         <Setter Property="Opacity" Value="0.8" />
     </Style>
@@ -124,7 +125,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
                     <Border
-                        Background="#202225"
+                        Background="#787881"
                         BorderBrush="Transparent"
                         BorderThickness="0"
                         CornerRadius="2"
@@ -141,9 +142,9 @@
         x:Key="SeparatorStyle"
         BasedOn="{StaticResource BaseSeparatorStyle}"
         TargetType="{x:Type Rectangle}">
-        <Setter Property="Fill" Value="#42454a" />
+        <Setter Property="Fill" Value="#3a3a41" />
         <Setter Property="Height" Value="1" />
-        <Setter Property="Margin" Value="12,0,12,6" />
+        <Setter Property="Margin" Value="0 0 0 0" />
     </Style>
     <Style
         x:Key="SearchIconStyle"
@@ -170,6 +171,7 @@
         BasedOn="{StaticResource BasePreviewBorderStyle}"
         TargetType="{x:Type Border}">
         <Setter Property="BorderBrush" Value="#42454a" />
+        <Setter Property="Margin" Value="0 0 0 0" />
     </Style>
     <Style
         x:Key="PreviewItemTitleStyle"
