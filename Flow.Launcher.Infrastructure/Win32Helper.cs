@@ -490,6 +490,7 @@ namespace Flow.Launcher.Infrastructure
         #endregion
 
         #region Notification
+
         public static bool IsNotificationSupport()
         {
             // Notification only supported Windows 10 19041+
