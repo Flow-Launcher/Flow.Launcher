@@ -109,7 +109,7 @@ public class SettingsPanePluginsViewModel : BaseModel
             }
         }
     }
-
+    
     private void UpdateDisplayMode()
     {
         if (IsOnOffSelected)
@@ -119,7 +119,6 @@ public class SettingsPanePluginsViewModel : BaseModel
         else if (IsSearchDelaySelected)
             CurrentDisplayMode = "SearchDelay";
     }
-
     public SettingsPanePluginsViewModel(Settings settings)
     {
         _settings = settings;
