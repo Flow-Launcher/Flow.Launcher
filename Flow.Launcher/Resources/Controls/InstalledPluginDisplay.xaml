@@ -108,8 +108,7 @@
                             <ui:NumberBox
                                 Margin="0 0 8 0"
                                 Maximum="999" ToolTip="{DynamicResource priorityToolTip}"
-                                Minimum="0"
-                                Value="{Binding Priority, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                Minimum="-999"
                                 SpinButtonPlacementMode="Inline" />
                         </StackPanel>
 
@@ -121,6 +120,12 @@
               RelativeSource={RelativeSource AncestorType=ListBox}, 
               Converter={StaticResource StringEqualityToVisibilityConverter}, 
               ConverterParameter=SearchDelay}">
+                            <TextBlock
+                                Margin="0 0 8 0"
+                                VerticalAlignment="Center"
+                                FontSize="13" ToolTip="{DynamicResource searchDelayToolTip}"
+                                Foreground="{DynamicResource Color08B}"
+                                Text="{DynamicResource searchDelay}" />
                             <cc:InstalledPluginSearchDelayCombobox
                                 Margin="0 0 8 0" />
                         </StackPanel>
