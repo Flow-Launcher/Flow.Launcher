@@ -492,7 +492,7 @@ namespace Flow.Launcher.Infrastructure
         #region Notification
         public static bool IsNotificationSupport()
         {
-            // Noticification only supported Windows 10 19041+
+            // Notification only supported Windows 10 19041+
             return RuntimeInformation.IsOSPlatform(OSPlatform.Windows) &&
                 Environment.OSVersion.Version.Build >= 19041;
         }
