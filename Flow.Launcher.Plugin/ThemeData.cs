@@ -23,7 +23,7 @@ public class ThemeData
     public bool? IsDark { get; private init; }
 
     /// <summary>
-    /// Theme file path
+    /// Indicates whether the theme supports blur effects
     /// </summary>
     public bool? HasBlur { get; private init; }
 
