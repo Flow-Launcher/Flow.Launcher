@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin.SharedCommands;
 using MemoryPack;
 
 #nullable enable
@@ -33,7 +34,7 @@ namespace Flow.Launcher.Infrastructure.Storage
         public BinaryStorage(string filename)
         {
             DirectoryPath = DataLocation.CacheDirectory;
-            Helper.ValidateDirectory(DirectoryPath);
+            FilesFolders.ValidateDirectory(DirectoryPath);
 
             FilePath = Path.Combine(DirectoryPath, $"{filename}{FileSuffix}");
         }

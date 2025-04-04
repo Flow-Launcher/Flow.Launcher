@@ -6,12 +6,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.Program.Programs;
 using Flow.Launcher.Plugin.Program.Views;
 using Flow.Launcher.Plugin.Program.Views.Models;
+using Flow.Launcher.Plugin.SharedCommands;
 using Microsoft.Extensions.Caching.Memory;
 using Path = System.IO.Path;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
@@ -184,7 +184,7 @@ namespace Flow.Launcher.Plugin.Program
             {
                 var pluginCachePath = Context.CurrentPluginMetadata.PluginCacheDirectoryPath;
 
-                Helper.ValidateDirectory(pluginCachePath);
+                FilesFolders.ValidateDirectory(pluginCachePath);
 
                 static void MoveFile(string sourcePath, string destinationPath)
                 {

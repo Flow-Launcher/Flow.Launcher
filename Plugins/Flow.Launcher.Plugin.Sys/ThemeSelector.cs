@@ -9,8 +9,12 @@ namespace Flow.Launcher.Plugin.Sys
     {
         public const string Keyword = "fltheme";
 
-        private readonly Theme _theme;
         private readonly PluginInitContext _context;
+
+        // Do not initialize it in the constructor, because it will cause null reference in
+        // var dicts = Application.Current.Resources.MergedDictionaries; line of Theme
+        private Theme theme = null;
+        private Theme Theme => theme ??= Ioc.Default.GetRequiredService<Theme>();
 
         #region Theme Selection
 
@@ -19,24 +23,23 @@ namespace Flow.Launcher.Plugin.Sys
         private Theme.ThemeData _selectedTheme;
         public Theme.ThemeData SelectedTheme
         {
-            get => _selectedTheme ??= Themes.Find(v => v.FileNameWithoutExtension == _theme.GetCurrentTheme());
+            get => _selectedTheme ??= Themes.Find(v => v.FileNameWithoutExtension == Theme.GetCurrentTheme());
             set
             {
                 _selectedTheme = value;
-                _theme.ChangeTheme(value.FileNameWithoutExtension);
+                Theme.ChangeTheme(value.FileNameWithoutExtension);
 
-                _ = _theme.RefreshFrameAsync();
+                _ = Theme.RefreshFrameAsync();
             }
         }
 
-        private List<Theme.ThemeData> Themes => _theme.LoadAvailableThemes();
+        private List<Theme.ThemeData> Themes => Theme.LoadAvailableThemes();
 
         #endregion
 
         public ThemeSelector(PluginInitContext context)
         {
             _context = context;
-            _theme = Ioc.Default.GetRequiredService<Theme>();
         }
 
         public List<Result> Query(Query query)

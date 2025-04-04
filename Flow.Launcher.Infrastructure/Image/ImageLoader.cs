@@ -62,7 +62,7 @@ namespace Flow.Launcher.Infrastructure.Image
             });
         }
 
-        public static async Task Save()
+        public static async Task SaveAsync()
         {
             await storageLock.WaitAsync();
 
@@ -72,10 +72,20 @@ namespace Flow.Launcher.Infrastructure.Image
                     .Select(x => x.Key)
                     .ToList());
             }
+            catch (System.Exception e)
+            {
+                Log.Exception($"|ImageLoader.SaveAsync|Failed to save image cache to file", e);
+            }
             finally
             {
                 storageLock.Release();
             }
+        }
+
+        public static async Task WaitSaveAsync()
+        {
+            await storageLock.WaitAsync();
+            storageLock.Release();
         }
 
         private static async Task<List<(string, bool)>> LoadStorageToConcurrentDictionaryAsync()

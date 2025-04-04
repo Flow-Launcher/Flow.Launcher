@@ -5,6 +5,7 @@ using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Infrastructure.Storage
 {
@@ -37,7 +38,7 @@ namespace Flow.Launcher.Infrastructure.Storage
             FilePath = filePath;
             DirectoryPath = Path.GetDirectoryName(filePath) ?? throw new ArgumentException("Invalid file path");
 
-            Helper.ValidateDirectory(DirectoryPath);
+            FilesFolders.ValidateDirectory(DirectoryPath);
         }
 
         public async Task<T> LoadAsync()
