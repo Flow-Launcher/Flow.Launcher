@@ -236,7 +236,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
         internal async ValueTask<List<Result>> RequestUpdateAsync(string search, CancellationToken token,
             bool usePrimaryUrlOnly = false)
         {
-            await PluginsManifest.UpdateManifestAsync(token, usePrimaryUrlOnly);
+            await PluginsManifest.UpdateManifestAsync(usePrimaryUrlOnly, token);
 
             var pluginFromLocalPath = null as UserPlugin;
             var updateFromLocalPath = false;
@@ -601,7 +601,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
         internal async ValueTask<List<Result>> RequestInstallOrUpdateAsync(string search, CancellationToken token,
             bool usePrimaryUrlOnly = false)
         {
-            await PluginsManifest.UpdateManifestAsync(token, usePrimaryUrlOnly);
+            await PluginsManifest.UpdateManifestAsync(usePrimaryUrlOnly, token);
 
             if (Uri.IsWellFormedUriString(search, UriKind.Absolute)
                 && search.Split('.').Last() == ZipSuffix)
