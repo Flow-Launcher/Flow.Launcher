@@ -3524,7 +3524,7 @@
     <!--  Content Dialog  -->
     <Style x:Key="ContentDialog" TargetType="ui:ContentDialog">
         <Setter Property="Foreground" Value="{DynamicResource PopupTextColor}" />
-        <Setter Property="Background" Value="{DynamicResource PopuBGColor}" />
+        <Setter Property="Background" Value="{DynamicResource PopupBGColor}" />
         <Setter Property="BorderThickness" Value="{DynamicResource ContentDialogBorderWidth}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ContentDialogBorderBrush}" />
         <Setter Property="IsTabStop" Value="False" />
@@ -3626,47 +3626,51 @@
                                                         TextWrapping="Wrap" />
                                                 </Grid>
                                             </ScrollViewer>
-                                            <Border Grid.Row="1" Background="{DynamicResource PopupButtonAreaBGColor}"
-                                                                BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
-                                                                BorderThickness="0,1,0,0" Padding="26 0 26 0" CornerRadius="0 0 8 8">
-                                            <Grid
-                                                x:Name="CommandSpace"
-                                                HorizontalAlignment="Stretch"
-                                                VerticalAlignment="Center"
-                                                KeyboardNavigation.DirectionalNavigation="Contained">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition />
-                                                    <ColumnDefinition Width="0.5*" />
-                                                    <ColumnDefinition Width="0.5*" />
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-                                                <Button
-                                                    x:Name="PrimaryButton"
-                                                    Grid.Column="0"
-                                                    Margin="0 0 2 0"
+                                            <Border
+                                                Grid.Row="1"
+                                                Padding="26 0 26 0"
+                                                Background="{DynamicResource PopupButtonAreaBGColor}"
+                                                BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
+                                                BorderThickness="0 1 0 0"
+                                                CornerRadius="0 0 8 8">
+                                                <Grid
+                                                    x:Name="CommandSpace"
                                                     HorizontalAlignment="Stretch"
-                                                    VerticalAlignment="Stretch"
-                                                    Content="{TemplateBinding PrimaryButtonText}"
-                                                    IsEnabled="{TemplateBinding IsPrimaryButtonEnabled}"
-                                                    Style="{TemplateBinding PrimaryButtonStyle}" />
-                                                <Button
-                                                    x:Name="SecondaryButton"
-                                                    Grid.Column="1"
-                                                    Grid.ColumnSpan="2"
-                                                    Margin="2 0 2 0"
-                                                    HorizontalAlignment="Stretch"
-                                                    VerticalAlignment="Stretch"
-                                                    Content="{TemplateBinding SecondaryButtonText}"
-                                                    IsEnabled="{TemplateBinding IsSecondaryButtonEnabled}"
-                                                    Style="{TemplateBinding SecondaryButtonStyle}" />
-                                                <Button
-                                                    x:Name="CloseButton"
-                                                    Grid.Column="3"
-                                                    Margin="2 0 0 0"
-                                                    HorizontalAlignment="Stretch"
-                                                    VerticalAlignment="Stretch"
-                                                    Content="{TemplateBinding CloseButtonText}"
-                                                    Style="{TemplateBinding CloseButtonStyle}" />
+                                                    VerticalAlignment="Center"
+                                                    KeyboardNavigation.DirectionalNavigation="Contained">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition Width="0.5*" />
+                                                        <ColumnDefinition Width="0.5*" />
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Button
+                                                        x:Name="PrimaryButton"
+                                                        Grid.Column="0"
+                                                        Margin="0 0 2 0"
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Stretch"
+                                                        Content="{TemplateBinding PrimaryButtonText}"
+                                                        IsEnabled="{TemplateBinding IsPrimaryButtonEnabled}"
+                                                        Style="{TemplateBinding PrimaryButtonStyle}" />
+                                                    <Button
+                                                        x:Name="SecondaryButton"
+                                                        Grid.Column="1"
+                                                        Grid.ColumnSpan="2"
+                                                        Margin="2 0 2 0"
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Stretch"
+                                                        Content="{TemplateBinding SecondaryButtonText}"
+                                                        IsEnabled="{TemplateBinding IsSecondaryButtonEnabled}"
+                                                        Style="{TemplateBinding SecondaryButtonStyle}" />
+                                                    <Button
+                                                        x:Name="CloseButton"
+                                                        Grid.Column="3"
+                                                        Margin="2 0 0 0"
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Stretch"
+                                                        Content="{TemplateBinding CloseButtonText}"
+                                                        Style="{TemplateBinding CloseButtonStyle}" />
                                                 </Grid>
                                             </Border>
                                         </Grid>
