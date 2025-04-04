@@ -180,24 +180,20 @@ namespace Flow.Launcher.Infrastructure.Storage
 
         public void Save()
         {
-            throw new NotImplementedException("Save error");
-
-            /*string serialized = JsonSerializer.Serialize(Data,
+            string serialized = JsonSerializer.Serialize(Data,
                 new JsonSerializerOptions { WriteIndented = true });
 
             File.WriteAllText(TempFilePath, serialized);
 
-            AtomicWriteSetting();*/
+            AtomicWriteSetting();
         }
 
         public async Task SaveAsync()
         {
-            throw new NotImplementedException("SaveAsync error");
-
-            /*await using var tempOutput = File.OpenWrite(TempFilePath);
+            await using var tempOutput = File.OpenWrite(TempFilePath);
             await JsonSerializer.SerializeAsync(tempOutput, Data,
                 new JsonSerializerOptions { WriteIndented = true });
-            AtomicWriteSetting();*/
+            AtomicWriteSetting();
         }
 
         private void AtomicWriteSetting()
