@@ -53,7 +53,7 @@ namespace Flow.Launcher.Plugin
         public string UrlSourceCode { get; set; }
 
         /// <summary>
-        /// URL to the issue tracker of the plugin
+        /// Local path where the plugin is installed
         /// </summary>
         public string LocalInstallPath { get; set; }
 
