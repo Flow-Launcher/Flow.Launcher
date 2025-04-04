@@ -1,8 +1,5 @@
 ﻿using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Plugin;
-using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Http;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Collections.Generic;
@@ -17,7 +14,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
 {
     internal class PluginsManager
     {
-        private const string zip = "zip";
+        private const string ZipSuffix = "zip";
+
+        private static readonly string ClassName = nameof(PluginsManager);
 
         private PluginInitContext Context { get; set; }
 
@@ -169,7 +168,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 Context.API.ShowMsgError(
                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"), plugin.Name),
                     Context.API.GetTranslation("plugin_pluginsmanager_download_error"));
-                Log.Exception("PluginsManager", "An error occurred while downloading plugin", e);
+                Context.API.LogException(ClassName, "An error occurred while downloading plugin", e);
 
                 return;
             }
@@ -179,7 +178,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_error_subtitle"),
                         plugin.Name));
-                Log.Exception("PluginsManager", "An error occurred while downloading plugin", e);
+                Context.API.LogException(ClassName, "An error occurred while downloading plugin", e);
 
                 return;
             }
@@ -366,7 +365,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                 }
                             }).ContinueWith(t =>
                             {
-                                Log.Exception("PluginsManager", $"Update failed for {x.Name}",
+                                Context.API.LogException(ClassName, $"Update failed for {x.Name}",
                                     t.Exception.InnerException);
                                 Context.API.ShowMsg(
                                     Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
@@ -438,7 +437,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             }
                             catch (Exception ex)
                             {
-                                Log.Exception("PluginsManager", $"Update failed for {plugin.Name}", ex.InnerException);
+                                Context.API.LogException(ClassName, $"Update failed for {plugin.Name}", ex.InnerException);
                                 Context.API.ShowMsg(
                                     Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
                                     string.Format(
@@ -486,7 +485,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             return results
                 .Where(x =>
                 {
-                    var matchResult = StringMatcher.FuzzySearch(searchName, x.Title);
+                    var matchResult = Context.API.FuzzySearch(searchName, x.Title);
                     if (matchResult.IsSearchPrecisionScoreMet())
                         x.Score = matchResult.Score;
 
@@ -498,7 +497,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
         internal List<Result> InstallFromWeb(string url)
         {
             var filename = url.Split("/").Last();
-            var name = filename.Split(string.Format(".{0}", zip)).First();
+            var name = filename.Split(string.Format(".{0}", ZipSuffix)).First();
 
             var plugin = new UserPlugin
             {
@@ -605,7 +604,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             await PluginsManifest.UpdateManifestAsync(token, usePrimaryUrlOnly);
 
             if (Uri.IsWellFormedUriString(search, UriKind.Absolute)
-                && search.Split('.').Last() == zip)
+                && search.Split('.').Last() == ZipSuffix)
                 return InstallFromWeb(search);
 
             if (FilesFolders.IsZipFilePath(search, checkFileExists: true))
@@ -656,21 +655,21 @@ namespace Flow.Launcher.Plugin.PluginsManager
             {
                 Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
                     Context.API.GetTranslation("plugin_pluginsmanager_install_errormetadatafile"));
-                Log.Exception("Flow.Launcher.Plugin.PluginsManager", e.Message, e);
+                Context.API.LogException(ClassName, e.Message, e);
             }
             catch (InvalidOperationException e)
             {
                 Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_error_duplicate"),
                         plugin.Name));
-                Log.Exception("Flow.Launcher.Plugin.PluginsManager", e.Message, e);
+                Context.API.LogException(ClassName, e.Message, e);
             }
             catch (ArgumentException e)
             {
                 Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_plugin_modified_error"),
                         plugin.Name));
-                Log.Exception("Flow.Launcher.Plugin.PluginsManager", e.Message, e);
+                Context.API.LogException(ClassName, e.Message, e);
             }
         }
 
@@ -744,7 +743,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             }
             catch (ArgumentException e)
             {
-                Log.Exception("Flow.Launcher.Plugin.PluginsManager", e.Message, e);
+                Context.API.LogException(ClassName, e.Message, e);
                 Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_uninstall_error_title"),
                     Context.API.GetTranslation("plugin_pluginsmanager_plugin_modified_error"));
             }
