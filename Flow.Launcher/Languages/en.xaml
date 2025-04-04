@@ -134,6 +134,10 @@
     <system:String x:Key="actionKeywordsTooltip">Change Action Keywords</system:String>
     <system:String x:Key="pluginSearchDelayTime">Plugin seach delay time</system:String>
     <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Seach Delay Time</system:String>
+    <system:String x:Key="FilterComboboxLabel">Advanced Settings:</system:String>
+    <system:String x:Key="EnabledCombobox">Enabled</system:String>
+    <system:String x:Key="PriorityCombobox">Priority</system:String>
+    <system:String x:Key="SearchDelayCombobox">Search Delay</system:String>
     <system:String x:Key="currentPriority">Current Priority</system:String>
     <system:String x:Key="newPriority">New Priority</system:String>
     <system:String x:Key="priority">Priority</system:String>

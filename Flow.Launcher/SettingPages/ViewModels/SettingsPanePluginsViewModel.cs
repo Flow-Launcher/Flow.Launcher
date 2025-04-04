@@ -14,9 +14,24 @@ public class SettingsPanePluginsViewModel : BaseModel
 {
     private readonly Settings _settings;
 
+    private string _selectedDisplayMode = "OnOff";
+    public string SelectedDisplayMode
+    {
+        get => _selectedDisplayMode;
+        set
+        {
+            if (_selectedDisplayMode != value)
+            {
+                _selectedDisplayMode = value;
+                OnPropertyChanged(nameof(SelectedDisplayMode));
+                UpdateDisplayModeFromSelection();
+            }
+        }
+    }
+
     public void UpdateDisplayModeFromSelection()
     {
-        switch (CurrentDisplayMode)
+        switch (SelectedDisplayMode)
         {
             case "OnOff":
                 IsOnOffSelected = true;
