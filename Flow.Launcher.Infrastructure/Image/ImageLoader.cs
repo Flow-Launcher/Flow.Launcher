@@ -71,6 +71,10 @@ namespace Flow.Launcher.Infrastructure.Image
                     .Select(x => x.Key)
                     .ToList());
             }
+            catch (System.Exception e)
+            {
+                Log.Exception($"|ImageLoader.SaveAsync|Failed to save image cache to file", e);
+            }
             finally
             {
                 storageLock.Release();
