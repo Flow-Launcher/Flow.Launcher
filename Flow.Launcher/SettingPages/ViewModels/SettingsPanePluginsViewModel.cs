@@ -14,6 +14,28 @@ public class SettingsPanePluginsViewModel : BaseModel
 {
     private readonly Settings _settings;
 
+    public void UpdateDisplayModeFromSelection()
+    {
+        switch (CurrentDisplayMode)
+        {
+            case "OnOff":
+                IsOnOffSelected = true;
+                IsPrioritySelected = false;
+                IsSearchDelaySelected = false;
+                break;
+            case "Priority":
+                IsOnOffSelected = false;
+                IsPrioritySelected = true;
+                IsSearchDelaySelected = false;
+                break;
+            case "SearchDelay":
+                IsOnOffSelected = false;
+                IsPrioritySelected = false;
+                IsSearchDelaySelected = true;
+                break;
+        }
+    }
+    
     private bool _isOnOffSelected = true;
     public bool IsOnOffSelected
     {

@@ -196,6 +196,27 @@
                 </cc:Card>
             </cc:CardGroup>
 
+            <cc:ExCard Margin="0 14 0 0"  Title="{DynamicResource searchDelay}"
+                       Icon="&#xE961;"
+                       Sub="{DynamicResource searchDelayToolTip}">
+                <cc:ExCard.SideContent>
+                <ui:ToggleSwitch
+                        IsOn="{Binding Settings.SearchQueryResultsWithDelay}"
+                        OffContent="{DynamicResource disable}"
+                        OnContent="{DynamicResource enable}" />
+                </cc:ExCard.SideContent>
+                <cc:Card Type="InsideFit"
+                    Title="{DynamicResource searchDelayTime}"
+                    Sub="{DynamicResource searchDelayTimeToolTip}">
+                    <ComboBox
+                        MaxWidth="200"
+                        DisplayMemberPath="Display"
+                        ItemsSource="{Binding SearchDelayTimes}"
+                        SelectedItem="{Binding SearchDelayTime}"
+                        SelectedValuePath="Value" />
+                </cc:Card>
+            </cc:ExCard>
+            
             <cc:Card
                 Title="{DynamicResource defaultFileManager}"
                 Margin="0 14 0 0"
