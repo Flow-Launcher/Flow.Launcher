@@ -22,7 +22,7 @@ namespace Flow.Launcher.Core.Configuration
         /// As at Squirrel.Windows version 1.5.2, UpdateManager needs to be disposed after finish
         /// </summary>
         /// <returns></returns>
-        private UpdateManager NewUpdateManager()
+        private static UpdateManager NewUpdateManager()
         {
             var applicationFolderName = Constant.ApplicationDirectory
                                             .Split(new[] { Path.DirectorySeparatorChar }, StringSplitOptions.None)
@@ -81,20 +81,16 @@ namespace Flow.Launcher.Core.Configuration
 
         public void RemoveShortcuts()
         {
-            using (var portabilityUpdater = NewUpdateManager())
-            {
-                portabilityUpdater.RemoveShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.StartMenu);
-                portabilityUpdater.RemoveShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.Desktop);
-                portabilityUpdater.RemoveShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.Startup);
-            }
+            using var portabilityUpdater = NewUpdateManager();
+            portabilityUpdater.RemoveShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.StartMenu);
+            portabilityUpdater.RemoveShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.Desktop);
+            portabilityUpdater.RemoveShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.Startup);
         }
 
         public void RemoveUninstallerEntry()
         {
-            using (var portabilityUpdater = NewUpdateManager())
-            {
-                portabilityUpdater.RemoveUninstallerRegistryEntry();
-            }
+            using var portabilityUpdater = NewUpdateManager();
+            portabilityUpdater.RemoveUninstallerRegistryEntry();
         }
 
         public void MoveUserDataFolder(string fromLocation, string toLocation)
@@ -110,12 +106,10 @@ namespace Flow.Launcher.Core.Configuration
 
         public void CreateShortcuts()
         {
-            using (var portabilityUpdater = NewUpdateManager())
-            {
-                portabilityUpdater.CreateShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.StartMenu, false);
-                portabilityUpdater.CreateShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.Desktop, false);
-                portabilityUpdater.CreateShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.Startup, false);
-            }
+            using var portabilityUpdater = NewUpdateManager();
+            portabilityUpdater.CreateShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.StartMenu, false);
+            portabilityUpdater.CreateShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.Desktop, false);
+            portabilityUpdater.CreateShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.Startup, false);
         }
 
         public void CreateUninstallerEntry()
@@ -129,18 +123,14 @@ namespace Flow.Launcher.Core.Configuration
                 subKey2.SetValue("DisplayIcon", Path.Combine(Constant.ApplicationDirectory, "app.ico"), RegistryValueKind.String);
             }
 
-            using (var portabilityUpdater = NewUpdateManager())
-            {
-                _ = portabilityUpdater.CreateUninstallerRegistryEntry();
-            }
+            using var portabilityUpdater = NewUpdateManager();
+            _ = portabilityUpdater.CreateUninstallerRegistryEntry();
         }
 
-        internal void IndicateDeletion(string filePathTodelete)
+        private static void IndicateDeletion(string filePathTodelete)
         {
             var deleteFilePath = Path.Combine(filePathTodelete, DataLocation.DeletionIndicatorFile);
-            using (var _ = File.CreateText(deleteFilePath))
-            {
-            }
+            using var _ = File.CreateText(deleteFilePath);
         }
 
         ///<summary>
