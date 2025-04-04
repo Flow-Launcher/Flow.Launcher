@@ -6,13 +6,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.Program.Programs;
 using Flow.Launcher.Plugin.Program.Views;
 using Flow.Launcher.Plugin.Program.Views.Models;
+using Flow.Launcher.Plugin.SharedCommands;
 using Microsoft.Extensions.Caching.Memory;
 using Path = System.IO.Path;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
@@ -191,7 +191,7 @@ namespace Flow.Launcher.Plugin.Program
 
             await Stopwatch.NormalAsync("|Flow.Launcher.Plugin.Program.Main|Preload programs cost", async () =>
             {
-                Helper.ValidateDirectory(Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
+                FilesFolders.ValidateDirectory(Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
 
                 static void MoveFile(string sourcePath, string destinationPath)
                 {

@@ -23,7 +23,7 @@ namespace Flow.Launcher.Infrastructure.Storage
             var dataType = typeof(T);
             AssemblyName = dataType.Assembly.GetName().Name;
             DirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, AssemblyName);
-            Helper.ValidateDirectory(DirectoryPath);
+            FilesFolders.ValidateDirectory(DirectoryPath);
 
             FilePath = Path.Combine(DirectoryPath, $"{dataType.Name}{FileSuffix}");
         }

@@ -17,7 +17,7 @@ namespace Flow.Launcher.Infrastructure.Storage
         public FlowLauncherJsonStorage()
         {
             var directoryPath = Path.Combine(DataLocation.DataDirectory(), DirectoryName);
-            Helper.ValidateDirectory(directoryPath);
+            FilesFolders.ValidateDirectory(directoryPath);
 
             var filename = typeof(T).Name;
             FilePath = Path.Combine(directoryPath, $"{filename}{FileSuffix}");

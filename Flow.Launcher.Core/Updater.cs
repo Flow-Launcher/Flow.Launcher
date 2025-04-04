@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
 using System.Linq;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -52,7 +53,7 @@ namespace Flow.Launcher.Core
                 var newReleaseVersion = Version.Parse(newUpdateInfo.FutureReleaseEntry.Version.ToString());
                 var currentVersion = Version.Parse(Constant.Version);
 
-                Log.Info($"|Updater.UpdateApp|Future Release <{newUpdateInfo.FutureReleaseEntry.Formatted()}>");
+                Log.Info($"|Updater.UpdateApp|Future Release <{Formatted(newUpdateInfo.FutureReleaseEntry)}>");
 
                 if (newReleaseVersion <= currentVersion)
                 {
@@ -151,6 +152,16 @@ namespace Flow.Launcher.Core
             var tips = string.Format(translator.GetTranslation("newVersionTips"), version);
 
             return tips;
+        }
+
+        private static string Formatted<T>(T t)
+        {
+            var formatted = JsonSerializer.Serialize(t, new JsonSerializerOptions
+            {
+                WriteIndented = true
+            });
+
+            return formatted;
         }
     }
 }
