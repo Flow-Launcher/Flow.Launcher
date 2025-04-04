@@ -1,4 +1,6 @@
-﻿namespace Flow.Launcher.Plugin;
+﻿using System;
+
+namespace Flow.Launcher.Plugin;
 
 /// <summary>
 /// Theme data model
@@ -60,7 +62,7 @@ public class ThemeData
     /// <inheritdoc />
     public override int GetHashCode()
     {
-        return Name?.GetHashCode() ?? 0;
+        return HashCode.Combine(FileNameWithoutExtension, Name);
     }
 
     /// <inheritdoc />
