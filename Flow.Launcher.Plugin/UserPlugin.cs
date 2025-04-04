@@ -73,7 +73,7 @@ namespace Flow.Launcher.Plugin
         public DateTime? DateAdded { get; set; }
 
         /// <summary>
-        /// The date when the plugin was last updated on the local system
+        /// Indicates whether the plugin is installed from a local path
         /// </summary>
         public bool IsFromLocalInstallPath => !string.IsNullOrEmpty(LocalInstallPath);
     }
