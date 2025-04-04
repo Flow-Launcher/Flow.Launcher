@@ -61,7 +61,7 @@ namespace Flow.Launcher.Infrastructure.Image
             });
         }
 
-        public static async Task Save()
+        public static async Task SaveAsync()
         {
             await storageLock.WaitAsync();
 
@@ -75,6 +75,12 @@ namespace Flow.Launcher.Infrastructure.Image
             {
                 storageLock.Release();
             }
+        }
+
+        public static async Task WaitSaveAsync()
+        {
+            await storageLock.WaitAsync();
+            storageLock.Release();
         }
 
         private static async Task<List<(string, bool)>> LoadStorageToConcurrentDictionaryAsync()

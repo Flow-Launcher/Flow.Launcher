@@ -57,7 +57,7 @@ namespace Flow.Launcher
             _mainVM.ChangeQueryText(query, requery);
         }
 
-        public void RestartApp()
+        public async void RestartApp()
         {
             _mainVM.Hide();
 
@@ -65,6 +65,9 @@ namespace Flow.Launcher
             // UpdateManager.RestartApp() will call Environment.Exit(0)
             // which will cause ungraceful exit
             SaveAppAllSettings();
+
+            // wait for all image caches to be saved
+            await ImageLoader.WaitSaveAsync();
 
             // Restart requires Squirrel's Update.exe to be present in the parent folder, 
             // it is only published from the project's release pipeline. When debugging without it,
@@ -88,7 +91,7 @@ namespace Flow.Launcher
             PluginManager.Save();
             _mainVM.Save();
             _settings.Save();
-            _ = ImageLoader.Save();
+            _ = ImageLoader.SaveAsync();
         }
 
         public Task ReloadAllPluginData() => PluginManager.ReloadDataAsync();
