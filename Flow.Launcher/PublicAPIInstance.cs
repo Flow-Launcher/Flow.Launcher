@@ -57,16 +57,18 @@ namespace Flow.Launcher
             _mainVM.ChangeQueryText(query, requery);
         }
 
+#pragma warning disable VSTHRD100 // Avoid async void methods
+
         public async void RestartApp()
         {
             _mainVM.Hide();
 
-            // we must manually save
+            // We must manually save
             // UpdateManager.RestartApp() will call Environment.Exit(0)
             // which will cause ungraceful exit
             SaveAppAllSettings();
 
-            // wait for all image caches to be saved
+            // Wait for all image caches to be saved before restarting
             await ImageLoader.WaitSaveAsync();
 
             // Restart requires Squirrel's Update.exe to be present in the parent folder, 
@@ -74,6 +76,8 @@ namespace Flow.Launcher
             // the project may not restart or just terminates. This is expected.
             UpdateManager.RestartApp(Constant.ApplicationFileName);
         }
+
+#pragma warning restore VSTHRD100 // Avoid async void methods
 
         public void ShowMainWindow() => _mainVM.Show();
 
