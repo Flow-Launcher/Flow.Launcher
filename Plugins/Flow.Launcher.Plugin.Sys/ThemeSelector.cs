@@ -38,7 +38,6 @@ namespace Flow.Launcher.Plugin.Sys
 
         private Result CreateThemeResult(ThemeData theme, ThemeData selectedTheme, int score, IList<int> highlightData)
         {
-            var themeName = theme.FileNameWithoutExtension;
             string title;
             if (theme == selectedTheme)
             {
