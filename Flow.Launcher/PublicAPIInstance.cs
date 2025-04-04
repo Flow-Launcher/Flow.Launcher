@@ -37,6 +37,8 @@ namespace Flow.Launcher
         private readonly Internationalization _translater;
         private readonly MainViewModel _mainVM;
 
+        private readonly object _saveSettingsLock = new();
+
         #region Constructor
 
         public PublicAPIInstance(Settings settings, Internationalization translater, MainViewModel mainVM)
@@ -92,9 +94,12 @@ namespace Flow.Launcher
 
         public void SaveAppAllSettings()
         {
-            PluginManager.Save();
-            _mainVM.Save();
-            _settings.Save();
+            lock (_saveSettingsLock)
+            {
+                _settings.Save();
+                PluginManager.Save();
+                _mainVM.Save();
+            }
             _ = ImageLoader.SaveAsync();
         }
 
