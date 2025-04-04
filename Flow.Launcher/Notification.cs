@@ -9,7 +9,7 @@ namespace Flow.Launcher
 {
     internal static class Notification
     {
-        internal static bool legacy = !Win32Helper.IsNotificationSupport();
+        internal static bool legacy = !Win32Helper.IsNotificationSupported();
 
         internal static void Uninstall()
         {
