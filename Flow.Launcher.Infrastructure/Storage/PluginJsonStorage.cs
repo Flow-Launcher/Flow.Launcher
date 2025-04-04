@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Infrastructure.Storage
 {
@@ -14,7 +15,7 @@ namespace Flow.Launcher.Infrastructure.Storage
             var dataType = typeof(T);
             AssemblyName = dataType.Assembly.GetName().Name;
             DirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, AssemblyName);
-            Helper.ValidateDirectory(DirectoryPath);
+            FilesFolders.ValidateDirectory(DirectoryPath);
 
             FilePath = Path.Combine(DirectoryPath, $"{dataType.Name}{FileSuffix}");
         }
