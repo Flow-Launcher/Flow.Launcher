@@ -46,7 +46,9 @@
                     Text="{DynamicResource FilterComboboxLabel}" />
                 <ComboBox
                     x:Name="DisplayModeComboBox"
-                    Width="150"
+                    Width="Auto"
+                    MinWidth="150"
+                    MaxWidth="150"
                     Height="34" HorizontalContentAlignment="Left"
                     Margin="0 0 4 0"
                     Background="{DynamicResource Color00B}"

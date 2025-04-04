@@ -102,12 +102,12 @@
                             <TextBlock
                                  Margin="0 0 8 0"
                                  VerticalAlignment="Center"
-                                 FontSize="13"
+                                 FontSize="13" ToolTip="{DynamicResource priorityToolTip}"
                                  Foreground="{DynamicResource Color08B}"
                                  Text="{DynamicResource priority}" />
                             <ui:NumberBox
                                 Margin="0 0 8 0"
-                                Maximum="999"
+                                Maximum="999" ToolTip="{DynamicResource priorityToolTip}"
                                 Minimum="0"
                                 Value="{Binding Priority, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                 SpinButtonPlacementMode="Inline" />
@@ -143,7 +143,7 @@
         <StackPanel>
             <ContentControl Content="{Binding BottomPart1}" />
 
-            <ContentControl Content="{Binding BottomPart2}" />
+            <!-- <ContentControl Content="{Binding BottomPart2}" /> -->
 
             <Border
                 Background="{DynamicResource Color00B}"
