@@ -344,5 +344,62 @@ namespace Flow.Launcher.Plugin
         /// Stop the loading bar in main window
         /// </summary>
         public void StopLoadingBar();
+
+        /// <summary>
+        /// Update the plugin manifest
+        /// </summary>
+        /// <param name="usePrimaryUrlOnly">
+        /// FL has multiple urls to download the plugin manifest. Set this to true to only use the primary url.
+        /// </param>
+        /// <param name="token"></param>
+        /// <returns>True if the manifest is updated successfully, false otherwise</returns>
+        public Task<bool> UpdatePluginManifestAsync(bool usePrimaryUrlOnly = false, CancellationToken token = default);
+
+        /// <summary>
+        /// Get the plugin manifest
+        /// </summary>
+        /// <returns></returns>
+        public IReadOnlyList<UserPlugin> GetPluginManifest();
+
+        /// <summary>
+        /// Check if the plugin has been modified.
+        /// If this plugin is updated, installed or uninstalled and users do not restart the app,
+        /// it will be marked as modified
+        /// </summary>
+        /// <param name="id">Plugin id</param>
+        /// <returns></returns>
+        public bool PluginModified(string id);
+
+        /// <summary>
+        /// Update a plugin to new version, from a zip file. By default will remove the zip file if update is via url,
+        /// unless it's a local path installation
+        /// </summary>
+        /// <param name="pluginMetadata">The metadata of the old plugin to update</param>
+        /// <param name="plugin">The new plugin to update</param>
+        /// <param name="zipFilePath">
+        /// Path to the zip file containing the plugin. It will be unzipped to the temporary directory, removed and installed.
+        /// </param>
+        /// <returns></returns>
+        public Task UpdatePluginAsync(PluginMetadata pluginMetadata, UserPlugin plugin, string zipFilePath);
+
+        /// <summary>
+        /// Install a plugin. By default will remove the zip file if installation is from url,
+        /// unless it's a local path installation
+        /// </summary>
+        /// <param name="plugin">The plugin to install</param>
+        /// <param name="zipFilePath">
+        /// Path to the zip file containing the plugin. It will be unzipped to the temporary directory, removed and installed.
+        /// </param>
+        public void InstallPlugin(UserPlugin plugin, string zipFilePath);
+
+        /// <summary>
+        /// Uninstall a plugin
+        /// </summary>
+        /// <param name="pluginMetadata">The metadata of the plugin to uninstall</param>
+        /// <param name="removePluginSettings">
+        /// Plugin has their own settings. If this is set to true, the plugin settings will be removed.
+        /// </param>
+        /// <returns></returns>
+        public Task UninstallPluginAsync(PluginMetadata pluginMetadata, bool removePluginSettings = false);
     }
 }

@@ -98,6 +98,10 @@
                 <StackPanel Orientation="Horizontal">
                     <Button
                         Margin="0 0 12 0"
+                        Command="{Binding AskClearCacheFolderConfirmationCommand}"
+                        Content="{Binding CacheFolderSize, Mode=OneWay}" />
+                    <Button
+                        Margin="0 0 12 0"
                         Command="{Binding AskClearLogFolderConfirmationCommand}"
                         Content="{Binding LogFolderSize, Mode=OneWay}" />
                     <Button

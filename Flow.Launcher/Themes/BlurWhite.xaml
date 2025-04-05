@@ -14,6 +14,8 @@
     <system:String x:Key="SystemBG">Light</system:String>
     <Color x:Key="LightBG">#BFFAFAFA</Color>
     <Color x:Key="DarkBG">#BFFAFAFA</Color>
+    <Thickness x:Key="ResultMargin">0 0 0 8</Thickness>
+    
     <Style
         x:Key="ItemGlyph"
         BasedOn="{StaticResource BaseGlyphStyle}"
@@ -148,13 +150,17 @@
         <Setter Property="Height" Value="30" />
         <Setter Property="Opacity" Value="0.2" />
     </Style>
-    <Style x:Key="ItemHotkeyStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="14" />
+    <Style
+        x:Key="ItemHotkeyStyle"
+        BasedOn="{StaticResource BaseItemHotkeyStyle}"
+        TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#000000" />
         <Setter Property="Opacity" Value="0.2" />
     </Style>
-    <Style x:Key="ItemHotkeySelectedStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="14" />
+    <Style
+        x:Key="ItemHotkeySelectedStyle"
+        BasedOn="{StaticResource BaseItemHotkeySelectedStyle}"
+        TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#000000" />
         <Setter Property="Opacity" Value="0.2" />
     </Style>

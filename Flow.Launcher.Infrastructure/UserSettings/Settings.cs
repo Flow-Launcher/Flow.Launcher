@@ -312,7 +312,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         bool _hideNotifyIcon { get; set; }
         public bool HideNotifyIcon
         {
-            get { return _hideNotifyIcon; }
+            get => _hideNotifyIcon;
             set
             {
                 _hideNotifyIcon = value;
@@ -321,6 +321,11 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
         public bool LeaveCmdOpen { get; set; }
         public bool HideWhenDeactivated { get; set; } = true;
+
+        public bool SearchQueryResultsWithDelay { get; set; }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public SearchDelayTime SearchDelayTime { get; set; } = SearchDelayTime.Normal;
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public SearchWindowScreens SearchWindowScreen { get; set; } = SearchWindowScreens.Cursor;
@@ -343,7 +348,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         [JsonIgnore]
         public bool WMPInstalled { get; set; } = true;
-        
+
         // This needs to be loaded last by staying at the bottom
         public PluginsSettings PluginSettings { get; set; } = new PluginsSettings();
 

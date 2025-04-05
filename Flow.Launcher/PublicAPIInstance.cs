@@ -28,6 +28,7 @@ using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
 using JetBrains.Annotations;
 using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Core.ExternalPlugins;
 
 namespace Flow.Launcher
 {
@@ -36,6 +37,8 @@ namespace Flow.Launcher
         private readonly Settings _settings;
         private readonly Internationalization _translater;
         private readonly MainViewModel _mainVM;
+
+        private readonly object _saveSettingsLock = new();
 
         #region Constructor
 
@@ -57,20 +60,27 @@ namespace Flow.Launcher
             _mainVM.ChangeQueryText(query, requery);
         }
 
-        public void RestartApp()
+#pragma warning disable VSTHRD100 // Avoid async void methods
+
+        public async void RestartApp()
         {
             _mainVM.Hide();
 
-            // we must manually save
+            // We must manually save
             // UpdateManager.RestartApp() will call Environment.Exit(0)
             // which will cause ungraceful exit
             SaveAppAllSettings();
+
+            // Wait for all image caches to be saved before restarting
+            await ImageLoader.WaitSaveAsync();
 
             // Restart requires Squirrel's Update.exe to be present in the parent folder, 
             // it is only published from the project's release pipeline. When debugging without it,
             // the project may not restart or just terminates. This is expected.
             UpdateManager.RestartApp(Constant.ApplicationFileName);
         }
+
+#pragma warning restore VSTHRD100 // Avoid async void methods
 
         public void ShowMainWindow() => _mainVM.Show();
 
@@ -85,10 +95,13 @@ namespace Flow.Launcher
 
         public void SaveAppAllSettings()
         {
-            PluginManager.Save();
-            _mainVM.Save();
-            _settings.Save();
-            _ = ImageLoader.Save();
+            lock (_saveSettingsLock)
+            {
+                _settings.Save();
+                PluginManager.Save();
+                _mainVM.Save();
+            }
+            _ = ImageLoader.SaveAsync();
         }
 
         public Task ReloadAllPluginData() => PluginManager.ReloadDataAsync();
@@ -192,7 +205,7 @@ namespace Flow.Launcher
 
         private readonly ConcurrentDictionary<Type, object> _pluginJsonStorages = new();
 
-        public object RemovePluginSettings(string assemblyName)
+        public void RemovePluginSettings(string assemblyName)
         {
             foreach (var keyValuePair in _pluginJsonStorages)
             {
@@ -202,11 +215,8 @@ namespace Flow.Launcher
                 if (name == assemblyName)
                 {
                     _pluginJsonStorages.Remove(key, out var pluginJsonStorage);
-                    return pluginJsonStorage;
                 }
             }
-
-            return null;
         }
 
         /// <summary>
@@ -344,6 +354,22 @@ namespace Flow.Launcher
             MessageBoxEx.Show(messageBoxText, caption, button, icon, defaultResult);
 
         public Task ShowProgressBoxAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action cancelProgress = null) => ProgressBoxEx.ShowAsync(caption, reportProgressAsync, cancelProgress);
+
+        public Task<bool> UpdatePluginManifestAsync(bool usePrimaryUrlOnly = false, CancellationToken token = default) =>
+            PluginsManifest.UpdateManifestAsync(usePrimaryUrlOnly, token);
+
+        public IReadOnlyList<UserPlugin> GetPluginManifest() => PluginsManifest.UserPlugins;
+
+        public bool PluginModified(string id) => PluginManager.PluginModified(id);
+
+        public Task UpdatePluginAsync(PluginMetadata pluginMetadata, UserPlugin plugin, string zipFilePath) =>
+            PluginManager.UpdatePluginAsync(pluginMetadata, plugin, zipFilePath);
+
+        public void InstallPlugin(UserPlugin plugin, string zipFilePath) =>
+            PluginManager.InstallPlugin(plugin, zipFilePath);
+
+        public Task UninstallPluginAsync(PluginMetadata pluginMetadata, bool removePluginSettings = false) =>
+            PluginManager.UninstallPluginAsync(pluginMetadata, removePluginSettings);
 
         #endregion
 
