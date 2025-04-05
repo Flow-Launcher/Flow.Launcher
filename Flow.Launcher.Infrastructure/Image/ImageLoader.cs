@@ -5,12 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
-using static Flow.Launcher.Infrastructure.Http.Http;
 
 namespace Flow.Launcher.Infrastructure.Image
 {
@@ -27,7 +25,6 @@ namespace Flow.Launcher.Infrastructure.Image
         public static ImageSource LoadingImage { get; } = new BitmapImage(new Uri(Constant.LoadingImgIcon));
         public const int SmallIconSize = 64;
         public const int FullIconSize = 256;
-
 
         private static readonly string[] ImageExtensions = { ".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tiff", ".ico" };
 
@@ -183,7 +180,7 @@ namespace Flow.Launcher.Infrastructure.Image
         private static async Task<BitmapImage> LoadRemoteImageAsync(bool loadFullImage, Uri uriResult)
         {
             // Download image from url
-            await using var resp = await GetStreamAsync(uriResult);
+            await using var resp = await Http.Http.GetStreamAsync(uriResult);
             await using var buffer = new MemoryStream();
             await resp.CopyToAsync(buffer);
             buffer.Seek(0, SeekOrigin.Begin);
