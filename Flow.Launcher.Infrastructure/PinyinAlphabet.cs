@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Text;
-using JetBrains.Annotations;
 using Flow.Launcher.Infrastructure.UserSettings;
 using ToolGood.Words.Pinyin;
 using System.Collections.Generic;
@@ -15,11 +13,11 @@ namespace Flow.Launcher.Infrastructure
         private readonly ConcurrentDictionary<string, (string translation, TranslationMapping map)> _pinyinCache =
             new();
 
-        private Settings _settings;
+        private readonly Settings _settings;
 
-        public void Initialize([NotNull] Settings settings)
+        public PinyinAlphabet()
         {
-            _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+            _settings = Ioc.Default.GetRequiredService<Settings>();
         }
 
         public bool ShouldTranslate(string stringToTranslate)
@@ -109,16 +107,6 @@ namespace Flow.Launcher.Infrastructure
             {"Sh", "u"},
             {"Zh", "v"}
         });
-        
-        public PinyinAlphabet()
-        {
-            Initialize(Ioc.Default.GetRequiredService<Settings>());
-        }
-
-        private void Initialize([NotNull] Settings settings)
-        {
-            _settings = settings ?? throw new ArgumentNullException(nameof(settings));
-        }
 
         private static readonly ReadOnlyDictionary<string, string> second = new(new Dictionary<string, string>()
         {
@@ -200,6 +188,7 @@ namespace Flow.Launcher.Infrastructure
 
             return doublePin.ToString();
         }
+
         #endregion
     }
 }
