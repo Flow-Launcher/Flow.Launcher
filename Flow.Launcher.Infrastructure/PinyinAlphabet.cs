@@ -1,10 +1,10 @@
 ﻿using System.Collections.Concurrent;
-using System.Text;
-using Flow.Launcher.Infrastructure.UserSettings;
-using ToolGood.Words.Pinyin;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Text;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Infrastructure.UserSettings;
+using ToolGood.Words.Pinyin;
 
 namespace Flow.Launcher.Infrastructure
 {
@@ -52,12 +52,12 @@ namespace Flow.Launcher.Infrastructure
 
             var resultList = WordsHelper.GetPinyinList(content);
 
-            StringBuilder resultBuilder = new StringBuilder();
-            TranslationMapping map = new TranslationMapping();
+            var resultBuilder = new StringBuilder();
+            var map = new TranslationMapping();
 
-            bool pre = false;
+            var pre = false;
 
-            for (int i = 0; i < resultList.Length; i++)
+            for (var i = 0; i < resultList.Length; i++)
             {
                 if (content[i] >= 0x3400 && content[i] <= 0x9FD5)
                 {
@@ -148,7 +148,7 @@ namespace Flow.Launcher.Infrastructure
         private static string ToDoublePin(string fullPinyin)
         {
             // Assuming s is valid
-            StringBuilder doublePin = new StringBuilder();
+            var doublePin = new StringBuilder();
 
             if (fullPinyin.Length <= 3 && (fullPinyin[0] == 'a' || fullPinyin[0] == 'e' || fullPinyin[0] == 'o'))
             {
