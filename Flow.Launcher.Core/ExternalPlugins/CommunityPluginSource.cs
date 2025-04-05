@@ -1,5 +1,6 @@
 ﻿using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Plugin;
 using System;
 using System.Collections.Generic;
 using System.Net;
