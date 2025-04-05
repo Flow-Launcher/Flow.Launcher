@@ -14,6 +14,8 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Squirrel;
 using Flow.Launcher.Core;
 using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Core.Storage;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Http;
@@ -27,11 +29,10 @@ using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
 using JetBrains.Annotations;
-using Flow.Launcher.Core.Resource;
 
 namespace Flow.Launcher
 {
-    public class PublicAPIInstance : IPublicAPI
+    public class PublicAPIInstance : IPublicAPI, IRemovable
     {
         private readonly Settings _settings;
         private readonly Internationalization _translater;
@@ -348,7 +349,7 @@ namespace Flow.Launcher
 
         private readonly ConcurrentDictionary<(string, string, Type), object> _pluginBinaryStorages = new();
 
-        public void RemovePluginCache(string cacheDirectory)
+        public void RemovePluginCaches(string cacheDirectory)
         {
             foreach (var keyValuePair in _pluginBinaryStorages)
             {

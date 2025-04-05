@@ -13,6 +13,7 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
+using IRemovable = Flow.Launcher.Core.Storage.IRemovable;
 using ISavable = Flow.Launcher.Plugin.ISavable;
 
 namespace Flow.Launcher.Core.Plugin
@@ -588,12 +589,10 @@ namespace Flow.Launcher.Core.Plugin
             if (removePluginSettings)
             {
                 // For dotnet plugins, we need to remove their PluginJsonStorage and PluginBinaryStorage instances
-                if (AllowedLanguage.IsDotNet(plugin.Language))
+                if (AllowedLanguage.IsDotNet(plugin.Language) && API is IRemovable removable)
                 {
-                    var method = API.GetType().GetMethod("RemovePluginSettings");
-                    method?.Invoke(API, new object[] { plugin.AssemblyName });
-                    var method1 = API.GetType().GetMethod("RemovePluginCache");
-                    method1?.Invoke(API, new object[] { plugin.PluginCacheDirectoryPath });
+                    removable.RemovePluginSettings(plugin.AssemblyName);
+                    removable.RemovePluginCaches(plugin.PluginCacheDirectoryPath);
                 }
 
                 try
