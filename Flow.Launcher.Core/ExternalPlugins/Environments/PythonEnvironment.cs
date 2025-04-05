@@ -1,10 +1,10 @@
-﻿using Droplex;
+﻿using System.Collections.Generic;
+using System.IO;
+using Droplex;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
-using System.Collections.Generic;
-using System.IO;
 
 namespace Flow.Launcher.Core.ExternalPlugins.Environments
 {
@@ -22,13 +22,17 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
         internal override string FileDialogFilter => "Python|pythonw.exe";
 
-        internal override string PluginsSettingsFilePath { get => PluginSettings.PythonExecutablePath; set => PluginSettings.PythonExecutablePath = value; }
+        internal override string PluginsSettingsFilePath
+        {
+            get => PluginSettings.PythonExecutablePath;
+            set => PluginSettings.PythonExecutablePath = value;
+        }
 
         internal PythonEnvironment(List<PluginMetadata> pluginMetadataList, PluginsSettings pluginSettings) : base(pluginMetadataList, pluginSettings) { }
 
         internal override void InstallEnvironment()
         {
-            FilesFolders.RemoveFolderIfExists(InstallPath);
+            FilesFolders.RemoveFolderIfExists(InstallPath, (s) => API.ShowMsgBox(s));
 
             // Python 3.11.4 is no longer Windows 7 compatible. If user is on Win 7 and
             // uses Python plugin they need to custom install and use v3.8.9

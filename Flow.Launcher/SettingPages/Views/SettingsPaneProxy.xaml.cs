@@ -1,6 +1,8 @@
-﻿using System;
-using System.Windows.Navigation;
+﻿using System.Windows.Navigation;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Core;
 using Flow.Launcher.SettingPages.ViewModels;
+using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.SettingPages.Views;
 
@@ -12,8 +14,8 @@ public partial class SettingsPaneProxy
     {
         if (!IsInitialized)
         {
-            if (e.ExtraData is not SettingWindow.PaneData { Settings: { } settings, Updater: { } updater })
-                throw new ArgumentException($"Settings are required for {nameof(SettingsPaneProxy)}.");
+            var settings = Ioc.Default.GetRequiredService<Settings>();
+            var updater = Ioc.Default.GetRequiredService<Updater>();
             _viewModel = new SettingsPaneProxyViewModel(settings, updater);
             DataContext = _viewModel;
             InitializeComponent();

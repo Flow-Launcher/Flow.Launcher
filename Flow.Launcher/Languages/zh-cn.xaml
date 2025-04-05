@@ -1,7 +1,19 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <!--  Startup  -->
+    <system:String x:Key="runtimePluginInstalledChooseRuntimePrompt">
+        Flow 检测到您已安装 {0} 个插件，需要 {1} 才能运行。是否要下载 {1}？
+        {2}{2}
+        如果已安装，请单击“否”，系统将提示您选择包含 {1} 可执行文件的文件夹
+    </system:String>
+    <system:String x:Key="runtimePluginChooseRuntimeExecutable">请选择 {0} 可执行文件</system:String>
+    <system:String x:Key="runtimePluginUnableToSetExecutablePath">无法设置 {0} 可执行路径，请尝试从 Flow 的设置中设置（向下滚动到底部）。</system:String>
+    <system:String x:Key="failedToInitializePluginsTitle">无法初始化插件</system:String>
+    <system:String x:Key="failedToInitializePluginsMessage">插件：{0} - 无法加载并将被禁用，请联系插件创建者寻求帮助</system:String>
+
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">无法注册热键“{0}”。该热键可能正在被其他程序使用。更改为不同的热键，或退出其他程序。</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">启动命令 {0} 失败</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">无效的 Flow Launcher 插件文件格式</system:String>
@@ -23,7 +35,7 @@
     <system:String x:Key="folderTitle">目录</system:String>
     <system:String x:Key="textTitle">文本</system:String>
     <system:String x:Key="GameMode">游戏模式</system:String>
-    <system:String x:Key="GameModeToolTip">暂停使用快捷键。</system:String>
+    <system:String x:Key="GameModeToolTip">暂停使用热键。</system:String>
     <system:String x:Key="PositionReset">重置位置</system:String>
     <system:String x:Key="PositionResetToolTip">重置搜索窗口位置</system:String>
 
@@ -33,6 +45,8 @@
     <system:String x:Key="portableMode">便携模式</system:String>
     <system:String x:Key="portableModeToolTIp">将所有设置和用户数据存储在一个文件夹中 (可用于可移除驱动器或云服务)。</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">开机自启</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
     <system:String x:Key="setAutoStartFailed">设置开机自启时出错</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">失去焦点时自动隐藏 Flow Launcher</system:String>
     <system:String x:Key="dontPromptUpdateMsg">不显示新版本提示</system:String>
@@ -54,6 +68,10 @@
     <system:String x:Key="LastQueryPreserved">保留上次搜索关键字</system:String>
     <system:String x:Key="LastQuerySelected">选择上次搜索关键字</system:String>
     <system:String x:Key="LastQueryEmpty">清空上次搜索关键字</system:String>
+    <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
+    <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
+    <system:String x:Key="KeepMaxResults">固定窗口高度</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">窗口高度不能通过拖动来调整。</system:String>
     <system:String x:Key="maxShowResults">最大结果显示个数</system:String>
     <system:String x:Key="maxShowResultsToolTip">您也可以通过使用 CTRL+ &quot;+&quot; 和 CTRL+ &quot;-&quot; 来快速调整它。</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">全屏模式下忽略热键</system:String>
@@ -71,10 +89,14 @@
     <system:String x:Key="autoUpdates">自动更新</system:String>
     <system:String x:Key="select">选择</system:String>
     <system:String x:Key="hideOnStartup">系统启动时不显示主窗口</system:String>
+    <system:String x:Key="hideOnStartupToolTip">Flow Launcher 启动后搜索窗口隐藏在托盘中。</system:String>
     <system:String x:Key="hideNotifyIcon">隐藏任务栏图标</system:String>
     <system:String x:Key="hideNotifyIconToolTip">任务栏图标被隐藏时，右键点击搜索窗口即可打开设置菜单。</system:String>
     <system:String x:Key="querySearchPrecision">查询搜索精度</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">更改匹配成功所需的最低分数。</system:String>
+    <system:String x:Key="SearchPrecisionNone">无</system:String>
+    <system:String x:Key="SearchPrecisionLow">低</system:String>
+    <system:String x:Key="SearchPrecisionRegular">常规</system:String>
     <system:String x:Key="ShouldUsePinyin">使用拼音搜索</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">允许使用拼音进行搜索。</system:String>
     <system:String x:Key="AlwaysPreview">始终打开预览</system:String>
@@ -107,7 +129,8 @@
     <system:String x:Key="plugin_query_version">版本</system:String>
     <system:String x:Key="plugin_query_web">官方网站</system:String>
     <system:String x:Key="plugin_uninstall">卸载</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">插件商店</system:String>
@@ -124,8 +147,6 @@
     <system:String x:Key="LabelNewToolTip">此插件在过去7天内有更新</system:String>
     <system:String x:Key="LabelUpdateToolTip">有可用的更新</system:String>
 
-
-
     <!--  Setting Theme  -->
     <system:String x:Key="theme">主题</system:String>
     <system:String x:Key="appearance">外观</system:String>
@@ -140,8 +161,13 @@
     <system:String x:Key="SampleSubTitleProgram">以管理员或其他用户身份启动程序</system:String>
     <system:String x:Key="SampleTitleProcessKiller">进程杀手</system:String>
     <system:String x:Key="SampleSubTitleProcessKiller">终止不需要的进程</system:String>
+    <system:String x:Key="SearchBarHeight">搜索栏高度</system:String>
+    <system:String x:Key="ItemHeight">项目高度</system:String>
     <system:String x:Key="queryBoxFont">查询框字体</system:String>
-    <system:String x:Key="resultItemFont">结果项字体</system:String>
+    <system:String x:Key="resultItemFont">结果标题字体</system:String>
+    <system:String x:Key="resultSubItemFont">结果字幕字体</system:String>
+    <system:String x:Key="resetCustomize">重置</system:String>
+    <system:String x:Key="CustomizeToolTip">自定义</system:String>
     <system:String x:Key="windowMode">窗口模式</system:String>
     <system:String x:Key="opacity">透明度</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">无法找到主题 {0} ，切换为默认主题</system:String>
@@ -156,7 +182,7 @@
     <system:String x:Key="SoundEffectTip">启用激活音效</system:String>
     <system:String x:Key="SoundEffectVolume">音效音量</system:String>
     <system:String x:Key="SoundEffectVolumeTip">调整音效音量</system:String>
-    <system:String x:Key="SoundEffectWarning">Windows Media Player is unavailable and is required for Flow's volume adjustment. Please check your installation if you need to adjust volume.</system:String>
+    <system:String x:Key="SoundEffectWarning">Windows 媒体播放器不可用，需要它来调节 Flow 的音量。如果您需要调节音量，请检查您的安装。</system:String>
     <system:String x:Key="Animation">动画</system:String>
     <system:String x:Key="AnimationTip">启用动画</system:String>
     <system:String x:Key="AnimationSpeed">动画速度</system:String>
@@ -167,41 +193,44 @@
     <system:String x:Key="AnimationSpeedCustom">自定义</system:String>
     <system:String x:Key="Clock">时钟</system:String>
     <system:String x:Key="Date">日期</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">该主题支持两种（浅色/深色）模式。</system:String>
+    <system:String x:Key="TypeHasBlurToolTip">该主题支持模糊透明背景。</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">热键</system:String>
     <system:String x:Key="hotkeys">热键</system:String>
-    <system:String x:Key="flowlauncherHotkey">Open Flow Launcher</system:String>
+    <system:String x:Key="flowlauncherHotkey">打开 Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">输入显示/隐藏 Flow Launcher 的快捷键。</system:String>
-    <system:String x:Key="previewHotkey">Toggle Preview</system:String>
+    <system:String x:Key="previewHotkey">切换预览</system:String>
     <system:String x:Key="previewHotkeyToolTip">输入在搜索窗口中开启/关闭预览的快捷键。</system:String>
-    <system:String x:Key="hotkeyPresets">Hotkey Presets</system:String>
-    <system:String x:Key="hotkeyPresetsToolTip">List of currently registered hotkeys</system:String>
+    <system:String x:Key="hotkeyPresets">热键预设</system:String>
+    <system:String x:Key="hotkeyPresetsToolTip">当前注册的热键列表</system:String>
     <system:String x:Key="openResultModifiers">打开结果快捷键修饰符</system:String>
     <system:String x:Key="openResultModifiersToolTip">选择一个用以打开搜索结果的按键修饰符。</system:String>
     <system:String x:Key="showOpenResultHotkey">显示热键</system:String>
-    <system:String x:Key="showOpenResultHotkeyToolTip">显示用于打开结果的快捷键。</system:String>
-    <system:String x:Key="autoCompleteHotkey">Auto Complete</system:String>
-    <system:String x:Key="autoCompleteHotkeyToolTip">Runs autocomplete for the selected items.</system:String>
-    <system:String x:Key="SelectNextItemHotkey">Select Next Item</system:String>
-    <system:String x:Key="SelectPrevItemHotkey">Select Previous Item</system:String>
-    <system:String x:Key="SelectNextPageHotkey">Next Page</system:String>
-    <system:String x:Key="SelectPrevPageHotkey">Previous Page</system:String>
-    <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
-    <system:String x:Key="CycleHistoryDownHotkey">Cycle Next Query</system:String>
+    <system:String x:Key="showOpenResultHotkeyToolTip">显示用于打开结果的热键。</system:String>
+    <system:String x:Key="autoCompleteHotkey">自动完成</system:String>
+    <system:String x:Key="autoCompleteHotkeyToolTip">对所选项目运行自动完成功能。</system:String>
+    <system:String x:Key="SelectNextItemHotkey">选择下一个项目</system:String>
+    <system:String x:Key="SelectPrevItemHotkey">选择上一个项目</system:String>
+    <system:String x:Key="SelectNextPageHotkey">下一页</system:String>
+    <system:String x:Key="SelectPrevPageHotkey">上一页</system:String>
+    <system:String x:Key="CycleHistoryUpHotkey">循环上一个查询</system:String>
+    <system:String x:Key="CycleHistoryDownHotkey">循环下一个查询</system:String>
     <system:String x:Key="OpenContextMenuHotkey">打开菜单目录</system:String>
+    <system:String x:Key="OpenNativeContextMenuHotkey">打开本机上下文菜单</system:String>
     <system:String x:Key="SettingWindowHotkey">打开设置窗口</system:String>
-    <system:String x:Key="CopyFilePathHotkey">Copy File Path</system:String>
+    <system:String x:Key="CopyFilePathHotkey">复制文件路径</system:String>
     <system:String x:Key="ToggleGameModeHotkey">切换游戏模式</system:String>
-    <system:String x:Key="ToggleHistoryHotkey">Toggle History</system:String>
+    <system:String x:Key="ToggleHistoryHotkey">切换历史记录</system:String>
     <system:String x:Key="OpenContainFolderHotkey">打开所在目录</system:String>
-    <system:String x:Key="RunAsAdminHotkey">Run As Admin</system:String>
-    <system:String x:Key="RequeryHotkey">Refresh Search Results</system:String>
-    <system:String x:Key="ReloadPluginHotkey">Reload Plugins Data</system:String>
-    <system:String x:Key="QuickWidthHotkey">Quick Adjust Window Width</system:String>
-    <system:String x:Key="QuickHeightHotkey">Quick Adjust Window Height</system:String>
-    <system:String x:Key="ReloadPluginHotkeyToolTip">Use when require plugins to reload and update their existing data.</system:String>
-    <system:String x:Key="AdditionalHotkeyToolTip">You can add one more hotkey for this function.</system:String>
+    <system:String x:Key="RunAsAdminHotkey">以管理员身份运行</system:String>
+    <system:String x:Key="RequeryHotkey">刷新搜索结果</system:String>
+    <system:String x:Key="ReloadPluginHotkey">重新加载插件数据</system:String>
+    <system:String x:Key="QuickWidthHotkey">快速调整窗口宽度</system:String>
+    <system:String x:Key="QuickHeightHotkey">快速调整窗口高度</system:String>
+    <system:String x:Key="ReloadPluginHotkeyToolTip">当需要插件重新加载并更新其现有数据时使用。</system:String>
+    <system:String x:Key="AdditionalHotkeyToolTip">您可以为此功能添加一个热键。</system:String>
     <system:String x:Key="customQueryHotkey">自定义查询热键</system:String>
     <system:String x:Key="customQueryShortcut">自定义查询捷径</system:String>
     <system:String x:Key="builtinShortcuts">内置捷径</system:String>
@@ -212,7 +241,7 @@
     <system:String x:Key="delete">删除</system:String>
     <system:String x:Key="edit">编辑</system:String>
     <system:String x:Key="add">添加</system:String>
-    <system:String x:Key="none">None</system:String>
+    <system:String x:Key="none">无</system:String>
     <system:String x:Key="pleaseSelectAnItem">请选择一项</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">你确定要删除插件 {0} 的热键吗?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">你确定要删除捷径 {0} （展开为 {1}）？</system:String>
@@ -266,11 +295,17 @@
     <system:String x:Key="clearlogfolder">清除日志</system:String>
     <system:String x:Key="clearlogfolderMessage">你确定要删除所有的日志吗？</system:String>
     <system:String x:Key="welcomewindow">向导</system:String>
+    <system:String x:Key="userdatapath">用户数据位置</system:String>
+    <system:String x:Key="userdatapathToolTip">用户设置和已安装的插件保存在用户数据文件夹中。此位置可能因是否处于便携模式而异。</system:String>
+    <system:String x:Key="userdatapathButton">打开文件夹</system:String>
+    <system:String x:Key="logLevel">Log Level</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">默认文件管理器</system:String>
-    <system:String x:Key="fileManager_tips">请指定文件管理器的文件位置，并在必要时修改参数。 默认参数是%d&quot;，作为占位符代表文件路径。 例如命令 “totalcmd.exe /A c:\winds”，参数是 /A &quot;%d”。</system:String>
-    <system:String x:Key="fileManager_tips2">%f是一个表示文件路径的参数。 它用于在第三方文件管理器中打开特定文件位置时强调文件/文件夹名称。 此参数仅在“选中文件参数”项目中可用。 如果文件管理器没有该功能，“%d” 仍然可用。</system:String>
+    <system:String x:Key="fileManager_tips">请指定您使用的文件管理器的文件位置并根据需要添加参数。“%d”表示要打开的目录路径，由文件夹字段的参数和打开特定目录的命令使用。“%f”表示要打开的文件路径，由文件字段的参数和打开特定文件的命令使用。</system:String>
+    <system:String x:Key="fileManager_tips2">例如，如果文件管理器使用诸如“totalcmd.exe /A c:\windows”之类的命令来打开 c:\windows 目录，则文件管理器路径将为 totalcmd.exe，文件夹参数将为 /A &quot;%d&quot;。某些文件管理器（如 QTTabBar）可能只需要提供路径，在本例中，使用“%d”作为文件管理器路径，其余字段留空。</system:String>
     <system:String x:Key="fileManager_name">文件管理器</system:String>
     <system:String x:Key="fileManager_profile_name">档案名称</system:String>
     <system:String x:Key="fileManager_path">文件管理器路径</system:String>
@@ -311,11 +346,11 @@
     <system:String x:Key="hotkeyIsNotUnavailable">热键不可用，请选择一个新的热键</system:String>
     <system:String x:Key="invalidPluginHotkey">插件热键不合法</system:String>
     <system:String x:Key="update">更新</system:String>
-    <system:String x:Key="hotkeyRegTitle">Binding Hotkey</system:String>
-    <system:String x:Key="hotkeyUnavailable">Current hotkey is unavailable.</system:String>
-    <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for &quot;{0}&quot; and can't be used. Please choose another hotkey.</system:String>
-    <system:String x:Key="hotkeyUnavailableEditable">This hotkey is already in use by &quot;{0}&quot;. If you press &quot;Overwrite&quot;, it will be removed from &quot;{0}&quot;.</system:String>
-    <system:String x:Key="hotkeyRegGuide">Press the keys you want to use for this function.</system:String>
+    <system:String x:Key="hotkeyRegTitle">绑定热键</system:String>
+    <system:String x:Key="hotkeyUnavailable">当前热键不可用。</system:String>
+    <system:String x:Key="hotkeyUnavailableUneditable">此热键为“{0}”保留，无法使用。请选择其他热键。</system:String>
+    <system:String x:Key="hotkeyUnavailableEditable">此热键已被“{0}”使用。如果按“覆盖”，则会将其从“{0}”中删除。</system:String>
+    <system:String x:Key="hotkeyRegGuide">按下您想要用于此功能的键。</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">自定义查询捷径</system:String>
@@ -329,10 +364,14 @@
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">保存</system:String>
-    <system:String x:Key="commonOverwrite">Overwrite</system:String>
+    <system:String x:Key="commonOverwrite">覆盖</system:String>
     <system:String x:Key="commonCancel">取消</system:String>
-    <system:String x:Key="commonReset">Reset</system:String>
+    <system:String x:Key="commonReset">重置</system:String>
     <system:String x:Key="commonDelete">删除</system:String>
+    <system:String x:Key="commonOK">更新</system:String>
+    <system:String x:Key="commonYes">是</system:String>
+    <system:String x:Key="commonNo">否</system:String>
+    <system:String x:Key="commonBackground">背景</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">版本</system:String>
@@ -349,6 +388,9 @@
     <system:String x:Key="reportWindow_report_succeed">发送成功</system:String>
     <system:String x:Key="reportWindow_report_failed">发送失败</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher 出错啦</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
+    <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
+    <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">请稍等...</system:String>
@@ -382,11 +424,11 @@
     <system:String x:Key="Welcome_Page2_Title">搜索并运行您PC上的文件和应用程序</system:String>
     <system:String x:Key="Welcome_Page2_Text01">搜索所有应用程序、 文件、 书签、 YouTube、 Twitter等。所有都只需要键盘而不需要鼠标。</system:String>
     <system:String x:Key="Welcome_Page2_Text02">Flow Launcher 默认使用下面的快捷键激活。 要更改它，请点击输入并按键盘上所需的热键。</system:String>
-    <system:String x:Key="Welcome_Page3_Title">快捷键</system:String>
+    <system:String x:Key="Welcome_Page3_Title">热键</system:String>
     <system:String x:Key="Welcome_Page4_Title">动作关键词和命令</system:String>
     <system:String x:Key="Welcome_Page4_Text01">通过 Flow Launcher 插件搜索网站、启动应用程序或运行各种功能。某些功能使用一个动作关键词激活，如有必要，它们也可以在没有动作关键词的情况下使用。欢迎尝试以下的查询语句。</system:String>
     <system:String x:Key="Welcome_Page5_Title">开始使用 Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page5_Text01">完成了！享受 Flow Launcher。不要忘记激活快捷键 :)</system:String>
+    <system:String x:Key="Welcome_Page5_Text01">大功告成。尽情使用 Flow Launcher 吧。别忘了用热键启动 :)</system:String>
 
     <!--  General Guide & Hotkey  -->
 
@@ -402,11 +444,11 @@
     <system:String x:Key="HotkeyCtrlIDesc">打开设置窗口</system:String>
     <system:String x:Key="HotkeyF5Desc">重新加载插件数据</system:String>
 
-    <system:String x:Key="HotkeySelectFirstResult">Select first result</system:String>
-    <system:String x:Key="HotkeySelectLastResult">Select last result</system:String>
-    <system:String x:Key="HotkeyRequery">Run current query again</system:String>
-    <system:String x:Key="HotkeyOpenResult">Open result</system:String>
-    <system:String x:Key="HotkeyOpenResultN">Open result #{0}</system:String>
+    <system:String x:Key="HotkeySelectFirstResult">选择第一个结果</system:String>
+    <system:String x:Key="HotkeySelectLastResult">选择最后一个结果</system:String>
+    <system:String x:Key="HotkeyRequery">再次运行当前查询</system:String>
+    <system:String x:Key="HotkeyOpenResult">打开结果</system:String>
+    <system:String x:Key="HotkeyOpenResultN">打开结果 #{0}</system:String>
 
     <system:String x:Key="RecommendWeather">天气</system:String>
     <system:String x:Key="RecommendWeatherDesc">谷歌天气结果</system:String>
@@ -417,4 +459,8 @@
     <system:String x:Key="RecommendAcronyms">sn</system:String>
     <system:String x:Key="RecommendAcronymsDesc">便笺</system:String>
 
+    <!--  Preview Area  -->
+    <system:String x:Key="FileSize">文件大小</system:String>
+    <system:String x:Key="Created">创建于</system:String>
+    <system:String x:Key="LastModified">最后修改于</system:String>
 </ResourceDictionary>

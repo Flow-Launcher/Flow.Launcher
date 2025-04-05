@@ -1,8 +1,9 @@
-using Flow.Launcher.Infrastructure.Logger;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core.ExternalPlugins
 {
@@ -17,11 +18,11 @@ namespace Flow.Launcher.Core.ExternalPlugins
         private static readonly SemaphoreSlim manifestUpdateLock = new(1);
 
         private static DateTime lastFetchedAt = DateTime.MinValue;
-        private static TimeSpan fetchTimeout = TimeSpan.FromMinutes(2);
+        private static readonly TimeSpan fetchTimeout = TimeSpan.FromMinutes(2);
 
         public static List<UserPlugin> UserPlugins { get; private set; }
 
-        public static async Task UpdateManifestAsync(CancellationToken token = default, bool usePrimaryUrlOnly = false)
+        public static async Task<bool> UpdateManifestAsync(bool usePrimaryUrlOnly = false, CancellationToken token = default)
         {
             try
             {
@@ -31,18 +32,26 @@ namespace Flow.Launcher.Core.ExternalPlugins
                 {
                     var results = await mainPluginStore.FetchAsync(token, usePrimaryUrlOnly).ConfigureAwait(false);
 
-                    UserPlugins = results;
-                    lastFetchedAt = DateTime.Now;
+                    // If the results are empty, we shouldn't update the manifest because the results are invalid.
+                    if (results.Count != 0)
+                    {
+                        UserPlugins = results;
+                        lastFetchedAt = DateTime.Now;
+
+                        return true;
+                    }
                 }
             }
             catch (Exception e)
             {
-                Log.Exception($"|PluginsManifest.{nameof(UpdateManifestAsync)}|Http request failed", e);
+                Ioc.Default.GetRequiredService<IPublicAPI>().LogException(nameof(PluginsManifest), "Http request failed", e);
             }
             finally
             {
                 manifestUpdateLock.Release();
             }
+
+            return false;
         }
     }
 }

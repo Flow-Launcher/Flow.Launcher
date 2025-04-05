@@ -1,6 +1,4 @@
 ﻿using System;
-using Flow.Launcher.Infrastructure.UserSettings;
-using Flow.Launcher.Plugin;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -10,6 +8,8 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -28,6 +28,7 @@ namespace Flow.Launcher.ViewModel
             Results = new ResultCollection();
             BindingOperations.EnableCollectionSynchronization(Results, _collectionLock);
         }
+
         public ResultsViewModel(Settings settings) : this()
         {
             _settings = settings;
@@ -182,7 +183,7 @@ namespace Flow.Launcher.ViewModel
         /// <summary>
         /// To avoid deadlock, this method should not called from main thread
         /// </summary>
-        public void AddResults(IEnumerable<ResultsForUpdate> resultsForUpdates, CancellationToken token, bool reselect = true)
+        public void AddResults(ICollection<ResultsForUpdate> resultsForUpdates, CancellationToken token, bool reselect = true)
         {
             var newResults = NewResults(resultsForUpdates);
 
@@ -219,7 +220,6 @@ namespace Flow.Launcher.ViewModel
             if (newRawResults.Count == 0)
                 return Results;
 
-
             var newResults = newRawResults.Select(r => new ResultViewModel(r, _settings));
 
             return Results.Where(r => r.Result.PluginID != resultId)
@@ -228,12 +228,12 @@ namespace Flow.Launcher.ViewModel
                 .ToList();
         }
 
-        private List<ResultViewModel> NewResults(IEnumerable<ResultsForUpdate> resultsForUpdates)
+        private List<ResultViewModel> NewResults(ICollection<ResultsForUpdate> resultsForUpdates)
         {
             if (!resultsForUpdates.Any())
                 return Results;
 
-            return Results.Where(r => r != null && !resultsForUpdates.Any(u => u.ID == r.Result.PluginID))
+            return Results.Where(r => r?.Result != null && resultsForUpdates.All(u => u.ID != r.Result.PluginID))
                           .Concat(resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings)))
                           .OrderByDescending(rv => rv.Result.Score)
                           .ToList();
@@ -241,6 +241,7 @@ namespace Flow.Launcher.ViewModel
         #endregion
 
         #region FormattedText Dependency Property
+
         public static readonly DependencyProperty FormattedTextProperty = DependencyProperty.RegisterAttached(
             "FormattedText",
             typeof(Inline),
@@ -259,8 +260,7 @@ namespace Flow.Launcher.ViewModel
 
         private static void FormattedTextPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var textBlock = d as TextBlock;
-            if (textBlock == null) return;
+            if (d is not TextBlock textBlock) return;
 
             var inline = (Inline)e.NewValue;
 
@@ -269,6 +269,7 @@ namespace Flow.Launcher.ViewModel
 
             textBlock.Inlines.Add(inline);
         }
+
         #endregion
 
         public class ResultCollection : List<ResultViewModel>, INotifyCollectionChanged
@@ -278,7 +279,6 @@ namespace Flow.Launcher.ViewModel
             private CancellationToken _token;
 
             public event NotifyCollectionChangedEventHandler CollectionChanged;
-
 
             protected void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
             {
@@ -297,6 +297,7 @@ namespace Flow.Launcher.ViewModel
                 // wpf use DirectX / double buffered already, so just reset all won't cause ui flickering
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             }
+
             private void AddAll(List<ResultViewModel> Items)
             {
                 for (int i = 0; i < Items.Count; i++)
@@ -308,6 +309,7 @@ namespace Flow.Launcher.ViewModel
                     OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, i));
                 }
             }
+
             public void RemoveAll(int Capacity = 512)
             {
                 Clear();

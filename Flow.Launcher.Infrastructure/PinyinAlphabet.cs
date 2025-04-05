@@ -6,6 +6,7 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using ToolGood.Words.Pinyin;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace Flow.Launcher.Infrastructure
 {
@@ -103,13 +104,21 @@ namespace Flow.Launcher.Infrastructure
             {"Ou", "ou"}
         });
 
-
         private static readonly ReadOnlyDictionary<string, string> first = new(new Dictionary<string, string>(){
             {"Ch", "i"},
             {"Sh", "u"},
             {"Zh", "v"}
         });
+        
+        public PinyinAlphabet()
+        {
+            Initialize(Ioc.Default.GetRequiredService<Settings>());
+        }
 
+        private void Initialize([NotNull] Settings settings)
+        {
+            _settings = settings ?? throw new ArgumentNullException(nameof(settings));
+        }
 
         private static readonly ReadOnlyDictionary<string, string> second = new(new Dictionary<string, string>()
         {

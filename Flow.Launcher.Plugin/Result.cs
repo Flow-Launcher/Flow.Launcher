@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -13,7 +12,6 @@ namespace Flow.Launcher.Plugin
     /// </summary>
     public class Result
     {
-
         private string _pluginDirectory;
 
         private string _icoPath;
@@ -70,7 +68,8 @@ namespace Flow.Launcher.Plugin
                     && !string.IsNullOrEmpty(PluginDirectory)
                     && !Path.IsPathRooted(value)
                     && !value.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
-                    && !value.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+                    && !value.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
+                    && !value.StartsWith("data:image", StringComparison.OrdinalIgnoreCase))
                 {
                     _icoPath = Path.Combine(PluginDirectory, value);
                 }
@@ -157,27 +156,6 @@ namespace Flow.Launcher.Plugin
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj)
-        {
-            var r = obj as Result;
-
-            var equality = string.Equals(r?.Title, Title) &&
-                           string.Equals(r?.SubTitle, SubTitle) &&
-                           string.Equals(r?.AutoCompleteText, AutoCompleteText) &&
-                           string.Equals(r?.CopyText, CopyText) &&
-                           string.Equals(r?.IcoPath, IcoPath) &&
-                           TitleHighlightData == r.TitleHighlightData;
-
-            return equality;
-        }
-
-        /// <inheritdoc />
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Title, SubTitle, AutoCompleteText, CopyText, IcoPath);
-        }
-
-        /// <inheritdoc />
         public override string ToString()
         {
             return Title + SubTitle + Score;
@@ -205,6 +183,16 @@ namespace Flow.Launcher.Plugin
                 TitleHighlightData = TitleHighlightData,
                 OriginQuery = OriginQuery,
                 PluginDirectory = PluginDirectory,
+                ContextData = ContextData,
+                PluginID = PluginID,
+                TitleToolTip = TitleToolTip,
+                SubTitleToolTip = SubTitleToolTip,
+                PreviewPanel = PreviewPanel,
+                ProgressBar = ProgressBar,
+                ProgressBarColor = ProgressBarColor,
+                Preview = Preview,
+                AddSelectedCount = AddSelectedCount,
+                RecordKey = RecordKey
             };
         }
 
@@ -263,6 +251,24 @@ namespace Flow.Launcher.Plugin
         public PreviewInfo Preview { get; set; } = PreviewInfo.Default;
 
         /// <summary>
+        /// Determines if the user selection count should be added to the score. This can be useful when set to false to allow the result sequence order to be the same everytime instead of changing based on selection.
+        /// </summary>
+        public bool AddSelectedCount { get; set; } = true;
+
+        /// <summary>
+        /// Maximum score. This can be useful when set one result to the top by default. This is the score for the results set to the topmost by users.
+        /// </summary>
+        public const int MaxScore = int.MaxValue;
+
+        /// <summary>
+        /// The key to identify the record. This is used when FL checks whether the result is the topmost record. Or FL calculates the hashcode of the result for user selected records.
+        /// This can be useful when your plugin will change the Title or SubTitle of the result dynamically.
+        /// If the plugin does not specific this, FL just uses Title and SubTitle to identify this result.
+        /// Note: Because old data does not have this key, we should use null as the default value for consistency.
+        /// </summary>
+        public string RecordKey { get; set; } = null;
+
+        /// <summary>
         /// Info of the preview section of a <see cref="Result"/>
         /// </summary>
         public record PreviewInfo
@@ -270,12 +276,12 @@ namespace Flow.Launcher.Plugin
             /// <summary>
             /// Full image used for preview panel
             /// </summary>
-            public string PreviewImagePath { get; set; }
+            public string PreviewImagePath { get; set; } = null;
 
             /// <summary>
             /// Determines if the preview image should occupy the full width of the preview panel.
             /// </summary>
-            public bool IsMedia { get; set; }
+            public bool IsMedia { get; set; } = false;
 
             /// <summary>
             /// Result description text that is shown at the bottom of the preview panel.
@@ -283,12 +289,17 @@ namespace Flow.Launcher.Plugin
             /// <remarks>
             /// When a value is not set, the <see cref="SubTitle"/> will be used.
             /// </remarks>
-            public string Description { get; set; }
+            public string Description { get; set; } = null;
 
             /// <summary>
             /// Delegate to get the preview panel's image
             /// </summary>
-            public IconDelegate PreviewDelegate { get; set; }
+            public IconDelegate PreviewDelegate { get; set; } = null;
+
+            /// <summary>
+            /// File path of the result. For third-party programs providing external preview.
+            /// </summary>
+            public string FilePath { get; set; } = null;
 
             /// <summary>
             /// Default instance of <see cref="PreviewInfo"/>
@@ -299,6 +310,7 @@ namespace Flow.Launcher.Plugin
                 Description = null,
                 IsMedia = false,
                 PreviewDelegate = null,
+                FilePath = null,
             };
         }
     }

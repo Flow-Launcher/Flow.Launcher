@@ -1,4 +1,4 @@
-using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
+﻿using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -40,7 +40,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         }
 
 
-        
+
         private void AccessLinkDragDrop(string containerName, DragEventArgs e)
         {
             var files = (string[])e.Data.GetData(DataFormats.FileDrop);
@@ -93,6 +93,11 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         private void LbxExcludedPaths_OnDrop(object sender, DragEventArgs e)
         {
             AccessLinkDragDrop("IndexSearchExcludedPath", e);
+        }
+
+        private void AllowOnlyNumericInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            e.Handled = e.Text.ToCharArray().Any(c => !char.IsDigit(c));
         }
     }
 }

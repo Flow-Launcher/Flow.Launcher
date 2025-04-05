@@ -29,7 +29,8 @@
         Assim, a fórmula genérica de uma pesquisa na Netflix é https://www.netflix.com/search?q={q}
     </system:String>
 
-
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">Copiar URL</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">Copiar URL para a área de transferência</system:String>
 
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">Título</system:String>

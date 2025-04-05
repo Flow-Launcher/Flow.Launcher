@@ -7,6 +7,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Flow.Launcher.Plugin
 {
@@ -16,7 +17,8 @@ namespace Flow.Launcher.Plugin
     public interface IPublicAPI
     {
         /// <summary>
-        /// Change Flow.Launcher query
+        /// Change Flow.Launcher query.
+        /// When current results are from context menu or history, it will go back to query results before changing query.
         /// </summary>
         /// <param name="query">query text</param>
         /// <param name="requery">
@@ -150,7 +152,6 @@ namespace Flow.Launcher.Plugin
         /// <param name="callback"></param>
         public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback);
 
-
         /// <summary>
         /// Fuzzy Search the string with the given query. This is the core search mechanism Flow uses
         /// </summary>
@@ -180,19 +181,24 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         /// <param name="url">URL to download file</param>
         /// <param name="filePath">path to save downloaded file</param>
+        /// <param name="reportProgress">
+        /// Action to report progress. The input of the action is the progress value which is a double value between 0 and 100.
+        /// It will be called if url support range request and the reportProgress is not null.
+        /// </param>
         /// <param name="token">place to store file</param>
         /// <returns>Task showing the progress</returns>
-        Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath, CancellationToken token = default);
+        Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath, Action<double> reportProgress = null, CancellationToken token = default);
 
         /// <summary>
-        /// Add ActionKeyword for specific plugin
+        /// Add ActionKeyword and update action keyword metadata for specific plugin
+        /// Before adding, please check if action keyword is already assigned by <see cref="ActionKeywordAssigned"/>
         /// </summary>
         /// <param name="pluginId">ID for plugin that needs to add action keyword</param>
         /// <param name="newActionKeyword">The actionkeyword that is supposed to be added</param>
         void AddActionKeyword(string pluginId, string newActionKeyword);
 
         /// <summary>
-        /// Remove ActionKeyword for specific plugin
+        /// Remove ActionKeyword and update action keyword metadata for specific plugin
         /// </summary>
         /// <param name="pluginId">ID for plugin that needs to remove action keyword</param>
         /// <param name="oldActionKeyword">The actionkeyword that is supposed to be removed</param>
@@ -294,9 +300,106 @@ namespace Flow.Launcher.Plugin
 
         /// <summary>
         /// Reloads the query.
-        /// This method should run
+        /// When current results are from context menu or history, it will go back to query results before requerying.
         /// </summary>
         /// <param name="reselect">Choose the first result after reload if true; keep the last selected result if false. Default is true.</param>
         public void ReQuery(bool reselect = true);
+
+        /// <summary>
+        /// Back to the query results.
+        /// This method should run when selected item is from context menu or history.
+        /// </summary>
+        public void BackToQueryResults();
+
+        /// <summary>
+        /// Displays a standardised Flow message box.
+        /// </summary>
+        /// <param name="messageBoxText">The message of the message box.</param>
+        /// <param name="caption">The caption of the message box.</param>
+        /// <param name="button">Specifies which button or buttons to display.</param>
+        /// <param name="icon">Specifies the icon to display.</param>
+        /// <param name="defaultResult">Specifies the default result of the message box.</param>
+        /// <returns>Specifies which message box button is clicked by the user.</returns>
+        public MessageBoxResult ShowMsgBox(string messageBoxText, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.None, MessageBoxResult defaultResult = MessageBoxResult.OK);
+
+        /// <summary>
+        /// Displays a standardised Flow progress box.
+        /// </summary>
+        /// <param name="caption">The caption of the progress box.</param>
+        /// <param name="reportProgressAsync">
+        /// Time-consuming task function, whose input is the action to report progress.
+        /// The input of the action is the progress value which is a double value between 0 and 100.
+        /// If there are any exceptions, this action will be null.
+        /// </param>
+        /// <param name="cancelProgress">When user cancel the progress, this action will be called.</param>
+        /// <returns></returns>
+        public Task ShowProgressBoxAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action cancelProgress = null);
+
+        /// <summary>
+        /// Start the loading bar in main window
+        /// </summary>
+        public void StartLoadingBar();
+
+        /// <summary>
+        /// Stop the loading bar in main window
+        /// </summary>
+        public void StopLoadingBar();
+
+        /// <summary>
+        /// Update the plugin manifest
+        /// </summary>
+        /// <param name="usePrimaryUrlOnly">
+        /// FL has multiple urls to download the plugin manifest. Set this to true to only use the primary url.
+        /// </param>
+        /// <param name="token"></param>
+        /// <returns>True if the manifest is updated successfully, false otherwise</returns>
+        public Task<bool> UpdatePluginManifestAsync(bool usePrimaryUrlOnly = false, CancellationToken token = default);
+
+        /// <summary>
+        /// Get the plugin manifest
+        /// </summary>
+        /// <returns></returns>
+        public IReadOnlyList<UserPlugin> GetPluginManifest();
+
+        /// <summary>
+        /// Check if the plugin has been modified.
+        /// If this plugin is updated, installed or uninstalled and users do not restart the app,
+        /// it will be marked as modified
+        /// </summary>
+        /// <param name="id">Plugin id</param>
+        /// <returns></returns>
+        public bool PluginModified(string id);
+
+        /// <summary>
+        /// Update a plugin to new version, from a zip file. By default will remove the zip file if update is via url,
+        /// unless it's a local path installation
+        /// </summary>
+        /// <param name="pluginMetadata">The metadata of the old plugin to update</param>
+        /// <param name="plugin">The new plugin to update</param>
+        /// <param name="zipFilePath">
+        /// Path to the zip file containing the plugin. It will be unzipped to the temporary directory, removed and installed.
+        /// </param>
+        /// <returns></returns>
+        public Task UpdatePluginAsync(PluginMetadata pluginMetadata, UserPlugin plugin, string zipFilePath);
+
+        /// <summary>
+        /// Install a plugin. By default will remove the zip file if installation is from url,
+        /// unless it's a local path installation
+        /// </summary>
+        /// <param name="plugin">The plugin to install</param>
+        /// <param name="zipFilePath">
+        /// Path to the zip file containing the plugin. It will be unzipped to the temporary directory, removed and installed.
+        /// </param>
+        public void InstallPlugin(UserPlugin plugin, string zipFilePath);
+
+        /// <summary>
+        /// Uninstall a plugin
+        /// </summary>
+        /// <param name="pluginMetadata">The metadata of the plugin to uninstall</param>
+        /// <param name="removePluginSettings">
+        /// Plugin has their own settings. If this is set to true, the plugin settings will be removed.
+        /// </param>
+        /// <returns></returns>
+        public Task UninstallPluginAsync(PluginMetadata pluginMetadata, bool removePluginSettings = false);
     }
 }

@@ -12,13 +12,13 @@ namespace Flow.Launcher.Infrastructure.Logger
 {
     public static class Log
     {
-        public const string DirectoryName = "Logs";
+        public const string DirectoryName = Constant.Logs;
 
         public static string CurrentLogDirectory { get; }
 
         static Log()
         {
-            CurrentLogDirectory = Path.Combine(DataLocation.DataDirectory(), DirectoryName, Constant.Version);
+            CurrentLogDirectory = DataLocation.VersionLogDirectory;
             if (!Directory.Exists(CurrentLogDirectory))
             {
                 Directory.CreateDirectory(CurrentLogDirectory);
@@ -48,15 +48,43 @@ namespace Flow.Launcher.Infrastructure.Logger
             configuration.AddTarget("file", fileTargetASyncWrapper);
             configuration.AddTarget("debug", debugTarget);
 
+            var fileRule = new LoggingRule("*", LogLevel.Debug, fileTargetASyncWrapper)
+            {
+                RuleName = "file"
+            };
 #if DEBUG
-            var fileRule = new LoggingRule("*", LogLevel.Debug, fileTargetASyncWrapper);
-            var debugRule = new LoggingRule("*", LogLevel.Debug, debugTarget);
+            var debugRule = new LoggingRule("*", LogLevel.Debug, debugTarget)
+            {
+                RuleName = "debug"
+            };
             configuration.LoggingRules.Add(debugRule);
-#else
-            var fileRule = new LoggingRule("*", LogLevel.Info, fileTargetASyncWrapper);
 #endif
             configuration.LoggingRules.Add(fileRule);
             LogManager.Configuration = configuration;
+        }
+
+        public static void SetLogLevel(LOGLEVEL level)
+        {
+            switch (level)
+            {
+                case LOGLEVEL.DEBUG:
+                    UseDebugLogLevel();
+                    break;
+                default:
+                    UseInfoLogLevel();
+                    break;
+            }
+            Info(nameof(Logger), $"Using log level: {level}.");
+        }
+
+        private static void UseDebugLogLevel()
+        {
+            LogManager.Configuration.FindRuleByName("file").SetLoggingLevels(LogLevel.Debug, LogLevel.Fatal);
+        }
+
+        private static void UseInfoLogLevel()
+        {
+            LogManager.Configuration.FindRuleByName("file").SetLoggingLevels(LogLevel.Info, LogLevel.Fatal);
         }
 
         private static void LogFaultyFormat(string message)
@@ -205,5 +233,11 @@ namespace Flow.Launcher.Infrastructure.Logger
         {
             LogInternal(message, LogLevel.Warn);
         }
+    }
+
+    public enum LOGLEVEL
+    {
+        DEBUG,
+        INFO
     }
 }

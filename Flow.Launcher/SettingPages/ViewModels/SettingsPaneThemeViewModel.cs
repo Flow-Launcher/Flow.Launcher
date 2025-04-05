@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
@@ -15,51 +14,77 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
 using ModernWpf;
-using ThemeManager = Flow.Launcher.Core.Resource.ThemeManager;
 using ThemeManagerForColorSchemeSwitch = ModernWpf.ThemeManager;
 
 namespace Flow.Launcher.SettingPages.ViewModels;
 
 public partial class SettingsPaneThemeViewModel : BaseModel
 {
+    private const string DefaultFont = "Segoe UI";
+    public string BackdropSubText => !Win32Helper.IsBackdropSupported() ? App.API.GetTranslation("BackdropTypeDisabledToolTip") : ""; 
     public Settings Settings { get; }
+    private readonly Theme _theme = Ioc.Default.GetRequiredService<Theme>();
 
-    public static string LinkHowToCreateTheme => @"https://flowlauncher.com/docs/#/how-to-create-a-theme";
+    public static string LinkHowToCreateTheme => @"https://www.flowlauncher.com/theme-builder/";
     public static string LinkThemeGallery => "https://github.com/Flow-Launcher/Flow.Launcher/discussions/1438";
 
-    public string SelectedTheme
+    private List<Theme.ThemeData> _themes;
+    public List<Theme.ThemeData> Themes => _themes ??= _theme.LoadAvailableThemes();
+
+    private Theme.ThemeData _selectedTheme;
+    public Theme.ThemeData SelectedTheme
     {
-        get => Settings.Theme;
+        get => _selectedTheme ??= Themes.Find(v => v.FileNameWithoutExtension == _theme.GetCurrentTheme());
         set
         {
-            ThemeManager.Instance.ChangeTheme(value);
+            _selectedTheme = value;
+            _theme.ChangeTheme(value.FileNameWithoutExtension);
 
-            if (ThemeManager.Instance.BlurEnabled && Settings.UseDropShadowEffect)
-                DropShadowEffect = false;
+            // Update UI state
+            OnPropertyChanged(nameof(BackdropType));
+            OnPropertyChanged(nameof(IsBackdropEnabled));
+            OnPropertyChanged(nameof(IsDropShadowEnabled));
+            OnPropertyChanged(nameof(DropShadowEffect));
+
+            _ = _theme.RefreshFrameAsync();
         }
     }
+
+    public bool IsBackdropEnabled
+    {
+        get
+        {
+            if (!Win32Helper.IsBackdropSupported()) return false;
+            return SelectedTheme?.HasBlur ?? false;
+        }
+    }
+
+    public bool IsDropShadowEnabled => !_theme.BlurEnabled;
 
     public bool DropShadowEffect
     {
         get => Settings.UseDropShadowEffect;
         set
         {
-            if (ThemeManager.Instance.BlurEnabled && value)
+            if (_theme.BlurEnabled)
             {
-                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("shadowEffectNotAllowed"));
+                // Always DropShadowEffect = true with blur theme
+                Settings.UseDropShadowEffect = true;
                 return;
             }
 
+            // User can change shadow with non-blur theme.
             if (value)
             {
-                ThemeManager.Instance.AddDropShadowEffectToCurrentTheme();
+                _theme.AddDropShadowEffectToCurrentTheme();
             }
             else
             {
-                ThemeManager.Instance.RemoveDropShadowEffectFromCurrentTheme();
+                _theme.RemoveDropShadowEffectFromCurrentTheme();
             }
 
             Settings.UseDropShadowEffect = value;
+            OnPropertyChanged(nameof(DropShadowEffect));
         }
     }
 
@@ -80,6 +105,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         get => Settings.QueryBoxFontSize;
         set => Settings.QueryBoxFontSize = value;
     }
+
     public double ResultItemFontSize
     {
         get => Settings.ResultItemFontSize;
@@ -91,31 +117,24 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         get => Settings.ResultSubItemFontSize;
         set => Settings.ResultSubItemFontSize = value;
     }
-    public List<string> Themes =>
-        ThemeManager.Instance.LoadAvailableThemes().Select(Path.GetFileNameWithoutExtension).ToList();
 
+    public class ColorSchemeData : DropdownDataGeneric<ColorSchemes> { }
 
-    public class ColorScheme
+    public List<ColorSchemeData> ColorSchemes { get; } = DropdownDataGeneric<ColorSchemes>.GetValues<ColorSchemeData>("ColorScheme");
+    public string ColorScheme
     {
-        public string Display { get; set; }
-        public ColorSchemes Value { get; set; }
-    }
-
-    public List<ColorScheme> ColorSchemes
-    {
-        get
+        get => Settings.ColorScheme;
+        set
         {
-            List<ColorScheme> modes = new List<ColorScheme>();
-            var enums = (ColorSchemes[])Enum.GetValues(typeof(ColorSchemes));
-            foreach (var e in enums)
+            ThemeManagerForColorSchemeSwitch.Current.ApplicationTheme = value switch
             {
-                var key = $"ColorScheme{e}";
-                var display = InternationalizationManager.Instance.GetTranslation(key);
-                var m = new ColorScheme { Display = display, Value = e, };
-                modes.Add(m);
-            }
-
-            return modes;
+                Constant.Light => ApplicationTheme.Light,
+                Constant.Dark => ApplicationTheme.Dark,
+                Constant.System => null,
+                _ => ThemeManagerForColorSchemeSwitch.Current.ApplicationTheme
+            };
+            Settings.ColorScheme = value;
+            _ = _theme.RefreshFrameAsync();
         }
     }
 
@@ -148,7 +167,9 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         "ddd dd'/'MM",
         "dddd dd'/'MM",
         "dddd dd', 'MMMM",
-        "dd', 'MMMM"
+        "dd', 'MMMM",
+        "dd.MM.yy",
+        "dd.MM.yyyy"
     };
 
     public string TimeFormat
@@ -164,14 +185,16 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     }
 
     public IEnumerable<int> MaxResultsRange => Enumerable.Range(2, 16);
+
     public bool KeepMaxResults
     {
         get => Settings.KeepMaxResults;
         set => Settings.KeepMaxResults = value;
     }
-    public string ClockText => DateTime.Now.ToString(TimeFormat, CultureInfo.CurrentCulture);
 
-    public string DateText => DateTime.Now.ToString(DateFormat, CultureInfo.CurrentCulture);
+    public string ClockText => DateTime.Now.ToString(TimeFormat, CultureInfo.CurrentUICulture);
+
+    public string DateText => DateTime.Now.ToString(DateFormat, CultureInfo.CurrentUICulture);
 
     public bool UseGlyphIcons
     {
@@ -185,29 +208,36 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         set => Settings.UseAnimation = value;
     }
 
-    public class AnimationSpeed
-    {
-        public string Display { get; set; }
-        public AnimationSpeeds Value { get; set; }
-    }
+    public class AnimationSpeedData : DropdownDataGeneric<AnimationSpeeds> { }
+    public List<AnimationSpeedData> AnimationSpeeds { get; } = DropdownDataGeneric<AnimationSpeeds>.GetValues<AnimationSpeedData>("AnimationSpeed");
 
-    public List<AnimationSpeed> AnimationSpeeds
+    public class BackdropTypeData : DropdownDataGeneric<BackdropTypes> { }
+
+    public List<BackdropTypeData> BackdropTypesList { get; } =
+        DropdownDataGeneric<BackdropTypes>.GetValues<BackdropTypeData>("BackdropTypes");
+    
+    public BackdropTypes BackdropType
     {
-        get
+        get => Enum.IsDefined(typeof(BackdropTypes), Settings.BackdropType)
+            ? Settings.BackdropType
+            : BackdropTypes.None;
+        set
         {
-            List<AnimationSpeed> speeds = new List<AnimationSpeed>();
-            var enums = (AnimationSpeeds[])Enum.GetValues(typeof(AnimationSpeeds));
-            foreach (var e in enums)
+            if (!Enum.IsDefined(typeof(BackdropTypes), value))
             {
-                var key = $"AnimationSpeed{e}";
-                var display = InternationalizationManager.Instance.GetTranslation(key);
-                var m = new AnimationSpeed { Display = display, Value = e, };
-                speeds.Add(m);
+                value = BackdropTypes.None;
             }
 
-            return speeds;
+            Settings.BackdropType = value;
+
+            // Can only apply blur because drop shadow effect is not supported with backdrop
+            // So drop shadow effect has been disabled
+            _ = _theme.SetBlurForWindowAsync();
+
+            OnPropertyChanged(nameof(IsDropShadowEnabled));
         }
     }
+
     public bool UseSound
     {
         get => Settings.UseSound;
@@ -230,6 +260,23 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         set => Settings.SoundVolume = value;
     }
 
+    public bool ShowPlaceholder
+    {
+        get => Settings.ShowPlaceholder;
+        set => Settings.ShowPlaceholder = value;
+    }
+
+    public string PlaceholderTextTip
+    {
+        get => string.Format(App.API.GetTranslation("PlaceholderTextTip"), App.API.GetTranslation("queryTextBoxPlaceholder"));
+    }
+
+    public string PlaceholderText
+    {
+        get => Settings.PlaceholderText;
+        set => Settings.PlaceholderText = value;
+    }
+
     public bool UseClock
     {
         get => Settings.UseClock;
@@ -244,24 +291,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
 
     public Brush PreviewBackground
     {
-        get
-        {
-            var wallpaper = WallpaperPathRetrieval.GetWallpaperPath();
-            if (wallpaper is not null && File.Exists(wallpaper))
-            {
-                var memStream = new MemoryStream(File.ReadAllBytes(wallpaper));
-                var bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.StreamSource = memStream;
-                bitmap.DecodePixelWidth = 800;
-                bitmap.DecodePixelHeight = 600;
-                bitmap.EndInit();
-                return new ImageBrush(bitmap) { Stretch = Stretch.UniformToFill };
-            }
-
-            var wallpaperColor = WallpaperPathRetrieval.GetWallpaperColor();
-            return new SolidColorBrush(wallpaperColor);
-        }
+        get => WallpaperPathRetrieval.GetWallpaperBrush();
     }
 
     public ResultsViewModel PreviewResults
@@ -270,37 +300,37 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         {
             var results = new List<Result>
             {
-                new Result
+                new()
                 {
-                    Title = InternationalizationManager.Instance.GetTranslation("SampleTitleExplorer"),
-                    SubTitle = InternationalizationManager.Instance.GetTranslation("SampleSubTitleExplorer"),
+                    Title = App.API.GetTranslation("SampleTitleExplorer"),
+                    SubTitle = App.API.GetTranslation("SampleSubTitleExplorer"),
                     IcoPath = Path.Combine(
                         Constant.ProgramDirectory,
                         @"Plugins\Flow.Launcher.Plugin.Explorer\Images\explorer.png"
                     )
                 },
-                new Result
+                new()
                 {
-                    Title = InternationalizationManager.Instance.GetTranslation("SampleTitleWebSearch"),
-                    SubTitle = InternationalizationManager.Instance.GetTranslation("SampleSubTitleWebSearch"),
+                    Title = App.API.GetTranslation("SampleTitleWebSearch"),
+                    SubTitle = App.API.GetTranslation("SampleSubTitleWebSearch"),
                     IcoPath = Path.Combine(
                         Constant.ProgramDirectory,
                         @"Plugins\Flow.Launcher.Plugin.WebSearch\Images\web_search.png"
                     )
                 },
-                new Result
+                new()
                 {
-                    Title = InternationalizationManager.Instance.GetTranslation("SampleTitleProgram"),
-                    SubTitle = InternationalizationManager.Instance.GetTranslation("SampleSubTitleProgram"),
+                    Title = App.API.GetTranslation("SampleTitleProgram"),
+                    SubTitle = App.API.GetTranslation("SampleSubTitleProgram"),
                     IcoPath = Path.Combine(
                         Constant.ProgramDirectory,
                         @"Plugins\Flow.Launcher.Plugin.Program\Images\program.png"
                     )
                 },
-                new Result
+                new()
                 {
-                    Title = InternationalizationManager.Instance.GetTranslation("SampleTitleProcessKiller"),
-                    SubTitle = InternationalizationManager.Instance.GetTranslation("SampleSubTitleProcessKiller"),
+                    Title = App.API.GetTranslation("SampleTitleProcessKiller"),
+                    SubTitle = App.API.GetTranslation("SampleSubTitleProcessKiller"),
                     IcoPath = Path.Combine(
                         Constant.ProgramDirectory,
                         @"Plugins\Flow.Launcher.Plugin.ProcessKiller\Images\app.png"
@@ -326,13 +356,13 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             return fontExists switch
             {
                 true => new FontFamily(Settings.QueryBoxFont),
-                _ => new FontFamily("Segoe UI")
+                _ => new FontFamily(DefaultFont)
             };
         }
         set
         {
             Settings.QueryBoxFont = value.ToString();
-            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+            _theme.UpdateFonts();
         }
     }
 
@@ -354,7 +384,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             Settings.QueryBoxFontStretch = value.Stretch.ToString();
             Settings.QueryBoxFontWeight = value.Weight.ToString();
             Settings.QueryBoxFontStyle = value.Style.ToString();
-            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+            _theme.UpdateFonts();
         }
     }
 
@@ -370,13 +400,13 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             return fontExists switch
             {
                 true => new FontFamily(Settings.ResultFont),
-                _ => new FontFamily("Segoe UI")
+                _ => new FontFamily(DefaultFont)
             };
         }
         set
         {
             Settings.ResultFont = value.ToString();
-            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+            _theme.UpdateFonts();
         }
     }
 
@@ -398,7 +428,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             Settings.ResultFontStretch = value.Stretch.ToString();
             Settings.ResultFontWeight = value.Weight.ToString();
             Settings.ResultFontStyle = value.Style.ToString();
-            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+            _theme.UpdateFonts();
         }
     }
 
@@ -406,23 +436,23 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     {
         get
         {
-            if (Fonts.SystemFontFamilies.Count(o =>
+            if (Fonts.SystemFontFamilies.Any(o =>
                     o.FamilyNames.Values != null &&
-                    o.FamilyNames.Values.Contains(Settings.ResultSubFont)) > 0)
+                    o.FamilyNames.Values.Contains(Settings.ResultSubFont)))
             {
                 var font = new FontFamily(Settings.ResultSubFont);
                 return font;
             }
             else
             {
-                var font = new FontFamily("Segoe UI");
+                var font = new FontFamily(DefaultFont);
                 return font;
             }
         }
         set
         {
             Settings.ResultSubFont = value.ToString();
-            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+            _theme.UpdateFonts();
         }
     }
 
@@ -443,31 +473,39 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             Settings.ResultSubFontStretch = value.Stretch.ToString();
             Settings.ResultSubFontWeight = value.Weight.ToString();
             Settings.ResultSubFontStyle = value.Style.ToString();
-            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+            _theme.UpdateFonts();
         }
     }
+
     public string ThemeImage => Constant.QueryTextBoxIconImagePath;
-
-    [RelayCommand]
-    private void OpenThemesFolder()
-    {
-        App.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Themes));
-    }
-
-    public void UpdateColorScheme()
-    {
-        ThemeManagerForColorSchemeSwitch.Current.ApplicationTheme = Settings.ColorScheme switch
-        {
-            Constant.Light => ApplicationTheme.Light,
-            Constant.Dark => ApplicationTheme.Dark,
-            Constant.System => null,
-            _ => ThemeManagerForColorSchemeSwitch.Current.ApplicationTheme
-        };
-    }
 
     public SettingsPaneThemeViewModel(Settings settings)
     {
         Settings = settings;
     }
 
+    [RelayCommand]
+    private void OpenThemesFolder()
+    {
+        App.API.OpenDirectory(DataLocation.ThemesDirectory);
+    }
+
+    [RelayCommand]
+    public void Reset()
+    {
+        SelectedQueryBoxFont = new FontFamily(DefaultFont);
+        SelectedQueryBoxFontFaces = new FamilyTypeface { Stretch = FontStretches.Normal, Weight = FontWeights.Normal, Style = FontStyles.Normal };
+        QueryBoxFontSize = 20;
+
+        SelectedResultFont = new FontFamily(DefaultFont);
+        SelectedResultFontFaces = new FamilyTypeface { Stretch = FontStretches.Normal, Weight = FontWeights.Normal, Style = FontStyles.Normal };
+        ResultItemFontSize = 16;
+
+        SelectedResultSubFont = new FontFamily(DefaultFont);
+        SelectedResultSubFontFaces = new FamilyTypeface { Stretch = FontStretches.Normal, Weight = FontWeights.Normal, Style = FontStyles.Normal };
+        ResultSubItemFontSize = 13;
+
+        WindowHeightSize = 42;
+        ItemHeightSize = 58;
+    }
 }

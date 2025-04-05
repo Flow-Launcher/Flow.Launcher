@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using CommunityToolkit.Mvvm.Input;
-using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Plugin;
+using Version = SemanticVersioning.Version;
 
 namespace Flow.Launcher.ViewModel
 {

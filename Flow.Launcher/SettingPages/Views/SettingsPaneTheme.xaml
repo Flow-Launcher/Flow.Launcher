@@ -30,6 +30,7 @@
         VirtualizingStackPanel.IsVirtualizing="True"
         VirtualizingStackPanel.ScrollUnit="Pixel">
         <StackPanel>
+
             <!--  Page title  -->
             <TextBlock
                 Margin="5 23 0 5"
@@ -38,8 +39,19 @@
                 Text="{DynamicResource appearance}"
                 TextAlignment="left"
                 Visibility="Collapsed" />
+
             <!--  Theme Preview and Editor  -->
-            <Grid Height="380">
+            <Grid>
+                <Grid.Style>
+                    <Style x:Name="PreviewArea" TargetType="Grid">
+                        <Setter Property="MaxHeight" Value="380" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=Editor, Path=IsChecked}" Value="True">
+                                <Setter Property="MaxHeight" Value="550" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
                 <Grid.Resources>
                     <!--  Style for the second ColumnDefinition  -->
                     <Style x:Key="SecondColumnStyle" TargetType="ColumnDefinition">
@@ -58,6 +70,7 @@
                     <ColumnDefinition Width="8*" />
                     <ColumnDefinition MaxWidth="250" Style="{StaticResource SecondColumnStyle}" />
                 </Grid.ColumnDefinitions>
+
                 <!--  Theme Size Editor  -->
                 <Border
                     Grid.Column="1"
@@ -245,14 +258,18 @@
                             <Button
                                 Margin="8"
                                 HorizontalAlignment="Stretch"
-                                Click="Reset_Click"
+                                Command="{Binding ResetCommand}"
                                 Content="{DynamicResource resetCustomize}" />
-
                         </StackPanel>
                     </ScrollViewer>
                 </Border>
-                <!--  Theme Preview  -->
-                <Border Grid.Column="0" Background="{Binding PreviewBackground}">
+
+                <!--  Theme preview  -->
+                <Border
+                    Grid.Column="0"
+                    Background="{Binding PreviewBackground}"
+                    SnapsToDevicePixels="True"
+                    UseLayoutRounding="True">
                     <Border.Style>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="6 0 0 6" />
@@ -290,16 +307,8 @@
                                 Width="400"
                                 Margin="40 30 0 30"
                                 SnapsToDevicePixels="True"
-                                Style="{DynamicResource WindowBorderStyle}"
-                                UseLayoutRounding="True">
-                                <Border Style="{DynamicResource WindowRadius}">
-                                    <Border.Clip>
-                                        <MultiBinding Converter="{StaticResource BorderClipConverter}">
-                                            <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
-                                            <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
-                                            <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}" />
-                                        </MultiBinding>
-                                    </Border.Clip>
+                                Style="{DynamicResource PreviewWindowBorderStyle}">
+                                <Border BorderThickness="0" Style="{DynamicResource WindowRadius}">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto" />
@@ -365,167 +374,158 @@
                     </DockPanel>
                 </Border>
             </Grid>
-            <!--  Drop shadow effect  -->
-            <cc:Card
-                Title="{DynamicResource queryWindowShadowEffect}"
-                Margin="0 4 0 0"
-                Icon="&#xeb91;"
-                Sub="{DynamicResource shadowEffectCPUUsage}">
-                <ui:ToggleSwitch
-                    IsOn="{Binding DropShadowEffect}"
-                    OffContent="{DynamicResource disable}"
-                    OnContent="{DynamicResource enable}" />
-            </cc:Card>
 
             <!--  Theme  -->
-            <Border
-                Height="64"
+            <cc:ExCard
+                x:Name="ThemeCard"
+                Title="{DynamicResource theme}"
                 Margin="0 8 0 0"
-                CornerRadius="5 5 0 0"
-                Style="{DynamicResource SettingGroupBox}">
-                <ItemsControl Style="{StaticResource SettingGrid}">
-                    <StackPanel Style="{StaticResource TextPanel}">
-                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource theme}" />
+                Icon="&#xe790;">
+                <cc:ExCard.SideContent>
+                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                        <ui:PathIcon
+                            Width="12"
+                            Margin="0 1 8 0"
+                            VerticalAlignment="Center"
+                            Data="{DynamicResource circle_half_stroke_solid}"
+                            ToolTip="{DynamicResource TypeIsDarkToolTip}"
+                            ToolTipService.InitialShowDelay="0"
+                            Visibility="{Binding SelectedTheme.IsDark, Converter={StaticResource BoolToVisibilityConverter}}" />
+                        <ui:FontIcon
+                            Margin="0 2 8 0"
+                            VerticalAlignment="Center"
+                            FontSize="12"
+                            Glyph="&#xEB42;"
+                            ToolTip="{DynamicResource TypeHasBlurToolTip}"
+                            ToolTipService.InitialShowDelay="0"
+                            Visibility="{Binding SelectedTheme.HasBlur, Converter={StaticResource BoolToVisibilityConverter}}" />
+                        <TextBlock Text="{Binding SelectedTheme.Name}" />
                     </StackPanel>
-                    <TextBlock Style="{StaticResource Glyph}">
-                        &#xe790;
-                    </TextBlock>
-                </ItemsControl>
-            </Border>
-
-            <Border
-                Margin="0"
-                Padding="0"
-                HorizontalAlignment="Stretch"
-                BorderThickness="1 0 1 1"
-                CornerRadius="0 0 5 5"
-                Style="{DynamicResource SettingGroupBox}">
+                </cc:ExCard.SideContent>
                 <ListBox
-                    Margin="12"
-                    HorizontalAlignment="Center"
-                    HorizontalContentAlignment="Center"
-                    ui:ScrollViewerHelper.AutoHideScrollBars="True"
-                    Background="#ffffff"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Stretch"
+                    Background="Transparent"
+                    ItemContainerStyle="{DynamicResource ThemeList}"
                     ItemsSource="{Binding Themes}"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                    SelectedItem="{Binding SelectedTheme}">
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem">
-                            <Setter Property="Background" Value="Transparent" />
-                            <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
-                            <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
-                            <Setter Property="Padding" Value="0" />
-                            <Setter Property="Margin" Value="4" />
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                        <Border
-                                            x:Name="Bd"
-                                            Padding="{TemplateBinding Padding}"
-                                            Background="{DynamicResource Color12B}"
-                                            BorderBrush="{DynamicResource Color03B}"
-                                            BorderThickness="1 1 1 0"
-                                            CornerRadius="4"
-                                            SnapsToDevicePixels="true">
-                                            <Border
-                                                x:Name="Bd2"
-                                                BorderBrush="{DynamicResource Color14B}"
-                                                BorderThickness="0 0 0 2"
-                                                CornerRadius="4">
-                                                <ContentPresenter
-                                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                            </Border>
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="true">
-                                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource ThemeHoverButton}" />
-                                            </Trigger>
-                                            <Trigger Property="IsSelected" Value="true">
-                                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource ToggleSwitchFillOn}" />
-                                                <Setter TargetName="Bd2" Property="BorderThickness" Value="0" />
-                                                <Setter TargetName="Bd2" Property="TextElement.Foreground" Value="{DynamicResource Color02B}" />
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ListBox.ItemContainerStyle>
-                    <ListBox.Template>
-                        <!--  For Scroll Wheel inside listbox area  -->
-                        <ControlTemplate>
-                            <ItemsPresenter />
-                        </ControlTemplate>
-                    </ListBox.Template>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid
-                                Width="Auto"
-                                Height="34"
-                                Margin="0">
-                                <TextBlock
-                                    x:Name="ThemeName"
-                                    Margin="0"
-                                    Padding="14 12"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Focusable="True"
-                                    FontSize="12"
-                                    Text="{Binding}"
-                                    TextWrapping="Wrap" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
+                    SelectedValue="{Binding SelectedTheme}">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel />
                         </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid
+                                Width="Auto"
+                                Height="34"
+                                Margin="0"
+                                Focusable="True">
+                                <StackPanel Margin="14 2 14 0" Orientation="Horizontal">
+                                    <TextBlock
+                                        Margin="0 0 0 0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="{Binding Name}"
+                                        TextWrapping="Wrap" />
+                                    <ui:PathIcon
+                                        Width="12"
+                                        Margin="8 1 0 0"
+                                        VerticalAlignment="Center"
+                                        Data="{DynamicResource circle_half_stroke_solid}"
+                                        ToolTip="{DynamicResource TypeIsDarkToolTip}"
+                                        ToolTipService.InitialShowDelay="0"
+                                        Visibility="{Binding IsDark, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                    <ui:FontIcon
+                                        Margin="8 1 0 0"
+                                        VerticalAlignment="Center"
+                                        FontSize="12"
+                                        Glyph="&#xEB42;"
+                                        ToolTip="{DynamicResource TypeHasBlurToolTip}"
+                                        ToolTipService.InitialShowDelay="0"
+                                        Visibility="{Binding HasBlur, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <ListBox.Template>
+                        <ControlTemplate>
+                            <Border
+                                Padding="18 12 18 12"
+                                BorderBrush="{DynamicResource Color03B}"
+                                BorderThickness="0 1 0 0">
+                                <ItemsPresenter />
+                            </Border>
+                        </ControlTemplate>
+                    </ListBox.Template>
                 </ListBox>
+            </cc:ExCard>
 
-            </Border>
+            <cc:CardGroup Margin="0 10 0 0">
+                <!--  Backdrop effect  -->
+                <cc:Card
+                    Title="{DynamicResource BackdropType}"
+                    Margin="0 0 0 0"
+                    Icon="&#xeb42;"
+                    Sub="{Binding BackdropSubText}">
+                    <ComboBox
+                        MinWidth="160"
+                        VerticalAlignment="Center"
+                        DisplayMemberPath="Display"
+                        FontSize="14"
+                        IsEnabled="{Binding IsBackdropEnabled}"
+                        ItemsSource="{Binding BackdropTypesList}"
+                        SelectedValue="{Binding BackdropType, Mode=TwoWay}"
+                        SelectedValuePath="Value" />
+                </cc:Card>
 
+                <!--  Drop shadow effect  -->
+                <cc:Card
+                    Title="{DynamicResource queryWindowShadowEffect}"
+                    Margin="0 0 0 0"
+                    Icon="&#xeb91;">
+                    <ui:ToggleSwitch
+                        IsEnabled="{Binding IsDropShadowEnabled}"
+                        IsOn="{Binding DropShadowEffect}"
+                        OffContent="{DynamicResource disable}"
+                        OnContent="{DynamicResource enable}" />
+                </cc:Card>
+            </cc:CardGroup>
             <cc:HyperLink
                 Margin="10"
                 HorizontalAlignment="Right"
                 Text="{DynamicResource browserMoreThemes}"
                 Uri="{Binding LinkThemeGallery}" />
 
-            <cc:CardGroup Margin="0 20 0 0">
-                <cc:Card
-                    Title="{DynamicResource KeepMaxResults}"
-                    Icon="&#xe8fd;"
-                    Sub="{DynamicResource KeepMaxResultsToolTip}">
-                    <ui:ToggleSwitch IsOn="{Binding KeepMaxResults}" />
-                </cc:Card>
+            <!--  Fixed size  -->
+            <cc:ExCard
+                Title="{DynamicResource KeepMaxResults}"
+                Margin="0 20 0 0"
+                Icon="&#xE744;"
+                Sub="{DynamicResource KeepMaxResultsToolTip}">
+                <cc:ExCard.SideContent>
+                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                        <ui:ToggleSwitch
+                            IsOn="{Binding KeepMaxResults}"
+                            OffContent="{DynamicResource disable}"
+                            OnContent="{DynamicResource enable}" />
+                    </StackPanel>
+                </cc:ExCard.SideContent>
                 <cc:Card
                     Title="{DynamicResource maxShowResults}"
                     Sub="{DynamicResource maxShowResultsToolTip}"
-                    Visibility="{Binding KeepMaxResults, Converter={StaticResource BoolToVisibilityConverter}}">
+                    Type="InsideFit">
                     <ComboBox
                         Width="100"
                         ItemsSource="{Binding MaxResultsRange}"
                         SelectedItem="{Binding Settings.MaxResultsToShow}" />
                 </cc:Card>
-            </cc:CardGroup>
-
-            <!--  Fonts and icons  -->
-            <cc:Card
-                Title="{DynamicResource useGlyphUI}"
-                Margin="0 6 0 0"
-                Icon="&#xf6b8;"
-                Sub="{DynamicResource useGlyphUIEffect}">
-                <ui:ToggleSwitch
-                    IsOn="{Binding UseGlyphIcons}"
-                    OffContent="{DynamicResource disable}"
-                    OnContent="{DynamicResource enable}" />
-            </cc:Card>
+            </cc:ExCard>
 
             <!--  Time and date  -->
-            <cc:CardGroup Margin="0 11 0 0">
+            <cc:CardGroup Margin="0 14 0 0">
                 <cc:Card Title="{DynamicResource Clock}" Icon="&#xec92;">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock
@@ -569,22 +569,45 @@
                 </cc:Card>
             </cc:CardGroup>
 
-            <!--  Animation  -->
-            <cc:CardGroup Margin="0 11 0 0">
+            <!--  Placeholder text  -->
+            <cc:ExCard
+                Title="{DynamicResource ShowPlaceholder}"
+                Margin="0 4 0 0"
+                Icon="&#xea80;"
+                Sub="{DynamicResource ShowPlaceholderTip}">
+                <cc:ExCard.SideContent>
+                    <ui:ToggleSwitch
+                        IsOn="{Binding ShowPlaceholder}"
+                        OffContent="{DynamicResource disable}"
+                        OnContent="{DynamicResource enable}" />
+                </cc:ExCard.SideContent>
                 <cc:Card
-                    Title="{DynamicResource Animation}"
-                    Icon="&#xedb5;"
-                    Sub="{DynamicResource AnimationTip}">
+                    Title="{DynamicResource PlaceholderText}"
+                    Sub="{Binding PlaceholderTextTip}"
+                    Type="InsideFit">
+                    <TextBox
+                        MinWidth="150"
+                        Text="{Binding PlaceholderText}"
+                        TextWrapping="NoWrap" />
+                </cc:Card>
+            </cc:ExCard>
+
+            <!--  Animation  -->
+            <cc:ExCard
+                Title="{DynamicResource Animation}"
+                Margin="0 18 0 0"
+                Icon="&#xedb5;"
+                Sub="{DynamicResource AnimationTip}">
+                <cc:ExCard.SideContent>
                     <ui:ToggleSwitch
                         IsOn="{Binding UseAnimation}"
                         OffContent="{DynamicResource disable}"
                         OnContent="{DynamicResource enable}" />
-                </cc:Card>
+                </cc:ExCard.SideContent>
                 <cc:Card
                     Title="{DynamicResource AnimationSpeed}"
-                    Icon="&#xe916;"
                     Sub="{DynamicResource AnimationSpeedTip}"
-                    Visibility="{Binding UseAnimation, Converter={StaticResource BoolToVisibilityConverter}}">
+                    Type="InsideFit">
                     <StackPanel Orientation="Horizontal">
                         <ComboBox
                             MinWidth="160"
@@ -604,25 +627,25 @@
                                                          IsEqualTo={x:Static userSettings:AnimationSpeeds.Custom}}" />
                     </StackPanel>
                 </cc:Card>
-            </cc:CardGroup>
+            </cc:ExCard>
 
             <!--  SFX  -->
-            <cc:CardGroup Margin="0 11 0 0">
-                <cc:Card
-                    Title="{DynamicResource SoundEffect}"
-                    Icon="&#xe7f5;"
-                    Sub="{DynamicResource SoundEffectTip}">
+            <cc:ExCard
+                Title="{DynamicResource SoundEffect}"
+                Margin="0 4 0 0"
+                Icon="&#xe7f5;"
+                Sub="{DynamicResource SoundEffectTip}">
+                <cc:ExCard.SideContent>
                     <ui:ToggleSwitch
                         IsOn="{Binding UseSound}"
                         OffContent="{DynamicResource disable}"
                         OnContent="{DynamicResource enable}" />
-                </cc:Card>
+                </cc:ExCard.SideContent>
                 <cc:Card
                     Title="{DynamicResource SoundEffectVolume}"
-                    Icon="&#xe994;"
                     IsEnabled="{Binding EnableVolumeAdjustment}"
                     Sub="{DynamicResource SoundEffectVolumeTip}"
-                    Visibility="{Binding UseSound, Converter={StaticResource BoolToVisibilityConverter}}">
+                    Type="InsideFit">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock
                             Margin="0 0 8 0"
@@ -639,7 +662,7 @@
                             Value="{Binding SoundEffectVolume}" />
                     </StackPanel>
                 </cc:Card>
-            </cc:CardGroup>
+            </cc:ExCard>
             <Border
                 Name="WMPWarning"
                 Padding="0 10"
@@ -675,23 +698,37 @@
                 </Grid>
             </Border>
 
+
+            <!--  Fonts and icons  -->
+            <cc:Card
+                Title="{DynamicResource useGlyphUI}"
+                Margin="0 0 0 0"
+                Icon="&#xf6b8;"
+                Sub="{DynamicResource useGlyphUIEffect}">
+                <ui:ToggleSwitch
+                    IsOn="{Binding UseGlyphIcons}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
+            </cc:Card>
             <!--  Settings color scheme  -->
             <cc:Card
                 Title="{DynamicResource ColorScheme}"
-                Margin="0 11 0 0"
+                Margin="0 14 0 0"
                 Icon="&#xe793;">
                 <ComboBox
                     MinWidth="180"
                     DisplayMemberPath="Display"
                     FontSize="14"
                     ItemsSource="{Binding ColorSchemes}"
-                    SelectedValue="{Binding Settings.ColorScheme}"
-                    SelectedValuePath="Value"
-                    SelectionChanged="Selector_OnSelectionChanged" />
+                    SelectedValue="{Binding ColorScheme, Mode=TwoWay}"
+                    SelectedValuePath="Value" />
             </cc:Card>
 
             <!--  Theme folder  -->
-            <cc:Card Title="{DynamicResource ThemeFolder}" Icon="&#xe838;">
+            <cc:Card
+                Title="{DynamicResource ThemeFolder}"
+                Margin="0 14 0 0"
+                Icon="&#xe838;">
                 <Button
                     MinWidth="180"
                     Command="{Binding OpenThemesFolderCommand}"

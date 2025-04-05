@@ -1,32 +1,15 @@
 ﻿using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using Microsoft.IO;
-using System.Windows;
-using System.Windows.Controls;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
-using CheckBox = System.Windows.Controls.CheckBox;
 using Control = System.Windows.Controls.Control;
-using Orientation = System.Windows.Controls.Orientation;
-using TextBox = System.Windows.Controls.TextBox;
-using UserControl = System.Windows.Controls.UserControl;
-using System.Windows.Documents;
-using static System.Windows.Forms.LinkLabel;
-using Droplex;
-using System.Windows.Forms;
-using Microsoft.VisualStudio.Threading;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -34,7 +17,7 @@ namespace Flow.Launcher.Core.Plugin
     /// Represent the plugin that using JsonPRC
     /// every JsonRPC plugin should has its own plugin instance
     /// </summary>
-    internal abstract class JsonRPCPluginBase : IAsyncPlugin, IContextMenu, ISettingProvider, ISavable
+    public abstract class JsonRPCPluginBase : IAsyncPlugin, IContextMenu, ISettingProvider, ISavable
     {
         protected PluginInitContext Context;
         public const string JsonRPC = "JsonRPC";
@@ -44,8 +27,9 @@ namespace Flow.Launcher.Core.Plugin
         private string SettingConfigurationPath =>
             Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "SettingsTemplate.yaml");
 
-        private string SettingPath => Path.Combine(DataLocation.PluginSettingsDirectory,
-            Context.CurrentPluginMetadata.Name, "Settings.json");
+        private string SettingDirectory => Context.CurrentPluginMetadata.PluginSettingsDirectoryPath;
+
+        private string SettingPath => Path.Combine(SettingDirectory, "Settings.json");
 
         public abstract List<Result> LoadContextMenus(Result selectedResult);
 
@@ -153,6 +137,11 @@ namespace Flow.Launcher.Core.Plugin
         public void Save()
         {
             Settings?.Save();
+        }
+
+        public bool NeedCreateSettingPanel()
+        {
+            return Settings.NeedCreateSettingPanel();
         }
 
         public Control CreateSettingPanel()

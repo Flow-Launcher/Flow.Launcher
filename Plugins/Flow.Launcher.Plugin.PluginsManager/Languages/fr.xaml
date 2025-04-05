@@ -13,6 +13,8 @@
     <system:String x:Key="plugin_pluginsmanager_installing_plugin">Installation du plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Télécharger et installer {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Désinstallation du plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_title">Garder les paramètres du plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_subtitle">Souhaitez-vous conserver les paramètres du plugin pour la prochaine utilisation ?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin successfully installed. Restarting Flow, please wait...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Impossible de trouver le fichier de métadonnées plugin.json à partir du fichier zip extrait.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Erreur : Un plugin ayant une version identique ou supérieure à {0} existe déjà.</system:String>
@@ -35,13 +37,13 @@
     <system:String x:Key="plugin_pluginsmanager_update_success_restart">Plugin {0} mis à jour avec succès. Redémarrage de Flow, veuillez patienter...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Installation depuis une source inconnue</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">Vous installez ce plugin à partir d'une source inconnue et il peut contenir des risques !{0}{0}Veuillez vous assurer que vous comprenez d'où provient ce plugin et qu'il est sûr.{0}{0}Voulez-vous continuer ?{0}{0}(Vous pouvez désactiver cet avertissement via les paramètres)</system:String>
-    
+
     <system:String x:Key="plugin_pluginsmanager_install_success_no_restart">Plugin {0} installé avec succès. Veuillez redémarrer Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_success_no_restart">Plugin {0} désinstallé avec succès. Veuillez redémarrer Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">Plugin {0} mis à jour avec succès. Veuillez redémarrer Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">{0} plugins mis à jour avec succès. Veuillez redémarrer Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">Le plugin {0} a déjà été modifié. Veuillez redémarrer Flow avant de faire d'autres modifications.</system:String>
-   
+
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_name">Gestionnaire de plugins</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_description">Gestion de l'installation, de la désinstallation ou de la mise à jour des plugins Flow Launcher</system:String>

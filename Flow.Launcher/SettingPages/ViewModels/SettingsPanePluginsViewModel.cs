@@ -30,8 +30,9 @@ public class SettingsPanePluginsViewModel : BaseModel
         .Select(plugin => new PluginViewModel
         {
             PluginPair = plugin,
-            PluginSettingsObject = _settings.PluginSettings.Plugins[plugin.Metadata.ID]
+            PluginSettingsObject = _settings.PluginSettings.GetPluginSettings(plugin.Metadata.ID)
         })
+        .Where(plugin => plugin.PluginSettingsObject != null)
         .ToList();
 
     public List<PluginViewModel> FilteredPluginViewModels => PluginViewModels

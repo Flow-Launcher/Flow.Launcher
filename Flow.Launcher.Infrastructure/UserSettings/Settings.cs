@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Text.Json.Serialization;
 using System.Windows;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.ViewModel;
@@ -13,7 +15,25 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 {
     public class Settings : BaseModel, IHotkeySettings
     {
-        private string language = "en";
+        private FlowLauncherJsonStorage<Settings> _storage;
+        private StringMatcher _stringMatcher = null;
+
+        public void SetStorage(FlowLauncherJsonStorage<Settings> storage)
+        {
+            _storage = storage;
+        }
+
+        public void Initialize()
+        {
+            _stringMatcher = Ioc.Default.GetRequiredService<StringMatcher>();
+        }
+
+        public void Save()
+        {
+            _storage.Save();
+        }
+
+        private string language = Constant.SystemLanguageCode;
         private string _theme = Constant.DefaultTheme;
         public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
         public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
@@ -48,21 +68,23 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             get => _theme;
             set
             {
-                if (value == _theme)
-                    return;
-                _theme = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(MaxResultsToShow));
+                if (value != _theme)
+                {
+                    _theme = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(MaxResultsToShow));
+                }
             }
         }
-        public bool UseDropShadowEffect { get; set; } = false;
+        public bool UseDropShadowEffect { get; set; } = true;
+        public BackdropTypes BackdropType{ get; set; } = BackdropTypes.None;
 
         /* Appearance Settings. It should be separated from the setting later.*/
         public double WindowHeightSize { get; set; } = 42;
         public double ItemHeightSize { get; set; } = 58;
         public double QueryBoxFontSize { get; set; } = 20;
         public double ResultItemFontSize { get; set; } = 16;
-        public double ResultSubItemFontSize { get; set; } = 13; 
+        public double ResultSubItemFontSize { get; set; } = 13;
         public string QueryBoxFont { get; set; } = FontFamily.GenericSansSerif.Name;
         public string QueryBoxFontStyle { get; set; }
         public string QueryBoxFontWeight { get; set; }
@@ -90,7 +112,34 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public double SettingWindowHeight { get; set; } = 700;
         public double? SettingWindowTop { get; set; } = null;
         public double? SettingWindowLeft { get; set; } = null;
-        public System.Windows.WindowState SettingWindowState { get; set; } = WindowState.Normal;
+        public WindowState SettingWindowState { get; set; } = WindowState.Normal;
+
+        bool _showPlaceholder { get; set; } = false;
+        public bool ShowPlaceholder
+        {
+            get => _showPlaceholder;
+            set
+            {
+                if (_showPlaceholder != value)
+                {
+                    _showPlaceholder = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        string _placeholderText { get; set; } = string.Empty;
+        public string PlaceholderText
+        {
+            get => _placeholderText;
+            set
+            {
+                if (_placeholderText != value)
+                {
+                    _placeholderText = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public int CustomExplorerIndex { get; set; } = 0;
 
@@ -180,6 +229,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         };
 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public LOGLEVEL LogLevel { get; set; } = LOGLEVEL.INFO;
 
         /// <summary>
         /// when false Alphabet static service will always return empty results
@@ -189,6 +240,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool UseDoublePinyin { get; set; } = true; //For developing
 
         public bool AlwaysPreview { get; set; } = false;
+
         public bool AlwaysStartEn { get; set; } = false;
 
         private SearchPrecisionScore _querySearchPrecision = SearchPrecisionScore.Regular;
@@ -199,8 +251,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             set
             {
                 _querySearchPrecision = value;
-                if (StringMatcher.Instance != null)
-                    StringMatcher.Instance.UserSettingSearchPrecision = value;
+                if (_stringMatcher != null)
+                    _stringMatcher.UserSettingSearchPrecision = value;
             }
         }
 
@@ -219,10 +271,26 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /// </summary>
         public double CustomWindowTop { get; set; } = 0;
 
-        public bool KeepMaxResults { get; set; } = false;
-        public int MaxResultsToShow { get; set; } = 5;
-        public int ActivateTimes { get; set; }
+        /// <summary>
+        /// Fixed window size
+        /// </summary>
+        private bool _keepMaxResults { get; set; } = false;
+        public bool KeepMaxResults
+        {
+            get => _keepMaxResults;
+            set
+            {
+                if (_keepMaxResults != value)
+                {
+                    _keepMaxResults = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
+        public int MaxResultsToShow { get; set; } = 5;
+
+        public int ActivateTimes { get; set; }
 
         public ObservableCollection<CustomPluginHotkey> CustomPluginHotkeys { get; set; } = new ObservableCollection<CustomPluginHotkey>();
 
@@ -239,11 +307,12 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool EnableUpdateLog { get; set; }
 
         public bool StartFlowLauncherOnSystemStartup { get; set; } = false;
+        public bool UseLogonTaskForStartup { get; set; } = false;
         public bool HideOnStartup { get; set; } = true;
         bool _hideNotifyIcon { get; set; }
         public bool HideNotifyIcon
         {
-            get { return _hideNotifyIcon; }
+            get => _hideNotifyIcon;
             set
             {
                 _hideNotifyIcon = value;
@@ -252,6 +321,11 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
         public bool LeaveCmdOpen { get; set; }
         public bool HideWhenDeactivated { get; set; } = true;
+
+        public bool SearchQueryResultsWithDelay { get; set; }
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public SearchDelayTime SearchDelayTime { get; set; } = SearchDelayTime.Normal;
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public SearchWindowScreens SearchWindowScreen { get; set; } = SearchWindowScreens.Cursor;
@@ -274,7 +348,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         [JsonIgnore]
         public bool WMPInstalled { get; set; } = true;
-
 
         // This needs to be loaded last by staying at the bottom
         public PluginsSettings PluginSettings { get; set; } = new PluginsSettings();
@@ -371,7 +444,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
     {
         Selected,
         Empty,
-        Preserved
+        Preserved,
+        ActionKeywordPreserved,
+        ActionKeywordSelected
     }
 
     public enum ColorSchemes
@@ -405,5 +480,13 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         Medium,
         Fast,
         Custom
+    }
+
+    public enum BackdropTypes
+    {
+        None,    
+        Acrylic,
+        Mica,
+        MicaAlt
     }
 }

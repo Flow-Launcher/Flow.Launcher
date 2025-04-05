@@ -58,10 +58,10 @@
 
             <Border Grid.Row="0" HorizontalAlignment="Stretch">
                 <Border.Background>
-                    <LinearGradientBrush StartPoint="0 0" EndPoint="1 1">
+                    <LinearGradientBrush StartPoint="0 1" EndPoint="0 0">
                         <LinearGradientBrush.GradientStops>
-                            <GradientStop Offset="0.0" Color="#7b83eb" />
-                            <GradientStop Offset="1.0" Color="#555dc0" />
+                            <GradientStop Offset="0.0" Color="#E5F3F7" />
+                            <GradientStop Offset="1.0" Color="#FAFAFD" />
                         </LinearGradientBrush.GradientStops>
                     </LinearGradientBrush>
                 </Border.Background>

@@ -1,31 +1,35 @@
 ﻿using Flow.Launcher.Core.Resource;
-using Flow.Launcher.ViewModel;
 using System;
 using System.Windows;
 using System.Windows.Input;
+using Flow.Launcher.SettingPages.ViewModels;
+using Flow.Launcher.Core;
 
 namespace Flow.Launcher
 {
     public partial class CustomShortcutSetting : Window
     {
+        private readonly SettingsPaneHotkeyViewModel _hotkeyVm;
         public string Key { get; set; } = String.Empty;
         public string Value { get; set; } = String.Empty;
-        private string originalKey { get; init; } = null;
-        private string originalValue { get; init; } = null;
-        private bool update { get; init; } = false;
+        private string originalKey { get; } = null;
+        private string originalValue { get; } = null;
+        private bool update { get; } = false;
 
-        public CustomShortcutSetting(SettingWindowViewModel vm)
+        public CustomShortcutSetting(SettingsPaneHotkeyViewModel vm)
         {
+            _hotkeyVm = vm;
             InitializeComponent();
         }
 
-        public CustomShortcutSetting(string key, string value)
+        public CustomShortcutSetting(string key, string value, SettingsPaneHotkeyViewModel vm)
         {
             Key = key;
             Value = value;
             originalKey = key;
             originalValue = value;
             update = true;
+            _hotkeyVm = vm;
             InitializeComponent();
         }
 
@@ -39,13 +43,13 @@ namespace Flow.Launcher
         {
             if (String.IsNullOrEmpty(Key) || String.IsNullOrEmpty(Value))
             {
-                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("emptyShortcut"));
+                App.API.ShowMsgBox(InternationalizationManager.Instance.GetTranslation("emptyShortcut"));
                 return;
             }
             // Check if key is modified or adding a new one
-            if ((update && originalKey != Key) || !update)
+            if (((update && originalKey != Key) || !update) && _hotkeyVm.DoesShortcutExist(Key))
             {
-                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("duplicateShortcut"));
+                App.API.ShowMsgBox(InternationalizationManager.Instance.GetTranslation("duplicateShortcut"));
                 return;
             }
             DialogResult = !update || originalKey != Key || originalValue != Value;
@@ -61,8 +65,7 @@ namespace Flow.Launcher
         private void BtnTestShortcut_OnClick(object sender, RoutedEventArgs e)
         {
             App.API.ChangeQuery(tbExpand.Text);
-            Application.Current.MainWindow.Show();
-            Application.Current.MainWindow.Opacity = 1;
+            App.API.ShowMainWindow();
             Application.Current.MainWindow.Focus();
         }
     }

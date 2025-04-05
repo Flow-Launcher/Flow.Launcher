@@ -1,43 +1,51 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Squirrel;
+using Flow.Launcher.Core;
 using Flow.Launcher.Core.Plugin;
-using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Image;
-using Flow.Launcher.Plugin;
-using Flow.Launcher.ViewModel;
-using Flow.Launcher.Plugin.SharedModels;
-using Flow.Launcher.Plugin.SharedCommands;
-using System.Threading;
-using System.IO;
-using Flow.Launcher.Infrastructure.Http;
-using JetBrains.Annotations;
-using System.Runtime.CompilerServices;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
-using System.Collections.Concurrent;
-using System.Diagnostics;
-using System.Collections.Specialized;
+using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedModels;
+using Flow.Launcher.Plugin.SharedCommands;
+using Flow.Launcher.ViewModel;
+using JetBrains.Annotations;
+using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Core.ExternalPlugins;
 
 namespace Flow.Launcher
 {
     public class PublicAPIInstance : IPublicAPI
     {
-        private readonly SettingWindowViewModel _settingsVM;
+        private readonly Settings _settings;
+        private readonly Internationalization _translater;
         private readonly MainViewModel _mainVM;
+
+        private readonly object _saveSettingsLock = new();
 
         #region Constructor
 
-        public PublicAPIInstance(SettingWindowViewModel settingsVM, MainViewModel mainVM)
+        public PublicAPIInstance(Settings settings, Internationalization translater, MainViewModel mainVM)
         {
-            _settingsVM = settingsVM;
+            _settings = settings;
+            _translater = translater;
             _mainVM = mainVM;
             GlobalHotkey.hookedKeyboardCallback = KListener_hookedKeyboardCallback;
             WebRequest.RegisterPrefix("data", new DataWebRequestFactory());
@@ -52,20 +60,27 @@ namespace Flow.Launcher
             _mainVM.ChangeQueryText(query, requery);
         }
 
-        public void RestartApp()
+#pragma warning disable VSTHRD100 // Avoid async void methods
+
+        public async void RestartApp()
         {
             _mainVM.Hide();
 
-            // we must manually save
+            // We must manually save
             // UpdateManager.RestartApp() will call Environment.Exit(0)
             // which will cause ungraceful exit
             SaveAppAllSettings();
+
+            // Wait for all image caches to be saved before restarting
+            await ImageLoader.WaitSaveAsync();
 
             // Restart requires Squirrel's Update.exe to be present in the parent folder, 
             // it is only published from the project's release pipeline. When debugging without it,
             // the project may not restart or just terminates. This is expected.
             UpdateManager.RestartApp(Constant.ApplicationFileName);
         }
+
+#pragma warning restore VSTHRD100 // Avoid async void methods
 
         public void ShowMainWindow() => _mainVM.Show();
 
@@ -75,14 +90,18 @@ namespace Flow.Launcher
 
         public event VisibilityChangedEventHandler VisibilityChanged { add => _mainVM.VisibilityChanged += value; remove => _mainVM.VisibilityChanged -= value; }
 
-        public void CheckForNewUpdate() => _settingsVM.UpdateApp();
+        // Must use Ioc.Default.GetRequiredService<Updater>() to avoid circular dependency
+        public void CheckForNewUpdate() => _ = Ioc.Default.GetRequiredService<Updater>().UpdateAppAsync(false);
 
         public void SaveAppAllSettings()
         {
-            PluginManager.Save();
-            _mainVM.Save();
-            _settingsVM.Save();
-            ImageLoader.Save();
+            lock (_saveSettingsLock)
+            {
+                _settings.Save();
+                PluginManager.Save();
+                _mainVM.Save();
+            }
+            _ = ImageLoader.SaveAsync();
         }
 
         public Task ReloadAllPluginData() => PluginManager.ReloadDataAsync();
@@ -102,7 +121,7 @@ namespace Flow.Launcher
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                SettingWindow sw = SingletonWindowOpener.Open<SettingWindow>(this, _settingsVM);
+                SettingWindow sw = SingletonWindowOpener.Open<SettingWindow>();
             });
         }
 
@@ -123,9 +142,9 @@ namespace Flow.Launcher
             if (directCopy && (isFile || Directory.Exists(stringToCopy)))
             {
                 var paths = new StringCollection
-                {
-                    stringToCopy
-                };
+                    {
+                        stringToCopy
+                    };
 
                 Clipboard.SetFileDropList(paths);
 
@@ -149,20 +168,20 @@ namespace Flow.Launcher
 
         public void StopLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Collapsed;
 
-        public string GetTranslation(string key) => InternationalizationManager.Instance.GetTranslation(key);
+        public string GetTranslation(string key) => _translater.GetTranslation(key);
 
         public List<PluginPair> GetAllPlugins() => PluginManager.AllPlugins.ToList();
 
         public MatchResult FuzzySearch(string query, string stringToCompare) =>
             StringMatcher.FuzzySearch(query, stringToCompare);
 
-        public Task<string> HttpGetStringAsync(string url, CancellationToken token = default) => Http.GetAsync(url);
+        public Task<string> HttpGetStringAsync(string url, CancellationToken token = default) => Http.GetAsync(url, token);
 
         public Task<Stream> HttpGetStreamAsync(string url, CancellationToken token = default) =>
-            Http.GetStreamAsync(url);
+            Http.GetStreamAsync(url, token);
 
-        public Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath,
-            CancellationToken token = default) => Http.DownloadAsync(url, filePath, token);
+        public Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath, Action<double> reportProgress = null,
+            CancellationToken token = default) => Http.DownloadAsync(url, filePath, reportProgress, token);
 
         public void AddActionKeyword(string pluginId, string newActionKeyword) =>
             PluginManager.AddActionKeyword(pluginId, newActionKeyword);
@@ -185,6 +204,20 @@ namespace Flow.Launcher
             [CallerMemberName] string methodName = "") => Log.Exception(className, message, e, methodName);
 
         private readonly ConcurrentDictionary<Type, object> _pluginJsonStorages = new();
+
+        public void RemovePluginSettings(string assemblyName)
+        {
+            foreach (var keyValuePair in _pluginJsonStorages)
+            {
+                var key = keyValuePair.Key;
+                var value = keyValuePair.Value;
+                var name = value.GetType().GetField("AssemblyName")?.GetValue(value)?.ToString();
+                if (name == assemblyName)
+                {
+                    _pluginJsonStorages.Remove(key, out var pluginJsonStorage);
+                }
+            }
+        }
 
         /// <summary>
         /// Save plugin settings.
@@ -227,10 +260,11 @@ namespace Flow.Launcher
         public void OpenDirectory(string DirectoryPath, string FileNameOrFilePath = null)
         {
             using var explorer = new Process();
-            var explorerInfo = _settingsVM.Settings.CustomExplorer;
+            var explorerInfo = _settings.CustomExplorer;
+
             explorer.StartInfo = new ProcessStartInfo
             {
-                FileName = explorerInfo.Path,
+                FileName = explorerInfo.Path.Replace("%d", DirectoryPath),
                 UseShellExecute = true,
                 Arguments = FileNameOrFilePath is null
                     ? explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath)
@@ -247,7 +281,7 @@ namespace Flow.Launcher
         {
             if (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
             {
-                var browserInfo = _settingsVM.Settings.CustomBrowser;
+                var browserInfo = _settings.CustomBrowser;
 
                 var path = browserInfo.Path == "*" ? "" : browserInfo.Path;
 
@@ -307,13 +341,35 @@ namespace Flow.Launcher
             return _mainVM.GameModeStatus;
         }
 
-
         private readonly List<Func<int, int, SpecialKeyState, bool>> _globalKeyboardHandlers = new();
 
         public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) => _globalKeyboardHandlers.Add(callback);
         public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) => _globalKeyboardHandlers.Remove(callback);
 
         public void ReQuery(bool reselect = true) => _mainVM.ReQuery(reselect);
+
+        public void BackToQueryResults() => _mainVM.BackToQueryResults();
+
+        public MessageBoxResult ShowMsgBox(string messageBoxText, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.None, MessageBoxResult defaultResult = MessageBoxResult.OK) =>
+            MessageBoxEx.Show(messageBoxText, caption, button, icon, defaultResult);
+
+        public Task ShowProgressBoxAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action cancelProgress = null) => ProgressBoxEx.ShowAsync(caption, reportProgressAsync, cancelProgress);
+
+        public Task<bool> UpdatePluginManifestAsync(bool usePrimaryUrlOnly = false, CancellationToken token = default) =>
+            PluginsManifest.UpdateManifestAsync(usePrimaryUrlOnly, token);
+
+        public IReadOnlyList<UserPlugin> GetPluginManifest() => PluginsManifest.UserPlugins;
+
+        public bool PluginModified(string id) => PluginManager.PluginModified(id);
+
+        public Task UpdatePluginAsync(PluginMetadata pluginMetadata, UserPlugin plugin, string zipFilePath) =>
+            PluginManager.UpdatePluginAsync(pluginMetadata, plugin, zipFilePath);
+
+        public void InstallPlugin(UserPlugin plugin, string zipFilePath) =>
+            PluginManager.InstallPlugin(plugin, zipFilePath);
+
+        public Task UninstallPluginAsync(PluginMetadata pluginMetadata, bool removePluginSettings = false) =>
+            PluginManager.UninstallPluginAsync(pluginMetadata, removePluginSettings);
 
         #endregion
 
