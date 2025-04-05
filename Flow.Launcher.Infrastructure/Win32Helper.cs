@@ -327,7 +327,7 @@ namespace Flow.Launcher.Infrastructure
         #region STA Thread
 
         /*
-        Found on https://github.com/files-community/Files
+        Inspired by https://github.com/files-community/Files code on STA Thread handling.
         */
 
         public static Task StartSTATaskAsync(Action action)
