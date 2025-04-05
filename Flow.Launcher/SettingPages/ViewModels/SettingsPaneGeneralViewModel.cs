@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using CommunityToolkit.Mvvm.Input;
@@ -10,6 +11,8 @@ using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
+using Microsoft.Win32;
+using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 
 namespace Flow.Launcher.SettingPages.ViewModels;
 
@@ -25,6 +28,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         _updater = updater;
         _portable = portable;
         UpdateEnumDropdownLocalizations();
+        IsLegacyKoreanIMEEnabled();
     }
 
     public class SearchWindowScreenData : DropdownDataGeneric<SearchWindowScreens> { }
@@ -187,6 +191,48 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         }
     }
 
+    bool IsLegacyKoreanIMEEnabled()
+    {
+        const string subKeyPath = @"Software\Microsoft\input\tsf\tsf3override\{A028AE76-01B1-46C2-99C4-ACD9858AE02F}";
+        const string valueName = "NoTsf3Override5";
+
+        try
+        {
+            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(subKeyPath))
+            {
+                if (key != null)
+                {
+                    object value = key.GetValue(valueName);
+                    if (value != null)
+                    {
+                        Debug.WriteLine($"[IME DEBUG] '{valueName}' 값: {value} (타입: {value.GetType()})");
+
+                        if (value is int intValue)
+                            return intValue == 1;
+
+                        if (int.TryParse(value.ToString(), out int parsed))
+                            return parsed == 1;
+                    }
+                    else
+                    {
+                        Debug.WriteLine($"[IME DEBUG] '{valueName}' 값이 존재하지 않습니다.");
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine($"[IME DEBUG] 레지스트리 키를 찾을 수 없습니다: {subKeyPath}");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[IME DEBUG] 예외 발생: {ex.Message}");
+        }
+
+        return false; // 기본적으로 새 IME 사용 중으로 간주
+    }
+
+    
     public bool ShouldUsePinyin
     {
         get => Settings.ShouldUsePinyin;
