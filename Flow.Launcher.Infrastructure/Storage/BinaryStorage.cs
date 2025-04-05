@@ -81,13 +81,6 @@ namespace Flow.Launcher.Infrastructure.Storage
             }
         }
 
-        public async ValueTask SaveAsync()
-        {
-            await using var stream = new FileStream(FilePath, FileMode.Create);
-            await MemoryPackSerializer.SerializeAsync(stream, Data);
-        }
-
-        // For SavePluginSettings function
         public void Save()
         {
             var serialized = MemoryPackSerializer.Serialize(Data);
@@ -95,13 +88,20 @@ namespace Flow.Launcher.Infrastructure.Storage
             File.WriteAllBytes(FilePath, serialized);
         }
 
-        // ImageCache need to be converted into concurrent dictionary, so it does not need to cache loading results into Data
+        public async ValueTask SaveAsync()
+        {
+            await SaveAsync(Data.NonNull());
+        }
+
+        // ImageCache need to convert data into concurrent dictionary for usage,
+        // so we would better to clear the data
         public void ClearData()
         {
             Data = default;
         }
 
-        // ImageCache storages data in its class, so it needs to pass it to SaveAsync
+        // ImageCache storages data in its class,
+        // so we need to pass it to SaveAsync
         public async ValueTask SaveAsync(T data)
         {
             await using var stream = new FileStream(FilePath, FileMode.Create);
