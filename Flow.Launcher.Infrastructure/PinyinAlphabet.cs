@@ -163,7 +163,7 @@ namespace Flow.Launcher.Infrastructure
             {
                 doublePin.Append(first[fullPinyin[..2]]);
 
-                if (second.TryGetValue(fullPinyin[2..], out string tmp))
+                if (second.TryGetValue(fullPinyin[2..], out var tmp))
                 {
                     doublePin.Append(tmp);
                 }
@@ -176,7 +176,7 @@ namespace Flow.Launcher.Infrastructure
             {
                 doublePin.Append(fullPinyin[0]);
 
-                if (second.TryGetValue(fullPinyin[1..], out string tmp))
+                if (second.TryGetValue(fullPinyin[1..], out var tmp))
                 {
                     doublePin.Append(tmp);
                 }
