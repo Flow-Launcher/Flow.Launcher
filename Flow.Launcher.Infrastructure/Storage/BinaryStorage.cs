@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using MemoryPack;
 
@@ -16,7 +17,7 @@ namespace Flow.Launcher.Infrastructure.Storage
     /// <remarks>
     /// It utilize MemoryPack, which means the object must be MemoryPackSerializable <see href="https://github.com/Cysharp/MemoryPack"/>
     /// </remarks>
-    public class BinaryStorage<T>
+    public class BinaryStorage<T> : ISavable
     {
         protected T? Data;
 

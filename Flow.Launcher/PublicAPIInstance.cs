@@ -225,8 +225,8 @@ namespace Flow.Launcher
         {
             foreach (var value in _pluginJsonStorages.Values)
             {
-                var method = value.GetType().GetMethod("Save");
-                method?.Invoke(value, null);
+                var savable = value as ISavable;
+                savable?.Save();
             }
         }
 
@@ -368,8 +368,8 @@ namespace Flow.Launcher
         {
             foreach (var value in _pluginBinaryStorages.Values)
             {
-                var method = value.GetType().GetMethod("Save");
-                method?.Invoke(value, null);
+                var savable = value as ISavable;
+                savable?.Save();
             }
         }
 
