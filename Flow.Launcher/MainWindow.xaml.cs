@@ -175,7 +175,7 @@ namespace Flow.Launcher
             // Without this part, when shown for the first time, switching the context menu does not move the cursor to the end.
             _viewModel.QueryTextCursorMovedToEnd = false;
             
-            // Initialize hotkey mapper after window shown or hiden the first it is loaded
+            // Initialize hotkey mapper after window is loaded
             HotKeyMapper.Initialize();
 
             // View model property changed event
