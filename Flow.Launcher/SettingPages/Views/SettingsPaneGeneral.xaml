@@ -32,13 +32,13 @@
                 Title="Test"
                 Closable="False"
                 IsIconVisible="True"
-                Length="Long"
+                Length="Short"
                 Message="This is a success message."
                 Type="Info" />
             <cc:InfoBar
                 Closable="True"
                 IsIconVisible="True"
-                Length="Long"
+                Length="Short"
                 Message="This is a success message."
                 Type="Success" />
             <cc:InfoBar
@@ -46,12 +46,19 @@
                 Closable="False"
                 IsIconVisible="True"
                 Length="Long"
-                Message="This is a success message."
+                Message="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Curabitur pretium"
                 Type="Warning" />
             <cc:InfoBar
                 Title="Test"
                 Closable="False"
                 IsIconVisible="True"
+                Length="Short"
+                Message="This is a success message."
+                Type="Error" />
+            <cc:InfoBar
+                Title="Test"
+                Closable="False"
+                IsIconVisible="False"
                 Length="Short"
                 Message="This is a success message."
                 Type="Error" />
