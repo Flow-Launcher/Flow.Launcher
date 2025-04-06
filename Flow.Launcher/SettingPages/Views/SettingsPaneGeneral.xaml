@@ -28,6 +28,33 @@
                 Style="{StaticResource PageTitle}"
                 Text="{DynamicResource general}"
                 TextAlignment="left" />
+            <cc:InfoBar
+                Title="Test"
+                Closable="False"
+                IsIconVisible="True"
+                Length="Long"
+                Message="This is a success message."
+                Type="Info" />
+            <cc:InfoBar
+                Closable="True"
+                IsIconVisible="True"
+                Length="Long"
+                Message="This is a success message."
+                Type="Success" />
+            <cc:InfoBar
+                Title="Test"
+                Closable="False"
+                IsIconVisible="True"
+                Length="Long"
+                Message="This is a success message."
+                Type="Warning" />
+            <cc:InfoBar
+                Title="Test"
+                Closable="False"
+                IsIconVisible="True"
+                Length="Short"
+                Message="This is a success message."
+                Type="Error" />
             <cc:ExCard
                 Title="{DynamicResource startFlowLauncherOnSystemStartup}"
                 Margin="0 8 0 0"
