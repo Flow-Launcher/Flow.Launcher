@@ -83,6 +83,18 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public int Priority
+        {
+            get => PluginPair.Metadata.Priority;
+            set
+            {
+                if (PluginPair.Metadata.Priority != value)
+                {
+                    ChangePriority(value);
+                }
+            }
+        }
+
         public SearchDelayTime? PluginSearchDelayTime
         {
             get => PluginPair.Metadata.SearchDelayTime;
@@ -127,19 +139,6 @@ namespace Flow.Launcher.ViewModel
             App.API.GetTranslation("plugin_query_time") + " " +
             PluginPair.Metadata.AvgQueryTime + "ms";
         public string ActionKeywordsText => string.Join(Query.ActionKeywordSeparator, PluginPair.Metadata.ActionKeywords);
-        //public int Priority => PluginPair.Metadata.Priority;
-        private int _priority;
-        public int Priority
-        {
-            get => PluginPair.Metadata.Priority;
-            set
-            {
-                if (PluginPair.Metadata.Priority != value)
-                {
-                    ChangePriority(value);
-                }
-            }
-        }
         public string SearchDelayTimeText => PluginPair.Metadata.SearchDelayTime == null ?
             App.API.GetTranslation("default") :
             App.API.GetTranslation($"SearchDelayTime{PluginPair.Metadata.SearchDelayTime}");
