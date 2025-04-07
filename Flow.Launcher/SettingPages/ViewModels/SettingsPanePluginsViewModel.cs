@@ -141,7 +141,7 @@ public partial class SettingsPanePluginsViewModel : BaseModel
                     },
                     new TextBlock
                     {
-                        Text = (string)Application.Current.Resources["searchDelayTime_tips"],
+                        Text = (string)Application.Current.Resources["searchDelayTimeTips"],
                         TextWrapping = TextWrapping.Wrap
                     }
                 }
