@@ -3587,7 +3587,7 @@
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="*" />
-                                                <RowDefinition Height="80" />
+                                                <RowDefinition Height="80" x:Name="CommandSpaceRow"/>
                                             </Grid.RowDefinitions>
                                             <ScrollViewer
                                                 x:Name="ContentScrollViewer"
@@ -3638,13 +3638,13 @@
                                                         TextWrapping="Wrap" />
                                                 </Grid>
                                             </ScrollViewer>
-                                            <Border
-                                                Grid.Row="1"
-                                                Padding="26 0 26 0"
-                                                Background="{DynamicResource PopupButtonAreaBGColor}"
-                                                BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
-                                                BorderThickness="0 1 0 0"
-                                                CornerRadius="0 0 8 8">
+                                            <Border x:Name="ButtonAreaBorder"
+                                                    Grid.Row="1"
+                                                    Padding="26 0 26 0"
+                                                    Background="{DynamicResource PopupButtonAreaBGColor}"
+                                                    BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
+                                                    BorderThickness="0 1 0 0"
+                                                    CornerRadius="0 0 8 8">
                                                 <Grid
                                                     x:Name="CommandSpace"
                                                     HorizontalAlignment="Stretch"
@@ -3791,6 +3791,14 @@
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CommandSpace" Storyboard.TargetProperty="Visibility">
                                             <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <!-- If the window has no buttons, it's assumed that the buttons are drawn directly within the window itself (as in the case of the HotkeyDialog).
+                                        In this case, the command space area is completely hidden. -->
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonAreaBorder" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CommandSpaceRow" Storyboard.TargetProperty="Height">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static GridLength.Auto}" />
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
