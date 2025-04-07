@@ -1947,7 +1947,7 @@
     <value>Ver ações recomendadas para manter o sistema a funcionar nas melhores condições</value>
   </data>
   <data name="ChangeCursorBlinkRate" xml:space="preserve">
-    <value>Alterar a frequência de piscar do cursor</value>
+    <value>Alterar frequência de intermitência do cursor</value>
   </data>
   <data name="AddOrRemovePrograms" xml:space="preserve">
     <value>Adicionar ou remover programas</value>
