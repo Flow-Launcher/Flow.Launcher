@@ -16,8 +16,10 @@ using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
@@ -32,6 +34,13 @@ namespace Flow.Launcher
 {
     public partial class MainWindow : IDisposable
     {
+        #region Public Property
+
+        // Window Event: Close Event
+        public bool CanClose { get; set; } = false;
+
+        #endregion
+
         #region Private Fields
 
         // Dependency Injection
@@ -45,8 +54,6 @@ namespace Flow.Launcher
         private readonly ContextMenu _contextMenu = new();
         private readonly MainViewModel _viewModel;
 
-        // Window Event: Close Event
-        private bool _canClose = false;
         // Window Event: Key Event
         private bool _isArrowKeyPressed = false;
 
@@ -168,6 +175,9 @@ namespace Flow.Launcher
             // Without this part, when shown for the first time, switching the context menu does not move the cursor to the end.
             _viewModel.QueryTextCursorMovedToEnd = false;
             
+            // Initialize hotkey mapper after window is loaded
+            HotKeyMapper.Initialize();
+
             // View model property changed event
             _viewModel.PropertyChanged += (o, e) =>
             {
@@ -279,15 +289,16 @@ namespace Flow.Launcher
 
         private async void OnClosing(object sender, CancelEventArgs e)
         {
-            if (!_canClose)
+            if (!CanClose)
             {
                 _notifyIcon.Visible = false;
                 App.API.SaveAppAllSettings();
                 e.Cancel = true;
+                await ImageLoader.WaitSaveAsync();
                 await PluginManager.DisposePluginsAsync();
                 Notification.Uninstall();
                 // After plugins are all disposed, we can close the main window
-                _canClose = true;
+                CanClose = true;
                 // Use this instead of Close() to avoid InvalidOperationException when calling Close() in OnClosing event
                 Application.Current.Shutdown();
             }
