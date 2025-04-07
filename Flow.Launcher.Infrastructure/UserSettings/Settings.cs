@@ -321,10 +321,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool HideWhenDeactivated { get; set; } = true;
 
         public bool SearchQueryResultsWithDelay { get; set; }
-
-        [JsonIgnore]
-        public IEnumerable<int> SearchDelayTimeRange = new List<int> { 50, 100, 150, 200, 250, 300, 350, 400, 450, 500 };
-
         public int SearchDelayTime { get; set; } = 150;
 
         [JsonConverter(typeof(JsonStringEnumConverter))]

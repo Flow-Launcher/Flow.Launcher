@@ -211,12 +211,17 @@
                     Title="{DynamicResource searchDelayTime}"
                     Sub="{DynamicResource searchDelayTimeToolTip}"
                     Type="InsideFit">
-                    <ComboBox
-                        MaxWidth="200"
-                        DisplayMemberPath="Display"
-                        ItemsSource="{Binding SearchDelayTimes}"
-                        SelectedItem="{Binding SearchDelayTime}"
-                        SelectedValuePath="Value" />
+                    <StackPanel Orientation="Horizontal">
+                        <ui:NumberBox
+                            Width="120"
+                            Margin="0 0 0 0"
+                            Minimum="0"
+                            Maximum="1000"
+                            SmallChange="10"
+                            SpinButtonPlacementMode="Compact"
+                            Value="{Binding SearchDelayTimeValue}"
+                            ValidationMode="InvalidInputOverwritten" />
+                    </StackPanel>
                 </cc:Card>
             </cc:ExCard>
 

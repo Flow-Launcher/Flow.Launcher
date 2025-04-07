@@ -32,25 +32,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public class SearchWindowAlignData : DropdownDataGeneric<SearchWindowAligns> { }
     public class SearchPrecisionData : DropdownDataGeneric<SearchPrecisionScore> { }
     public class LastQueryModeData : DropdownDataGeneric<LastQueryMode> { }
-    public class SearchDelayTimeData
-    {
-        public string Display { get; set; }
-        public int Value { get; set; }
-
-        public static List<SearchDelayTimeData> GetValues()
-        {
-            var settings = Ioc.Default.GetRequiredService<Settings>();
-            var data = new List<SearchDelayTimeData>();
-
-            foreach (var value in settings.SearchDelayTimeRange)
-            {
-                var display = $"{value}ms";
-                data.Add(new SearchDelayTimeData { Display = display, Value = value });
-            }
-
-            return data;
-        }
-    }
+    
 
     public bool StartFlowLauncherOnSystemStartup
     {
@@ -163,21 +145,20 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public List<LastQueryModeData> LastQueryModes { get; } =
         DropdownDataGeneric<LastQueryMode>.GetValues<LastQueryModeData>("LastQuery");
 
-    public List<SearchDelayTimeData> SearchDelayTimes { get; } = SearchDelayTimeData.GetValues();
-
-    public SearchDelayTimeData SearchDelayTime
+    public int SearchDelayTimeValue
     {
-        get => SearchDelayTimes.FirstOrDefault(x => x.Value == Settings.SearchDelayTime);
+        get => Settings.SearchDelayTime;
         set
         {
-            if (value == null) return;
-
-            if (Settings.SearchDelayTime != value.Value)
+            if (Settings.SearchDelayTime != value)
             {
-                Settings.SearchDelayTime = value.Value;
+                Settings.SearchDelayTime = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(SearchDelayTimeDisplay));
             }
         }
     }
+    public string SearchDelayTimeDisplay => $"{SearchDelayTimeValue}ms";
 
     private void UpdateEnumDropdownLocalizations()
     {

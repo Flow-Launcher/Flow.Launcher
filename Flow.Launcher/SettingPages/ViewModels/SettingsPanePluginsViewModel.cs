@@ -122,7 +122,7 @@ public partial class SettingsPanePluginsViewModel : BaseModel
                 {
                     new TextBlock
                     {
-                        Text = (string)Application.Current.Resources["changePriorityWindow"],
+                        Text = (string)Application.Current.Resources["priority"],
                         FontSize = 18,
                         Margin = new Thickness(0, 0, 0, 10),
                         TextWrapping = TextWrapping.Wrap
@@ -134,7 +134,7 @@ public partial class SettingsPanePluginsViewModel : BaseModel
                     },
                     new TextBlock
                     {
-                        Text = (string)Application.Current.Resources["searchDelayTimeTitle"],
+                        Text = (string)Application.Current.Resources["searchDelay"],
                         FontSize = 18,
                         Margin = new Thickness(0, 24, 0, 10),
                         TextWrapping = TextWrapping.Wrap

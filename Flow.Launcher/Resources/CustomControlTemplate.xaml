@@ -1503,7 +1503,7 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="ui:ControlHelper.PlaceholderForeground" Value="{x:Null}">
-                            <Setter TargetName="PlaceholderTextContentPresenter" Property="Foreground" Value="{DynamicResource TextControlPlaceholderForeground}" />
+                            <Setter TargetName="PlaceholderTextContentPresenter" Property="Foreground" Value="{DynamicResource CustomContextDisabled}" />
                         </Trigger>
                         <Trigger Property="ui:TextBoxHelper.HasText" Value="True">
                             <Setter TargetName="PlaceholderTextContentPresenter" Property="Visibility" Value="Collapsed" />
@@ -2689,10 +2689,20 @@
                             MinWidth="{TemplateBinding MinWidth}"
                             MinHeight="{TemplateBinding MinHeight}"
                             ui:ValidationHelper.IsTemplateValidationAdornerSite="True"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}" />
+                            Background="{DynamicResource CustomTextBoxBG}"
+                            BorderBrush="{DynamicResource CustomTextBoxOutline}"
+                            BorderThickness="{DynamicResource CustomTextBoxOutlineThickness}"
+                            CornerRadius="4">
+                            <Border
+                                x:Name="BorderElementInline"
+                                MinWidth="{TemplateBinding MinWidth}"
+                                MinHeight="{TemplateBinding MinHeight}"
+                                ui:ValidationHelper.IsTemplateValidationAdornerSite="True"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{DynamicResource CustomTextBoxInline}"
+                                BorderThickness="{DynamicResource CustomTextBoxInlineThickness}"
+                                CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}" />
+                        </Border>
                         <ScrollViewer
                             x:Name="PART_ContentHost"
                             Grid.Row="1"
@@ -2780,7 +2790,7 @@
                             <Setter TargetName="PlaceholderTextContentPresenter" Property="Foreground" Value="{DynamicResource TextControlPlaceholderForegroundDisabled}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushPointerOver}" />
+                            <Setter TargetName="BorderElementInline" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushPointerOver}" />
                             <Setter Property="Background" Value="{DynamicResource TextControlBackgroundPointerOver}" />
                             <Setter TargetName="PlaceholderTextContentPresenter" Property="Foreground" Value="{DynamicResource TextControlPlaceholderForegroundPointerOver}" />
                             <Setter Property="Foreground" Value="{DynamicResource TextControlForegroundPointerOver}" />
@@ -2788,8 +2798,10 @@
                         <Trigger Property="IsSelectionActive" Value="true">
                             <Setter TargetName="PlaceholderTextContentPresenter" Property="Foreground" Value="{DynamicResource TextControlPlaceholderForegroundFocused}" />
                             <Setter Property="Background" Value="{DynamicResource TextControlBackgroundFocused}" />
-                            <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushFocused}" />
-                            <Setter TargetName="BorderElement" Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThicknessFocused}" />
+                            <Setter TargetName="BorderElementInline" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushFocused}" />
+                            <Setter TargetName="BorderElementInline" Property="BorderThickness" Value="0 0 0 2" />
+                            <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource CustomTextBoxOutline}" />
+                            <Setter TargetName="BorderElement" Property="BorderThickness" Value="{DynamicResource 2 2 2 0}" />
                             <Setter Property="Foreground" Value="{DynamicResource TextControlForegroundFocused}" />
                         </Trigger>
                         <MultiTrigger>
