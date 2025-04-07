@@ -93,13 +93,23 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public int? PluginSearchDelayTime
+        public double PluginSearchDelayTime
         {
-            get => PluginPair.Metadata.SearchDelayTime;
+            get => PluginPair.Metadata.SearchDelayTime == null ?
+                double.NaN :
+                PluginPair.Metadata.SearchDelayTime.Value;
             set
             {
-                PluginPair.Metadata.SearchDelayTime = value;
-                PluginSettingsObject.SearchDelayTime = value;
+                if (double.IsNaN(value))
+                {
+                    PluginPair.Metadata.SearchDelayTime = null;
+                    PluginSettingsObject.SearchDelayTime = null;
+                }
+                else
+                {
+                    PluginPair.Metadata.SearchDelayTime = (int)value;
+                    PluginSettingsObject.SearchDelayTime = (int)value;
+                }
             }
         }
 

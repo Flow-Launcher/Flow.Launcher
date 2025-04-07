@@ -91,7 +91,8 @@
                                 Maximum="1000"
                                 Minimum="0"
                                 SpinButtonPlacementMode="Inline"
-                                ToolTip="{DynamicResource searchDelayToolTip}" />
+                                ToolTip="{DynamicResource searchDelayToolTip}"
+                                Value="{Binding PluginSearchDelayTime, Mode=TwoWay}" />
                         </StackPanel>
 
                         <!--  Put OnOffControl after PriorityControl & SearchDelayControl so that it can display correctly  -->
