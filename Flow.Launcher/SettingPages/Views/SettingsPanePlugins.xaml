@@ -47,10 +47,11 @@
                 <ComboBox
                     x:Name="DisplayModeComboBox"
                     Width="Auto"
+                    Height="34"
                     MinWidth="150"
                     MaxWidth="150"
-                    Height="34" HorizontalContentAlignment="Left"
                     Margin="0 0 4 0"
+                    HorizontalContentAlignment="Left"
                     Background="{DynamicResource Color00B}"
                     SelectedValue="{Binding SelectedDisplayMode, Mode=TwoWay}"
                     SelectedValuePath="Tag"
@@ -67,10 +68,12 @@
                 </ComboBox>
                 <Button
                     Width="34"
-                    Height="34" FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                    Height="34"
                     Margin="0 0 20 0"
+                    Command="{Binding OpenHelperCommand}"
                     Content="&#xe9ce;"
-                    FontSize="14" Click="Help_Click"/>
+                    FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                    FontSize="14" />
                 <TextBox
                     Name="PluginFilterTextbox"
                     Width="150"

@@ -1,16 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows;
+using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
+using ModernWpf.Controls;
 
 #nullable enable
 
 namespace Flow.Launcher.SettingPages.ViewModels;
 
-public class SettingsPanePluginsViewModel : BaseModel
+public partial class SettingsPanePluginsViewModel : BaseModel
 {
     private readonly Settings _settings;
 
@@ -147,4 +152,48 @@ public class SettingsPanePluginsViewModel : BaseModel
             StringMatcher.FuzzySearch(FilterText, v.PluginPair.Metadata.Description).IsSearchPrecisionScoreMet()
         )
         .ToList();
+
+    [RelayCommand]
+    private async Task OpenHelperAsync()
+    {
+        var helpDialog = new ContentDialog()
+        {
+            Content = new StackPanel
+            {
+                Children =
+                {
+                    new TextBlock
+                    {
+                        Text = (string)Application.Current.Resources["changePriorityWindow"],
+                        FontSize = 18,
+                        Margin = new Thickness(0, 0, 0, 10),
+                        TextWrapping = TextWrapping.Wrap
+                    },
+                    new TextBlock
+                    {
+                        Text = (string)Application.Current.Resources["priority_tips"],
+                        TextWrapping = TextWrapping.Wrap
+                    },
+                    new TextBlock
+                    {
+                        Text = (string)Application.Current.Resources["searchDelayTimeTitle"],
+                        FontSize = 18,
+                        Margin = new Thickness(0, 24, 0, 10),
+                        TextWrapping = TextWrapping.Wrap
+                    },
+                    new TextBlock
+                    {
+                        Text = (string)Application.Current.Resources["searchDelayTime_tips"],
+                        TextWrapping = TextWrapping.Wrap
+                    }
+                }
+            },
+
+            PrimaryButtonText = (string)Application.Current.Resources["commonOK"],
+            CornerRadius = new CornerRadius(8),
+            Style = (Style)Application.Current.Resources["ContentDialog"]
+        };
+
+        await helpDialog.ShowAsync();
+    }
 }
