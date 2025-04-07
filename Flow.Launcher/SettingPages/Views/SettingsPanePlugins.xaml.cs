@@ -1,10 +1,8 @@
-﻿using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using System.Windows.Navigation;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.SettingPages.ViewModels;
 using Flow.Launcher.Infrastructure.UserSettings;
-using System.Windows.Controls;
 
 namespace Flow.Launcher.SettingPages.Views;
 
@@ -22,14 +20,6 @@ public partial class SettingsPanePlugins
             InitializeComponent();
         }
         base.OnNavigatedTo(e);
-    }
-    
-    private void DisplayModeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        if (DataContext is SettingsPanePluginsViewModel viewModel)
-        {
-            viewModel.UpdateDisplayModeFromSelection();
-        }
     }
 
     private void SettingsPanePlugins_OnKeyDown(object sender, KeyEventArgs e)

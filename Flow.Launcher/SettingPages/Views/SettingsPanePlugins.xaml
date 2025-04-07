@@ -3,7 +3,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:cc="clr-namespace:Flow.Launcher.Resources.Controls"
-    xmlns:converters="clr-namespace:Flow.Launcher.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
@@ -16,10 +15,6 @@
     FocusManager.FocusedElement="{Binding ElementName=PluginFilterTextbox}"
     KeyDown="SettingsPanePlugins_OnKeyDown"
     mc:Ignorable="d">
-    <ui:Page.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <converters:StringEqualityToVisibilityConverter x:Key="StringEqualityToVisibilityConverter" />
-    </ui:Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="73" />
@@ -53,19 +48,10 @@
                     Margin="0 0 4 0"
                     HorizontalContentAlignment="Left"
                     Background="{DynamicResource Color00B}"
+                    DisplayMemberPath="Display"
+                    ItemsSource="{Binding DisplayModes}"
                     SelectedValue="{Binding SelectedDisplayMode, Mode=TwoWay}"
-                    SelectedValuePath="Tag"
-                    SelectionChanged="DisplayModeComboBox_SelectionChanged">
-                    <ComboBoxItem Tag="OnOff">
-                        <TextBlock Text="{DynamicResource EnabledCombobox}" />
-                    </ComboBoxItem>
-                    <ComboBoxItem Tag="Priority">
-                        <TextBlock Text="{DynamicResource PriorityCombobox}" />
-                    </ComboBoxItem>
-                    <ComboBoxItem Tag="SearchDelay">
-                        <TextBlock Text="{DynamicResource SearchDelayCombobox}" />
-                    </ComboBoxItem>
-                </ComboBox>
+                    SelectedValuePath="Value" />
                 <Button
                     Width="34"
                     Height="34"

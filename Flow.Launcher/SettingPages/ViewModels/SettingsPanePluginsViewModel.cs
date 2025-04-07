@@ -19,8 +19,13 @@ public partial class SettingsPanePluginsViewModel : BaseModel
 {
     private readonly Settings _settings;
 
-    private string _selectedDisplayMode = "OnOff";
-    public string SelectedDisplayMode
+    public class DisplayModeData : DropdownDataGeneric<DisplayMode> { }
+
+    public List<DisplayModeData> DisplayModes { get; } =
+        DropdownDataGeneric<DisplayMode>.GetValues<DisplayModeData>("DisplayMode");
+
+    private DisplayMode _selectedDisplayMode = DisplayMode.OnOff;
+    public DisplayMode SelectedDisplayMode
     {
         get => _selectedDisplayMode;
         set
@@ -28,34 +33,12 @@ public partial class SettingsPanePluginsViewModel : BaseModel
             if (_selectedDisplayMode != value)
             {
                 _selectedDisplayMode = value;
-                OnPropertyChanged(nameof(SelectedDisplayMode));
+                OnPropertyChanged();
                 UpdateDisplayModeFromSelection();
             }
         }
     }
 
-    public void UpdateDisplayModeFromSelection()
-    {
-        switch (SelectedDisplayMode)
-        {
-            case "OnOff":
-                IsOnOffSelected = true;
-                IsPrioritySelected = false;
-                IsSearchDelaySelected = false;
-                break;
-            case "Priority":
-                IsOnOffSelected = false;
-                IsPrioritySelected = true;
-                IsSearchDelaySelected = false;
-                break;
-            case "SearchDelay":
-                IsOnOffSelected = false;
-                IsPrioritySelected = false;
-                IsSearchDelaySelected = true;
-                break;
-        }
-    }
-    
     private bool _isOnOffSelected = true;
     public bool IsOnOffSelected
     {
@@ -65,8 +48,7 @@ public partial class SettingsPanePluginsViewModel : BaseModel
             if (_isOnOffSelected != value)
             {
                 _isOnOffSelected = value;
-                OnPropertyChanged(nameof(IsOnOffSelected));
-                UpdateDisplayMode();
+                OnPropertyChanged();
             }
         }
     }
@@ -80,8 +62,7 @@ public partial class SettingsPanePluginsViewModel : BaseModel
             if (_isPrioritySelected != value)
             {
                 _isPrioritySelected = value;
-                OnPropertyChanged(nameof(IsPrioritySelected));
-                UpdateDisplayMode();
+                OnPropertyChanged();
             }
         }
     }
@@ -95,38 +76,15 @@ public partial class SettingsPanePluginsViewModel : BaseModel
             if (_isSearchDelaySelected != value)
             {
                 _isSearchDelaySelected = value;
-                OnPropertyChanged(nameof(IsSearchDelaySelected));
-                UpdateDisplayMode();
+                OnPropertyChanged();
             }
         }
     }
 
-    private string _currentDisplayMode = "OnOff";
-    public string CurrentDisplayMode
-    {
-        get => _currentDisplayMode;
-        set
-        {
-            if (_currentDisplayMode != value)
-            {
-                _currentDisplayMode = value;
-                OnPropertyChanged(nameof(CurrentDisplayMode));
-            }
-        }
-    }
-    
-    private void UpdateDisplayMode()
-    {
-        if (IsOnOffSelected)
-            CurrentDisplayMode = "OnOff";
-        else if (IsPrioritySelected)
-            CurrentDisplayMode = "Priority";
-        else if (IsSearchDelaySelected)
-            CurrentDisplayMode = "SearchDelay";
-    }
     public SettingsPanePluginsViewModel(Settings settings)
     {
         _settings = settings;
+        UpdateEnumDropdownLocalizations();
     }
 
     public string FilterText { get; set; } = string.Empty;
@@ -196,4 +154,38 @@ public partial class SettingsPanePluginsViewModel : BaseModel
 
         await helpDialog.ShowAsync();
     }
+
+    private void UpdateEnumDropdownLocalizations()
+    {
+        DropdownDataGeneric<DisplayMode>.UpdateLabels(DisplayModes);
+    }
+
+    private void UpdateDisplayModeFromSelection()
+    {
+        switch (SelectedDisplayMode)
+        {
+            case DisplayMode.Priority:
+                IsOnOffSelected = false;
+                IsPrioritySelected = true;
+                IsSearchDelaySelected = false;
+                break;
+            case DisplayMode.SearchDelay:
+                IsOnOffSelected = false;
+                IsPrioritySelected = false;
+                IsSearchDelaySelected = true;
+                break;
+            default:
+                IsOnOffSelected = true;
+                IsPrioritySelected = false;
+                IsSearchDelaySelected = false;
+                break;
+        }
+    }
+}
+
+public enum DisplayMode
+{
+    OnOff,
+    Priority,
+    SearchDelay
 }
