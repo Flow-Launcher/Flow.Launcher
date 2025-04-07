@@ -70,7 +70,8 @@
                                 Maximum="999"
                                 Minimum="-999"
                                 SpinButtonPlacementMode="Inline"
-                                ToolTip="{DynamicResource priorityToolTip}" />
+                                ToolTip="{DynamicResource priorityToolTip}"
+                                Value="{Binding Priority, Mode=TwoWay}" />
                         </StackPanel>
 
                         <StackPanel

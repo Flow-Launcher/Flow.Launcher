@@ -88,10 +88,8 @@ namespace Flow.Launcher.ViewModel
             get => PluginPair.Metadata.Priority;
             set
             {
-                if (PluginPair.Metadata.Priority != value)
-                {
-                    ChangePriority(value);
-                }
+                PluginPair.Metadata.Priority = value;
+                PluginSettingsObject.Priority = value;
             }
         }
 
@@ -149,20 +147,6 @@ namespace Flow.Launcher.ViewModel
         public void OnSearchDelayTimeChanged()
         {
             OnPropertyChanged(nameof(SearchDelayTimeText));
-        }
-
-        public void ChangePriority(int newPriority)
-        {
-            PluginPair.Metadata.Priority = newPriority;
-            PluginSettingsObject.Priority = newPriority;
-            OnPropertyChanged(nameof(Priority));
-        }
-
-        [RelayCommand]
-        private void EditPluginPriority()
-        {
-            var priorityChangeWindow = new PriorityChangeWindow(PluginPair. Metadata.ID, this);
-            priorityChangeWindow.ShowDialog();
         }
 
         [RelayCommand]
