@@ -56,12 +56,12 @@
                 Message="This is a success message."
                 Type="Error" />
             <cc:InfoBar
-                Title="Test"
+                Title="{DynamicResource KoreanImeTitle}"
                 Closable="False"
-                IsIconVisible="False"
-                Length="Short"
-                Message="This is a success message."
-                Type="Error" />
+                IsIconVisible="True"
+                Length="Long"
+                Message="{DynamicResource KoreanImeGuide}"
+                Type="Warning" />
             <cc:ExCard
                 Title="{DynamicResource startFlowLauncherOnSystemStartup}"
                 Margin="0 8 0 0"
