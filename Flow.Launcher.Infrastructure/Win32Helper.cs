@@ -125,6 +125,16 @@ namespace Flow.Launcher.Infrastructure
             return PInvoke.SetForegroundWindow(new(handle));
         }
 
+        public static bool IsForegroundWindow(Window window)
+        {
+            return IsForegroundWindow(GetWindowHandle(window));
+        }
+
+        internal static bool IsForegroundWindow(HWND handle)
+        {
+            return handle.Equals(PInvoke.GetForegroundWindow());
+        }
+
         #endregion
 
         #region Task Switching
@@ -355,9 +365,19 @@ namespace Flow.Launcher.Infrastructure
             // No installed English layout found
             if (enHKL == HKL.Null) return;
 
-            // Get the current foreground window
-            var hwnd = PInvoke.GetForegroundWindow();
+            // When application is exiting, the Application.Current will be null
+            if (Application.Current == null) return;
+
+            // Get the FL main window
+            var hwnd = GetWindowHandle(Application.Current.MainWindow, true);
             if (hwnd == HWND.Null) return;
+
+            // Check if the FL main window is the current foreground window
+            if (!IsForegroundWindow(hwnd))
+            {
+                var result = PInvoke.SetForegroundWindow(hwnd);
+                if (!result) throw new Win32Exception(Marshal.GetLastWin32Error());
+            }
 
             // Get the current foreground window thread ID
             var threadId = PInvoke.GetWindowThreadProcessId(hwnd);
@@ -368,12 +388,10 @@ namespace Flow.Launcher.Infrastructure
             // the IME mode instead of switching to another layout.
             var currentLayout = PInvoke.GetKeyboardLayout(threadId);
             var currentLangId = (uint)currentLayout.Value & KeyboardLayoutLoWord;
-            foreach (var langTag in ImeLanguageTags)
+            foreach (var imeLangTag in ImeLanguageTags)
             {
-                if (GetLanguageTag(currentLangId).StartsWith(langTag, StringComparison.OrdinalIgnoreCase))
-                {
-                    return;
-                }
+                var langTag = GetLanguageTag(currentLangId);
+                if (langTag.StartsWith(imeLangTag, StringComparison.OrdinalIgnoreCase)) return;
             }
 
             // Backup current keyboard layout
@@ -490,6 +508,17 @@ namespace Flow.Launcher.Infrastructure
 
         #endregion
 
+        #region Notification
+
+        public static bool IsNotificationSupported()
+        {
+            // Notifications only supported on Windows 10 19041+
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Windows) &&
+                Environment.OSVersion.Version.Build >= 19041;
+        }
+
+        #endregion
+
         #region Window Freeze
 
         public static Dictionary<UIElement, CacheMode> ClearAllCacheModes(DependencyObject parent)
@@ -537,8 +566,8 @@ namespace Flow.Launcher.Infrastructure
                     }
                 }
             }
-        }
 
         #endregion
+
     }
 }
