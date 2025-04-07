@@ -71,6 +71,7 @@
                                 Minimum="-999"
                                 SpinButtonPlacementMode="Inline"
                                 ToolTip="{DynamicResource priorityToolTip}"
+                                ValueChanged="NumberBox_OnValueChanged"
                                 Value="{Binding Priority, Mode=TwoWay}" />
                         </StackPanel>
 
