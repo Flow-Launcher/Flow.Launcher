@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core;
 using Flow.Launcher.Core.Configuration;
@@ -31,7 +32,25 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public class SearchWindowAlignData : DropdownDataGeneric<SearchWindowAligns> { }
     public class SearchPrecisionData : DropdownDataGeneric<SearchPrecisionScore> { }
     public class LastQueryModeData : DropdownDataGeneric<LastQueryMode> { }
-    public class SearchDelayTimeData : DropdownDataGeneric<SearchDelayTime> { }
+    public class SearchDelayTimeData
+    {
+        public string Display { get; set; }
+        public int Value { get; set; }
+
+        public static List<SearchDelayTimeData> GetValues()
+        {
+            var settings = Ioc.Default.GetRequiredService<Settings>();
+            var data = new List<SearchDelayTimeData>();
+
+            foreach (var value in settings.SearchDelayTimeRange)
+            {
+                var display = $"{value}ms";
+                data.Add(new SearchDelayTimeData { Display = display, Value = value });
+            }
+
+            return data;
+        }
+    }
 
     public bool StartFlowLauncherOnSystemStartup
     {
@@ -144,19 +163,15 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public List<LastQueryModeData> LastQueryModes { get; } =
         DropdownDataGeneric<LastQueryMode>.GetValues<LastQueryModeData>("LastQuery");
 
-    public List<SearchDelayTimeData> SearchDelayTimes { get; } =
-        DropdownDataGeneric<SearchDelayTime>.GetValues<SearchDelayTimeData>("SearchDelayTime");
+    public List<SearchDelayTimeData> SearchDelayTimes { get; } = SearchDelayTimeData.GetValues();
 
     public SearchDelayTimeData SearchDelayTime
     {
-        get => SearchDelayTimes.FirstOrDefault(x => x.Value == Settings.SearchDelayTime) ?? 
-               SearchDelayTimes.FirstOrDefault(x => x.Value == Plugin.SearchDelayTime.Normal) ?? 
-               SearchDelayTimes.FirstOrDefault();
+        get => SearchDelayTimes.FirstOrDefault(x => x.Value == Settings.SearchDelayTime);
         set
         {
-            if (value == null)
-                return;
-                
+            if (value == null) return;
+
             if (Settings.SearchDelayTime != value.Value)
             {
                 Settings.SearchDelayTime = value.Value;
@@ -170,7 +185,6 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         DropdownDataGeneric<SearchWindowAligns>.UpdateLabels(SearchWindowAligns);
         DropdownDataGeneric<SearchPrecisionScore>.UpdateLabels(SearchPrecisionScores);
         DropdownDataGeneric<LastQueryMode>.UpdateLabels(LastQueryModes);
-        DropdownDataGeneric<SearchDelayTime>.UpdateLabels(SearchDelayTimes);
     }
 
     public string Language

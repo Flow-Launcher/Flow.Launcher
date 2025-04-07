@@ -85,7 +85,12 @@
                                 Foreground="{DynamicResource Color08B}"
                                 Text="{DynamicResource searchDelay}"
                                 ToolTip="{DynamicResource searchDelayToolTip}" />
-                            <cc:InstalledPluginSearchDelayCombobox Margin="0 0 8 0" />
+                            <ui:NumberBox
+                                Margin="0 0 8 0"
+                                Maximum="1000"
+                                Minimum="0"
+                                SpinButtonPlacementMode="Inline"
+                                ToolTip="{DynamicResource searchDelayToolTip}" />
                         </StackPanel>
 
                         <!--  Put OnOffControl after PriorityControl & SearchDelayControl so that it can display correctly  -->

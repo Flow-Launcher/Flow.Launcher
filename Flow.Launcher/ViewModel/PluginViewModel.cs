@@ -95,7 +95,7 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public SearchDelayTime? PluginSearchDelayTime
+        public int? PluginSearchDelayTime
         {
             get => PluginPair.Metadata.SearchDelayTime;
             set
@@ -191,13 +191,6 @@ namespace Flow.Launcher.ViewModel
         {
             var changeKeywordsWindow = new ActionKeywords(this);
             changeKeywordsWindow.ShowDialog();
-        }
-
-        [RelayCommand]
-        private void SetSearchDelayTime()
-        {
-            var searchDelayTimeWindow = new SearchDelayTimeWindow(this);
-            searchDelayTimeWindow.ShowDialog();
         }
     }
 }

@@ -380,9 +380,7 @@
 
     <!--  Search Delay Settings Dialog  -->
     <system:String x:Key="searchDelayTimeTitle">Search Delay Time Setting</system:String>
-    <system:String x:Key="searchDelayTime_tips">Select the search delay time you like to use for the plugin. Select "{0}" if you don't want to specify any, and the plugin will use default search delay time.</system:String>
-    <system:String x:Key="currentSearchDelayTime">Current search delay time</system:String>
-    <system:String x:Key="newSearchDelayTime">New search delay time</system:String>
+    <system:String x:Key="searchDelayTimeTips">Input the search delay time in ms you like to use for the plugin. Input empty if you don't want to specify any, and the plugin will use default search delay time.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Custom Query Hotkey</system:String>
