@@ -101,6 +101,7 @@
                                     <RowDefinition />
                                     <RowDefinition />
                                     <RowDefinition />
+                                    <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <TextBlock
                                     Grid.Row="0"
@@ -175,13 +176,28 @@
                                 <TextBlock
                                     Grid.Row="4"
                                     Grid.Column="0"
+                                    Margin="10,15,15,10"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Text="{DynamicResource flowlauncher_plugin_websearch_tag}" />
+                                <TextBox
+                                    Grid.Row="4"
+                                    Grid.Column="1"
+                                    Margin="10,10,10,0"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding SearchSource.Tag}" />
+                                <TextBlock
+                                    Grid.Row="5"
+                                    Grid.Column="0"
                                     Margin="10,10,15,15"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     FontSize="14"
                                     Text="{DynamicResource flowlauncher_plugin_websearch_enabled_label}" />
                                 <CheckBox
-                                    Grid.Row="4"
+                                    Grid.Row="5"
                                     Grid.Column="1"
                                     Margin="10,10,10,15"
                                     VerticalAlignment="Center"

@@ -31,6 +31,8 @@ namespace Flow.Launcher.Plugin.WebSearch
         }
 
         public string Url { get; set; }
+        
+        public string Tag { get; set; }
 
         [JsonIgnore]
         public bool Status => Enabled;
@@ -45,6 +47,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                 Url = Url,
                 Icon = Icon,
                 CustomIcon = CustomIcon,
+                Tag = Tag,
                 Enabled = Enabled
             };
             return webSearch;

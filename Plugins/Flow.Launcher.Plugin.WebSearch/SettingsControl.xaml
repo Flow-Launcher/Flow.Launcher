@@ -96,6 +96,10 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+                    <GridViewColumn 
+                        Width="130"
+                        DisplayMemberBinding="{Binding Tag}"
+                        Header="{DynamicResource flowlauncher_plugin_websearch_tag}" />
                 </GridView>
             </ListView.View>
         </ListView>

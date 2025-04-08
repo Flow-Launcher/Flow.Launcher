@@ -2,6 +2,9 @@
 using System.Windows.Controls;
 using System.ComponentModel;
 using System.Windows.Data;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Flow.Launcher.Plugin.WebSearch
 {
@@ -19,6 +22,40 @@ namespace Flow.Launcher.Plugin.WebSearch
             _context = context;
             _settings = viewModel.Settings;
             DataContext = viewModel;
+            this.Loaded += SettingsControl_Loaded;
+        }
+        
+        private void SettingsControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            // After the ListView is loaded, sort by Tag in ascending order
+            if (SearchSourcesListView.ItemsSource != null)
+            {
+                // Apply initial sorting by Tag column
+                Sort("Tag", ListSortDirection.Ascending);
+        
+                // Display an arrow on the sorted column (optional)
+                var tagColumn = GetColumnByHeader("Tag");
+                if (tagColumn != null)
+                {
+                    tagColumn.HeaderTemplate = Resources["HeaderTemplateArrowUp"] as DataTemplate;
+                    _lastHeaderClicked = tagColumn.Header as GridViewColumnHeader;
+                    _lastDirection = ListSortDirection.Ascending;
+                }
+            }
+        }
+
+        // Find column by header name
+        private GridViewColumn GetColumnByHeader(string header)
+        {
+            if (SearchSourcesListView.View is GridView gridView)
+            {
+                foreach (var column in gridView.Columns)
+                {
+                    if (column.Header != null && column.Header.ToString() == header)
+                        return column;
+                }
+            }
+            return null;
         }
 
         private void OnAddSearchSearchClick(object sender, RoutedEventArgs e)
@@ -122,8 +159,23 @@ namespace Flow.Launcher.Plugin.WebSearch
         {
             ICollectionView dataView = CollectionViewSource.GetDefaultView(SearchSourcesListView.ItemsSource);
             dataView.SortDescriptions.Clear();
-            SortDescription sd = new(sortBy, direction);
-            dataView.SortDescriptions.Add(sd);
+
+            // Special handling for Tag sorting
+            if (sortBy == "Tag")
+            {
+                // Apply custom sorting (using TagComparer)
+                if (dataView is ListCollectionView listView)
+                {
+                    listView.CustomSort = new TagComparer(direction);
+                }
+            }
+            else
+            {
+                // Normal sorting
+                SortDescription sd = new SortDescription(sortBy, direction);
+                dataView.SortDescriptions.Add(sd);
+            }
+
             dataView.Refresh();
         }
 
@@ -137,6 +189,49 @@ namespace Flow.Launcher.Plugin.WebSearch
                 );
 
                 webSearch.ShowDialog();
+            }
+        }
+        
+        
+        public class TagComparer : IComparer
+        {
+            private readonly ListSortDirection _direction;
+
+            public TagComparer(ListSortDirection direction)
+            {
+                _direction = direction;
+            }
+
+            public int Compare(object x, object y)
+            {
+                if (x is SearchSource sourceX && y is SearchSource sourceY)
+                {
+                    string tagX = sourceX.Tag;
+                    string tagY = sourceY.Tag;
+
+                    bool isEmptyX = string.IsNullOrWhiteSpace(tagX);
+                    bool isEmptyY = string.IsNullOrWhiteSpace(tagY);
+
+                    // If both are empty tags, they are equal
+                    if (isEmptyX && isEmptyY)
+                        return 0;
+
+                    // If only x is an empty tag, it always goes to the back
+                    if (isEmptyX)
+                        return 1;
+
+                    // If only y is an empty tag, it always goes to the front
+                    if (isEmptyY)
+                        return -1;
+
+                    // If both have tags, compare as normal strings
+                    int result = string.Compare(tagX, tagY, StringComparison.OrdinalIgnoreCase);
+
+                    // Reverse the result according to the sorting direction
+                    return _direction == ListSortDirection.Ascending ? result : -result;
+                }
+
+                return 0;
             }
         }
     }
