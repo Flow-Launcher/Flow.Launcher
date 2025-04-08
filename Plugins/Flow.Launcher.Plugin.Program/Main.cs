@@ -413,10 +413,7 @@ namespace Flow.Launcher.Plugin.Program
                 _uwpsLock.Release();
 
                 // Reindex UWP programs
-                _ = Task.Run(() =>
-                {
-                    _ = IndexUwpProgramsAsync();
-                });
+                _ = Task.Run(IndexUwpProgramsAsync);
                 return;
             }
             else
@@ -433,10 +430,8 @@ namespace Flow.Launcher.Plugin.Program
                 _win32sLock.Release();
 
                 // Reindex Win32 programs
-                _ = Task.Run(() =>
-                {
-                    _ = IndexWin32ProgramsAsync();
-                });
+                _ = Task.Run(IndexWin32ProgramsAsync);
+                return;
             }
             else
             {
