@@ -106,9 +106,9 @@
     <system:String x:Key="AlwaysPreviewToolTip">פתח תמיד את לוח התצוגה המקדימה כאשר Flow מופעל. הקש על {0} כדי להחליף את התצוגה המקדימה.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">לא ניתן להחיל אפקט צל כאשר העיצוב הנוכחי מוגדר לאפקט טשטוש</system:String>
     <system:String x:Key="searchDelay">Search Delay</system:String>
-    <system:String x:Key="searchDelayToolTip">Adds a short delay while typing to reduce UI flicker and result load. Recommended if your typing speed is average.</system:String>
+    <system:String x:Key="searchDelayToolTip">מוסיף עיכוב קצר בזמן ההקלדה כדי להפחית קפיצות בממשק המשתמש ועומס בתוצאות. מומלץ אם מהירות ההקלדה שלך ממוצעת.</system:String>
     <system:String x:Key="searchDelayTime">Default Search Delay Time</system:String>
-    <system:String x:Key="searchDelayTimeToolTip">Wait time before showing results after typing stops. Higher values wait longer. (ms)</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">זמן המתנה להצגת התוצאות לאחר שתפסיק להקליד. ערכים גבוהים יותר מייצגים המתנה רבה יותר. (שניות)</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">חפש תוסף</system:String>
@@ -127,10 +127,10 @@
     <system:String x:Key="actionKeywordsTooltip">שנה מילות מפתח לפעולה</system:String>
     <system:String x:Key="pluginSearchDelayTime">Plugin seach delay time</system:String>
     <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Seach Delay Time</system:String>
-    <system:String x:Key="FilterComboboxLabel">Advanced Settings:</system:String>
+    <system:String x:Key="FilterComboboxLabel">הגדרות מתקדמות:</system:String>
     <system:String x:Key="DisplayModeOnOff">מופעל</system:String>
     <system:String x:Key="DisplayModePriority">עדיפות</system:String>
-    <system:String x:Key="DisplayModeSearchDelay">Search Delay</system:String>
+    <system:String x:Key="DisplayModeSearchDelay">עיכוב חיפוש</system:String>
     <system:String x:Key="currentPriority">עדיפות נוכחית</system:String>
     <system:String x:Key="newPriority">עדיפות חדשה</system:String>
     <system:String x:Key="priority">עדיפות</system:String>
@@ -372,7 +372,7 @@
 
     <!--  Search Delay Settings Dialog  -->
     <system:String x:Key="searchDelayTimeTitle">Search Delay Time Setting</system:String>
-    <system:String x:Key="searchDelayTimeTips">Input the search delay time in ms you like to use for the plugin. Input empty if you don't want to specify any, and the plugin will use default search delay time.</system:String>
+    <system:String x:Key="searchDelayTimeTips">הזן את זמן עיכוב החיפוש בשניות שבו אתה רוצה להשתמש עבור התוסף. השאר ריק אם אינך רוצה לציין, והתוסף ישתמש בזמן ברירת המחדל לעיכוב חיפוש.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">מקש קיצור לשאילתה מותאמת אישית</system:String>
