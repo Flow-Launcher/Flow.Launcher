@@ -228,7 +228,7 @@ namespace Flow.Launcher.Plugin
         void LogWarn(string className, string message, [CallerMemberName] string methodName = "");
 
         /// <summary>
-        /// Log error message
+        /// Log error message. Preferred error logging method for plugins.
         /// </summary>
         void LogError(string className, string message, [CallerMemberName] string methodName = "");
 
