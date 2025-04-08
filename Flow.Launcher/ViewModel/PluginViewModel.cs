@@ -3,9 +3,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure.Image;
+using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Resources.Controls;
 
@@ -13,6 +15,8 @@ namespace Flow.Launcher.ViewModel
 {
     public partial class PluginViewModel : BaseModel
     {
+        private static readonly Settings Settings = Ioc.Default.GetRequiredService<Settings>();
+
         private readonly PluginPair _pluginPair;
         public PluginPair PluginPair
         {
@@ -148,6 +152,7 @@ namespace Flow.Launcher.ViewModel
             App.API.GetTranslation("default") :
             App.API.GetTranslation($"SearchDelayTime{PluginPair.Metadata.SearchDelayTime}");
         public Infrastructure.UserSettings.Plugin PluginSettingsObject{ get; init; }
+        public bool SearchDelayEnabled => Settings.SearchQueryResultsWithDelay;
 
         public void OnActionKeywordsChanged()
         {
