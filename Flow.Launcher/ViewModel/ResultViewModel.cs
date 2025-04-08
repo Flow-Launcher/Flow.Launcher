@@ -199,7 +199,7 @@ namespace Flow.Launcher.ViewModel
                 }
             }
 
-            return await ImageLoader.LoadAsync(imagePath, loadFullImage).ConfigureAwait(false);
+            return await App.API.LoadImageAsync(imagePath, loadFullImage).ConfigureAwait(false);
         }
 
         private async Task LoadImageAsync()
