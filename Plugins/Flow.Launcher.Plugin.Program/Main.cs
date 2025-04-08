@@ -190,8 +190,8 @@ namespace Flow.Launcher.Plugin.Program
             var _uwpsCount = 0;
             await Stopwatch.NormalAsync("|Flow.Launcher.Plugin.Program.Main|Preload programs cost", async () =>
             {
-                var pluginCachePath = Context.CurrentPluginMetadata.PluginCacheDirectoryPath;
-                FilesFolders.ValidateDirectory(pluginCachePath);
+                var pluginCacheDirectory = Context.CurrentPluginMetadata.PluginCacheDirectoryPath;
+                FilesFolders.ValidateDirectory(pluginCacheDirectory);
 
                 static void MoveFile(string sourcePath, string destinationPath)
                 {
@@ -237,19 +237,19 @@ namespace Flow.Launcher.Plugin.Program
 
                 // Move old cache files to the new cache directory
                 var oldWin32CacheFile = Path.Combine(DataLocation.CacheDirectory, $"{Win32CacheName}.cache");
-                var newWin32CacheFile = Path.Combine(pluginCachePath, $"{Win32CacheName}.cache");
+                var newWin32CacheFile = Path.Combine(pluginCacheDirectory, $"{Win32CacheName}.cache");
                 MoveFile(oldWin32CacheFile, newWin32CacheFile);
                 var oldUWPCacheFile = Path.Combine(DataLocation.CacheDirectory, $"{UwpCacheName}.cache");
-                var newUWPCacheFile = Path.Combine(pluginCachePath, $"{UwpCacheName}.cache");
+                var newUWPCacheFile = Path.Combine(pluginCacheDirectory, $"{UwpCacheName}.cache");
                 MoveFile(oldUWPCacheFile, newUWPCacheFile);
 
                 await _win32sLock.WaitAsync();
-                _win32s = await context.API.LoadCacheBinaryStorageAsync(Win32CacheName, pluginCachePath, new List<Win32>());
+                _win32s = await context.API.LoadCacheBinaryStorageAsync(Win32CacheName, pluginCacheDirectory, new List<Win32>());
                 _win32sCount = _win32s.Count;
                 _win32sLock.Release();
 
                 await _uwpsLock.WaitAsync();
-                _uwps = await context.API.LoadCacheBinaryStorageAsync(UwpCacheName, pluginCachePath, new List<UWPApp>());
+                _uwps = await context.API.LoadCacheBinaryStorageAsync(UwpCacheName, pluginCacheDirectory, new List<UWPApp>());
                 _uwpsCount = _uwps.Count;
                 _uwpsLock.Release();
             });
