@@ -479,25 +479,25 @@ namespace Flow.Launcher.Plugin
         /// Message will only be logged in Debug mode
         /// </summary>
         /// <returns>The time taken to execute the method in milliseconds</returns>
-        public long StopWatchLogDebug(string className, string message, Action action, [CallerMemberName] string methodName = "");
+        public long StopwatchLogDebug(string className, string message, Action action, [CallerMemberName] string methodName = "");
 
         /// <summary>
         /// Log debug message of the time taken to execute a method asynchronously
         /// Message will only be logged in Debug mode
         /// </summary>
         /// <returns>The time taken to execute the method in milliseconds</returns>
-        public Task<long> StopWatchLogDebugAsync(string className, string message, Func<Task> action, [CallerMemberName] string methodName = "");
+        public Task<long> StopwatchLogDebugAsync(string className, string message, Func<Task> action, [CallerMemberName] string methodName = "");
 
         /// <summary>
         /// Log info message of the time taken to execute a method
         /// </summary>
         /// <returns>The time taken to execute the method in milliseconds</returns>
-        public long StopWatchLogInfo(string className, string message, Action action, [CallerMemberName] string methodName = "");
+        public long StopwatchLogInfo(string className, string message, Action action, [CallerMemberName] string methodName = "");
 
         /// <summary>
         /// Log info message of the time taken to execute a method asynchronously
         /// </summary>
         /// <returns>The time taken to execute the method in milliseconds</returns>
-        public Task<long> StopWatchLogInfoAsync(string className, string message, Func<Task> action, [CallerMemberName] string methodName = "");
+        public Task<long> StopwatchLogInfoAsync(string className, string message, Func<Task> action, [CallerMemberName] string methodName = "");
     }
 }
