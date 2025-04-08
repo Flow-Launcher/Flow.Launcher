@@ -51,8 +51,6 @@ public class ThemeData
     /// <inheritdoc />
     public static bool operator !=(ThemeData left, ThemeData right)
     {
-        if (left is null && right is null)
-            return false;
         return !(left == right);
     }
 
