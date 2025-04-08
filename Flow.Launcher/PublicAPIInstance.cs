@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Squirrel;
 using Flow.Launcher.Core;
@@ -392,6 +393,9 @@ namespace Flow.Launcher
 
             await ((PluginBinaryStorage<T>)_pluginBinaryStorages[(cacheName, cacheDirectory, type)]).SaveAsync();
         }
+
+        public ValueTask<ImageSource> LoadImageAsync(string path, bool loadFullImage = false, bool cacheImage = true) =>
+            ImageLoader.LoadAsync(path, loadFullImage, cacheImage);
 
         public Task<bool> UpdatePluginManifestAsync(bool usePrimaryUrlOnly = false, CancellationToken token = default) =>
             PluginsManifest.UpdateManifestAsync(usePrimaryUrlOnly, token);
