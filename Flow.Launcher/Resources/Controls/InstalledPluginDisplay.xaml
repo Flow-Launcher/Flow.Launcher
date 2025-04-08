@@ -93,7 +93,7 @@
                                 IsEnabled="{Binding SearchDelayEnabled}"
                                 Maximum="1000"
                                 Minimum="0"
-                                PlaceholderText="{DynamicResource searchDelayPlaceHolder}"
+                                PlaceholderText="{Binding DefaultSearchDelay}"
                                 SmallChange="10"
                                 SpinButtonPlacementMode="Compact"
                                 ToolTip="{DynamicResource searchDelayToolTip}"

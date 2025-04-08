@@ -153,6 +153,7 @@ namespace Flow.Launcher.ViewModel
             App.API.GetTranslation($"SearchDelayTime{PluginPair.Metadata.SearchDelayTime}");
         public Infrastructure.UserSettings.Plugin PluginSettingsObject{ get; init; }
         public bool SearchDelayEnabled => Settings.SearchQueryResultsWithDelay;
+        public string DefaultSearchDelay => Settings.SearchDelayTime.ToString();
 
         public void OnActionKeywordsChanged()
         {
