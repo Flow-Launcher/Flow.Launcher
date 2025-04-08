@@ -106,9 +106,9 @@
     <system:String x:Key="AlwaysPreviewToolTip">Toujours ouvrir le panneau d'aperçu lorsque Flow s'active. Appuyez sur {0} pour activer/désactiver l'aperçu.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">L'effet d'ombre n'est pas autorisé lorsque le thème actuel à un effet de flou activé</system:String>
     <system:String x:Key="searchDelay">Délai de recherche</system:String>
-    <system:String x:Key="searchDelayToolTip">Adds a short delay while typing to reduce UI flicker and result load. Recommended if your typing speed is average.</system:String>
+    <system:String x:Key="searchDelayToolTip">Ajoute un court délai pendant la frappe pour réduire le scintillement de l'interface utilisateur et le chargement des résultats. Recommandé si votre vitesse de frappe est moyenne.</system:String>
     <system:String x:Key="searchDelayTime">Délai de recherche par défaut</system:String>
-    <system:String x:Key="searchDelayTimeToolTip">Wait time before showing results after typing stops. Higher values wait longer. (ms)</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Délai d'attente avant l'affichage des résultats après l'arrêt de la saisie. Les valeurs élevées permettent d'attendre plus longtemps. (ms)</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Rechercher des plugins</system:String>
@@ -127,7 +127,7 @@
     <system:String x:Key="actionKeywordsTooltip">Changer les mots-clés d'action</system:String>
     <system:String x:Key="pluginSearchDelayTime">Délai de recherche du plugin</system:String>
     <system:String x:Key="pluginSearchDelayTimeTooltip">Modifier le délai de recherche du plugin</system:String>
-    <system:String x:Key="FilterComboboxLabel">Advanced Settings:</system:String>
+    <system:String x:Key="FilterComboboxLabel">Paramètres avancés :</system:String>
     <system:String x:Key="DisplayModeOnOff">Activé</system:String>
     <system:String x:Key="DisplayModePriority">Priorité</system:String>
     <system:String x:Key="DisplayModeSearchDelay">Délai de recherche</system:String>
@@ -371,7 +371,7 @@
 
     <!--  Search Delay Settings Dialog  -->
     <system:String x:Key="searchDelayTimeTitle">Réglage du délai de recherche</system:String>
-    <system:String x:Key="searchDelayTimeTips">Input the search delay time in ms you like to use for the plugin. Input empty if you don't want to specify any, and the plugin will use default search delay time.</system:String>
+    <system:String x:Key="searchDelayTimeTips">Entrez le délai de recherche en ms que vous souhaitez utiliser pour le plugin. Laissez la case vide et le plugin utilisera le délai de recherche par défaut.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Requêtes personnalisées</system:String>
