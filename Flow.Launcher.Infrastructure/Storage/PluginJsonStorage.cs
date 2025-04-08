@@ -20,6 +20,7 @@ namespace Flow.Launcher.Infrastructure.Storage
 
         public PluginJsonStorage()
         {
+            // C# related, add python related below
             var dataType = typeof(T);
             AssemblyName = dataType.Assembly.GetName().Name;
             DirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, AssemblyName);

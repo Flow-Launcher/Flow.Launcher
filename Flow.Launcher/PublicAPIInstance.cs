@@ -229,9 +229,6 @@ namespace Flow.Launcher
             }
         }
 
-        /// <summary>
-        /// Save plugin settings.
-        /// </summary>
         public void SavePluginSettings()
         {
             foreach (var value in _pluginJsonStorages.Values)
@@ -378,9 +375,6 @@ namespace Flow.Launcher
             }
         }
 
-        /// <summary>
-        /// Save plugin caches.
-        /// </summary>
         public void SavePluginCaches()
         {
             foreach (var value in _pluginBinaryStorages.Values)

@@ -77,10 +77,6 @@ namespace Flow.Launcher.Plugin.Program
 
         private static readonly string WindowsAppPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "WindowsApps");
 
-        static Main()
-        {
-        }
-
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
             var result = await cache.GetOrCreateAsync(query.Search, async entry =>
@@ -101,15 +97,15 @@ namespace Flow.Launcher.Plugin.Program
                             .ToArray() : null;
 
                         return _win32s.Cast<IProgram>()
-                                .Concat(_uwps)
-                                .AsParallel()
-                                .WithCancellation(token)
-                                .Where(HideUninstallersFilter)
-                                .Where(p => HideDuplicatedWindowsAppFilter(p, uwpsDirectories))
-                                .Where(p => p.Enabled)
-                                .Select(p => p.Result(query.Search, Context.API))
-                                .Where(r => r?.Score > 0)
-                                .ToList();
+                            .Concat(_uwps)
+                            .AsParallel()
+                            .WithCancellation(token)
+                            .Where(HideUninstallersFilter)
+                            .Where(p => HideDuplicatedWindowsAppFilter(p, uwpsDirectories))
+                            .Where(p => p.Enabled)
+                            .Select(p => p.Result(query.Search, Context.API))
+                            .Where(r => r?.Score > 0)
+                            .ToList();
                     }
                     catch (OperationCanceledException)
                     {
@@ -193,7 +189,6 @@ namespace Flow.Launcher.Plugin.Program
             await Stopwatch.NormalAsync("|Flow.Launcher.Plugin.Program.Main|Preload programs cost", async () =>
             {
                 var pluginCachePath = Context.CurrentPluginMetadata.PluginCacheDirectoryPath;
-
                 FilesFolders.ValidateDirectory(pluginCachePath);
 
                 static void MoveFile(string sourcePath, string destinationPath)
@@ -294,10 +289,10 @@ namespace Flow.Launcher.Plugin.Program
             {
                 _win32s.Add(win32);
             }
-            _win32sLock.Release();
             ResetCache();
             await Context.API.SaveCacheBinaryStorageAsync<List<Win32>>(Win32CacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
             _settings.LastIndexTime = DateTime.Now;
+            _win32sLock.Release();
         }
 
         public static async Task IndexUwpProgramsAsync()
@@ -309,10 +304,10 @@ namespace Flow.Launcher.Plugin.Program
             {
                 _uwps.Add(uwp);
             }
-            _uwpsLock.Release();
             ResetCache();
             await Context.API.SaveCacheBinaryStorageAsync<List<UWPApp>>(UwpCacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
             _settings.LastIndexTime = DateTime.Now;
+            _uwpsLock.Release();
         }
 
         public static async Task IndexProgramsAsync()
@@ -405,7 +400,6 @@ namespace Flow.Launcher.Plugin.Program
             }
             else
             {
-                // Release the lock if we cannot find the program
                 _uwpsLock.Release();
             }
 
@@ -425,7 +419,6 @@ namespace Flow.Launcher.Plugin.Program
             }
             else
             {
-                // Release the lock if we cannot find the program
                 _win32sLock.Release();
             }
         }

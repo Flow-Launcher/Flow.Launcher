@@ -42,8 +42,7 @@ namespace Flow.Launcher.Infrastructure.Storage
 
         public async ValueTask<T> TryLoadAsync(T defaultData)
         {
-            if (Data != null)
-                return Data;
+            if (Data != null) return Data;
 
             if (File.Exists(FilePath))
             {
@@ -55,8 +54,7 @@ namespace Flow.Launcher.Infrastructure.Storage
                 }
 
                 await using var stream = new FileStream(FilePath, FileMode.Open);
-                var d = await DeserializeAsync(stream, defaultData);
-                Data = d;
+                Data = await DeserializeAsync(stream, defaultData);
             }
             else
             {
