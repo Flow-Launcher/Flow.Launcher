@@ -125,7 +125,11 @@
         and enable "Use previous version of Microsoft IME".&#x0a;&#x0a;
         You can open the relevant menu using the option below, or change the setting directly without manually opening the settings page.
     </system:String>
-    <system:String x:Key="KoreanImeRegistry">Very short</system:String>
+    <system:String x:Key="KoreanImeOpenLink">Open Language and Region System Settings</system:String>
+    <system:String x:Key="KoreanImeOpenLinkToolTIp">Opens the Korean IME setting locationKorean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility</system:String>
+    <system:String x:Key="KoreanImeOpenLinkButton">Open</system:String>
+    <system:String x:Key="KoreanImeRegistry">Use Legacy Korean IME</system:String>
+    <system:String x:Key="KoreanImeRegistryTooltip">You can change the IME settings directly from here without opening a separate settings window</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Search Plugin</system:String>

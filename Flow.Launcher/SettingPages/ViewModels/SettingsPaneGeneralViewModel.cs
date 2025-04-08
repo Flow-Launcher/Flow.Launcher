@@ -13,6 +13,8 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
 using Microsoft.Win32;
 using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
+using System.Windows.Input;
+
 
 namespace Flow.Launcher.SettingPages.ViewModels;
 
@@ -21,7 +23,8 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public Settings Settings { get; }
     private readonly Updater _updater;
     private readonly IPortable _portable;
-
+    public ICommand OpenImeSettingsCommand { get; }
+    
     public SettingsPaneGeneralViewModel(Settings settings, Updater updater, IPortable portable)
     {
         Settings = settings;
@@ -29,6 +32,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         _portable = portable;
         UpdateEnumDropdownLocalizations();
         IsLegacyKoreanIMEEnabled();
+        OpenImeSettingsCommand = new RelayCommand(OpenImeSettings);
     }
 
     public class SearchWindowScreenData : DropdownDataGeneric<SearchWindowScreens> { }
@@ -190,8 +194,89 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             UpdateEnumDropdownLocalizations();
         }
     }
+    
+     public bool LegacyKoreanIMEEnabled
+    {
+        get => IsLegacyKoreanIMEEnabled();
+        set
+        {
+            SetLegacyKoreanIMEEnabled(value);
+            OnPropertyChanged(nameof(LegacyKoreanIMEEnabled));
+            OnPropertyChanged(nameof(KoreanIMERegistryValueIsZero));
+        }
+    }
+
+    public bool KoreanIMERegistryKeyExists => IsKoreanIMEExist();
+
+    public bool KoreanIMERegistryValueIsZero
+    {
+        get
+        {
+            object value = GetLegacyKoreanIMERegistryValue();
+            if (value is int intValue)
+            {
+                return intValue == 0;
+            }
+            else if (value != null && int.TryParse(value.ToString(), out int parsedValue))
+            {
+                return parsedValue == 0;
+            }
+
+            return false;
+        }
+    }
+
+    bool IsKoreanIMEExist()
+    {
+        return GetLegacyKoreanIMERegistryValue() != null;
+    }
 
     bool IsLegacyKoreanIMEEnabled()
+    {
+        object value = GetLegacyKoreanIMERegistryValue();
+
+        if (value is int intValue)
+        {
+            return intValue == 1;
+        }
+        else if (value != null && int.TryParse(value.ToString(), out int parsedValue))
+        {
+            return parsedValue == 1;
+        }
+
+        return false;
+    }
+
+    bool SetLegacyKoreanIMEEnabled(bool enable)
+    {
+        const string subKeyPath = @"Software\Microsoft\input\tsf\tsf3override\{A028AE76-01B1-46C2-99C4-ACD9858AE02F}";
+        const string valueName = "NoTsf3Override5";
+
+        try
+        {
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(subKeyPath))
+            {
+                if (key != null)
+                {
+                    int value = enable ? 1 : 0;
+                    key.SetValue(valueName, value, RegistryValueKind.DWord);
+                    return true;
+                }
+                else
+                {
+                    Debug.WriteLine($"[IME DEBUG] 레지스트리 키 생성 또는 열기 실패: {subKeyPath}");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"[IME DEBUG] 레지스트리 설정 중 예외 발생: {ex.Message}");
+        }
+
+        return false;
+    }
+
+    private object GetLegacyKoreanIMERegistryValue()
     {
         const string subKeyPath = @"Software\Microsoft\input\tsf\tsf3override\{A028AE76-01B1-46C2-99C4-ACD9858AE02F}";
         const string valueName = "NoTsf3Override5";
@@ -202,25 +287,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             {
                 if (key != null)
                 {
-                    object value = key.GetValue(valueName);
-                    if (value != null)
-                    {
-                        Debug.WriteLine($"[IME DEBUG] '{valueName}' 값: {value} (타입: {value.GetType()})");
-
-                        if (value is int intValue)
-                            return intValue == 1;
-
-                        if (int.TryParse(value.ToString(), out int parsed))
-                            return parsed == 1;
-                    }
-                    else
-                    {
-                        Debug.WriteLine($"[IME DEBUG] '{valueName}' 값이 존재하지 않습니다.");
-                    }
-                }
-                else
-                {
-                    Debug.WriteLine($"[IME DEBUG] 레지스트리 키를 찾을 수 없습니다: {subKeyPath}");
+                    return key.GetValue(valueName);
                 }
             }
         }
@@ -229,10 +296,21 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             Debug.WriteLine($"[IME DEBUG] 예외 발생: {ex.Message}");
         }
 
-        return false; // 기본적으로 새 IME 사용 중으로 간주
+        return null;
     }
 
-    
+    private void OpenImeSettings()
+    {
+        try
+        {
+            Process.Start(new ProcessStartInfo("ms-settings:regionlanguage") { UseShellExecute = true });
+        }
+        catch (Exception e)
+        {
+            Debug.WriteLine($"Error opening IME settings: {e.Message}");
+        }
+    }
+
     public bool ShouldUsePinyin
     {
         get => Settings.ShouldUsePinyin;

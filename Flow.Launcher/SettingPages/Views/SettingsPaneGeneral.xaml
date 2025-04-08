@@ -8,12 +8,16 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:settingsViewModels="clr-namespace:Flow.Launcher.SettingPages.ViewModels"
     xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:converters="clr-namespace:Flow.Launcher.Converters"
     xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
     Title="General"
     d:DataContext="{d:DesignInstance settingsViewModels:SettingsPaneGeneralViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <ui:Page.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </ui:Page.Resources>
     <ScrollViewer
         Margin="0"
         CanContentScroll="False"
@@ -28,40 +32,7 @@
                 Style="{StaticResource PageTitle}"
                 Text="{DynamicResource general}"
                 TextAlignment="left" />
-            <cc:InfoBar
-                Title="Test"
-                Closable="False"
-                IsIconVisible="True"
-                Length="Short"
-                Message="This is a success message."
-                Type="Info" />
-            <cc:InfoBar
-                Closable="True"
-                IsIconVisible="True"
-                Length="Short"
-                Message="This is a success message."
-                Type="Success" />
-            <cc:InfoBar
-                Title="Test"
-                Closable="False"
-                IsIconVisible="True"
-                Length="Long"
-                Message="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Curabitur pretium"
-                Type="Warning" />
-            <cc:InfoBar
-                Title="Test"
-                Closable="False"
-                IsIconVisible="True"
-                Length="Short"
-                Message="This is a success message."
-                Type="Error" />
-            <cc:InfoBar
-                Title="{DynamicResource KoreanImeTitle}"
-                Closable="False"
-                IsIconVisible="True"
-                Length="Long"
-                Message="{DynamicResource KoreanImeGuide}"
-                Type="Warning" />
+            
             <cc:ExCard
                 Title="{DynamicResource startFlowLauncherOnSystemStartup}"
                 Margin="0 8 0 0"
@@ -317,6 +288,29 @@
                     SelectedValue="{Binding Language}"
                     SelectedValuePath="LanguageCode" />
             </cc:Card>
+            <cc:InfoBar  Margin="0 12 0 0"
+                         Title="{DynamicResource KoreanImeTitle}"
+                         Closable="False"
+                         IsIconVisible="True"
+                         Length="Long"
+                         Message="{DynamicResource KoreanImeGuide}"
+                         Type="Warning" />
+            <cc:CardGroup Margin="0 4 0 0">
+                <cc:Card
+                    Title="{DynamicResource KoreanImeRegistry}"
+                    Icon="&#xe88b;" Sub="{DynamicResource KoreanImeRegistryTooltip}">
+                    <ui:ToggleSwitch
+                        IsOn="{Binding LegacyKoreanIMEEnabled}"
+                        OffContent="{DynamicResource disable}"
+                        OnContent="{DynamicResource enable}" />
+                </cc:Card>
+                <cc:Card
+                    Title="{DynamicResource KoreanImeOpenLink}"
+                    Sub="{DynamicResource KoreanImeOpenLinkTooltip}"
+                    Icon="&#xf7b9;">
+                    <Button Content="{DynamicResource KoreanImeOpenLinkButton}" Command="{Binding OpenImeSettingsCommand}"/>
+                </cc:Card>
+            </cc:CardGroup>
         </VirtualizingStackPanel>
     </ScrollViewer>
 </ui:Page>
