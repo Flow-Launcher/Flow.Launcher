@@ -367,7 +367,7 @@ namespace Flow.Launcher.Plugin.Program
                     Title = Context.API.GetTranslation("flowlauncher_plugin_program_disable_program"),
                     Action = c =>
                     {
-                        DisableProgram(program);
+                        _ = DisableProgramAsync(program);
                         Context.API.ShowMsg(
                             Context.API.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_success"),
                             Context.API.GetTranslation(
@@ -383,7 +383,7 @@ namespace Flow.Launcher.Plugin.Program
             return menuOptions;
         }
 
-        private static async Task DisableProgram(IProgram programToDelete)
+        private static async Task DisableProgramAsync(IProgram programToDelete)
         {
             if (_settings.DisabledProgramSources.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
                 return;
@@ -403,7 +403,12 @@ namespace Flow.Launcher.Plugin.Program
                 });
                 return;
             }
-            
+            else
+            {
+                // Release the lock if we cannot find the program
+                _uwpsLock.Release();
+            }
+
             await _win32sLock.WaitAsync();
             if (_win32s.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
             {
@@ -417,6 +422,11 @@ namespace Flow.Launcher.Plugin.Program
                 {
                     _ = IndexWin32ProgramsAsync();
                 });
+            }
+            else
+            {
+                // Release the lock if we cannot find the program
+                _win32sLock.Release();
             }
         }
 
