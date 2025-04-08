@@ -433,7 +433,7 @@ namespace Flow.Launcher.Core.Resource
 
                 BlurEnabled = IsBlurTheme();
 
-                // Can only apply blur but here also apply drop shadow effect to avoid possible drop shadow effect issues
+                // Apply blur and drop shadow effect so that we do not need to call it again
                 _ = RefreshFrameAsync();
 
                 return true;

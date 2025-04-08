@@ -377,11 +377,8 @@ namespace Flow.Launcher
 
         public ThemeData GetCurrentTheme() => Theme.GetCurrentTheme();
 
-        public void SetCurrentTheme(ThemeData theme)
-        {
+        public bool SetCurrentTheme(ThemeData theme) =>
             Theme.ChangeTheme(theme.FileNameWithoutExtension);
-            _ = _theme.RefreshFrameAsync();
-        }
 
         public ValueTask<ImageSource> LoadImageAsync(string path, bool loadFullImage = false, bool cacheImage = true) =>
             ImageLoader.LoadAsync(path, loadFullImage, cacheImage);

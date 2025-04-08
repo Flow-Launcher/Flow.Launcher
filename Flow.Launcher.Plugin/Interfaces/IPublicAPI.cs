@@ -367,8 +367,10 @@ namespace Flow.Launcher.Plugin
         /// Set the current theme
         /// </summary>
         /// <param name="theme"></param>
-        /// <returns></returns>
-        public void SetCurrentTheme(ThemeData theme);
+        /// <returns>
+        /// True if the theme is set successfully, false otherwise.
+        /// </returns>
+        public bool SetCurrentTheme(ThemeData theme);
 
         /// Load image from path. Support local, remote and data:image url.
         /// If image path is missing, it will return a missing icon.
