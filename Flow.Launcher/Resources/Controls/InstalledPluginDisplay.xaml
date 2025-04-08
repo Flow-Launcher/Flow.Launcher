@@ -88,7 +88,7 @@
                                 Text="{DynamicResource searchDelay}"
                                 ToolTip="{DynamicResource searchDelayToolTip}" />
                             <ui:NumberBox
-                                Width="160"
+                                Width="120"
                                 Margin="0 0 8 0"
                                 IsEnabled="{Binding SearchDelayEnabled}"
                                 Maximum="1000"
