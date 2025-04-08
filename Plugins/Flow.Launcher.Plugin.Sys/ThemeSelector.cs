@@ -76,8 +76,10 @@ namespace Flow.Launcher.Plugin.Sys
                 Score = score,
                 Action = c =>
                 {
-                    _context.API.SetCurrentTheme(theme);
-                    _context.API.ReQuery();
+                    if (_context.API.SetCurrentTheme(theme))
+                    {
+                        _context.API.ReQuery();
+                    }
                     return false;
                 }
             };
