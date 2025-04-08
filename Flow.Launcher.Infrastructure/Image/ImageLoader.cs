@@ -34,6 +34,7 @@ namespace Flow.Launcher.Infrastructure.Image
             _hashGenerator = new ImageHashGenerator();
 
             var usage = await LoadStorageToConcurrentDictionaryAsync();
+            _storage.ClearData();
 
             ImageCache.Initialize(usage);
 
@@ -284,7 +285,7 @@ namespace Flow.Launcher.Infrastructure.Image
             return ImageCache.TryGetValue(path, loadFullImage, out image);
         }
 
-        public static async ValueTask<ImageSource> LoadAsync(string path, bool loadFullImage = false)
+        public static async ValueTask<ImageSource> LoadAsync(string path, bool loadFullImage = false, bool cacheImage = true)
         {
             var imageResult = await LoadInternalAsync(path, loadFullImage);
 
@@ -300,16 +301,18 @@ namespace Flow.Launcher.Infrastructure.Image
                         // image already exists
                         img = ImageCache[key, loadFullImage] ?? img;
                     }
-                    else
+                    else if (cacheImage)
                     {
-                        // new guid
-
+                        // save guid key
                         GuidToKey[hash] = path;
                     }
                 }
 
-                // update cache
-                ImageCache[path, loadFullImage] = img;
+                if (cacheImage)
+                {
+                    // update cache
+                    ImageCache[path, loadFullImage] = img;
+                }
             }
 
             return img;

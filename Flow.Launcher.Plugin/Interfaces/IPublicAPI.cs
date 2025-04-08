@@ -1,6 +1,4 @@
-﻿using Flow.Launcher.Plugin.SharedModels;
-using JetBrains.Annotations;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -8,6 +6,9 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
+using Flow.Launcher.Plugin.SharedModels;
+using JetBrains.Annotations;
 
 namespace Flow.Launcher.Plugin
 {
@@ -228,6 +229,11 @@ namespace Flow.Launcher.Plugin
         void LogWarn(string className, string message, [CallerMemberName] string methodName = "");
 
         /// <summary>
+        /// Log error message. Preferred error logging method for plugins.
+        /// </summary>
+        void LogError(string className, string message, [CallerMemberName] string methodName = "");
+
+        /// <summary>
         /// Log an Exception. Will throw if in debug mode so developer will be aware, 
         /// otherwise logs the eror message. This is the primary logging method used for Flow 
         /// </summary>
@@ -346,6 +352,72 @@ namespace Flow.Launcher.Plugin
         public void StopLoadingBar();
 
         /// <summary>
+        /// Get all available themes
+        /// </summary>
+        /// <returns></returns>
+        public List<ThemeData> GetAvailableThemes();
+
+        /// <summary>
+        /// Get the current theme
+        /// </summary>
+        /// <returns></returns>
+        public ThemeData GetCurrentTheme();
+
+        /// <summary>
+        /// Set the current theme
+        /// </summary>
+        /// <param name="theme"></param>
+        /// <returns>
+        /// True if the theme is set successfully, false otherwise.
+        /// </returns>
+        public bool SetCurrentTheme(ThemeData theme);
+
+        /// Save all Flow's plugins caches
+        /// </summary>
+        void SavePluginCaches();
+
+        /// <summary>
+        /// Load BinaryStorage for current plugin's cache. This is the method used to load cache from binary in Flow.
+        /// When the file is not exist, it will create a new instance for the specific type.
+        /// </summary>
+        /// <typeparam name="T">Type for deserialization</typeparam>
+        /// <param name="cacheName">Cache file name</param>
+        /// <param name="cacheDirectory">Cache directory from plugin metadata</param>
+        /// <param name="defaultData">Default data to return</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// BinaryStorage utilizes MemoryPack, which means the object must be MemoryPackSerializable <see href="https://github.com/Cysharp/MemoryPack"/>
+        /// </remarks>
+        Task<T> LoadCacheBinaryStorageAsync<T>(string cacheName, string cacheDirectory, T defaultData) where T : new();
+
+        /// <summary>
+        /// Save BinaryStorage for current plugin's cache. This is the method used to save cache to binary in Flow.Launcher
+        /// This method will save the original instance loaded with LoadCacheBinaryStorageAsync.
+        /// This API call is for manually Save. Flow will automatically save all cache type that has called LoadCacheBinaryStorageAsync or SaveCacheBinaryStorageAsync previously.
+        /// </summary>
+        /// <typeparam name="T">Type for Serialization</typeparam>
+        /// <param name="cacheName">Cache file name</param>
+        /// <param name="cacheDirectory">Cache directory from plugin metadata</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// BinaryStorage utilizes MemoryPack, which means the object must be MemoryPackSerializable <see href="https://github.com/Cysharp/MemoryPack"/>
+        /// </remarks>
+        Task SaveCacheBinaryStorageAsync<T>(string cacheName, string cacheDirectory) where T : new();
+
+        /// Load image from path. Support local, remote and data:image url.
+        /// If image path is missing, it will return a missing icon.
+        /// </summary>
+        /// <param name="path">The path of the image.</param>
+        /// <param name="loadFullImage">
+        /// Load full image or not.
+        /// </param>
+        /// <param name="cacheImage">
+        /// Cache the image or not. Cached image will be stored in FL cache.
+        /// If the image is just used one time, it's better to set this to false.
+        /// </param>
+        /// <returns></returns>
+        ValueTask<ImageSource> LoadImageAsync(string path, bool loadFullImage = false, bool cacheImage = true);
+
         /// Update the plugin manifest
         /// </summary>
         /// <param name="usePrimaryUrlOnly">

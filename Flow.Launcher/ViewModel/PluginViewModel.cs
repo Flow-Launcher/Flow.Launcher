@@ -49,7 +49,7 @@ namespace Flow.Launcher.ViewModel
 
         private async Task LoadIconAsync()
         {
-            Image = await ImageLoader.LoadAsync(PluginPair.Metadata.IcoPath);
+            Image = await App.API.LoadImageAsync(PluginPair.Metadata.IcoPath);
             OnPropertyChanged(nameof(Image));
         }
 
