@@ -7,6 +7,11 @@
         Клацніть Ні, якщо воно вже встановлене, і вам буде запропоновано вибрати теку, яка містить виконуваник {1}
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Будласка оберіть виконуваник {0}</system:String>
+    <system:String x:Key="runtimeExecutableInvalidChooseDownload">
+        Your selected {0} executable is invalid.
+        {2}{2}
+        Click yes if you would like select the {0} executable agian. Click no if you would like to download {1}
+    </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Не вдається встановити шлях до виконуваника {0}, будласка спробуйте в налаштуваннях Flow (прокрутіть вниз до кінця).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Невдача ініціалізації плагінів</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">Плагіни: {0} - не вдалося підвантажити і буде вимкнено, зверніться за допомогою до автора плагіна</system:String>
@@ -37,7 +42,7 @@
     <system:String x:Key="GameMode">Режим гри</system:String>
     <system:String x:Key="GameModeToolTip">Призупинити використання гарячих клавіш.</system:String>
     <system:String x:Key="PositionReset">Скидання позиції</system:String>
-    <system:String x:Key="PositionResetToolTip">Скинути положення вікна пошуку</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Налаштування</system:String>
@@ -70,8 +75,6 @@
     <system:String x:Key="LastQueryEmpty">Очистити останній запит</system:String>
     <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
     <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
-    <system:String x:Key="KeepMaxResults">Фіксована висота вікна</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">Висота вікна не регулюється перетягуванням.</system:String>
     <system:String x:Key="maxShowResults">Максимальна кількість результатів</system:String>
     <system:String x:Key="maxShowResultsToolTip">Ви також можете швидко налаштувати цей параметр за допомогою клавіш CTRL+Плюс чи CTRL+Мінус.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ігнорувати гарячі клавіші в повноекранному режимі</system:String>
@@ -102,6 +105,15 @@
     <system:String x:Key="AlwaysPreview">Завжди переглядати</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Завжди відкривати панель попереднього перегляду при активації Flow. Натисніть {0}, щоб переключити попередній перегляд.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Ефект тіні не дозволено, коли поточна тема має ефект розмиття</system:String>
+    <system:String x:Key="searchDelay">Search Delay</system:String>
+    <system:String x:Key="searchDelayToolTip">Delay for a while to search when typing. This reduces interface jumpiness and result load.</system:String>
+    <system:String x:Key="searchDelayTime">Default Search Delay Time</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Plugin default delay time after which search results appear when typing is stopped.</system:String>
+    <system:String x:Key="SearchDelayTimeVeryLong">Very long</system:String>
+    <system:String x:Key="SearchDelayTimeLong">Long</system:String>
+    <system:String x:Key="SearchDelayTimeNormal">Normal</system:String>
+    <system:String x:Key="SearchDelayTimeShort">Short</system:String>
+    <system:String x:Key="SearchDelayTimeVeryShort">Very short</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Плагін для пошуку</system:String>
@@ -118,6 +130,8 @@
     <system:String x:Key="currentActionKeywords">Поточна гаряча клавіша</system:String>
     <system:String x:Key="newActionKeyword">Нова гаряча клавіша</system:String>
     <system:String x:Key="actionKeywordsTooltip">Змінити гарячі клавіши</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Plugin seach delay time</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Seach Delay Time</system:String>
     <system:String x:Key="currentPriority">Поточний пріоритет</system:String>
     <system:String x:Key="newPriority">Новий пріоритет</system:String>
     <system:String x:Key="priority">Пріоритет</system:String>
@@ -131,6 +145,9 @@
     <system:String x:Key="plugin_uninstall">Видалити</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
+    <system:String x:Key="failedToRemovePluginCacheTitle">Fail to remove plugin cache</system:String>
+    <system:String x:Key="failedToRemovePluginCacheMessage">Plugins: {0} - Fail to remove plugin cache files, please remove them manually</system:String>
+    <system:String x:Key="default">Default</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Магазин плагінів</system:String>
@@ -193,8 +210,20 @@
     <system:String x:Key="AnimationSpeedCustom">Користувацька</system:String>
     <system:String x:Key="Clock">Годинник</system:String>
     <system:String x:Key="Date">Дата</system:String>
+    <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropTypeDisabledToolTip">Backdrop supported starting from Windows 11 build 22000 and above</system:String>
+    <system:String x:Key="BackdropTypesNone">Нема</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
+    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
     <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Ця тема підтримує розмитий прозорий фон.</system:String>
+    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
+    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
+    <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Гаряча клавіша</system:String>
@@ -294,6 +323,9 @@
     <system:String x:Key="logfolder">Тека журналу</system:String>
     <system:String x:Key="clearlogfolder">Очистити журнали</system:String>
     <system:String x:Key="clearlogfolderMessage">Ви впевнені, що хочете видалити всі журнали?</system:String>
+    <system:String x:Key="clearcachefolder">Clear Caches</system:String>
+    <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
+    <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
     <system:String x:Key="welcomewindow">Чаклун</system:String>
     <system:String x:Key="userdatapath">Розташування даних користувача</system:String>
     <system:String x:Key="userdatapathToolTip">Налаштування користувача та встановлені плагіни зберігаються у теці даних користувача. Це місце може змінюватися залежно від того, чи перебуває програма в портативному режимі, чи ні.</system:String>
@@ -335,9 +367,16 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Не вдалося знайти вказаний плагін</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Нова гаряча клавіша не може бути порожньою</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Нова гаряча клавіша вже використовується іншим плагіном. Будь ласка, вкажіть нову</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
     <system:String x:Key="success">Успішно</system:String>
     <system:String x:Key="completedSuccessfully">Успішно завершено</system:String>
-    <system:String x:Key="actionkeyword_tips">Введіть гарячу клавішу, яку ви хочете використовувати для запуску плагіна. Використовуйте * у разі, якщо ви не хочете ставити конкретну гарячу клавішу.</system:String>
+    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="searchDelayTimeTitle">Search Delay Time Setting</system:String>
+    <system:String x:Key="searchDelayTime_tips">Select the search delay time you like to use for the plugin. Select &quot;{0}&quot; if you don't want to specify any, and the plugin will use default search delay time.</system:String>
+    <system:String x:Key="currentSearchDelayTime">Current search delay time</system:String>
+    <system:String x:Key="newSearchDelayTime">New search delay time</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Задані гарячі клавіші для запитів</system:String>

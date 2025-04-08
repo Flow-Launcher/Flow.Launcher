@@ -7,6 +7,11 @@
         Click no if it's already installed, and you will be prompted to select the folder that contains the {1} executable
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Please select the {0} executable</system:String>
+    <system:String x:Key="runtimeExecutableInvalidChooseDownload">
+        Your selected {0} executable is invalid.
+        {2}{2}
+        Click yes if you would like select the {0} executable agian. Click no if you would like to download {1}
+    </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Unable to set {0} executable path, please try from Flow's settings (scroll down to the bottom).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Fail to Init Plugins</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">Plugins: {0} - fail to load and would be disabled, please contact plugin creator for help</system:String>
@@ -37,7 +42,7 @@
     <system:String x:Key="GameMode">게임 모드</system:String>
     <system:String x:Key="GameModeToolTip">단축키 사용을 일시중단합니다.</system:String>
     <system:String x:Key="PositionReset">창 위치 초기화</system:String>
-    <system:String x:Key="PositionResetToolTip">검색창 위치 초기화</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">검색어 입력</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">설정</system:String>
@@ -45,8 +50,8 @@
     <system:String x:Key="portableMode">포터블 모드</system:String>
     <system:String x:Key="portableModeToolTIp">모든 설정이 폴더안에 들어갑니다. USB 드라이브나 클라우드로 사용 가능합니다.</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">시스템 시작 시 Flow Launcher 실행</system:String>
-    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
-    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
+    <system:String x:Key="useLogonTaskForStartup">더 빠른 시작을 위해 시작 프로그램 항목 대신 로그온 Task 사용</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">Flow Launcher를 제거한 후에는 작업 스케줄러에서 이 작업(Flow.Launcher Startup)을 수동으로 삭제해야 합니다</system:String>
     <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">포커스 잃으면 Flow Launcher 숨김</system:String>
     <system:String x:Key="dontPromptUpdateMsg">새 버전 알림 끄기</system:String>
@@ -70,8 +75,6 @@
     <system:String x:Key="LastQueryEmpty">직전 쿼리 지우기</system:String>
     <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
     <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
-    <system:String x:Key="KeepMaxResults">창 높이 고정</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">드래그로 창 높이를 조정하지 않습니다.</system:String>
     <system:String x:Key="maxShowResults">표시할 결과 수</system:String>
     <system:String x:Key="maxShowResultsToolTip">Ctrl + '+'키와 Ctrl + '-'키로도 빠르게 조정할 수 있습니다</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">전체화면 모드에서는 단축키 무시</system:String>
@@ -89,7 +92,7 @@
     <system:String x:Key="autoUpdates">자동 업데이트</system:String>
     <system:String x:Key="select">선택</system:String>
     <system:String x:Key="hideOnStartup">시작 시 Flow Launcher 숨김</system:String>
-    <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
+    <system:String x:Key="hideOnStartupToolTip">Flowr Launcher가 트레이에 숨겨진 상태로 시작합니다.</system:String>
     <system:String x:Key="hideNotifyIcon">트레이 아이콘 숨기기</system:String>
     <system:String x:Key="hideNotifyIconToolTip">트레이에서 아이콘을 숨길 경우, 검색창 우클릭으로 설정창을 열 수 있습니다.</system:String>
     <system:String x:Key="querySearchPrecision">쿼리 검색 정밀도</system:String>
@@ -102,6 +105,15 @@
     <system:String x:Key="AlwaysPreview">항상 미리보기</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Flow 사용시 항상 미리보기 패널을 열어둡니다. {0} 키를 눌러 프리뷰창을 켜고 끌 수 있습니다.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">반투명 흐림 효과를 사용하는 경우, 그림자 효과를 쓸 수 없습니다.</system:String>
+    <system:String x:Key="searchDelay">Search Delay</system:String>
+    <system:String x:Key="searchDelayToolTip">Delay for a while to search when typing. This reduces interface jumpiness and result load.</system:String>
+    <system:String x:Key="searchDelayTime">Default Search Delay Time</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Plugin default delay time after which search results appear when typing is stopped.</system:String>
+    <system:String x:Key="SearchDelayTimeVeryLong">Very long</system:String>
+    <system:String x:Key="SearchDelayTimeLong">Long</system:String>
+    <system:String x:Key="SearchDelayTimeNormal">Normal</system:String>
+    <system:String x:Key="SearchDelayTimeShort">Short</system:String>
+    <system:String x:Key="SearchDelayTimeVeryShort">Very short</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">플러그인 검색</system:String>
@@ -118,6 +130,8 @@
     <system:String x:Key="currentActionKeywords">현재 액션 키워드</system:String>
     <system:String x:Key="newActionKeyword">새 액션 키워드</system:String>
     <system:String x:Key="actionKeywordsTooltip">액션 키워드 변경</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Plugin seach delay time</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Seach Delay Time</system:String>
     <system:String x:Key="currentPriority">현재 중요도:</system:String>
     <system:String x:Key="newPriority">새 중요도:</system:String>
     <system:String x:Key="priority">중요도</system:String>
@@ -131,6 +145,9 @@
     <system:String x:Key="plugin_uninstall">제거</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
+    <system:String x:Key="failedToRemovePluginCacheTitle">Fail to remove plugin cache</system:String>
+    <system:String x:Key="failedToRemovePluginCacheMessage">Plugins: {0} - Fail to remove plugin cache files, please remove them manually</system:String>
+    <system:String x:Key="default">Default</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">플러그인 스토어</system:String>
@@ -193,8 +210,20 @@
     <system:String x:Key="AnimationSpeedCustom">사용자 정의</system:String>
     <system:String x:Key="Clock">시계</system:String>
     <system:String x:Key="Date">날짜</system:String>
+    <system:String x:Key="BackdropType">배경 효과 타입</system:String>
+    <system:String x:Key="BackdropTypeDisabledToolTip">Backdrop supported starting from Windows 11 build 22000 and above</system:String>
+    <system:String x:Key="BackdropTypesNone">없음</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">아크릴</system:String>
+    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
     <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
+    <system:String x:Key="ShowPlaceholder">안내 텍스트 표시</system:String>
+    <system:String x:Key="ShowPlaceholderTip">입력 내용이 없을때 입력창 위치를 알 수 있는 텍스트를 표시합니다</system:String>
+    <system:String x:Key="PlaceholderText">안내 텍스트</system:String>
+    <system:String x:Key="PlaceholderTextTip">안내 텍스트를 변경하세요. 아무것도 입력하지 않으면 다음을 사용합니다: &quot;{0}&quot;</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">단축키</system:String>
@@ -294,6 +323,9 @@
     <system:String x:Key="logfolder">로그 폴더</system:String>
     <system:String x:Key="clearlogfolder">로그 삭제</system:String>
     <system:String x:Key="clearlogfolderMessage">정말 모든 로그를 삭제하시겠습니까?</system:String>
+    <system:String x:Key="clearcachefolder">Clear Caches</system:String>
+    <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
+    <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
     <system:String x:Key="welcomewindow">마법사</system:String>
     <system:String x:Key="userdatapath">사용자 데이터 위치</system:String>
     <system:String x:Key="userdatapathToolTip">사용자 설정과 설치된 플러그인은 사용자 데이터 폴더에 저장됩니다. 이 위치는 휴대용 모드 활성화 여부에 따라 달라질 수 있습니다.</system:String>
@@ -335,9 +367,16 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">플러그인을 찾을 수 없습니다.</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">새 액션 키워드를 입력하세요.</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">새 액션 키워드가 할당된 플러그인이 이미 있습니다. 다른 액션 키워드를 입력하세요.</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
     <system:String x:Key="success">성공</system:String>
     <system:String x:Key="completedSuccessfully">성공적으로 완료했습니다.</system:String>
-    <system:String x:Key="actionkeyword_tips">플러그인을 시작하는데 필요한 액션 키워드를 입력하세요. 액션 키워드를 지정하지 않으려면 *를 사용하세요. 이 경우 키워드를 입력하지 않아도 동작합니다.</system:String>
+    <system:String x:Key="actionkeyword_tips">플러그인을 실행할 때 사용할 액션 키워드를 입력하세요. 여러 개를 입력할 경우 공백으로 구분하세요. 아무 키워드도 지정하지 않으려면 * 를 입력하세요. 이 경우 액션 키워드 없이도 플러그인이 실행됩니다.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="searchDelayTimeTitle">Search Delay Time Setting</system:String>
+    <system:String x:Key="searchDelayTime_tips">Select the search delay time you like to use for the plugin. Select &quot;{0}&quot; if you don't want to specify any, and the plugin will use default search delay time.</system:String>
+    <system:String x:Key="currentSearchDelayTime">Current search delay time</system:String>
+    <system:String x:Key="newSearchDelayTime">New search delay time</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">사용자지정 쿼리 단축키</system:String>

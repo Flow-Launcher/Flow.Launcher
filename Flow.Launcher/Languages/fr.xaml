@@ -7,6 +7,11 @@
         Cliquez sur non s'il est déjà installé, et vous serez invité à sélectionner le dossier qui contient l'exécutable {1}
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Veuillez sélectionner l'exécutable {0}</system:String>
+    <system:String x:Key="runtimeExecutableInvalidChooseDownload">
+        L'exécutable {0} que vous avez sélectionné est invalide.
+        {2}{2}
+        Cliquez sur oui si vous souhaitez sélectionner l'exécutable {0} à nouveau. Cliquez sur non si vous souhaitez télécharger {1}.
+    </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Impossible de définir {0} comme chemin d'accès vers l'exécutable. Veuillez essayer à partir des paramètres de Flow (défiler vers le bas).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Échec de l'initialisation des plugins</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">Plugins : {0} - n'ont pas pu être chargés et doivent être désactivés, veuillez contacter le créateur du plugin pour obtenir de l'aide</system:String>
@@ -37,7 +42,7 @@
     <system:String x:Key="GameMode">Mode jeu</system:String>
     <system:String x:Key="GameModeToolTip">Suspend l'utilisation des raccourcis claviers.</system:String>
     <system:String x:Key="PositionReset">Réinitialiser la position</system:String>
-    <system:String x:Key="PositionResetToolTip">Rétablir la position de la fenêtre de recherche</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Tapez ici pour rechercher</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Paramètres</system:String>
@@ -70,8 +75,6 @@
     <system:String x:Key="LastQueryEmpty">Ne pas afficher la dernière recherche</system:String>
     <system:String x:Key="LastQueryActionKeywordPreserved">Conserver le mot clé de la dernière action</system:String>
     <system:String x:Key="LastQueryActionKeywordSelected">Sélectionnez le mot clé de la dernière action</system:String>
-    <system:String x:Key="KeepMaxResults">Hauteur de fenêtre fixe</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">La hauteur de la fenêtre n'est pas réglable par glissement.</system:String>
     <system:String x:Key="maxShowResults">Résultats maximums à afficher</system:String>
     <system:String x:Key="maxShowResultsToolTip">Vous pouvez également ajuster ce paramètre en utilisant CTRL+Plus ou CTRL+Moins.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignore les raccourcis lorsqu'une application est en plein écran</system:String>
@@ -102,6 +105,15 @@
     <system:String x:Key="AlwaysPreview">Toujours prévisualiser</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Toujours ouvrir le panneau d'aperçu lorsque Flow s'active. Appuyez sur {0} pour activer/désactiver l'aperçu.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">L'effet d'ombre n'est pas autorisé lorsque le thème actuel à un effet de flou activé</system:String>
+    <system:String x:Key="searchDelay">Délai de recherche</system:String>
+    <system:String x:Key="searchDelayToolTip">Attendre un certain temps pour effectuer une recherche lors de la saisie. Cela permet de réduire les sauts d'interface et la charge des résultats.</system:String>
+    <system:String x:Key="searchDelayTime">Délai de recherche par défaut</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Délai par défaut du plugin après lequel les résultats de la recherche s'affichent lorsque la saisie est interrompue.</system:String>
+    <system:String x:Key="SearchDelayTimeVeryLong">Très long</system:String>
+    <system:String x:Key="SearchDelayTimeLong">Long</system:String>
+    <system:String x:Key="SearchDelayTimeNormal">Normal</system:String>
+    <system:String x:Key="SearchDelayTimeShort">Court</system:String>
+    <system:String x:Key="SearchDelayTimeVeryShort">Très court</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Rechercher des plugins</system:String>
@@ -118,6 +130,8 @@
     <system:String x:Key="currentActionKeywords">Mot-clé d'action actuel</system:String>
     <system:String x:Key="newActionKeyword">Nouveau mot-clé d'action</system:String>
     <system:String x:Key="actionKeywordsTooltip">Changer les mots-clés d'action</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Délai de recherche du plugin</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Modifier le délai de recherche du plugin</system:String>
     <system:String x:Key="currentPriority">Priorité actuelle</system:String>
     <system:String x:Key="newPriority">Nouvelle priorité</system:String>
     <system:String x:Key="priority">Priorité</system:String>
@@ -131,6 +145,9 @@
     <system:String x:Key="plugin_uninstall">Désinstaller</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Échec de la suppression des paramètres du plugin</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins : {0} - Échec de la suppression des fichiers de configuration des plugins, veuillez les supprimer manuellement</system:String>
+    <system:String x:Key="failedToRemovePluginCacheTitle">Échec de la suppression du cache du plugin</system:String>
+    <system:String x:Key="failedToRemovePluginCacheMessage">Plugins : {0} - Échec de la suppression des fichiers cache des plugins, veuillez les supprimer manuellement</system:String>
+    <system:String x:Key="default">Défaut</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Magasin des Plugins</system:String>
@@ -193,8 +210,20 @@
     <system:String x:Key="AnimationSpeedCustom">Personnalisé</system:String>
     <system:String x:Key="Clock">Heure</system:String>
     <system:String x:Key="Date">Date</system:String>
+    <system:String x:Key="BackdropType">Type d'arrière-plan</system:String>
+    <system:String x:Key="BackdropTypeDisabledToolTip">Arrière-plan pris en charge à partir de Windows 11 version 22000 et plus</system:String>
+    <system:String x:Key="BackdropTypesNone">Aucun</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrylique</system:String>
+    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
     <system:String x:Key="TypeIsDarkToolTip">Ce thème prend en charge deux modes (clair/sombre).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Ce thème prend en charge l'arrière-plan flou et transparent.</system:String>
+    <system:String x:Key="ShowPlaceholder">Afficher l'espace réservé</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Afficher un espace réservé lorsque la requête est vide</system:String>
+    <system:String x:Key="PlaceholderText">Texte de l'espace réservé</system:String>
+    <system:String x:Key="PlaceholderTextTip">Modifier le texte de l'espace réservé. Les entrées vides utiliseront : {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Taille de la fenêtre fixe</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">La taille de la fenêtre n'est pas réglable par glissement.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Raccourcis</system:String>
@@ -293,6 +322,9 @@
     <system:String x:Key="logfolder">Répertoire des journaux</system:String>
     <system:String x:Key="clearlogfolder">Effacer le journal</system:String>
     <system:String x:Key="clearlogfolderMessage">Êtes-vous sûr de vouloir supprimer tous les journaux ?</system:String>
+    <system:String x:Key="clearcachefolder">Vider les caches</system:String>
+    <system:String x:Key="clearcachefolderMessage">Êtes-vous sûr de vouloir supprimer tous les caches ?</system:String>
+    <system:String x:Key="clearfolderfailMessage">Échec de l'effacement d'une partie des dossiers et des fichiers. Veuillez consulter le fichier journal pour plus d'informations</system:String>
     <system:String x:Key="welcomewindow">Assistant</system:String>
     <system:String x:Key="userdatapath">Emplacement des données utilisateur</system:String>
     <system:String x:Key="userdatapathToolTip">Les paramètres utilisateur et les plugins installés sont enregistrés dans le dossier des données utilisateur. Cet emplacement peut varier selon que vous soyez en mode portable ou non.</system:String>
@@ -334,9 +366,16 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Impossible de trouver le module spécifi</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Le nouveau mot-clé d'action doit être spécifi</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Le nouveau mot-clé d'action a été assigné à un autre module, veuillez en choisir un autre</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">Ce nouveau mot-clé d'action est identique à l'ancien, veuillez en choisir un autre</system:String>
     <system:String x:Key="success">Ajout</system:String>
     <system:String x:Key="completedSuccessfully">Terminé avec succès</system:String>
-    <system:String x:Key="actionkeyword_tips">Saisissez * si vous ne souhaitez pas utiliser de mot-clé spécifique</system:String>
+    <system:String x:Key="actionkeyword_tips">Saisissez les mots-clés d'action que vous souhaitez utiliser pour lancer le plugin et séparez-les par des espaces. Utilisez * si vous ne voulez en spécifier aucun, et le plugin sera déclenché sans aucun mot-clé d'action.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="searchDelayTimeTitle">Réglage du délai de recherche</system:String>
+    <system:String x:Key="searchDelayTime_tips">Sélectionnez le délai de recherche que vous souhaitez utiliser pour le plugin. Sélectionnez &quot;{0}&quot; si vous ne voulez pas en spécifier, et le plugin utilisera le délai de recherche par défaut.</system:String>
+    <system:String x:Key="currentSearchDelayTime">Délai de recherche actuel</system:String>
+    <system:String x:Key="newSearchDelayTime">Nouveau délai de recherche</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Requêtes personnalisées</system:String>

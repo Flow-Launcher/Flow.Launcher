@@ -7,6 +7,11 @@
         Click no if it's already installed, and you will be prompted to select the folder that contains the {1} executable
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Please select the {0} executable</system:String>
+    <system:String x:Key="runtimeExecutableInvalidChooseDownload">
+        Your selected {0} executable is invalid.
+        {2}{2}
+        Click yes if you would like select the {0} executable agian. Click no if you would like to download {1}
+    </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Unable to set {0} executable path, please try from Flow's settings (scroll down to the bottom).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Fail to Init Plugins</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">Plugins: {0} - fail to load and would be disabled, please contact plugin creator for help</system:String>
@@ -37,7 +42,7 @@
     <system:String x:Key="GameMode">Spelmodus</system:String>
     <system:String x:Key="GameModeToolTip">Stop het gebruik van Sneltoetsen.</system:String>
     <system:String x:Key="PositionReset">Positie resetten</system:String>
-    <system:String x:Key="PositionResetToolTip">Positie zoekvenster resetten</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Instellingen</system:String>
@@ -70,8 +75,6 @@
     <system:String x:Key="LastQueryEmpty">Laatste zoekopdracht verwijderen</system:String>
     <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
     <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
-    <system:String x:Key="KeepMaxResults">Vaste venster hoogte</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">De vensterhoogte is niet aanpasbaar door te slepen.</system:String>
     <system:String x:Key="maxShowResults">Laat maximale resultaten zien</system:String>
     <system:String x:Key="maxShowResultsToolTip">Je kunt dit ook snel aanpassen met CTRL+Plus en CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Negeer sneltoetsen in vol scherm modus</system:String>
@@ -102,6 +105,15 @@
     <system:String x:Key="AlwaysPreview">Altijd voorbeeld</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Open altijd het voorbeeld paneel wanneer Flow activeert. Druk op {0} om voorbeeld te schakelen.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Schaduw effect is niet toegestaan omdat het huidige thema een vervagingseffect heeft</system:String>
+    <system:String x:Key="searchDelay">Search Delay</system:String>
+    <system:String x:Key="searchDelayToolTip">Delay for a while to search when typing. This reduces interface jumpiness and result load.</system:String>
+    <system:String x:Key="searchDelayTime">Default Search Delay Time</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Plugin default delay time after which search results appear when typing is stopped.</system:String>
+    <system:String x:Key="SearchDelayTimeVeryLong">Very long</system:String>
+    <system:String x:Key="SearchDelayTimeLong">Long</system:String>
+    <system:String x:Key="SearchDelayTimeNormal">Normal</system:String>
+    <system:String x:Key="SearchDelayTimeShort">Short</system:String>
+    <system:String x:Key="SearchDelayTimeVeryShort">Very short</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Plug-ins zoeken</system:String>
@@ -118,6 +130,8 @@
     <system:String x:Key="currentActionKeywords">Huidige actie sneltoets</system:String>
     <system:String x:Key="newActionKeyword">Nieuw actie sneltoets</system:String>
     <system:String x:Key="actionKeywordsTooltip">Wijzig actie-sneltoets</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Plugin seach delay time</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Seach Delay Time</system:String>
     <system:String x:Key="currentPriority">Huidige Prioriteit</system:String>
     <system:String x:Key="newPriority">Nieuwe Prioriteit</system:String>
     <system:String x:Key="priority">Prioriteit</system:String>
@@ -131,6 +145,9 @@
     <system:String x:Key="plugin_uninstall">Verwijderen</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
+    <system:String x:Key="failedToRemovePluginCacheTitle">Fail to remove plugin cache</system:String>
+    <system:String x:Key="failedToRemovePluginCacheMessage">Plugins: {0} - Fail to remove plugin cache files, please remove them manually</system:String>
+    <system:String x:Key="default">Default</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Plugin Winkel</system:String>
@@ -193,8 +210,20 @@
     <system:String x:Key="AnimationSpeedCustom">Aangepast</system:String>
     <system:String x:Key="Clock">Klok</system:String>
     <system:String x:Key="Date">Datum</system:String>
+    <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropTypeDisabledToolTip">Backdrop supported starting from Windows 11 build 22000 and above</system:String>
+    <system:String x:Key="BackdropTypesNone">None</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
+    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
     <system:String x:Key="TypeIsDarkToolTip">Dit thema ondersteunt twee (licht/donker) modi.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
+    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
+    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
+    <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Sneltoets</system:String>
@@ -294,6 +323,9 @@
     <system:String x:Key="logfolder">Log Map</system:String>
     <system:String x:Key="clearlogfolder">Logbestanden wissen</system:String>
     <system:String x:Key="clearlogfolderMessage">Weet u zeker dat u alle logbestanden wilt verwijderen?</system:String>
+    <system:String x:Key="clearcachefolder">Clear Caches</system:String>
+    <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
+    <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
     <system:String x:Key="welcomewindow">Wizard</system:String>
     <system:String x:Key="userdatapath">Gegevenslocatie van gebruiker</system:String>
     <system:String x:Key="userdatapathToolTip">Gebruikersinstellingen en geïnstalleerde plug-ins worden opgeslagen in de gebruikersgegevensmap. Deze locatie kan variëren afhankelijk van of het in draagbare modus is of niet.</system:String>
@@ -335,9 +367,16 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Kan plugin niet vinden</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Nieuwe actie sneltoets moet ingevuld worden</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Nieuwe actie sneltoets is toegewezen aan een andere plugin, wijs een nieuwe actie sneltoets aan</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
     <system:String x:Key="success">Succesvol</system:String>
     <system:String x:Key="completedSuccessfully">Succesvol afgerond</system:String>
-    <system:String x:Key="actionkeyword_tips">Gebruik * wanneer je geen nieuwe actie sneltoets wilt specificeren</system:String>
+    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="searchDelayTimeTitle">Search Delay Time Setting</system:String>
+    <system:String x:Key="searchDelayTime_tips">Select the search delay time you like to use for the plugin. Select &quot;{0}&quot; if you don't want to specify any, and the plugin will use default search delay time.</system:String>
+    <system:String x:Key="currentSearchDelayTime">Current search delay time</system:String>
+    <system:String x:Key="newSearchDelayTime">New search delay time</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Custom Query Sneltoets</system:String>

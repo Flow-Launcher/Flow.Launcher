@@ -7,6 +7,11 @@
         انقر فوق لا إذا كان مثبتاً بالفعل، وسوف يطلب منك تحديد المجلد الذي يحتوي على {1} القابل للتنفيذ
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">الرجاء اختيار الملف التنفيذي لـ {0}</system:String>
+    <system:String x:Key="runtimeExecutableInvalidChooseDownload">
+        Your selected {0} executable is invalid.
+        {2}{2}
+        Click yes if you would like select the {0} executable agian. Click no if you would like to download {1}
+    </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">تعذر تعيين مسار الملف التنفيذي لـ {0}، يرجى المحاولة من إعدادات Flow (قم بالتمرير إلى الأسفل).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">فشل في تهيئة الإضافات</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">الإضافات: {0} - فشل في التحميل وسيتم تعطيلها، يرجى الاتصال بمطور الإضافة للحصول على المساعدة</system:String>
@@ -37,7 +42,7 @@
     <system:String x:Key="GameMode">وضع اللعب</system:String>
     <system:String x:Key="GameModeToolTip">تعليق استخدام مفاتيح التشغيل السريع.</system:String>
     <system:String x:Key="PositionReset">إعادة تعيين الموقع</system:String>
-    <system:String x:Key="PositionResetToolTip">إعادة تعيين موضع نافذة البحث</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">الإعدادات</system:String>
@@ -70,8 +75,6 @@
     <system:String x:Key="LastQueryEmpty">تفريغ الاستعلام الأخير</system:String>
     <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
     <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
-    <system:String x:Key="KeepMaxResults">ارتفاع ثابت للنافذة</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">ارتفاع النافذة غير قابل للتعديل عن طريق السحب.</system:String>
     <system:String x:Key="maxShowResults">الحد الأقصى للنتائج المعروضة</system:String>
     <system:String x:Key="maxShowResultsToolTip">يمكنك أيضًا تعديل هذا بسرعة باستخدام CTRL+Plus وCTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">تجاهل مفاتيح التشغيل السريع في وضع ملء الشاشة</system:String>
@@ -102,6 +105,15 @@
     <system:String x:Key="AlwaysPreview">دائمًا معاينة</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">فتح لوحة المعاينة دائمًا عند تنشيط Flow. اضغط على {0} للتبديل بين المعاينة وعدمها.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">تأثير الظل غير مسموح به بينما يتم تمكين تأثير التمويه في السمة الحالية</system:String>
+    <system:String x:Key="searchDelay">Search Delay</system:String>
+    <system:String x:Key="searchDelayToolTip">Delay for a while to search when typing. This reduces interface jumpiness and result load.</system:String>
+    <system:String x:Key="searchDelayTime">Default Search Delay Time</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Plugin default delay time after which search results appear when typing is stopped.</system:String>
+    <system:String x:Key="SearchDelayTimeVeryLong">Very long</system:String>
+    <system:String x:Key="SearchDelayTimeLong">Long</system:String>
+    <system:String x:Key="SearchDelayTimeNormal">Normal</system:String>
+    <system:String x:Key="SearchDelayTimeShort">Short</system:String>
+    <system:String x:Key="SearchDelayTimeVeryShort">Very short</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">البحث عن إضافة</system:String>
@@ -118,6 +130,8 @@
     <system:String x:Key="currentActionKeywords">كلمة الفعل الحالية</system:String>
     <system:String x:Key="newActionKeyword">كلمة فعل جديدة</system:String>
     <system:String x:Key="actionKeywordsTooltip">تغيير كلمات الفعل</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Plugin seach delay time</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Seach Delay Time</system:String>
     <system:String x:Key="currentPriority">الأولوية الحالية</system:String>
     <system:String x:Key="newPriority">أولوية جديدة</system:String>
     <system:String x:Key="priority">الأولوية</system:String>
@@ -131,6 +145,9 @@
     <system:String x:Key="plugin_uninstall">إلغاء التثبيت</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
+    <system:String x:Key="failedToRemovePluginCacheTitle">Fail to remove plugin cache</system:String>
+    <system:String x:Key="failedToRemovePluginCacheMessage">Plugins: {0} - Fail to remove plugin cache files, please remove them manually</system:String>
+    <system:String x:Key="default">Default</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">متجر الإضافات</system:String>
@@ -193,8 +210,20 @@
     <system:String x:Key="AnimationSpeedCustom">مخصص</system:String>
     <system:String x:Key="Clock">الساعة</system:String>
     <system:String x:Key="Date">التاريخ</system:String>
+    <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropTypeDisabledToolTip">Backdrop supported starting from Windows 11 build 22000 and above</system:String>
+    <system:String x:Key="BackdropTypesNone">بلا</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
+    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
     <system:String x:Key="TypeIsDarkToolTip">هذه السمة تدعم الوضعين (فاتح/داكن).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">هذه السمة تدعم الخلفية الضبابية الشفافة.</system:String>
+    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
+    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
+    <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">مفتاح الاختصار</system:String>
@@ -294,6 +323,9 @@
     <system:String x:Key="logfolder">مجلد السجلات</system:String>
     <system:String x:Key="clearlogfolder">مسح السجلات</system:String>
     <system:String x:Key="clearlogfolderMessage">هل أنت متأكد أنك تريد حذف جميع السجلات؟</system:String>
+    <system:String x:Key="clearcachefolder">Clear Caches</system:String>
+    <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
+    <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
     <system:String x:Key="welcomewindow">معالج الترحيب</system:String>
     <system:String x:Key="userdatapath">موقع بيانات المستخدم</system:String>
     <system:String x:Key="userdatapathToolTip">يتم حفظ إعدادات المستخدم والإضافات المثبتة في مجلد بيانات المستخدم. قد يختلف هذا الموقع اعتمادًا على ما إذا كان في وضع النقل أم لا.</system:String>
@@ -335,9 +367,16 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">لا يمكن العثور على الإضافة المحددة</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">كلمة المفتاح الجديدة لا يمكن أن تكون فارغة</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">تم تعيين كلمة المفتاح الجديدة هذه إلى إضافة أخرى، يرجى اختيار كلمة أخرى</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
     <system:String x:Key="success">نجاح</system:String>
     <system:String x:Key="completedSuccessfully">اكتمل بنجاح</system:String>
-    <system:String x:Key="actionkeyword_tips">أدخل كلمة المفتاح التي ترغب في استخدامها لبدء الإضافة. استخدم * إذا كنت لا ترغب في تحديد أي كلمة، وسيتم تشغيل الإضافة بدون كلمات مفتاحية.</system:String>
+    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="searchDelayTimeTitle">Search Delay Time Setting</system:String>
+    <system:String x:Key="searchDelayTime_tips">Select the search delay time you like to use for the plugin. Select &quot;{0}&quot; if you don't want to specify any, and the plugin will use default search delay time.</system:String>
+    <system:String x:Key="currentSearchDelayTime">Current search delay time</system:String>
+    <system:String x:Key="newSearchDelayTime">New search delay time</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">مفتاح اختصار الاستعلام المخصص</system:String>
