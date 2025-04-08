@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using Squirrel;
 using Flow.Launcher.Core;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
@@ -31,6 +30,7 @@ using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
 using JetBrains.Annotations;
+using Squirrel;
 
 namespace Flow.Launcher
 {
@@ -90,7 +90,11 @@ namespace Flow.Launcher
 
         public bool IsMainWindowVisible() => _mainVM.MainWindowVisibilityStatus;
 
-        public event VisibilityChangedEventHandler VisibilityChanged { add => _mainVM.VisibilityChanged += value; remove => _mainVM.VisibilityChanged -= value; }
+        public event VisibilityChangedEventHandler VisibilityChanged
+        {
+            add => _mainVM.VisibilityChanged += value;
+            remove => _mainVM.VisibilityChanged -= value;
+        }
 
         // Must use Ioc.Default.GetRequiredService<Updater>() to avoid circular dependency
         public void CheckForNewUpdate() => _ = Ioc.Default.GetRequiredService<Updater>().UpdateAppAsync(false);
@@ -177,13 +181,14 @@ namespace Flow.Launcher
         public MatchResult FuzzySearch(string query, string stringToCompare) =>
             StringMatcher.FuzzySearch(query, stringToCompare);
 
-        public Task<string> HttpGetStringAsync(string url, CancellationToken token = default) => Http.GetAsync(url, token);
+        public Task<string> HttpGetStringAsync(string url, CancellationToken token = default) =>
+            Http.GetAsync(url, token);
 
         public Task<Stream> HttpGetStreamAsync(string url, CancellationToken token = default) =>
             Http.GetStreamAsync(url, token);
 
         public Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath, Action<double> reportProgress = null,
-            CancellationToken token = default) => Http.DownloadAsync(url, filePath, reportProgress, token);
+            CancellationToken token = default) =>Http.DownloadAsync(url, filePath, reportProgress, token);
 
         public void AddActionKeyword(string pluginId, string newActionKeyword) =>
             PluginManager.AddActionKeyword(pluginId, newActionKeyword);
@@ -202,8 +207,11 @@ namespace Flow.Launcher
         public void LogWarn(string className, string message, [CallerMemberName] string methodName = "") =>
             Log.Warn(className, message, methodName);
 
-        public void LogException(string className, string message, Exception e,
-            [CallerMemberName] string methodName = "") => Log.Exception(className, message, e, methodName);
+        public void LogError(string className, string message, [CallerMemberName] string methodName = "") =>
+            Log.Error(className, message, methodName);
+
+        public void LogException(string className, string message, Exception e, [CallerMemberName] string methodName = "") =>
+            Log.Exception(className, message, e, methodName);
 
         private readonly ConcurrentDictionary<Type, object> _pluginJsonStorages = new();
 
@@ -216,7 +224,7 @@ namespace Flow.Launcher
                 var name = value.GetType().GetField("AssemblyName")?.GetValue(value)?.ToString();
                 if (name == assemblyName)
                 {
-                    _pluginJsonStorages.TryRemove(key, out var pluginJsonStorage);
+                    _pluginJsonStorages.TryRemove(key, out var _);
                 }
             }
         }
@@ -337,17 +345,23 @@ namespace Flow.Launcher
 
         private readonly List<Func<int, int, SpecialKeyState, bool>> _globalKeyboardHandlers = new();
 
-        public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) => _globalKeyboardHandlers.Add(callback);
-        public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) => _globalKeyboardHandlers.Remove(callback);
+        public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) =>
+            _globalKeyboardHandlers.Add(callback);
+
+        public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) =>
+            _globalKeyboardHandlers.Remove(callback);
 
         public void ReQuery(bool reselect = true) => _mainVM.ReQuery(reselect);
 
         public void BackToQueryResults() => _mainVM.BackToQueryResults();
 
-        public MessageBoxResult ShowMsgBox(string messageBoxText, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.None, MessageBoxResult defaultResult = MessageBoxResult.OK) =>
+        public MessageBoxResult ShowMsgBox(string messageBoxText, string caption = "",
+            MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.None,
+            MessageBoxResult defaultResult = MessageBoxResult.OK) =>
             MessageBoxEx.Show(messageBoxText, caption, button, icon, defaultResult);
 
-        public Task ShowProgressBoxAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action cancelProgress = null) => ProgressBoxEx.ShowAsync(caption, reportProgressAsync, cancelProgress);
+        public Task ShowProgressBoxAsync(string caption, Func<Action<double>, Task> reportProgressAsync,
+            Action cancelProgress = null) => ProgressBoxEx.ShowAsync(caption, reportProgressAsync, cancelProgress);
 
         private readonly ConcurrentDictionary<(string, string, Type), object> _pluginBinaryStorages = new();
 

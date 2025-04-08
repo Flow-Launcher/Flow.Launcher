@@ -12,7 +12,7 @@ namespace Flow.Launcher.Core.Plugin.JsonRPCV2Models
 {
     public class JsonRPCPublicAPI
     {
-        private IPublicAPI _api;
+        private readonly IPublicAPI _api;
 
         public JsonRPCPublicAPI(IPublicAPI api)
         {
@@ -104,7 +104,6 @@ namespace Flow.Launcher.Core.Plugin.JsonRPCV2Models
             return _api.GetAllPlugins();
         }
 
-
         public MatchResult FuzzySearch(string query, string stringToCompare)
         {
             return _api.FuzzySearch(query, stringToCompare);
@@ -154,6 +153,11 @@ namespace Flow.Launcher.Core.Plugin.JsonRPCV2Models
         public void LogWarn(string className, string message, [CallerMemberName] string methodName = "")
         {
             _api.LogWarn(className, message, methodName);
+        }
+
+        public void LogError(string className, string message, [CallerMemberName] string methodName = "")
+        {
+            _api.LogError(className, message, methodName);
         }
 
         public void OpenDirectory(string DirectoryPath, string FileNameOrFilePath = null)
