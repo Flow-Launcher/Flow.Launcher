@@ -27,6 +27,9 @@ namespace Flow.Launcher.Plugin.Program
         internal static List<UWPApp> _uwps { get; private set; }
         internal static Settings _settings { get; private set; }
 
+        internal static SemaphoreSlim _win32sLock = new(1, 1);
+        internal static SemaphoreSlim _uwpsLock = new(1, 1);
+
         internal static PluginInitContext Context { get; private set; }
 
         private static readonly List<Result> emptyResults = new();
@@ -82,8 +85,11 @@ namespace Flow.Launcher.Plugin.Program
         {
             var result = await cache.GetOrCreateAsync(query.Search, async entry =>
             {
-                var resultList = await Task.Run(() =>
+                var resultList = await Task.Run(async () =>
                 {
+                    await _win32sLock.WaitAsync(token);
+                    await _uwpsLock.WaitAsync(token);
+
                     try
                     {
                         // Collect all UWP Windows app directories
@@ -95,22 +101,26 @@ namespace Flow.Launcher.Plugin.Program
                             .ToArray() : null;
 
                         return _win32s.Cast<IProgram>()
-                            .Concat(_uwps)
-                            .AsParallel()
-                            .WithCancellation(token)
-                            .Where(HideUninstallersFilter)
-                            .Where(p => HideDuplicatedWindowsAppFilter(p, uwpsDirectories))
-                            .Where(p => p.Enabled)
-                            .Select(p => p.Result(query.Search, Context.API))
-                            .Where(r => r?.Score > 0)
-                            .ToList();
+                                .Concat(_uwps)
+                                .AsParallel()
+                                .WithCancellation(token)
+                                .Where(HideUninstallersFilter)
+                                .Where(p => HideDuplicatedWindowsAppFilter(p, uwpsDirectories))
+                                .Where(p => p.Enabled)
+                                .Select(p => p.Result(query.Search, Context.API))
+                                .Where(r => r?.Score > 0)
+                                .ToList();
                     }
                     catch (OperationCanceledException)
                     {
                         Log.Debug("|Flow.Launcher.Plugin.Program.Main|Query operation cancelled");
                         return emptyResults;
                     }
-                   
+                    finally
+                    {
+                        _uwpsLock.Release();
+                        _win32sLock.Release();
+                    }
                 }, token);
 
                 resultList = resultList.Any() ? resultList : emptyResults;
@@ -236,13 +246,24 @@ namespace Flow.Launcher.Plugin.Program
                 var newUWPCacheFile = Path.Combine(pluginCachePath, $"{UwpCacheName}.cache");
                 MoveFile(oldUWPCacheFile, newUWPCacheFile);
 
+                await _win32sLock.WaitAsync();
                 _win32s = await context.API.LoadCacheBinaryStorageAsync(Win32CacheName, pluginCachePath, new List<Win32>());
+                _win32sLock.Release();
+
+                await _uwpsLock.WaitAsync();
                 _uwps = await context.API.LoadCacheBinaryStorageAsync(UwpCacheName, pluginCachePath, new List<UWPApp>());
+                _uwpsLock.Release();
             });
+            await _win32sLock.WaitAsync();
+            await _uwpsLock.WaitAsync();
+
             Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload win32 programs <{_win32s.Count}>");
             Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload uwps <{_uwps.Count}>");
 
             bool cacheEmpty = !_win32s.Any() || !_uwps.Any();
+
+            _win32sLock.Release();
+            _uwpsLock.Release();
 
             if (cacheEmpty || _settings.LastIndexTime.AddHours(30) < DateTime.Now)
             {
@@ -267,11 +288,13 @@ namespace Flow.Launcher.Plugin.Program
         public static async Task IndexWin32ProgramsAsync()
         {
             var win32S = Win32.All(_settings);
+            await _win32sLock.WaitAsync();
             _win32s.Clear();
             foreach (var win32 in win32S)
             {
                 _win32s.Add(win32);
             }
+            _win32sLock.Release();
             ResetCache();
             await Context.API.SaveCacheBinaryStorageAsync<List<Win32>>(Win32CacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
             _settings.LastIndexTime = DateTime.Now;
@@ -280,11 +303,13 @@ namespace Flow.Launcher.Plugin.Program
         public static async Task IndexUwpProgramsAsync()
         {
             var uwps = UWPPackage.All(_settings);
+            await _uwpsLock.WaitAsync();
             _uwps.Clear();
             foreach (var uwp in uwps)
             {
                 _uwps.Add(uwp);
             }
+            _uwpsLock.Release();
             ResetCache();
             await Context.API.SaveCacheBinaryStorageAsync<List<UWPApp>>(UwpCacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
             _settings.LastIndexTime = DateTime.Now;
@@ -358,26 +383,36 @@ namespace Flow.Launcher.Plugin.Program
             return menuOptions;
         }
 
-        private static void DisableProgram(IProgram programToDelete)
+        private static async Task DisableProgram(IProgram programToDelete)
         {
             if (_settings.DisabledProgramSources.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
                 return;
 
+            await _uwpsLock.WaitAsync();
             if (_uwps.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
             {
                 var program = _uwps.First(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier);
                 program.Enabled = false;
                 _settings.DisabledProgramSources.Add(new ProgramSource(program));
+                _uwpsLock.Release();
+
+                // Reindex UWP programs
                 _ = Task.Run(() =>
                 {
                     _ = IndexUwpProgramsAsync();
                 });
+                return;
             }
-            else if (_win32s.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
+            
+            await _win32sLock.WaitAsync();
+            if (_win32s.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
             {
                 var program = _win32s.First(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier);
                 program.Enabled = false;
                 _settings.DisabledProgramSources.Add(new ProgramSource(program));
+                _win32sLock.Release();
+
+                // Reindex Win32 programs
                 _ = Task.Run(() =>
                 {
                     _ = IndexWin32ProgramsAsync();

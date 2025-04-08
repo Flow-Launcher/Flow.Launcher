@@ -183,7 +183,7 @@ namespace Flow.Launcher.Plugin.Program.Views
             EditProgramSource(selectedProgramSource);
         }
 
-        private void EditProgramSource(ProgramSource selectedProgramSource)
+        private async void EditProgramSource(ProgramSource selectedProgramSource)
         {
             if (selectedProgramSource == null)
             {
@@ -202,13 +202,13 @@ namespace Flow.Launcher.Plugin.Program.Views
                 {
                     if (selectedProgramSource.Enabled)
                     {
-                        ProgramSettingDisplay.SetProgramSourcesStatus(new List<ProgramSource> { selectedProgramSource },
+                        await ProgramSettingDisplay.SetProgramSourcesStatusAsync(new List<ProgramSource> { selectedProgramSource },
                             true); // sync status in win32, uwp and disabled
                         ProgramSettingDisplay.RemoveDisabledFromSettings();
                     }
                     else
                     {
-                        ProgramSettingDisplay.SetProgramSourcesStatus(new List<ProgramSource> { selectedProgramSource },
+                        await ProgramSettingDisplay.SetProgramSourcesStatusAsync(new List<ProgramSource> { selectedProgramSource },
                             false);
                         ProgramSettingDisplay.StoreDisabledInSettings();
                     }
@@ -277,14 +277,14 @@ namespace Flow.Launcher.Plugin.Program.Views
             }
         }
 
-        private void btnLoadAllProgramSource_OnClick(object sender, RoutedEventArgs e)
+        private async void btnLoadAllProgramSource_OnClick(object sender, RoutedEventArgs e)
         {
-            ProgramSettingDisplay.DisplayAllPrograms();
+            await ProgramSettingDisplay.DisplayAllProgramsAsync();
 
             ViewRefresh();
         }
 
-        private void btnProgramSourceStatus_OnClick(object sender, RoutedEventArgs e)
+        private async void btnProgramSourceStatus_OnClick(object sender, RoutedEventArgs e)
         {
             var selectedItems = programSourceView
                 .SelectedItems.Cast<ProgramSource>()
@@ -311,18 +311,18 @@ namespace Flow.Launcher.Plugin.Program.Views
             }
             else if (HasMoreOrEqualEnabledItems(selectedItems))
             {
-                ProgramSettingDisplay.SetProgramSourcesStatus(selectedItems, false);
+                await ProgramSettingDisplay.SetProgramSourcesStatusAsync(selectedItems, false);
 
                 ProgramSettingDisplay.StoreDisabledInSettings();
             }
             else
             {
-                ProgramSettingDisplay.SetProgramSourcesStatus(selectedItems, true);
+                await ProgramSettingDisplay.SetProgramSourcesStatusAsync(selectedItems, true);
 
                 ProgramSettingDisplay.RemoveDisabledFromSettings();
             }
 
-            if (selectedItems.IsReindexRequired())
+            if (await selectedItems.IsReindexRequiredAsync())
                 ReIndexing();
 
             programSourceView.SelectedItems.Clear();
