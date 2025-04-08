@@ -15,7 +15,7 @@ namespace Flow.Launcher.Infrastructure.Storage
     /// Normally, it has better performance, but not readable
     /// </summary>
     /// <remarks>
-    /// It utilize MemoryPack, which means the object must be MemoryPackSerializable <see href="https://github.com/Cysharp/MemoryPack"/>
+    /// It utilizes MemoryPack, which means the object must be MemoryPackSerializable <see href="https://github.com/Cysharp/MemoryPack"/>
     /// </remarks>
     public class BinaryStorage<T> : ISavable
     {

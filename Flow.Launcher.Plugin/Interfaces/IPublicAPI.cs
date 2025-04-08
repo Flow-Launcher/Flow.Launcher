@@ -380,7 +380,7 @@ namespace Flow.Launcher.Plugin
         /// <param name="cacheDirectory">Cache directory from plugin metadata</param>
         /// <returns></returns>
         /// <remarks>
-        /// BinaryStorage utilize MemoryPack, which means the object must be MemoryPackSerializable <see href="https://github.com/Cysharp/MemoryPack"/>
+        /// BinaryStorage utilizes MemoryPack, which means the object must be MemoryPackSerializable <see href="https://github.com/Cysharp/MemoryPack"/>
         /// </remarks>
         Task SaveCacheBinaryStorageAsync<T>(string cacheName, string cacheDirectory) where T : new();
 
