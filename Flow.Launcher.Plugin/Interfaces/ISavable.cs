@@ -1,8 +1,7 @@
 ﻿namespace Flow.Launcher.Plugin
 {
     /// <summary>
-    /// Inherit this interface if additional data.
-    /// If you need to save data which is not a setting or cache,
+    /// Inherit this interface if you need to save additional data which is not a setting or cache,
     /// please implement this interface.
     /// </summary>
     /// <remarks>
