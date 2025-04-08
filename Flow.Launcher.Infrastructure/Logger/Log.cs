@@ -1,12 +1,12 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Runtime.ExceptionServices;
+using Flow.Launcher.Infrastructure.UserSettings;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
-using Flow.Launcher.Infrastructure.UserSettings;
 using NLog.Targets.Wrappers;
-using System.Runtime.ExceptionServices;
 
 namespace Flow.Launcher.Infrastructure.Logger
 {
