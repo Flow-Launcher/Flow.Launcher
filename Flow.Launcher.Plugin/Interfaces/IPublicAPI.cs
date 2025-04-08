@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using Flow.Launcher.Plugin.SharedModels;
 using JetBrains.Annotations;
 
@@ -363,6 +364,20 @@ namespace Flow.Launcher.Plugin
         /// <param name="theme"></param>
         /// <returns></returns>
         public void SetCurrentTheme(ThemeData theme);
+
+        /// Load image from path. Support local, remote and data:image url.
+        /// If image path is missing, it will return a missing icon.
+        /// </summary>
+        /// <param name="path">The path of the image.</param>
+        /// <param name="loadFullImage">
+        /// Load full image or not.
+        /// </param>
+        /// <param name="cacheImage">
+        /// Cache the image or not. Cached image will be stored in FL cache.
+        /// If the image is just used one time, it's better to set this to false.
+        /// </param>
+        /// <returns></returns>
+        ValueTask<ImageSource> LoadImageAsync(string path, bool loadFullImage = false, bool cacheImage = true);
 
         /// Update the plugin manifest
         /// </summary>
