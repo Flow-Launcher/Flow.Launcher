@@ -1,5 +1,4 @@
-﻿using Flow.Launcher.Core.ExternalPlugins;
-using ICSharpCode.SharpZipLib.Zip;
+﻿using ICSharpCode.SharpZipLib.Zip;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
