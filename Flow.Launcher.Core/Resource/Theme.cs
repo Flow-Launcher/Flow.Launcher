@@ -384,7 +384,12 @@ namespace Flow.Launcher.Core.Resource
         public ThemeData GetCurrentTheme()
         {
             var themes = GetAvailableThemes();
-            return themes.FirstOrDefault(t => t.FileNameWithoutExtension == _settings.Theme) ?? themes.FirstOrDefault();
+            var matchingTheme = themes.FirstOrDefault(t => t.FileNameWithoutExtension == _settings.Theme);
+            if (matchingTheme == null)
+            {
+                Log.Warn($"No matching theme found for '{_settings.Theme}'. Falling back to the first available theme.");
+            }
+            return matchingTheme ?? themes.FirstOrDefault();
         }
 
         public List<ThemeData> GetAvailableThemes()
