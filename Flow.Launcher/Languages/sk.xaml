@@ -106,14 +106,9 @@
     <system:String x:Key="AlwaysPreviewToolTip">Pri aktivácii Flowu vždy otvoriť panel s náhľadom. Stlačením klávesu {0} prepnete náhľad.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Efekt tieňa nie je povolený, kým má aktuálny motív povolený efekt rozostrenia</system:String>
     <system:String x:Key="searchDelay">Oneskorenie vyhľadávania</system:String>
-    <system:String x:Key="searchDelayToolTip">Pri písaní sa na chvíľu oneskorí vyhľadávanie. Tým sa zníži skákanie rozhrania a načítanie výsledkov.</system:String>
+    <system:String x:Key="searchDelayToolTip">Adds a short delay while typing to reduce UI flicker and result load. Recommended if your typing speed is average.</system:String>
     <system:String x:Key="searchDelayTime">Predvolené oneskorenie vyhľadávania</system:String>
-    <system:String x:Key="searchDelayTimeToolTip">Predvolené oneskorenie pluginu, po ktorom sa zobrazia výsledky vyhľadávania po zastavení písania.</system:String>
-    <system:String x:Key="SearchDelayTimeVeryLong">Veľmi dlhé</system:String>
-    <system:String x:Key="SearchDelayTimeLong">Dlhé</system:String>
-    <system:String x:Key="SearchDelayTimeNormal">Normálne</system:String>
-    <system:String x:Key="SearchDelayTimeShort">Krátke</system:String>
-    <system:String x:Key="SearchDelayTimeVeryShort">Veľmi krátke</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Wait time before showing results after typing stops. Higher values wait longer. (ms)</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Vyhľadať plugin</system:String>
@@ -132,6 +127,10 @@
     <system:String x:Key="actionKeywordsTooltip">Upraviť aktivačný príkaz</system:String>
     <system:String x:Key="pluginSearchDelayTime">Oneskorenie vyhľadávania pomocou pluginu</system:String>
     <system:String x:Key="pluginSearchDelayTimeTooltip">Zmení oneskorenie vyhľadávania pomocou pluginu</system:String>
+    <system:String x:Key="FilterComboboxLabel">Advanced Settings:</system:String>
+    <system:String x:Key="DisplayModeOnOff">Povolené</system:String>
+    <system:String x:Key="DisplayModePriority">Priorita</system:String>
+    <system:String x:Key="DisplayModeSearchDelay">Oneskorenie vyhľadávania</system:String>
     <system:String x:Key="currentPriority">Aktuálna priorita</system:String>
     <system:String x:Key="newPriority">Nová priorita</system:String>
     <system:String x:Key="priority">Priorita</system:String>
@@ -147,7 +146,6 @@
     <system:String x:Key="failedToRemovePluginSettingsMessage">Pluginy: {0} – Nepodarilo sa odstrániť súbory s nastaveniami pluginu, odstráňte ich manuálne</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Nepodarilo sa odstrániť vyrovnávaciu pamäť pluginu</system:String>
     <system:String x:Key="failedToRemovePluginCacheMessage">Pluginy: {0} – Nepodarilo sa odstrániť vyrovnávaciu pamäť pluginu, odstráňte ju manuálne</system:String>
-    <system:String x:Key="default">Predvolené</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Repozitár pluginov</system:String>
@@ -374,9 +372,7 @@
 
     <!--  Search Delay Settings Dialog  -->
     <system:String x:Key="searchDelayTimeTitle">Nastavenie oneskoreného vyhľadávania</system:String>
-    <system:String x:Key="searchDelayTime_tips">Vyberte oneskorenie vyhľadávania, ktoré chcete použiť pre plugin. Ak vyberiete &quot;{0}&quot;, plugin použije predvolené oneskorenie vyhľadávania.</system:String>
-    <system:String x:Key="currentSearchDelayTime">Aktuálne oneskorenie vyhľadávania</system:String>
-    <system:String x:Key="newSearchDelayTime">Nové oneskorenie vyhľadávania</system:String>
+    <system:String x:Key="searchDelayTimeTips">Input the search delay time in ms you like to use for the plugin. Input empty if you don't want to specify any, and the plugin will use default search delay time.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Klávesová skratka vlastného vyhľadávania</system:String>
