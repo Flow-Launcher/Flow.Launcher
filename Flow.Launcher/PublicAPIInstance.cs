@@ -31,6 +31,7 @@ using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
 using JetBrains.Annotations;
 using Squirrel;
+using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher
 {
@@ -430,6 +431,18 @@ namespace Flow.Launcher
 
         public Task UninstallPluginAsync(PluginMetadata pluginMetadata, bool removePluginSettings = false) =>
             PluginManager.UninstallPluginAsync(pluginMetadata, removePluginSettings);
+
+        public long StopWatchLogDebug(string className, string message, Action action, [CallerMemberName] string methodName = "") =>
+            Stopwatch.Debug($"|{className}.{methodName}|{message}", action);
+
+        public Task<long> StopWatchLogDebugAsync(string className, string message, Func<Task> action, [CallerMemberName] string methodName = "") =>
+            Stopwatch.DebugAsync($"|{className}.{methodName}|{message}", action);
+
+        public long StopWatchLogInfo(string className, string message, Action action, [CallerMemberName] string methodName = "") =>
+            Stopwatch.Normal($"|{className}.{methodName}|{message}", action);
+
+        public Task<long> StopWatchLogInfoAsync(string className, string message, Func<Task> action, [CallerMemberName] string methodName = "") =>
+            Stopwatch.NormalAsync($"|{className}.{methodName}|{message}", action);
 
         #endregion
 
