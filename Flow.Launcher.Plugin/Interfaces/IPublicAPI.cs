@@ -366,7 +366,7 @@ namespace Flow.Launcher.Plugin
         /// <param name="defaultData">Default data to return</param>
         /// <returns></returns>
         /// <remarks>
-        /// BinaryStorage utilize MemoryPack, which means the object must be MemoryPackSerializable <see href="https://github.com/Cysharp/MemoryPack"/>
+        /// BinaryStorage utilizes MemoryPack, which means the object must be MemoryPackSerializable <see href="https://github.com/Cysharp/MemoryPack"/>
         /// </remarks>
         Task<T> LoadCacheBinaryStorageAsync<T>(string cacheName, string cacheDirectory, T defaultData) where T : new();
 
