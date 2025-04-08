@@ -16,12 +16,16 @@ using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
 using ModernWpf.Controls;
+using DataObject = System.Windows.DataObject;
+using Key = System.Windows.Input.Key;
 using MouseButtons = System.Windows.Forms.MouseButtons;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
 using Screen = System.Windows.Forms.Screen;
@@ -30,6 +34,13 @@ namespace Flow.Launcher
 {
     public partial class MainWindow : IDisposable
     {
+        #region Public Property
+
+        // Window Event: Close Event
+        public bool CanClose { get; set; } = false;
+
+        #endregion
+
         #region Private Fields
 
         // Dependency Injection
@@ -43,8 +54,6 @@ namespace Flow.Launcher
         private readonly ContextMenu _contextMenu = new();
         private readonly MainViewModel _viewModel;
 
-        // Window Event: Close Event
-        private bool _canClose = false;
         // Window Event: Key Event
         private bool _isArrowKeyPressed = false;
 
@@ -165,6 +174,11 @@ namespace Flow.Launcher
             // Set the initial state of the QueryTextBoxCursorMovedToEnd property
             // Without this part, when shown for the first time, switching the context menu does not move the cursor to the end.
             _viewModel.QueryTextCursorMovedToEnd = false;
+            
+            // Initialize hotkey mapper after window is loaded
+            HotKeyMapper.Initialize();
+
+            // View model property changed event
             _viewModel.PropertyChanged += (o, e) =>
             {
                 switch (e.PropertyName)
@@ -227,6 +241,7 @@ namespace Flow.Launcher
                 }
             };
 
+            // Settings property changed event
             _settings.PropertyChanged += (o, e) =>
             {
                 switch (e.PropertyName)
@@ -274,15 +289,16 @@ namespace Flow.Launcher
 
         private async void OnClosing(object sender, CancelEventArgs e)
         {
-            if (!_canClose)
+            if (!CanClose)
             {
                 _notifyIcon.Visible = false;
                 App.API.SaveAppAllSettings();
                 e.Cancel = true;
+                await ImageLoader.WaitSaveAsync();
                 await PluginManager.DisposePluginsAsync();
                 Notification.Uninstall();
                 // After plugins are all disposed, we can close the main window
-                _canClose = true;
+                CanClose = true;
                 // Use this instead of Close() to avoid InvalidOperationException when calling Close() in OnClosing event
                 Application.Current.Shutdown();
             }
@@ -1050,7 +1066,7 @@ namespace Flow.Launcher
         {
             e.Handled = true;
         }
-
+        
         #endregion
 
         #region Placeholder
@@ -1099,6 +1115,17 @@ namespace Flow.Launcher
             {
                 _theme.SetResizeBorderThickness(windowChrome, _settings.KeepMaxResults);
             }
+        }
+
+        #endregion
+        
+        #region Search Delay
+
+        private void QueryTextBox_TextChanged1(object sender, TextChangedEventArgs e)
+        {
+            var textBox = (TextBox)sender;
+            _viewModel.QueryText = textBox.Text;
+            _viewModel.Query(_settings.SearchQueryResultsWithDelay);
         }
 
         #endregion

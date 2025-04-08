@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -191,8 +190,6 @@ namespace Flow.Launcher.Plugin.Sys
         private List<Result> Commands()
         {
             var results = new List<Result>();
-            var logPath = Path.Combine(DataLocation.DataDirectory(), "Logs", Constant.Version);
-            var userDataPath = DataLocation.DataDirectory();
             var recycleBinFolder = "shell:RecycleBinFolder";
             results.AddRange(new[]
             {
@@ -440,11 +437,11 @@ namespace Flow.Launcher.Plugin.Sys
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xf12b"),
                     Title = "Open Log Location",
                     IcoPath = "Images\\app.png",
-                    CopyText = logPath,
-                    AutoCompleteText = logPath,
+                    CopyText = DataLocation.VersionLogDirectory,
+                    AutoCompleteText = DataLocation.VersionLogDirectory,
                     Action = c =>
                     {
-                        _context.API.OpenDirectory(logPath);
+                        _context.API.OpenDirectory(DataLocation.VersionLogDirectory);
                         return true;
                     }
                 },
@@ -466,11 +463,11 @@ namespace Flow.Launcher.Plugin.Sys
                     Title = "Flow Launcher UserData Folder",
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xf12b"),
                     IcoPath = "Images\\app.png",
-                    CopyText = userDataPath,
-                    AutoCompleteText = userDataPath,
+                    CopyText = DataLocation.DataDirectory(),
+                    AutoCompleteText = DataLocation.DataDirectory(),
                     Action = c =>
                     {
-                        _context.API.OpenDirectory(userDataPath);
+                        _context.API.OpenDirectory(DataLocation.DataDirectory());
                         return true;
                     }
                 },

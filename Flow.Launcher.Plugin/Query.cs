@@ -2,10 +2,11 @@
 
 namespace Flow.Launcher.Plugin
 {
+    /// <summary>
+    /// Represents a query that is sent to a plugin.
+    /// </summary>
     public class Query
     {
-        public Query() { }
-
         /// <summary>
         /// Raw query, this includes action keyword if it has
         /// We didn't recommend use this property directly. You should always use Search property.
@@ -54,13 +55,13 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         public string ActionKeyword { get; init; }
 
-        [JsonIgnore]
         /// <summary>
         /// Splits <see cref="SearchTerms"/> by spaces and returns the first item.
         /// </summary>
         /// <remarks>
         /// returns an empty string when <see cref="SearchTerms"/> does not have enough items.
         /// </remarks>
+        [JsonIgnore]
         public string FirstSearch => SplitSearch(0);
         
         [JsonIgnore]

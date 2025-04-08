@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
@@ -9,7 +9,6 @@ using System.Text.Json;
 
 namespace Flow.Launcher.Core.Plugin
 {
-
     internal abstract class PluginConfig
     {
         /// <summary>
@@ -112,7 +111,7 @@ namespace Flow.Launcher.Core.Plugin
                 metadata = JsonSerializer.Deserialize<PluginMetadata>(File.ReadAllText(configPath));
                 metadata.PluginDirectory = pluginDirectory;
                 // for plugins which doesn't has ActionKeywords key
-                metadata.ActionKeywords = metadata.ActionKeywords ?? new List<string> { metadata.ActionKeyword };
+                metadata.ActionKeywords ??= new List<string> { metadata.ActionKeyword };
                 // for plugin still use old ActionKeyword
                 metadata.ActionKeyword = metadata.ActionKeywords?[0];
             }

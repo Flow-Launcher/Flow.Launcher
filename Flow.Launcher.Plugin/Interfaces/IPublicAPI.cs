@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 
 namespace Flow.Launcher.Plugin
 {
@@ -228,6 +229,11 @@ namespace Flow.Launcher.Plugin
         void LogWarn(string className, string message, [CallerMemberName] string methodName = "");
 
         /// <summary>
+        /// Log error message. Preferred error logging method for plugins.
+        /// </summary>
+        void LogError(string className, string message, [CallerMemberName] string methodName = "");
+
+        /// <summary>
         /// Log an Exception. Will throw if in debug mode so developer will be aware, 
         /// otherwise logs the eror message. This is the primary logging method used for Flow 
         /// </summary>
@@ -344,5 +350,108 @@ namespace Flow.Launcher.Plugin
         /// Stop the loading bar in main window
         /// </summary>
         public void StopLoadingBar();
+
+        /// <summary>
+        /// Save all Flow's plugins caches
+        /// </summary>
+        void SavePluginCaches();
+
+        /// <summary>
+        /// Load BinaryStorage for current plugin's cache. This is the method used to load cache from binary in Flow.
+        /// When the file is not exist, it will create a new instance for the specific type.
+        /// </summary>
+        /// <typeparam name="T">Type for deserialization</typeparam>
+        /// <param name="cacheName">Cache file name</param>
+        /// <param name="cacheDirectory">Cache directory from plugin metadata</param>
+        /// <param name="defaultData">Default data to return</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// BinaryStorage utilizes MemoryPack, which means the object must be MemoryPackSerializable <see href="https://github.com/Cysharp/MemoryPack"/>
+        /// </remarks>
+        Task<T> LoadCacheBinaryStorageAsync<T>(string cacheName, string cacheDirectory, T defaultData) where T : new();
+
+        /// <summary>
+        /// Save BinaryStorage for current plugin's cache. This is the method used to save cache to binary in Flow.Launcher
+        /// This method will save the original instance loaded with LoadCacheBinaryStorageAsync.
+        /// This API call is for manually Save. Flow will automatically save all cache type that has called LoadCacheBinaryStorageAsync or SaveCacheBinaryStorageAsync previously.
+        /// </summary>
+        /// <typeparam name="T">Type for Serialization</typeparam>
+        /// <param name="cacheName">Cache file name</param>
+        /// <param name="cacheDirectory">Cache directory from plugin metadata</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// BinaryStorage utilizes MemoryPack, which means the object must be MemoryPackSerializable <see href="https://github.com/Cysharp/MemoryPack"/>
+        /// </remarks>
+        Task SaveCacheBinaryStorageAsync<T>(string cacheName, string cacheDirectory) where T : new();
+
+        /// Load image from path. Support local, remote and data:image url.
+        /// If image path is missing, it will return a missing icon.
+        /// </summary>
+        /// <param name="path">The path of the image.</param>
+        /// <param name="loadFullImage">
+        /// Load full image or not.
+        /// </param>
+        /// <param name="cacheImage">
+        /// Cache the image or not. Cached image will be stored in FL cache.
+        /// If the image is just used one time, it's better to set this to false.
+        /// </param>
+        /// <returns></returns>
+        ValueTask<ImageSource> LoadImageAsync(string path, bool loadFullImage = false, bool cacheImage = true);
+
+        /// Update the plugin manifest
+        /// </summary>
+        /// <param name="usePrimaryUrlOnly">
+        /// FL has multiple urls to download the plugin manifest. Set this to true to only use the primary url.
+        /// </param>
+        /// <param name="token"></param>
+        /// <returns>True if the manifest is updated successfully, false otherwise</returns>
+        public Task<bool> UpdatePluginManifestAsync(bool usePrimaryUrlOnly = false, CancellationToken token = default);
+
+        /// <summary>
+        /// Get the plugin manifest
+        /// </summary>
+        /// <returns></returns>
+        public IReadOnlyList<UserPlugin> GetPluginManifest();
+
+        /// <summary>
+        /// Check if the plugin has been modified.
+        /// If this plugin is updated, installed or uninstalled and users do not restart the app,
+        /// it will be marked as modified
+        /// </summary>
+        /// <param name="id">Plugin id</param>
+        /// <returns></returns>
+        public bool PluginModified(string id);
+
+        /// <summary>
+        /// Update a plugin to new version, from a zip file. By default will remove the zip file if update is via url,
+        /// unless it's a local path installation
+        /// </summary>
+        /// <param name="pluginMetadata">The metadata of the old plugin to update</param>
+        /// <param name="plugin">The new plugin to update</param>
+        /// <param name="zipFilePath">
+        /// Path to the zip file containing the plugin. It will be unzipped to the temporary directory, removed and installed.
+        /// </param>
+        /// <returns></returns>
+        public Task UpdatePluginAsync(PluginMetadata pluginMetadata, UserPlugin plugin, string zipFilePath);
+
+        /// <summary>
+        /// Install a plugin. By default will remove the zip file if installation is from url,
+        /// unless it's a local path installation
+        /// </summary>
+        /// <param name="plugin">The plugin to install</param>
+        /// <param name="zipFilePath">
+        /// Path to the zip file containing the plugin. It will be unzipped to the temporary directory, removed and installed.
+        /// </param>
+        public void InstallPlugin(UserPlugin plugin, string zipFilePath);
+
+        /// <summary>
+        /// Uninstall a plugin
+        /// </summary>
+        /// <param name="pluginMetadata">The metadata of the plugin to uninstall</param>
+        /// <param name="removePluginSettings">
+        /// Plugin has their own settings. If this is set to true, the plugin settings will be removed.
+        /// </param>
+        /// <returns></returns>
+        public Task UninstallPluginAsync(PluginMetadata pluginMetadata, bool removePluginSettings = false);
     }
 }
