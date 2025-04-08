@@ -283,32 +283,52 @@ namespace Flow.Launcher.Plugin.Program
 
         public static async Task IndexWin32ProgramsAsync()
         {
-            var win32S = Win32.All(_settings);
             await _win32sLock.WaitAsync();
-            _win32s.Clear();
-            foreach (var win32 in win32S)
+            try
             {
-                _win32s.Add(win32);
+                var win32S = Win32.All(_settings);
+                _win32s.Clear();
+                foreach (var win32 in win32S)
+                {
+                    _win32s.Add(win32);
+                }
+                ResetCache();
+                await Context.API.SaveCacheBinaryStorageAsync<List<Win32>>(Win32CacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
+                _settings.LastIndexTime = DateTime.Now;
             }
-            ResetCache();
-            await Context.API.SaveCacheBinaryStorageAsync<List<Win32>>(Win32CacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
-            _settings.LastIndexTime = DateTime.Now;
-            _win32sLock.Release();
+            catch (Exception e)
+            {
+                Log.Exception("|Flow.Launcher.Plugin.Program.Main|Failed to index Win32 programs", e);
+            }
+            finally
+            {
+                _win32sLock.Release();
+            }
         }
 
         public static async Task IndexUwpProgramsAsync()
         {
-            var uwps = UWPPackage.All(_settings);
             await _uwpsLock.WaitAsync();
-            _uwps.Clear();
-            foreach (var uwp in uwps)
+            try
             {
-                _uwps.Add(uwp);
+                var uwps = UWPPackage.All(_settings);
+                _uwps.Clear();
+                foreach (var uwp in uwps)
+                {
+                    _uwps.Add(uwp);
+                }
+                ResetCache();
+                await Context.API.SaveCacheBinaryStorageAsync<List<UWPApp>>(UwpCacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
+                _settings.LastIndexTime = DateTime.Now;
             }
-            ResetCache();
-            await Context.API.SaveCacheBinaryStorageAsync<List<UWPApp>>(UwpCacheName, Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
-            _settings.LastIndexTime = DateTime.Now;
-            _uwpsLock.Release();
+            catch (Exception e)
+            {
+                Log.Exception("|Flow.Launcher.Plugin.Program.Main|Failed to index Uwp programs", e);
+            }
+            finally
+            {
+                _uwpsLock.Release();
+            }
         }
 
         public static async Task IndexProgramsAsync()
