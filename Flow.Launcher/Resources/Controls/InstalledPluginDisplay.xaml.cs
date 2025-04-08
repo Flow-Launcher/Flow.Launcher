@@ -9,6 +9,7 @@ public partial class InstalledPluginDisplay
         InitializeComponent();
     }
 
+    // This is used for PriorityControl to force its value to be 0 when the user clears the value
     private void NumberBox_OnValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
     {
         if (double.IsNaN(args.NewValue))
