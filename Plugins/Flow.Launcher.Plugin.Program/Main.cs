@@ -186,6 +186,8 @@ namespace Flow.Launcher.Plugin.Program
 
             _settings = context.API.LoadSettingJsonStorage<Settings>();
 
+            var _win32sCount = 0;
+            var _uwpsCount = 0;
             await Stopwatch.NormalAsync("|Flow.Launcher.Plugin.Program.Main|Preload programs cost", async () =>
             {
                 var pluginCachePath = Context.CurrentPluginMetadata.PluginCacheDirectoryPath;
@@ -243,19 +245,18 @@ namespace Flow.Launcher.Plugin.Program
 
                 await _win32sLock.WaitAsync();
                 _win32s = await context.API.LoadCacheBinaryStorageAsync(Win32CacheName, pluginCachePath, new List<Win32>());
+                _win32sCount = _win32s.Count;
                 _win32sLock.Release();
 
                 await _uwpsLock.WaitAsync();
                 _uwps = await context.API.LoadCacheBinaryStorageAsync(UwpCacheName, pluginCachePath, new List<UWPApp>());
+                _uwpsCount = _uwps.Count;
                 _uwpsLock.Release();
             });
-            await _win32sLock.WaitAsync();
-            await _uwpsLock.WaitAsync();
+            Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload win32 programs <{_win32sCount}>");
+            Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload uwps <{_uwpsCount}>");
 
-            Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload win32 programs <{_win32s.Count}>");
-            Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload uwps <{_uwps.Count}>");
-
-            bool cacheEmpty = !_win32s.Any() || !_uwps.Any();
+            var cacheEmpty = _win32sCount == 0 || _uwpsCount == 0;
 
             _win32sLock.Release();
             _uwpsLock.Release();
