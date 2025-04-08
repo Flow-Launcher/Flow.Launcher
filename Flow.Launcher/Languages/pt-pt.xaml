@@ -106,14 +106,9 @@
     <system:String x:Key="AlwaysPreviewToolTip">Abrir painel de pré-visualização ao ativar Flow Launcher. Prima {0} para comutar a pré-visualização.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">O efeito sombra não é permitido com este tema porque o efeito desfocar está ativo</system:String>
     <system:String x:Key="searchDelay">Atraso da pesquisa</system:String>
-    <system:String x:Key="searchDelayToolTip">Tempo a esperar após a digitação. Esta definição melhora o carregamento dos resultados.</system:String>
+    <system:String x:Key="searchDelayToolTip">Adds a short delay while typing to reduce UI flicker and result load. Recommended if your typing speed is average.</system:String>
     <system:String x:Key="searchDelayTime">Tempo de espera padrão</system:String>
-    <system:String x:Key="searchDelayTimeToolTip">O valor padrão a esperar, antes de iniciar a pesquisa após terminar a digitação.</system:String>
-    <system:String x:Key="SearchDelayTimeVeryLong">Muito longo</system:String>
-    <system:String x:Key="SearchDelayTimeLong">Longo</system:String>
-    <system:String x:Key="SearchDelayTimeNormal">Normal</system:String>
-    <system:String x:Key="SearchDelayTimeShort">Curto</system:String>
-    <system:String x:Key="SearchDelayTimeVeryShort">Muito curto</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Wait time before showing results after typing stops. Higher values wait longer. (ms)</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Pesquisar plugins</system:String>
@@ -132,6 +127,10 @@
     <system:String x:Key="actionKeywordsTooltip">Alterar palavras-chave</system:String>
     <system:String x:Key="pluginSearchDelayTime">Tempo de espera do plugin</system:String>
     <system:String x:Key="pluginSearchDelayTimeTooltip">Alterar tempo de espera do plugin</system:String>
+    <system:String x:Key="FilterComboboxLabel">Advanced Settings:</system:String>
+    <system:String x:Key="DisplayModeOnOff">Ativo</system:String>
+    <system:String x:Key="DisplayModePriority">Prioridade</system:String>
+    <system:String x:Key="DisplayModeSearchDelay">Atraso da pesquisa</system:String>
     <system:String x:Key="currentPriority">Prioridade atual</system:String>
     <system:String x:Key="newPriority">Nova prioridade</system:String>
     <system:String x:Key="priority">Prioridade</system:String>
@@ -147,7 +146,6 @@
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugin: {0} - Falha ao remover o ficheiro de definições do plugin. Experimente remover manualmente.</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Falha ao limpar a cache do plugin</system:String>
     <system:String x:Key="failedToRemovePluginCacheMessage">Plugin: {0} - Falha ao remover os ficheiros em cache do plugin. Experimente remover manualmente.</system:String>
-    <system:String x:Key="default">Padrão</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Loja de plugins</system:String>
@@ -373,9 +371,7 @@
 
     <!--  Search Delay Settings Dialog  -->
     <system:String x:Key="searchDelayTimeTitle">Definição do tempo de espera</system:String>
-    <system:String x:Key="searchDelayTime_tips">Selecione o tempo de espera que pretende utilizar com este plugin. Selecione &quot;{0}&quot; se não o quiser especificar e, desta forma, o plugin irá utilizar o tempo de espera padrão.</system:String>
-    <system:String x:Key="currentSearchDelayTime">Tempo de espera atual</system:String>
-    <system:String x:Key="newSearchDelayTime">Novo tempo de espera</system:String>
+    <system:String x:Key="searchDelayTimeTips">Input the search delay time in ms you like to use for the plugin. Input empty if you don't want to specify any, and the plugin will use default search delay time.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Tecla de atalho personalizada</system:String>
