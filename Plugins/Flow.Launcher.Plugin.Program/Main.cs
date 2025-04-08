@@ -258,9 +258,6 @@ namespace Flow.Launcher.Plugin.Program
 
             var cacheEmpty = _win32sCount == 0 || _uwpsCount == 0;
 
-            _win32sLock.Release();
-            _uwpsLock.Release();
-
             if (cacheEmpty || _settings.LastIndexTime.AddHours(30) < DateTime.Now)
             {
                 _ = Task.Run(async () =>
