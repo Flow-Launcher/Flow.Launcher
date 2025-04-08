@@ -16,6 +16,7 @@ using Flow.Launcher.Core;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Core.ExternalPlugins;
+using Flow.Launcher.Core.Storage;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Http;
@@ -33,7 +34,7 @@ using Squirrel;
 
 namespace Flow.Launcher
 {
-    public class PublicAPIInstance : IPublicAPI
+    public class PublicAPIInstance : IPublicAPI, IRemovable
     {
         private readonly Settings _settings;
         private readonly Internationalization _translater;
@@ -226,20 +227,17 @@ namespace Flow.Launcher
                 var name = value.GetType().GetField("AssemblyName")?.GetValue(value)?.ToString();
                 if (name == assemblyName)
                 {
-                    _pluginJsonStorages.Remove(key, out var _);
+                    _pluginJsonStorages.TryRemove(key, out var _);
                 }
             }
         }
 
-        /// <summary>
-        /// Save plugin settings.
-        /// </summary>
         public void SavePluginSettings()
         {
             foreach (var value in _pluginJsonStorages.Values)
             {
-                var method = value.GetType().GetMethod("Save");
-                method?.Invoke(value, null);
+                var savable = value as ISavable;
+                savable?.Save();
             }
         }
 
@@ -257,14 +255,6 @@ namespace Flow.Launcher
             var type = typeof(T);
             if (!_pluginJsonStorages.ContainsKey(type))
                 _pluginJsonStorages[type] = new PluginJsonStorage<T>();
-
-            ((PluginJsonStorage<T>)_pluginJsonStorages[type]).Save();
-        }
-
-        public void SaveJsonStorage<T>(T settings) where T : new()
-        {
-            var type = typeof(T);
-            _pluginJsonStorages[type] = new PluginJsonStorage<T>(settings);
 
             ((PluginJsonStorage<T>)_pluginJsonStorages[type]).Save();
         }
@@ -379,6 +369,48 @@ namespace Flow.Launcher
 
         public bool SetCurrentTheme(ThemeData theme) =>
             Theme.ChangeTheme(theme.FileNameWithoutExtension);
+
+        private readonly ConcurrentDictionary<(string, string, Type), object> _pluginBinaryStorages = new();
+
+        public void RemovePluginCaches(string cacheDirectory)
+        {
+            foreach (var keyValuePair in _pluginBinaryStorages)
+            {
+                var key = keyValuePair.Key;
+                var currentCacheDirectory = key.Item2;
+                if (cacheDirectory == currentCacheDirectory)
+                {
+                    _pluginBinaryStorages.TryRemove(key, out var _);
+                }
+            }
+        }
+
+        public void SavePluginCaches()
+        {
+            foreach (var value in _pluginBinaryStorages.Values)
+            {
+                var savable = value as ISavable;
+                savable?.Save();
+            }
+        }
+
+        public async Task<T> LoadCacheBinaryStorageAsync<T>(string cacheName, string cacheDirectory, T defaultData) where T : new()
+        {
+            var type = typeof(T);
+            if (!_pluginBinaryStorages.ContainsKey((cacheName, cacheDirectory, type)))
+                _pluginBinaryStorages[(cacheName, cacheDirectory, type)] = new PluginBinaryStorage<T>(cacheName, cacheDirectory);
+
+            return await ((PluginBinaryStorage<T>)_pluginBinaryStorages[(cacheName, cacheDirectory, type)]).TryLoadAsync(defaultData);
+        }
+
+        public async Task SaveCacheBinaryStorageAsync<T>(string cacheName, string cacheDirectory) where T : new()
+        {
+            var type = typeof(T);
+            if (!_pluginBinaryStorages.ContainsKey((cacheName, cacheDirectory, type)))
+                _pluginBinaryStorages[(cacheName, cacheDirectory, type)] = new PluginBinaryStorage<T>(cacheName, cacheDirectory);
+
+            await ((PluginBinaryStorage<T>)_pluginBinaryStorages[(cacheName, cacheDirectory, type)]).SaveAsync();
+        }
 
         public ValueTask<ImageSource> LoadImageAsync(string path, bool loadFullImage = false, bool cacheImage = true) =>
             ImageLoader.LoadAsync(path, loadFullImage, cacheImage);

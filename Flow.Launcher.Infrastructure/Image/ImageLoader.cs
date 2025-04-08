@@ -34,6 +34,7 @@ namespace Flow.Launcher.Infrastructure.Image
             _hashGenerator = new ImageHashGenerator();
 
             var usage = await LoadStorageToConcurrentDictionaryAsync();
+            _storage.ClearData();
 
             ImageCache.Initialize(usage);
 
