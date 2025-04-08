@@ -1,6 +1,4 @@
-﻿using Flow.Launcher.Plugin.SharedModels;
-using JetBrains.Annotations;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -9,6 +7,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using Flow.Launcher.Plugin.SharedModels;
+using JetBrains.Annotations;
 
 namespace Flow.Launcher.Plugin
 {
@@ -352,6 +352,26 @@ namespace Flow.Launcher.Plugin
         public void StopLoadingBar();
 
         /// <summary>
+        /// Get all available themes
+        /// </summary>
+        /// <returns></returns>
+        public List<ThemeData> GetAvailableThemes();
+
+        /// <summary>
+        /// Get the current theme
+        /// </summary>
+        /// <returns></returns>
+        public ThemeData GetCurrentTheme();
+
+        /// <summary>
+        /// Set the current theme
+        /// </summary>
+        /// <param name="theme"></param>
+        /// <returns>
+        /// True if the theme is set successfully, false otherwise.
+        /// </returns>
+        public bool SetCurrentTheme(ThemeData theme);
+
         /// Save all Flow's plugins caches
         /// </summary>
         void SavePluginCaches();
