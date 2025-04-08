@@ -1,6 +1,4 @@
-﻿using Flow.Launcher.Plugin.SharedModels;
-using JetBrains.Annotations;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -8,6 +6,8 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using Flow.Launcher.Plugin.SharedModels;
+using JetBrains.Annotations;
 
 namespace Flow.Launcher.Plugin
 {

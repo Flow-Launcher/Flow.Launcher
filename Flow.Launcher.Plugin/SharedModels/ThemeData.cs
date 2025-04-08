@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Flow.Launcher.Plugin;
+namespace Flow.Launcher.Plugin.SharedModels;
 
 /// <summary>
 /// Theme data model

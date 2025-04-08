@@ -16,6 +16,7 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedModels;
 using Microsoft.Win32;
 
 namespace Flow.Launcher.Core.Resource

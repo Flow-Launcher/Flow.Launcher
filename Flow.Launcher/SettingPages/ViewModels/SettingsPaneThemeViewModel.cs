@@ -12,6 +12,7 @@ using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.ViewModel;
 using ModernWpf;
 using ThemeManagerForColorSchemeSwitch = ModernWpf.ThemeManager;
