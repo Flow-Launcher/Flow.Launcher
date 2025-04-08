@@ -106,6 +106,7 @@
     <Color x:Key="NumberBoxColor24">#f5f5f5</Color>
     <Color x:Key="NumberBoxColor25">#464646</Color>
     <Color x:Key="NumberBoxColor26">#ffffff</Color>
+    <SolidColorBrush x:Key="NumberBoxPlaceHolder" Color="#565656" />
     <Color x:Key="HoverStoreGrid">#272727</Color>
 
     <!--  Resources for HotkeyControl  -->

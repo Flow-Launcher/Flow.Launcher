@@ -2777,7 +2777,7 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="ui:ControlHelper.PlaceholderForeground" Value="{x:Null}">
-                            <Setter TargetName="PlaceholderTextContentPresenter" Property="Foreground" Value="{DynamicResource TextControlPlaceholderForeground}" />
+                            <Setter TargetName="PlaceholderTextContentPresenter" Property="Foreground" Value="{DynamicResource NumberBoxPlaceHolder}" />
                         </Trigger>
                         <Trigger Property="ui:TextBoxHelper.HasText" Value="True">
                             <Setter TargetName="PlaceholderTextContentPresenter" Property="Visibility" Value="Collapsed" />
@@ -3587,7 +3587,7 @@
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="*" />
-                                                <RowDefinition Height="80" x:Name="CommandSpaceRow"/>
+                                                <RowDefinition x:Name="CommandSpaceRow" Height="80" />
                                             </Grid.RowDefinitions>
                                             <ScrollViewer
                                                 x:Name="ContentScrollViewer"
@@ -3638,13 +3638,14 @@
                                                         TextWrapping="Wrap" />
                                                 </Grid>
                                             </ScrollViewer>
-                                            <Border x:Name="ButtonAreaBorder"
-                                                    Grid.Row="1"
-                                                    Padding="26 0 26 0"
-                                                    Background="{DynamicResource PopupButtonAreaBGColor}"
-                                                    BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
-                                                    BorderThickness="0 1 0 0"
-                                                    CornerRadius="0 0 8 8">
+                                            <Border
+                                                x:Name="ButtonAreaBorder"
+                                                Grid.Row="1"
+                                                Padding="26 0 26 0"
+                                                Background="{DynamicResource PopupButtonAreaBGColor}"
+                                                BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
+                                                BorderThickness="0 1 0 0"
+                                                CornerRadius="0 0 8 8">
                                                 <Grid
                                                     x:Name="CommandSpace"
                                                     HorizontalAlignment="Stretch"
@@ -3792,8 +3793,10 @@
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CommandSpace" Storyboard.TargetProperty="Visibility">
                                             <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
                                         </ObjectAnimationUsingKeyFrames>
-                                        <!-- If the window has no buttons, it's assumed that the buttons are drawn directly within the window itself (as in the case of the HotkeyDialog).
-                                        In this case, the command space area is completely hidden. -->
+                                        <!--
+                                            If the window has no buttons, it's assumed that the buttons are drawn directly within the window itself (as in the case of the HotkeyDialog).
+                                            In this case, the command space area is completely hidden.
+                                        -->
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonAreaBorder" Storyboard.TargetProperty="Visibility">
                                             <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
                                         </ObjectAnimationUsingKeyFrames>
