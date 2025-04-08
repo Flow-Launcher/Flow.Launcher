@@ -106,14 +106,9 @@
     <system:String x:Key="AlwaysPreviewToolTip">Toujours ouvrir le panneau d'aperçu lorsque Flow s'active. Appuyez sur {0} pour activer/désactiver l'aperçu.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">L'effet d'ombre n'est pas autorisé lorsque le thème actuel à un effet de flou activé</system:String>
     <system:String x:Key="searchDelay">Délai de recherche</system:String>
-    <system:String x:Key="searchDelayToolTip">Attendre un certain temps pour effectuer une recherche lors de la saisie. Cela permet de réduire les sauts d'interface et la charge des résultats.</system:String>
+    <system:String x:Key="searchDelayToolTip">Adds a short delay while typing to reduce UI flicker and result load. Recommended if your typing speed is average.</system:String>
     <system:String x:Key="searchDelayTime">Délai de recherche par défaut</system:String>
-    <system:String x:Key="searchDelayTimeToolTip">Délai par défaut du plugin après lequel les résultats de la recherche s'affichent lorsque la saisie est interrompue.</system:String>
-    <system:String x:Key="SearchDelayTimeVeryLong">Très long</system:String>
-    <system:String x:Key="SearchDelayTimeLong">Long</system:String>
-    <system:String x:Key="SearchDelayTimeNormal">Normal</system:String>
-    <system:String x:Key="SearchDelayTimeShort">Court</system:String>
-    <system:String x:Key="SearchDelayTimeVeryShort">Très court</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Wait time before showing results after typing stops. Higher values wait longer. (ms)</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Rechercher des plugins</system:String>
@@ -132,6 +127,10 @@
     <system:String x:Key="actionKeywordsTooltip">Changer les mots-clés d'action</system:String>
     <system:String x:Key="pluginSearchDelayTime">Délai de recherche du plugin</system:String>
     <system:String x:Key="pluginSearchDelayTimeTooltip">Modifier le délai de recherche du plugin</system:String>
+    <system:String x:Key="FilterComboboxLabel">Advanced Settings:</system:String>
+    <system:String x:Key="DisplayModeOnOff">Activé</system:String>
+    <system:String x:Key="DisplayModePriority">Priorité</system:String>
+    <system:String x:Key="DisplayModeSearchDelay">Délai de recherche</system:String>
     <system:String x:Key="currentPriority">Priorité actuelle</system:String>
     <system:String x:Key="newPriority">Nouvelle priorité</system:String>
     <system:String x:Key="priority">Priorité</system:String>
@@ -147,7 +146,6 @@
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins : {0} - Échec de la suppression des fichiers de configuration des plugins, veuillez les supprimer manuellement</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Échec de la suppression du cache du plugin</system:String>
     <system:String x:Key="failedToRemovePluginCacheMessage">Plugins : {0} - Échec de la suppression des fichiers cache des plugins, veuillez les supprimer manuellement</system:String>
-    <system:String x:Key="default">Défaut</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Magasin des Plugins</system:String>
@@ -373,9 +371,7 @@
 
     <!--  Search Delay Settings Dialog  -->
     <system:String x:Key="searchDelayTimeTitle">Réglage du délai de recherche</system:String>
-    <system:String x:Key="searchDelayTime_tips">Sélectionnez le délai de recherche que vous souhaitez utiliser pour le plugin. Sélectionnez &quot;{0}&quot; si vous ne voulez pas en spécifier, et le plugin utilisera le délai de recherche par défaut.</system:String>
-    <system:String x:Key="currentSearchDelayTime">Délai de recherche actuel</system:String>
-    <system:String x:Key="newSearchDelayTime">Nouveau délai de recherche</system:String>
+    <system:String x:Key="searchDelayTimeTips">Input the search delay time in ms you like to use for the plugin. Input empty if you don't want to specify any, and the plugin will use default search delay time.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Requêtes personnalisées</system:String>
