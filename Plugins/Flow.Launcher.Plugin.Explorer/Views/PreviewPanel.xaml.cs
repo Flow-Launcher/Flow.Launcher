@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Plugin.Explorer.Search;
 
 namespace Flow.Launcher.Plugin.Explorer.Views;
@@ -89,7 +88,7 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
 
     private async Task LoadImageAsync()
     {
-        PreviewImage = await ImageLoader.LoadAsync(FilePath, true).ConfigureAwait(false);
+        PreviewImage = await Main.Context.API.LoadImageAsync(FilePath, true).ConfigureAwait(false);
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

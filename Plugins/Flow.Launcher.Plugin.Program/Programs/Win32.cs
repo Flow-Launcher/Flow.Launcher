@@ -6,7 +6,6 @@ using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Win32;
-using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.Program.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.SharedModels;
@@ -73,7 +72,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
         private const string ExeExtension = "exe";
         private string _uid = string.Empty;
 
-        private static readonly Win32 Default = new Win32()
+        private static readonly Win32 Default = new()
         {
             Name = string.Empty,
             Description = string.Empty,
@@ -92,7 +91,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             if (candidates.Count == 0)
                 return null;
 
-            var match = candidates.Select(candidate => StringMatcher.FuzzySearch(query, candidate))
+            var match = candidates.Select(candidate => Main.Context.API.FuzzySearch(query, candidate))
                 .MaxBy(match => match.Score);
 
             return match?.IsSearchPrecisionScoreMet() ?? false ? match : null;
@@ -112,14 +111,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 resultName.Equals(Description))
             {
                 title = resultName;
-                matchResult = StringMatcher.FuzzySearch(query, resultName);
+                matchResult = Main.Context.API.FuzzySearch(query, resultName);
             }
             else
             {
                 // Search in both
                 title = $"{resultName}: {Description}";
-                var nameMatch = StringMatcher.FuzzySearch(query, resultName);
-                var descriptionMatch = StringMatcher.FuzzySearch(query, Description);
+                var nameMatch = Main.Context.API.FuzzySearch(query, resultName);
+                var descriptionMatch = Main.Context.API.FuzzySearch(query, Description);
                 if (descriptionMatch.Score > nameMatch.Score)
                 {
                     for (int i = 0; i < descriptionMatch.MatchData.Count; i++)
@@ -219,27 +218,27 @@ namespace Flow.Launcher.Plugin.Program.Programs
         {
             var contextMenus = new List<Result>
             {
-                new Result
+                new()
                 {
                     Title = api.GetTranslation("flowlauncher_plugin_program_run_as_different_user"),
-                    Action = _ =>
+                    Action = c =>
                     {
                         var info = new ProcessStartInfo
                         {
                             FileName = FullPath, WorkingDirectory = ParentDirectory, UseShellExecute = true
                         };
 
-                        Task.Run(() => Main.StartProcess(ShellCommand.RunAsDifferentUser, info));
+                        _ = Task.Run(() => Main.StartProcess(ShellCommand.RunAsDifferentUser, info));
 
                         return true;
                     },
                     IcoPath = "Images/user.png",
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe7ee"),
                 },
-                new Result
+                new()
                 {
                     Title = api.GetTranslation("flowlauncher_plugin_program_run_as_administrator"),
-                    Action = _ =>
+                    Action = c =>
                     {
                         var info = new ProcessStartInfo
                         {
@@ -249,14 +248,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
                             UseShellExecute = true
                         };
 
-                        Task.Run(() => Main.StartProcess(Process.Start, info));
+                        _ = Task.Run(() => Main.StartProcess(Process.Start, info));
 
                         return true;
                     },
                     IcoPath = "Images/cmd.png",
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe7ef"),
                 },
-                new Result
+                new()
                 {
                     Title = api.GetTranslation("flowlauncher_plugin_program_open_containing_folder"),
                     Action = _ =>
@@ -296,7 +295,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             return Name;
         }
 
-        private static List<FileSystemWatcher> Watchers = new List<FileSystemWatcher>();
+        private static readonly List<FileSystemWatcher> Watchers = new();
 
         private static Win32 Win32Program(string path)
         {
@@ -402,7 +401,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 var data = parser.ReadFile(path);
                 var urlSection = data["InternetShortcut"];
                 var url = urlSection?["URL"];
-                if (String.IsNullOrEmpty(url))
+                if (string.IsNullOrEmpty(url))
                 {
                     return program;
                 }
@@ -418,12 +417,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 }
 
                 var iconPath = urlSection?["IconFile"];
-                if (!String.IsNullOrEmpty(iconPath))
+                if (!string.IsNullOrEmpty(iconPath))
                 {
                     program.IcoPath = iconPath;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // Many files do not have the required fields, so no logging is done.
             }
@@ -474,7 +473,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             var extension = Path.GetExtension(path)?.ToLowerInvariant();
             if (!string.IsNullOrEmpty(extension))
             {
-                return extension.Substring(1); // remove dot
+                return extension[1..]; // remove dot
             }
             else
             {
@@ -785,7 +784,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             _ = Task.Run(MonitorDirectoryChangeAsync);
         }
 
-        private static Channel<byte> indexQueue = Channel.CreateBounded<byte>(1);
+        private static readonly Channel<byte> indexQueue = Channel.CreateBounded<byte>(1);
 
         public static async Task MonitorDirectoryChangeAsync()
         {
@@ -797,7 +796,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                 }
 
-                await Task.Run(Main.IndexWin32Programs);
+                await Task.Run(Main.IndexWin32ProgramsAsync);
             }
         }
 

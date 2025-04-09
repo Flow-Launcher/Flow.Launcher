@@ -1168,7 +1168,7 @@ namespace Flow.Launcher.ViewModel
             else if (plugins.Count == 1)
             {
                 PluginIconPath = plugins.Single().Metadata.IcoPath;
-                PluginIconSource = await ImageLoader.LoadAsync(PluginIconPath);
+                PluginIconSource = await App.API.LoadImageAsync(PluginIconPath);
                 SearchIconVisibility = Visibility.Hidden;
             }
             else
@@ -1257,15 +1257,7 @@ namespace Flow.Launcher.ViewModel
             {
                 if (searchDelay)
                 {
-                    var searchDelayTime = (plugin.Metadata.SearchDelayTime ?? Settings.SearchDelayTime) switch
-                    {
-                        SearchDelayTime.VeryLong => 250,
-                        SearchDelayTime.Long => 200,
-                        SearchDelayTime.Normal => 150,
-                        SearchDelayTime.Short => 100,
-                        SearchDelayTime.VeryShort => 50,
-                        _ => 150
-                    };
+                    var searchDelayTime = plugin.Metadata.SearchDelayTime ?? Settings.SearchDelayTime;
 
                     await Task.Delay(searchDelayTime, token);
 

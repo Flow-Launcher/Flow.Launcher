@@ -17,7 +17,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">액션 키워드</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">검색</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">검색 쿼리 자동완성 사용:</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Use Search Query Autocomplete</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">자동완성 데이터 출처:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">웹 검색을 선택하세요</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Are you sure you want to delete {0}?</system:String>

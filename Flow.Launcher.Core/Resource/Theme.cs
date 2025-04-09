@@ -16,6 +16,7 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedModels;
 using Microsoft.Win32;
 
 namespace Flow.Launcher.Core.Resource
@@ -81,11 +82,6 @@ namespace Flow.Launcher.Core.Resource
 
         #region Theme Resources
 
-        public string GetCurrentTheme()
-        {
-            return _settings.Theme;
-        }
-
         private void MakeSureThemeDirectoriesExist()
         {
             foreach (var dir in _themeDirectories.Where(dir => !Directory.Exists(dir)))
@@ -127,7 +123,7 @@ namespace Flow.Launcher.Core.Resource
             try
             {
                 // Load a ResourceDictionary for the specified theme.
-                var themeName = GetCurrentTheme();
+                var themeName = _settings.Theme;
                 var dict = GetThemeResourceDictionary(themeName);
                 
                 // Apply font settings to the theme resource.
@@ -330,7 +326,7 @@ namespace Flow.Launcher.Core.Resource
 
         private ResourceDictionary GetCurrentResourceDictionary()
         {
-            return GetResourceDictionary(GetCurrentTheme());
+            return GetResourceDictionary(_settings.Theme);
         }
 
         private ThemeData GetThemeDataFromPath(string path)
@@ -383,9 +379,20 @@ namespace Flow.Launcher.Core.Resource
 
         #endregion
 
-        #region Load & Change
+        #region Get & Change Theme
 
-        public List<ThemeData> LoadAvailableThemes()
+        public ThemeData GetCurrentTheme()
+        {
+            var themes = GetAvailableThemes();
+            var matchingTheme = themes.FirstOrDefault(t => t.FileNameWithoutExtension == _settings.Theme);
+            if (matchingTheme == null)
+            {
+                Log.Warn($"No matching theme found for '{_settings.Theme}'. Falling back to the first available theme.");
+            }
+            return matchingTheme ?? themes.FirstOrDefault();
+        }
+
+        public List<ThemeData> GetAvailableThemes()
         {
             List<ThemeData> themes = new List<ThemeData>();
             foreach (var themeDirectory in _themeDirectories)
@@ -403,7 +410,7 @@ namespace Flow.Launcher.Core.Resource
         public bool ChangeTheme(string theme = null)
         {
             if (string.IsNullOrEmpty(theme))
-                theme = GetCurrentTheme();
+                theme = _settings.Theme;
 
             string path = GetThemePath(theme);
             try
@@ -426,7 +433,7 @@ namespace Flow.Launcher.Core.Resource
 
                 BlurEnabled = IsBlurTheme();
 
-                // Can only apply blur but here also apply drop shadow effect to avoid possible drop shadow effect issues
+                // Apply blur and drop shadow effect so that we do not need to call it again
                 _ = RefreshFrameAsync();
 
                 return true;
@@ -591,7 +598,7 @@ namespace Flow.Launcher.Core.Resource
                 {
                     AutoDropShadow(useDropShadowEffect);
                 }
-                SetBlurForWindow(GetCurrentTheme(), backdropType);
+                SetBlurForWindow(_settings.Theme, backdropType);
 
                 if (!BlurEnabled)
                 {
@@ -610,7 +617,7 @@ namespace Flow.Launcher.Core.Resource
                 // Get the actual backdrop type and drop shadow effect settings
                 var (backdropType, _) = GetActualValue();
 
-                SetBlurForWindow(GetCurrentTheme(), backdropType);
+                SetBlurForWindow(_settings.Theme, backdropType);
             }, DispatcherPriority.Render);
         }
 
@@ -896,12 +903,6 @@ namespace Flow.Launcher.Core.Resource
 
             return resource is bool b && b;
         }
-
-        #endregion
-
-        #region Classes
-
-        public record ThemeData(string FileNameWithoutExtension, string Name, bool? IsDark = null, bool? HasBlur = null);
 
         #endregion
     }

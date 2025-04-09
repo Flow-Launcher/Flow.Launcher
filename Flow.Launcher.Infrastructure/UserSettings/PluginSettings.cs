@@ -120,10 +120,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public int Priority { get; set; }
 
         [JsonIgnore]
-        public SearchDelayTime? DefaultSearchDelayTime { get; set; }
+        public int? DefaultSearchDelayTime { get; set; }
 
-        [JsonConverter(typeof(JsonStringEnumConverter))]
-        public SearchDelayTime? SearchDelayTime { get; set; }
+        public int? SearchDelayTime { get; set; }
 
         /// <summary>
         /// Used only to save the state of the plugin in settings
