@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core;
 using Flow.Launcher.Core.Configuration;
@@ -24,13 +23,16 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public Settings Settings { get; }
     private readonly Updater _updater;
     private readonly IPortable _portable;
+    private readonly Internationalization _translater;
+    
     public ICommand OpenImeSettingsCommand { get; }
     
-    public SettingsPaneGeneralViewModel(Settings settings, Updater updater, IPortable portable)
+    public SettingsPaneGeneralViewModel(Settings settings, Updater updater, IPortable portable, Internationalization translater)
     {
         Settings = settings;
         _updater = updater;
         _portable = portable;
+        _translater = translater;
         UpdateEnumDropdownLocalizations();
         IsLegacyKoreanIMEEnabled();
         OpenImeSettingsCommand = new RelayCommand(OpenImeSettings);
@@ -40,7 +42,6 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public class SearchWindowAlignData : DropdownDataGeneric<SearchWindowAligns> { }
     public class SearchPrecisionData : DropdownDataGeneric<SearchPrecisionScore> { }
     public class LastQueryModeData : DropdownDataGeneric<LastQueryMode> { }
-    
 
     public bool StartFlowLauncherOnSystemStartup
     {
@@ -69,8 +70,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             }
             catch (Exception e)
             {
-                Notification.Show(InternationalizationManager.Instance.GetTranslation("setAutoStartFailed"),
-                    e.Message);
+                App.API.ShowMsg(App.API.GetTranslation("setAutoStartFailed"), e.Message);
             }
         }
     }
@@ -97,8 +97,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
                 }
                 catch (Exception e)
                 {
-                    Notification.Show(InternationalizationManager.Instance.GetTranslation("setAutoStartFailed"),
-                        e.Message);
+                    App.API.ShowMsg(App.API.GetTranslation("setAutoStartFailed"), e.Message);
                 }
             } 
         }
@@ -129,7 +128,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     }
 
     // This is only required to set at startup. When portable mode enabled/disabled a restart is always required
-    private bool _portableMode = DataLocation.PortableDataLocationInUse();
+    private static bool _portableMode = DataLocation.PortableDataLocationInUse();
 
     public bool PortableMode
     {
@@ -181,9 +180,9 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         get => Settings.Language;
         set
         {
-            InternationalizationManager.Instance.ChangeLanguage(value);
+            _translater.ChangeLanguage(value);
 
-            if (InternationalizationManager.Instance.PromptShouldUsePinyin(value))
+            if (_translater.PromptShouldUsePinyin(value))
                 ShouldUsePinyin = true;
 
             UpdateEnumDropdownLocalizations();
@@ -312,14 +311,14 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         set => Settings.ShouldUsePinyin = value;
     }
 
-    public List<Language> Languages => InternationalizationManager.Instance.LoadAvailableLanguages();
+    public List<Language> Languages => _translater.LoadAvailableLanguages();
 
     public string AlwaysPreviewToolTip => string.Format(
-        InternationalizationManager.Instance.GetTranslation("AlwaysPreviewToolTip"),
+        App.API.GetTranslation("AlwaysPreviewToolTip"),
         Settings.PreviewHotkey
     );
 
-    private string GetFileFromDialog(string title, string filter = "")
+    private static string GetFileFromDialog(string title, string filter = "")
     {
         var dlg = new OpenFileDialog
         {
@@ -361,7 +360,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     private void SelectPython()
     {
         var selectedFile = GetFileFromDialog(
-            InternationalizationManager.Instance.GetTranslation("selectPythonExecutable"),
+            App.API.GetTranslation("selectPythonExecutable"),
             "Python|pythonw.exe"
         );
 
@@ -373,7 +372,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     private void SelectNode()
     {
         var selectedFile = GetFileFromDialog(
-            InternationalizationManager.Instance.GetTranslation("selectNodeExecutable"),
+            App.API.GetTranslation("selectNodeExecutable"),
             "node|*.exe"
         );
 

@@ -9,8 +9,6 @@ using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using CommunityToolkit.Mvvm.DependencyInjection;
-using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Http;
@@ -131,7 +129,7 @@ namespace Flow.Launcher.Core
 
             await using var jsonStream = await Http.GetStreamAsync(api).ConfigureAwait(false);
 
-            var releases = await System.Text.Json.JsonSerializer.DeserializeAsync<List<GithubRelease>>(jsonStream).ConfigureAwait(false);
+            var releases = await JsonSerializer.DeserializeAsync<List<GithubRelease>>(jsonStream).ConfigureAwait(false);
             var latest = releases.Where(r => !r.Prerelease).OrderByDescending(r => r.PublishedAt).First();
             var latestUrl = latest.HtmlUrl.Replace("/tag/", "/download/");
 
@@ -146,10 +144,9 @@ namespace Flow.Launcher.Core
             return manager;
         }
 
-        private static string NewVersionTips(string version)
+        private string NewVersionTips(string version)
         {
-            var translator = Ioc.Default.GetRequiredService<Internationalization>();
-            var tips = string.Format(translator.GetTranslation("newVersionTips"), version);
+            var tips = string.Format(_api.GetTranslation("newVersionTips"), version);
 
             return tips;
         }
