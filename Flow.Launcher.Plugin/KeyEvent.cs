@@ -1,7 +1,12 @@
 ﻿using Windows.Win32;
 
-namespace Flow.Launcher.Infrastructure.Hotkey
+namespace Flow.Launcher.Plugin
 {
+    /// <summary>
+    /// Enumeration of key events for 
+    /// <see cref="IPublicAPI.RegisterGlobalKeyboardCallback(System.Func{int, int, SpecialKeyState, bool})"/>
+    /// and <see cref="IPublicAPI.RemoveGlobalKeyboardCallback(System.Func{int, int, SpecialKeyState, bool})"/>
+    /// </summary>
     public enum KeyEvent
     {
         /// <summary>

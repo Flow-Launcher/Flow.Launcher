@@ -13,6 +13,7 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
+using IRemovable = Flow.Launcher.Core.Storage.IRemovable;
 using ISavable = Flow.Launcher.Plugin.ISavable;
 
 namespace Flow.Launcher.Core.Plugin
@@ -22,6 +23,8 @@ namespace Flow.Launcher.Core.Plugin
     /// </summary>
     public static class PluginManager
     {
+        private static readonly string ClassName = nameof(PluginManager);
+
         private static IEnumerable<PluginPair> _contextMenuPlugins;
 
         public static List<PluginPair> AllPlugins { get; private set; }
@@ -65,6 +68,7 @@ namespace Flow.Launcher.Core.Plugin
             }
 
             API.SavePluginSettings();
+            API.SavePluginCaches();
         }
 
         public static async ValueTask DisposePluginsAsync()
@@ -192,7 +196,7 @@ namespace Flow.Launcher.Core.Plugin
             {
                 try
                 {
-                    var milliseconds = await Stopwatch.DebugAsync($"|PluginManager.InitializePlugins|Init method time cost for <{pair.Metadata.Name}>",
+                    var milliseconds = await API.StopwatchLogDebugAsync(ClassName, $"Init method time cost for <{pair.Metadata.Name}>",
                         () => pair.Plugin.InitAsync(new PluginInitContext(pair.Metadata, API)));
 
                     pair.Metadata.InitTime += milliseconds;
@@ -201,7 +205,7 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 catch (Exception e)
                 {
-                    Log.Exception(nameof(PluginManager), $"Fail to Init plugin: {pair.Metadata.Name}", e);
+                    Log.Exception(ClassName, $"Fail to Init plugin: {pair.Metadata.Name}", e);
                     pair.Metadata.Disabled = true;
                     failedPlugins.Enqueue(pair);
                 }
@@ -264,7 +268,7 @@ namespace Flow.Launcher.Core.Plugin
 
             try
             {
-                var milliseconds = await Stopwatch.DebugAsync($"|PluginManager.QueryForPlugin|Cost for {metadata.Name}",
+                var milliseconds = await API.StopwatchLogDebugAsync(ClassName, $"Cost for {metadata.Name}",
                     async () => results = await pair.Plugin.QueryAsync(query, token).ConfigureAwait(false));
 
                 token.ThrowIfCancellationRequested();
@@ -454,16 +458,11 @@ namespace Flow.Launcher.Core.Plugin
 
         #region Public functions
 
-        public static bool PluginModified(string uuid)
+        public static bool PluginModified(string id)
         {
-            return _modifiedPlugins.Contains(uuid);
+            return _modifiedPlugins.Contains(id);
         }
 
-
-        /// <summary>
-        /// Update a plugin to new version, from a zip file. By default will remove the zip file if update is via url,
-        /// unless it's a local path installation
-        /// </summary>
         public static async Task UpdatePluginAsync(PluginMetadata existingVersion, UserPlugin newVersion, string zipFilePath)
         {
             InstallPlugin(newVersion, zipFilePath, checkModified:false);
@@ -471,17 +470,11 @@ namespace Flow.Launcher.Core.Plugin
             _modifiedPlugins.Add(existingVersion.ID);
         }
 
-        /// <summary>
-        /// Install a plugin. By default will remove the zip file if installation is from url, unless it's a local path installation
-        /// </summary>
         public static void InstallPlugin(UserPlugin plugin, string zipFilePath)
         {
             InstallPlugin(plugin, zipFilePath, checkModified: true);
         }
 
-        /// <summary>
-        /// Uninstall a plugin.
-        /// </summary>
         public static async Task UninstallPluginAsync(PluginMetadata plugin, bool removePluginFromSettings = true, bool removePluginSettings = false)
         {
             await UninstallPluginAsync(plugin, removePluginFromSettings, removePluginSettings, true);
@@ -525,20 +518,20 @@ namespace Flow.Launcher.Core.Plugin
             var folderName = string.IsNullOrEmpty(plugin.Version) ? $"{plugin.Name}-{Guid.NewGuid()}" : $"{plugin.Name}-{plugin.Version}";
 
             var defaultPluginIDs = new List<string>
-                                    {
-                                        "0ECADE17459B49F587BF81DC3A125110", // BrowserBookmark
-                                        "CEA0FDFC6D3B4085823D60DC76F28855", // Calculator
-                                        "572be03c74c642baae319fc283e561a8", // Explorer
-                                        "6A122269676E40EB86EB543B945932B9", // PluginIndicator
-                                        "9f8f9b14-2518-4907-b211-35ab6290dee7", // PluginsManager
-                                        "b64d0a79-329a-48b0-b53f-d658318a1bf6", // ProcessKiller
-                                        "791FC278BA414111B8D1886DFE447410", // Program
-                                        "D409510CD0D2481F853690A07E6DC426", // Shell
-                                        "CEA08895D2544B019B2E9C5009600DF4", // Sys
-                                        "0308FD86DE0A4DEE8D62B9B535370992", // URL
-                                        "565B73353DBF4806919830B9202EE3BF", // WebSearch
-                                        "5043CETYU6A748679OPA02D27D99677A" // WindowsSettings
-                                    };
+                {
+                    "0ECADE17459B49F587BF81DC3A125110", // BrowserBookmark
+                    "CEA0FDFC6D3B4085823D60DC76F28855", // Calculator
+                    "572be03c74c642baae319fc283e561a8", // Explorer
+                    "6A122269676E40EB86EB543B945932B9", // PluginIndicator
+                    "9f8f9b14-2518-4907-b211-35ab6290dee7", // PluginsManager
+                    "b64d0a79-329a-48b0-b53f-d658318a1bf6", // ProcessKiller
+                    "791FC278BA414111B8D1886DFE447410", // Program
+                    "D409510CD0D2481F853690A07E6DC426", // Shell
+                    "CEA08895D2544B019B2E9C5009600DF4", // Sys
+                    "0308FD86DE0A4DEE8D62B9B535370992", // URL
+                    "565B73353DBF4806919830B9202EE3BF", // WebSearch
+                    "5043CETYU6A748679OPA02D27D99677A" // WindowsSettings
+                };
 
             // Treat default plugin differently, it needs to be removable along with each flow release
             var installDirectory = !defaultPluginIDs.Any(x => x == plugin.ID)
@@ -586,11 +579,11 @@ namespace Flow.Launcher.Core.Plugin
 
             if (removePluginSettings)
             {
-                // For dotnet plugins, we need to remove their PluginJsonStorage instance
-                if (AllowedLanguage.IsDotNet(plugin.Language))
+                // For dotnet plugins, we need to remove their PluginJsonStorage and PluginBinaryStorage instances
+                if (AllowedLanguage.IsDotNet(plugin.Language) && API is IRemovable removable)
                 {
-                    var method = API.GetType().GetMethod("RemovePluginSettings");
-                    method?.Invoke(API, new object[] { plugin.AssemblyName });
+                    removable.RemovePluginSettings(plugin.AssemblyName);
+                    removable.RemovePluginCaches(plugin.PluginCacheDirectoryPath);
                 }
 
                 try

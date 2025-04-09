@@ -17,7 +17,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">觸發關鍵字</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">網址</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">搜尋</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">啟用搜尋建議</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Use Search Query Autocomplete</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">從以下位置自動填入資料：</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">請選擇一項</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">你確認要刪除{0}嗎</system:String>

@@ -11,12 +11,17 @@ using Flow.Launcher.Infrastructure.Logger;
 #pragma warning restore IDE0005
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher.Core.Plugin
 {
     public static class PluginsLoader
     {
+        private static readonly string ClassName = nameof(PluginsLoader);
+
+        // We should not initialize API in static constructor because it will create another API instance
+        private static IPublicAPI api = null;
+        private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
+
         public static List<PluginPair> Plugins(List<PluginMetadata> metadatas, PluginsSettings settings)
         {
             var dotnetPlugins = DotNetPlugins(metadatas);
@@ -59,8 +64,7 @@ namespace Flow.Launcher.Core.Plugin
 
             foreach (var metadata in metadatas)
             {
-                var milliseconds = Stopwatch.Debug(
-                    $"|PluginsLoader.DotNetPlugins|Constructor init cost for {metadata.Name}", () =>
+                var milliseconds = API.StopwatchLogDebug(ClassName, $"Constructor init cost for {metadata.Name}", () =>
                     {
                         Assembly assembly = null;
                         IAsyncPlugin plugin = null;

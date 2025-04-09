@@ -43,7 +43,7 @@ namespace Flow.Launcher
 
         private async System.Threading.Tasks.Task LoadImageAsync()
         {
-            imgClose.Source = await ImageLoader.LoadAsync(Path.Combine(Infrastructure.Constant.ProgramDirectory, "Images\\close.png"));
+            imgClose.Source = await App.API.LoadImageAsync(Path.Combine(Constant.ProgramDirectory, "Images\\close.png"));
         }
 
         void imgClose_MouseUp(object sender, MouseButtonEventArgs e)
@@ -71,11 +71,11 @@ namespace Flow.Launcher
             
             if (!File.Exists(iconPath))
             {
-                imgIco.Source = await ImageLoader.LoadAsync(Path.Combine(Constant.ProgramDirectory, "Images\\app.png"));
+                imgIco.Source = await App.API.LoadImageAsync(Path.Combine(Constant.ProgramDirectory, "Images\\app.png"));
             }
             else 
             {
-                imgIco.Source = await ImageLoader.LoadAsync(iconPath);
+                imgIco.Source = await App.API.LoadImageAsync(iconPath);
             }
 
             Show();

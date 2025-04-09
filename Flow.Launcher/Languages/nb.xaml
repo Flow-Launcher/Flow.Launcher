@@ -7,6 +7,11 @@
         Klikk nei hvis det allerede er installert, og du vil bli bedt om å velge mappen som inneholder {1} kjørbar fil
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Velg den kjørbare filen for {0}</system:String>
+    <system:String x:Key="runtimeExecutableInvalidChooseDownload">
+        Your selected {0} executable is invalid.
+        {2}{2}
+        Click yes if you would like select the {0} executable agian. Click no if you would like to download {1}
+    </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Kan ikke angi {0} kjørbar bane, prøv fra Flows innstillinger (bla ned til bunnen).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Mislykkes i å initialisere programtillegg</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">Programtillegg: {0} - mislykkes å lastes inn og vil bli deaktivert, vennligst kontakt utvikleren av programtillegget for hjelp</system:String>
@@ -37,7 +42,7 @@
     <system:String x:Key="GameMode">Spillmodus</system:String>
     <system:String x:Key="GameModeToolTip">Stopp bruken av hurtigtaster.</system:String>
     <system:String x:Key="PositionReset">Tilbakestilling av posisjon</system:String>
-    <system:String x:Key="PositionResetToolTip">Tilbakestill posisjonen til søkevinduet</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Innstillinger</system:String>
@@ -70,8 +75,6 @@
     <system:String x:Key="LastQueryEmpty">Tøm siste spørring</system:String>
     <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
     <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
-    <system:String x:Key="KeepMaxResults">Fast vindushøyde</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">Vindushøyden kan ikke justeres ved å dra.</system:String>
     <system:String x:Key="maxShowResults">Maksimalt antall resultater vist</system:String>
     <system:String x:Key="maxShowResultsToolTip">Du kan også raskt justere dette ved å bruke CTRL+Plus og CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorer hurtigtaster i fullskjermmodus</system:String>
@@ -102,6 +105,15 @@
     <system:String x:Key="AlwaysPreview">Alltid forhåndsvisning</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Åpne alltid forhåndsvisningspanel når Flow aktiveres. Trykk på {0} for å velge forhåndsvisning.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Skyggeeffekt er ikke tillatt mens gjeldende tema har uskarphet-effekt aktivert</system:String>
+    <system:String x:Key="searchDelay">Search Delay</system:String>
+    <system:String x:Key="searchDelayToolTip">Delay for a while to search when typing. This reduces interface jumpiness and result load.</system:String>
+    <system:String x:Key="searchDelayTime">Default Search Delay Time</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Plugin default delay time after which search results appear when typing is stopped.</system:String>
+    <system:String x:Key="SearchDelayTimeVeryLong">Very long</system:String>
+    <system:String x:Key="SearchDelayTimeLong">Long</system:String>
+    <system:String x:Key="SearchDelayTimeNormal">Normal</system:String>
+    <system:String x:Key="SearchDelayTimeShort">Short</system:String>
+    <system:String x:Key="SearchDelayTimeVeryShort">Very short</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Søk etter programtillegg</system:String>
@@ -118,6 +130,8 @@
     <system:String x:Key="currentActionKeywords">Nåværende handlingsnøkkelord</system:String>
     <system:String x:Key="newActionKeyword">Nytt handlingsnøkkelord</system:String>
     <system:String x:Key="actionKeywordsTooltip">Endre handlingsnøkkelord</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Plugin seach delay time</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Seach Delay Time</system:String>
     <system:String x:Key="currentPriority">Gjeldende prioritet</system:String>
     <system:String x:Key="newPriority">Ny prioritet</system:String>
     <system:String x:Key="priority">Prioritet</system:String>
@@ -131,6 +145,9 @@
     <system:String x:Key="plugin_uninstall">Avinstaller</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
+    <system:String x:Key="failedToRemovePluginCacheTitle">Fail to remove plugin cache</system:String>
+    <system:String x:Key="failedToRemovePluginCacheMessage">Plugins: {0} - Fail to remove plugin cache files, please remove them manually</system:String>
+    <system:String x:Key="default">Default</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Programtillegg butikk</system:String>
@@ -193,8 +210,20 @@
     <system:String x:Key="AnimationSpeedCustom">Egendefinert</system:String>
     <system:String x:Key="Clock">Klokke</system:String>
     <system:String x:Key="Date">Dato</system:String>
+    <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropTypeDisabledToolTip">Backdrop supported starting from Windows 11 build 22000 and above</system:String>
+    <system:String x:Key="BackdropTypesNone">Ingen</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
+    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
     <system:String x:Key="TypeIsDarkToolTip">Dette temaet støtter to (lys/mørk) moduser.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Dette temaet støtter uskarp gjennomsiktig bakgrunn.</system:String>
+    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
+    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
+    <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Hurtigtast</system:String>
@@ -294,6 +323,9 @@
     <system:String x:Key="logfolder">Loggmappe</system:String>
     <system:String x:Key="clearlogfolder">Tøm logger</system:String>
     <system:String x:Key="clearlogfolderMessage">Er du sikker på at du vil slette alle loggene?</system:String>
+    <system:String x:Key="clearcachefolder">Clear Caches</system:String>
+    <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
+    <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
     <system:String x:Key="welcomewindow">Veiviser</system:String>
     <system:String x:Key="userdatapath">Plassering av brukerdata</system:String>
     <system:String x:Key="userdatapathToolTip">Brukerinnstillinger og installerte programtillegg lagres i brukerens datamappe. Denne plasseringen kan variere avhengig av om den er i portabel modus eller ikke.</system:String>
@@ -335,9 +367,16 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Kan ikke finne spesifisert programtillegg</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Nytt handlingsnøkkelord kan ikke være tom</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Det nye nøkkelordet for handling er allerede tilordnet et annet programtillegg, velg et annet</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
     <system:String x:Key="success">Vellykket</system:String>
     <system:String x:Key="completedSuccessfully">Fullført vellykket</system:String>
-    <system:String x:Key="actionkeyword_tips">Skriv inn handlingsnøkkelord du vil bruke for å starte programtillegget. Bruk * hvis du ikke ønsker å spesifisere noen, og utvidelsen vil bli utløst uten noen handlingsord.</system:String>
+    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="searchDelayTimeTitle">Search Delay Time Setting</system:String>
+    <system:String x:Key="searchDelayTime_tips">Select the search delay time you like to use for the plugin. Select &quot;{0}&quot; if you don't want to specify any, and the plugin will use default search delay time.</system:String>
+    <system:String x:Key="currentSearchDelayTime">Current search delay time</system:String>
+    <system:String x:Key="newSearchDelayTime">New search delay time</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Hurtigtast for egendefinert spørring</system:String>

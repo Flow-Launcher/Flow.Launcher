@@ -321,9 +321,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool HideWhenDeactivated { get; set; } = true;
 
         public bool SearchQueryResultsWithDelay { get; set; }
-
-        [JsonConverter(typeof(JsonStringEnumConverter))]
-        public SearchDelayTime SearchDelayTime { get; set; } = SearchDelayTime.Normal;
+        public int SearchDelayTime { get; set; } = 150;
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public SearchWindowScreens SearchWindowScreen { get; set; } = SearchWindowScreens.Cursor;
