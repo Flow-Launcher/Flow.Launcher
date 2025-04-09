@@ -136,7 +136,7 @@ internal static class HotKeyMapper
             if (_mainViewModel.ShouldIgnoreHotkeys())
                 return;
 
-            _mainViewModel.Show();
+            App.API.ShowMainWindow();
             _mainViewModel.ChangeQueryText(hotkey.ActionKeyword, true);
         });
     }

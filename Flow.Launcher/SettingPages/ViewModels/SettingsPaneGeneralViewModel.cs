@@ -60,8 +60,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             }
             catch (Exception e)
             {
-                Notification.Show(App.API.GetTranslation("setAutoStartFailed"),
-                    e.Message);
+                App.API.ShowMsg(App.API.GetTranslation("setAutoStartFailed"), e.Message);
             }
         }
     }
@@ -88,8 +87,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
                 }
                 catch (Exception e)
                 {
-                    Notification.Show(App.API.GetTranslation("setAutoStartFailed"),
-                        e.Message);
+                    App.API.ShowMsg(App.API.GetTranslation("setAutoStartFailed"), e.Message);
                 }
             } 
         }

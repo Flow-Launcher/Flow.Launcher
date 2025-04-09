@@ -343,7 +343,7 @@ namespace Flow.Launcher
 
         public void OnSecondAppStarted()
         {
-            Ioc.Default.GetRequiredService<MainViewModel>().Show();
+            API.ShowMainWindow();
         }
 
         #endregion

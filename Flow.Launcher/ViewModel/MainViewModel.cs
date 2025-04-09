@@ -16,7 +16,6 @@ using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
-using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
@@ -275,7 +274,7 @@ namespace Flow.Launcher.ViewModel
             Hide();
 
             await PluginManager.ReloadDataAsync().ConfigureAwait(false);
-            Notification.Show(App.API.GetTranslation("success"),
+            App.API.ShowMsg(App.API.GetTranslation("success"),
                 App.API.GetTranslation("completedSuccessfully"));
         }
 
