@@ -17,7 +17,9 @@ namespace Flow.Launcher.Resources.Pages
             Ioc.Default.GetRequiredService<WelcomeViewModel>().PageNum = 1;
             InitializeComponent();
         }
-        private Internationalization _translater => InternationalizationManager.Instance;
+
+        private readonly Internationalization _translater = Ioc.Default.GetRequiredService<Internationalization>();
+
         public List<Language> Languages => _translater.LoadAvailableLanguages();
 
         public Settings Settings { get; set; }
@@ -30,12 +32,11 @@ namespace Flow.Launcher.Resources.Pages
             }
             set
             {
-                InternationalizationManager.Instance.ChangeLanguage(value);
+                _translater.ChangeLanguage(value);
 
-                if (InternationalizationManager.Instance.PromptShouldUsePinyin(value))
+                if (_translater.PromptShouldUsePinyin(value))
                     Settings.ShouldUsePinyin = true;
             }
         }
-
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core;
-using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 
@@ -22,7 +21,7 @@ public partial class SettingsPaneProxyViewModel : BaseModel
     private void OnTestProxyClicked()
     {
         var message = TestProxy();
-        App.API.ShowMsgBox(InternationalizationManager.Instance.GetTranslation(message));
+        App.API.ShowMsgBox(App.API.GetTranslation(message));
     }
 
     private string TestProxy()
