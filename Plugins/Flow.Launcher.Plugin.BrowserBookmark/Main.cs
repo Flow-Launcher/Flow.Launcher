@@ -32,7 +32,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
         _settings = context.API.LoadSettingJsonStorage<Settings>();
 
         _faviconCacheDir = Path.Combine(
-            _context.CurrentPluginMetadata.PluginCacheDirectoryPath,
+            context.CurrentPluginMetadata.PluginCacheDirectoryPath,
             "FaviconCache");
 
         FilesFolders.ValidateDirectory(_faviconCacheDir);
