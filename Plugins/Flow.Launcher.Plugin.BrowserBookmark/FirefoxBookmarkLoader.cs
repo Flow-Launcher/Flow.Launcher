@@ -159,16 +159,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
 
                     if (!File.Exists(faviconPath))
                     {
-                        // SVG 파일인지 확인
-                        if (IsSvgData(imageData))
-                        {
-                            bookmark.FaviconPath = defaultIconPath;
-                            continue;
-                        }
-                        else
-                        {
-                            SaveBitmapData(imageData, faviconPath);
-                        }
+                        SaveBitmapData(imageData, faviconPath);
                     }
 
                     bookmark.FaviconPath = faviconPath;
@@ -197,15 +188,6 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
         {
             Main._context.API.LogException(ClassName, $"Failed to load Firefox favicon DB: {faviconDbPath}", ex);
         }
-    }
-
-    private static bool IsSvgData(byte[] data)
-    {
-        if (data.Length < 5)
-            return false;
-        string start = System.Text.Encoding.ASCII.GetString(data, 0, Math.Min(100, data.Length));
-        return start.Contains("<svg") || 
-               (start.StartsWith("<?xml") && start.Contains("<svg"));
     }
 
     private static void SaveBitmapData(byte[] imageData, string outputPath)

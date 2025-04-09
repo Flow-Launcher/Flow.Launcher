@@ -9,6 +9,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
+using SharpVectors.Converters;
+using SharpVectors.Renderers.Wpf;
 
 namespace Flow.Launcher.Infrastructure.Image
 {
@@ -25,8 +27,10 @@ namespace Flow.Launcher.Infrastructure.Image
         public static ImageSource LoadingImage { get; } = new BitmapImage(new Uri(Constant.LoadingImgIcon));
         public const int SmallIconSize = 64;
         public const int FullIconSize = 256;
+        public const int FullImageSize = 320;
 
         private static readonly string[] ImageExtensions = { ".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tiff", ".ico" };
+        private static readonly string SvgExtension = ".svg";
 
         public static async Task InitializeAsync()
         {
@@ -245,6 +249,19 @@ namespace Flow.Launcher.Infrastructure.Image
                         image = GetThumbnail(path, ThumbnailOptions.ThumbnailOnly);
                     }
                 }
+                else if (extension == SvgExtension)
+                {
+                    try
+                    {
+                        image = LoadFullSvgImage(path, loadFullImage);
+                        type = ImageType.FullImageFile;
+                    }
+                    catch (System.Exception)
+                    {
+                        image = Image;
+                        type = ImageType.Error;
+                    }
+                }
                 else
                 {
                     type = ImageType.File;
@@ -318,7 +335,7 @@ namespace Flow.Launcher.Infrastructure.Image
             return img;
         }
 
-        private static BitmapImage LoadFullImage(string path)
+        private static ImageSource LoadFullImage(string path)
         {
             BitmapImage image = new BitmapImage();
             image.BeginInit();
@@ -327,24 +344,24 @@ namespace Flow.Launcher.Infrastructure.Image
             image.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
             image.EndInit();
 
-            if (image.PixelWidth > 320)
+            if (image.PixelWidth > FullImageSize)
             {
                 BitmapImage resizedWidth = new BitmapImage();
                 resizedWidth.BeginInit();
                 resizedWidth.CacheOption = BitmapCacheOption.OnLoad;
                 resizedWidth.UriSource = new Uri(path);
                 resizedWidth.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
-                resizedWidth.DecodePixelWidth = 320;
+                resizedWidth.DecodePixelWidth = FullImageSize;
                 resizedWidth.EndInit();
 
-                if (resizedWidth.PixelHeight > 320)
+                if (resizedWidth.PixelHeight > FullImageSize)
                 {
                     BitmapImage resizedHeight = new BitmapImage();
                     resizedHeight.BeginInit();
                     resizedHeight.CacheOption = BitmapCacheOption.OnLoad;
                     resizedHeight.UriSource = new Uri(path);
                     resizedHeight.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
-                    resizedHeight.DecodePixelHeight = 320;
+                    resizedHeight.DecodePixelHeight = FullImageSize;
                     resizedHeight.EndInit();
                     return resizedHeight;
                 }
@@ -353,6 +370,45 @@ namespace Flow.Launcher.Infrastructure.Image
             }
 
             return image;
+        }
+
+        private static ImageSource LoadFullSvgImage(string path, bool loadFullImage = false)
+        {
+            // Set up drawing settings
+            var desiredHeight = loadFullImage ? FullImageSize : SmallIconSize;
+            var drawingSettings = new WpfDrawingSettings
+            {
+                IncludeRuntime = true,
+                // Set IgnoreRootViewbox to false to respect the SVG's viewBox
+                IgnoreRootViewbox = false
+            };
+
+            // Load and render the SVG
+            var converter = new FileSvgReader(drawingSettings);
+            var drawing = converter.Read(path);
+
+            // Calculate scale to achieve desired height
+            var drawingBounds = drawing.Bounds;
+            var scale = desiredHeight / drawingBounds.Height;
+            var scaledWidth = drawingBounds.Width * scale;
+            var scaledHeight = drawingBounds.Height * scale;
+
+            // Convert the Drawing to a Bitmap
+            var drawingVisual = new DrawingVisual();
+            using DrawingContext drawingContext = drawingVisual.RenderOpen();
+            drawingContext.PushTransform(new ScaleTransform(scale, scale));
+            drawingContext.DrawDrawing(drawing);
+
+            // Create a RenderTargetBitmap to hold the rendered image
+            var bitmap = new RenderTargetBitmap(
+                (int)Math.Ceiling(scaledWidth),
+                (int)Math.Ceiling(scaledHeight),
+                96, // DpiX
+                96, // DpiY
+                PixelFormats.Pbgra32);
+            bitmap.Render(drawingVisual);
+
+            return bitmap;
         }
     }
 }
