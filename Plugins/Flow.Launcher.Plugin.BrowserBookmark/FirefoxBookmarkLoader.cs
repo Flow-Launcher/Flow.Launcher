@@ -41,6 +41,8 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
         if (string.IsNullOrEmpty(placesPath) || !File.Exists(placesPath))
             return bookmarks;
 
+        var tempDbPath = Path.Combine(_faviconCacheDir, $"tempplaces_{Guid.NewGuid()}.sqlite");
+
         try
         {
             // Try to register file monitoring
@@ -54,7 +56,6 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
             }
 
             // Use a copy to avoid lock issues with the original file
-            var tempDbPath = Path.Combine(_faviconCacheDir, $"tempplaces_{Guid.NewGuid()}.sqlite");
             File.Copy(placesPath, tempDbPath, true);
 
             // Connect to database and execute query
@@ -83,20 +84,20 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
             // https://github.com/dotnet/efcore/issues/26580
             SqliteConnection.ClearPool(dbConnection);
             dbConnection.Close();
-
-            // Delete temporary file
-            try
-            {
-                File.Delete(tempDbPath);
-            }
-            catch (Exception ex)
-            {
-                Main._context.API.LogException(ClassName, $"Failed to delete temporary favicon DB: {tempDbPath}", ex);
-            }
         }
         catch (Exception ex)
         {
             Main._context.API.LogException(ClassName, $"Failed to load Firefox bookmarks: {placesPath}", ex);
+        }
+
+        // Delete temporary file
+        try
+        {
+            File.Delete(tempDbPath);
+        }
+        catch (Exception ex)
+        {
+            Main._context.API.LogException(ClassName, $"Failed to delete temporary favicon DB: {tempDbPath}", ex);
         }
 
         return bookmarks;
@@ -104,10 +105,11 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
 
     private void LoadFaviconsFromDb(string faviconDbPath, List<Bookmark> bookmarks)
     {
+        var tempDbPath = Path.Combine(_faviconCacheDir, $"tempfavicons_{Guid.NewGuid()}.sqlite");
+
         try
         {
             // Use a copy to avoid lock issues with the original file
-            var tempDbPath = Path.Combine(_faviconCacheDir, $"tempfavicons_{Guid.NewGuid()}.sqlite");
             File.Copy(faviconDbPath, tempDbPath, true);
             
             var defaultIconPath = Path.Combine(
@@ -177,20 +179,20 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
             // https://github.com/dotnet/efcore/issues/26580
             SqliteConnection.ClearPool(connection);
             connection.Close();
-
-            // Delete temporary file
-            try
-            {
-                File.Delete(tempDbPath);
-            }
-            catch (Exception ex)
-            {
-                Main._context.API.LogException(ClassName, $"Failed to delete temporary favicon DB: {tempDbPath}", ex);
-            }
         }
         catch (Exception ex)
         {
             Main._context.API.LogException(ClassName, $"Failed to load Firefox favicon DB: {faviconDbPath}", ex);
+        }
+
+        // Delete temporary file
+        try
+        {
+            File.Delete(tempDbPath);
+        }
+        catch (Exception ex)
+        {
+            Main._context.API.LogException(ClassName, $"Failed to delete temporary favicon DB: {tempDbPath}", ex);
         }
     }
 
