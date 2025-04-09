@@ -118,9 +118,11 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch (RemoteMethodNotFoundException)
             {
+                // Ignored
             }
             catch (ConnectionLostException)
             {
+                // Ignored
             }
             catch (Exception e)
             {
@@ -136,9 +138,11 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch (RemoteMethodNotFoundException)
             {
+                // Ignored
             }
             catch (ConnectionLostException)
             {
+                // Ignored
             }
             catch (Exception e)
             {
