@@ -142,15 +142,47 @@ namespace Flow.Launcher.Plugin
         List<PluginPair> GetAllPlugins();
 
         /// <summary>
-        /// Register a callback for Global Keyboard Event
+        /// Registers a callback function for global keyboard events.
         /// </summary>
-        /// <param name="callback"></param>
+        /// <param name="callback">
+        /// The callback function to invoke when a global keyboard event occurs.
+        /// <para>
+        /// Parameters:
+        /// <list type="number">
+        ///   <item><description>int: The type of <see cref="KeyEvent"/> (key down, key up, etc.)</description></item>
+        ///   <item><description>int: The virtual key code of the pressed/released key</description></item>
+        ///   <item><description><see cref="SpecialKeyState"/>: The state of modifier keys (Ctrl, Alt, Shift, etc.)</description></item>
+        /// </list>
+        /// </para>
+        /// <para>
+        /// Returns: <c>true</c> to allow normal system processing of the key event,
+        /// or <c>false</c> to intercept and prevent default handling.
+        /// </para>
+        /// </param>
+        /// <remarks>
+        /// This callback will be invoked for all keyboard events system-wide.
+        /// Use with caution as intercepting system keys may affect normal system operation.
+        /// </remarks>
         public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback);
-        
+
         /// <summary>
         /// Remove a callback for Global Keyboard Event
         /// </summary>
-        /// <param name="callback"></param>
+        /// <param name="callback">
+        /// The callback function to invoke when a global keyboard event occurs.
+        /// <para>
+        /// Parameters:
+        /// <list type="number">
+        ///   <item><description>int: The type of <see cref="KeyEvent"/> (key down, key up, etc.)</description></item>
+        ///   <item><description>int: The virtual key code of the pressed/released key</description></item>
+        ///   <item><description><see cref="SpecialKeyState"/>: The state of modifier keys (Ctrl, Alt, Shift, etc.)</description></item>
+        /// </list>
+        /// </para>
+        /// <para>
+        /// Returns: <c>true</c> to allow normal system processing of the key event,
+        /// or <c>false</c> to intercept and prevent default handling.
+        /// </para>
+        /// </param>
         public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback);
 
         /// <summary>
