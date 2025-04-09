@@ -32,8 +32,6 @@ namespace Flow.Launcher.Plugin.Program
 
         internal static PluginInitContext Context { get; private set; }
 
-        private static readonly string ClassName = nameof(Main);
-
         private static readonly List<Result> emptyResults = new();
 
         private static readonly MemoryCacheOptions cacheOptions = new() { SizeLimit = 1560 };

@@ -243,7 +243,7 @@ namespace Flow.Launcher.Infrastructure.Image
                         {
                             image = Image;
                             type = ImageType.Error;
-                            Log.Exception($"Failed to load image file from path {path}: {ex.Message}", ex);
+                            API.LogException(ClassName, $"Failed to load image file from path {path}: {ex.Message}", ex);
                         }
                     }
                     else
@@ -267,7 +267,7 @@ namespace Flow.Launcher.Infrastructure.Image
                     {
                         image = Image;
                         type = ImageType.Error;
-                        Log.Exception($"Failed to load SVG image from path {path}: {ex.Message}", ex);
+                        API.LogException(ClassName, $"Failed to load SVG image from path {path}: {ex.Message}", ex);
                     }
                 }
                 else
