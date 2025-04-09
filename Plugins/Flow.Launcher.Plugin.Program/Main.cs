@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.Program.Programs;
 using Flow.Launcher.Plugin.Program.Views;
@@ -20,6 +19,8 @@ namespace Flow.Launcher.Plugin.Program
 {
     public class Main : ISettingProvider, IAsyncPlugin, IPluginI18n, IContextMenu, IAsyncReloadable, IDisposable
     {
+        private static readonly string ClassName = nameof(Main);
+
         private const string Win32CacheName = "Win32";
         private const string UwpCacheName = "UWP";
 
@@ -109,7 +110,7 @@ namespace Flow.Launcher.Plugin.Program
                     }
                     catch (OperationCanceledException)
                     {
-                        Log.Debug("|Flow.Launcher.Plugin.Program.Main|Query operation cancelled");
+                        Context.API.LogDebug(ClassName, "Query operation cancelled");
                         return emptyResults;
                     }
                     finally
@@ -253,8 +254,8 @@ namespace Flow.Launcher.Plugin.Program
                 _uwpsCount = _uwps.Count;
                 _uwpsLock.Release();
             });
-            Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload win32 programs <{_win32sCount}>");
-            Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload uwps <{_uwpsCount}>");
+            Context.API.LogInfo(ClassName, "Number of preload win32 programs <{_win32sCount}>");
+            Context.API.LogInfo(ClassName, "Number of preload uwps <{_uwpsCount}>");
 
             var cacheEmpty = _win32sCount == 0 || _uwpsCount == 0;
 
@@ -295,7 +296,7 @@ namespace Flow.Launcher.Plugin.Program
             }
             catch (Exception e)
             {
-                Log.Exception("|Flow.Launcher.Plugin.Program.Main|Failed to index Win32 programs", e);
+                Context.API.LogException(ClassName, "Failed to index Win32 programs", e);
             }
             finally
             {
@@ -320,7 +321,7 @@ namespace Flow.Launcher.Plugin.Program
             }
             catch (Exception e)
             {
-                Log.Exception("|Flow.Launcher.Plugin.Program.Main|Failed to index Uwp programs", e);
+                Context.API.LogException(ClassName, "Failed to index Uwp programs", e);
             }
             finally
             {

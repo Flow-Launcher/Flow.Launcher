@@ -2,7 +2,6 @@
 using System.IO;
 using System.Text.Json;
 using System;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using Microsoft.Data.Sqlite;
 
@@ -116,8 +115,7 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
             }
             else
             {
-                Log.Error(
-                    $"ChromiumBookmarkLoader: EnumerateFolderBookmark: type property not found for {subElement.GetString()}");
+                Main._context.API.LogError(ClassName, $"type property not found for {subElement.GetString()}");
             }
         }
     }

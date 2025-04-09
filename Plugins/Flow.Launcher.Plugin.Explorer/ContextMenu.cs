@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
-using System.Linq;
 using Flow.Launcher.Plugin.Explorer.Helper;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
 
@@ -470,22 +469,16 @@ namespace Flow.Launcher.Plugin.Explorer
 
         private void LogException(string message, Exception e)
         {
-            Log.Exception($"|Flow.Launcher.Plugin.Folder.ContextMenu|{message}", e);
+            Context.API.LogException(nameof(Main), message, e);
         }
 
-        private bool CanRunAsDifferentUser(string path)
+        private static bool CanRunAsDifferentUser(string path)
         {
-            switch (Path.GetExtension(path))
+            return Path.GetExtension(path) switch
             {
-                case ".exe":
-                case ".bat":
-                case ".msi":
-                    return true;
-
-                default:
-                    return false;
-
-            }
+                ".exe" or ".bat" or ".msi" => true,
+                _ => false,
+            };
         }
     }
 }
