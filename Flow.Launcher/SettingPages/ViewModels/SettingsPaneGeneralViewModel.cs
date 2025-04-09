@@ -206,7 +206,8 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             }
             else
             {
-                Debug.WriteLine("[DEBUG] Failed to set LegacyKoreanIMEEnabled");
+                //Since this is rarely seen text, language support is not provided.
+                App.API.ShowMsg("Failed to change Korean IME setting", "Please check your system registry access or contact support.");
             }
         }
     }
