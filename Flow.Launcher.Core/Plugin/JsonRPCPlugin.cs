@@ -7,7 +7,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin;
 using Microsoft.IO;
 
@@ -20,6 +19,8 @@ namespace Flow.Launcher.Core.Plugin
     internal abstract class JsonRPCPlugin : JsonRPCPluginBase
     {
         public new const string JsonRPC = "JsonRPC";
+
+        private static readonly string ClassName = nameof(JsonRPCPlugin);
 
         protected abstract Task<Stream> RequestAsync(JsonRPCRequestModel rpcRequest, CancellationToken token = default);
         protected abstract string Request(JsonRPCRequestModel rpcRequest, CancellationToken token = default);
@@ -148,11 +149,11 @@ namespace Flow.Launcher.Core.Plugin
                     var error = standardError.ReadToEnd();
                     if (!string.IsNullOrEmpty(error))
                     {
-                        Log.Error($"|JsonRPCPlugin.Execute|{error}");
+                        Context.API.LogError(ClassName, error);
                         return string.Empty;
                     }
 
-                    Log.Error("|JsonRPCPlugin.Execute|Empty standard output and standard error.");
+                    Context.API.LogError(ClassName, "Empty standard output and standard error.");
                     return string.Empty;
                 }
 
@@ -160,8 +161,8 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch (Exception e)
             {
-                Log.Exception(
-                    $"|JsonRPCPlugin.Execute|Exception for filename <{startInfo.FileName}> with argument <{startInfo.Arguments}>",
+                Context.API.LogException(ClassName,
+                    $"Exception for filename <{startInfo.FileName}> with argument <{startInfo.Arguments}>",
                     e);
                 return string.Empty;
             }
@@ -172,7 +173,7 @@ namespace Flow.Launcher.Core.Plugin
             using var process = Process.Start(startInfo);
             if (process == null)
             {
-                Log.Error("|JsonRPCPlugin.ExecuteAsync|Can't start new process");
+                Context.API.LogError(ClassName, "Can't start new process");
                 return Stream.Null;
             }
 
@@ -192,7 +193,7 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 catch (Exception e)
                 {
-                    Log.Exception("|JsonRPCPlugin.ExecuteAsync|Exception when kill process", e);
+                    Context.API.LogException(ClassName, "Exception when kill process", e);
                 }
             });
 
@@ -213,7 +214,7 @@ namespace Flow.Launcher.Core.Plugin
             {
                 case (0, 0):
                     const string errorMessage = "Empty JSON-RPC Response.";
-                    Log.Warn($"|{nameof(JsonRPCPlugin)}.{nameof(ExecuteAsync)}|{errorMessage}");
+                    Context.API.LogWarn(ClassName, errorMessage);
                     break;
                 case (_, not 0):
                     throw new InvalidDataException(Encoding.UTF8.GetString(errorBuffer.ToArray())); // The process has exited with an error message

@@ -16,6 +16,8 @@ namespace Flow.Launcher.Core.Plugin
     {
         public const string JsonRpc = "JsonRPC";
 
+        private static readonly string ClassName = nameof(JsonRPCPluginV2);
+
         protected abstract IDuplexPipe ClientPipe { get; set; }
 
         protected StreamReader ErrorStream { get; set; }
@@ -122,7 +124,7 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch (Exception e)
             {
-                Context.API.LogException(nameof(JsonRPCPluginV2), $"Failed to call reload_data for plugin {Context.CurrentPluginMetadata.Name}", e);
+                Context.API.LogException(ClassName, $"Failed to call reload_data for plugin {Context.CurrentPluginMetadata.Name}", e);
             }
         }
 
@@ -140,7 +142,7 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch (Exception e)
             {
-                Context.API.LogException(nameof(JsonRPCPluginV2), $"Failed to call close for plugin {Context.CurrentPluginMetadata.Name}", e);
+                Context.API.LogException(ClassName, $"Failed to call close for plugin {Context.CurrentPluginMetadata.Name}", e);
             }
             finally
             {

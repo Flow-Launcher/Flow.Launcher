@@ -19,10 +19,9 @@ namespace Flow.Launcher.Core.Plugin
     /// </summary>
     public abstract class JsonRPCPluginBase : IAsyncPlugin, IContextMenu, ISettingProvider, ISavable
     {
-        protected PluginInitContext Context;
         public const string JsonRPC = "JsonRPC";
 
-        private int RequestId { get; set; }
+        protected PluginInitContext Context;
 
         private string SettingConfigurationPath =>
             Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "SettingsTemplate.yaml");
@@ -107,7 +106,6 @@ namespace Flow.Launcher.Core.Plugin
 
         public abstract Task<List<Result>> QueryAsync(Query query, CancellationToken token);
 
-
         private async Task InitSettingAsync()
         {
             JsonRpcConfigurationModel configuration = null;
@@ -119,7 +117,6 @@ namespace Flow.Launcher.Core.Plugin
                         await File.ReadAllTextAsync(SettingConfigurationPath));
             }
 
-
             Settings ??= new JsonRPCPluginSettings
             {
                 Configuration = configuration, SettingPath = SettingPath, API = Context.API
@@ -130,7 +127,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public virtual async Task InitAsync(PluginInitContext context)
         {
-            this.Context = context;
+            Context = context;
             await InitSettingAsync();
         }
 
