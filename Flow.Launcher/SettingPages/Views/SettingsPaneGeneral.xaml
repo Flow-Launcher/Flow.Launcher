@@ -320,7 +320,7 @@
             <Border Visibility="{Binding KoreanIMERegistryKeyExists, Converter={StaticResource BoolToVisibilityConverter}}">
                 <cc:InfoBar
                     Title="{DynamicResource KoreanImeTitle}"
-                    Margin="0 12 0 0"
+                    Margin="0 14 0 0"
                     Closable="False"
                     DataContext="{Binding RelativeSource={RelativeSource AncestorType=Border}, Path=DataContext}"
                     IsIconVisible="True"
@@ -329,7 +329,7 @@
                     Type="Warning"
                     Visibility="{Binding LegacyKoreanIMEEnabled, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Inverted, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
             </Border>
-            <cc:CardGroup Margin="0 4 0 0" Visibility="{Binding KoreanIMERegistryKeyExists, Converter={StaticResource BoolToVisibilityConverter}}">
+            <cc:CardGroup Margin="0 14 0 0" Visibility="{Binding KoreanIMERegistryKeyExists, Converter={StaticResource BoolToVisibilityConverter}}">
                 <cc:Card
                     Title="{DynamicResource KoreanImeRegistry}"
                     Icon="&#xe88b;"
@@ -342,7 +342,7 @@
                 <cc:Card
                     Title="{DynamicResource KoreanImeOpenLink}"
                     Icon="&#xf7b9;"
-                    Sub="{DynamicResource KoreanImeOpenLinkTooltip}">
+                    Sub="{DynamicResource KoreanImeOpenLinkToolTip}">
                     <Button Command="{Binding OpenImeSettingsCommand}" Content="{DynamicResource KoreanImeOpenLinkButton}" />
                 </cc:Card>
             </cc:CardGroup>

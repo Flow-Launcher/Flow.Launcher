@@ -189,127 +189,128 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         }
     }
     public bool LegacyKoreanIMEEnabled
+{
+    get => IsLegacyKoreanIMEEnabled();
+    set
     {
-        get => IsLegacyKoreanIMEEnabled();
-        set
+        Debug.WriteLine($"[DEBUG] LegacyKoreanIMEEnabled changed: {value}");
+        if (SetLegacyKoreanIMEEnabled(value))
         {
-            Debug.WriteLine($"[DEBUG] LegacyKoreanIMEEnabled 변경: {value}");
-            if (SetLegacyKoreanIMEEnabled(value))
-            {
-                OnPropertyChanged(nameof(LegacyKoreanIMEEnabled));
-                OnPropertyChanged(nameof(KoreanIMERegistryValueIsZero));
-            }
-            else
-            {
-                Debug.WriteLine("[DEBUG] LegacyKoreanIMEEnabled 설정 실패");
-            }
+            OnPropertyChanged(nameof(LegacyKoreanIMEEnabled));
+            OnPropertyChanged(nameof(KoreanIMERegistryValueIsZero));
+        }
+        else
+        {
+            Debug.WriteLine("[DEBUG] Failed to set LegacyKoreanIMEEnabled");
         }
     }
+}
 
-    public bool KoreanIMERegistryKeyExists => IsKoreanIMEExist();
+public bool KoreanIMERegistryKeyExists => IsKoreanIMEExist();
 
-    public bool KoreanIMERegistryValueIsZero
-    {
-        get
-        {
-            object value = GetLegacyKoreanIMERegistryValue();
-            if (value is int intValue)
-            {
-                return intValue == 0;
-            }
-            else if (value != null && int.TryParse(value.ToString(), out int parsedValue))
-            {
-                return parsedValue == 0;
-            }
-
-            return false;
-        }
-    }
-
-    bool IsKoreanIMEExist()
-    {
-        return GetLegacyKoreanIMERegistryValue() != null;
-    }
-
-    bool IsLegacyKoreanIMEEnabled()
+public bool KoreanIMERegistryValueIsZero
+{
+    get
     {
         object value = GetLegacyKoreanIMERegistryValue();
-
         if (value is int intValue)
         {
-            return intValue == 1;
+            return intValue == 0;
         }
         else if (value != null && int.TryParse(value.ToString(), out int parsedValue))
         {
-            return parsedValue == 1;
+            return parsedValue == 0;
         }
 
         return false;
     }
+}
 
-    bool SetLegacyKoreanIMEEnabled(bool enable)
+bool IsKoreanIMEExist()
+{
+    return GetLegacyKoreanIMERegistryValue() != null;
+}
+
+bool IsLegacyKoreanIMEEnabled()
+{
+    object value = GetLegacyKoreanIMERegistryValue();
+
+    if (value is int intValue)
     {
-        const string subKeyPath = @"Software\Microsoft\input\tsf\tsf3override\{A028AE76-01B1-46C2-99C4-ACD9858AE02F}";
-        const string valueName = "NoTsf3Override5";
+        return intValue == 1;
+    }
+    else if (value != null && int.TryParse(value.ToString(), out int parsedValue))
+    {
+        return parsedValue == 1;
+    }
 
-        try
+    return false;
+}
+
+bool SetLegacyKoreanIMEEnabled(bool enable)
+{
+    const string subKeyPath = @"Software\Microsoft\input\tsf\tsf3override\{A028AE76-01B1-46C2-99C4-ACD9858AE02F}";
+    const string valueName = "NoTsf3Override5";
+
+    try
+    {
+        using (RegistryKey key = Registry.CurrentUser.CreateSubKey(subKeyPath))
         {
-            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(subKeyPath))
+            if (key != null)
             {
-                if (key != null)
-                {
-                    int value = enable ? 1 : 0;
-                    key.SetValue(valueName, value, RegistryValueKind.DWord);
-                    return true;
-                }
-                else
-                {
-                    Debug.WriteLine($"[IME DEBUG] 레지스트리 키 생성 또는 열기 실패: {subKeyPath}");
-                }
+                int value = enable ? 1 : 0;
+                key.SetValue(valueName, value, RegistryValueKind.DWord);
+                return true;
+            }
+            else
+            {
+                Debug.WriteLine($"[IME DEBUG] Failed to create or open registry key: {subKeyPath}");
             }
         }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"[IME DEBUG] 레지스트리 설정 중 예외 발생: {ex.Message}");
-        }
-
-        return false;
+    }
+    catch (Exception ex)
+    {
+        Debug.WriteLine($"[IME DEBUG] Exception occurred while setting registry: {ex.Message}");
     }
 
-    private object GetLegacyKoreanIMERegistryValue()
-    {
-        const string subKeyPath = @"Software\Microsoft\input\tsf\tsf3override\{A028AE76-01B1-46C2-99C4-ACD9858AE02F}";
-        const string valueName = "NoTsf3Override5";
+    return false;
+}
 
-        try
+private object GetLegacyKoreanIMERegistryValue()
+{
+    const string subKeyPath = @"Software\Microsoft\input\tsf\tsf3override\{A028AE76-01B1-46C2-99C4-ACD9858AE02F}";
+    const string valueName = "NoTsf3Override5";
+
+    try
+    {
+        using (RegistryKey key = Registry.CurrentUser.OpenSubKey(subKeyPath))
         {
-            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(subKeyPath))
+            if (key != null)
             {
-                if (key != null)
-                {
-                    return key.GetValue(valueName);
-                }
+                return key.GetValue(valueName);
             }
         }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"[IME DEBUG] 예외 발생: {ex.Message}");
-        }
-
-        return null;
     }
-
-    private void OpenImeSettings()
+    catch (Exception ex)
     {
-        try
-        {
-            Process.Start(new ProcessStartInfo("ms-settings:regionlanguage") { UseShellExecute = true });
-        }
-        catch (Exception e)
-        {
-            Debug.WriteLine($"Error opening IME settings: {e.Message}");
-        }
+        Debug.WriteLine($"[IME DEBUG] Exception occurred: {ex.Message}");
     }
+
+    return null;
+}
+
+private void OpenImeSettings()
+{
+    try
+    {
+        Process.Start(new ProcessStartInfo("ms-settings:regionlanguage") { UseShellExecute = true });
+    }
+    catch (Exception e)
+    {
+        Debug.WriteLine($"Error opening IME settings: {e.Message}");
+    }
+}
+
 
     public bool ShouldUsePinyin
     {
