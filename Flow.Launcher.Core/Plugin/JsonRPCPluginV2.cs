@@ -10,7 +10,6 @@ using Microsoft.VisualStudio.Threading;
 using StreamJsonRpc;
 using IAsyncDisposable = System.IAsyncDisposable;
 
-
 namespace Flow.Launcher.Core.Plugin
 {
     internal abstract class JsonRPCPluginV2 : JsonRPCPluginBase, IAsyncDisposable, IAsyncReloadable, IResultUpdated
@@ -22,7 +21,6 @@ namespace Flow.Launcher.Core.Plugin
         protected StreamReader ErrorStream { get; set; }
 
         private JsonRpc RPC { get; set; }
-
 
         protected override async Task<bool> ExecuteResultAsync(JsonRPCResult result)
         {
@@ -54,7 +52,6 @@ namespace Flow.Launcher.Core.Plugin
 
             return results;
         }
-
 
         public override async Task InitAsync(PluginInitContext context)
         {
@@ -88,7 +85,6 @@ namespace Flow.Launcher.Core.Plugin
 
         protected abstract MessageHandlerType MessageHandler { get; }
 
-
         private void SetupJsonRPC()
         {
             var formatter = new SystemTextJsonFormatter { JsonSerializerOptions = RequestSerializeOption };
@@ -118,8 +114,15 @@ namespace Flow.Launcher.Core.Plugin
             {
                 await RPC.InvokeAsync("reload_data", Context);
             }
-            catch (RemoteMethodNotFoundException e)
+            catch (RemoteMethodNotFoundException)
             {
+            }
+            catch (ConnectionLostException)
+            {
+            }
+            catch (Exception e)
+            {
+                Context.API.LogException(nameof(JsonRPCPluginV2), "Failed to call reload_data", e);
             }
         }
 
@@ -129,8 +132,15 @@ namespace Flow.Launcher.Core.Plugin
             {
                 await RPC.InvokeAsync("close");
             }
-            catch (RemoteMethodNotFoundException e)
+            catch (RemoteMethodNotFoundException)
             {
+            }
+            catch (ConnectionLostException)
+            {
+            }
+            catch (Exception e)
+            {
+                Context.API.LogException(nameof(JsonRPCPluginV2), "Failed to call close", e);
             }
             finally
             {

@@ -1,11 +1,11 @@
-﻿using Flow.Launcher.Core.Resource;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Plugin;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;

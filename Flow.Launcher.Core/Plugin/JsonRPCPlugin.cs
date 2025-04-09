@@ -1,5 +1,4 @@
-﻿using Flow.Launcher.Core.Resource;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -7,10 +6,10 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin;
 using Microsoft.IO;
-using System.Windows;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -20,7 +19,7 @@ namespace Flow.Launcher.Core.Plugin
     /// </summary>
     internal abstract class JsonRPCPlugin : JsonRPCPluginBase
     {
-        public const string JsonRPC = "JsonRPC";
+        public new const string JsonRPC = "JsonRPC";
 
         protected abstract Task<Stream> RequestAsync(JsonRPCRequestModel rpcRequest, CancellationToken token = default);
         protected abstract string Request(JsonRPCRequestModel rpcRequest, CancellationToken token = default);
@@ -28,9 +27,6 @@ namespace Flow.Launcher.Core.Plugin
         private static readonly RecyclableMemoryStreamManager BufferManager = new();
 
         private int RequestId { get; set; }
-
-        private string SettingConfigurationPath => Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "SettingsTemplate.yaml");
-        private string SettingPath => Path.Combine(Context.CurrentPluginMetadata.PluginSettingsDirectoryPath, "Settings.json");
 
         public override List<Result> LoadContextMenus(Result selectedResult)
         {
@@ -56,13 +52,6 @@ namespace Flow.Launcher.Core.Plugin
                 new JsonObjectConverter()
             }
         };
-
-        private static readonly JsonSerializerOptions settingSerializeOption = new()
-        {
-            WriteIndented = true
-        };
-
-        private readonly Dictionary<string, FrameworkElement> _settingControls = new();
 
         private async Task<List<Result>> DeserializedResultAsync(Stream output)
         {
@@ -121,7 +110,6 @@ namespace Flow.Launcher.Core.Plugin
 
             return !result.JsonRPCAction.DontHideAfterAction;
         }
-
 
         /// <summary>
         /// Execute external program and return the output
