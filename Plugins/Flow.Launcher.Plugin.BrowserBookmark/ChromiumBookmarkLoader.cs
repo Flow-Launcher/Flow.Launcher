@@ -122,45 +122,43 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
 
     private void LoadFaviconsFromDb(string dbPath, List<Bookmark> bookmarks)
     {
+        // Use a copy to avoid lock issues with the original file
+        var tempDbPath = Path.Combine(_faviconCacheDir, $"tempfavicons_{Guid.NewGuid()}.db");
+
         try
         {
-            // Use a copy to avoid lock issues with the original file
-            var tempDbPath = Path.Combine(_faviconCacheDir, $"tempfavicons_{Guid.NewGuid()}.db");
+            File.Copy(dbPath, tempDbPath, true);
+        }
+        catch (Exception ex)
+        {
+            Main._context.API.LogException(ClassName, $"Failed to copy favicon DB: {dbPath}", ex);
+            return;
+        }
+        finally
+        {
+            File.Delete(tempDbPath);
+        }
 
-            try
-            {
-                File.Copy(dbPath, tempDbPath, true);
-            }
-            catch (Exception ex)
-            {
-                Main._context.API.LogException(ClassName, $"Failed to copy favicon DB: {dbPath}", ex);
-                return;
-            }
-            finally
-            {
-                File.Delete(tempDbPath);
-            }
+        try
+        {
+            using var connection = new SqliteConnection($"Data Source={tempDbPath}");
+            connection.Open();
 
-            try
+            foreach (var bookmark in bookmarks)
             {
-                using var connection = new SqliteConnection($"Data Source={tempDbPath}");
-                connection.Open();
-
-                foreach (var bookmark in bookmarks)
+                try
                 {
-                    try
-                    {
-                        var url = bookmark.Url;
-                        if (string.IsNullOrEmpty(url)) continue;
+                    var url = bookmark.Url;
+                    if (string.IsNullOrEmpty(url)) continue;
 
-                        // Extract domain from URL
-                        if (!Uri.TryCreate(url, UriKind.Absolute, out Uri uri))
-                            continue;
+                    // Extract domain from URL
+                    if (!Uri.TryCreate(url, UriKind.Absolute, out Uri uri))
+                        continue;
 
-                        var domain = uri.Host;
+                    var domain = uri.Host;
 
-                        using var cmd = connection.CreateCommand();
-                        cmd.CommandText = @"
+                    using var cmd = connection.CreateCommand();
+                    cmd.CommandText = @"
                             SELECT f.id, b.image_data
                             FROM favicons f
                             JOIN favicon_bitmaps b ON f.id = b.icon_id
@@ -169,51 +167,46 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
                             ORDER BY b.width DESC
                             LIMIT 1";
 
-                        cmd.Parameters.AddWithValue("@url", $"%{domain}%");
+                    cmd.Parameters.AddWithValue("@url", $"%{domain}%");
 
-                        using var reader = cmd.ExecuteReader();
-                        if (!reader.Read() || reader.IsDBNull(1))
-                            continue;
+                    using var reader = cmd.ExecuteReader();
+                    if (!reader.Read() || reader.IsDBNull(1))
+                        continue;
 
-                        var iconId = reader.GetInt64(0).ToString();
-                        var imageData = (byte[])reader["image_data"];
+                    var iconId = reader.GetInt64(0).ToString();
+                    var imageData = (byte[])reader["image_data"];
 
-                        if (imageData is not { Length: > 0 })
-                            continue;
+                    if (imageData is not { Length: > 0 })
+                        continue;
 
-                        var faviconPath = Path.Combine(_faviconCacheDir, $"chromium_{domain}_{iconId}.png");
-                        SaveBitmapData(imageData, faviconPath);
+                    var faviconPath = Path.Combine(_faviconCacheDir, $"chromium_{domain}_{iconId}.png");
+                    SaveBitmapData(imageData, faviconPath);
 
-                        bookmark.FaviconPath = faviconPath;
-                    }
-                    catch (Exception ex)
-                    {
-                        Main._context.API.LogException(ClassName, $"Failed to extract bookmark favicon: {bookmark.Url}", ex);
-                    }
+                    bookmark.FaviconPath = faviconPath;
                 }
-
-                // https://github.com/dotnet/efcore/issues/26580
-                SqliteConnection.ClearPool(connection);
-                connection.Close();
-            }
-            catch (Exception ex)
-            {
-                Main._context.API.LogException(ClassName, $"Failed to connect to SQLite: {tempDbPath}", ex);
+                catch (Exception ex)
+                {
+                    Main._context.API.LogException(ClassName, $"Failed to extract bookmark favicon: {bookmark.Url}", ex);
+                }
             }
 
-            // Delete temporary file
-            try
-            {
-                File.Delete(tempDbPath);
-            }
-            catch (Exception ex)
-            {
-                Main._context.API.LogException(ClassName, $"Failed to delete temporary favicon DB: {tempDbPath}", ex);
-            }
+            // https://github.com/dotnet/efcore/issues/26580
+            SqliteConnection.ClearPool(connection);
+            connection.Close();
         }
         catch (Exception ex)
         {
-            Main._context.API.LogException(ClassName, $"Failed to load favicon DB: {dbPath}", ex);
+            Main._context.API.LogException(ClassName, $"Failed to connect to SQLite: {tempDbPath}", ex);
+        }
+
+        // Delete temporary file
+        try
+        {
+            File.Delete(tempDbPath);
+        }
+        catch (Exception ex)
+        {
+            Main._context.API.LogException(ClassName, $"Failed to delete temporary favicon DB: {tempDbPath}", ex);
         }
     }
 
