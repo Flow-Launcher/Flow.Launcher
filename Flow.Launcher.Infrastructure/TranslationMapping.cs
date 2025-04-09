@@ -8,8 +8,9 @@ namespace Flow.Launcher.Infrastructure
     {
         private bool constructed;
 
-        private List<int> originalIndexs = new List<int>();
-        private List<int> translatedIndexs = new List<int>();
+        private readonly List<int> originalIndexes = new();
+        private readonly List<int> translatedIndexes = new();
+
         private int translatedLength = 0;
 
         public void AddNewIndex(int originalIndex, int translatedIndex, int length)
@@ -17,46 +18,47 @@ namespace Flow.Launcher.Infrastructure
             if (constructed)
                 throw new InvalidOperationException("Mapping shouldn't be changed after constructed");
 
-            originalIndexs.Add(originalIndex);
-            translatedIndexs.Add(translatedIndex);
-            translatedIndexs.Add(translatedIndex + length);
+            originalIndexes.Add(originalIndex);
+            translatedIndexes.Add(translatedIndex);
+            translatedIndexes.Add(translatedIndex + length);
             translatedLength += length - 1;
         }
 
         public int MapToOriginalIndex(int translatedIndex)
         {
-            if (translatedIndex > translatedIndexs.Last())
+            if (translatedIndex > translatedIndexes.Last())
                 return translatedIndex - translatedLength - 1;
 
             int lowerBound = 0;
-            int upperBound = originalIndexs.Count - 1;
+            int upperBound = originalIndexes.Count - 1;
 
             int count = 0;
 
             // Corner case handle
-            if (translatedIndex < translatedIndexs[0])
+            if (translatedIndex < translatedIndexes[0])
                 return translatedIndex;
-            if (translatedIndex > translatedIndexs.Last())
+
+            if (translatedIndex > translatedIndexes.Last())
             {
                 int indexDef = 0;
-                for (int k = 0; k < originalIndexs.Count; k++)
+                for (int k = 0; k < originalIndexes.Count; k++)
                 {
-                    indexDef += translatedIndexs[k * 2 + 1] - translatedIndexs[k * 2];
+                    indexDef += translatedIndexes[k * 2 + 1] - translatedIndexes[k * 2];
                 }
 
                 return translatedIndex - indexDef - 1;
             }
 
             // Binary Search with Range
-            for (int i = originalIndexs.Count / 2;; count++)
+            for (int i = originalIndexes.Count / 2;; count++)
             {
-                if (translatedIndex < translatedIndexs[i * 2])
+                if (translatedIndex < translatedIndexes[i * 2])
                 {
                     // move to lower middle
                     upperBound = i;
                     i = (i + lowerBound) / 2;
                 }
-                else if (translatedIndex > translatedIndexs[i * 2 + 1] - 1)
+                else if (translatedIndex > translatedIndexes[i * 2 + 1] - 1)
                 {
                     lowerBound = i;
                     // move to upper middle
@@ -64,17 +66,19 @@ namespace Flow.Launcher.Infrastructure
                     i = (i + upperBound + 1) / 2;
                 }
                 else
-                    return originalIndexs[i];
+                {
+                    return originalIndexes[i];
+                }
 
                 if (upperBound - lowerBound <= 1 &&
-                    translatedIndex > translatedIndexs[lowerBound * 2 + 1] &&
-                    translatedIndex < translatedIndexs[upperBound * 2])
+                    translatedIndex > translatedIndexes[lowerBound * 2 + 1] &&
+                    translatedIndex < translatedIndexes[upperBound * 2])
                 {
                     int indexDef = 0;
 
                     for (int j = 0; j < upperBound; j++)
                     {
-                        indexDef += translatedIndexs[j * 2 + 1] - translatedIndexs[j * 2];
+                        indexDef += translatedIndexes[j * 2 + 1] - translatedIndexes[j * 2];
                     }
 
                     return translatedIndex - indexDef - 1;
