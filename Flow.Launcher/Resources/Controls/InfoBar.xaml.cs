@@ -49,7 +49,6 @@ namespace Flow.Launcher.Resources.Controls
             set
             {
                 SetValue(MessageProperty, value);
-                UpdateMessageVisibility(); //  Visibility update when change Message
             }
         }
 
@@ -128,13 +127,13 @@ namespace Flow.Launcher.Resources.Controls
         {
             if (Length == InfoBarLength.Short)
             {
-                Part_IconBorder.VerticalAlignment = VerticalAlignment.Center;
-                Part_IconBorder.Margin = new Thickness(0, 0, 12, 0);
+                PART_IconBorder.VerticalAlignment = VerticalAlignment.Center;
+                PART_IconBorder.Margin = new Thickness(0, 0, 12, 0);
             }
             else
             {
-                Part_IconBorder.VerticalAlignment = VerticalAlignment.Top;
-                Part_IconBorder.Margin = new Thickness(0, 2, 12, 0);
+                PART_IconBorder.VerticalAlignment = VerticalAlignment.Top;
+                PART_IconBorder.Margin = new Thickness(0, 2, 12, 0);
             }
         }
 
@@ -158,22 +157,22 @@ namespace Flow.Launcher.Resources.Controls
             {
                 case InfoBarType.Info:
                     PART_Border.Background = (Brush)FindResource("InfoBarInfoBG");
-                    Part_IconBorder.Background = (Brush)FindResource("InfoBarInfoIcon");
+                    PART_IconBorder.Background = (Brush)FindResource("InfoBarInfoIcon");
                     PART_Icon.Glyph = "\xF13F";
                     break;
                 case InfoBarType.Success:
                     PART_Border.Background = (Brush)FindResource("InfoBarSuccessBG");
-                    Part_IconBorder.Background = (Brush)FindResource("InfoBarSuccessIcon");
+                    PART_IconBorder.Background = (Brush)FindResource("InfoBarSuccessIcon");
                     PART_Icon.Glyph = "\xF13E";
                     break;
                 case InfoBarType.Warning:
                     PART_Border.Background = (Brush)FindResource("InfoBarWarningBG");
-                    Part_IconBorder.Background = (Brush)FindResource("InfoBarWarningIcon");
+                    PART_IconBorder.Background = (Brush)FindResource("InfoBarWarningIcon");
                     PART_Icon.Glyph = "\xF13C";
                     break;
                 case InfoBarType.Error:
                     PART_Border.Background = (Brush)FindResource("InfoBarErrorBG");
-                    Part_IconBorder.Background = (Brush)FindResource("InfoBarErrorIcon");
+                    PART_IconBorder.Background = (Brush)FindResource("InfoBarErrorIcon");
                     PART_Icon.Glyph = "\xF13D";
                     break;
             }
@@ -193,7 +192,7 @@ namespace Flow.Launcher.Resources.Controls
 
         private void UpdateIconVisibility()
         {
-            Part_IconBorder.Visibility = IsIconVisible ? Visibility.Visible : Visibility.Collapsed;
+            PART_IconBorder.Visibility = IsIconVisible ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void UpdateCloseButtonVisibility()

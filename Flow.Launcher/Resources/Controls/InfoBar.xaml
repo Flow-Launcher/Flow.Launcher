@@ -28,7 +28,7 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Grid.Column="0" Orientation="Horizontal">
                     <Border
-                        x:Name="Part_IconBorder"
+                        x:Name="PART_IconBorder"
                         Width="16"
                         Height="16"
                         Margin="0 0 12 0"

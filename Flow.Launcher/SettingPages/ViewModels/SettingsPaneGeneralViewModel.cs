@@ -34,8 +34,6 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         _portable = portable;
         _translater = translater;
         UpdateEnumDropdownLocalizations();
-        // Initialize the Korean IME status by checking registry
-        IsLegacyKoreanIMEEnabled();
         OpenImeSettingsCommand = new RelayCommand(OpenImeSettings);
     }
 
