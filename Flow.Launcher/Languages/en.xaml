@@ -130,7 +130,6 @@
     <system:String x:Key="KoreanImeOpenLinkButton">Open</system:String>
     <system:String x:Key="KoreanImeRegistry">Use Legacy Korean IME</system:String>
     <system:String x:Key="KoreanImeRegistryTooltip">You can change the IME settings directly from here without opening a separate settings window</system:String>
-    <system:String x:Key="searchDelayTimeToolTip">Wait time before showing results after typing stops. Higher values wait longer. (ms)</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Search Plugin</system:String>

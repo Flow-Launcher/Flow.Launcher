@@ -220,12 +220,12 @@
                         <ui:NumberBox
                             Width="120"
                             Margin="0 0 0 0"
-                            Minimum="0"
                             Maximum="1000"
+                            Minimum="0"
                             SmallChange="10"
                             SpinButtonPlacementMode="Compact"
-                            Value="{Binding SearchDelayTimeValue}"
-                            ValidationMode="InvalidInputOverwritten" />
+                            ValidationMode="InvalidInputOverwritten"
+                            Value="{Binding SearchDelayTimeValue}" />
                     </StackPanel>
                 </cc:Card>
             </cc:ExCard>
@@ -325,7 +325,7 @@
                     IsIconVisible="True"
                     Length="Long"
                     Message="{DynamicResource KoreanImeGuide}"
-                    Type="Info"
+                    Type="Warning"
                     Visibility="{Binding LegacyKoreanIMEEnabled, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Inverted, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
             </Border>
             <cc:CardGroup Margin="0 4 0 0" Visibility="{Binding KoreanIMERegistryKeyExists, Converter={StaticResource BoolToVisibilityConverter}}">
