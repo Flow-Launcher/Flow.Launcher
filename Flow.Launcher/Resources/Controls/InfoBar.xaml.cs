@@ -19,7 +19,6 @@ namespace Flow.Launcher.Resources.Controls
             UpdateMessageVisibility();
             UpdateOrientation();
             UpdateIconAlignmentAndMargin();
-            //this.DataContext = this;
         }
 
         public static readonly DependencyProperty TypeProperty =
@@ -48,7 +47,7 @@ namespace Flow.Launcher.Resources.Controls
             set
             {
                 SetValue(MessageProperty, value);
-                UpdateMessageVisibility(); // Message 속성 변경 시 Visibility 업데이트
+                UpdateMessageVisibility(); //  Visibility update when change Message
             }
         }
 
@@ -74,7 +73,7 @@ namespace Flow.Launcher.Resources.Controls
             set
             {
                 SetValue(TitleProperty, value);
-                UpdateTitleVisibility(); // Title 속성 변경 시 Visibility 업데이트
+                UpdateTitleVisibility(); // Visibility update when change Title
             }
         }
 
