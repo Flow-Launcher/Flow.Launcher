@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core.ExternalPlugins
 {

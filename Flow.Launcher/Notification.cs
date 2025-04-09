@@ -9,8 +9,8 @@ namespace Flow.Launcher
 {
     internal static class Notification
     {
-        internal static bool legacy = Environment.OSVersion.Version.Build < 19041;
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
+        internal static bool legacy = !Win32Helper.IsNotificationSupported();
+
         internal static void Uninstall()
         {
             if (!legacy)
@@ -25,7 +25,6 @@ namespace Flow.Launcher
             });
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
         private static void ShowInternal(string title, string subTitle, string iconPath = null)
         {
             // Handle notification for win7/8/early win10

@@ -1203,7 +1203,7 @@
     <comment>Area Gaming</comment>
   </data>
   <data name="PluginDescription" xml:space="preserve">
-    <value>Windows 설정을 검색하는 플러그 인</value>
+    <value>Windows 설정을 검색하는 플러그인</value>
   </data>
   <data name="PluginTitle" xml:space="preserve">
     <value>Windows Settings</value>

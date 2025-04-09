@@ -106,6 +106,7 @@
     <Color x:Key="NumberBoxColor24">#f5f5f5</Color>
     <Color x:Key="NumberBoxColor25">#464646</Color>
     <Color x:Key="NumberBoxColor26">#ffffff</Color>
+    <SolidColorBrush x:Key="NumberBoxPlaceHolder" Color="#565656" />
     <Color x:Key="HoverStoreGrid">#272727</Color>
 
     <!--  Resources for HotkeyControl  -->
@@ -113,7 +114,7 @@
     <!--  Resources for Expander  -->
     <SolidColorBrush x:Key="CustomExpanderHover" Color="#323232" />
     <!--  Resource for ContentDialog  -->
-    <SolidColorBrush x:Key="ContentDialogOverlayBG" Color="#4D000000" />
+    <SolidColorBrush x:Key="ContentDialogOverlayBG" Color="#58000000" />
     <!--  Infobar Warning  -->
     <SolidColorBrush x:Key="InfoBarWarningIcon" Color="#FCE100" />
     <SolidColorBrush x:Key="InfoBarWarningBG" Color="#433519" />

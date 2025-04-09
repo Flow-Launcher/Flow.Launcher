@@ -23,6 +23,8 @@ namespace Flow.Launcher.Core.Plugin
         protected ConcurrentDictionary<string, object?> Settings { get; set; } = null!;
         public required IPublicAPI API { get; init; }
 
+        private static readonly string ClassName = nameof(JsonRPCPluginSettings);
+
         private JsonStorage<ConcurrentDictionary<string, object?>> _storage = null!;
 
         private static readonly Thickness SettingPanelMargin = (Thickness)Application.Current.FindResource("SettingPanelMargin");
@@ -122,12 +124,26 @@ namespace Flow.Launcher.Core.Plugin
 
         public async Task SaveAsync()
         {
-            await _storage.SaveAsync();
+            try
+            {
+                await _storage.SaveAsync();
+            }
+            catch (System.Exception e)
+            {
+                API.LogException(ClassName, $"Failed to save plugin settings to path: {SettingPath}", e);
+            }
         }
 
         public void Save()
         {
-            _storage.Save();
+            try
+            {
+                _storage.Save();
+            }
+            catch (System.Exception e)
+            {
+                API.LogException(ClassName, $"Failed to save plugin settings to path: {SettingPath}", e);
+            }
         }
         
         public bool NeedCreateSettingPanel()

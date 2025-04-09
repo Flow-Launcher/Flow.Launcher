@@ -7,6 +7,11 @@
         如果已安装，请单击“否”，系统将提示您选择包含 {1} 可执行文件的文件夹
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">请选择 {0} 可执行文件</system:String>
+    <system:String x:Key="runtimeExecutableInvalidChooseDownload">
+        Your selected {0} executable is invalid.
+        {2}{2}
+        Click yes if you would like select the {0} executable agian. Click no if you would like to download {1}
+    </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">无法设置 {0} 可执行路径，请尝试从 Flow 的设置中设置（向下滚动到底部）。</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">无法初始化插件</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">插件：{0} - 无法加载并将被禁用，请联系插件创建者寻求帮助</system:String>
@@ -37,7 +42,7 @@
     <system:String x:Key="GameMode">游戏模式</system:String>
     <system:String x:Key="GameModeToolTip">暂停使用热键。</system:String>
     <system:String x:Key="PositionReset">重置位置</system:String>
-    <system:String x:Key="PositionResetToolTip">重置搜索窗口位置</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">设置</system:String>
@@ -70,8 +75,6 @@
     <system:String x:Key="LastQueryEmpty">清空上次搜索关键字</system:String>
     <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
     <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
-    <system:String x:Key="KeepMaxResults">固定窗口高度</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">窗口高度不能通过拖动来调整。</system:String>
     <system:String x:Key="maxShowResults">最大结果显示个数</system:String>
     <system:String x:Key="maxShowResultsToolTip">您也可以通过使用 CTRL+ &quot;+&quot; 和 CTRL+ &quot;-&quot; 来快速调整它。</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">全屏模式下忽略热键</system:String>
@@ -102,6 +105,15 @@
     <system:String x:Key="AlwaysPreview">始终打开预览</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Flow 启动时总是打开预览面板。按 {0} 以切换预览。</system:String>
     <system:String x:Key="shadowEffectNotAllowed">当前主题已启用模糊效果，不允许启用阴影效果</system:String>
+    <system:String x:Key="searchDelay">Search Delay</system:String>
+    <system:String x:Key="searchDelayToolTip">Delay for a while to search when typing. This reduces interface jumpiness and result load.</system:String>
+    <system:String x:Key="searchDelayTime">Default Search Delay Time</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Plugin default delay time after which search results appear when typing is stopped.</system:String>
+    <system:String x:Key="SearchDelayTimeVeryLong">Very long</system:String>
+    <system:String x:Key="SearchDelayTimeLong">Long</system:String>
+    <system:String x:Key="SearchDelayTimeNormal">Normal</system:String>
+    <system:String x:Key="SearchDelayTimeShort">Short</system:String>
+    <system:String x:Key="SearchDelayTimeVeryShort">Very short</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">搜索插件</system:String>
@@ -118,6 +130,8 @@
     <system:String x:Key="currentActionKeywords">当前触发关键字</system:String>
     <system:String x:Key="newActionKeyword">新触发关键字</system:String>
     <system:String x:Key="actionKeywordsTooltip">更改触发关键字</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Plugin seach delay time</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Seach Delay Time</system:String>
     <system:String x:Key="currentPriority">当前优先级</system:String>
     <system:String x:Key="newPriority">新优先级</system:String>
     <system:String x:Key="priority">优先级</system:String>
@@ -131,6 +145,9 @@
     <system:String x:Key="plugin_uninstall">卸载</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
+    <system:String x:Key="failedToRemovePluginCacheTitle">Fail to remove plugin cache</system:String>
+    <system:String x:Key="failedToRemovePluginCacheMessage">Plugins: {0} - Fail to remove plugin cache files, please remove them manually</system:String>
+    <system:String x:Key="default">Default</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">插件商店</system:String>
@@ -193,8 +210,20 @@
     <system:String x:Key="AnimationSpeedCustom">自定义</system:String>
     <system:String x:Key="Clock">时钟</system:String>
     <system:String x:Key="Date">日期</system:String>
+    <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropTypeDisabledToolTip">Backdrop supported starting from Windows 11 build 22000 and above</system:String>
+    <system:String x:Key="BackdropTypesNone">无</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
+    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
     <system:String x:Key="TypeIsDarkToolTip">该主题支持两种（浅色/深色）模式。</system:String>
     <system:String x:Key="TypeHasBlurToolTip">该主题支持模糊透明背景。</system:String>
+    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
+    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
+    <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">热键</system:String>
@@ -294,6 +323,9 @@
     <system:String x:Key="logfolder">日志目录</system:String>
     <system:String x:Key="clearlogfolder">清除日志</system:String>
     <system:String x:Key="clearlogfolderMessage">你确定要删除所有的日志吗？</system:String>
+    <system:String x:Key="clearcachefolder">Clear Caches</system:String>
+    <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
+    <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
     <system:String x:Key="welcomewindow">向导</system:String>
     <system:String x:Key="userdatapath">用户数据位置</system:String>
     <system:String x:Key="userdatapathToolTip">用户设置和已安装的插件保存在用户数据文件夹中。此位置可能因是否处于便携模式而异。</system:String>
@@ -335,9 +367,16 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">找不到指定的插件</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">新触发关键字不能为空</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">此触发关键字已经被指派给其他插件了，请换一个关键字</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
     <system:String x:Key="success">成功</system:String>
     <system:String x:Key="completedSuccessfully">成功完成</system:String>
-    <system:String x:Key="actionkeyword_tips">如果你不想设置触发关键字，可以使用*代替</system:String>
+    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="searchDelayTimeTitle">Search Delay Time Setting</system:String>
+    <system:String x:Key="searchDelayTime_tips">Select the search delay time you like to use for the plugin. Select &quot;{0}&quot; if you don't want to specify any, and the plugin will use default search delay time.</system:String>
+    <system:String x:Key="currentSearchDelayTime">Current search delay time</system:String>
+    <system:String x:Key="newSearchDelayTime">New search delay time</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">自定义查询热键</system:String>
@@ -371,7 +410,7 @@
     <system:String x:Key="commonOK">更新</system:String>
     <system:String x:Key="commonYes">是</system:String>
     <system:String x:Key="commonNo">否</system:String>
-    <system:String x:Key="commonBackground">背景</system:String>
+    <system:String x:Key="commonBackground">后台</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">版本</system:String>

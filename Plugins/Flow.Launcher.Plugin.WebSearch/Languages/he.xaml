@@ -17,7 +17,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">מילת מפתח לפעולה</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">כתובת URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">חיפו</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">השתמש בהשלמה אוטומטית לשאילתות חיפוש:</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">השתמש בהשלמה אוטומטית לשאילתת חיפוש</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">השלמה אוטומטית מתוך:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">בחר שירות חיפוש אינטרנטי</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">האם אתה בטוח שברצונך למחוק את {0}?</system:String>

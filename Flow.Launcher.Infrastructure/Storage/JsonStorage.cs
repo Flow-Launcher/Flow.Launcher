@@ -1,17 +1,20 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Globalization;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedCommands;
+
+#nullable enable
 
 namespace Flow.Launcher.Infrastructure.Storage
 {
     /// <summary>
     /// Serialize object using json format.
     /// </summary>
-    public class JsonStorage<T> where T : new()
+    public class JsonStorage<T> : ISavable where T : new()
     {
         protected T? Data;
 
@@ -37,7 +40,7 @@ namespace Flow.Launcher.Infrastructure.Storage
             FilePath = filePath;
             DirectoryPath = Path.GetDirectoryName(filePath) ?? throw new ArgumentException("Invalid file path");
 
-            Helper.ValidateDirectory(DirectoryPath);
+            FilesFolders.ValidateDirectory(DirectoryPath);
         }
 
         public async Task<T> LoadAsync()

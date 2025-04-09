@@ -84,7 +84,7 @@
 
     <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">סייר מותאם אישית</system:String>
     <system:String x:Key="flowlauncher_plugin_program_args">ארגומנטים</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">You can customize the explorer used for opening the container folder by inputing the Environmental Variable of the explorer you want to use. It will be useful to use CMD to test whether the Environmental Variable is available.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">באפשרותך להתאים אישית את הסייר שבו נעשה שימוש לפתיחת תיקיית המכולה על ידי הזנת משתנה הסביבה של הסייר שברצונך להשתמש בו. כדאי לבדוק באמצעות CMD אם משתנה הסביבה זמין.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_args">הזן את הארגומנטים שברצונך להוסיף לסייר המותאם אישית שלך. %s עבור ספריית האב, %f עבור הנתיב המלא (זמין רק עבור win32). בדוק באתר הסייר לפרטים נוספים.</system:String>
 
     <!--  Dialogs  -->
