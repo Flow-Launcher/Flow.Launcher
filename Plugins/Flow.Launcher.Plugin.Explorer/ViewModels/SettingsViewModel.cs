@@ -524,7 +524,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             }
         }
 
-        public int MaxResultLowerLimit => 100;
+        public int MaxResultLowerLimit => 1;
         public int MaxResultUpperLimit => 100000;
 
         public int MaxResult
