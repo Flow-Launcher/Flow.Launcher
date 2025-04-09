@@ -1,6 +1,4 @@
-﻿using Flow.Launcher.Infrastructure.Logger;
-using Microsoft.Search.Interop;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.OleDb;
 using System.Linq;
@@ -9,11 +7,13 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
 using Flow.Launcher.Plugin.Explorer.Exceptions;
+using Microsoft.Search.Interop;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 {
     internal static class WindowsIndex
     {
+        private static readonly string ClassName = nameof(WindowsIndex);
 
         // Reserved keywords in oleDB
         private static Regex _reservedPatternMatcher = new(@"^[`\@\＠\#\＃\＊\^,\&\＆\/\\\$\%_;\[\]]+$", RegexOptions.Compiled);
@@ -33,7 +33,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             }
             catch (OleDbException e)
             {
-                Log.Exception($"|WindowsIndex.ExecuteWindowsIndexSearchAsync|Failed to execute windows index search query: {indexQueryString}", e);
+                Main.Context.API.LogException(ClassName, $"Failed to execute windows index search query: {indexQueryString}", e);
                 yield break;
             }
             await using var dataReader = dataReaderAttempt;

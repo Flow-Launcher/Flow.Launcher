@@ -142,15 +142,47 @@ namespace Flow.Launcher.Plugin
         List<PluginPair> GetAllPlugins();
 
         /// <summary>
-        /// Register a callback for Global Keyboard Event
+        /// Registers a callback function for global keyboard events.
         /// </summary>
-        /// <param name="callback"></param>
+        /// <param name="callback">
+        /// The callback function to invoke when a global keyboard event occurs.
+        /// <para>
+        /// Parameters:
+        /// <list type="number">
+        ///   <item><description>int: The type of <see cref="KeyEvent"/> (key down, key up, etc.)</description></item>
+        ///   <item><description>int: The virtual key code of the pressed/released key</description></item>
+        ///   <item><description><see cref="SpecialKeyState"/>: The state of modifier keys (Ctrl, Alt, Shift, etc.)</description></item>
+        /// </list>
+        /// </para>
+        /// <para>
+        /// Returns: <c>true</c> to allow normal system processing of the key event,
+        /// or <c>false</c> to intercept and prevent default handling.
+        /// </para>
+        /// </param>
+        /// <remarks>
+        /// This callback will be invoked for all keyboard events system-wide.
+        /// Use with caution as intercepting system keys may affect normal system operation.
+        /// </remarks>
         public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback);
-        
+
         /// <summary>
         /// Remove a callback for Global Keyboard Event
         /// </summary>
-        /// <param name="callback"></param>
+        /// <param name="callback">
+        /// The callback function to invoke when a global keyboard event occurs.
+        /// <para>
+        /// Parameters:
+        /// <list type="number">
+        ///   <item><description>int: The type of <see cref="KeyEvent"/> (key down, key up, etc.)</description></item>
+        ///   <item><description>int: The virtual key code of the pressed/released key</description></item>
+        ///   <item><description><see cref="SpecialKeyState"/>: The state of modifier keys (Ctrl, Alt, Shift, etc.)</description></item>
+        /// </list>
+        /// </para>
+        /// <para>
+        /// Returns: <c>true</c> to allow normal system processing of the key event,
+        /// or <c>false</c> to intercept and prevent default handling.
+        /// </para>
+        /// </param>
         public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback);
 
         /// <summary>
@@ -372,6 +404,7 @@ namespace Flow.Launcher.Plugin
         /// </returns>
         public bool SetCurrentTheme(ThemeData theme);
 
+        /// <summary>
         /// Save all Flow's plugins caches
         /// </summary>
         void SavePluginCaches();
@@ -404,7 +437,10 @@ namespace Flow.Launcher.Plugin
         /// </remarks>
         Task SaveCacheBinaryStorageAsync<T>(string cacheName, string cacheDirectory) where T : new();
 
-        /// Load image from path. Support local, remote and data:image url.
+        /// <summary>
+        /// Load image from path.
+        /// Support local, remote and data:image url.
+        /// Support png, jpg, jpeg, gif, bmp, tiff, ico, svg image files.
         /// If image path is missing, it will return a missing icon.
         /// </summary>
         /// <param name="path">The path of the image.</param>
@@ -418,6 +454,7 @@ namespace Flow.Launcher.Plugin
         /// <returns></returns>
         ValueTask<ImageSource> LoadImageAsync(string path, bool loadFullImage = false, bool cacheImage = true);
 
+        /// <summary>
         /// Update the plugin manifest
         /// </summary>
         /// <param name="usePrimaryUrlOnly">

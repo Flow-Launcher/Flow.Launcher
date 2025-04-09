@@ -18,6 +18,8 @@ namespace Flow.Launcher.Plugin.Program
 {
     public class Main : ISettingProvider, IAsyncPlugin, IPluginI18n, IContextMenu, IAsyncReloadable, IDisposable
     {
+        private static readonly string ClassName = nameof(Main);
+
         private const string Win32CacheName = "Win32";
         private const string UwpCacheName = "UWP";
 
@@ -29,8 +31,6 @@ namespace Flow.Launcher.Plugin.Program
         internal static SemaphoreSlim _uwpsLock = new(1, 1);
 
         internal static PluginInitContext Context { get; private set; }
-
-        private static readonly string ClassName = nameof(Main);
 
         private static readonly List<Result> emptyResults = new();
 
@@ -274,7 +274,7 @@ namespace Flow.Launcher.Plugin.Program
             static void WatchProgramUpdate()
             {
                 Win32.WatchProgramUpdate(_settings);
-                _ = UWPPackage.WatchPackageChange();
+                _ = UWPPackage.WatchPackageChangeAsync();
             }
         }
 
