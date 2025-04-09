@@ -233,10 +233,11 @@ namespace Flow.Launcher.Infrastructure.Image
                             image = LoadFullImage(path);
                             type = ImageType.FullImageFile;
                         }
-                        catch (NotSupportedException)
+                        catch (NotSupportedException ex)
                         {
                             image = Image;
                             type = ImageType.Error;
+                            Log.Exception($"Failed to load image file from path {path}: {ex.Message}", ex);
                         }
                     }
                     else
@@ -256,10 +257,11 @@ namespace Flow.Launcher.Infrastructure.Image
                         image = LoadSvgImage(path, loadFullImage);
                         type = ImageType.FullImageFile;
                     }
-                    catch (System.Exception)
+                    catch (System.Exception ex)
                     {
                         image = Image;
                         type = ImageType.Error;
+                        Log.Exception($"Failed to load SVG image from path {path}: {ex.Message}", ex);
                     }
                 }
                 else
