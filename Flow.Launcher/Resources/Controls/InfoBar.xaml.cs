@@ -175,6 +175,11 @@ namespace Flow.Launcher.Resources.Controls
                     PART_IconBorder.Background = (Brush)FindResource("InfoBarErrorIcon");
                     PART_Icon.Glyph = "\xF13D";
                     break;
+                default:
+                    PART_Border.Background = (Brush)FindResource("InfoBarInfoBG");
+                    PART_IconBorder.Background = (Brush)FindResource("InfoBarInfoIcon");
+                    PART_Icon.Glyph = "\xF13F";
+                    break;
             }
         }
 

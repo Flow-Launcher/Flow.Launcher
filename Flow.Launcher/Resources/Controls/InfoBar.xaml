@@ -3,7 +3,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:cc="clr-namespace:Flow.Launcher.Resources.Controls"
-    xmlns:converters="clr-namespace:Flow.Launcher.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.modernwpf.com/2019"
@@ -69,10 +68,12 @@
                     Width="32"
                     Height="32"
                     VerticalAlignment="Center"
+                    AutomationProperties.Name="Close InfoBar"
                     Click="PART_CloseButton_Click"
                     Content="&#xE10A;"
                     FontFamily="Segoe MDL2 Assets"
                     FontSize="12"
+                    ToolTip="Close"
                     Visibility="Visible" />
             </Grid>
         </Border>
