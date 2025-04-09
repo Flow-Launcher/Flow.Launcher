@@ -393,7 +393,7 @@ namespace Flow.Launcher.Plugin.Explorer
             {
                 Title = Context.API.GetTranslation("plugin_explorer_excludefromindexsearch"),
                 SubTitle = Context.API.GetTranslation("plugin_explorer_path") + " " + record.FullPath,
-                Action = _ =>
+                Action = c_ =>
                 {
                     if (!Settings.IndexSearchExcludedSubdirectoryPaths.Any(x => string.Equals(x.Path, record.FullPath, StringComparison.OrdinalIgnoreCase)))
                         Settings.IndexSearchExcludedSubdirectoryPaths.Add(new AccessLink
@@ -401,7 +401,7 @@ namespace Flow.Launcher.Plugin.Explorer
                             Path = record.FullPath
                         });
 
-                    Task.Run(() =>
+                    _ = Task.Run(() =>
                     {
                         Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_excludedfromindexsearch_msg"),
                             Context.API.GetTranslation("plugin_explorer_path") +
@@ -469,7 +469,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
         private void LogException(string message, Exception e)
         {
-            Context.API.LogException(nameof(Main), message, e);
+            Context.API.LogException(nameof(ContextMenu), message, e);
         }
 
         private static bool CanRunAsDifferentUser(string path)
