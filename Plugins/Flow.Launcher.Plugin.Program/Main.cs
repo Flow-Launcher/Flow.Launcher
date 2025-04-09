@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.Program.Programs;
 using Flow.Launcher.Plugin.Program.Views;
@@ -14,7 +13,6 @@ using Flow.Launcher.Plugin.Program.Views.Models;
 using Flow.Launcher.Plugin.SharedCommands;
 using Microsoft.Extensions.Caching.Memory;
 using Path = System.IO.Path;
-using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher.Plugin.Program
 {
@@ -31,6 +29,8 @@ namespace Flow.Launcher.Plugin.Program
         internal static SemaphoreSlim _uwpsLock = new(1, 1);
 
         internal static PluginInitContext Context { get; private set; }
+
+        private static readonly string ClassName = nameof(Main);
 
         private static readonly List<Result> emptyResults = new();
 
@@ -109,7 +109,7 @@ namespace Flow.Launcher.Plugin.Program
                     }
                     catch (OperationCanceledException)
                     {
-                        Log.Debug("|Flow.Launcher.Plugin.Program.Main|Query operation cancelled");
+                        Context.API.LogDebug(ClassName, "Query operation cancelled");
                         return emptyResults;
                     }
                     finally
@@ -188,7 +188,7 @@ namespace Flow.Launcher.Plugin.Program
 
             var _win32sCount = 0;
             var _uwpsCount = 0;
-            await Stopwatch.NormalAsync("|Flow.Launcher.Plugin.Program.Main|Preload programs cost", async () =>
+            await Context.API.StopwatchLogInfoAsync(ClassName, "Preload programs cost", async () =>
             {
                 var pluginCacheDirectory = Context.CurrentPluginMetadata.PluginCacheDirectoryPath;
                 FilesFolders.ValidateDirectory(pluginCacheDirectory);
@@ -253,8 +253,8 @@ namespace Flow.Launcher.Plugin.Program
                 _uwpsCount = _uwps.Count;
                 _uwpsLock.Release();
             });
-            Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload win32 programs <{_win32sCount}>");
-            Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload uwps <{_uwpsCount}>");
+            Context.API.LogInfo(ClassName, $"Number of preload win32 programs <{_win32sCount}>");
+            Context.API.LogInfo(ClassName, $"Number of preload uwps <{_uwpsCount}>");
 
             var cacheEmpty = _win32sCount == 0 || _uwpsCount == 0;
 
@@ -295,7 +295,7 @@ namespace Flow.Launcher.Plugin.Program
             }
             catch (Exception e)
             {
-                Log.Exception("|Flow.Launcher.Plugin.Program.Main|Failed to index Win32 programs", e);
+                Context.API.LogException(ClassName, "Failed to index Win32 programs", e);
             }
             finally
             {
@@ -320,7 +320,7 @@ namespace Flow.Launcher.Plugin.Program
             }
             catch (Exception e)
             {
-                Log.Exception("|Flow.Launcher.Plugin.Program.Main|Failed to index Uwp programs", e);
+                Context.API.LogException(ClassName, "Failed to index Uwp programs", e);
             }
             finally
             {
@@ -332,12 +332,12 @@ namespace Flow.Launcher.Plugin.Program
         {
             var win32Task = Task.Run(async () =>
             {
-                await Stopwatch.NormalAsync("|Flow.Launcher.Plugin.Program.Main|Win32Program index cost", IndexWin32ProgramsAsync);
+                await Context.API.StopwatchLogInfoAsync(ClassName, "Win32Program index cost", IndexWin32ProgramsAsync);
             });
 
             var uwpTask = Task.Run(async () =>
             {
-                await Stopwatch.NormalAsync("|Flow.Launcher.Plugin.Program.Main|UWPProgram index cost", IndexUwpProgramsAsync);
+                await Context.API.StopwatchLogInfoAsync(ClassName, "UWPProgram index cost", IndexUwpProgramsAsync);
             });
 
             await Task.WhenAll(win32Task, uwpTask).ConfigureAwait(false);

@@ -21,7 +21,6 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher
 {
@@ -34,6 +33,8 @@ namespace Flow.Launcher
         #endregion
 
         #region Private Fields
+
+        private static readonly string ClassName = nameof(App);
 
         private static bool _disposed;
         private MainWindow _mainWindow;
@@ -136,7 +137,7 @@ namespace Flow.Launcher
 
         private async void OnStartup(object sender, StartupEventArgs e)
         {
-            await Stopwatch.NormalAsync("|App.OnStartup|Startup cost", async () =>
+            await API.StopwatchLogInfoAsync(ClassName, "Startup cost", async () =>
             {
                 // Because new message box api uses MessageBoxEx window,
                 // if it is created and closed before main window is created, it will cause the application to exit.
@@ -313,7 +314,7 @@ namespace Flow.Launcher
                 _disposed = true;
             }
 
-            Stopwatch.Normal("|App.Dispose|Dispose cost", () =>
+            API.StopwatchLogInfo(ClassName, "Dispose cost", () =>
             {
                 Log.Info("|App.Dispose|Begin Flow Launcher dispose ----------------------------------------------------");
 
