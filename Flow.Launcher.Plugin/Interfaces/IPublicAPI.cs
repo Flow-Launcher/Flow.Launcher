@@ -372,6 +372,7 @@ namespace Flow.Launcher.Plugin
         /// </returns>
         public bool SetCurrentTheme(ThemeData theme);
 
+        /// <summary>
         /// Save all Flow's plugins caches
         /// </summary>
         void SavePluginCaches();
@@ -404,6 +405,7 @@ namespace Flow.Launcher.Plugin
         /// </remarks>
         Task SaveCacheBinaryStorageAsync<T>(string cacheName, string cacheDirectory) where T : new();
 
+        /// <summary>
         /// Load image from path. Support local, remote and data:image url.
         /// If image path is missing, it will return a missing icon.
         /// </summary>
@@ -418,6 +420,7 @@ namespace Flow.Launcher.Plugin
         /// <returns></returns>
         ValueTask<ImageSource> LoadImageAsync(string path, bool loadFullImage = false, bool cacheImage = true);
 
+        /// <summary>
         /// Update the plugin manifest
         /// </summary>
         /// <param name="usePrimaryUrlOnly">
