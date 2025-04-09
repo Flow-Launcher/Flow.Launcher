@@ -155,12 +155,16 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
                     if (imageData is not { Length: > 0 })
                         continue;
 
-                    var faviconPath = Path.Combine(_faviconCacheDir, $"firefox_{domain}.png");
-
-                    if (!File.Exists(faviconPath))
+                    string faviconPath;
+                    if (IsSvgData(imageData))
                     {
-                        SaveBitmapData(imageData, faviconPath);
+                        faviconPath = Path.Combine(_faviconCacheDir, $"firefox_{domain}.svg");
                     }
+                    else
+                    {
+                        faviconPath = Path.Combine(_faviconCacheDir, $"firefox_{domain}.png");
+                    }
+                    SaveBitmapData(imageData, faviconPath);
 
                     bookmark.FaviconPath = faviconPath;
                 }
@@ -200,6 +204,15 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
         {
             Main._context.API.LogException(ClassName, $"Failed to save image: {outputPath}", ex);
         }
+    }
+
+    private static bool IsSvgData(byte[] data)
+    {
+        if (data.Length < 5)
+            return false;
+        string start = System.Text.Encoding.ASCII.GetString(data, 0, Math.Min(100, data.Length));
+        return start.Contains("<svg") ||
+               (start.StartsWith("<?xml") && start.Contains("<svg"));
     }
 }
 

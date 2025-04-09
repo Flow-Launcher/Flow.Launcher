@@ -177,11 +177,9 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
                         if (imageData is not { Length: > 0 })
                             continue;
 
-                        var faviconPath = Path.Combine(_faviconCacheDir, $"{domain}_{iconId}.png");
-                        if (!File.Exists(faviconPath))
-                        {
-                            SaveBitmapData(imageData, faviconPath);
-                        }
+                        var faviconPath = Path.Combine(_faviconCacheDir, $"chromium_{domain}_{iconId}.png");
+                        SaveBitmapData(imageData, faviconPath);
+
                         bookmark.FaviconPath = faviconPath;
                     }
                     catch (Exception ex)
