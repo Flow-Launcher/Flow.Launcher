@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using WindowsInput;
 using WindowsInput.Native;
-using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin.SharedCommands;
 using Control = System.Windows.Controls.Control;
 using Keys = System.Windows.Forms.Keys;
@@ -22,7 +21,7 @@ namespace Flow.Launcher.Plugin.Shell
 
         private const string Image = "Images/shell.png";
         private bool _winRStroked;
-        private readonly KeyboardSimulator _keyboardSimulator = new KeyboardSimulator(new InputSimulator());
+        private readonly KeyboardSimulator _keyboardSimulator = new(new InputSimulator());
 
         private Settings _settings;
 
@@ -55,7 +54,7 @@ namespace Flow.Launcher.Plugin.Shell
                     {
                         basedir = Path.GetDirectoryName(excmd);
                         var dirName = Path.GetDirectoryName(cmd);
-                        dir = (dirName.EndsWith("/") || dirName.EndsWith(@"\")) ? dirName : cmd.Substring(0, dirName.Length + 1);
+                        dir = (dirName.EndsWith("/") || dirName.EndsWith(@"\")) ? dirName : cmd[..(dirName.Length + 1)];
                     }
 
                     if (basedir != null)
@@ -321,7 +320,7 @@ namespace Flow.Launcher.Plugin.Shell
             }
         }
 
-        private bool ExistInPath(string filename)
+        private static bool ExistInPath(string filename)
         {
             if (File.Exists(filename))
             {
