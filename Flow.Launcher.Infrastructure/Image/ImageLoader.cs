@@ -391,6 +391,10 @@ namespace Flow.Launcher.Infrastructure.Image
 
             // Calculate scale to achieve desired height
             var drawingBounds = drawing.Bounds;
+            if (drawingBounds.Height <= 0)
+            {
+                throw new InvalidOperationException($"Invalid SVG dimensions: Height must be greater than zero in {path}");
+            }
             var scale = desiredHeight / drawingBounds.Height;
             var scaledWidth = drawingBounds.Width * scale;
             var scaledHeight = drawingBounds.Height * scale;
