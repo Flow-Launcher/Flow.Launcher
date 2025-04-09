@@ -393,7 +393,7 @@ namespace Flow.Launcher.Infrastructure.Image
 
             // Load and render the SVG
             var converter = new FileSvgReader(drawingSettings);
-            var drawing = converter.Read(path);
+            var drawing = converter.Read(new Uri(path));
 
             // Calculate scale to achieve desired height
             var drawingBounds = drawing.Bounds;
@@ -407,9 +407,11 @@ namespace Flow.Launcher.Infrastructure.Image
 
             // Convert the Drawing to a Bitmap
             var drawingVisual = new DrawingVisual();
-            using DrawingContext drawingContext = drawingVisual.RenderOpen();
-            drawingContext.PushTransform(new ScaleTransform(scale, scale));
-            drawingContext.DrawDrawing(drawing);
+            using (DrawingContext drawingContext = drawingVisual.RenderOpen())
+            {
+                drawingContext.PushTransform(new ScaleTransform(scale, scale));
+                drawingContext.DrawDrawing(drawing);
+            }
 
             // Create a RenderTargetBitmap to hold the rendered image
             var bitmap = new RenderTargetBitmap(
