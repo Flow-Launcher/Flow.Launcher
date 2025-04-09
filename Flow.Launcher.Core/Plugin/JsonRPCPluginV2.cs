@@ -122,7 +122,7 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch (Exception e)
             {
-                Context.API.LogException(nameof(JsonRPCPluginV2), "Failed to call reload_data", e);
+                Context.API.LogException(nameof(JsonRPCPluginV2), $"Failed to call reload_data for plugin {Context.CurrentPluginMetadata.Name}", e);
             }
         }
 
@@ -140,7 +140,7 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch (Exception e)
             {
-                Context.API.LogException(nameof(JsonRPCPluginV2), "Failed to call close", e);
+                Context.API.LogException(nameof(JsonRPCPluginV2), $"Failed to call close for plugin {Context.CurrentPluginMetadata.Name}", e);
             }
             finally
             {
