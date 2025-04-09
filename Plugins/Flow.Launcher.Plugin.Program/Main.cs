@@ -275,7 +275,7 @@ namespace Flow.Launcher.Plugin.Program
             static void WatchProgramUpdate()
             {
                 Win32.WatchProgramUpdate(_settings);
-                _ = UWPPackage.WatchPackageChange();
+                _ = UWPPackage.WatchPackageChangeAsync();
             }
         }
 
