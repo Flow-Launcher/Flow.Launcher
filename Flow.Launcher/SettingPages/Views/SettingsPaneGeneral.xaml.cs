@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core;
 using Flow.Launcher.Core.Configuration;
+using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.SettingPages.ViewModels;
 
@@ -18,7 +19,8 @@ public partial class SettingsPaneGeneral
             var settings = Ioc.Default.GetRequiredService<Settings>();
             var updater = Ioc.Default.GetRequiredService<Updater>();
             var portable = Ioc.Default.GetRequiredService<Portable>();
-            _viewModel = new SettingsPaneGeneralViewModel(settings, updater, portable);
+            var translater = Ioc.Default.GetRequiredService<Internationalization>();
+            _viewModel = new SettingsPaneGeneralViewModel(settings, updater, portable, translater);
             DataContext = _viewModel;
             InitializeComponent();
         }
