@@ -136,6 +136,10 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
                 Main._context.API.LogException(ClassName, $"Failed to copy favicon DB: {dbPath}", ex);
                 return;
             }
+            finally
+            {
+                File.Delete(tempDbPath);
+            }
 
             try
             {
