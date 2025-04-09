@@ -106,8 +106,8 @@ public partial class SettingsPanePluginsViewModel : BaseModel
     public List<PluginViewModel> FilteredPluginViewModels => PluginViewModels
         .Where(v =>
             string.IsNullOrEmpty(FilterText) ||
-            StringMatcher.FuzzySearch(FilterText, v.PluginPair.Metadata.Name).IsSearchPrecisionScoreMet() ||
-            StringMatcher.FuzzySearch(FilterText, v.PluginPair.Metadata.Description).IsSearchPrecisionScoreMet()
+            App.API.FuzzySearch(FilterText, v.PluginPair.Metadata.Name).IsSearchPrecisionScoreMet() ||
+            App.API.FuzzySearch(FilterText, v.PluginPair.Metadata.Description).IsSearchPrecisionScoreMet()
         )
         .ToList();
 
