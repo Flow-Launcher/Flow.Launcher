@@ -13,7 +13,7 @@ using Keys = System.Windows.Forms.Keys;
 
 namespace Flow.Launcher.Plugin.Shell
 {
-    public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu
+    public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu, IDisposable
     {
         private static readonly string ClassName = nameof(Main);
 
@@ -441,6 +441,11 @@ namespace Flow.Launcher.Plugin.Shell
             };
 
             return results;
+        }
+
+        public void Dispose()
+        {
+            Context.API.RemoveGlobalKeyboardCallback(API_GlobalKeyboardEvent);
         }
     }
 }
