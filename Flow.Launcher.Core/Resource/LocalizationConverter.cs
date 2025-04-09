@@ -6,6 +6,7 @@ using System.Windows.Data;
 
 namespace Flow.Launcher.Core.Resource
 {
+    [Obsolete("LocalizationConverter is obsolete. Use with Flow.Launcher.Localization NuGet package instead.")]
     public class LocalizationConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
