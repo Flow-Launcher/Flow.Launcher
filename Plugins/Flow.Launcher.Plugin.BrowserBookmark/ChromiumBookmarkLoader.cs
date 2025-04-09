@@ -37,7 +37,7 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
             {
                 if (File.Exists(bookmarkPath))
                 {
-                    //Main.RegisterBookmarkFile(bookmarkPath);
+                    Main.RegisterBookmarkFile(bookmarkPath);
                 }
             }
             catch (Exception ex)
