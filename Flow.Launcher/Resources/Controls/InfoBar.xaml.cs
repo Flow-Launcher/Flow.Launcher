@@ -19,9 +19,7 @@ namespace Flow.Launcher.Resources.Controls
             UpdateMessageVisibility();
             UpdateOrientation();
             UpdateIconAlignmentAndMargin();
-
-            // DataContext 설정 (예시)
-            this.DataContext = this; // InfoBar 자체를 DataContext로 사용
+            //this.DataContext = this;
         }
 
         public static readonly DependencyProperty TypeProperty =

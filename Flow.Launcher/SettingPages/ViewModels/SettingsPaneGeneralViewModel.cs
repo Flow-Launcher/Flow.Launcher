@@ -188,15 +188,21 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             UpdateEnumDropdownLocalizations();
         }
     }
-    
-     public bool LegacyKoreanIMEEnabled
+    public bool LegacyKoreanIMEEnabled
     {
         get => IsLegacyKoreanIMEEnabled();
         set
         {
-            SetLegacyKoreanIMEEnabled(value);
-            OnPropertyChanged(nameof(LegacyKoreanIMEEnabled));
-            OnPropertyChanged(nameof(KoreanIMERegistryValueIsZero));
+            Debug.WriteLine($"[DEBUG] LegacyKoreanIMEEnabled 변경: {value}");
+            if (SetLegacyKoreanIMEEnabled(value))
+            {
+                OnPropertyChanged(nameof(LegacyKoreanIMEEnabled));
+                OnPropertyChanged(nameof(KoreanIMERegistryValueIsZero));
+            }
+            else
+            {
+                Debug.WriteLine("[DEBUG] LegacyKoreanIMEEnabled 설정 실패");
+            }
         }
     }
 
