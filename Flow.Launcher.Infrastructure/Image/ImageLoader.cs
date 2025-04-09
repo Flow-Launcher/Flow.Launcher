@@ -253,7 +253,7 @@ namespace Flow.Launcher.Infrastructure.Image
                 {
                     try
                     {
-                        image = LoadFullSvgImage(path, loadFullImage);
+                        image = LoadSvgImage(path, loadFullImage);
                         type = ImageType.FullImageFile;
                     }
                     catch (System.Exception)
@@ -372,7 +372,7 @@ namespace Flow.Launcher.Infrastructure.Image
             return image;
         }
 
-        private static ImageSource LoadFullSvgImage(string path, bool loadFullImage = false)
+        private static ImageSource LoadSvgImage(string path, bool loadFullImage = false)
         {
             // Set up drawing settings
             var desiredHeight = loadFullImage ? FullImageSize : SmallIconSize;
