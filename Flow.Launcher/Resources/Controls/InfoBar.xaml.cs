@@ -19,6 +19,8 @@ namespace Flow.Launcher.Resources.Controls
             UpdateMessageVisibility();
             UpdateOrientation();
             UpdateIconAlignmentAndMargin();
+            UpdateIconVisibility();
+            UpdateCloseButtonVisibility();
         }
 
         public static readonly DependencyProperty TypeProperty =
