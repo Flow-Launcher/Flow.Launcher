@@ -57,7 +57,7 @@ internal static class HotKeyMapper
                               e.StackTrace));
             string errorMsg = string.Format(App.API.GetTranslation("registerHotkeyFailed"), hotkeyStr);
             string errorMsgTitle = App.API.GetTranslation("MessageBoxTitle");
-            MessageBoxEx.Show(errorMsg, errorMsgTitle);
+            App.API.ShowMsgBox(errorMsg, errorMsgTitle);
         }
     }
 
@@ -108,7 +108,7 @@ internal static class HotKeyMapper
                               e.StackTrace));
             string errorMsg = string.Format(App.API.GetTranslation("unregisterHotkeyFailed"), hotkeyStr);
             string errorMsgTitle = App.API.GetTranslation("MessageBoxTitle");
-            MessageBoxEx.Show(errorMsg, errorMsgTitle);
+            App.API.ShowMsgBox(errorMsg, errorMsgTitle);
         }
     }
 
