@@ -254,9 +254,8 @@ namespace Flow.Launcher.Plugin.Program
                 _uwpsCount = _uwps.Count;
                 _uwpsLock.Release();
             });
-            Context.API.LogInfo(ClassName, "Number of preload win32 programs <{_win32sCount}>");
-            Context.API.LogInfo(ClassName, "Number of preload uwps <{_uwpsCount}>");
-
+            Context.API.LogInfo(ClassName, $"Number of preload win32 programs <{_win32sCount}>");
+            Context.API.LogInfo(ClassName, $"Number of preload uwps <{_uwpsCount}>");
             var cacheEmpty = _win32sCount == 0 || _uwpsCount == 0;
 
             if (cacheEmpty || _settings.LastIndexTime.AddHours(30) < DateTime.Now)
