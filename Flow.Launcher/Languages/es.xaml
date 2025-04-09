@@ -106,9 +106,9 @@
     <system:String x:Key="AlwaysPreviewToolTip">Muestra siempre el panel de vista previa al iniciar Flow. Pulsar {0} para mostrar/ocultar la vista previa.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">El efecto de sombra no está permitido si el tema actual tiene activado el efecto de desenfoque</system:String>
     <system:String x:Key="searchDelay">Retardo de búsqueda</system:String>
-    <system:String x:Key="searchDelayToolTip">Adds a short delay while typing to reduce UI flicker and result load. Recommended if your typing speed is average.</system:String>
+    <system:String x:Key="searchDelayToolTip">Añade un breve retardo al escribir para reducir el parpadeo de la interfaz de usuario y la carga de resultados. Recomendado si la velocidad de escritura es media.</system:String>
     <system:String x:Key="searchDelayTime">Tiempo de retardo de búsqueda predeterminado</system:String>
-    <system:String x:Key="searchDelayTimeToolTip">Wait time before showing results after typing stops. Higher values wait longer. (ms)</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Tiempo de espera antes de mostrar los resultados después de dejar de teclear. A mayor valor, más tiempo de espera. (ms)</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Buscar complemento</system:String>
@@ -127,7 +127,7 @@
     <system:String x:Key="actionKeywordsTooltip">Cambia la palabra clave de acción</system:String>
     <system:String x:Key="pluginSearchDelayTime">Tiempo de retardo de la búsqueda del complemento</system:String>
     <system:String x:Key="pluginSearchDelayTimeTooltip">Cambiar tiempo de retardo de la búsqueda del complemento</system:String>
-    <system:String x:Key="FilterComboboxLabel">Advanced Settings:</system:String>
+    <system:String x:Key="FilterComboboxLabel">Configuración avanzada:</system:String>
     <system:String x:Key="DisplayModeOnOff">Activado</system:String>
     <system:String x:Key="DisplayModePriority">Prioridad</system:String>
     <system:String x:Key="DisplayModeSearchDelay">Retardo de búsqueda</system:String>
@@ -321,9 +321,9 @@
     <system:String x:Key="logfolder">Carpeta de registros</system:String>
     <system:String x:Key="clearlogfolder">Eliminar registros</system:String>
     <system:String x:Key="clearlogfolderMessage">¿Está seguro de que desea eliminar todos los registros?</system:String>
-    <system:String x:Key="clearcachefolder">Clear Caches</system:String>
-    <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
-    <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
+    <system:String x:Key="clearcachefolder">Limpiar cachés</system:String>
+    <system:String x:Key="clearcachefolderMessage">¿Está seguro de que desea eliminar todos los cachés?</system:String>
+    <system:String x:Key="clearfolderfailMessage">No se pudo eliminar parte de las carpetas y archivos. Por favor, consulte el archivo de registro para más información</system:String>
     <system:String x:Key="welcomewindow">Asistente</system:String>
     <system:String x:Key="userdatapath">Ubicación de datos del usuario</system:String>
     <system:String x:Key="userdatapathToolTip">La configuración del usuario y los complementos instalados se guardan en la carpeta de datos del usuario. Esta ubicación puede variar dependiendo de si está en modo portable o no.</system:String>
@@ -372,7 +372,7 @@
 
     <!--  Search Delay Settings Dialog  -->
     <system:String x:Key="searchDelayTimeTitle">Ajuste del tiempo de retardo de búsqueda</system:String>
-    <system:String x:Key="searchDelayTimeTips">Input the search delay time in ms you like to use for the plugin. Input empty if you don't want to specify any, and the plugin will use default search delay time.</system:String>
+    <system:String x:Key="searchDelayTimeTips">Introducir el tiempo de retardo de búsqueda en ms que se desea utilizar para el complemento. Introducir un espacio vacío si no desea especificar ninguno, y el complemento utilizará el tiempo de retardo de búsqueda predeterminado.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Atajo de teclado de consulta personalizada</system:String>
