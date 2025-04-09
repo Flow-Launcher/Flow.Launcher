@@ -13,6 +13,7 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
+using IRemovable = Flow.Launcher.Core.Storage.IRemovable;
 using ISavable = Flow.Launcher.Plugin.ISavable;
 
 namespace Flow.Launcher.Core.Plugin
@@ -22,6 +23,8 @@ namespace Flow.Launcher.Core.Plugin
     /// </summary>
     public static class PluginManager
     {
+        private static readonly string ClassName = nameof(PluginManager);
+
         private static IEnumerable<PluginPair> _contextMenuPlugins;
 
         public static List<PluginPair> AllPlugins { get; private set; }
@@ -65,6 +68,7 @@ namespace Flow.Launcher.Core.Plugin
             }
 
             API.SavePluginSettings();
+            API.SavePluginCaches();
         }
 
         public static async ValueTask DisposePluginsAsync()
@@ -192,7 +196,7 @@ namespace Flow.Launcher.Core.Plugin
             {
                 try
                 {
-                    var milliseconds = await Stopwatch.DebugAsync($"|PluginManager.InitializePlugins|Init method time cost for <{pair.Metadata.Name}>",
+                    var milliseconds = await API.StopwatchLogDebugAsync(ClassName, $"Init method time cost for <{pair.Metadata.Name}>",
                         () => pair.Plugin.InitAsync(new PluginInitContext(pair.Metadata, API)));
 
                     pair.Metadata.InitTime += milliseconds;
@@ -264,7 +268,7 @@ namespace Flow.Launcher.Core.Plugin
 
             try
             {
-                var milliseconds = await Stopwatch.DebugAsync($"|PluginManager.QueryForPlugin|Cost for {metadata.Name}",
+                var milliseconds = await API.StopwatchLogDebugAsync(ClassName, $"Cost for {metadata.Name}",
                     async () => results = await pair.Plugin.QueryAsync(query, token).ConfigureAwait(false));
 
                 token.ThrowIfCancellationRequested();
@@ -575,11 +579,11 @@ namespace Flow.Launcher.Core.Plugin
 
             if (removePluginSettings)
             {
-                // For dotnet plugins, we need to remove their PluginJsonStorage instance
-                if (AllowedLanguage.IsDotNet(plugin.Language))
+                // For dotnet plugins, we need to remove their PluginJsonStorage and PluginBinaryStorage instances
+                if (AllowedLanguage.IsDotNet(plugin.Language) && API is IRemovable removable)
                 {
-                    var method = API.GetType().GetMethod("RemovePluginSettings");
-                    method?.Invoke(API, new object[] { plugin.AssemblyName });
+                    removable.RemovePluginSettings(plugin.AssemblyName);
+                    removable.RemovePluginCaches(plugin.PluginCacheDirectoryPath);
                 }
 
                 try

@@ -201,6 +201,35 @@
                 </cc:Card>
             </cc:CardGroup>
 
+            <cc:ExCard
+                Title="{DynamicResource searchDelay}"
+                Margin="0 14 0 0"
+                Icon="&#xE961;"
+                Sub="{DynamicResource searchDelayToolTip}">
+                <cc:ExCard.SideContent>
+                    <ui:ToggleSwitch
+                        IsOn="{Binding Settings.SearchQueryResultsWithDelay}"
+                        OffContent="{DynamicResource disable}"
+                        OnContent="{DynamicResource enable}" />
+                </cc:ExCard.SideContent>
+                <cc:Card
+                    Title="{DynamicResource searchDelayTime}"
+                    Sub="{DynamicResource searchDelayTimeToolTip}"
+                    Type="InsideFit">
+                    <StackPanel Orientation="Horizontal">
+                        <ui:NumberBox
+                            Width="120"
+                            Margin="0 0 0 0"
+                            Minimum="0"
+                            Maximum="1000"
+                            SmallChange="10"
+                            SpinButtonPlacementMode="Compact"
+                            Value="{Binding SearchDelayTimeValue}"
+                            ValidationMode="InvalidInputOverwritten" />
+                    </StackPanel>
+                </cc:Card>
+            </cc:ExCard>
+
             <cc:Card
                 Title="{DynamicResource defaultFileManager}"
                 Margin="0 14 0 0"

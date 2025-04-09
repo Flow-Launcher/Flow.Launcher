@@ -7,6 +7,11 @@
         Ak už ho máte nainštalovaný, kliknite na nie, a budete vyzvaný na zadanie cesty k priečinku spustiteľného súboru {1}
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Vyberte spustiteľný súbor {0}</system:String>
+    <system:String x:Key="runtimeExecutableInvalidChooseDownload">
+        Vybrali ste nesprávny spustiteľný súbor {0}.
+        {2}{2}
+        Ak chcete znovu vybrať spustiteľný súbor {0}, kliknite na Áno. Kliknutím na Nie sa stiahne {1}.
+    </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Nie je možné nastaviť cestu ku spustiteľnému súboru {0}, skúste to v nastaveniach Flowu (prejdite nadol).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Nepodarilo sa inicializovať pluginy</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">Pluginy: {0} – nepodarilo sa načítať a mal by byť zakázaný, na pomoc kontaktujte autora pluginu</system:String>
@@ -37,7 +42,7 @@
     <system:String x:Key="GameMode">Herný režim</system:String>
     <system:String x:Key="GameModeToolTip">Pozastaviť používanie klávesových skratiek.</system:String>
     <system:String x:Key="PositionReset">Resetovať pozíciu</system:String>
-    <system:String x:Key="PositionResetToolTip">Resetovať pozíciu vyhľadávacieho okna</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Zadajte text na vyhľadávanie</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Nastavenia</system:String>
@@ -70,8 +75,6 @@
     <system:String x:Key="LastQueryEmpty">Vymazať</system:String>
     <system:String x:Key="LastQueryActionKeywordPreserved">Ponechať posledný akčný príkaz</system:String>
     <system:String x:Key="LastQueryActionKeywordSelected">Označiť posledný akčný príkaz</system:String>
-    <system:String x:Key="KeepMaxResults">Pevná výška okna</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">Výška okna sa nedá nastaviť ťahaním.</system:String>
     <system:String x:Key="maxShowResults">Maximum výsledkov</system:String>
     <system:String x:Key="maxShowResultsToolTip">Túto hodnotu môžete rýchlo upraviť aj pomocou klávesových skratiek CTRL + znamienko plus (+) a CTRL + znamienko mínus (-).</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorovať klávesové skratky v režime na celú obrazovku</system:String>
@@ -102,6 +105,15 @@
     <system:String x:Key="AlwaysPreview">Vždy zobraziť náhľad</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Pri aktivácii Flowu vždy otvoriť panel s náhľadom. Stlačením klávesu {0} prepnete náhľad.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Efekt tieňa nie je povolený, kým má aktuálny motív povolený efekt rozostrenia</system:String>
+    <system:String x:Key="searchDelay">Oneskorenie vyhľadávania</system:String>
+    <system:String x:Key="searchDelayToolTip">Pri písaní sa na chvíľu oneskorí vyhľadávanie. Tým sa zníži skákanie rozhrania a načítanie výsledkov.</system:String>
+    <system:String x:Key="searchDelayTime">Predvolené oneskorenie vyhľadávania</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Predvolené oneskorenie pluginu, po ktorom sa zobrazia výsledky vyhľadávania po zastavení písania.</system:String>
+    <system:String x:Key="SearchDelayTimeVeryLong">Veľmi dlhé</system:String>
+    <system:String x:Key="SearchDelayTimeLong">Dlhé</system:String>
+    <system:String x:Key="SearchDelayTimeNormal">Normálne</system:String>
+    <system:String x:Key="SearchDelayTimeShort">Krátke</system:String>
+    <system:String x:Key="SearchDelayTimeVeryShort">Veľmi krátke</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Vyhľadať plugin</system:String>
@@ -118,6 +130,8 @@
     <system:String x:Key="currentActionKeywords">Aktuálny aktivačný príkaz</system:String>
     <system:String x:Key="newActionKeyword">Nový aktivačný príkaz</system:String>
     <system:String x:Key="actionKeywordsTooltip">Upraviť aktivačný príkaz</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Oneskorenie vyhľadávania pomocou pluginu</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Zmení oneskorenie vyhľadávania pomocou pluginu</system:String>
     <system:String x:Key="currentPriority">Aktuálna priorita</system:String>
     <system:String x:Key="newPriority">Nová priorita</system:String>
     <system:String x:Key="priority">Priorita</system:String>
@@ -131,6 +145,9 @@
     <system:String x:Key="plugin_uninstall">Odinštalovať</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Nepodarilo sa odstrániť nastavenia pluginu</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Pluginy: {0} – Nepodarilo sa odstrániť súbory s nastaveniami pluginu, odstráňte ich manuálne</system:String>
+    <system:String x:Key="failedToRemovePluginCacheTitle">Nepodarilo sa odstrániť vyrovnávaciu pamäť pluginu</system:String>
+    <system:String x:Key="failedToRemovePluginCacheMessage">Pluginy: {0} – Nepodarilo sa odstrániť vyrovnávaciu pamäť pluginu, odstráňte ju manuálne</system:String>
+    <system:String x:Key="default">Predvolené</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Repozitár pluginov</system:String>
@@ -193,8 +210,20 @@
     <system:String x:Key="AnimationSpeedCustom">Vlastné</system:String>
     <system:String x:Key="Clock">Hodiny</system:String>
     <system:String x:Key="Date">Dátum</system:String>
+    <system:String x:Key="BackdropType">Typ pozadia</system:String>
+    <system:String x:Key="BackdropTypeDisabledToolTip">Backdrop je podporovaný od Windows 11 zostava 22000 a novších</system:String>
+    <system:String x:Key="BackdropTypesNone">Žiadna</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
+    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
     <system:String x:Key="TypeIsDarkToolTip">Tento motív podporuje 2 režimy (svetlý/tmavý).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Tento motív podporuje rozostrenie priehľadného pozadia.</system:String>
+    <system:String x:Key="ShowPlaceholder">Zobraziť zástupný text</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Zobrazí zástupný text v prázdnom vyhľadávacom poli</system:String>
+    <system:String x:Key="PlaceholderText">Zástupný text</system:String>
+    <system:String x:Key="PlaceholderTextTip">Zobrazí zástupný text. V prázdnom poli sa zobrazí: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Pevná veľkosť okna</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">Veľkosť okna sa nedá nastaviť ťahaním.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Klávesové skratky</system:String>
@@ -294,6 +323,9 @@
     <system:String x:Key="logfolder">Priečinok s logmi</system:String>
     <system:String x:Key="clearlogfolder">Vymazať logy</system:String>
     <system:String x:Key="clearlogfolderMessage">Naozaj chcete odstrániť všetky logy?</system:String>
+    <system:String x:Key="clearcachefolder">Vymazať vyrovnávaciu pamäť</system:String>
+    <system:String x:Key="clearcachefolderMessage">Naozaj chcete vymazať všetky vyrovnávacie pamäte?</system:String>
+    <system:String x:Key="clearfolderfailMessage">Nepodarilo sa odstrániť niektoré priečinky a súbory. Pre viac informácií si pozrite súbor logu</system:String>
     <system:String x:Key="welcomewindow">Sprievodca</system:String>
     <system:String x:Key="userdatapath">Cesta k používateľskému priečinku</system:String>
     <system:String x:Key="userdatapathToolTip">Nastavenia používateľa a nainštalované pluginy sa ukladajú do používateľského priečinka. Toto umiestnenie sa môže líšiť v závislosti od toho, či je v prenosnom režime alebo nie.</system:String>
@@ -335,9 +367,16 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Nepodarilo sa nájsť zadaný plugin</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Nový aktivačný príkaz nemôže byť prázdny</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Nový aktivačný príkaz už bol priradený inému pluginu, prosím, zvoľte iný aktivačný príkaz</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">Tento nový aktivačný príkaz je rovnaký ako starý, vyberte iný</system:String>
     <system:String x:Key="success">Úspešné</system:String>
     <system:String x:Key="completedSuccessfully">Úspešne dokončené</system:String>
-    <system:String x:Key="actionkeyword_tips">Zadajte aktivačný príkaz, ktorý je potrebný na spustenie pluginu. Ak nechcete zadať aktivačný príkaz, použite * a plugin bude spustený bez aktivačného príkazu.</system:String>
+    <system:String x:Key="actionkeyword_tips">Zadajte aktivačné príkazy, ktoré chcete používať na spustenie pluginu a oddeľte ich medzerou. Ak nechcete zadať aktivačný príkaz, použite * a plugin bude spustený bez aktivačného príkazu.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="searchDelayTimeTitle">Nastavenie oneskoreného vyhľadávania</system:String>
+    <system:String x:Key="searchDelayTime_tips">Vyberte oneskorenie vyhľadávania, ktoré chcete použiť pre plugin. Ak vyberiete &quot;{0}&quot;, plugin použije predvolené oneskorenie vyhľadávania.</system:String>
+    <system:String x:Key="currentSearchDelayTime">Aktuálne oneskorenie vyhľadávania</system:String>
+    <system:String x:Key="newSearchDelayTime">Nové oneskorenie vyhľadávania</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Klávesová skratka vlastného vyhľadávania</system:String>

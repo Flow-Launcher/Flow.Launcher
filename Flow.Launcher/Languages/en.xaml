@@ -108,7 +108,7 @@
     <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
     <system:String x:Key="searchDelay">Search Delay</system:String>
-    <system:String x:Key="searchDelayToolTip">Delay for a while to search when typing. This reduces interface jumpiness and result load.</system:String>
+    <system:String x:Key="searchDelayToolTip">Adds a short delay while typing to reduce UI flicker and result load. Recommended if your typing speed is average.</system:String>
     <system:String x:Key="searchDelayTime">Default Search Delay Time</system:String>
     <system:String x:Key="searchDelayTimeToolTip">Plugin default delay time after which search results appear when typing is stopped.</system:String>
     <system:String x:Key="SearchDelayTimeVeryLong">Very long</system:String>
@@ -130,6 +130,7 @@
     <system:String x:Key="KoreanImeOpenLinkButton">Open</system:String>
     <system:String x:Key="KoreanImeRegistry">Use Legacy Korean IME</system:String>
     <system:String x:Key="KoreanImeRegistryTooltip">You can change the IME settings directly from here without opening a separate settings window</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Wait time before showing results after typing stops. Higher values wait longer. (ms)</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Search Plugin</system:String>

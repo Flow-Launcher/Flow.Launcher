@@ -32,7 +32,7 @@ public partial class SettingsPanePluginStoreViewModel : BaseModel
     public bool SatisfiesFilter(PluginStoreItemViewModel plugin)
     {
         return string.IsNullOrEmpty(FilterText) ||
-               StringMatcher.FuzzySearch(FilterText, plugin.Name).IsSearchPrecisionScoreMet() ||
-               StringMatcher.FuzzySearch(FilterText, plugin.Description).IsSearchPrecisionScoreMet();
+               App.API.FuzzySearch(FilterText, plugin.Name).IsSearchPrecisionScoreMet() ||
+               App.API.FuzzySearch(FilterText, plugin.Description).IsSearchPrecisionScoreMet();
     }
 }

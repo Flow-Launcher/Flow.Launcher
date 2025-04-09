@@ -113,8 +113,7 @@
     <!--  Resources for Expander  -->
     <SolidColorBrush x:Key="CustomExpanderHover" Color="#323232" />
     <!--  Resource for ContentDialog  -->
-    <SolidColorBrush x:Key="ContentDialogOverlayBG" Color="#4D000000" />
-
+    <SolidColorBrush x:Key="ContentDialogOverlayBG" Color="#58000000" />
     <!--  DIY Infobar  -->
     <SolidColorBrush x:Key="InfoBarBD" Color="#19000000" />
     <SolidColorBrush

@@ -4,6 +4,6 @@
     <system:String x:Key="flowlauncher_plugin_pluginindicator_result_subtitle">Activate {0} plugin action keyword</system:String>
 
     <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_name">플러그인 인디케이터</system:String>
-    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_description">플러그인의 액션 키워드 제안을 제공합니다</system:String>
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_description">사용중인 플러그인들의 전체 액션 키워드 목록을 보여줍니다</system:String>
 
 </ResourceDictionary>
