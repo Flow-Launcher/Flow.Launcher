@@ -2784,10 +2784,12 @@
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter TargetName="HeaderContentPresenter" Property="Foreground" Value="{DynamicResource TextControlHeaderForegroundDisabled}" />
-                            <Setter Property="Background" Value="{DynamicResource TextControlBackgroundDisabled}" />
+                            <Setter Property="Background" Value="{DynamicResource CustomNumberBoxBGDisabled}" />
                             <Setter TargetName="BorderElementInline" Property="Background" Value="{DynamicResource TextControlBackgroundDisabled}" />
                             <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushDisabled}" />
-                            <Setter Property="Foreground" Value="{DynamicResource TextControlForegroundDisabled}" />
+                            <Setter TargetName="BorderElement" Property="BorderThickness" Value="0 0 0 0" />
+                            <Setter TargetName="BorderElementInline" Property="BorderThickness" Value="0 0 0 0" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextControlPlaceholderForegroundDisabled}" />
                             <Setter TargetName="PlaceholderTextContentPresenter" Property="Foreground" Value="{DynamicResource TextControlPlaceholderForegroundDisabled}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
@@ -2873,7 +2875,7 @@
                             FontFamily="{TemplateBinding FontFamily}"
                             FontSize="{TemplateBinding FontSize}"
                             FontWeight="{TemplateBinding FontWeight}"
-                            Foreground="{TemplateBinding Foreground}"
+                            Foreground="{DynamicResource ForeGround}"
                             InputScope="{TemplateBinding InputScope}"
                             SelectionBrush="{TemplateBinding SelectionBrush}"
                             TextAlignment="{TemplateBinding TextAlignment}" />
