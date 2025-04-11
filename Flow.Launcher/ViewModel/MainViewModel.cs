@@ -245,6 +245,14 @@ namespace Flow.Launcher.ViewModel
                     // make a clone to avoid possible issue that plugin will also change the list and items when updating view model
                     var resultsCopy = DeepCloneResults(e.Results, token);
 
+                    foreach (var result in resultsCopy)
+                    {
+                        if (string.IsNullOrEmpty(result.BadgeIcoPath))
+                        {
+                            result.BadgeIcoPath = pair.Metadata.IcoPath;
+                        }
+                    }
+
                     PluginManager.UpdatePluginMetadata(resultsCopy, pair.Metadata, e.Query);
                     if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query,
                             token)))
