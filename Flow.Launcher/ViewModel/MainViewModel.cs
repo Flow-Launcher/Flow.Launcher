@@ -1268,8 +1268,7 @@ namespace Flow.Launcher.ViewModel
                 // Task.Yield will force it to run in ThreadPool
                 await Task.Yield();
 
-                IReadOnlyList<Result> results =
-                    await PluginManager.QueryForPluginAsync(plugin, query, token);
+                var results = await PluginManager.QueryForPluginAsync(plugin, query, token);
 
                 if (token.IsCancellationRequested)
                     return;
@@ -1283,6 +1282,14 @@ namespace Flow.Launcher.ViewModel
                 {
                     // make a copy of results to avoid possible issue that FL changes some properties of the records, like score, etc.
                     resultsCopy = DeepCloneResults(results, token);
+                }
+
+                foreach (var result in results)
+                {
+                    if (string.IsNullOrEmpty(result.BadgePath))
+                    {
+                        result.BadgePath = plugin.Metadata.IcoPath;
+                    }
                 }
 
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
