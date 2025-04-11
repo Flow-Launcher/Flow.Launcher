@@ -183,7 +183,10 @@ namespace Flow.Launcher.Infrastructure.Storage
 
         public void Save()
         {
-            string serialized = JsonSerializer.Serialize(Data,
+            // User may delete the directory, so we need to check it
+            FilesFolders.ValidateDirectory(DirectoryPath);
+
+            var serialized = JsonSerializer.Serialize(Data,
                 new JsonSerializerOptions { WriteIndented = true });
 
             File.WriteAllText(TempFilePath, serialized);
@@ -193,6 +196,9 @@ namespace Flow.Launcher.Infrastructure.Storage
 
         public async Task SaveAsync()
         {
+            // User may delete the directory, so we need to check it
+            FilesFolders.ValidateDirectory(DirectoryPath);
+
             await using var tempOutput = File.OpenWrite(TempFilePath);
             await JsonSerializer.SerializeAsync(tempOutput, Data,
                 new JsonSerializerOptions { WriteIndented = true });
