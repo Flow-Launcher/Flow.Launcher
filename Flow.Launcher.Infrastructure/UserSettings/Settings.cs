@@ -82,7 +82,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /* Appearance Settings. It should be separated from the setting later.*/
         public double WindowHeightSize { get; set; } = 42;
         public double ItemHeightSize { get; set; } = 58;
-        public double QueryBoxFontSize { get; set; } = 20;
+        public double QueryBoxFontSize { get; set; } = 18;
         public double ResultItemFontSize { get; set; } = 16;
         public double ResultSubItemFontSize { get; set; } = 13;
         public string QueryBoxFont { get; set; } = FontFamily.GenericSansSerif.Name;
@@ -114,7 +114,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public double? SettingWindowLeft { get; set; } = null;
         public WindowState SettingWindowState { get; set; } = WindowState.Normal;
 
-        bool _showPlaceholder { get; set; } = false;
+        bool _showPlaceholder { get; set; } = true;
         public bool ShowPlaceholder
         {
             get => _showPlaceholder;
