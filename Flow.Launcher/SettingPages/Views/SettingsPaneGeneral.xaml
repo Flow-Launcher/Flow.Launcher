@@ -341,7 +341,7 @@
                 </cc:Card>
                 <cc:Card
                     Title="{DynamicResource KoreanImeOpenLink}"
-                    Icon="&#xf7b9;"
+                    Icon="&#xF210;"
                     Sub="{DynamicResource KoreanImeOpenLinkToolTip}">
                     <Button Command="{Binding OpenImeSettingsCommand}" Content="{DynamicResource KoreanImeOpenLinkButton}" />
                 </cc:Card>
