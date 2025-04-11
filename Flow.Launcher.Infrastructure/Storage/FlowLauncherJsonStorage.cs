@@ -17,11 +17,11 @@ namespace Flow.Launcher.Infrastructure.Storage
 
         public FlowLauncherJsonStorage()
         {
-            var directoryPath = Path.Combine(DataLocation.DataDirectory(), DirectoryName);
-            FilesFolders.ValidateDirectory(directoryPath);
+            DirectoryPath = Path.Combine(DataLocation.DataDirectory(), DirectoryName);
+            FilesFolders.ValidateDirectory(DirectoryPath);
 
             var filename = typeof(T).Name;
-            FilePath = Path.Combine(directoryPath, $"{filename}{FileSuffix}");
+            FilePath = Path.Combine(DirectoryPath, $"{filename}{FileSuffix}");
         }
 
         public new void Save()
