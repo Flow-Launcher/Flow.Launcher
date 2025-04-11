@@ -123,6 +123,11 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public Visibility ShowBadge
+        {
+            get => Settings.ShowPluginBadges ? Visibility.Visible : Visibility.Collapsed;
+        }
+
         private bool GlyphAvailable => Glyph is not null;
 
         private bool ImgIconAvailable => !string.IsNullOrEmpty(Result.IcoPath) || Result.Icon is not null;

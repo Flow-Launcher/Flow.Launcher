@@ -146,7 +146,7 @@
                                         VerticalAlignment="Bottom"
                                         RenderOptions.BitmapScalingMode="Fant"
                                         Source="{Binding Image, TargetNullValue={x:Null}}"
-                                        Visibility="{Binding ShowBadge, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                        Visibility="{Binding ShowBadge}" />
                                 </Grid>
                             </Border>
                         </Grid>
