@@ -210,9 +210,9 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     {
         get
         {
-            bool registryKeyExists = Win32Helper.IsKoreanIMEExist();
-            bool koreanLanguageInstalled = InputLanguage.InstalledInputLanguages.Cast<InputLanguage>().Any(lang => lang.Culture.Name.StartsWith("ko"));
-            bool isWindows11 = Win32Helper.IsWindows11();
+            var registryKeyExists = Win32Helper.IsKoreanIMEExist();
+            var koreanLanguageInstalled = InputLanguage.InstalledInputLanguages.Cast<InputLanguage>().Any(lang => lang.Culture.Name.StartsWith("ko"));
+            var isWindows11 = Win32Helper.IsWindows11();
 
             // Return true if Windows 11 with Korean IME installed, or if the registry key exists
             return (isWindows11 && koreanLanguageInstalled) || registryKeyExists;
@@ -223,12 +223,12 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     {
         get
         {
-            object value = Win32Helper.GetLegacyKoreanIMERegistryValue();
+            var value = Win32Helper.GetLegacyKoreanIMERegistryValue();
             if (value is int intValue)
             {
                 return intValue == 0;
             }
-            else if (value != null && int.TryParse(value.ToString(), out int parsedValue))
+            else if (value != null && int.TryParse(value.ToString(), out var parsedValue))
             {
                 return parsedValue == 0;
             }

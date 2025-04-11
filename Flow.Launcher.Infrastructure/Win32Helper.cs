@@ -21,10 +21,6 @@ namespace Flow.Launcher.Infrastructure
     {
         #region Blur Handling
 
-        public static bool IsWindows11()
-        {
-            return Environment.OSVersion.Version.Major >= 10 && Environment.OSVersion.Version.Build >= 22000;
-        }
         public static bool IsBackdropSupported()
         {
             // Mica and Acrylic only supported Windows 11 22000+
@@ -524,6 +520,12 @@ namespace Flow.Launcher.Infrastructure
         #endregion
 
         #region Korean IME
+
+        public static bool IsWindows11()
+        {
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Windows) &&
+                Environment.OSVersion.Version.Build >= 22000;
+        }
 
         public static bool IsKoreanIMEExist()
         {
