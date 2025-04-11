@@ -188,8 +188,9 @@ namespace Flow.Launcher.Plugin
 
                 // When the Result object is returned from the query call, PluginDirectory is not provided until
                 // UpdatePluginMetadata call is made at PluginManager.cs L196. Once the PluginDirectory becomes available
-                // we need to update (only if not Uri path) the IcoPath with the full absolute path so the image can be loaded.
+                // we need to update (only if not Uri path) the IcoPath and BadgeIcoPath with the full absolute path so the image can be loaded.
                 IcoPath = _icoPath;
+                BadgeIcoPath = _badgeIcoPath;
             }
         }
 
