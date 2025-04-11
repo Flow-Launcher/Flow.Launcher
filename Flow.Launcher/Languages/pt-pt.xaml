@@ -42,7 +42,7 @@
     <system:String x:Key="GameMode">Modo de jogo</system:String>
     <system:String x:Key="GameModeToolTip">Suspender utilização das teclas de atalho</system:String>
     <system:String x:Key="PositionReset">Repor posição</system:String>
-    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
+    <system:String x:Key="PositionResetToolTip">Repor posição da janela de pesquisa</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">Escreva aqui para pesquisar</system:String>
 
     <!--  Setting General  -->
@@ -108,7 +108,7 @@
     <system:String x:Key="shadowEffectNotAllowed">O efeito sombra não é permitido com este tema porque o efeito desfocar está ativo</system:String>
     <system:String x:Key="searchDelay">Atraso da pesquisa</system:String>
     <system:String x:Key="searchDelayToolTip">Adiciona um pequeno atraso durante a escrita para reduzir a oscilação ao carregar os resultados. Recomendado se a sua velocidade de escrita for média.</system:String>
-    <system:String x:Key="searchDelayNumberBoxToolTip">Enter the wait time (in ms) until input is considered complete. This can only be edited if Search Delay is enabled.</system:String>
+    <system:String x:Key="searchDelayNumberBoxToolTip">Introduza o tempo de espera (ms) até que a entrada seja considerada completa. Apenas pode editar se ativara opção Atraso de pesquisa.</system:String>
     <system:String x:Key="searchDelayTime">Tempo de espera padrão</system:String>
     <system:String x:Key="searchDelayTimeToolTip">Tempo a aguardar antes de mostrar os resultados. Valores mais altos resultam num atraso maior (ms).</system:String>
     <system:String x:Key="KoreanImeTitle">Information for Korean IME user</system:String>
