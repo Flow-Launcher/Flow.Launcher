@@ -82,7 +82,9 @@ namespace Flow.Launcher.Infrastructure.Storage
 
         public void Save()
         {
-            FilesFolders.ValidateDirectory(DirectoryPath); // User may delete the directory, so we need to check it
+            // User may delete the directory, so we need to check it
+            FilesFolders.ValidateDirectory(DirectoryPath);
+
             var serialized = MemoryPackSerializer.Serialize(Data);
             File.WriteAllBytes(FilePath, serialized);
         }
@@ -103,7 +105,9 @@ namespace Flow.Launcher.Infrastructure.Storage
         // so we need to pass it to SaveAsync
         public async ValueTask SaveAsync(T data)
         {
-            FilesFolders.ValidateDirectory(DirectoryPath); // User may delete the directory, so we need to check it
+            // User may delete the directory, so we need to check it
+            FilesFolders.ValidateDirectory(DirectoryPath);
+
             await using var stream = new FileStream(FilePath, FileMode.Create);
             await MemoryPackSerializer.SerializeAsync(stream, data);
         }
