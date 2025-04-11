@@ -2804,7 +2804,7 @@
                             <Setter TargetName="BorderElementInline" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushFocused}" />
                             <Setter TargetName="BorderElementInline" Property="BorderThickness" Value="0 0 0 2" />
                             <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource CustomTextBoxOutline}" />
-                            <Setter TargetName="BorderElement" Property="BorderThickness" Value="{DynamicResource 2 2 2 0}" />
+                            <Setter TargetName="BorderElement" Property="BorderThickness" Value="2 2 2 0" />
                             <Setter Property="Foreground" Value="{DynamicResource TextControlForegroundFocused}" />
                         </Trigger>
                         <MultiTrigger>
