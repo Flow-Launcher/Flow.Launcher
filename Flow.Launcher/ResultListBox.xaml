@@ -145,7 +145,7 @@
                                         HorizontalAlignment="Right"
                                         VerticalAlignment="Bottom"
                                         RenderOptions.BitmapScalingMode="Fant"
-                                        Source="{Binding Image, TargetNullValue={x:Null}}"
+                                        Source="{Binding BadgeImage, TargetNullValue={x:Null}}"
                                         Visibility="{Binding ShowBadge}" />
                                 </Grid>
                             </Border>
