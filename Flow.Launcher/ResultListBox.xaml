@@ -102,8 +102,6 @@
                                 <Grid>
                                     <Image
                                         x:Name="ImageIcon"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
                                         IsHitTestVisible="False"
                                         RenderOptions.BitmapScalingMode="Fant"
                                         Source="{Binding Image, TargetNullValue={x:Null}}"
@@ -131,24 +129,21 @@
 
                                     <TextBlock
                                         x:Name="GlyphIcon"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
                                         FontFamily="{Binding Glyph.FontFamily}"
                                         Style="{DynamicResource ItemGlyph}"
                                         Text="{Binding Glyph.Glyph}"
                                         Visibility="{Binding ShowGlyph}" />
+
                                     <Image
                                         x:Name="BadgeIcon"
-                                        Width="16"
-                                        Height="16"
-                                        Margin="0 2 4 0"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Bottom"
-                                        RenderOptions.BitmapScalingMode="Fant"
+                                        Width="{Binding ElementName=ImageIcon, Path=ActualWidth}"
+                                        Height="{Binding ElementName=ImageIcon, Path=ActualHeight}"
+                                        RenderOptions.BitmapScalingMode="HighQuality"
                                         Source="{Binding BadgeImage, TargetNullValue={x:Null}}"
                                         Visibility="{Binding ShowBadge}" />
                                 </Grid>
                             </Border>
+
                         </Grid>
 
                         <Grid
