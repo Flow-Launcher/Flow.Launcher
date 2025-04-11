@@ -1208,11 +1208,11 @@ namespace Flow.Launcher.ViewModel
 
             _lastQuery = query;
 
-            if (query.ActionKeyword == Plugin.Query.GlobalPluginWildcardSign)
+            if (string.IsNullOrEmpty(query.ActionKeyword))
             {
-                // Wait 45 millisecond for query change in global query
+                // Wait 15 millisecond for query change in global query
                 // if query changes, return so that it won't be calculated
-                await Task.Delay(45, _updateSource.Token);
+                await Task.Delay(15, _updateSource.Token);
                 if (_updateSource.Token.IsCancellationRequested)
                     return;
             }

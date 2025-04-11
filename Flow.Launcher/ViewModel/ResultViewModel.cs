@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing.Text;
 using System.IO;
@@ -137,7 +138,7 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public bool IsGlobalQuery => Result.OriginQuery.ActionKeyword == Query.GlobalPluginWildcardSign;
+        public bool IsGlobalQuery => string.IsNullOrEmpty(Result.OriginQuery.ActionKeyword);
 
         private bool GlyphAvailable => Glyph is not null;
 
