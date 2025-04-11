@@ -42,6 +42,7 @@
     <system:String x:Key="GameMode">מצב משחק</system:String>
     <system:String x:Key="GameModeToolTip">השהה את השימוש במקשי קיצור.</system:String>
     <system:String x:Key="PositionReset">איפוס מיקום</system:String>
+    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">הקלד כאן כדי לחפש</system:String>
 
     <!--  Setting General  -->
@@ -107,6 +108,7 @@
     <system:String x:Key="shadowEffectNotAllowed">לא ניתן להחיל אפקט צל כאשר העיצוב הנוכחי מוגדר לאפקט טשטוש</system:String>
     <system:String x:Key="searchDelay">Search Delay</system:String>
     <system:String x:Key="searchDelayToolTip">מוסיף עיכוב קצר בזמן ההקלדה כדי להפחית קפיצות בממשק המשתמש ועומס בתוצאות. מומלץ אם מהירות ההקלדה שלך ממוצעת.</system:String>
+    <system:String x:Key="searchDelayNumberBoxToolTip">Enter the wait time (in ms) until input is considered complete. This can only be edited if Search Delay is enabled.</system:String>
     <system:String x:Key="searchDelayTime">Default Search Delay Time</system:String>
     <system:String x:Key="searchDelayTimeToolTip">זמן המתנה להצגת התוצאות לאחר שתפסיק להקליד. ערכים גבוהים יותר מייצגים המתנה רבה יותר. (שניות)</system:String>
 
