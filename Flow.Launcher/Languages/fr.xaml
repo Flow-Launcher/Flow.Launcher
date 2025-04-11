@@ -42,7 +42,7 @@
     <system:String x:Key="GameMode">Mode jeu</system:String>
     <system:String x:Key="GameModeToolTip">Suspend l'utilisation des raccourcis claviers.</system:String>
     <system:String x:Key="PositionReset">Réinitialiser la position</system:String>
-    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
+    <system:String x:Key="PositionResetToolTip">Réinitialiser la position de la fenêtre de recherche</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">Tapez ici pour rechercher</system:String>
 
     <!--  Setting General  -->
@@ -108,10 +108,10 @@
     <system:String x:Key="shadowEffectNotAllowed">L'effet d'ombre n'est pas autorisé lorsque le thème actuel à un effet de flou activé</system:String>
     <system:String x:Key="searchDelay">Délai de recherche</system:String>
     <system:String x:Key="searchDelayToolTip">Ajoute un court délai pendant la frappe pour réduire le scintillement de l'interface utilisateur et le chargement des résultats. Recommandé si votre vitesse de frappe est moyenne.</system:String>
-    <system:String x:Key="searchDelayNumberBoxToolTip">Enter the wait time (in ms) until input is considered complete. This can only be edited if Search Delay is enabled.</system:String>
+    <system:String x:Key="searchDelayNumberBoxToolTip">Entrez le temps d'attente (en ms) jusqu'à ce que l'entrée soit considérée comme terminée. Cela ne peut être modifié que si le délai de recherche est activé.</system:String>
     <system:String x:Key="searchDelayTime">Délai de recherche par défaut</system:String>
     <system:String x:Key="searchDelayTimeToolTip">Délai d'attente avant l'affichage des résultats après l'arrêt de la saisie. Les valeurs élevées permettent d'attendre plus longtemps. (ms)</system:String>
-    <system:String x:Key="KoreanImeTitle">Information for Korean IME user</system:String>
+    <system:String x:Key="KoreanImeTitle">Information pour les utilisateurs coréens IME</system:String>
     <system:String x:Key="KoreanImeGuide">
         The Korean input method used in Windows 11 may cause some issues in Flow Launcher.
 
@@ -126,7 +126,7 @@
 
 
     </system:String>
-    <system:String x:Key="KoreanImeOpenLink">Open Language and Region System Settings</system:String>
+    <system:String x:Key="KoreanImeOpenLink">Ouvrir les paramètres du système de langue et de région</system:String>
     <system:String x:Key="KoreanImeOpenLinkToolTip">Opens the Korean IME setting location. Go to Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility</system:String>
     <system:String x:Key="KoreanImeOpenLinkButton">Ouvrir</system:String>
     <system:String x:Key="KoreanImeRegistry">Use Previous Korean IME</system:String>
