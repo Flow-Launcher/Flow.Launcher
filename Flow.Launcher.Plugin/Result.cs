@@ -60,7 +60,7 @@ namespace Flow.Launcher.Plugin
         /// <remarks>GlyphInfo is prioritized if not null</remarks>
         public string IcoPath
         {
-            get { return _icoPath; }
+            get => _icoPath;
             set
             {
                 // As a standard this property will handle prepping and converting to absolute local path for icon image processing
@@ -100,7 +100,6 @@ namespace Flow.Launcher.Plugin
         /// Information for Glyph Icon (Prioritized than IcoPath/Icon if user enable Glyph Icons)
         /// </summary>
         public GlyphInfo Glyph { get; init; }
-
 
         /// <summary>
         /// An action to take in the form of a function call when the result has been selected.
@@ -143,7 +142,7 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         public string PluginDirectory
         {
-            get { return _pluginDirectory; }
+            get => _pluginDirectory;
             set
             {
                 _pluginDirectory = value;
