@@ -10,7 +10,6 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
-using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 
 namespace Flow.Launcher.SettingPages.ViewModels;
 
@@ -20,7 +19,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     private readonly Updater _updater;
     private readonly IPortable _portable;
     private readonly Internationalization _translater;
-    
+
     public SettingsPaneGeneralViewModel(Settings settings, Updater updater, IPortable portable, Internationalization translater)
     {
         Settings = settings;
