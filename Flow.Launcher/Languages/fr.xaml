@@ -113,24 +113,24 @@
     <system:String x:Key="searchDelayTimeToolTip">Délai d'attente avant l'affichage des résultats après l'arrêt de la saisie. Les valeurs élevées permettent d'attendre plus longtemps. (ms)</system:String>
     <system:String x:Key="KoreanImeTitle">Information pour les utilisateurs coréens IME</system:String>
     <system:String x:Key="KoreanImeGuide">
-        The Korean input method used in Windows 11 may cause some issues in Flow Launcher.
+        La méthode de saisie coréenne utilisée dans Windows 11 peut causer des problèmes dans Flow Launcher.
 
-        If you experience any problems, you may need to enable &quot;Use previous version of Korean IME&quot;.
+        Si vous rencontrez des problèmes, il se peut que vous deviez activer l'option &quot;Utiliser la version précédente de l'IME coréen&quot;.
 
 
-        Open Setting in Windows 11 and go to:
+        Ouvrez les Paramètres dans Windows 11 et allez dans :
 
-        Time &amp; Language &gt; Language &amp; Region &gt; Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility,
+        Heure et langue &gt; Langue et région &gt; Coréen &gt; Options linguistiques &gt; Claviers - Microsoft IME &gt; Compatibilité,
 
-        and enable &quot;Use previous version of Microsoft IME&quot;.
+        et activez l'option &quot;Utiliser la version précédente de Microsoft IME&quot;.
 
 
     </system:String>
     <system:String x:Key="KoreanImeOpenLink">Ouvrir les paramètres du système de langue et de région</system:String>
-    <system:String x:Key="KoreanImeOpenLinkToolTip">Opens the Korean IME setting location. Go to Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility</system:String>
+    <system:String x:Key="KoreanImeOpenLinkToolTip">Ouvre l'emplacement de réglage IME coréen. Allez dans coréen &gt; Options linguistiques &gt; Claviers - Microsoft IME &gt; Compatibilité</system:String>
     <system:String x:Key="KoreanImeOpenLinkButton">Ouvrir</system:String>
-    <system:String x:Key="KoreanImeRegistry">Use Previous Korean IME</system:String>
-    <system:String x:Key="KoreanImeRegistryTooltip">You can change the Previous Korean IME settings directly from here</system:String>
+    <system:String x:Key="KoreanImeRegistry">Utilisez l'IME coréenne précédente</system:String>
+    <system:String x:Key="KoreanImeRegistryTooltip">Vous pouvez modifier les paramètres de l'IME coréen précédent directement à partir d'ici</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Rechercher des plugins</system:String>
