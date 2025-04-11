@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.ViewModel;
