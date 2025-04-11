@@ -88,14 +88,21 @@ namespace Flow.Launcher.Core.Plugin
 
         private static async Task DisposePluginAsync(PluginPair pluginPair)
         {
-            switch (pluginPair.Plugin)
+            try
             {
-                case IDisposable disposable:
-                    disposable.Dispose();
-                    break;
-                case IAsyncDisposable asyncDisposable:
-                    await asyncDisposable.DisposeAsync();
-                    break;
+                switch (pluginPair.Plugin)
+                {
+                    case IDisposable disposable:
+                        disposable.Dispose();
+                        break;
+                    case IAsyncDisposable asyncDisposable:
+                        await asyncDisposable.DisposeAsync();
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                throw new FlowPluginException(pluginPair.Metadata, e);
             }
         }
 
