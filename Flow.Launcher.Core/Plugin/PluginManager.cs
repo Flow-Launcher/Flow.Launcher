@@ -64,7 +64,14 @@ namespace Flow.Launcher.Core.Plugin
             foreach (var plugin in AllPlugins)
             {
                 var savable = plugin.Plugin as ISavable;
-                savable?.Save();
+                try
+                {
+                    savable?.Save();
+                }
+                catch (Exception e)
+                {
+                    throw new FlowPluginException(plugin.Metadata, e);
+                }
             }
 
             API.SavePluginSettings();
