@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core;
@@ -205,7 +206,18 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         }
     }
 
-    public bool KoreanIMERegistryKeyExists => Win32Helper.IsKoreanIMEExist();
+    public bool KoreanIMERegistryKeyExists
+    {
+        get
+        {
+            bool registryKeyExists = Win32Helper.IsKoreanIMEExist();
+            bool koreanLanguageInstalled = InputLanguage.InstalledInputLanguages.Cast<InputLanguage>().Any(lang => lang.Culture.Name.StartsWith("ko"));
+            bool isWindows11 = Win32Helper.IsWindows11();
+
+            // Return true if Windows 11 with Korean IME installed, or if the registry key exists
+            return (isWindows11 && koreanLanguageInstalled) || registryKeyExists;
+        }
+    }
 
     public bool KoreanIMERegistryValueIsZero
     {
