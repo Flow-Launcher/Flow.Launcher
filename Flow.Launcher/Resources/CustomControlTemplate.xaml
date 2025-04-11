@@ -1285,7 +1285,6 @@
         BasedOn="{StaticResource DefaultComboBoxStyle}"
         TargetType="ComboBox">
         <Setter Property="Padding" Value="12 0 0 0" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="ui:ControlHelper.CornerRadius" Value="0" />
