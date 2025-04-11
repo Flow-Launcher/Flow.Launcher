@@ -111,26 +111,25 @@
     <system:String x:Key="searchDelayNumberBoxToolTip">Introduza o tempo de espera (ms) até que a entrada seja considerada completa. Apenas pode editar se ativara opção Atraso de pesquisa.</system:String>
     <system:String x:Key="searchDelayTime">Tempo de espera padrão</system:String>
     <system:String x:Key="searchDelayTimeToolTip">Tempo a aguardar antes de mostrar os resultados. Valores mais altos resultam num atraso maior (ms).</system:String>
-    <system:String x:Key="KoreanImeTitle">Information for Korean IME user</system:String>
+    <system:String x:Key="KoreanImeTitle">Informações para utilizadores coreanos</system:String>
     <system:String x:Key="KoreanImeGuide">
-        The Korean input method used in Windows 11 may cause some issues in Flow Launcher.
+        O método de introdução Coreano em sistemas Windows 11 pode causar erros no Flow Launcher.
 
-        If you experience any problems, you may need to enable &quot;Use previous version of Korean IME&quot;.
+        Se estiver a sofrer problemas, pode ser necessário ativar &quot;Utilizar versão anterior do IME Coreano&quot;.
 
+        Abra as definições no seu sistema e aceda a:
 
-        Open Setting in Windows 11 and go to:
+        Hora e Idioma &gt; Idioma e Região &gt; Coreano &gt; Opções de idioma &gt; Teclado - Microsoft IME &gt; Compatibilidade
 
-        Time &amp; Language &gt; Language &amp; Region &gt; Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility,
-
-        and enable &quot;Use previous version of Microsoft IME&quot;.
+        e ative &quot;Utilizar versão anterior de Microsoft IME&quot;.
 
 
     </system:String>
-    <system:String x:Key="KoreanImeOpenLink">Open Language and Region System Settings</system:String>
-    <system:String x:Key="KoreanImeOpenLinkToolTip">Opens the Korean IME setting location. Go to Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility</system:String>
+    <system:String x:Key="KoreanImeOpenLink">Abrir definições de Idioma e Região</system:String>
+    <system:String x:Key="KoreanImeOpenLinkToolTip">Abra a definição do método de introdução coreano. Aceda a Corano &gt; Opções de idioma &gt; Teclado - Microsoft IME &gt; Compatibilidade</system:String>
     <system:String x:Key="KoreanImeOpenLinkButton">Abrir</system:String>
-    <system:String x:Key="KoreanImeRegistry">Use Previous Korean IME</system:String>
-    <system:String x:Key="KoreanImeRegistryTooltip">You can change the Previous Korean IME settings directly from here</system:String>
+    <system:String x:Key="KoreanImeRegistry">Utilizar versão anterior de IME Coreano</system:String>
+    <system:String x:Key="KoreanImeRegistryTooltip">Pode alterar as definições do método de introdução coreano aqui</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Pesquisar plugins</system:String>
