@@ -1284,7 +1284,7 @@ namespace Flow.Launcher.ViewModel
                     resultsCopy = DeepCloneResults(results, token);
                 }
 
-                foreach (var result in results)
+                foreach (var result in resultsCopy)
                 {
                     if (string.IsNullOrEmpty(result.BadgeIcoPath))
                     {
