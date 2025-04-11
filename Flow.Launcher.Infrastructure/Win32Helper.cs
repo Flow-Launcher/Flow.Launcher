@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -514,6 +515,93 @@ namespace Flow.Launcher.Infrastructure
             // Notifications only supported on Windows 10 19041+
             return RuntimeInformation.IsOSPlatform(OSPlatform.Windows) &&
                 Environment.OSVersion.Version.Build >= 19041;
+        }
+
+        #endregion
+
+        #region Korean IME
+
+        public static bool IsWindows11()
+        {
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Windows) &&
+                Environment.OSVersion.Version.Build >= 22000;
+        }
+
+        public static bool IsKoreanIMEExist()
+        {
+            return GetLegacyKoreanIMERegistryValue() != null;
+        }
+
+        public static bool IsLegacyKoreanIMEEnabled()
+        {
+            object value = GetLegacyKoreanIMERegistryValue();
+
+            if (value is int intValue)
+            {
+                return intValue == 1;
+            }
+            else if (value != null && int.TryParse(value.ToString(), out int parsedValue))
+            {
+                return parsedValue == 1;
+            }
+
+            return false;
+        }
+
+        public static bool SetLegacyKoreanIMEEnabled(bool enable)
+        {
+            const string subKeyPath = @"Software\Microsoft\input\tsf\tsf3override\{A028AE76-01B1-46C2-99C4-ACD9858AE02F}";
+            const string valueName = "NoTsf3Override5";
+
+            try
+            {
+                using RegistryKey key = Registry.CurrentUser.CreateSubKey(subKeyPath);
+                if (key != null)
+                {
+                    int value = enable ? 1 : 0;
+                    key.SetValue(valueName, value, RegistryValueKind.DWord);
+                    return true;
+                }
+            }
+            catch (System.Exception)
+            {
+                // Ignored
+            }
+
+            return false;
+        }
+
+        public static object GetLegacyKoreanIMERegistryValue()
+        {
+            const string subKeyPath = @"Software\Microsoft\input\tsf\tsf3override\{A028AE76-01B1-46C2-99C4-ACD9858AE02F}";
+            const string valueName = "NoTsf3Override5";
+
+            try
+            {
+                using RegistryKey key = Registry.CurrentUser.OpenSubKey(subKeyPath);
+                if (key != null)
+                {
+                    return key.GetValue(valueName);
+                }
+            }
+            catch (System.Exception)
+            {
+                // Ignored
+            }
+
+            return null;
+        }
+
+        public static void OpenImeSettings()
+        {
+            try
+            {
+                Process.Start(new ProcessStartInfo("ms-settings:regionlanguage") { UseShellExecute = true });
+            }
+            catch (System.Exception)
+            {
+                // Ignored
+            }
         }
 
         #endregion

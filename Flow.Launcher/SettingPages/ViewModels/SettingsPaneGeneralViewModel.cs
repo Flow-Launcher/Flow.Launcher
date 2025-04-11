@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core;
 using Flow.Launcher.Core.Configuration;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
@@ -178,6 +180,70 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             UpdateEnumDropdownLocalizations();
         }
     }
+
+    #region Korean IME
+
+    // The new Korean IME used in Windows 11 has compatibility issues with WPF. This issue is difficult to resolve within
+    // WPF itself, but it can be avoided by having the user switch to the legacy IME at the system level. Therefore,
+    // we provide guidance and a direct button for users to make this change themselves. If the relevant registry key does
+    // not exist (i.e., the Korean IME is not installed), this setting will not be shown at all.
+
+    public bool LegacyKoreanIMEEnabled
+    {
+        get => Win32Helper.IsLegacyKoreanIMEEnabled();
+        set
+        {
+            if (Win32Helper.SetLegacyKoreanIMEEnabled(value))
+            {
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(KoreanIMERegistryValueIsZero));
+            }
+            else
+            {
+                //Since this is rarely seen text, language support is not provided.
+                App.API.ShowMsg("Failed to change Korean IME setting", "Please check your system registry access or contact support.");
+            }
+        }
+    }
+
+    public bool KoreanIMERegistryKeyExists
+    {
+        get
+        {
+            var registryKeyExists = Win32Helper.IsKoreanIMEExist();
+            var koreanLanguageInstalled = InputLanguage.InstalledInputLanguages.Cast<InputLanguage>().Any(lang => lang.Culture.Name.StartsWith("ko"));
+            var isWindows11 = Win32Helper.IsWindows11();
+
+            // Return true if Windows 11 with Korean IME installed, or if the registry key exists
+            return (isWindows11 && koreanLanguageInstalled) || registryKeyExists;
+        }
+    }
+
+    public bool KoreanIMERegistryValueIsZero
+    {
+        get
+        {
+            var value = Win32Helper.GetLegacyKoreanIMERegistryValue();
+            if (value is int intValue)
+            {
+                return intValue == 0;
+            }
+            else if (value != null && int.TryParse(value.ToString(), out var parsedValue))
+            {
+                return parsedValue == 0;
+            }
+
+            return false;
+        }
+    }
+
+    [RelayCommand]
+    private void OpenImeSettings()
+    {
+        Win32Helper.OpenImeSettings();
+    }
+
+    #endregion
 
     public bool ShouldUsePinyin
     {

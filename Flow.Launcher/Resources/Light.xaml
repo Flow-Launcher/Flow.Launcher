@@ -108,10 +108,20 @@
     <SolidColorBrush x:Key="CustomExpanderHover" Color="#f6f6f6" />
     <!--  Resource for ContentDialog  -->
     <SolidColorBrush x:Key="ContentDialogOverlayBG" Color="#4D000000" />
-    <!--  Infobar Warning  -->
+
+    <!--  DIY Infobar  -->
+    <SolidColorBrush x:Key="InfoBarBD" Color="#0F000000" />
+    <SolidColorBrush
+        x:Key="InfoBarInfoIcon"
+        Opacity="0.8"
+        Color="{m:DynamicColor SystemAccentColor}" />
+    <SolidColorBrush x:Key="InfoBarInfoBG" Color="{m:DynamicColor Color01}" />
     <SolidColorBrush x:Key="InfoBarWarningIcon" Color="#9D5D00" />
     <SolidColorBrush x:Key="InfoBarWarningBG" Color="#FFF4CE" />
-    <SolidColorBrush x:Key="InfoBarBD" Color="#0F000000" />
+    <SolidColorBrush x:Key="InfoBarSuccessIcon" Color="#3f973e" />
+    <SolidColorBrush x:Key="InfoBarSuccessBG" Color="#dff6dd" />
+    <SolidColorBrush x:Key="InfoBarErrorIcon" Color="#c42b1c" />
+    <SolidColorBrush x:Key="InfoBarErrorBG" Color="#fde7e9" />
 
     <SolidColorBrush x:Key="MouseOverWindowCloseButtonForegroundBrush" Color="#ffffff" />
 
