@@ -42,6 +42,7 @@
     <system:String x:Key="GameMode">Herný režim</system:String>
     <system:String x:Key="GameModeToolTip">Pozastaviť používanie klávesových skratiek.</system:String>
     <system:String x:Key="PositionReset">Resetovať pozíciu</system:String>
+    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">Zadajte text na vyhľadávanie</system:String>
 
     <!--  Setting General  -->
@@ -107,6 +108,7 @@
     <system:String x:Key="shadowEffectNotAllowed">Efekt tieňa nie je povolený, kým má aktuálny motív povolený efekt rozostrenia</system:String>
     <system:String x:Key="searchDelay">Oneskorenie vyhľadávania</system:String>
     <system:String x:Key="searchDelayToolTip">Pridá krátke oneskorenie počas písania, aby na zníženie blikanie rozhrania počas načítavania. Odporúča sa pri priemernej rýchlosti písania.</system:String>
+    <system:String x:Key="searchDelayNumberBoxToolTip">Enter the wait time (in ms) until input is considered complete. This can only be edited if Search Delay is enabled.</system:String>
     <system:String x:Key="searchDelayTime">Predvolené oneskorenie vyhľadávania</system:String>
     <system:String x:Key="searchDelayTimeToolTip">Čas čakania pred zobrazením výsledkov po ukončení písania. Pri vyšších hodnotách sa čaká dlhšie. (ms)</system:String>
 
