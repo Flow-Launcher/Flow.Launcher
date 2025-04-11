@@ -108,7 +108,6 @@ namespace Flow.Launcher.ViewModel
                 
                 return IconXY;
             }
-
         }
 
         public Visibility ShowGlyph

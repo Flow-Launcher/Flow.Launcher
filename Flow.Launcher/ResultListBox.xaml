@@ -151,8 +151,6 @@
                             </Border>
                         </Grid>
 
-
-
                         <Grid
                             Grid.Column="1"
                             Margin="6 0 10 0"
