@@ -23,7 +23,7 @@ namespace Flow.Launcher.Plugin
 
         private string _copyText = string.Empty;
 
-        private string _badgePath;
+        private string _badgeIcoPath;
 
         /// <summary>
         /// The title of the result. This is always required.
@@ -92,9 +92,9 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         /// <value>Can be a local file path or a URL.</value>
         /// <remarks>If null or empty, will use plugin icon</remarks>
-        public string BadgePath
+        public string BadgeIcoPath
         {
-            get => _badgePath;
+            get => _badgeIcoPath;
             set
             {
                 // As a standard this property will handle prepping and converting to absolute local path for icon image processing
@@ -105,11 +105,11 @@ namespace Flow.Launcher.Plugin
                     && !value.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
                     && !value.StartsWith("data:image", StringComparison.OrdinalIgnoreCase))
                 {
-                    _badgePath = Path.Combine(PluginDirectory, value);
+                    _badgeIcoPath = Path.Combine(PluginDirectory, value);
                 }
                 else
                 {
-                    _badgePath = value;
+                    _badgeIcoPath = value;
                 }
             }
         }
@@ -279,7 +279,7 @@ namespace Flow.Launcher.Plugin
                 CopyText = CopyText,
                 AutoCompleteText = AutoCompleteText,
                 IcoPath = IcoPath,
-                BadgePath = BadgePath,
+                BadgeIcoPath = BadgeIcoPath,
                 RoundedIcon = RoundedIcon,
                 Icon = Icon,
                 BadgeIcon = BadgeIcon,

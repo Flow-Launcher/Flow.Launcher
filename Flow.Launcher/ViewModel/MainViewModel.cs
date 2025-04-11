@@ -1286,9 +1286,9 @@ namespace Flow.Launcher.ViewModel
 
                 foreach (var result in results)
                 {
-                    if (string.IsNullOrEmpty(result.BadgePath))
+                    if (string.IsNullOrEmpty(result.BadgeIcoPath))
                     {
-                        result.BadgePath = plugin.Metadata.IcoPath;
+                        result.BadgeIcoPath = plugin.Metadata.IcoPath;
                     }
                 }
 
