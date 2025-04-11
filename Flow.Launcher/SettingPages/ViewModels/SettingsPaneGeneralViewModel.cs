@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Windows.Forms;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core;
 using Flow.Launcher.Core.Configuration;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
-using Microsoft.Win32;
 using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
-using System.Windows.Input;
-
 
 namespace Flow.Launcher.SettingPages.ViewModels;
 
@@ -25,8 +21,6 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     private readonly IPortable _portable;
     private readonly Internationalization _translater;
     
-    public ICommand OpenImeSettingsCommand { get; }
-    
     public SettingsPaneGeneralViewModel(Settings settings, Updater updater, IPortable portable, Internationalization translater)
     {
         Settings = settings;
@@ -34,7 +28,6 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         _portable = portable;
         _translater = translater;
         UpdateEnumDropdownLocalizations();
-        OpenImeSettingsCommand = new RelayCommand(OpenImeSettings);
     }
 
     public class SearchWindowScreenData : DropdownDataGeneric<SearchWindowScreens> { }
@@ -187,21 +180,22 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             UpdateEnumDropdownLocalizations();
         }
     }
-    
+
+    #region Korean IME
+
     // The new Korean IME used in Windows 11 has compatibility issues with WPF. This issue is difficult to resolve within
     // WPF itself, but it can be avoided by having the user switch to the legacy IME at the system level. Therefore,
     // we provide guidance and a direct button for users to make this change themselves. If the relevant registry key does
     // not exist (i.e., the Korean IME is not installed), this setting will not be shown at all.
-    #region Korean IME
+
     public bool LegacyKoreanIMEEnabled
     {
-        get => IsLegacyKoreanIMEEnabled();
+        get => Win32Helper.IsLegacyKoreanIMEEnabled();
         set
         {
-            Debug.WriteLine($"[DEBUG] LegacyKoreanIMEEnabled changed: {value}");
-            if (SetLegacyKoreanIMEEnabled(value))
+            if (Win32Helper.SetLegacyKoreanIMEEnabled(value))
             {
-                OnPropertyChanged(nameof(LegacyKoreanIMEEnabled));
+                OnPropertyChanged();
                 OnPropertyChanged(nameof(KoreanIMERegistryValueIsZero));
             }
             else
@@ -212,13 +206,13 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         }
     }
 
-    public bool KoreanIMERegistryKeyExists => IsKoreanIMEExist();
+    public bool KoreanIMERegistryKeyExists => Win32Helper.IsKoreanIMEExist();
 
     public bool KoreanIMERegistryValueIsZero
     {
         get
         {
-            object value = GetLegacyKoreanIMERegistryValue();
+            object value = Win32Helper.GetLegacyKoreanIMERegistryValue();
             if (value is int intValue)
             {
                 return intValue == 0;
@@ -232,90 +226,12 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         }
     }
 
-    bool IsKoreanIMEExist()
-    {
-        return GetLegacyKoreanIMERegistryValue() != null;
-    }
-
-    bool IsLegacyKoreanIMEEnabled()
-    {
-        object value = GetLegacyKoreanIMERegistryValue();
-
-        if (value is int intValue)
-        {
-            return intValue == 1;
-        }
-        else if (value != null && int.TryParse(value.ToString(), out int parsedValue))
-        {
-            return parsedValue == 1;
-        }
-
-        return false;
-    }
-
-    bool SetLegacyKoreanIMEEnabled(bool enable)
-    {
-        const string subKeyPath = @"Software\Microsoft\input\tsf\tsf3override\{A028AE76-01B1-46C2-99C4-ACD9858AE02F}";
-        const string valueName = "NoTsf3Override5";
-
-        try
-        {
-            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(subKeyPath))
-            {
-                if (key != null)
-                {
-                    int value = enable ? 1 : 0;
-                    key.SetValue(valueName, value, RegistryValueKind.DWord);
-                    return true;
-                }
-                else
-                {
-                    Debug.WriteLine($"[IME DEBUG] Failed to create or open registry key: {subKeyPath}");
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"[IME DEBUG] Exception occurred while setting registry: {ex.Message}");
-        }
-
-        return false;
-    }
-
-    private object GetLegacyKoreanIMERegistryValue()
-    {
-        const string subKeyPath = @"Software\Microsoft\input\tsf\tsf3override\{A028AE76-01B1-46C2-99C4-ACD9858AE02F}";
-        const string valueName = "NoTsf3Override5";
-
-        try
-        {
-            using (RegistryKey key = Registry.CurrentUser.OpenSubKey(subKeyPath))
-            {
-                if (key != null)
-                {
-                    return key.GetValue(valueName);
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"[IME DEBUG] Exception occurred: {ex.Message}");
-        }
-
-        return null;
-    }
-
+    [RelayCommand]
     private void OpenImeSettings()
     {
-        try
-        {
-            Process.Start(new ProcessStartInfo("ms-settings:regionlanguage") { UseShellExecute = true });
-        }
-        catch (Exception e)
-        {
-            Debug.WriteLine($"Error opening IME settings: {e.Message}");
-        }
+        Win32Helper.OpenImeSettings();
     }
+
     #endregion
 
     public bool ShouldUsePinyin
