@@ -102,6 +102,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool UseSound { get; set; } = true;
         public double SoundVolume { get; set; } = 50;
         public bool ShowBadges { get; set; } = false;
+        public bool ShowBadgesGlobalOnly { get; set; } = false;
 
         public bool UseClock { get; set; } = true;
         public bool UseDate { get; set; } = false;

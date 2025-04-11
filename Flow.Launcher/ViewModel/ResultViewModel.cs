@@ -127,12 +127,17 @@ namespace Flow.Launcher.ViewModel
         {
             get
             {
-                if (Settings.ShowBadges && BadgeIconAvailable)
-                    return Visibility.Visible;
+                if (!Settings.ShowBadges || !BadgeIconAvailable)
+                    return Visibility.Collapsed;
 
-                return Visibility.Collapsed;
+                if (Settings.ShowBadgesGlobalOnly && !IsGlobalQuery)
+                    return Visibility.Collapsed;
+
+                return Visibility.Visible;
             }
         }
+
+        public bool IsGlobalQuery => Result.OriginQuery.ActionKeyword == Query.GlobalPluginWildcardSign;
 
         private bool GlyphAvailable => Glyph is not null;
 

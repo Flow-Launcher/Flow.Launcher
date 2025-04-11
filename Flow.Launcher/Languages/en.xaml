@@ -285,6 +285,8 @@
     <system:String x:Key="flowlauncherPressHotkey">Press Key</system:String>
     <system:String x:Key="showBadges">Show Result Badges</system:String>
     <system:String x:Key="showBadgesToolTip">Show badges for query results where supported</system:String>
+    <system:String x:Key="showBadgesGlobalOnly">Show Result Badges Only for Global Query</system:String>
+    <system:String x:Key="showBadgesGlobalOnlyToolTip">Show badges only for global query results</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP Proxy</system:String>
