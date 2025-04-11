@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
@@ -38,6 +39,16 @@ namespace Flow.Launcher.Infrastructure.Storage
             FilesFolders.ValidateDirectory(DirectoryPath);
 
             FilePath = Path.Combine(DirectoryPath, $"{filename}{FileSuffix}");
+        }
+
+        // Let the old Program plugin get this constructor
+        [Obsolete("This constructor is obsolete. Use BinaryStorage(string filename) instead.")]
+        public BinaryStorage(string filename, string directoryPath = null!)
+        {
+            directoryPath ??= DataLocation.CacheDirectory;
+            FilesFolders.ValidateDirectory(directoryPath);
+
+            FilePath = Path.Combine(directoryPath, $"{filename}{FileSuffix}");
         }
 
         public async ValueTask<T> TryLoadAsync(T defaultData)
@@ -82,8 +93,10 @@ namespace Flow.Launcher.Infrastructure.Storage
 
         public void Save()
         {
-            var serialized = MemoryPackSerializer.Serialize(Data);
+            // User may delete the directory, so we need to check it
+            FilesFolders.ValidateDirectory(DirectoryPath);
 
+            var serialized = MemoryPackSerializer.Serialize(Data);
             File.WriteAllBytes(FilePath, serialized);
         }
 
@@ -103,6 +116,9 @@ namespace Flow.Launcher.Infrastructure.Storage
         // so we need to pass it to SaveAsync
         public async ValueTask SaveAsync(T data)
         {
+            // User may delete the directory, so we need to check it
+            FilesFolders.ValidateDirectory(DirectoryPath);
+
             await using var stream = new FileStream(FilePath, FileMode.Create);
             await MemoryPackSerializer.SerializeAsync(stream, data);
         }
