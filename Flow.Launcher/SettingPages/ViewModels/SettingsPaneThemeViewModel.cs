@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 using System.Globalization;
 using System.IO;
@@ -21,7 +22,7 @@ namespace Flow.Launcher.SettingPages.ViewModels;
 
 public partial class SettingsPaneThemeViewModel : BaseModel
 {
-    private const string DefaultFont = "Segoe UI";
+    private string DefaultFont = Settings.GetSystemDefaultFont();
     public string BackdropSubText => !Win32Helper.IsBackdropSupported() ? App.API.GetTranslation("BackdropTypeDisabledToolTip") : ""; 
     public Settings Settings { get; }
     private readonly Theme _theme = Ioc.Default.GetRequiredService<Theme>();
@@ -507,4 +508,5 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         WindowHeightSize = 42;
         ItemHeightSize = 58;
     }
+   
 }

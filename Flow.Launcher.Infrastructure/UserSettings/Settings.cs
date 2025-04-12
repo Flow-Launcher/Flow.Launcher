@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.Text.Json.Serialization;
 using System.Windows;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -10,6 +12,7 @@ using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.ViewModel;
+using SystemFonts = System.Windows.SystemFonts;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
 {
@@ -34,6 +37,24 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
 
         private string language = Constant.SystemLanguageCode;
+        public static string GetSystemDefaultFont()
+        {
+            try
+            {
+                var font = SystemFonts.MessageFontFamily;
+                
+                if (font.FamilyNames.TryGetValue(System.Windows.Markup.XmlLanguage.GetLanguage("en-US"), out var englishName))
+                {
+                    return englishName;
+                }
+                return font.Source ?? "Segoe UI";
+            }
+            catch
+            {
+                return "Segoe UI";
+            }
+        }
+        
         private string _theme = Constant.DefaultTheme;
         public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
         public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
@@ -85,15 +106,15 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public double QueryBoxFontSize { get; set; } = 18;
         public double ResultItemFontSize { get; set; } = 16;
         public double ResultSubItemFontSize { get; set; } = 13;
-        public string QueryBoxFont { get; set; } = FontFamily.GenericSansSerif.Name;
+        public string QueryBoxFont { get; set; } = GetSystemDefaultFont();
         public string QueryBoxFontStyle { get; set; }
         public string QueryBoxFontWeight { get; set; }
         public string QueryBoxFontStretch { get; set; }
-        public string ResultFont { get; set; } = FontFamily.GenericSansSerif.Name;
+        public string ResultFont { get; set; } = GetSystemDefaultFont();
         public string ResultFontStyle { get; set; }
         public string ResultFontWeight { get; set; }
         public string ResultFontStretch { get; set; }
-        public string ResultSubFont { get; set; } = FontFamily.GenericSansSerif.Name;
+        public string ResultSubFont { get; set; } = GetSystemDefaultFont();
         public string ResultSubFontStyle { get; set; }
         public string ResultSubFontWeight { get; set; }
         public string ResultSubFontStretch { get; set; }
@@ -140,7 +161,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 }
             }
         }
-
         public int CustomExplorerIndex { get; set; } = 0;
 
         [JsonIgnore]
