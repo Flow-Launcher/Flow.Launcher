@@ -6,8 +6,6 @@ namespace Flow.Launcher.QuickSwitch
 {
     public static class NativeHelper
     {
-
-
         public const uint WINEVENT_OUTOFCONTEXT = 0;
         public const uint EVENT_SYSTEM_FOREGROUND = 3;
 

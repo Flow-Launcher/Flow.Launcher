@@ -1,12 +1,12 @@
-﻿using Flow.Launcher.Helper;
+﻿using System;
+using System.IO;
+using System.Runtime.InteropServices;
+using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Logger;
 using Interop.UIAutomationClient;
 using SHDocVw;
 using Shell32;
-using System;
-using System.IO;
-using System.Runtime.InteropServices;
 using WindowsInput;
 using WindowsInput.Native;
 using static Flow.Launcher.QuickSwitch.NativeHelper;
@@ -45,12 +45,12 @@ namespace Flow.Launcher.QuickSwitch
             {
                 return;
             }
-            object? document;
+            object document;
             try
             {
                 document = lastExplorerView?.Document;
             }
-            catch (COMException e)
+            catch (COMException)
             {
                 return;
             }
@@ -60,7 +60,6 @@ namespace Flow.Launcher.QuickSwitch
             var path = folder.Folder.Items().Item().Path;
             if (!Path.IsPathRooted(path))
                 return;
-
 
             _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.MENU, VirtualKeyCode.VK_D);
 
@@ -77,9 +76,7 @@ namespace Flow.Launcher.QuickSwitch
             var edit = (IUIAutomationValuePattern)address.GetCurrentPattern(UIA_PatternIds.UIA_ValuePatternId);
             edit.SetValue(path);
 
-            SendMessage(address.CurrentNativeWindowHandle, NativeHelper.WmType.WM_KEYDOWN, (nuint)VirtualKeyCode.RETURN, IntPtr.Zero);
-
-
+            SendMessage(address.CurrentNativeWindowHandle, WmType.WM_KEYDOWN, (nuint)VirtualKeyCode.RETURN, IntPtr.Zero);
         }
 
         [UnmanagedCallersOnly]
@@ -115,7 +112,6 @@ namespace Flow.Launcher.QuickSwitch
                     continue;
                 }
                 lastExplorerView = explorer;
-
             }
         }
     }
