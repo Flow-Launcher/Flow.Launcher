@@ -61,16 +61,16 @@ namespace Flow.Launcher.Core.Plugin
         /// </summary>
         public static void Save()
         {
-            foreach (var plugin in AllPlugins)
+            foreach (var pluginPair in AllPlugins)
             {
-                var savable = plugin.Plugin as ISavable;
+                var savable = pluginPair.Plugin as ISavable;
                 try
                 {
                     savable?.Save();
                 }
                 catch (Exception e)
                 {
-                    throw new FlowPluginException(plugin.Metadata, e);
+                    API.LogException(ClassName, $"Failed to save plugin {pluginPair.Metadata.Name}", e);
                 }
             }
 
@@ -102,7 +102,7 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch (Exception e)
             {
-                throw new FlowPluginException(pluginPair.Metadata, e);
+                API.LogException(ClassName, $"Failed to dispose plugin {pluginPair.Metadata.Name}", e);
             }
         }
 
