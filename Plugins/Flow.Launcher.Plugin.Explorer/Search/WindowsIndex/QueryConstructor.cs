@@ -60,13 +60,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         ///</summary>
         public string Directory(ReadOnlySpan<char> path, ReadOnlySpan<char> searchString = default, bool recursive = false)
         {
-            var queryConstraint = searchString.IsWhiteSpace() ? "" : $"AND ({FileName} LIKE '{searchString}%' OR CONTAINS({FileName},'\"{searchString}*\"'))";
+            var queryConstraint = searchString.IsWhiteSpace() ? "" : $"AND ({OrderIdentifier} LIKE '{searchString}%' OR CONTAINS({OrderIdentifier},'\"{searchString}*\"'))";
 
             var scopeConstraint = recursive
                 ? RecursiveDirectoryConstraint(path)
                 : TopLevelDirectoryConstraint(path);
 
-            var query = $"SELECT TOP {settings.MaxResult} {CreateBaseQuery().QuerySelectColumns} FROM {SystemIndex} WHERE {scopeConstraint} {queryConstraint} ORDER BY {FileName}";
+            var query = $"SELECT TOP {settings.MaxResult} {CreateBaseQuery().QuerySelectColumns} FROM {SystemIndex} WHERE {scopeConstraint} {queryConstraint} ORDER BY {OrderIdentifier}";
 
             return query;
         }
@@ -83,7 +83,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             var replacedSearchString = ReplaceSpecialCharacterWithTwoSideWhiteSpace(userSearchString);
 
             // Generate SQL from constructed parameters, converting the userSearchString from AQS->WHERE clause
-            return $"{CreateBaseQuery().GenerateSQLFromUserQuery(replacedSearchString)} AND {RestrictionsForAllFilesAndFoldersSearch} ORDER BY {FileName}";
+            return $"{CreateBaseQuery().GenerateSQLFromUserQuery(replacedSearchString)} AND {RestrictionsForAllFilesAndFoldersSearch} ORDER BY {OrderIdentifier}";
         }
 
         /// <summary>
@@ -120,9 +120,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         public const string RestrictionsForAllFilesAndFoldersSearch = "scope='file:'";
 
         /// <summary>
-        /// Order identifier: file name
+        /// Order identifier: System.Search.Rank DESC
         /// </summary>
-        public const string FileName = "System.Search.Rank DESC";
+        /// <remarks>
+        /// <see href="https://docs.microsoft.com/en-us/windows/win32/properties/props-system-search-rank"/>
+        /// </remarks>
+        public const string OrderIdentifier = "System.Search.Rank DESC";
 
         ///<summary>
         /// Search will be performed on all indexed file contents for the specified search keywords.
@@ -130,7 +133,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         public string FileContent(ReadOnlySpan<char> userSearchString)
         {
             string query =
-                $"SELECT TOP {settings.MaxResult} {CreateBaseQuery().QuerySelectColumns} FROM {SystemIndex} WHERE {RestrictionsForFileContentSearch(userSearchString)} AND {RestrictionsForAllFilesAndFoldersSearch} ORDER BY {FileName}";
+                $"SELECT TOP {settings.MaxResult} {CreateBaseQuery().QuerySelectColumns} FROM {SystemIndex} WHERE {RestrictionsForFileContentSearch(userSearchString)} AND {RestrictionsForAllFilesAndFoldersSearch} ORDER BY {OrderIdentifier}";
 
             return query;
         }
