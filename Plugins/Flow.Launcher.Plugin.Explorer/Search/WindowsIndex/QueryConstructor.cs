@@ -6,8 +6,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 {
     public class QueryConstructor
     {
-        private static Regex _specialCharacterMatcher = new(@"[\@\＠\#\＃\&\＆＊_;,\%\|\!\(\)\{\}\[\]\^\~\?\\""\/\:\=\-]+", RegexOptions.Compiled);
-        private static Regex _multiWhiteSpacesMatcher = new(@"\s+", RegexOptions.Compiled);
+        private static readonly Regex _specialCharacterMatcher = new(@"[\@\＠\#\＃\&\＆＊_;,\%\|\!\(\)\{\}\[\]\^\~\?\\""\/\:\=\-]+", RegexOptions.Compiled);
+        private static readonly Regex _multiWhiteSpacesMatcher = new(@"\s+", RegexOptions.Compiled);
 
         private Settings Settings { get; }
 
