@@ -91,10 +91,24 @@ namespace Flow.Launcher.Plugin.Program.Programs
             if (candidates.Count == 0)
                 return null;
 
-            var match = candidates.Select(candidate => Main.Context.API.FuzzySearch(query, candidate))
+            var match = candidates.Select(candidate =>
+                {
+                    var matchResult = Main.Context.API.FuzzySearch(query, candidate);
+                    matchResult.Score = FuzzySearch(query, candidate);
+                    return matchResult;
+                })
                 .MaxBy(match => match.Score);
 
             return match?.IsSearchPrecisionScoreMet() ?? false ? match : null;
+        }
+
+        private static int FuzzySearch(string query, string stringToCompare)
+        {
+            var newScore = FuzzySharp.Fuzz.PartialTokenSetRatio(query.ToLower(), stringToCompare.ToLower());
+            if (stringToCompare.Length < query.Length)
+                newScore = 0;
+
+            return newScore;
         }
 
         public Result Result(string query, IPublicAPI api)
@@ -112,13 +126,16 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 title = resultName;
                 matchResult = Main.Context.API.FuzzySearch(query, resultName);
+                matchResult.Score = FuzzySearch(query, resultName);
             }
             else
             {
                 // Search in both
                 title = $"{resultName}: {Description}";
                 var nameMatch = Main.Context.API.FuzzySearch(query, resultName);
+                nameMatch.Score = FuzzySearch(query, resultName);
                 var descriptionMatch = Main.Context.API.FuzzySearch(query, Description);
+                descriptionMatch.Score = FuzzySearch(query, Description);
                 if (descriptionMatch.Score > nameMatch.Score)
                 {
                     for (int i = 0; i < descriptionMatch.MatchData.Count; i++)
