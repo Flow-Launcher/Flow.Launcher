@@ -36,8 +36,7 @@ public static class ErrorReporting
     {
         //handle unobserved task exceptions
         Application.Current.Dispatcher.Invoke(() => Report(e.Exception));
-        //prevent application exist, so the user can copy prompted error info
-        e.SetObserved();
+        //prevent application exit, so the user can copy the prompted error info
     }
 
     public static string RuntimeInfo()
