@@ -1,70 +1,75 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using System.Linq;
+using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
 {
     public static class EnvironmentVariables
     {
-        internal static bool IsEnvironmentVariableSearch(string search)
+        private static Dictionary<string, string> _envStringPaths = null;
+        private static Dictionary<string, string> EnvStringPaths
         {
-            return search.StartsWith("%") 
-                    && search != "%%"
-                    && !search.Contains("\\") &&
-                    LoadEnvironmentStringPaths().Count > 0;
+            get
+            {
+                if (_envStringPaths == null)
+                {
+                    LoadEnvironmentStringPaths();
+                }
+                return _envStringPaths;
+            }
         }
 
-        internal static Dictionary<string, string> LoadEnvironmentStringPaths()
+        internal static bool IsEnvironmentVariableSearch(string search)
         {
-            var envStringPaths = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
+            return search.StartsWith("%")
+                    && search != "%%"
+                    && !search.Contains('\\')
+                    && EnvStringPaths.Count > 0;
+        }
+
+        public static bool HasEnvironmentVar(string search)
+        {
+            // "c:\foo %appdata%\" returns false
+            var splited = search.Split(Path.DirectorySeparatorChar);
+            return splited.Any(dir => dir.StartsWith('%') && 
+                                        dir.EndsWith('%') &&
+                                        dir.Length > 2 &&
+                                        dir.Split('%').Length == 3);
+        }
+
+        private static void LoadEnvironmentStringPaths()
+        {
+            _envStringPaths = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
+            var homedrive = Environment.GetEnvironmentVariable("HOMEDRIVE")?.EnsureTrailingSlash() ?? "C:\\";
 
             foreach (DictionaryEntry special in Environment.GetEnvironmentVariables())
             {
                 var path = special.Value.ToString();
+                // we add a trailing slash to the path to make sure drive paths become valid absolute paths.
+                // for example, if %systemdrive% is C: we turn it to C:\
+                path = path.EnsureTrailingSlash();
+
+                // if we don't have an absolute path, we use Path.GetFullPath to get one.
+                // for example, if %homepath% is \Users\John we turn it to C:\Users\John
+                // Add basepath for GetFullPath() to parse %HOMEPATH% correctly
+                path = Path.IsPathFullyQualified(path) ? path : Path.GetFullPath(path, homedrive);
+
                 if (Directory.Exists(path))
                 {
-                    // we add a trailing slash to the path to make sure drive paths become valid absolute paths.
-                    // for example, if %systemdrive% is C: we turn it to C:\
-                    path = path.TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar;
-
-                    // if we don't have an absolute path, we use Path.GetFullPath to get one.
-                    // for example, if %homepath% is \Users\John we turn it to C:\Users\John
-                    path = Path.IsPathFullyQualified(path) ? path : Path.GetFullPath(path);
-
                     // Variables are returned with a mixture of all upper/lower case. 
-                    // Call ToLower() to make the results look consistent
-                    envStringPaths.Add(special.Key.ToString().ToLower(), path);
+                    // Call ToUpper() to make the results look consistent
+                    _envStringPaths.Add(special.Key.ToString().ToUpper(), path);
                 }
             }
-
-            return envStringPaths;
-        }
-
-        internal static string TranslateEnvironmentVariablePath(string environmentVariablePath)
-        {
-            var envStringPaths = LoadEnvironmentStringPaths();
-            var splitSearch = environmentVariablePath.Substring(1).Split("%");
-            var exactEnvStringPath = splitSearch[0];
-
-            // if there are more than 2 % characters in the query, don't bother
-            if (splitSearch.Length == 2 && envStringPaths.ContainsKey(exactEnvStringPath))
-            {
-                var queryPartToReplace = $"%{exactEnvStringPath}%";
-                var expandedPath = envStringPaths[exactEnvStringPath];
-                // replace the %envstring% part of the query with its expanded equivalent
-                return environmentVariablePath.Replace(queryPartToReplace, expandedPath);
-            }
-
-            return environmentVariablePath;
         }
 
         internal static List<Result> GetEnvironmentStringPathSuggestions(string querySearch, Query query, PluginInitContext context)
         {
             var results = new List<Result>();
 
-            var environmentVariables = LoadEnvironmentStringPaths();
             var search = querySearch;
 
             if (querySearch.EndsWith("%") && search.Length > 1)
@@ -72,12 +77,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 // query starts and ends with a %, find an exact match from env-string paths
                 search = querySearch.Substring(1, search.Length - 2);
 
-                if (environmentVariables.ContainsKey(search))
+                if (EnvStringPaths.ContainsKey(search))
                 {
-                    var expandedPath = environmentVariables[search];
-                   
+                    var expandedPath = EnvStringPaths[search];
+
                     results.Add(ResultManager.CreateFolderResult($"%{search}%", expandedPath, expandedPath, query));
-                    
+
                     return results;
                 }
             }
@@ -90,8 +95,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 search = search.Substring(1);
             }
-            
-            foreach (var p in environmentVariables)
+
+            foreach (var p in EnvStringPaths)
             {
                 if (p.Key.StartsWith(search, StringComparison.InvariantCultureIgnoreCase))
                 {

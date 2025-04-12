@@ -8,16 +8,44 @@
     d:DesignWidth="500"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
     mc:Ignorable="d">
-    <Grid Margin="10">
+    <Grid Margin="{StaticResource SettingPanelMargin}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel Margin="0,0,0,0" Orientation="Vertical">
-            <TextBlock Margin="10" Text="{DynamicResource flowlauncher_plugin_browserbookmark_loadBrowserFrom}" />
+        <StackPanel
+            Grid.Row="0"
+            Margin="{StaticResource SettingPanelItemTopBottomMargin}"
+            Orientation="Horizontal">
+            <TextBlock
+                Margin="{StaticResource SettingPanelItemRightMargin}"
+                VerticalAlignment="Center"
+                Text="{DynamicResource flowlauncher_plugin_browserbookmark_loadBrowserFrom}" />
+            <CheckBox
+                Margin="{StaticResource SettingPanelItemRightMargin}"
+                Content="Chrome"
+                IsChecked="{Binding LoadChromeBookmark}" />
+            <CheckBox
+                Margin="{StaticResource SettingPanelItemRightMargin}"
+                Content="Edge"
+                IsChecked="{Binding LoadEdgeBookmark}" />
+            <CheckBox
+                Margin="{StaticResource SettingPanelItemRightMargin}"
+                Content="Firefox"
+                IsChecked="{Binding LoadFirefoxBookmark}" />
+            <Button
+                Margin="{StaticResource SettingPanelItemRightMargin}"
+                Click="Others_Click"
+                Content="{DynamicResource flowlauncher_plugin_browserbookmark_others}" />
+        </StackPanel>
+        <StackPanel
+            Name="CustomBrowsersList"
+            Grid.Row="1"
+            Visibility="Collapsed">
             <ListView
                 Name="CustomBrowsers"
                 Height="auto"
-                Margin="10"
+                Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                 BorderBrush="DarkGray"
                 BorderThickness="1"
                 ItemsSource="{Binding Settings.CustomChromiumBrowsers}"
@@ -28,18 +56,37 @@
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding Name, Mode=OneWay}" Header="{DynamicResource flowlauncher_plugin_browserbookmark_browserName}" />
                         <GridViewColumn DisplayMemberBinding="{Binding DataDirectoryPath, Mode=OneWay}" Header="{DynamicResource flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory}" />
+                        <GridViewColumn DisplayMemberBinding="{Binding BrowserType, Mode=OneWay}" Header="{DynamicResource flowlauncher_plugin_browserbookmark_browserEngine}" />
                     </GridView>
                 </ListView.View>
             </ListView>
-            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+            <StackPanel
+                Margin="{StaticResource SettingPanelItemTopBottomMargin}"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
                 <Button
-                    MinWidth="120"
-                    Margin="10"
+                    Width="100"
                     Click="NewCustomBrowser"
                     Content="{DynamicResource flowlauncher_plugin_browserbookmark_addBrowserBookmark}" />
                 <Button
-                    MinWidth="120"
-                    Margin="10"
+                    Width="100"
+                    Margin="{StaticResource SettingPanelItemLeftMargin}"
+                    Click="EditCustomBrowser"
+                    Content="{DynamicResource flowlauncher_plugin_browserbookmark_editBrowserBookmark}">
+                    <Button.Style>
+                        <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
+                            <Setter Property="IsEnabled" Value="true" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=CustomBrowsers, Path=SelectedItems.Count}" Value="0">
+                                    <Setter Property="IsEnabled" Value="false" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button
+                    Width="100"
+                    Margin="{StaticResource SettingPanelItemLeftMargin}"
                     Click="DeleteCustomBrowser"
                     Content="{DynamicResource flowlauncher_plugin_browserbookmark_removeBrowserBookmark}" />
             </StackPanel>

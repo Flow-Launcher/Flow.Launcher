@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     ShutdownMode="OnMainWindowClose"
-    Startup="OnStartupAsync">
+    Startup="OnStartup">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -20,11 +20,17 @@
                                 <ResourceDictionary Source="pack://application:,,,/Resources/Dark.xaml" />
                             </ResourceDictionary.MergedDictionaries>
                         </ResourceDictionary>
+                        <ResourceDictionary x:Key="HighContrast">
+                            <ResourceDictionary.MergedDictionaries>
+                                <ResourceDictionary Source="pack://application:,,,/Resources/Dark.xaml" />
+                            </ResourceDictionary.MergedDictionaries>
+                        </ResourceDictionary>
                     </ui:ThemeResources.ThemeDictionaries>
                 </ui:ThemeResources>
                 <ui:XamlControlsResources />
                 <ResourceDictionary Source="pack://application:,,,/Resources/CustomControlTemplate.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Themes/Win11System.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resources/SettingWindowStyle.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Themes/Win11Light.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Languages/en.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

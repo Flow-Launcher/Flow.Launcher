@@ -1,4 +1,4 @@
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -6,6 +6,9 @@ using System.Linq;
 
 namespace Flow.Launcher.Plugin.SharedCommands
 {
+    /// <summary>
+    /// Contains methods to open a search in a new browser window or tab.
+    /// </summary>
     public static class SearchWeb
     {
         private static string GetDefaultBrowserPath()
@@ -71,12 +74,6 @@ namespace Flow.Launcher.Plugin.SharedCommands
             }
         }
 
-        [Obsolete("This is provided for backwards compatibility after 1.9.0 release, e.g. GitHub plugin. Use the new method instead")]
-        public static void NewBrowserWindow(this string url, string browserPath = "")
-        {
-            OpenInBrowserWindow(url, browserPath);
-        }
-
         /// <summary> 
         /// Opens search as a tab in the default browser chosen in Windows settings.
         /// </summary>
@@ -110,12 +107,6 @@ namespace Flow.Launcher.Plugin.SharedCommands
                     FileName = url, UseShellExecute = true
                 });
             }
-        }
-
-        [Obsolete("This is provided for backwards compatibility after 1.9.0 release, e.g. GitHub plugin. Use the new method instead")]
-        public static void NewTabInBrowser(this string url, string browserPath = "")
-        {
-            OpenInBrowserTab(url, browserPath);
         }
     }
 }

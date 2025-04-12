@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Flow.Launcher.Infrastructure.Http;
-using Flow.Launcher.Infrastructure.Logger;
 using System.Net.Http;
 using System.Threading;
 
@@ -23,11 +20,11 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
             try
             {
                 const string api = "http://suggestion.baidu.com/su?json=1&wd=";
-                result = await Http.GetAsync(api + Uri.EscapeUriString(query), token).ConfigureAwait(false);
+                result = await Main._context.API.HttpGetStringAsync(api + Uri.EscapeDataString(query), token).ConfigureAwait(false);
             }
             catch (Exception e) when (e is HttpRequestException or {InnerException: TimeoutException})
             {
-                Log.Exception("|Baidu.Suggestions|Can't get suggestion from baidu", e);
+                Main._context.API.LogException(nameof(Baidu), "Can't get suggestion from Baidu", e);
                 return null;
             }
 
@@ -42,7 +39,7 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
                 }
                 catch (JsonException e)
                 {
-                    Log.Exception("|Baidu.Suggestions|can't parse suggestions", e);
+                    Main._context.API.LogException(nameof(Baidu), "Can't parse suggestions", e);
                     return new List<string>();
                 }
 

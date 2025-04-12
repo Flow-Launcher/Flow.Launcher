@@ -7,15 +7,21 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid Margin="70,15,0,15">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="400" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+    <Grid Margin="{StaticResource SettingPanelMargin}">
+        <Grid.ColumnDefinitions />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
         <CheckBox
-            Grid.Column="0"
-            Padding="8,0,0,0"
+            Grid.Row="0"
+            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             Content="{DynamicResource plugin_pluginsmanager_plugin_settings_unknown_source}"
             IsChecked="{Binding WarnFromUnknownSource}" />
+        <CheckBox
+            Grid.Row="1"
+            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
+            Content="{DynamicResource plugin_pluginsmanager_plugin_settings_auto_restart}"
+            IsChecked="{Binding AutoRestartAfterChanging}" />
     </Grid>
 </UserControl>

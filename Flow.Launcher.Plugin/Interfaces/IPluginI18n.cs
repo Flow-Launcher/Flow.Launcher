@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+using System.Globalization;
 
 namespace Flow.Launcher.Plugin
 {
@@ -7,8 +7,14 @@ namespace Flow.Launcher.Plugin
     /// </summary>
     public interface IPluginI18n : IFeatures
     {
+        /// <summary>
+        /// Get a localised version of the plugin's title
+        /// </summary>
         string GetTranslatedPluginTitle();
 
+        /// <summary>
+        /// Get a localised version of the plugin's description
+        /// </summary>
         string GetTranslatedPluginDescription();
 
         /// <summary>

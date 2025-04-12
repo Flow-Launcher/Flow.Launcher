@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
@@ -6,66 +9,66 @@ using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using System.IO;
-using System.Drawing.Text;
-using System.Collections.Generic;
 
 namespace Flow.Launcher.ViewModel
 {
     public class ResultViewModel : BaseModel
     {
-        private static PrivateFontCollection fontCollection = new();
-        private static Dictionary<string, string> fonts = new(); 
+        private static readonly PrivateFontCollection FontCollection = new();
+        private static readonly Dictionary<string, string> Fonts = new();
 
         public ResultViewModel(Result result, Settings settings)
         {
-            if (result != null)
+            Settings = settings;
+
+            if (result == null) return;
+
+            Result = result;
+
+            if (Result.Glyph is { FontFamily: not null } glyph)
             {
-                Result = result;
-
-                if (Result.Glyph is { FontFamily: not null } glyph)
+                // Checks if it's a system installed font, which does not require path to be provided.
+                if (glyph.FontFamily.EndsWith(".ttf") || glyph.FontFamily.EndsWith(".otf"))
                 {
-                    // Checks if it's a system installed font, which does not require path to be provided. 
-                    if (glyph.FontFamily.EndsWith(".ttf") || glyph.FontFamily.EndsWith(".otf"))
+                    string fontFamilyPath = glyph.FontFamily;
+
+                    if (!Path.IsPathRooted(fontFamilyPath))
                     {
-                        string fontFamilyPath = glyph.FontFamily;
+                        fontFamilyPath = Path.Combine(Result.PluginDirectory, fontFamilyPath);
+                    }
 
-                        if (!Path.IsPathRooted(fontFamilyPath))
+                    if (Fonts.TryGetValue(fontFamilyPath, out var value))
+                    {
+                        Glyph = glyph with
                         {
-                            fontFamilyPath = Path.Combine(Result.PluginDirectory, fontFamilyPath);
-                        }
-
-                        if (fonts.ContainsKey(fontFamilyPath))
-                        {
-                            Glyph = glyph with
-                            {
-                                FontFamily = fonts[fontFamilyPath]
-                            };
-                        }
-                        else
-                        {
-                            fontCollection.AddFontFile(fontFamilyPath);
-                            fonts[fontFamilyPath] = $"{Path.GetDirectoryName(fontFamilyPath)}/#{fontCollection.Families[^1].Name}";
-                            Glyph = glyph with
-                            {
-                                FontFamily = fonts[fontFamilyPath]
-                            };
-                        }
+                            FontFamily = value
+                        };
                     }
                     else
                     {
-                        Glyph = glyph;
+                        FontCollection.AddFontFile(fontFamilyPath);
+                        Fonts[fontFamilyPath] = $"{Path.GetDirectoryName(fontFamilyPath)}/#{FontCollection.Families[^1].Name}";
+                        Glyph = glyph with
+                        {
+                            FontFamily = Fonts[fontFamilyPath]
+                        };
                     }
                 }
+                else
+                {
+                    Glyph = glyph;
+                }
             }
-
-            Settings = settings;
         }
 
-        private Settings Settings { get; }
+        public Settings Settings { get; }
 
         public Visibility ShowOpenResultHotkey =>
             Settings.ShowOpenResultHotkey ? Visibility.Visible : Visibility.Collapsed;
+
+        public Visibility ShowDefaultPreview => Result.PreviewPanel == null ? Visibility.Visible : Visibility.Collapsed;
+
+        public Visibility ShowCustomizedPreview => Result.PreviewPanel == null ? Visibility.Collapsed : Visibility.Visible;
 
         public Visibility ShowIcon
         {
@@ -84,6 +87,30 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public Visibility ShowPreviewImage
+        {
+            get
+            {
+                if (PreviewImageAvailable)
+                    return Visibility.Visible;
+                
+                // Fall back to icon
+                return ShowIcon;
+            }
+        }
+
+        public double IconRadius
+        {
+            get
+            {
+                if (Result.RoundedIcon)
+                    return IconXY / 2;
+                
+                return IconXY;
+            }
+
+        }
+
         public Visibility ShowGlyph
         {
             get
@@ -93,13 +120,15 @@ namespace Flow.Launcher.ViewModel
                 if (!Settings.UseGlyphIcons && !ImgIconAvailable && GlyphAvailable)
                     return Visibility.Visible;
 
-                return Settings.UseGlyphIcons && GlyphAvailable ? Visibility.Visible : Visibility.Hidden;
+                return Settings.UseGlyphIcons && GlyphAvailable ? Visibility.Visible : Visibility.Collapsed;
             }
         }
 
         private bool GlyphAvailable => Glyph is not null;
 
         private bool ImgIconAvailable => !string.IsNullOrEmpty(Result.IcoPath) || Result.Icon is not null;
+
+        private bool PreviewImageAvailable => !string.IsNullOrEmpty(Result.Preview.PreviewImagePath) || Result.Preview.PreviewDelegate != null;
 
         public string OpenResultModifiers => Settings.OpenResultModifiers;
 
@@ -111,59 +140,122 @@ namespace Flow.Launcher.ViewModel
             ? Result.SubTitle
             : Result.SubTitleToolTip;
 
-        private volatile bool ImageLoaded;
+        private volatile bool _imageLoaded;
+        private volatile bool _previewImageLoaded;
 
-        private ImageSource image = ImageLoader.DefaultImage;
+        private ImageSource _image = ImageLoader.LoadingImage;
+        private ImageSource _previewImage = ImageLoader.LoadingImage;
 
         public ImageSource Image
         {
             get
             {
-                if (!ImageLoaded)
+                if (!_imageLoaded)
                 {
-                    ImageLoaded = true;
+                    _imageLoaded = true;
                     _ = LoadImageAsync();
                 }
 
-                return image;
+                return _image;
             }
-            private set => image = value;
+            private set => _image = value;
         }
+
+        public ImageSource PreviewImage
+        {
+            get
+            {
+                if (!_previewImageLoaded)
+                {
+                    _previewImageLoaded = true;
+                    _ = LoadPreviewImageAsync();
+                }
+
+                return _previewImage;
+            }
+            private set => _previewImage = value;
+        }
+
+        /// <summary>
+        /// Determines if to use the full width of the preview panel
+        /// </summary>
+        public bool UseBigThumbnail => Result.Preview.IsMedia;
 
         public GlyphInfo Glyph { get; set; }
 
-        private async ValueTask LoadImageAsync()
+        private async Task<ImageSource> LoadImageInternalAsync(string imagePath, Result.IconDelegate icon, bool loadFullImage)
         {
-            var imagePath = Result.IcoPath;
-            if (string.IsNullOrEmpty(imagePath) && Result.Icon != null)
+            if (string.IsNullOrEmpty(imagePath) && icon != null)
             {
                 try
                 {
-                    image = Result.Icon();
-                    return;
+                    return icon();
                 }
                 catch (Exception e)
                 {
                     Log.Exception(
-                        $"|ResultViewModel.Image|IcoPath is empty and exception when calling Icon() for result <{Result.Title}> of plugin <{Result.PluginDirectory}>",
+                        $"|ResultViewModel.LoadImageInternalAsync|IcoPath is empty and exception when calling IconDelegate for result <{Result.Title}> of plugin <{Result.PluginDirectory}>",
                         e);
                 }
             }
 
-            if (ImageLoader.CacheContainImage(imagePath))
-            {
-                // will get here either when icoPath has value\icon delegate is null\when had exception in delegate
-                image = ImageLoader.Load(imagePath);
-                return;
-            }
+            return await App.API.LoadImageAsync(imagePath, loadFullImage).ConfigureAwait(false);
+        }
 
-            // We need to modify the property not field here to trigger the OnPropertyChanged event
-            Image = await Task.Run(() => ImageLoader.Load(imagePath)).ConfigureAwait(false);
+        private async Task LoadImageAsync()
+        {
+            var imagePath = Result.IcoPath;
+            var iconDelegate = Result.Icon;
+            if (ImageLoader.TryGetValue(imagePath, false, out ImageSource img))
+            {
+                _image = img;
+            }
+            else
+            {
+                // We need to modify the property not field here to trigger the OnPropertyChanged event
+                Image = await LoadImageInternalAsync(imagePath, iconDelegate, false).ConfigureAwait(false);
+            }
+        }
+
+        private async Task LoadPreviewImageAsync()
+        {
+            var imagePath = Result.Preview.PreviewImagePath ?? Result.IcoPath;
+            var iconDelegate = Result.Preview.PreviewDelegate ?? Result.Icon;
+            if (ImageLoader.TryGetValue(imagePath, true, out ImageSource img))
+            {
+                _previewImage = img;
+            }
+            else
+            {
+                // We need to modify the property not field here to trigger the OnPropertyChanged event
+                PreviewImage = await LoadImageInternalAsync(imagePath, iconDelegate, true).ConfigureAwait(false);
+            }
+        }
+
+        public void LoadPreviewImage()
+        {
+            if (ShowDefaultPreview == Visibility.Visible && !_previewImageLoaded && ShowPreviewImage == Visibility.Visible)
+            {
+                _previewImageLoaded = true;
+                _ = LoadPreviewImageAsync();
+            }
         }
 
         public Result Result { get; }
+        public int ResultProgress
+        {
+            get
+            {
+                if (Result.ProgressBar == null)
+                    return 0;
+
+                return Result.ProgressBar.Value;
+            }
+        }
 
         public string QuerySuggestionText { get; set; }
+
+        public double IconXY { get; set; } = 32;
 
         public override bool Equals(object obj)
         {

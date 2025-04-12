@@ -1,7 +1,5 @@
-using Microsoft.Win32;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using Flow.Launcher.Core.Plugin;
 using System.ComponentModel;
 using System.Windows.Data;
 
@@ -37,11 +35,11 @@ namespace Flow.Launcher.Plugin.WebSearch
                 var warning = _context.API.GetTranslation("flowlauncher_plugin_websearch_delete_warning");
                 var formated = string.Format(warning, selected.Title);
 
-                var result = MessageBox.Show(formated, string.Empty, MessageBoxButton.YesNo);
+                var result = _context.API.ShowMsgBox(formated, string.Empty, MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
                     var id = _context.CurrentPluginMetadata.ID;
-                    PluginManager.RemoveActionKeyword(id, selected.ActionKeyword);
+                    _context.API.RemoveActionKeyword(id, selected.ActionKeyword);
                     _settings.SearchSources.Remove(selected);
                 }
             }
@@ -96,27 +94,29 @@ namespace Flow.Launcher.Plugin.WebSearch
             var columnBinding = headerClicked.Column.DisplayMemberBinding as Binding;
             var sortBy = columnBinding?.Path.Path ?? headerClicked.Column.Header as string;
 
-            Sort(sortBy, direction);
+            if(sortBy != null) { 
+                Sort(sortBy, direction);
 
-            if (direction == ListSortDirection.Ascending)
-            {
-                headerClicked.Column.HeaderTemplate =
-                  Resources["HeaderTemplateArrowUp"] as DataTemplate;
-            }
-            else
-            {
-                headerClicked.Column.HeaderTemplate =
-                  Resources["HeaderTemplateArrowDown"] as DataTemplate;
-            }
+                if (direction == ListSortDirection.Ascending)
+                {
+                    headerClicked.Column.HeaderTemplate =
+                      Resources["HeaderTemplateArrowUp"] as DataTemplate;
+                }
+                else
+                {
+                    headerClicked.Column.HeaderTemplate =
+                      Resources["HeaderTemplateArrowDown"] as DataTemplate;
+                }
 
-            // Remove arrow from previously sorted header
-            if (_lastHeaderClicked != null && _lastHeaderClicked != headerClicked)
-            {
-                _lastHeaderClicked.Column.HeaderTemplate = null;
-            }
+                // Remove arrow from previously sorted header
+                if (_lastHeaderClicked != null && _lastHeaderClicked != headerClicked)
+                {
+                    _lastHeaderClicked.Column.HeaderTemplate = null;
+                }
 
-            _lastHeaderClicked = headerClicked;
-            _lastDirection = direction;
+                _lastHeaderClicked = headerClicked;
+                _lastDirection = direction;
+            }
         }
         private void Sort(string sortBy, ListSortDirection direction)
         {

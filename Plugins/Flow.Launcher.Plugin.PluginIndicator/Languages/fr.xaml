@@ -1,0 +1,9 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_result_subtitle">Activer le mot-clé d'action du plugin {0}</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_name">Indicateur de Plugin</system:String>
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_description">Fournit des suggestions de mots d'action pour les plugins</system:String>
+
+</ResourceDictionary>

@@ -1,15 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text.Json.Serialization;
+﻿using System.Collections.ObjectModel;
 
-namespace Flow.Launcher.Plugin.BrowserBookmark.Models
+namespace Flow.Launcher.Plugin.BrowserBookmark.Models;
+
+public class Settings : BaseModel
 {
-    public class Settings : BaseModel
-    {
-        public bool OpenInNewBrowserWindow { get; set; } = true;
+    public bool OpenInNewBrowserWindow { get; set; } = true;
 
-        public string BrowserPath { get; set; }
+    public string BrowserPath { get; set; }
 
-        public ObservableCollection<CustomBrowser> CustomChromiumBrowsers { get; set; } = new();
-    }
+    public bool LoadChromeBookmark { get; set; } = true;
+    public bool LoadFirefoxBookmark { get; set; } = true;
+    public bool LoadEdgeBookmark { get; set; } = true;
+
+    public ObservableCollection<CustomBrowser> CustomChromiumBrowsers { get; set; } = new();
 }

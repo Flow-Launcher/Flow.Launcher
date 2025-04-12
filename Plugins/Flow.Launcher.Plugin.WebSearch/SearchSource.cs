@@ -1,9 +1,5 @@
-using System.IO;
-using System.Windows.Media;
+﻿using System.IO;
 using JetBrains.Annotations;
-using Flow.Launcher.Infrastructure.Image;
-using Flow.Launcher.Infrastructure;
-using System.Reflection;
 using System.Text.Json.Serialization;
 
 namespace Flow.Launcher.Plugin.WebSearch
@@ -35,16 +31,19 @@ namespace Flow.Launcher.Plugin.WebSearch
         }
 
         public string Url { get; set; }
+
+        [JsonIgnore]
+        public bool Status => Enabled;
         public bool Enabled { get; set; }
 
         public SearchSource DeepCopy()
         {
             var webSearch = new SearchSource
             {
-                Title = string.Copy(Title),
-                ActionKeyword = string.Copy(ActionKeyword),
-                Url = string.Copy(Url),
-                Icon = string.Copy(Icon),
+                Title = Title,
+                ActionKeyword = ActionKeyword,
+                Url = Url,
+                Icon = Icon,
                 CustomIcon = CustomIcon,
                 Enabled = Enabled
             };

@@ -1,57 +1,56 @@
 ﻿using Flow.Launcher.Plugin.BrowserBookmark.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using System.Windows.Forms;
 
-namespace Flow.Launcher.Plugin.BrowserBookmark.Views
+namespace Flow.Launcher.Plugin.BrowserBookmark.Views;
+
+/// <summary>
+/// Interaction logic for CustomBrowserSetting.xaml
+/// </summary>
+public partial class CustomBrowserSettingWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for CustomBrowserSetting.xaml
-    /// </summary>
-    public partial class CustomBrowserSettingWindow : Window
+    private CustomBrowser _currentCustomBrowser;
+    public CustomBrowserSettingWindow(CustomBrowser browser)
     {
-        private CustomBrowser currentCustomBrowser;
-        public CustomBrowserSettingWindow(CustomBrowser browser)
+        InitializeComponent();
+        _currentCustomBrowser = browser;
+        DataContext = new CustomBrowser
         {
-            InitializeComponent();
-            currentCustomBrowser = browser;
-            DataContext = new CustomBrowser
-            {
-                Name = browser.Name, DataDirectoryPath = browser.DataDirectoryPath
-            };
-        }
+            Name = browser.Name,
+            DataDirectoryPath = browser.DataDirectoryPath,
+            BrowserType = browser.BrowserType,
+        };
+    }
 
-        private void ConfirmCancelEditCustomBrowser(object sender, RoutedEventArgs e)
+    private void ConfirmEditCustomBrowser(object sender, RoutedEventArgs e)
+    {
+        CustomBrowser editBrowser = (CustomBrowser)DataContext;
+        _currentCustomBrowser.Name = editBrowser.Name;
+        _currentCustomBrowser.DataDirectoryPath = editBrowser.DataDirectoryPath;
+        _currentCustomBrowser.BrowserType = editBrowser.BrowserType;
+        DialogResult = true;
+        Close();
+    }
+
+    private void CancelEditCustomBrowser(object sender, RoutedEventArgs e)
+    {
+        Close();
+    }
+
+    private void WindowKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+    {
+        if (e.Key == Key.Enter)
         {
-            if (DataContext is CustomBrowser editBrowser && e.Source is Button button)
-            {
-                if (button.Name == "btnConfirm")
-                {
-                    currentCustomBrowser.Name = editBrowser.Name;
-                    currentCustomBrowser.DataDirectoryPath = editBrowser.DataDirectoryPath;
-                    Close();
-                }
-            }
-
-            Close();
+            ConfirmEditCustomBrowser(sender, e);
         }
+    }
 
-        private void WindowKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                ConfirmCancelEditCustomBrowser(sender, e);
-            }
-        }
+    private void OnSelectPathClick(object sender, RoutedEventArgs e)
+    {
+        var dialog = new FolderBrowserDialog();
+        dialog.ShowDialog();
+        CustomBrowser editBrowser = (CustomBrowser)DataContext;
+        editBrowser.DataDirectoryPath = dialog.SelectedPath;
     }
 }

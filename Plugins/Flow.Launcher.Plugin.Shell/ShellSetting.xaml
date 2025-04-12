@@ -8,8 +8,10 @@
     d:DesignWidth="300"
     Loaded="CMDSetting_OnLoaded"
     mc:Ignorable="d">
-    <Grid Margin="60,10,10,20" VerticalAlignment="Top">
+    <Grid Margin="{StaticResource SettingPanelMargin}" VerticalAlignment="Top">
         <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
@@ -19,38 +21,51 @@
         <CheckBox
             x:Name="ReplaceWinR"
             Grid.Row="0"
-            Margin="10,10,5,5"
+            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             HorizontalAlignment="Left"
             Content="{DynamicResource flowlauncher_plugin_cmd_relace_winr}" />
         <CheckBox
-            x:Name="LeaveShellOpen"
+            x:Name="CloseShellAfterPress"
             Grid.Row="1"
-            Margin="10,5,5,5"
+            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
+            HorizontalAlignment="Left"
+            Content="{DynamicResource flowlauncher_plugin_cmd_close_cmd_after_press}" />
+        <CheckBox
+            x:Name="LeaveShellOpen"
+            Grid.Row="2"
+            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             HorizontalAlignment="Left"
             Content="{DynamicResource flowlauncher_plugin_cmd_leave_cmd_open}" />
         <CheckBox
             x:Name="AlwaysRunAsAdministrator"
-            Grid.Row="2"
-            Margin="10,5,5,5"
+            Grid.Row="3"
+            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             HorizontalAlignment="Left"
             Content="{DynamicResource flowlauncher_plugin_cmd_always_run_as_administrator}" />
+        <CheckBox
+            x:Name="UseWindowsTerminal"
+            Grid.Row="4"
+            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
+            HorizontalAlignment="Left"
+            Content="{DynamicResource flowlauncher_plugin_cmd_use_windows_terminal}" />
         <ComboBox
             x:Name="ShellComboBox"
-            Grid.Row="3"
-            Margin="10,5,5,5"
+            Grid.Row="5"
+            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             HorizontalAlignment="Left">
             <ComboBoxItem>CMD</ComboBoxItem>
             <ComboBoxItem>PowerShell</ComboBoxItem>
+            <ComboBoxItem>Pwsh</ComboBoxItem>
             <ComboBoxItem>RunCommand</ComboBoxItem>
         </ComboBox>
-        <StackPanel Grid.Row="4" Orientation="Horizontal">
+        <StackPanel Grid.Row="6" Orientation="Horizontal">
             <CheckBox
                 x:Name="ShowOnlyMostUsedCMDs"
-                Margin="10,5,5,5"
+                Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
                 Content="{DynamicResource flowlauncher_plugin_cmd_history}" />
             <ComboBox
                 x:Name="ShowOnlyMostUsedCMDsNumber"
-                Margin="10,5,5,5"
+                Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
                 HorizontalAlignment="Left" />
         </StackPanel>
     </Grid>

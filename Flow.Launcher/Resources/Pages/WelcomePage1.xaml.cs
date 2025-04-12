@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows.Navigation;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Core.Resource;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.Resources.Pages
 {
@@ -10,13 +11,15 @@ namespace Flow.Launcher.Resources.Pages
     {
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (e.ExtraData is Settings settings)
-                Settings = settings;
-            else
-                throw new ArgumentException("Unexpected Navigation Parameter for Settings");
+            Settings = Ioc.Default.GetRequiredService<Settings>();
+            // Sometimes the navigation is not triggered by button click,
+            // so we need to reset the page number
+            Ioc.Default.GetRequiredService<WelcomeViewModel>().PageNum = 1;
             InitializeComponent();
         }
-        private Internationalization _translater => InternationalizationManager.Instance;
+
+        private readonly Internationalization _translater = Ioc.Default.GetRequiredService<Internationalization>();
+
         public List<Language> Languages => _translater.LoadAvailableLanguages();
 
         public Settings Settings { get; set; }
@@ -29,12 +32,11 @@ namespace Flow.Launcher.Resources.Pages
             }
             set
             {
-                InternationalizationManager.Instance.ChangeLanguage(value);
+                _translater.ChangeLanguage(value);
 
-                if (InternationalizationManager.Instance.PromptShouldUsePinyin(value))
+                if (_translater.PromptShouldUsePinyin(value))
                     Settings.ShouldUsePinyin = true;
             }
         }
-
     }
 }
