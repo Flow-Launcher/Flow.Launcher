@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Flow.Launcher.Plugin.PluginsManager
+﻿namespace Flow.Launcher.Plugin.PluginsManager
 {
     internal class Settings
     {
-        internal string HotKeyInstall { get; set; } = "install";
-        internal string HotkeyUninstall { get; set; } = "uninstall";
+        internal const string InstallCommand = "install";
 
-        internal string HotkeyUpdate { get; set; } = "update";
+        internal const string UninstallCommand = "uninstall";
+
+        internal const string UpdateCommand = "update";
+
+        public bool WarnFromUnknownSource { get; set; } = true;
+        
+        public bool AutoRestartAfterChanging { get; set; } = true;
     }
 }

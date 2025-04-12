@@ -1,28 +1,35 @@
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Plugin.SharedModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.Infrastructure
 {
     public class StringMatcher
     {
-        private readonly MatchOption _defaultMatchOption = new MatchOption();
+        private readonly MatchOption _defaultMatchOption = new();
 
         public SearchPrecisionScore UserSettingSearchPrecision { get; set; }
 
         private readonly IAlphabet _alphabet;
 
-        public StringMatcher(IAlphabet alphabet = null)
+        public StringMatcher(IAlphabet alphabet, Settings settings)
+        {
+            _alphabet = alphabet;
+            UserSettingSearchPrecision = settings.QuerySearchPrecision;
+        }
+
+        // This is a workaround to allow unit tests to set the instance
+        public StringMatcher(IAlphabet alphabet)
         {
             _alphabet = alphabet;
         }
 
-        public static StringMatcher Instance { get; internal set; }
-
         public static MatchResult FuzzySearch(string query, string stringToCompare)
         {
-            return Instance.FuzzyMatch(query, stringToCompare);
+            return Ioc.Default.GetRequiredService<StringMatcher>().FuzzyMatch(query, stringToCompare);
         }
 
         public MatchResult FuzzyMatch(string query, string stringToCompare)
@@ -60,8 +67,13 @@ namespace Flow.Launcher.Infrastructure
                 return new MatchResult(false, UserSettingSearchPrecision);
 
             query = query.Trim();
-            TranslationMapping translationMapping;
-            (stringToCompare, translationMapping) = _alphabet?.Translate(stringToCompare) ?? (stringToCompare, null);
+            TranslationMapping translationMapping = null;
+            if (_alphabet is not null && !_alphabet.CanBeTranslated(query))
+            {
+                // We assume that if a query can be translated (containing characters of a language, like Chinese)
+                // it actually means user doesn't want it to be translated to English letters.
+                (stringToCompare, translationMapping) = _alphabet.Translate(stringToCompare);
+            }
 
             var currentAcronymQueryIndex = 0;
             var acronymMatchData = new List<int>();
@@ -202,7 +214,11 @@ namespace Flow.Launcher.Infrastructure
             if (allQuerySubstringsMatched)
             {
                 var nearestSpaceIndex = CalculateClosestSpaceIndex(spaceIndices, firstMatchIndex);
-                var score = CalculateSearchScore(query, stringToCompare, firstMatchIndex - nearestSpaceIndex - 1,
+
+                // firstMatchIndex - nearestSpaceIndex - 1 is to set the firstIndex as the index of the first matched char
+                // preceded by a space e.g. 'world' matching 'hello world' firstIndex would be 0 not 6 
+                // giving more weight than 'we or donald' by allowing the distance calculation to treat the starting position at after the space.
+                var score = CalculateSearchScore(query, stringToCompare, firstMatchIndex - nearestSpaceIndex - 1, spaceIndices,
                     lastMatchIndex - firstMatchIndex, allSubstringsContainedInCompareString);
 
                 var resultList = indexList.Select(x => translationMapping?.MapToOriginalIndex(x) ?? x).Distinct().ToList();
@@ -232,16 +248,16 @@ namespace Flow.Launcher.Infrastructure
             return false;
         }
 
-        private bool IsAcronymChar(string stringToCompare, int compareStringIndex)
+        private static bool IsAcronymChar(string stringToCompare, int compareStringIndex)
             => char.IsUpper(stringToCompare[compareStringIndex]) ||
                compareStringIndex == 0 || // 0 index means char is the start of the compare string, which is an acronym
                char.IsWhiteSpace(stringToCompare[compareStringIndex - 1]);
 
-        private bool IsAcronymNumber(string stringToCompare, int compareStringIndex)
+        private static bool IsAcronymNumber(string stringToCompare, int compareStringIndex)
             => stringToCompare[compareStringIndex] >= 0 && stringToCompare[compareStringIndex] <= 9;
 
         // To get the index of the closest space which preceeds the first matching index
-        private int CalculateClosestSpaceIndex(List<int> spaceIndices, int firstMatchIndex)
+        private static int CalculateClosestSpaceIndex(List<int> spaceIndices, int firstMatchIndex)
         {
             var closestSpaceIndex = -1;
 
@@ -296,13 +312,21 @@ namespace Flow.Launcher.Infrastructure
             return currentQuerySubstringIndex >= querySubstringsLength;
         }
 
-        private static int CalculateSearchScore(string query, string stringToCompare, int firstIndex, int matchLen,
+        private static int CalculateSearchScore(string query, string stringToCompare, int firstIndex, List<int> spaceIndices, int matchLen,
             bool allSubstringsContainedInCompareString)
         {
             // A match found near the beginning of a string is scored more than a match found near the end
             // A match is scored more if the characters in the patterns are closer to each other, 
             // while the score is lower if they are more spread out
             var score = 100 * (query.Length + 1) / ((1 + firstIndex) + (matchLen + 1));
+
+            // Give more weight to a match that is closer to the start of the string. 
+            // if the first matched char is immediately before space and all strings are contained in the compare string e.g. 'world' matching 'hello world'
+            // and 'world hello', because both have 'world' immediately preceded by space, their firstIndex will be 0 when distance is calculated,
+            // to prevent them scoring the same, we adjust the score by deducting the number of spaces it has from the start of the string, so 'world hello'
+            // will score slightly higher than 'hello world' because 'hello world' has one additional space.
+            if (firstIndex == 0 && allSubstringsContainedInCompareString)
+                score -= spaceIndices.Count;
 
             // A match with less characters assigning more weights
             if (stringToCompare.Length - query.Length < 5)

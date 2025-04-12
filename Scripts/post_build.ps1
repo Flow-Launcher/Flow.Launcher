@@ -70,9 +70,8 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
 
     Write-Host "Packing: $spec"
     Write-Host "Input path:  $input"
-    # making version static as multiple versions can exist in the nuget folder and in the case a breaking change is introduced.
-    New-Alias Nuget $env:USERPROFILE\.nuget\packages\NuGet.CommandLine\5.4.0\tools\NuGet.exe -Force
-    # TODO: can we use dotnet pack here?
+
+    # dotnet pack is not used because ran into issues, need to test installation and starting up if to use it.
     nuget pack $spec -Version $version -BasePath $input -OutputDirectory $output -Properties Configuration=Release
 
     $nupkg = "$output\FlowLauncher.$version.nupkg"
@@ -89,7 +88,7 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     Move-Item $temp\* $output -Force
     Remove-Item $temp
     
-    $file = "$output\Flow-Launcher-v$version.exe"
+    $file = "$output\Flow-Launcher-Setup.exe"
     Write-Host "Filename: $file"
 
     Move-Item "$output\Setup.exe" $file -Force
@@ -100,11 +99,18 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
 function Publish-Self-Contained ($p) {
 
     $csproj  = Join-Path "$p" "Flow.Launcher/Flow.Launcher.csproj" -Resolve
-    $profile = Join-Path "$p" "Flow.Launcher/Properties/PublishProfiles/Net5.0-SelfContained.pubxml" -Resolve
+    $profile = Join-Path "$p" "Flow.Launcher/Properties/PublishProfiles/Net7.0-SelfContained.pubxml" -Resolve
 
     # we call dotnet publish on the main project. 
     # The other projects should have been built in Release at this point.
     dotnet publish -c Release $csproj /p:PublishProfile=$profile
+}
+
+function Publish-Portable ($outputLocation, $version) {
+    
+    & $outputLocation\Flow-Launcher-Setup.exe --silent | Out-Null
+    mkdir "$env:LocalAppData\FlowLauncher\app-$version\UserData"
+    Compress-Archive -Path $env:LocalAppData\FlowLauncher -DestinationPath $outputLocation\Flow-Launcher-Portable.zip
 }
 
 function Main {
@@ -123,6 +129,8 @@ function Main {
         $o = "$p\Output\Packages"
         Validate-Directory $o
         Pack-Squirrel-Installer $p $v $o
+
+        Publish-Portable $o $v
     }
 }
 

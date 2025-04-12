@@ -1,0 +1,1410 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>Acerca de</value>
+  </data>
+  <data name="AccessWorkOrSchool" xml:space="preserve">
+    <value>Obtener acceso a trabajo o escuela</value>
+  </data>
+  <data name="AccessibilityOptions" xml:space="preserve">
+    <value>Opciones de accesibilidad</value>
+  </data>
+  <data name="AccessoryApps" xml:space="preserve">
+    <value>Aplicaciones accesorias</value>
+  </data>
+  <data name="AccountInfo" xml:space="preserve">
+    <value>Información de cuenta</value>
+  </data>
+  <data name="Accounts" xml:space="preserve">
+    <value>Cuentas</value>
+  </data>
+  <data name="ActionCenter" xml:space="preserve">
+    <value>Centro de actividades</value>
+  </data>
+  <data name="Activation" xml:space="preserve">
+    <value>Activación</value>
+  </data>
+  <data name="ActivityHistory" xml:space="preserve">
+    <value>Historial de actividad</value>
+  </data>
+  <data name="AddHardware" xml:space="preserve">
+    <value>Agregar hardware</value>
+  </data>
+  <data name="AddRemovePrograms" xml:space="preserve">
+    <value>Agregar o quitar programas</value>
+  </data>
+  <data name="AddYourPhone" xml:space="preserve">
+    <value>Agregar el teléfono</value>
+  </data>
+  <data name="AdministrativeTools" xml:space="preserve">
+    <value>Herramientas administrativas</value>
+  </data>
+  <data name="AdvancedDisplaySettings" xml:space="preserve">
+    <value>Configuración avanzada de pantalla</value>
+  </data>
+  <data name="AdvancedGraphics" xml:space="preserve">
+    <value>Gráficos avanzados</value>
+  </data>
+  <data name="AdvertisingId" xml:space="preserve">
+    <value>Id. de publicidad</value>
+  </data>
+  <data name="AirplaneMode" xml:space="preserve">
+    <value>Modo avión</value>
+  </data>
+  <data name="AltAndTab" xml:space="preserve">
+    <value>Alt+Tab</value>
+  </data>
+  <data name="AlternativeName" xml:space="preserve">
+    <value>Nombres alternativos</value>
+  </data>
+  <data name="Animations" xml:space="preserve">
+    <value>Animaciones</value>
+  </data>
+  <data name="AppColor" xml:space="preserve">
+    <value>Color de la aplicación</value>
+  </data>
+  <data name="AppControlPanel" xml:space="preserve">
+    <value>Panel de control</value>
+  </data>
+  <data name="AppDiagnostics" xml:space="preserve">
+    <value>Diagnóstico de la aplicación</value>
+  </data>
+  <data name="AppFeatures" xml:space="preserve">
+    <value>Características de la aplicación</value>
+  </data>
+  <data name="AppSettingsApp" xml:space="preserve">
+    <value>Configuración del sistema</value>
+  </data>
+  <data name="AppVolumeAndDevicePreferences" xml:space="preserve">
+    <value>Preferencias del dispositivo y el volumen de la aplicación</value>
+  </data>
+  <data name="Application" xml:space="preserve">
+    <value>Aplicación</value>
+  </data>
+  <data name="AppsAndFeatures" xml:space="preserve">
+    <value>Aplicaciones y características</value>
+  </data>
+  <data name="AppsForWebsites" xml:space="preserve">
+    <value>Aplicaciones para sitios web</value>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>Área</value>
+  </data>
+  <data name="AreaAccounts" xml:space="preserve">
+    <value>Cuentas</value>
+  </data>
+  <data name="AreaAdministrativeTools" xml:space="preserve">
+    <value>Herramientas administrativas</value>
+  </data>
+  <data name="AreaAppearanceAndPersonalization" xml:space="preserve">
+    <value>Apariencia y personalización</value>
+  </data>
+  <data name="AreaApps" xml:space="preserve">
+    <value>Aplicaciones</value>
+  </data>
+  <data name="AreaClockAndRegion" xml:space="preserve">
+    <value>Reloj y región</value>
+  </data>
+  <data name="AreaCortana" xml:space="preserve">
+    <value>Cortana</value>
+  </data>
+  <data name="AreaDevices" xml:space="preserve">
+    <value>Dispositivos</value>
+  </data>
+  <data name="AreaEaseOfAccess" xml:space="preserve">
+    <value>Accesibilidad</value>
+  </data>
+  <data name="AreaExtras" xml:space="preserve">
+    <value>Extras</value>
+  </data>
+  <data name="AreaGaming" xml:space="preserve">
+    <value>Juegos</value>
+  </data>
+  <data name="AreaHardwareAndSound" xml:space="preserve">
+    <value>Hardware y sonido</value>
+  </data>
+  <data name="AreaHomePage" xml:space="preserve">
+    <value>Página principal</value>
+  </data>
+  <data name="AreaMixedReality" xml:space="preserve">
+    <value>Realidad mixta</value>
+  </data>
+  <data name="AreaNetworkAndInternet" xml:space="preserve">
+    <value>Red e Internet</value>
+  </data>
+  <data name="AreaPersonalization" xml:space="preserve">
+    <value>Personalización</value>
+  </data>
+  <data name="AreaPhone" xml:space="preserve">
+    <value>Teléfono</value>
+  </data>
+  <data name="AreaPrivacy" xml:space="preserve">
+    <value>Privacidad</value>
+  </data>
+  <data name="AreaPrograms" xml:space="preserve">
+    <value>Programas</value>
+  </data>
+  <data name="AreaSurfaceHub" xml:space="preserve">
+    <value>SurfaceHub</value>
+  </data>
+  <data name="AreaSystem" xml:space="preserve">
+    <value>Sistema</value>
+  </data>
+  <data name="AreaSystemAndSecurity" xml:space="preserve">
+    <value>Sistema y seguridad</value>
+  </data>
+  <data name="AreaTimeAndLanguage" xml:space="preserve">
+    <value>Hora e idioma</value>
+  </data>
+  <data name="AreaUpdateAndSecurity" xml:space="preserve">
+    <value>Actualización y seguridad</value>
+  </data>
+  <data name="AreaUserAccounts" xml:space="preserve">
+    <value>Cuentas de usuario</value>
+  </data>
+  <data name="AssignedAccess" xml:space="preserve">
+    <value>Acceso asignado</value>
+  </data>
+  <data name="Audio" xml:space="preserve">
+    <value>Audio</value>
+  </data>
+  <data name="AudioAlerts" xml:space="preserve">
+    <value>Alertas de audio</value>
+  </data>
+  <data name="AudioAndSpeech" xml:space="preserve">
+    <value>Audio y voz</value>
+  </data>
+  <data name="AutoPlay" xml:space="preserve">
+    <value>Reproducción automática</value>
+  </data>
+  <data name="AutomaticFileDownloads" xml:space="preserve">
+    <value>Descargas automáticas de archivos</value>
+  </data>
+  <data name="Background" xml:space="preserve">
+    <value>Fondo</value>
+  </data>
+  <data name="BackgroundApps" xml:space="preserve">
+    <value>Aplicaciones en segundo plano</value>
+  </data>
+  <data name="Backup" xml:space="preserve">
+    <value>Backup</value>
+  </data>
+  <data name="BackupAndRestore" xml:space="preserve">
+    <value>Copia de seguridad y restauración</value>
+  </data>
+  <data name="BatterySaver" xml:space="preserve">
+    <value>Ahorro de batería</value>
+  </data>
+  <data name="BatterySaverSettings" xml:space="preserve">
+    <value>Configuración del ahorro de batería</value>
+  </data>
+  <data name="BatterySaverUsageDetails" xml:space="preserve">
+    <value>Detalles de uso del ahorro de batería</value>
+  </data>
+  <data name="BatteryUse" xml:space="preserve">
+    <value>Uso de la batería</value>
+  </data>
+  <data name="BiometricDevices" xml:space="preserve">
+    <value>Dispositivos biométricos</value>
+  </data>
+  <data name="BitLockerDriveEncryption" xml:space="preserve">
+    <value>Cifrado de unidad BitLocker</value>
+  </data>
+  <data name="BlueLight" xml:space="preserve">
+    <value>Azul claro</value>
+  </data>
+  <data name="BlueYellow" xml:space="preserve">
+    <value>Azul y amarillo</value>
+  </data>
+  <data name="Bluetooth" xml:space="preserve">
+    <value>Bluetooth</value>
+  </data>
+  <data name="BluetoothDevices" xml:space="preserve">
+    <value>Dispositivos Bluetooth</value>
+  </data>
+  <data name="BopomofoIme" xml:space="preserve">
+    <value>Bopomofo IME</value>
+  </data>
+  <data name="Broadcasting" xml:space="preserve">
+    <value>Difusión</value>
+  </data>
+  <data name="Calendar" xml:space="preserve">
+    <value>Calendario</value>
+  </data>
+  <data name="CallHistory" xml:space="preserve">
+    <value>Historial de llamadas</value>
+  </data>
+  <data name="Camera" xml:space="preserve">
+    <value>Cámara</value>
+  </data>
+  <data name="CangjieIme" xml:space="preserve">
+    <value>Cangjie IME</value>
+  </data>
+  <data name="CapsLock" xml:space="preserve">
+    <value>Bloq Mayús</value>
+  </data>
+  <data name="CellularAndSim" xml:space="preserve">
+    <value>Red de telefonía móvil y SIM</value>
+  </data>
+  <data name="ChooseWhichFoldersAppearOnStart" xml:space="preserve">
+    <value>Elegir qué carpetas aparecen en Inicio</value>
+  </data>
+  <data name="ClientServiceForNetWare" xml:space="preserve">
+    <value>Servicio de cliente para NetWare</value>
+  </data>
+  <data name="Clipboard" xml:space="preserve">
+    <value>Portapapeles</value>
+  </data>
+  <data name="ClosedCaptions" xml:space="preserve">
+    <value>Subtítulos</value>
+  </data>
+  <data name="ColorFilters" xml:space="preserve">
+    <value>Filtros de color</value>
+  </data>
+  <data name="ColorManagement" xml:space="preserve">
+    <value>Administración de colores</value>
+  </data>
+  <data name="Colors" xml:space="preserve">
+    <value>Colores</value>
+  </data>
+  <data name="Command" xml:space="preserve">
+    <value>Comando</value>
+  </data>
+  <data name="ConnectedDevices" xml:space="preserve">
+    <value>Dispositivos conectados</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>Contactos</value>
+  </data>
+  <data name="CopyCommand" xml:space="preserve">
+    <value>Copiar comando</value>
+  </data>
+  <data name="CoreIsolation" xml:space="preserve">
+    <value>Aislamiento del núcleo</value>
+  </data>
+  <data name="Cortana" xml:space="preserve">
+    <value>Cortana</value>
+  </data>
+  <data name="CortanaAcrossMyDevices" xml:space="preserve">
+    <value>Cortana en mis dispositivos</value>
+  </data>
+  <data name="CortanaLanguage" xml:space="preserve">
+    <value>Cortana: idioma</value>
+  </data>
+  <data name="CredentialManager" xml:space="preserve">
+    <value>Administrador de credenciales</value>
+  </data>
+  <data name="Crossdevice" xml:space="preserve">
+    <value>Multidispositivo</value>
+  </data>
+  <data name="CustomDevices" xml:space="preserve">
+    <value>Dispositivos personalizados</value>
+  </data>
+  <data name="DNS" xml:space="preserve">
+    <value>DNS</value>
+  </data>
+  <data name="DarkColor" xml:space="preserve">
+    <value>Color oscuro</value>
+  </data>
+  <data name="DarkMode" xml:space="preserve">
+    <value>Modo oscuro</value>
+  </data>
+  <data name="DataUsage" xml:space="preserve">
+    <value>Uso de datos</value>
+  </data>
+  <data name="DateAndTime" xml:space="preserve">
+    <value>Fecha y hora</value>
+  </data>
+  <data name="DefaultApps" xml:space="preserve">
+    <value>Aplicaciones predeterminadas</value>
+  </data>
+  <data name="DefaultCamera" xml:space="preserve">
+    <value>Cámara predeterminada</value>
+  </data>
+  <data name="DefaultLocation" xml:space="preserve">
+    <value>Ubicación predeterminada</value>
+  </data>
+  <data name="DefaultPrograms" xml:space="preserve">
+    <value>Programas predeterminados</value>
+  </data>
+  <data name="DefaultSaveLocations" xml:space="preserve">
+    <value>Ubicaciones de guardado predeterminadas</value>
+  </data>
+  <data name="DeliveryOptimization" xml:space="preserve">
+    <value>Optimización de distribución</value>
+  </data>
+  <data name="DesktopThemes" xml:space="preserve">
+    <value>Temas de escritorio</value>
+  </data>
+  <data name="DeviceManager" xml:space="preserve">
+    <value>Administrador de dispositivos</value>
+  </data>
+  <data name="DevicesAndPrinters" xml:space="preserve">
+    <value>Dispositivos e impresoras</value>
+  </data>
+  <data name="Dhcp" xml:space="preserve">
+    <value>DHCP</value>
+  </data>
+  <data name="DialUp" xml:space="preserve">
+    <value>Marcado</value>
+  </data>
+  <data name="DirectAccess" xml:space="preserve">
+    <value>Acceso directo</value>
+  </data>
+  <data name="DirectOpenYourPhone" xml:space="preserve">
+    <value>Abrir directamente en el teléfono</value>
+  </data>
+  <data name="Display" xml:space="preserve">
+    <value>Mostrar</value>
+  </data>
+  <data name="DisplayProperties" xml:space="preserve">
+    <value>Mostrar propiedades</value>
+  </data>
+  <data name="Documents" xml:space="preserve">
+    <value>Documentos</value>
+  </data>
+  <data name="DuplicatingMyDisplay" xml:space="preserve">
+    <value>Duplicando mi pantalla</value>
+  </data>
+  <data name="DuringTheseHours" xml:space="preserve">
+    <value>Durante estas horas</value>
+  </data>
+  <data name="EaseOfAccessCenter" xml:space="preserve">
+    <value>Centro de accesibilidad</value>
+  </data>
+  <data name="Edition" xml:space="preserve">
+    <value>Edición</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Correo</value>
+  </data>
+  <data name="EmailAndAppAccounts" xml:space="preserve">
+    <value>Cuentas de correo electrónico y de la aplicación</value>
+  </data>
+  <data name="Encryption" xml:space="preserve">
+    <value>Cifrado</value>
+  </data>
+  <data name="Environment" xml:space="preserve">
+    <value>Entorno</value>
+  </data>
+  <data name="Ethernet" xml:space="preserve">
+    <value>Ethernet</value>
+  </data>
+  <data name="ExploitProtection" xml:space="preserve">
+    <value>Protección contra vulnerabilidades</value>
+  </data>
+  <data name="Extras" xml:space="preserve">
+    <value>Extras</value>
+  </data>
+  <data name="EyeControl" xml:space="preserve">
+    <value>Control ocular</value>
+  </data>
+  <data name="EyeTracker" xml:space="preserve">
+    <value>Seguimiento ocular</value>
+  </data>
+  <data name="FamilyAndOtherPeople" xml:space="preserve">
+    <value>Familia y otros usuarios</value>
+  </data>
+  <data name="FeedbackAndDiagnostics" xml:space="preserve">
+    <value>Comentarios y diagnósticos</value>
+  </data>
+  <data name="FileSystem" xml:space="preserve">
+    <value>Sistema de archivos</value>
+  </data>
+  <data name="FindFast" xml:space="preserve">
+    <value>FindFast</value>
+  </data>
+  <data name="FindMyDevice" xml:space="preserve">
+    <value>Buscar mi dispositivo</value>
+  </data>
+  <data name="Firewall" xml:space="preserve">
+    <value>Firewall</value>
+  </data>
+  <data name="FocusAssistQuietHours" xml:space="preserve">
+    <value>Asistente de concentración: horas tranquilas</value>
+  </data>
+  <data name="FocusAssistQuietMoments" xml:space="preserve">
+    <value>Asistente de concentración: momentos tranquilos</value>
+  </data>
+  <data name="FolderOptions" xml:space="preserve">
+    <value>Opciones de la carpeta</value>
+  </data>
+  <data name="Fonts" xml:space="preserve">
+    <value>Fuentes</value>
+  </data>
+  <data name="ForDevelopers" xml:space="preserve">
+    <value>Para desarrolladores</value>
+  </data>
+  <data name="GameBar" xml:space="preserve">
+    <value>Barra de juegos</value>
+  </data>
+  <data name="GameControllers" xml:space="preserve">
+    <value>Mandos del juego</value>
+  </data>
+  <data name="GameDvr" xml:space="preserve">
+    <value>Juego DVR</value>
+  </data>
+  <data name="GameMode" xml:space="preserve">
+    <value>Modo juego</value>
+  </data>
+  <data name="Gateway" xml:space="preserve">
+    <value>Puerta de enlace</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="GetPrograms" xml:space="preserve">
+    <value>Obtener programas</value>
+  </data>
+  <data name="GettingStarted" xml:space="preserve">
+    <value>Comenzar</value>
+  </data>
+  <data name="Glance" xml:space="preserve">
+    <value>Ojeada</value>
+  </data>
+  <data name="GraphicsSettings" xml:space="preserve">
+    <value>Configuración de gráficos</value>
+  </data>
+  <data name="Grayscale" xml:space="preserve">
+    <value>Escala de grises</value>
+  </data>
+  <data name="GreenWeek" xml:space="preserve">
+    <value>Semana verde</value>
+  </data>
+  <data name="HeadsetDisplay" xml:space="preserve">
+    <value>Visualización del casco de realidad mixta</value>
+  </data>
+  <data name="HighContrast" xml:space="preserve">
+    <value>Contraste alto</value>
+  </data>
+  <data name="HolographicAudio" xml:space="preserve">
+    <value>Audio holográfico</value>
+  </data>
+  <data name="HolographicEnvironment" xml:space="preserve">
+    <value>Ambiente holográfico</value>
+  </data>
+  <data name="HolographicHeadset" xml:space="preserve">
+    <value>Casco holográfico</value>
+  </data>
+  <data name="HolographicManagement" xml:space="preserve">
+    <value>Administración holográfica</value>
+  </data>
+  <data name="HomeGroup" xml:space="preserve">
+    <value>Grupo de inicio</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Id.</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>Imagen</value>
+  </data>
+  <data name="IndexingOptions" xml:space="preserve">
+    <value>Opciones de indexación</value>
+  </data>
+  <data name="Infrared" xml:space="preserve">
+    <value>Infrarrojos</value>
+  </data>
+  <data name="InkingAndTyping" xml:space="preserve">
+    <value>Entrada manuscrita y escritura</value>
+  </data>
+  <data name="InternetOptions" xml:space="preserve">
+    <value>Opciones de Internet</value>
+  </data>
+  <data name="InvertedColors" xml:space="preserve">
+    <value>Colores invertidos</value>
+  </data>
+  <data name="Ip" xml:space="preserve">
+    <value>IP</value>
+  </data>
+  <data name="IsolatedBrowsing" xml:space="preserve">
+    <value>Exploración aislada</value>
+  </data>
+  <data name="JapanImeSettings" xml:space="preserve">
+    <value>Configuración de IME de Japón</value>
+  </data>
+  <data name="JoystickProperties" xml:space="preserve">
+    <value>Propiedades del joystick</value>
+  </data>
+  <data name="Keyboard" xml:space="preserve">
+    <value>Teclado</value>
+  </data>
+  <data name="Keypad" xml:space="preserve">
+    <value>Teclado</value>
+  </data>
+  <data name="Keys" xml:space="preserve">
+    <value>Claves</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Idioma</value>
+  </data>
+  <data name="LightColor" xml:space="preserve">
+    <value>Color claro</value>
+  </data>
+  <data name="LightMode" xml:space="preserve">
+    <value>Modo claro</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Ubicación</value>
+  </data>
+  <data name="LockScreen" xml:space="preserve">
+    <value>Pantalla de bloqueo</value>
+  </data>
+  <data name="Magnifier" xml:space="preserve">
+    <value>Lupa</value>
+  </data>
+  <data name="MailMicrosoftExchangeOrWindowsMessaging" xml:space="preserve">
+    <value>Correo: Microsoft Exchange o Mensajes de Windows</value>
+  </data>
+  <data name="ManageKnownNetworks" xml:space="preserve">
+    <value>Administrar redes conocidas</value>
+  </data>
+  <data name="ManageOptionalFeatures" xml:space="preserve">
+    <value>Administrar características opcionales</value>
+  </data>
+  <data name="Messaging" xml:space="preserve">
+    <value>Mensajería</value>
+  </data>
+  <data name="MeteredConnection" xml:space="preserve">
+    <value>Conexión de uso medido</value>
+  </data>
+  <data name="Microphone" xml:space="preserve">
+    <value>Micrófono</value>
+  </data>
+  <data name="MicrosoftMailPostOffice" xml:space="preserve">
+    <value>Oficina de correos de Microsoft Mail</value>
+  </data>
+  <data name="MobileDevices" xml:space="preserve">
+    <value>Dispositivos móviles</value>
+  </data>
+  <data name="MobileHotspot" xml:space="preserve">
+    <value>Zona con cobertura inalámbrica móvil</value>
+  </data>
+  <data name="Mono" xml:space="preserve">
+    <value>Mono</value>
+  </data>
+  <data name="MoreDetails" xml:space="preserve">
+    <value>Más detalles</value>
+  </data>
+  <data name="Motion" xml:space="preserve">
+    <value>Movimiento</value>
+  </data>
+  <data name="Mouse" xml:space="preserve">
+    <value>Mouse</value>
+  </data>
+  <data name="MouseAndTouchpad" xml:space="preserve">
+    <value>Mouse y panel táctil</value>
+  </data>
+  <data name="MouseFontsKeyboardAndPrintersProperties" xml:space="preserve">
+    <value>Propiedades del mouse, fuentes, teclado e impresoras</value>
+  </data>
+  <data name="MousePointer" xml:space="preserve">
+    <value>Puntero del mouse</value>
+  </data>
+  <data name="MultimediaProperties" xml:space="preserve">
+    <value>Propiedades multimedia</value>
+  </data>
+  <data name="Multitasking" xml:space="preserve">
+    <value>Multitarea</value>
+  </data>
+  <data name="NFC" xml:space="preserve">
+    <value>NFC</value>
+  </data>
+  <data name="NFCTransactions" xml:space="preserve">
+    <value>Transacciones NFC</value>
+  </data>
+  <data name="Narrator" xml:space="preserve">
+    <value>Narrador</value>
+  </data>
+  <data name="NavigationBar" xml:space="preserve">
+    <value>Barra de navegación</value>
+  </data>
+  <data name="Network" xml:space="preserve">
+    <value>Red</value>
+  </data>
+  <data name="NetworkAndSharingCenter" xml:space="preserve">
+    <value>Centro de redes y recursos compartidos</value>
+  </data>
+  <data name="NetworkConnection" xml:space="preserve">
+    <value>Conexión de red</value>
+  </data>
+  <data name="NetworkProperties" xml:space="preserve">
+    <value>Propiedades de red</value>
+  </data>
+  <data name="NetworkSetupWizard" xml:space="preserve">
+    <value>Asistente para instalación de red</value>
+  </data>
+  <data name="NetworkStatus" xml:space="preserve">
+    <value>Estado de red</value>
+  </data>
+  <data name="NightLight" xml:space="preserve">
+    <value>Luz nocturna</value>
+  </data>
+  <data name="NightLightSettings" xml:space="preserve">
+    <value>Configuración de la luz nocturna</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>Nota</value>
+  </data>
+  <data name="NoteAddYourPhone" xml:space="preserve">
+    <value>Solo está disponible cuando haya conectado un dispositivo móvil al dispositivo.</value>
+  </data>
+  <data name="NoteAdvancedGraphics" xml:space="preserve">
+    <value>Solo está disponible en dispositivos que admiten opciones gráficas avanzadas.</value>
+  </data>
+  <data name="NoteBattery" xml:space="preserve">
+    <value>Solo disponible en dispositivos que tienen una batería, como una tableta.</value>
+  </data>
+  <data name="NoteDeprecated17763" xml:space="preserve">
+    <value>En desuso en Windows 10, versión 1809 (compilación 17763) y posteriores.</value>
+  </data>
+  <data name="NoteDialPaired" xml:space="preserve">
+    <value>Solo está disponible si Marcar está emparejado.</value>
+  </data>
+  <data name="NoteDirectAccess" xml:space="preserve">
+    <value>Solo disponible si DirectAccess está habilitado.</value>
+  </data>
+  <data name="NoteDisplayGraphics" xml:space="preserve">
+    <value>Solo disponible en dispositivos que admiten opciones de visualización avanzadas.</value>
+  </data>
+  <data name="NoteEnrolledWIP" xml:space="preserve">
+    <value>Solo está presente si el usuario está inscrito en el trabajo en curso.</value>
+  </data>
+  <data name="NoteEyetrackerHardware" xml:space="preserve">
+    <value>Requiere hardware de seguimiento visual.</value>
+  </data>
+  <data name="NoteImeJapan" xml:space="preserve">
+    <value>Disponible si está instalado el editor de métodos de entrada en Japón de Microsoft.</value>
+  </data>
+  <data name="NoteImePinyin" xml:space="preserve">
+    <value>Disponible si está instalado el editor de métodos de entrada en pinyin de Microsoft.</value>
+  </data>
+  <data name="NoteImeWubi" xml:space="preserve">
+    <value>Disponible si está instalado el editor de métodos de entrada en wubi de Microsoft.</value>
+  </data>
+  <data name="NoteMixedReality" xml:space="preserve">
+    <value>Solo está disponible si la aplicación de portal de Mixed Reality está instalada.</value>
+  </data>
+  <data name="NoteMobileProvisioning" xml:space="preserve">
+    <value>Solo disponible en dispositivos móviles y si la empresa ha implementado un paquete de aprovisionamiento.</value>
+  </data>
+  <data name="NoteSince18362" xml:space="preserve">
+    <value>Se agregó en Windows 10, versión 1903 (compilación 18362).</value>
+  </data>
+  <data name="NoteSince19041" xml:space="preserve">
+    <value>Se agregó en Windows 10, versión 2004 (compilación 19041).</value>
+  </data>
+  <data name="NoteThirdParty" xml:space="preserve">
+    <value>Solo está disponible si las "aplicaciones de configuración" están instaladas, por ejemplo, por un tercero.</value>
+  </data>
+  <data name="NoteTouchpad" xml:space="preserve">
+    <value>Solo está disponible si el hardware del panel de teclado táctil está presente.</value>
+  </data>
+  <data name="NoteWiFiAdapter" xml:space="preserve">
+    <value>Solo está disponible si el dispositivo tiene un adaptador Wi-Fi.</value>
+  </data>
+  <data name="NoteWindowsAnywhere" xml:space="preserve">
+    <value>El dispositivo debe ser compatible con Windows Anywhere.</value>
+  </data>
+  <data name="NoteWorkplaceProvisioning" xml:space="preserve">
+    <value>Solo disponible si la empresa ha implementado un paquete de aprovisionamiento.</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>Notificaciones</value>
+  </data>
+  <data name="NotificationsAndActions" xml:space="preserve">
+    <value>Notificaciones y acciones</value>
+  </data>
+  <data name="NumLock" xml:space="preserve">
+    <value>Bloqueo numérico</value>
+  </data>
+  <data name="OdbcDataSourceAdministrator32Bit" xml:space="preserve">
+    <value>Administrador del origen de datos ODBC (32 bits)</value>
+  </data>
+  <data name="OdbcDataSourceAdministrator64Bit" xml:space="preserve">
+    <value>Administrador del origen de datos ODBC (64 bits)</value>
+  </data>
+  <data name="OfflineFiles" xml:space="preserve">
+    <value>Archivos sin conexión</value>
+  </data>
+  <data name="OfflineMaps" xml:space="preserve">
+    <value>Mapas sin conexión</value>
+  </data>
+  <data name="OfflineMapsDownloadMaps" xml:space="preserve">
+    <value>Mapas sin conexión: descargar mapas</value>
+  </data>
+  <data name="OnScreen" xml:space="preserve">
+    <value>En pantalla</value>
+  </data>
+  <data name="Os" xml:space="preserve">
+    <value>SO</value>
+  </data>
+  <data name="OtherDevices" xml:space="preserve">
+    <value>Otros dispositivos</value>
+  </data>
+  <data name="OtherOptions" xml:space="preserve">
+    <value>Otras opciones</value>
+  </data>
+  <data name="OtherUsers" xml:space="preserve">
+    <value>Otros usuarios</value>
+  </data>
+  <data name="ParentalControls" xml:space="preserve">
+    <value>Control parental</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Contraseña</value>
+  </data>
+  <data name="PasswordProperties" xml:space="preserve">
+    <value>Propiedades de contraseña</value>
+  </data>
+  <data name="PenAndInputDevices" xml:space="preserve">
+    <value>Lápiz y dispositivos de entrada</value>
+  </data>
+  <data name="PenAndTouch" xml:space="preserve">
+    <value>Lápiz y entrada táctil</value>
+  </data>
+  <data name="PenAndWindowsInk" xml:space="preserve">
+    <value>Lápiz y Windows Ink</value>
+  </data>
+  <data name="PeopleNearMe" xml:space="preserve">
+    <value>Usuarios a mi alrededor</value>
+  </data>
+  <data name="PerformanceInformationAndTools" xml:space="preserve">
+    <value>Información y herramientas de rendimiento</value>
+  </data>
+  <data name="PermissionsAndHistory" xml:space="preserve">
+    <value>Permisos e historial</value>
+  </data>
+  <data name="PersonalizationCategory" xml:space="preserve">
+    <value>Personalización (categoría)</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Teléfono</value>
+  </data>
+  <data name="PhoneAndModem" xml:space="preserve">
+    <value>Teléfono y módem</value>
+  </data>
+  <data name="PhoneAndModemOptions" xml:space="preserve">
+    <value>Teléfono y módem: opciones </value>
+  </data>
+  <data name="PhoneCalls" xml:space="preserve">
+    <value>Llamadas de teléfono</value>
+  </data>
+  <data name="PhoneDefaultApps" xml:space="preserve">
+    <value>Teléfono: aplicaciones predeterminadas</value>
+  </data>
+  <data name="Picture" xml:space="preserve">
+    <value>Imagen</value>
+  </data>
+  <data name="Pictures" xml:space="preserve">
+    <value>Imágenes</value>
+  </data>
+  <data name="PinyinImeSettings" xml:space="preserve">
+    <value>Configuración de IME en pinyin</value>
+  </data>
+  <data name="PinyinImeSettingsDomainLexicon" xml:space="preserve">
+    <value>Configuración de IME de pinyin: léxico de dominio</value>
+  </data>
+  <data name="PinyinImeSettingsKeyConfiguration" xml:space="preserve">
+    <value>Configuración de IME en pinyin: configuración de clave</value>
+  </data>
+  <data name="PinyinImeSettingsUdp" xml:space="preserve">
+    <value>Configuración de IME en pinyin: UDP</value>
+  </data>
+  <data name="PlayingGameFullScreen" xml:space="preserve">
+    <value>Reproduciendo una partida en pantalla completa</value>
+  </data>
+  <data name="PluginDescription" xml:space="preserve">
+    <value>Complemento en el que buscar la configuración de Windows</value>
+  </data>
+  <data name="PluginTitle" xml:space="preserve">
+    <value>Configuración de Windows</value>
+  </data>
+  <data name="PowerAndSleep" xml:space="preserve">
+    <value>Inicio/apagado y suspensión</value>
+  </data>
+  <data name="PowerOptions" xml:space="preserve">
+    <value>Opciones de energía</value>
+  </data>
+  <data name="Presentation" xml:space="preserve">
+    <value>Presentación</value>
+  </data>
+  <data name="PrintScreen" xml:space="preserve">
+    <value>Imprimir pantalla</value>
+  </data>
+  <data name="Printers" xml:space="preserve">
+    <value>Impresoras</value>
+  </data>
+  <data name="PrintersAndScanners" xml:space="preserve">
+    <value>Impresoras y escáneres</value>
+  </data>
+  <data name="ProblemReportsAndSolutions" xml:space="preserve">
+    <value>Informes de problemas y soluciones</value>
+  </data>
+  <data name="Processor" xml:space="preserve">
+    <value>Procesador</value>
+  </data>
+  <data name="ProgramsAndFeatures" xml:space="preserve">
+    <value>Programas y características</value>
+  </data>
+  <data name="ProjectingToThisPc" xml:space="preserve">
+    <value>Proyectando en este equipo</value>
+  </data>
+  <data name="Provisioning" xml:space="preserve">
+    <value>Aprovisionando</value>
+  </data>
+  <data name="Proximity" xml:space="preserve">
+    <value>Proximidad</value>
+  </data>
+  <data name="Proxy" xml:space="preserve">
+    <value>Proxy</value>
+  </data>
+  <data name="Quickime" xml:space="preserve">
+    <value>Quickime</value>
+  </data>
+  <data name="QuietMomentsGame" xml:space="preserve">
+    <value>Juego de minutos de silencio</value>
+  </data>
+  <data name="Radios" xml:space="preserve">
+    <value>Radios</value>
+  </data>
+  <data name="Ram" xml:space="preserve">
+    <value>RAM</value>
+  </data>
+  <data name="Recognition" xml:space="preserve">
+    <value>Reconocimiento</value>
+  </data>
+  <data name="Recovery" xml:space="preserve">
+    <value>Recuperación</value>
+  </data>
+  <data name="RedEye" xml:space="preserve">
+    <value>Ojos rojos</value>
+  </data>
+  <data name="RedGreen" xml:space="preserve">
+    <value>Rojo-verde</value>
+  </data>
+  <data name="RedWeek" xml:space="preserve">
+    <value>Semana roja</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>Región</value>
+  </data>
+  <data name="RegionAndLanguage" xml:space="preserve">
+    <value>Región e idioma</value>
+  </data>
+  <data name="RegionFormatting" xml:space="preserve">
+    <value>Formato de región</value>
+  </data>
+  <data name="RegionalLanguage" xml:space="preserve">
+    <value>Idioma regional</value>
+  </data>
+  <data name="RegionalSettingsProperties" xml:space="preserve">
+    <value>Propiedades de configuración regional</value>
+  </data>
+  <data name="RemoteAppAndDesktopConnections" xml:space="preserve">
+    <value>Conexiones de RemoteApp y Escritorio</value>
+  </data>
+  <data name="RemoteDesktop" xml:space="preserve">
+    <value>Escritorio remoto</value>
+  </data>
+  <data name="ScannersAndCameras" xml:space="preserve">
+    <value>Escáneres y cámaras</value>
+  </data>
+  <data name="Scheduled" xml:space="preserve">
+    <value>Programado</value>
+  </data>
+  <data name="ScheduledTasks" xml:space="preserve">
+    <value>Tareas programadas</value>
+  </data>
+  <data name="ScreenRotation" xml:space="preserve">
+    <value>Rotación de pantalla</value>
+  </data>
+  <data name="ScrollBars" xml:space="preserve">
+    <value>Barras de desplazamiento</value>
+  </data>
+  <data name="ScrollLock" xml:space="preserve">
+    <value>Bloqueo de desplazamiento</value>
+  </data>
+  <data name="Sdns" xml:space="preserve">
+    <value>SDNS</value>
+  </data>
+  <data name="SearchingWindows" xml:space="preserve">
+    <value>Buscando en Windows</value>
+  </data>
+  <data name="SecureDNS" xml:space="preserve">
+    <value>SecureDNS</value>
+  </data>
+  <data name="SecurityCenter" xml:space="preserve">
+    <value>Security Center</value>
+  </data>
+  <data name="SecurityProcessor" xml:space="preserve">
+    <value>Procesador de seguridad</value>
+  </data>
+  <data name="SessionCleanup" xml:space="preserve">
+    <value>Limpieza de sesión</value>
+  </data>
+  <data name="SetUpKiosk" xml:space="preserve">
+    <value>Configurar un quiosco multimedia</value>
+  </data>
+  <data name="SettingsHomePage" xml:space="preserve">
+    <value>Página principal de configuración</value>
+  </data>
+  <data name="SharedExperiences" xml:space="preserve">
+    <value>Experiencias compartidas</value>
+  </data>
+  <data name="ShortNameWiFi" xml:space="preserve">
+    <value>Wi-Fi</value>
+  </data>
+  <data name="Shortcuts" xml:space="preserve">
+    <value>Accesos directos</value>
+  </data>
+  <data name="SignInOptions" xml:space="preserve">
+    <value>Opciones de inicio de sesión</value>
+  </data>
+  <data name="SignInOptionsDynamicLock" xml:space="preserve">
+    <value>Opciones de inicio de sesión: bloqueo dinámico</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>Tamaño</value>
+  </data>
+  <data name="Sound" xml:space="preserve">
+    <value>Sonido</value>
+  </data>
+  <data name="Speech" xml:space="preserve">
+    <value>Voz</value>
+  </data>
+  <data name="SpeechRecognition" xml:space="preserve">
+    <value>Reconocimiento de voz</value>
+  </data>
+  <data name="SpeechTyping" xml:space="preserve">
+    <value>Escritura con voz</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Inicio</value>
+  </data>
+  <data name="StartPlaces" xml:space="preserve">
+    <value>Lugares de inicio</value>
+  </data>
+  <data name="StartupApps" xml:space="preserve">
+    <value>Aplicaciones de inicio</value>
+  </data>
+  <data name="Storage" xml:space="preserve">
+    <value>Almacenamiento</value>
+  </data>
+  <data name="StoragePolicies" xml:space="preserve">
+    <value>Directivas de almacenamiento</value>
+  </data>
+  <data name="StorageSense" xml:space="preserve">
+    <value>Sensor de almacenamiento</value>
+  </data>
+  <data name="SyncCenter" xml:space="preserve">
+    <value>Centro de sincronización</value>
+  </data>
+  <data name="SyncYourSettings" xml:space="preserve">
+    <value>Sincronizar la configuración</value>
+  </data>
+  <data name="System" xml:space="preserve">
+    <value>Sistema</value>
+  </data>
+  <data name="SystemPropertiesAndAddNewHardwareWizard" xml:space="preserve">
+    <value>Propiedades del sistema y asistente para agregar nuevo hardware</value>
+  </data>
+  <data name="Tab" xml:space="preserve">
+    <value>Pestaña</value>
+  </data>
+  <data name="TabletMode" xml:space="preserve">
+    <value>Modo tableta</value>
+  </data>
+  <data name="TabletPcSettings" xml:space="preserve">
+    <value>Configuración de PC de tableta</value>
+  </data>
+  <data name="Talk" xml:space="preserve">
+    <value>Hablar</value>
+  </data>
+  <data name="TalkToCortana" xml:space="preserve">
+    <value>Hablar con Cortana</value>
+  </data>
+  <data name="Taskbar" xml:space="preserve">
+    <value>Barra de tareas</value>
+  </data>
+  <data name="TaskbarColor" xml:space="preserve">
+    <value>Color de la barra de tareas</value>
+  </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>Tareas</value>
+  </data>
+  <data name="TeamConferencing" xml:space="preserve">
+    <value>Conferencia de equipo</value>
+  </data>
+  <data name="TeamDeviceManagement" xml:space="preserve">
+    <value>Administración de dispositivos del equipo</value>
+  </data>
+  <data name="TextToSpeech" xml:space="preserve">
+    <value>Texto a voz</value>
+  </data>
+  <data name="Themes" xml:space="preserve">
+    <value>Temas</value>
+  </data>
+  <data name="Timeline" xml:space="preserve">
+    <value>Escala de tiempo</value>
+  </data>
+  <data name="Touch" xml:space="preserve">
+    <value>Táctil</value>
+  </data>
+  <data name="TouchFeedback" xml:space="preserve">
+    <value>Comentarios táctiles</value>
+  </data>
+  <data name="Touchpad" xml:space="preserve">
+    <value>Panel táctil</value>
+  </data>
+  <data name="Transparency" xml:space="preserve">
+    <value>Transparencia</value>
+  </data>
+  <data name="Troubleshoot" xml:space="preserve">
+    <value>Solucionar problemas</value>
+  </data>
+  <data name="TruePlay" xml:space="preserve">
+    <value>TruePlay</value>
+  </data>
+  <data name="Typing" xml:space="preserve">
+    <value>Escritura</value>
+  </data>
+  <data name="Uninstall" xml:space="preserve">
+    <value>Desinstalar</value>
+  </data>
+  <data name="Usb" xml:space="preserve">
+    <value>USB</value>
+  </data>
+  <data name="UserAccounts" xml:space="preserve">
+    <value>Cuentas de usuario</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Versión</value>
+  </data>
+  <data name="VideoPlayback" xml:space="preserve">
+    <value>Reproducción de vídeo</value>
+  </data>
+  <data name="Videos" xml:space="preserve">
+    <value>Vídeos</value>
+  </data>
+  <data name="VirtualDesktops" xml:space="preserve">
+    <value>Escritorios virtuales</value>
+  </data>
+  <data name="Virus" xml:space="preserve">
+    <value>Virus</value>
+  </data>
+  <data name="VoiceActivation" xml:space="preserve">
+    <value>Activación por voz</value>
+  </data>
+  <data name="Volume" xml:space="preserve">
+    <value>Volumen</value>
+  </data>
+  <data name="Vpn" xml:space="preserve">
+    <value>VPN</value>
+  </data>
+  <data name="Wallpaper" xml:space="preserve">
+    <value>Fondo de pantalla</value>
+  </data>
+  <data name="WarmerColor" xml:space="preserve">
+    <value>Color más cálido</value>
+  </data>
+  <data name="WelcomeCenter" xml:space="preserve">
+    <value>Centro de bienvenida</value>
+  </data>
+  <data name="WelcomeScreen" xml:space="preserve">
+    <value>Pantalla de bienvenida</value>
+  </data>
+  <data name="Wheel" xml:space="preserve">
+    <value>Rueda</value>
+  </data>
+  <data name="WiFi" xml:space="preserve">
+    <value>Wi-Fi</value>
+  </data>
+  <data name="WiFiCalling" xml:space="preserve">
+    <value>Llamadas de Wi-Fi</value>
+  </data>
+  <data name="WiFiSettings" xml:space="preserve">
+    <value>Configuración de Wi-Fi</value>
+  </data>
+  <data name="WindowBorder" xml:space="preserve">
+    <value>Borde de la ventana</value>
+  </data>
+  <data name="WindowsAnytimeUpgrade" xml:space="preserve">
+    <value>Windows Anytime Upgrade</value>
+  </data>
+  <data name="WindowsAnywhere" xml:space="preserve">
+    <value>Windows en cualquier lugar</value>
+  </data>
+  <data name="WindowsCardSpace" xml:space="preserve">
+    <value>Windows CardSpace</value>
+  </data>
+  <data name="WindowsDefender" xml:space="preserve">
+    <value>Windows Defender</value>
+  </data>
+  <data name="WindowsFirewall" xml:space="preserve">
+    <value>Firewall de Windows</value>
+  </data>
+  <data name="WindowsHelloSetupFace" xml:space="preserve">
+    <value>Configuración de Windows Hello: cara</value>
+  </data>
+  <data name="WindowsHelloSetupFingerprint" xml:space="preserve">
+    <value>Configuración de Windows Hello: huella digital</value>
+  </data>
+  <data name="WindowsInsiderProgram" xml:space="preserve">
+    <value>Programa Windows Insider</value>
+  </data>
+  <data name="WindowsMobilityCenter" xml:space="preserve">
+    <value>Centro de movilidad de Windows</value>
+  </data>
+  <data name="WindowsSearch" xml:space="preserve">
+    <value>Windows Search</value>
+  </data>
+  <data name="WindowsSecurity" xml:space="preserve">
+    <value>Seguridad de Windows</value>
+  </data>
+  <data name="WindowsUpdate" xml:space="preserve">
+    <value>Windows Update</value>
+  </data>
+  <data name="WindowsUpdateAdvancedOptions" xml:space="preserve">
+    <value>Windows Update: opciones avanzadas</value>
+  </data>
+  <data name="WindowsUpdateCheckForUpdates" xml:space="preserve">
+    <value>Windows Update: buscar actualizaciones</value>
+  </data>
+  <data name="WindowsUpdateRestartOptions" xml:space="preserve">
+    <value>Windows Update: opciones de reinicio</value>
+  </data>
+  <data name="WindowsUpdateViewOptionalUpdates" xml:space="preserve">
+    <value>Windows Update: ver actualizaciones opcionales</value>
+  </data>
+  <data name="WindowsUpdateViewUpdateHistory" xml:space="preserve">
+    <value>Windows Update: ver historial de actualizaciones</value>
+  </data>
+  <data name="Wireless" xml:space="preserve">
+    <value>Inalámbrico</value>
+  </data>
+  <data name="Workplace" xml:space="preserve">
+    <value>Área de trabajo</value>
+  </data>
+  <data name="WorkplaceProvisioning" xml:space="preserve">
+    <value>Aprovisionamiento del área de trabajo</value>
+  </data>
+  <data name="WubiImeSettings" xml:space="preserve">
+    <value>Configuración de IME Wubi</value>
+  </data>
+  <data name="WubiImeSettingsUdp" xml:space="preserve">
+    <value>Configuración de IME Wubi: UDP</value>
+  </data>
+  <data name="XboxNetworking" xml:space="preserve">
+    <value>Redes Xbox</value>
+  </data>
+  <data name="YourInfo" xml:space="preserve">
+    <value>Su información</value>
+  </data>
+  <data name="Zoom" xml:space="preserve">
+    <value>Zoom</value>
+  </data>
+  <data name="access.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="appwiz.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="bpmf" xml:space="preserve">
+    <value>bpmf</value>
+  </data>
+  <data name="calling" xml:space="preserve">
+    <value>llamadas</value>
+  </data>
+  <data name="desk.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="deuteranopia" xml:space="preserve">
+    <value>deuteranopía</value>
+  </data>
+  <data name="findfast.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="inetcpl.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="intl.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="joy.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="jpnime" xml:space="preserve">
+    <value>jpnime</value>
+  </data>
+  <data name="main.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="mlcfg32.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="mmsys.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="modem.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="netcpl.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="netsetup.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="nwc.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="odbccp32.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="password.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="powercfg.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="protanopia" xml:space="preserve">
+    <value>protanopia</value>
+  </data>
+  <data name="schedtasks" xml:space="preserve">
+    <value>schedtasks</value>
+  </data>
+  <data name="sticpl.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="sysdm.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="themes.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="timedate.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tritanopia" xml:space="preserve">
+    <value>tritanopia</value>
+  </data>
+  <data name="wgpocpl.cpl" xml:space="preserve">
+    <value />
+  </data>
+</root>

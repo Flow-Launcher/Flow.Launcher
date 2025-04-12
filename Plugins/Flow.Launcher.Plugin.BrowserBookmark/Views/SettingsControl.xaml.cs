@@ -1,52 +1,118 @@
-using Microsoft.Win32;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
+using System.Windows.Input;
+using System.ComponentModel;
+using System.Threading.Tasks;
 
-namespace Flow.Launcher.Plugin.BrowserBookmark.Views
+namespace Flow.Launcher.Plugin.BrowserBookmark.Views;
+
+public partial class SettingsControl : INotifyPropertyChanged
 {
-    /// <summary>
-    /// Interaction logic for BrowserBookmark.xaml
-    /// </summary>
-    public partial class SettingsControl : UserControl
+    public Settings Settings { get; }
+    public CustomBrowser SelectedCustomBrowser { get; set; }
+
+    public SettingsControl(Settings settings)
     {
-        private readonly Settings _settings;
+        Settings = settings;
+        InitializeComponent();
+    }
 
-        public SettingsControl(Settings settings)
+    public bool LoadChromeBookmark
+    {
+        get => Settings.LoadChromeBookmark;
+        set
         {
-            InitializeComponent();
-            _settings = settings;
-            browserPathBox.Text = _settings.BrowserPath;
-            NewWindowBrowser.IsChecked = _settings.OpenInNewBrowserWindow;
-            NewTabInBrowser.IsChecked = !_settings.OpenInNewBrowserWindow;
+            Settings.LoadChromeBookmark = value;
+            _ = Task.Run(() => Main.ReloadAllBookmarks());
         }
+    }
 
-        private void OnNewBrowserWindowClick(object sender, RoutedEventArgs e)
+    public bool LoadFirefoxBookmark
+    {
+        get => Settings.LoadFirefoxBookmark;
+        set
         {
-            _settings.OpenInNewBrowserWindow = true;
+            Settings.LoadFirefoxBookmark = value;
+            _ = Task.Run(() => Main.ReloadAllBookmarks());
         }
+    }
 
-        private void OnNewTabClick(object sender, RoutedEventArgs e)
+    public bool LoadEdgeBookmark
+    {
+        get => Settings.LoadEdgeBookmark;
+        set
         {
-            _settings.OpenInNewBrowserWindow = false;
+            Settings.LoadEdgeBookmark = value;
+            _ = Task.Run(() => Main.ReloadAllBookmarks());
         }
+    }
 
-        private void OnChooseClick(object sender, RoutedEventArgs e)
+    public bool OpenInNewBrowserWindow
+    {
+        get => Settings.OpenInNewBrowserWindow;
+        set
         {
-            var fileBrowserDialog = new OpenFileDialog();
-            fileBrowserDialog.Filter = "Application(*.exe)|*.exe|All files|*.*";
-            fileBrowserDialog.CheckFileExists = true;
-            fileBrowserDialog.CheckPathExists = true;
-            if (fileBrowserDialog.ShowDialog() == true)
+            Settings.OpenInNewBrowserWindow = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(OpenInNewBrowserWindow)));
+        }
+    }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    private void NewCustomBrowser(object sender, RoutedEventArgs e)
+    {
+        var newBrowser = new CustomBrowser();
+        var window = new CustomBrowserSettingWindow(newBrowser);
+        window.ShowDialog();
+        if (newBrowser is not
             {
-                browserPathBox.Text = fileBrowserDialog.FileName;
-                _settings.BrowserPath = fileBrowserDialog.FileName;
-            }
-        }
-
-        private void OnBrowserPathTextChanged(object sender, TextChangedEventArgs e)
+                Name: null,
+                DataDirectoryPath: null
+            })
         {
-            _settings.BrowserPath = browserPathBox.Text;
+            Settings.CustomChromiumBrowsers.Add(newBrowser);
+            _ = Task.Run(() => Main.ReloadAllBookmarks());
+        }
+    }
+
+    private void DeleteCustomBrowser(object sender, RoutedEventArgs e)
+    {
+        if (CustomBrowsers.SelectedItem is CustomBrowser selectedCustomBrowser)
+        {
+            Settings.CustomChromiumBrowsers.Remove(selectedCustomBrowser);
+            _ = Task.Run(() => Main.ReloadAllBookmarks());
+        }
+    }
+
+    private void MouseDoubleClickOnSelectedCustomBrowser(object sender, MouseButtonEventArgs e)
+    {
+        EditSelectedCustomBrowser();
+    }
+
+    private void Others_Click(object sender, RoutedEventArgs e)
+    {
+        CustomBrowsersList.Visibility = CustomBrowsersList.Visibility switch
+        {
+            Visibility.Collapsed => Visibility.Visible,
+            _ => Visibility.Collapsed
+        };
+    }
+
+    private void EditCustomBrowser(object sender, RoutedEventArgs e)
+    {
+        EditSelectedCustomBrowser();
+    }
+
+    private void EditSelectedCustomBrowser()
+    {
+        if (SelectedCustomBrowser is null)
+            return;
+
+        var window = new CustomBrowserSettingWindow(SelectedCustomBrowser);
+        var result = window.ShowDialog() ?? false;
+        if (result)
+        {
+            _ = Task.Run(() => Main.ReloadAllBookmarks());
         }
     }
 }

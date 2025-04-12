@@ -1,20 +1,16 @@
-﻿using Flow.Launcher.Infrastructure.Storage;
-using Flow.Launcher.Plugin.PluginsManager.ViewModels;
-using Flow.Launcher.Plugin.PluginsManager.Views;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
-using Flow.Launcher.Infrastructure;
-using System;
 using System.Threading.Tasks;
 using System.Threading;
-using System.Windows;
+using Flow.Launcher.Plugin.PluginsManager.ViewModels;
+using Flow.Launcher.Plugin.PluginsManager.Views;
 
 namespace Flow.Launcher.Plugin.PluginsManager
 {
-    public class Main : ISettingProvider, IAsyncPlugin, IContextMenu, IPluginI18n, IAsyncReloadable
+    public class Main : ISettingProvider, IAsyncPlugin, IContextMenu, IPluginI18n
     {
-        internal PluginInitContext Context { get; set; }
+        internal static PluginInitContext Context { get; set; }
 
         internal Settings Settings;
 
@@ -24,58 +20,41 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal PluginsManager pluginManager;
 
-        private DateTime lastUpdateTime = DateTime.MinValue;
-
         public Control CreateSettingPanel()
         {
             return new PluginsManagerSettings(viewModel);
         }
 
-        public Task InitAsync(PluginInitContext context)
+        public async Task InitAsync(PluginInitContext context)
         {
             Context = context;
             Settings = context.API.LoadSettingJsonStorage<Settings>();
             viewModel = new SettingsViewModel(context, Settings);
             contextMenu = new ContextMenu(Context);
             pluginManager = new PluginsManager(Context, Settings);
-            _manifestUpdateTask = pluginManager.UpdateManifest().ContinueWith(_ =>
-             {
-                 lastUpdateTime = DateTime.Now;
-             }, TaskContinuationOptions.OnlyOnRanToCompletion);
 
-            return Task.CompletedTask;
+            await Context.API.UpdatePluginManifestAsync();
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
         {
             return contextMenu.LoadContextMenus(selectedResult);
         }
-        
-        private Task _manifestUpdateTask = Task.CompletedTask;
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
-            var search = query.Search.ToLower();
-
-            if (string.IsNullOrWhiteSpace(search))
+            if (string.IsNullOrWhiteSpace(query.Search))
                 return pluginManager.GetDefaultHotKeys();
 
-            if ((DateTime.Now - lastUpdateTime).TotalHours > 12 && _manifestUpdateTask.IsCompleted) // 12 hours
+            return query.FirstSearch.ToLower() switch
             {
-                _manifestUpdateTask = pluginManager.UpdateManifest().ContinueWith(t =>
-                {
-                    lastUpdateTime = DateTime.Now;
-                }, TaskContinuationOptions.OnlyOnRanToCompletion);
-            }
-
-            return search switch
-            {
-                var s when s.StartsWith(Settings.HotKeyInstall) => await pluginManager.RequestInstallOrUpdate(s, token),
-                var s when s.StartsWith(Settings.HotkeyUninstall) => pluginManager.RequestUninstall(s),
-                var s when s.StartsWith(Settings.HotkeyUpdate) => await pluginManager.RequestUpdate(s, token),
+                //search could be url, no need ToLower() when passed in
+                Settings.InstallCommand => await pluginManager.RequestInstallOrUpdateAsync(query.SecondToEndSearch, token, query.IsReQuery),
+                Settings.UninstallCommand => pluginManager.RequestUninstall(query.SecondToEndSearch),
+                Settings.UpdateCommand => await pluginManager.RequestUpdateAsync(query.SecondToEndSearch, token, query.IsReQuery),
                 _ => pluginManager.GetDefaultHotKeys().Where(hotkey =>
                 {
-                    hotkey.Score = StringMatcher.FuzzySearch(search, hotkey.Title).Score;
+                    hotkey.Score = Context.API.FuzzySearch(query.Search, hotkey.Title).Score;
                     return hotkey.Score > 0;
                 }).ToList()
             };
@@ -89,12 +68,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
         public string GetTranslatedPluginDescription()
         {
             return Context.API.GetTranslation("plugin_pluginsmanager_plugin_description");
-        }
-
-        public async Task ReloadDataAsync()
-        {
-            await pluginManager.UpdateManifest();
-            lastUpdateTime = DateTime.Now;
         }
     }
 }

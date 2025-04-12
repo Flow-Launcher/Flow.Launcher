@@ -1,0 +1,1410 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>Informace</value>
+  </data>
+  <data name="AccessWorkOrSchool" xml:space="preserve">
+    <value>Přístup k práci nebo škole</value>
+  </data>
+  <data name="AccessibilityOptions" xml:space="preserve">
+    <value>Možnosti přístupnosti</value>
+  </data>
+  <data name="AccessoryApps" xml:space="preserve">
+    <value>Doplňkové aplikace</value>
+  </data>
+  <data name="AccountInfo" xml:space="preserve">
+    <value>Informace o účtu</value>
+  </data>
+  <data name="Accounts" xml:space="preserve">
+    <value>Účty</value>
+  </data>
+  <data name="ActionCenter" xml:space="preserve">
+    <value>Centrum akcí</value>
+  </data>
+  <data name="Activation" xml:space="preserve">
+    <value>Aktivace</value>
+  </data>
+  <data name="ActivityHistory" xml:space="preserve">
+    <value>Historie aktivit</value>
+  </data>
+  <data name="AddHardware" xml:space="preserve">
+    <value>Přidat hardware</value>
+  </data>
+  <data name="AddRemovePrograms" xml:space="preserve">
+    <value>Přidat nebo odebrat programy</value>
+  </data>
+  <data name="AddYourPhone" xml:space="preserve">
+    <value>Přidejte svůj telefon</value>
+  </data>
+  <data name="AdministrativeTools" xml:space="preserve">
+    <value>Nástroje pro správu</value>
+  </data>
+  <data name="AdvancedDisplaySettings" xml:space="preserve">
+    <value>Upřesňující nastavení zobrazení</value>
+  </data>
+  <data name="AdvancedGraphics" xml:space="preserve">
+    <value>Pokročilá grafika</value>
+  </data>
+  <data name="AdvertisingId" xml:space="preserve">
+    <value>Reklamní ID</value>
+  </data>
+  <data name="AirplaneMode" xml:space="preserve">
+    <value>Režim v letadle</value>
+  </data>
+  <data name="AltAndTab" xml:space="preserve">
+    <value>Alt+Tab</value>
+  </data>
+  <data name="AlternativeName" xml:space="preserve">
+    <value>Alternativní názvy</value>
+  </data>
+  <data name="Animations" xml:space="preserve">
+    <value>Animace</value>
+  </data>
+  <data name="AppColor" xml:space="preserve">
+    <value>Barva aplikace</value>
+  </data>
+  <data name="AppControlPanel" xml:space="preserve">
+    <value>Ovládací panel</value>
+  </data>
+  <data name="AppDiagnostics" xml:space="preserve">
+    <value>Diagnostika aplikace</value>
+  </data>
+  <data name="AppFeatures" xml:space="preserve">
+    <value>Funkce aplikace</value>
+  </data>
+  <data name="AppSettingsApp" xml:space="preserve">
+    <value>Nastavení systému</value>
+  </data>
+  <data name="AppVolumeAndDevicePreferences" xml:space="preserve">
+    <value>Předvolby hlasitosti aplikací a zařízení</value>
+  </data>
+  <data name="Application" xml:space="preserve">
+    <value>Aplikace</value>
+  </data>
+  <data name="AppsAndFeatures" xml:space="preserve">
+    <value>Aplikace a funkce</value>
+  </data>
+  <data name="AppsForWebsites" xml:space="preserve">
+    <value>Aplikace pro weby</value>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>Oblast</value>
+  </data>
+  <data name="AreaAccounts" xml:space="preserve">
+    <value>Účty</value>
+  </data>
+  <data name="AreaAdministrativeTools" xml:space="preserve">
+    <value>Nástroje pro správu</value>
+  </data>
+  <data name="AreaAppearanceAndPersonalization" xml:space="preserve">
+    <value>Vzhled a přizpůsobení</value>
+  </data>
+  <data name="AreaApps" xml:space="preserve">
+    <value>Aplikace</value>
+  </data>
+  <data name="AreaClockAndRegion" xml:space="preserve">
+    <value>Hodiny a oblast</value>
+  </data>
+  <data name="AreaCortana" xml:space="preserve">
+    <value>Cortana</value>
+  </data>
+  <data name="AreaDevices" xml:space="preserve">
+    <value>Zařízení</value>
+  </data>
+  <data name="AreaEaseOfAccess" xml:space="preserve">
+    <value>Usnadnění přístupu</value>
+  </data>
+  <data name="AreaExtras" xml:space="preserve">
+    <value>Doplňky</value>
+  </data>
+  <data name="AreaGaming" xml:space="preserve">
+    <value>Hry</value>
+  </data>
+  <data name="AreaHardwareAndSound" xml:space="preserve">
+    <value>Hardware a zvuk</value>
+  </data>
+  <data name="AreaHomePage" xml:space="preserve">
+    <value>Domovská stránka</value>
+  </data>
+  <data name="AreaMixedReality" xml:space="preserve">
+    <value>Hybridní realita</value>
+  </data>
+  <data name="AreaNetworkAndInternet" xml:space="preserve">
+    <value>Síť a internet</value>
+  </data>
+  <data name="AreaPersonalization" xml:space="preserve">
+    <value>Přizpůsobení</value>
+  </data>
+  <data name="AreaPhone" xml:space="preserve">
+    <value>Telefon</value>
+  </data>
+  <data name="AreaPrivacy" xml:space="preserve">
+    <value>Soukromí</value>
+  </data>
+  <data name="AreaPrograms" xml:space="preserve">
+    <value>Programy</value>
+  </data>
+  <data name="AreaSurfaceHub" xml:space="preserve">
+    <value>SurfaceHub</value>
+  </data>
+  <data name="AreaSystem" xml:space="preserve">
+    <value>Systém</value>
+  </data>
+  <data name="AreaSystemAndSecurity" xml:space="preserve">
+    <value>Systém a zabezpečení</value>
+  </data>
+  <data name="AreaTimeAndLanguage" xml:space="preserve">
+    <value>Čas a jazyk</value>
+  </data>
+  <data name="AreaUpdateAndSecurity" xml:space="preserve">
+    <value>Aktualizace a zabezpečení</value>
+  </data>
+  <data name="AreaUserAccounts" xml:space="preserve">
+    <value>Uživatelské účty</value>
+  </data>
+  <data name="AssignedAccess" xml:space="preserve">
+    <value>Přiřazený přístup</value>
+  </data>
+  <data name="Audio" xml:space="preserve">
+    <value>Zvuk</value>
+  </data>
+  <data name="AudioAlerts" xml:space="preserve">
+    <value>Zvuková upozornění</value>
+  </data>
+  <data name="AudioAndSpeech" xml:space="preserve">
+    <value>Zvuk a řeč</value>
+  </data>
+  <data name="AutoPlay" xml:space="preserve">
+    <value>Automatické přehrávání</value>
+  </data>
+  <data name="AutomaticFileDownloads" xml:space="preserve">
+    <value>Automatická stahování souborů</value>
+  </data>
+  <data name="Background" xml:space="preserve">
+    <value>Pozadí</value>
+  </data>
+  <data name="BackgroundApps" xml:space="preserve">
+    <value>Aplikace na pozadí</value>
+  </data>
+  <data name="Backup" xml:space="preserve">
+    <value>Záloha</value>
+  </data>
+  <data name="BackupAndRestore" xml:space="preserve">
+    <value>Zálohování a obnovení</value>
+  </data>
+  <data name="BatterySaver" xml:space="preserve">
+    <value>Spořič baterie</value>
+  </data>
+  <data name="BatterySaverSettings" xml:space="preserve">
+    <value>Nastavení spořiče baterie</value>
+  </data>
+  <data name="BatterySaverUsageDetails" xml:space="preserve">
+    <value>Podrobnosti o využití spořiče baterie</value>
+  </data>
+  <data name="BatteryUse" xml:space="preserve">
+    <value>Využití baterie</value>
+  </data>
+  <data name="BiometricDevices" xml:space="preserve">
+    <value>Biometrická zařízení</value>
+  </data>
+  <data name="BitLockerDriveEncryption" xml:space="preserve">
+    <value>Šifrování jednotky nástrojem BitLocker</value>
+  </data>
+  <data name="BlueLight" xml:space="preserve">
+    <value>Modré světlo</value>
+  </data>
+  <data name="BlueYellow" xml:space="preserve">
+    <value>Modrožlutá</value>
+  </data>
+  <data name="Bluetooth" xml:space="preserve">
+    <value>Bluetooth</value>
+  </data>
+  <data name="BluetoothDevices" xml:space="preserve">
+    <value>Zařízení Bluetooth</value>
+  </data>
+  <data name="BopomofoIme" xml:space="preserve">
+    <value>Bopomofo IME</value>
+  </data>
+  <data name="Broadcasting" xml:space="preserve">
+    <value>Vysílání</value>
+  </data>
+  <data name="Calendar" xml:space="preserve">
+    <value>Kalendář</value>
+  </data>
+  <data name="CallHistory" xml:space="preserve">
+    <value>Historie volání</value>
+  </data>
+  <data name="Camera" xml:space="preserve">
+    <value>Kamera</value>
+  </data>
+  <data name="CangjieIme" xml:space="preserve">
+    <value>Cangjie IME</value>
+  </data>
+  <data name="CapsLock" xml:space="preserve">
+    <value>Caps Lock</value>
+  </data>
+  <data name="CellularAndSim" xml:space="preserve">
+    <value>Mobilní síť a SIM karta</value>
+  </data>
+  <data name="ChooseWhichFoldersAppearOnStart" xml:space="preserve">
+    <value>Zvolte složky, které se zobrazí v nabídce Start.</value>
+  </data>
+  <data name="ClientServiceForNetWare" xml:space="preserve">
+    <value>Klientská služba pro NetWare</value>
+  </data>
+  <data name="Clipboard" xml:space="preserve">
+    <value>Schránka</value>
+  </data>
+  <data name="ClosedCaptions" xml:space="preserve">
+    <value>Skryté titulky</value>
+  </data>
+  <data name="ColorFilters" xml:space="preserve">
+    <value>Filtry barev</value>
+  </data>
+  <data name="ColorManagement" xml:space="preserve">
+    <value>Správa barev</value>
+  </data>
+  <data name="Colors" xml:space="preserve">
+    <value>Barvy</value>
+  </data>
+  <data name="Command" xml:space="preserve">
+    <value>Příkaz</value>
+  </data>
+  <data name="ConnectedDevices" xml:space="preserve">
+    <value>Připojená zařízení</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>Kontakty</value>
+  </data>
+  <data name="CopyCommand" xml:space="preserve">
+    <value>Příkaz Kopírovat</value>
+  </data>
+  <data name="CoreIsolation" xml:space="preserve">
+    <value>Izolace jádra</value>
+  </data>
+  <data name="Cortana" xml:space="preserve">
+    <value>Cortana</value>
+  </data>
+  <data name="CortanaAcrossMyDevices" xml:space="preserve">
+    <value>Cortana na všech mých zařízeních</value>
+  </data>
+  <data name="CortanaLanguage" xml:space="preserve">
+    <value>Cortana – jazyk</value>
+  </data>
+  <data name="CredentialManager" xml:space="preserve">
+    <value>Správce přihlašovacích údajů</value>
+  </data>
+  <data name="Crossdevice" xml:space="preserve">
+    <value>Mezi zařízeními</value>
+  </data>
+  <data name="CustomDevices" xml:space="preserve">
+    <value>Vlastní zařízení</value>
+  </data>
+  <data name="DNS" xml:space="preserve">
+    <value>DNS</value>
+  </data>
+  <data name="DarkColor" xml:space="preserve">
+    <value>Tmavá barva</value>
+  </data>
+  <data name="DarkMode" xml:space="preserve">
+    <value>Tmavý režim</value>
+  </data>
+  <data name="DataUsage" xml:space="preserve">
+    <value>Využití dat</value>
+  </data>
+  <data name="DateAndTime" xml:space="preserve">
+    <value>Datum a čas</value>
+  </data>
+  <data name="DefaultApps" xml:space="preserve">
+    <value>Výchozí aplikace</value>
+  </data>
+  <data name="DefaultCamera" xml:space="preserve">
+    <value>Výchozí kamera</value>
+  </data>
+  <data name="DefaultLocation" xml:space="preserve">
+    <value>Výchozí umístění</value>
+  </data>
+  <data name="DefaultPrograms" xml:space="preserve">
+    <value>Výchozí programy</value>
+  </data>
+  <data name="DefaultSaveLocations" xml:space="preserve">
+    <value>Výchozí umístění pro ukládání</value>
+  </data>
+  <data name="DeliveryOptimization" xml:space="preserve">
+    <value>Optimalizace doručení</value>
+  </data>
+  <data name="DesktopThemes" xml:space="preserve">
+    <value>Motivy plochy</value>
+  </data>
+  <data name="DeviceManager" xml:space="preserve">
+    <value>Správce zařízení</value>
+  </data>
+  <data name="DevicesAndPrinters" xml:space="preserve">
+    <value>Zařízení a tiskárny</value>
+  </data>
+  <data name="Dhcp" xml:space="preserve">
+    <value>DHCP</value>
+  </data>
+  <data name="DialUp" xml:space="preserve">
+    <value>Vytáčené připojení</value>
+  </data>
+  <data name="DirectAccess" xml:space="preserve">
+    <value>Přímý přístup</value>
+  </data>
+  <data name="DirectOpenYourPhone" xml:space="preserve">
+    <value>Přímé otevření telefonu</value>
+  </data>
+  <data name="Display" xml:space="preserve">
+    <value>Zobrazení</value>
+  </data>
+  <data name="DisplayProperties" xml:space="preserve">
+    <value>Vlastnosti zobrazení</value>
+  </data>
+  <data name="Documents" xml:space="preserve">
+    <value>Dokumenty</value>
+  </data>
+  <data name="DuplicatingMyDisplay" xml:space="preserve">
+    <value>Duplikování displeje</value>
+  </data>
+  <data name="DuringTheseHours" xml:space="preserve">
+    <value>Během těchto hodin</value>
+  </data>
+  <data name="EaseOfAccessCenter" xml:space="preserve">
+    <value>Centrum usnadnění přístupu</value>
+  </data>
+  <data name="Edition" xml:space="preserve">
+    <value>Edice</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-mail</value>
+  </data>
+  <data name="EmailAndAppAccounts" xml:space="preserve">
+    <value>E-mailové účty a účty aplikací</value>
+  </data>
+  <data name="Encryption" xml:space="preserve">
+    <value>Šifrování</value>
+  </data>
+  <data name="Environment" xml:space="preserve">
+    <value>Prostředí</value>
+  </data>
+  <data name="Ethernet" xml:space="preserve">
+    <value>Ethernet</value>
+  </data>
+  <data name="ExploitProtection" xml:space="preserve">
+    <value>Ochrana Exploit Protection</value>
+  </data>
+  <data name="Extras" xml:space="preserve">
+    <value>Doplňky</value>
+  </data>
+  <data name="EyeControl" xml:space="preserve">
+    <value>Ovládání zrakem</value>
+  </data>
+  <data name="EyeTracker" xml:space="preserve">
+    <value>Sledování očí</value>
+  </data>
+  <data name="FamilyAndOtherPeople" xml:space="preserve">
+    <value>Rodina a další lidé</value>
+  </data>
+  <data name="FeedbackAndDiagnostics" xml:space="preserve">
+    <value>Zpětná vazba a diagnostika</value>
+  </data>
+  <data name="FileSystem" xml:space="preserve">
+    <value>Systém souborů</value>
+  </data>
+  <data name="FindFast" xml:space="preserve">
+    <value>FindFast</value>
+  </data>
+  <data name="FindMyDevice" xml:space="preserve">
+    <value>Najít moje zařízení</value>
+  </data>
+  <data name="Firewall" xml:space="preserve">
+    <value>Brána firewall</value>
+  </data>
+  <data name="FocusAssistQuietHours" xml:space="preserve">
+    <value>Pomocník pro lepší soustředění – doba klidu</value>
+  </data>
+  <data name="FocusAssistQuietMoments" xml:space="preserve">
+    <value>Pomocník pro lepší soustředění – tiché okamžiky</value>
+  </data>
+  <data name="FolderOptions" xml:space="preserve">
+    <value>Možnosti složky</value>
+  </data>
+  <data name="Fonts" xml:space="preserve">
+    <value>Písma</value>
+  </data>
+  <data name="ForDevelopers" xml:space="preserve">
+    <value>Pro vývojáře</value>
+  </data>
+  <data name="GameBar" xml:space="preserve">
+    <value>Herní panel</value>
+  </data>
+  <data name="GameControllers" xml:space="preserve">
+    <value>Herní ovladače</value>
+  </data>
+  <data name="GameDvr" xml:space="preserve">
+    <value>Záznam ze hry</value>
+  </data>
+  <data name="GameMode" xml:space="preserve">
+    <value>Herní režim</value>
+  </data>
+  <data name="Gateway" xml:space="preserve">
+    <value>Brána</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>Obecné</value>
+  </data>
+  <data name="GetPrograms" xml:space="preserve">
+    <value>Získat programy</value>
+  </data>
+  <data name="GettingStarted" xml:space="preserve">
+    <value>Začínáme</value>
+  </data>
+  <data name="Glance" xml:space="preserve">
+    <value>Rychlý náhled</value>
+  </data>
+  <data name="GraphicsSettings" xml:space="preserve">
+    <value>Nastavení grafiky</value>
+  </data>
+  <data name="Grayscale" xml:space="preserve">
+    <value>Stupně šedé</value>
+  </data>
+  <data name="GreenWeek" xml:space="preserve">
+    <value>Zelený týden</value>
+  </data>
+  <data name="HeadsetDisplay" xml:space="preserve">
+    <value>Displej náhlavní soupravy</value>
+  </data>
+  <data name="HighContrast" xml:space="preserve">
+    <value>Vysoký kontrast</value>
+  </data>
+  <data name="HolographicAudio" xml:space="preserve">
+    <value>Holografický zvuk</value>
+  </data>
+  <data name="HolographicEnvironment" xml:space="preserve">
+    <value>Holografické prostředí</value>
+  </data>
+  <data name="HolographicHeadset" xml:space="preserve">
+    <value>Holografická náhlavní souprava</value>
+  </data>
+  <data name="HolographicManagement" xml:space="preserve">
+    <value>Správa holografie</value>
+  </data>
+  <data name="HomeGroup" xml:space="preserve">
+    <value>Domácí skupina</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>Obrázek</value>
+  </data>
+  <data name="IndexingOptions" xml:space="preserve">
+    <value>Možnosti indexování</value>
+  </data>
+  <data name="Infrared" xml:space="preserve">
+    <value>Infračervené rozhraní</value>
+  </data>
+  <data name="InkingAndTyping" xml:space="preserve">
+    <value>Rukopis a psaní</value>
+  </data>
+  <data name="InternetOptions" xml:space="preserve">
+    <value>Možnosti internetu</value>
+  </data>
+  <data name="InvertedColors" xml:space="preserve">
+    <value>Invertované barvy</value>
+  </data>
+  <data name="Ip" xml:space="preserve">
+    <value>IP</value>
+  </data>
+  <data name="IsolatedBrowsing" xml:space="preserve">
+    <value>Izolované procházení</value>
+  </data>
+  <data name="JapanImeSettings" xml:space="preserve">
+    <value>Nastavení editoru IME pro Japonsko</value>
+  </data>
+  <data name="JoystickProperties" xml:space="preserve">
+    <value>Vlastnosti pákového ovladače</value>
+  </data>
+  <data name="Keyboard" xml:space="preserve">
+    <value>Klávesnice</value>
+  </data>
+  <data name="Keypad" xml:space="preserve">
+    <value>Klávesnice</value>
+  </data>
+  <data name="Keys" xml:space="preserve">
+    <value>Klíče</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Jazyk</value>
+  </data>
+  <data name="LightColor" xml:space="preserve">
+    <value>Světlá barva</value>
+  </data>
+  <data name="LightMode" xml:space="preserve">
+    <value>Světlý režim</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Umístění</value>
+  </data>
+  <data name="LockScreen" xml:space="preserve">
+    <value>Zamykací obrazovka</value>
+  </data>
+  <data name="Magnifier" xml:space="preserve">
+    <value>Lupa</value>
+  </data>
+  <data name="MailMicrosoftExchangeOrWindowsMessaging" xml:space="preserve">
+    <value>Pošta – Microsoft Exchange nebo Windows Zprávy</value>
+  </data>
+  <data name="ManageKnownNetworks" xml:space="preserve">
+    <value>Správa známých sítí</value>
+  </data>
+  <data name="ManageOptionalFeatures" xml:space="preserve">
+    <value>Správa volitelných funkcí</value>
+  </data>
+  <data name="Messaging" xml:space="preserve">
+    <value>Zprávy</value>
+  </data>
+  <data name="MeteredConnection" xml:space="preserve">
+    <value>Připojení účtované podle objemu dat</value>
+  </data>
+  <data name="Microphone" xml:space="preserve">
+    <value>Mikrofon</value>
+  </data>
+  <data name="MicrosoftMailPostOffice" xml:space="preserve">
+    <value>Microsoft Mail Post Office</value>
+  </data>
+  <data name="MobileDevices" xml:space="preserve">
+    <value>Mobilní zařízení</value>
+  </data>
+  <data name="MobileHotspot" xml:space="preserve">
+    <value>Mobilní hotspot</value>
+  </data>
+  <data name="Mono" xml:space="preserve">
+    <value>Mono</value>
+  </data>
+  <data name="MoreDetails" xml:space="preserve">
+    <value>Další podrobnosti</value>
+  </data>
+  <data name="Motion" xml:space="preserve">
+    <value>Pohyb</value>
+  </data>
+  <data name="Mouse" xml:space="preserve">
+    <value>Myš</value>
+  </data>
+  <data name="MouseAndTouchpad" xml:space="preserve">
+    <value>Myš a touchpad</value>
+  </data>
+  <data name="MouseFontsKeyboardAndPrintersProperties" xml:space="preserve">
+    <value>Vlastnosti myši, písem, klávesnice a tiskáren</value>
+  </data>
+  <data name="MousePointer" xml:space="preserve">
+    <value>Ukazatel myši</value>
+  </data>
+  <data name="MultimediaProperties" xml:space="preserve">
+    <value>Vlastnosti multimédií</value>
+  </data>
+  <data name="Multitasking" xml:space="preserve">
+    <value>Multitasking</value>
+  </data>
+  <data name="NFC" xml:space="preserve">
+    <value>NFC</value>
+  </data>
+  <data name="NFCTransactions" xml:space="preserve">
+    <value>Transakce NFC</value>
+  </data>
+  <data name="Narrator" xml:space="preserve">
+    <value>Vypravěč</value>
+  </data>
+  <data name="NavigationBar" xml:space="preserve">
+    <value>Navigační panel</value>
+  </data>
+  <data name="Network" xml:space="preserve">
+    <value>Síť</value>
+  </data>
+  <data name="NetworkAndSharingCenter" xml:space="preserve">
+    <value>Centrum síťových připojení a sdílení</value>
+  </data>
+  <data name="NetworkConnection" xml:space="preserve">
+    <value>Síťové připojení</value>
+  </data>
+  <data name="NetworkProperties" xml:space="preserve">
+    <value>Vlastnosti sítě</value>
+  </data>
+  <data name="NetworkSetupWizard" xml:space="preserve">
+    <value>Průvodce instalací sítě</value>
+  </data>
+  <data name="NetworkStatus" xml:space="preserve">
+    <value>Stav sítě</value>
+  </data>
+  <data name="NightLight" xml:space="preserve">
+    <value>Noční osvětlení</value>
+  </data>
+  <data name="NightLightSettings" xml:space="preserve">
+    <value>Nastavení nočního osvětlení</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>Poznámka</value>
+  </data>
+  <data name="NoteAddYourPhone" xml:space="preserve">
+    <value>K dispozici jenom v případě, že jste ke svému zařízení připojili mobilní zařízení.</value>
+  </data>
+  <data name="NoteAdvancedGraphics" xml:space="preserve">
+    <value>K dispozici jenom na zařízeních, která podporují pokročilé možnosti grafiky.</value>
+  </data>
+  <data name="NoteBattery" xml:space="preserve">
+    <value>K dispozici jenom na zařízeních, která mají baterii, například na tabletu.</value>
+  </data>
+  <data name="NoteDeprecated17763" xml:space="preserve">
+    <value>Zastaralé ve Windows 10 verze 1809 (build 17763) a novějších.</value>
+  </data>
+  <data name="NoteDialPaired" xml:space="preserve">
+    <value>K dispozici jenom v případě, že je vytáčení spárováno.</value>
+  </data>
+  <data name="NoteDirectAccess" xml:space="preserve">
+    <value>K dispozici jenom v případě, že je povolena technologie DirectAccess.</value>
+  </data>
+  <data name="NoteDisplayGraphics" xml:space="preserve">
+    <value>K dispozici jenom na zařízeních, která podporují rozšířené možnosti zobrazení.</value>
+  </data>
+  <data name="NoteEnrolledWIP" xml:space="preserve">
+    <value>K dispozici jenom v případě, že je uživatel zaregistrovaný v programu WIP.</value>
+  </data>
+  <data name="NoteEyetrackerHardware" xml:space="preserve">
+    <value>Vyžaduje hardware pro sledování očí.</value>
+  </data>
+  <data name="NoteImeJapan" xml:space="preserve">
+    <value>K dispozici, pokud je nainstalovaný editor IME pro Microsoft Japan.</value>
+  </data>
+  <data name="NoteImePinyin" xml:space="preserve">
+    <value>K dispozici, pokud je nainstalovaný editor IME pro Microsoft Pchin-jin.</value>
+  </data>
+  <data name="NoteImeWubi" xml:space="preserve">
+    <value>K dispozici, pokud je nainstalovaný editor IME Microsoft Wubi.</value>
+  </data>
+  <data name="NoteMixedReality" xml:space="preserve">
+    <value>K dispozici jenom v případě, že je nainstalovaná aplikace Portál hybridní reality.</value>
+  </data>
+  <data name="NoteMobileProvisioning" xml:space="preserve">
+    <value>K dispozici jenom na mobilních zařízeních a v případě, že podnik nasadil zřizovací balíček.</value>
+  </data>
+  <data name="NoteSince18362" xml:space="preserve">
+    <value>Přidáno ve Windows 10 verze 1903 (build 18362).</value>
+  </data>
+  <data name="NoteSince19041" xml:space="preserve">
+    <value>Přidáno ve Windows 10 verze 2004 (build 19041).</value>
+  </data>
+  <data name="NoteThirdParty" xml:space="preserve">
+    <value>K dispozici jenom v případě, že jsou „aplikace nastavení“ nainstalovány například třetí stranou.</value>
+  </data>
+  <data name="NoteTouchpad" xml:space="preserve">
+    <value>K dispozici jenom v případě, že je k dispozici hardware touchpadu.</value>
+  </data>
+  <data name="NoteWiFiAdapter" xml:space="preserve">
+    <value>K dispozici jenom v případě, že má zařízení adaptér Wi-Fi.</value>
+  </data>
+  <data name="NoteWindowsAnywhere" xml:space="preserve">
+    <value>Zařízení musí podporovat funkci Windows Anywhere.</value>
+  </data>
+  <data name="NoteWorkplaceProvisioning" xml:space="preserve">
+    <value>K dispozici jenom v případě, že podnik nasadil zřizovací balíček.</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>Oznámení</value>
+  </data>
+  <data name="NotificationsAndActions" xml:space="preserve">
+    <value>Oznámení a akce</value>
+  </data>
+  <data name="NumLock" xml:space="preserve">
+    <value>Num Lock</value>
+  </data>
+  <data name="OdbcDataSourceAdministrator32Bit" xml:space="preserve">
+    <value>Správce zdrojů dat ODBC (32bitová verze)</value>
+  </data>
+  <data name="OdbcDataSourceAdministrator64Bit" xml:space="preserve">
+    <value>Správce zdrojů dat ODBC (64bitová verze)</value>
+  </data>
+  <data name="OfflineFiles" xml:space="preserve">
+    <value>Offline soubory</value>
+  </data>
+  <data name="OfflineMaps" xml:space="preserve">
+    <value>Offline mapy</value>
+  </data>
+  <data name="OfflineMapsDownloadMaps" xml:space="preserve">
+    <value>Offline mapy – stahování map</value>
+  </data>
+  <data name="OnScreen" xml:space="preserve">
+    <value>Na obrazovce</value>
+  </data>
+  <data name="Os" xml:space="preserve">
+    <value>Operační systém</value>
+  </data>
+  <data name="OtherDevices" xml:space="preserve">
+    <value>Jiná zařízení</value>
+  </data>
+  <data name="OtherOptions" xml:space="preserve">
+    <value>Další možnosti</value>
+  </data>
+  <data name="OtherUsers" xml:space="preserve">
+    <value>Ostatní uživatelé</value>
+  </data>
+  <data name="ParentalControls" xml:space="preserve">
+    <value>Rodičovská kontrola</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Heslo</value>
+  </data>
+  <data name="PasswordProperties" xml:space="preserve">
+    <value>Vlastnosti hesla</value>
+  </data>
+  <data name="PenAndInputDevices" xml:space="preserve">
+    <value>Pero a vstupní zařízení</value>
+  </data>
+  <data name="PenAndTouch" xml:space="preserve">
+    <value>Pero a dotykové ovládání</value>
+  </data>
+  <data name="PenAndWindowsInk" xml:space="preserve">
+    <value>Pero a Windows Ink</value>
+  </data>
+  <data name="PeopleNearMe" xml:space="preserve">
+    <value>Lidé v mém okolí</value>
+  </data>
+  <data name="PerformanceInformationAndTools" xml:space="preserve">
+    <value>Informace o výkonu a nástroje</value>
+  </data>
+  <data name="PermissionsAndHistory" xml:space="preserve">
+    <value>Oprávnění a historie</value>
+  </data>
+  <data name="PersonalizationCategory" xml:space="preserve">
+    <value>Přizpůsobení (kategorie)</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Telefon</value>
+  </data>
+  <data name="PhoneAndModem" xml:space="preserve">
+    <value>Telefon a modem</value>
+  </data>
+  <data name="PhoneAndModemOptions" xml:space="preserve">
+    <value>Telefon a modem – možnosti</value>
+  </data>
+  <data name="PhoneCalls" xml:space="preserve">
+    <value>Telefonní hovory</value>
+  </data>
+  <data name="PhoneDefaultApps" xml:space="preserve">
+    <value>Telefon – výchozí aplikace</value>
+  </data>
+  <data name="Picture" xml:space="preserve">
+    <value>Obrázek</value>
+  </data>
+  <data name="Pictures" xml:space="preserve">
+    <value>Obrázky</value>
+  </data>
+  <data name="PinyinImeSettings" xml:space="preserve">
+    <value>Nastavení editoru IME pro pchin-jin</value>
+  </data>
+  <data name="PinyinImeSettingsDomainLexicon" xml:space="preserve">
+    <value>Nastavení editoru IME pro pchin-jin – lexikon domén</value>
+  </data>
+  <data name="PinyinImeSettingsKeyConfiguration" xml:space="preserve">
+    <value>Nastavení editoru IME pro pchin-jin – konfigurace klíče</value>
+  </data>
+  <data name="PinyinImeSettingsUdp" xml:space="preserve">
+    <value>Nastavení editoru IME pro pchin-jin – UDP</value>
+  </data>
+  <data name="PlayingGameFullScreen" xml:space="preserve">
+    <value>Hraní hry na celé obrazovce</value>
+  </data>
+  <data name="PluginDescription" xml:space="preserve">
+    <value>Modul plug-in pro vyhledávání nastavení Windows</value>
+  </data>
+  <data name="PluginTitle" xml:space="preserve">
+    <value>Nastavení Windows</value>
+  </data>
+  <data name="PowerAndSleep" xml:space="preserve">
+    <value>Napájení a režim spánku</value>
+  </data>
+  <data name="PowerOptions" xml:space="preserve">
+    <value>Možnosti napájení</value>
+  </data>
+  <data name="Presentation" xml:space="preserve">
+    <value>Prezentace</value>
+  </data>
+  <data name="PrintScreen" xml:space="preserve">
+    <value>Print Screen</value>
+  </data>
+  <data name="Printers" xml:space="preserve">
+    <value>Tiskárny</value>
+  </data>
+  <data name="PrintersAndScanners" xml:space="preserve">
+    <value>Tiskárny a skenery</value>
+  </data>
+  <data name="ProblemReportsAndSolutions" xml:space="preserve">
+    <value>Hlášení a řešení problémů</value>
+  </data>
+  <data name="Processor" xml:space="preserve">
+    <value>Procesor</value>
+  </data>
+  <data name="ProgramsAndFeatures" xml:space="preserve">
+    <value>Programy a funkce</value>
+  </data>
+  <data name="ProjectingToThisPc" xml:space="preserve">
+    <value>Promítání na tento počítač</value>
+  </data>
+  <data name="Provisioning" xml:space="preserve">
+    <value>Zřizování</value>
+  </data>
+  <data name="Proximity" xml:space="preserve">
+    <value>Blízkost</value>
+  </data>
+  <data name="Proxy" xml:space="preserve">
+    <value>Proxy server</value>
+  </data>
+  <data name="Quickime" xml:space="preserve">
+    <value>QuickTime</value>
+  </data>
+  <data name="QuietMomentsGame" xml:space="preserve">
+    <value>Hra pro tiché okamžiky</value>
+  </data>
+  <data name="Radios" xml:space="preserve">
+    <value>Rádia</value>
+  </data>
+  <data name="Ram" xml:space="preserve">
+    <value>RAM</value>
+  </data>
+  <data name="Recognition" xml:space="preserve">
+    <value>Rozpoznávání</value>
+  </data>
+  <data name="Recovery" xml:space="preserve">
+    <value>Obnovení</value>
+  </data>
+  <data name="RedEye" xml:space="preserve">
+    <value>Červené oči</value>
+  </data>
+  <data name="RedGreen" xml:space="preserve">
+    <value>Červená-zelená</value>
+  </data>
+  <data name="RedWeek" xml:space="preserve">
+    <value>Červený týden</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>Oblast</value>
+  </data>
+  <data name="RegionAndLanguage" xml:space="preserve">
+    <value>Oblast a jazyk</value>
+  </data>
+  <data name="RegionFormatting" xml:space="preserve">
+    <value>Formátování oblasti</value>
+  </data>
+  <data name="RegionalLanguage" xml:space="preserve">
+    <value>Regionální jazyk</value>
+  </data>
+  <data name="RegionalSettingsProperties" xml:space="preserve">
+    <value>Vlastnosti místního nastavení</value>
+  </data>
+  <data name="RemoteAppAndDesktopConnections" xml:space="preserve">
+    <value>Připojení ke vzdálené aplikaci RemoteApp a ploše</value>
+  </data>
+  <data name="RemoteDesktop" xml:space="preserve">
+    <value>Vzdálená plocha</value>
+  </data>
+  <data name="ScannersAndCameras" xml:space="preserve">
+    <value>Skenery a kamery</value>
+  </data>
+  <data name="Scheduled" xml:space="preserve">
+    <value>Plánované</value>
+  </data>
+  <data name="ScheduledTasks" xml:space="preserve">
+    <value>Plánované úlohy</value>
+  </data>
+  <data name="ScreenRotation" xml:space="preserve">
+    <value>Otočení obrazovky</value>
+  </data>
+  <data name="ScrollBars" xml:space="preserve">
+    <value>Posuvníky</value>
+  </data>
+  <data name="ScrollLock" xml:space="preserve">
+    <value>Scroll Lock</value>
+  </data>
+  <data name="Sdns" xml:space="preserve">
+    <value>SDNS</value>
+  </data>
+  <data name="SearchingWindows" xml:space="preserve">
+    <value>Vyhledávání ve Windows</value>
+  </data>
+  <data name="SecureDNS" xml:space="preserve">
+    <value>SecureDNS</value>
+  </data>
+  <data name="SecurityCenter" xml:space="preserve">
+    <value>Centrum zabezpečení</value>
+  </data>
+  <data name="SecurityProcessor" xml:space="preserve">
+    <value>Procesor zabezpečení</value>
+  </data>
+  <data name="SessionCleanup" xml:space="preserve">
+    <value>Vyčištění relace</value>
+  </data>
+  <data name="SetUpKiosk" xml:space="preserve">
+    <value>Nastavení veřejného terminálu</value>
+  </data>
+  <data name="SettingsHomePage" xml:space="preserve">
+    <value>Domovská stránka nastavení</value>
+  </data>
+  <data name="SharedExperiences" xml:space="preserve">
+    <value>Sdílená prostředí</value>
+  </data>
+  <data name="ShortNameWiFi" xml:space="preserve">
+    <value>Wi-Fi</value>
+  </data>
+  <data name="Shortcuts" xml:space="preserve">
+    <value>Klávesové zkratky</value>
+  </data>
+  <data name="SignInOptions" xml:space="preserve">
+    <value>Možnosti přihlášení</value>
+  </data>
+  <data name="SignInOptionsDynamicLock" xml:space="preserve">
+    <value>Možnosti přihlášení – dynamický zámek</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>Velikost</value>
+  </data>
+  <data name="Sound" xml:space="preserve">
+    <value>Zvuk</value>
+  </data>
+  <data name="Speech" xml:space="preserve">
+    <value>Řeč</value>
+  </data>
+  <data name="SpeechRecognition" xml:space="preserve">
+    <value>Rozpoznávání řeči</value>
+  </data>
+  <data name="SpeechTyping" xml:space="preserve">
+    <value>Psaní řeči</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="StartPlaces" xml:space="preserve">
+    <value>Počáteční místa</value>
+  </data>
+  <data name="StartupApps" xml:space="preserve">
+    <value>Aplikace při spuštění</value>
+  </data>
+  <data name="Storage" xml:space="preserve">
+    <value>Úložiště</value>
+  </data>
+  <data name="StoragePolicies" xml:space="preserve">
+    <value>Zásady úložiště</value>
+  </data>
+  <data name="StorageSense" xml:space="preserve">
+    <value>Inteligentní úložiště</value>
+  </data>
+  <data name="SyncCenter" xml:space="preserve">
+    <value>Centrum synchronizace</value>
+  </data>
+  <data name="SyncYourSettings" xml:space="preserve">
+    <value>Synchronizace nastavení</value>
+  </data>
+  <data name="System" xml:space="preserve">
+    <value>Systém</value>
+  </data>
+  <data name="SystemPropertiesAndAddNewHardwareWizard" xml:space="preserve">
+    <value>Vlastnosti systému a průvodce přidáním nového hardwaru</value>
+  </data>
+  <data name="Tab" xml:space="preserve">
+    <value>Karta</value>
+  </data>
+  <data name="TabletMode" xml:space="preserve">
+    <value>Režim tabletu</value>
+  </data>
+  <data name="TabletPcSettings" xml:space="preserve">
+    <value>Nastavení počítače Tablet PC</value>
+  </data>
+  <data name="Talk" xml:space="preserve">
+    <value>Mluvení</value>
+  </data>
+  <data name="TalkToCortana" xml:space="preserve">
+    <value>Promluvte si s Cortanou</value>
+  </data>
+  <data name="Taskbar" xml:space="preserve">
+    <value>Hlavní panel</value>
+  </data>
+  <data name="TaskbarColor" xml:space="preserve">
+    <value>Barva hlavního panelu</value>
+  </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>Úlohy</value>
+  </data>
+  <data name="TeamConferencing" xml:space="preserve">
+    <value>Týmové konference</value>
+  </data>
+  <data name="TeamDeviceManagement" xml:space="preserve">
+    <value>Správa týmových zařízení</value>
+  </data>
+  <data name="TextToSpeech" xml:space="preserve">
+    <value>Převod textu na řeč</value>
+  </data>
+  <data name="Themes" xml:space="preserve">
+    <value>Motivy</value>
+  </data>
+  <data name="Timeline" xml:space="preserve">
+    <value>Časová osa</value>
+  </data>
+  <data name="Touch" xml:space="preserve">
+    <value>Dotyk</value>
+  </data>
+  <data name="TouchFeedback" xml:space="preserve">
+    <value>Dotyková zpětná vazba</value>
+  </data>
+  <data name="Touchpad" xml:space="preserve">
+    <value>Touchpad</value>
+  </data>
+  <data name="Transparency" xml:space="preserve">
+    <value>Průhlednost</value>
+  </data>
+  <data name="Troubleshoot" xml:space="preserve">
+    <value>Odstranit potíže</value>
+  </data>
+  <data name="TruePlay" xml:space="preserve">
+    <value>TruePlay</value>
+  </data>
+  <data name="Typing" xml:space="preserve">
+    <value>Psaní</value>
+  </data>
+  <data name="Uninstall" xml:space="preserve">
+    <value>Odinstalovat</value>
+  </data>
+  <data name="Usb" xml:space="preserve">
+    <value>USB</value>
+  </data>
+  <data name="UserAccounts" xml:space="preserve">
+    <value>Uživatelské účty</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Verze</value>
+  </data>
+  <data name="VideoPlayback" xml:space="preserve">
+    <value>Přehrávání videa</value>
+  </data>
+  <data name="Videos" xml:space="preserve">
+    <value>Videa</value>
+  </data>
+  <data name="VirtualDesktops" xml:space="preserve">
+    <value>Virtuální plochy</value>
+  </data>
+  <data name="Virus" xml:space="preserve">
+    <value>Virus</value>
+  </data>
+  <data name="VoiceActivation" xml:space="preserve">
+    <value>Aktivace hlasem</value>
+  </data>
+  <data name="Volume" xml:space="preserve">
+    <value>Hlasitost</value>
+  </data>
+  <data name="Vpn" xml:space="preserve">
+    <value>VPN</value>
+  </data>
+  <data name="Wallpaper" xml:space="preserve">
+    <value>Tapeta</value>
+  </data>
+  <data name="WarmerColor" xml:space="preserve">
+    <value>Teplejší barva</value>
+  </data>
+  <data name="WelcomeCenter" xml:space="preserve">
+    <value>Uvítací centrum</value>
+  </data>
+  <data name="WelcomeScreen" xml:space="preserve">
+    <value>Úvodní obrazovka</value>
+  </data>
+  <data name="Wheel" xml:space="preserve">
+    <value>Volant</value>
+  </data>
+  <data name="WiFi" xml:space="preserve">
+    <value>Wi-Fi</value>
+  </data>
+  <data name="WiFiCalling" xml:space="preserve">
+    <value>Volání přes Wi-Fi</value>
+  </data>
+  <data name="WiFiSettings" xml:space="preserve">
+    <value>Nastavení Wi-Fi</value>
+  </data>
+  <data name="WindowBorder" xml:space="preserve">
+    <value>Ohraničení okna</value>
+  </data>
+  <data name="WindowsAnytimeUpgrade" xml:space="preserve">
+    <value>Windows Anytime Upgrade</value>
+  </data>
+  <data name="WindowsAnywhere" xml:space="preserve">
+    <value>Windows Anywhere</value>
+  </data>
+  <data name="WindowsCardSpace" xml:space="preserve">
+    <value>Služba Windows CardSpace</value>
+  </data>
+  <data name="WindowsDefender" xml:space="preserve">
+    <value>Windows Defender</value>
+  </data>
+  <data name="WindowsFirewall" xml:space="preserve">
+    <value>Windows Firewall</value>
+  </data>
+  <data name="WindowsHelloSetupFace" xml:space="preserve">
+    <value>Nastavení Windows Hello – obličej</value>
+  </data>
+  <data name="WindowsHelloSetupFingerprint" xml:space="preserve">
+    <value>Nastavení Windows Hello – otisk prstu</value>
+  </data>
+  <data name="WindowsInsiderProgram" xml:space="preserve">
+    <value>Program Windows Insider</value>
+  </data>
+  <data name="WindowsMobilityCenter" xml:space="preserve">
+    <value>Centrum nastavení mobilních zařízení Windows</value>
+  </data>
+  <data name="WindowsSearch" xml:space="preserve">
+    <value>Windows Search</value>
+  </data>
+  <data name="WindowsSecurity" xml:space="preserve">
+    <value>Zabezpečení Windows</value>
+  </data>
+  <data name="WindowsUpdate" xml:space="preserve">
+    <value>Služba Windows Update</value>
+  </data>
+  <data name="WindowsUpdateAdvancedOptions" xml:space="preserve">
+    <value>Služba Windows Update – upřesnit možnosti</value>
+  </data>
+  <data name="WindowsUpdateCheckForUpdates" xml:space="preserve">
+    <value>Služba Windows Update – zkontrolovat aktualizace</value>
+  </data>
+  <data name="WindowsUpdateRestartOptions" xml:space="preserve">
+    <value>Služba Windows Update – možnosti restartování</value>
+  </data>
+  <data name="WindowsUpdateViewOptionalUpdates" xml:space="preserve">
+    <value>Služba Windows Update – zobrazit volitelné aktualizace</value>
+  </data>
+  <data name="WindowsUpdateViewUpdateHistory" xml:space="preserve">
+    <value>Služba Windows Update – zobrazit historii aktualizací</value>
+  </data>
+  <data name="Wireless" xml:space="preserve">
+    <value>Bezdrátové připojení</value>
+  </data>
+  <data name="Workplace" xml:space="preserve">
+    <value>Pracoviště</value>
+  </data>
+  <data name="WorkplaceProvisioning" xml:space="preserve">
+    <value>Zřizování na pracovišti</value>
+  </data>
+  <data name="WubiImeSettings" xml:space="preserve">
+    <value>Nastavení editoru Wubi IME</value>
+  </data>
+  <data name="WubiImeSettingsUdp" xml:space="preserve">
+    <value>Nastavení editoru Wubi IME – UDP</value>
+  </data>
+  <data name="XboxNetworking" xml:space="preserve">
+    <value>Síťové nastavení pro Xbox</value>
+  </data>
+  <data name="YourInfo" xml:space="preserve">
+    <value>Vaše údaje</value>
+  </data>
+  <data name="Zoom" xml:space="preserve">
+    <value>Změna velikosti</value>
+  </data>
+  <data name="access.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="appwiz.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="bpmf" xml:space="preserve">
+    <value>bpmf</value>
+  </data>
+  <data name="calling" xml:space="preserve">
+    <value>volání</value>
+  </data>
+  <data name="desk.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="deuteranopia" xml:space="preserve">
+    <value>deuteranopie</value>
+  </data>
+  <data name="findfast.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="inetcpl.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="intl.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="joy.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="jpnime" xml:space="preserve">
+    <value>jpnime</value>
+  </data>
+  <data name="main.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="mlcfg32.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="mmsys.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="modem.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="netcpl.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="netsetup.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="nwc.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="odbccp32.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="password.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="powercfg.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="protanopia" xml:space="preserve">
+    <value>protanopie</value>
+  </data>
+  <data name="schedtasks" xml:space="preserve">
+    <value>schedtasks</value>
+  </data>
+  <data name="sticpl.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="sysdm.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="themes.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="timedate.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tritanopia" xml:space="preserve">
+    <value>tritanopie</value>
+  </data>
+  <data name="wgpocpl.cpl" xml:space="preserve">
+    <value />
+  </data>
+</root>

@@ -1,16 +1,14 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core.Plugin
 {
     internal class ExecutablePlugin : JsonRPCPlugin
     {
         private readonly ProcessStartInfo _startInfo;
-        public override string SupportedLanguage { get; set; } = AllowedLanguage.Executable;
 
         public ExecutablePlugin(string filename)
         {
@@ -22,37 +20,22 @@ namespace Flow.Launcher.Core.Plugin
                 RedirectStandardOutput = true,
                 RedirectStandardError = true
             };
+            
+            // required initialisation for below request calls 
+            _startInfo.ArgumentList.Add(string.Empty);
         }
 
-        protected override Task<Stream> ExecuteQueryAsync(Query query, CancellationToken token)
+        protected override Task<Stream> RequestAsync(JsonRPCRequestModel request, CancellationToken token = default)
         {
-            JsonRPCServerRequestModel request = new JsonRPCServerRequestModel
-            {
-                Method = "query",
-                Parameters = new object[] {query.Search},
-            };
-
-            _startInfo.Arguments = $"\"{request}\"";
-
+            // since this is not static, request strings will build up in ArgumentList if index is not specified
+            _startInfo.ArgumentList[0] = JsonSerializer.Serialize(request, RequestSerializeOption);
             return ExecuteAsync(_startInfo, token);
         }
 
-        protected override string ExecuteCallback(JsonRPCRequestModel rpcRequest)
+        protected override string Request(JsonRPCRequestModel rpcRequest, CancellationToken token = default)
         {
-            _startInfo.Arguments = $"\"{rpcRequest}\"";
-            return Execute(_startInfo);
-        }
-
-        protected override string ExecuteContextMenu(Result selectedResult)
-        {
-            JsonRPCServerRequestModel request = new JsonRPCServerRequestModel
-            {
-                Method = "contextmenu",
-                Parameters = new object[] {selectedResult.ContextData},
-            };
-
-            _startInfo.Arguments = $"\"{request}\"";
-
+            // since this is not static, request strings will build up in ArgumentList if index is not specified
+            _startInfo.ArgumentList[0] = JsonSerializer.Serialize(rpcRequest, RequestSerializeOption);
             return Execute(_startInfo);
         }
     }

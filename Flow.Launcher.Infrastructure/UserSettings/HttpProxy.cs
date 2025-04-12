@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace Flow.Launcher.Infrastructure.UserSettings
+﻿namespace Flow.Launcher.Infrastructure.UserSettings
 {
     public enum ProxyProperty
     {

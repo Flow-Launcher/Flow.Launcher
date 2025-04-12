@@ -1,0 +1,2514 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>關於</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="access.cpl" xml:space="preserve">
+    <value>access.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="AccessibilityOptions" xml:space="preserve">
+    <value>協助工具選項</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="AccessoryApps" xml:space="preserve">
+    <value>配件專屬 App</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="AccessWorkOrSchool" xml:space="preserve">
+    <value>存取公司或學校</value>
+    <comment>Area UserAccounts</comment>
+  </data>
+  <data name="AccountInfo" xml:space="preserve">
+    <value>帳戶資訊</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="Accounts" xml:space="preserve">
+    <value>帳戶</value>
+    <comment>Area SurfaceHub</comment>
+  </data>
+  <data name="ActionCenter" xml:space="preserve">
+    <value>重要訊息中心</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Activation" xml:space="preserve">
+    <value>啟用</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="ActivityHistory" xml:space="preserve">
+    <value>活動歷程記錄</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="AddHardware" xml:space="preserve">
+    <value>新增硬體</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="AddRemovePrograms" xml:space="preserve">
+    <value>新增/移除程式</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="AddYourPhone" xml:space="preserve">
+    <value>新增您的電話</value>
+    <comment>Area Phone</comment>
+  </data>
+  <data name="AdministrativeTools" xml:space="preserve">
+    <value>系統管理工具</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="AdvancedDisplaySettings" xml:space="preserve">
+    <value>進階顯示設定</value>
+    <comment>Area System, only available on devices that support advanced display options</comment>
+  </data>
+  <data name="AdvancedGraphics" xml:space="preserve">
+    <value>進階圖形</value>
+  </data>
+  <data name="AdvertisingId" xml:space="preserve">
+    <value>廣告識別碼</value>
+    <comment>Area Privacy, Deprecated in Windows 10, version 1809 and later</comment>
+  </data>
+  <data name="AirplaneMode" xml:space="preserve">
+    <value>飛航模式</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
+  <data name="AltAndTab" xml:space="preserve">
+    <value>Alt+Tab</value>
+    <comment>Means the key  combination "Tabulator+Alt" on the keyboard</comment>
+  </data>
+  <data name="AlternativeName" xml:space="preserve">
+    <value>替代名稱</value>
+  </data>
+  <data name="Animations" xml:space="preserve">
+    <value>動畫</value>
+  </data>
+  <data name="AppColor" xml:space="preserve">
+    <value>應用程式色彩</value>
+  </data>
+  <data name="AppDiagnostics" xml:space="preserve">
+    <value>應用程式診斷</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="AppFeatures" xml:space="preserve">
+    <value>應用程式功能</value>
+    <comment>Area Apps</comment>
+  </data>
+  <data name="Application" xml:space="preserve">
+    <value>應用程式</value>
+    <comment>Short/modern name for application</comment>
+  </data>
+  <data name="AppsAndFeatures" xml:space="preserve">
+    <value>應用程式與功能</value>
+    <comment>Area Apps</comment>
+  </data>
+  <data name="AppSettingsApp" xml:space="preserve">
+    <value>系統設定</value>
+    <comment>Type of the setting is a "Modern Windows settings". We use the same term as used in start menu search at the moment. </comment>
+  </data>
+  <data name="AppsForWebsites" xml:space="preserve">
+    <value>適用於網站的 App</value>
+    <comment>Area Apps</comment>
+  </data>
+  <data name="AppVolumeAndDevicePreferences" xml:space="preserve">
+    <value>應用程式磁碟區與裝置喜好設定</value>
+    <comment>Area System, Added in Windows 10, version 1903</comment>
+  </data>
+  <data name="appwiz.cpl" xml:space="preserve">
+    <value>appwiz.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>區域</value>
+    <comment>Mean the settings area or settings category</comment>
+  </data>
+  <data name="AreaAccounts" xml:space="preserve">
+    <value>帳戶</value>
+  </data>
+  <data name="AreaAdministrativeTools" xml:space="preserve">
+    <value>系統管理工具</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="AreaAppearanceAndPersonalization" xml:space="preserve">
+    <value>外觀及個人化</value>
+  </data>
+  <data name="AreaApps" xml:space="preserve">
+    <value>應用程式</value>
+  </data>
+  <data name="AreaClockAndRegion" xml:space="preserve">
+    <value>時鐘與地區</value>
+  </data>
+  <data name="AreaControlPanel" xml:space="preserve">
+    <value>控制台</value>
+  </data>
+  <data name="AreaCortana" xml:space="preserve">
+    <value>Cortana</value>
+  </data>
+  <data name="AreaDevices" xml:space="preserve">
+    <value>裝置</value>
+  </data>
+  <data name="AreaEaseOfAccess" xml:space="preserve">
+    <value>輕鬆存取</value>
+  </data>
+  <data name="AreaExtras" xml:space="preserve">
+    <value>額外項目</value>
+  </data>
+  <data name="AreaGaming" xml:space="preserve">
+    <value>遊戲</value>
+  </data>
+  <data name="AreaHardwareAndSound" xml:space="preserve">
+    <value>硬體和音效</value>
+  </data>
+  <data name="AreaHomePage" xml:space="preserve">
+    <value>首頁</value>
+  </data>
+  <data name="AreaMixedReality" xml:space="preserve">
+    <value>混合實境</value>
+  </data>
+  <data name="AreaNetworkAndInternet" xml:space="preserve">
+    <value>網路和網際網路</value>
+  </data>
+  <data name="AreaPersonalization" xml:space="preserve">
+    <value>個人化</value>
+  </data>
+  <data name="AreaPhone" xml:space="preserve">
+    <value>電話</value>
+  </data>
+  <data name="AreaPrivacy" xml:space="preserve">
+    <value>隱私權</value>
+  </data>
+  <data name="AreaPrograms" xml:space="preserve">
+    <value>程式</value>
+  </data>
+  <data name="AreaSurfaceHub" xml:space="preserve">
+    <value>SurfaceHub</value>
+  </data>
+  <data name="AreaSystem" xml:space="preserve">
+    <value>系統</value>
+  </data>
+  <data name="AreaSystemAndSecurity" xml:space="preserve">
+    <value>系統及安全性</value>
+  </data>
+  <data name="AreaTimeAndLanguage" xml:space="preserve">
+    <value>時間與語言</value>
+  </data>
+  <data name="AreaUpdateAndSecurity" xml:space="preserve">
+    <value>更新與安全性</value>
+  </data>
+  <data name="AreaUserAccounts" xml:space="preserve">
+    <value>使用者帳戶</value>
+  </data>
+  <data name="AssignedAccess" xml:space="preserve">
+    <value>受指派的存取權</value>
+  </data>
+  <data name="Audio" xml:space="preserve">
+    <value>音訊</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="AudioAlerts" xml:space="preserve">
+    <value>音訊警示</value>
+  </data>
+  <data name="AudioAndSpeech" xml:space="preserve">
+    <value>音訊與語音</value>
+    <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
+  </data>
+  <data name="AutomaticFileDownloads" xml:space="preserve">
+    <value>自動下載檔案</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="AutoPlay" xml:space="preserve">
+    <value>自動播放</value>
+    <comment>Area Device</comment>
+  </data>
+  <data name="Background" xml:space="preserve">
+    <value>背景</value>
+    <comment>Area Personalization</comment>
+  </data>
+  <data name="BackgroundApps" xml:space="preserve">
+    <value>背景應用程式</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="Backup" xml:space="preserve">
+    <value>備份</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="BackupAndRestore" xml:space="preserve">
+    <value>備份與還原</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="BatterySaver" xml:space="preserve">
+    <value>省電模式</value>
+    <comment>Area System, only available on devices that have a battery, such as a tablet</comment>
+  </data>
+  <data name="BatterySaverSettings" xml:space="preserve">
+    <value>省電模式設定</value>
+    <comment>Area System, only available on devices that have a battery, such as a tablet</comment>
+  </data>
+  <data name="BatterySaverUsageDetails" xml:space="preserve">
+    <value>省電模式使用情況詳細資料</value>
+  </data>
+  <data name="BatteryUse" xml:space="preserve">
+    <value>電池使用</value>
+    <comment>Area System, only available on devices that have a battery, such as a tablet</comment>
+  </data>
+  <data name="BiometricDevices" xml:space="preserve">
+    <value>生物特徵辨識裝置</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="BitLockerDriveEncryption" xml:space="preserve">
+    <value>BitLocker 磁碟機加密</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="BlueLight" xml:space="preserve">
+    <value>藍色光</value>
+  </data>
+  <data name="Bluetooth" xml:space="preserve">
+    <value>藍牙</value>
+    <comment>Area Device</comment>
+  </data>
+  <data name="BluetoothDevices" xml:space="preserve">
+    <value>藍牙裝置</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="BlueYellow" xml:space="preserve">
+    <value>黃藍色</value>
+  </data>
+  <data name="BopomofoIme" xml:space="preserve">
+    <value>注音輸入法</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
+  <data name="bpmf" xml:space="preserve">
+    <value>注音符號</value>
+    <comment>Should not translated</comment>
+  </data>
+  <data name="Broadcasting" xml:space="preserve">
+    <value>廣播</value>
+    <comment>Area Gaming</comment>
+  </data>
+  <data name="Calendar" xml:space="preserve">
+    <value>行事曆</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="CallHistory" xml:space="preserve">
+    <value>通話記錄</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="calling" xml:space="preserve">
+    <value>通話</value>
+  </data>
+  <data name="Camera" xml:space="preserve">
+    <value>相機</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="CangjieIme" xml:space="preserve">
+    <value>倉頡輸入法</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
+  <data name="CapsLock" xml:space="preserve">
+    <value>大寫鎖定</value>
+    <comment>Mean the "Caps Lock" key</comment>
+  </data>
+  <data name="CellularAndSim" xml:space="preserve">
+    <value>行動數據與 SIM</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
+  <data name="ChooseWhichFoldersAppearOnStart" xml:space="preserve">
+    <value>選擇要顯示在 [開始]5D; 上的資料夾</value>
+    <comment>Area Personalization</comment>
+  </data>
+  <data name="ClientServiceForNetWare" xml:space="preserve">
+    <value>NetWare 的用戶端服務</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Clipboard" xml:space="preserve">
+    <value>剪貼簿</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="ClosedCaptions" xml:space="preserve">
+    <value>隱藏式輔助字幕</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="ColorFilters" xml:space="preserve">
+    <value>色彩篩選</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="ColorManagement" xml:space="preserve">
+    <value>色彩管理</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Colors" xml:space="preserve">
+    <value>色彩</value>
+    <comment>Area Personalization</comment>
+  </data>
+  <data name="Command" xml:space="preserve">
+    <value>命令</value>
+    <comment>The command to direct start a setting</comment>
+  </data>
+  <data name="ConnectedDevices" xml:space="preserve">
+    <value>已連線的裝置</value>
+    <comment>Area Device</comment>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>連絡人</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="ControlPanel" xml:space="preserve">
+    <value>控制台</value>
+    <comment>Type of the setting is a "(legacy) Control Panel setting"</comment>
+  </data>
+  <data name="CopyCommand" xml:space="preserve">
+    <value>複製命令</value>
+  </data>
+  <data name="CoreIsolation" xml:space="preserve">
+    <value>核心隔離</value>
+    <comment>Means the protection of the system core</comment>
+  </data>
+  <data name="Cortana" xml:space="preserve">
+    <value>Cortana</value>
+    <comment>Area Cortana</comment>
+  </data>
+  <data name="CortanaAcrossMyDevices" xml:space="preserve">
+    <value>跨裝置使用 Cortana</value>
+    <comment>Area Cortana</comment>
+  </data>
+  <data name="CortanaLanguage" xml:space="preserve">
+    <value>Cortana - 語言</value>
+    <comment>Area Cortana</comment>
+  </data>
+  <data name="CredentialManager" xml:space="preserve">
+    <value>認證管理員</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Crossdevice" xml:space="preserve">
+    <value>跨裝置</value>
+  </data>
+  <data name="CustomDevices" xml:space="preserve">
+    <value>自訂裝置</value>
+  </data>
+  <data name="DarkColor" xml:space="preserve">
+    <value>深色</value>
+  </data>
+  <data name="DarkMode" xml:space="preserve">
+    <value>深色模式</value>
+  </data>
+  <data name="DataUsage" xml:space="preserve">
+    <value>資料使用量</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
+  <data name="DateAndTime" xml:space="preserve">
+    <value>日期和時間</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
+  <data name="DefaultApps" xml:space="preserve">
+    <value>預設應用程式</value>
+    <comment>Area Apps</comment>
+  </data>
+  <data name="DefaultCamera" xml:space="preserve">
+    <value>預設攝影機</value>
+    <comment>Area Device</comment>
+  </data>
+  <data name="DefaultLocation" xml:space="preserve">
+    <value>預設位置</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="DefaultPrograms" xml:space="preserve">
+    <value>預設程式</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="DefaultSaveLocations" xml:space="preserve">
+    <value>預設儲存位置</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="DeliveryOptimization" xml:space="preserve">
+    <value>傳遞最佳化</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="desk.cpl" xml:space="preserve">
+    <value>desk.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="DesktopThemes" xml:space="preserve">
+    <value>桌面主題</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="deuteranopia" xml:space="preserve">
+    <value>綠色盲</value>
+    <comment>Medical: Mean you don't can see red colors</comment>
+  </data>
+  <data name="DeviceManager" xml:space="preserve">
+    <value>裝置管理員</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="DevicesAndPrinters" xml:space="preserve">
+    <value>裝置與印表機</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Dhcp" xml:space="preserve">
+    <value>DHCP</value>
+    <comment>Should not translated</comment>
+  </data>
+  <data name="DialUp" xml:space="preserve">
+    <value>撥號</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
+  <data name="DirectAccess" xml:space="preserve">
+    <value>直接存取</value>
+    <comment>Area NetworkAndInternet, only available if DirectAccess is enabled</comment>
+  </data>
+  <data name="DirectOpenYourPhone" xml:space="preserve">
+    <value>直接開啟您的手機</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="Display" xml:space="preserve">
+    <value>顯示</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="DisplayProperties" xml:space="preserve">
+    <value>顯示屬性</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="DNS" xml:space="preserve">
+    <value>DNS</value>
+    <comment>Should not translated</comment>
+  </data>
+  <data name="Documents" xml:space="preserve">
+    <value>文件</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="DuplicatingMyDisplay" xml:space="preserve">
+    <value>正在複製我的顯示器</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="DuringTheseHours" xml:space="preserve">
+    <value>在這段時間內</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="EaseOfAccessCenter" xml:space="preserve">
+    <value>輕鬆存取中心</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Edition" xml:space="preserve">
+    <value>版本</value>
+    <comment>Means the "Windows Edition"</comment>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>電子郵件</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="EmailAndAppAccounts" xml:space="preserve">
+    <value>電子郵件和應用程式帳戶</value>
+    <comment>Area UserAccounts</comment>
+  </data>
+  <data name="Encryption" xml:space="preserve">
+    <value>加密</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="Environment" xml:space="preserve">
+    <value>環境</value>
+    <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
+  </data>
+  <data name="Ethernet" xml:space="preserve">
+    <value>乙太網路</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
+  <data name="ExploitProtection" xml:space="preserve">
+    <value>惡意探索保護</value>
+  </data>
+  <data name="Extras" xml:space="preserve">
+    <value>額外項目</value>
+    <comment>Area Extra, , only used for setting of 3rd-Party tools</comment>
+  </data>
+  <data name="EyeControl" xml:space="preserve">
+    <value>眼球控制</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="EyeTracker" xml:space="preserve">
+    <value>眼動追蹤儀</value>
+    <comment>Area Privacy, requires eyetracker hardware</comment>
+  </data>
+  <data name="FamilyAndOtherPeople" xml:space="preserve">
+    <value>家庭與其他人員</value>
+    <comment>Area UserAccounts</comment>
+  </data>
+  <data name="FeedbackAndDiagnostics" xml:space="preserve">
+    <value>意見反應與診斷</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="FileSystem" xml:space="preserve">
+    <value>檔案系統</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="FindFast" xml:space="preserve">
+    <value>快速搜尋</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="findfast.cpl" xml:space="preserve">
+    <value>findfast.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="FindMyDevice" xml:space="preserve">
+    <value>尋找我的裝置</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="Firewall" xml:space="preserve">
+    <value>防火牆</value>
+  </data>
+  <data name="FocusAssistQuietHours" xml:space="preserve">
+    <value>專注輔助 - 勿打擾時間</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="FocusAssistQuietMoments" xml:space="preserve">
+    <value>專注輔助 - 安靜時刻</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="FolderOptions" xml:space="preserve">
+    <value>資料夾選項</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Fonts" xml:space="preserve">
+    <value>字型</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="ForDevelopers" xml:space="preserve">
+    <value>適用於開發人員</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="GameBar" xml:space="preserve">
+    <value>遊戲列</value>
+    <comment>Area Gaming</comment>
+  </data>
+  <data name="GameControllers" xml:space="preserve">
+    <value>遊戲遙控器</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="GameDvr" xml:space="preserve">
+    <value>遊戲 DVR</value>
+    <comment>Area Gaming</comment>
+  </data>
+  <data name="GameMode" xml:space="preserve">
+    <value>遊戲模式</value>
+    <comment>Area Gaming</comment>
+  </data>
+  <data name="Gateway" xml:space="preserve">
+    <value>閘道</value>
+    <comment>Should not translated</comment>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>一般</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="GetPrograms" xml:space="preserve">
+    <value>取得程式</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="GettingStarted" xml:space="preserve">
+    <value>開始使用</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Glance" xml:space="preserve">
+    <value>概覽</value>
+    <comment>Area Personalization, Deprecated in Windows 10, version 1809 and later</comment>
+  </data>
+  <data name="GraphicsSettings" xml:space="preserve">
+    <value>圖形設定</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="Grayscale" xml:space="preserve">
+    <value>灰階</value>
+  </data>
+  <data name="GreenWeek" xml:space="preserve">
+    <value>綠色弱視</value>
+    <comment>Mean you don't can see green colors</comment>
+  </data>
+  <data name="HeadsetDisplay" xml:space="preserve">
+    <value>頭戴式裝置顯示器</value>
+    <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
+  </data>
+  <data name="HighContrast" xml:space="preserve">
+    <value>高對比</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="HolographicAudio" xml:space="preserve">
+    <value>全像攝影音訊</value>
+  </data>
+  <data name="HolographicEnvironment" xml:space="preserve">
+    <value>全像攝影環境</value>
+  </data>
+  <data name="HolographicHeadset" xml:space="preserve">
+    <value>全像攝影頭戴式裝置</value>
+  </data>
+  <data name="HolographicManagement" xml:space="preserve">
+    <value>全像攝影管理</value>
+  </data>
+  <data name="HomeGroup" xml:space="preserve">
+    <value>常用群組</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>識別碼</value>
+    <comment>MEans The "Windows Identifier"</comment>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>影像</value>
+  </data>
+  <data name="IndexingOptions" xml:space="preserve">
+    <value>索引選項</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="inetcpl.cpl" xml:space="preserve">
+    <value>inetcpl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="Infrared" xml:space="preserve">
+    <value>紅外線</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="InkingAndTyping" xml:space="preserve">
+    <value>筆跡及輸入</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="InternetOptions" xml:space="preserve">
+    <value>網際網路選項</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="intl.cpl" xml:space="preserve">
+    <value>intl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="InvertedColors" xml:space="preserve">
+    <value>反相色彩</value>
+  </data>
+  <data name="Ip" xml:space="preserve">
+    <value>IP</value>
+    <comment>Should not translated</comment>
+  </data>
+  <data name="IsolatedBrowsing" xml:space="preserve">
+    <value>隔離瀏覽</value>
+  </data>
+  <data name="JapanImeSettings" xml:space="preserve">
+    <value>日本輸入法設定</value>
+    <comment>Area TimeAndLanguage, available if the Microsoft Japan input method editor is installed</comment>
+  </data>
+  <data name="joy.cpl" xml:space="preserve">
+    <value>joy.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="JoystickProperties" xml:space="preserve">
+    <value>搖桿屬性</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="jpnime" xml:space="preserve">
+    <value>jpnime</value>
+    <comment>Should not translated</comment>
+  </data>
+  <data name="Keyboard" xml:space="preserve">
+    <value>鍵盤</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="Keypad" xml:space="preserve">
+    <value>鍵盤</value>
+  </data>
+  <data name="Keys" xml:space="preserve">
+    <value>金鑰</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>語</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
+  <data name="LightColor" xml:space="preserve">
+    <value>淺色</value>
+  </data>
+  <data name="LightMode" xml:space="preserve">
+    <value>淺色模式</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>路徑</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="LockScreen" xml:space="preserve">
+    <value>鎖定螢幕</value>
+    <comment>Area Personalization</comment>
+  </data>
+  <data name="Magnifier" xml:space="preserve">
+    <value>放大鏡</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="MailMicrosoftExchangeOrWindowsMessaging" xml:space="preserve">
+    <value>郵件 - Microsoft Exchange 或 Windows 訊息中心</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="main.cpl" xml:space="preserve">
+    <value>main.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="ManageKnownNetworks" xml:space="preserve">
+    <value>管理已知的網路</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
+  <data name="ManageOptionalFeatures" xml:space="preserve">
+    <value>管理選用功能</value>
+    <comment>Area Apps</comment>
+  </data>
+  <data name="Messaging" xml:space="preserve">
+    <value>訊息中心</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="MeteredConnection" xml:space="preserve">
+    <value>計量付費連線</value>
+  </data>
+  <data name="Microphone" xml:space="preserve">
+    <value>麥克風</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="MicrosoftMailPostOffice" xml:space="preserve">
+    <value>Microsoft Mail Post Office</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="mlcfg32.cpl" xml:space="preserve">
+    <value>mlcfg32.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="mmsys.cpl" xml:space="preserve">
+    <value>mmsys.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="MobileDevices" xml:space="preserve">
+    <value>行動裝置</value>
+  </data>
+  <data name="MobileHotspot" xml:space="preserve">
+    <value>行動熱點</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
+  <data name="modem.cpl" xml:space="preserve">
+    <value>modem.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="Mono" xml:space="preserve">
+    <value>單聲道</value>
+  </data>
+  <data name="MoreDetails" xml:space="preserve">
+    <value>詳細資料</value>
+    <comment>Area Cortana</comment>
+  </data>
+  <data name="Motion" xml:space="preserve">
+    <value>動作</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="Mouse" xml:space="preserve">
+    <value>滑鼠</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="MouseAndTouchpad" xml:space="preserve">
+    <value>滑鼠和觸控板</value>
+    <comment>Area Device</comment>
+  </data>
+  <data name="MouseFontsKeyboardAndPrintersProperties" xml:space="preserve">
+    <value>滑鼠、字型、鍵盤和印表機屬性</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="MousePointer" xml:space="preserve">
+    <value>滑鼠指標</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="MultimediaProperties" xml:space="preserve">
+    <value>多媒體屬性</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Multitasking" xml:space="preserve">
+    <value>多工</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="Narrator" xml:space="preserve">
+    <value>朗讀程式</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="NavigationBar" xml:space="preserve">
+    <value>瀏覽列</value>
+    <comment>Area Personalization</comment>
+  </data>
+  <data name="netcpl.cpl" xml:space="preserve">
+    <value>netcpl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="netsetup.cpl" xml:space="preserve">
+    <value>netsetup.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="Network" xml:space="preserve">
+    <value>網路</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
+  <data name="NetworkAndSharingCenter" xml:space="preserve">
+    <value>網路與共享中心</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="NetworkConnection" xml:space="preserve">
+    <value>網路連線</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="NetworkProperties" xml:space="preserve">
+    <value>網路屬性</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="NetworkSetupWizard" xml:space="preserve">
+    <value>網路設定精靈</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="NetworkStatus" xml:space="preserve">
+    <value>網路狀態</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
+  <data name="NFC" xml:space="preserve">
+    <value>NFC</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
+  <data name="NFCTransactions" xml:space="preserve">
+    <value>NFC 交易</value>
+    <comment>"NFC should not translated"</comment>
+  </data>
+  <data name="NightLight" xml:space="preserve">
+    <value>夜間光線</value>
+  </data>
+  <data name="NightLightSettings" xml:space="preserve">
+    <value>夜間光線設定</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>注意</value>
+  </data>
+  <data name="NoteAddYourPhone" xml:space="preserve">
+    <value>只有在您將行動裝置連線至裝置時才可使用。</value>
+  </data>
+  <data name="NoteAdvancedGraphics" xml:space="preserve">
+    <value>僅適用於支援進階圖形選項的裝置。</value>
+  </data>
+  <data name="NoteBattery" xml:space="preserve">
+    <value>只在有電池的裝置上使用，例如平板電腦。</value>
+  </data>
+  <data name="NoteDeprecated17763" xml:space="preserve">
+    <value>在 Windows 10 版本 1809 及更新版本中已被取代 (組建 17763)。</value>
+  </data>
+  <data name="NoteDialPaired" xml:space="preserve">
+    <value>僅當撥號已經配對時才可用。</value>
+  </data>
+  <data name="NoteDirectAccess" xml:space="preserve">
+    <value>只有在啟用 DirectAccess 時才可用。</value>
+  </data>
+  <data name="NoteDisplayGraphics" xml:space="preserve">
+    <value>僅適用於支援進階顯示選項的裝置。</value>
+  </data>
+  <data name="NoteEnrolledWIP" xml:space="preserve">
+    <value>僅當使用者在 WIP 中註冊時才出現。</value>
+  </data>
+  <data name="NoteEyetrackerHardware" xml:space="preserve">
+    <value>需要眼球追蹤器硬體。</value>
+  </data>
+  <data name="NoteImeJapan" xml:space="preserve">
+    <value>若已安裝 Microsoft 日本輸入法編輯器，即可使用。</value>
+  </data>
+  <data name="NoteImePinyin" xml:space="preserve">
+    <value>若已安裝 Microsoft 拼音輸入法編輯器，即可使用。</value>
+  </data>
+  <data name="NoteImeWubi" xml:space="preserve">
+    <value>若已安裝 Microsoft 五筆輸入法編輯器，即可使用。</value>
+  </data>
+  <data name="NoteMixedReality" xml:space="preserve">
+    <value>只有在安裝混合式現實入口網站應用程式時才可使用。</value>
+  </data>
+  <data name="NoteMobileProvisioning" xml:space="preserve">
+    <value>僅可在行動及有部署佈建中套件的企業中使用。</value>
+  </data>
+  <data name="NoteSince18362" xml:space="preserve">
+    <value>已新增至 Windows 10 版本 1903 (版本 18362)。</value>
+  </data>
+  <data name="NoteSince19041" xml:space="preserve">
+    <value>已新增至 Windows 10 版本 2004 (組建 19041)。</value>
+  </data>
+  <data name="NoteThirdParty" xml:space="preserve">
+    <value>只有在安裝了 [設定應用程式]5D; 時才可使用，例如由協力廠商提供。</value>
+  </data>
+  <data name="NoteTouchpad" xml:space="preserve">
+    <value>只有在有觸控板硬體時才可使用。</value>
+  </data>
+  <data name="NoteWiFiAdapter" xml:space="preserve">
+    <value>僅當裝置具有 Wi-Fi 介面卡時才可用。</value>
+  </data>
+  <data name="NoteWindowsAnywhere" xml:space="preserve">
+    <value>裝置必須支援 Windows Anywhere。</value>
+  </data>
+  <data name="NoteWorkplaceProvisioning" xml:space="preserve">
+    <value>僅當企業已部署佈建套件時才可用。</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>通知</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="NotificationsAndActions" xml:space="preserve">
+    <value>通知和動作</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="NumLock" xml:space="preserve">
+    <value>數字鎖定</value>
+    <comment>Mean the "Num Lock" key</comment>
+  </data>
+  <data name="nwc.cpl" xml:space="preserve">
+    <value>nwc.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="odbccp32.cpl" xml:space="preserve">
+    <value>odbccp32.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="OdbcDataSourceAdministrator32Bit" xml:space="preserve">
+    <value>ODBC 資料來源系統管理員 (32 位元)</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="OdbcDataSourceAdministrator64Bit" xml:space="preserve">
+    <value>ODBC 資料來源系統管理員 (64 位元)</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="OfflineFiles" xml:space="preserve">
+    <value>離線檔案</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="OfflineMaps" xml:space="preserve">
+    <value>離線地圖</value>
+    <comment>Area Apps</comment>
+  </data>
+  <data name="OfflineMapsDownloadMaps" xml:space="preserve">
+    <value>離線地圖 - 下載地圖</value>
+    <comment>Area Apps</comment>
+  </data>
+  <data name="OnScreen" xml:space="preserve">
+    <value>螢幕上</value>
+  </data>
+  <data name="Os" xml:space="preserve">
+    <value>作業系統</value>
+    <comment>Means the "Operating System"</comment>
+  </data>
+  <data name="OtherDevices" xml:space="preserve">
+    <value>其他裝置</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="OtherOptions" xml:space="preserve">
+    <value>其他選項</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="OtherUsers" xml:space="preserve">
+    <value>其他使用者</value>
+  </data>
+  <data name="ParentalControls" xml:space="preserve">
+    <value>家長監護</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>密碼</value>
+  </data>
+  <data name="password.cpl" xml:space="preserve">
+    <value>password.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="PasswordProperties" xml:space="preserve">
+    <value>密碼屬性</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="PenAndInputDevices" xml:space="preserve">
+    <value>筆與輸入裝置</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="PenAndTouch" xml:space="preserve">
+    <value>筆和觸控</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="PenAndWindowsInk" xml:space="preserve">
+    <value>筆和 Windows Ink</value>
+    <comment>Area Device</comment>
+  </data>
+  <data name="PeopleNearMe" xml:space="preserve">
+    <value>我附近的人員</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="PerformanceInformationAndTools" xml:space="preserve">
+    <value>效能資訊和工具</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="PermissionsAndHistory" xml:space="preserve">
+    <value>權限與歷程記錄</value>
+    <comment>Area Cortana</comment>
+  </data>
+  <data name="PersonalizationCategory" xml:space="preserve">
+    <value>個人化 (類別)</value>
+    <comment>Area Personalization</comment>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>電話</value>
+    <comment>Area Phone</comment>
+  </data>
+  <data name="PhoneAndModem" xml:space="preserve">
+    <value>電話與數據機</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="PhoneAndModemOptions" xml:space="preserve">
+    <value>電話與數據機 - 選項</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="PhoneCalls" xml:space="preserve">
+    <value>手機通話</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="PhoneDefaultApps" xml:space="preserve">
+    <value>手機 - 預設應用程式</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="Picture" xml:space="preserve">
+    <value>圖片</value>
+  </data>
+  <data name="Pictures" xml:space="preserve">
+    <value>圖片</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="PinyinImeSettings" xml:space="preserve">
+    <value>拼音 IME 設定</value>
+    <comment>Area TimeAndLanguage, available if the Microsoft Pinyin input method editor is installed</comment>
+  </data>
+  <data name="PinyinImeSettingsDomainLexicon" xml:space="preserve">
+    <value>拼音輸入法設定 - 網域辭典</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
+  <data name="PinyinImeSettingsKeyConfiguration" xml:space="preserve">
+    <value>拼音輸入法設定 - 金鑰設定</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
+  <data name="PinyinImeSettingsUdp" xml:space="preserve">
+    <value>拼音 IME 設定 - UDP</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
+  <data name="PlayingGameFullScreen" xml:space="preserve">
+    <value>全螢幕玩遊戲</value>
+    <comment>Area Gaming</comment>
+  </data>
+  <data name="PluginDescription" xml:space="preserve">
+    <value>搜尋 Windows 設定外掛程式</value>
+  </data>
+  <data name="PluginTitle" xml:space="preserve">
+    <value>Windows Settings</value>
+  </data>
+  <data name="PowerAndSleep" xml:space="preserve">
+    <value>電源與睡眠</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="powercfg.cpl" xml:space="preserve">
+    <value>powercfg.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="PowerOptions" xml:space="preserve">
+    <value>電源選項</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Presentation" xml:space="preserve">
+    <value>簡報</value>
+  </data>
+  <data name="Printers" xml:space="preserve">
+    <value>印表機</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="PrintersAndScanners" xml:space="preserve">
+    <value>印表機和掃描器</value>
+    <comment>Area Device</comment>
+  </data>
+  <data name="PrintScreen" xml:space="preserve">
+    <value>列印螢幕</value>
+    <comment>Mean the "Print screen" key</comment>
+  </data>
+  <data name="ProblemReportsAndSolutions" xml:space="preserve">
+    <value>問題報告及解決方案</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Processor" xml:space="preserve">
+    <value>處理器</value>
+  </data>
+  <data name="ProgramsAndFeatures" xml:space="preserve">
+    <value>程式和功能</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="ProjectingToThisPc" xml:space="preserve">
+    <value>投影到此電腦</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="protanopia" xml:space="preserve">
+    <value>紅色盲</value>
+    <comment>Medical: Mean you don't can see green colors</comment>
+  </data>
+  <data name="Provisioning" xml:space="preserve">
+    <value>正在佈建</value>
+    <comment>Area UserAccounts, only available if enterprise has deployed a provisioning package</comment>
+  </data>
+  <data name="Proximity" xml:space="preserve">
+    <value>接近</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
+  <data name="Proxy" xml:space="preserve">
+    <value>Proxy</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
+  <data name="Quickime" xml:space="preserve">
+    <value>Quickime</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
+  <data name="QuietMomentsGame" xml:space="preserve">
+    <value>安靜時刻遊戲</value>
+  </data>
+  <data name="Radios" xml:space="preserve">
+    <value>無線電波</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="Ram" xml:space="preserve">
+    <value>記憶體</value>
+    <comment>Means the Read-Access-Memory (typical the used to inform about the size)</comment>
+  </data>
+  <data name="Recognition" xml:space="preserve">
+    <value>辨識</value>
+  </data>
+  <data name="Recovery" xml:space="preserve">
+    <value>復原</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="RedEye" xml:space="preserve">
+    <value>紅眼</value>
+    <comment>Mean red eye effect by over-the-night flights</comment>
+  </data>
+  <data name="RedGreen" xml:space="preserve">
+    <value>紅-綠</value>
+    <comment>Mean the weakness you can't differ between red and green colors</comment>
+  </data>
+  <data name="RedWeek" xml:space="preserve">
+    <value>紅色弱視</value>
+    <comment>Mean you don't can see red colors</comment>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>區域</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
+  <data name="RegionalLanguage" xml:space="preserve">
+    <value>地區語言</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
+  <data name="RegionalSettingsProperties" xml:space="preserve">
+    <value>地區設定屬性</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="RegionAndLanguage" xml:space="preserve">
+    <value>地區和語言</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="RegionFormatting" xml:space="preserve">
+    <value>地區格式</value>
+  </data>
+  <data name="RemoteAppAndDesktopConnections" xml:space="preserve">
+    <value>RemoteApp 和桌面連線</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="RemoteDesktop" xml:space="preserve">
+    <value>遠端桌面</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="ScannersAndCameras" xml:space="preserve">
+    <value>掃描器與數位相機</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="schedtasks" xml:space="preserve">
+    <value>schedtasks</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="Scheduled" xml:space="preserve">
+    <value>已排程</value>
+  </data>
+  <data name="ScheduledTasks" xml:space="preserve">
+    <value>排定的工作</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="ScreenRotation" xml:space="preserve">
+    <value>旋轉螢幕</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="ScrollBars" xml:space="preserve">
+    <value>捲軸</value>
+  </data>
+  <data name="ScrollLock" xml:space="preserve">
+    <value>捲動鎖定</value>
+    <comment>Mean the "Scroll Lock" key</comment>
+  </data>
+  <data name="Sdns" xml:space="preserve">
+    <value>SDNS</value>
+    <comment>Should not translated</comment>
+  </data>
+  <data name="SearchingWindows" xml:space="preserve">
+    <value>正在搜尋 Windows</value>
+    <comment>Area Cortana</comment>
+  </data>
+  <data name="SecureDNS" xml:space="preserve">
+    <value>SecureDNS</value>
+    <comment>Should not translated</comment>
+  </data>
+  <data name="SecurityCenter" xml:space="preserve">
+    <value>資訊安全中心</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="SecurityProcessor" xml:space="preserve">
+    <value>安全性處理器</value>
+  </data>
+  <data name="SessionCleanup" xml:space="preserve">
+    <value>工作階段清除</value>
+    <comment>Area SurfaceHub</comment>
+  </data>
+  <data name="SettingsHomePage" xml:space="preserve">
+    <value>設定首頁</value>
+    <comment>Area Home, Overview-page for all areas of settings </comment>
+  </data>
+  <data name="SetUpKiosk" xml:space="preserve">
+    <value>設定 Kiosk</value>
+    <comment>Area UserAccounts</comment>
+  </data>
+  <data name="SharedExperiences" xml:space="preserve">
+    <value>共用體驗</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="Shortcuts" xml:space="preserve">
+    <value>縮寫</value>
+  </data>
+  <data name="ShortNameWiFi" xml:space="preserve">
+    <value>wifi</value>
+    <comment>dont translate this, is a short term to find entries</comment>
+  </data>
+  <data name="SignInOptions" xml:space="preserve">
+    <value>登入選項</value>
+    <comment>Area UserAccounts</comment>
+  </data>
+  <data name="SignInOptionsDynamicLock" xml:space="preserve">
+    <value>登入選項 - 動態鎖定</value>
+    <comment>Area UserAccounts</comment>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>大小</value>
+    <comment>Size for text and symbols</comment>
+  </data>
+  <data name="Sound" xml:space="preserve">
+    <value>音效</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="Speech" xml:space="preserve">
+    <value>語音</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="SpeechRecognition" xml:space="preserve">
+    <value>語音辨識</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="SpeechTyping" xml:space="preserve">
+    <value>語音輸入</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>開始</value>
+    <comment>Area Personalization</comment>
+  </data>
+  <data name="StartPlaces" xml:space="preserve">
+    <value>開始位置</value>
+  </data>
+  <data name="StartupApps" xml:space="preserve">
+    <value>啟動應用程式</value>
+    <comment>Area Apps</comment>
+  </data>
+  <data name="sticpl.cpl" xml:space="preserve">
+    <value>sticpl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="Storage" xml:space="preserve">
+    <value>儲存體</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="StoragePolicies" xml:space="preserve">
+    <value>存放原則</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="StorageSense" xml:space="preserve">
+    <value>儲存空間感知器</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="SubtitlePreposition" xml:space="preserve">
+    <value>在</value>
+    <comment>Example: Area "System" in System settings</comment>
+  </data>
+  <data name="SyncCenter" xml:space="preserve">
+    <value>同步中心</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="SyncYourSettings" xml:space="preserve">
+    <value>同步您的設定</value>
+    <comment>Area UserAccounts</comment>
+  </data>
+  <data name="sysdm.cpl" xml:space="preserve">
+    <value>sysdm.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="System" xml:space="preserve">
+    <value>系統</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="SystemPropertiesAndAddNewHardwareWizard" xml:space="preserve">
+    <value>系統屬性與新增硬體精靈</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Tab" xml:space="preserve">
+    <value>Tab</value>
+    <comment>Means the key "Tabulator" on the keyboard</comment>
+  </data>
+  <data name="TabletMode" xml:space="preserve">
+    <value>平板電腦模式</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="TabletPcSettings" xml:space="preserve">
+    <value>平板電腦設定</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Talk" xml:space="preserve">
+    <value>交談</value>
+  </data>
+  <data name="TalkToCortana" xml:space="preserve">
+    <value>與 Cortana 交談</value>
+    <comment>Area Cortana</comment>
+  </data>
+  <data name="Taskbar" xml:space="preserve">
+    <value>工作列</value>
+    <comment>Area Personalization</comment>
+  </data>
+  <data name="TaskbarColor" xml:space="preserve">
+    <value>工作列色彩</value>
+  </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>工作</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="TeamConferencing" xml:space="preserve">
+    <value>小組會議</value>
+    <comment>Area SurfaceHub</comment>
+  </data>
+  <data name="TeamDeviceManagement" xml:space="preserve">
+    <value>小組裝置管理</value>
+    <comment>Area SurfaceHub</comment>
+  </data>
+  <data name="TextToSpeech" xml:space="preserve">
+    <value>文字轉換語音</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Themes" xml:space="preserve">
+    <value>主題</value>
+    <comment>Area Personalization</comment>
+  </data>
+  <data name="themes.cpl" xml:space="preserve">
+    <value>themes.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="timedate.cpl" xml:space="preserve">
+    <value>timedate.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="Timeline" xml:space="preserve">
+    <value>時間軸</value>
+  </data>
+  <data name="Touch" xml:space="preserve">
+    <value>觸控</value>
+  </data>
+  <data name="TouchFeedback" xml:space="preserve">
+    <value>觸控回饋</value>
+  </data>
+  <data name="Touchpad" xml:space="preserve">
+    <value>觸控板</value>
+    <comment>Area Device</comment>
+  </data>
+  <data name="Transparency" xml:space="preserve">
+    <value>透明度</value>
+  </data>
+  <data name="tritanopia" xml:space="preserve">
+    <value>黃藍色盲</value>
+    <comment>Medical: Mean you don't can see yellow and blue colors</comment>
+  </data>
+  <data name="Troubleshoot" xml:space="preserve">
+    <value>疑難排解</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="TruePlay" xml:space="preserve">
+    <value>TruePlay</value>
+    <comment>Area Gaming</comment>
+  </data>
+  <data name="Typing" xml:space="preserve">
+    <value>輸入</value>
+    <comment>Area Device</comment>
+  </data>
+  <data name="Uninstall" xml:space="preserve">
+    <value>解除安裝</value>
+    <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
+  </data>
+  <data name="Usb" xml:space="preserve">
+    <value>USB</value>
+    <comment>Area Device</comment>
+  </data>
+  <data name="UserAccounts" xml:space="preserve">
+    <value>使用者帳戶</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>版本</value>
+    <comment>Means The "Windows Version"</comment>
+  </data>
+  <data name="VideoPlayback" xml:space="preserve">
+    <value>影片播放</value>
+    <comment>Area Apps</comment>
+  </data>
+  <data name="Videos" xml:space="preserve">
+    <value>影片</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="VirtualDesktops" xml:space="preserve">
+    <value>虛擬桌面</value>
+  </data>
+  <data name="Virus" xml:space="preserve">
+    <value>病毒</value>
+    <comment>Means the virus in computers and software</comment>
+  </data>
+  <data name="VoiceActivation" xml:space="preserve">
+    <value>語音啟用</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="Volume" xml:space="preserve">
+    <value>音量</value>
+  </data>
+  <data name="Vpn" xml:space="preserve">
+    <value>VPN</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
+  <data name="Wallpaper" xml:space="preserve">
+    <value>桌布</value>
+  </data>
+  <data name="WarmerColor" xml:space="preserve">
+    <value>暖色調</value>
+  </data>
+  <data name="WelcomeCenter" xml:space="preserve">
+    <value>歡迎中心</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="WelcomeScreen" xml:space="preserve">
+    <value>歡迎畫面</value>
+    <comment>Area SurfaceHub</comment>
+  </data>
+  <data name="wgpocpl.cpl" xml:space="preserve">
+    <value>wgpocpl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="Wheel" xml:space="preserve">
+    <value>滾輪</value>
+    <comment>Area Device</comment>
+  </data>
+  <data name="WiFi" xml:space="preserve">
+    <value>Wi-Fi</value>
+    <comment>Area NetworkAndInternet, only available if Wi-Fi calling is enabled</comment>
+  </data>
+  <data name="WiFiCalling" xml:space="preserve">
+    <value>Wi-Fi 通話</value>
+    <comment>Area NetworkAndInternet, only available if Wi-Fi calling is enabled</comment>
+  </data>
+  <data name="WiFiSettings" xml:space="preserve">
+    <value>Wi-Fi 設定</value>
+    <comment>"Wi-Fi" should not translated</comment>
+  </data>
+  <data name="WindowBorder" xml:space="preserve">
+    <value>視窗框線</value>
+  </data>
+  <data name="WindowsAnytimeUpgrade" xml:space="preserve">
+    <value>Windows Anytime Upgrade</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="WindowsAnywhere" xml:space="preserve">
+    <value>Windows 無所不在</value>
+    <comment>Area UserAccounts, device must be Windows Anywhere-capable</comment>
+  </data>
+  <data name="WindowsCardSpace" xml:space="preserve">
+    <value>Windows CardSpace</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="WindowsDefender" xml:space="preserve">
+    <value>Windows Defender</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="WindowsFirewall" xml:space="preserve">
+    <value>Windows 防火牆</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="WindowsHelloSetupFace" xml:space="preserve">
+    <value>Windows Hello 設定 - 臉部</value>
+    <comment>Area UserAccounts</comment>
+  </data>
+  <data name="WindowsHelloSetupFingerprint" xml:space="preserve">
+    <value>Windows Hello 設定 - 指紋</value>
+    <comment>Area UserAccounts</comment>
+  </data>
+  <data name="WindowsInsiderProgram" xml:space="preserve">
+    <value>Windows 測試人員計畫</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="WindowsMobilityCenter" xml:space="preserve">
+    <value>Windows 行動中心</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="WindowsSearch" xml:space="preserve">
+    <value>Windows Search</value>
+    <comment>Area Cortana</comment>
+  </data>
+  <data name="WindowsSecurity" xml:space="preserve">
+    <value>Windows 安全性</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="WindowsUpdate" xml:space="preserve">
+    <value>Windows Update</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="WindowsUpdateAdvancedOptions" xml:space="preserve">
+    <value>Windows Update - 進階選項</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="WindowsUpdateCheckForUpdates" xml:space="preserve">
+    <value>Windows Update - 檢查更新</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="WindowsUpdateRestartOptions" xml:space="preserve">
+    <value>Windows Update - 重新啟動選項</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="WindowsUpdateViewOptionalUpdates" xml:space="preserve">
+    <value>Windows Update - 檢視選用的更新</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="WindowsUpdateViewUpdateHistory" xml:space="preserve">
+    <value>Windows Update - 檢視更新歷程記錄</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="Wireless" xml:space="preserve">
+    <value>無線</value>
+  </data>
+  <data name="Workplace" xml:space="preserve">
+    <value>工作場所</value>
+  </data>
+  <data name="WorkplaceProvisioning" xml:space="preserve">
+    <value>工作場所佈建</value>
+    <comment>Area UserAccounts</comment>
+  </data>
+  <data name="WubiImeSettings" xml:space="preserve">
+    <value>五筆輸入法設定</value>
+    <comment>Area TimeAndLanguage, available if the Microsoft Wubi input method editor is installed</comment>
+  </data>
+  <data name="WubiImeSettingsUdp" xml:space="preserve">
+    <value>五筆 IME 設定 - UDP</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
+  <data name="XboxNetworking" xml:space="preserve">
+    <value>Xbox 網路</value>
+    <comment>Area Gaming</comment>
+  </data>
+  <data name="YourInfo" xml:space="preserve">
+    <value>您的資訊</value>
+    <comment>Area UserAccounts</comment>
+  </data>
+  <data name="Zoom" xml:space="preserve">
+    <value>縮放</value>
+    <comment>Mean zooming of things via a magnifier</comment>
+  </data>
+  <data name="ChangeDeviceInstallationSettings" xml:space="preserve">
+    <value>更改裝置安裝設定</value>
+  </data>
+  <data name="TurnOffBackgroundImages" xml:space="preserve">
+    <value>Turn off background images</value>
+  </data>
+  <data name="NavigationProperties" xml:space="preserve">
+    <value>Navigation properties</value>
+  </data>
+  <data name="MediaStreamingOptions" xml:space="preserve">
+    <value>Media streaming options</value>
+  </data>
+  <data name="MakeAFileTypeAlwaysOpenInASpecificProgram" xml:space="preserve">
+    <value>讓某種檔案類型始終以特定程式開啟</value>
+  </data>
+  <data name="ChangeTheNarratorSVoice" xml:space="preserve">
+    <value>更改語音助理的聲音</value>
+  </data>
+  <data name="FindAndFixKeyboardProblems" xml:space="preserve">
+    <value>尋找並修復鍵盤問題</value>
+  </data>
+  <data name="UseScreenReader" xml:space="preserve">
+    <value>Use screen reader</value>
+  </data>
+  <data name="ShowWhichWorkgroupThisComputerIsOn" xml:space="preserve">
+    <value>Show which workgroup this computer is on</value>
+  </data>
+  <data name="ChangeMouseWheelSettings" xml:space="preserve">
+    <value>更改滑鼠滾輪設定</value>
+  </data>
+  <data name="ManageComputerCertificates" xml:space="preserve">
+    <value>Manage computer certificates</value>
+  </data>
+  <data name="FindAndFixProblems" xml:space="preserve">
+    <value>尋找並修復問題</value>
+  </data>
+  <data name="ChangeSettingsForContentReceivedUsingTapAndSend" xml:space="preserve">
+    <value>更改使用點按傳送接收的內容的設定</value>
+  </data>
+  <data name="ChangeDefaultSettingsForMediaOrDevices" xml:space="preserve">
+    <value>更改使用媒體或裝置的預設設定</value>
+  </data>
+  <data name="PrintTheSpeechReferenceCard" xml:space="preserve">
+    <value>Print the speech reference card</value>
+  </data>
+  <data name="CalibrateDisplayColour" xml:space="preserve">
+    <value>Calibrate display colour</value>
+  </data>
+  <data name="ManageFileEncryptionCertificates" xml:space="preserve">
+    <value>Manage file encryption certificates</value>
+  </data>
+  <data name="ViewRecentMessagesAboutYourComputer" xml:space="preserve">
+    <value>View recent messages about your computer</value>
+  </data>
+  <data name="GiveOtherUsersAccessToThisComputer" xml:space="preserve">
+    <value>Give other users access to this computer</value>
+  </data>
+  <data name="ShowHiddenFilesAndFolders" xml:space="preserve">
+    <value>Show hidden files and folders</value>
+  </data>
+  <data name="ChangeWindowsToGoStartUpOptions" xml:space="preserve">
+    <value>Change Windows To Go start-up options</value>
+  </data>
+  <data name="SeeWhichProcessesStartUpAutomaticallyWhenYouStartWindows" xml:space="preserve">
+    <value>See which processes start up automatically when you start Windows</value>
+  </data>
+  <data name="TellIfAnRSSFeedIsAvailableOnAWebsite" xml:space="preserve">
+    <value>Tell if an RSS feed is available on a website</value>
+  </data>
+  <data name="AddClocksForDifferentTimeZones" xml:space="preserve">
+    <value>Add clocks for different time zones</value>
+  </data>
+  <data name="AddABluetoothDevice" xml:space="preserve">
+    <value>Add a Bluetooth device</value>
+  </data>
+  <data name="CustomiseTheMouseButtons" xml:space="preserve">
+    <value>Customise the mouse buttons</value>
+  </data>
+  <data name="SetTabletButtonsToPerformCertainTasks" xml:space="preserve">
+    <value>Set tablet buttons to perform certain tasks</value>
+  </data>
+  <data name="ViewInstalledFonts" xml:space="preserve">
+    <value>View installed fonts</value>
+  </data>
+  <data name="ChangeTheWayCurrencyIsDisplayed" xml:space="preserve">
+    <value>Change the way currency is displayed</value>
+  </data>
+  <data name="EditGroupPolicy" xml:space="preserve">
+    <value>Edit group policy</value>
+  </data>
+  <data name="ManageBrowserAddOns" xml:space="preserve">
+    <value>Manage browser add-ons</value>
+  </data>
+  <data name="CheckProcessorSpeed" xml:space="preserve">
+    <value>Check processor speed</value>
+  </data>
+  <data name="CheckFirewallStatus" xml:space="preserve">
+    <value>Check firewall status</value>
+  </data>
+  <data name="SendOrReceiveAFile" xml:space="preserve">
+    <value>Send or receive a file</value>
+  </data>
+  <data name="AddOrRemoveUserAccounts" xml:space="preserve">
+    <value>Add or remove user accounts</value>
+  </data>
+  <data name="EditTheSystemEnvironmentVariables" xml:space="preserve">
+    <value>Edit the system environment variables</value>
+  </data>
+  <data name="ManageBitlocker" xml:space="preserve">
+    <value>Manage BitLocker</value>
+  </data>
+  <data name="AutoHideTheTaskbar" xml:space="preserve">
+    <value>Auto-hide the taskbar</value>
+  </data>
+  <data name="ChangeSoundCardSettings" xml:space="preserve">
+    <value>更改聲音卡設定</value>
+  </data>
+  <data name="MakeChangesToAccounts" xml:space="preserve">
+    <value>Make changes to accounts</value>
+  </data>
+  <data name="EditLocalUsersAndGroups" xml:space="preserve">
+    <value>Edit local users and groups</value>
+  </data>
+  <data name="ViewNetworkComputersAndDevices" xml:space="preserve">
+    <value>View network computers and devices</value>
+  </data>
+  <data name="InstallAProgramFromTheNetwork" xml:space="preserve">
+    <value>Install a program from the network</value>
+  </data>
+  <data name="ViewScannersAndCameras" xml:space="preserve">
+    <value>View scanners and cameras</value>
+  </data>
+  <data name="MicrosoftIMERegisterWordJapanese" xml:space="preserve">
+    <value>Microsoft IME Register Word (Japanese)</value>
+  </data>
+  <data name="RestoreYourFilesWithFileHistory" xml:space="preserve">
+    <value>Restore your files with File History</value>
+  </data>
+  <data name="TurnOnScreenKeyboardOnOrOff" xml:space="preserve">
+    <value>Turn On-Screen keyboard on or off</value>
+  </data>
+  <data name="BlockOrAllowThirdPartyCookies" xml:space="preserve">
+    <value>Block or allow third-party cookies</value>
+  </data>
+  <data name="FindAndFixAudioRecordingProblems" xml:space="preserve">
+    <value>尋找並修復錄音問題</value>
+  </data>
+  <data name="CreateARecoveryDrive" xml:space="preserve">
+    <value>Create a recovery drive</value>
+  </data>
+  <data name="MicrosoftNewPhoneticSettings" xml:space="preserve">
+    <value>Microsoft New Phonetic Settings</value>
+  </data>
+  <data name="GenerateASystemHealthReport" xml:space="preserve">
+    <value>Generate a system health report</value>
+  </data>
+  <data name="FixProblemsWithYourComputer" xml:space="preserve">
+    <value>Fix problems with your computer</value>
+  </data>
+  <data name="BackUpAndRestoreWindows7" xml:space="preserve">
+    <value>Back up and Restore (Windows 7)</value>
+  </data>
+  <data name="PreviewDeleteShowOrHideFonts" xml:space="preserve">
+    <value>Preview, delete, show or hide fonts</value>
+  </data>
+  <data name="MicrosoftQuickSettings" xml:space="preserve">
+    <value>Microsoft Quick Settings</value>
+  </data>
+  <data name="ViewReliabilityHistory" xml:space="preserve">
+    <value>View reliability history</value>
+  </data>
+  <data name="AccessRemoteappAndDesktops" xml:space="preserve">
+    <value>Access RemoteApp and desktops</value>
+  </data>
+  <data name="SetUpODBCDataSources" xml:space="preserve">
+    <value>Set up ODBC data sources</value>
+  </data>
+  <data name="ResetSecurityPolicies" xml:space="preserve">
+    <value>Reset Security Policies</value>
+  </data>
+  <data name="BlockOrAllowPopUps" xml:space="preserve">
+    <value>Block or allow pop-ups</value>
+  </data>
+  <data name="TurnAutocompleteInInternetExplorerOnOrOff" xml:space="preserve">
+    <value>Turn autocomplete in Internet Explorer on or off</value>
+  </data>
+  <data name="MicrosoftPinyinSimplefastOptions" xml:space="preserve">
+    <value>Microsoft Pinyin SimpleFast Options</value>
+  </data>
+  <data name="ChangeWhatClosingTheLidDoes" xml:space="preserve">
+    <value>Change what closing the lid does</value>
+  </data>
+  <data name="TurnOffUnnecessaryAnimations" xml:space="preserve">
+    <value>Turn off unnecessary animations</value>
+  </data>
+  <data name="CreateARestorePoint" xml:space="preserve">
+    <value>Create a restore point</value>
+  </data>
+  <data name="TurnOffAutomaticWindowArrangement" xml:space="preserve">
+    <value>Turn off automatic window arrangement</value>
+  </data>
+  <data name="TroubleshootingHistory" xml:space="preserve">
+    <value>Troubleshooting History</value>
+  </data>
+  <data name="DiagnoseYourComputersMemoryProblems" xml:space="preserve">
+    <value>Diagnose your computer's memory problems</value>
+  </data>
+  <data name="ViewRecommendedActionsToKeepWindowsRunningSmoothly" xml:space="preserve">
+    <value>View recommended actions to keep Windows running smoothly</value>
+  </data>
+  <data name="ChangeCursorBlinkRate" xml:space="preserve">
+    <value>Change cursor blink rate</value>
+  </data>
+  <data name="AddOrRemovePrograms" xml:space="preserve">
+    <value>Add or remove programs</value>
+  </data>
+  <data name="CreateAPasswordResetDisk" xml:space="preserve">
+    <value>Create a password reset disk</value>
+  </data>
+  <data name="ConfigureAdvancedUserProfileProperties" xml:space="preserve">
+    <value>Configure advanced user profile properties</value>
+  </data>
+  <data name="StartOrStopUsingAutoplayForAllMediaAndDevices" xml:space="preserve">
+    <value>Start or stop using AutoPlay for all media and devices</value>
+  </data>
+  <data name="ChangeAutomaticMaintenanceSettings" xml:space="preserve">
+    <value>Change Automatic Maintenance settings</value>
+  </data>
+  <data name="SpecifySingleOrDoubleClickToOpen" xml:space="preserve">
+    <value>Specify single- or double-click to open</value>
+  </data>
+  <data name="SelectUsersWhoCanUseRemoteDesktop" xml:space="preserve">
+    <value>Select users who can use remote desktop</value>
+  </data>
+  <data name="ShowWhichProgramsAreInstalledOnYourComputer" xml:space="preserve">
+    <value>Show which programs are installed on your computer</value>
+  </data>
+  <data name="AllowRemoteAccessToYourComputer" xml:space="preserve">
+    <value>Allow remote access to your computer</value>
+  </data>
+  <data name="ViewAdvancedSystemSettings" xml:space="preserve">
+    <value>View advanced system settings</value>
+  </data>
+  <data name="HowToInstallAProgram" xml:space="preserve">
+    <value>How to install a program</value>
+  </data>
+  <data name="ChangeHowYourKeyboardWorks" xml:space="preserve">
+    <value>Change how your keyboard works</value>
+  </data>
+  <data name="AutomaticallyAdjustForDaylightSavingTime" xml:space="preserve">
+    <value>Automatically adjust for daylight saving time</value>
+  </data>
+  <data name="ChangeTheOrderOfWindowsSideshowGadgets" xml:space="preserve">
+    <value>Change the order of Windows SideShow gadgets</value>
+  </data>
+  <data name="CheckKeyboardStatus" xml:space="preserve">
+    <value>Check keyboard status</value>
+  </data>
+  <data name="ControlTheComputerWithoutTheMouseOrKeyboard" xml:space="preserve">
+    <value>Control the computer without the mouse or keyboard</value>
+  </data>
+  <data name="ChangeOrRemoveAProgram" xml:space="preserve">
+    <value>Change or remove a program</value>
+  </data>
+  <data name="ChangeMultiTouchGestureSettings" xml:space="preserve">
+    <value>Change multi-touch gesture settings</value>
+  </data>
+  <data name="SetUpODBCDataSources64Bit" xml:space="preserve">
+    <value>Set up ODBC data sources (64-bit)</value>
+  </data>
+  <data name="ConfigureProxyServer" xml:space="preserve">
+    <value>Configure proxy server</value>
+  </data>
+  <data name="ChangeYourHomepage" xml:space="preserve">
+    <value>Change your homepage</value>
+  </data>
+  <data name="GroupSimilarWindowsOnTheTaskbar" xml:space="preserve">
+    <value>Group similar windows on the taskbar</value>
+  </data>
+  <data name="ChangeWindowsSideshowSettings" xml:space="preserve">
+    <value>Change Windows SideShow settings</value>
+  </data>
+  <data name="UseAudioDescriptionForVideo" xml:space="preserve">
+    <value>Use audio description for video</value>
+  </data>
+  <data name="ChangeWorkgroupName" xml:space="preserve">
+    <value>Change workgroup name</value>
+  </data>
+  <data name="FindAndFixPrintingProblems" xml:space="preserve">
+    <value>尋找並修復列印問題</value>
+  </data>
+  <data name="ChangeWhenTheComputerSleeps" xml:space="preserve">
+    <value>Change when the computer sleeps</value>
+  </data>
+  <data name="SetUpAVirtualPrivateNetworkVPNConnection" xml:space="preserve">
+    <value>Set up a virtual private network (VPN) connection</value>
+  </data>
+  <data name="AccommodateLearningAbilities" xml:space="preserve">
+    <value>Accommodate learning abilities</value>
+  </data>
+  <data name="SetUpADialUpConnection" xml:space="preserve">
+    <value>Set up a dial-up connection</value>
+  </data>
+  <data name="SetUpAConnectionOrNetwork" xml:space="preserve">
+    <value>Set up a connection or network</value>
+  </data>
+  <data name="HowToChangeYourWindowsPassword" xml:space="preserve">
+    <value>How to change your Windows password</value>
+  </data>
+  <data name="MakeItEasierToSeeTheMousePointer" xml:space="preserve">
+    <value>Make it easier to see the mouse pointer</value>
+  </data>
+  <data name="SetUpIscsiInitiator" xml:space="preserve">
+    <value>Set up iSCSI initiator</value>
+  </data>
+  <data name="AccommodateLowVision" xml:space="preserve">
+    <value>Accommodate low vision</value>
+  </data>
+  <data name="ManageOfflineFiles" xml:space="preserve">
+    <value>Manage offline files</value>
+  </data>
+  <data name="ReviewYourComputersStatusAndResolveIssues" xml:space="preserve">
+    <value>Review your computer's status and resolve issues</value>
+  </data>
+  <data name="MicrosoftChangjieSettings" xml:space="preserve">
+    <value>Microsoft ChangJie Settings</value>
+  </data>
+  <data name="ReplaceSoundsWithVisualCues" xml:space="preserve">
+    <value>Replace sounds with visual cues</value>
+  </data>
+  <data name="ChangeTemporaryInternetFileSettings" xml:space="preserve">
+    <value>Change temporary Internet file settings</value>
+  </data>
+  <data name="ConnectToTheInternet" xml:space="preserve">
+    <value>Connect to the Internet</value>
+  </data>
+  <data name="FindAndFixAudioPlaybackProblems" xml:space="preserve">
+    <value>尋找並修復音訊播放問題。</value>
+  </data>
+  <data name="ChangeTheMousePointerDisplayOrSpeed" xml:space="preserve">
+    <value>Change the mouse pointer display or speed</value>
+  </data>
+  <data name="BackUpYourRecoveryKey" xml:space="preserve">
+    <value>Back up your recovery key</value>
+  </data>
+  <data name="SaveBackupCopiesOfYourFilesWithFileHistory" xml:space="preserve">
+    <value>Save backup copies of your files with File History</value>
+  </data>
+  <data name="ViewCurrentAccessibilitySettings" xml:space="preserve">
+    <value>View current accessibility settings</value>
+  </data>
+  <data name="ChangeTabletPenSettings" xml:space="preserve">
+    <value>Change tablet pen settings</value>
+  </data>
+  <data name="ChangeHowYourMouseWorks" xml:space="preserve">
+    <value>Change how your mouse works</value>
+  </data>
+  <data name="ShowHowMuchRAMIsOnThisComputer" xml:space="preserve">
+    <value>Show how much RAM is on this computer</value>
+  </data>
+  <data name="EditPowerPlan" xml:space="preserve">
+    <value>Edit power plan</value>
+  </data>
+  <data name="AdjustSystemVolume" xml:space="preserve">
+    <value>Adjust system volume</value>
+  </data>
+  <data name="DefragmentAndOptimiseYourDrives" xml:space="preserve">
+    <value>Defragment and optimise your drives</value>
+  </data>
+  <data name="SetUpODBCDataSources32Bit" xml:space="preserve">
+    <value>Set up ODBC data sources (32-bit)</value>
+  </data>
+  <data name="ChangeFontSettings" xml:space="preserve">
+    <value>Change Font Settings</value>
+  </data>
+  <data name="MagnifyPortionsOfTheScreenUsingMagnifier" xml:space="preserve">
+    <value>Magnify portions of the screen using Magnifier</value>
+  </data>
+  <data name="ChangeTheFileTypeAssociatedWithAFileExtension" xml:space="preserve">
+    <value>Change the file type associated with a file extension</value>
+  </data>
+  <data name="ViewEventLogs" xml:space="preserve">
+    <value>View event logs</value>
+  </data>
+  <data name="ManageWindowsCredentials" xml:space="preserve">
+    <value>Manage Windows Credentials</value>
+  </data>
+  <data name="SetUpAMicrophone" xml:space="preserve">
+    <value>Set up a microphone</value>
+  </data>
+  <data name="ChangeHowTheMousePointerLooks" xml:space="preserve">
+    <value>Change how the mouse pointer looks</value>
+  </data>
+  <data name="ChangePowerSavingSettings" xml:space="preserve">
+    <value>Change power-saving settings</value>
+  </data>
+  <data name="OptimiseForBlindness" xml:space="preserve">
+    <value>Optimise for blindness</value>
+  </data>
+  <data name="null" xml:space="preserve">
+    <value>
+    </value>
+  </data>
+  <data name="TurnWindowsFeaturesOnOrOff" xml:space="preserve">
+    <value>Turn Windows features on or off</value>
+  </data>
+  <data name="ShowWhichOperatingSystemYourComputerIsRunning" xml:space="preserve">
+    <value>Show which operating system your computer is running</value>
+  </data>
+  <data name="ViewLocalServices" xml:space="preserve">
+    <value>View local services</value>
+  </data>
+  <data name="ManageWorkFolders" xml:space="preserve">
+    <value>Manage Work Folders</value>
+  </data>
+  <data name="EncryptYourOfflineFiles" xml:space="preserve">
+    <value>Encrypt your offline files</value>
+  </data>
+  <data name="TrainTheComputerToRecogniseYourVoice" xml:space="preserve">
+    <value>Train the computer to recognise your voice</value>
+  </data>
+  <data name="AdvancedPrinterSetup" xml:space="preserve">
+    <value>Advanced printer setup</value>
+  </data>
+  <data name="ChangeDefaultPrinter" xml:space="preserve">
+    <value>Change default printer</value>
+  </data>
+  <data name="EditEnvironmentVariablesForYourAccount" xml:space="preserve">
+    <value>Edit environment variables for your account</value>
+  </data>
+  <data name="OptimiseVisualDisplay" xml:space="preserve">
+    <value>Optimise visual display</value>
+  </data>
+  <data name="ChangeMouseClickSettings" xml:space="preserve">
+    <value>Change mouse click settings</value>
+  </data>
+  <data name="ChangeAdvancedColourManagementSettingsForDisplaysScannersAndPrinters" xml:space="preserve">
+    <value>Change advanced colour management settings for displays, scanners and printers</value>
+  </data>
+  <data name="LetWindowsSuggestEaseOfAccessSettings" xml:space="preserve">
+    <value>Let Windows suggest Ease of Access settings</value>
+  </data>
+  <data name="ClearDiskSpaceByDeletingUnnecessaryFiles" xml:space="preserve">
+    <value>Clear disk space by deleting unnecessary files</value>
+  </data>
+  <data name="ViewDevicesAndPrinters" xml:space="preserve">
+    <value>View devices and printers</value>
+  </data>
+  <data name="PrivateCharacterEditor" xml:space="preserve">
+    <value>Private Character Editor</value>
+  </data>
+  <data name="RecordStepsToReproduceAProblem" xml:space="preserve">
+    <value>Record steps to reproduce a problem</value>
+  </data>
+  <data name="AdjustTheAppearanceAndPerformanceOfWindows" xml:space="preserve">
+    <value>調整 Windows 的外觀和效能</value>
+  </data>
+  <data name="SettingsForMicrosoftIMEJapanese" xml:space="preserve">
+    <value>Settings for Microsoft IME (Japanese)</value>
+  </data>
+  <data name="InviteSomeoneToConnectToYourPCAndHelpYouOrOfferToHelpSomeoneElse" xml:space="preserve">
+    <value>Invite someone to connect to your PC and help you, or offer to help someone else</value>
+  </data>
+  <data name="RunProgramsMadeForPreviousVersionsOfWindows" xml:space="preserve">
+    <value>Run programs made for previous versions of Windows</value>
+  </data>
+  <data name="ChooseTheOrderOfHowYourScreenRotates" xml:space="preserve">
+    <value>Choose the order of how your screen rotates</value>
+  </data>
+  <data name="ChangeHowWindowsSearches" xml:space="preserve">
+    <value>Change how Windows searches</value>
+  </data>
+  <data name="SetFlicksToPerformCertainTasks" xml:space="preserve">
+    <value>Set flicks to perform certain tasks</value>
+  </data>
+  <data name="ChangeAccountType" xml:space="preserve">
+    <value>Change account type</value>
+  </data>
+  <data name="ChangeScreenSaver" xml:space="preserve">
+    <value>Change screen saver</value>
+  </data>
+  <data name="ChangeUserAccountControlSettings" xml:space="preserve">
+    <value>Change User Account Control settings</value>
+  </data>
+  <data name="TurnOnEasyAccessKeys" xml:space="preserve">
+    <value>Turn on easy access keys</value>
+  </data>
+  <data name="IdentifyAndRepairNetworkProblems" xml:space="preserve">
+    <value>Identify and repair network problems</value>
+  </data>
+  <data name="FindAndFixNetworkingAndConnectionProblems" xml:space="preserve">
+    <value>尋找並修復網路連接問題</value>
+  </data>
+  <data name="PlayCdsOrOtherMediaAutomatically" xml:space="preserve">
+    <value>Play CDs or other media automatically</value>
+  </data>
+  <data name="ViewBasicInformationAboutYourComputer" xml:space="preserve">
+    <value>View basic information about your computer</value>
+  </data>
+  <data name="ChooseHowYouOpenLinks" xml:space="preserve">
+    <value>Choose how you open links</value>
+  </data>
+  <data name="AllowRemoteAssistanceInvitationsToBeSentFromThisComputer" xml:space="preserve">
+    <value>Allow Remote Assistance invitations to be sent from this computer</value>
+  </data>
+  <data name="TaskManager" xml:space="preserve">
+    <value>Task Manager</value>
+  </data>
+  <data name="TurnFlicksOnOrOff" xml:space="preserve">
+    <value>Turn flicks on or off</value>
+  </data>
+  <data name="AddALanguage" xml:space="preserve">
+    <value>Add a language</value>
+  </data>
+  <data name="ViewNetworkStatusAndTasks" xml:space="preserve">
+    <value>View network status and tasks</value>
+  </data>
+  <data name="TurnMagnifierOnOrOff" xml:space="preserve">
+    <value>Turn Magnifier on or off</value>
+  </data>
+  <data name="SeeTheNameOfThisComputer" xml:space="preserve">
+    <value>See the name of this computer</value>
+  </data>
+  <data name="ViewNetworkConnections" xml:space="preserve">
+    <value>View network connections</value>
+  </data>
+  <data name="PerformRecommendedMaintenanceTasksAutomatically" xml:space="preserve">
+    <value>Perform recommended maintenance tasks automatically</value>
+  </data>
+  <data name="ManageDiskSpaceUsedByYourOfflineFiles" xml:space="preserve">
+    <value>Manage disk space used by your offline files</value>
+  </data>
+  <data name="TurnHighContrastOnOrOff" xml:space="preserve">
+    <value>Turn High Contrast on or off</value>
+  </data>
+  <data name="ChangeTheWayTimeIsDisplayed" xml:space="preserve">
+    <value>Change the way time is displayed</value>
+  </data>
+  <data name="ChangeHowWebPagesAreDisplayedInTabs" xml:space="preserve">
+    <value>Change how web pages are displayed in tabs</value>
+  </data>
+  <data name="ChangeTheWayDatesAndListsAreDisplayed" xml:space="preserve">
+    <value>Change the way dates and lists are displayed</value>
+  </data>
+  <data name="ManageAudioDevices" xml:space="preserve">
+    <value>Manage audio devices</value>
+  </data>
+  <data name="ChangeSecuritySettings" xml:space="preserve">
+    <value>Change security settings</value>
+  </data>
+  <data name="CheckSecurityStatus" xml:space="preserve">
+    <value>Check security status</value>
+  </data>
+  <data name="DeleteCookiesOrTemporaryFiles" xml:space="preserve">
+    <value>Delete cookies or temporary files</value>
+  </data>
+  <data name="SpecifyWhichHandYouWriteWith" xml:space="preserve">
+    <value>Specify which hand you write with</value>
+  </data>
+  <data name="ChangeTouchInputSettings" xml:space="preserve">
+    <value>Change touch input settings</value>
+  </data>
+  <data name="HowToChangeTheSizeOfVirtualMemory" xml:space="preserve">
+    <value>How to change the size of virtual memory</value>
+  </data>
+  <data name="HearTextReadAloudWithNarrator" xml:space="preserve">
+    <value>Hear text read aloud with Narrator</value>
+  </data>
+  <data name="SetUpUSBGameControllers" xml:space="preserve">
+    <value>Set up USB game controllers</value>
+  </data>
+  <data name="ShowWhichDomainYourComputerIsOn" xml:space="preserve">
+    <value>Show which domain your computer is on</value>
+  </data>
+  <data name="ViewAllProblemReports" xml:space="preserve">
+    <value>View all problem reports</value>
+  </data>
+  <data name="16BitApplicationSupport" xml:space="preserve">
+    <value>16-Bit Application Support</value>
+  </data>
+  <data name="SetUpDiallingRules" xml:space="preserve">
+    <value>Set up dialling rules</value>
+  </data>
+  <data name="EnableOrDisableSessionCookies" xml:space="preserve">
+    <value>Enable or disable session cookies</value>
+  </data>
+  <data name="GiveAdministrativeRightsToADomainUser" xml:space="preserve">
+    <value>Give administrative rights to a domain user</value>
+  </data>
+  <data name="ChooseWhenToTurnOffDisplay" xml:space="preserve">
+    <value>Choose when to turn off display</value>
+  </data>
+  <data name="MoveThePointerWithTheKeypadUsingMousekeys" xml:space="preserve">
+    <value>Move the pointer with the keypad using MouseKeys</value>
+  </data>
+  <data name="ChangeWindowsSideshowCompatibleDeviceSettings" xml:space="preserve">
+    <value>Change Windows SideShow-compatible device settings</value>
+  </data>
+  <data name="AdjustCommonlyUsedMobilitySettings" xml:space="preserve">
+    <value>Adjust commonly used mobility settings</value>
+  </data>
+  <data name="ChangeTextToSpeechSettings" xml:space="preserve">
+    <value>Change text-to-speech settings</value>
+  </data>
+  <data name="SetTheTimeAndDate" xml:space="preserve">
+    <value>Set the time and date</value>
+  </data>
+  <data name="ChangeLocationSettings" xml:space="preserve">
+    <value>Change location settings</value>
+  </data>
+  <data name="ChangeMouseSettings" xml:space="preserve">
+    <value>Change mouse settings</value>
+  </data>
+  <data name="ManageStorageSpaces" xml:space="preserve">
+    <value>Manage Storage Spaces</value>
+  </data>
+  <data name="ShowOrHideFileExtensions" xml:space="preserve">
+    <value>Show or hide file extensions</value>
+  </data>
+  <data name="AllowAnAppThroughWindowsFirewall" xml:space="preserve">
+    <value>Allow an app through Windows Firewall</value>
+  </data>
+  <data name="ChangeSystemSounds" xml:space="preserve">
+    <value>Change system sounds</value>
+  </data>
+  <data name="AdjustCleartypeText" xml:space="preserve">
+    <value>Adjust ClearType text</value>
+  </data>
+  <data name="TurnScreenSaverOnOrOff" xml:space="preserve">
+    <value>Turn screen saver on or off</value>
+  </data>
+  <data name="FindAndFixWindowsUpdateProblems" xml:space="preserve">
+    <value>尋找並修復 Windows 更新問題</value>
+  </data>
+  <data name="ChangeBluetoothSettings" xml:space="preserve">
+    <value>Change Bluetooth settings</value>
+  </data>
+  <data name="ConnectToANetwork" xml:space="preserve">
+    <value>Connect to a network</value>
+  </data>
+  <data name="ChangeTheSearchProviderInInternetExplorer" xml:space="preserve">
+    <value>Change the search provider in Internet Explorer</value>
+  </data>
+  <data name="JoinADomain" xml:space="preserve">
+    <value>Join a domain</value>
+  </data>
+  <data name="AddADevice" xml:space="preserve">
+    <value>Add a device</value>
+  </data>
+  <data name="FindAndFixProblemsWithWindowsSearch" xml:space="preserve">
+    <value>尋找並修復 Windows 搜尋問題</value>
+  </data>
+  <data name="ChooseAPowerPlan" xml:space="preserve">
+    <value>Choose a power plan</value>
+  </data>
+  <data name="ChangeHowTheMousePointerLooksWhenItSMoving" xml:space="preserve">
+    <value>Change how the mouse pointer looks when it’s moving</value>
+  </data>
+  <data name="UninstallAProgram" xml:space="preserve">
+    <value>Uninstall a program</value>
+  </data>
+  <data name="CreateAndFormatHardDiskPartitions" xml:space="preserve">
+    <value>Create and format hard disk partitions</value>
+  </data>
+  <data name="ChangeDateTimeOrNumberFormats" xml:space="preserve">
+    <value>Change date, time or number formats</value>
+  </data>
+  <data name="ChangePCWakeUpSettings" xml:space="preserve">
+    <value>Change PC wake-up settings</value>
+  </data>
+  <data name="ManageNetworkPasswords" xml:space="preserve">
+    <value>Manage network passwords</value>
+  </data>
+  <data name="ChangeInputMethods" xml:space="preserve">
+    <value>Change input methods</value>
+  </data>
+  <data name="ManageAdvancedSharingSettings" xml:space="preserve">
+    <value>Manage advanced sharing settings</value>
+  </data>
+  <data name="ChangeBatterySettings" xml:space="preserve">
+    <value>Change battery settings</value>
+  </data>
+  <data name="RenameThisComputer" xml:space="preserve">
+    <value>Rename this computer</value>
+  </data>
+  <data name="LockOrUnlockTheTaskbar" xml:space="preserve">
+    <value>Lock or unlock the taskbar</value>
+  </data>
+  <data name="ManageWebCredentials" xml:space="preserve">
+    <value>Manage Web Credentials</value>
+  </data>
+  <data name="ChangeTheTimeZone" xml:space="preserve">
+    <value>Change the time zone</value>
+  </data>
+  <data name="StartSpeechRecognition" xml:space="preserve">
+    <value>Start speech recognition</value>
+  </data>
+  <data name="ViewInstalledUpdates" xml:space="preserve">
+    <value>View installed updates</value>
+  </data>
+  <data name="WhatsHappenedToTheQuickLaunchToolbar" xml:space="preserve">
+    <value>What's happened to the Quick Launch toolbar?</value>
+  </data>
+  <data name="ChangeSearchOptionsForFilesAndFolders" xml:space="preserve">
+    <value>Change search options for files and folders</value>
+  </data>
+  <data name="AdjustSettingsBeforeGivingAPresentation" xml:space="preserve">
+    <value>Adjust settings before giving a presentation</value>
+  </data>
+  <data name="ScanADocumentOrPicture" xml:space="preserve">
+    <value>Scan a document or picture</value>
+  </data>
+  <data name="ChangeTheWayMeasurementsAreDisplayed" xml:space="preserve">
+    <value>Change the way measurements are displayed</value>
+  </data>
+  <data name="PressKeyCombinationsOneAtATime" xml:space="preserve">
+    <value>Press key combinations one at a time</value>
+  </data>
+  <data name="RestoreDataFilesOrComputerFromBackupWindows7" xml:space="preserve">
+    <value>Restore data, files or computer from backup (Windows 7)</value>
+  </data>
+  <data name="SetYourDefaultPrograms" xml:space="preserve">
+    <value>Set your default programs</value>
+  </data>
+  <data name="SetUpABroadbandConnection" xml:space="preserve">
+    <value>Set up a broadband connection</value>
+  </data>
+  <data name="CalibrateTheScreenForPenOrTouchInput" xml:space="preserve">
+    <value>Calibrate the screen for pen or touch input</value>
+  </data>
+  <data name="ManageUserCertificates" xml:space="preserve">
+    <value>Manage user certificates</value>
+  </data>
+  <data name="ScheduleTasks" xml:space="preserve">
+    <value>Schedule tasks</value>
+  </data>
+  <data name="IgnoreRepeatedKeystrokesUsingFilterkeys" xml:space="preserve">
+    <value>Ignore repeated keystrokes using FilterKeys</value>
+  </data>
+  <data name="FindAndFixBluescreenProblems" xml:space="preserve">
+    <value>尋找並修復藍屏問題</value>
+  </data>
+  <data name="HearAToneWhenKeysArePressed" xml:space="preserve">
+    <value>Hear a tone when keys are pressed</value>
+  </data>
+  <data name="DeleteBrowsingHistory" xml:space="preserve">
+    <value>Delete browsing history</value>
+  </data>
+  <data name="ChangeWhatThePowerButtonsDo" xml:space="preserve">
+    <value>Change what the power buttons do</value>
+  </data>
+  <data name="CreateStandardUserAccount" xml:space="preserve">
+    <value>Create standard user account</value>
+  </data>
+  <data name="TakeSpeechTutorials" xml:space="preserve">
+    <value>Take speech tutorials</value>
+  </data>
+  <data name="ViewSystemResourceUsageInTaskManager" xml:space="preserve">
+    <value>View system resource usage in Task Manager</value>
+  </data>
+  <data name="CreateAnAccount" xml:space="preserve">
+    <value>Create an account</value>
+  </data>
+  <data name="GetMoreFeaturesWithANewEditionOfWindows" xml:space="preserve">
+    <value>Get more features with a new edition of Windows</value>
+  </data>
+  <data name="AppControlPanel" xml:space="preserve">
+    <value>控制台</value>
+  </data>
+  <data name="TaskLink" xml:space="preserve">
+    <value>TaskLink</value>
+  </data>
+  <data name="AreaUnknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+</root>

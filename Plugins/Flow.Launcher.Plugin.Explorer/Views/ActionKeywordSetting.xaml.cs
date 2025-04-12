@@ -1,8 +1,6 @@
-using Flow.Launcher.Plugin.Explorer.ViewModels;
-using ICSharpCode.SharpZipLib.Zip;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 
@@ -11,40 +9,37 @@ namespace Flow.Launcher.Plugin.Explorer.Views
     /// <summary>
     /// Interaction logic for ActionKeywordSetting.xaml
     /// </summary>
-    public partial class ActionKeywordSetting : Window
+    public partial class ActionKeywordSetting : INotifyPropertyChanged
     {
-        private SettingsViewModel settingsViewModel;
-
-        public ActionKeywordView CurrentActionKeyword { get; set; }
+        private ActionKeywordModel CurrentActionKeyword { get; }
 
         public string ActionKeyword
         {
-            get => _actionKeyword;
+            get => actionKeyword;
             set
             {
                 // Set Enable to be true if user change ActionKeyword
-                if (Enabled is not null)
-                    Enabled = true;
-                _actionKeyword = value;
+                KeywordEnabled = true;
+                _ = SetField(ref actionKeyword, value);
             }
         }
 
-        public bool? Enabled { get; set; }
-
-        private string _actionKeyword;
-
-        public Visibility Visible =>
-            CurrentActionKeyword.Enabled is not null ? Visibility.Visible : Visibility.Collapsed;
-
-        public ActionKeywordSetting(SettingsViewModel settingsViewModel,
-            ActionKeywordView selectedActionKeyword)
+        public bool KeywordEnabled
         {
-            this.settingsViewModel = settingsViewModel;
+            get => _keywordEnabled;
+            set => SetField(ref _keywordEnabled, value);
+        }
 
+        private string actionKeyword;
+        private readonly IPublicAPI _api;
+        private bool _keywordEnabled;
+
+        public ActionKeywordSetting(ActionKeywordModel selectedActionKeyword, IPublicAPI api)
+        {
             CurrentActionKeyword = selectedActionKeyword;
-
+            _api = api;
             ActionKeyword = selectedActionKeyword.Keyword;
-            Enabled = selectedActionKeyword.Enabled;
+            KeywordEnabled = selectedActionKeyword.Enabled;
 
             InitializeComponent();
 
@@ -56,53 +51,40 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             if (string.IsNullOrEmpty(ActionKeyword))
                 ActionKeyword = Query.GlobalPluginWildcardSign;
 
-            if (CurrentActionKeyword.Keyword == ActionKeyword && CurrentActionKeyword.Enabled == Enabled)
+            if (CurrentActionKeyword.Keyword == ActionKeyword && CurrentActionKeyword.Enabled == KeywordEnabled)
             {
+                DialogResult = false;
                 Close();
                 return;
             }
 
-
-            if (CurrentActionKeyword.KeywordProperty == Settings.ActionKeyword.FileContentSearchActionKeyword 
-                && ActionKeyword == Query.GlobalPluginWildcardSign)
-            {
-                MessageBox.Show(
-                    settingsViewModel.Context.API.GetTranslation("plugin_explorer_globalActionKeywordInvalid"));
-
-                return;
-            }
-
-            var oldActionKeyword = CurrentActionKeyword.Keyword;
-
-            // == because of nullable
-            if (Enabled == false || !settingsViewModel.IsActionKeywordAlreadyAssigned(ActionKeyword))
-            {
-                // Update View Data
-                CurrentActionKeyword.Keyword = Enabled == true ? ActionKeyword : Query.GlobalPluginWildcardSign;
-                CurrentActionKeyword.Enabled = Enabled;
-
-                switch (Enabled)
+            if (ActionKeyword == Query.GlobalPluginWildcardSign)
+                switch (CurrentActionKeyword.KeywordProperty, KeywordEnabled)
                 {
-                    // reset to global so it does not take up an action keyword when disabled
-                    //     not for null Enable plugin
-                    case false when oldActionKeyword != Query.GlobalPluginWildcardSign:
-                        settingsViewModel.UpdateActionKeyword(CurrentActionKeyword.KeywordProperty,
-                            Query.GlobalPluginWildcardSign, oldActionKeyword);
-                        break;
-                    default:
-                        settingsViewModel.UpdateActionKeyword(CurrentActionKeyword.KeywordProperty,
-                            CurrentActionKeyword.Keyword, oldActionKeyword);
-                        break;
+                    case (Settings.ActionKeyword.FileContentSearchActionKeyword, true):
+                        _api.ShowMsgBox(_api.GetTranslation("plugin_explorer_globalActionKeywordInvalid"));
+                        return;
+                    case (Settings.ActionKeyword.QuickAccessActionKeyword, true):
+                        _api.ShowMsgBox(_api.GetTranslation("plugin_explorer_quickaccess_globalActionKeywordInvalid"));
+                        return;
                 }
 
+            if (!KeywordEnabled || !_api.ActionKeywordAssigned(ActionKeyword))
+            {
+                DialogResult = true;
                 Close();
                 return;
             }
 
             // The keyword is not valid, so show message
-            MessageBox.Show(settingsViewModel.Context.API.GetTranslation("newActionKeywordsHasBeenAssigned"));
+            _api.ShowMsgBox(_api.GetTranslation("newActionKeywordsHasBeenAssigned"));
         }
 
+        private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+            Close();
+        }
         private void TxtCurrentActionKeyword_OnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -111,6 +93,19 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 OnDoneButtonClick(sender, e);
                 e.Handled = true;
             }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        private bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(field, value))
+                return false;
+            field = value;
+            OnPropertyChanged(propertyName);
+            return true;
         }
     }
 }

@@ -1,84 +1,65 @@
-using System;
-using System.Collections.Concurrent;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using BitFaster.Caching.Lfu;
 
 namespace Flow.Launcher.Infrastructure.Image
 {
-    [Serializable]
-    public class ImageUsage
-    {
-
-        public int usage;
-        public ImageSource imageSource;
-
-        public ImageUsage(int usage, ImageSource image)
-        {
-            this.usage = usage;
-            imageSource = image;
-        }
-    }
-
     public class ImageCache
     {
-        private const int MaxCached = 50;
-        public ConcurrentDictionary<string, ImageUsage> Data { get; private set; } = new ConcurrentDictionary<string, ImageUsage>();
-        private const int permissibleFactor = 2;
-        
-        public void Initialization(Dictionary<string, int> usage)
+        private const int MaxCached = 150;
+
+        private ConcurrentLfu<(string, bool), ImageSource> CacheManager { get; set; } = new(MaxCached);
+
+        public void Initialize(IEnumerable<(string, bool)> usage)
         {
-            foreach (var key in usage.Keys)
+            foreach (var key in usage)
             {
-                Data[key] = new ImageUsage(usage[key], null);
+                CacheManager.AddOrUpdate(key, null);
             }
         }
 
-        public ImageSource this[string path]
+        public ImageSource this[string path, bool isFullImage = false]
         {
             get
             {
-                if (Data.TryGetValue(path, out var value))
-                {
-                    value.usage++;
-                    return value.imageSource;
-                }
-
-                return null;
+                return CacheManager.TryGet((path, isFullImage), out var value) ? value : null;
             }
             set
             {
-                Data.AddOrUpdate(
-                        path,
-                        new ImageUsage(0, value),
-                        (k, v) =>
-                            {
-                                v.imageSource = value;
-                                v.usage++;
-                                return v;
-                            }
-                );
-
-                // To prevent the dictionary from drastically increasing in size by caching images, the dictionary size is not allowed to grow more than the permissibleFactor * maxCached size
-                // This is done so that we don't constantly perform this resizing operation and also maintain the image cache size at the same time
-                if (Data.Count > permissibleFactor * MaxCached)
-                {
-                    // To delete the images from the data dictionary based on the resizing of the Usage Dictionary.
-                    foreach (var key in Data.OrderBy(x => x.Value.usage).Take(Data.Count - MaxCached).Select(x => x.Key))
-                        Data.TryRemove(key, out _);
-                }
+                CacheManager.AddOrUpdate((path, isFullImage), value);
             }
         }
 
-        public bool ContainsKey(string key)
+        public async ValueTask<ImageSource> GetOrAddAsync(string key,
+            Func<(string, bool), Task<ImageSource>> valueFactory,
+            bool isFullImage = false)
         {
-            return Data.ContainsKey(key) && Data[key].imageSource != null;
+            return await CacheManager.GetOrAddAsync((key, isFullImage), valueFactory);
+        }
+
+        public bool ContainsKey(string key, bool isFullImage)
+        {
+            return CacheManager.TryGet((key, isFullImage), out _);
+        }
+
+        public bool TryGetValue(string key, bool isFullImage, out ImageSource image)
+        {
+            if (CacheManager.TryGet((key, isFullImage), out var value))
+            {
+                image = value;
+                return image != null;
+            }
+
+            image = null;
+            return false;
         }
 
         public int CacheSize()
         {
-            return Data.Count;
+            return CacheManager.Count;
         }
 
         /// <summary>
@@ -86,7 +67,14 @@ namespace Flow.Launcher.Infrastructure.Image
         /// </summary>
         public int UniqueImagesInCache()
         {
-            return Data.Values.Select(x => x.imageSource).Distinct().Count();
+            return CacheManager.Select(x => x.Value)
+                .Distinct()
+                .Count();
+        }
+
+        public IEnumerable<KeyValuePair<(string, bool), ImageSource>> EnumerateEntries()
+        {
+            return CacheManager;
         }
     }
 }

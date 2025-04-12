@@ -2,12 +2,13 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFramework>net7.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <Nullable>warnings</Nullable>
     <ApplicationIcon />
     <StartupObject />
   </PropertyGroup>
@@ -24,6 +25,12 @@
     <None Include="plugin.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="EverythingSDK\x64\Everything.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="EverythingSDK\x86\Everything.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   
   <ItemGroup>
@@ -38,7 +45,9 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="System.Data.OleDb" Version="4.7.1" />
+    <!-- Do not upgrade System.Data.OleDb since we are .Net7.0 -->
+    <PackageReference Include="System.Data.OleDb" Version="8.0.1" />
+    <PackageReference Include="System.Linq.Async" Version="6.0.1" />
     <PackageReference Include="tlbimp-Microsoft.Search.Interop" Version="1.0.0" />
   </ItemGroup>
 
@@ -47,5 +56,5 @@
     <ProjectReference Include="..\..\Flow.Launcher.Infrastructure\Flow.Launcher.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj" />
   </ItemGroup>
-
+  
 </Project>

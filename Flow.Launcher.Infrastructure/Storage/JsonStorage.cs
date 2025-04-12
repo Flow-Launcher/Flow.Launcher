@@ -2,71 +2,172 @@
 using System.Globalization;
 using System.IO;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedCommands;
+
+#nullable enable
 
 namespace Flow.Launcher.Infrastructure.Storage
 {
     /// <summary>
     /// Serialize object using json format.
     /// </summary>
-    public class JsonStorage<T> where T : new()
+    public class JsonStorage<T> : ISavable where T : new()
     {
-        protected T _data;
+        protected T? Data;
+
         // need a new directory name
-        public const string DirectoryName = "Settings";
+        public const string DirectoryName = Constant.Settings;
         public const string FileSuffix = ".json";
-        public string FilePath { get; set; }
-        public string DirectoryPath { get; set; }
 
+        protected string FilePath { get; init; } = null!;
 
-        public T Load()
+        private string TempFilePath => $"{FilePath}.tmp";
+
+        private string BackupFilePath => $"{FilePath}.bak";
+
+        protected string DirectoryPath { get; init; } = null!;
+
+        // Let the derived class to set the file path
+        protected JsonStorage()
         {
+        }
+
+        public JsonStorage(string filePath)
+        {
+            FilePath = filePath;
+            DirectoryPath = Path.GetDirectoryName(filePath) ?? throw new ArgumentException("Invalid file path");
+
+            FilesFolders.ValidateDirectory(DirectoryPath);
+        }
+
+        public async Task<T> LoadAsync()
+        {
+            if (Data != null)
+                return Data;
+
+            string? serialized = null;
+
             if (File.Exists(FilePath))
             {
-                var serialized = File.ReadAllText(FilePath);
-                if (!string.IsNullOrWhiteSpace(serialized))
+                serialized = await File.ReadAllTextAsync(FilePath);
+            }
+
+            if (!string.IsNullOrEmpty(serialized))
+            {
+                try
                 {
-                    Deserialize(serialized);
+                    Data = JsonSerializer.Deserialize<T>(serialized) ?? await LoadBackupOrDefaultAsync();
                 }
-                else
+                catch (JsonException)
                 {
-                    LoadDefault();
+                    Data = await LoadBackupOrDefaultAsync();
                 }
             }
             else
             {
-                LoadDefault();
+                Data = await LoadBackupOrDefaultAsync();
             }
-            return _data.NonNull();
+
+            return Data.NonNull();
         }
 
-        private void Deserialize(string serialized)
+        private async ValueTask<T> LoadBackupOrDefaultAsync()
         {
+            var backup = await TryLoadBackupAsync();
+
+            return backup ?? LoadDefault();
+        }
+
+        private async ValueTask<T?> TryLoadBackupAsync()
+        {
+            if (!File.Exists(BackupFilePath))
+                return default;
+
             try
             {
-                _data = JsonSerializer.Deserialize<T>(serialized);
-            }
-            catch (JsonException e)
-            {
-                LoadDefault();
-                Log.Exception($"|JsonStorage.Deserialize|Deserialize error for json <{FilePath}>", e);
-            }
+                await using var source = File.OpenRead(BackupFilePath);
+                var data = await JsonSerializer.DeserializeAsync<T>(source) ?? default;
 
-            if (_data == null)
+                if (data != null)
+                    RestoreBackup();
+
+                return data;
+            }
+            catch (JsonException)
             {
-                LoadDefault();
+                return default;
             }
         }
 
-        private void LoadDefault()
+        private void RestoreBackup()
+        {
+            Log.Info($"|JsonStorage.Load|Failed to load settings.json, {BackupFilePath} restored successfully");
+
+            if (File.Exists(FilePath))
+                File.Replace(BackupFilePath, FilePath, null);
+            else
+                File.Move(BackupFilePath, FilePath);
+        }
+
+        public T Load()
+        {
+            string? serialized = null;
+
+            if (File.Exists(FilePath))
+            {
+                serialized = File.ReadAllText(FilePath);
+            }
+
+            if (!string.IsNullOrEmpty(serialized))
+            {
+                try
+                {
+                    Data = JsonSerializer.Deserialize<T>(serialized) ?? TryLoadBackup() ?? LoadDefault();
+                }
+                catch (JsonException)
+                {
+                    Data = TryLoadBackup() ?? LoadDefault();
+                }
+            }
+            else
+            {
+                Data = TryLoadBackup() ?? LoadDefault();
+            }
+
+            return Data.NonNull();
+        }
+
+        private T LoadDefault()
         {
             if (File.Exists(FilePath))
             {
                 BackupOriginFile();
             }
 
-            _data = new T();
-            Save();
+            return new T();
+        }
+
+        private T? TryLoadBackup()
+        {
+            if (!File.Exists(BackupFilePath))
+                return default;
+
+            try
+            {
+                var data = JsonSerializer.Deserialize<T>(File.ReadAllText(BackupFilePath));
+
+                if (data != null)
+                    RestoreBackup();
+
+                return data;
+            }
+            catch (JsonException)
+            {
+                return default;
+            }
         }
 
         private void BackupOriginFile()
@@ -82,13 +183,39 @@ namespace Flow.Launcher.Infrastructure.Storage
 
         public void Save()
         {
-            string serialized = JsonSerializer.Serialize(_data, new JsonSerializerOptions() { WriteIndented = true });
+            // User may delete the directory, so we need to check it
+            FilesFolders.ValidateDirectory(DirectoryPath);
 
-            File.WriteAllText(FilePath, serialized);
+            var serialized = JsonSerializer.Serialize(Data,
+                new JsonSerializerOptions { WriteIndented = true });
+
+            File.WriteAllText(TempFilePath, serialized);
+
+            AtomicWriteSetting();
+        }
+
+        public async Task SaveAsync()
+        {
+            // User may delete the directory, so we need to check it
+            FilesFolders.ValidateDirectory(DirectoryPath);
+
+            await using var tempOutput = File.OpenWrite(TempFilePath);
+            await JsonSerializer.SerializeAsync(tempOutput, Data,
+                new JsonSerializerOptions { WriteIndented = true });
+            AtomicWriteSetting();
+        }
+
+        private void AtomicWriteSetting()
+        {
+            if (!File.Exists(FilePath))
+            {
+                File.Move(TempFilePath, FilePath);
+            }
+            else
+            {
+                var finalFilePath = new FileInfo(FilePath).LinkTarget ?? FilePath;
+                File.Replace(TempFilePath, finalFilePath, BackupFilePath);
+            }
         }
     }
-
-    [Obsolete("Deprecated as of Flow Launcher v1.8.0, on 2021.06.21. " +
-        "This is used only for Everything plugin v1.4.9 or below backwards compatibility")]
-    public class JsonStrorage<T> : JsonStorage<T> where T : new() { }
 }

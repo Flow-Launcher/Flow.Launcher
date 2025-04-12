@@ -6,6 +6,6 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
 {
     public abstract class SuggestionSource
     {
-        public abstract Task<List<string>> Suggestions(string query, CancellationToken token);
+        public abstract Task<List<string>> SuggestionsAsync(string query, CancellationToken token);
     }
 }

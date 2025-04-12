@@ -1,19 +1,9 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29806.167
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flow.Launcher.Test", "Flow.Launcher.Test\Flow.Launcher.Test.csproj", "{FF742965-9A80-41A5-B042-D6C7D3A21708}"
-	ProjectSection(ProjectDependencies) = postProject
-		{DB90F671-D861-46BB-93A3-F1304F5BA1C5} = {DB90F671-D861-46BB-93A3-F1304F5BA1C5}
-	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flow.Launcher.Plugin", "Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj", "{8451ECDD-2EA4-4966-BB0A-7BBC40138E80}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{3A73F5A7-0335-40D8-BF7C-F20BE5D0BA87}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flow.Launcher", "Flow.Launcher\Flow.Launcher.csproj", "{DB90F671-D861-46BB-93A3-F1304F5BA1C5}"
 	ProjectSection(ProjectDependencies) = postProject
-		{1EE20B48-82FB-48A2-8086-675D6DDAB4F0} = {1EE20B48-82FB-48A2-8086-675D6DDAB4F0}
 		{0B9DE348-9361-4940-ADB6-F5953BFFCCEC} = {0B9DE348-9361-4940-ADB6-F5953BFFCCEC}
 		{4792A74A-0CEA-4173-A8B2-30E6764C6217} = {4792A74A-0CEA-4173-A8B2-30E6764C6217}
 		{FDB3555B-58EF-4AE6-B5F1-904719637AB4} = {FDB3555B-58EF-4AE6-B5F1-904719637AB4}
@@ -23,9 +13,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flow.Launcher", "Flow.Launc
 		{9B130CC5-14FB-41FF-B310-0A95B6894C37} = {9B130CC5-14FB-41FF-B310-0A95B6894C37}
 		{FDED22C8-B637-42E8-824A-63B5B6E05A3A} = {FDED22C8-B637-42E8-824A-63B5B6E05A3A}
 		{A3DCCBCA-ACC1-421D-B16E-210896234C26} = {A3DCCBCA-ACC1-421D-B16E-210896234C26}
+		{5043CECE-E6A7-4867-9CBE-02D27D83747A} = {5043CECE-E6A7-4867-9CBE-02D27D83747A}
 		{403B57F2-1856-4FC7-8A24-36AB346B763E} = {403B57F2-1856-4FC7-8A24-36AB346B763E}
 		{588088F4-3262-4F9F-9663-A05DE12534C3} = {588088F4-3262-4F9F-9663-A05DE12534C3}
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flow.Launcher.Test", "Flow.Launcher.Test\Flow.Launcher.Test.csproj", "{FF742965-9A80-41A5-B042-D6C7D3A21708}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DB90F671-D861-46BB-93A3-F1304F5BA1C5} = {DB90F671-D861-46BB-93A3-F1304F5BA1C5}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flow.Launcher.Plugin", "Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj", "{8451ECDD-2EA4-4966-BB0A-7BBC40138E80}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{3A73F5A7-0335-40D8-BF7C-F20BE5D0BA87}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flow.Launcher.Infrastructure", "Flow.Launcher.Infrastructure\Flow.Launcher.Infrastructure.csproj", "{4FD29318-A8AB-4D8F-AA47-60BC241B8DA3}"
 EndProject
@@ -35,8 +35,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flow.Launcher.Plugin.Progra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flow.Launcher.Plugin.WebSearch", "Plugins\Flow.Launcher.Plugin.WebSearch\Flow.Launcher.Plugin.WebSearch.csproj", "{403B57F2-1856-4FC7-8A24-36AB346B763E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flow.Launcher.Plugin.ControlPanel", "Plugins\Flow.Launcher.Plugin.ControlPanel\Flow.Launcher.Plugin.ControlPanel.csproj", "{1EE20B48-82FB-48A2-8086-675D6DDAB4F0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flow.Launcher.Plugin.PluginIndicator", "Plugins\Flow.Launcher.Plugin.PluginIndicator\Flow.Launcher.Plugin.PluginIndicator.csproj", "{FDED22C8-B637-42E8-824A-63B5B6E05A3A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flow.Launcher.Plugin.Sys", "Plugins\Flow.Launcher.Plugin.Sys\Flow.Launcher.Plugin.Sys.csproj", "{0B9DE348-9361-4940-ADB6-F5953BFFCCEC}"
@@ -45,15 +43,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flow.Launcher.Plugin.Url", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FFD651C7-0546-441F-BC8C-D4EE8FD01EA7}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		appveyor.yml = appveyor.yml
+		Directory.Build.props = Directory.Build.props
 		Directory.Build.targets = Directory.Build.targets
 		Scripts\flowlauncher.nuspec = Scripts\flowlauncher.nuspec
 		LICENSE = LICENSE
 		Scripts\post_build.ps1 = Scripts\post_build.ps1
 		README.md = README.md
 		SolutionAssemblyInfo.cs = SolutionAssemblyInfo.cs
+		Settings.XamlStyler = Settings.XamlStyler
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flow.Launcher.Plugin.Shell", "Plugins\Flow.Launcher.Plugin.Shell\Flow.Launcher.Plugin.Shell.csproj", "{C21BFF9C-2C99-4B5F-B7C9-A5E6DDDB37B0}"
@@ -68,6 +69,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flow.Launcher.Plugin.Proces
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flow.Launcher.Plugin.PluginsManager", "Plugins\Flow.Launcher.Plugin.PluginsManager\Flow.Launcher.Plugin.PluginsManager.csproj", "{4792A74A-0CEA-4173-A8B2-30E6764C6217}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flow.Launcher.Plugin.WindowsSettings", "Plugins\Flow.Launcher.Plugin.WindowsSettings\Flow.Launcher.Plugin.WindowsSettings.csproj", "{5043CECE-E6A7-4867-9CBE-02D27D83747A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,7 +82,7 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{FF742965-9A80-41A5-B042-D6C7D3A21708}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FF742965-9A80-41A5-B042-D6C7D3A21708}.Debug|Any CPU.Build.0 = Debug|Any CPU
+                {FF742965-9A80-41A5-B042-D6C7D3A21708}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF742965-9A80-41A5-B042-D6C7D3A21708}.Debug|x64.ActiveCfg = Debug|Any CPU
 		{FF742965-9A80-41A5-B042-D6C7D3A21708}.Debug|x64.Build.0 = Debug|Any CPU
 		{FF742965-9A80-41A5-B042-D6C7D3A21708}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -162,18 +165,6 @@ Global
 		{403B57F2-1856-4FC7-8A24-36AB346B763E}.Release|x64.Build.0 = Release|Any CPU
 		{403B57F2-1856-4FC7-8A24-36AB346B763E}.Release|x86.ActiveCfg = Release|Any CPU
 		{403B57F2-1856-4FC7-8A24-36AB346B763E}.Release|x86.Build.0 = Release|Any CPU
-		{1EE20B48-82FB-48A2-8086-675D6DDAB4F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1EE20B48-82FB-48A2-8086-675D6DDAB4F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1EE20B48-82FB-48A2-8086-675D6DDAB4F0}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{1EE20B48-82FB-48A2-8086-675D6DDAB4F0}.Debug|x64.Build.0 = Debug|Any CPU
-		{1EE20B48-82FB-48A2-8086-675D6DDAB4F0}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{1EE20B48-82FB-48A2-8086-675D6DDAB4F0}.Debug|x86.Build.0 = Debug|Any CPU
-		{1EE20B48-82FB-48A2-8086-675D6DDAB4F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1EE20B48-82FB-48A2-8086-675D6DDAB4F0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1EE20B48-82FB-48A2-8086-675D6DDAB4F0}.Release|x64.ActiveCfg = Release|Any CPU
-		{1EE20B48-82FB-48A2-8086-675D6DDAB4F0}.Release|x64.Build.0 = Release|Any CPU
-		{1EE20B48-82FB-48A2-8086-675D6DDAB4F0}.Release|x86.ActiveCfg = Release|Any CPU
-		{1EE20B48-82FB-48A2-8086-675D6DDAB4F0}.Release|x86.Build.0 = Release|Any CPU
 		{FDED22C8-B637-42E8-824A-63B5B6E05A3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FDED22C8-B637-42E8-824A-63B5B6E05A3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDED22C8-B637-42E8-824A-63B5B6E05A3A}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -283,6 +274,18 @@ Global
 		{4792A74A-0CEA-4173-A8B2-30E6764C6217}.Release|x64.Build.0 = Release|Any CPU
 		{4792A74A-0CEA-4173-A8B2-30E6764C6217}.Release|x86.ActiveCfg = Release|Any CPU
 		{4792A74A-0CEA-4173-A8B2-30E6764C6217}.Release|x86.Build.0 = Release|Any CPU
+		{5043CECE-E6A7-4867-9CBE-02D27D83747A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5043CECE-E6A7-4867-9CBE-02D27D83747A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5043CECE-E6A7-4867-9CBE-02D27D83747A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5043CECE-E6A7-4867-9CBE-02D27D83747A}.Debug|x64.Build.0 = Debug|Any CPU
+		{5043CECE-E6A7-4867-9CBE-02D27D83747A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5043CECE-E6A7-4867-9CBE-02D27D83747A}.Debug|x86.Build.0 = Debug|Any CPU
+		{5043CECE-E6A7-4867-9CBE-02D27D83747A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5043CECE-E6A7-4867-9CBE-02D27D83747A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5043CECE-E6A7-4867-9CBE-02D27D83747A}.Release|x64.ActiveCfg = Release|Any CPU
+		{5043CECE-E6A7-4867-9CBE-02D27D83747A}.Release|x64.Build.0 = Release|Any CPU
+		{5043CECE-E6A7-4867-9CBE-02D27D83747A}.Release|x86.ActiveCfg = Release|Any CPU
+		{5043CECE-E6A7-4867-9CBE-02D27D83747A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -290,7 +293,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{FDB3555B-58EF-4AE6-B5F1-904719637AB4} = {3A73F5A7-0335-40D8-BF7C-F20BE5D0BA87}
 		{403B57F2-1856-4FC7-8A24-36AB346B763E} = {3A73F5A7-0335-40D8-BF7C-F20BE5D0BA87}
-		{1EE20B48-82FB-48A2-8086-675D6DDAB4F0} = {3A73F5A7-0335-40D8-BF7C-F20BE5D0BA87}
 		{FDED22C8-B637-42E8-824A-63B5B6E05A3A} = {3A73F5A7-0335-40D8-BF7C-F20BE5D0BA87}
 		{0B9DE348-9361-4940-ADB6-F5953BFFCCEC} = {3A73F5A7-0335-40D8-BF7C-F20BE5D0BA87}
 		{A3DCCBCA-ACC1-421D-B16E-210896234C26} = {3A73F5A7-0335-40D8-BF7C-F20BE5D0BA87}
@@ -300,6 +302,7 @@ Global
 		{F9C4C081-4CC3-4146-95F1-E102B4E10A5F} = {3A73F5A7-0335-40D8-BF7C-F20BE5D0BA87}
 		{588088F4-3262-4F9F-9663-A05DE12534C3} = {3A73F5A7-0335-40D8-BF7C-F20BE5D0BA87}
 		{4792A74A-0CEA-4173-A8B2-30E6764C6217} = {3A73F5A7-0335-40D8-BF7C-F20BE5D0BA87}
+		{5043CECE-E6A7-4867-9CBE-02D27D83747A} = {3A73F5A7-0335-40D8-BF7C-F20BE5D0BA87}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F26ACB50-3F6C-4907-B0C9-1ADACC1D0DED}

@@ -17,10 +17,14 @@ namespace Flow.Launcher.Plugin.Shell
         private void CMDSetting_OnLoaded(object sender, RoutedEventArgs re)
         {
             ReplaceWinR.IsChecked = _settings.ReplaceWinR;
+
+            CloseShellAfterPress.IsChecked = _settings.CloseShellAfterPress;
             
             LeaveShellOpen.IsChecked = _settings.LeaveShellOpen;
             
             AlwaysRunAsAdministrator.IsChecked = _settings.RunAsAdministrator;
+
+            UseWindowsTerminal.IsChecked = _settings.UseWindowsTerminal;
             
             LeaveShellOpen.IsEnabled = _settings.Shell != Shell.RunCommand;
             
@@ -38,14 +42,30 @@ namespace Flow.Launcher.Plugin.Shell
                 _settings.ShowOnlyMostUsedCMDsNumber = (int)ShowOnlyMostUsedCMDsNumber.SelectedItem;
             }
 
+            CloseShellAfterPress.Checked += (o, e) =>
+            {
+                _settings.CloseShellAfterPress = true;
+                LeaveShellOpen.IsChecked = false;
+                LeaveShellOpen.IsEnabled = false;
+            };
+
+            CloseShellAfterPress.Unchecked += (o, e) =>
+            {
+                _settings.CloseShellAfterPress = false;
+                LeaveShellOpen.IsEnabled = true;
+            };
+
             LeaveShellOpen.Checked += (o, e) =>
             {
                 _settings.LeaveShellOpen = true;
+                CloseShellAfterPress.IsChecked = false;
+                CloseShellAfterPress.IsEnabled = false;
             };
 
             LeaveShellOpen.Unchecked += (o, e) =>
             {
                 _settings.LeaveShellOpen = false;
+                CloseShellAfterPress.IsEnabled = true;
             };
 
             AlwaysRunAsAdministrator.Checked += (o, e) =>
@@ -58,6 +78,16 @@ namespace Flow.Launcher.Plugin.Shell
                 _settings.RunAsAdministrator = false;
             };
 
+            UseWindowsTerminal.Checked += (o, e) =>
+            {
+                _settings.UseWindowsTerminal = true;
+            };
+
+            UseWindowsTerminal.Unchecked += (o, e) =>
+            {
+                _settings.UseWindowsTerminal = false;
+            };
+
             ReplaceWinR.Checked += (o, e) =>
             {
                 _settings.ReplaceWinR = true;
@@ -68,10 +98,23 @@ namespace Flow.Launcher.Plugin.Shell
                 _settings.ReplaceWinR = false;
             };
 
-            ShellComboBox.SelectedIndex = (int) _settings.Shell;
+            ShellComboBox.SelectedIndex = _settings.Shell switch
+            {
+                Shell.Cmd => 0,
+                Shell.Powershell => 1,
+                Shell.Pwsh => 2,
+                _ => ShellComboBox.Items.Count - 1
+            };
+
             ShellComboBox.SelectionChanged += (o, e) =>
             {
-                _settings.Shell = (Shell) ShellComboBox.SelectedIndex;
+                _settings.Shell = ShellComboBox.SelectedIndex switch
+                {
+                    0 => Shell.Cmd,
+                    1 => Shell.Powershell,
+                    2 => Shell.Pwsh,
+                    _ => Shell.RunCommand
+                };
                 LeaveShellOpen.IsEnabled = _settings.Shell != Shell.RunCommand;
             };
 

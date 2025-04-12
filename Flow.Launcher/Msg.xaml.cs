@@ -1,11 +1,9 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Image;
 
@@ -13,14 +11,14 @@ namespace Flow.Launcher
 {
     public partial class Msg : Window
     {
-        Storyboard fadeOutStoryboard = new Storyboard();
+        private readonly Storyboard fadeOutStoryboard = new();
         private bool closing;
 
         public Msg()
         {
             InitializeComponent();
             var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
-            var dipWorkingArea = WindowsInteropHelper.TransformPixelsToDIP(this,
+            var dipWorkingArea = Win32Helper.TransformPixelsToDIP(this,
                 screen.WorkingArea.Width,
                 screen.WorkingArea.Height);
             Left = dipWorkingArea.X - Width;
@@ -38,8 +36,14 @@ namespace Flow.Launcher
             Storyboard.SetTargetProperty(fadeOutAnimation, new PropertyPath(TopProperty));
             fadeOutStoryboard.Children.Add(fadeOutAnimation);
 
-            imgClose.Source = ImageLoader.Load(Path.Combine(Infrastructure.Constant.ProgramDirectory, "Images\\close.png"));
+            _ = LoadImageAsync();
+            
             imgClose.MouseUp += imgClose_MouseUp;
+        }
+
+        private async System.Threading.Tasks.Task LoadImageAsync()
+        {
+            imgClose.Source = await App.API.LoadImageAsync(Path.Combine(Constant.ProgramDirectory, "Images\\close.png"));
         }
 
         void imgClose_MouseUp(object sender, MouseButtonEventArgs e)
@@ -56,7 +60,7 @@ namespace Flow.Launcher
             Close();
         }
 
-        public void Show(string title, string subTitle, string iconPath)
+        public async void Show(string title, string subTitle, string iconPath)
         {
             tbTitle.Text = title;
             tbSubTitle.Text = subTitle;
@@ -64,24 +68,26 @@ namespace Flow.Launcher
             {
                 tbSubTitle.Visibility = Visibility.Collapsed;
             }
+            
             if (!File.Exists(iconPath))
             {
-                imgIco.Source = ImageLoader.Load(Path.Combine(Constant.ProgramDirectory, "Images\\app.png"));
+                imgIco.Source = await App.API.LoadImageAsync(Path.Combine(Constant.ProgramDirectory, "Images\\app.png"));
             }
-            else {
-                imgIco.Source = ImageLoader.Load(iconPath);
+            else 
+            {
+                imgIco.Source = await App.API.LoadImageAsync(iconPath);
             }
 
             Show();
 
-            Dispatcher.InvokeAsync(async () =>
-                                   {
-                                       if (!closing)
-                                       {
-                                           closing = true;
-                                           await Dispatcher.InvokeAsync(fadeOutStoryboard.Begin);
-                                       }
-                                   });
+            await Dispatcher.InvokeAsync(async () =>
+            {
+                if (!closing)
+                {
+                    closing = true;
+                    await Dispatcher.InvokeAsync(fadeOutStoryboard.Begin);
+                }
+            });
         }
     }
 }
