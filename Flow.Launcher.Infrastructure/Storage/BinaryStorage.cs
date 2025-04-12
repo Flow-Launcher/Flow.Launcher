@@ -45,10 +45,10 @@ namespace Flow.Launcher.Infrastructure.Storage
         [Obsolete("This constructor is obsolete. Use BinaryStorage(string filename) instead.")]
         public BinaryStorage(string filename, string directoryPath = null!)
         {
-            directoryPath ??= DataLocation.CacheDirectory;
-            FilesFolders.ValidateDirectory(directoryPath);
+            DirectoryPath = directoryPath ?? DataLocation.CacheDirectory;
+            FilesFolders.ValidateDirectory(DirectoryPath);
 
-            FilePath = Path.Combine(directoryPath, $"{filename}{FileSuffix}");
+            FilePath = Path.Combine(DirectoryPath, $"{filename}{FileSuffix}");
         }
 
         public async ValueTask<T> TryLoadAsync(T defaultData)

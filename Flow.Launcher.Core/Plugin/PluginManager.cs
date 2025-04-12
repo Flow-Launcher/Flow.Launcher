@@ -37,7 +37,7 @@ namespace Flow.Launcher.Core.Plugin
 
         private static PluginsSettings Settings;
         private static List<PluginMetadata> _metadatas;
-        private static List<string> _modifiedPlugins = new();
+        private static readonly List<string> _modifiedPlugins = new();
 
         /// <summary>
         /// Directories that will hold Flow Launcher plugin directory
@@ -61,10 +61,17 @@ namespace Flow.Launcher.Core.Plugin
         /// </summary>
         public static void Save()
         {
-            foreach (var plugin in AllPlugins)
+            foreach (var pluginPair in AllPlugins)
             {
-                var savable = plugin.Plugin as ISavable;
-                savable?.Save();
+                var savable = pluginPair.Plugin as ISavable;
+                try
+                {
+                    savable?.Save();
+                }
+                catch (Exception e)
+                {
+                    API.LogException(ClassName, $"Failed to save plugin {pluginPair.Metadata.Name}", e);
+                }
             }
 
             API.SavePluginSettings();
@@ -81,14 +88,21 @@ namespace Flow.Launcher.Core.Plugin
 
         private static async Task DisposePluginAsync(PluginPair pluginPair)
         {
-            switch (pluginPair.Plugin)
+            try
             {
-                case IDisposable disposable:
-                    disposable.Dispose();
-                    break;
-                case IAsyncDisposable asyncDisposable:
-                    await asyncDisposable.DisposeAsync();
-                    break;
+                switch (pluginPair.Plugin)
+                {
+                    case IDisposable disposable:
+                        disposable.Dispose();
+                        break;
+                    case IAsyncDisposable asyncDisposable:
+                        await asyncDisposable.DisposeAsync();
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                API.LogException(ClassName, $"Failed to dispose plugin {pluginPair.Metadata.Name}", e);
             }
         }
 
@@ -292,7 +306,7 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     Title = $"{metadata.Name}: Failed to respond!",
                     SubTitle = "Select this result for more info",
-                    IcoPath = Flow.Launcher.Infrastructure.Constant.ErrorIcon,
+                    IcoPath = Constant.ErrorIcon,
                     PluginDirectory = metadata.PluginDirectory,
                     ActionKeywordAssigned = query.ActionKeyword,
                     PluginID = metadata.ID,
@@ -369,8 +383,8 @@ namespace Flow.Launcher.Core.Plugin
         {
             // this method is only checking for action keywords (defined as not '*') registration
             // hence the actionKeyword != Query.GlobalPluginWildcardSign logic
-            return actionKeyword != Query.GlobalPluginWildcardSign
-                   && NonGlobalPlugins.ContainsKey(actionKeyword);
+            return actionKeyword != Query.GlobalPluginWildcardSign 
+                && NonGlobalPlugins.ContainsKey(actionKeyword);
         }
 
         /// <summary>
