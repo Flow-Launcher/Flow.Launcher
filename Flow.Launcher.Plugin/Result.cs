@@ -306,7 +306,8 @@ namespace Flow.Launcher.Plugin
                 ProgressBarColor = ProgressBarColor,
                 Preview = Preview,
                 AddSelectedCount = AddSelectedCount,
-                RecordKey = RecordKey
+                RecordKey = RecordKey,
+                ShowBadge = ShowBadge,
             };
         }
 
