@@ -494,7 +494,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     {
         SelectedQueryBoxFont = new FontFamily(DefaultFont);
         SelectedQueryBoxFontFaces = new FamilyTypeface { Stretch = FontStretches.Normal, Weight = FontWeights.Normal, Style = FontStyles.Normal };
-        QueryBoxFontSize = 20;
+        QueryBoxFontSize = 18;
 
         SelectedResultFont = new FontFamily(DefaultFont);
         SelectedResultFontFaces = new FamilyTypeface { Stretch = FontStretches.Normal, Weight = FontWeights.Normal, Style = FontStyles.Normal };
