@@ -303,6 +303,10 @@
     <system:String x:Key="useGlyphUI">Використання іконок Segoe Fluent</system:String>
     <system:String x:Key="useGlyphUIEffect">Використання іконок Segoe Fluent Icons для результатів запитів, де це підтримується</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Натисніть клавішу</system:String>
+    <system:String x:Key="showBadges">Show Result Badges</system:String>
+    <system:String x:Key="showBadgesToolTip">Show badges for query results where supported</system:String>
+    <system:String x:Key="showBadgesGlobalOnly">Show Result Badges for Global Query Only</system:String>
+    <system:String x:Key="showBadgesGlobalOnlyToolTip">Show badges for global query results only</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP-проксі</system:String>
