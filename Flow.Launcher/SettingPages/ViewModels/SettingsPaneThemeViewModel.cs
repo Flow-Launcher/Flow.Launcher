@@ -23,7 +23,7 @@ namespace Flow.Launcher.SettingPages.ViewModels;
 public partial class SettingsPaneThemeViewModel : BaseModel
 {
     private string DefaultFont = Settings.GetSystemDefaultFont();
-    public string BackdropSubText => !Win32Helper.IsBackdropSupported() ? App.API.GetTranslation("BackdropTypeDisabledToolTip") : ""; 
+    public string BackdropSubText => !Win32Helper.IsBackdropSupported() ? App.API.GetTranslation("BackdropTypeDisabledToolTip") : App.API.GetTranslation("BackdropTypeToolTip"); 
     public Settings Settings { get; }
     private readonly Theme _theme = Ioc.Default.GetRequiredService<Theme>();
 
