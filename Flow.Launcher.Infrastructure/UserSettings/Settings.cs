@@ -39,31 +39,48 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
 
         private string language = Constant.SystemLanguageCode;
+        private static readonly Dictionary<string, string> LanguageToNotoSans = new()
+        {
+            { "ko", "Noto Sans KR" },
+            { "ja", "Noto Sans JP" },
+            { "zh-CN", "Noto Sans SC" },
+            { "zh-SG", "Noto Sans SC" },
+            { "zh-Hans", "Noto Sans SC" },
+            { "zh-TW", "Noto Sans TC" },
+            { "zh-HK", "Noto Sans TC" },
+            { "zh-MO", "Noto Sans TC" },
+            { "zh-Hant", "Noto Sans TC" },
+            { "th", "Noto Sans Thai" },
+            { "ar", "Noto Sans Arabic" },
+            { "he", "Noto Sans Hebrew" },
+            { "hi", "Noto Sans Devanagari" },
+            { "bn", "Noto Sans Bengali" },
+            { "ta", "Noto Sans Tamil" },
+            { "el", "Noto Sans Greek" },
+            { "ru", "Noto Sans" },
+            { "en", "Noto Sans" },
+            { "fr", "Noto Sans" },
+            { "de", "Noto Sans" },
+            { "es", "Noto Sans" },
+            { "pt", "Noto Sans" }
+        };
+
         public static string GetSystemDefaultFont()
         {
             try
             {
-                var systemLanguage = CultureInfo.CurrentCulture.Name;
-                var font = SystemFonts.MessageFontFamily;
+                var culture = CultureInfo.CurrentCulture;
+                var language = culture.Name; // e.g., "zh-TW"
+                var langPrefix = language.Split('-')[0]; // e.g., "zh"
 
-                // Set Noto Sans as default font for specific languages
-                switch (systemLanguage)
+                // First, try to find by full name, and if not found, fallback to prefix
+                if (TryGetNotoFont(language, out var notoFont) || TryGetNotoFont(langPrefix, out notoFont))
                 {
-                    case "ko-KR":
-                        if (Fonts.SystemFontFamilies.Any(f => f.Source.Equals("Noto Sans KR")))
-                            return "Noto Sans KR";
-                        break;
-                    case "ja-JP":
-                        if (Fonts.SystemFontFamilies.Any(f => f.Source.Equals("Noto Sans JP")))
-                            return "Noto Sans JP";
-                        break;
-                    case "zh-CN":
-                    case "zh-Hans":
-                        if (Fonts.SystemFontFamilies.Any(f => f.Source.Equals("Noto Sans SC")))
-                            return "Noto Sans SC";
-                        break;
+                    if (Fonts.SystemFontFamilies.Any(f => f.Source.Equals(notoFont)))
+                        return notoFont;
                 }
 
+                var font = SystemFonts.MessageFontFamily;
                 if (font.FamilyNames.TryGetValue(System.Windows.Markup.XmlLanguage.GetLanguage("en-US"), out var englishName))
                 {
                     return englishName;
@@ -75,6 +92,11 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             {
                 return "Segoe UI";
             }
+        }
+
+        private static bool TryGetNotoFont(string langKey, out string notoFont)
+        {
+            return LanguageToNotoSans.TryGetValue(langKey, out notoFont);
         }
         
         private string _theme = Constant.DefaultTheme;
@@ -527,4 +549,5 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         Mica,
         MicaAlt
     }
+    
 }
