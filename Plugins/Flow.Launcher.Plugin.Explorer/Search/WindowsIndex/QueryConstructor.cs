@@ -60,7 +60,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         ///</summary>
         public string Directory(ReadOnlySpan<char> path, ReadOnlySpan<char> searchString = default, bool recursive = false)
         {
-            var queryConstraint = searchString.IsWhiteSpace() ? "" : $"AND ({OrderIdentifier} LIKE '{searchString}%' OR CONTAINS({OrderIdentifier},'\"{searchString}*\"'))";
+            var queryConstraint = searchString.IsWhiteSpace() ? "" : $"AND (System.FileName LIKE '{searchString}%' OR CONTAINS(System.FileName,'\"{searchString}*\"'))";
 
             var scopeConstraint = recursive
                 ? RecursiveDirectoryConstraint(path)
