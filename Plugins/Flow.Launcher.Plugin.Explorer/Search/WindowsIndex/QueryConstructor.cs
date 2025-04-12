@@ -9,13 +9,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         private static Regex _specialCharacterMatcher = new(@"[\@\＠\#\＃\&\＆＊_;,\%\|\!\(\)\{\}\[\]\^\~\?\\""\/\:\=\-]+", RegexOptions.Compiled);
         private static Regex _multiWhiteSpacesMatcher = new(@"\s+", RegexOptions.Compiled);
 
-        private Settings settings { get; }
+        private Settings Settings { get; }
 
         private const string SystemIndex = "SystemIndex";
 
         public QueryConstructor(Settings settings)
         {
-            this.settings = settings;
+            Settings = settings;
         }
 
         public CSearchQueryHelper CreateBaseQuery()
@@ -23,7 +23,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             var baseQuery = CreateQueryHelper();
 
             // Set the number of results we want. Don't set this property if all results are needed.
-            baseQuery.QueryMaxResults = settings.MaxResult;
+            baseQuery.QueryMaxResults = Settings.MaxResult;
 
             // Set list of columns we want to display, getting the path presently
             baseQuery.QuerySelectColumns = "System.FileName, System.ItemUrl, System.ItemType";
@@ -37,7 +37,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             return baseQuery;
         }
 
-        internal CSearchQueryHelper CreateQueryHelper()
+        internal static CSearchQueryHelper CreateQueryHelper()
         {
             // This uses the Microsoft.Search.Interop assembly
             // Throws COMException if Windows Search service is not running/disabled, this needs to be caught
@@ -66,7 +66,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 ? RecursiveDirectoryConstraint(path)
                 : TopLevelDirectoryConstraint(path);
 
-            var query = $"SELECT TOP {settings.MaxResult} {CreateBaseQuery().QuerySelectColumns} FROM {SystemIndex} WHERE {scopeConstraint} {queryConstraint} ORDER BY {OrderIdentifier}";
+            var query = $"SELECT TOP {Settings.MaxResult} {CreateBaseQuery().QuerySelectColumns} FROM {SystemIndex} WHERE {scopeConstraint} {queryConstraint} ORDER BY {OrderIdentifier}";
 
             return query;
         }
@@ -133,7 +133,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         public string FileContent(ReadOnlySpan<char> userSearchString)
         {
             string query =
-                $"SELECT TOP {settings.MaxResult} {CreateBaseQuery().QuerySelectColumns} FROM {SystemIndex} WHERE {RestrictionsForFileContentSearch(userSearchString)} AND {RestrictionsForAllFilesAndFoldersSearch} ORDER BY {OrderIdentifier}";
+                $"SELECT TOP {Settings.MaxResult} {CreateBaseQuery().QuerySelectColumns} FROM {SystemIndex} WHERE {RestrictionsForFileContentSearch(userSearchString)} AND {RestrictionsForAllFilesAndFoldersSearch} ORDER BY {OrderIdentifier}";
 
             return query;
         }
