@@ -3,8 +3,10 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
+using System.Linq;
 using System.Text.Json.Serialization;
 using System.Windows;
+using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Logger;
@@ -41,12 +43,32 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         {
             try
             {
+                var systemLanguage = CultureInfo.CurrentCulture.Name;
                 var font = SystemFonts.MessageFontFamily;
-                
+
+                // Set Noto Sans as default font for specific languages
+                switch (systemLanguage)
+                {
+                    case "ko-KR":
+                        if (Fonts.SystemFontFamilies.Any(f => f.Source.Equals("Noto Sans KR")))
+                            return "Noto Sans KR";
+                        break;
+                    case "ja-JP":
+                        if (Fonts.SystemFontFamilies.Any(f => f.Source.Equals("Noto Sans JP")))
+                            return "Noto Sans JP";
+                        break;
+                    case "zh-CN":
+                    case "zh-Hans":
+                        if (Fonts.SystemFontFamilies.Any(f => f.Source.Equals("Noto Sans SC")))
+                            return "Noto Sans SC";
+                        break;
+                }
+
                 if (font.FamilyNames.TryGetValue(System.Windows.Markup.XmlLanguage.GetLanguage("en-US"), out var englishName))
                 {
                     return englishName;
                 }
+
                 return font.Source ?? "Segoe UI";
             }
             catch
