@@ -32,6 +32,8 @@
     <!--  IsSynchronizedWithCurrentItem: http://stackoverflow.com/a/7833798/2833083  -->
 
     <ListBox.Resources>
+        <converter:SizeRatioConverter x:Key="SizeRatioConverter" />
+        <converter:BadgePositionConverter x:Key="BadgePositionConverter" />
         <converter:IconRadiusConverter x:Key="IconRadiusConverter" />
         <converter:DiameterToCenterPointConverter x:Key="DiameterToCenterPointConverter" />
     </ListBox.Resources>
@@ -136,11 +138,15 @@
 
                                     <Image
                                         x:Name="BadgeIcon"
-                                        Width="{Binding ElementName=ImageIcon, Path=ActualWidth}"
-                                        Height="{Binding ElementName=ImageIcon, Path=ActualHeight}"
+                                        Width="{Binding ElementName=ImageIcon, Path=ActualWidth, Converter={StaticResource SizeRatioConverter}, ConverterParameter=0.6}"
+                                        Height="{Binding ElementName=ImageIcon, Path=ActualWidth, Converter={StaticResource SizeRatioConverter}, ConverterParameter=0.6}"
                                         RenderOptions.BitmapScalingMode="HighQuality"
                                         Source="{Binding BadgeImage, TargetNullValue={x:Null}}"
-                                        Visibility="{Binding ShowBadge}" />
+                                        Visibility="{Binding ShowBadge}">
+                                        <Image.RenderTransform>
+                                            <TranslateTransform X="{Binding ElementName=ImageIcon, Path=ActualWidth, Converter={StaticResource BadgePositionConverter}, ConverterParameter=1}" Y="{Binding ElementName=ImageIcon, Path=ActualWidth, Converter={StaticResource BadgePositionConverter}, ConverterParameter=2}" />
+                                        </Image.RenderTransform>
+                                    </Image>
                                 </Grid>
                             </Border>
 
