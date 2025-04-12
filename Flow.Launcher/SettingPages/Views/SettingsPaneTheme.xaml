@@ -305,7 +305,7 @@
                         <StackPanel VerticalAlignment="Center" DockPanel.Dock="Left">
                             <Border
                                 Width="400"
-                                Margin="40 30 0 30"
+                                Margin="40 30 0 10"
                                 SnapsToDevicePixels="True"
                                 Style="{DynamicResource PreviewWindowBorderStyle}">
                                 <Border BorderThickness="0" Style="{DynamicResource WindowRadius}">
@@ -369,6 +369,17 @@
                                         <Border x:Name="History" Visibility="Collapsed" />
                                     </Grid>
                                 </Border>
+                            </Border>
+                            <Border
+                                Margin="0 0 0 20"
+                                Padding="8 4 8 4"
+                                HorizontalAlignment="Center"
+                                Background="#89000000"
+                                CornerRadius="4">
+                                <TextBlock
+                                    FontSize="10"
+                                    Foreground="#62FFFFFF"
+                                    Text="{DynamicResource BackdropInfo}" />
                             </Border>
                         </StackPanel>
                     </DockPanel>
