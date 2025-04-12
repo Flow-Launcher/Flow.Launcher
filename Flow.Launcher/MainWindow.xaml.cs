@@ -291,15 +291,15 @@ namespace Flow.Launcher
         {
             if (!CanClose)
             {
+                CanClose = true;
                 _notifyIcon.Visible = false;
                 App.API.SaveAppAllSettings();
                 e.Cancel = true;
                 await ImageLoader.WaitSaveAsync();
                 await PluginManager.DisposePluginsAsync();
                 Notification.Uninstall();
-                // After plugins are all disposed, we can close the main window
-                CanClose = true;
-                // Use this instead of Close() to avoid InvalidOperationException when calling Close() in OnClosing event
+                // After plugins are all disposed, we shutdown application to close app
+                // We use this instead of Close() to avoid InvalidOperationException when calling Close() in OnClosing event
                 Application.Current.Shutdown();
             }
         }

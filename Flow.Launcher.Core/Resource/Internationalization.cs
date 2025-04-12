@@ -22,8 +22,8 @@ namespace Flow.Launcher.Core.Resource
         private const string DefaultFile = "en.xaml";
         private const string Extension = ".xaml";
         private readonly Settings _settings;
-        private readonly List<string> _languageDirectories = new List<string>();
-        private readonly List<ResourceDictionary> _oldResources = new List<ResourceDictionary>();
+        private readonly List<string> _languageDirectories = new();
+        private readonly List<ResourceDictionary> _oldResources = new();
         private readonly string SystemLanguageCode;
 
         public Internationalization(Settings settings)
@@ -144,7 +144,7 @@ namespace Flow.Launcher.Core.Resource
             _settings.Language = isSystem ? Constant.SystemLanguageCode : language.LanguageCode;
         }
 
-        private Language GetLanguageByLanguageCode(string languageCode)
+        private static Language GetLanguageByLanguageCode(string languageCode)
         {
             var lowercase = languageCode.ToLower();
             var language = AvailableLanguages.GetAvailableLanguages().FirstOrDefault(o => o.LanguageCode.ToLower() == lowercase);
@@ -239,7 +239,7 @@ namespace Flow.Launcher.Core.Resource
             return list;
         }
 
-        public string GetTranslation(string key)
+        public static string GetTranslation(string key)
         {
             var translation = Application.Current.TryFindResource(key);
             if (translation is string)
@@ -257,8 +257,7 @@ namespace Flow.Launcher.Core.Resource
         {
             foreach (var p in PluginManager.GetPluginsForInterface<IPluginI18n>())
             {
-                var pluginI18N = p.Plugin as IPluginI18n;
-                if (pluginI18N == null) return;
+                if (p.Plugin is not IPluginI18n pluginI18N) return;
                 try
                 {
                     p.Metadata.Name = pluginI18N.GetTranslatedPluginTitle();
@@ -272,11 +271,11 @@ namespace Flow.Launcher.Core.Resource
             }
         }
 
-        public string LanguageFile(string folder, string language)
+        private static string LanguageFile(string folder, string language)
         {
             if (Directory.Exists(folder))
             {
-                string path = Path.Combine(folder, language);
+                var path = Path.Combine(folder, language);
                 if (File.Exists(path))
                 {
                     return path;
@@ -284,7 +283,7 @@ namespace Flow.Launcher.Core.Resource
                 else
                 {
                     Log.Error($"|Internationalization.LanguageFile|Language path can't be found <{path}>");
-                    string english = Path.Combine(folder, DefaultFile);
+                    var english = Path.Combine(folder, DefaultFile);
                     if (File.Exists(english))
                     {
                         return english;
