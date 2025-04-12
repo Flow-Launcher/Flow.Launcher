@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin;
-using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.Storage
 {
@@ -19,7 +14,6 @@ namespace Flow.Launcher.Storage
 
         [JsonInclude, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Dictionary<string, int> records { get; private set; }
-
 
         public UserSelectedRecord()
         {
@@ -50,16 +44,38 @@ namespace Flow.Launcher.Storage
 
         private static int GenerateResultHashCode(Result result)
         {
-            int hashcode = GenerateStaticHashCode(result.Title);
-            return GenerateStaticHashCode(result.SubTitle, hashcode);
+            if (string.IsNullOrEmpty(result.RecordKey))
+            {
+                int hashcode = GenerateStaticHashCode(result.Title);
+                return GenerateStaticHashCode(result.SubTitle, hashcode);
+            }
+            else
+            {
+                return GenerateStaticHashCode(result.RecordKey);
+            }
         }
 
         private static int GenerateQueryAndResultHashCode(Query query, Result result)
         {
+            // query is null when user select the context menu item directly of one item from query list
+            // so we only need to consider the result
+            if (query == null)
+            {
+                return GenerateResultHashCode(result);
+            }
+
             int hashcode = GenerateStaticHashCode(query.ActionKeyword);
             hashcode = GenerateStaticHashCode(query.Search, hashcode);
-            hashcode = GenerateStaticHashCode(result.Title, hashcode);
-            hashcode = GenerateStaticHashCode(result.SubTitle, hashcode);
+
+            if (string.IsNullOrEmpty(result.RecordKey))
+            {
+                hashcode = GenerateStaticHashCode(result.Title, hashcode);
+                hashcode = GenerateStaticHashCode(result.SubTitle, hashcode);
+            }
+            else
+            {
+                hashcode = GenerateStaticHashCode(result.RecordKey, hashcode);
+            }
 
             return hashcode;
         }

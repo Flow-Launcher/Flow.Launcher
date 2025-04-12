@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using Microsoft.Win32;
-using Flow.Launcher.Core.Plugin;
 
 namespace Flow.Launcher.Plugin.WebSearch
 {
@@ -16,21 +15,20 @@ namespace Flow.Launcher.Plugin.WebSearch
         private SearchSourceViewModel _viewModel;
         private string selectedNewIconImageFullPath;
 
-
         public SearchSourceSettingWindow(IList<SearchSource> sources, PluginInitContext context, SearchSource old)
         {
             _oldSearchSource = old;
             _viewModel = new SearchSourceViewModel {SearchSource = old.DeepCopy()};
-            Initilize(sources, context, Action.Edit);
+            Initialize(sources, context, Action.Edit);
         }
 
         public SearchSourceSettingWindow(IList<SearchSource> sources, PluginInitContext context)
         {
             _viewModel = new SearchSourceViewModel {SearchSource = new SearchSource()};
-            Initilize(sources, context, Action.Add);
+            Initialize(sources, context, Action.Add);
         }
 
-        private void Initilize(IList<SearchSource> sources, PluginInitContext context, Action action)
+        private async void Initialize(IList<SearchSource> sources, PluginInitContext context, Action action)
         {
             InitializeComponent();
             DataContext = _viewModel;
@@ -42,7 +40,7 @@ namespace Flow.Launcher.Plugin.WebSearch
 
             _viewModel.SetupCustomImagesDirectory();
 
-            imgPreviewIcon.Source = _viewModel.LoadPreviewIcon(_searchSource.IconPath);
+            imgPreviewIcon.Source = await _viewModel.LoadPreviewIconAsync(_searchSource.IconPath);
         }
 
         private void OnCancelButtonClick(object sender, RoutedEventArgs e)
@@ -55,17 +53,17 @@ namespace Flow.Launcher.Plugin.WebSearch
             if (string.IsNullOrEmpty(_searchSource.Title))
             {
                 var warning = _api.GetTranslation("flowlauncher_plugin_websearch_input_title");
-                MessageBox.Show(warning);
+                _context.API.ShowMsgBox(warning);
             }
             else if (string.IsNullOrEmpty(_searchSource.Url))
             {
                 var warning = _api.GetTranslation("flowlauncher_plugin_websearch_input_url");
-                MessageBox.Show(warning);
+                _context.API.ShowMsgBox(warning);
             }
             else if (string.IsNullOrEmpty(_searchSource.ActionKeyword))
             {
                 var warning = _api.GetTranslation("flowlauncher_plugin_websearch_input_action_keyword");
-                MessageBox.Show(warning);
+                _context.API.ShowMsgBox(warning);
             }
             else if (_action == Action.Add)
             {
@@ -80,10 +78,10 @@ namespace Flow.Launcher.Plugin.WebSearch
         private void AddSearchSource()
         {
             var keyword = _searchSource.ActionKeyword;
-            if (!PluginManager.ActionKeywordRegistered(keyword))
+            if (!_context.API.ActionKeywordAssigned(keyword))
             {
                 var id = _context.CurrentPluginMetadata.ID;
-                PluginManager.AddActionKeyword(id, keyword);
+                _context.API.AddActionKeyword(id, keyword);
 
                 _searchSources.Add(_searchSource);
 
@@ -92,7 +90,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             else
             {
                 var warning = _api.GetTranslation("newActionKeywordsHasBeenAssigned");
-                MessageBox.Show(warning);
+                _context.API.ShowMsgBox(warning);
             }
         }
 
@@ -100,10 +98,11 @@ namespace Flow.Launcher.Plugin.WebSearch
         {
             var newKeyword = _searchSource.ActionKeyword;
             var oldKeyword = _oldSearchSource.ActionKeyword;
-            if (!PluginManager.ActionKeywordRegistered(newKeyword) || oldKeyword == newKeyword)
+            if (!_context.API.ActionKeywordAssigned(newKeyword) || oldKeyword == newKeyword)
             {
                 var id = _context.CurrentPluginMetadata.ID;
-                PluginManager.ReplaceActionKeyword(id, oldKeyword, newKeyword);
+                _context.API.RemoveActionKeyword(id, oldKeyword);
+                _context.API.AddActionKeyword(id, newKeyword);
 
                 var index = _searchSources.IndexOf(_oldSearchSource);
                 _searchSources[index] = _searchSource;
@@ -113,7 +112,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             else
             {
                 var warning = _api.GetTranslation("newActionKeywordsHasBeenAssigned");
-                MessageBox.Show(warning);
+                _context.API.ShowMsgBox(warning);
             }
 
             if (!string.IsNullOrEmpty(selectedNewIconImageFullPath))
@@ -125,7 +124,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             }
         }
 
-        private void OnSelectIconClick(object sender, RoutedEventArgs e)
+        private async void OnSelectIconClick(object sender, RoutedEventArgs e)
         {
             const string filter = "Image files (*.jpg, *.jpeg, *.gif, *.png, *.bmp) |*.jpg; *.jpeg; *.gif; *.png; *.bmp";
             var dialog = new OpenFileDialog {InitialDirectory = Main.CustomImagesDirectory, Filter = filter};
@@ -138,9 +137,9 @@ namespace Flow.Launcher.Plugin.WebSearch
                 if (!string.IsNullOrEmpty(selectedNewIconImageFullPath))
                 {
                     if (_viewModel.ShouldProvideHint(selectedNewIconImageFullPath))
-                        MessageBox.Show(_api.GetTranslation("flowlauncher_plugin_websearch_iconpath_hint"));
+                        _context.API.ShowMsgBox(_api.GetTranslation("flowlauncher_plugin_websearch_iconpath_hint"));
                     
-                    imgPreviewIcon.Source = _viewModel.LoadPreviewIcon(selectedNewIconImageFullPath);
+                    imgPreviewIcon.Source = await _viewModel.LoadPreviewIconAsync(selectedNewIconImageFullPath);
                 }
             }
         }

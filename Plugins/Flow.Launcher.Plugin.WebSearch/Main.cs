@@ -1,22 +1,17 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Storage;
-using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.WebSearch
 {
-    public class Main : IAsyncPlugin, ISettingProvider, IPluginI18n, IResultUpdated
+    public class Main : IAsyncPlugin, ISettingProvider, IPluginI18n, IResultUpdated, IContextMenu
     {
-        private PluginInitContext _context;
+        internal static PluginInitContext _context;
 
         private Settings _settings;
         private SettingsViewModel _viewModel;
@@ -41,17 +36,18 @@ namespace Flow.Launcher.Plugin.WebSearch
             var results = new List<Result>();
 
             foreach (SearchSource searchSource in _settings.SearchSources.Where(o => (o.ActionKeyword == query.ActionKeyword ||
-                                                                  o.ActionKeyword == SearchSourceGlobalPluginWildCardSign)
-                                                && o.Enabled))
+                                                                                      o.ActionKeyword == SearchSourceGlobalPluginWildCardSign)
+                                                                                     && o.Enabled))
             {
                 string keyword = string.Empty;
                 keyword = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? query.ToString() : query.Search;
                 var title = keyword;
                 string subtitle = _context.API.GetTranslation("flowlauncher_plugin_websearch_search") + " " + searchSource.Title;
 
-                //Action Keyword match apear on top
+                // Action Keyword match apear on top
                 var score = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? scoreStandard : scoreStandard + 1;
 
+                // This populates the associated action keyword search entry
                 if (string.IsNullOrEmpty(keyword))
                 {
                     var result = new Result
@@ -61,6 +57,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                         IcoPath = searchSource.IconPath,
                         Score = score
                     };
+
                     results.Add(result);
                 }
                 else
@@ -74,17 +71,11 @@ namespace Flow.Launcher.Plugin.WebSearch
                         Score = score,
                         Action = c =>
                         {
-                            if (_settings.OpenInNewBrowser)
-                            {
-                                searchSource.Url.Replace("{q}", Uri.EscapeDataString(keyword)).NewBrowserWindow(_settings.BrowserPath);
-                            }
-                            else
-                            {
-                                searchSource.Url.Replace("{q}", Uri.EscapeDataString(keyword)).NewTabInBrowser(_settings.BrowserPath);
-                            }
+                            _context.API.OpenUrl(searchSource.Url.Replace("{q}", Uri.EscapeDataString(keyword)));
 
                             return true;
-                        }
+                        },
+                        ContextData = searchSource.Url.Replace("{q}", Uri.EscapeDataString(keyword)),
                     };
 
                     results.Add(result);
@@ -100,7 +91,6 @@ namespace Flow.Launcher.Plugin.WebSearch
 
                 if (token.IsCancellationRequested)
                     return null;
-
             }
 
             return results;
@@ -112,11 +102,11 @@ namespace Flow.Launcher.Plugin.WebSearch
             if (_settings.EnableSuggestion)
             {
                 var suggestions = await SuggestionsAsync(keyword, subtitle, searchSource, token).ConfigureAwait(false);
-                if (token.IsCancellationRequested || !suggestions.Any())
+                var enumerable = suggestions?.ToList();
+                if (token.IsCancellationRequested || enumerable is not { Count: > 0 })
                     return;
-
-
-                results.AddRange(suggestions);
+                
+                results.AddRange(enumerable);
 
                 token.ThrowIfCancellationRequested();
             }
@@ -125,39 +115,52 @@ namespace Flow.Launcher.Plugin.WebSearch
         private async Task<IEnumerable<Result>> SuggestionsAsync(string keyword, string subtitle, SearchSource searchSource, CancellationToken token)
         {
             var source = _settings.SelectedSuggestion;
-            if (source != null)
+            if (source == null)
             {
-                //Suggestions appear below actual result, and appear above global action keyword match if non-global;
-                var score = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? scoreSuggestions : scoreSuggestions + 1;
+                return new List<Result>();
+            }
+            //Suggestions appear below actual result, and appear above global action keyword match if non-global;
+            var score = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? scoreSuggestions : scoreSuggestions + 1;
 
-                var suggestions = await source.Suggestions(keyword, token).ConfigureAwait(false);
+            var suggestions = await source.SuggestionsAsync(keyword, token).ConfigureAwait(false);
 
-                token.ThrowIfCancellationRequested();
+            token.ThrowIfCancellationRequested();
 
-                var resultsFromSuggestion = suggestions?.Select(o => new Result
+            var resultsFromSuggestion = suggestions?.Select(o => new Result
+            {
+                Title = o,
+                SubTitle = subtitle,
+                Score = score,
+                IcoPath = searchSource.IconPath,
+                ActionKeywordAssigned = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? string.Empty : searchSource.ActionKeyword,
+                Action = c =>
                 {
-                    Title = o,
-                    SubTitle = subtitle,
-                    Score = score,
-                    IcoPath = searchSource.IconPath,
-                    ActionKeywordAssigned = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? string.Empty : searchSource.ActionKeyword,
+                    _context.API.OpenUrl(searchSource.Url.Replace("{q}", Uri.EscapeDataString(o)));
+
+                    return true;
+                },
+                ContextData = searchSource.Url.Replace("{q}", Uri.EscapeDataString(o)),
+            });
+            return resultsFromSuggestion;
+        }
+
+        public List<Result> LoadContextMenus(Result selected)
+        {
+            if (selected?.ContextData == null || selected.ContextData is not string) return new List<Result>();
+            return new List<Result>() {
+                new Result
+                {
+                    Title = _context.API.GetTranslation("flowlauncher_plugin_websearch_copyurl_title"),
+                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_websearch_copyurl_subtitle"),
+                    IcoPath = "Images/copylink.png",
                     Action = c =>
                     {
-                        if (_settings.OpenInNewBrowser)
-                        {
-                            searchSource.Url.Replace("{q}", Uri.EscapeDataString(o)).NewBrowserWindow(_settings.BrowserPath);
-                        }
-                        else
-                        {
-                            searchSource.Url.Replace("{q}", Uri.EscapeDataString(o)).NewTabInBrowser(_settings.BrowserPath);
-                        }
+                        _context.API.CopyToClipboard(selected.ContextData as string);
 
                         return true;
                     }
-                });
-                return resultsFromSuggestion;
-            }
-            return new List<Result>();
+                },
+            };
         }
 
         public Task InitAsync(PluginInitContext context)
@@ -170,17 +173,16 @@ namespace Flow.Launcher.Plugin.WebSearch
 
                 _settings = _context.API.LoadSettingJsonStorage<Settings>();
                 _viewModel = new SettingsViewModel(_settings);
-                
+
                 var pluginDirectory = _context.CurrentPluginMetadata.PluginDirectory;
                 var bundledImagesDirectory = Path.Combine(pluginDirectory, Images);
 
                 // Default images directory is in the WebSearch's application folder  
                 DefaultImagesDirectory = Path.Combine(pluginDirectory, Images);
-                Helper.ValidateDataDirectory(bundledImagesDirectory, DefaultImagesDirectory);
+                FilesFolders.ValidateDataDirectory(bundledImagesDirectory, DefaultImagesDirectory);
 
-                // Custom images directory is in the WebSearch's data location folder 
-                var name = Path.GetFileNameWithoutExtension(_context.CurrentPluginMetadata.ExecuteFileName);
-                CustomImagesDirectory = Path.Combine(DataLocation.PluginSettingsDirectory, name, "CustomIcons");
+                // Custom images directory is in the WebSearch's data location folder
+                CustomImagesDirectory = Path.Combine(_context.CurrentPluginMetadata.PluginSettingsDirectoryPath, "CustomIcons");
             };
         }
 

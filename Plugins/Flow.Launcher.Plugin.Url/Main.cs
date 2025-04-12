@@ -1,13 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System.Windows.Controls;
-using Flow.Launcher.Infrastructure.Storage;
-using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.Url
 {
-    public class Main : ISettingProvider,IPlugin, IPluginI18n
+    public class Main : IPlugin, IPluginI18n
     {
         //based on https://gist.github.com/dperini/729294
         private const string urlPattern = "^" +
@@ -45,7 +42,6 @@ namespace Flow.Launcher.Plugin.Url
         Regex reg = new Regex(urlPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private PluginInitContext context;
         private Settings _settings;
-
         
         public List<Result> Query(Query query)
         {
@@ -68,20 +64,13 @@ namespace Flow.Launcher.Plugin.Url
                             }
                             try
                             {
-                                if (_settings.OpenInNewBrowserWindow)
-                                {
-                                    raw.NewBrowserWindow(_settings.BrowserPath);
-                                }
-                                else
-                                {
-                                    raw.NewTabInBrowser(_settings.BrowserPath);
-                                }
+                                context.API.OpenUrl(raw);
                                 
                                 return true;
                             }
-                            catch(Exception ex)
+                            catch(Exception)
                             {
-                                context.API.ShowMsg(string.Format(context.API.GetTranslation("flowlauncher_plugin_url_canot_open_url"), raw));
+                                context.API.ShowMsg(string.Format(context.API.GetTranslation("flowlauncher_plugin_url_cannot_open_url"), raw));
                                 return false;
                             }
                         }
@@ -89,12 +78,6 @@ namespace Flow.Launcher.Plugin.Url
                 };
             }
             return new List<Result>(0);
-        }
-
-
-        public Control CreateSettingPanel()
-        {
-            return new SettingsControl(context.API,_settings);
         }
 
         public bool IsURL(string raw)

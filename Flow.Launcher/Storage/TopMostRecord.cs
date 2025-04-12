@@ -1,61 +1,81 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Storage
 {
-    // todo this class is not thread safe.... but used from multiple threads.
     public class TopMostRecord
     {
         [JsonInclude]
-        public Dictionary<string, Record> records { get; private set; } = new Dictionary<string, Record>();
+        public ConcurrentDictionary<string, Record> records { get; private set; } = new ConcurrentDictionary<string, Record>();
 
         internal bool IsTopMost(Result result)
         {
-            if (records.Count == 0 || !records.ContainsKey(result.OriginQuery.RawQuery))
+            // origin query is null when user select the context menu item directly of one item from query list
+            // in this case, we do not need to check if the result is top most
+            if (records.IsEmpty || result.OriginQuery == null ||
+                !records.TryGetValue(result.OriginQuery.RawQuery, out var value))
             {
                 return false;
             }
 
             // since this dictionary should be very small (or empty) going over it should be pretty fast.
-            return records[result.OriginQuery.RawQuery].Equals(result);
+            return value.Equals(result);
         }
 
         internal void Remove(Result result)
         {
-            records.Remove(result.OriginQuery.RawQuery);
+            // origin query is null when user select the context menu item directly of one item from query list
+            // in this case, we do not need to remove the record
+            if (result.OriginQuery == null)
+            {
+                return;
+            }
+
+            records.Remove(result.OriginQuery.RawQuery, out _);
         }
 
         internal void AddOrUpdate(Result result)
         {
+            // origin query is null when user select the context menu item directly of one item from query list
+            // in this case, we do not need to add or update the record
+            if (result.OriginQuery == null)
+            {
+                return;
+            }
+
             var record = new Record
             {
                 PluginID = result.PluginID,
                 Title = result.Title,
-                SubTitle = result.SubTitle
+                SubTitle = result.SubTitle,
+                RecordKey = result.RecordKey
             };
-            records[result.OriginQuery.RawQuery] = record;
-
-        }
-
-        public void Load(Dictionary<string, Record> dictionary)
-        {
-            records = dictionary;
+            records.AddOrUpdate(result.OriginQuery.RawQuery, record, (key, oldValue) => record);
         }
     }
-
 
     public class Record
     {
         public string Title { get; set; }
         public string SubTitle { get; set; }
         public string PluginID { get; set; }
+        public string RecordKey { get; set; }
 
         public bool Equals(Result r)
         {
-            return Title == r.Title
-                && SubTitle == r.SubTitle
-                && PluginID == r.PluginID;
+            if (string.IsNullOrEmpty(RecordKey) || string.IsNullOrEmpty(r.RecordKey))
+            {
+                return Title == r.Title
+                    && SubTitle == r.SubTitle
+                    && PluginID == r.PluginID;
+            }
+            else
+            {
+                return RecordKey == r.RecordKey
+                    && PluginID == r.PluginID;
+            }
         }
     }
 }

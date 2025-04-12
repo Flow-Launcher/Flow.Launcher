@@ -1,7 +1,8 @@
-﻿using Flow.Launcher.Infrastructure.Http;
-using ICSharpCode.SharpZipLib.Zip;
+﻿using ICSharpCode.SharpZipLib.Zip;
 using System.IO;
-using System.Net;
+using System.IO.Compression;
+using System.Linq;
+using System.Text.Json;
 
 namespace Flow.Launcher.Plugin.PluginsManager
 {
@@ -56,6 +57,26 @@ namespace Flow.Launcher.Plugin.PluginsManager
                return unzippedParentFolderPath;
 
             return string.Empty;
+        }
+
+        internal static UserPlugin GetPluginInfoFromZip(string filePath)
+        {
+            var plugin = null as UserPlugin;
+
+            using (ZipArchive archive = System.IO.Compression.ZipFile.OpenRead(filePath))
+            {
+                var pluginJsonPath = archive.Entries.FirstOrDefault(x => x.Name == "plugin.json").ToString();
+                ZipArchiveEntry pluginJsonEntry = archive.GetEntry(pluginJsonPath);
+
+                if (pluginJsonEntry != null)
+                {
+                    using Stream stream = pluginJsonEntry.Open();
+                    plugin = JsonSerializer.Deserialize<UserPlugin>(stream);
+                    plugin.IcoPath = "Images\\zipfolder.png";
+                }
+            }
+
+            return plugin;
         }
     }
 }

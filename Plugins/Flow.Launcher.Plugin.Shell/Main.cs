@@ -1,29 +1,27 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using WindowsInput;
 using WindowsInput.Native;
-using Flow.Launcher.Infrastructure.Hotkey;
-using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.SharedCommands;
-using Application = System.Windows.Application;
 using Control = System.Windows.Controls.Control;
 using Keys = System.Windows.Forms.Keys;
 
 namespace Flow.Launcher.Plugin.Shell
 {
-    public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu
+    public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu, IDisposable
     {
+        private static readonly string ClassName = nameof(Main);
+
+        internal PluginInitContext Context { get; private set; }
+
         private const string Image = "Images/shell.png";
-        private PluginInitContext context;
         private bool _winRStroked;
-        private readonly KeyboardSimulator _keyboardSimulator = new KeyboardSimulator(new InputSimulator());
+        private readonly KeyboardSimulator _keyboardSimulator = new(new InputSimulator());
 
         private Settings _settings;
 
@@ -33,7 +31,7 @@ namespace Flow.Launcher.Plugin.Shell
             string cmd = query.Search;
             if (string.IsNullOrEmpty(cmd))
             {
-                return ResultsFromlHistory();
+                return ResultsFromHistory();
             }
             else
             {
@@ -55,33 +53,43 @@ namespace Flow.Launcher.Plugin.Shell
                     else if (Directory.Exists(Path.GetDirectoryName(excmd) ?? string.Empty))
                     {
                         basedir = Path.GetDirectoryName(excmd);
-                        var dirn = Path.GetDirectoryName(cmd);
-                        dir = (dirn.EndsWith("/") || dirn.EndsWith(@"\")) ? dirn : cmd.Substring(0, dirn.Length + 1);
+                        var dirName = Path.GetDirectoryName(cmd);
+                        dir = (dirName.EndsWith("/") || dirName.EndsWith(@"\")) ? dirName : cmd[..(dirName.Length + 1)];
                     }
 
                     if (basedir != null)
                     {
-                        var autocomplete = Directory.GetFileSystemEntries(basedir).
-                            Select(o => dir + Path.GetFileName(o)).
-                            Where(o => o.StartsWith(cmd, StringComparison.OrdinalIgnoreCase) &&
-                                       !results.Any(p => o.Equals(p.Title, StringComparison.OrdinalIgnoreCase)) &&
-                                       !results.Any(p => o.Equals(p.Title, StringComparison.OrdinalIgnoreCase))).ToList();
+                        var autocomplete =
+                            Directory.GetFileSystemEntries(basedir)
+                                .Select(o => dir + Path.GetFileName(o))
+                                .Where(o => o.StartsWith(cmd, StringComparison.OrdinalIgnoreCase) &&
+                                            !results.Any(p => o.Equals(p.Title, StringComparison.OrdinalIgnoreCase)) &&
+                                            !results.Any(p => o.Equals(p.Title, StringComparison.OrdinalIgnoreCase))).ToList();
+
                         autocomplete.Sort();
+
                         results.AddRange(autocomplete.ConvertAll(m => new Result
                         {
                             Title = m,
                             IcoPath = Image,
                             Action = c =>
                             {
-                                Execute(Process.Start, PrepareProcessStartInfo(m, c.SpecialKeyState.CtrlPressed));
+                                var runAsAdministrator =
+                                    c.SpecialKeyState.CtrlPressed &&
+                                    c.SpecialKeyState.ShiftPressed &&
+                                    !c.SpecialKeyState.AltPressed &&
+                                    !c.SpecialKeyState.WinPressed;
+
+                                Execute(Process.Start, PrepareProcessStartInfo(m, runAsAdministrator));
                                 return true;
-                            }
+                            },
+                            CopyText = m
                         }));
                     }
                 }
                 catch (Exception e)
                 {
-                    Log.Exception($"|Flow.Launcher.Plugin.Shell.Main.Query|Exception when query for <{query}>", e);
+                    Context.API.LogException(ClassName, $"Exception when query for <{query}>", e);
                 }
                 return results;
             }
@@ -95,20 +103,27 @@ namespace Flow.Launcher.Plugin.Shell
                 {
                     if (m.Key == cmd)
                     {
-                        result.SubTitle = string.Format(context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value);
+                        result.SubTitle = string.Format(Context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value);
                         return null;
                     }
 
                     var ret = new Result
                     {
                         Title = m.Key,
-                        SubTitle = string.Format(context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value),
+                        SubTitle = string.Format(Context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value),
                         IcoPath = Image,
                         Action = c =>
                         {
-                            Execute(Process.Start, PrepareProcessStartInfo(m.Key));
+                            var runAsAdministrator =
+                                c.SpecialKeyState.CtrlPressed &&
+                                c.SpecialKeyState.ShiftPressed &&
+                                !c.SpecialKeyState.AltPressed &&
+                                !c.SpecialKeyState.WinPressed;
+
+                            Execute(Process.Start, PrepareProcessStartInfo(m.Key, runAsAdministrator));
                             return true;
-                        }
+                        },
+                        CopyText = m.Key
                     };
                     return ret;
                 }).Where(o => o != null);
@@ -125,31 +140,45 @@ namespace Flow.Launcher.Plugin.Shell
             {
                 Title = cmd,
                 Score = 5000,
-                SubTitle = context.API.GetTranslation("flowlauncher_plugin_cmd_execute_through_shell"),
+                SubTitle = Context.API.GetTranslation("flowlauncher_plugin_cmd_execute_through_shell"),
                 IcoPath = Image,
                 Action = c =>
                 {
-                    Execute(Process.Start, PrepareProcessStartInfo(cmd));
+                    var runAsAdministrator =
+                        c.SpecialKeyState.CtrlPressed &&
+                        c.SpecialKeyState.ShiftPressed &&
+                        !c.SpecialKeyState.AltPressed &&
+                        !c.SpecialKeyState.WinPressed;
+
+                    Execute(Process.Start, PrepareProcessStartInfo(cmd, runAsAdministrator));
                     return true;
-                }
+                },
+                CopyText = cmd
             };
 
             return result;
         }
 
-        private List<Result> ResultsFromlHistory()
+        private List<Result> ResultsFromHistory()
         {
             IEnumerable<Result> history = _settings.CommandHistory.OrderByDescending(o => o.Value)
                 .Select(m => new Result
                 {
                     Title = m.Key,
-                    SubTitle = string.Format(context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value),
+                    SubTitle = string.Format(Context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value),
                     IcoPath = Image,
                     Action = c =>
                     {
-                        Execute(Process.Start, PrepareProcessStartInfo(m.Key));
+                        var runAsAdministrator =
+                            c.SpecialKeyState.CtrlPressed &&
+                            c.SpecialKeyState.ShiftPressed &&
+                            !c.SpecialKeyState.AltPressed &&
+                            !c.SpecialKeyState.WinPressed;
+
+                        Execute(Process.Start, PrepareProcessStartInfo(m.Key, runAsAdministrator));
                         return true;
-                    }
+                    },
+                    CopyText = m.Key
                 });
 
             if (_settings.ShowOnlyMostUsedCMDs)
@@ -165,51 +194,103 @@ namespace Flow.Launcher.Plugin.Shell
             var workingDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             var runAsAdministratorArg = !runAsAdministrator && !_settings.RunAsAdministrator ? "" : "runas";
 
-            ProcessStartInfo info;
-            if (_settings.Shell == Shell.Cmd)
+            ProcessStartInfo info = new()
             {
-                var arguments = _settings.LeaveShellOpen ? $"/k \"{command}\"" : $"/c \"{command}\" & pause";
-
-                info = ShellCommand.SetProcessStartInfo("cmd.exe", workingDirectory, arguments, runAsAdministratorArg);
-            }
-            else if (_settings.Shell == Shell.Powershell)
+                Verb = runAsAdministratorArg, WorkingDirectory = workingDirectory,
+            };
+            switch (_settings.Shell)
             {
-                string arguments;
-                if (_settings.LeaveShellOpen)
+                case Shell.Cmd:
                 {
-                    arguments = $"-NoExit \"{command}\"";
-                }
-                else
-                {
-                    arguments = $"\"{command} ; Read-Host -Prompt \\\"Press Enter to continue\\\"\"";
-                }
-
-                info = ShellCommand.SetProcessStartInfo("powershell.exe", workingDirectory, arguments, runAsAdministratorArg);
-            }
-            else if (_settings.Shell == Shell.RunCommand)
-            {
-                var parts = command.Split(new[] { ' ' }, 2);
-                if (parts.Length == 2)
-                {
-                    var filename = parts[0];
-                    if (ExistInPath(filename))
+                    if (_settings.UseWindowsTerminal)
                     {
-                        var arguments = parts[1];
-                        info = ShellCommand.SetProcessStartInfo(filename, workingDirectory, arguments, runAsAdministratorArg);
+                        info.FileName = "wt.exe";
+                        info.ArgumentList.Add("cmd");
                     }
                     else
                     {
-                        info = ShellCommand.SetProcessStartInfo(command, verb: runAsAdministratorArg);
+                        info.FileName = "cmd.exe";
                     }
+
+                    info.ArgumentList.Add($"{(_settings.LeaveShellOpen ? "/k" : "/c")} {command} {(_settings.CloseShellAfterPress ? $"&& echo {Context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")} && pause > nul /c" : "")}");
+                    break;
                 }
-                else
+
+                case Shell.Powershell:
                 {
-                    info = ShellCommand.SetProcessStartInfo(command, verb: runAsAdministratorArg);
+                    if (_settings.UseWindowsTerminal)
+                    {
+                        info.FileName = "wt.exe";
+                        info.ArgumentList.Add("powershell");
+                    }
+                    else
+                    {
+                        info.FileName = "powershell.exe";
+                    }
+                    if (_settings.LeaveShellOpen)
+                    {
+                        info.ArgumentList.Add("-NoExit");
+                        info.ArgumentList.Add(command);
+                    }
+                    else
+                    {
+                        info.ArgumentList.Add("-Command");
+                        info.ArgumentList.Add($"{command}\\; {(_settings.CloseShellAfterPress ? $"Write-Host '{Context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")}'\\; [System.Console]::ReadKey()\\; exit" : "")}");
+                    }
+                    break;
                 }
-            }
-            else
-            {
-                throw new NotImplementedException();
+
+                case Shell.Pwsh:
+                {
+                    if (_settings.UseWindowsTerminal)
+                    {
+                        info.FileName = "wt.exe";
+                        info.ArgumentList.Add("pwsh");
+                    }
+                    else
+                    {
+                        info.FileName = "pwsh.exe";
+                    }
+                    if (_settings.LeaveShellOpen)
+                    {
+                        info.ArgumentList.Add("-NoExit");
+                    }
+                    info.ArgumentList.Add("-Command");
+                    info.ArgumentList.Add($"{command}\\; {(_settings.CloseShellAfterPress ? $"Write-Host '{Context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")}'\\; [System.Console]::ReadKey()\\; exit" : "")}");
+                    break;
+                }
+
+                case Shell.RunCommand:
+                {
+                    var parts = command.Split(new[]
+                    {
+                        ' '
+                    }, 2);
+                    if (parts.Length == 2)
+                    {
+                        var filename = parts[0];
+                        if (ExistInPath(filename))
+                        {
+                            var arguments = parts[1];
+                            info.FileName = filename;
+                            info.ArgumentList.Add(arguments);
+                        }
+                        else
+                        {
+                            info.FileName = command;
+                        }
+                    }
+                    else
+                    {
+                        info.FileName = command;
+                    }
+
+                    info.UseShellExecute = true;
+
+                    break;
+                }
+                default:
+                    throw new NotImplementedException();
             }
 
             info.UseShellExecute = true;
@@ -223,23 +304,23 @@ namespace Flow.Launcher.Plugin.Shell
         {
             try
             {
-                startProcess(info);
+                ShellCommand.Execute(startProcess, info);
             }
             catch (FileNotFoundException e)
             {
                 var name = "Plugin: Shell";
                 var message = $"Command not found: {e.Message}";
-                context.API.ShowMsg(name, message);
+                Context.API.ShowMsg(name, message);
             }
             catch (Win32Exception e)
             {
                 var name = "Plugin: Shell";
                 var message = $"Error running the command: {e.Message}";
-                context.API.ShowMsg(name, message);
+                Context.API.ShowMsg(name, message);
             }
         }
 
-        private bool ExistInPath(string filename)
+        private static bool ExistInPath(string filename)
         {
             if (File.Exists(filename))
             {
@@ -270,14 +351,14 @@ namespace Flow.Launcher.Plugin.Shell
 
         public void Init(PluginInitContext context)
         {
-            this.context = context;
+            Context = context;
             _settings = context.API.LoadSettingJsonStorage<Settings>();
-            context.API.GlobalKeyboardEvent += API_GlobalKeyboardEvent;
+            context.API.RegisterGlobalKeyboardCallback(API_GlobalKeyboardEvent);
         }
 
         bool API_GlobalKeyboardEvent(int keyevent, int vkcode, SpecialKeyState state)
         {
-            if (_settings.ReplaceWinR)
+            if (!Context.CurrentPluginMetadata.Disabled && _settings.ReplaceWinR)
             {
                 if (keyevent == (int)KeyEvent.WM_KEYDOWN && vkcode == (int)Keys.R && state.WinPressed)
                 {
@@ -297,12 +378,12 @@ namespace Flow.Launcher.Plugin.Shell
 
         private void OnWinRPressed()
         {
-            context.API.ChangeQuery($"{context.CurrentPluginMetadata.ActionKeywords[0]}{Plugin.Query.TermSeperater}");
-
             // show the main window and set focus to the query box
-            Window mainWindow = Application.Current.MainWindow;
-            mainWindow.Visibility = Visibility.Visible;
-            mainWindow.Focus();
+            _ = Task.Run(() =>
+            {
+                Context.API.ShowMainWindow();
+                Context.API.ChangeQuery($"{Context.CurrentPluginMetadata.ActionKeywords[0]}{Plugin.Query.TermSeparator}");
+            });
         }
 
         public Control CreateSettingPanel()
@@ -312,51 +393,59 @@ namespace Flow.Launcher.Plugin.Shell
 
         public string GetTranslatedPluginTitle()
         {
-            return context.API.GetTranslation("flowlauncher_plugin_cmd_plugin_name");
+            return Context.API.GetTranslation("flowlauncher_plugin_cmd_plugin_name");
         }
 
         public string GetTranslatedPluginDescription()
         {
-            return context.API.GetTranslation("flowlauncher_plugin_cmd_plugin_description");
+            return Context.API.GetTranslation("flowlauncher_plugin_cmd_plugin_description");
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
         {
-            var resultlist = new List<Result>
+            var results = new List<Result>
             {
-                new Result
+                new()
                 {
-                    Title = context.API.GetTranslation("flowlauncher_plugin_cmd_run_as_different_user"),
+                    Title = Context.API.GetTranslation("flowlauncher_plugin_cmd_run_as_different_user"),
                     Action = c =>
                     {
-                        Task.Run(() =>Execute(ShellCommand.RunAsDifferentUser, PrepareProcessStartInfo(selectedResult.Title)));
+                        Execute(ShellCommand.RunAsDifferentUser, PrepareProcessStartInfo(selectedResult.Title));
                         return true;
                     },
-                    IcoPath = "Images/user.png"
+                    IcoPath = "Images/user.png",
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe7ee")
                 },
-                new Result
+                new()
                 {
-                    Title = context.API.GetTranslation("flowlauncher_plugin_cmd_run_as_administrator"),
+                    Title = Context.API.GetTranslation("flowlauncher_plugin_cmd_run_as_administrator"),
                     Action = c =>
                     {
                         Execute(Process.Start, PrepareProcessStartInfo(selectedResult.Title, true));
                         return true;
                     },
-                    IcoPath = "Images/admin.png"
+                    IcoPath = "Images/admin.png",
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe7ef")
                 },
-                new Result
+                new()
                 {
-                    Title = context.API.GetTranslation("flowlauncher_plugin_cmd_copy"),
+                    Title = Context.API.GetTranslation("flowlauncher_plugin_cmd_copy"),
                     Action = c =>
                     {
-                        Clipboard.SetDataObject(selectedResult.Title);
+                        Context.API.CopyToClipboard(selectedResult.Title);
                         return true;
                     },
-                    IcoPath = "Images/copy.png"
+                    IcoPath = "Images/copy.png",
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe8c8")
                 }
             };
 
-            return resultlist;
+            return results;
+        }
+
+        public void Dispose()
+        {
+            Context.API.RemoveGlobalKeyboardCallback(API_GlobalKeyboardEvent);
         }
     }
 }

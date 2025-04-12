@@ -1,6 +1,5 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core.Plugin
@@ -10,37 +9,37 @@ namespace Flow.Launcher.Core.Plugin
         public static Query Build(string text, Dictionary<string, PluginPair> nonGlobalPlugins)
         {
             // replace multiple white spaces with one white space
-            var terms = text.Split(new[] { Query.TermSeperater }, StringSplitOptions.RemoveEmptyEntries);
+            var terms = text.Split(Query.TermSeparator, StringSplitOptions.RemoveEmptyEntries);
             if (terms.Length == 0)
             { // nothing was typed
                 return null;
             }
 
-            var rawQuery = string.Join(Query.TermSeperater, terms);
+            var rawQuery = text;
             string actionKeyword, search;
             string possibleActionKeyword = terms[0];
-            List<string> actionParameters;
+            string[] searchTerms;
+
             if (nonGlobalPlugins.TryGetValue(possibleActionKeyword, out var pluginPair) && !pluginPair.Metadata.Disabled)
             { // use non global plugin for query
                 actionKeyword = possibleActionKeyword;
-                actionParameters = terms.Skip(1).ToList();
-                search = actionParameters.Count > 0 ? rawQuery.Substring(actionKeyword.Length + 1) : string.Empty;
+                search = terms.Length > 1 ? rawQuery[(actionKeyword.Length + 1)..].TrimStart() : string.Empty;
+                searchTerms = terms[1..];
             }
             else
             { // non action keyword
                 actionKeyword = string.Empty;
-                search = rawQuery;
+                search = rawQuery.TrimStart();
+                searchTerms = terms;
             }
 
-            var query = new Query
+            return new Query ()
             {
-                Terms = terms,
+                Search = search,
                 RawQuery = rawQuery,
-                ActionKeyword = actionKeyword,
-                Search = search
+                SearchTerms = searchTerms,
+                ActionKeyword = actionKeyword
             };
-
-            return query;
         }
     }
 }

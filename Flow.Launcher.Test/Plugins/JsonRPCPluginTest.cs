@@ -1,13 +1,11 @@
-﻿using NUnit;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Plugin;
 using System.Threading.Tasks;
 using System.IO;
 using System.Threading;
 using System.Text;
-using System.Text.Json;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace Flow.Launcher.Test.Plugins
@@ -16,21 +14,14 @@ namespace Flow.Launcher.Test.Plugins
     // ReSharper disable once InconsistentNaming
     internal class JsonRPCPluginTest : JsonRPCPlugin
     {
-        public override string SupportedLanguage { get; set; } = AllowedLanguage.Executable;
-
-        protected override string ExecuteCallback(JsonRPCRequestModel rpcRequest)
+        protected override string Request(JsonRPCRequestModel rpcRequest, CancellationToken token = default)
         {
             throw new System.NotImplementedException();
         }
 
-        protected override string ExecuteContextMenu(Result selectedResult)
+        protected override Task<Stream> RequestAsync(JsonRPCRequestModel request, CancellationToken token = default)
         {
-            throw new System.NotImplementedException();
-        }
-
-        protected override Task<Stream> ExecuteQueryAsync(Query query, CancellationToken token)
-        {
-            var byteInfo = Encoding.UTF8.GetBytes(query.RawQuery);
+            var byteInfo = Encoding.UTF8.GetBytes(request.Parameters[0] as string ?? string.Empty);
 
             var resultStream = new MemoryStream(byteInfo);
             return Task.FromResult((Stream)resultStream);
@@ -45,61 +36,30 @@ namespace Flow.Launcher.Test.Plugins
         {
             var results = await QueryAsync(new Query
             {
-                RawQuery = resultText
+                Search = resultText
             }, default);
 
-            Assert.IsNotNull(results);
+            ClassicAssert.IsNotNull(results);
 
             foreach (var result in results)
             {
-                Assert.IsNotNull(result);
-                Assert.IsNotNull(result.Action);
-                Assert.IsNotNull(result.Title);
+                ClassicAssert.IsNotNull(result);
+                ClassicAssert.IsNotNull(result.AsyncAction);
+                ClassicAssert.IsNotNull(result.Title);
             }
 
         }
 
         public static List<JsonRPCQueryResponseModel> ResponseModelsSource = new()
         {
-            new()
+            new JsonRPCQueryResponseModel(0, new List<JsonRPCResult>()),
+            new JsonRPCQueryResponseModel(0, new List<JsonRPCResult>
             {
-                Result = new()
-            },
-            new()
-            {
-                Result = new()
+                new()
                 {
-                    new JsonRPCResult
-                    {
-                        Title = "Test1",
-                        SubTitle = "Test2"
-                    }
+                    Title = "Test1", SubTitle = "Test2"
                 }
-            }
+            })
         };
-
-        [TestCaseSource(typeof(JsonRPCPluginTest), nameof(ResponseModelsSource))]
-        public async Task GivenModel_WhenSerializeWithDifferentNamingPolicy_ThenExpectSameResult_Async(JsonRPCQueryResponseModel reference)
-        {
-            var camelText = JsonSerializer.Serialize(reference, new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
-
-            var pascalText = JsonSerializer.Serialize(reference);
-
-            var results1 = await QueryAsync(new Query { RawQuery = camelText }, default);
-            var results2 = await QueryAsync(new Query { RawQuery = pascalText }, default);
-
-            Assert.IsNotNull(results1);
-            Assert.IsNotNull(results2);
-
-            foreach (var ((result1, result2), referenceResult) in results1.Zip(results2).Zip(reference.Result))
-            {
-                Assert.AreEqual(result1, result2);
-                Assert.AreEqual(result1, referenceResult);
-
-                Assert.IsNotNull(result1);
-                Assert.IsNotNull(result1.Action);
-            }
-        }
-
     }
 }

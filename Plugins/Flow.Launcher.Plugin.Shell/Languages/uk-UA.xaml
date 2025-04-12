@@ -1,0 +1,18 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <system:String x:Key="flowlauncher_plugin_cmd_relace_winr">Заміна Win+R</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_close_cmd_after_press">Закривати командний рядок після натискання будь-якої клавіші</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">Натисніть будь-яку клавішу, щоб закрити це вікно...</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">Не закривати командний рядок після виконання команди</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">Завжди запускати від імені адміністратора</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_use_windows_terminal">Use Windows Terminal</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">Запустити від імені іншого користувача</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">Shell</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Дозволяє виконувати системні команди з Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_cmd_has_been_executed_times">цю команду було виконано {0} разів</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_execute_through_shell">виконати команду через командну оболонку</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">Запустити від імені адміністратора</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_copy">Скопіювати команду</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_history">Показати лише кількість найчастіше використовуваних команд:</system:String>
+</ResourceDictionary>

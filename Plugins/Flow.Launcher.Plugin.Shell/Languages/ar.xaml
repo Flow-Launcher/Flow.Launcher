@@ -1,0 +1,18 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <system:String x:Key="flowlauncher_plugin_cmd_relace_winr">استبدال Win+R</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_close_cmd_after_press">إغلاق موجه الأوامر بعد الضغط على أي مفتاح</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">اضغط أي مفتاح لإغلاق هذه النافذة...</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">عدم إغلاق موجه الأوامر بعد تنفيذ الأمر</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">التشغيل دائمًا كمسؤول</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_use_windows_terminal">Use Windows Terminal</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">التشغيل كمستخدم مختلف</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">Shell</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">يسمح بتنفيذ أوامر النظام من Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_cmd_has_been_executed_times">تم تنفيذ هذا الأمر {0} مرات</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_execute_through_shell">تنفيذ الأمر من خلال موجه الأوامر</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">التشغيل كمسؤول</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_copy">نسخ الأمر</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_history">إظهار عدد أوامر الأكثر استخدامًا فقط:</system:String>
+</ResourceDictionary>

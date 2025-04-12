@@ -1,0 +1,1410 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>Om</value>
+  </data>
+  <data name="AccessWorkOrSchool" xml:space="preserve">
+    <value>Åtkomst, arbete eller skola</value>
+  </data>
+  <data name="AccessibilityOptions" xml:space="preserve">
+    <value>Alternativ för hjälpmedel</value>
+  </data>
+  <data name="AccessoryApps" xml:space="preserve">
+    <value>Tillbehörsappar</value>
+  </data>
+  <data name="AccountInfo" xml:space="preserve">
+    <value>Kontoinformation</value>
+  </data>
+  <data name="Accounts" xml:space="preserve">
+    <value>Konton</value>
+  </data>
+  <data name="ActionCenter" xml:space="preserve">
+    <value>Åtgärdscenter</value>
+  </data>
+  <data name="Activation" xml:space="preserve">
+    <value>Aktivering</value>
+  </data>
+  <data name="ActivityHistory" xml:space="preserve">
+    <value>Aktivitetshistorik</value>
+  </data>
+  <data name="AddHardware" xml:space="preserve">
+    <value>Lägg till maskinvara</value>
+  </data>
+  <data name="AddRemovePrograms" xml:space="preserve">
+    <value>Lägg till/ta bort program</value>
+  </data>
+  <data name="AddYourPhone" xml:space="preserve">
+    <value>Lägg till din telefon</value>
+  </data>
+  <data name="AdministrativeTools" xml:space="preserve">
+    <value>Administrationsverktyg</value>
+  </data>
+  <data name="AdvancedDisplaySettings" xml:space="preserve">
+    <value>Avancerade bildskärmsinställningar</value>
+  </data>
+  <data name="AdvancedGraphics" xml:space="preserve">
+    <value>Avancerad grafik</value>
+  </data>
+  <data name="AdvertisingId" xml:space="preserve">
+    <value>Annonserings-ID</value>
+  </data>
+  <data name="AirplaneMode" xml:space="preserve">
+    <value>Flygplansläge</value>
+  </data>
+  <data name="AltAndTab" xml:space="preserve">
+    <value>Alt+Tabb</value>
+  </data>
+  <data name="AlternativeName" xml:space="preserve">
+    <value>Alternativa namn</value>
+  </data>
+  <data name="Animations" xml:space="preserve">
+    <value>Animeringar</value>
+  </data>
+  <data name="AppColor" xml:space="preserve">
+    <value>Appfärg</value>
+  </data>
+  <data name="AppControlPanel" xml:space="preserve">
+    <value>Kontrollpanelen</value>
+  </data>
+  <data name="AppDiagnostics" xml:space="preserve">
+    <value>Appdiagnostik</value>
+  </data>
+  <data name="AppFeatures" xml:space="preserve">
+    <value>Appfunktioner</value>
+  </data>
+  <data name="AppSettingsApp" xml:space="preserve">
+    <value>Systeminställningar</value>
+  </data>
+  <data name="AppVolumeAndDevicePreferences" xml:space="preserve">
+    <value>Inställningar för appvolym och enhet</value>
+  </data>
+  <data name="Application" xml:space="preserve">
+    <value>App</value>
+  </data>
+  <data name="AppsAndFeatures" xml:space="preserve">
+    <value>Appar och funktioner</value>
+  </data>
+  <data name="AppsForWebsites" xml:space="preserve">
+    <value>Appar för webbplatser</value>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>Område</value>
+  </data>
+  <data name="AreaAccounts" xml:space="preserve">
+    <value>Konton</value>
+  </data>
+  <data name="AreaAdministrativeTools" xml:space="preserve">
+    <value>Administrationsverktyg</value>
+  </data>
+  <data name="AreaAppearanceAndPersonalization" xml:space="preserve">
+    <value>Utseende och personanpassning</value>
+  </data>
+  <data name="AreaApps" xml:space="preserve">
+    <value>Appar</value>
+  </data>
+  <data name="AreaClockAndRegion" xml:space="preserve">
+    <value>Klocka och region</value>
+  </data>
+  <data name="AreaCortana" xml:space="preserve">
+    <value>Cortana</value>
+  </data>
+  <data name="AreaDevices" xml:space="preserve">
+    <value>Enheter</value>
+  </data>
+  <data name="AreaEaseOfAccess" xml:space="preserve">
+    <value>Hjälpmedel</value>
+  </data>
+  <data name="AreaExtras" xml:space="preserve">
+    <value>Extrafunktioner</value>
+  </data>
+  <data name="AreaGaming" xml:space="preserve">
+    <value>Spel</value>
+  </data>
+  <data name="AreaHardwareAndSound" xml:space="preserve">
+    <value>Maskinvara och ljud</value>
+  </data>
+  <data name="AreaHomePage" xml:space="preserve">
+    <value>Startsida</value>
+  </data>
+  <data name="AreaMixedReality" xml:space="preserve">
+    <value>Mixed Reality</value>
+  </data>
+  <data name="AreaNetworkAndInternet" xml:space="preserve">
+    <value>Nätverk och Internet</value>
+  </data>
+  <data name="AreaPersonalization" xml:space="preserve">
+    <value>Personanpassning</value>
+  </data>
+  <data name="AreaPhone" xml:space="preserve">
+    <value>Telefon</value>
+  </data>
+  <data name="AreaPrivacy" xml:space="preserve">
+    <value>Sekretess</value>
+  </data>
+  <data name="AreaPrograms" xml:space="preserve">
+    <value>Program</value>
+  </data>
+  <data name="AreaSurfaceHub" xml:space="preserve">
+    <value>SurfaceHub</value>
+  </data>
+  <data name="AreaSystem" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="AreaSystemAndSecurity" xml:space="preserve">
+    <value>System och säkerhet</value>
+  </data>
+  <data name="AreaTimeAndLanguage" xml:space="preserve">
+    <value>Tid och språk</value>
+  </data>
+  <data name="AreaUpdateAndSecurity" xml:space="preserve">
+    <value>Uppdatering och säkerhet</value>
+  </data>
+  <data name="AreaUserAccounts" xml:space="preserve">
+    <value>Användarkonton</value>
+  </data>
+  <data name="AssignedAccess" xml:space="preserve">
+    <value>Tilldelad åtkomst</value>
+  </data>
+  <data name="Audio" xml:space="preserve">
+    <value>Ljud</value>
+  </data>
+  <data name="AudioAlerts" xml:space="preserve">
+    <value>Ljudaviseringar</value>
+  </data>
+  <data name="AudioAndSpeech" xml:space="preserve">
+    <value>Ljud och tal</value>
+  </data>
+  <data name="AutoPlay" xml:space="preserve">
+    <value>Automatisk uppspelning</value>
+  </data>
+  <data name="AutomaticFileDownloads" xml:space="preserve">
+    <value>Automatiska filnedladdningar</value>
+  </data>
+  <data name="Background" xml:space="preserve">
+    <value>Bakgrund</value>
+  </data>
+  <data name="BackgroundApps" xml:space="preserve">
+    <value>Bakgrundsappar</value>
+  </data>
+  <data name="Backup" xml:space="preserve">
+    <value>Säkerhetskopiering</value>
+  </data>
+  <data name="BackupAndRestore" xml:space="preserve">
+    <value>Säkerhetskopiera och återställ</value>
+  </data>
+  <data name="BatterySaver" xml:space="preserve">
+    <value>Batterisparfunktionen</value>
+  </data>
+  <data name="BatterySaverSettings" xml:space="preserve">
+    <value>Inställningar för batterisparfunktionen</value>
+  </data>
+  <data name="BatterySaverUsageDetails" xml:space="preserve">
+    <value>Användningsinformation om batterisparfunktionen</value>
+  </data>
+  <data name="BatteryUse" xml:space="preserve">
+    <value>Batterianvändning</value>
+  </data>
+  <data name="BiometricDevices" xml:space="preserve">
+    <value>Biometriska enheter</value>
+  </data>
+  <data name="BitLockerDriveEncryption" xml:space="preserve">
+    <value>BitLocker-diskkryptering</value>
+  </data>
+  <data name="BlueLight" xml:space="preserve">
+    <value>Blått ljus</value>
+  </data>
+  <data name="BlueYellow" xml:space="preserve">
+    <value>Blågul</value>
+  </data>
+  <data name="Bluetooth" xml:space="preserve">
+    <value>Bluetooth</value>
+  </data>
+  <data name="BluetoothDevices" xml:space="preserve">
+    <value>Bluetooth-enheter</value>
+  </data>
+  <data name="BopomofoIme" xml:space="preserve">
+    <value>IME för Bopomofo</value>
+  </data>
+  <data name="Broadcasting" xml:space="preserve">
+    <value>Sändning</value>
+  </data>
+  <data name="Calendar" xml:space="preserve">
+    <value>Kalender</value>
+  </data>
+  <data name="CallHistory" xml:space="preserve">
+    <value>Samtalshistorik</value>
+  </data>
+  <data name="Camera" xml:space="preserve">
+    <value>Kamera</value>
+  </data>
+  <data name="CangjieIme" xml:space="preserve">
+    <value>IME för Cangjie</value>
+  </data>
+  <data name="CapsLock" xml:space="preserve">
+    <value>Caps Lock</value>
+  </data>
+  <data name="CellularAndSim" xml:space="preserve">
+    <value>Mobilnät och SIM</value>
+  </data>
+  <data name="ChooseWhichFoldersAppearOnStart" xml:space="preserve">
+    <value>Välj vilka mappar som ska visas på Start</value>
+  </data>
+  <data name="ClientServiceForNetWare" xml:space="preserve">
+    <value>Klienttjänst för NetWare</value>
+  </data>
+  <data name="Clipboard" xml:space="preserve">
+    <value>Urklipp</value>
+  </data>
+  <data name="ClosedCaptions" xml:space="preserve">
+    <value>Undertexter</value>
+  </data>
+  <data name="ColorFilters" xml:space="preserve">
+    <value>Färgfilter</value>
+  </data>
+  <data name="ColorManagement" xml:space="preserve">
+    <value>Färghantering</value>
+  </data>
+  <data name="Colors" xml:space="preserve">
+    <value>Färger</value>
+  </data>
+  <data name="Command" xml:space="preserve">
+    <value>Kommando</value>
+  </data>
+  <data name="ConnectedDevices" xml:space="preserve">
+    <value>Anslutna enheter</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>Kontakter</value>
+  </data>
+  <data name="CopyCommand" xml:space="preserve">
+    <value>Kopiera kommando</value>
+  </data>
+  <data name="CoreIsolation" xml:space="preserve">
+    <value>Kärnisolering</value>
+  </data>
+  <data name="Cortana" xml:space="preserve">
+    <value>Cortana</value>
+  </data>
+  <data name="CortanaAcrossMyDevices" xml:space="preserve">
+    <value>Cortana på mina enheter</value>
+  </data>
+  <data name="CortanaLanguage" xml:space="preserve">
+    <value>Cortana – språk</value>
+  </data>
+  <data name="CredentialManager" xml:space="preserve">
+    <value>Autentiseringshanteraren</value>
+  </data>
+  <data name="Crossdevice" xml:space="preserve">
+    <value>Mellan enheter</value>
+  </data>
+  <data name="CustomDevices" xml:space="preserve">
+    <value>Anpassade enheter</value>
+  </data>
+  <data name="DNS" xml:space="preserve">
+    <value>DNS</value>
+  </data>
+  <data name="DarkColor" xml:space="preserve">
+    <value>Mörk färg</value>
+  </data>
+  <data name="DarkMode" xml:space="preserve">
+    <value>Mörkt läge</value>
+  </data>
+  <data name="DataUsage" xml:space="preserve">
+    <value>Dataanvändning</value>
+  </data>
+  <data name="DateAndTime" xml:space="preserve">
+    <value>Datum och tid</value>
+  </data>
+  <data name="DefaultApps" xml:space="preserve">
+    <value>Standardappar</value>
+  </data>
+  <data name="DefaultCamera" xml:space="preserve">
+    <value>Standardkamera</value>
+  </data>
+  <data name="DefaultLocation" xml:space="preserve">
+    <value>Standardplats</value>
+  </data>
+  <data name="DefaultPrograms" xml:space="preserve">
+    <value>Standardprogram</value>
+  </data>
+  <data name="DefaultSaveLocations" xml:space="preserve">
+    <value>Standardplatser för sparade filer</value>
+  </data>
+  <data name="DeliveryOptimization" xml:space="preserve">
+    <value>Leveransoptimering</value>
+  </data>
+  <data name="DesktopThemes" xml:space="preserve">
+    <value>Skrivbordsteman</value>
+  </data>
+  <data name="DeviceManager" xml:space="preserve">
+    <value>Enhetshanteraren</value>
+  </data>
+  <data name="DevicesAndPrinters" xml:space="preserve">
+    <value>Enheter och skrivare</value>
+  </data>
+  <data name="Dhcp" xml:space="preserve">
+    <value>DHCP</value>
+  </data>
+  <data name="DialUp" xml:space="preserve">
+    <value>Fjärranslutning</value>
+  </data>
+  <data name="DirectAccess" xml:space="preserve">
+    <value>Direkt åtkomst</value>
+  </data>
+  <data name="DirectOpenYourPhone" xml:space="preserve">
+    <value>Öppna din telefon direkt</value>
+  </data>
+  <data name="Display" xml:space="preserve">
+    <value>Bildskärm</value>
+  </data>
+  <data name="DisplayProperties" xml:space="preserve">
+    <value>Bildskärmsegenskaper</value>
+  </data>
+  <data name="Documents" xml:space="preserve">
+    <value>Dokument</value>
+  </data>
+  <data name="DuplicatingMyDisplay" xml:space="preserve">
+    <value>Duplicerar min bildskärm</value>
+  </data>
+  <data name="DuringTheseHours" xml:space="preserve">
+    <value>Under dessa timmar</value>
+  </data>
+  <data name="EaseOfAccessCenter" xml:space="preserve">
+    <value>Hjälpmedelscenter</value>
+  </data>
+  <data name="Edition" xml:space="preserve">
+    <value>Utgåva</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-post</value>
+  </data>
+  <data name="EmailAndAppAccounts" xml:space="preserve">
+    <value>E-post- och appkonton</value>
+  </data>
+  <data name="Encryption" xml:space="preserve">
+    <value>Kryptering</value>
+  </data>
+  <data name="Environment" xml:space="preserve">
+    <value>Miljö</value>
+  </data>
+  <data name="Ethernet" xml:space="preserve">
+    <value>Ethernet</value>
+  </data>
+  <data name="ExploitProtection" xml:space="preserve">
+    <value>Sårbarhetsskydd</value>
+  </data>
+  <data name="Extras" xml:space="preserve">
+    <value>Extrafunktioner</value>
+  </data>
+  <data name="EyeControl" xml:space="preserve">
+    <value>Ögonstyrning</value>
+  </data>
+  <data name="EyeTracker" xml:space="preserve">
+    <value>Ögonspårare</value>
+  </data>
+  <data name="FamilyAndOtherPeople" xml:space="preserve">
+    <value>Familj och andra personer</value>
+  </data>
+  <data name="FeedbackAndDiagnostics" xml:space="preserve">
+    <value>Feedback och diagnostik</value>
+  </data>
+  <data name="FileSystem" xml:space="preserve">
+    <value>Filsystem</value>
+  </data>
+  <data name="FindFast" xml:space="preserve">
+    <value>FindFast</value>
+  </data>
+  <data name="FindMyDevice" xml:space="preserve">
+    <value>Hitta min enhet</value>
+  </data>
+  <data name="Firewall" xml:space="preserve">
+    <value>Brandvägg</value>
+  </data>
+  <data name="FocusAssistQuietHours" xml:space="preserve">
+    <value>Fokusstöd – tysta timmar</value>
+  </data>
+  <data name="FocusAssistQuietMoments" xml:space="preserve">
+    <value>Fokusstöd – tysta stunder</value>
+  </data>
+  <data name="FolderOptions" xml:space="preserve">
+    <value>Mappalternativ</value>
+  </data>
+  <data name="Fonts" xml:space="preserve">
+    <value>Teckensnitt</value>
+  </data>
+  <data name="ForDevelopers" xml:space="preserve">
+    <value>För utvecklare</value>
+  </data>
+  <data name="GameBar" xml:space="preserve">
+    <value>Spelfältet</value>
+  </data>
+  <data name="GameControllers" xml:space="preserve">
+    <value>Spelkontroller</value>
+  </data>
+  <data name="GameDvr" xml:space="preserve">
+    <value>Spel-DVR</value>
+  </data>
+  <data name="GameMode" xml:space="preserve">
+    <value>Spelläge</value>
+  </data>
+  <data name="Gateway" xml:space="preserve">
+    <value>Gateway</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>Allmänt</value>
+  </data>
+  <data name="GetPrograms" xml:space="preserve">
+    <value>Hämta program</value>
+  </data>
+  <data name="GettingStarted" xml:space="preserve">
+    <value>Komma igång</value>
+  </data>
+  <data name="Glance" xml:space="preserve">
+    <value>Överblick</value>
+  </data>
+  <data name="GraphicsSettings" xml:space="preserve">
+    <value>Grafikinställningar</value>
+  </data>
+  <data name="Grayscale" xml:space="preserve">
+    <value>Gråskala</value>
+  </data>
+  <data name="GreenWeek" xml:space="preserve">
+    <value>Grön vecka</value>
+  </data>
+  <data name="HeadsetDisplay" xml:space="preserve">
+    <value>Bildskärm för headset</value>
+  </data>
+  <data name="HighContrast" xml:space="preserve">
+    <value>Högkontrast</value>
+  </data>
+  <data name="HolographicAudio" xml:space="preserve">
+    <value>Holographic-ljud</value>
+  </data>
+  <data name="HolographicEnvironment" xml:space="preserve">
+    <value>Holographic-miljö</value>
+  </data>
+  <data name="HolographicHeadset" xml:space="preserve">
+    <value>Holographic-headset</value>
+  </data>
+  <data name="HolographicManagement" xml:space="preserve">
+    <value>Hantering av Holographic</value>
+  </data>
+  <data name="HomeGroup" xml:space="preserve">
+    <value>Hemgrupp</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>Bild</value>
+  </data>
+  <data name="IndexingOptions" xml:space="preserve">
+    <value>Indexeringsalternativ</value>
+  </data>
+  <data name="Infrared" xml:space="preserve">
+    <value>Infraröd</value>
+  </data>
+  <data name="InkingAndTyping" xml:space="preserve">
+    <value>Pennanteckning och inmatning</value>
+  </data>
+  <data name="InternetOptions" xml:space="preserve">
+    <value>Internetalternativ</value>
+  </data>
+  <data name="InvertedColors" xml:space="preserve">
+    <value>Inverterade färger</value>
+  </data>
+  <data name="Ip" xml:space="preserve">
+    <value>IP</value>
+  </data>
+  <data name="IsolatedBrowsing" xml:space="preserve">
+    <value>Isolerad surfning</value>
+  </data>
+  <data name="JapanImeSettings" xml:space="preserve">
+    <value>IME-inställningar för Japan</value>
+  </data>
+  <data name="JoystickProperties" xml:space="preserve">
+    <value>Egenskaper för styrspak</value>
+  </data>
+  <data name="Keyboard" xml:space="preserve">
+    <value>Tangentbord</value>
+  </data>
+  <data name="Keypad" xml:space="preserve">
+    <value>Knappsats</value>
+  </data>
+  <data name="Keys" xml:space="preserve">
+    <value>Nycklar</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Språk</value>
+  </data>
+  <data name="LightColor" xml:space="preserve">
+    <value>Ljus färg</value>
+  </data>
+  <data name="LightMode" xml:space="preserve">
+    <value>Ljust läge</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Plats</value>
+  </data>
+  <data name="LockScreen" xml:space="preserve">
+    <value>Låsskärmen</value>
+  </data>
+  <data name="Magnifier" xml:space="preserve">
+    <value>Förstoringsglaset</value>
+  </data>
+  <data name="MailMicrosoftExchangeOrWindowsMessaging" xml:space="preserve">
+    <value>E-post – Microsoft Exchange eller Windows Meddelanden</value>
+  </data>
+  <data name="ManageKnownNetworks" xml:space="preserve">
+    <value>Hantera kända nätverk</value>
+  </data>
+  <data name="ManageOptionalFeatures" xml:space="preserve">
+    <value>Hantera valfria funktioner</value>
+  </data>
+  <data name="Messaging" xml:space="preserve">
+    <value>Meddelanden</value>
+  </data>
+  <data name="MeteredConnection" xml:space="preserve">
+    <value>Anslutning med datapriser</value>
+  </data>
+  <data name="Microphone" xml:space="preserve">
+    <value>Mikrofon</value>
+  </data>
+  <data name="MicrosoftMailPostOffice" xml:space="preserve">
+    <value>Microsoft Mail Post Office</value>
+  </data>
+  <data name="MobileDevices" xml:space="preserve">
+    <value>Mobila enheter</value>
+  </data>
+  <data name="MobileHotspot" xml:space="preserve">
+    <value>Delning av trådlös anslutning</value>
+  </data>
+  <data name="Mono" xml:space="preserve">
+    <value>Mono</value>
+  </data>
+  <data name="MoreDetails" xml:space="preserve">
+    <value>Mer information</value>
+  </data>
+  <data name="Motion" xml:space="preserve">
+    <value>Rörelse</value>
+  </data>
+  <data name="Mouse" xml:space="preserve">
+    <value>Mus</value>
+  </data>
+  <data name="MouseAndTouchpad" xml:space="preserve">
+    <value>Mus och pekplatta</value>
+  </data>
+  <data name="MouseFontsKeyboardAndPrintersProperties" xml:space="preserve">
+    <value>Egenskaper för mus, teckensnitt, tangentbord och skrivare</value>
+  </data>
+  <data name="MousePointer" xml:space="preserve">
+    <value>Muspekare</value>
+  </data>
+  <data name="MultimediaProperties" xml:space="preserve">
+    <value>Multimediaegenskaper</value>
+  </data>
+  <data name="Multitasking" xml:space="preserve">
+    <value>Flerprogramskörning</value>
+  </data>
+  <data name="NFC" xml:space="preserve">
+    <value>NFC</value>
+  </data>
+  <data name="NFCTransactions" xml:space="preserve">
+    <value>NFC-transaktioner</value>
+  </data>
+  <data name="Narrator" xml:space="preserve">
+    <value>Skärmläsaren</value>
+  </data>
+  <data name="NavigationBar" xml:space="preserve">
+    <value>Navigeringsfält</value>
+  </data>
+  <data name="Network" xml:space="preserve">
+    <value>Nätverk</value>
+  </data>
+  <data name="NetworkAndSharingCenter" xml:space="preserve">
+    <value>Nätverks- och delningscenter</value>
+  </data>
+  <data name="NetworkConnection" xml:space="preserve">
+    <value>Nätverksanslutning</value>
+  </data>
+  <data name="NetworkProperties" xml:space="preserve">
+    <value>Nätverksegenskaper</value>
+  </data>
+  <data name="NetworkSetupWizard" xml:space="preserve">
+    <value>Guiden Konfigurera nätverk</value>
+  </data>
+  <data name="NetworkStatus" xml:space="preserve">
+    <value>Nätverksstatus</value>
+  </data>
+  <data name="NightLight" xml:space="preserve">
+    <value>Nattläge</value>
+  </data>
+  <data name="NightLightSettings" xml:space="preserve">
+    <value>Inställningar för nattläge</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>Observera</value>
+  </data>
+  <data name="NoteAddYourPhone" xml:space="preserve">
+    <value>Endast tillgängligt när du har anslutit en mobil enhet till enheten.</value>
+  </data>
+  <data name="NoteAdvancedGraphics" xml:space="preserve">
+    <value>Endast tillgängligt för enheter som stöder avancerade grafikalternativ.</value>
+  </data>
+  <data name="NoteBattery" xml:space="preserve">
+    <value>Endast tillgängligt för enheter som har ett batteri, t. ex. en surfplatta.</value>
+  </data>
+  <data name="NoteDeprecated17763" xml:space="preserve">
+    <value>Inaktuellt i Windows 10, version 1809 (build 17763) och senare.</value>
+  </data>
+  <data name="NoteDialPaired" xml:space="preserve">
+    <value>Endast tillgängligt om det finns en länkad uppringning.</value>
+  </data>
+  <data name="NoteDirectAccess" xml:space="preserve">
+    <value>Endast tillgängligt om DirectAccess har aktiverats.</value>
+  </data>
+  <data name="NoteDisplayGraphics" xml:space="preserve">
+    <value>Endast tillgängligt för enheter som stöder avancerade visningsalternativ.</value>
+  </data>
+  <data name="NoteEnrolledWIP" xml:space="preserve">
+    <value>Visa bara om användaren har registrerats i WIP.</value>
+  </data>
+  <data name="NoteEyetrackerHardware" xml:space="preserve">
+    <value>Kräver eyetracker-maskinvara.</value>
+  </data>
+  <data name="NoteImeJapan" xml:space="preserve">
+    <value>Tillgängligt om Microsoft Japan-indatametodredigeraren har installerats.</value>
+  </data>
+  <data name="NoteImePinyin" xml:space="preserve">
+    <value>Tillgängligt om Microsoft pinyin-indatametodredigeraren har installerats.</value>
+  </data>
+  <data name="NoteImeWubi" xml:space="preserve">
+    <value>Tillgängligt om Microsoft Wubi-indatametodredigeraren har installerats.</value>
+  </data>
+  <data name="NoteMixedReality" xml:space="preserve">
+    <value>Endast tillgängligt om Mixed Reality Portal-appen är installerad.</value>
+  </data>
+  <data name="NoteMobileProvisioning" xml:space="preserve">
+    <value>Endast tillgängligt på mobila enheter och om företaget har distribuerat ett etableringspaket.</value>
+  </data>
+  <data name="NoteSince18362" xml:space="preserve">
+    <value>Tillagt i Windows 10, version 1903 (build 18362).</value>
+  </data>
+  <data name="NoteSince19041" xml:space="preserve">
+    <value>Tillagt i Windows 10, version 2004 (build 19041).</value>
+  </data>
+  <data name="NoteThirdParty" xml:space="preserve">
+    <value>Endast tillgängligt om "inställningsappar" har installerats, exempelvis av en tredje part.</value>
+  </data>
+  <data name="NoteTouchpad" xml:space="preserve">
+    <value>Endast tillgängligt om maskinvara för pekplatta finns.</value>
+  </data>
+  <data name="NoteWiFiAdapter" xml:space="preserve">
+    <value>Endast tillgängligt om enheten har en Wi-Fi-adapter.</value>
+  </data>
+  <data name="NoteWindowsAnywhere" xml:space="preserve">
+    <value>Enheten måste vara Windows Anywhere-kompatibel.</value>
+  </data>
+  <data name="NoteWorkplaceProvisioning" xml:space="preserve">
+    <value>Endast tillgängligt om företaget har distribuerat ett konfigurationspaket.</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>Aviseringar</value>
+  </data>
+  <data name="NotificationsAndActions" xml:space="preserve">
+    <value>Meddelanden och åtgärder</value>
+  </data>
+  <data name="NumLock" xml:space="preserve">
+    <value>Num Lock</value>
+  </data>
+  <data name="OdbcDataSourceAdministrator32Bit" xml:space="preserve">
+    <value>ODBC-datakällsadministratör (32-bitars)</value>
+  </data>
+  <data name="OdbcDataSourceAdministrator64Bit" xml:space="preserve">
+    <value>ODBC-datakällsadministratör (64-bitars)</value>
+  </data>
+  <data name="OfflineFiles" xml:space="preserve">
+    <value>Offlinefiler</value>
+  </data>
+  <data name="OfflineMaps" xml:space="preserve">
+    <value>Offlinekartor</value>
+  </data>
+  <data name="OfflineMapsDownloadMaps" xml:space="preserve">
+    <value>Offlinekartor – ladca ned kartor</value>
+  </data>
+  <data name="OnScreen" xml:space="preserve">
+    <value>På skärmen</value>
+  </data>
+  <data name="Os" xml:space="preserve">
+    <value>Operativsystem</value>
+  </data>
+  <data name="OtherDevices" xml:space="preserve">
+    <value>Andra enheter</value>
+  </data>
+  <data name="OtherOptions" xml:space="preserve">
+    <value>Andra alternativ</value>
+  </data>
+  <data name="OtherUsers" xml:space="preserve">
+    <value>Andra användare</value>
+  </data>
+  <data name="ParentalControls" xml:space="preserve">
+    <value>Barnspärr</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Lösenord</value>
+  </data>
+  <data name="PasswordProperties" xml:space="preserve">
+    <value>Lösenordsegenskaper</value>
+  </data>
+  <data name="PenAndInputDevices" xml:space="preserve">
+    <value>Penn- och indataenheter</value>
+  </data>
+  <data name="PenAndTouch" xml:space="preserve">
+    <value>Penna och pekskärm</value>
+  </data>
+  <data name="PenAndWindowsInk" xml:space="preserve">
+    <value>Penna och Windows Ink</value>
+  </data>
+  <data name="PeopleNearMe" xml:space="preserve">
+    <value>Personer i närheten</value>
+  </data>
+  <data name="PerformanceInformationAndTools" xml:space="preserve">
+    <value>Prestandainformation och verktyg</value>
+  </data>
+  <data name="PermissionsAndHistory" xml:space="preserve">
+    <value>Behörigheter och historik</value>
+  </data>
+  <data name="PersonalizationCategory" xml:space="preserve">
+    <value>Personanpassning (kategori)</value>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Telefon</value>
+  </data>
+  <data name="PhoneAndModem" xml:space="preserve">
+    <value>Telefon och modem</value>
+  </data>
+  <data name="PhoneAndModemOptions" xml:space="preserve">
+    <value>Telefoner och modem – alternativ</value>
+  </data>
+  <data name="PhoneCalls" xml:space="preserve">
+    <value>Telefonsamtal</value>
+  </data>
+  <data name="PhoneDefaultApps" xml:space="preserve">
+    <value>Telefon – standardappar</value>
+  </data>
+  <data name="Picture" xml:space="preserve">
+    <value>Bild</value>
+  </data>
+  <data name="Pictures" xml:space="preserve">
+    <value>Bilder</value>
+  </data>
+  <data name="PinyinImeSettings" xml:space="preserve">
+    <value>Pinyin IME-inställningar</value>
+  </data>
+  <data name="PinyinImeSettingsDomainLexicon" xml:space="preserve">
+    <value>Pinyin IME-inställningar – domänlexikon</value>
+  </data>
+  <data name="PinyinImeSettingsKeyConfiguration" xml:space="preserve">
+    <value>Inställningar för Pinyin IME – nyckelkonfiguration</value>
+  </data>
+  <data name="PinyinImeSettingsUdp" xml:space="preserve">
+    <value>Pinyin IME-inställningar – UDP</value>
+  </data>
+  <data name="PlayingGameFullScreen" xml:space="preserve">
+    <value>Spela ett spel i helskärmsläge</value>
+  </data>
+  <data name="PluginDescription" xml:space="preserve">
+    <value>Plugin-program för att söka efter Windows-inställningar</value>
+  </data>
+  <data name="PluginTitle" xml:space="preserve">
+    <value>Windows-inställningar</value>
+  </data>
+  <data name="PowerAndSleep" xml:space="preserve">
+    <value>Energi och sömn</value>
+  </data>
+  <data name="PowerOptions" xml:space="preserve">
+    <value>Energialternativ</value>
+  </data>
+  <data name="Presentation" xml:space="preserve">
+    <value>Presentation</value>
+  </data>
+  <data name="PrintScreen" xml:space="preserve">
+    <value>PrintScrn</value>
+  </data>
+  <data name="Printers" xml:space="preserve">
+    <value>Skrivare</value>
+  </data>
+  <data name="PrintersAndScanners" xml:space="preserve">
+    <value>Skrivare och skannrar</value>
+  </data>
+  <data name="ProblemReportsAndSolutions" xml:space="preserve">
+    <value>Problemrapporter och lösningar</value>
+  </data>
+  <data name="Processor" xml:space="preserve">
+    <value>Processor</value>
+  </data>
+  <data name="ProgramsAndFeatures" xml:space="preserve">
+    <value>Program och funktioner</value>
+  </data>
+  <data name="ProjectingToThisPc" xml:space="preserve">
+    <value>Projicera till den här datorn</value>
+  </data>
+  <data name="Provisioning" xml:space="preserve">
+    <value>Etablering</value>
+  </data>
+  <data name="Proximity" xml:space="preserve">
+    <value>Närhet</value>
+  </data>
+  <data name="Proxy" xml:space="preserve">
+    <value>Proxy</value>
+  </data>
+  <data name="Quickime" xml:space="preserve">
+    <value>Quickime</value>
+  </data>
+  <data name="QuietMomentsGame" xml:space="preserve">
+    <value>Tyst stunds-spel</value>
+  </data>
+  <data name="Radios" xml:space="preserve">
+    <value>Trådlösa anslutningar</value>
+  </data>
+  <data name="Ram" xml:space="preserve">
+    <value>RAM</value>
+  </data>
+  <data name="Recognition" xml:space="preserve">
+    <value>Igenkänning</value>
+  </data>
+  <data name="Recovery" xml:space="preserve">
+    <value>Återställning</value>
+  </data>
+  <data name="RedEye" xml:space="preserve">
+    <value>Röd iris</value>
+  </data>
+  <data name="RedGreen" xml:space="preserve">
+    <value>Röd-grön</value>
+  </data>
+  <data name="RedWeek" xml:space="preserve">
+    <value>Röd vecka</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="RegionAndLanguage" xml:space="preserve">
+    <value>Region och språk</value>
+  </data>
+  <data name="RegionFormatting" xml:space="preserve">
+    <value>Regionformat</value>
+  </data>
+  <data name="RegionalLanguage" xml:space="preserve">
+    <value>Regionalt språk</value>
+  </data>
+  <data name="RegionalSettingsProperties" xml:space="preserve">
+    <value>Egenskaper för nationella inställningar</value>
+  </data>
+  <data name="RemoteAppAndDesktopConnections" xml:space="preserve">
+    <value>RemoteApp- och skrivbordsanslutningar</value>
+  </data>
+  <data name="RemoteDesktop" xml:space="preserve">
+    <value>Fjärrskrivbord</value>
+  </data>
+  <data name="ScannersAndCameras" xml:space="preserve">
+    <value>Skannrar och kameror</value>
+  </data>
+  <data name="Scheduled" xml:space="preserve">
+    <value>Schemalagd</value>
+  </data>
+  <data name="ScheduledTasks" xml:space="preserve">
+    <value>Schemalagda aktiviteter</value>
+  </data>
+  <data name="ScreenRotation" xml:space="preserve">
+    <value>Skärmrotation</value>
+  </data>
+  <data name="ScrollBars" xml:space="preserve">
+    <value>Rullningslister</value>
+  </data>
+  <data name="ScrollLock" xml:space="preserve">
+    <value>Scroll Lock</value>
+  </data>
+  <data name="Sdns" xml:space="preserve">
+    <value>SDNS</value>
+  </data>
+  <data name="SearchingWindows" xml:space="preserve">
+    <value>Söker i Windows</value>
+  </data>
+  <data name="SecureDNS" xml:space="preserve">
+    <value>SecureDNS</value>
+  </data>
+  <data name="SecurityCenter" xml:space="preserve">
+    <value>Security Center</value>
+  </data>
+  <data name="SecurityProcessor" xml:space="preserve">
+    <value>Säkerhetsprocessor</value>
+  </data>
+  <data name="SessionCleanup" xml:space="preserve">
+    <value>Sessionsrensning</value>
+  </data>
+  <data name="SetUpKiosk" xml:space="preserve">
+    <value>Konfigurera en kiosk</value>
+  </data>
+  <data name="SettingsHomePage" xml:space="preserve">
+    <value>Startsida för inställningar</value>
+  </data>
+  <data name="SharedExperiences" xml:space="preserve">
+    <value>Delade upplevelser</value>
+  </data>
+  <data name="ShortNameWiFi" xml:space="preserve">
+    <value>wifi</value>
+  </data>
+  <data name="Shortcuts" xml:space="preserve">
+    <value>Genvägar</value>
+  </data>
+  <data name="SignInOptions" xml:space="preserve">
+    <value>Inloggningsalternativ</value>
+  </data>
+  <data name="SignInOptionsDynamicLock" xml:space="preserve">
+    <value>Inloggningsalternativ – dynamiskt lås</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>Storlek</value>
+  </data>
+  <data name="Sound" xml:space="preserve">
+    <value>Ljud</value>
+  </data>
+  <data name="Speech" xml:space="preserve">
+    <value>Tal</value>
+  </data>
+  <data name="SpeechRecognition" xml:space="preserve">
+    <value>Taligenkänning</value>
+  </data>
+  <data name="SpeechTyping" xml:space="preserve">
+    <value>Talinmatning</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Starta</value>
+  </data>
+  <data name="StartPlaces" xml:space="preserve">
+    <value>Startplatser</value>
+  </data>
+  <data name="StartupApps" xml:space="preserve">
+    <value>Startappar</value>
+  </data>
+  <data name="Storage" xml:space="preserve">
+    <value>Storage</value>
+  </data>
+  <data name="StoragePolicies" xml:space="preserve">
+    <value>Lagringsprinciper</value>
+  </data>
+  <data name="StorageSense" xml:space="preserve">
+    <value>Storage Sense</value>
+  </data>
+  <data name="SyncCenter" xml:space="preserve">
+    <value>Synkroniseringscenter</value>
+  </data>
+  <data name="SyncYourSettings" xml:space="preserve">
+    <value>Synkronisera dina inställningar</value>
+  </data>
+  <data name="System" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="SystemPropertiesAndAddNewHardwareWizard" xml:space="preserve">
+    <value>Systemegenskaper och guiden Lägg till ny maskinvara</value>
+  </data>
+  <data name="Tab" xml:space="preserve">
+    <value>Flik</value>
+  </data>
+  <data name="TabletMode" xml:space="preserve">
+    <value>Surfplatteläge</value>
+  </data>
+  <data name="TabletPcSettings" xml:space="preserve">
+    <value>Surfplatteinställningar</value>
+  </data>
+  <data name="Talk" xml:space="preserve">
+    <value>Prata</value>
+  </data>
+  <data name="TalkToCortana" xml:space="preserve">
+    <value>Prata med Cortana</value>
+  </data>
+  <data name="Taskbar" xml:space="preserve">
+    <value>Aktivitetsfält</value>
+  </data>
+  <data name="TaskbarColor" xml:space="preserve">
+    <value>Färg på aktivitetsfältet</value>
+  </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>Aktiviteter</value>
+  </data>
+  <data name="TeamConferencing" xml:space="preserve">
+    <value>Gruppkonferens</value>
+  </data>
+  <data name="TeamDeviceManagement" xml:space="preserve">
+    <value>Teamenhetshantering</value>
+  </data>
+  <data name="TextToSpeech" xml:space="preserve">
+    <value>Text till tal</value>
+  </data>
+  <data name="Themes" xml:space="preserve">
+    <value>Teman</value>
+  </data>
+  <data name="Timeline" xml:space="preserve">
+    <value>Tidslinje</value>
+  </data>
+  <data name="Touch" xml:space="preserve">
+    <value>Touch</value>
+  </data>
+  <data name="TouchFeedback" xml:space="preserve">
+    <value>Beröringsåterkoppling</value>
+  </data>
+  <data name="Touchpad" xml:space="preserve">
+    <value>Pekplatta</value>
+  </data>
+  <data name="Transparency" xml:space="preserve">
+    <value>Transparens</value>
+  </data>
+  <data name="Troubleshoot" xml:space="preserve">
+    <value>Felsök</value>
+  </data>
+  <data name="TruePlay" xml:space="preserve">
+    <value>TruePlay</value>
+  </data>
+  <data name="Typing" xml:space="preserve">
+    <value>Inmatning</value>
+  </data>
+  <data name="Uninstall" xml:space="preserve">
+    <value>Avinstallera</value>
+  </data>
+  <data name="Usb" xml:space="preserve">
+    <value>USB</value>
+  </data>
+  <data name="UserAccounts" xml:space="preserve">
+    <value>Användarkonton</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="VideoPlayback" xml:space="preserve">
+    <value>Videouppspelning</value>
+  </data>
+  <data name="Videos" xml:space="preserve">
+    <value>Videor</value>
+  </data>
+  <data name="VirtualDesktops" xml:space="preserve">
+    <value>Virtuella skrivbord</value>
+  </data>
+  <data name="Virus" xml:space="preserve">
+    <value>Virus</value>
+  </data>
+  <data name="VoiceActivation" xml:space="preserve">
+    <value>Röstaktivering</value>
+  </data>
+  <data name="Volume" xml:space="preserve">
+    <value>Volym</value>
+  </data>
+  <data name="Vpn" xml:space="preserve">
+    <value>VPN</value>
+  </data>
+  <data name="Wallpaper" xml:space="preserve">
+    <value>Bakgrund</value>
+  </data>
+  <data name="WarmerColor" xml:space="preserve">
+    <value>Varmare färg</value>
+  </data>
+  <data name="WelcomeCenter" xml:space="preserve">
+    <value>Välkomstcenter</value>
+  </data>
+  <data name="WelcomeScreen" xml:space="preserve">
+    <value>Välkomstskärm</value>
+  </data>
+  <data name="Wheel" xml:space="preserve">
+    <value>Hjul</value>
+  </data>
+  <data name="WiFi" xml:space="preserve">
+    <value>Wi-Fi</value>
+  </data>
+  <data name="WiFiCalling" xml:space="preserve">
+    <value>Wi-Fi-samtal</value>
+  </data>
+  <data name="WiFiSettings" xml:space="preserve">
+    <value>Wi-Fi-inställningar</value>
+  </data>
+  <data name="WindowBorder" xml:space="preserve">
+    <value>Fönsterkantlinje</value>
+  </data>
+  <data name="WindowsAnytimeUpgrade" xml:space="preserve">
+    <value>Windows Anytime Upgrade</value>
+  </data>
+  <data name="WindowsAnywhere" xml:space="preserve">
+    <value>Windows Anywhere</value>
+  </data>
+  <data name="WindowsCardSpace" xml:space="preserve">
+    <value>Windows CardSpace</value>
+  </data>
+  <data name="WindowsDefender" xml:space="preserve">
+    <value>Windows Defender</value>
+  </data>
+  <data name="WindowsFirewall" xml:space="preserve">
+    <value>Windows-brandväggen</value>
+  </data>
+  <data name="WindowsHelloSetupFace" xml:space="preserve">
+    <value>Installation av Windows Hello – Ansiktsigenkänning</value>
+  </data>
+  <data name="WindowsHelloSetupFingerprint" xml:space="preserve">
+    <value>Installation av Windows Hello – fingeravtryck</value>
+  </data>
+  <data name="WindowsInsiderProgram" xml:space="preserve">
+    <value>Windows Insider Program</value>
+  </data>
+  <data name="WindowsMobilityCenter" xml:space="preserve">
+    <value>Windows mobilitetscenter</value>
+  </data>
+  <data name="WindowsSearch" xml:space="preserve">
+    <value>Windows Search</value>
+  </data>
+  <data name="WindowsSecurity" xml:space="preserve">
+    <value>Windows-säkerhet</value>
+  </data>
+  <data name="WindowsUpdate" xml:space="preserve">
+    <value>Windows Update</value>
+  </data>
+  <data name="WindowsUpdateAdvancedOptions" xml:space="preserve">
+    <value>Windows Update – Avancerade alternativ</value>
+  </data>
+  <data name="WindowsUpdateCheckForUpdates" xml:space="preserve">
+    <value>Windows Update – Sök efter uppdateringar</value>
+  </data>
+  <data name="WindowsUpdateRestartOptions" xml:space="preserve">
+    <value>Windows Update – omstartsalternativ</value>
+  </data>
+  <data name="WindowsUpdateViewOptionalUpdates" xml:space="preserve">
+    <value>Windows Update – Visa valfria uppdateringar</value>
+  </data>
+  <data name="WindowsUpdateViewUpdateHistory" xml:space="preserve">
+    <value>Windows Update – Visa uppdateringshistorik</value>
+  </data>
+  <data name="Wireless" xml:space="preserve">
+    <value>Trådlöst</value>
+  </data>
+  <data name="Workplace" xml:space="preserve">
+    <value>Arbetsplats</value>
+  </data>
+  <data name="WorkplaceProvisioning" xml:space="preserve">
+    <value>Arbetsplatsetablering</value>
+  </data>
+  <data name="WubiImeSettings" xml:space="preserve">
+    <value>Wubi IME-inställningar</value>
+  </data>
+  <data name="WubiImeSettingsUdp" xml:space="preserve">
+    <value>Wubi IME-inställningar – UDP</value>
+  </data>
+  <data name="XboxNetworking" xml:space="preserve">
+    <value>Xbox-nätverk</value>
+  </data>
+  <data name="YourInfo" xml:space="preserve">
+    <value>Din information</value>
+  </data>
+  <data name="Zoom" xml:space="preserve">
+    <value>Zooma</value>
+  </data>
+  <data name="access.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="appwiz.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="bpmf" xml:space="preserve">
+    <value>bpmf</value>
+  </data>
+  <data name="calling" xml:space="preserve">
+    <value>ringer</value>
+  </data>
+  <data name="desk.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="deuteranopia" xml:space="preserve">
+    <value>deuteranopia</value>
+  </data>
+  <data name="findfast.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="inetcpl.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="intl.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="joy.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="jpnime" xml:space="preserve">
+    <value>jpnime</value>
+  </data>
+  <data name="main.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="mlcfg32.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="mmsys.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="modem.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="netcpl.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="netsetup.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="nwc.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="odbccp32.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="password.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="powercfg.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="protanopia" xml:space="preserve">
+    <value>protanopia</value>
+  </data>
+  <data name="schedtasks" xml:space="preserve">
+    <value>schedtasks</value>
+  </data>
+  <data name="sticpl.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="sysdm.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="themes.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="timedate.cpl" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tritanopia" xml:space="preserve">
+    <value>tritanopia</value>
+  </data>
+  <data name="wgpocpl.cpl" xml:space="preserve">
+    <value />
+  </data>
+</root>
