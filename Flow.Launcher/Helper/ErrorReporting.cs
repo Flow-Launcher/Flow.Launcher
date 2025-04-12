@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Threading;
 using NLog;
 using Flow.Launcher.Infrastructure;
@@ -28,6 +29,14 @@ public static class ErrorReporting
         Report(e.Exception);
         //prevent application exist, so the user can copy prompted error info
         e.Handled = true;
+    }
+
+    public static void TaskSchedulerUnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+    {
+        //handle unobserved task exceptions
+        Report(e.Exception);
+        //prevent application exist, so the user can copy prompted error info
+        e.SetObserved();
     }
 
     public static string RuntimeInfo()
