@@ -324,7 +324,7 @@ namespace Flow.Launcher.Core.Resource
             return dict;
         }
 
-        private ResourceDictionary GetCurrentResourceDictionary()
+        public ResourceDictionary GetCurrentResourceDictionary()
         {
             return GetResourceDictionary(_settings.Theme);
         }

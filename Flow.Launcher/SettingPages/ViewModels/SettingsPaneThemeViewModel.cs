@@ -17,6 +17,7 @@ using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.ViewModel;
 using ModernWpf;
 using ThemeManagerForColorSchemeSwitch = ModernWpf.ThemeManager;
+using System.Windows.Controls;
 
 namespace Flow.Launcher.SettingPages.ViewModels;
 
@@ -508,5 +509,56 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         WindowHeightSize = 42;
         ItemHeightSize = 58;
     }
-   
+    
+    [RelayCommand]
+    private void Import()
+    {
+        var resourceDictionary = _theme.GetCurrentResourceDictionary();
+        
+        if (resourceDictionary["QueryBoxStyle"] is Style queryBoxStyle)
+        {
+            var fontSizeSetter = queryBoxStyle.Setters
+                .OfType<Setter>()
+                .FirstOrDefault(setter => setter.Property == TextBox.FontSizeProperty);
+            if (fontSizeSetter?.Value is double fontSize)
+            {
+                QueryBoxFontSize = fontSize;
+            }
+            
+            var heightSetter = queryBoxStyle.Setters
+                .OfType<Setter>()
+                .FirstOrDefault(setter => setter.Property == FrameworkElement.HeightProperty);
+            if (heightSetter?.Value is double height)
+            {
+                WindowHeightSize = height;
+            }
+        }
+        
+        if (resourceDictionary["ResultItemHeight"] is double resultItemHeight)
+        {
+            ItemHeightSize = resultItemHeight;
+        }
+        
+        if (resourceDictionary["ItemTitleStyle"] is Style itemTitleStyle)
+        {
+            var fontSizeSetter = itemTitleStyle.Setters
+                .OfType<Setter>()
+                .FirstOrDefault(setter => setter.Property == TextBlock.FontSizeProperty);
+            if (fontSizeSetter?.Value is double fontSize)
+            {
+                ResultItemFontSize = fontSize;
+            }
+        }
+        
+        if (resourceDictionary["ItemSubTitleStyle"] is Style itemSubTitleStyle)
+        {
+            var fontSizeSetter = itemSubTitleStyle.Setters
+                .OfType<Setter>()
+                .FirstOrDefault(setter => setter.Property == TextBlock.FontSizeProperty);
+            if (fontSizeSetter?.Value is double fontSize)
+            {
+                ResultSubItemFontSize = fontSize;
+            }
+        }
+    }
 }
