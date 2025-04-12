@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0-windows</TargetFramework>
@@ -67,6 +67,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="NHotkey.Wpf" Version="3.0.0" />
     <PackageReference Include="NLog" Version="4.7.10" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
     <PackageReference Include="SharpVectors.Wpf" Version="1.8.4.2" />
@@ -76,5 +77,13 @@
     <PackageReference Include="ToolGood.Words.Pinyin" Version="3.0.1.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Interop.SHDocVw, Version=1.1.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>QuickSwitch\Interop.SHDocVw.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.Shell32, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>QuickSwitch\Interop.Shell32.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   
 </Project>

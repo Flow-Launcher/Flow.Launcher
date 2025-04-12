@@ -22,6 +22,8 @@ internal static class HotKeyMapper
 
         SetHotkey(_settings.Hotkey, OnToggleHotkey);
         LoadCustomPluginHotkey();
+
+        Infrastructure.QuickSwitch.QuickSwitch.Initialize(SetHotkey);
     }
 
     internal static void OnToggleHotkey(object sender, HotkeyEventArgs args)

@@ -12,7 +12,6 @@
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -97,7 +96,6 @@
     <!-- ModernWpfUI v0.9.5 introduced WinRT changes that causes Notification platform unavailable error on some machines -->
     <!-- https://github.com/Flow-Launcher/Flow.Launcher/issues/1772#issuecomment-1502440801 -->
     <PackageReference Include="ModernWpfUI" Version="0.9.4" />
-    <PackageReference Include="NHotkey.Wpf" Version="3.0.0" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
     <PackageReference Include="SemanticVersioning" Version="3.0.0" />
     <PackageReference Include="TaskScheduler" Version="2.12.1" />
@@ -114,15 +112,6 @@
     <Content Include="Resources\open.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Interop.SHDocVw, Version=1.1.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>QuickSwitch\Interop.SHDocVw.dll</HintPath>
-    </Reference>
-    <Reference Include="Interop.Shell32, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>QuickSwitch\Interop.Shell32.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>

@@ -184,9 +184,6 @@ namespace Flow.Launcher
                 // main windows needs initialized before theme change because of blur settings
                 Ioc.Default.GetRequiredService<Theme>().ChangeTheme();
 
-                // initialize quick switch
-                QuickSwitch.QuickSwitch.Initialize();
-
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
                 RegisterExitEvents();
@@ -337,6 +334,7 @@ namespace Flow.Launcher
                     // since some resources owned by the thread need to be disposed.
                     _mainWindow?.Dispatcher.Invoke(_mainWindow.Dispose);
                     _mainVM?.Dispose();
+                    Infrastructure.QuickSwitch.QuickSwitch.Dispose();
                 }
 
                 Log.Info("|App.Dispose|End Flow Launcher dispose ----------------------------------------------------");
