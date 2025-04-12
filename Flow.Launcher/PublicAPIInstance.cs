@@ -38,20 +38,23 @@ namespace Flow.Launcher
     public class PublicAPIInstance : IPublicAPI, IRemovable
     {
         private readonly Settings _settings;
-        private readonly Internationalization _translater;
         private readonly MainViewModel _mainVM;
 
+        // Must use getter to access Application.Current.Resources.MergedDictionaries so earlier
         private Theme _theme;
         private Theme Theme => _theme ??= Ioc.Default.GetRequiredService<Theme>();
+
+        // Must use getter to avoid circular dependency
+        private Updater _updater;
+        private Updater Updater => _updater ??= Ioc.Default.GetRequiredService<Updater>();
 
         private readonly object _saveSettingsLock = new();
 
         #region Constructor
 
-        public PublicAPIInstance(Settings settings, Internationalization translater, MainViewModel mainVM)
+        public PublicAPIInstance(Settings settings, MainViewModel mainVM)
         {
             _settings = settings;
-            _translater = translater;
             _mainVM = mainVM;
             GlobalHotkey.hookedKeyboardCallback = KListener_hookedKeyboardCallback;
             WebRequest.RegisterPrefix("data", new DataWebRequestFactory());
@@ -100,8 +103,7 @@ namespace Flow.Launcher
             remove => _mainVM.VisibilityChanged -= value;
         }
 
-        // Must use Ioc.Default.GetRequiredService<Updater>() to avoid circular dependency
-        public void CheckForNewUpdate() => _ = Ioc.Default.GetRequiredService<Updater>().UpdateAppAsync(false);
+        public void CheckForNewUpdate() => _ = Updater.UpdateAppAsync(false);
 
         public void SaveAppAllSettings()
         {
@@ -232,7 +234,7 @@ namespace Flow.Launcher
 
         public void StopLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Collapsed;
 
-        public string GetTranslation(string key) => _translater.GetTranslation(key);
+        public string GetTranslation(string key) => Internationalization.GetTranslation(key);
 
         public List<PluginPair> GetAllPlugins() => PluginManager.AllPlugins.ToList();
 

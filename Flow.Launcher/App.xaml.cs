@@ -153,6 +153,7 @@ namespace Flow.Launcher
 
                 RegisterAppDomainExceptions();
                 RegisterDispatcherUnhandledException();
+                RegisterTaskSchedulerUnhandledException();
 
                 var imageLoadertask = ImageLoader.InitializeAsync();
 
@@ -282,6 +283,15 @@ namespace Flow.Launcher
         private static void RegisterAppDomainExceptions()
         {
             AppDomain.CurrentDomain.UnhandledException += ErrorReporting.UnhandledExceptionHandle;
+        }
+
+        /// <summary>
+        /// let exception throw as normal is better for Debug
+        /// </summary>
+        [Conditional("RELEASE")]
+        private static void RegisterTaskSchedulerUnhandledException()
+        {
+            TaskScheduler.UnobservedTaskException += ErrorReporting.TaskSchedulerUnobservedTaskException;
         }
 
         #endregion
