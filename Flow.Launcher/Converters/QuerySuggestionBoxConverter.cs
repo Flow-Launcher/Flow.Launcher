@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
@@ -43,8 +44,16 @@ public class QuerySuggestionBoxConverter : IMultiValueConverter
 
             // Check if Text will be larger than our QueryTextBox
             Typeface typeface = new Typeface(queryTextBox.FontFamily, queryTextBox.FontStyle, queryTextBox.FontWeight, queryTextBox.FontStretch);
-            // TODO: Obsolete warning?
-            var ft = new FormattedText(queryTextBox.Text, CultureInfo.CurrentCulture, System.Windows.FlowDirection.LeftToRight, typeface, queryTextBox.FontSize, Brushes.Black);
+            var dpi = VisualTreeHelper.GetDpi(queryTextBox);
+            var ft = new FormattedText(
+                queryTextBox.Text,
+                CultureInfo.CurrentCulture,
+                FlowDirection.LeftToRight,
+                typeface,
+                queryTextBox.FontSize,
+                Brushes.Black,
+                dpi.PixelsPerDip
+            );
 
             var offset = queryTextBox.Padding.Right;
 

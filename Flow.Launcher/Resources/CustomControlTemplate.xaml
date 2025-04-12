@@ -1285,7 +1285,6 @@
         BasedOn="{StaticResource DefaultComboBoxStyle}"
         TargetType="ComboBox">
         <Setter Property="Padding" Value="12 0 0 0" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="ui:ControlHelper.CornerRadius" Value="0" />
@@ -2784,9 +2783,12 @@
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter TargetName="HeaderContentPresenter" Property="Foreground" Value="{DynamicResource TextControlHeaderForegroundDisabled}" />
-                            <Setter Property="Background" Value="{DynamicResource TextControlBackgroundDisabled}" />
+                            <Setter Property="Background" Value="{DynamicResource CustomNumberBoxBGDisabled}" />
+                            <Setter TargetName="BorderElementInline" Property="Background" Value="{DynamicResource TextControlBackgroundDisabled}" />
                             <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushDisabled}" />
-                            <Setter Property="Foreground" Value="{DynamicResource TextControlForegroundDisabled}" />
+                            <Setter TargetName="BorderElement" Property="BorderThickness" Value="0 0 0 0" />
+                            <Setter TargetName="BorderElementInline" Property="BorderThickness" Value="0 0 0 0" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextControlPlaceholderForegroundDisabled}" />
                             <Setter TargetName="PlaceholderTextContentPresenter" Property="Foreground" Value="{DynamicResource TextControlPlaceholderForegroundDisabled}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
@@ -2801,7 +2803,7 @@
                             <Setter TargetName="BorderElementInline" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushFocused}" />
                             <Setter TargetName="BorderElementInline" Property="BorderThickness" Value="0 0 0 2" />
                             <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource CustomTextBoxOutline}" />
-                            <Setter TargetName="BorderElement" Property="BorderThickness" Value="{DynamicResource 2 2 2 0}" />
+                            <Setter TargetName="BorderElement" Property="BorderThickness" Value="2 2 2 0" />
                             <Setter Property="Foreground" Value="{DynamicResource TextControlForegroundFocused}" />
                         </Trigger>
                         <MultiTrigger>
@@ -2872,7 +2874,6 @@
                             FontFamily="{TemplateBinding FontFamily}"
                             FontSize="{TemplateBinding FontSize}"
                             FontWeight="{TemplateBinding FontWeight}"
-                            Foreground="{DynamicResource Color05B}"
                             InputScope="{TemplateBinding InputScope}"
                             SelectionBrush="{TemplateBinding SelectionBrush}"
                             TextAlignment="{TemplateBinding TextAlignment}" />

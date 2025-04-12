@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Threading;
-using NLog;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Exception;
+using NLog;
 
 namespace Flow.Launcher.Helper;
 
@@ -28,6 +30,13 @@ public static class ErrorReporting
         Report(e.Exception);
         //prevent application exist, so the user can copy prompted error info
         e.Handled = true;
+    }
+
+    public static void TaskSchedulerUnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+    {
+        //handle unobserved task exceptions
+        Application.Current.Dispatcher.Invoke(() => Report(e.Exception));
+        //prevent application exit, so the user can copy the prompted error info
     }
 
     public static string RuntimeInfo()

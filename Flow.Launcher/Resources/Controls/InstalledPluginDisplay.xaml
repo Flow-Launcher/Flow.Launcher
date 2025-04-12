@@ -96,8 +96,11 @@
                                 PlaceholderText="{Binding DefaultSearchDelay}"
                                 SmallChange="10"
                                 SpinButtonPlacementMode="Compact"
-                                ToolTip="{DynamicResource searchDelayToolTip}"
+                                ToolTip="{DynamicResource searchDelayNumberBoxToolTip}"
+                                ToolTipService.InitialShowDelay="0"
+                                ToolTipService.ShowOnDisabled="True"
                                 Value="{Binding PluginSearchDelayTime, Mode=TwoWay}" />
+
                         </StackPanel>
 
                         <!--  Put OnOffControl after PriorityControl & SearchDelayControl so that it can display correctly  -->
