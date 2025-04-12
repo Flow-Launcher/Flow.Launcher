@@ -256,13 +256,13 @@
                                 BorderThickness="1"
                                 Style="{StaticResource SettingSeparatorStyle}" />
                             <Button
-                                Margin="12 4 12 8"
+                                Margin="12 8 12 4"
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding ImportCommand}"
                                 Content="{DynamicResource ImportThemeSize}"
                                 ToolTip="{DynamicResource ImportThemeSizeToolTip}" />
                             <Button
-                                Margin="12 4 12 8"
+                                Margin="12 4 12 12"
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding ResetCommand}"
                                 Content="{DynamicResource resetCustomize}"
