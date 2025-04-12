@@ -252,6 +252,12 @@ namespace Flow.Launcher.Plugin
         public string RecordKey { get; set; } = null;
 
         /// <summary>
+        /// Determines if the badge icon should be shown.
+        /// If users want to show the result badges and here you set this to true, the results will show the badge icon.
+        /// </summary>
+        public bool ShowBadge { get; set; } = false;
+
+        /// <summary>
         /// Run this result, asynchronously
         /// </summary>
         /// <param name="context"></param>

@@ -128,9 +128,13 @@ namespace Flow.Launcher.ViewModel
         {
             get
             {
-                if (!Settings.ShowBadges || !BadgeIconAvailable)
+                // If results do not allow badges, or user has disabled badges in settings,
+                // or badge icon is not available, then do not show badge
+                if (!Result.ShowBadge || !Settings.ShowBadges || !BadgeIconAvailable)
                     return Visibility.Collapsed;
 
+                // If user has set to show badges only for global results, and this is not a global result,
+                // then do not show badge
                 if (Settings.ShowBadgesGlobalOnly && !IsGlobalQuery)
                     return Visibility.Collapsed;
 
