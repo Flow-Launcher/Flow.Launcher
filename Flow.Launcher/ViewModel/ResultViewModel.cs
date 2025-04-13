@@ -13,7 +13,7 @@ namespace Flow.Launcher.ViewModel
 {
     public class ResultViewModel : BaseModel
     {
-        private static readonly string ClassName = nameof(ResultsViewModel);
+        private static readonly string ClassName = nameof(ResultViewModel);
 
         private static readonly PrivateFontCollection FontCollection = new();
         private static readonly Dictionary<string, string> Fonts = new();
