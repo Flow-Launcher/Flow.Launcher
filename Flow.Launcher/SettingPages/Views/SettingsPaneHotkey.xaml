@@ -212,7 +212,7 @@
                 Sub="{DynamicResource autoCompleteHotkeyToolTip}">
                 <cc:ExCard.SideContent>
                     <flowlauncher:HotkeyControl
-                        DefaultHotkey="Ctrl+Tab"
+                        DefaultHotkey="Alt+Right"
                         Type="AutoCompleteHotkey"
                         ValidateKeyGesture="False" />
                 </cc:ExCard.SideContent>
