@@ -15,6 +15,7 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.QuickSwitch;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -183,6 +184,8 @@ namespace Flow.Launcher
 
                 // main windows needs initialized before theme change because of blur settings
                 Ioc.Default.GetRequiredService<Theme>().ChangeTheme();
+
+                QuickSwitch.Initialize();
 
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 

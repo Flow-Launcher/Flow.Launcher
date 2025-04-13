@@ -33,11 +33,13 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         private static UnhookWinEventSafeHandle _hookWinEventSafeHandle = null;
 
+        private static bool _isInitialized = false;
+
         public static bool Initialize()
         {
-            try
-            {
-                _hookWinEventSafeHandle = PInvoke.SetWinEventHook(
+            if (_isInitialized) return true;
+
+            _hookWinEventSafeHandle = PInvoke.SetWinEventHook(
                     PInvoke.EVENT_SYSTEM_FOREGROUND,
                     PInvoke.EVENT_SYSTEM_FOREGROUND,
                     null,
@@ -46,20 +48,14 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     0,
                     PInvoke.WINEVENT_OUTOFCONTEXT);
 
-                if (_hookWinEventSafeHandle.IsInvalid)
-                {
-                    Log.Error("Failed to set window event hook");
-                    return false;
-                }
-
-                return true;
-            }
-            catch (System.Exception e)
+            if (_hookWinEventSafeHandle.IsInvalid)
             {
-                Log.Exception(ClassName, "Failed to initialize QuickSwitch", e);
+                Log.Error(ClassName, "Failed to initialize QuickSwitch");
+                return false;
             }
 
-            return false;
+            _isInitialized = true;
+            return true;
         }
 
         public static void OnToggleHotkey(object sender, HotkeyEventArgs args)
