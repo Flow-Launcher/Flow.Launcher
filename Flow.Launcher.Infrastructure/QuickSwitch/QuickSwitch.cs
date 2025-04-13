@@ -7,10 +7,10 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Interop.UIAutomationClient;
 using NHotkey;
 using SHDocVw;
-using Shell32;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.UI.Accessibility;
+using Windows.Win32.UI.Shell;
 using WindowsInput;
 
 namespace Flow.Launcher.Infrastructure.QuickSwitch
@@ -78,7 +78,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 return;
             }
 
-            if (document is not IShellFolderViewDual2 folder)
+            if (document is not IShellFolderViewDual2 folderView)
             {
                 return;
             }
@@ -86,7 +86,24 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             string path;
             try
             {
-                path = folder.Folder.Items().Item().Path;
+                // CSWin32 Folder does not have Self, so we need to use dynamic type here
+                // Use dynamic to bypass static typing
+                dynamic folder = folderView.Folder;
+
+                // Access the Self property via dynamic binding
+                dynamic folderItem = folder.Self;
+
+                // Check if the item is part of the file system
+                if (folderItem != null && folderItem.IsFileSystem)
+                {
+                    path = folderItem.Path;
+                }
+                else
+                {
+                    // Handle non-file system paths (e.g., virtual folders)
+                    path = string.Empty;
+                }
+
                 if (!Path.IsPathRooted(path))
                 {
                     return;
