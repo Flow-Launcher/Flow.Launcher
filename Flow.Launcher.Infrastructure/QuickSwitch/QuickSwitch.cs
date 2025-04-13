@@ -1,7 +1,6 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
+﻿using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading;
 using Flow.Launcher.Infrastructure.Logger;
 using Interop.UIAutomationClient;
 using NHotkey;
@@ -11,7 +10,6 @@ using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.UI.Accessibility;
 using WindowsInput;
-using WindowsInput.Native;
 
 namespace Flow.Launcher.Infrastructure.QuickSwitch
 {
@@ -58,16 +56,11 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         public static void OnToggleHotkey(object sender, HotkeyEventArgs args)
         {
-            NavigateDialogPath(_automation.ElementFromHandle(Win32Helper.GetForegroundWindow()));
+            NavigateDialogPath();
         }
 
-        private static void NavigateDialogPath(IUIAutomationElement window)
+        private static void NavigateDialogPath()
         {
-            if (window is not { CurrentClassName: "#32770" } dialog)
-            {
-                return;
-            }
-
             object document;
             try
             {
@@ -96,31 +89,45 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             {
                 return;
             }
-            Debug.WriteLine($"Path: {path}");
 
-            // Use Alt + D to focus address bar
-            _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.MENU, VirtualKeyCode.VK_D);
+            JumpToPath(path);
+        }
 
-            var address = dialog.FindFirst(TreeScope.TreeScope_Subtree, _automation.CreateAndCondition(
-                _automation.CreatePropertyCondition(UIA_PropertyIds.UIA_ControlTypePropertyId, UIA_ControlTypeIds.UIA_EditControlTypeId),
-                _automation.CreatePropertyCondition(UIA_PropertyIds.UIA_AccessKeyPropertyId, "d")));
-
-            if (address == null)
+        private static bool JumpToPath(string path)
+        {
+            var t = new Thread(() =>
             {
-                // I found I cannot get address edit control here
-                Debug.WriteLine("Failed to find address edit control");
-                return;
+                // Jump after flow launcher window vanished (after JumpAction returned true)
+                // and the dialog had been in the foreground. The class name of a dialog window is "#32770".
+                var timeOut = !SpinWait.SpinUntil(() => GetForegroundWindowClassName() == "#32770", 1000);
+                if (timeOut)
+                {
+                    return;
+                };
+
+                // Assume that the dialog is in the foreground now
+                Win32Helper.DirJump(_inputSimulator, path, PInvoke.GetForegroundWindow());
+            });
+            t.Start();
+            return true;
+
+            static string GetForegroundWindowClassName()
+            {
+                var handle = PInvoke.GetForegroundWindow();
+                return GetClassName(handle);
             }
+        }
 
-            var edit = (IUIAutomationValuePattern)address.GetCurrentPattern(UIA_PatternIds.UIA_ValuePatternId);
-            edit.SetValue(path);
-
-            PInvoke.SendMessage(
-                new(address.CurrentNativeWindowHandle),
-                PInvoke.WM_KEYDOWN,
-                (nuint)VirtualKeyCode.RETURN,
-                IntPtr.Zero);
-            Debug.WriteLine("Send Enter key to address edit control");
+        private static unsafe string GetClassName(HWND handle)
+        {
+            fixed (char* buf = new char[256])
+            {
+                return PInvoke.GetClassName(handle, buf, 256) switch
+                {
+                    0 => null,
+                    _ => new string(buf),
+                };
+            }
         }
 
         private static void WindowSwitch(
@@ -145,7 +152,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
             if (window is { CurrentClassName: "#32770" })
             {
-                NavigateDialogPath(window);
+                NavigateDialogPath();
                 return;
             }
 

@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -13,6 +14,8 @@ using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Dwm;
 using Windows.Win32.UI.Input.KeyboardAndMouse;
 using Windows.Win32.UI.WindowsAndMessaging;
+using WindowsInput;
+using WindowsInput.Native;
 using Point = System.Windows.Point;
 
 namespace Flow.Launcher.Infrastructure
@@ -601,6 +604,87 @@ namespace Flow.Launcher.Infrastructure
             catch (System.Exception)
             {
                 // Ignored
+            }
+        }
+
+        #endregion
+
+        #region Quick Switch
+
+        // Edited from: https://github.com/idkidknow/Flow.Launcher.Plugin.DirQuickJump
+
+        internal static bool DirJump(InputSimulator inputSimulator, string path, HWND dialogHandle, bool altD = true)
+        {
+            // Alt-D or Ctrl-L to focus on the path input box
+            if (altD)
+            {
+                inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LMENU, VirtualKeyCode.VK_D);
+            }
+            else
+            {
+                inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LCONTROL, VirtualKeyCode.VK_L);
+            }
+
+            // Get the handle of the path input box and then set the text.
+            // The window with class name "ComboBoxEx32" is not visible when the path input box is not with the keyboard focus.
+            var controlHandle = PInvoke.FindWindowEx(dialogHandle, HWND.Null, "WorkerW", null);
+            controlHandle = PInvoke.FindWindowEx(controlHandle, HWND.Null, "ReBarWindow32", null);
+            controlHandle = PInvoke.FindWindowEx(controlHandle, HWND.Null, "Address Band Root", null);
+            controlHandle = PInvoke.FindWindowEx(controlHandle, HWND.Null, "msctls_progress32", null);
+            controlHandle = PInvoke.FindWindowEx(controlHandle, HWND.Null, "ComboBoxEx32", null);
+            if (controlHandle == HWND.Null)
+            {
+                return DirJumpOnLegacyDialog(inputSimulator, path, dialogHandle);
+            }
+
+            var timeOut = !SpinWait.SpinUntil(() =>
+            {
+                int style = PInvoke.GetWindowLong(controlHandle, WINDOW_LONG_PTR_INDEX.GWL_STYLE);
+                return (style & (int)WINDOW_STYLE.WS_VISIBLE) != 0;
+            }, 1000);
+            if (timeOut)
+            {
+                return false;
+            }
+
+            var editHandle = PInvoke.FindWindowEx(controlHandle, HWND.Null, "ComboBox", null);
+            editHandle = PInvoke.FindWindowEx(editHandle, HWND.Null, "Edit", null);
+            if (editHandle == HWND.Null)
+            {
+                return false;
+            }
+
+            SetWindowText(editHandle, path);
+            inputSimulator.Keyboard.KeyPress(VirtualKeyCode.RETURN);
+
+            return true;
+        }
+
+        internal static bool DirJumpOnLegacyDialog(InputSimulator inputSimulator, string path, HWND dialogHandle)
+        {
+            // https://github.com/idkidknow/Flow.Launcher.Plugin.DirQuickJump/issues/1
+            var controlHandle = PInvoke.FindWindowEx(dialogHandle, HWND.Null, "ComboBoxEx32", null);
+            controlHandle = PInvoke.FindWindowEx(controlHandle, HWND.Null, "ComboBox", null);
+            controlHandle = PInvoke.FindWindowEx(controlHandle, HWND.Null, "Edit", null);
+            if (controlHandle == HWND.Null)
+            {
+                return false;
+            }
+
+            SetWindowText(controlHandle, path);
+            // Alt-O (equivalent to press the Open button) twice. In normal cases it suffices to press once,
+            // but when the focus is on an irrelevant folder, that press once will just open the irrelevant one.
+            inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LMENU, VirtualKeyCode.VK_O);
+            inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LMENU, VirtualKeyCode.VK_O);
+
+            return true;
+        }
+
+        private static unsafe nint SetWindowText(HWND handle, string text)
+        {
+            fixed (char* textPtr = text + '\0')
+            {
+                return PInvoke.SendMessage(handle, PInvoke.WM_SETTEXT, 0, (nint)textPtr).Value;
             }
         }
 
