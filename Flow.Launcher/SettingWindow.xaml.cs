@@ -6,7 +6,6 @@ using System.Windows.Interop;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
-using Flow.Launcher.Plugin;
 using Flow.Launcher.SettingPages.Views;
 using Flow.Launcher.ViewModel;
 using ModernWpf.Controls;
@@ -16,7 +15,6 @@ namespace Flow.Launcher;
 
 public partial class SettingWindow
 {
-    private readonly IPublicAPI _api;
     private readonly Settings _settings;
     private readonly SettingWindowViewModel _viewModel;
 
@@ -26,7 +24,6 @@ public partial class SettingWindow
         _settings = Ioc.Default.GetRequiredService<Settings>();
         DataContext = viewModel;
         _viewModel = viewModel;
-        _api = Ioc.Default.GetRequiredService<IPublicAPI>();
         InitializePosition();
         InitializeComponent();
     }
@@ -49,7 +46,7 @@ public partial class SettingWindow
         _settings.SettingWindowTop = Top;
         _settings.SettingWindowLeft = Left;
         _viewModel.Save();
-        _api.SavePluginSettings();
+        App.API.SavePluginSettings();
     }
 
     private void OnCloseExecuted(object sender, ExecutedRoutedEventArgs e)
