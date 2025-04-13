@@ -98,7 +98,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
             Debug.WriteLine($"Path: {path}");
 
-            //_inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.MENU, VirtualKeyCode.VK_D);
+            // Use Alt + D to focus address bar
+            _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.MENU, VirtualKeyCode.VK_D);
 
             var address = dialog.FindFirst(TreeScope.TreeScope_Subtree, _automation.CreateAndCondition(
                 _automation.CreatePropertyCondition(UIA_PropertyIds.UIA_ControlTypePropertyId, UIA_ControlTypeIds.UIA_EditControlTypeId),
@@ -106,7 +107,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
             if (address == null)
             {
-                // I found issue here
+                // I found I cannot get address edit control here
                 Debug.WriteLine("Failed to find address edit control");
                 return;
             }
@@ -119,6 +120,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 PInvoke.WM_KEYDOWN,
                 (nuint)VirtualKeyCode.RETURN,
                 IntPtr.Zero);
+            Debug.WriteLine("Send Enter key to address edit control");
         }
 
         private static void WindowSwitch(
@@ -164,32 +166,12 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                         continue;
                     }
 
-                    // Release previous reference if exists
-                    /*if (lastExplorerView != null)
-                    {
-                        Marshal.ReleaseComObject(lastExplorerView);
-                        lastExplorerView = null;
-                    }*/
-
                     lastExplorerView = explorer;
                 }
             }
             catch (System.Exception e)
             {
                 Log.Exception(ClassName, "Failed to get shell windows", e);
-            }
-            finally
-            {
-                /*if (window != null)
-                {
-                    Marshal.ReleaseComObject(window);
-                    window = null;
-                }
-                if (shellWindows != null)
-                {
-                    Marshal.ReleaseComObject(shellWindows);
-                    shellWindows = null;
-                }*/
             }
         }
 
