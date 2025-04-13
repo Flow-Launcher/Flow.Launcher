@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Net.Sockets;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
@@ -15,6 +16,8 @@ namespace Flow.Launcher.Core.ExternalPlugins
 {
     public record CommunityPluginSource(string ManifestFileUrl)
     {
+        private static readonly string ClassName = nameof(CommunityPluginSource);
+
         private string latestEtag = "";
 
         private List<UserPlugin> plugins = new();
@@ -34,35 +37,50 @@ namespace Flow.Launcher.Core.ExternalPlugins
         /// </remarks>
         public async Task<List<UserPlugin>> FetchAsync(CancellationToken token)
         {
-            Log.Info(nameof(CommunityPluginSource), $"Loading plugins from {ManifestFileUrl}");
+            Log.Info(ClassName, $"Loading plugins from {ManifestFileUrl}");
 
             var request = new HttpRequestMessage(HttpMethod.Get, ManifestFileUrl);
 
             request.Headers.Add("If-None-Match", latestEtag);
 
-            using var response = await Http.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, token)
+            try
+            {
+                using var response = await Http.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, token)
                 .ConfigureAwait(false);
 
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                plugins = await response.Content
-                    .ReadFromJsonAsync<List<UserPlugin>>(PluginStoreItemSerializationOption, cancellationToken: token)
-                    .ConfigureAwait(false);
-                latestEtag = response.Headers.ETag?.Tag;
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    plugins = await response.Content
+                        .ReadFromJsonAsync<List<UserPlugin>>(PluginStoreItemSerializationOption, cancellationToken: token)
+                        .ConfigureAwait(false);
+                    latestEtag = response.Headers.ETag?.Tag;
 
-                Log.Info(nameof(CommunityPluginSource), $"Loaded {plugins.Count} plugins from {ManifestFileUrl}");
-                return plugins;
+                    Log.Info(ClassName, $"Loaded {plugins.Count} plugins from {ManifestFileUrl}");
+                    return plugins;
+                }
+                else if (response.StatusCode == HttpStatusCode.NotModified)
+                {
+                    Log.Info(ClassName, $"Resource {ManifestFileUrl} has not been modified.");
+                    return plugins;
+                }
+                else
+                {
+                    Log.Warn(ClassName,
+                        $"Failed to load resource {ManifestFileUrl} with response {response.StatusCode}");
+                    return plugins;
+                }
             }
-            else if (response.StatusCode == HttpStatusCode.NotModified)
+            catch (Exception e)
             {
-                Log.Info(nameof(CommunityPluginSource), $"Resource {ManifestFileUrl} has not been modified.");
+                if (e is HttpRequestException or WebException or SocketException || e.InnerException is TimeoutException)
+                {
+                    Log.Exception(ClassName, $"Check your connection and proxy settings to {ManifestFileUrl}.", e);
+                }
+                else
+                {
+                    Log.Exception(ClassName, "Error Occurred", e);
+                }
                 return plugins;
-            }
-            else
-            {
-                Log.Warn(nameof(CommunityPluginSource),
-                    $"Failed to load resource {ManifestFileUrl} with response {response.StatusCode}");
-                throw new Exception($"Failed to load resource {ManifestFileUrl} with response {response.StatusCode}");
             }
         }
     }

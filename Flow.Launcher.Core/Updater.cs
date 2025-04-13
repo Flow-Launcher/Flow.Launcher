@@ -93,10 +93,14 @@ namespace Flow.Launcher.Core
             }
             catch (Exception e)
             {
-                if ((e is HttpRequestException or WebException or SocketException || e.InnerException is TimeoutException))
+                if (e is HttpRequestException or WebException or SocketException || e.InnerException is TimeoutException)
+                {
                     Log.Exception($"|Updater.UpdateApp|Check your connection and proxy settings to github-cloud.s3.amazonaws.com.", e);
+                }
                 else
+                {
                     Log.Exception($"|Updater.UpdateApp|Error Occurred", e);
+                }
                 
                 if (!silentUpdate)
                     _api.ShowMsg(_api.GetTranslation("update_flowlauncher_fail"),
