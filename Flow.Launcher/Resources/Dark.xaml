@@ -13,7 +13,7 @@
     <SolidColorBrush x:Key="SubTitleSelectedForeground" Color="#33FFFFFF" />
     <SolidColorBrush x:Key="SearchIconForeground" Color="#33FFFFFF" />
     <SolidColorBrush x:Key="SeparatorForeground" Color="#24FFFFFF" />
-    <SolidColorBrush x:Key="ThumbColor" Color="#9a9a9a" />
+    <SolidColorBrush x:Key="ThumbColor" Color="#28F7F3FF" />
     <SolidColorBrush x:Key="InlineHighlight" Color="#0078d7" />
     <SolidColorBrush x:Key="HotkeyForeground" Color="#33FFFFFF" />
     <SolidColorBrush x:Key="HotkeySelectedForeground" Color="#33FFFFFF" />
