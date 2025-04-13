@@ -189,6 +189,7 @@ namespace Flow.Launcher
                 var exception = await RetryActionOnSTAThreadAsync(() =>
                 {
                     // We should use SetText instead of SetDataObject to avoid the clipboard being locked by other applications
+                    Clipboard.SetText(stringToCopy);
                 });
 
                 if (exception == null)
