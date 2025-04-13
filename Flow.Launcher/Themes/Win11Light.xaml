@@ -38,7 +38,7 @@
         BasedOn="{StaticResource BaseGlyphStyle}"
         TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
-        <Setter Property="Margin" Value="-4 0 0 0" />
+        <Setter Property="Margin" Value="0 0 0 0" />
     </Style>
     <Style
         x:Key="QueryBoxStyle"
@@ -182,7 +182,7 @@
         <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="Margin" Value="-4 0 0 0" />
+        <Setter Property="Margin" Value="0 0 0 0" />
         <Setter Property="Width" Value="25" />
         <Setter Property="Height" Value="25" />
         <Setter Property="FontSize" Value="25" />
