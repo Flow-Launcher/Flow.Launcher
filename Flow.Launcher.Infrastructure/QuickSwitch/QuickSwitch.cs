@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
-using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Logger;
 using Interop.UIAutomationClient;
 using NHotkey;
@@ -61,7 +61,10 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         private static void NavigateDialogPath(IUIAutomationElement window)
         {
-            if (window is not { CurrentClassName: "#32770" } dialog) return;
+            if (window is not { CurrentClassName: "#32770" } dialog)
+            {
+                return;
+            }
 
             object document;
             try
@@ -73,12 +76,26 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 return;
             }
 
-            if (document is not IShellFolderViewDual2 folder) return;
+            if (document is not IShellFolderViewDual2 folder)
+            {
+                return;
+            }
 
-            var path = folder.Folder.Items().Item().Path;
-            if (!Path.IsPathRooted(path)) return;
+            string path;
+            try
+            {
+                path = folder.Folder.Items().Item().Path;
+                if (!Path.IsPathRooted(path))
+                {
+                    return;
+                }
+            }
+            catch
+            {
+                return;
+            }
 
-            _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.MENU, VirtualKeyCode.VK_D);
+            //_inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.MENU, VirtualKeyCode.VK_D);
 
             var address = dialog.FindFirst(TreeScope.TreeScope_Subtree, _automation.CreateAndCondition(
                 _automation.CreatePropertyCondition(UIA_PropertyIds.UIA_ControlTypePropertyId, UIA_ControlTypeIds.UIA_EditControlTypeId),
@@ -86,7 +103,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
             if (address == null)
             {
-                Log.Error("Cannot Get specific Control");
+                // I found issue here
+                Debug.WriteLine("Failed to find address edit control");
                 return;
             }
 
@@ -145,11 +163,11 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     }
 
                     // Release previous reference if exists
-                    if (lastExplorerView != null)
+                    /*if (lastExplorerView != null)
                     {
                         Marshal.ReleaseComObject(lastExplorerView);
                         lastExplorerView = null;
-                    }
+                    }*/
 
                     lastExplorerView = explorer;
                 }
@@ -160,7 +178,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
             finally
             {
-                if (window != null)
+                /*if (window != null)
                 {
                     Marshal.ReleaseComObject(window);
                     window = null;
@@ -169,7 +187,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 {
                     Marshal.ReleaseComObject(shellWindows);
                     shellWindows = null;
-                }
+                }*/
             }
         }
 
