@@ -1,19 +1,21 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
-using System;
-using System.Threading;
 using Flow.Launcher.Plugin;
-using CommunityToolkit.Mvvm.DependencyInjection;
+using JetBrains.Annotations;
 
 namespace Flow.Launcher.Infrastructure.Http
 {
     public static class Http
     {
+        private static readonly string ClassName = nameof(Http);
+
         private const string UserAgent = @"Mozilla/5.0 (Trident/7.0; rv:11.0) like Gecko";
 
         private static readonly HttpClient client = new();
@@ -33,7 +35,7 @@ namespace Flow.Launcher.Infrastructure.Http
 
         public static HttpProxy Proxy
         {
-            private get { return proxy; }
+            private get => proxy;
             set
             {
                 proxy = value;
@@ -77,7 +79,7 @@ namespace Flow.Launcher.Infrastructure.Http
             catch (UriFormatException e)
             {
                 Ioc.Default.GetRequiredService<IPublicAPI>().ShowMsg("Please try again", "Unable to parse Http Proxy");
-                Log.Exception("Flow.Launcher.Infrastructure.Http", "Unable to parse Uri", e);
+                Log.Exception(ClassName, "Unable to parse Uri", e);
             }
         }
 
@@ -133,7 +135,7 @@ namespace Flow.Launcher.Infrastructure.Http
             }
             catch (HttpRequestException e)
             {
-                Log.Exception("Infrastructure.Http", "Http Request Error", e, "DownloadAsync");
+                Log.Exception(ClassName, "Http Request Error", e, "DownloadAsync");
                 throw;
             }
         }
@@ -146,7 +148,7 @@ namespace Flow.Launcher.Infrastructure.Http
         /// <returns>The Http result as string. Null if cancellation requested</returns>
         public static Task<string> GetAsync([NotNull] string url, CancellationToken token = default)
         {
-            Log.Debug($"|Http.Get|Url <{url}>");
+            Log.Debug(ClassName, $"Url <{url}>");
             return GetAsync(new Uri(url), token);
         }
 
@@ -158,7 +160,7 @@ namespace Flow.Launcher.Infrastructure.Http
         /// <returns>The Http result as string. Null if cancellation requested</returns>
         public static async Task<string> GetAsync([NotNull] Uri url, CancellationToken token = default)
         {
-            Log.Debug($"|Http.Get|Url <{url}>");
+            Log.Debug(ClassName, $"Url <{url}>");
             using var response = await client.GetAsync(url, token);
             var content = await response.Content.ReadAsStringAsync(token);
             if (response.StatusCode != HttpStatusCode.OK)
@@ -190,7 +192,7 @@ namespace Flow.Launcher.Infrastructure.Http
         public static async Task<Stream> GetStreamAsync([NotNull] Uri url,
             CancellationToken token = default)
         {
-            Log.Debug($"|Http.Get|Url <{url}>");
+            Log.Debug(ClassName, $"Url <{url}>");
             return await client.GetStreamAsync(url, token);
         }
 
@@ -201,7 +203,7 @@ namespace Flow.Launcher.Infrastructure.Http
         public static async Task<HttpResponseMessage> GetResponseAsync([NotNull] Uri url, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
             CancellationToken token = default)
         {
-            Log.Debug($"|Http.Get|Url <{url}>");
+            Log.Debug(ClassName, $"Url <{url}>");
             return await client.GetAsync(url, completionOption, token);
         }
 

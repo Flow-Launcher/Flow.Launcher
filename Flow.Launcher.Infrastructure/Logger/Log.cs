@@ -227,12 +227,6 @@ namespace Flow.Launcher.Infrastructure.Logger
         {
             LogInternal(LogLevel.Warn, className, message, methodName);
         }
-
-        /// Example: "|ClassName.MethodName|Message"
-        public static void Warn(string message)
-        {
-            LogInternal(message, LogLevel.Warn);
-        }
     }
 
     public enum LOGLEVEL
