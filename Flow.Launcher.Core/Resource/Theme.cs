@@ -771,22 +771,18 @@ namespace Flow.Launcher.Core.Resource
         {
             if (bgColor == null) return;
 
-            // Copy the existing WindowBorderStyle
+            // Create a new Style for the preview
             var previewStyle = new Style(typeof(Border));
-            if (Application.Current.Resources.Contains("WindowBorderStyle"))
+
+            // Get the original WindowBorderStyle
+            if (Application.Current.Resources.Contains("WindowBorderStyle") &&
+                Application.Current.Resources["WindowBorderStyle"] is Style originalStyle)
             {
-                if (Application.Current.Resources["WindowBorderStyle"] is Style originalStyle)
-                {
-                    foreach (var setter in originalStyle.Setters.OfType<Setter>())
-                    {
-                        previewStyle.Setters.Add(new Setter(setter.Property, setter.Value));
-                    }
-                }
+                // Copy the original style, including the base style if it exists
+                CopyStyle(originalStyle, previewStyle);
             }
 
             // Apply background color (remove transparency in color)
-            // WPF does not allow the use of an acrylic brush within the window's internal area,
-            // so transparency effects are not applied to the preview.
             Color backgroundColor = Color.FromRgb(bgColor.Value.R, bgColor.Value.G, bgColor.Value.B);
             previewStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(backgroundColor)));
 
@@ -797,7 +793,24 @@ namespace Flow.Launcher.Core.Resource
                 previewStyle.Setters.Add(new Setter(Border.CornerRadiusProperty, new CornerRadius(5)));
                 previewStyle.Setters.Add(new Setter(Border.BorderThicknessProperty, new Thickness(1)));
             }
+
+            // Set the new style to the resource
             Application.Current.Resources["PreviewWindowBorderStyle"] = previewStyle;
+        }
+
+        private void CopyStyle(Style originalStyle, Style targetStyle)
+        {
+            // If the style is based on another style, copy the base style first
+            if (originalStyle.BasedOn != null)
+            {
+                CopyStyle(originalStyle.BasedOn, targetStyle);
+            }
+
+            // Copy the setters from the original style
+            foreach (var setter in originalStyle.Setters.OfType<Setter>())
+            {
+                targetStyle.Setters.Add(new Setter(setter.Property, setter.Value));
+            }
         }
 
         private void ColorizeWindow(string theme, BackdropTypes backdropType)
