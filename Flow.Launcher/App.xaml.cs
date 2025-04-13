@@ -149,8 +149,8 @@ namespace Flow.Launcher
 
                 Ioc.Default.GetRequiredService<Portable>().PreStartCleanUpAfterPortabilityUpdate();
 
-                Log.Info("|App.OnStartup|Begin Flow Launcher startup ----------------------------------------------------");
-                Log.Info($"|App.OnStartup|Runtime info:{ErrorReporting.RuntimeInfo()}");
+                API.LogInfo(ClassName, "Begin Flow Launcher startup ----------------------------------------------------");
+                API.LogInfo(ClassName, "Runtime info:{ErrorReporting.RuntimeInfo()}");
 
                 RegisterAppDomainExceptions();
                 RegisterDispatcherUnhandledException();
@@ -177,7 +177,7 @@ namespace Flow.Launcher
 
                 _mainWindow = new MainWindow();
 
-                Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
+                API.LogInfo(ClassName, "Dependencies Info:{ErrorReporting.DependenciesInfo()}");
 
                 Current.MainWindow = _mainWindow;
                 Current.MainWindow.Title = Constant.FlowLauncher;
@@ -195,7 +195,7 @@ namespace Flow.Launcher
                 AutoUpdates();
 
                 API.SaveAppAllSettings();
-                Log.Info("|App.OnStartup|End Flow Launcher startup ----------------------------------------------------");
+                API.LogInfo(ClassName, "End Flow Launcher startup ----------------------------------------------------");
             });
         }
 
@@ -253,19 +253,19 @@ namespace Flow.Launcher
         {
             AppDomain.CurrentDomain.ProcessExit += (s, e) =>
             {
-                Log.Info("|App.RegisterExitEvents|Process Exit");
+                API.LogInfo(ClassName, "Process Exit");
                 Dispose();
             };
 
             Current.Exit += (s, e) =>
             {
-                Log.Info("|App.RegisterExitEvents|Application Exit");
+                API.LogInfo(ClassName, "Application Exit");
                 Dispose();
             };
 
             Current.SessionEnding += (s, e) =>
             {
-                Log.Info("|App.RegisterExitEvents|Session Ending");
+                API.LogInfo(ClassName, "Session Ending");
                 Dispose();
             };
         }
@@ -329,7 +329,7 @@ namespace Flow.Launcher
 
             API.StopwatchLogInfo(ClassName, "Dispose cost", () =>
             {
-                Log.Info("|App.Dispose|Begin Flow Launcher dispose ----------------------------------------------------");
+                API.LogInfo(ClassName, "Begin Flow Launcher dispose ----------------------------------------------------");
 
                 if (disposing)
                 {
@@ -340,7 +340,7 @@ namespace Flow.Launcher
                     HotKeyMapper.Dispose();
                 }
 
-                Log.Info("|App.Dispose|End Flow Launcher dispose ----------------------------------------------------");
+                API.LogInfo(ClassName, "End Flow Launcher dispose ----------------------------------------------------");
             });
         }
 

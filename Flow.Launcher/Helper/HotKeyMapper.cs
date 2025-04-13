@@ -13,6 +13,8 @@ namespace Flow.Launcher.Helper;
 
 internal static class HotKeyMapper
 {
+    private static readonly string ClassName = nameof(HotKeyMapper);
+
     private static Settings _settings;
     private static MainViewModel _mainViewModel;
 
@@ -62,7 +64,7 @@ internal static class HotKeyMapper
         }
         catch (Exception e)
         {
-            Log.Error(
+            App.API.LogError(ClassName,
                 string.Format("|HotkeyMapper.SetWithChefKeys|Error registering hotkey: {0} \nStackTrace:{1}",
                               e.Message,
                               e.StackTrace));
@@ -87,7 +89,7 @@ internal static class HotKeyMapper
         }
         catch (Exception e)
         {
-            Log.Error(
+            App.API.LogError(ClassName,
                 string.Format("|HotkeyMapper.SetHotkey|Error registering hotkey {2}: {0} \nStackTrace:{1}",
                               e.Message,
                               e.StackTrace,
@@ -113,7 +115,7 @@ internal static class HotKeyMapper
         }
         catch (Exception e)
         {
-            Log.Error(
+            App.API.LogError(ClassName,
                 string.Format("|HotkeyMapper.RemoveHotkey|Error removing hotkey: {0} \nStackTrace:{1}",
                               e.Message,
                               e.StackTrace));
