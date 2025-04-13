@@ -118,7 +118,7 @@
         Si se experimenta algún problema, es posible que se tenga que activar &quot;Usar versión anterior del IME coreano&quot;.
 
 
-        Abrir Configuración en Windows 11 y acceder a:
+        Abrir Configuración en Windows 11 e ir a:
 
         Hora e idioma &gt; Idioma y región &gt; Coreano &gt; Opciones de idioma &gt; Teclado - Microsoft IME &gt; Compatibilidad,
 
@@ -126,11 +126,11 @@
 
 
     </system:String>
-    <system:String x:Key="KoreanImeOpenLink">Open Language and Region System Settings</system:String>
-    <system:String x:Key="KoreanImeOpenLinkToolTip">Opens the Korean IME setting location. Go to Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility</system:String>
+    <system:String x:Key="KoreanImeOpenLink">Abrir idioma y región en configuración</system:String>
+    <system:String x:Key="KoreanImeOpenLinkToolTip">Abre la ubicación de configuración del IME coreano. Ir a Coreano &gt; Opciones de idioma &gt; Teclado - Microsoft IME &gt; Compatibilidad</system:String>
     <system:String x:Key="KoreanImeOpenLinkButton">Abrir</system:String>
-    <system:String x:Key="KoreanImeRegistry">Use Previous Korean IME</system:String>
-    <system:String x:Key="KoreanImeRegistryTooltip">You can change the Previous Korean IME settings directly from here</system:String>
+    <system:String x:Key="KoreanImeRegistry">Utilizar IME Coreano anterior</system:String>
+    <system:String x:Key="KoreanImeRegistryTooltip">Se puede cambiar la configuración anterior del IME coreano directamente desde aquí</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Buscar complemento</system:String>
@@ -303,10 +303,10 @@
     <system:String x:Key="useGlyphUI">Iconos Segoe Fluent</system:String>
     <system:String x:Key="useGlyphUIEffect">Utiliza iconos Segoe Fluent para los resultados de la consulta cuando sean compatibles</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Pulsar Tecla</system:String>
-    <system:String x:Key="showBadges">Show Result Badges</system:String>
-    <system:String x:Key="showBadgesToolTip">Show badges for query results where supported</system:String>
-    <system:String x:Key="showBadgesGlobalOnly">Show Result Badges for Global Query Only</system:String>
-    <system:String x:Key="showBadgesGlobalOnlyToolTip">Show badges for global query results only</system:String>
+    <system:String x:Key="showBadges">Mostrar distintivos en resultados</system:String>
+    <system:String x:Key="showBadgesToolTip">Muestra distintivos en los resultados de las consultas cuando sean compatibles</system:String>
+    <system:String x:Key="showBadgesGlobalOnly">Mostrar distintivos en resultados solo para consulta global</system:String>
+    <system:String x:Key="showBadgesGlobalOnlyToolTip">Muestra solo distintivos para los resultados de consultas globales</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">Proxy HTTP</system:String>
