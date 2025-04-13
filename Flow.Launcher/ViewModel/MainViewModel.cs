@@ -222,7 +222,7 @@ namespace Flow.Launcher.ViewModel
 #if DEBUG
                 throw t.Exception;
 #else
-                Log.Error($"Error happen in task dealing with viewupdate for results. {t.Exception}");
+                App.API.LogError(ClassName, $"Error happen in task dealing with viewupdate for results. {t.Exception}");
                 _resultsViewUpdateTask =
                     Task.Run(UpdateActionAsync).ContinueWith(continueAction, CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.Default);
 #endif
@@ -892,7 +892,7 @@ namespace Flow.Launcher.ViewModel
 #if DEBUG
                 throw new NotImplementedException("ResultAreaColumn should match ResultAreaColumnPreviewShown/ResultAreaColumnPreviewHidden value");
 #else
-                Log.Error("MainViewModel", "ResultAreaColumnPreviewHidden/ResultAreaColumnPreviewShown int value not implemented", "InternalPreviewVisible");
+                App.API.LogError(ClassName, "ResultAreaColumnPreviewHidden/ResultAreaColumnPreviewShown int value not implemented", "InternalPreviewVisible");
                 return false;
 #endif
             }
