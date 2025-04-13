@@ -25,13 +25,10 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         private static UnhookWinEventSafeHandle _hookWinEventSafeHandle = null;
 
-        public static void Initialize(Action<HotkeyModel, EventHandler<HotkeyEventArgs>> setHotkeyAction)
+        public static bool Initialize()
         {
             try
             {
-                // Inspired from: https://github.com/citelao/dotnet_win32/blob/c830132d84eeed3a77e3a6e7f9ed6109258c7947/window_events/Program.cs
-                // Here we use an UnhookWinEventSafeHandle as return value so the result is IDisposable and
-                // can be cleaned up automatically for us.
                 _hookWinEventSafeHandle = PInvoke.SetWinEventHook(
                     PInvoke.EVENT_SYSTEM_FOREGROUND,
                     PInvoke.EVENT_SYSTEM_FOREGROUND,
@@ -44,18 +41,22 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 if (_hookWinEventSafeHandle.IsInvalid)
                 {
                     Log.Error("Failed to set window event hook");
-                    return;
+                    return false;
                 }
 
-                setHotkeyAction(new HotkeyModel("Alt+G"), (_, _) =>
-                {
-                    NavigateDialogPath(_automation.ElementFromHandle(Win32Helper.GetForegroundWindow()));
-                });
+                return true;
             }
             catch (System.Exception e)
             {
                 Log.Exception(nameof(QuickSwitch), "Failed to initialize QuickSwitch", e);
             }
+
+            return false;
+        }
+
+        public static void OnToggleHotkey(object sender, HotkeyEventArgs args)
+        {
+            NavigateDialogPath(_automation.ElementFromHandle(Win32Helper.GetForegroundWindow()));
         }
 
         private static void NavigateDialogPath(IUIAutomationElement window)

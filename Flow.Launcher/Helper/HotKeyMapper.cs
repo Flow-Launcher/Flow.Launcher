@@ -1,12 +1,13 @@
-﻿using Flow.Launcher.Infrastructure.Hotkey;
+﻿using System;
+using ChefKeys;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.QuickSwitch;
 using Flow.Launcher.Infrastructure.UserSettings;
-using System;
+using Flow.Launcher.ViewModel;
 using NHotkey;
 using NHotkey.Wpf;
-using Flow.Launcher.ViewModel;
-using ChefKeys;
-using Flow.Launcher.Infrastructure.Logger;
-using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace Flow.Launcher.Helper;
 
@@ -23,7 +24,15 @@ internal static class HotKeyMapper
         SetHotkey(_settings.Hotkey, OnToggleHotkey);
         LoadCustomPluginHotkey();
 
-        Infrastructure.QuickSwitch.QuickSwitch.Initialize(SetHotkey);
+        if (QuickSwitch.Initialize())
+        {
+            SetHotkey(_settings.QuickSwitchHotkey, QuickSwitch.OnToggleHotkey);
+        }
+    }
+
+    internal static void Dispose()
+    {
+        QuickSwitch.Dispose();
     }
 
     internal static void OnToggleHotkey(object sender, HotkeyEventArgs args)

@@ -334,7 +334,7 @@ namespace Flow.Launcher
                     // since some resources owned by the thread need to be disposed.
                     _mainWindow?.Dispatcher.Invoke(_mainWindow.Dispose);
                     _mainVM?.Dispose();
-                    Infrastructure.QuickSwitch.QuickSwitch.Dispose();
+                    HotKeyMapper.Dispose();
                 }
 
                 Log.Info("|App.Dispose|End Flow Launcher dispose ----------------------------------------------------");
