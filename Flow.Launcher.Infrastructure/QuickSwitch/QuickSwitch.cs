@@ -96,6 +96,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             {
                 return;
             }
+            Debug.WriteLine($"Path: {path}");
 
             //_inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.MENU, VirtualKeyCode.VK_D);
 
@@ -158,8 +159,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                         continue;
                     }
 
-                    // Fix for CA2020: Wrap the conversion in a 'checked' statement
-                    if (explorer.HWND != checked((int)hwnd))
+                    if (explorer.HWND != hwnd.Value)
                     {
                         continue;
                     }
