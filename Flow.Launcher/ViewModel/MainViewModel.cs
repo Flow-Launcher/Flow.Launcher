@@ -16,7 +16,6 @@ using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -29,6 +28,8 @@ namespace Flow.Launcher.ViewModel
     public partial class MainViewModel : BaseModel, ISavable, IDisposable
     {
         #region Private Fields
+
+        private static readonly string ClassName = nameof(MainViewModel);
 
         private bool _isQueryRunning;
         private Query _lastQuery;
@@ -213,7 +214,7 @@ namespace Flow.Launcher.ViewModel
                 }
 
                 if (!_disposed)
-                    Log.Error("MainViewModel", "Unexpected ResultViewUpdate ends");
+                    App.API.LogError(ClassName, "Unexpected ResultViewUpdate ends");
             }
 
             void continueAction(Task t)
@@ -257,7 +258,7 @@ namespace Flow.Launcher.ViewModel
                     if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query,
                             token)))
                     {
-                        Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
+                        App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                     }
                 };
             }
@@ -1303,7 +1304,7 @@ namespace Flow.Launcher.ViewModel
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
                     token, reSelect)))
                 {
-                    Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
+                    App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
             }
         }
@@ -1347,8 +1348,8 @@ namespace Flow.Launcher.ViewModel
                     }
                     catch (Exception e)
                     {
-                        Log.Exception(
-                            $"{nameof(MainViewModel)}.{nameof(ConstructQuery)}|Error when expanding shortcut {shortcut.Key}",
+                        App.API.LogException(ClassName,
+                            $"Error when expanding shortcut {shortcut.Key}",
                             e);
                     }
                 }
