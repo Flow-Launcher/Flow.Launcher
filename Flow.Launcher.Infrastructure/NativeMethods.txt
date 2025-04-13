@@ -62,3 +62,7 @@ WINEVENT_OUTOFCONTEXT
 WM_KEYDOWN
 WM_SETTEXT
 IShellFolderViewDual2
+CoCreateInstance
+CLSCTX
+IShellWindows
+IWebBrowser2

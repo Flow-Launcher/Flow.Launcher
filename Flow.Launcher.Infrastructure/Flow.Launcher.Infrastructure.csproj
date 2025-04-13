@@ -76,11 +76,5 @@
     <!--Bumping to it or higher needs to test and ensure this is no longer a problem-->
     <PackageReference Include="ToolGood.Words.Pinyin" Version="3.0.1.4" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Interop.SHDocVw, Version=1.1.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>QuickSwitch\Interop.SHDocVw.dll</HintPath>
-    </Reference>
-  </ItemGroup>
   
 </Project>

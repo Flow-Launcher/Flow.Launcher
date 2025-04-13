@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -6,9 +7,9 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Interop.UIAutomationClient;
 using NHotkey;
-using SHDocVw;
 using Windows.Win32;
 using Windows.Win32.Foundation;
+using Windows.Win32.System.Com;
 using Windows.Win32.UI.Accessibility;
 using Windows.Win32.UI.Shell;
 using WindowsInput;
@@ -21,12 +22,12 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         private static readonly Settings _settings = Ioc.Default.GetRequiredService<Settings>();
 
-        // The class name of a dialog window is "#32770".
+        // The class name of a dialog window
         private const string DialogWindowClassName = "#32770";
 
         private static CUIAutomation8 _automation = new CUIAutomation8Class();
 
-        private static InternetExplorer lastExplorerView = null;
+        private static IWebBrowser2 lastExplorerView = null;
 
         private static readonly InputSimulator _inputSimulator = new();
 
@@ -68,10 +69,16 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         private static void NavigateDialogPath()
         {
-            object document;
+            object document = null;
             try
             {
-                document = lastExplorerView?.Document;
+                if (lastExplorerView != null)
+                {
+                    // Use dynamic here because using IWebBrower2.Document can cause exception here:
+                    // System.Runtime.InteropServices.InvalidOleVariantTypeException: 'Specified OLE variant is invalid.'
+                    dynamic explorerView = lastExplorerView;
+                    document = explorerView.Document;
+                }
             }
             catch (COMException)
             {
@@ -183,29 +190,44 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 }
             }
 
-            ShellWindowsClass shellWindows;
             try
             {
-                shellWindows = new ShellWindowsClass();
-
-                foreach (var shellWindow in shellWindows)
+                EnumerateShellWindows((shellWindow) =>
                 {
-                    if (shellWindow is not InternetExplorer explorer)
+                    if (shellWindow is not IWebBrowser2 explorer)
                     {
-                        continue;
+                        return;
                     }
 
                     if (explorer.HWND != hwnd.Value)
                     {
-                        continue;
+                        return;
                     }
 
                     lastExplorerView = explorer;
-                }
+                });
             }
             catch (System.Exception e)
             {
                 Log.Exception(ClassName, "Failed to get shell windows", e);
+            }
+        }
+
+        private static unsafe void EnumerateShellWindows(Action<object> action)
+        {
+            // Create an instance of ShellWindows
+            var clsidShellWindows = new Guid("9BA05972-F6A8-11CF-A442-00A0C90A8F39"); // ShellWindowsClass
+            var iidIShellWindows = typeof(IShellWindows).GUID; // IShellWindows
+
+            PInvoke.CoCreateInstance(&clsidShellWindows, null, CLSCTX.CLSCTX_ALL, &iidIShellWindows, out var shellWindowsObj);
+
+            var shellWindows = (IShellWindows)shellWindowsObj;
+
+            // Enumerate the shell windows
+            int count = shellWindows.Count;
+            for (var i = 0; i < count; i++)
+            {
+                action(shellWindows.Item(i));
             }
         }
 
