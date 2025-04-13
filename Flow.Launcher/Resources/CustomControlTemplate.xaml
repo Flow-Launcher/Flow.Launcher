@@ -1103,7 +1103,8 @@
                             IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
                             Placement="Bottom"
                             PlacementTarget="{Binding ElementName=Background}"
-                            PopupAnimation="None">
+                            PopupAnimation="None"
+                            VerticalOffset="-1">
                             <Popup.PlacementRectangle>
                                 <MultiBinding>
                                     <MultiBinding.Converter>
@@ -1127,7 +1128,7 @@
                                     CornerRadius="{DynamicResource OverlayCornerRadius}">
                                     <Border
                                         Padding="{DynamicResource ComboBoxDropdownBorderPadding}"
-                                        BorderBrush="{DynamicResource ComboBoxDropDownBorderBrush}"
+                                        BorderBrush="{DynamicResource CustomComboBorder}"
                                         BorderThickness="{DynamicResource ComboBoxDropdownBorderThickness}"
                                         CornerRadius="{Binding ElementName=PopupBorder, Path=CornerRadius}">
                                         <ScrollViewer
@@ -1157,8 +1158,8 @@
                         <!--  Pressed  -->
                         <Trigger SourceName="ToggleButton" Property="IsPressed" Value="True">
                             <Setter TargetName="Background" Property="Background" Value="{DynamicResource CustomComboPressedBG}" />
-                            <Setter TargetName="Background" Property="BorderThickness" Value="0" />
-                            <Setter TargetName="Background" Property="BorderBrush" Value="{DynamicResource ComboBoxBorderBrushPressed}" />
+                            <Setter TargetName="Background" Property="BorderThickness" Value="0 0 0 1" />
+                            <Setter TargetName="Background" Property="BorderBrush" Value="{DynamicResource CustomComboPressedOutLine}" />
                             <Setter TargetName="OutLine" Property="BorderBrush" Value="{DynamicResource CustomComboPressedOutLine}" />
                             <Setter TargetName="OutLine" Property="BorderThickness" Value="{DynamicResource PressedCustomComboOutlineThickness}" />
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource CustomComboPressedText}" />

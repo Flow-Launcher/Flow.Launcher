@@ -153,6 +153,10 @@
     <m:StaticResource x:Key="CustomComboOutline" ResourceKey="Color13B" />
     <m:StaticResource x:Key="CustomComboInline" ResourceKey="Color21B" />
     <m:StaticResource x:Key="PopUpBorderBG" ResourceKey="Color07B" />
+    <SolidColorBrush
+        x:Key="CustomComboBorder"
+        Opacity="0.14"
+        Color="#000000" />
     <m:StaticResource x:Key="CustomComboHoverBG" ResourceKey="Color07B" />
     <m:StaticResource x:Key="CustomComboPressedBG" ResourceKey="Color07B" />
     <m:StaticResource x:Key="CustomComboPressedOutLine" ResourceKey="Color13B" />
@@ -165,7 +169,7 @@
 
     <Thickness x:Key="CustomComboOutlineThickness">1,1,1,0</Thickness>
     <Thickness x:Key="CustomComboInlineThickness">0,0,0,2</Thickness>
-    <Thickness x:Key="PressedCustomComboOutlineThickness">1,1,1,1</Thickness>
+    <Thickness x:Key="PressedCustomComboOutlineThickness">1,1,1,0</Thickness>
     <Thickness x:Key="DisabledCustomComboOutlineThickness">1,1,1,1</Thickness>
 
 
