@@ -89,19 +89,19 @@ namespace Flow.Launcher.Core.Plugin
 #else
                         catch (Exception e) when (assembly == null)
                         {
-                            Log.Exception($"|PluginsLoader.DotNetPlugins|Couldn't load assembly for the plugin: {metadata.Name}", e);
+                            Log.Exception(ClassName, $"Couldn't load assembly for the plugin: {metadata.Name}", e);
                         }
                         catch (InvalidOperationException e)
                         {
-                            Log.Exception($"|PluginsLoader.DotNetPlugins|Can't find the required IPlugin interface for the plugin: <{metadata.Name}>", e);
+                            Log.Exception(ClassName, $"Can't find the required IPlugin interface for the plugin: <{metadata.Name}>", e);
                         }
                         catch (ReflectionTypeLoadException e)
                         {
-                            Log.Exception($"|PluginsLoader.DotNetPlugins|The GetTypes method was unable to load assembly types for the plugin: <{metadata.Name}>", e);
+                            Log.Exception(ClassName, $"The GetTypes method was unable to load assembly types for the plugin: <{metadata.Name}>", e);
                         }
                         catch (Exception e)
                         {
-                            Log.Exception($"|PluginsLoader.DotNetPlugins|The following plugin has errored and can not be loaded: <{metadata.Name}>", e);
+                            Log.Exception(ClassName, $"The following plugin has errored and can not be loaded: <{metadata.Name}>", e);
                         }
 #endif
 

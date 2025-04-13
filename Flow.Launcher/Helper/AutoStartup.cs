@@ -11,6 +11,8 @@ namespace Flow.Launcher.Helper;
 
 public class AutoStartup
 {
+    private static readonly string ClassName = nameof(AutoStartup);
+
     private const string StartupPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
     private const string LogonTaskName = $"{Constant.FlowLauncher} Startup";
     private const string LogonTaskDesc = $"{Constant.FlowLauncher} Auto Startup";
@@ -34,7 +36,7 @@ public class AutoStartup
             }
             catch (Exception e)
             {
-                Log.Error("AutoStartup", $"Ignoring non-critical registry error (querying if enabled): {e}");
+                App.API.LogError(ClassName, $"Ignoring non-critical registry error (querying if enabled): {e}");
             }
 
             return false;
@@ -61,7 +63,7 @@ public class AutoStartup
             }
             catch (Exception e)
             {
-                Log.Error("AutoStartup", $"Failed to check logon task: {e}");
+                App.API.LogError(ClassName, $"Failed to check logon task: {e}");
             }
         }
 
@@ -112,7 +114,7 @@ public class AutoStartup
         }
         catch (Exception e)
         {
-            Log.Error("AutoStartup", $"Failed to disable auto-startup: {e}");
+            App.API.LogError(ClassName, $"Failed to disable auto-startup: {e}");
             throw;
         }
     }
@@ -133,7 +135,7 @@ public class AutoStartup
         }
         catch (Exception e)
         {
-            Log.Error("AutoStartup", $"Failed to enable auto-startup: {e}");
+            App.API.LogError(ClassName, $"Failed to enable auto-startup: {e}");
             throw;
         }
     }
@@ -161,7 +163,7 @@ public class AutoStartup
         }
         catch (Exception e)
         {
-            Log.Error("AutoStartup", $"Failed to schedule logon task: {e}");
+            App.API.LogError(ClassName, $"Failed to schedule logon task: {e}");
             return false;
         }
     }
@@ -176,7 +178,7 @@ public class AutoStartup
         }
         catch (Exception e)
         {
-            Log.Error("AutoStartup", $"Failed to unschedule logon task: {e}");
+            App.API.LogError(ClassName, $"Failed to unschedule logon task: {e}");
             return false;
         }
     }

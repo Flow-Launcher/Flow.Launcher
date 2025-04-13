@@ -4,13 +4,14 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.Converters;
 
 public class QuerySuggestionBoxConverter : IMultiValueConverter
 {
+    private static readonly string ClassName = nameof(QuerySuggestionBoxConverter);
+
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
         // values[0] is TextBox: The textbox displaying the autocomplete suggestion
@@ -64,7 +65,7 @@ public class QuerySuggestionBoxConverter : IMultiValueConverter
         }
         catch (Exception e)
         {
-            Log.Exception(nameof(QuerySuggestionBoxConverter), "fail to convert text for suggestion box", e);
+            App.API.LogException(ClassName, "fail to convert text for suggestion box", e);
             return string.Empty;
         }
     }

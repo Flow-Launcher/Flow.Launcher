@@ -9,6 +9,8 @@ namespace Flow.Launcher.Core.ExternalPlugins
 {
     public static class PluginsManifest
     {
+        private static readonly string ClassName = nameof(PluginsManifest);
+
         private static readonly CommunityPluginStore mainPluginStore =
             new("https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher.PluginsManifest/plugin_api_v2/plugins.json",
                 "https://fastly.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@plugin_api_v2/plugins.json",
@@ -44,7 +46,7 @@ namespace Flow.Launcher.Core.ExternalPlugins
             }
             catch (Exception e)
             {
-                Ioc.Default.GetRequiredService<IPublicAPI>().LogException(nameof(PluginsManifest), "Http request failed", e);
+                Ioc.Default.GetRequiredService<IPublicAPI>().LogException(ClassName, "Http request failed", e);
             }
             finally
             {

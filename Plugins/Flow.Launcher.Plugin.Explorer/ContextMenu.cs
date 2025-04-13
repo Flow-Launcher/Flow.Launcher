@@ -15,6 +15,8 @@ namespace Flow.Launcher.Plugin.Explorer
 {
     internal class ContextMenu : IContextMenu
     {
+        private static readonly string ClassName = nameof(ContextMenu);
+
         private PluginInitContext Context { get; set; }
 
         private Settings Settings { get; set; }
@@ -469,7 +471,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
         private void LogException(string message, Exception e)
         {
-            Context.API.LogException(nameof(ContextMenu), message, e);
+            Context.API.LogException(ClassName, message, e);
         }
 
         private static bool CanRunAsDifferentUser(string path)

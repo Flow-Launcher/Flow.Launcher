@@ -1,21 +1,22 @@
-﻿using Microsoft.Win32;
-using Squirrel;
-using System;
+﻿using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Windows;
-using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Infrastructure.UserSettings;
-using Flow.Launcher.Plugin.SharedCommands;
-using System.Linq;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedCommands;
+using Microsoft.Win32;
+using Squirrel;
 
 namespace Flow.Launcher.Core.Configuration
 {
     public class Portable : IPortable
     {
+        private static readonly string ClassName = nameof(Portable);
+
         private readonly IPublicAPI API = Ioc.Default.GetRequiredService<IPublicAPI>();
 
         /// <summary>
@@ -51,7 +52,7 @@ namespace Flow.Launcher.Core.Configuration
             }
             catch (Exception e)
             {
-                Log.Exception("|Portable.DisablePortableMode|Error occurred while disabling portable mode", e);
+                API.LogException(ClassName, "Error occurred while disabling portable mode", e);
             }
         }
 
@@ -75,7 +76,7 @@ namespace Flow.Launcher.Core.Configuration
             }
             catch (Exception e)
             {
-                Log.Exception("|Portable.EnablePortableMode|Error occurred while enabling portable mode", e);
+                API.LogException(ClassName, "Error occurred while enabling portable mode", e);
             }
         }
 
