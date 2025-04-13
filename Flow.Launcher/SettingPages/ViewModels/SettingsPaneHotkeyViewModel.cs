@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.QuickSwitch;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 
@@ -32,6 +33,12 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
     private void SetTogglingHotkey(HotkeyModel hotkey)
     {
         HotKeyMapper.SetHotkey(hotkey, HotKeyMapper.OnToggleHotkey);
+    }
+
+    [RelayCommand]
+    private void SetQuickSwitchHotkey(HotkeyModel hotkey)
+    {
+        HotKeyMapper.SetHotkey(hotkey, QuickSwitch.OnToggleHotkey);
     }
 
     [RelayCommand]

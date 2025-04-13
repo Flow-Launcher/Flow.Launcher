@@ -298,6 +298,10 @@
     <system:String x:Key="useGlyphUI">Use Segoe Fluent Icons</system:String>
     <system:String x:Key="useGlyphUIEffect">Use Segoe Fluent Icons for query results where supported</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Press Key</system:String>
+    <system:String x:Key="quickSwitchHotkey">Quick Switch</system:String>
+    <system:String x:Key="quickSwitchHotkeyToolTip">Enter shortcut to quickly navigate dialog path as current Explorer.</system:String>
+    <system:String x:Key="autoQuickSwitch">Quick Switch Automatically</system:String>
+    <system:String x:Key="autoQuickSwitchToolTip">Quick switch automatically when a navigate dialog is opened.</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP Proxy</system:String>
