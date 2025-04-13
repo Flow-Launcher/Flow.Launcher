@@ -39,6 +39,18 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         {
             if (_isInitialized) return true;
 
+            // Check all foreground windows and check if there are explorer windows
+            EnumerateShellWindows((shellWindow) =>
+            {
+                if (shellWindow is not IWebBrowser2 explorer)
+                {
+                    return;
+                }
+
+                lastExplorerView = explorer;
+            });
+
+            // Call WindowSwitch when the foreground window changes and check if there are explorer windows
             _hookWinEventSafeHandle = PInvoke.SetWinEventHook(
                     PInvoke.EVENT_SYSTEM_FOREGROUND,
                     PInvoke.EVENT_SYSTEM_FOREGROUND,
