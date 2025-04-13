@@ -15,6 +15,8 @@ namespace Flow.Launcher.Plugin.BrowserBookmark;
 
 public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContextMenu, IDisposable
 {
+    private static readonly string ClassName = nameof(Main);
+
     internal static string _faviconCacheDir;
 
     internal static PluginInitContext _context;
@@ -221,7 +223,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
                     catch (Exception e)
                     {
                         var message = "Failed to set url in clipboard";
-                        _context.API.LogException(nameof(Main), message, e);
+                        _context.API.LogException(ClassName, message, e);
 
                         _context.API.ShowMsg(message);
 

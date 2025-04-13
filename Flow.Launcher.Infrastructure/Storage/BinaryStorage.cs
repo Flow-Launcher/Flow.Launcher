@@ -20,6 +20,8 @@ namespace Flow.Launcher.Infrastructure.Storage
     /// </remarks>
     public class BinaryStorage<T> : ISavable
     {
+        private static readonly string ClassName = "BinaryStorage";
+
         protected T? Data;
 
         public const string FileSuffix = ".cache";
@@ -59,7 +61,7 @@ namespace Flow.Launcher.Infrastructure.Storage
             {
                 if (new FileInfo(FilePath).Length == 0)
                 {
-                    Log.Error($"|BinaryStorage.TryLoad|Zero length cache file <{FilePath}>");
+                    Log.Error(ClassName, $"Zero length cache file <{FilePath}>");
                     Data = defaultData;
                     await SaveAsync();
                 }
@@ -69,7 +71,7 @@ namespace Flow.Launcher.Infrastructure.Storage
             }
             else
             {
-                Log.Info("|BinaryStorage.TryLoad|Cache file not exist, load default data");
+                Log.Info(ClassName, "Cache file not exist, load default data");
                 Data = defaultData;
                 await SaveAsync();
             }

@@ -11,6 +11,8 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
 {
     public class Baidu : SuggestionSource
     {
+        private static readonly string ClassName = nameof(Baidu);
+
         private readonly Regex _reg = new Regex("window.baidu.sug\\((.*)\\)");
 
         public override async Task<List<string>> SuggestionsAsync(string query, CancellationToken token)
@@ -24,7 +26,7 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
             }
             catch (Exception e) when (e is HttpRequestException or {InnerException: TimeoutException})
             {
-                Main._context.API.LogException(nameof(Baidu), "Can't get suggestion from Baidu", e);
+                Main._context.API.LogException(ClassName, "Can't get suggestion from Baidu", e);
                 return null;
             }
 
@@ -39,7 +41,7 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
                 }
                 catch (JsonException e)
                 {
-                    Main._context.API.LogException(nameof(Baidu), "Can't parse suggestions", e);
+                    Main._context.API.LogException(ClassName, "Can't parse suggestions", e);
                     return new List<string>();
                 }
 

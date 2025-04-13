@@ -16,6 +16,8 @@ namespace Flow.Launcher.Infrastructure.Storage
     /// </summary>
     public class JsonStorage<T> : ISavable where T : new()
     {
+        private static readonly string ClassName = "JsonStorage";
+
         protected T? Data;
 
         // need a new directory name
@@ -104,7 +106,7 @@ namespace Flow.Launcher.Infrastructure.Storage
 
         private void RestoreBackup()
         {
-            Log.Info($"|JsonStorage.Load|Failed to load settings.json, {BackupFilePath} restored successfully");
+            Log.Info(ClassName, $"Failed to load settings.json, {BackupFilePath} restored successfully");
 
             if (File.Exists(FilePath))
                 File.Replace(BackupFilePath, FilePath, null);

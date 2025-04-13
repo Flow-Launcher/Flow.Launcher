@@ -8,13 +8,15 @@ using System.Windows;
 using System.Windows.Documents;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
+using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher
 {
     internal partial class ReportWindow
     {
+        private static readonly string ClassName = nameof(ReportWindow);
+
         public ReportWindow(Exception exception)
         {
             InitializeComponent();
@@ -38,7 +40,7 @@ namespace Flow.Launcher
 
         private void SetException(Exception exception)
         {
-            string path = Log.CurrentLogDirectory;
+            var path = DataLocation.VersionLogDirectory;
             var directory = new DirectoryInfo(path);
             var log = directory.GetFiles().OrderByDescending(f => f.LastWriteTime).First();
 
