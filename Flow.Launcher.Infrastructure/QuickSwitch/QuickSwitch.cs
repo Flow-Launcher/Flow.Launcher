@@ -215,7 +215,14 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             var clsidShellWindows = new Guid("9BA05972-F6A8-11CF-A442-00A0C90A8F39"); // ShellWindowsClass
             var iidIShellWindows = typeof(IShellWindows).GUID; // IShellWindows
 
-            PInvoke.CoCreateInstance(&clsidShellWindows, null, CLSCTX.CLSCTX_ALL, &iidIShellWindows, out var shellWindowsObj);
+            var result = PInvoke.CoCreateInstance(
+                &clsidShellWindows,
+                null,
+                CLSCTX.CLSCTX_ALL,
+                &iidIShellWindows,
+                out var shellWindowsObj);
+
+            if (result.Failed) return;
 
             var shellWindows = (IShellWindows)shellWindowsObj;
 
