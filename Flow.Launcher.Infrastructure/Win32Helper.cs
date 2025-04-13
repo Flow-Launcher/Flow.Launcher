@@ -613,8 +613,11 @@ namespace Flow.Launcher.Infrastructure
 
         // Edited from: https://github.com/idkidknow/Flow.Launcher.Plugin.DirQuickJump
 
-        internal static bool DirJump(InputSimulator inputSimulator, string path, HWND dialogHandle, bool altD = true)
+        public static bool DirJump(InputSimulator inputSimulator, string path, nint dialog, bool altD = true)
         {
+            // Get the handle of the dialog window
+            var dialogHandle = new HWND(dialog);
+
             // Alt-D or Ctrl-L to focus on the path input box
             if (altD)
             {
@@ -627,7 +630,7 @@ namespace Flow.Launcher.Infrastructure
 
             // Get the handle of the path input box and then set the text.
             // The window with class name "ComboBoxEx32" is not visible when the path input box is not with the keyboard focus.
-            var controlHandle = PInvoke.FindWindowEx(dialogHandle, HWND.Null, "WorkerW", null);
+            var controlHandle = PInvoke.FindWindowEx(new(dialogHandle), HWND.Null, "WorkerW", null);
             controlHandle = PInvoke.FindWindowEx(controlHandle, HWND.Null, "ReBarWindow32", null);
             controlHandle = PInvoke.FindWindowEx(controlHandle, HWND.Null, "Address Band Root", null);
             controlHandle = PInvoke.FindWindowEx(controlHandle, HWND.Null, "msctls_progress32", null);

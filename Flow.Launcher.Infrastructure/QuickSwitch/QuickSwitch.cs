@@ -145,7 +145,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 };
 
                 // Assume that the dialog is in the foreground now
-                Win32Helper.DirJump(_inputSimulator, path, PInvoke.GetForegroundWindow());
+                Win32Helper.DirJump(_inputSimulator, path, Win32Helper.GetForegroundWindow());
             });
             t.Start();
             return true;
