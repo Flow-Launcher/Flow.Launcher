@@ -42,7 +42,7 @@
     <system:String x:Key="GameMode">Modo Juego</system:String>
     <system:String x:Key="GameModeToolTip">Suspende el uso de atajos de teclado.</system:String>
     <system:String x:Key="PositionReset">Restablecer posición</system:String>
-    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
+    <system:String x:Key="PositionResetToolTip">Restablece la posición de la ventana de búsqueda</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">Escribir aquí para buscar</system:String>
 
     <!--  Setting General  -->
@@ -108,21 +108,21 @@
     <system:String x:Key="shadowEffectNotAllowed">El efecto de sombra no está permitido si el tema actual tiene activado el efecto de desenfoque</system:String>
     <system:String x:Key="searchDelay">Retardo de búsqueda</system:String>
     <system:String x:Key="searchDelayToolTip">Añade un breve retardo al escribir para reducir el parpadeo de la interfaz de usuario y la carga de resultados. Recomendado si la velocidad de escritura es media.</system:String>
-    <system:String x:Key="searchDelayNumberBoxToolTip">Enter the wait time (in ms) until input is considered complete. This can only be edited if Search Delay is enabled.</system:String>
+    <system:String x:Key="searchDelayNumberBoxToolTip">Introduzca el tiempo de espera (en ms) hasta que la entrada se considere completa. Solo se puede editar cuando el retardo de búsqueda está activado.</system:String>
     <system:String x:Key="searchDelayTime">Tiempo de retardo de búsqueda predeterminado</system:String>
     <system:String x:Key="searchDelayTimeToolTip">Tiempo de espera antes de mostrar los resultados después de dejar de teclear. A mayor valor, más tiempo de espera. (ms)</system:String>
-    <system:String x:Key="KoreanImeTitle">Information for Korean IME user</system:String>
+    <system:String x:Key="KoreanImeTitle">Información para usuario de IME coreano</system:String>
     <system:String x:Key="KoreanImeGuide">
-        The Korean input method used in Windows 11 may cause some issues in Flow Launcher.
+        El método de entrada coreano utilizado en Windows 11 puede causar algunos problemas en Flow Launcher.
 
-        If you experience any problems, you may need to enable &quot;Use previous version of Korean IME&quot;.
+        Si se experimenta algún problema, es posible que se tenga que activar &quot;Usar versión anterior del IME coreano&quot;.
 
 
-        Open Setting in Windows 11 and go to:
+        Abrir Configuración en Windows 11 y acceder a:
 
-        Time &amp; Language &gt; Language &amp; Region &gt; Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility,
+        Hora e idioma &gt; Idioma y región &gt; Coreano &gt; Opciones de idioma &gt; Teclado - Microsoft IME &gt; Compatibilidad,
 
-        and enable &quot;Use previous version of Microsoft IME&quot;.
+        y activar &quot;Usar versión anterior de Microsoft IME&quot;.
 
 
     </system:String>
