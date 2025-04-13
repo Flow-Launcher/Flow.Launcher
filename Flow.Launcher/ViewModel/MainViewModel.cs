@@ -245,6 +245,14 @@ namespace Flow.Launcher.ViewModel
                     // make a clone to avoid possible issue that plugin will also change the list and items when updating view model
                     var resultsCopy = DeepCloneResults(e.Results, token);
 
+                    foreach (var result in resultsCopy)
+                    {
+                        if (string.IsNullOrEmpty(result.BadgeIcoPath))
+                        {
+                            result.BadgeIcoPath = pair.Metadata.IcoPath;
+                        }
+                    }
+
                     PluginManager.UpdatePluginMetadata(resultsCopy, pair.Metadata, e.Query);
                     if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query,
                             token)))
@@ -1200,11 +1208,11 @@ namespace Flow.Launcher.ViewModel
 
             _lastQuery = query;
 
-            if (query.ActionKeyword == Plugin.Query.GlobalPluginWildcardSign)
+            if (string.IsNullOrEmpty(query.ActionKeyword))
             {
-                // Wait 45 millisecond for query change in global query
+                // Wait 15 millisecond for query change in global query
                 // if query changes, return so that it won't be calculated
-                await Task.Delay(45, _updateSource.Token);
+                await Task.Delay(15, _updateSource.Token);
                 if (_updateSource.Token.IsCancellationRequested)
                     return;
             }
@@ -1268,8 +1276,7 @@ namespace Flow.Launcher.ViewModel
                 // Task.Yield will force it to run in ThreadPool
                 await Task.Yield();
 
-                IReadOnlyList<Result> results =
-                    await PluginManager.QueryForPluginAsync(plugin, query, token);
+                var results = await PluginManager.QueryForPluginAsync(plugin, query, token);
 
                 if (token.IsCancellationRequested)
                     return;
@@ -1283,6 +1290,14 @@ namespace Flow.Launcher.ViewModel
                 {
                     // make a copy of results to avoid possible issue that FL changes some properties of the records, like score, etc.
                     resultsCopy = DeepCloneResults(results, token);
+                }
+
+                foreach (var result in resultsCopy)
+                {
+                    if (string.IsNullOrEmpty(result.BadgeIcoPath))
+                    {
+                        result.BadgeIcoPath = plugin.Metadata.IcoPath;
+                    }
                 }
 
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
