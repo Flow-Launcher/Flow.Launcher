@@ -31,7 +31,7 @@
         <Setter Property="Width" Value="4" />
         <Setter Property="Height" Value="38" />
         <Setter Property="CornerRadius" Value="2" />
-        <Setter Property="Background" Value="{StaticResource SystemAccentColorLight1Brush}" />
+        <Setter Property="Background" Value="{DynamicResource BasicSystemAccentColor}" />
     </Style>
     <Style
         x:Key="ItemGlyph"

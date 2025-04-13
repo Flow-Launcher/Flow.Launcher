@@ -755,17 +755,33 @@
                 <ControlTemplate TargetType="ComboBoxItem">
                     <Border
                         x:Name="LayoutRoot"
+                        Margin="0 2 0 2"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="4"
                         SnapsToDevicePixels="True">
-                        <ContentPresenter
-                            x:Name="ContentPresenter"
-                            Margin="{TemplateBinding Padding}"
-                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                            TextElement.Foreground="{TemplateBinding Foreground}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Border
+                                x:Name="ComboBullet"
+                                Grid.Column="0"
+                                Width="3"
+                                Height="14"
+                                Background="Transparent"
+                                CornerRadius="2" />
+                            <ContentPresenter
+                                x:Name="ContentPresenter"
+                                Grid.Column="1"
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                TextElement.Foreground="{TemplateBinding Foreground}" />
+                        </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <MultiTrigger>
@@ -773,7 +789,7 @@
                                 <Condition Property="IsSelected" Value="False" />
                                 <Condition Property="IsMouseOver" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource ComboBoxItemBackgroundPointerOver}" />
+                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource CustomComboItemHoverBG}" />
                             <Setter TargetName="LayoutRoot" Property="BorderBrush" Value="{DynamicResource ComboBoxItemBorderBrushPointerOver}" />
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ComboBoxItemForegroundPointerOver}" />
                         </MultiTrigger>
@@ -792,7 +808,8 @@
                                 <Condition Property="IsSelected" Value="True" />
                                 <Condition Property="IsFocused" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource ComboBoxItemBackgroundSelected}" />
+                            <Setter TargetName="ComboBullet" Property="Background" Value="{StaticResource SystemControlBackgroundAccentBrush}" />
+                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource CustomComboItemHoverBG}" />
                             <Setter TargetName="LayoutRoot" Property="BorderBrush" Value="{DynamicResource ComboBoxItemBorderBrushSelected}" />
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ComboBoxItemForegroundSelected}" />
                         </MultiTrigger>
@@ -802,7 +819,8 @@
                                 <Condition Property="IsSelected" Value="True" />
                                 <Condition Property="IsFocused" Value="False" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource ComboBoxItemBackgroundSelectedUnfocused}" />
+                            <Setter TargetName="ComboBullet" Property="Background" Value="{StaticResource SystemControlBackgroundAccentBrush}" />
+                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource CustomComboItemHoverBG}" />
                             <Setter TargetName="LayoutRoot" Property="BorderBrush" Value="{DynamicResource ComboBoxItemBorderBrushSelectedUnfocused}" />
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ComboBoxItemForegroundSelectedUnfocused}" />
                         </MultiTrigger>
@@ -822,7 +840,7 @@
                                 <Condition Property="IsSelected" Value="True" />
                                 <Condition Property="IsMouseOver" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource ComboBoxItemBackgroundSelectedPointerOver}" />
+                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource CustomComboItemSelectedHoverBG}" />
                             <Setter TargetName="LayoutRoot" Property="BorderBrush" Value="{DynamicResource ComboBoxItemBorderBrushSelectedPointerOver}" />
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ComboBoxItemForegroundSelectedPointerOver}" />
                         </MultiTrigger>
@@ -1124,10 +1142,10 @@
                                 <Border
                                     x:Name="PopupBorder"
                                     HorizontalAlignment="Stretch"
-                                    Background="{DynamicResource PopUpBorderBG}"
-                                    CornerRadius="{DynamicResource OverlayCornerRadius}">
+                                    Background="{DynamicResource CustomPopUpBorderBG}"
+                                    CornerRadius="5">
                                     <Border
-                                        Padding="{DynamicResource ComboBoxDropdownBorderPadding}"
+                                        Padding="5"
                                         BorderBrush="{DynamicResource CustomComboBorder}"
                                         BorderThickness="{DynamicResource ComboBoxDropdownBorderThickness}"
                                         CornerRadius="{Binding ElementName=PopupBorder, Path=CornerRadius}">
@@ -1138,7 +1156,7 @@
                                             IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
                                             VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
                                             <ItemsPresenter
-                                                Margin="{DynamicResource ComboBoxDropdownContentMargin}"
+                                                Margin="0"
                                                 KeyboardNavigation.DirectionalNavigation="Contained"
                                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                         </ScrollViewer>

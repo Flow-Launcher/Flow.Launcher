@@ -20,6 +20,8 @@
     <SolidColorBrush x:Key="ClockDateForeground" Color="#44000000" />
     <Color x:Key="ItemSelectedBackgroundColorBrush">#7EFFFFFF</Color>
 
+    <SolidColorBrush x:Key="BasicSystemAccentColor" Color="{m:DynamicColor SystemAccentColor}" />
+
     <SolidColorBrush x:Key="Color00B" Color="#CEFAFAFA" />
     <SolidColorBrush x:Key="Color01B" Color="#f3f3f3" />
     <SolidColorBrush x:Key="Color02B" Color="#ffffff" />
@@ -153,12 +155,17 @@
     <m:StaticResource x:Key="CustomComboOutline" ResourceKey="Color13B" />
     <m:StaticResource x:Key="CustomComboInline" ResourceKey="Color21B" />
     <m:StaticResource x:Key="PopUpBorderBG" ResourceKey="Color07B" />
+    <SolidColorBrush x:Key="CustomPopUpBorderBG" Color="#f6f6f6" />
     <SolidColorBrush
         x:Key="CustomComboBorder"
         Opacity="0.14"
         Color="#000000" />
     <m:StaticResource x:Key="CustomComboHoverBG" ResourceKey="Color07B" />
     <m:StaticResource x:Key="CustomComboPressedBG" ResourceKey="Color07B" />
+
+    <SolidColorBrush x:Key="CustomComboItemHoverBG" Color="#E5E5E5" />
+    <SolidColorBrush x:Key="CustomComboItemSelectedHoverBG" Color="#D9D9D9" />
+
     <m:StaticResource x:Key="CustomComboPressedOutLine" ResourceKey="Color13B" />
     <m:StaticResource x:Key="CustomComboPressedText" ResourceKey="Color08B" />
     <m:StaticResource x:Key="CustomComboDisabledBG" ResourceKey="Color07B" />
