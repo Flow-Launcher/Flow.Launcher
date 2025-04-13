@@ -16,15 +16,14 @@ namespace Flow.Launcher.Infrastructure.Http
     {
         private const string UserAgent = @"Mozilla/5.0 (Trident/7.0; rv:11.0) like Gecko";
 
-        private static HttpClient client = new HttpClient();
+        private static readonly HttpClient client = new();
 
         static Http()
         {
             // need to be added so it would work on a win10 machine
             ServicePointManager.Expect100Continue = true;
             ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls
-                                                    | SecurityProtocolType.Tls11
-                                                    | SecurityProtocolType.Tls12;
+                | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 
             client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
             HttpClient.DefaultProxy = WebProxy;
@@ -72,7 +71,7 @@ namespace Flow.Launcher.Infrastructure.Http
                     ProxyProperty.Port => (new Uri($"http://{Proxy.Server}:{Proxy.Port}"), WebProxy.Credentials),
                     ProxyProperty.UserName => (WebProxy.Address, new NetworkCredential(Proxy.UserName, Proxy.Password)),
                     ProxyProperty.Password => (WebProxy.Address, new NetworkCredential(Proxy.UserName, Proxy.Password)),
-                    _ => throw new ArgumentOutOfRangeException()
+                    _ => throw new ArgumentOutOfRangeException(null)
                 };
             }
             catch (UriFormatException e)

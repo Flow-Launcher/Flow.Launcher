@@ -19,7 +19,7 @@ namespace Flow.Launcher.Core.ExternalPlugins
 
         private List<UserPlugin> plugins = new();
 
-        private static JsonSerializerOptions PluginStoreItemSerializationOption = new JsonSerializerOptions()
+        private static readonly JsonSerializerOptions PluginStoreItemSerializationOption = new()
         {
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
         };
@@ -45,18 +45,18 @@ namespace Flow.Launcher.Core.ExternalPlugins
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                this.plugins = await response.Content
+                plugins = await response.Content
                     .ReadFromJsonAsync<List<UserPlugin>>(PluginStoreItemSerializationOption, cancellationToken: token)
                     .ConfigureAwait(false);
-                this.latestEtag = response.Headers.ETag?.Tag;
+                latestEtag = response.Headers.ETag?.Tag;
 
-                Log.Info(nameof(CommunityPluginSource), $"Loaded {this.plugins.Count} plugins from {ManifestFileUrl}");
-                return this.plugins;
+                Log.Info(nameof(CommunityPluginSource), $"Loaded {plugins.Count} plugins from {ManifestFileUrl}");
+                return plugins;
             }
             else if (response.StatusCode == HttpStatusCode.NotModified)
             {
                 Log.Info(nameof(CommunityPluginSource), $"Resource {ManifestFileUrl} has not been modified.");
-                return this.plugins;
+                return plugins;
             }
             else
             {
