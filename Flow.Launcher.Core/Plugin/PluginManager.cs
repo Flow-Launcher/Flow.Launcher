@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -214,12 +213,12 @@ namespace Flow.Launcher.Core.Plugin
                         () => pair.Plugin.InitAsync(new PluginInitContext(pair.Metadata, API)));
 
                     pair.Metadata.InitTime += milliseconds;
-                    Log.Info(
-                        $"|PluginManager.InitializePlugins|Total init cost for <{pair.Metadata.Name}> is <{pair.Metadata.InitTime}ms>");
+                    API.LogInfo(ClassName,
+                        $"Total init cost for <{pair.Metadata.Name}> is <{pair.Metadata.InitTime}ms>");
                 }
                 catch (Exception e)
                 {
-                    Log.Exception(ClassName, $"Fail to Init plugin: {pair.Metadata.Name}", e);
+                    API.LogException(ClassName, $"Fail to Init plugin: {pair.Metadata.Name}", e);
                     pair.Metadata.Disabled = true;
                     failedPlugins.Enqueue(pair);
                 }
@@ -370,8 +369,8 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 catch (Exception e)
                 {
-                    Log.Exception(
-                        $"|PluginManager.GetContextMenusForPlugin|Can't load context menus for plugin <{pluginPair.Metadata.Name}>",
+                    API.LogException(ClassName, 
+                        $"Can't load context menus for plugin <{pluginPair.Metadata.Name}>",
                         e);
                 }
             }
@@ -563,7 +562,7 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch (Exception e)
             {
-                Log.Exception($"|PluginManager.InstallPlugin|Failed to delete temp folder {tempFolderPluginPath}", e);
+                API.LogException(ClassName, $"Failed to delete temp folder {tempFolderPluginPath}", e);
             }
 
             if (checkModified)
@@ -608,7 +607,7 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 catch (Exception e)
                 {
-                    Log.Exception($"|PluginManager.UninstallPlugin|Failed to delete plugin settings folder for {plugin.Name}", e);
+                    API.LogException(ClassName, $"Failed to delete plugin settings folder for {plugin.Name}", e);
                     API.ShowMsg(API.GetTranslation("failedToRemovePluginSettingsTitle"),
                         string.Format(API.GetTranslation("failedToRemovePluginSettingsMessage"), plugin.Name));
                 }
@@ -624,7 +623,7 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 catch (Exception e)
                 {
-                    Log.Exception($"|PluginManager.UninstallPlugin|Failed to delete plugin cache folder for {plugin.Name}", e);
+                    API.LogException(ClassName, $"Failed to delete plugin cache folder for {plugin.Name}", e);
                     API.ShowMsg(API.GetTranslation("failedToRemovePluginCacheTitle"),
                         string.Format(API.GetTranslation("failedToRemovePluginCacheMessage"), plugin.Name));
                 }

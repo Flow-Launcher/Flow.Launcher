@@ -1,7 +1,4 @@
-﻿using Flow.Launcher.Infrastructure.Http;
-using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Plugin;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -11,11 +8,18 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Infrastructure.Http;
+using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core.ExternalPlugins
 {
     public record CommunityPluginSource(string ManifestFileUrl)
     {
+        // We should not initialize API in static constructor because it will create another API instance
+        private static IPublicAPI api = null;
+        private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
+
         private static readonly string ClassName = nameof(CommunityPluginSource);
 
         private string latestEtag = "";
@@ -37,7 +41,7 @@ namespace Flow.Launcher.Core.ExternalPlugins
         /// </remarks>
         public async Task<List<UserPlugin>> FetchAsync(CancellationToken token)
         {
-            Log.Info(ClassName, $"Loading plugins from {ManifestFileUrl}");
+            API.LogInfo(ClassName, $"Loading plugins from {ManifestFileUrl}");
 
             var request = new HttpRequestMessage(HttpMethod.Get, ManifestFileUrl);
 
@@ -55,18 +59,17 @@ namespace Flow.Launcher.Core.ExternalPlugins
                         .ConfigureAwait(false);
                     latestEtag = response.Headers.ETag?.Tag;
 
-                    Log.Info(ClassName, $"Loaded {plugins.Count} plugins from {ManifestFileUrl}");
+                    API.LogInfo(ClassName, $"Loaded {plugins.Count} plugins from {ManifestFileUrl}");
                     return plugins;
                 }
                 else if (response.StatusCode == HttpStatusCode.NotModified)
                 {
-                    Log.Info(ClassName, $"Resource {ManifestFileUrl} has not been modified.");
+                    API.LogInfo(ClassName, $"Resource {ManifestFileUrl} has not been modified.");
                     return plugins;
                 }
                 else
                 {
-                    Log.Warn(ClassName,
-                        $"Failed to load resource {ManifestFileUrl} with response {response.StatusCode}");
+                    API.LogWarn(ClassName, $"Failed to load resource {ManifestFileUrl} with response {response.StatusCode}");
                     return plugins;
                 }
             }
@@ -74,11 +77,11 @@ namespace Flow.Launcher.Core.ExternalPlugins
             {
                 if (e is HttpRequestException or WebException or SocketException || e.InnerException is TimeoutException)
                 {
-                    Log.Exception(ClassName, $"Check your connection and proxy settings to {ManifestFileUrl}.", e);
+                    API.LogException(ClassName, $"Check your connection and proxy settings to {ManifestFileUrl}.", e);
                 }
                 else
                 {
-                    Log.Exception(ClassName, "Error Occurred", e);
+                    API.LogException(ClassName, "Error Occurred", e);
                 }
                 return plugins;
             }
