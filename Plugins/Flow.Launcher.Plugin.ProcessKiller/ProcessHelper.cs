@@ -12,6 +12,8 @@ namespace Flow.Launcher.Plugin.ProcessKiller
 {
     internal class ProcessHelper
     {
+        private static readonly string ClassName = nameof(ProcessHelper);
+
         private readonly HashSet<string> _systemProcessList = new()
         {
             "conhost",
@@ -131,7 +133,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             }
             catch (Exception e)
             {
-                context.API.LogException($"{nameof(ProcessHelper)}", $"Failed to kill process {p.ProcessName}", e);
+                context.API.LogException(ClassName, $"Failed to kill process {p.ProcessName}", e);
             }
         }
 
