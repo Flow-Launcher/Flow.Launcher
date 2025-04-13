@@ -17,6 +17,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 {
     public static class QuickSwitch
     {
+        private static readonly string ClassName = nameof(QuickSwitch);
+
         private static CUIAutomation8 _automation = new CUIAutomation8Class();
 
         private static InternetExplorer lastExplorerView = null;
@@ -48,7 +50,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
             catch (System.Exception e)
             {
-                Log.Exception(nameof(QuickSwitch), "Failed to initialize QuickSwitch", e);
+                Log.Exception(ClassName, "Failed to initialize QuickSwitch", e);
             }
 
             return false;
@@ -128,7 +130,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             uint dwmsEventTime
         )
         {
-            IUIAutomationElement window = null;
+            IUIAutomationElement window;
             try
             {
                 window = _automation.ElementFromHandle(hwnd);
@@ -144,7 +146,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 return;
             }
 
-            ShellWindowsClass shellWindows = null;
+            ShellWindowsClass shellWindows;
             try
             {
                 shellWindows = new ShellWindowsClass();
@@ -174,7 +176,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
             catch (System.Exception e)
             {
-                Log.Exception(nameof(QuickSwitch), "Failed to get shell windows", e);
+                Log.Exception(ClassName, "Failed to get shell windows", e);
             }
             finally
             {
