@@ -174,8 +174,6 @@
                             <TextBlock
                                 x:Name="Title"
                                 Grid.Row="0"
-                                Margin="0 0 0 1"
-                                VerticalAlignment="Bottom"
                                 DockPanel.Dock="Left"
                                 FontSize="{Binding Settings.ResultItemFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 IsEnabled="False"
@@ -194,8 +192,6 @@
                             <TextBlock
                                 x:Name="SubTitle"
                                 Grid.Row="1"
-                                Margin="0 1 0 0"
-                                VerticalAlignment="Top"
                                 FontSize="{Binding Settings.ResultSubItemFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 IsEnabled="False"
                                 Style="{DynamicResource ItemSubTitleStyle}"
