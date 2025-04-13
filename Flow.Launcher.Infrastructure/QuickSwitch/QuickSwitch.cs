@@ -1,7 +1,9 @@
 ﻿using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.UserSettings;
 using Interop.UIAutomationClient;
 using NHotkey;
 using SHDocVw;
@@ -16,6 +18,11 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
     public static class QuickSwitch
     {
         private static readonly string ClassName = nameof(QuickSwitch);
+
+        private static readonly Settings _settings = Ioc.Default.GetRequiredService<Settings>();
+
+        // The class name of a dialog window is "#32770".
+        private const string DialogWindowClassName = "#32770";
 
         private static CUIAutomation8 _automation = new CUIAutomation8Class();
 
@@ -98,8 +105,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             var t = new Thread(() =>
             {
                 // Jump after flow launcher window vanished (after JumpAction returned true)
-                // and the dialog had been in the foreground. The class name of a dialog window is "#32770".
-                var timeOut = !SpinWait.SpinUntil(() => GetForegroundWindowClassName() == "#32770", 1000);
+                // and the dialog had been in the foreground.
+                var timeOut = !SpinWait.SpinUntil(() => GetForegroundWindowClassName() == DialogWindowClassName, 1000);
                 if (timeOut)
                 {
                     return;
@@ -150,10 +157,13 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 return;
             }
 
-            if (window is { CurrentClassName: "#32770" })
+            if (_settings.AutoQuickSwitch)
             {
-                NavigateDialogPath();
-                return;
+                if (window is { CurrentClassName: DialogWindowClassName })
+                {
+                    NavigateDialogPath();
+                    return;
+                }
             }
 
             ShellWindowsClass shellWindows;

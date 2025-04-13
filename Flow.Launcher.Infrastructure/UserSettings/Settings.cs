@@ -53,7 +53,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string SettingWindowHotkey { get; set; } = $"Ctrl+I";
         public string CycleHistoryUpHotkey { get; set; } = $"{KeyConstant.Alt} + Up";
         public string CycleHistoryDownHotkey { get; set; } = $"{KeyConstant.Alt} + Down";
-        public string QuickSwitchHotkey { get; set; } = $"{KeyConstant.Alt} + G";
+        public string QuickSwitchHotkey { get; set; } = $"{KeyConstant.Ctrl} + G";
+
+        public bool AutoQuickSwitch { get; set; } = false;
 
         public string Language
         {
