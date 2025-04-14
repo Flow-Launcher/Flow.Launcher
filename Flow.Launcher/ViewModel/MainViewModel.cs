@@ -1332,45 +1332,48 @@ namespace Flow.Launcher.ViewModel
             }
 
             var customExpanded = queryBuilder.ToString();
-            var queryChanged = false;
-
-            foreach (var shortcut in builtInShortcuts)
+            await Application.Current.Dispatcher.InvokeAsync(async () =>
             {
-                string expansion;
-                if (shortcut is BuiltinShortcutModel syncShortcut)
+                var queryChanged = false;
+
+                foreach (var shortcut in builtInShortcuts)
                 {
-                    expansion = syncShortcut.Expand();
-                }
-                else if (shortcut is AsyncBuiltinShortcutModel asyncShortcut)
-                {
-                    expansion = await asyncShortcut.ExpandAsync();
-                }
-                else
-                {
-                    continue;
-                }
-                try
-                {
-                    if (customExpanded.Contains(shortcut.Key))
+                    string expansion;
+                    if (shortcut is BuiltinShortcutModel syncShortcut)
                     {
-                        queryBuilder.Replace(shortcut.Key, expansion);
-                        queryBuilderTmp.Replace(shortcut.Key, expansion);
-                        queryChanged = true;
+                        expansion = syncShortcut.Expand();
+                    }
+                    else if (shortcut is AsyncBuiltinShortcutModel asyncShortcut)
+                    {
+                        expansion = await asyncShortcut.ExpandAsync();
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                    try
+                    {
+                        if (customExpanded.Contains(shortcut.Key))
+                        {
+                            queryBuilder.Replace(shortcut.Key, expansion);
+                            queryBuilderTmp.Replace(shortcut.Key, expansion);
+                            queryChanged = true;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        App.API.LogException(ClassName, $"Error when expanding shortcut {shortcut.Key}", e);
                     }
                 }
-                catch (Exception e)
-                {
-                    App.API.LogException(ClassName, $"Error when expanding shortcut {shortcut.Key}", e);
-                }
-            }
 
-            if (queryChanged)
-            {
-                // show expanded builtin shortcuts
-                // use private field to avoid infinite recursion
-                _queryText = queryBuilderTmp.ToString();
-                OnPropertyChanged(nameof(QueryText));
-            }
+                if (queryChanged)
+                {
+                    // show expanded builtin shortcuts
+                    // use private field to avoid infinite recursion
+                    _queryText = queryBuilderTmp.ToString();
+                    OnPropertyChanged(nameof(QueryText));
+                }
+            });
 
             return QueryBuilder.Build(queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
         }
