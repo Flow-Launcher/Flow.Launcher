@@ -240,17 +240,24 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             {
                 EnumerateShellWindows((shellWindow) =>
                 {
-                    if (shellWindow is not IWebBrowser2 explorer)
+                    try
                     {
-                        return;
-                    }
+                        if (shellWindow is not IWebBrowser2 explorer)
+                        {
+                            return;
+                        }
 
-                    if (explorer.HWND != hwnd.Value)
+                        if (explorer.HWND != hwnd.Value)
+                        {
+                            return;
+                        }
+
+                        _lastExplorerView = explorer;
+                    }
+                    catch (COMException)
                     {
-                        return;
+                        // Ignored
                     }
-
-                    _lastExplorerView = explorer;
                 });
             }
             catch (System.Exception e)
@@ -286,10 +293,17 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             uint dwmsEventTime
         )
         {
-            // If the explorer window is destroyed, set _lastExplorerView to null
-            if (_lastExplorerView != null && _lastExplorerView.HWND == hwnd.Value)
+            try
             {
-                _lastExplorerView = null;
+                // If the explorer window is destroyed, set _lastExplorerView to null
+                if (_lastExplorerView != null && _lastExplorerView.HWND == hwnd.Value)
+                {
+                    _lastExplorerView = null;
+                }
+            }
+            catch (COMException)
+            {
+                // Ignored
             }
 
             // If the dialog window is destroyed, set _dialogWindowHandle to null
