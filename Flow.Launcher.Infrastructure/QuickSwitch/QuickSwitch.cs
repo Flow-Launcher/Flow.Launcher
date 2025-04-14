@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -35,6 +36,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         private static UnhookWinEventSafeHandle _foregroundChangeHook = null;
 
         private static UnhookWinEventSafeHandle _destroyChangeHook = null;
+
+        private static UnhookWindowsHookExSafeHandle _callWndProcHook;
 
         private static HWND _dialogWindowHandle = HWND.Null;
 
@@ -75,8 +78,16 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 0,
                 PInvoke.WINEVENT_OUTOFCONTEXT);
 
+            // Install hook for dialog window message
+            _callWndProcHook = PInvoke.SetWindowsHookEx(
+                WINDOWS_HOOK_ID.WH_CALLWNDPROC,
+                CallWndProc,
+                Process.GetCurrentProcess().SafeHandle,
+                0);
+
             if (_foregroundChangeHook.IsInvalid ||
-                _destroyChangeHook.IsInvalid)
+                _destroyChangeHook.IsInvalid ||
+                _callWndProcHook.IsInvalid)
             {
                 Log.Error(ClassName, "Failed to initialize QuickSwitch");
                 return;
@@ -212,7 +223,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 if (_settings.ShowQuickSwitchWindow)
                 {
                     ShowQuickSwitchWindow?.Invoke(_dialogWindowHandle.Value);
-                    FixPositionToDialog(_dialogWindowHandle);
                 }
                 if (_settings.AutoQuickSwitch)
                 {
@@ -309,33 +319,23 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
         }
 
-        private static WNDPROC _oldWndProc;
-        private static WNDPROC _newWndProc;
-
-        private static void FixPositionToDialog(HWND handle)
+        private static LRESULT CallWndProc(int nCode, WPARAM wParam, LPARAM lParam)
         {
-            _newWndProc = new(NewWindowProc);
-            var pNewWndProc = Marshal.GetFunctionPointerForDelegate(_newWndProc);
-            var pOldWndProc = PInvoke.SetWindowLongPtr(handle, WINDOW_LONG_PTR_INDEX.GWL_WNDPROC, pNewWndProc);
-            _oldWndProc = pOldWndProc == nint.Zero ? null : Marshal.GetDelegateForFunctionPointer<WNDPROC>(pOldWndProc);
-        }
-
-        private static LRESULT NewWindowProc(HWND param0, uint param1, WPARAM param2, LPARAM param3)
-        {
-            if (param1 == PInvoke.WM_SIZE || param1 == PInvoke.WM_MOVE)
+            if (nCode == PInvoke.HC_ACTION)
             {
-                UpdateQuickSwitchWindow?.Invoke();
+                var msg = Marshal.PtrToStructure<CWPSTRUCT>(lParam);
+                if (msg.hwnd == _dialogWindowHandle &&
+                    (msg.message == PInvoke.WM_MOVE || msg.message == PInvoke.WM_SIZE))
+                {
+                    UpdateQuickSwitchWindow?.Invoke();
+                }
             }
 
-            if (_oldWndProc != null)
-            {
-                // Call the original window procedure
-                return PInvoke.CallWindowProc(_oldWndProc, param0, param1, param2, param3);
-            }
-            else
-            {
-                return new LRESULT(0);
-            }
+            return PInvoke.CallNextHookEx(
+                _callWndProcHook,
+                nCode,
+                wParam,
+                lParam);
         }
 
         public static void Dispose()
@@ -350,6 +350,11 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             {
                 _destroyChangeHook.Dispose();
                 _destroyChangeHook = null;
+            }
+            if (_callWndProcHook != null)
+            {
+                _callWndProcHook.Dispose();
+                _callWndProcHook = null;
             }
 
             // Release ComObjects
