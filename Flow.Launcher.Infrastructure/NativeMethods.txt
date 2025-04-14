@@ -68,3 +68,6 @@ IShellWindows
 IWebBrowser2
 EVENT_OBJECT_DESTROY
 SetParent
+WM_SIZE
+WM_MOVE
+CallWindowProc

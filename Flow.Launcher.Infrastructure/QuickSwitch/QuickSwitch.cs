@@ -11,6 +11,7 @@ using Windows.Win32.Foundation;
 using Windows.Win32.System.Com;
 using Windows.Win32.UI.Accessibility;
 using Windows.Win32.UI.Shell;
+using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace Flow.Launcher.Infrastructure.QuickSwitch
 {
@@ -92,8 +93,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 NavigateDialogPath();
             }
         }
-
-        
 
         private static void NavigateDialogPath()
         {
@@ -210,7 +209,11 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             if (GetWindowClassName(hwnd) == DialogWindowClassName)
             {
                 _dialogWindowHandle = hwnd;
-                ShowQuickSwitchWindow?.Invoke(_dialogWindowHandle.Value);
+                if (_settings.ShowQuickSwitchWindow)
+                {
+                    ShowQuickSwitchWindow?.Invoke(_dialogWindowHandle.Value);
+                    FixPositionToDialog(_dialogWindowHandle);
+                }
                 if (_settings.AutoQuickSwitch)
                 {
                     // Showing quick switch window may bring focus
@@ -303,6 +306,35 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             for (var i = 0; i < count; i++)
             {
                 action(shellWindows.Item(i));
+            }
+        }
+
+        private static WNDPROC _oldWndProc;
+        private static WNDPROC _newWndProc;
+
+        private static void FixPositionToDialog(HWND handle)
+        {
+            _newWndProc = new(NewWindowProc);
+            var pNewWndProc = Marshal.GetFunctionPointerForDelegate(_newWndProc);
+            var pOldWndProc = PInvoke.SetWindowLongPtr(handle, WINDOW_LONG_PTR_INDEX.GWL_WNDPROC, pNewWndProc);
+            _oldWndProc = pOldWndProc == nint.Zero ? null : Marshal.GetDelegateForFunctionPointer<WNDPROC>(pOldWndProc);
+        }
+
+        private static LRESULT NewWindowProc(HWND param0, uint param1, WPARAM param2, LPARAM param3)
+        {
+            if (param1 == PInvoke.WM_SIZE || param1 == PInvoke.WM_MOVE)
+            {
+                UpdateQuickSwitchWindow?.Invoke();
+            }
+
+            if (_oldWndProc != null)
+            {
+                // Call the original window procedure
+                return PInvoke.CallWindowProc(_oldWndProc, param0, param1, param2, param3);
+            }
+            else
+            {
+                return new LRESULT(0);
             }
         }
 

@@ -1520,8 +1520,6 @@ namespace Flow.Launcher.ViewModel
 
         public void SetupQuickSwitch(nint handle)
         {
-            if (!Settings.ShowQuickSwitchWindow) return;
-
             PreviousMainWindowVisibilityStatus = MainWindowVisibilityStatus;
 
             DialogWindowHandle = handle;
