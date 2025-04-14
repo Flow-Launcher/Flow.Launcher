@@ -255,6 +255,8 @@
     <system:String x:Key="showOpenResultHotkeyToolTip">Show result selection hotkey with results.</system:String>
     <system:String x:Key="autoCompleteHotkey">Auto Complete</system:String>
     <system:String x:Key="autoCompleteHotkeyToolTip">Runs autocomplete for the selected items.</system:String>
+    <system:String x:Key="DeleteWordHotkey">Delete Word Backwards</system:String>
+    <system:String x:Key="DeleteWordHotkeyToolTip">Deletes text by word. For paths, deletes by path segment.</system:String>
     <system:String x:Key="SelectNextItemHotkey">Select Next Item</system:String>
     <system:String x:Key="SelectPrevItemHotkey">Select Previous Item</system:String>
     <system:String x:Key="SelectNextPageHotkey">Next Page</system:String>

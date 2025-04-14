@@ -230,7 +230,8 @@
             <cc:ExCard
                 Title="{DynamicResource DeleteWordHotkey}"
                 Margin="0 4 0 0"
-                Icon="&#xE777;">
+                Icon="&#xe892;"
+                Sub="{DynamicResource DeleteWordHotkeyToolTip}">
                 <cc:ExCard.SideContent>
                     <flowlauncher:HotkeyControl
                         DefaultHotkey="Alt+Left"
