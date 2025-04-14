@@ -164,7 +164,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Score = score,
                 TitleToolTip = Main.Context.API.GetTranslation("plugin_explorer_plugin_ToolTipOpenDirectory"),
                 SubTitleToolTip = path,
-                ContextData = new SearchResult { Type = ResultType.Folder, FullPath = path, WindowsIndexed = windowsIndexed }
+                ContextData = new SearchResult { Type = ResultType.Folder, FullPath = path, WindowsIndexed = windowsIndexed },
+                AllowQuickSwitch = true,
+                QuickSwitchPath = path
             };
         }
 
@@ -204,7 +206,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 },
                 TitleToolTip = path,
                 SubTitleToolTip = path,
-                ContextData = new SearchResult { Type = ResultType.Volume, FullPath = path, WindowsIndexed = windowsIndexed }
+                ContextData = new SearchResult { Type = ResultType.Volume, FullPath = path, WindowsIndexed = windowsIndexed },
+                AllowQuickSwitch = true,
+                QuickSwitchPath = path
             };
         }
 
@@ -260,22 +264,24 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     OpenFolder(folderPath);
                     return true;
                 },
-                ContextData = new SearchResult { Type = ResultType.Folder, FullPath = folderPath, WindowsIndexed = windowsIndexed }
+                ContextData = new SearchResult { Type = ResultType.Folder, FullPath = folderPath, WindowsIndexed = windowsIndexed },
+                AllowQuickSwitch = true,
+                QuickSwitchPath = folderPath
             };
         }
 
         internal static Result CreateFileResult(string filePath, Query query, int score = 0, bool windowsIndexed = false)
         {
-            bool isMedia = IsMedia(Path.GetExtension(filePath));
+            var isMedia = IsMedia(Path.GetExtension(filePath));
             var title = Path.GetFileName(filePath);
-
+            var directory = Path.GetDirectoryName(filePath);
 
             /* Preview Detail */
 
             var result = new Result
             {
                 Title = title,
-                SubTitle = Path.GetDirectoryName(filePath),
+                SubTitle = directory,
                 IcoPath = filePath,
                 Preview = new Result.PreviewInfo
                 {
@@ -299,7 +305,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     {
                         if (c.SpecialKeyState.ToModifierKeys() == (ModifierKeys.Control | ModifierKeys.Shift))
                         {
-                            OpenFile(filePath, Settings.UseLocationAsWorkingDir ? Path.GetDirectoryName(filePath) : string.Empty, true);
+                            OpenFile(filePath, Settings.UseLocationAsWorkingDir ? directory : string.Empty, true);
                         }
                         else if (c.SpecialKeyState.ToModifierKeys() == ModifierKeys.Control)
                         {
@@ -307,7 +313,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         }
                         else
                         {
-                            OpenFile(filePath, Settings.UseLocationAsWorkingDir ? Path.GetDirectoryName(filePath) : string.Empty);
+                            OpenFile(filePath, Settings.UseLocationAsWorkingDir ? directory : string.Empty);
                         }
                     }
                     catch (Exception ex)
@@ -319,7 +325,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 },
                 TitleToolTip = Main.Context.API.GetTranslation("plugin_explorer_plugin_ToolTipOpenContainingFolder"),
                 SubTitleToolTip = filePath,
-                ContextData = new SearchResult { Type = ResultType.File, FullPath = filePath, WindowsIndexed = windowsIndexed }
+                ContextData = new SearchResult { Type = ResultType.File, FullPath = filePath, WindowsIndexed = windowsIndexed },
+                AllowQuickSwitch = true,
+                QuickSwitchPath = directory
             };
             return result;
         }
