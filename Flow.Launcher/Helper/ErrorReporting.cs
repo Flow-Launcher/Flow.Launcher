@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Threading;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Exception;
@@ -35,8 +34,11 @@ public static class ErrorReporting
     public static void TaskSchedulerUnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
     {
         //handle unobserved task exceptions
-        Application.Current.Dispatcher.Invoke(() => Report(e.Exception));
+        //do not open report window since it is not an unhandled exception
+        var logger = LogManager.GetLogger("TaskSchedulerUnobservedException");
+        logger.Fatal(ExceptionFormatter.FormatExcpetion(e.Exception));
         //prevent application exit, so the user can copy the prompted error info
+        e.SetObserved();
     }
 
     public static string RuntimeInfo()

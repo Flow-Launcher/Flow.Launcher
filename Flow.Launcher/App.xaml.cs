@@ -286,9 +286,8 @@ namespace Flow.Launcher
         }
 
         /// <summary>
-        /// let exception throw as normal is better for Debug
+        /// exception will not be thrown normally, so we log it
         /// </summary>
-        [Conditional("RELEASE")]
         private static void RegisterTaskSchedulerUnhandledException()
         {
             TaskScheduler.UnobservedTaskException += ErrorReporting.TaskSchedulerUnobservedTaskException;
