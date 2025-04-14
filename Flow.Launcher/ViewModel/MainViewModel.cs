@@ -1347,7 +1347,7 @@ namespace Flow.Launcher.ViewModel
                     }
                     else if (shortcut is AsyncBuiltinShortcutModel asyncShortcut)
                     {
-                        expansion = await Task.Run(asyncShortcut.ExpandAsync);
+                        expansion = await asyncShortcut.ExpandAsync();
                     }
                     else
                     {
