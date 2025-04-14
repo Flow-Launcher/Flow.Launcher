@@ -32,6 +32,10 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         private static readonly Settings _settings = Ioc.Default.GetRequiredService<Settings>();
 
+        private static readonly object _lastExplorerViewLock = new();
+
+        private static readonly object _dialogWindowHandleLock = new();
+
         private static IWebBrowser2 _lastExplorerView = null;
 
         private static UnhookWinEventSafeHandle _foregroundChangeHook = null;
@@ -55,15 +59,28 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             if (_isInitialized) return;
 
             // Check all foreground windows and check if there are explorer windows
-            EnumerateShellWindows((shellWindow) =>
+            lock (_lastExplorerViewLock)
             {
-                if (shellWindow is not IWebBrowser2 explorer)
+                var explorerInitialized = false;
+                EnumerateShellWindows((shellWindow) =>
                 {
-                    return;
-                }
+                    if (shellWindow is not IWebBrowser2 explorer)
+                    {
+                        return;
+                    }
 
-                _lastExplorerView = explorer;
-            });
+                    // Initialize one explorer window even if it is not foreground
+                    if (!explorerInitialized)
+                    {
+                        _lastExplorerView = explorer;
+                    }
+                    // Force update explorer window if it is foreground
+                    else if (Win32Helper.IsForegroundWindow(explorer.HWND.Value))
+                    {
+                        _lastExplorerView = explorer;
+                    }
+                });
+            }
 
             // Call ForegroundChange when the foreground window changes
             _foregroundChangeHook = PInvoke.SetWinEventHook(
@@ -247,7 +264,10 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             // File dialog window is foreground
             if (GetWindowClassName(hwnd) == DialogWindowClassName)
             {
-                _dialogWindowHandle = hwnd;
+                lock (_dialogWindowHandleLock)
+                {
+                    _dialogWindowHandle = hwnd;
+                }
 
                 // Show quick switch window
                 if (_settings.ShowQuickSwitchWindow)
@@ -281,27 +301,30 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 // Check if explorer window is foreground
                 try
                 {
-                    EnumerateShellWindows((shellWindow) =>
+                    lock (_lastExplorerViewLock)
                     {
-                        try
+                        EnumerateShellWindows((shellWindow) =>
                         {
-                            if (shellWindow is not IWebBrowser2 explorer)
+                            try
                             {
-                                return;
-                            }
+                                if (shellWindow is not IWebBrowser2 explorer)
+                                {
+                                    return;
+                                }
 
-                            if (explorer.HWND != hwnd.Value)
+                                if (explorer.HWND != hwnd.Value)
+                                {
+                                    return;
+                                }
+
+                                _lastExplorerView = explorer;
+                            }
+                            catch (COMException)
                             {
-                                return;
+                                // Ignored
                             }
-
-                            _lastExplorerView = explorer;
-                        }
-                        catch (COMException)
-                        {
-                            // Ignored
-                        }
-                    });
+                        });
+                    }
                 }
                 catch (System.Exception)
                 {
@@ -368,9 +391,12 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             try
             {
                 // If the explorer window is destroyed, set _lastExplorerView to null
-                if (_lastExplorerView != null && _lastExplorerView.HWND == hwnd.Value)
+                lock (_lastExplorerViewLock)
                 {
-                    _lastExplorerView = null;
+                    if (_lastExplorerView != null && _lastExplorerView.HWND == hwnd.Value)
+                    {
+                        _lastExplorerView = null;
+                    }
                 }
             }
             catch (COMException)
@@ -381,7 +407,10 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             // If the dialog window is destroyed, set _dialogWindowHandle to null
             if (_dialogWindowHandle != HWND.Null && _dialogWindowHandle == hwnd)
             {
-                _dialogWindowHandle = HWND.Null;
+                lock (_dialogWindowHandleLock)
+                {
+                    _dialogWindowHandle = HWND.Null;
+                }
                 ResetQuickSwitchWindow?.Invoke();
                 _dragMoveTimer?.Stop();
             }
