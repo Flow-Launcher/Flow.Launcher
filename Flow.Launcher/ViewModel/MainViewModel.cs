@@ -348,16 +348,32 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void LoadContextMenu()
         {
-            if (QueryResultsSelected())
+            // For quick switch mode, we need to navigate to the path 
+            if (IsQuickSwitch)
             {
-                // When switch to ContextMenu from QueryResults, but no item being chosen, should do nothing
-                // i.e. Shift+Enter/Ctrl+O right after Alt + Space should do nothing
                 if (SelectedResults.SelectedItem != null)
-                    SelectedResults = ContextMenu;
+                {
+                    var result = SelectedResults.SelectedItem.Result;
+                    Win32Helper.SetForegroundWindow(DialogWindowHandle);
+                    QuickSwitch.JumpToPath(result.QuickSwitchPath);
+                }
             }
+            // For query mode, we load context menu
             else
             {
-                SelectedResults = Results;
+                if (QueryResultsSelected())
+                {
+                    // When switch to ContextMenu from QueryResults, but no item being chosen, should do nothing
+                    // i.e. Shift+Enter/Ctrl+O right after Alt + Space should do nothing
+                    if (SelectedResults.SelectedItem != null)
+                    {
+                        SelectedResults = ContextMenu;
+                    }
+                }
+                else
+                {
+                    SelectedResults = Results;
+                }
             }
         }
 
@@ -423,24 +439,16 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
-            if (IsQuickSwitch)
+            var hideWindow = await result.ExecuteAsync(new ActionContext
             {
-                Win32Helper.SetForegroundWindow(DialogWindowHandle);
-                QuickSwitch.JumpToPath(result.QuickSwitchPath);
-            }
-            else
-            {
-                var hideWindow = await result.ExecuteAsync(new ActionContext
-                {
-                    // not null means pressing modifier key + number, should ignore the modifier key
-                    SpecialKeyState = index is not null ? SpecialKeyState.Default : GlobalHotkey.CheckModifiers()
-                })
+                // not null means pressing modifier key + number, should ignore the modifier key
+                SpecialKeyState = index is not null ? SpecialKeyState.Default : GlobalHotkey.CheckModifiers()
+            })
                 .ConfigureAwait(false);
 
-                if (hideWindow)
-                {
-                    Hide();
-                }
+            if (hideWindow)
+            {
+                Hide();
             }
 
             if (QueryResultsSelected())
@@ -1074,6 +1082,10 @@ namespace Flow.Launcher.ViewModel
             if (QueryResultsSelected())
             {
                 await QueryResultsAsync(searchDelay, isReQuery);
+            }
+            else if (IsQuickSwitch)
+            {
+                return;
             }
             else if (ContextMenuSelected())
             {
