@@ -2,7 +2,6 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
-using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
@@ -33,14 +32,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         private static IWebBrowser2 _lastExplorerView = null;
 
         private static UnhookWinEventSafeHandle _foregroundChangeHook = null;
-        
-        private static UnhookWinEventSafeHandle _locationChangeHook = null;
-
-        private static UnhookWinEventSafeHandle _moveSizeHook = null;
 
         private static UnhookWinEventSafeHandle _destroyChangeHook = null;
-
-        private static DispatcherTimer _dragMoveTimer = null;
 
         private static HWND _dialogWindowHandle = HWND.Null;
 
@@ -71,26 +64,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 0,
                 PInvoke.WINEVENT_OUTOFCONTEXT);
 
-            // Call LocationChange when the location of the window changes
-            _locationChangeHook = PInvoke.SetWinEventHook(
-                PInvoke.EVENT_OBJECT_LOCATIONCHANGE,
-                PInvoke.EVENT_OBJECT_LOCATIONCHANGE,
-                null,
-                LocationChangeCallback,
-                0,
-                0,
-                PInvoke.WINEVENT_OUTOFCONTEXT);
-
-            // Call MoveSizeCallBack when the window is moved or resized
-            _moveSizeHook = PInvoke.SetWinEventHook(
-                PInvoke.EVENT_SYSTEM_MOVESIZESTART,
-                PInvoke.EVENT_SYSTEM_MOVESIZEEND,
-                null,
-                MoveSizeCallBack,
-                0,
-                0,
-                PInvoke.WINEVENT_OUTOFCONTEXT);
-
             // Call DestroyChange when the window is destroyed
             _destroyChangeHook = PInvoke.SetWinEventHook(
                 PInvoke.EVENT_OBJECT_DESTROY,
@@ -102,17 +75,11 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 PInvoke.WINEVENT_OUTOFCONTEXT);
 
             if (_foregroundChangeHook.IsInvalid ||
-                _locationChangeHook.IsInvalid ||
-                _moveSizeHook.IsInvalid ||
                 _destroyChangeHook.IsInvalid)
             {
                 Log.Error(ClassName, "Failed to initialize QuickSwitch");
                 return;
             }
-
-            // Initialize timer
-            _dragMoveTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(30) };
-            _dragMoveTimer.Tick += (s, e) => UpdateQuickSwitchWindow();
 
             _isInitialized = true;
             return;
@@ -284,48 +251,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
         }
 
-        private static void LocationChangeCallback(
-            HWINEVENTHOOK hWinEventHook,
-            uint eventType,
-            HWND hwnd,
-            int idObject,
-            int idChild,
-            uint dwEventThread,
-            uint dwmsEventTime
-        )
-        {
-            // If the dialog window is moved, update the quick switch window position
-            if (_dialogWindowHandle != HWND.Null && _dialogWindowHandle == hwnd)
-            {
-                UpdateQuickSwitchWindow?.Invoke();
-            }
-        }
-
-        private static void MoveSizeCallBack(
-            HWINEVENTHOOK hWinEventHook,
-            uint eventType,
-            HWND hwnd,
-            int idObject,
-            int idChild,
-            uint dwEventThread,
-            uint dwmsEventTime
-        )
-        {
-            // If the dialog window is moved or resized, update the quick switch window position
-            if (_dialogWindowHandle != HWND.Null && _dialogWindowHandle == hwnd && _dragMoveTimer != null)
-            {
-                switch (eventType)
-                {
-                    case PInvoke.EVENT_SYSTEM_MOVESIZESTART:
-                        _dragMoveTimer.Start(); // Start dragging position
-                        break;
-                    case PInvoke.EVENT_SYSTEM_MOVESIZEEND:
-                        _dragMoveTimer.Stop(); // Stop dragging
-                        break;
-                }
-            }
-        }
-
         private static void DestroyChangeCallback(
             HWINEVENTHOOK hWinEventHook,
             uint eventType,
@@ -389,16 +314,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             {
                 _foregroundChangeHook.Dispose();
                 _foregroundChangeHook = null;
-            }
-            if (_locationChangeHook != null)
-            {
-                _locationChangeHook.Dispose();
-                _locationChangeHook = null;
-            }
-            if (_moveSizeHook != null)
-            {
-                _moveSizeHook.Dispose();
-                _moveSizeHook = null;
             }
             if (_destroyChangeHook != null)
             {
