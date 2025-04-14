@@ -47,9 +47,9 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         private static bool _isInitialized = false;
 
-        public static bool Initialize()
+        public static void Initialize()
         {
-            if (_isInitialized) return true;
+            if (_isInitialized) return;
 
             // Check all foreground windows and check if there are explorer windows
             EnumerateShellWindows((shellWindow) =>
@@ -95,16 +95,19 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             if (_foregroundChangeHook.IsInvalid || _locationChangeHook.IsInvalid || _destroyChangeHook.IsInvalid)
             {
                 Log.Error(ClassName, "Failed to initialize QuickSwitch");
-                return false;
+                return;
             }
 
             _isInitialized = true;
-            return true;
+            return;
         }
 
         public static void OnToggleHotkey(object sender, HotkeyEventArgs args)
         {
-            NavigateDialogPath();
+            if (_isInitialized)
+            {
+                NavigateDialogPath();
+            }
         }
 
         private static void NavigateDialogPath()

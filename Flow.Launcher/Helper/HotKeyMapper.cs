@@ -23,12 +23,8 @@ internal static class HotKeyMapper
         _settings = Ioc.Default.GetService<Settings>();
 
         SetHotkey(_settings.Hotkey, OnToggleHotkey);
+        SetHotkey(_settings.QuickSwitchHotkey, QuickSwitch.OnToggleHotkey);
         LoadCustomPluginHotkey();
-
-        if (QuickSwitch.Initialize())
-        {
-            SetHotkey(_settings.QuickSwitchHotkey, QuickSwitch.OnToggleHotkey);
-        }
     }
 
     internal static void Dispose()
