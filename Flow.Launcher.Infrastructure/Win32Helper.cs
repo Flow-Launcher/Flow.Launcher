@@ -665,7 +665,7 @@ namespace Flow.Launcher.Infrastructure
             return true;
         }
 
-        internal static bool DirJumpOnLegacyDialog(string path, HWND dialogHandle)
+        private static bool DirJumpOnLegacyDialog(string path, HWND dialogHandle)
         {
             // https://github.com/idkidknow/Flow.Launcher.Plugin.DirQuickJump/issues/1
             var controlHandle = PInvoke.FindWindowEx(dialogHandle, HWND.Null, "ComboBoxEx32", null);
