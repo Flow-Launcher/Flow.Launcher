@@ -1518,7 +1518,9 @@ namespace Flow.Launcher.ViewModel
         
         private bool PreviousMainWindowVisibilityStatus { get; set; } = true;
 
-        public void SetupQuickSwitch(nint handle)
+#pragma warning disable VSTHRD100 // Avoid async void methods
+
+        public async void SetupQuickSwitch(nint handle)
         {
             if (handle != nint.Zero && DialogWindowHandle != handle) // Only set once for one file dialog
             {
@@ -1526,6 +1528,10 @@ namespace Flow.Launcher.ViewModel
                 DialogWindowHandle = handle;
                 IsQuickSwitch = true;
             }
+
+            await Task.Delay(300); // If don't give a time, Positioning will be weird.
+
+            if (handle == nint.Zero) return; // If handle is null, it means the dialog is closed, so return
 
             if (MainWindowVisibilityStatus)
             {
@@ -1543,6 +1549,8 @@ namespace Flow.Launcher.ViewModel
                 Show();
             }
         }
+
+#pragma warning restore VSTHRD100 // Avoid async void methods
 
         public void ResetQuickSwitch()
         {

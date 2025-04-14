@@ -2,7 +2,6 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Logger;
@@ -228,7 +227,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
         }
 
-        private static async void ForegroundChangeCallback(
+        private static void ForegroundChangeCallback(
             HWINEVENTHOOK hWinEventHook,
             uint eventType,
             HWND hwnd,
@@ -245,9 +244,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 if (_settings.ShowQuickSwitchWindow)
                 {
                     ShowQuickSwitchWindow?.Invoke(_dialogWindowHandle.Value);
-                    // Here we delay 350ms because MainWindow.UpdateQuickSwitchPosition wait 300ms before position change
-                    // and we use additional 50ms for waiting dialog initialization
-                    await Task.Delay(350);
                     _dragMoveTimer?.Start();
                 }
                 if (_settings.AutoQuickSwitch)

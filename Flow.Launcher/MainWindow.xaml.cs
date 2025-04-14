@@ -1165,13 +1165,9 @@ namespace Flow.Launcher
             QuickSwitch.ResetQuickSwitchWindow = _viewModel.ResetQuickSwitch;
         }
 
-#pragma warning disable VSTHRD100 // Avoid async void methods
-
-        private async void UpdateQuickSwitchPosition()
+        private void UpdateQuickSwitchPosition()
         {
             if (_viewModel.DialogWindowHandle == nint.Zero) return;
-
-            await Task.Delay(300); // If don't give a time, Positioning will be weird.
 
             // Get dialog window rect
             var result = Win32Helper.GetWindowRect(_viewModel.DialogWindowHandle, out var window);
@@ -1181,8 +1177,6 @@ namespace Flow.Launcher
             Top = VerticalBottom(window);
             Left = HorizonCenter(window);
         }
-
-#pragma warning restore VSTHRD100 // Avoid async void methods
 
         private double HorizonCenter(Rect window)
         {
