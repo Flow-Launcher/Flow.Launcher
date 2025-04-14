@@ -13,7 +13,6 @@ using System.Windows.Media.Effects;
 using System.Windows.Shell;
 using System.Windows.Threading;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
@@ -24,6 +23,8 @@ namespace Flow.Launcher.Core.Resource
     public class Theme
     {
         #region Properties & Fields
+
+        private readonly string ClassName = nameof(Theme);
 
         public bool BlurEnabled { get; private set; }
 
@@ -73,7 +74,7 @@ namespace Flow.Launcher.Core.Resource
             }
             else
             {
-                Log.Error("Current theme resource not found. Initializing with default theme.");
+                _api.LogError(ClassName, "Current theme resource not found. Initializing with default theme.");
                 _oldTheme = Constant.DefaultTheme;
             };
         }
@@ -92,7 +93,7 @@ namespace Flow.Launcher.Core.Resource
                 }
                 catch (Exception e)
                 {
-                    Log.Exception($"|Theme.MakesureThemeDirectoriesExist|Exception when create directory <{dir}>", e);
+                    _api.LogException(ClassName, $"Exception when create directory <{dir}>", e);
                 }
             }
         }
@@ -135,7 +136,7 @@ namespace Flow.Launcher.Core.Resource
             }
             catch (Exception e)
             {
-                Log.Exception("Error occurred while updating theme fonts", e);
+                _api.LogException(ClassName, "Error occurred while updating theme fonts", e);
             }
         }
 
@@ -387,7 +388,7 @@ namespace Flow.Launcher.Core.Resource
             var matchingTheme = themes.FirstOrDefault(t => t.FileNameWithoutExtension == _settings.Theme);
             if (matchingTheme == null)
             {
-                Log.Warn($"No matching theme found for '{_settings.Theme}'. Falling back to the first available theme.");
+                _api.LogWarn(ClassName, $"No matching theme found for '{_settings.Theme}'. Falling back to the first available theme.");
             }
             return matchingTheme ?? themes.FirstOrDefault();
         }
@@ -440,7 +441,7 @@ namespace Flow.Launcher.Core.Resource
             }
             catch (DirectoryNotFoundException)
             {
-                Log.Error($"|Theme.ChangeTheme|Theme <{theme}> path can't be found");
+                _api.LogError(ClassName, $"Theme <{theme}> path can't be found");
                 if (theme != Constant.DefaultTheme)
                 {
                     _api.ShowMsgBox(string.Format(_api.GetTranslation("theme_load_failure_path_not_exists"), theme));
@@ -450,7 +451,7 @@ namespace Flow.Launcher.Core.Resource
             }
             catch (XamlParseException)
             {
-                Log.Error($"|Theme.ChangeTheme|Theme <{theme}> fail to parse");
+                _api.LogError(ClassName, $"Theme <{theme}> fail to parse");
                 if (theme != Constant.DefaultTheme)
                 {
                     _api.ShowMsgBox(string.Format(_api.GetTranslation("theme_load_failure_parse_error"), theme));

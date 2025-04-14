@@ -435,16 +435,16 @@ namespace Flow.Launcher
             PluginManager.UninstallPluginAsync(pluginMetadata, removePluginSettings);
 
         public long StopwatchLogDebug(string className, string message, Action action, [CallerMemberName] string methodName = "") =>
-            Stopwatch.Debug($"|{className}.{methodName}|{message}", action);
+            Stopwatch.Debug(className, message, action, methodName);
 
         public Task<long> StopwatchLogDebugAsync(string className, string message, Func<Task> action, [CallerMemberName] string methodName = "") =>
-            Stopwatch.DebugAsync($"|{className}.{methodName}|{message}", action);
+            Stopwatch.DebugAsync(className, message, action, methodName);
 
         public long StopwatchLogInfo(string className, string message, Action action, [CallerMemberName] string methodName = "") =>
-            Stopwatch.Normal($"|{className}.{methodName}|{message}", action);
+            Stopwatch.Info(className, message, action, methodName);
 
         public Task<long> StopwatchLogInfoAsync(string className, string message, Func<Task> action, [CallerMemberName] string methodName = "") =>
-            Stopwatch.NormalAsync($"|{className}.{methodName}|{message}", action);
+            Stopwatch.InfoAsync(className, message, action, methodName);
 
         #endregion
 

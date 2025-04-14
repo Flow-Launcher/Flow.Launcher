@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing.Text;
 using System.IO;
@@ -7,7 +6,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Image;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 
@@ -15,6 +13,8 @@ namespace Flow.Launcher.ViewModel
 {
     public class ResultViewModel : BaseModel
     {
+        private static readonly string ClassName = nameof(ResultViewModel);
+
         private static readonly PrivateFontCollection FontCollection = new();
         private static readonly Dictionary<string, string> Fonts = new();
 
@@ -232,8 +232,8 @@ namespace Flow.Launcher.ViewModel
                 }
                 catch (Exception e)
                 {
-                    Log.Exception(
-                        $"|ResultViewModel.LoadImageInternalAsync|IcoPath is empty and exception when calling IconDelegate for result <{Result.Title}> of plugin <{Result.PluginDirectory}>",
+                    App.API.LogException(ClassName,
+                        $"IcoPath is empty and exception when calling IconDelegate for result <{Result.Title}> of plugin <{Result.PluginDirectory}>",
                         e);
                 }
             }

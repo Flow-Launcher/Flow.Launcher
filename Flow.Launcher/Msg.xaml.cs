@@ -5,7 +5,6 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Image;
 
 namespace Flow.Launcher
 {

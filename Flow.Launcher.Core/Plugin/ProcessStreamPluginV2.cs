@@ -1,21 +1,19 @@
-﻿#nullable enable
-
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Diagnostics;
 using System.IO.Pipelines;
 using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin;
 using Meziantou.Framework.Win32;
-using Microsoft.VisualBasic.ApplicationServices;
 using Nerdbank.Streams;
+
+#nullable enable
 
 namespace Flow.Launcher.Core.Plugin
 {
     internal abstract class ProcessStreamPluginV2 : JsonRPCPluginV2
     {
-        private static JobObject _jobObject = new JobObject();
+        private static readonly JobObject _jobObject = new();
 
         static ProcessStreamPluginV2()
         {
@@ -66,11 +64,10 @@ namespace Flow.Launcher.Core.Plugin
             ClientPipe = new DuplexPipe(reader, writer);
         }
 
-
         public override async Task ReloadDataAsync()
         {
             var oldProcess = ClientProcess;
-            ClientProcess = Process.Start(StartInfo);
+            ClientProcess = Process.Start(StartInfo)!;
             ArgumentNullException.ThrowIfNull(ClientProcess);
             SetupPipe(ClientProcess);
             await base.ReloadDataAsync();
@@ -78,7 +75,6 @@ namespace Flow.Launcher.Core.Plugin
             await oldProcess.WaitForExitAsync();
             oldProcess.Dispose();
         }
-
 
         public override async ValueTask DisposeAsync()
         {
