@@ -4,14 +4,16 @@ using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace Windows.Win32;
 
-// Edited from: https://github.com/files-community/Files
+/// <summary>
+/// Edited from: https://github.com/files-community/Files
+/// </summary>
 internal static partial class PInvoke
 {
     [DllImport("User32", EntryPoint = "SetWindowLongW", ExactSpelling = true)]
-    static extern int _SetWindowLong(HWND hWnd, int nIndex, int dwNewLong);
+    private static extern int _SetWindowLong(HWND hWnd, int nIndex, int dwNewLong);
 
     [DllImport("User32", EntryPoint = "SetWindowLongPtrW", ExactSpelling = true)]
-    static extern nint _SetWindowLongPtr(HWND hWnd, int nIndex, nint dwNewLong);
+    private static extern nint _SetWindowLongPtr(HWND hWnd, int nIndex, nint dwNewLong);
 
     // NOTE:
     //  CsWin32 doesn't generate SetWindowLong on other than x86 and vice versa.
