@@ -243,6 +243,9 @@ namespace Flow.Launcher
             }
 
             var dialog = new HotkeyControlDialog(Hotkey, DefaultHotkey, WindowTitle);
+
+            dialog.Owner = Window.GetWindow(this);
+
             await dialog.ShowAsync();
             switch (dialog.ResultType)
             {
