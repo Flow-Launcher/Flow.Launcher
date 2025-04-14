@@ -264,7 +264,7 @@ namespace Flow.Launcher.Plugin
 
         /// <summary>
         /// This holds the path which can be provided by plugin to be navigated to the
-        /// file dialog when records in quick switch window is clicked on a result.
+        /// file dialog when records in quick switch window is right clicked on a result.
         /// </summary>
         public string QuickSwitchPath { get; set; }
 
