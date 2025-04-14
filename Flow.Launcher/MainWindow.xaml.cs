@@ -665,7 +665,7 @@ namespace Flow.Launcher
 
         #region Window Position
 
-        private void UpdatePosition()
+        public void UpdatePosition()
         {
             if (_viewModel.IsQuickSwitch)
             {

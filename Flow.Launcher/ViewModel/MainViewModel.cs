@@ -1520,11 +1520,28 @@ namespace Flow.Launcher.ViewModel
 
         public void SetupQuickSwitch(nint handle)
         {
-            PreviousMainWindowVisibilityStatus = MainWindowVisibilityStatus;
+            if (handle != nint.Zero && DialogWindowHandle != handle) // Only set once for one file dialog
+            {
+                PreviousMainWindowVisibilityStatus = MainWindowVisibilityStatus;
+                DialogWindowHandle = handle;
+                IsQuickSwitch = true;
+            }
 
-            DialogWindowHandle = handle;
-            IsQuickSwitch = true;
-            Show();
+            if (MainWindowVisibilityStatus)
+            {
+                // Only update the position
+                if (PreviousMainWindowVisibilityStatus)
+                {
+                    Application.Current?.Dispatcher.Invoke(() =>
+                    {
+                        (Application.Current?.MainWindow as MainWindow).UpdatePosition();
+                    });
+                }
+            }
+            else
+            {
+                Show();
+            }
         }
 
         public void ResetQuickSwitch()
@@ -1532,13 +1549,28 @@ namespace Flow.Launcher.ViewModel
             DialogWindowHandle = nint.Zero;
             IsQuickSwitch = false;
 
-            if (PreviousMainWindowVisibilityStatus)
+            if (PreviousMainWindowVisibilityStatus != MainWindowVisibilityStatus)
             {
-                Show();
+                // Show or hide to change visibility
+                if (PreviousMainWindowVisibilityStatus)
+                {
+                    Show();
+                }
+                else
+                {
+                    Hide();
+                }
             }
             else
             {
-                Hide();
+                // Only update the position
+                if (PreviousMainWindowVisibilityStatus)
+                {
+                    Application.Current?.Dispatcher.Invoke(() =>
+                    {
+                        (Application.Current?.MainWindow as MainWindow).UpdatePosition();
+                    });
+                }
             }
         }
 
