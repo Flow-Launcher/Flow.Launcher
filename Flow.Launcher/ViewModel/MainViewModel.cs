@@ -244,7 +244,7 @@ namespace Flow.Launcher.ViewModel
                     var token = e.Token == default ? _updateToken : e.Token;
 
                     // make a clone to avoid possible issue that plugin will also change the list and items when updating view model
-                    var resultsCopy = DeepCloneResults(e.Results, token);
+                    var resultsCopy = CheckQuickSwitchAndDeepClone(e.Results, token);
 
                     foreach (var result in resultsCopy)
                     {
@@ -447,9 +447,10 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private static IReadOnlyList<Result> DeepCloneResults(IReadOnlyList<Result> results, CancellationToken token = default)
+        private IReadOnlyList<Result> CheckQuickSwitchAndDeepClone(IReadOnlyList<Result> results, CancellationToken token = default)
         {
             var resultsCopy = new List<Result>();
+
             foreach (var result in results.ToList())
             {
                 if (token.IsCancellationRequested)
@@ -457,9 +458,15 @@ namespace Flow.Launcher.ViewModel
                     break;
                 }
 
+                if (IsQuickSwitch && !result.AllowQuickSwitch)
+                {
+                    continue;
+                }
+
                 var resultCopy = result.Clone();
                 resultsCopy.Add(resultCopy);
             }
+
             return resultsCopy;
         }
 
@@ -1290,7 +1297,7 @@ namespace Flow.Launcher.ViewModel
                 else
                 {
                     // make a copy of results to avoid possible issue that FL changes some properties of the records, like score, etc.
-                    resultsCopy = DeepCloneResults(results, token);
+                    resultsCopy = CheckQuickSwitchAndDeepClone(results, token);
                 }
 
                 foreach (var result in resultsCopy)
@@ -1485,20 +1492,20 @@ namespace Flow.Launcher.ViewModel
 
         #region Quick Switch
 
-        public bool QuickSwitch { get; private set; }
+        public bool IsQuickSwitch { get; private set; }
         public nint DialogWindowHandle { get; private set; } = nint.Zero;
 
         public void SetupQuickSwitch(nint handle)
         {
             DialogWindowHandle = handle;
-            QuickSwitch = true;
+            IsQuickSwitch = true;
             Show();
         }
 
         public void ResetQuickSwitch()
         {
             DialogWindowHandle = nint.Zero;
-            QuickSwitch = false;
+            IsQuickSwitch = false;
             Hide();
         }
 
@@ -1520,7 +1527,7 @@ namespace Flow.Launcher.ViewModel
                     Win32Helper.DWMSetCloakForWindow(mainWindow, false);
 
                     // Set clock and search icon opacity
-                    var opacity = (Settings.UseAnimation && !QuickSwitch) ? 0.0 : 1.0;
+                    var opacity = (Settings.UseAnimation && !IsQuickSwitch) ? 0.0 : 1.0;
                     ClockPanelOpacity = opacity;
                     SearchIconOpacity = opacity;
 
@@ -1543,7 +1550,7 @@ namespace Flow.Launcher.ViewModel
             VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
 
             // Switch keyboard layout
-            if (StartWithEnglishMode && !QuickSwitch)
+            if (StartWithEnglishMode && !IsQuickSwitch)
             {
                 Win32Helper.SwitchToEnglishKeyboardLayout(true);
             }
@@ -1592,7 +1599,7 @@ namespace Flow.Launcher.ViewModel
                 if (Application.Current?.MainWindow is MainWindow mainWindow)
                 {
                     // Set clock and search icon opacity
-                    var opacity = (Settings.UseAnimation && !QuickSwitch) ? 0.0 : 1.0;
+                    var opacity = (Settings.UseAnimation && !IsQuickSwitch) ? 0.0 : 1.0;
                     ClockPanelOpacity = opacity;
                     SearchIconOpacity = opacity;
 
@@ -1610,7 +1617,7 @@ namespace Flow.Launcher.ViewModel
             }, DispatcherPriority.Render);
 
             // Switch keyboard layout
-            if (StartWithEnglishMode && !QuickSwitch)
+            if (StartWithEnglishMode && !IsQuickSwitch)
             {
                 Win32Helper.RestorePreviousKeyboardLayout();
             }

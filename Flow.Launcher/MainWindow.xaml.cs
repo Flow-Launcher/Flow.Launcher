@@ -194,7 +194,7 @@ namespace Flow.Launcher
                                 if (_viewModel.MainWindowVisibilityStatus)
                                 {
                                     // Play sound effect before activing the window
-                                    if (_settings.UseSound && !_viewModel.QuickSwitch)
+                                    if (_settings.UseSound && !_viewModel.IsQuickSwitch)
                                     {
                                         SoundPlay();
                                     }
@@ -217,7 +217,7 @@ namespace Flow.Launcher
                                     QueryTextBox.Focus();
 
                                     // Play window animation
-                                    if (_settings.UseAnimation && !_viewModel.QuickSwitch)
+                                    if (_settings.UseAnimation && !_viewModel.IsQuickSwitch)
                                     {
                                         WindowAnimation();
                                     }
@@ -324,7 +324,7 @@ namespace Flow.Launcher
 
         private void OnLocationChanged(object sender, EventArgs e)
         {
-            if (_viewModel.QuickSwitch)
+            if (_viewModel.IsQuickSwitch)
             {
                 return;
             }
@@ -338,7 +338,7 @@ namespace Flow.Launcher
 
         private async void OnDeactivated(object sender, EventArgs e)
         {
-            if (_viewModel.QuickSwitch)
+            if (_viewModel.IsQuickSwitch)
             {
                 return;
             }
@@ -481,7 +481,7 @@ namespace Flow.Launcher
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            if (_viewModel.QuickSwitch)
+            if (_viewModel.IsQuickSwitch)
             {
                 return IntPtr.Zero;
             }
@@ -667,7 +667,7 @@ namespace Flow.Launcher
 
         private void UpdatePosition()
         {
-            if (_viewModel.QuickSwitch)
+            if (_viewModel.IsQuickSwitch)
             {
                 UpdateQuickSwitchPosition();
             }
