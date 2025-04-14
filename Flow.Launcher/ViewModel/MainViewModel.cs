@@ -1582,6 +1582,17 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public void HideQuickSwitch()
+        {
+            if (DialogWindowHandle != nint.Zero)
+            {
+                if (MainWindowVisibilityStatus)
+                {
+                    Hide();
+                }
+            }
+        }
+
         #endregion
 
         #region Public Methods

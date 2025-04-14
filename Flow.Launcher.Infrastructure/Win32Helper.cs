@@ -334,6 +334,16 @@ namespace Flow.Launcher.Infrastructure
             return new(windowHelper.Handle);
         }
 
+        internal static HWND GetMainWindowHandle()
+        {
+            // When application is exiting, the Application.Current will be null
+            if (Application.Current == null) return HWND.Null;
+
+            // Get the FL main window
+            var hwnd = GetWindowHandle(Application.Current.MainWindow, true);
+            return hwnd;
+        }
+
         #endregion
 
         #region Keyboard Layout
@@ -368,11 +378,8 @@ namespace Flow.Launcher.Infrastructure
             // No installed English layout found
             if (enHKL == HKL.Null) return;
 
-            // When application is exiting, the Application.Current will be null
-            if (Application.Current == null) return;
-
             // Get the FL main window
-            var hwnd = GetWindowHandle(Application.Current.MainWindow, true);
+            var hwnd = GetMainWindowHandle();
             if (hwnd == HWND.Null) return;
 
             // Check if the FL main window is the current foreground window

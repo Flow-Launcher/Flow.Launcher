@@ -25,6 +25,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         public static Action ResetQuickSwitchWindow { get; set; } = null;
 
+        public static Action HideQuickSwitchWindow { get; set; } = null;
+
         // The class name of a dialog window
         private const string DialogWindowClassName = "#32770";
 
@@ -41,6 +43,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         private static UnhookWinEventSafeHandle _destroyChangeHook = null;
 
         private static DispatcherTimer _dragMoveTimer = null;
+
+        private static HWND _mainWindowHandle = HWND.Null;
 
         private static HWND _dialogWindowHandle = HWND.Null;
 
@@ -109,6 +113,9 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 Log.Error(ClassName, "Failed to initialize QuickSwitch");
                 return;
             }
+
+            // Initialize main window handle
+            _mainWindowHandle = Win32Helper.GetMainWindowHandle();
 
             // Initialize timer
             _dragMoveTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(10) };
@@ -237,15 +244,19 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             uint dwmsEventTime
         )
         {
-            // If window is dialog window, show quick switch window and navigate path if needed
+            // File dialog window is foreground
             if (GetWindowClassName(hwnd) == DialogWindowClassName)
             {
                 _dialogWindowHandle = hwnd;
+
+                // Show quick switch window
                 if (_settings.ShowQuickSwitchWindow)
                 {
                     ShowQuickSwitchWindow?.Invoke(_dialogWindowHandle.Value);
                     _dragMoveTimer?.Start();
                 }
+
+                // Navigate path if needed
                 if (_settings.AutoQuickSwitch)
                 {
                     // Showing quick switch window may bring focus
@@ -253,35 +264,49 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     NavigateDialogPath();
                 }
             }
-
-            // If window is explorer window, set _lastExplorerView to the explorer
-            try
+            // Quick switch window is foreground
+            else if (hwnd == _mainWindowHandle)
             {
-                EnumerateShellWindows((shellWindow) =>
-                {
-                    try
-                    {
-                        if (shellWindow is not IWebBrowser2 explorer)
-                        {
-                            return;
-                        }
-
-                        if (explorer.HWND != hwnd.Value)
-                        {
-                            return;
-                        }
-
-                        _lastExplorerView = explorer;
-                    }
-                    catch (COMException)
-                    {
-                        // Ignored
-                    }
-                });
+                // Nothing to do
             }
-            catch (System.Exception e)
+            else
             {
-                Log.Exception(ClassName, "Failed to get shell windows", e);
+                if (_dialogWindowHandle != HWND.Null)
+                {
+                    // Neither quick switch window nor file dialog window is foreground
+                    // Hide quick switch window until the file dialog window is brought to the foreground
+                    HideQuickSwitchWindow?.Invoke();
+                }
+
+                // Check if explorer window is foreground
+                try
+                {
+                    EnumerateShellWindows((shellWindow) =>
+                    {
+                        try
+                        {
+                            if (shellWindow is not IWebBrowser2 explorer)
+                            {
+                                return;
+                            }
+
+                            if (explorer.HWND != hwnd.Value)
+                            {
+                                return;
+                            }
+
+                            _lastExplorerView = explorer;
+                        }
+                        catch (COMException)
+                        {
+                            // Ignored
+                        }
+                    });
+                }
+                catch (System.Exception)
+                {
+                    // Ignored
+                }
             }
         }
 

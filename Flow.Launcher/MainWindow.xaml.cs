@@ -1163,6 +1163,7 @@ namespace Flow.Launcher
             QuickSwitch.ShowQuickSwitchWindow = _viewModel.SetupQuickSwitch;
             QuickSwitch.UpdateQuickSwitchWindow = UpdateQuickSwitchPosition;
             QuickSwitch.ResetQuickSwitchWindow = _viewModel.ResetQuickSwitch;
+            QuickSwitch.HideQuickSwitchWindow = _viewModel.HideQuickSwitch;
         }
 
         private void UpdateQuickSwitchPosition()
