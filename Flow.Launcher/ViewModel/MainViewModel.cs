@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -446,7 +447,113 @@ namespace Flow.Launcher.ViewModel
                 Hide();
             }
         }
+        
+        /// <summary>
+        /// Command to delete the last word from the query box (for path)
+        /// </summary>
+        [RelayCommand]
+        private void DeleteWord()
+        {
+            if (string.IsNullOrEmpty(QueryText))
+                return;
 
+            string text = QueryText;
+
+            // Check if it can be treated as a file path (if it contains a backslash)
+            if (text.Contains('\\'))
+            {
+                // Remove the backslash at the end if it exists
+                string trimmedPath = text.TrimEnd('\\');
+
+                // Find the last directory separator (backslash) and cut it off
+                int lastDirSeparatorIndex = trimmedPath.LastIndexOf('\\');
+
+                if (lastDirSeparatorIndex > 0)
+                {
+                    // Cut off the last part of the directory path and keep the backslash
+                    ChangeQueryText(text.Substring(0, lastDirSeparatorIndex + 1));
+                }
+                else if (trimmedPath.EndsWith(":") || trimmedPath.EndsWith(":\\"))
+                {
+                    // If it is a drive root (e.g. c:\), empty it
+                    ChangeQueryText(string.Empty);
+                }
+                else
+                {
+                    // Handle special cases (if there is a backslash but not a normal path pattern)
+                    DeleteWordNormal(text);
+                }
+            }
+            else
+            {
+                // Process as normal text
+                DeleteWordNormal(text);
+            }
+        }
+        /// <summary>
+        /// Command to delete the last word from the query box (similar to Ctrl+Backspace functionality)
+        /// </summary>
+        private void DeleteWordNormal(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                ChangeQueryText(string.Empty);
+                return;
+            }
+
+            int length = text.Length;
+            int currentPos = length - 1;
+
+            // Skip trailing whitespace
+            while (currentPos >= 0 && char.IsWhiteSpace(text[currentPos]))
+                currentPos--;
+
+            if (currentPos < 0)
+            {
+                ChangeQueryText(string.Empty);
+                return;
+            }
+
+            // Check if the current character is a special character
+            bool IsSpecialChar(char c) => !char.IsLetterOrDigit(c) && c != '_';
+            bool isCurrentSpecial = currentPos >= 0 && IsSpecialChar(text[currentPos]);
+
+            // Find the word start position
+            int wordStart = currentPos;
+
+            if (isCurrentSpecial)
+            {
+                // If the current character is a special character, delete only that special character
+                wordStart--;
+            }
+            else
+            {
+                // If the current character is a regular character, move to the beginning of the word
+                while (wordStart >= 0 && !IsSpecialChar(text[wordStart]) && !char.IsWhiteSpace(text[wordStart]))
+                    wordStart--;
+            }
+
+            // Skip remaining whitespace
+            if (wordStart >= 0 && char.IsWhiteSpace(text[wordStart]))
+            {
+                while (wordStart >= 0 && char.IsWhiteSpace(text[wordStart]))
+                    wordStart--;
+            }
+
+            // Calculate new text length
+            int newLength = wordStart + 1;
+    
+            // Set new text
+            if (newLength <= 0)
+            {
+                ChangeQueryText(string.Empty);
+            }
+            else
+            {
+                ChangeQueryText(text[..newLength]);
+            }
+        }
+        
         private static IReadOnlyList<Result> DeepCloneResults(IReadOnlyList<Result> results, CancellationToken token = default)
         {
             var resultsCopy = new List<Result>();
@@ -847,6 +954,8 @@ namespace Flow.Launcher.ViewModel
         public string PreviewHotkey => VerifyOrSetDefaultHotkey(Settings.PreviewHotkey, "F1");
         public string AutoCompleteHotkey => VerifyOrSetDefaultHotkey(Settings.AutoCompleteHotkey, "Ctrl+Tab");
         public string AutoCompleteHotkey2 => VerifyOrSetDefaultHotkey(Settings.AutoCompleteHotkey2, "");
+        public string DeleteWordHotkey => VerifyOrSetDefaultHotkey(Settings.DeleteWordHotkey, "Alt+Left");
+        public string DeleteWordHotkey2 => VerifyOrSetDefaultHotkey(Settings.DeleteWordHotkey2, "");
         public string SelectNextItemHotkey => VerifyOrSetDefaultHotkey(Settings.SelectNextItemHotkey, "Tab");
         public string SelectNextItemHotkey2 => VerifyOrSetDefaultHotkey(Settings.SelectNextItemHotkey2, "");
         public string SelectPrevItemHotkey => VerifyOrSetDefaultHotkey(Settings.SelectPrevItemHotkey, "Shift+Tab");

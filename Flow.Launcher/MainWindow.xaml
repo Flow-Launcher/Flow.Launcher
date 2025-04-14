@@ -172,6 +172,14 @@
             Command="{Binding AutocompleteQueryCommand}"
             Modifiers="{Binding AutoCompleteHotkey2, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
         <KeyBinding
+            Key="{Binding DeleteWordHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding DeleteWordCommand}"
+            Modifiers="{Binding DeleteWordHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding DeleteWordHotkey2, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding DeleteWordCommand}"
+            Modifiers="{Binding DeleteWordHotkey2, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
             Key="{Binding SelectNextItemHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
             Command="{Binding SelectNextItemCommand}"
             Modifiers="{Binding SelectNextItemHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />

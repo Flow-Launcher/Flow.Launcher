@@ -228,6 +228,27 @@
             </cc:ExCard>
 
             <cc:ExCard
+                Title="{DynamicResource DeleteWordHotkey}"
+                Margin="0 4 0 0"
+                Icon="&#xE777;">
+                <cc:ExCard.SideContent>
+                    <flowlauncher:HotkeyControl
+                        DefaultHotkey="Alt+Left"
+                        Type="DeleteWordHotkey"
+                        ValidateKeyGesture="False" />
+                </cc:ExCard.SideContent>
+                <cc:Card
+                    Title="{DynamicResource DeleteWordHotkey}"
+                    Sub="{DynamicResource AdditionalHotkeyToolTip}"
+                    Type="InsideFit">
+                    <flowlauncher:HotkeyControl
+                        DefaultHotkey=""
+                        Type="DeleteWordHotkey2"
+                        ValidateKeyGesture="False" />
+                </cc:Card>
+            </cc:ExCard>
+
+            <cc:ExCard
                 Title="{DynamicResource SelectPrevItemHotkey}"
                 Margin="0 4 0 0"
                 Icon="&#xe74a;">

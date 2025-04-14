@@ -43,6 +43,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string PreviewHotkey { get; set; } = $"F1";
         public string AutoCompleteHotkey { get; set; } = $"{KeyConstant.Alt} + Right";
         public string AutoCompleteHotkey2 { get; set; } = $"";
+        public string DeleteWordHotkey { get; set; } = $"{KeyConstant.Alt} + Left";
+        public string DeleteWordHotkey2 { get; set; } = $"";
         public string SelectNextItemHotkey { get; set; } = $"Tab";
         public string SelectNextItemHotkey2 { get; set; } = $"";
         public string SelectPrevItemHotkey { get; set; } = $"Shift + Tab";
@@ -366,6 +368,10 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                     list.Add(new(AutoCompleteHotkey, "autoCompleteHotkey", () => AutoCompleteHotkey = ""));
                 if(!string.IsNullOrEmpty(AutoCompleteHotkey2))
                     list.Add(new(AutoCompleteHotkey2, "autoCompleteHotkey", () => AutoCompleteHotkey2 = ""));
+                if(!string.IsNullOrEmpty(DeleteWordHotkey))
+                    list.Add(new(DeleteWordHotkey, "deleteWordHotkey", () => DeleteWordHotkey = ""));
+                if(!string.IsNullOrEmpty(DeleteWordHotkey2))
+                    list.Add(new(DeleteWordHotkey2, "deleteWordHotkey", () => DeleteWordHotkey2 = ""));
                 if(!string.IsNullOrEmpty(SelectNextItemHotkey))
                     list.Add(new(SelectNextItemHotkey, "SelectNextItemHotkey", () => SelectNextItemHotkey = ""));
                 if(!string.IsNullOrEmpty(SelectNextItemHotkey2))

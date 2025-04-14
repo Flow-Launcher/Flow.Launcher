@@ -106,6 +106,8 @@ namespace Flow.Launcher
             SelectNextPageHotkey,
             AutoCompleteHotkey,
             AutoCompleteHotkey2,
+            DeleteWordHotkey,
+            DeleteWordHotkey2,
             SelectPrevItemHotkey,
             SelectPrevItemHotkey2,
             SelectNextItemHotkey,
@@ -136,6 +138,8 @@ namespace Flow.Launcher
                     HotkeyType.SelectNextPageHotkey => _settings.SelectNextPageHotkey,
                     HotkeyType.AutoCompleteHotkey => _settings.AutoCompleteHotkey,
                     HotkeyType.AutoCompleteHotkey2 => _settings.AutoCompleteHotkey2,
+                    HotkeyType.DeleteWordHotkey => _settings.DeleteWordHotkey,
+                    HotkeyType.DeleteWordHotkey2 => _settings.DeleteWordHotkey2,
                     HotkeyType.SelectPrevItemHotkey => _settings.SelectPrevItemHotkey,
                     HotkeyType.SelectPrevItemHotkey2 => _settings.SelectPrevItemHotkey2,
                     HotkeyType.SelectNextItemHotkey => _settings.SelectNextItemHotkey,
@@ -183,6 +187,12 @@ namespace Flow.Launcher
                         break;
                     case HotkeyType.AutoCompleteHotkey2:
                         _settings.AutoCompleteHotkey2 = value;
+                        break;
+                    case HotkeyType.DeleteWordHotkey:
+                        _settings.DeleteWordHotkey = value;
+                        break;
+                    case HotkeyType.DeleteWordHotkey2:
+                        _settings.DeleteWordHotkey2 = value;
                         break;
                     case HotkeyType.SelectPrevItemHotkey:
                         _settings.SelectPrevItemHotkey = value;
