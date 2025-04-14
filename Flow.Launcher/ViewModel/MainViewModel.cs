@@ -16,6 +16,7 @@ using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.QuickSwitch;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -422,12 +423,25 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
-            var hideWindow = await result.ExecuteAsync(new ActionContext
+            if (IsQuickSwitch)
             {
-                // not null means pressing modifier key + number, should ignore the modifier key
-                SpecialKeyState = index is not null ? SpecialKeyState.Default : GlobalHotkey.CheckModifiers()
-            })
-            .ConfigureAwait(false);
+                Win32Helper.SetForegroundWindow(DialogWindowHandle);
+                QuickSwitch.JumpToPath(result.QuickSwitchPath);
+            }
+            else
+            {
+                var hideWindow = await result.ExecuteAsync(new ActionContext
+                {
+                    // not null means pressing modifier key + number, should ignore the modifier key
+                    SpecialKeyState = index is not null ? SpecialKeyState.Default : GlobalHotkey.CheckModifiers()
+                })
+                .ConfigureAwait(false);
+
+                if (hideWindow)
+                {
+                    Hide();
+                }
+            }
 
             if (QueryResultsSelected())
             {
@@ -439,11 +453,6 @@ namespace Flow.Launcher.ViewModel
                     _history.Add(result.OriginQuery.RawQuery);
                 }
                 lastHistoryIndex = 1;
-            }
-
-            if (hideWindow)
-            {
-                Hide();
             }
         }
 

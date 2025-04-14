@@ -12,7 +12,6 @@ using Windows.Win32.Foundation;
 using Windows.Win32.System.Com;
 using Windows.Win32.UI.Accessibility;
 using Windows.Win32.UI.Shell;
-using WindowsInput;
 
 namespace Flow.Launcher.Infrastructure.QuickSwitch
 {
@@ -32,8 +31,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         private static readonly Settings _settings = Ioc.Default.GetRequiredService<Settings>();
 
         private static IWebBrowser2 _lastExplorerView = null;
-
-        private static readonly InputSimulator _inputSimulator = new();
 
         private static UnhookWinEventSafeHandle _foregroundChangeHook = null;
         
@@ -129,16 +126,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
         }
 
-        public static bool CheckPath(string path)
-        {
-            // Is non-null
-            if (string.IsNullOrEmpty(path)) return false;
-            // Is absolute?
-            if (!Path.IsPathRooted(path)) return false;
-            // Is folder?
-            if (!Directory.Exists(path)) return false;
-            return true;
-        }
+        
 
         private static void NavigateDialogPath()
         {
@@ -183,11 +171,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     // Handle non-file system paths (e.g., virtual folders)
                     path = string.Empty;
                 }
-
-                if (!CheckPath(path))
-                {
-                    return;
-                }
             }
             catch
             {
@@ -197,8 +180,10 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             JumpToPath(path);
         }
 
-        private static bool JumpToPath(string path)
+        public static bool JumpToPath(string path)
         {
+            if (!CheckPath(path)) return false;
+
             var t = new Thread(() =>
             {
                 // Jump after flow launcher window vanished (after JumpAction returned true)
@@ -210,10 +195,21 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 };
 
                 // Assume that the dialog is in the foreground now
-                Win32Helper.DirJump(_inputSimulator, path, Win32Helper.GetForegroundWindow());
+                Win32Helper.DirJump(path, Win32Helper.GetForegroundWindow());
             });
             t.Start();
             return true;
+
+            static bool CheckPath(string path)
+            {
+                // Is non-null
+                if (string.IsNullOrEmpty(path)) return false;
+                // Is absolute?
+                if (!Path.IsPathRooted(path)) return false;
+                // Is folder?
+                if (!Directory.Exists(path)) return false;
+                return true;
+            }
         }
 
         private static string GetWindowClassName(HWND handle)

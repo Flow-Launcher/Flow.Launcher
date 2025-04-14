@@ -613,7 +613,9 @@ namespace Flow.Launcher.Infrastructure
 
         // Edited from: https://github.com/idkidknow/Flow.Launcher.Plugin.DirQuickJump
 
-        public static bool DirJump(InputSimulator inputSimulator, string path, nint dialog, bool altD = true)
+        private static readonly InputSimulator _inputSimulator = new();
+
+        public static bool DirJump(string path, nint dialog, bool altD = true)
         {
             // Get the handle of the dialog window
             var dialogHandle = new HWND(dialog);
@@ -621,11 +623,11 @@ namespace Flow.Launcher.Infrastructure
             // Alt-D or Ctrl-L to focus on the path input box
             if (altD)
             {
-                inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LMENU, VirtualKeyCode.VK_D);
+                _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LMENU, VirtualKeyCode.VK_D);
             }
             else
             {
-                inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LCONTROL, VirtualKeyCode.VK_L);
+                _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LCONTROL, VirtualKeyCode.VK_L);
             }
 
             // Get the handle of the path input box and then set the text.
@@ -637,7 +639,7 @@ namespace Flow.Launcher.Infrastructure
             controlHandle = PInvoke.FindWindowEx(controlHandle, HWND.Null, "ComboBoxEx32", null);
             if (controlHandle == HWND.Null)
             {
-                return DirJumpOnLegacyDialog(inputSimulator, path, dialogHandle);
+                return DirJumpOnLegacyDialog(path, dialogHandle);
             }
 
             var timeOut = !SpinWait.SpinUntil(() =>
@@ -658,12 +660,12 @@ namespace Flow.Launcher.Infrastructure
             }
 
             SetWindowText(editHandle, path);
-            inputSimulator.Keyboard.KeyPress(VirtualKeyCode.RETURN);
+            _inputSimulator.Keyboard.KeyPress(VirtualKeyCode.RETURN);
 
             return true;
         }
 
-        internal static bool DirJumpOnLegacyDialog(InputSimulator inputSimulator, string path, HWND dialogHandle)
+        internal static bool DirJumpOnLegacyDialog(string path, HWND dialogHandle)
         {
             // https://github.com/idkidknow/Flow.Launcher.Plugin.DirQuickJump/issues/1
             var controlHandle = PInvoke.FindWindowEx(dialogHandle, HWND.Null, "ComboBoxEx32", null);
@@ -677,8 +679,8 @@ namespace Flow.Launcher.Infrastructure
             SetWindowText(controlHandle, path);
             // Alt-O (equivalent to press the Open button) twice. In normal cases it suffices to press once,
             // but when the focus is on an irrelevant folder, that press once will just open the irrelevant one.
-            inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LMENU, VirtualKeyCode.VK_O);
-            inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LMENU, VirtualKeyCode.VK_O);
+            _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LMENU, VirtualKeyCode.VK_O);
+            _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LMENU, VirtualKeyCode.VK_O);
 
             return true;
         }
