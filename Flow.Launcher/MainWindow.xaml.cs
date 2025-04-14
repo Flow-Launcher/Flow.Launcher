@@ -1162,7 +1162,7 @@ namespace Flow.Launcher
         {
             QuickSwitch.ShowQuickSwitchWindow = _viewModel.SetupQuickSwitch;
             QuickSwitch.UpdateQuickSwitchWindow = UpdateQuickSwitchPosition;
-            QuickSwitch.DestoryQuickSwitchWindow = _viewModel.ResetQuickSwitch;
+            QuickSwitch.ResetQuickSwitchWindow = _viewModel.ResetQuickSwitch;
         }
 
 #pragma warning disable VSTHRD100 // Avoid async void methods

@@ -1515,9 +1515,15 @@ namespace Flow.Launcher.ViewModel
 
         public bool IsQuickSwitch { get; private set; }
         public nint DialogWindowHandle { get; private set; } = nint.Zero;
+        
+        private bool PreviousMainWindowVisibilityStatus { get; set; } = true;
 
         public void SetupQuickSwitch(nint handle)
         {
+            if (!Settings.ShowQuickSwitchWindow) return;
+
+            PreviousMainWindowVisibilityStatus = MainWindowVisibilityStatus;
+
             DialogWindowHandle = handle;
             IsQuickSwitch = true;
             Show();
@@ -1527,7 +1533,15 @@ namespace Flow.Launcher.ViewModel
         {
             DialogWindowHandle = nint.Zero;
             IsQuickSwitch = false;
-            Hide();
+
+            if (PreviousMainWindowVisibilityStatus)
+            {
+                Show();
+            }
+            else
+            {
+                Hide();
+            }
         }
 
         #endregion

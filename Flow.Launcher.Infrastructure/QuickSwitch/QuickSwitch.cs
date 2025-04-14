@@ -22,7 +22,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         public static Action UpdateQuickSwitchWindow { get; set; } = null;
 
-        public static Action DestoryQuickSwitchWindow { get; set; } = null;
+        public static Action ResetQuickSwitchWindow { get; set; } = null;
 
         // The class name of a dialog window
         private const string DialogWindowClassName = "#32770";
@@ -209,13 +209,12 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             // If window is dialog window, show quick switch window and navigate path if needed
             if (GetWindowClassName(hwnd) == DialogWindowClassName)
             {
-                if (_settings.ShowQuickSwitchWindow)
-                {
-                    _dialogWindowHandle = hwnd;
-                    ShowQuickSwitchWindow?.Invoke(_dialogWindowHandle.Value);
-                }
+                _dialogWindowHandle = hwnd;
+                ShowQuickSwitchWindow?.Invoke(_dialogWindowHandle.Value);
                 if (_settings.AutoQuickSwitch)
                 {
+                    // Showing quick switch window may bring focus
+                    Win32Helper.SetForegroundWindow(hwnd);
                     NavigateDialogPath();
                 }
             }
@@ -278,7 +277,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             if (_dialogWindowHandle != HWND.Null && _dialogWindowHandle == hwnd)
             {
                 _dialogWindowHandle = HWND.Null;
-                DestoryQuickSwitchWindow?.Invoke();
+                ResetQuickSwitchWindow?.Invoke();
             }
         }
 
