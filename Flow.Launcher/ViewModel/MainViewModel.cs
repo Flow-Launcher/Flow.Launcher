@@ -1317,8 +1317,8 @@ namespace Flow.Launcher.ViewModel
                 return null;
             }
 
-            StringBuilder queryBuilder = new(queryText);
-            StringBuilder queryBuilderTmp = new(queryText);
+            var queryBuilder = new StringBuilder(queryText);
+            var queryBuilderTmp = new StringBuilder(queryText);
 
             // Sorting order is important here, the reason is for matching longest shortcut by default
             foreach (var shortcut in customShortcuts.OrderByDescending(x => x.Key.Length))
@@ -1332,7 +1332,9 @@ namespace Flow.Launcher.ViewModel
             }
 
             var customExpanded = queryBuilder.ToString();
-            await Application.Current.Dispatcher.InvokeAsync(async () =>
+
+            // We must use dispatcher because text here will be used in TextBox
+            await Application.Current?.Dispatcher.InvokeAsync(async () =>
             {
                 var queryChanged = false;
 
