@@ -5,7 +5,6 @@ using System.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
-using Interop.UIAutomationClient;
 using NHotkey;
 using Windows.Win32;
 using Windows.Win32.Foundation;
@@ -30,8 +29,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         private const string DialogWindowClassName = "#32770";
 
         private static readonly Settings _settings = Ioc.Default.GetRequiredService<Settings>();
-
-        private static CUIAutomation8 _automation = new CUIAutomation8Class();
 
         private static IWebBrowser2 _lastExplorerView = null;
 
@@ -173,7 +170,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             {
                 // Jump after flow launcher window vanished (after JumpAction returned true)
                 // and the dialog had been in the foreground.
-                var timeOut = !SpinWait.SpinUntil(() => GetForegroundWindowClassName() == DialogWindowClassName, 1000);
+                var timeOut = !SpinWait.SpinUntil(() => GetWindowClassName(PInvoke.GetForegroundWindow()) == DialogWindowClassName, 1000);
                 if (timeOut)
                 {
                     return;
@@ -184,23 +181,22 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             });
             t.Start();
             return true;
-
-            static string GetForegroundWindowClassName()
-            {
-                var handle = PInvoke.GetForegroundWindow();
-                return GetClassName(handle);
-            }
         }
 
-        private static unsafe string GetClassName(HWND handle)
+        private static string GetWindowClassName(HWND handle)
         {
-            fixed (char* buf = new char[256])
+            return GetClassName(handle);
+
+            static unsafe string GetClassName(HWND handle)
             {
-                return PInvoke.GetClassName(handle, buf, 256) switch
+                fixed (char* buf = new char[256])
                 {
-                    0 => null,
-                    _ => new string(buf),
-                };
+                    return PInvoke.GetClassName(handle, buf, 256) switch
+                    {
+                        0 => null,
+                        _ => new string(buf),
+                    };
+                }
             }
         }
 
@@ -214,18 +210,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             uint dwmsEventTime
         )
         {
-            IUIAutomationElement window;
-            try
-            {
-                window = _automation.ElementFromHandle(hwnd);
-            }
-            catch
-            {
-                return;
-            }
-
             // If window is dialog window, show quick switch window and navigate path if needed
-            if (window is { CurrentClassName: DialogWindowClassName })
+            if (GetWindowClassName(hwnd) == DialogWindowClassName)
             {
                 if (_settings.ShowQuickSwitchWindow)
                 {
@@ -366,11 +352,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             {
                 Marshal.ReleaseComObject(_lastExplorerView);
                 _lastExplorerView = null;
-            }
-            if (_automation != null)
-            {
-                Marshal.ReleaseComObject(_automation);
-                _automation = null;
             }
         }
     }

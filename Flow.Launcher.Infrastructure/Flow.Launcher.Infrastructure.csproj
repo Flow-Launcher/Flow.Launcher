@@ -60,7 +60,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="InputSimulator" Version="1.0.4" />
-    <PackageReference Include="Interop.UIAutomationClient" Version="10.19041.0" />
     <PackageReference Include="MemoryPack" Version="1.21.4" />
     <PackageReference Include="Microsoft.VisualStudio.Threading" Version="17.12.19" />
     <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.106">
