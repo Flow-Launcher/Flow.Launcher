@@ -295,7 +295,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         )
         {
             // If the dialog window is moved, update the quick switch window position
-            if (_dialogWindowHandle != null && _dialogWindowHandle == hwnd)
+            if (_dialogWindowHandle != HWND.Null && _dialogWindowHandle == hwnd)
             {
                 UpdateQuickSwitchWindow?.Invoke();
             }
@@ -312,7 +312,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         )
         {
             // If the dialog window is moved or resized, update the quick switch window position
-            if (_dialogWindowHandle != null && _dialogWindowHandle == hwnd && _dragMoveTimer != null)
+            if (_dialogWindowHandle != HWND.Null && _dialogWindowHandle == hwnd && _dragMoveTimer != null)
             {
                 switch (eventType)
                 {
@@ -350,7 +350,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
 
             // If the dialog window is destroyed, set _dialogWindowHandle to null
-            if (_dialogWindowHandle != null && _dialogWindowHandle == hwnd)
+            if (_dialogWindowHandle != HWND.Null && _dialogWindowHandle == hwnd)
             {
                 _dialogWindowHandle = HWND.Null;
                 DestoryQuickSwitchWindow?.Invoke();
