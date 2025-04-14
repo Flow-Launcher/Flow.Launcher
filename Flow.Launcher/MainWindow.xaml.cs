@@ -1169,6 +1169,8 @@ namespace Flow.Launcher
 
         private async void UpdateQuickSwitchPosition()
         {
+            if (_viewModel.DialogWindowHandle == nint.Zero) return;
+
             await Task.Delay(300); // If don't give a time, Positioning will be weird.
 
             // Get dialog window rect

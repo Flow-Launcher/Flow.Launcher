@@ -351,7 +351,7 @@ namespace Flow.Launcher.ViewModel
             // For quick switch mode, we need to navigate to the path 
             if (IsQuickSwitch)
             {
-                if (SelectedResults.SelectedItem != null)
+                if (SelectedResults.SelectedItem != null && DialogWindowHandle != nint.Zero)
                 {
                     var result = SelectedResults.SelectedItem.Result;
                     Win32Helper.SetForegroundWindow(DialogWindowHandle);
