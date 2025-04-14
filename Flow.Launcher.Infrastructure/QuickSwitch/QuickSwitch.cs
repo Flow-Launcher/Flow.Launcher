@@ -129,6 +129,17 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
         }
 
+        public static bool CheckPath(string path)
+        {
+            // Is non-null
+            if (string.IsNullOrEmpty(path)) return false;
+            // Is absolute?
+            if (!Path.IsPathRooted(path)) return false;
+            // Is folder?
+            if (!Directory.Exists(path)) return false;
+            return true;
+        }
+
         private static void NavigateDialogPath()
         {
             object document = null;
@@ -173,7 +184,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     path = string.Empty;
                 }
 
-                if (!Path.IsPathRooted(path))
+                if (!CheckPath(path))
                 {
                     return;
                 }
