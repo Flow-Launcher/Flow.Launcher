@@ -72,3 +72,4 @@ WM_MOVE
 SetWindowsHookEx
 HC_ACTION
 CWPSTRUCT
+GetCurrentThreadId

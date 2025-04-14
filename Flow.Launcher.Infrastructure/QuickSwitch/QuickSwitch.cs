@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -82,8 +81,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             _callWndProcHook = PInvoke.SetWindowsHookEx(
                 WINDOWS_HOOK_ID.WH_CALLWNDPROC,
                 CallWndProc,
-                Process.GetCurrentProcess().SafeHandle,
-                0);
+                null,
+                PInvoke.GetCurrentThreadId());
 
             if (_foregroundChangeHook.IsInvalid ||
                 _destroyChangeHook.IsInvalid ||
