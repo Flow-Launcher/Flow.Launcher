@@ -691,6 +691,26 @@ namespace Flow.Launcher.Infrastructure
             }
         }
 
+        public static unsafe bool GetWindowRect(nint handle, out Rect outRect)
+        {
+            var rect = new RECT();
+            var result = PInvoke.GetWindowRect(new(handle), &rect);
+            if (!result)
+            {
+                outRect = new Rect();
+                return false;
+            }
+
+            // Convert RECT to Rect
+            outRect = new Rect(
+                rect.left,
+                rect.top,
+                rect.right - rect.left,
+                rect.bottom - rect.top
+            );
+            return true;
+        }
+
         #endregion
     }
 }

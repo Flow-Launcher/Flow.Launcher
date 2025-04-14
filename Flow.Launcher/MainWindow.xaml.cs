@@ -20,6 +20,7 @@ using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Image;
+using Flow.Launcher.Infrastructure.QuickSwitch;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
@@ -106,7 +107,7 @@ namespace Flow.Launcher
             Win32Helper.DisableControlBox(this);
         }
 
-        private async void OnLoaded(object sender, RoutedEventArgs _)
+        private async void OnLoaded(object sender, RoutedEventArgs e)
         {
             // Check first launch
             if (_settings.FirstLaunch)
@@ -174,6 +175,9 @@ namespace Flow.Launcher
             // Set the initial state of the QueryTextBoxCursorMovedToEnd property
             // Without this part, when shown for the first time, switching the context menu does not move the cursor to the end.
             _viewModel.QueryTextCursorMovedToEnd = false;
+
+            // Register quick switch events
+            InitializeQuickSwitch();
             
             // Initialize hotkey mapper after window is loaded
             HotKeyMapper.Initialize();
@@ -190,7 +194,7 @@ namespace Flow.Launcher
                                 if (_viewModel.MainWindowVisibilityStatus)
                                 {
                                     // Play sound effect before activing the window
-                                    if (_settings.UseSound)
+                                    if (_settings.UseSound && !_viewModel.QuickSwitch)
                                     {
                                         SoundPlay();
                                     }
@@ -213,7 +217,7 @@ namespace Flow.Launcher
                                     QueryTextBox.Focus();
 
                                     // Play window animation
-                                    if (_settings.UseAnimation)
+                                    if (_settings.UseAnimation && !_viewModel.QuickSwitch)
                                     {
                                         WindowAnimation();
                                     }
@@ -320,6 +324,11 @@ namespace Flow.Launcher
 
         private void OnLocationChanged(object sender, EventArgs e)
         {
+            if (_viewModel.QuickSwitch)
+            {
+                return;
+            }
+
             if (_settings.SearchWindowScreen == SearchWindowScreens.RememberLastLaunchLocation)
             {
                 _settings.WindowLeft = Left;
@@ -329,6 +338,11 @@ namespace Flow.Launcher
 
         private async void OnDeactivated(object sender, EventArgs e)
         {
+            if (_viewModel.QuickSwitch)
+            {
+                return;
+            }
+
             _settings.WindowLeft = Left;
             _settings.WindowTop = Top;
 
@@ -467,6 +481,11 @@ namespace Flow.Launcher
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
+            if (_viewModel.QuickSwitch)
+            {
+                return IntPtr.Zero;
+            }
+
             if (msg == Win32Helper.WM_ENTERSIZEMOVE)
             {
                 _initialWidth = (int)Width;
@@ -648,9 +667,16 @@ namespace Flow.Launcher
 
         private void UpdatePosition()
         {
-            // Initialize call twice to work around multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
-            InitializePosition();
-            InitializePosition();
+            if (_viewModel.QuickSwitch)
+            {
+                UpdateQuickSwitchPosition();
+            }
+            else
+            {
+                // Initialize call twice to work around multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
+                InitializePosition();
+                InitializePosition();
+            }
         }
 
         private async Task PositionResetAsync()
@@ -1126,6 +1152,48 @@ namespace Flow.Launcher
             var textBox = (TextBox)sender;
             _viewModel.QueryText = textBox.Text;
             _viewModel.Query(_settings.SearchQueryResultsWithDelay);
+        }
+
+        #endregion
+
+        #region Quick Switch
+
+        private void InitializeQuickSwitch()
+        {
+            QuickSwitch.ShowQuickSwitchWindow = _viewModel.SetupQuickSwitch;
+            QuickSwitch.UpdateQuickSwitchWindow = UpdateQuickSwitchPosition;
+            QuickSwitch.DestoryQuickSwitchWindow = _viewModel.ResetQuickSwitch;
+        }
+
+#pragma warning disable VSTHRD100 // Avoid async void methods
+
+        private async void UpdateQuickSwitchPosition()
+        {
+            await Task.Delay(300); // If don't give a time, Positioning will be weird.
+
+            // Get dialog window rect
+            var result = Win32Helper.GetWindowRect(_viewModel.DialogWindowHandle, out var window);
+            if (!result) return;
+
+            // Move window below the bottom of the dialog and keep it center
+            Top = VerticalBottom(window);
+            Left = HorizonCenter(window);
+        }
+
+#pragma warning restore VSTHRD100 // Avoid async void methods
+
+        private double HorizonCenter(Rect window)
+        {
+            var dip1 = Win32Helper.TransformPixelsToDIP(this, window.X, 0);
+            var dip2 = Win32Helper.TransformPixelsToDIP(this, window.Width, 0);
+            var left = (dip2.X - ActualWidth) / 2 + dip1.X;
+            return left;
+        }
+
+        private double VerticalBottom(Rect window)
+        {
+            var dip1 = Win32Helper.TransformPixelsToDIP(this, 0, window.Bottom);
+            return dip1.Y;
         }
 
         #endregion

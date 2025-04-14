@@ -56,6 +56,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string QuickSwitchHotkey { get; set; } = $"{KeyConstant.Alt} + G";
 
         public bool AutoQuickSwitch { get; set; } = false;
+        public bool ShowQuickSwitchWindow { get; set; } = true;
 
         public string Language
         {

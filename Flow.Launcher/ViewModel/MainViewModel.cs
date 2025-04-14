@@ -1483,6 +1483,27 @@ namespace Flow.Launcher.ViewModel
 
         #endregion
 
+        #region Quick Switch
+
+        public bool QuickSwitch { get; private set; }
+        public nint DialogWindowHandle { get; private set; } = nint.Zero;
+
+        public void SetupQuickSwitch(nint handle)
+        {
+            DialogWindowHandle = handle;
+            QuickSwitch = true;
+            Show();
+        }
+
+        public void ResetQuickSwitch()
+        {
+            DialogWindowHandle = nint.Zero;
+            QuickSwitch = false;
+            Hide();
+        }
+
+        #endregion
+
         #region Public Methods
 
 #pragma warning disable VSTHRD100 // Avoid async void methods
@@ -1499,7 +1520,7 @@ namespace Flow.Launcher.ViewModel
                     Win32Helper.DWMSetCloakForWindow(mainWindow, false);
 
                     // Set clock and search icon opacity
-                    var opacity = Settings.UseAnimation ? 0.0 : 1.0;
+                    var opacity = (Settings.UseAnimation && !QuickSwitch) ? 0.0 : 1.0;
                     ClockPanelOpacity = opacity;
                     SearchIconOpacity = opacity;
 
@@ -1522,7 +1543,7 @@ namespace Flow.Launcher.ViewModel
             VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
 
             // Switch keyboard layout
-            if (StartWithEnglishMode)
+            if (StartWithEnglishMode && !QuickSwitch)
             {
                 Win32Helper.SwitchToEnglishKeyboardLayout(true);
             }
@@ -1571,7 +1592,7 @@ namespace Flow.Launcher.ViewModel
                 if (Application.Current?.MainWindow is MainWindow mainWindow)
                 {
                     // Set clock and search icon opacity
-                    var opacity = Settings.UseAnimation ? 0.0 : 1.0;
+                    var opacity = (Settings.UseAnimation && !QuickSwitch) ? 0.0 : 1.0;
                     ClockPanelOpacity = opacity;
                     SearchIconOpacity = opacity;
 
@@ -1589,7 +1610,7 @@ namespace Flow.Launcher.ViewModel
             }, DispatcherPriority.Render);
 
             // Switch keyboard layout
-            if (StartWithEnglishMode)
+            if (StartWithEnglishMode && !QuickSwitch)
             {
                 Win32Helper.RestorePreviousKeyboardLayout();
             }

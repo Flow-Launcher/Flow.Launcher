@@ -20,18 +20,30 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
     {
         private static readonly string ClassName = nameof(QuickSwitch);
 
-        private static readonly Settings _settings = Ioc.Default.GetRequiredService<Settings>();
+        public static Action<nint> ShowQuickSwitchWindow { get; set; } = null;
+
+        public static Action UpdateQuickSwitchWindow { get; set; } = null;
+
+        public static Action DestoryQuickSwitchWindow { get; set; } = null;
 
         // The class name of a dialog window
         private const string DialogWindowClassName = "#32770";
 
+        private static readonly Settings _settings = Ioc.Default.GetRequiredService<Settings>();
+
         private static CUIAutomation8 _automation = new CUIAutomation8Class();
 
-        private static IWebBrowser2 lastExplorerView = null;
+        private static IWebBrowser2 _lastExplorerView = null;
 
         private static readonly InputSimulator _inputSimulator = new();
 
-        private static UnhookWinEventSafeHandle _hookWinEventSafeHandle = null;
+        private static UnhookWinEventSafeHandle _foregroundChangeHook = null;
+        
+        private static UnhookWinEventSafeHandle _locationChangeHook = null;
+
+        private static UnhookWinEventSafeHandle _destroyChangeHook = null;
+
+        private static HWND _dialogWindowHandle = HWND.Null;
 
         private static bool _isInitialized = false;
 
@@ -47,20 +59,40 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     return;
                 }
 
-                lastExplorerView = explorer;
+                _lastExplorerView = explorer;
             });
 
-            // Call WindowSwitch when the foreground window changes and check if there are explorer windows
-            _hookWinEventSafeHandle = PInvoke.SetWinEventHook(
-                    PInvoke.EVENT_SYSTEM_FOREGROUND,
-                    PInvoke.EVENT_SYSTEM_FOREGROUND,
-                    null,
-                    WindowSwitch,
-                    0,
-                    0,
-                    PInvoke.WINEVENT_OUTOFCONTEXT);
+            // Call ForegroundChange when the foreground window changes
+            _foregroundChangeHook = PInvoke.SetWinEventHook(
+                PInvoke.EVENT_SYSTEM_FOREGROUND,
+                PInvoke.EVENT_SYSTEM_FOREGROUND,
+                null,
+                ForegroundChangeCallback,
+                0,
+                0,
+                PInvoke.WINEVENT_OUTOFCONTEXT);
 
-            if (_hookWinEventSafeHandle.IsInvalid)
+            // Call LocationChange when the location of the window changes
+            _locationChangeHook = PInvoke.SetWinEventHook(
+                PInvoke.EVENT_OBJECT_LOCATIONCHANGE,
+                PInvoke.EVENT_OBJECT_LOCATIONCHANGE,
+                null,
+                LocationChangeCallback,
+                0,
+                0,
+                PInvoke.WINEVENT_OUTOFCONTEXT);
+
+            // Call DestroyChange when the window is destroyed
+            _destroyChangeHook = PInvoke.SetWinEventHook(
+                PInvoke.EVENT_OBJECT_DESTROY,
+                PInvoke.EVENT_OBJECT_DESTROY,
+                null,
+                DestroyChangeCallback,
+                0,
+                0,
+                PInvoke.WINEVENT_OUTOFCONTEXT);
+
+            if (_foregroundChangeHook.IsInvalid || _locationChangeHook.IsInvalid || _destroyChangeHook.IsInvalid)
             {
                 Log.Error(ClassName, "Failed to initialize QuickSwitch");
                 return false;
@@ -80,11 +112,11 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             object document = null;
             try
             {
-                if (lastExplorerView != null)
+                if (_lastExplorerView != null)
                 {
                     // Use dynamic here because using IWebBrower2.Document can cause exception here:
                     // System.Runtime.InteropServices.InvalidOleVariantTypeException: 'Specified OLE variant is invalid.'
-                    dynamic explorerView = lastExplorerView;
+                    dynamic explorerView = _lastExplorerView;
                     document = explorerView.Document;
                 }
             }
@@ -169,7 +201,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
         }
 
-        private static void WindowSwitch(
+        private static void ForegroundChangeCallback(
             HWINEVENTHOOK hWinEventHook,
             uint eventType,
             HWND hwnd,
@@ -189,15 +221,21 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 return;
             }
 
-            if (_settings.AutoQuickSwitch)
+            // If window is dialog window, show quick switch window and navigate path if needed
+            if (window is { CurrentClassName: DialogWindowClassName })
             {
-                if (window is { CurrentClassName: DialogWindowClassName })
+                if (_settings.ShowQuickSwitchWindow)
+                {
+                    _dialogWindowHandle = hwnd;
+                    ShowQuickSwitchWindow?.Invoke(_dialogWindowHandle.Value);
+                }
+                if (_settings.AutoQuickSwitch)
                 {
                     NavigateDialogPath();
-                    return;
                 }
             }
 
+            // If window is explorer window, set _lastExplorerView to the explorer
             try
             {
                 EnumerateShellWindows((shellWindow) =>
@@ -212,12 +250,53 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                         return;
                     }
 
-                    lastExplorerView = explorer;
+                    _lastExplorerView = explorer;
                 });
             }
             catch (System.Exception e)
             {
                 Log.Exception(ClassName, "Failed to get shell windows", e);
+            }
+        }
+
+        private static void LocationChangeCallback(
+            HWINEVENTHOOK hWinEventHook,
+            uint eventType,
+            HWND hwnd,
+            int idObject,
+            int idChild,
+            uint dwEventThread,
+            uint dwmsEventTime
+        )
+        {
+            // If the dialog window is moved, update the quick switch window position
+            if (_dialogWindowHandle != null && _dialogWindowHandle == hwnd)
+            {
+                UpdateQuickSwitchWindow?.Invoke();
+            }
+        }
+
+        private static void DestroyChangeCallback(
+            HWINEVENTHOOK hWinEventHook,
+            uint eventType,
+            HWND hwnd,
+            int idObject,
+            int idChild,
+            uint dwEventThread,
+            uint dwmsEventTime
+        )
+        {
+            // If the explorer window is destroyed, set _lastExplorerView to null
+            if (_lastExplorerView != null && _lastExplorerView.HWND == hwnd.Value)
+            {
+                _lastExplorerView = null;
+            }
+
+            // If the dialog window is destroyed, set _dialogWindowHandle to null
+            if (_dialogWindowHandle != null && _dialogWindowHandle == hwnd)
+            {
+                _dialogWindowHandle = HWND.Null;
+                DestoryQuickSwitchWindow?.Invoke();
             }
         }
 
@@ -239,7 +318,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             var shellWindows = (IShellWindows)shellWindowsObj;
 
             // Enumerate the shell windows
-            int count = shellWindows.Count;
+            var count = shellWindows.Count;
             for (var i = 0; i < count; i++)
             {
                 action(shellWindows.Item(i));
@@ -249,17 +328,27 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         public static void Dispose()
         {
             // Dispose handle
-            if (_hookWinEventSafeHandle != null)
+            if (_foregroundChangeHook != null)
             {
-                _hookWinEventSafeHandle.Dispose();
-                _hookWinEventSafeHandle = null;
+                _foregroundChangeHook.Dispose();
+                _foregroundChangeHook = null;
+            }
+            if (_locationChangeHook != null)
+            {
+                _locationChangeHook.Dispose();
+                _locationChangeHook = null;
+            }
+            if (_destroyChangeHook != null)
+            {
+                _destroyChangeHook.Dispose();
+                _destroyChangeHook = null;
             }
 
             // Release ComObjects
-            if (lastExplorerView != null)
+            if (_lastExplorerView != null)
             {
-                Marshal.ReleaseComObject(lastExplorerView);
-                lastExplorerView = null;
+                Marshal.ReleaseComObject(_lastExplorerView);
+                _lastExplorerView = null;
             }
             if (_automation != null)
             {
