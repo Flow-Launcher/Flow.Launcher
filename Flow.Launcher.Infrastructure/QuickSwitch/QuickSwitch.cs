@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Logger;
@@ -36,7 +37,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         private static UnhookWinEventSafeHandle _locationChangeHook = null;
 
-        private static UnhookWinEventSafeHandle _moveSizeHook = null;
+        /*private static UnhookWinEventSafeHandle _moveSizeHook = null;*/
 
         private static UnhookWinEventSafeHandle _destroyChangeHook = null;
 
@@ -82,14 +83,14 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 PInvoke.WINEVENT_OUTOFCONTEXT);
 
             // Call MoveSizeCallBack when the window is moved or resized
-            _moveSizeHook = PInvoke.SetWinEventHook(
+            /*_moveSizeHook = PInvoke.SetWinEventHook(
                 PInvoke.EVENT_SYSTEM_MOVESIZESTART,
                 PInvoke.EVENT_SYSTEM_MOVESIZEEND,
                 null,
                 MoveSizeCallBack,
                 0,
                 0,
-                PInvoke.WINEVENT_OUTOFCONTEXT);
+                PInvoke.WINEVENT_OUTOFCONTEXT);*/
 
             // Call DestroyChange when the window is destroyed
             _destroyChangeHook = PInvoke.SetWinEventHook(
@@ -103,7 +104,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
             if (_foregroundChangeHook.IsInvalid ||
                 _locationChangeHook.IsInvalid ||
-                _moveSizeHook.IsInvalid ||
+                /*_moveSizeHook.IsInvalid ||*/
                 _destroyChangeHook.IsInvalid)
             {
                 Log.Error(ClassName, "Failed to initialize QuickSwitch");
@@ -227,7 +228,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
         }
 
-        private static void ForegroundChangeCallback(
+        private static async void ForegroundChangeCallback(
             HWINEVENTHOOK hWinEventHook,
             uint eventType,
             HWND hwnd,
@@ -244,6 +245,10 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 if (_settings.ShowQuickSwitchWindow)
                 {
                     ShowQuickSwitchWindow?.Invoke(_dialogWindowHandle.Value);
+                    // Here we delay 350ms because MainWindow.UpdateQuickSwitchPosition wait 300ms before position change
+                    // and we use additional 50ms for waiting dialog initialization
+                    await Task.Delay(350);
+                    _dragMoveTimer?.Start();
                 }
                 if (_settings.AutoQuickSwitch)
                 {
@@ -301,7 +306,10 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
         }
 
-        private static void MoveSizeCallBack(
+        // TODO: Use a better way to detect dragging
+        // Here we do not start & stop the timer beacause the start time is not accurate (more than 1s delay)
+        // So we start & stop the timer when we find a file dialog window
+        /*private static void MoveSizeCallBack(
             HWINEVENTHOOK hWinEventHook,
             uint eventType,
             HWND hwnd,
@@ -324,7 +332,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                         break;
                 }
             }
-        }
+        }*/
 
         private static void DestroyChangeCallback(
             HWINEVENTHOOK hWinEventHook,
@@ -354,6 +362,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             {
                 _dialogWindowHandle = HWND.Null;
                 ResetQuickSwitchWindow?.Invoke();
+                _dragMoveTimer?.Stop();
             }
         }
 
@@ -390,20 +399,20 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 _foregroundChangeHook.Dispose();
                 _foregroundChangeHook = null;
             }
-            if (_destroyChangeHook != null)
-            {
-                _destroyChangeHook.Dispose();
-                _destroyChangeHook = null;
-            }
             if (_locationChangeHook != null)
             {
                 _locationChangeHook.Dispose();
                 _locationChangeHook = null;
             }
-            if (_moveSizeHook != null)
+            /*if (_moveSizeHook != null)
             {
                 _moveSizeHook.Dispose();
                 _moveSizeHook = null;
+            }*/
+            if (_destroyChangeHook != null)
+            {
+                _destroyChangeHook.Dispose();
+                _destroyChangeHook = null;
             }
 
             // Release ComObjects
