@@ -450,7 +450,8 @@ namespace Flow.Launcher.Infrastructure
             if (!IsForegroundWindow(hwnd))
             {
                 var result = PInvoke.SetForegroundWindow(hwnd);
-                if (!result) throw new Win32Exception(Marshal.GetLastWin32Error());
+                // If we cannot set the foreground window, we can use the foreground window and switch the layout
+                if (!result) hwnd = PInvoke.GetForegroundWindow();
             }
 
             // Get the current foreground window thread ID
