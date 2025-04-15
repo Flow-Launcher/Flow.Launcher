@@ -636,6 +636,12 @@ namespace Flow.Launcher.Infrastructure
             // Get the handle of the dialog window
             var dialogHandle = new HWND(dialog);
 
+            // Directly edit file name input box.
+            if (editFileName)
+            {
+                return DirFileJumpForFileName(filePath, dialogHandle);
+            }
+
             // Alt-D or Ctrl-L to focus on the path input box
             if (altD)
             {
@@ -644,12 +650,6 @@ namespace Flow.Launcher.Infrastructure
             else
             {
                 _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LCONTROL, VirtualKeyCode.VK_L);
-            }
-
-            // Directly edit file name
-            if (editFileName)
-            {
-                return DirFileJumpForFileName(filePath, dialogHandle);
             }
 
             // Get the handle of the path input box and then set the text.
