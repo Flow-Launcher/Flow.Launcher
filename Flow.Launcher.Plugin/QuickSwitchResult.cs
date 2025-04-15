@@ -9,9 +9,6 @@
         /// This holds the path which can be provided by plugin to be navigated to the
         /// file dialog when records in quick switch window is right clicked on a result.
         /// </summary>
-        /// <remarks>
-        /// If this path is file path, Flow will use its directory path instead.
-        /// </remarks>
         public required string QuickSwitchPath { get; init; }
 
         /// <summary>
