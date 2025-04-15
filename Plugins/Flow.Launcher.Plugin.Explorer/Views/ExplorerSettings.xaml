@@ -245,7 +245,7 @@
                             Margin="{StaticResource SettingPanelItemLeftMargin}"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
-                            Command="{Binding OpenFileEditorPath}"
+                            Command="{Binding OpenFileEditorPathCommand}"
                             Content="{DynamicResource select}" />
                     </StackPanel>
 
@@ -272,7 +272,7 @@
                             Margin="{StaticResource SettingPanelItemLeftMargin}"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
-                            Command="{Binding OpenFolderEditorPath}"
+                            Command="{Binding OpenFolderEditorPathCommand}"
                             Content="{DynamicResource select}" />
                     </StackPanel>
 
@@ -299,7 +299,7 @@
                             Margin="{StaticResource SettingPanelItemLeftMargin}"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
-                            Command="{Binding OpenShellPath}"
+                            Command="{Binding OpenShellPathCommand}"
                             Content="{DynamicResource select}" />
                     </StackPanel>
 

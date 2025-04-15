@@ -111,11 +111,11 @@ public partial class SettingsPanePluginsViewModel : BaseModel
         .ToList();
 
     [RelayCommand]
-    private async Task OpenHelperAsync()
+    private async Task OpenHelperAsync(Button button)
     {
         var helpDialog = new ContentDialog()
         {
-            Owner = Application.Current.MainWindow,
+            Owner = Window.GetWindow(button),
             Content = new StackPanel
             {
                 Children =
