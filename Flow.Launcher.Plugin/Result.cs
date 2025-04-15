@@ -258,17 +258,6 @@ namespace Flow.Launcher.Plugin
         public bool ShowBadge { get; set; } = false;
 
         /// <summary>
-        /// Determines if the result can be shown in quick switch window.
-        /// </summary>
-        public bool AllowQuickSwitch { get; set; } = false;
-
-        /// <summary>
-        /// This holds the path which can be provided by plugin to be navigated to the
-        /// file dialog when records in quick switch window is right clicked on a result.
-        /// </summary>
-        public string QuickSwitchPath { get; set; }
-
-        /// <summary>
         /// Run this result, asynchronously
         /// </summary>
         /// <param name="context"></param>
@@ -318,9 +307,7 @@ namespace Flow.Launcher.Plugin
                 Preview = Preview,
                 AddSelectedCount = AddSelectedCount,
                 RecordKey = RecordKey,
-                ShowBadge = ShowBadge,
-                AllowQuickSwitch = AllowQuickSwitch,
-                QuickSwitchPath = QuickSwitchPath,
+                ShowBadge = ShowBadge
             };
         }
 

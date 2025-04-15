@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
@@ -51,6 +52,7 @@ namespace Flow.Launcher.ViewModel
         private Task _resultsViewUpdateTask;
 
         private readonly IReadOnlyList<Result> _emptyResult = new List<Result>();
+        private readonly IReadOnlyList<QuickSwitchResult> _emptyQuickSwitchResult = new List<QuickSwitchResult>();
 
         #endregion
 
@@ -244,8 +246,16 @@ namespace Flow.Launcher.ViewModel
 
                     var token = e.Token == default ? _updateToken : e.Token;
 
-                    // make a clone to avoid possible issue that plugin will also change the list and items when updating view model
-                    var resultsCopy = CheckQuickSwitchAndDeepClone(e.Results, token);
+                    IReadOnlyList<Result> resultsCopy;
+                    if (e.Results == null)
+                    {
+                        resultsCopy = _emptyResult;
+                    }
+                    else
+                    {
+                        // make a clone to avoid possible issue that plugin will also change the list and items when updating view model
+                        resultsCopy = DeepClone(e.Results, token);
+                    }
 
                     foreach (var result in resultsCopy)
                     {
@@ -354,8 +364,11 @@ namespace Flow.Launcher.ViewModel
                 if (SelectedResults.SelectedItem != null && DialogWindowHandle != nint.Zero)
                 {
                     var result = SelectedResults.SelectedItem.Result;
-                    Win32Helper.SetForegroundWindow(DialogWindowHandle);
-                    QuickSwitch.JumpToPath(result.QuickSwitchPath);
+                    if (result is QuickSwitchResult quickSwitchResult)
+                    {
+                        Win32Helper.SetForegroundWindow(DialogWindowHandle);
+                        QuickSwitch.JumpToPath(quickSwitchResult.QuickSwitchPath);
+                    }
                 }
             }
             // For query mode, we load context menu
@@ -464,7 +477,7 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private IReadOnlyList<Result> CheckQuickSwitchAndDeepClone(IReadOnlyList<Result> results, CancellationToken token = default)
+        private static IReadOnlyList<Result> DeepClone(IReadOnlyList<Result> results, CancellationToken token = default)
         {
             var resultsCopy = new List<Result>();
 
@@ -475,9 +488,22 @@ namespace Flow.Launcher.ViewModel
                     break;
                 }
 
-                if (IsQuickSwitch && !result.AllowQuickSwitch)
+                var resultCopy = result.Clone();
+                resultsCopy.Add(resultCopy);
+            }
+
+            return resultsCopy;
+        }
+
+        private static IReadOnlyList<QuickSwitchResult> DeepClone(IReadOnlyList<QuickSwitchResult> results, CancellationToken token = default)
+        {
+            var resultsCopy = new List<QuickSwitchResult>();
+
+            foreach (var result in results.ToList())
+            {
+                if (token.IsCancellationRequested)
                 {
-                    continue;
+                    break;
                 }
 
                 var resultCopy = result.Clone();
@@ -1191,6 +1217,13 @@ namespace Flow.Launcher.ViewModel
             var query = ConstructQuery(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
 
             var plugins = PluginManager.ValidPluginsForQuery(query);
+            var quickSwitch = IsQuickSwitch; // save quick switch state
+
+            if (quickSwitch)
+            {
+                // Select for IAsyncQuickSwitch
+                plugins = new Collection<PluginPair>(plugins.Where(p => p.Plugin is IAsyncQuickSwitch).ToList());
+            }
 
             if (query == null || plugins.Count == 0) // shortcut expanded
             {
@@ -1305,34 +1338,69 @@ namespace Flow.Launcher.ViewModel
                 // Task.Yield will force it to run in ThreadPool
                 await Task.Yield();
 
-                var results = await PluginManager.QueryForPluginAsync(plugin, query, token);
-
-                if (token.IsCancellationRequested)
-                    return;
-
-                IReadOnlyList<Result> resultsCopy;
-                if (results == null)
+                if (quickSwitch)
                 {
-                    resultsCopy = _emptyResult;
+                    var results = await PluginManager.QueryQuickSwitchForPluginAsync(plugin, query, token);
+
+                    if (token.IsCancellationRequested)
+                        return;
+
+                    IReadOnlyList<QuickSwitchResult> resultsCopy;
+                    if (results == null)
+                    {
+                        resultsCopy = _emptyQuickSwitchResult;
+                    }
+                    else
+                    {
+                        // make a copy of results to avoid possible issue that FL changes some properties of the records, like score, etc.
+                        resultsCopy = DeepClone(results, token);
+                    }
+
+                    foreach (var result in resultsCopy)
+                    {
+                        if (string.IsNullOrEmpty(result.BadgeIcoPath))
+                        {
+                            result.BadgeIcoPath = plugin.Metadata.IcoPath;
+                        }
+                    }
+
+                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
+                        token, reSelect)))
+                    {
+                        App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
+                    }
                 }
                 else
                 {
-                    // make a copy of results to avoid possible issue that FL changes some properties of the records, like score, etc.
-                    resultsCopy = CheckQuickSwitchAndDeepClone(results, token);
-                }
+                    var results = await PluginManager.QueryForPluginAsync(plugin, query, token);
 
-                foreach (var result in resultsCopy)
-                {
-                    if (string.IsNullOrEmpty(result.BadgeIcoPath))
+                    if (token.IsCancellationRequested)
+                        return;
+
+                    IReadOnlyList<Result> resultsCopy;
+                    if (results == null)
                     {
-                        result.BadgeIcoPath = plugin.Metadata.IcoPath;
+                        resultsCopy = _emptyResult;
                     }
-                }
+                    else
+                    {
+                        // make a copy of results to avoid possible issue that FL changes some properties of the records, like score, etc.
+                        resultsCopy = DeepClone(results, token);
+                    }
 
-                if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
-                    token, reSelect)))
-                {
-                    App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
+                    foreach (var result in resultsCopy)
+                    {
+                        if (string.IsNullOrEmpty(result.BadgeIcoPath))
+                        {
+                            result.BadgeIcoPath = plugin.Metadata.IcoPath;
+                        }
+                    }
+
+                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
+                        token, reSelect)))
+                    {
+                        App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
+                    }
                 }
             }
         }

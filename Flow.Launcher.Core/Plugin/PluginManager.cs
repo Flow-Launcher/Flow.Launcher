@@ -318,6 +318,35 @@ namespace Flow.Launcher.Core.Plugin
             return results;
         }
 
+        public static async Task<List<QuickSwitchResult>> QueryQuickSwitchForPluginAsync(PluginPair pair, Query query, CancellationToken token)
+        {
+            var results = new List<QuickSwitchResult>();
+            var metadata = pair.Metadata;
+
+            try
+            {
+                var milliseconds = await API.StopwatchLogDebugAsync(ClassName, $"Cost for {metadata.Name}",
+                    async () => results = await ((IAsyncQuickSwitch)pair.Plugin).QueryQuickSwitchAsync(query, token).ConfigureAwait(false));
+
+                token.ThrowIfCancellationRequested();
+                if (results == null)
+                    return null;
+                UpdatePluginMetadata(results, metadata, query);
+
+                token.ThrowIfCancellationRequested();
+            }
+            catch (OperationCanceledException)
+            {
+                // null will be fine since the results will only be added into queue if the token hasn't been cancelled
+                return null;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            return results;
+        }
+
         public static void UpdatePluginMetadata(IReadOnlyList<Result> results, PluginMetadata metadata, Query query)
         {
             foreach (var r in results)

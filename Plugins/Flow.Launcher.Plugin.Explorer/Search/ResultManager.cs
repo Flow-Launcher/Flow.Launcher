@@ -164,9 +164,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Score = score,
                 TitleToolTip = Main.Context.API.GetTranslation("plugin_explorer_plugin_ToolTipOpenDirectory"),
                 SubTitleToolTip = path,
-                ContextData = new SearchResult { Type = ResultType.Folder, FullPath = path, WindowsIndexed = windowsIndexed },
-                AllowQuickSwitch = true,
-                QuickSwitchPath = path
+                ContextData = new SearchResult { Type = ResultType.Folder, FullPath = path, WindowsIndexed = windowsIndexed }
             };
         }
 
@@ -206,9 +204,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 },
                 TitleToolTip = path,
                 SubTitleToolTip = path,
-                ContextData = new SearchResult { Type = ResultType.Volume, FullPath = path, WindowsIndexed = windowsIndexed },
-                AllowQuickSwitch = true,
-                QuickSwitchPath = path
+                ContextData = new SearchResult { Type = ResultType.Volume, FullPath = path, WindowsIndexed = windowsIndexed }
             };
         }
 
@@ -264,9 +260,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     OpenFolder(folderPath);
                     return true;
                 },
-                ContextData = new SearchResult { Type = ResultType.Folder, FullPath = folderPath, WindowsIndexed = windowsIndexed },
-                AllowQuickSwitch = true,
-                QuickSwitchPath = folderPath
+                ContextData = new SearchResult { Type = ResultType.Folder, FullPath = folderPath, WindowsIndexed = windowsIndexed }
             };
         }
 
@@ -325,9 +319,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 },
                 TitleToolTip = Main.Context.API.GetTranslation("plugin_explorer_plugin_ToolTipOpenContainingFolder"),
                 SubTitleToolTip = filePath,
-                ContextData = new SearchResult { Type = ResultType.File, FullPath = filePath, WindowsIndexed = windowsIndexed },
-                AllowQuickSwitch = true,
-                QuickSwitchPath = directory
+                ContextData = new SearchResult { Type = ResultType.File, FullPath = filePath, WindowsIndexed = windowsIndexed }
             };
             return result;
         }

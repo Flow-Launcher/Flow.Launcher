@@ -230,6 +230,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 if (!Path.IsPathRooted(path)) return false;
                 // Is folder?
                 if (!Directory.Exists(path)) return false;
+                // Is file?
                 return true;
             }
         }
