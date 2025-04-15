@@ -171,8 +171,8 @@ namespace Flow.Launcher.Infrastructure.Image
                 }
                 catch (System.Exception e2)
                 {
-                    Log.Exception(ClassName, $"|ImageLoader.Load|Failed to get thumbnail for {path} on first try", e);
-                    Log.Exception(ClassName, $"|ImageLoader.Load|Failed to get thumbnail for {path} on second try", e2);
+                    Log.Exception(ClassName, $"Failed to get thumbnail for {path} on first try", e);
+                    Log.Exception(ClassName, $"Failed to get thumbnail for {path} on second try", e2);
 
                     ImageSource image = ImageCache[Constant.MissingImgIcon, false];
                     ImageCache[path, false] = image;
