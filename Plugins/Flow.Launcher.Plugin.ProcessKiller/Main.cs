@@ -81,7 +81,9 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             // Filter processes based on search term
             var searchTerm = query.Search;
             var processlist = new List<ProcessResult>();
-            var processWindowTitle = ProcessHelper.GetProcessesWithNonEmptyWindowTitle();
+            var processWindowTitle = Settings.ShowWindowTitle ?
+                ProcessHelper.GetProcessesWithNonEmptyWindowTitle() :
+                new Dictionary<int, string>();
             if (string.IsNullOrWhiteSpace(searchTerm))
             {
                 foreach (var p in allPocessList)
