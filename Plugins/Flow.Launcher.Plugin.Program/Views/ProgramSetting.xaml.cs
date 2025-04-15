@@ -146,6 +146,7 @@ namespace Flow.Launcher.Plugin.Program.Views
             programSourceView.Items.Refresh();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         private async void ReIndexing()
         {
             ViewRefresh();
@@ -183,6 +184,7 @@ namespace Flow.Launcher.Plugin.Program.Views
             EditProgramSource(selectedProgramSource);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         private async void EditProgramSource(ProgramSource selectedProgramSource)
         {
             if (selectedProgramSource == null)
@@ -277,6 +279,7 @@ namespace Flow.Launcher.Plugin.Program.Views
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         private async void btnLoadAllProgramSource_OnClick(object sender, RoutedEventArgs e)
         {
             await ProgramSettingDisplay.DisplayAllProgramsAsync();
@@ -284,6 +287,7 @@ namespace Flow.Launcher.Plugin.Program.Views
             ViewRefresh();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         private async void btnProgramSourceStatus_OnClick(object sender, RoutedEventArgs e)
         {
             var selectedItems = programSourceView
