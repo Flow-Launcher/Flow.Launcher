@@ -78,7 +78,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
     #endregion
 
-    #region Buildin Shortcut
+    #region Builtin Shortcut
 
     public class BuiltinShortcutModel : BaseBuiltinShortcutModel
     {
