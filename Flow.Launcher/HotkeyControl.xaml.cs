@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -8,6 +6,8 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
+
+#nullable enable
 
 namespace Flow.Launcher
 {
@@ -242,9 +242,10 @@ namespace Flow.Launcher
                 HotKeyMapper.RemoveHotkey(Hotkey);
             }
 
-            var dialog = new HotkeyControlDialog(Hotkey, DefaultHotkey, WindowTitle);
-
-            dialog.Owner = Window.GetWindow(this);
+            var dialog = new HotkeyControlDialog(Hotkey, DefaultHotkey, WindowTitle)
+            {
+                Owner = Window.GetWindow(this)
+            };
 
             await dialog.ShowAsync();
             switch (dialog.ResultType)
