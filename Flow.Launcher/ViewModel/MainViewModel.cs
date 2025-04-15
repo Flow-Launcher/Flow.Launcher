@@ -1599,7 +1599,7 @@ namespace Flow.Launcher.ViewModel
 
             await Task.Delay(300); // If don't give a time, Positioning will be weird.
 
-            if (handle == nint.Zero) return; // If handle is null, it means the dialog is closed, so return
+            if (DialogWindowHandle == nint.Zero) return; // If handle is cleared, which means the dialog is closed, do nothing
 
             if (MainWindowVisibilityStatus)
             {
