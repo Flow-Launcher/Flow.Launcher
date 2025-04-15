@@ -1,8 +1,8 @@
-using System.Windows.Navigation;
+﻿using System.Windows.Navigation;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.SettingPages.ViewModels;
-using Page = ModernWpf.Controls.Page;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Page = ModernWpf.Controls.Page;
 
 namespace Flow.Launcher.SettingPages.Views;
 
