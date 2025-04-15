@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Drawing;
@@ -341,7 +341,7 @@ namespace Peter
                 return null;
             }
 
-            IShellFolder oParentFolder = GetParentFolder(arrFI[0].Parent.FullName);
+            IShellFolder oParentFolder = GetParentFolder(arrFI[0].Parent!.FullName);
             if (null == oParentFolder)
             {
                 return null;
@@ -1535,7 +1535,7 @@ namespace Peter
                 m_hookType,
                 m_filterFunc,
                 IntPtr.Zero,
-                (int)AppDomain.GetCurrentThreadId());
+                Environment.CurrentManagedThreadId);
         }
         // ************************************************************************
 

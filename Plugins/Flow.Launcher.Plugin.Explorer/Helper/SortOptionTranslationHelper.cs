@@ -16,7 +16,7 @@ public static class SortOptionTranslationHelper
         ArgumentNullException.ThrowIfNull(API);
 
         var enumName = Enum.GetName(sortOption);
-        var splited = enumName.Split('_');
+        var splited = enumName!.Split('_');
         var name = string.Join('_', splited[..^1]);
         var direction = splited[^1];
 
