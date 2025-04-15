@@ -383,16 +383,9 @@ namespace Flow.Launcher.Infrastructure
             // No installed English layout found
             if (enHKL == HKL.Null) return;
 
-            // Get the FL main window
-            var hwnd = GetMainWindowHandle();
+            // Get the foreground window
+            var hwnd = PInvoke.GetForegroundWindow();
             if (hwnd == HWND.Null) return;
-
-            // Check if the FL main window is the current foreground window
-            if (!IsForegroundWindow(hwnd))
-            {
-                var result = PInvoke.SetForegroundWindow(hwnd);
-                if (!result) throw new Win32Exception(Marshal.GetLastWin32Error());
-            }
 
             // Get the current foreground window thread ID
             var threadId = PInvoke.GetWindowThreadProcessId(hwnd);

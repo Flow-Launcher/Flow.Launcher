@@ -5,7 +5,6 @@ using System.Windows.Controls;
 using System.Windows;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
-using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
@@ -116,6 +115,7 @@ public partial class SettingsPanePluginsViewModel : BaseModel
     {
         var helpDialog = new ContentDialog()
         {
+            Owner = Application.Current.MainWindow,
             Content = new StackPanel
             {
                 Children =
@@ -146,7 +146,6 @@ public partial class SettingsPanePluginsViewModel : BaseModel
                     }
                 }
             },
-
             PrimaryButtonText = (string)Application.Current.Resources["commonOK"],
             CornerRadius = new CornerRadius(8),
             Style = (Style)Application.Current.Resources["ContentDialog"]

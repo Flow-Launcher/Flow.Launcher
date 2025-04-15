@@ -351,6 +351,7 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 </p>
 <p align="center">
   <a href="https://github.com/itsonlyfrans"><img src="https://avatars.githubusercontent.com/u/46535667?v=4" width="10%" /></a>
+  <a href="https://github.com/atilford"><img src="https://avatars.githubusercontent.com/u/13649625?v=4" width="10%" /></a>
   <a href="https://github.com/andreqramos"><img src="https://avatars.githubusercontent.com/u/49326063?v=4" width="10%" /></a>
   <a href="https://github.com/Yuba4"><img src="https://avatars.githubusercontent.com/u/46278200?v=4" width="10%" /></a>
   <a href="https://github.com/Mavrik327"><img src="https://avatars.githubusercontent.com/u/121626149?v=4" width="10%" /></a>
