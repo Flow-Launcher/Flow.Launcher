@@ -225,6 +225,7 @@ namespace Flow.Launcher
             }
         }
 
+        [Conditional("RELEASE")]
         private void AutoUpdates()
         {
             _ = Task.Run(async () =>
@@ -282,11 +283,11 @@ namespace Flow.Launcher
         [Conditional("RELEASE")]
         private static void RegisterAppDomainExceptions()
         {
-            AppDomain.CurrentDomain.UnhandledException += ErrorReporting.UnhandledExceptionHandle;
+            AppDomain.CurrentDomain.UnhandledException += ErrorReporting.UnhandledException;
         }
 
         /// <summary>
-        /// exception will not be thrown normally, so we log it
+        /// exception will not be thrown normally, so we need to register event
         /// </summary>
         private static void RegisterTaskSchedulerUnhandledException()
         {
