@@ -1160,7 +1160,7 @@ namespace Flow.Launcher.ViewModel
         {
             _updateSource?.Cancel();
 
-            var query = await ConstructQueryAsync(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
+            var query = ConstructQuery(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
 
             var plugins = PluginManager.ValidPluginsForQuery(query);
 
@@ -1309,7 +1309,7 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private async Task<Query> ConstructQueryAsync(string queryText, IEnumerable<CustomShortcutModel> customShortcuts,
+        private Query ConstructQuery(string queryText, IEnumerable<CustomShortcutModel> customShortcuts,
             IEnumerable<BaseBuiltinShortcutModel> builtInShortcuts)
         {
             if (string.IsNullOrWhiteSpace(queryText))
@@ -1334,7 +1334,7 @@ namespace Flow.Launcher.ViewModel
             var customExpanded = queryBuilder.ToString();
 
             // We must use dispatcher because text here will be used in TextBox
-            await Application.Current?.Dispatcher.InvokeAsync(async () =>
+            Application.Current?.Dispatcher.Invoke(() =>
             {
                 var queryChanged = false;
 
@@ -1347,7 +1347,7 @@ namespace Flow.Launcher.ViewModel
                     }
                     else if (shortcut is AsyncBuiltinShortcutModel asyncShortcut)
                     {
-                        expansion = await asyncShortcut.ExpandAsync();
+                        expansion = App.JTF.Run(async () => await asyncShortcut.ExpandAsync());
                     }
                     else
                     {

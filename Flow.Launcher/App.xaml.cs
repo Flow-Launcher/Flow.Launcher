@@ -21,6 +21,7 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.VisualStudio.Threading;
 
 namespace Flow.Launcher
 {
@@ -29,6 +30,7 @@ namespace Flow.Launcher
         #region Public Properties
 
         public static IPublicAPI API { get; private set; }
+        public static JoinableTaskFactory JTF { get; } = new JoinableTaskFactory(new JoinableTaskContext());
 
         #endregion
 

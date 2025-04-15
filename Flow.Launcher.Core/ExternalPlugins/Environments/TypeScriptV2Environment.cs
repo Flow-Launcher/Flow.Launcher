@@ -34,7 +34,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
         {
             FilesFolders.RemoveFolderIfExists(InstallPath, (s) => API.ShowMsgBox(s));
 
-            JTF.Run(() => DroplexPackage.Drop(App.nodejs_16_18_0, InstallPath));
+            JTF.Run(async () => await DroplexPackage.Drop(App.nodejs_16_18_0, InstallPath));
 
             PluginsSettingsFilePath = ExecutablePath;
         }
