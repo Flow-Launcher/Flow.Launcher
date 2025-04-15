@@ -31,7 +31,7 @@ namespace Flow.Launcher.Infrastructure.Image
 
         private static readonly Guid GUID_IShellItem = typeof(IShellItem).GUID;
 
-        private static readonly HRESULT S_ExtractionFailed = (HRESULT)0x8004B200;
+        private static readonly HRESULT S_EXTRACTIONFAILED = (HRESULT)0x8004B200;
 
         private static readonly HRESULT S_PATHNOTFOUND = (HRESULT)0x8004B205;
 
@@ -82,7 +82,7 @@ namespace Flow.Launcher.Infrastructure.Image
                     imageFactory.GetImage(size, (SIIGBF)options, &hBitmap);
                 }
                 catch (COMException ex) when (options == ThumbnailOptions.ThumbnailOnly &&
-                    (ex.HResult == S_PATHNOTFOUND || ex.HResult == S_ExtractionFailed))
+                    (ex.HResult == S_PATHNOTFOUND || ex.HResult == S_EXTRACTIONFAILED))
                 {
                     // Fallback to IconOnly if extraction fails or files cannot be found
                     imageFactory.GetImage(size, (SIIGBF)ThumbnailOptions.IconOnly, &hBitmap);
