@@ -718,8 +718,6 @@ namespace Flow.Launcher.Infrastructure
             return true;
         }
 
-        
-
         #endregion
     }
 }
