@@ -39,7 +39,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
             // Python 3.11.4 is no longer Windows 7 compatible. If user is on Win 7 and
             // uses Python plugin they need to custom install and use v3.8.9
-            JTF.Run(async () => await DroplexPackage.Drop(App.python_3_11_4_embeddable, InstallPath));
+            JTF.Run(() => DroplexPackage.Drop(App.python_3_11_4_embeddable, InstallPath));
 
             PluginsSettingsFilePath = ExecutablePath;
         }

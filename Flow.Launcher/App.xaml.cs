@@ -289,7 +289,7 @@ namespace Flow.Launcher
         }
 
         /// <summary>
-        /// exception will not be thrown normally, so we need to register event
+        /// let exception throw as normal for Debug and Release
         /// </summary>
         private static void RegisterTaskSchedulerUnhandledException()
         {
