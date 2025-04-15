@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows;
@@ -620,7 +621,17 @@ namespace Flow.Launcher.Infrastructure
 
         private static readonly InputSimulator _inputSimulator = new();
 
-        public static bool DirJump(string path, nint dialog, bool altD = true)
+        public static bool FileJump(string filePath, nint dialog, bool altD = true)
+        {
+            return DirFileJump(Path.GetDirectoryName(filePath), filePath, dialog, altD);
+        }
+
+        public static bool DirJump(string dirPath, nint dialog, bool altD = true)
+        {
+            return DirFileJump(dirPath, null, dialog, altD);
+        }
+
+        private static bool DirFileJump(string dirPath, string filePath, nint dialog, bool altD = true, bool editFileName = false)
         {
             // Get the handle of the dialog window
             var dialogHandle = new HWND(dialog);
@@ -635,6 +646,12 @@ namespace Flow.Launcher.Infrastructure
                 _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LCONTROL, VirtualKeyCode.VK_L);
             }
 
+            // Directly edit file name
+            if (editFileName)
+            {
+                return DirFileJumpForFileName(filePath, dialogHandle);
+            }
+
             // Get the handle of the path input box and then set the text.
             // The window with class name "ComboBoxEx32" is not visible when the path input box is not with the keyboard focus.
             var controlHandle = PInvoke.FindWindowEx(new(dialogHandle), HWND.Null, "WorkerW", null);
@@ -644,7 +661,9 @@ namespace Flow.Launcher.Infrastructure
             controlHandle = PInvoke.FindWindowEx(controlHandle, HWND.Null, "ComboBoxEx32", null);
             if (controlHandle == HWND.Null)
             {
-                return DirJumpOnLegacyDialog(path, dialogHandle);
+                // https://github.com/idkidknow/Flow.Launcher.Plugin.DirQuickJump/issues/1
+                // The dialog is a legacy one, so we edit file name text box directly.
+                return DirFileJumpForFileName(string.IsNullOrEmpty(filePath) ? dirPath : filePath, dialogHandle);
             }
 
             var timeOut = !SpinWait.SpinUntil(() =>
@@ -664,15 +683,23 @@ namespace Flow.Launcher.Infrastructure
                 return false;
             }
 
-            SetWindowText(editHandle, path);
+            SetWindowText(editHandle, dirPath);
             _inputSimulator.Keyboard.KeyPress(VirtualKeyCode.RETURN);
+
+            if (!string.IsNullOrEmpty(filePath))
+            {
+                // After navigating to the path, we then set the file name.
+                return DirFileJump(null, Path.GetFileName(filePath), dialog, altD, true);
+            }
 
             return true;
         }
 
-        private static bool DirJumpOnLegacyDialog(string path, HWND dialogHandle)
+        /// <summary>
+        /// Edit file name text box in the file open dialog.
+        /// </summary>
+        private static bool DirFileJumpForFileName(string fileName, HWND dialogHandle)
         {
-            // https://github.com/idkidknow/Flow.Launcher.Plugin.DirQuickJump/issues/1
             var controlHandle = PInvoke.FindWindowEx(dialogHandle, HWND.Null, "ComboBoxEx32", null);
             controlHandle = PInvoke.FindWindowEx(controlHandle, HWND.Null, "ComboBox", null);
             controlHandle = PInvoke.FindWindowEx(controlHandle, HWND.Null, "Edit", null);
@@ -681,7 +708,8 @@ namespace Flow.Launcher.Infrastructure
                 return false;
             }
 
-            SetWindowText(controlHandle, path);
+            SetWindowText(controlHandle, fileName);
+
             // Alt-O (equivalent to press the Open button) twice. In normal cases it suffices to press once,
             // but when the focus is on an irrelevant folder, that press once will just open the irrelevant one.
             _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LMENU, VirtualKeyCode.VK_O);

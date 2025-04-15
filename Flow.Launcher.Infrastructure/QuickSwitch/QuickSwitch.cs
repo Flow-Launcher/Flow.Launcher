@@ -204,7 +204,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         public static bool JumpToPath(string path)
         {
-            if (!CheckPath(path)) return false;
+            if (!CheckPath(path, out var isFile)) return false;
 
             var t = new Thread(() =>
             {
@@ -217,21 +217,31 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 };
 
                 // Assume that the dialog is in the foreground now
-                Win32Helper.DirJump(path, Win32Helper.GetForegroundWindow());
+                if (isFile)
+                {
+                    Win32Helper.FileJump(path, Win32Helper.GetForegroundWindow());
+                }
+                else
+                {
+                    Win32Helper.DirJump(path, Win32Helper.GetForegroundWindow());
+                }
             });
             t.Start();
             return true;
 
-            static bool CheckPath(string path)
+            static bool CheckPath(string path, out bool file)
             {
-                // Is non-null
+                file = false;
+                // Is non-null?
                 if (string.IsNullOrEmpty(path)) return false;
                 // Is absolute?
                 if (!Path.IsPathRooted(path)) return false;
                 // Is folder?
-                if (!Directory.Exists(path)) return false;
+                var isFolder = Directory.Exists(path);
                 // Is file?
-                return true;
+                var isFile = File.Exists(path);
+                file = isFile;
+                return isFolder || isFile;
             }
         }
 
