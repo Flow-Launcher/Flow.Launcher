@@ -45,7 +45,7 @@ namespace Flow.Launcher.ViewModel
 
         private CancellationTokenSource _updateSource; // Used to cancel old query flows
         private CancellationToken _updateToken;
-        private readonly SemaphoreSlim _updateSlim = new(1, 1); // Used to ensure one updating flow
+        private readonly SemaphoreSlim _updateLock = new(1, 1); // Used to ensure one updating flow
 
         private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
         private Task _resultsViewUpdateTask;
@@ -1208,7 +1208,7 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
-            await _updateSlim.WaitAsync();
+            await _updateLock.WaitAsync();
             try
             {
                 var currentUpdateSource = new CancellationTokenSource();
@@ -1303,7 +1303,7 @@ namespace Flow.Launcher.ViewModel
             }
             finally
             {
-                _updateSlim.Release();
+                _updateLock.Release();
             }
 
             // Local function
@@ -1800,7 +1800,7 @@ namespace Flow.Launcher.ViewModel
                     {
                         _resultsViewUpdateTask.Dispose();
                     }
-                    _updateSlim?.Dispose();
+                    _updateLock?.Dispose();
                     _disposed = true;
                 }
             }
