@@ -128,12 +128,12 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Delegate to load an icon for this result.
         /// </summary>
-        public IconDelegate Icon { get; set; }
+        public IconDelegate Icon = null;
 
         /// <summary>
         /// Delegate to load an icon for the badge of this result.
         /// </summary>
-        public IconDelegate BadgeIcon { get; set; }
+        public IconDelegate BadgeIcon = null;
 
         /// <summary>
         /// Information for Glyph Icon (Prioritized than IcoPath/Icon if user enable Glyph Icons)
