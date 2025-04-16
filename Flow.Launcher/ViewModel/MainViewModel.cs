@@ -1804,6 +1804,7 @@ namespace Flow.Launcher.ViewModel
                     {
                         _resultsViewUpdateTask.Dispose();
                     }
+                    _updateSlim?.Dispose();
                     _disposed = true;
                 }
             }
