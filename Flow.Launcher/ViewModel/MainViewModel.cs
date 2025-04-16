@@ -1222,6 +1222,7 @@ namespace Flow.Launcher.ViewModel
             }
 
             _updateSource?.Dispose();
+            _updateSource = null;
 
             var currentUpdateSource = new CancellationTokenSource();
             _updateSource = currentUpdateSource;
