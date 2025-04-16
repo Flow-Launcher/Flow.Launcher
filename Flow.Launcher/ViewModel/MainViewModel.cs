@@ -1209,14 +1209,15 @@ namespace Flow.Launcher.ViewModel
 
             _lastQuery = query;
 
-            if (string.IsNullOrEmpty(query.ActionKeyword))
+            // Do not wait for performance improvement
+            /*if (string.IsNullOrEmpty(query.ActionKeyword))
             {
                 // Wait 15 millisecond for query change in global query
                 // if query changes, return so that it won't be calculated
                 await Task.Delay(15, _updateSource.Token);
                 if (_updateSource.Token.IsCancellationRequested)
                     return;
-            }
+            }*/
 
             _ = Task.Delay(200, _updateSource.Token).ContinueWith(_ =>
                 {
