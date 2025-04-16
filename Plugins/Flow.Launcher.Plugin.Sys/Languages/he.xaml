@@ -26,7 +26,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips_cmd">מדריך Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location_cmd">תיקיית הנתונים של Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode_cmd">מצב משחק</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_theme_selector_cmd">Set the Flow Launcher Theme</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector_cmd">הגדר את ערכת הנושא של Flow Launcher</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_edit">ערו</system:String>
 
@@ -51,7 +51,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">עיין במדריך של Flow Launcher לקבלת מידע נוסף וטיפים</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">פתח את מיקום תיקיית ההגדרות של Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode">הפעל/כבה מצב משחק</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_theme_selector">Quickly change the Flow Launcher theme</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector">שנה במהירות את ערכת הנושא של Flow Launcher</system:String>
 
     <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">הצליח</system:String>
