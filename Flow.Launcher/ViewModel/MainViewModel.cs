@@ -1208,8 +1208,6 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
-            _updateSource?.Dispose();
-
             await _updateSlim.WaitAsync();
             try
             {
