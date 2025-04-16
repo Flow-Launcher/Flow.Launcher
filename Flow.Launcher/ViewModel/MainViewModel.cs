@@ -45,7 +45,7 @@ namespace Flow.Launcher.ViewModel
 
         private CancellationTokenSource _updateSource; // Used to cancel old query flows
         private CancellationToken _updateToken;
-        private SemaphoreSlim _updateSlim = new(1, 1); // Used to make sure one query flow running
+        private readonly SemaphoreSlim _updateSlim = new(1, 1); // Used to ensure one updating flow
 
         private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
         private Task _resultsViewUpdateTask;
