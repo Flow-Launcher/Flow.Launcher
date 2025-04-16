@@ -584,28 +584,37 @@ namespace Flow.Launcher.Core.Resource
         /// <summary>
         /// Refreshes the frame to apply the current theme settings.
         /// </summary>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD103:Call async methods when in an async method", Justification = "<Pending>")]
         public async Task RefreshFrameAsync()
         {
-            await Application.Current.Dispatcher.InvokeAsync(() =>
+            // When application is exiting, the Application.Current will be null
+            if (Application.Current == null) return;
+
+            // Must check access so that we will not block the UI thread which causes other issues
+            if (!Application.Current.Dispatcher.CheckAccess())
             {
-                // Get the actual backdrop type and drop shadow effect settings
-                var (backdropType, useDropShadowEffect) = GetActualValue();
+                // When application is exiting, the Application.Current will be null
+                await Application.Current?.Dispatcher.InvokeAsync(RefreshFrameAsync, DispatcherPriority.Render);
+                return;
+            }
 
-                // Remove OS minimizing/maximizing animation
-                // Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_TRANSITIONS_FORCEDISABLED, 3);
+            // Get the actual backdrop type and drop shadow effect settings
+            var (backdropType, useDropShadowEffect) = GetActualValue();
 
-                // The timing of adding the shadow effect should vary depending on whether the theme is transparent.
-                if (BlurEnabled)
-                {
-                    AutoDropShadow(useDropShadowEffect);
-                }
-                SetBlurForWindow(_settings.Theme, backdropType);
+            // Remove OS minimizing/maximizing animation
+            // Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_TRANSITIONS_FORCEDISABLED, 3);
 
-                if (!BlurEnabled)
-                {
-                    AutoDropShadow(useDropShadowEffect);
-                }
-            }, DispatcherPriority.Render);
+            // The timing of adding the shadow effect should vary depending on whether the theme is transparent.
+            if (BlurEnabled)
+            {
+                AutoDropShadow(useDropShadowEffect);
+            }
+            SetBlurForWindow(_settings.Theme, backdropType);
+
+            if (!BlurEnabled)
+            {
+                AutoDropShadow(useDropShadowEffect);
+            }
         }
 
         /// <summary>
@@ -613,13 +622,21 @@ namespace Flow.Launcher.Core.Resource
         /// </summary>
         public async Task SetBlurForWindowAsync()
         {
-            await Application.Current.Dispatcher.InvokeAsync(() =>
-            {
-                // Get the actual backdrop type and drop shadow effect settings
-                var (backdropType, _) = GetActualValue();
+            // When application is exiting, the Application.Current will be null
+            if (Application.Current == null) return;
 
-                SetBlurForWindow(_settings.Theme, backdropType);
-            }, DispatcherPriority.Render);
+            // Must check access so that we will not block the UI thread which causes other issues
+            if (!Application.Current.Dispatcher.CheckAccess())
+            {
+                // When application is exiting, the Application.Current will be null
+                await Application.Current?.Dispatcher.InvokeAsync(SetBlurForWindowAsync, DispatcherPriority.Render);
+                return;
+            }
+
+            // Get the actual backdrop type and drop shadow effect settings
+            var (backdropType, _) = GetActualValue();
+
+            SetBlurForWindow(_settings.Theme, backdropType);
         }
 
         /// <summary>
