@@ -31,8 +31,8 @@ namespace Flow.Launcher.ViewModel
 
         private static readonly string ClassName = nameof(MainViewModel);
 
-        private bool _isQueryRunning;
         private Query _lastQuery;
+        private Query _runningQuery;
         private string _queryTextBeforeLeaveResults;
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
@@ -1216,7 +1216,8 @@ namespace Flow.Launcher.ViewModel
                 _updateToken = _updateSource.Token;
 
                 ProgressBarVisibility = Visibility.Hidden;
-                _isQueryRunning = true;
+
+                _runningQuery = query;
 
                 // Switch to ThreadPool thread
                 await TaskScheduler.Default;
@@ -1260,7 +1261,7 @@ namespace Flow.Launcher.ViewModel
                 _ = Task.Delay(200, _updateSource.Token).ContinueWith(_ =>
                     {
                         // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
-                        if (_isQueryRunning)
+                        if (_runningQuery != null && _runningQuery == query)
                         {
                             ProgressBarVisibility = Visibility.Visible;
                         }
@@ -1292,7 +1293,8 @@ namespace Flow.Launcher.ViewModel
 
                 // this should happen once after all queries are done so progress bar should continue
                 // until the end of all querying
-                _isQueryRunning = false;
+                _runningQuery = null;
+
                 if (!_updateSource.Token.IsCancellationRequested)
                 {
                     // update to hidden if this is still the current query
