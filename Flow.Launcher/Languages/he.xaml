@@ -42,7 +42,7 @@
     <system:String x:Key="GameMode">מצב משחק</system:String>
     <system:String x:Key="GameModeToolTip">השהה את השימוש במקשי קיצור.</system:String>
     <system:String x:Key="PositionReset">איפוס מיקום</system:String>
-    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
+    <system:String x:Key="PositionResetToolTip">אפס את מיקום חלון החיפוש</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">הקלד כאן כדי לחפש</system:String>
 
     <!--  Setting General  -->
@@ -109,7 +109,7 @@
     <system:String x:Key="searchDelay">Search Delay</system:String>
     <system:String x:Key="searchDelayToolTip">מוסיף עיכוב קצר בזמן ההקלדה כדי להפחית קפיצות בממשק המשתמש ועומס בתוצאות. מומלץ אם מהירות ההקלדה שלך ממוצעת.</system:String>
     <system:String x:Key="searchDelayNumberBoxToolTip">Enter the wait time (in ms) until input is considered complete. This can only be edited if Search Delay is enabled.</system:String>
-    <system:String x:Key="searchDelayTime">Default Search Delay Time</system:String>
+    <system:String x:Key="searchDelayTime">זמן עיכוב חיפוש ברירת מחדל</system:String>
     <system:String x:Key="searchDelayTimeToolTip">זמן המתנה להצגת התוצאות לאחר שתפסיק להקליד. ערכים גבוהים יותר מייצגים המתנה רבה יותר. (שניות)</system:String>
     <system:String x:Key="KoreanImeTitle">Information for Korean IME user</system:String>
     <system:String x:Key="KoreanImeGuide">
@@ -136,7 +136,7 @@
     <system:String x:Key="searchplugin">חפש תוסף</system:String>
     <system:String x:Key="searchpluginToolTip">Ctrl+F לחיפוש תוסף</system:String>
     <system:String x:Key="searchplugin_Noresult_Title">לא נמצאו תוצאות</system:String>
-    <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
+    <system:String x:Key="searchplugin_Noresult_Subtitle">אנא נסה חיפוש אחר.</system:String>
     <system:String x:Key="plugin">תוסף</system:String>
     <system:String x:Key="plugins">תוספים</system:String>
     <system:String x:Key="browserMorePlugins">מצא תוספים נוספים</system:String>
@@ -303,8 +303,8 @@
     <system:String x:Key="useGlyphUI">השתמש ב-Segoe Fluent Icons</system:String>
     <system:String x:Key="useGlyphUIEffect">השתמש ב-Segoe Fluent Icons לתוצאות חיפוש כאשר נתמך</system:String>
     <system:String x:Key="flowlauncherPressHotkey">הקש על מקש</system:String>
-    <system:String x:Key="showBadges">Show Result Badges</system:String>
-    <system:String x:Key="showBadgesToolTip">Show badges for query results where supported</system:String>
+    <system:String x:Key="showBadges">הצג תגי תוצאות</system:String>
+    <system:String x:Key="showBadgesToolTip">הצג תגים עבור תוצאות שאילתות כאשר הם נתמכים</system:String>
     <system:String x:Key="showBadgesGlobalOnly">Show Result Badges for Global Query Only</system:String>
     <system:String x:Key="showBadgesGlobalOnlyToolTip">Show badges for global query results only</system:String>
 
