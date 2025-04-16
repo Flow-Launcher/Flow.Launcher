@@ -1209,7 +1209,6 @@ namespace Flow.Launcher.ViewModel
             }
 
             _updateSource?.Dispose();
-            _updateSource = null;
 
             await _updateSlim.WaitAsync();
             try
