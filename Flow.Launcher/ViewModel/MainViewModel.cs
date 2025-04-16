@@ -1260,7 +1260,7 @@ namespace Flow.Launcher.ViewModel
                 _ = Task.Delay(200, _updateSource.Token).ContinueWith(_ =>
                     {
                         // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
-                        if (!_updateSource.Token.IsCancellationRequested && _isQueryRunning)
+                        if (_isQueryRunning)
                         {
                             ProgressBarVisibility = Visibility.Visible;
                         }
