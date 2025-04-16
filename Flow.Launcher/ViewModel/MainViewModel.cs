@@ -1337,6 +1337,9 @@ namespace Flow.Launcher.ViewModel
                     }
                 }
 
+                if (token.IsCancellationRequested)
+                    return;
+
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
                     token, reSelect)))
                 {
