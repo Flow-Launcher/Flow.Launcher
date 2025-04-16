@@ -1331,53 +1331,63 @@ namespace Flow.Launcher.ViewModel
                 queryBuilder.Replace('@' + shortcut.Key, shortcut.Expand());
             }
 
-            var customExpanded = queryBuilder.ToString();
-
-            // We must use dispatcher because text here will be used in TextBox
-            Application.Current?.Dispatcher.Invoke(() =>
-            {
-                var queryChanged = false;
-
-                foreach (var shortcut in builtInShortcuts)
-                {
-                    string expansion;
-                    if (shortcut is BuiltinShortcutModel syncShortcut)
-                    {
-                        expansion = syncShortcut.Expand();
-                    }
-                    else if (shortcut is AsyncBuiltinShortcutModel asyncShortcut)
-                    {
-                        expansion = App.JTF.Run(() => asyncShortcut.ExpandAsync());
-                    }
-                    else
-                    {
-                        continue;
-                    }
-                    try
-                    {
-                        if (customExpanded.Contains(shortcut.Key))
-                        {
-                            queryBuilder.Replace(shortcut.Key, expansion);
-                            queryBuilderTmp.Replace(shortcut.Key, expansion);
-                            queryChanged = true;
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        App.API.LogException(ClassName, $"Error when expanding shortcut {shortcut.Key}", e);
-                    }
-                }
-
-                if (queryChanged)
-                {
-                    // show expanded builtin shortcuts
-                    // use private field to avoid infinite recursion
-                    _queryText = queryBuilderTmp.ToString();
-                    OnPropertyChanged(nameof(QueryText));
-                }
-            });
+            // Applying builtin shortcuts
+            BuildQuery(builtInShortcuts, queryBuilder, queryBuilderTmp);
 
             return QueryBuilder.Build(queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
+        }
+
+        // We must use dispatcher because text here will be used in TextBox
+        private void BuildQuery(IEnumerable<BaseBuiltinShortcutModel> builtInShortcuts,
+            StringBuilder queryBuilder, StringBuilder queryBuilderTmp)
+        {
+            if (!Application.Current.Dispatcher.CheckAccess())
+            {
+                Application.Current.Dispatcher.Invoke(() => BuildQuery(builtInShortcuts, queryBuilder, queryBuilderTmp));
+                return;
+            }
+
+            var customExpanded = queryBuilder.ToString();
+
+            var queryChanged = false;
+
+            foreach (var shortcut in builtInShortcuts)
+            {
+                string expansion;
+                if (shortcut is BuiltinShortcutModel syncShortcut)
+                {
+                    expansion = syncShortcut.Expand();
+                }
+                else if (shortcut is AsyncBuiltinShortcutModel asyncShortcut)
+                {
+                    expansion = App.JTF.Run(() => asyncShortcut.ExpandAsync());
+                }
+                else
+                {
+                    continue;
+                }
+                try
+                {
+                    if (customExpanded.Contains(shortcut.Key))
+                    {
+                        queryBuilder.Replace(shortcut.Key, expansion);
+                        queryBuilderTmp.Replace(shortcut.Key, expansion);
+                        queryChanged = true;
+                    }
+                }
+                catch (Exception e)
+                {
+                    App.API.LogException(ClassName, $"Error when expanding shortcut {shortcut.Key}", e);
+                }
+            }
+
+            if (queryChanged)
+            {
+                // show expanded builtin shortcuts
+                // use private field to avoid infinite recursion
+                _queryText = queryBuilderTmp.ToString();
+                OnPropertyChanged(nameof(QueryText));
+            }
         }
 
         private void RemoveOldQueryResults(Query query)
