@@ -1198,9 +1198,7 @@ namespace Flow.Launcher.ViewModel
 
             var query = ConstructQuery(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
 
-            var plugins = PluginManager.ValidPluginsForQuery(query);
-
-            if (query == null || plugins.Count == 0) // shortcut expanded
+            if (query == null) // shortcut expanded
             {
                 Results.Clear();
                 Results.Visibility = Visibility.Collapsed;
@@ -1208,18 +1206,6 @@ namespace Flow.Launcher.ViewModel
                 PluginIconSource = null;
                 SearchIconVisibility = Visibility.Visible;
                 return;
-            }
-            else if (plugins.Count == 1)
-            {
-                PluginIconPath = plugins.Single().Metadata.IcoPath;
-                PluginIconSource = await App.API.LoadImageAsync(PluginIconPath);
-                SearchIconVisibility = Visibility.Hidden;
-            }
-            else
-            {
-                PluginIconPath = null;
-                PluginIconSource = null;
-                SearchIconVisibility = Visibility.Visible;
             }
 
             _updateSource?.Dispose();
@@ -1248,6 +1234,21 @@ namespace Flow.Launcher.ViewModel
                 RemoveOldQueryResults(query);
 
                 _lastQuery = query;
+
+                var plugins = PluginManager.ValidPluginsForQuery(query);
+
+                if (plugins.Count == 1)
+                {
+                    PluginIconPath = plugins.Single().Metadata.IcoPath;
+                    PluginIconSource = await App.API.LoadImageAsync(PluginIconPath);
+                    SearchIconVisibility = Visibility.Hidden;
+                }
+                else
+                {
+                    PluginIconPath = null;
+                    PluginIconSource = null;
+                    SearchIconVisibility = Visibility.Visible;
+                }
 
                 // Do not wait for performance improvement
                 /*if (string.IsNullOrEmpty(query.ActionKeyword))
