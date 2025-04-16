@@ -43,8 +43,9 @@ namespace Flow.Launcher.ViewModel
         private readonly UserSelectedRecord _userSelectedRecord;
         private readonly TopMostRecord _topMostRecord;
 
-        private CancellationTokenSource _updateSource;
+        private CancellationTokenSource _updateSource; // Used to cancel old query flows
         private CancellationToken _updateToken;
+        private SemaphoreSlim _updateSlim = new(1, 1); // Used to make sure one query flow running
 
         private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
         private Task _resultsViewUpdateTask;
@@ -1224,38 +1225,41 @@ namespace Flow.Launcher.ViewModel
             _updateSource?.Dispose();
             _updateSource = null;
 
-            var currentUpdateSource = new CancellationTokenSource();
-            _updateSource = currentUpdateSource;
-            _updateToken = _updateSource.Token;
-
-            ProgressBarVisibility = Visibility.Hidden;
-            _isQueryRunning = true;
-
-            // Switch to ThreadPool thread
-            await TaskScheduler.Default;
-
-            if (_updateSource.Token.IsCancellationRequested)
-                return;
-
-            // Update the query's IsReQuery property to true if this is a re-query
-            query.IsReQuery = isReQuery;
-
-            // handle the exclusiveness of plugin using action keyword
-            RemoveOldQueryResults(query);
-
-            _lastQuery = query;
-
-            // Do not wait for performance improvement
-            /*if (string.IsNullOrEmpty(query.ActionKeyword))
+            await _updateSlim.WaitAsync();
+            try
             {
-                // Wait 15 millisecond for query change in global query
-                // if query changes, return so that it won't be calculated
-                await Task.Delay(15, _updateSource.Token);
+                var currentUpdateSource = new CancellationTokenSource();
+                _updateSource = currentUpdateSource;
+                _updateToken = _updateSource.Token;
+
+                ProgressBarVisibility = Visibility.Hidden;
+                _isQueryRunning = true;
+
+                // Switch to ThreadPool thread
+                await TaskScheduler.Default;
+
                 if (_updateSource.Token.IsCancellationRequested)
                     return;
-            }*/
 
-            _ = Task.Delay(200, _updateSource.Token).ContinueWith(_ =>
+                // Update the query's IsReQuery property to true if this is a re-query
+                query.IsReQuery = isReQuery;
+
+                // handle the exclusiveness of plugin using action keyword
+                RemoveOldQueryResults(query);
+
+                _lastQuery = query;
+
+                // Do not wait for performance improvement
+                /*if (string.IsNullOrEmpty(query.ActionKeyword))
+                {
+                    // Wait 15 millisecond for query change in global query
+                    // if query changes, return so that it won't be calculated
+                    await Task.Delay(15, _updateSource.Token);
+                    if (_updateSource.Token.IsCancellationRequested)
+                        return;
+                }*/
+
+                _ = Task.Delay(200, _updateSource.Token).ContinueWith(_ =>
                 {
                     // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
                     if (!_updateSource.Token.IsCancellationRequested && _isQueryRunning)
@@ -1263,38 +1267,43 @@ namespace Flow.Launcher.ViewModel
                         ProgressBarVisibility = Visibility.Visible;
                     }
                 },
-                _updateSource.Token,
-                TaskContinuationOptions.NotOnCanceled,
-                TaskScheduler.Default);
+                    _updateSource.Token,
+                    TaskContinuationOptions.NotOnCanceled,
+                    TaskScheduler.Default);
 
-            // plugins are ICollection, meaning LINQ will get the Count and preallocate Array
+                // plugins are ICollection, meaning LINQ will get the Count and preallocate Array
 
-            var tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
-            {
-                false => QueryTaskAsync(plugin, _updateSource.Token),
-                true => Task.CompletedTask
-            }).ToArray();
+                var tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
+                {
+                    false => QueryTaskAsync(plugin, _updateSource.Token),
+                    true => Task.CompletedTask
+                }).ToArray();
 
-            try
-            {
-                // Check the code, WhenAll will translate all type of IEnumerable or Collection to Array, so make an array at first
-                await Task.WhenAll(tasks);
+                try
+                {
+                    // Check the code, WhenAll will translate all type of IEnumerable or Collection to Array, so make an array at first
+                    await Task.WhenAll(tasks);
+                }
+                catch (OperationCanceledException)
+                {
+                    // nothing to do here
+                }
+
+                if (_updateSource.Token.IsCancellationRequested)
+                    return;
+
+                // this should happen once after all queries are done so progress bar should continue
+                // until the end of all querying
+                _isQueryRunning = false;
+                if (!_updateSource.Token.IsCancellationRequested)
+                {
+                    // update to hidden if this is still the current query
+                    ProgressBarVisibility = Visibility.Hidden;
+                }
             }
-            catch (OperationCanceledException)
+            finally
             {
-                // nothing to do here
-            }
-
-            if (_updateSource.Token.IsCancellationRequested)
-                return;
-
-            // this should happen once after all queries are done so progress bar should continue
-            // until the end of all querying
-            _isQueryRunning = false;
-            if (!_updateSource.Token.IsCancellationRequested)
-            {
-                // update to hidden if this is still the current query
-                ProgressBarVisibility = Visibility.Hidden;
+                _updateSlim.Release();
             }
 
             // Local function
