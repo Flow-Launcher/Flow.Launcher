@@ -1275,7 +1275,7 @@ namespace Flow.Launcher.ViewModel
 
                 var tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
                 {
-                    false => QueryTaskAsync(plugin, _updateSource.Token),
+                    false => QueryTaskAsync(plugin),
                     true => Task.CompletedTask
                 }).ToArray();
 
@@ -1307,15 +1307,15 @@ namespace Flow.Launcher.ViewModel
             }
 
             // Local function
-            async Task QueryTaskAsync(PluginPair plugin, CancellationToken token)
+            async Task QueryTaskAsync(PluginPair plugin)
             {
                 if (searchDelay)
                 {
                     var searchDelayTime = plugin.Metadata.SearchDelayTime ?? Settings.SearchDelayTime;
 
-                    await Task.Delay(searchDelayTime, token);
+                    await Task.Delay(searchDelayTime, _updateSource.Token);
 
-                    if (token.IsCancellationRequested)
+                    if (_updateSource.Token.IsCancellationRequested)
                         return;
                 }
 
@@ -1323,9 +1323,9 @@ namespace Flow.Launcher.ViewModel
                 // Task.Yield will force it to run in ThreadPool
                 await Task.Yield();
 
-                var results = await PluginManager.QueryForPluginAsync(plugin, query, token);
+                var results = await PluginManager.QueryForPluginAsync(plugin, query, _updateSource.Token);
 
-                if (token.IsCancellationRequested)
+                if (_updateSource.Token.IsCancellationRequested)
                     return;
 
                 IReadOnlyList<Result> resultsCopy;
@@ -1336,7 +1336,7 @@ namespace Flow.Launcher.ViewModel
                 else
                 {
                     // make a copy of results to avoid possible issue that FL changes some properties of the records, like score, etc.
-                    resultsCopy = DeepCloneResults(results, token);
+                    resultsCopy = DeepCloneResults(results, _updateSource.Token);
                 }
 
                 foreach (var result in resultsCopy)
@@ -1347,11 +1347,8 @@ namespace Flow.Launcher.ViewModel
                     }
                 }
 
-                if (token.IsCancellationRequested)
-                    return;
-
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
-                    token, reSelect)))
+                    _updateSource.Token, reSelect)))
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
