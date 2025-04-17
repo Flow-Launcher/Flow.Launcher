@@ -1208,6 +1208,9 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
+            // Switch to ThreadPool thread to keep UI responsive when waiting update lock
+            await TaskScheduler.Default;
+
             await _updateLock.WaitAsync();
             try
             {
