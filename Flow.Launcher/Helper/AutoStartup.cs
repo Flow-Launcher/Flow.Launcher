@@ -16,29 +16,37 @@ public class AutoStartup
     private const string LogonTaskName = $"{Constant.FlowLauncher} Startup";
     private const string LogonTaskDesc = $"{Constant.FlowLauncher} Auto Startup";
 
-    public static bool IsEnabled
+    public static void CheckIsEnabled(bool useLogonTaskForStartup)
     {
-        get
+        // We need to check both because if both of them are enabled,
+        // Hide Flow Launcher on startup will not work since the later one will trigger main window show event
+        var logonTaskEnabled = CheckLogonTask();
+        var registryEnabled = CheckRegistry();
+        if (useLogonTaskForStartup)
         {
-            // Check if logon task is enabled
-            if (CheckLogonTask())
+            // Enable logon task
+            if (!logonTaskEnabled)
             {
-                return true;
+                Enable(true);
             }
-
-            // Check if registry is enabled
-            try
+            // Disable registry
+            if (registryEnabled)
             {
-                using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
-                var path = key?.GetValue(Constant.FlowLauncher) as string;
-                return path == Constant.ExecutablePath;
+                Disable(false);
             }
-            catch (Exception e)
+        }
+        else
+        {
+            // Enable registry
+            if (!registryEnabled)
             {
-                App.API.LogError(ClassName, $"Ignoring non-critical registry error (querying if enabled): {e}");
+                Enable(false);
             }
-
-            return false;
+            // Disable logon task
+            if (logonTaskEnabled)
+            {
+                Disable(true);
+            }
         }
     }
 
@@ -69,20 +77,26 @@ public class AutoStartup
         return false;
     }
 
+    private static bool CheckRegistry()
+    {
+        try
+        {
+            using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
+            var path = key?.GetValue(Constant.FlowLauncher) as string;
+            return path == Constant.ExecutablePath;
+        }
+        catch (Exception e)
+        {
+            App.API.LogError(ClassName, $"Ignoring non-critical registry error (querying if enabled): {e}");
+        }
+
+        return false;
+    }
+
     public static void DisableViaLogonTaskAndRegistry()
     {
         Disable(true);
         Disable(false);
-    }
-
-    public static void EnableViaLogonTask()
-    {
-        Enable(true);
-    }
-
-    public static void EnableViaRegistry()
-    {
-        Enable(false);
     }
 
     public static void ChangeToViaLogonTask()
