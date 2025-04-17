@@ -1206,13 +1206,13 @@ namespace Flow.Launcher.ViewModel
 
             if (query == null) // shortcut expanded
             {
-                App.API.LogDebug(ClassName, $"Query null for QueryText: null");
+                App.API.LogDebug(ClassName, $"Query null for QueryText");
 
                 // Wait last query to be canceled and then do resetting actions
                 await _updateLock.WaitAsync(CancellationToken.None);
                 try
                 {
-                    App.API.LogDebug(ClassName, $"Clear for QueryText: {query.RawQuery}");
+                    App.API.LogDebug(ClassName, $"Clear for QueryText");
 
                     // Reset results
                     Results.Clear();
