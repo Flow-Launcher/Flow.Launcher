@@ -1222,22 +1222,29 @@ namespace Flow.Launcher.ViewModel
             {
                 Infrastructure.Logger.Log.Debug(ClassName, $"Query null for QueryText");
 
-                // Wait last query to be canceled and then do resetting actions
+                // Hide and clear results fast because results are already invalid although query is still running
+                Results.Visibility = Visibility.Collapsed;
+                Results.Clear();
+
+                // Hide progress bar because running query is already invalid
+                ProgressBarVisibility = Visibility.Hidden;
+
+                // Wait last query to be canceled and then reset UI elements
                 await _updateLock.WaitAsync(CancellationToken.None);
                 try
                 {
                     Infrastructure.Logger.Log.Debug(ClassName, $"Clear for QueryText");
 
-                    // Reset results
-                    Results.Clear();
+                    // Hide and clear results again because running query may show and add some results
                     Results.Visibility = Visibility.Collapsed;
+                    Results.Clear();
 
                     // Reset plugin icon
                     PluginIconPath = null;
                     PluginIconSource = null;
                     SearchIconVisibility = Visibility.Visible;
 
-                    // Reset progress bar
+                    // Hide progress bar again because running query may set this to visible
                     ProgressBarVisibility = Visibility.Hidden;
                 }
                 finally
@@ -1252,6 +1259,14 @@ namespace Flow.Launcher.ViewModel
             await _updateLock.WaitAsync(CancellationToken.None);
             try
             {
+                // Check if the query has changed because query can be changed so fast that
+                // token of the query between two queries has not been created yet
+                if (query.RawQuery != QueryText)
+                {
+                    Infrastructure.Logger.Log.Debug(ClassName, $"Cancel for QueryText 0: {query.RawQuery}");
+                    return;
+                }
+
                 var currentUpdateSource = new CancellationTokenSource();
                 _updateSource = currentUpdateSource;
                 _updateToken = _updateSource.Token;
