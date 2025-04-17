@@ -237,7 +237,7 @@ namespace Flow.Launcher.ViewModel
                 var plugin = (IResultUpdated)pair.Plugin;
                 plugin.ResultsUpdated += (s, e) =>
                 {
-                    if (e.Query.RawQuery != QueryText || e.Token.IsCancellationRequested)
+                    if (_runningQuery == null || e.Query.RawQuery != _runningQuery.RawQuery || e.Token.IsCancellationRequested)
                     {
                         return;
                     }
@@ -256,8 +256,14 @@ namespace Flow.Launcher.ViewModel
                     }
 
                     PluginManager.UpdatePluginMetadata(resultsCopy, pair.Metadata, e.Query);
-                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query,
-                            token)))
+
+                    if (_runningQuery == null || e.Query.RawQuery != _runningQuery.RawQuery || token.IsCancellationRequested)
+                    {
+                        return;
+                    }
+
+                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query, 
+                        token)))
                     {
                         App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                     }
@@ -1315,7 +1321,7 @@ namespace Flow.Launcher.ViewModel
 
                 var tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
                 {
-                    false => QueryTaskAsync(plugin),
+                    false => QueryTaskAsync(plugin, _updateSource.Token),
                     true => Task.CompletedTask
                 }).ToArray();
 
@@ -1354,15 +1360,15 @@ namespace Flow.Launcher.ViewModel
             }
 
             // Local function
-            async Task QueryTaskAsync(PluginPair plugin)
+            async Task QueryTaskAsync(PluginPair plugin, CancellationToken token)
             {
                 if (searchDelay)
                 {
                     var searchDelayTime = plugin.Metadata.SearchDelayTime ?? Settings.SearchDelayTime;
 
-                    await Task.Delay(searchDelayTime, _updateSource.Token);
+                    await Task.Delay(searchDelayTime, token);
 
-                    if (_updateSource.Token.IsCancellationRequested)
+                    if (token.IsCancellationRequested)
                     {
                         App.API.LogDebug(ClassName, $"Cancel for QueryText 3: {QueryText}");
                         return;
@@ -1373,9 +1379,9 @@ namespace Flow.Launcher.ViewModel
                 // Task.Yield will force it to run in ThreadPool
                 await Task.Yield();
 
-                var results = await PluginManager.QueryForPluginAsync(plugin, query, _updateSource.Token);
+                var results = await PluginManager.QueryForPluginAsync(plugin, query, token);
 
-                if (_updateSource.Token.IsCancellationRequested)
+                if (token.IsCancellationRequested)
                 {
                     App.API.LogDebug(ClassName, $"Cancel for QueryText 4: {query.RawQuery}");
                     return;
@@ -1389,7 +1395,7 @@ namespace Flow.Launcher.ViewModel
                 else
                 {
                     // make a copy of results to avoid possible issue that FL changes some properties of the records, like score, etc.
-                    resultsCopy = DeepCloneResults(results, _updateSource.Token);
+                    resultsCopy = DeepCloneResults(results, token);
                 }
 
                 foreach (var result in resultsCopy)
@@ -1400,14 +1406,14 @@ namespace Flow.Launcher.ViewModel
                     }
                 }
 
-                if (_updateSource.Token.IsCancellationRequested)
+                if (token.IsCancellationRequested)
                 {
                     App.API.LogDebug(ClassName, $"Cancel for QueryText 5: {query.RawQuery}");
                     return;
                 }
 
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
-                    _updateSource.Token, reSelect)))
+                    token, reSelect)))
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
