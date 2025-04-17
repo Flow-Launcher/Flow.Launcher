@@ -1,12 +1,49 @@
-﻿using Flow.Launcher.Plugin;
+﻿using System;
+using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.ViewModel
 {
+    public enum WelcomePage
+    {
+        Intro = 1,           // WelcomePage1
+        Features = 2,        // WelcomePage2
+        UserType = 3,        // WelcomePageUserType
+        Hotkeys = 4,         // WelcomePage3
+        Commands = 5,        // WelcomePage4
+        Finish = 6           // WelcomePage5
+    }
+
     public partial class WelcomeViewModel : BaseModel
     {
-        public const int MaxPageNum = 5;
+        public const int MaxPageNum = 6; 
+        
+        public static readonly WelcomePage[] PageSequence = new[]
+        {
+            WelcomePage.Intro,
+            WelcomePage.Features,
+            WelcomePage.UserType,
+            WelcomePage.Hotkeys,
+            WelcomePage.Commands,
+            WelcomePage.Finish
+        };
 
-        public string PageDisplay => $"{PageNum}/5";
+        public string PageDisplay => $"{GetPageIndex(CurrentPage) + 1}/{PageSequence.Length}";
+
+        private WelcomePage _currentPage = WelcomePage.Intro;
+        public WelcomePage CurrentPage
+        {
+            get => _currentPage;
+            set
+            {
+                if (_currentPage != value)
+                {
+                    _currentPage = value;
+                    _pageNum = (int)value; 
+                    OnPropertyChanged();
+                    UpdateView();
+                }
+            }
+        }
 
         private int _pageNum = 1;
         public int PageNum
@@ -17,6 +54,7 @@ namespace Flow.Launcher.ViewModel
                 if (_pageNum != value)
                 {
                     _pageNum = value;
+                    _currentPage = (WelcomePage)value;
                     OnPropertyChanged();
                     UpdateView();
                 }
@@ -45,24 +83,18 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        private int GetPageIndex(WelcomePage page)
+        {
+            return Array.IndexOf(PageSequence, page);
+        }
+
         private void UpdateView()
         {
             OnPropertyChanged(nameof(PageDisplay));
-            if (PageNum == 1)
-            {
-                BackEnabled = false;
-                NextEnabled = true;
-            }
-            else if (PageNum == MaxPageNum)
-            {
-                BackEnabled = true;
-                NextEnabled = false;
-            }
-            else
-            {
-                BackEnabled = true;
-                NextEnabled = true;
-            }
+            
+            int index = GetPageIndex(CurrentPage);
+            BackEnabled = index > 0;
+            NextEnabled = index < PageSequence.Length - 1;
         }
     }
 }

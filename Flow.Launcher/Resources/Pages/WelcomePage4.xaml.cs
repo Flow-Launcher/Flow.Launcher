@@ -12,7 +12,7 @@ namespace Flow.Launcher.Resources.Pages
             Settings = Ioc.Default.GetRequiredService<Settings>();
             // Sometimes the navigation is not triggered by button click,
             // so we need to reset the page number
-            Ioc.Default.GetRequiredService<WelcomeViewModel>().PageNum = 4;
+            Ioc.Default.GetRequiredService<WelcomeViewModel>().PageNum = 5;
             InitializeComponent();
         }
 

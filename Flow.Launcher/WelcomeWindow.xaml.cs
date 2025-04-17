@@ -32,27 +32,26 @@ namespace Flow.Launcher
 
         private void ForwardButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_viewModel.PageNum < WelcomeViewModel.MaxPageNum)
+            int currentIndex = Array.IndexOf(WelcomeViewModel.PageSequence, _viewModel.CurrentPage);
+            if (currentIndex < WelcomeViewModel.PageSequence.Length - 1)
             {
-                _viewModel.PageNum++;
-                ContentFrame.Navigate(PageTypeSelector(_viewModel.PageNum), null, _forwardTransitionInfo);
-            }
-            else
-            {
-                _viewModel.NextEnabled = false;
+                WelcomePage nextPage = WelcomeViewModel.PageSequence[currentIndex + 1];
+                
+                Type nextPageType = PageTypeSelector(nextPage);
+                ContentFrame.Navigate(nextPageType, null, _forwardTransitionInfo);
+                
+                _viewModel.CurrentPage = nextPage;
             }
         }
-
         private void BackwardButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_viewModel.PageNum > 1)
+            int currentIndex = Array.IndexOf(WelcomeViewModel.PageSequence, _viewModel.CurrentPage);
+            if (currentIndex > 0)
             {
-                _viewModel.PageNum--;
-                ContentFrame.Navigate(PageTypeSelector(_viewModel.PageNum), null, _backTransitionInfo);
-            }
-            else
-            {
-                _viewModel.BackEnabled = false;
+                WelcomePage prevPage = WelcomeViewModel.PageSequence[currentIndex - 1];
+                Type prevPageType = PageTypeSelector(prevPage);
+                ContentFrame.Navigate(prevPageType, null, _backTransitionInfo);
+                _viewModel.CurrentPage = prevPage;
             }
         }
 
@@ -61,17 +60,25 @@ namespace Flow.Launcher
             Close();
         }
 
+        private static Type PageTypeSelector(WelcomePage page)
+        {
+            Type result = page switch
+            {
+                WelcomePage.Intro => typeof(WelcomePage1),
+                WelcomePage.Features => typeof(WelcomePage2),
+                WelcomePage.UserType => typeof(WelcomePageUserType),
+                WelcomePage.Hotkeys => typeof(WelcomePage3),
+                WelcomePage.Commands => typeof(WelcomePage4),
+                WelcomePage.Finish => typeof(WelcomePage5),
+                _ => throw new ArgumentOutOfRangeException(nameof(page), page, "Unexpected page type")
+            };
+            return result;
+        }
+
+        // This method is used to convert the page number to the corresponding page type.
         private static Type PageTypeSelector(int pageNumber)
         {
-            return pageNumber switch
-            {
-                1 => typeof(WelcomePage1),
-                2 => typeof(WelcomePage2),
-                3 => typeof(WelcomePage3),
-                4 => typeof(WelcomePage4),
-                5 => typeof(WelcomePage5),
-                _ => throw new ArgumentOutOfRangeException(nameof(pageNumber), pageNumber, "Unexpected Page Number")
-            };
+            return PageTypeSelector((WelcomePage)pageNumber);
         }
 
         private void window_MouseDown(object sender, MouseButtonEventArgs e) /* for close hotkey popup */
@@ -91,7 +98,7 @@ namespace Flow.Launcher
 
         private void ContentFrame_Loaded(object sender, RoutedEventArgs e)
         {
-            ContentFrame.Navigate(PageTypeSelector(1)); /* Set First Page */
+            ContentFrame.Navigate(PageTypeSelector(_viewModel.CurrentPage));
         }
 
         private void Window_Closed(object sender, EventArgs e)
