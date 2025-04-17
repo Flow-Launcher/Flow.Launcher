@@ -151,7 +151,7 @@ namespace Flow.Launcher
                 Ioc.Default.GetRequiredService<Portable>().PreStartCleanUpAfterPortabilityUpdate();
 
                 API.LogInfo(ClassName, "Begin Flow Launcher startup ----------------------------------------------------");
-                API.LogInfo(ClassName, "Runtime info:{ErrorReporting.RuntimeInfo()}");
+                API.LogInfo(ClassName, $"Runtime info:{ErrorReporting.RuntimeInfo()}");
 
                 RegisterAppDomainExceptions();
                 RegisterDispatcherUnhandledException();
@@ -177,8 +177,6 @@ namespace Flow.Launcher
                 await imageLoadertask;
 
                 _mainWindow = new MainWindow();
-
-                API.LogInfo(ClassName, "Dependencies Info:{ErrorReporting.DependenciesInfo()}");
 
                 Current.MainWindow = _mainWindow;
                 Current.MainWindow.Title = Constant.FlowLauncher;
