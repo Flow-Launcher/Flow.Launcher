@@ -306,7 +306,7 @@
     <system:String x:Key="showBadgesGlobalOnlyToolTip">Show badges for global query results only</system:String>
     <system:String x:Key="enterKeyInfoTitle">Opening a folder using the Enter key</system:String>
     <system:String x:Key="enterKeyInfoToolTip">If you turn off "Hit Enter to open folder in Default File Manager" in the Explorer plugin, you'll be able to explore the contents of the folder instead of opening it in your file manager.</system:String>
-    <system:String x:Key="pathControlInfoTitle">Auto-complete & Delete Path</system:String>
+    <system:String x:Key="pathControlInfoTitle">Auto-complete &amp; Delete Path</system:String>
     <system:String x:Key="pathControlInfoToolTip">Try using Auto Complete and the Delete Word Backwards shortcut when switching directories.</system:String>
 
     <!--  Setting Proxy  -->
