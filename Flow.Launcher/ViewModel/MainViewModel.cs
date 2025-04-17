@@ -237,7 +237,7 @@ namespace Flow.Launcher.ViewModel
                 var plugin = (IResultUpdated)pair.Plugin;
                 plugin.ResultsUpdated += (s, e) =>
                 {
-                    Infrastructure.Logger.Log.Debug(ClassName, ClassName, $"Call IResultsUpdated for QueryText: {e.Query.RawQuery}");
+                    Infrastructure.Logger.Log.Debug(ClassName, $"Call IResultsUpdated for QueryText: {e.Query.RawQuery}");
 
                     if (_runningQuery == null || e.Query.RawQuery != _runningQuery.RawQuery || e.Token.IsCancellationRequested)
                     {
