@@ -66,10 +66,17 @@
                         OnContent="{DynamicResource enable}" />
                 </cc:Card>
             </cc:CardGroup>
-
+            <cc:InfoBar
+                Title="{DynamicResource enterKeyInfoTitle}"
+                Margin="0 18 0 0"
+                Closable="False"
+                IsIconVisible="True"
+                Length="Long"
+                Message="{DynamicResource enterKeyInfoToolTip}"
+                Type="Info" />
             <cc:ExCard
                 Title="{DynamicResource hotkeyPresets}"
-                Margin="0 14 0 0"
+                Margin="0 4 0 0"
                 Icon="&#xf0e2;"
                 Sub="{DynamicResource hotkeyPresetsToolTip}">
                 <StackPanel>
@@ -204,10 +211,17 @@
                 </StackPanel>
             </cc:ExCard>
 
-
+            <cc:InfoBar
+                Title="{DynamicResource pathControlInfoTitle}"
+                Margin="0 18 0 0"
+                Closable="False"
+                IsIconVisible="True"
+                Length="Long"
+                Message="{DynamicResource pathControlInfoToolTip}"
+                Type="Info" />
             <cc:ExCard
                 Title="{DynamicResource autoCompleteHotkey}"
-                Margin="0 14 0 0"
+                Margin="0 4 0 0"
                 Icon="&#xe893;"
                 Sub="{DynamicResource autoCompleteHotkeyToolTip}">
                 <cc:ExCard.SideContent>
@@ -248,7 +262,6 @@
                         ValidateKeyGesture="False" />
                 </cc:Card>
             </cc:ExCard>
-
             <cc:ExCard
                 Title="{DynamicResource SelectPrevItemHotkey}"
                 Margin="0 4 0 0"
