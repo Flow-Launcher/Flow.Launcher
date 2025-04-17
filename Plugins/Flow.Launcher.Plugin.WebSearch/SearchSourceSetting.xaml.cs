@@ -28,6 +28,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             Initialize(sources, context, Action.Add);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         private async void Initialize(IList<SearchSource> sources, PluginInitContext context, Action action)
         {
             InitializeComponent();
@@ -124,6 +125,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         private async void OnSelectIconClick(object sender, RoutedEventArgs e)
         {
             const string filter = "Image files (*.jpg, *.jpeg, *.gif, *.png, *.bmp) |*.jpg; *.jpeg; *.gif; *.png; *.bmp";

@@ -362,6 +362,7 @@ namespace Flow.Launcher.Plugin.Sys
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe89f"),
                     Action = c =>
                     {
+                        _context.API.HideMainWindow();
                         Application.Current.MainWindow.Close();
                         return true;
                     }

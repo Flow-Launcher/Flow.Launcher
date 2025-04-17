@@ -1,13 +1,15 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
+#nullable enable
+
 namespace Flow.Launcher.Plugin.Explorer.Views
 {
     public class ActionKeywordModel : INotifyPropertyChanged
     {
-        private static Settings _settings;
+        private static Settings _settings = null!;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public static void Init(Settings settings)
         {

@@ -59,6 +59,7 @@ namespace Flow.Launcher
             Close();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         public async void Show(string title, string subTitle, string iconPath)
         {
             tbTitle.Text = title;

@@ -85,6 +85,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             DialogResult = false;
             Close();
         }
+
         private void TxtCurrentActionKeyword_OnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -94,11 +95,13 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 e.Handled = true;
             }
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
         private bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
             if (EqualityComparer<T>.Default.Equals(field, value))
