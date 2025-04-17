@@ -228,6 +228,10 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         /// <param name="pluginId">ID for plugin that needs to add action keyword</param>
         /// <param name="newActionKeyword">The actionkeyword that is supposed to be added</param>
+        /// <remarks>
+        /// If new action keyword contains any whitespace, FL will still add it but it will not work for users.
+        /// So plugin should check the whitespace before calling this function.
+        /// </remarks>
         void AddActionKeyword(string pluginId, string newActionKeyword);
 
         /// <summary>
