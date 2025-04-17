@@ -1,11 +1,13 @@
-﻿using Flow.Launcher.Infrastructure.UserSettings;
+﻿using System.ComponentModel;
+using System.Windows.Media;
+using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.ViewModel;
 
 public partial class SettingWindowViewModel : BaseModel
 {
-    private readonly Settings _settings; 
+    private readonly Settings _settings;
 
     public SettingWindowViewModel(Settings settings)
     {
@@ -42,5 +44,25 @@ public partial class SettingWindowViewModel : BaseModel
     {
         get => _settings.SettingWindowLeft;
         set => _settings.SettingWindowLeft = value;
+    }
+
+    public string SettingWindowFont
+    {
+        get => _settings.SettingWindowFont;
+        set
+        {
+            if (_settings.SettingWindowFont != value)
+            {
+                _settings.SettingWindowFont = value;
+                OnPropertyChanged(nameof(SettingWindowFont));
+            }
+        }
+    }
+
+    public event PropertyChangedEventHandler PropertyChanged;
+
+    protected virtual void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

@@ -65,19 +65,21 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             { "pt", "Noto Sans" }
         };
 
-        public static string GetSystemDefaultFont()
+        public static string GetSystemDefaultFont(bool? useNoto = null)
         {
             try
             {
-                var culture = CultureInfo.CurrentCulture;
-                var language = culture.Name; // e.g., "zh-TW"
-                var langPrefix = language.Split('-')[0]; // e.g., "zh"
-
-                // First, try to find by full name, and if not found, fallback to prefix
-                if (TryGetNotoFont(language, out var notoFont) || TryGetNotoFont(langPrefix, out notoFont))
+                if (useNoto != false)
                 {
-                    if (Fonts.SystemFontFamilies.Any(f => f.Source.Equals(notoFont)))
-                        return notoFont;
+                    var culture = CultureInfo.CurrentCulture;
+                    var language = culture.Name; // e.g., "zh-TW"
+                    var langPrefix = language.Split('-')[0]; // e.g., "zh"
+
+                    if (TryGetNotoFont(language, out var notoFont) || TryGetNotoFont(langPrefix, out notoFont))
+                    {
+                        if (Fonts.SystemFontFamilies.Any(f => f.Source.Equals(notoFont)))
+                            return notoFont;
+                    }
                 }
 
                 var font = SystemFonts.MessageFontFamily;
@@ -162,6 +164,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string ResultSubFontStyle { get; set; }
         public string ResultSubFontWeight { get; set; }
         public string ResultSubFontStretch { get; set; }
+        public string SettingWindowFont { get; set; } = GetSystemDefaultFont(false);
         public bool UseGlyphIcons { get; set; } = true;
         public bool UseAnimation { get; set; } = true;
         public bool UseSound { get; set; } = true;

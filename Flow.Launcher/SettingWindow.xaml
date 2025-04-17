@@ -13,6 +13,7 @@
     MinHeight="600"
     d:DataContext="{d:DesignInstance vm:SettingWindowViewModel}"
     Closed="OnClosed"
+    FontFamily="{Binding SettingWindowFont, Mode=TwoWay}"
     Icon="Images\app.ico"
     Left="{Binding SettingWindowLeft, Mode=TwoWay}"
     Loaded="OnLoaded"

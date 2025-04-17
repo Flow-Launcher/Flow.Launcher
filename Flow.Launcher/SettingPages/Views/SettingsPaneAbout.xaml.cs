@@ -1,4 +1,7 @@
-﻿using System.Windows.Navigation;
+﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Navigation;
 using Flow.Launcher.Core;
 using Flow.Launcher.SettingPages.ViewModels;
 using Flow.Launcher.Infrastructure.UserSettings;
@@ -27,5 +30,22 @@ public partial class SettingsPaneAbout
     {
         App.API.OpenUrl(e.Uri.AbsoluteUri);
         e.Handled = true;
+    }
+    
+    private void SettingWindowFontComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (sender is ComboBox comboBox && comboBox.SelectedItem is FontFamily selectedFont)
+        {
+            if (DataContext is SettingsPaneAboutViewModel viewModel)
+            {
+                viewModel.SettingWindowFont = selectedFont.Source;
+            
+                // 설정 창 글꼴 즉시 업데이트
+                if (Window.GetWindow(this) is SettingWindow settingWindow)
+                {
+                    settingWindow.FontFamily = selectedFont;
+                }
+            }
+        }
     }
 }
