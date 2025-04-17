@@ -1211,7 +1211,7 @@ namespace Flow.Launcher.ViewModel
             // Switch to ThreadPool thread to keep UI responsive when waiting update lock
             await TaskScheduler.Default;
 
-            await _updateLock.WaitAsync();
+            await _updateLock.WaitAsync(CancellationToken.None);
             try
             {
                 var currentUpdateSource = new CancellationTokenSource();
