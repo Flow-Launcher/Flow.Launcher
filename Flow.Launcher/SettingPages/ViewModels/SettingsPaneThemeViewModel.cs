@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows;
+using System.Windows.Controls;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -17,13 +17,12 @@ using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.ViewModel;
 using ModernWpf;
 using ThemeManagerForColorSchemeSwitch = ModernWpf.ThemeManager;
-using System.Windows.Controls;
 
 namespace Flow.Launcher.SettingPages.ViewModels;
 
 public partial class SettingsPaneThemeViewModel : BaseModel
 {
-    private string DefaultFont = Settings.GetSystemDefaultFont();
+    private readonly string DefaultFont = Win32Helper.GetSystemDefaultFont();
     public string BackdropSubText => !Win32Helper.IsBackdropSupported() ? App.API.GetTranslation("BackdropTypeDisabledToolTip") : ""; 
     public Settings Settings { get; }
     private readonly Theme _theme = Ioc.Default.GetRequiredService<Theme>();

@@ -1,12 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Drawing;
-using System.Globalization;
-using System.Linq;
 using System.Text.Json.Serialization;
 using System.Windows;
-using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Logger;
@@ -14,7 +9,6 @@ using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.ViewModel;
-using SystemFonts = System.Windows.SystemFonts;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
 {
@@ -37,67 +31,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         {
             _storage.Save();
         }
-
-        private string language = Constant.SystemLanguageCode;
-        private static readonly Dictionary<string, string> LanguageToNotoSans = new()
-        {
-            { "ko", "Noto Sans KR" },
-            { "ja", "Noto Sans JP" },
-            { "zh-CN", "Noto Sans SC" },
-            { "zh-SG", "Noto Sans SC" },
-            { "zh-Hans", "Noto Sans SC" },
-            { "zh-TW", "Noto Sans TC" },
-            { "zh-HK", "Noto Sans TC" },
-            { "zh-MO", "Noto Sans TC" },
-            { "zh-Hant", "Noto Sans TC" },
-            { "th", "Noto Sans Thai" },
-            { "ar", "Noto Sans Arabic" },
-            { "he", "Noto Sans Hebrew" },
-            { "hi", "Noto Sans Devanagari" },
-            { "bn", "Noto Sans Bengali" },
-            { "ta", "Noto Sans Tamil" },
-            { "el", "Noto Sans Greek" },
-            { "ru", "Noto Sans" },
-            { "en", "Noto Sans" },
-            { "fr", "Noto Sans" },
-            { "de", "Noto Sans" },
-            { "es", "Noto Sans" },
-            { "pt", "Noto Sans" }
-        };
-
-        public static string GetSystemDefaultFont()
-        {
-            try
-            {
-                var culture = CultureInfo.CurrentCulture;
-                var language = culture.Name; // e.g., "zh-TW"
-                var langPrefix = language.Split('-')[0]; // e.g., "zh"
-
-                // First, try to find by full name, and if not found, fallback to prefix
-                if (TryGetNotoFont(language, out var notoFont) || TryGetNotoFont(langPrefix, out notoFont))
-                {
-                    if (Fonts.SystemFontFamilies.Any(f => f.Source.Equals(notoFont)))
-                        return notoFont;
-                }
-
-                var font = SystemFonts.MessageFontFamily;
-                if (font.FamilyNames.TryGetValue(System.Windows.Markup.XmlLanguage.GetLanguage("en-US"), out var englishName))
-                {
-                    return englishName;
-                }
-
-                return font.Source ?? "Segoe UI";
-            }
-            catch
-            {
-                return "Segoe UI";
-            }
-        }
-
-        private static bool TryGetNotoFont(string langKey, out string notoFont)
-        {
-            return LanguageToNotoSans.TryGetValue(langKey, out notoFont);
-        }
         
         private string _theme = Constant.DefaultTheme;
         public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
@@ -119,12 +52,13 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string CycleHistoryUpHotkey { get; set; } = $"{KeyConstant.Alt} + Up";
         public string CycleHistoryDownHotkey { get; set; } = $"{KeyConstant.Alt} + Down";
 
+        private string _language = Constant.SystemLanguageCode;
         public string Language
         {
-            get => language;
+            get => _language;
             set
             {
-                language = value;
+                _language = value;
                 OnPropertyChanged();
             }
         }
@@ -150,15 +84,15 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public double QueryBoxFontSize { get; set; } = 16;
         public double ResultItemFontSize { get; set; } = 16;
         public double ResultSubItemFontSize { get; set; } = 13;
-        public string QueryBoxFont { get; set; } = GetSystemDefaultFont();
+        public string QueryBoxFont { get; set; } = Win32Helper.GetSystemDefaultFont();
         public string QueryBoxFontStyle { get; set; }
         public string QueryBoxFontWeight { get; set; }
         public string QueryBoxFontStretch { get; set; }
-        public string ResultFont { get; set; } = GetSystemDefaultFont();
+        public string ResultFont { get; set; } = Win32Helper.GetSystemDefaultFont();
         public string ResultFontStyle { get; set; }
         public string ResultFontWeight { get; set; }
         public string ResultFontStretch { get; set; }
-        public string ResultSubFont { get; set; } = GetSystemDefaultFont();
+        public string ResultSubFont { get; set; } = Win32Helper.GetSystemDefaultFont();
         public string ResultSubFontStyle { get; set; }
         public string ResultSubFontWeight { get; set; }
         public string ResultSubFontStretch { get; set; }
@@ -181,7 +115,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public double? SettingWindowLeft { get; set; } = null;
         public WindowState SettingWindowState { get; set; } = WindowState.Normal;
 
-        bool _showPlaceholder { get; set; } = true;
+        private bool _showPlaceholder { get; set; } = true;
         public bool ShowPlaceholder
         {
             get => _showPlaceholder;
@@ -194,7 +128,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 }
             }
         }
-        string _placeholderText { get; set; } = string.Empty;
+        private string _placeholderText { get; set; } = string.Empty;
         public string PlaceholderText
         {
             get => _placeholderText;
@@ -373,7 +307,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool StartFlowLauncherOnSystemStartup { get; set; } = false;
         public bool UseLogonTaskForStartup { get; set; } = false;
         public bool HideOnStartup { get; set; } = true;
-        bool _hideNotifyIcon { get; set; }
+        private bool _hideNotifyIcon;
         public bool HideNotifyIcon
         {
             get => _hideNotifyIcon;
@@ -551,5 +485,4 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         Mica,
         MicaAlt
     }
-    
 }
