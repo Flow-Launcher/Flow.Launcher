@@ -1204,16 +1204,16 @@ namespace Flow.Launcher.ViewModel
                 await _updateLock.WaitAsync(CancellationToken.None);
                 try
                 {
-                    // Reset the results
+                    // Reset results
                 Results.Clear();
                 Results.Visibility = Visibility.Collapsed;
 
-                    // Reset the plugin icon
+                    // Reset plugin icon
                 PluginIconPath = null;
                 PluginIconSource = null;
                 SearchIconVisibility = Visibility.Visible;
 
-                    // Reset the progress bar
+                    // Reset progress bar
                     ProgressBarVisibility = Visibility.Hidden;
                 }
                 finally
