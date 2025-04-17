@@ -1233,9 +1233,6 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
-            // Switch to ThreadPool thread to keep UI responsive when waiting update lock
-            await TaskScheduler.Default;
-
             App.API.LogDebug(ClassName, $"Wait for QueryText: {query.RawQuery}");
 
             await _updateLock.WaitAsync(CancellationToken.None);
