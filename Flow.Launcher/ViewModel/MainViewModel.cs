@@ -237,8 +237,11 @@ namespace Flow.Launcher.ViewModel
                 var plugin = (IResultUpdated)pair.Plugin;
                 plugin.ResultsUpdated += (s, e) =>
                 {
+                    App.API.LogDebug(ClassName, ClassName, $"Call IResultsUpdated for QueryText: {e.Query.RawQuery}");
+
                     if (_runningQuery == null || e.Query.RawQuery != _runningQuery.RawQuery || e.Token.IsCancellationRequested)
                     {
+                        App.API.LogDebug(ClassName, $"Cancel for QueryText 6: {e.Query.RawQuery}");
                         return;
                     }
 
@@ -259,6 +262,7 @@ namespace Flow.Launcher.ViewModel
 
                     if (_runningQuery == null || e.Query.RawQuery != _runningQuery.RawQuery || token.IsCancellationRequested)
                     {
+                        App.API.LogDebug(ClassName, $"Cancel for QueryText 7: {e.Query.RawQuery}");
                         return;
                     }
 
@@ -266,6 +270,10 @@ namespace Flow.Launcher.ViewModel
                         token)))
                     {
                         App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
+                    }
+                    else
+                    {
+                        App.API.LogDebug(ClassName, $"Write updates for QueryText 1: {e.Query.RawQuery}");
                     }
                 };
             }
