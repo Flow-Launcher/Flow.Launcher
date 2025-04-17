@@ -15,8 +15,6 @@ namespace Flow.Launcher
 {
     internal partial class ReportWindow
     {
-        private static readonly string ClassName = nameof(ReportWindow);
-
         public ReportWindow(Exception exception)
         {
             InitializeComponent();

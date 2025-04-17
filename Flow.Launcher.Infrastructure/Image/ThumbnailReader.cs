@@ -12,7 +12,7 @@ using Windows.Win32.Graphics.Gdi;
 namespace Flow.Launcher.Infrastructure.Image
 {
     /// <summary>
-    /// Subclass of <see cref="Windows.Win32.UI.Shell.SIIGBF"/>
+    /// Subclass of <see cref="SIIGBF"/>
     /// </summary>
     [Flags]
     public enum ThumbnailOptions
@@ -31,7 +31,9 @@ namespace Flow.Launcher.Infrastructure.Image
 
         private static readonly Guid GUID_IShellItem = typeof(IShellItem).GUID;
 
-        private static readonly HRESULT S_ExtractionFailed = (HRESULT)0x8004B200;
+        private static readonly HRESULT S_EXTRACTIONFAILED = (HRESULT)0x8004B200;
+
+        private static readonly HRESULT S_PATHNOTFOUND = (HRESULT)0x8004B205;
 
         public static BitmapSource GetThumbnail(string fileName, int width, int height, ThumbnailOptions options)
         {
@@ -79,15 +81,21 @@ namespace Flow.Launcher.Infrastructure.Image
                 {
                     imageFactory.GetImage(size, (SIIGBF)options, &hBitmap);
                 }
-                catch (COMException ex) when (ex.HResult == S_ExtractionFailed && options == ThumbnailOptions.ThumbnailOnly)
+                catch (COMException ex) when (options == ThumbnailOptions.ThumbnailOnly &&
+                    (ex.HResult == S_PATHNOTFOUND || ex.HResult == S_EXTRACTIONFAILED))
                 {
-                    // Fallback to IconOnly if ThumbnailOnly fails
+                    // Fallback to IconOnly if extraction fails or files cannot be found
                     imageFactory.GetImage(size, (SIIGBF)ThumbnailOptions.IconOnly, &hBitmap);
                 }
                 catch (FileNotFoundException) when (options == ThumbnailOptions.ThumbnailOnly)
                 {
                     // Fallback to IconOnly if files cannot be found
                     imageFactory.GetImage(size, (SIIGBF)ThumbnailOptions.IconOnly, &hBitmap);
+                }
+                catch (System.Exception ex)
+                {
+                    // Handle other exceptions
+                    throw new InvalidOperationException("Failed to get thumbnail", ex);
                 }
             }
             finally

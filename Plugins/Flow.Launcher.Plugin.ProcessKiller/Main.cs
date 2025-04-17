@@ -81,7 +81,10 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             // Filter processes based on search term
             var searchTerm = query.Search;
             var processlist = new List<ProcessResult>();
-            var processWindowTitle = ProcessHelper.GetProcessesWithNonEmptyWindowTitle();
+            var processWindowTitle =
+                Settings.ShowWindowTitle || Settings.PutVisibleWindowProcessesTop ?
+                ProcessHelper.GetProcessesWithNonEmptyWindowTitle() :
+                new Dictionary<int, string>();
             if (string.IsNullOrWhiteSpace(searchTerm))
             {
                 foreach (var p in allPocessList)
@@ -91,12 +94,22 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                     if (processWindowTitle.TryGetValue(p.Id, out var windowTitle))
                     {
                         // Add score to prioritize processes with visible windows
-                        // And use window title for those processes
-                        processlist.Add(new ProcessResult(p, Settings.PutVisibleWindowProcessesTop ? 200 : 0, windowTitle, null, progressNameIdTitle));
+                        // Use window title for those processes if enabled
+                        processlist.Add(new ProcessResult(
+                            p,
+                            Settings.PutVisibleWindowProcessesTop ? 200 : 0,
+                            Settings.ShowWindowTitle ? windowTitle : progressNameIdTitle,
+                            null,
+                            progressNameIdTitle));
                     }
                     else
                     {
-                        processlist.Add(new ProcessResult(p, 0, progressNameIdTitle, null, progressNameIdTitle));
+                        processlist.Add(new ProcessResult(
+                            p,
+                            0,
+                            progressNameIdTitle,
+                            null,
+                            progressNameIdTitle));
                     }
                 }
             }
@@ -115,13 +128,17 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                         if (score > 0)
                         {
                             // Add score to prioritize processes with visible windows
-                            // And use window title for those processes
+                            // Use window title for those processes
                             if (Settings.PutVisibleWindowProcessesTop)
                             {
                                 score += 200;
                             }
-                            processlist.Add(new ProcessResult(p, score, windowTitle, 
-                                score == windowTitleMatch.Score ? windowTitleMatch : null, progressNameIdTitle));
+                            processlist.Add(new ProcessResult(
+                                p,
+                                score,
+                                Settings.ShowWindowTitle ? windowTitle : progressNameIdTitle,
+                                score == windowTitleMatch.Score ? windowTitleMatch : null,
+                                progressNameIdTitle));
                         }
                     }
                     else
@@ -130,7 +147,12 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                         var score = processNameIdMatch.Score;
                         if (score > 0)
                         {
-                            processlist.Add(new ProcessResult(p, score, progressNameIdTitle, processNameIdMatch, progressNameIdTitle));
+                            processlist.Add(new ProcessResult(
+                                p,
+                                score,
+                                progressNameIdTitle,
+                                processNameIdMatch,
+                                progressNameIdTitle));
                         }
                     }
                 }
