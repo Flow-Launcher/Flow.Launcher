@@ -1200,16 +1200,20 @@ namespace Flow.Launcher.ViewModel
 
             if (query == null) // shortcut expanded
             {
+                // Wait last query to be canceled and then do resetting actions
+                await _updateLock.WaitAsync(CancellationToken.None);
+                try
+                {
+                    // Reset the results
                 Results.Clear();
                 Results.Visibility = Visibility.Collapsed;
+
+                    // Reset the plugin icon
                 PluginIconPath = null;
                 PluginIconSource = null;
                 SearchIconVisibility = Visibility.Visible;
 
-                // Wait last query to be canceled and hide progress bar
-                await _updateLock.WaitAsync(CancellationToken.None);
-                try
-                {
+                    // Reset the progress bar
                     ProgressBarVisibility = Visibility.Hidden;
                 }
                 finally
