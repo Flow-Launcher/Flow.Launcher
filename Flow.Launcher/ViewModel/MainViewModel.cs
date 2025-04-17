@@ -1383,17 +1383,9 @@ namespace Flow.Launcher.ViewModel
             return QueryBuilder.Build(queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
         }
 
-        // We must use dispatcher because text here will be used in TextBox
         private void BuildQuery(IEnumerable<BaseBuiltinShortcutModel> builtInShortcuts,
             StringBuilder queryBuilder, StringBuilder queryBuilderTmp)
         {
-            // Must check access so that we will not block the UI thread which causes other issues
-            if (!Application.Current.Dispatcher.CheckAccess())
-            {
-                Application.Current.Dispatcher.Invoke(() => BuildQuery(builtInShortcuts, queryBuilder, queryBuilderTmp));
-                return;
-            }
-
             var customExpanded = queryBuilder.ToString();
 
             var queryChanged = false;
