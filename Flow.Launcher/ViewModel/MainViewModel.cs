@@ -1456,23 +1456,23 @@ namespace Flow.Launcher.ViewModel
 
             foreach (var shortcut in builtInShortcuts)
             {
-                string expansion;
-                if (shortcut is BuiltinShortcutModel syncShortcut)
-                {
-                    expansion = syncShortcut.Expand();
-                }
-                else if (shortcut is AsyncBuiltinShortcutModel asyncShortcut)
-                {
-                    expansion = App.JTF.Run(() => asyncShortcut.ExpandAsync());
-                }
-                else
-                {
-                    continue;
-                }
                 try
                 {
                     if (customExpanded.Contains(shortcut.Key))
                     {
+                        string expansion;
+                        if (shortcut is BuiltinShortcutModel syncShortcut)
+                        {
+                            expansion = syncShortcut.Expand();
+                        }
+                        else if (shortcut is AsyncBuiltinShortcutModel asyncShortcut)
+                        {
+                            expansion = App.JTF.Run(() => asyncShortcut.ExpandAsync());
+                        }
+                        else
+                        {
+                            continue;
+                        }
                         queryBuilder.Replace(shortcut.Key, expansion);
                         queryBuilderTmp.Replace(shortcut.Key, expansion);
                         queryChanged = true;
