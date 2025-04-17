@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace Flow.Launcher.SettingPages.ViewModels;
 
 public partial class SettingsPaneThemeViewModel : BaseModel
 {
-    private const string DefaultFont = "Segoe UI";
+    private readonly string DefaultFont = Win32Helper.GetSystemDefaultFont();
     public string BackdropSubText => !Win32Helper.IsBackdropSupported() ? App.API.GetTranslation("BackdropTypeDisabledToolTip") : ""; 
     public Settings Settings { get; }
     private readonly Theme _theme = Ioc.Default.GetRequiredService<Theme>();
@@ -494,7 +495,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     {
         SelectedQueryBoxFont = new FontFamily(DefaultFont);
         SelectedQueryBoxFontFaces = new FamilyTypeface { Stretch = FontStretches.Normal, Weight = FontWeights.Normal, Style = FontStyles.Normal };
-        QueryBoxFontSize = 20;
+        QueryBoxFontSize = 16;
 
         SelectedResultFont = new FontFamily(DefaultFont);
         SelectedResultFontFaces = new FamilyTypeface { Stretch = FontStretches.Normal, Weight = FontWeights.Normal, Style = FontStyles.Normal };
@@ -506,5 +507,57 @@ public partial class SettingsPaneThemeViewModel : BaseModel
 
         WindowHeightSize = 42;
         ItemHeightSize = 58;
+    }
+    
+    [RelayCommand]
+    private void Import()
+    {
+        var resourceDictionary = _theme.GetCurrentResourceDictionary();
+        
+        if (resourceDictionary["QueryBoxStyle"] is Style queryBoxStyle)
+        {
+            var fontSizeSetter = queryBoxStyle.Setters
+                .OfType<Setter>()
+                .FirstOrDefault(setter => setter.Property == TextBox.FontSizeProperty);
+            if (fontSizeSetter?.Value is double fontSize)
+            {
+                QueryBoxFontSize = fontSize;
+            }
+            
+            var heightSetter = queryBoxStyle.Setters
+                .OfType<Setter>()
+                .FirstOrDefault(setter => setter.Property == FrameworkElement.HeightProperty);
+            if (heightSetter?.Value is double height)
+            {
+                WindowHeightSize = height;
+            }
+        }
+        
+        if (resourceDictionary["ResultItemHeight"] is double resultItemHeight)
+        {
+            ItemHeightSize = resultItemHeight;
+        }
+        
+        if (resourceDictionary["ItemTitleStyle"] is Style itemTitleStyle)
+        {
+            var fontSizeSetter = itemTitleStyle.Setters
+                .OfType<Setter>()
+                .FirstOrDefault(setter => setter.Property == TextBlock.FontSizeProperty);
+            if (fontSizeSetter?.Value is double fontSize)
+            {
+                ResultItemFontSize = fontSize;
+            }
+        }
+        
+        if (resourceDictionary["ItemSubTitleStyle"] is Style itemSubTitleStyle)
+        {
+            var fontSizeSetter = itemSubTitleStyle.Setters
+                .OfType<Setter>()
+                .FirstOrDefault(setter => setter.Property == TextBlock.FontSizeProperty);
+            if (fontSizeSetter?.Value is double fontSize)
+            {
+                ResultSubItemFontSize = fontSize;
+            }
+        }
     }
 }

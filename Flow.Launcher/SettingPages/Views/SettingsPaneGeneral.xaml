@@ -194,6 +194,7 @@
 
                 <cc:Card Title="{DynamicResource lastQueryMode}" Sub="{DynamicResource lastQueryModeToolTip}">
                     <ComboBox
+                        MinWidth="210"
                         DisplayMemberPath="Display"
                         ItemsSource="{Binding LastQueryModes}"
                         SelectedValue="{Binding Settings.LastQueryMode}"
