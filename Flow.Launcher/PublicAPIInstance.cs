@@ -38,20 +38,23 @@ namespace Flow.Launcher
     public class PublicAPIInstance : IPublicAPI, IRemovable
     {
         private readonly Settings _settings;
-        private readonly Internationalization _translater;
         private readonly MainViewModel _mainVM;
 
+        // Must use getter to access Application.Current.Resources.MergedDictionaries so earlier
         private Theme _theme;
         private Theme Theme => _theme ??= Ioc.Default.GetRequiredService<Theme>();
+
+        // Must use getter to avoid circular dependency
+        private Updater _updater;
+        private Updater Updater => _updater ??= Ioc.Default.GetRequiredService<Updater>();
 
         private readonly object _saveSettingsLock = new();
 
         #region Constructor
 
-        public PublicAPIInstance(Settings settings, Internationalization translater, MainViewModel mainVM)
+        public PublicAPIInstance(Settings settings, MainViewModel mainVM)
         {
             _settings = settings;
-            _translater = translater;
             _mainVM = mainVM;
             GlobalHotkey.hookedKeyboardCallback = KListener_hookedKeyboardCallback;
             WebRequest.RegisterPrefix("data", new DataWebRequestFactory());
@@ -100,8 +103,7 @@ namespace Flow.Launcher
             remove => _mainVM.VisibilityChanged -= value;
         }
 
-        // Must use Ioc.Default.GetRequiredService<Updater>() to avoid circular dependency
-        public void CheckForNewUpdate() => _ = Ioc.Default.GetRequiredService<Updater>().UpdateAppAsync(false);
+        public void CheckForNewUpdate() => _ = Updater.UpdateAppAsync(false);
 
         public void SaveAppAllSettings()
         {
@@ -178,7 +180,7 @@ namespace Flow.Launcher
 
         public void StopLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Collapsed;
 
-        public string GetTranslation(string key) => _translater.GetTranslation(key);
+        public string GetTranslation(string key) => Internationalization.GetTranslation(key);
 
         public List<PluginPair> GetAllPlugins() => PluginManager.AllPlugins.ToList();
 
@@ -433,16 +435,16 @@ namespace Flow.Launcher
             PluginManager.UninstallPluginAsync(pluginMetadata, removePluginSettings);
 
         public long StopwatchLogDebug(string className, string message, Action action, [CallerMemberName] string methodName = "") =>
-            Stopwatch.Debug($"|{className}.{methodName}|{message}", action);
+            Stopwatch.Debug(className, message, action, methodName);
 
         public Task<long> StopwatchLogDebugAsync(string className, string message, Func<Task> action, [CallerMemberName] string methodName = "") =>
-            Stopwatch.DebugAsync($"|{className}.{methodName}|{message}", action);
+            Stopwatch.DebugAsync(className, message, action, methodName);
 
         public long StopwatchLogInfo(string className, string message, Action action, [CallerMemberName] string methodName = "") =>
-            Stopwatch.Normal($"|{className}.{methodName}|{message}", action);
+            Stopwatch.Info(className, message, action, methodName);
 
         public Task<long> StopwatchLogInfoAsync(string className, string message, Func<Task> action, [CallerMemberName] string methodName = "") =>
-            Stopwatch.NormalAsync($"|{className}.{methodName}|{message}", action);
+            Stopwatch.InfoAsync(className, message, action, methodName);
 
         #endregion
 

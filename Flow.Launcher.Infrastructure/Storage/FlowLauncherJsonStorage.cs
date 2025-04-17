@@ -1,8 +1,7 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
-using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Infrastructure.Storage
@@ -11,17 +10,13 @@ namespace Flow.Launcher.Infrastructure.Storage
     {
         private static readonly string ClassName = "FlowLauncherJsonStorage";
 
-        // We should not initialize API in static constructor because it will create another API instance
-        private static IPublicAPI api = null;
-        private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
-
         public FlowLauncherJsonStorage()
         {
-            var directoryPath = Path.Combine(DataLocation.DataDirectory(), DirectoryName);
-            FilesFolders.ValidateDirectory(directoryPath);
+            DirectoryPath = Path.Combine(DataLocation.DataDirectory(), DirectoryName);
+            FilesFolders.ValidateDirectory(DirectoryPath);
 
             var filename = typeof(T).Name;
-            FilePath = Path.Combine(directoryPath, $"{filename}{FileSuffix}");
+            FilePath = Path.Combine(DirectoryPath, $"{filename}{FileSuffix}");
         }
 
         public new void Save()
@@ -32,7 +27,7 @@ namespace Flow.Launcher.Infrastructure.Storage
             }
             catch (System.Exception e)
             {
-                API.LogException(ClassName, $"Failed to save FL settings to path: {FilePath}", e);
+                Log.Exception(ClassName, $"Failed to save FL settings to path: {FilePath}", e);
             }
         }
 
@@ -44,7 +39,7 @@ namespace Flow.Launcher.Infrastructure.Storage
             }
             catch (System.Exception e)
             {
-                API.LogException(ClassName, $"Failed to save FL settings to path: {FilePath}", e);
+                Log.Exception(ClassName, $"Failed to save FL settings to path: {FilePath}", e);
             }
         }
     }

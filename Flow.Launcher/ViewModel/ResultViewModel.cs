@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Image;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 
@@ -14,6 +13,8 @@ namespace Flow.Launcher.ViewModel
 {
     public class ResultViewModel : BaseModel
     {
+        private static readonly string ClassName = nameof(ResultViewModel);
+
         private static readonly PrivateFontCollection FontCollection = new();
         private static readonly Dictionary<string, string> Fonts = new();
 
@@ -108,7 +109,6 @@ namespace Flow.Launcher.ViewModel
                 
                 return IconXY;
             }
-
         }
 
         public Visibility ShowGlyph
@@ -124,9 +124,31 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public Visibility ShowBadge
+        {
+            get
+            {
+                // If results do not allow badges, or user has disabled badges in settings,
+                // or badge icon is not available, then do not show badge
+                if (!Result.ShowBadge || !Settings.ShowBadges || !BadgeIconAvailable)
+                    return Visibility.Collapsed;
+
+                // If user has set to show badges only for global results, and this is not a global result,
+                // then do not show badge
+                if (Settings.ShowBadgesGlobalOnly && !IsGlobalQuery)
+                    return Visibility.Collapsed;
+
+                return Visibility.Visible;
+            }
+        }
+
+        public bool IsGlobalQuery => string.IsNullOrEmpty(Result.OriginQuery.ActionKeyword);
+
         private bool GlyphAvailable => Glyph is not null;
 
         private bool ImgIconAvailable => !string.IsNullOrEmpty(Result.IcoPath) || Result.Icon is not null;
+
+        private bool BadgeIconAvailable => !string.IsNullOrEmpty(Result.BadgeIcoPath) || Result.BadgeIcon is not null;
 
         private bool PreviewImageAvailable => !string.IsNullOrEmpty(Result.Preview.PreviewImagePath) || Result.Preview.PreviewDelegate != null;
 
@@ -141,9 +163,11 @@ namespace Flow.Launcher.ViewModel
             : Result.SubTitleToolTip;
 
         private volatile bool _imageLoaded;
+        private volatile bool _badgeImageLoaded;
         private volatile bool _previewImageLoaded;
 
         private ImageSource _image = ImageLoader.LoadingImage;
+        private ImageSource _badgeImage = ImageLoader.LoadingImage;
         private ImageSource _previewImage = ImageLoader.LoadingImage;
 
         public ImageSource Image
@@ -159,6 +183,21 @@ namespace Flow.Launcher.ViewModel
                 return _image;
             }
             private set => _image = value;
+        }
+
+        public ImageSource BadgeImage
+        {
+            get
+            {
+                if (!_badgeImageLoaded)
+                {
+                    _badgeImageLoaded = true;
+                    _ = LoadBadgeImageAsync();
+                }
+
+                return _badgeImage;
+            }
+            private set => _badgeImage = value;
         }
 
         public ImageSource PreviewImage
@@ -193,8 +232,8 @@ namespace Flow.Launcher.ViewModel
                 }
                 catch (Exception e)
                 {
-                    Log.Exception(
-                        $"|ResultViewModel.LoadImageInternalAsync|IcoPath is empty and exception when calling IconDelegate for result <{Result.Title}> of plugin <{Result.PluginDirectory}>",
+                    App.API.LogException(ClassName,
+                        $"IcoPath is empty and exception when calling IconDelegate for result <{Result.Title}> of plugin <{Result.PluginDirectory}>",
                         e);
                 }
             }
@@ -206,7 +245,7 @@ namespace Flow.Launcher.ViewModel
         {
             var imagePath = Result.IcoPath;
             var iconDelegate = Result.Icon;
-            if (ImageLoader.TryGetValue(imagePath, false, out ImageSource img))
+            if (ImageLoader.TryGetValue(imagePath, false, out var img))
             {
                 _image = img;
             }
@@ -217,11 +256,26 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        private async Task LoadBadgeImageAsync()
+        {
+            var badgeImagePath = Result.BadgeIcoPath;
+            var badgeIconDelegate = Result.BadgeIcon;
+            if (ImageLoader.TryGetValue(badgeImagePath, false, out var img))
+            {
+                _badgeImage = img;
+            }
+            else
+            {
+                // We need to modify the property not field here to trigger the OnPropertyChanged event
+                BadgeImage = await LoadImageInternalAsync(badgeImagePath, badgeIconDelegate, false).ConfigureAwait(false);
+            }
+        }
+
         private async Task LoadPreviewImageAsync()
         {
             var imagePath = Result.Preview.PreviewImagePath ?? Result.IcoPath;
             var iconDelegate = Result.Preview.PreviewDelegate ?? Result.Icon;
-            if (ImageLoader.TryGetValue(imagePath, true, out ImageSource img))
+            if (ImageLoader.TryGetValue(imagePath, true, out var img))
             {
                 _previewImage = img;
             }

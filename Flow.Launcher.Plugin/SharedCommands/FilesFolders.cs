@@ -264,12 +264,12 @@ namespace Flow.Launcher.Plugin.SharedCommands
             var index = path.LastIndexOf('\\');
             if (index > 0 && index < (path.Length - 1))
             {
-                string previousDirectoryPath = path.Substring(0, index + 1);
-                return locationExists(previousDirectoryPath) ? previousDirectoryPath : "";
+                string previousDirectoryPath = path[..(index + 1)];
+                return locationExists(previousDirectoryPath) ? previousDirectoryPath : string.Empty;
             }
             else
             {
-                return "";
+                return string.Empty;
             }
         }
 
@@ -285,7 +285,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 // not full path, get previous level directory string
                 var indexOfSeparator = path.LastIndexOf('\\');
 
-                return path.Substring(0, indexOfSeparator + 1);
+                return path[..(indexOfSeparator + 1)];
             }
 
             return path;

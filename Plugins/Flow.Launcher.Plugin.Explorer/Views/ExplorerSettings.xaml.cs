@@ -1,11 +1,10 @@
-﻿using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
-using Flow.Launcher.Plugin.Explorer.ViewModels;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
+using Flow.Launcher.Plugin.Explorer.ViewModels;
 using DataFormats = System.Windows.DataFormats;
 using DragDropEffects = System.Windows.DragDropEffects;
 using DragEventArgs = System.Windows.DragEventArgs;
@@ -18,9 +17,6 @@ namespace Flow.Launcher.Plugin.Explorer.Views
     public partial class ExplorerSettings
     {
         private readonly SettingsViewModel viewModel;
-
-        private List<ActionKeywordModel> actionKeywordsListView;
-
 
         public ExplorerSettings(SettingsViewModel viewModel)
         {
@@ -38,8 +34,6 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             lbxExcludedPaths.Items.SortDescriptions.Add(new SortDescription("Path", ListSortDirection.Ascending));
         }
-
-
 
         private void AccessLinkDragDrop(string containerName, DragEventArgs e)
         {
