@@ -1257,7 +1257,7 @@ namespace Flow.Launcher.ViewModel
 
                 if (_updateSource.Token.IsCancellationRequested)
                 {
-                    App.API.LogDebug(ClassName, $"Cancel for QueryText: {query.RawQuery}");
+                    App.API.LogDebug(ClassName, $"Cancel for QueryText 1: {query.RawQuery}");
                     return;
                 }
 
@@ -1334,7 +1334,7 @@ namespace Flow.Launcher.ViewModel
 
                 if (_updateSource.Token.IsCancellationRequested)
                 {
-                    App.API.LogDebug(ClassName, $"Cancel for QueryText: {QueryText}");
+                    App.API.LogDebug(ClassName, $"Cancel for QueryText 2: {QueryText}");
                     return;
                 }
 
@@ -1367,7 +1367,7 @@ namespace Flow.Launcher.ViewModel
 
                     if (_updateSource.Token.IsCancellationRequested)
                     {
-                        App.API.LogDebug(ClassName, $"Cancel for QueryText: {QueryText}");
+                        App.API.LogDebug(ClassName, $"Cancel for QueryText 3: {QueryText}");
                         return;
                     }
                 }
@@ -1380,7 +1380,7 @@ namespace Flow.Launcher.ViewModel
 
                 if (_updateSource.Token.IsCancellationRequested)
                 {
-                    App.API.LogDebug(ClassName, $"Cancel for QueryText: {query.RawQuery}");
+                    App.API.LogDebug(ClassName, $"Cancel for QueryText 4: {query.RawQuery}");
                     return;
                 }
 
@@ -1405,7 +1405,7 @@ namespace Flow.Launcher.ViewModel
 
                 if (_updateSource.Token.IsCancellationRequested)
                 {
-                    App.API.LogDebug(ClassName, $"Cancel for QueryText: {query.RawQuery}");
+                    App.API.LogDebug(ClassName, $"Cancel for QueryText 5: {query.RawQuery}");
                     return;
                 }
 
