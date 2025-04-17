@@ -1619,7 +1619,32 @@ namespace Flow.Launcher.ViewModel
 
         public void Show()
         {
-            ShowWindow();
+            // When application is exiting, the Application.Current will be null
+            Application.Current?.Dispatcher.Invoke(() =>
+            {
+                // When application is exiting, the Application.Current will be null
+                if (Application.Current?.MainWindow is MainWindow mainWindow)
+                {
+                    // 📌 Remove DWM Cloak (Make the window visible normally)
+                    Win32Helper.DWMSetCloakForWindow(mainWindow, false);
+
+                    // Set clock and search icon opacity
+                    var opacity = Settings.UseAnimation ? 0.0 : 1.0;
+                    ClockPanelOpacity = opacity;
+                    SearchIconOpacity = opacity;
+
+                    // Set clock and search icon visibility
+                    ClockPanelVisibility = string.IsNullOrEmpty(QueryText) ? Visibility.Visible : Visibility.Collapsed;
+                    if (PluginIconSource != null)
+                    {
+                        SearchIconOpacity = 0.0;
+                    }
+                    else
+                    {
+                        SearchIconVisibility = Visibility.Visible;
+                    }
+                }
+            }, DispatcherPriority.Render);
 
             // Update WPF properties
             MainWindowVisibility = Visibility.Visible;
@@ -1630,43 +1655,6 @@ namespace Flow.Launcher.ViewModel
             if (StartWithEnglishMode)
             {
                 Win32Helper.SwitchToEnglishKeyboardLayout(true);
-            }
-        }
-
-        private void ShowWindow()
-        {
-            // When application is exiting, the Application.Current will be null
-            if (Application.Current == null) return;
-
-            // Must check access so that we will not block the UI thread which causes window visibility issue
-            if (!Application.Current.Dispatcher.CheckAccess())
-            {
-                // When application is exiting, the Application.Current will be null
-                Application.Current?.Dispatcher.Invoke(ShowWindow, DispatcherPriority.Render);
-                return;
-            }
-
-            // When application is exiting, the Application.Current will be null
-            if (Application.Current?.MainWindow is MainWindow mainWindow)
-            {
-                // 📌 Remove DWM Cloak (Make the window visible normally)
-                Win32Helper.DWMSetCloakForWindow(mainWindow, false);
-
-                // Set clock and search icon opacity
-                var opacity = Settings.UseAnimation ? 0.0 : 1.0;
-                ClockPanelOpacity = opacity;
-                SearchIconOpacity = opacity;
-
-                // Set clock and search icon visibility
-                ClockPanelVisibility = string.IsNullOrEmpty(QueryText) ? Visibility.Visible : Visibility.Collapsed;
-                if (PluginIconSource != null)
-                {
-                    SearchIconOpacity = 0.0;
-                }
-                else
-                {
-                    SearchIconVisibility = Visibility.Visible;
-                }
             }
         }
 
@@ -1706,7 +1694,29 @@ namespace Flow.Launcher.ViewModel
                     break;
             }
 
-            HideWindow();
+            // When application is exiting, the Application.Current will be null
+            Application.Current?.Dispatcher.Invoke(() =>
+            {
+                // When application is exiting, the Application.Current will be null
+                if (Application.Current?.MainWindow is MainWindow mainWindow)
+                {
+                    // Set clock and search icon opacity
+                    var opacity = Settings.UseAnimation ? 0.0 : 1.0;
+                    ClockPanelOpacity = opacity;
+                    SearchIconOpacity = opacity;
+
+                    // Set clock and search icon visibility
+                    ClockPanelVisibility = Visibility.Hidden;
+                    SearchIconVisibility = Visibility.Hidden;
+
+                    // Force UI update
+                    mainWindow.ClockPanel.UpdateLayout();
+                    mainWindow.SearchIcon.UpdateLayout();
+
+                    // 📌 Apply DWM Cloak (Completely hide the window)
+                    Win32Helper.DWMSetCloakForWindow(mainWindow, true);
+                }
+            }, DispatcherPriority.Render);
 
             // Switch keyboard layout
             if (StartWithEnglishMode)
@@ -1721,40 +1731,6 @@ namespace Flow.Launcher.ViewModel
             MainWindowVisibilityStatus = false;
             MainWindowVisibility = Visibility.Collapsed;
             VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = false });
-        }
-
-        private void HideWindow()
-        {
-            // When application is exiting, the Application.Current will be null
-            if (Application.Current == null) return;
-
-            // Must check access so that we will not block the UI thread which causes window visibility issue
-            if (!Application.Current.Dispatcher.CheckAccess())
-            {
-                // When application is exiting, the Application.Current will be null
-                Application.Current?.Dispatcher.Invoke(HideWindow, DispatcherPriority.Render);
-                return;
-            }
-
-            // When application is exiting, the Application.Current will be null
-            if (Application.Current?.MainWindow is MainWindow mainWindow)
-            {
-                // Set clock and search icon opacity
-                var opacity = Settings.UseAnimation ? 0.0 : 1.0;
-                ClockPanelOpacity = opacity;
-                SearchIconOpacity = opacity;
-
-                // Set clock and search icon visibility
-                ClockPanelVisibility = Visibility.Hidden;
-                SearchIconVisibility = Visibility.Hidden;
-
-                // Force UI update
-                mainWindow.ClockPanel.UpdateLayout();
-                mainWindow.SearchIcon.UpdateLayout();
-
-                // 📌 Apply DWM Cloak (Completely hide the window)
-                Win32Helper.DWMSetCloakForWindow(mainWindow, true);
-            }
         }
 
 #pragma warning restore VSTHRD100 // Avoid async void methods
