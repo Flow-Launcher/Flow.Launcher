@@ -1212,6 +1212,8 @@ namespace Flow.Launcher.ViewModel
                 await _updateLock.WaitAsync(CancellationToken.None);
                 try
                 {
+                    App.API.LogDebug(ClassName, $"Clear for QueryText: {query.RawQuery}");
+
                     // Reset results
                     Results.Clear();
                     Results.Visibility = Visibility.Collapsed;
