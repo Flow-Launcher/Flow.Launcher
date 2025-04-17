@@ -307,6 +307,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (QueryResultsSelected())
             {
+                App.API.LogDebug(ClassName, $"Search Delay: {false}, Is Requery: {true}, Reselect: {true}");
                 // When we are re-querying, we should not delay the query
                 _ = QueryResultsAsync(false, isReQuery: true);
             }
@@ -315,6 +316,7 @@ namespace Flow.Launcher.ViewModel
         public void ReQuery(bool reselect)
         {
             BackToQueryResults();
+            App.API.LogDebug(ClassName, $"Search Delay: {false}, Is Requery: {true}, Reselect: {reselect}");
             // When we are re-querying, we should not delay the query
             _ = QueryResultsAsync(false, isReQuery: true, reSelect: reselect);
         }
@@ -1077,6 +1079,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (QueryResultsSelected())
             {
+                App.API.LogDebug(ClassName, $"Search Delay: {searchDelay}, Is Requery: {isReQuery}, Reselect: {true}");
                 _ = QueryResultsAsync(searchDelay, isReQuery);
             }
             else if (ContextMenuSelected())
@@ -1093,6 +1096,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (QueryResultsSelected())
             {
+                App.API.LogDebug(ClassName, $"Search Delay: {searchDelay}, Is Requery: {isReQuery}, Reselect: {true}");
                 await QueryResultsAsync(searchDelay, isReQuery);
             }
             else if (ContextMenuSelected())
@@ -1196,22 +1200,26 @@ namespace Flow.Launcher.ViewModel
         {
             _updateSource?.Cancel();
 
+            App.API.LogDebug(ClassName, $"Query construct for QueryText: {QueryText}");
+
             var query = ConstructQuery(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
 
             if (query == null) // shortcut expanded
             {
+                App.API.LogDebug(ClassName, $"Query null for QueryText: null");
+
                 // Wait last query to be canceled and then do resetting actions
                 await _updateLock.WaitAsync(CancellationToken.None);
                 try
                 {
                     // Reset results
-                Results.Clear();
-                Results.Visibility = Visibility.Collapsed;
+                    Results.Clear();
+                    Results.Visibility = Visibility.Collapsed;
 
                     // Reset plugin icon
-                PluginIconPath = null;
-                PluginIconSource = null;
-                SearchIconVisibility = Visibility.Visible;
+                    PluginIconPath = null;
+                    PluginIconSource = null;
+                    SearchIconVisibility = Visibility.Visible;
 
                     // Reset progress bar
                     ProgressBarVisibility = Visibility.Hidden;
@@ -1226,6 +1234,8 @@ namespace Flow.Launcher.ViewModel
             // Switch to ThreadPool thread to keep UI responsive when waiting update lock
             await TaskScheduler.Default;
 
+            App.API.LogDebug(ClassName, $"Wait for QueryText: {query.RawQuery}");
+
             await _updateLock.WaitAsync(CancellationToken.None);
             try
             {
@@ -1235,13 +1245,19 @@ namespace Flow.Launcher.ViewModel
 
                 ProgressBarVisibility = Visibility.Hidden;
 
+                App.API.LogDebug(ClassName, $"Start for QueryText: {query.RawQuery}");
+                App.API.LogDebug(ClassName, $"ProgressBar: {Visibility.Hidden}");
+
                 _runningQuery = query;
 
                 // Switch to ThreadPool thread
                 await TaskScheduler.Default;
 
                 if (_updateSource.Token.IsCancellationRequested)
+                {
+                    App.API.LogDebug(ClassName, $"Cancel for QueryText: {query.RawQuery}");
                     return;
+                }
 
                 // Update the query's IsReQuery property to true if this is a re-query
                 query.IsReQuery = isReQuery;
@@ -1249,9 +1265,13 @@ namespace Flow.Launcher.ViewModel
                 // handle the exclusiveness of plugin using action keyword
                 RemoveOldQueryResults(query);
 
+                App.API.LogDebug(ClassName, $"Remove old for QueryText: {query.RawQuery}");
+
                 _lastQuery = query;
 
                 var plugins = PluginManager.ValidPluginsForQuery(query);
+
+                App.API.LogDebug(ClassName, $"Valid {plugins.Count} plugins QueryText: {query.RawQuery}");
 
                 if (plugins.Count == 1)
                 {
@@ -1278,10 +1298,14 @@ namespace Flow.Launcher.ViewModel
 
                 _ = Task.Delay(200, _updateSource.Token).ContinueWith(_ =>
                     {
+                        App.API.LogDebug(ClassName, $"Check ProgressBar for QueryText: running: {_runningQuery?.RawQuery ?? "null"} query: {query.RawQuery}");
+
                         // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
                         if (_runningQuery != null && _runningQuery == query)
                         {
                             ProgressBarVisibility = Visibility.Visible;
+
+                            App.API.LogDebug(ClassName, $"ProgressBar: {Visibility.Visible}");
                         }
                     },
                     _updateSource.Token,
@@ -1307,7 +1331,10 @@ namespace Flow.Launcher.ViewModel
                 }
 
                 if (_updateSource.Token.IsCancellationRequested)
+                {
+                    App.API.LogDebug(ClassName, $"Cancel for QueryText: {QueryText}");
                     return;
+                }
 
                 // this should happen once after all queries are done so progress bar should continue
                 // until the end of all querying
@@ -1317,10 +1344,13 @@ namespace Flow.Launcher.ViewModel
                 {
                     // update to hidden if this is still the current query
                     ProgressBarVisibility = Visibility.Hidden;
+
+                    App.API.LogDebug(ClassName, $"ProgressBar: {Visibility.Hidden}");
                 }
             }
             finally
             {
+                App.API.LogDebug(ClassName, $"Query return for QueryText: {QueryText}");
                 _updateLock.Release();
             }
 
@@ -1334,7 +1364,10 @@ namespace Flow.Launcher.ViewModel
                     await Task.Delay(searchDelayTime, _updateSource.Token);
 
                     if (_updateSource.Token.IsCancellationRequested)
+                    {
+                        App.API.LogDebug(ClassName, $"Cancel for QueryText: {QueryText}");
                         return;
+                    }
                 }
 
                 // Since it is wrapped within a ThreadPool Thread, the synchronous context is null
@@ -1344,7 +1377,10 @@ namespace Flow.Launcher.ViewModel
                 var results = await PluginManager.QueryForPluginAsync(plugin, query, _updateSource.Token);
 
                 if (_updateSource.Token.IsCancellationRequested)
+                {
+                    App.API.LogDebug(ClassName, $"Cancel for QueryText: {query.RawQuery}");
                     return;
+                }
 
                 IReadOnlyList<Result> resultsCopy;
                 if (results == null)
@@ -1366,12 +1402,19 @@ namespace Flow.Launcher.ViewModel
                 }
 
                 if (_updateSource.Token.IsCancellationRequested)
+                {
+                    App.API.LogDebug(ClassName, $"Cancel for QueryText: {query.RawQuery}");
                     return;
+                }
 
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
                     _updateSource.Token, reSelect)))
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
+                }
+                else
+                {
+                    App.API.LogDebug(ClassName, $"Write updates for QueryText: {query.RawQuery}");
                 }
             }
         }
