@@ -1345,7 +1345,7 @@ namespace Flow.Launcher.ViewModel
 
                 if (_updateSource.Token.IsCancellationRequested)
                 {
-                    Infrastructure.Logger.Log.Debug(ClassName, $"Cancel for QueryText 2: {QueryText}");
+                    Infrastructure.Logger.Log.Debug(ClassName, $"Cancel for QueryText 2: {query.RawQuery}");
                     return;
                 }
 
@@ -1363,7 +1363,7 @@ namespace Flow.Launcher.ViewModel
             }
             finally
             {
-                Infrastructure.Logger.Log.Debug(ClassName, $"Query return for QueryText: {QueryText}");
+                Infrastructure.Logger.Log.Debug(ClassName, $"Query return for QueryText: {query.RawQuery}");
                 _updateLock.Release();
             }
 
