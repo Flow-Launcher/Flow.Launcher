@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Security.Principal;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.Win32;
 using Microsoft.Win32.TaskScheduler;
 
