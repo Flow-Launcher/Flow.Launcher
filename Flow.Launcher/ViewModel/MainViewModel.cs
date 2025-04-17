@@ -1205,6 +1205,17 @@ namespace Flow.Launcher.ViewModel
                 PluginIconPath = null;
                 PluginIconSource = null;
                 SearchIconVisibility = Visibility.Visible;
+
+                // Wait last query to be canceled and hide progress bar
+                await _updateLock.WaitAsync(CancellationToken.None);
+                try
+                {
+                    ProgressBarVisibility = Visibility.Hidden;
+                }
+                finally
+                {
+                    _updateLock.Release();
+                }
                 return;
             }
 
