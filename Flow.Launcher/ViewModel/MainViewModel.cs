@@ -237,11 +237,11 @@ namespace Flow.Launcher.ViewModel
                 var plugin = (IResultUpdated)pair.Plugin;
                 plugin.ResultsUpdated += (s, e) =>
                 {
-                    App.API.LogDebug(ClassName, ClassName, $"Call IResultsUpdated for QueryText: {e.Query.RawQuery}");
+                    Infrastructure.Logger.Log.Debug(ClassName, ClassName, $"Call IResultsUpdated for QueryText: {e.Query.RawQuery}");
 
                     if (_runningQuery == null || e.Query.RawQuery != _runningQuery.RawQuery || e.Token.IsCancellationRequested)
                     {
-                        App.API.LogDebug(ClassName, $"Cancel for QueryText 6: {e.Query.RawQuery}");
+                        Infrastructure.Logger.Log.Debug(ClassName, $"Cancel for QueryText 6: {e.Query.RawQuery}");
                         return;
                     }
 
@@ -262,7 +262,7 @@ namespace Flow.Launcher.ViewModel
 
                     if (_runningQuery == null || e.Query.RawQuery != _runningQuery.RawQuery || token.IsCancellationRequested)
                     {
-                        App.API.LogDebug(ClassName, $"Cancel for QueryText 7: {e.Query.RawQuery}");
+                        Infrastructure.Logger.Log.Debug(ClassName, $"Cancel for QueryText 7: {e.Query.RawQuery}");
                         return;
                     }
 
@@ -273,7 +273,7 @@ namespace Flow.Launcher.ViewModel
                     }
                     else
                     {
-                        App.API.LogDebug(ClassName, $"Write updates for QueryText 1: {e.Query.RawQuery}");
+                        Infrastructure.Logger.Log.Debug(ClassName, $"Write updates for QueryText 1: {e.Query.RawQuery}");
                     }
                 };
             }
@@ -321,7 +321,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (QueryResultsSelected())
             {
-                App.API.LogDebug(ClassName, $"Search Delay: {false}, Is Requery: {true}, Reselect: {true}");
+                Infrastructure.Logger.Log.Debug(ClassName, $"Search Delay: {false}, Is Requery: {true}, Reselect: {true}");
                 // When we are re-querying, we should not delay the query
                 _ = QueryResultsAsync(false, isReQuery: true);
             }
@@ -330,7 +330,7 @@ namespace Flow.Launcher.ViewModel
         public void ReQuery(bool reselect)
         {
             BackToQueryResults();
-            App.API.LogDebug(ClassName, $"Search Delay: {false}, Is Requery: {true}, Reselect: {reselect}");
+            Infrastructure.Logger.Log.Debug(ClassName, $"Search Delay: {false}, Is Requery: {true}, Reselect: {reselect}");
             // When we are re-querying, we should not delay the query
             _ = QueryResultsAsync(false, isReQuery: true, reSelect: reselect);
         }
@@ -1093,7 +1093,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (QueryResultsSelected())
             {
-                App.API.LogDebug(ClassName, $"Search Delay: {searchDelay}, Is Requery: {isReQuery}, Reselect: {true}");
+                Infrastructure.Logger.Log.Debug(ClassName, $"Search Delay: {searchDelay}, Is Requery: {isReQuery}, Reselect: {true}");
                 _ = QueryResultsAsync(searchDelay, isReQuery);
             }
             else if (ContextMenuSelected())
@@ -1110,7 +1110,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (QueryResultsSelected())
             {
-                App.API.LogDebug(ClassName, $"Search Delay: {searchDelay}, Is Requery: {isReQuery}, Reselect: {true}");
+                Infrastructure.Logger.Log.Debug(ClassName, $"Search Delay: {searchDelay}, Is Requery: {isReQuery}, Reselect: {true}");
                 await QueryResultsAsync(searchDelay, isReQuery);
             }
             else if (ContextMenuSelected())
@@ -1214,19 +1214,19 @@ namespace Flow.Launcher.ViewModel
         {
             _updateSource?.Cancel();
 
-            App.API.LogDebug(ClassName, $"Query construct for QueryText: {QueryText}");
+            Infrastructure.Logger.Log.Debug(ClassName, $"Query construct for QueryText: {QueryText}");
 
             var query = ConstructQuery(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
 
             if (query == null) // shortcut expanded
             {
-                App.API.LogDebug(ClassName, $"Query null for QueryText");
+                Infrastructure.Logger.Log.Debug(ClassName, $"Query null for QueryText");
 
                 // Wait last query to be canceled and then do resetting actions
                 await _updateLock.WaitAsync(CancellationToken.None);
                 try
                 {
-                    App.API.LogDebug(ClassName, $"Clear for QueryText");
+                    Infrastructure.Logger.Log.Debug(ClassName, $"Clear for QueryText");
 
                     // Reset results
                     Results.Clear();
@@ -1247,7 +1247,7 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
-            App.API.LogDebug(ClassName, $"Wait for QueryText: {query.RawQuery}");
+            Infrastructure.Logger.Log.Debug(ClassName, $"Wait for QueryText: {query.RawQuery}");
 
             await _updateLock.WaitAsync(CancellationToken.None);
             try
@@ -1258,8 +1258,8 @@ namespace Flow.Launcher.ViewModel
 
                 ProgressBarVisibility = Visibility.Hidden;
 
-                App.API.LogDebug(ClassName, $"Start for QueryText: {query.RawQuery}");
-                App.API.LogDebug(ClassName, $"ProgressBar: {Visibility.Hidden}");
+                Infrastructure.Logger.Log.Debug(ClassName, $"Start for QueryText: {query.RawQuery}");
+                Infrastructure.Logger.Log.Debug(ClassName, $"ProgressBar: {Visibility.Hidden}");
 
                 _runningQuery = query;
 
@@ -1268,7 +1268,7 @@ namespace Flow.Launcher.ViewModel
 
                 if (_updateSource.Token.IsCancellationRequested)
                 {
-                    App.API.LogDebug(ClassName, $"Cancel for QueryText 1: {query.RawQuery}");
+                    Infrastructure.Logger.Log.Debug(ClassName, $"Cancel for QueryText 1: {query.RawQuery}");
                     return;
                 }
 
@@ -1278,13 +1278,13 @@ namespace Flow.Launcher.ViewModel
                 // handle the exclusiveness of plugin using action keyword
                 RemoveOldQueryResults(query);
 
-                App.API.LogDebug(ClassName, $"Remove old for QueryText: {query.RawQuery}");
+                Infrastructure.Logger.Log.Debug(ClassName, $"Remove old for QueryText: {query.RawQuery}");
 
                 _lastQuery = query;
 
                 var plugins = PluginManager.ValidPluginsForQuery(query);
 
-                App.API.LogDebug(ClassName, $"Valid {plugins.Count} plugins QueryText: {query.RawQuery}");
+                Infrastructure.Logger.Log.Debug(ClassName, $"Valid {plugins.Count} plugins QueryText: {query.RawQuery}");
 
                 if (plugins.Count == 1)
                 {
@@ -1311,14 +1311,14 @@ namespace Flow.Launcher.ViewModel
 
                 _ = Task.Delay(200, _updateSource.Token).ContinueWith(_ =>
                     {
-                        App.API.LogDebug(ClassName, $"Check ProgressBar for QueryText: running: {_runningQuery?.RawQuery ?? "null"} query: {query.RawQuery}");
+                        Infrastructure.Logger.Log.Debug(ClassName, $"Check ProgressBar for QueryText: running: {_runningQuery?.RawQuery ?? "null"} query: {query.RawQuery}");
 
                         // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
                         if (_runningQuery != null && _runningQuery == query)
                         {
                             ProgressBarVisibility = Visibility.Visible;
 
-                            App.API.LogDebug(ClassName, $"ProgressBar: {Visibility.Visible}");
+                            Infrastructure.Logger.Log.Debug(ClassName, $"ProgressBar: {Visibility.Visible}");
                         }
                     },
                     _updateSource.Token,
@@ -1345,7 +1345,7 @@ namespace Flow.Launcher.ViewModel
 
                 if (_updateSource.Token.IsCancellationRequested)
                 {
-                    App.API.LogDebug(ClassName, $"Cancel for QueryText 2: {QueryText}");
+                    Infrastructure.Logger.Log.Debug(ClassName, $"Cancel for QueryText 2: {QueryText}");
                     return;
                 }
 
@@ -1358,12 +1358,12 @@ namespace Flow.Launcher.ViewModel
                     // update to hidden if this is still the current query
                     ProgressBarVisibility = Visibility.Hidden;
 
-                    App.API.LogDebug(ClassName, $"ProgressBar: {Visibility.Hidden}");
+                    Infrastructure.Logger.Log.Debug(ClassName, $"ProgressBar: {Visibility.Hidden}");
                 }
             }
             finally
             {
-                App.API.LogDebug(ClassName, $"Query return for QueryText: {QueryText}");
+                Infrastructure.Logger.Log.Debug(ClassName, $"Query return for QueryText: {QueryText}");
                 _updateLock.Release();
             }
 
@@ -1378,7 +1378,7 @@ namespace Flow.Launcher.ViewModel
 
                     if (token.IsCancellationRequested)
                     {
-                        App.API.LogDebug(ClassName, $"Cancel for QueryText 3: {QueryText}");
+                        Infrastructure.Logger.Log.Debug(ClassName, $"Cancel for QueryText 3: {QueryText}");
                         return;
                     }
                 }
@@ -1391,7 +1391,7 @@ namespace Flow.Launcher.ViewModel
 
                 if (token.IsCancellationRequested)
                 {
-                    App.API.LogDebug(ClassName, $"Cancel for QueryText 4: {query.RawQuery}");
+                    Infrastructure.Logger.Log.Debug(ClassName, $"Cancel for QueryText 4: {query.RawQuery}");
                     return;
                 }
 
@@ -1416,7 +1416,7 @@ namespace Flow.Launcher.ViewModel
 
                 if (token.IsCancellationRequested)
                 {
-                    App.API.LogDebug(ClassName, $"Cancel for QueryText 5: {query.RawQuery}");
+                    Infrastructure.Logger.Log.Debug(ClassName, $"Cancel for QueryText 5: {query.RawQuery}");
                     return;
                 }
 
@@ -1427,7 +1427,7 @@ namespace Flow.Launcher.ViewModel
                 }
                 else
                 {
-                    App.API.LogDebug(ClassName, $"Write updates for QueryText: {query.RawQuery}");
+                    Infrastructure.Logger.Log.Debug(ClassName, $"Write updates for QueryText: {query.RawQuery}");
                 }
             }
         }
