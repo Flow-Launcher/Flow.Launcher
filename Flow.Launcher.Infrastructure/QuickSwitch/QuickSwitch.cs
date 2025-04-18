@@ -160,6 +160,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         private static void NavigateDialogPath(HWND dialog, Action action = null)
         {
+            if (dialog == HWND.Null || GetWindowClassName(dialog) != DialogWindowClassName) return;
+
             object document = null;
             try
             {
