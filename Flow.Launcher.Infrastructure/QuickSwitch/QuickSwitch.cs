@@ -163,12 +163,15 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             object document = null;
             try
             {
-                if (_lastExplorerView != null)
+                lock (_lastExplorerViewLock)
                 {
-                    // Use dynamic here because using IWebBrower2.Document can cause exception here:
-                    // System.Runtime.InteropServices.InvalidOleVariantTypeException: 'Specified OLE variant is invalid.'
-                    dynamic explorerView = _lastExplorerView;
-                    document = explorerView.Document;
+                    if (_lastExplorerView != null)
+                    {
+                        // Use dynamic here because using IWebBrower2.Document can cause exception here:
+                        // System.Runtime.InteropServices.InvalidOleVariantTypeException: 'Specified OLE variant is invalid.'
+                        dynamic explorerView = _lastExplorerView;
+                        document = explorerView.Document;
+                    }
                 }
             }
             catch (COMException)
