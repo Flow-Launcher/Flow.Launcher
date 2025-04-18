@@ -98,7 +98,7 @@ namespace Flow.Launcher
 
         private void ContentFrame_Loaded(object sender, RoutedEventArgs e)
         {
-            ContentFrame.Navigate(PageTypeSelector(_viewModel.CurrentPage));
+            ContentFrame.Navigate(PageTypeSelector(WelcomePage.Intro)); /* Set First Page */
         }
 
         private void Window_Closed(object sender, EventArgs e)
