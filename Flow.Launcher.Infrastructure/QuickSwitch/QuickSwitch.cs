@@ -410,22 +410,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             uint dwmsEventTime
         )
         {
-            try
-            {
-                // If the explorer window is destroyed, set _lastExplorerView to null
-                lock (_lastExplorerViewLock)
-                {
-                    if (_lastExplorerView != null && _lastExplorerView.HWND == hwnd.Value)
-                    {
-                        _lastExplorerView = null;
-                    }
-                }
-            }
-            catch (COMException)
-            {
-                // Ignored
-            }
-
             // If the dialog window is destroyed, set _dialogWindowHandle to null
             if (_dialogWindowHandle != HWND.Null && _dialogWindowHandle == hwnd)
             {
