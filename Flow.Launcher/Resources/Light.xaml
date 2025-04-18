@@ -107,6 +107,7 @@
     <SolidColorBrush x:Key="RadioButtonCardBackground" Color="#f3f3f3" />
     <SolidColorBrush x:Key="RadioButtonCardBorderHover" Color="#DBDBDB" />
     <SolidColorBrush x:Key="RadioButtonCardBackgroundHover" Color="#ECECEC" />
+    <SolidColorBrush x:Key="RadioButtonCardTextSelected" Color="#ffffff" />
     <!--  Resources for HotkeyControl  -->
     <SolidColorBrush x:Key="CustomHotkeyHover" Color="#f6f6f6" />
     <!--  Resources for Expander  -->

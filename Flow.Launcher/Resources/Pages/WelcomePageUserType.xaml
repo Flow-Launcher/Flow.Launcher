@@ -19,7 +19,7 @@
             <Setter Property="Foreground" Value="{DynamicResource Color04B}" />
             <Style.Triggers>
                 <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource AncestorType=RadioButton}}" Value="True">
-                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="Foreground" Value="{DynamicResource RadioButtonCardTextSelected}" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -61,7 +61,6 @@
                                         x:Name="Desc"
                                         Margin="0 8 0 0"
                                         FontSize="14"
-                                        Foreground="{DynamicResource Color05B}"
                                         Text="{Binding Tag.Description1, RelativeSource={RelativeSource TemplatedParent}}"
                                         TextWrapping="Wrap" />
 
@@ -71,6 +70,7 @@
                                             <TextBlock
                                                 Margin="0 0 8 0"
                                                 VerticalAlignment="Top"
+                                                Style="{StaticResource BulletTextBlockStyle}"
                                                 Text="•" />
                                         </BulletDecorator.Bullet>
                                         <TextBlock
@@ -86,6 +86,7 @@
                                             <TextBlock
                                                 Margin="0 0 8 0"
                                                 VerticalAlignment="Top"
+                                                Style="{StaticResource BulletTextBlockStyle}"
                                                 Text="•" />
                                         </BulletDecorator.Bullet>
                                         <TextBlock
@@ -101,6 +102,7 @@
                                             <TextBlock
                                                 Margin="0 0 8 0"
                                                 VerticalAlignment="Top"
+                                                Style="{StaticResource BulletTextBlockStyle}"
                                                 Text="•" />
                                         </BulletDecorator.Bullet>
                                         <TextBlock
@@ -117,18 +119,23 @@
                             <Trigger Property="IsChecked" Value="True">
                                 <Setter TargetName="CardBorder" Property="Background" Value="{DynamicResource BasicSystemAccentColor}" />
                                 <Setter TargetName="CardBorder" Property="BorderBrush" Value="{DynamicResource SystemControlHighlightTransparentBrush}" />
-                                <Setter TargetName="TitleText" Property="Foreground" Value="White" />
-                                <Setter TargetName="IconText" Property="Foreground" Value="White" />
+                                <Setter TargetName="TitleText" Property="Foreground" Value="{DynamicResource RadioButtonCardTextSelected}" />
+                                <Setter TargetName="IconText" Property="Foreground" Value="{DynamicResource RadioButtonCardTextSelected}" />
+                                <Setter TargetName="Desc" Property="Foreground" Value="{DynamicResource RadioButtonCardTextSelected}" />
                             </Trigger>
                             <Trigger Property="IsChecked" Value="False">
                                 <Setter TargetName="TitleText" Property="Foreground" Value="{DynamicResource Color05B}" />
                                 <Setter TargetName="IconText" Property="Foreground" Value="{DynamicResource Color05B}" />
                                 <Setter TargetName="Desc" Property="Foreground" Value="{DynamicResource Color05B}" />
                             </Trigger>
-                            <Trigger Property="IsMouseOver" Value="True">
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True" />
+                                    <Condition Property="IsChecked" Value="False" />
+                                </MultiTrigger.Conditions>
                                 <Setter TargetName="CardBorder" Property="BorderBrush" Value="{DynamicResource RadioButtonCardBorderHover}" />
                                 <Setter TargetName="CardBorder" Property="Background" Value="{DynamicResource RadioButtonCardBackgroundHover}" />
-                            </Trigger>
+                            </MultiTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
