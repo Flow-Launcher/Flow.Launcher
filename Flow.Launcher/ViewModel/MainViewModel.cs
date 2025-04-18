@@ -1584,7 +1584,12 @@ namespace Flow.Launcher.ViewModel
         public bool IsQuickSwitch { get; private set; }
         public nint DialogWindowHandle { get; private set; } = nint.Zero;
         
-        private bool PreviousMainWindowVisibilityStatus { get; set; } = true;
+        private bool PreviousMainWindowVisibilityStatus { get; set; }
+
+        public void InitializeVisibilityStatus(bool visibilityStatus)
+        {
+            PreviousMainWindowVisibilityStatus = visibilityStatus;
+        }
 
 #pragma warning disable VSTHRD100 // Avoid async void methods
 

@@ -135,10 +135,12 @@ namespace Flow.Launcher
             if (_settings.HideOnStartup)
             {
                 _viewModel.Hide();
+                _viewModel.InitializeVisibilityStatus(false);
             }
             else
             {
                 _viewModel.Show();
+                _viewModel.InitializeVisibilityStatus(true);
             }
 
             // Show notify icon when flowlauncher is hidden
