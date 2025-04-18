@@ -204,6 +204,9 @@
     <system:String x:Key="resultItemFont">결과 제목 글꼴</system:String>
     <system:String x:Key="resultSubItemFont">결과 부제목 글꼴</system:String>
     <system:String x:Key="resetCustomize">초기화</system:String>
+    <system:String x:Key="resetCustomizeToolTip">Reset to the recommended font and size settings.</system:String>
+    <system:String x:Key="ImportThemeSize">Import Theme Size</system:String>
+    <system:String x:Key="ImportThemeSizeToolTip">If a size value intended by the theme designer is available, it will be retrieved and applied.</system:String>
     <system:String x:Key="CustomizeToolTip">사용자 지정</system:String>
     <system:String x:Key="windowMode">윈도우 모드</system:String>
     <system:String x:Key="opacity">투명도</system:String>
@@ -231,6 +234,7 @@
     <system:String x:Key="Clock">시계</system:String>
     <system:String x:Key="Date">날짜</system:String>
     <system:String x:Key="BackdropType">배경 효과 타입</system:String>
+    <system:String x:Key="BackdropInfo">The backdrop effect is not applied in the preview.</system:String>
     <system:String x:Key="BackdropTypeDisabledToolTip">Backdrop supported starting from Windows 11 build 22000 and above</system:String>
     <system:String x:Key="BackdropTypesNone">없음</system:String>
     <system:String x:Key="BackdropTypesAcrylic">아크릴</system:String>
