@@ -16,11 +16,11 @@ namespace Flow.Launcher.Core.ExternalPlugins
 {
     public record CommunityPluginSource(string ManifestFileUrl)
     {
+        private static readonly string ClassName = nameof(CommunityPluginSource);
+
         // We should not initialize API in static constructor because it will create another API instance
         private static IPublicAPI api = null;
         private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
-
-        private static readonly string ClassName = nameof(CommunityPluginSource);
 
         private string latestEtag = "";
 
@@ -70,7 +70,7 @@ namespace Flow.Launcher.Core.ExternalPlugins
                 else
                 {
                     API.LogWarn(ClassName, $"Failed to load resource {ManifestFileUrl} with response {response.StatusCode}");
-                    return plugins;
+                    return null;
                 }
             }
             catch (Exception e)
@@ -83,7 +83,7 @@ namespace Flow.Launcher.Core.ExternalPlugins
                 {
                     API.LogException(ClassName, "Error Occurred", e);
                 }
-                return plugins;
+                return null;
             }
         }
     }

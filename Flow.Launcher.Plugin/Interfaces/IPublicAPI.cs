@@ -223,11 +223,15 @@ namespace Flow.Launcher.Plugin
         Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath, Action<double> reportProgress = null, CancellationToken token = default);
 
         /// <summary>
-        /// Add ActionKeyword and update action keyword metadata for specific plugin
+        /// Add ActionKeyword and update action keyword metadata for specific plugin.
         /// Before adding, please check if action keyword is already assigned by <see cref="ActionKeywordAssigned"/>
         /// </summary>
         /// <param name="pluginId">ID for plugin that needs to add action keyword</param>
         /// <param name="newActionKeyword">The actionkeyword that is supposed to be added</param>
+        /// <remarks>
+        /// If new action keyword contains any whitespace, FL will still add it but it will not work for users.
+        /// So plugin should check the whitespace before calling this function.
+        /// </remarks>
         void AddActionKeyword(string pluginId, string newActionKeyword);
 
         /// <summary>
@@ -280,9 +284,10 @@ namespace Flow.Launcher.Plugin
         T LoadSettingJsonStorage<T>() where T : new();
 
         /// <summary>
-        /// Save JsonStorage for current plugin's setting. This is the method used to save settings to json in Flow.Launcher
+        /// Save JsonStorage for current plugin's setting. This is the method used to save settings to json in Flow.
         /// This method will save the original instance loaded with LoadJsonStorage.
-        /// This API call is for manually Save. Flow will automatically save all setting type that has called LoadSettingJsonStorage or SaveSettingJsonStorage previously.
+        /// This API call is for manually Save.
+        /// Flow will automatically save all setting type that has called <see cref="LoadSettingJsonStorage"/> or <see cref="SaveSettingJsonStorage"/> previously.
         /// </summary>
         /// <typeparam name="T">Type for Serialization</typeparam>
         /// <returns></returns>
@@ -424,9 +429,10 @@ namespace Flow.Launcher.Plugin
         Task<T> LoadCacheBinaryStorageAsync<T>(string cacheName, string cacheDirectory, T defaultData) where T : new();
 
         /// <summary>
-        /// Save BinaryStorage for current plugin's cache. This is the method used to save cache to binary in Flow.Launcher
+        /// Save BinaryStorage for current plugin's cache. This is the method used to save cache to binary in Flow.
         /// This method will save the original instance loaded with LoadCacheBinaryStorageAsync.
-        /// This API call is for manually Save. Flow will automatically save all cache type that has called LoadCacheBinaryStorageAsync or SaveCacheBinaryStorageAsync previously.
+        /// This API call is for manually Save.
+        /// Flow will automatically save all cache type that has called <see cref="LoadCacheBinaryStorageAsync"/> or <see cref="SaveCacheBinaryStorageAsync"/> previously.
         /// </summary>
         /// <typeparam name="T">Type for Serialization</typeparam>
         /// <param name="cacheName">Cache file name</param>
