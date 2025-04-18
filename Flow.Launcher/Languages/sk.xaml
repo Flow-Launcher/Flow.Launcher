@@ -113,24 +113,24 @@
     <system:String x:Key="searchDelayTimeToolTip">Čas čakania pred zobrazením výsledkov po ukončení písania. Pri vyšších hodnotách sa čaká dlhšie. (ms)</system:String>
     <system:String x:Key="KoreanImeTitle">Informácie pre kórejského používateľa IME</system:String>
     <system:String x:Key="KoreanImeGuide">
-        The Korean input method used in Windows 11 may cause some issues in Flow Launcher.
+        Kórejská metóda vstupu použitá vo Windows 11 môže spôsobiť určité problémy vo Flow Launcheri.
 
-        If you experience any problems, you may need to enable &quot;Use previous version of Korean IME&quot;.
+        Ak sa vyskytnú problémy, možno bude potrebné povoliť &quot;Použiť predchádzajúcu verziu editora Microsoft IME&quot;.
 
 
-        Open Setting in Windows 11 and go to:
+        Otvorte nastavenia Windows 11 a prejdite do:
 
-        Time &amp; Language &gt; Language &amp; Region &gt; Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility,
+        Čas a jazyk &gt; Jazyk a oblasť &gt; Kórejčina&gt; Možnosti jazyka &gt; Klávesnice – Microsoft IME &gt; Možnosti klávesnice – Kompatibilita,
 
-        and enable &quot;Use previous version of Microsoft IME&quot;.
+        a povoľte &quot;Predcházdajúca verzia editora Microsoft IME&quot;.
 
 
     </system:String>
-    <system:String x:Key="KoreanImeOpenLink">Open Language and Region System Settings</system:String>
-    <system:String x:Key="KoreanImeOpenLinkToolTip">Opens the Korean IME setting location. Go to Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility</system:String>
+    <system:String x:Key="KoreanImeOpenLink">Otvoriť nastavenia systému Jazyk a oblasť</system:String>
+    <system:String x:Key="KoreanImeOpenLinkToolTip">Otvorí okno s nastaveniami kórejského editora Microsoft IME. Prejdite do Kórejčina &gt; Možnosti jazyka &gt; Klávesnice – Microsoft IME &gt; Možnosti klávesnice – Kompatibilita</system:String>
     <system:String x:Key="KoreanImeOpenLinkButton">Otvoriť</system:String>
-    <system:String x:Key="KoreanImeRegistry">Use Previous Korean IME</system:String>
-    <system:String x:Key="KoreanImeRegistryTooltip">You can change the Previous Korean IME settings directly from here</system:String>
+    <system:String x:Key="KoreanImeRegistry">Použiť predchádzajúcu verziu editora Microsoft IME</system:String>
+    <system:String x:Key="KoreanImeRegistryTooltip">Zmeniť na predchádzajúcu verziu editora Microsoft IME môžete priamo tu</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Vyhľadať plugin</system:String>
