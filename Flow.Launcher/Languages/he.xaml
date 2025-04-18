@@ -204,6 +204,9 @@
     <system:String x:Key="resultItemFont">גופן הכותרת לתוצאה</system:String>
     <system:String x:Key="resultSubItemFont">גופן כותרת המשנה לתוצאה</system:String>
     <system:String x:Key="resetCustomize">אפס</system:String>
+    <system:String x:Key="resetCustomizeToolTip">Reset to the recommended font and size settings.</system:String>
+    <system:String x:Key="ImportThemeSize">Import Theme Size</system:String>
+    <system:String x:Key="ImportThemeSizeToolTip">If a size value intended by the theme designer is available, it will be retrieved and applied.</system:String>
     <system:String x:Key="CustomizeToolTip">התאם אישית</system:String>
     <system:String x:Key="windowMode">מצב חלון</system:String>
     <system:String x:Key="opacity">שקיפות</system:String>
@@ -231,6 +234,7 @@
     <system:String x:Key="Clock">שעון</system:String>
     <system:String x:Key="Date">תאריך</system:String>
     <system:String x:Key="BackdropType">סוג רקע</system:String>
+    <system:String x:Key="BackdropInfo">The backdrop effect is not applied in the preview.</system:String>
     <system:String x:Key="BackdropTypeDisabledToolTip">התמיכה ב-Backdrop קיימת החל מ-Windows 11 build 22000 ומעלה</system:String>
     <system:String x:Key="BackdropTypesNone">ללא</system:String>
     <system:String x:Key="BackdropTypesAcrylic">אקריליק</system:String>
