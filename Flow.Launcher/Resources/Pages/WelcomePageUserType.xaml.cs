@@ -9,6 +9,14 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace Flow.Launcher.Resources.Pages;
 
+public class RadioCardData
+{
+    public string Icon { get; set; }
+    public string Description1 { get; set; }
+    public string Bullet1 { get; set; }
+    public string Bullet2 { get; set; }
+
+}
 public partial class WelcomePageUserType
 {
     public Settings Settings { get; set; }
@@ -26,5 +34,6 @@ public partial class WelcomePageUserType
         Ioc.Default.GetRequiredService<WelcomeViewModel>().PageNum = 3;
         InitializeComponent();
     }
+
 }
 

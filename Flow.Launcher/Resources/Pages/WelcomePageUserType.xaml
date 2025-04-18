@@ -7,105 +7,142 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     Title="WelcomePageUserType"
+    Height="540"
     mc:Ignorable="d">
     <ui:Page.Resources>
-        <Style x:Key="StyleImageFadeIn" TargetType="{x:Type Image}">
-            <Setter Property="Opacity" Value="0" />
-            <Style.Triggers>
-                <!--  Fades-in the image when it becomes visible  -->
-                <Trigger Property="IsVisible" Value="True">
-                    <Trigger.EnterActions>
-                        <BeginStoryboard>
-                            <BeginStoryboard.Storyboard>
-                                <Storyboard x:Name="FadeIn">
-                                    <DoubleAnimation
-                                        Storyboard.TargetProperty="Opacity"
-                                        To="1"
-                                        Duration="0:0:2" />
-                                </Storyboard>
-                            </BeginStoryboard.Storyboard>
-                        </BeginStoryboard>
-                    </Trigger.EnterActions>
-                </Trigger>
-            </Style.Triggers>
+        <Style x:Key="RadioCardStyle" TargetType="RadioButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border
+                            x:Name="CardBorder"
+                            Padding="20"
+                            Background="{DynamicResource Color01B}"
+                            BorderBrush="{DynamicResource Color03B}"
+                            BorderThickness="1"
+                            CornerRadius="5">
+                            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center">
+                                <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                                    <!--  아이콘  -->
+                                    <TextBlock
+                                        x:Name="IconText"
+                                        Margin="0 0 8 0"
+                                        VerticalAlignment="Center"
+                                        FontFamily="/Resources/#Segoe Fluent Icons"
+                                        FontSize="24"
+                                        Text="{Binding Tag.Icon, RelativeSource={RelativeSource TemplatedParent}}" />
+
+                                    <!--  제목  -->
+                                    <TextBlock
+                                        x:Name="TitleText"
+                                        Margin="0 0 0 2"
+                                        VerticalAlignment="Center"
+                                        FontSize="16"
+                                        FontWeight="Bold"
+                                        Text="{TemplateBinding Content}" />
+                                </StackPanel>
+
+                                <!--  설명  -->
+                                <StackPanel>
+                                    <TextBlock
+                                        x:Name="Desc"
+                                        Margin="0 8 0 0"
+                                        FontSize="14"
+                                        Text="{Binding Tag.Description1, RelativeSource={RelativeSource TemplatedParent}}"
+                                        TextWrapping="Wrap" />
+
+                                    <TextBlock
+                                        x:Name="SubText1"
+                                        Margin="12 12 0 0"
+                                        FontSize="14"
+                                        TextWrapping="Wrap">
+                                        <Run FontWeight="Bold" Text="• " />
+                                        <Run Text="{Binding Tag.Bullet1, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    </TextBlock>
+
+                                    <TextBlock
+                                        x:Name="SubText2"
+                                        Margin="12 4 0 0"
+                                        FontSize="14"
+                                        TextWrapping="Wrap">
+                                        <Run FontWeight="Bold" Text="• " />
+                                        <Run Text="{Binding Tag.Bullet2, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    </TextBlock>
+
+
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="CardBorder" Property="Background" Value="{DynamicResource BasicSystemAccentColor}" />
+                                <Setter TargetName="TitleText" Property="Foreground" Value="White" />
+                                <Setter TargetName="IconText" Property="Foreground" Value="White" />
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter TargetName="TitleText" Property="Foreground" Value="{DynamicResource Color05B}" />
+                                <Setter TargetName="IconText" Property="Foreground" Value="{DynamicResource Color05B}" />
+                                <Setter TargetName="Desc" Property="Foreground" Value="{DynamicResource Color05B}" />
+                                <Setter TargetName="SubText1" Property="Foreground" Value="{DynamicResource Color04B}" />
+                                <Setter TargetName="SubText2" Property="Foreground" Value="{DynamicResource Color04B}" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="CardBorder" Property="BorderBrush" Value="#3399FF" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </ui:Page.Resources>
-    <ScrollViewer>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-            </Grid.RowDefinitions>
+    <Grid Margin="24 20 24 20" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <TextBlock
+                FontSize="20"
+                FontWeight="SemiBold"
+                Text="Pick your style" />
+            <TextBlock
+                Margin="0 10 0 15"
+                FontSize="14"
+                Text="Based on your selected style, Flow will customize the initial settings for you. This setting can be changed later."
+                TextWrapping="Wrap" />
+        </StackPanel>
+        <ScrollViewer Grid.Row="1" VerticalAlignment="Top">
+            <StackPanel>
+                <!--  CLI Style 카드 (기본 선택됨)  -->
+                <RadioButton
+                    Content="CLI Friendly"
+                    GroupName="UserTypeGroup"
+                    IsChecked="True"
+                    Style="{StaticResource RadioCardStyle}">
+                    <RadioButton.Tag>
+                        <local:RadioCardData
+                            Bullet1="TAB is used as the key to Auto Complete."
+                            Bullet2="Pressing Enter will open the path in Flow."
+                            Description1="Recommended for users familiar with the CLI or Terminal environment."
+                            Icon="&#xE756;" />
+                    </RadioButton.Tag>
+                </RadioButton>
 
-
-            <StackPanel Grid.Row="1" Margin="24 20 24 20">
-                <StackPanel>
-                    <TextBlock
-                        FontSize="20"
-                        FontWeight="SemiBold"
-                        Text="Pick your fighting style" />
-                    <TextBlock
-                        Margin="0 10 0 10"
-                        FontSize="14"
-                        Text="Based on your selected style, the CH(Cheap Human) will customize the initial settings for you"
-                        TextWrapping="Wrap" />
-                    <RadioButton
-                        Height="150"
-                        Margin="0 5 0 0"
-                        HorizontalAlignment="Stretch">
-                        <RadioButton.Template>
-                            <ControlTemplate TargetType="RadioButton">
-                                <Border
-                                    Padding="10"
-                                    BorderBrush="Black"
-                                    BorderThickness="2"
-                                    CornerRadius="10">
-                                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        <Image
-                                            Width="50"
-                                            Height="50"
-                                            HorizontalAlignment="Center"
-                                            Source="your_image.png" />
-                                        <TextBlock FontSize="18" Text="GUI Style" />
-                                        <TextBlock FontSize="13" Text="Recommended for users familiar with the Windows operating style." />
-                                        <TextBlock FontSize="13" Text="TAB is used as the key to switch between selectable options." />
-                                        <TextBlock FontSize="13" Text="Pressing Enter will open the folder." />
-                                    </StackPanel>
-                                </Border>
-                            </ControlTemplate>
-                        </RadioButton.Template>
-                    </RadioButton>
-                    <RadioButton
-                        Height="150"
-                        Margin="0 10 0 0"
-                        HorizontalAlignment="Stretch">
-                        <RadioButton.Template>
-                            <ControlTemplate TargetType="RadioButton">
-                                <Border
-                                    Padding="10"
-                                    BorderBrush="Black"
-                                    BorderThickness="2"
-                                    CornerRadius="10">
-                                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        <Image
-                                            Width="50"
-                                            Height="50"
-                                            HorizontalAlignment="Center"
-                                            Source="your_image.png" />
-                                        <TextBlock FontSize="18" Text="CLI Style" />
-                                        <TextBlock FontSize="13" Text="Recommended for users familiar with the CLI or Terminal environment." />
-                                        <TextBlock FontSize="13" Text="TAB is used as the key to Auto Complete" />
-                                        <TextBlock
-                                            HorizontalAlignment="Center"
-                                            FontSize="13"
-                                            Text="When you open a folder with Enter, it will be displayed inside Flow." />
-                                    </StackPanel>
-                                </Border>
-                            </ControlTemplate>
-                        </RadioButton.Template>
-                    </RadioButton>
-                </StackPanel>
-
+                <RadioButton
+                    Margin="0 12 0 0"
+                    Content="Windows Friendly"
+                    GroupName="UserTypeGroup"
+                    Style="{StaticResource RadioCardStyle}">
+                    <RadioButton.Tag>
+                        <local:RadioCardData
+                            Bullet1="TAB is used as the key to switch between selectable options. Autocomplete will be ALT+RIGHT"
+                            Bullet2="Pressing Enter will open the folder."
+                            Description1="Recommended for users familiar with the Windows operating style."
+                            Icon="&#xE961;" />
+                    </RadioButton.Tag>
+                </RadioButton>
             </StackPanel>
-        </Grid>
-    </ScrollViewer>
+        </ScrollViewer>
+    </Grid>
 </ui:Page>
