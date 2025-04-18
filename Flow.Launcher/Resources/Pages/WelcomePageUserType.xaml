@@ -12,7 +12,6 @@
     mc:Ignorable="d">
 
     <ui:Page.Resources>
-
         <converters:NullToVisibilityConverter x:Key="NullToVisibility" />
         <Style x:Key="BulletTextBlockStyle" TargetType="TextBlock">
             <Setter Property="FontSize" Value="14" />
@@ -53,7 +52,6 @@
                                         Text="{TemplateBinding Content}" />
                                 </StackPanel>
 
-                                <!--  설명 및 bullet 목록  -->
                                 <StackPanel>
                                     <TextBlock
                                         x:Name="Desc"
@@ -62,7 +60,6 @@
                                         Text="{Binding Tag.Description1, RelativeSource={RelativeSource TemplatedParent}}"
                                         TextWrapping="Wrap" />
 
-                                    <!--  Bullet 1  -->
                                     <BulletDecorator Margin="12 12 0 0" Visibility="{Binding Tag.Bullet1, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NullToVisibility}}">
                                         <BulletDecorator.Bullet>
                                             <TextBlock
@@ -78,7 +75,6 @@
                                             TextWrapping="Wrap" />
                                     </BulletDecorator>
 
-                                    <!--  Bullet 2  -->
                                     <BulletDecorator Margin="12 4 0 0" Visibility="{Binding Tag.Bullet2, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NullToVisibility}}">
                                         <BulletDecorator.Bullet>
                                             <TextBlock
@@ -94,7 +90,6 @@
                                             TextWrapping="Wrap" />
                                     </BulletDecorator>
 
-                                    <!--  Bullet 3  -->
                                     <BulletDecorator Margin="12 4 0 0" Visibility="{Binding Tag.Bullet3, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NullToVisibility}}">
                                         <BulletDecorator.Bullet>
                                             <TextBlock
@@ -161,7 +156,7 @@
 
         <ScrollViewer Grid.Row="1" VerticalAlignment="Top">
             <StackPanel>
-                <!--  CLI 카드  -->
+                <!--  CLI Radio  -->
                 <RadioButton
                     Content="{DynamicResource Welcome_Page_UserType_CLI_Title}"
                     GroupName="UserTypeGroup"
@@ -175,8 +170,7 @@
                             Icon="&#xE756;" />
                     </RadioButton.Tag>
                 </RadioButton>
-
-                <!--  Windows 카드 (Bullet 3개)  -->
+                <!--  GUI Radio  -->
                 <RadioButton
                     Margin="0 12 0 0"
                     Content="{DynamicResource Welcome_Page_UserType_GUI_Title}"
