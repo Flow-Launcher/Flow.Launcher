@@ -37,7 +37,6 @@
                             CornerRadius="5">
                             <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                                    <!--  아이콘  -->
                                     <TextBlock
                                         x:Name="IconText"
                                         Margin="0 0 8 0"
@@ -45,7 +44,6 @@
                                         FontFamily="/Resources/#Segoe Fluent Icons"
                                         FontSize="24"
                                         Text="{Binding Tag.Icon, RelativeSource={RelativeSource TemplatedParent}}" />
-                                    <!--  제목  -->
                                     <TextBlock
                                         x:Name="TitleText"
                                         Margin="0 0 0 2"
@@ -153,11 +151,11 @@
             <TextBlock
                 FontSize="20"
                 FontWeight="SemiBold"
-                Text="Pick your style" />
+                Text="{DynamicResource Welcome_Page_UserType_Title}" />
             <TextBlock
                 Margin="0 10 0 15"
                 FontSize="14"
-                Text="Based on your selected style, Flow will customize the initial settings for you. This setting can be changed later."
+                Text="{DynamicResource Welcome_Page_UserType_Desc}"
                 TextWrapping="Wrap" />
         </StackPanel>
 
@@ -165,15 +163,15 @@
             <StackPanel>
                 <!--  CLI 카드  -->
                 <RadioButton
-                    Content="CLI Friendly"
+                    Content="{DynamicResource Welcome_Page_UserType_CLI_Title}"
                     GroupName="UserTypeGroup"
                     IsChecked="True"
                     Style="{StaticResource RadioCardStyle}">
                     <RadioButton.Tag>
                         <local:RadioCardData
-                            Bullet1="TAB is used as the key to Auto Complete."
-                            Bullet2="Pressing Enter will open the path in Flow."
-                            Description1="Recommended for users familiar with the CLI or Terminal environment."
+                            Bullet1="{StaticResource Welcome_Page_UserType_CLI_Sub1}"
+                            Bullet2="{StaticResource Welcome_Page_UserType_CLI_Sub2}"
+                            Description1="{StaticResource Welcome_Page_UserType_CLI_Desc}"
                             Icon="&#xE756;" />
                     </RadioButton.Tag>
                 </RadioButton>
@@ -181,15 +179,15 @@
                 <!--  Windows 카드 (Bullet 3개)  -->
                 <RadioButton
                     Margin="0 12 0 0"
-                    Content="Windows Friendly"
+                    Content="{DynamicResource Welcome_Page_UserType_GUI_Title}"
                     GroupName="UserTypeGroup"
                     Style="{StaticResource RadioCardStyle}">
                     <RadioButton.Tag>
                         <local:RadioCardData
-                            Bullet1="TAB is used as the key to switch between selectable options."
-                            Bullet2="Autocomplete will be ALT+RIGHT."
-                            Bullet3="Pressing Enter will open the folder."
-                            Description1="Recommended for users familiar with the Windows operating style."
+                            Bullet1="{StaticResource Welcome_Page_UserType_GUI_Sub1}"
+                            Bullet2="{StaticResource Welcome_Page_UserType_GUI_Sub2}"
+                            Bullet3="{StaticResource Welcome_Page_UserType_GUI_Sub3}"
+                            Description1="{StaticResource Welcome_Page_UserType_GUI_Desc}"
                             Icon="&#xE961;" />
                     </RadioButton.Tag>
                 </RadioButton>

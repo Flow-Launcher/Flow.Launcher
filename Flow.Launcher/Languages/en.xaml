@@ -44,7 +44,7 @@
     <system:String x:Key="GameMode">Game Mode</system:String>
     <system:String x:Key="GameModeToolTip">Suspend the use of Hotkeys.</system:String>
     <system:String x:Key="PositionReset">Position Reset</system:String>
-    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
+    <system:String x:Key="PositionResetToolTip">Reset search window location</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
 
     <!--  Setting General  -->
@@ -58,7 +58,7 @@
     <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Hide Flow Launcher when focus is lost</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Do not show new version notifications</system:String>
-    <system:String x:Key="SearchWindowPosition">Search Window Position</system:String>
+    <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Remember Last Position</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Monitor with Mouse Cursor</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Monitor with Focused Window</system:String>
@@ -489,6 +489,18 @@
     <system:String x:Key="Welcome_Page4_Text01">Search the web, launch applications or run various functions through Flow Launcher plugins. Certain functions start with an action keyword, and if necessary, they can be used without action keywords. Try the queries below in Flow Launcher.</system:String>
     <system:String x:Key="Welcome_Page5_Title">Let's Start Flow Launcher</system:String>
     <system:String x:Key="Welcome_Page5_Text01">Finished. Enjoy Flow Launcher. Don't forget the hotkey to start :)</system:String>
+
+    <system:String x:Key="Welcome_Page_UserType_Title">Pick your style</system:String>
+    <system:String x:Key="Welcome_Page_UserType_Desc">Based on your selected style, Flow will customize the initial settings for you. This setting can be changed later.</system:String>
+    <system:String x:Key="Welcome_Page_UserType_CLI_Title">CLI Friendly</system:String>
+    <system:String x:Key="Welcome_Page_UserType_CLI_Desc">Recommended for users familiar with the CLI or Terminal environment.</system:String>
+    <system:String x:Key="Welcome_Page_UserType_CLI_Sub1">TAB is used as the key to Auto Complete.</system:String>
+    <system:String x:Key="Welcome_Page_UserType_CLI_Sub2">Pressing Enter will open the path in Flow.</system:String>
+    <system:String x:Key="Welcome_Page_UserType_GUI_Title">Windows Friendly</system:String>
+    <system:String x:Key="Welcome_Page_UserType_GUI_Desc">Recommended for users familiar with the Windows operating style.</system:String>
+    <system:String x:Key="Welcome_Page_UserType_GUI_Sub1">TAB is used as the key to switch between selectable options.</system:String>
+    <system:String x:Key="Welcome_Page_UserType_GUI_Sub2">Auto Complete will be ALT+RIGHT.</system:String>
+    <system:String x:Key="Welcome_Page_UserType_GUI_Sub3">Pressing Enter will open the folder.</system:String>
 
     <!--  General Guide & Hotkey  -->
 
