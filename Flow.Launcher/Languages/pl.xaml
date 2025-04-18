@@ -204,6 +204,9 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="resultItemFont">Czcionka tytułu wyniku</system:String>
     <system:String x:Key="resultSubItemFont">Czcionka podtytułu wyniku</system:String>
     <system:String x:Key="resetCustomize">Resetuj</system:String>
+    <system:String x:Key="resetCustomizeToolTip">Reset to the recommended font and size settings.</system:String>
+    <system:String x:Key="ImportThemeSize">Import Theme Size</system:String>
+    <system:String x:Key="ImportThemeSizeToolTip">If a size value intended by the theme designer is available, it will be retrieved and applied.</system:String>
     <system:String x:Key="CustomizeToolTip">Personalizuj</system:String>
     <system:String x:Key="windowMode">Tryb w oknie</system:String>
     <system:String x:Key="opacity">Przeźroczystość</system:String>
@@ -231,6 +234,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="Clock">Zegar</system:String>
     <system:String x:Key="Date">Data</system:String>
     <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropInfo">The backdrop effect is not applied in the preview.</system:String>
     <system:String x:Key="BackdropTypeDisabledToolTip">Backdrop supported starting from Windows 11 build 22000 and above</system:String>
     <system:String x:Key="BackdropTypesNone">Brak</system:String>
     <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
