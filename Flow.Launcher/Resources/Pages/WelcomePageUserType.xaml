@@ -7,8 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     Title="WelcomePageUserType"
-    Width="800"
-    Height="450"
     mc:Ignorable="d">
     <ui:Page.Resources>
         <Style x:Key="StyleImageFadeIn" TargetType="{x:Type Image}">
@@ -35,79 +33,76 @@
     <ScrollViewer>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="250" />
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <Border Grid.Row="0" HorizontalAlignment="Stretch">
-                <Border.Background>
-                    <LinearGradientBrush StartPoint="1 0" EndPoint="0 1">
-                        <LinearGradientBrush.GradientStops>
-                            <GradientStop Offset="0.0" Color="#6e34a4" />
-                            <GradientStop Offset="1.0" Color="#ab58f8" />
-                        </LinearGradientBrush.GradientStops>
-                    </LinearGradientBrush>
-                </Border.Background>
-
-                <StackPanel
-                    Grid.Row="1"
-                    Margin="0"
-                    Background="{Binding PreviewBackground}">
-                    <StackPanel
-                        Margin="0 80 0 0"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Orientation="Horizontal">
-                        <Border Width="450" Style="{DynamicResource PreviewWindowBorderStyle}">
-                            <Border Style="{DynamicResource WindowRadius}">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="54" />
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <Border Grid.Row="0">
-                                        <TextBox
-                                            IsReadOnly="True"
-                                            Style="{DynamicResource QueryBoxStyle}"
-                                            Text="{DynamicResource hiThere}" />
-
-                                    </Border>
-                                    <Canvas Style="{DynamicResource SearchIconPosition}">
-                                        <Path
-                                            Margin="0"
-                                            Data="{DynamicResource SearchIconImg}"
-                                            Stretch="Fill"
-                                            Style="{DynamicResource SearchIconStyle}" />
-                                    </Canvas>
-                                </Grid>
-                            </Border>
-                        </Border>
-                    </StackPanel>
-                </StackPanel>
-            </Border>
 
             <StackPanel Grid.Row="1" Margin="24 20 24 20">
                 <StackPanel>
                     <TextBlock
                         FontSize="20"
                         FontWeight="SemiBold"
-                        Text="{DynamicResource Welcome_Page2_Title}" />
+                        Text="Pick your fighting style" />
                     <TextBlock
+                        Margin="0 10 0 10"
+                        FontSize="14"
+                        Text="Based on your selected style, the CH(Cheap Human) will customize the initial settings for you"
+                        TextWrapping="Wrap" />
+                    <RadioButton
+                        Height="150"
+                        Margin="0 5 0 0"
+                        HorizontalAlignment="Stretch">
+                        <RadioButton.Template>
+                            <ControlTemplate TargetType="RadioButton">
+                                <Border
+                                    Padding="10"
+                                    BorderBrush="Black"
+                                    BorderThickness="2"
+                                    CornerRadius="10">
+                                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Image
+                                            Width="50"
+                                            Height="50"
+                                            HorizontalAlignment="Center"
+                                            Source="your_image.png" />
+                                        <TextBlock FontSize="18" Text="GUI Style" />
+                                        <TextBlock FontSize="13" Text="Recommended for users familiar with the Windows operating style." />
+                                        <TextBlock FontSize="13" Text="TAB is used as the key to switch between selectable options." />
+                                        <TextBlock FontSize="13" Text="Pressing Enter will open the folder." />
+                                    </StackPanel>
+                                </Border>
+                            </ControlTemplate>
+                        </RadioButton.Template>
+                    </RadioButton>
+                    <RadioButton
+                        Height="150"
                         Margin="0 10 0 0"
-                        FontSize="14"
-                        Text="{DynamicResource Welcome_Page2_Text01}"
-                        TextWrapping="WrapWithOverflow" />
-                    <TextBlock
-                        Margin="0 10 0 0"
-                        FontSize="14"
-                        Text="{DynamicResource Welcome_Page2_Text02}"
-                        TextWrapping="WrapWithOverflow" />
-                    <TextBlock
-                        Margin="0 30 0 0"
-                        FontSize="14"
-                        FontWeight="SemiBold"
-                        Text="{DynamicResource flowlauncherHotkey}" />
+                        HorizontalAlignment="Stretch">
+                        <RadioButton.Template>
+                            <ControlTemplate TargetType="RadioButton">
+                                <Border
+                                    Padding="10"
+                                    BorderBrush="Black"
+                                    BorderThickness="2"
+                                    CornerRadius="10">
+                                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Image
+                                            Width="50"
+                                            Height="50"
+                                            HorizontalAlignment="Center"
+                                            Source="your_image.png" />
+                                        <TextBlock FontSize="18" Text="CLI Style" />
+                                        <TextBlock FontSize="13" Text="Recommended for users familiar with the CLI or Terminal environment." />
+                                        <TextBlock FontSize="13" Text="TAB is used as the key to Auto Complete" />
+                                        <TextBlock
+                                            HorizontalAlignment="Center"
+                                            FontSize="13"
+                                            Text="When you open a folder with Enter, it will be displayed inside Flow." />
+                                    </StackPanel>
+                                </Border>
+                            </ControlTemplate>
+                        </RadioButton.Template>
+                    </RadioButton>
                 </StackPanel>
 
             </StackPanel>
