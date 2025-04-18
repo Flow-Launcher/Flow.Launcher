@@ -2,6 +2,7 @@
     x:Class="Flow.Launcher.Resources.Pages.WelcomePageUserType"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:Flow.Launcher.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Flow.Launcher.Resources.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -9,7 +10,20 @@
     Title="WelcomePageUserType"
     Height="540"
     mc:Ignorable="d">
+
     <ui:Page.Resources>
+
+        <converters:NullToVisibilityConverter x:Key="NullToVisibility" />
+        <Style x:Key="BulletTextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Foreground" Value="{DynamicResource Color04B}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsChecked, RelativeSource={RelativeSource AncestorType=RadioButton}}" Value="True">
+                    <Setter Property="Foreground" Value="White" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
         <Style x:Key="RadioCardStyle" TargetType="RadioButton">
             <Setter Property="Template">
                 <Setter.Value>
@@ -17,8 +31,8 @@
                         <Border
                             x:Name="CardBorder"
                             Padding="20"
-                            Background="{DynamicResource Color01B}"
-                            BorderBrush="{DynamicResource Color03B}"
+                            Background="{DynamicResource RadioButtonCardBackground}"
+                            BorderBrush="{DynamicResource RadioButtonCardBorder}"
                             BorderThickness="1"
                             CornerRadius="5">
                             <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center">
@@ -31,7 +45,6 @@
                                         FontFamily="/Resources/#Segoe Fluent Icons"
                                         FontSize="24"
                                         Text="{Binding Tag.Icon, RelativeSource={RelativeSource TemplatedParent}}" />
-
                                     <!--  제목  -->
                                     <TextBlock
                                         x:Name="TitleText"
@@ -42,34 +55,60 @@
                                         Text="{TemplateBinding Content}" />
                                 </StackPanel>
 
-                                <!--  설명  -->
+                                <!--  설명 및 bullet 목록  -->
                                 <StackPanel>
                                     <TextBlock
                                         x:Name="Desc"
                                         Margin="0 8 0 0"
                                         FontSize="14"
+                                        Foreground="{DynamicResource Color05B}"
                                         Text="{Binding Tag.Description1, RelativeSource={RelativeSource TemplatedParent}}"
                                         TextWrapping="Wrap" />
 
-                                    <TextBlock
-                                        x:Name="SubText1"
-                                        Margin="12 12 0 0"
-                                        FontSize="14"
-                                        TextWrapping="Wrap">
-                                        <Run FontWeight="Bold" Text="• " />
-                                        <Run Text="{Binding Tag.Bullet1, RelativeSource={RelativeSource TemplatedParent}}" />
-                                    </TextBlock>
+                                    <!--  Bullet 1  -->
+                                    <BulletDecorator Margin="12 12 0 0" Visibility="{Binding Tag.Bullet1, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NullToVisibility}}">
+                                        <BulletDecorator.Bullet>
+                                            <TextBlock
+                                                Margin="0 0 8 0"
+                                                VerticalAlignment="Top"
+                                                Text="•" />
+                                        </BulletDecorator.Bullet>
+                                        <TextBlock
+                                            Margin="6 0 0 0"
+                                            Style="{StaticResource BulletTextBlockStyle}"
+                                            Text="{Binding Tag.Bullet1, RelativeSource={RelativeSource TemplatedParent}}"
+                                            TextWrapping="Wrap" />
+                                    </BulletDecorator>
 
-                                    <TextBlock
-                                        x:Name="SubText2"
-                                        Margin="12 4 0 0"
-                                        FontSize="14"
-                                        TextWrapping="Wrap">
-                                        <Run FontWeight="Bold" Text="• " />
-                                        <Run Text="{Binding Tag.Bullet2, RelativeSource={RelativeSource TemplatedParent}}" />
-                                    </TextBlock>
+                                    <!--  Bullet 2  -->
+                                    <BulletDecorator Margin="12 4 0 0" Visibility="{Binding Tag.Bullet2, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NullToVisibility}}">
+                                        <BulletDecorator.Bullet>
+                                            <TextBlock
+                                                Margin="0 0 8 0"
+                                                VerticalAlignment="Top"
+                                                Text="•" />
+                                        </BulletDecorator.Bullet>
+                                        <TextBlock
+                                            Margin="6 0 0 0"
+                                            Style="{StaticResource BulletTextBlockStyle}"
+                                            Text="{Binding Tag.Bullet2, RelativeSource={RelativeSource TemplatedParent}}"
+                                            TextWrapping="Wrap" />
+                                    </BulletDecorator>
 
-
+                                    <!--  Bullet 3  -->
+                                    <BulletDecorator Margin="12 4 0 0" Visibility="{Binding Tag.Bullet3, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource NullToVisibility}}">
+                                        <BulletDecorator.Bullet>
+                                            <TextBlock
+                                                Margin="0 0 8 0"
+                                                VerticalAlignment="Top"
+                                                Text="•" />
+                                        </BulletDecorator.Bullet>
+                                        <TextBlock
+                                            Margin="6 0 0 0"
+                                            Style="{StaticResource BulletTextBlockStyle}"
+                                            Text="{Binding Tag.Bullet3, RelativeSource={RelativeSource TemplatedParent}}"
+                                            TextWrapping="Wrap" />
+                                    </BulletDecorator>
                                 </StackPanel>
                             </StackPanel>
                         </Border>
@@ -77,6 +116,7 @@
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="True">
                                 <Setter TargetName="CardBorder" Property="Background" Value="{DynamicResource BasicSystemAccentColor}" />
+                                <Setter TargetName="CardBorder" Property="BorderBrush" Value="{DynamicResource SystemControlHighlightTransparentBrush}" />
                                 <Setter TargetName="TitleText" Property="Foreground" Value="White" />
                                 <Setter TargetName="IconText" Property="Foreground" Value="White" />
                             </Trigger>
@@ -84,11 +124,10 @@
                                 <Setter TargetName="TitleText" Property="Foreground" Value="{DynamicResource Color05B}" />
                                 <Setter TargetName="IconText" Property="Foreground" Value="{DynamicResource Color05B}" />
                                 <Setter TargetName="Desc" Property="Foreground" Value="{DynamicResource Color05B}" />
-                                <Setter TargetName="SubText1" Property="Foreground" Value="{DynamicResource Color04B}" />
-                                <Setter TargetName="SubText2" Property="Foreground" Value="{DynamicResource Color04B}" />
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="CardBorder" Property="BorderBrush" Value="#3399FF" />
+                                <Setter TargetName="CardBorder" Property="BorderBrush" Value="{DynamicResource RadioButtonCardBorderHover}" />
+                                <Setter TargetName="CardBorder" Property="Background" Value="{DynamicResource RadioButtonCardBackgroundHover}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -96,11 +135,13 @@
             </Setter>
         </Style>
     </ui:Page.Resources>
+
     <Grid Margin="24 20 24 20" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+
         <StackPanel Grid.Row="0">
             <TextBlock
                 FontSize="20"
@@ -112,9 +153,10 @@
                 Text="Based on your selected style, Flow will customize the initial settings for you. This setting can be changed later."
                 TextWrapping="Wrap" />
         </StackPanel>
+
         <ScrollViewer Grid.Row="1" VerticalAlignment="Top">
             <StackPanel>
-                <!--  CLI Style 카드 (기본 선택됨)  -->
+                <!--  CLI 카드  -->
                 <RadioButton
                     Content="CLI Friendly"
                     GroupName="UserTypeGroup"
@@ -129,6 +171,7 @@
                     </RadioButton.Tag>
                 </RadioButton>
 
+                <!--  Windows 카드 (Bullet 3개)  -->
                 <RadioButton
                     Margin="0 12 0 0"
                     Content="Windows Friendly"
@@ -136,8 +179,9 @@
                     Style="{StaticResource RadioCardStyle}">
                     <RadioButton.Tag>
                         <local:RadioCardData
-                            Bullet1="TAB is used as the key to switch between selectable options. Autocomplete will be ALT+RIGHT"
-                            Bullet2="Pressing Enter will open the folder."
+                            Bullet1="TAB is used as the key to switch between selectable options."
+                            Bullet2="Autocomplete will be ALT+RIGHT."
+                            Bullet3="Pressing Enter will open the folder."
                             Description1="Recommended for users familiar with the Windows operating style."
                             Icon="&#xE961;" />
                     </RadioButton.Tag>

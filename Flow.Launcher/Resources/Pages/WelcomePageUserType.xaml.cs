@@ -15,7 +15,7 @@ public class RadioCardData
     public string Description1 { get; set; }
     public string Bullet1 { get; set; }
     public string Bullet2 { get; set; }
-
+    public string Bullet3 { get; set; }
 }
 public partial class WelcomePageUserType
 {

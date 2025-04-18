@@ -110,6 +110,11 @@
     <Color x:Key="NumberBoxColor26">#ffffff</Color>
     <Color x:Key="HoverStoreGrid">#272727</Color>
 
+    <!--  Resources for RadioCard  -->
+    <SolidColorBrush x:Key="RadioButtonCardBorder" Color="#363636" />
+    <SolidColorBrush x:Key="RadioButtonCardBackground" Color="#202020" />
+    <SolidColorBrush x:Key="RadioButtonCardBorderHover" Color="#363636" />
+    <SolidColorBrush x:Key="RadioButtonCardBackgroundHover" Color="#3E3E3E" />
     <!--  Resources for HotkeyControl  -->
     <SolidColorBrush x:Key="CustomHotkeyHover" Color="#323232" />
     <!--  Resources for Expander  -->
