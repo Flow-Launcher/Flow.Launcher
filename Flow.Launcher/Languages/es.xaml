@@ -204,6 +204,9 @@
     <system:String x:Key="resultItemFont">Fuente del título del resultado</system:String>
     <system:String x:Key="resultSubItemFont">Fuente del subtítulo del resultado</system:String>
     <system:String x:Key="resetCustomize">Restablecer</system:String>
+    <system:String x:Key="resetCustomizeToolTip">Reset to the recommended font and size settings.</system:String>
+    <system:String x:Key="ImportThemeSize">Import Theme Size</system:String>
+    <system:String x:Key="ImportThemeSizeToolTip">If a size value intended by the theme designer is available, it will be retrieved and applied.</system:String>
     <system:String x:Key="CustomizeToolTip">Personaliza</system:String>
     <system:String x:Key="windowMode">Modo Ventana</system:String>
     <system:String x:Key="opacity">Opacidad</system:String>
@@ -231,6 +234,7 @@
     <system:String x:Key="Clock">Reloj</system:String>
     <system:String x:Key="Date">Fecha</system:String>
     <system:String x:Key="BackdropType">Tipo de telón de fondo</system:String>
+    <system:String x:Key="BackdropInfo">The backdrop effect is not applied in the preview.</system:String>
     <system:String x:Key="BackdropTypeDisabledToolTip">Telón de fondo compatible a partir de Windows 11 build 22000 y superiores</system:String>
     <system:String x:Key="BackdropTypesNone">Ninguno</system:String>
     <system:String x:Key="BackdropTypesAcrylic">Acrílico</system:String>
