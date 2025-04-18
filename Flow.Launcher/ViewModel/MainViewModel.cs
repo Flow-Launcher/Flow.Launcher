@@ -24,6 +24,7 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 using Microsoft.VisualStudio.Threading;
+using Windows.Win32;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -367,7 +368,7 @@ namespace Flow.Launcher.ViewModel
                     if (result is QuickSwitchResult quickSwitchResult)
                     {
                         Win32Helper.SetForegroundWindow(DialogWindowHandle);
-                        QuickSwitch.JumpToPath(quickSwitchResult.QuickSwitchPath);
+                        QuickSwitch.JumpToPath(Win32Helper.GetForegroundWindow(), quickSwitchResult.QuickSwitchPath);
                     }
                 }
             }

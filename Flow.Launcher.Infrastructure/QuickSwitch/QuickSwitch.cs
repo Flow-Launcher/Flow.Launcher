@@ -154,11 +154,11 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         {
             if (_isInitialized)
             {
-                NavigateDialogPath();
+                NavigateDialogPath(Win32Helper.GetForegroundWindowHWND());
             }
         }
 
-        private static void NavigateDialogPath(Action action = null)
+        private static void NavigateDialogPath(HWND dialog, Action action = null)
         {
             object document = null;
             try
@@ -210,12 +210,11 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 return;
             }
 
-            Log.Debug(ClassName, $"Path: {path}");
-            JumpToPath(path, action);
+            JumpToPath(dialog.Value, path, action);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD101:Avoid unsupported async delegates", Justification = "<Pending>")]
-        public static void JumpToPath(string path, Action action = null)
+        public static void JumpToPath(nint dialog, string path, Action action = null)
         {
             if (!CheckPath(path, out var isFile)) return;
 
@@ -223,7 +222,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             {
                 // Jump after flow launcher window vanished (after JumpAction returned true)
                 // and the dialog had been in the foreground.
-                var timeOut = !SpinWait.SpinUntil(() => GetWindowClassName(PInvoke.GetForegroundWindow()) == DialogWindowClassName, 1000);
+                var timeOut = !SpinWait.SpinUntil(() => Win32Helper.GetForegroundWindow() == dialog, 1000);
                 if (timeOut)
                 {
                     return;
@@ -233,23 +232,25 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 await _navigationLock.WaitAsync();
                 try
                 {
-                    var dialog = Win32Helper.GetForegroundWindowHWND();
+                    var dialogHandle = new HWND(dialog);
 
                     bool result;
                     if (isFile)
                     {
-                        result = Win32Helper.FileJump(path, dialog);
+                        result = Win32Helper.FileJump(path, dialogHandle);
+                        Log.Debug(ClassName, $"File Jump: {path}");
                     }
                     else
                     {
-                        result = Win32Helper.DirJump(path, dialog);
+                        result = Win32Helper.DirJump(path, dialogHandle);
+                        Log.Debug(ClassName, $"Dir Jump: {path}");
                     }
 
                     if (result)
                     {
                         lock (_autoSwitchedDialogsLock)
                         {
-                            _autoSwitchedDialogs.Add(dialog);
+                            _autoSwitchedDialogs.Add(dialogHandle);
                         }
                     }
                     else
@@ -347,7 +348,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     // Show quick switch window after navigating the path
                     else
                     {
-                        NavigateDialogPath(() =>
+                        NavigateDialogPath(hwnd, () =>
                         {
                             if (_settings.ShowQuickSwitchWindow)
                             {
