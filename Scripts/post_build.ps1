@@ -130,7 +130,7 @@ function Main {
         Validate-Directory $o
         Pack-Squirrel-Installer $p $v $o
 
-        Publish-Portable $o $v
+#        Publish-Portable $o $v
     }
 }
 
