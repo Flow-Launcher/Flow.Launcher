@@ -204,6 +204,9 @@
     <system:String x:Key="resultItemFont">Шрифт заголовка результату</system:String>
     <system:String x:Key="resultSubItemFont">Шрифт підзаголовка результату</system:String>
     <system:String x:Key="resetCustomize">Скинути</system:String>
+    <system:String x:Key="resetCustomizeToolTip">Reset to the recommended font and size settings.</system:String>
+    <system:String x:Key="ImportThemeSize">Import Theme Size</system:String>
+    <system:String x:Key="ImportThemeSizeToolTip">If a size value intended by the theme designer is available, it will be retrieved and applied.</system:String>
     <system:String x:Key="CustomizeToolTip">Підлаштувати</system:String>
     <system:String x:Key="windowMode">Віконний режим</system:String>
     <system:String x:Key="opacity">Прозорість</system:String>
@@ -231,6 +234,7 @@
     <system:String x:Key="Clock">Годинник</system:String>
     <system:String x:Key="Date">Дата</system:String>
     <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropInfo">The backdrop effect is not applied in the preview.</system:String>
     <system:String x:Key="BackdropTypeDisabledToolTip">Backdrop supported starting from Windows 11 build 22000 and above</system:String>
     <system:String x:Key="BackdropTypesNone">Нема</system:String>
     <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
