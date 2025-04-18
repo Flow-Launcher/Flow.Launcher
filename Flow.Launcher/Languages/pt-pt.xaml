@@ -203,6 +203,9 @@
     <system:String x:Key="resultItemFont">Tipo de letra dos títulos</system:String>
     <system:String x:Key="resultSubItemFont">Tipo de letra dos subtítulos</system:String>
     <system:String x:Key="resetCustomize">Repor</system:String>
+    <system:String x:Key="resetCustomizeToolTip">Reset to the recommended font and size settings.</system:String>
+    <system:String x:Key="ImportThemeSize">Import Theme Size</system:String>
+    <system:String x:Key="ImportThemeSizeToolTip">If a size value intended by the theme designer is available, it will be retrieved and applied.</system:String>
     <system:String x:Key="CustomizeToolTip">Personalizar</system:String>
     <system:String x:Key="windowMode">Modo da janela</system:String>
     <system:String x:Key="opacity">Opacidade</system:String>
@@ -230,6 +233,7 @@
     <system:String x:Key="Clock">Relógio</system:String>
     <system:String x:Key="Date">Data</system:String>
     <system:String x:Key="BackdropType">Tipo de fundo</system:String>
+    <system:String x:Key="BackdropInfo">The backdrop effect is not applied in the preview.</system:String>
     <system:String x:Key="BackdropTypeDisabledToolTip">Esta opção apenas está disponível em sistemas após Windows 11 Build 22000</system:String>
     <system:String x:Key="BackdropTypesNone">Nenhuma</system:String>
     <system:String x:Key="BackdropTypesAcrylic">Acrílico</system:String>
