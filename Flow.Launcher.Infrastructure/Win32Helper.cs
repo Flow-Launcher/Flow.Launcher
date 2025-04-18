@@ -116,7 +116,12 @@ namespace Flow.Launcher.Infrastructure
 
         public static nint GetForegroundWindow()
         {
-            return PInvoke.GetForegroundWindow().Value;
+            return GetForegroundWindowHWND().Value;
+        }
+
+        internal static HWND GetForegroundWindowHWND()
+        {
+            return PInvoke.GetForegroundWindow();
         }
 
         public static bool SetForegroundWindow(Window window)
@@ -621,21 +626,18 @@ namespace Flow.Launcher.Infrastructure
 
         private static readonly InputSimulator _inputSimulator = new();
 
-        public static bool FileJump(string filePath, nint dialog, bool altD = true)
+        internal static bool FileJump(string filePath, HWND dialogHandle, bool altD = true)
         {
-            return DirFileJump(Path.GetDirectoryName(filePath), filePath, dialog, altD);
+            return DirFileJump(Path.GetDirectoryName(filePath), filePath, dialogHandle, altD);
         }
 
-        public static bool DirJump(string dirPath, nint dialog, bool altD = true)
+        internal static bool DirJump(string dirPath, HWND dialogHandle, bool altD = true)
         {
-            return DirFileJump(dirPath, null, dialog, altD);
+            return DirFileJump(dirPath, null, dialogHandle, altD);
         }
 
-        private static bool DirFileJump(string dirPath, string filePath, nint dialog, bool altD = true, bool editFileName = false)
+        private static bool DirFileJump(string dirPath, string filePath, HWND dialogHandle, bool altD = true, bool editFileName = false)
         {
-            // Get the handle of the dialog window
-            var dialogHandle = new HWND(dialog);
-
             // Directly edit file name input box.
             if (editFileName)
             {
@@ -654,7 +656,7 @@ namespace Flow.Launcher.Infrastructure
 
             // Get the handle of the path input box and then set the text.
             // The window with class name "ComboBoxEx32" is not visible when the path input box is not with the keyboard focus.
-            var controlHandle = PInvoke.FindWindowEx(new(dialogHandle), HWND.Null, "WorkerW", null);
+            var controlHandle = PInvoke.FindWindowEx(dialogHandle, HWND.Null, "WorkerW", null);
             controlHandle = PInvoke.FindWindowEx(controlHandle, HWND.Null, "ReBarWindow32", null);
             controlHandle = PInvoke.FindWindowEx(controlHandle, HWND.Null, "Address Band Root", null);
             controlHandle = PInvoke.FindWindowEx(controlHandle, HWND.Null, "msctls_progress32", null);
@@ -689,7 +691,7 @@ namespace Flow.Launcher.Infrastructure
             if (!string.IsNullOrEmpty(filePath))
             {
                 // After navigating to the path, we then set the file name.
-                return DirFileJump(null, Path.GetFileName(filePath), dialog, altD, true);
+                return DirFileJump(null, Path.GetFileName(filePath), dialogHandle, altD, true);
             }
 
             return true;
