@@ -331,7 +331,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 {
                     // Check if we have already switched for this dialog
                     bool alreadySwitched;
-                    lock (_dialogWindowHandleLock)
+                    lock (_autoSwitchedDialogsLock)
                     {
                         alreadySwitched = _autoSwitchedDialogs.Contains(hwnd);
                     }
