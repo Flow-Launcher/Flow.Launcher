@@ -1590,7 +1590,9 @@ namespace Flow.Launcher.ViewModel
 
         public async void SetupQuickSwitch(nint handle)
         {
-            if (handle != nint.Zero && DialogWindowHandle != handle) // Only set once for one file dialog
+            if (handle == nint.Zero) return;
+
+            if (DialogWindowHandle != handle) // Only set once for one file dialog
             {
                 PreviousMainWindowVisibilityStatus = MainWindowVisibilityStatus;
                 DialogWindowHandle = handle;
