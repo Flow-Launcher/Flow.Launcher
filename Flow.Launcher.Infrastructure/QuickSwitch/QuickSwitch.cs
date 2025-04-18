@@ -150,7 +150,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
         }
 
-        private static void NavigateDialogPath()
+        private static void NavigateDialogPath(Action action = null)
         {
             object document = null;
             try
@@ -199,10 +199,10 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 return;
             }
 
-            JumpToPath(path);
+            JumpToPath(path, action);
         }
 
-        public static bool JumpToPath(string path)
+        public static bool JumpToPath(string path, Action action = null)
         {
             if (!CheckPath(path, out var isFile)) return false;
 
@@ -225,6 +225,9 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 {
                     Win32Helper.DirJump(path, Win32Helper.GetForegroundWindow());
                 }
+
+                // Invoke action if provided
+                action?.Invoke();
             });
             t.Start();
             return true;
@@ -272,12 +275,28 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             uint dwmsEventTime
         )
         {
-            // File dialog window is foreground
+            // File dialog window
             if (GetWindowClassName(hwnd) == DialogWindowClassName)
             {
                 lock (_dialogWindowHandleLock)
                 {
                     _dialogWindowHandle = hwnd;
+                }
+
+                // Navigate to path
+                if (_settings.AutoQuickSwitch)
+                {
+                    Win32Helper.SetForegroundWindow(hwnd);
+                    NavigateDialogPath(() =>
+                    {
+                        // Show quick switch window after path is navigated
+                        if (_settings.ShowQuickSwitchWindow)
+                        {
+                            ShowQuickSwitchWindow?.Invoke(_dialogWindowHandle.Value);
+                            _dragMoveTimer?.Start();
+                        }
+                    });
+                    return;
                 }
 
                 // Show quick switch window
@@ -286,16 +305,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     ShowQuickSwitchWindow?.Invoke(_dialogWindowHandle.Value);
                     _dragMoveTimer?.Start();
                 }
-
-                // Navigate path if needed
-                if (_settings.AutoQuickSwitch)
-                {
-                    // Showing quick switch window may bring focus
-                    Win32Helper.SetForegroundWindow(hwnd);
-                    NavigateDialogPath();
-                }
             }
-            // Quick switch window is foreground
+            // Quick switch window
             else if (hwnd == _mainWindowHandle)
             {
                 // Nothing to do
