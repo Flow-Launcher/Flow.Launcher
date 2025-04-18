@@ -516,6 +516,9 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         public static void Dispose()
         {
+            // Reset initialize flag
+            _isInitialized = false;
+
             // Dispose handle
             if (_foregroundChangeHook != null)
             {
@@ -543,6 +546,13 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             {
                 Marshal.ReleaseComObject(_lastExplorerView);
                 _lastExplorerView = null;
+            }
+
+            // Stop drag move timer
+            if (_dragMoveTimer != null)
+            {
+                _dragMoveTimer.Stop();
+                _dragMoveTimer = null;
             }
         }
     }
