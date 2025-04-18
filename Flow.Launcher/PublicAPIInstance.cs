@@ -69,8 +69,7 @@ namespace Flow.Launcher
             _mainVM.ChangeQueryText(query, requery);
         }
 
-#pragma warning disable VSTHRD100 // Avoid async void methods
-
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         public async void RestartApp()
         {
             _mainVM.Hide();
@@ -88,8 +87,6 @@ namespace Flow.Launcher
             // the project may not restart or just terminates. This is expected.
             UpdateManager.RestartApp(Constant.ApplicationFileName);
         }
-
-#pragma warning restore VSTHRD100 // Avoid async void methods
 
         public void ShowMainWindow() => _mainVM.Show();
 
@@ -145,6 +142,7 @@ namespace Flow.Launcher
             ShellCommand.Execute(startInfo);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         public async void CopyToClipboard(string stringToCopy, bool directCopy = false, bool showDefaultNotification = true)
         {
             if (string.IsNullOrEmpty(stringToCopy))
