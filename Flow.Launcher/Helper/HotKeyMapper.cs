@@ -5,7 +5,6 @@ using NHotkey;
 using NHotkey.Wpf;
 using Flow.Launcher.ViewModel;
 using ChefKeys;
-using Flow.Launcher.Infrastructure.Logger;
 using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace Flow.Launcher.Helper;

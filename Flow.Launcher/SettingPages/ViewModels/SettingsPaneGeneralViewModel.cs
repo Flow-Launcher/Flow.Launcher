@@ -48,11 +48,11 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
                 {
                     if (UseLogonTaskForStartup)
                     {
-                        AutoStartup.EnableViaLogonTask();
+                        AutoStartup.ChangeToViaLogonTask();
                     }
                     else
                     {
-                        AutoStartup.EnableViaRegistry();
+                        AutoStartup.ChangeToViaRegistry();
                     }
                 }
                 else

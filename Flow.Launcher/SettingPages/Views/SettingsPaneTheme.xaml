@@ -256,10 +256,17 @@
                                 BorderThickness="1"
                                 Style="{StaticResource SettingSeparatorStyle}" />
                             <Button
-                                Margin="8"
+                                Margin="12 8 12 4"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ImportCommand}"
+                                Content="{DynamicResource ImportThemeSize}"
+                                ToolTip="{DynamicResource ImportThemeSizeToolTip}" />
+                            <Button
+                                Margin="12 4 12 12"
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding ResetCommand}"
-                                Content="{DynamicResource resetCustomize}" />
+                                Content="{DynamicResource resetCustomize}"
+                                ToolTip="{DynamicResource resetCustomizeToolTip}" />
                         </StackPanel>
                     </ScrollViewer>
                 </Border>
@@ -305,7 +312,7 @@
                         <StackPanel VerticalAlignment="Center" DockPanel.Dock="Left">
                             <Border
                                 Width="400"
-                                Margin="40 30 0 30"
+                                Margin="40 30 0 10"
                                 SnapsToDevicePixels="True"
                                 Style="{DynamicResource PreviewWindowBorderStyle}">
                                 <Border BorderThickness="0" Style="{DynamicResource WindowRadius}">
@@ -369,6 +376,17 @@
                                         <Border x:Name="History" Visibility="Collapsed" />
                                     </Grid>
                                 </Border>
+                            </Border>
+                            <Border
+                                Margin="0 0 0 30"
+                                Padding="8 4 8 4"
+                                HorizontalAlignment="Center"
+                                Background="#89000000"
+                                CornerRadius="4">
+                                <TextBlock
+                                    FontSize="10"
+                                    Foreground="#62FFFFFF"
+                                    Text="{DynamicResource BackdropInfo}" />
                             </Border>
                         </StackPanel>
                     </DockPanel>

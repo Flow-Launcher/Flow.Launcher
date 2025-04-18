@@ -80,6 +80,7 @@
                         Width="135"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
+                        DataObject.Pasting="TextBox_Pasting"
                         PreviewKeyDown="TxtCurrentActionKeyword_OnKeyDown"
                         Text="{Binding ActionKeyword}" />
                 </StackPanel>
