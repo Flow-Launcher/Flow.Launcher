@@ -204,6 +204,9 @@
     <system:String x:Key="resultItemFont">Písmo nadpisu výsledku</system:String>
     <system:String x:Key="resultSubItemFont">Písmo podnadpisu výsledku</system:String>
     <system:String x:Key="resetCustomize">Resetovať</system:String>
+    <system:String x:Key="resetCustomizeToolTip">Reset to the recommended font and size settings.</system:String>
+    <system:String x:Key="ImportThemeSize">Import Theme Size</system:String>
+    <system:String x:Key="ImportThemeSizeToolTip">If a size value intended by the theme designer is available, it will be retrieved and applied.</system:String>
     <system:String x:Key="CustomizeToolTip">Prispôsobiť</system:String>
     <system:String x:Key="windowMode">Režim okno</system:String>
     <system:String x:Key="opacity">Nepriehľadnosť</system:String>
@@ -231,6 +234,7 @@
     <system:String x:Key="Clock">Hodiny</system:String>
     <system:String x:Key="Date">Dátum</system:String>
     <system:String x:Key="BackdropType">Typ pozadia</system:String>
+    <system:String x:Key="BackdropInfo">The backdrop effect is not applied in the preview.</system:String>
     <system:String x:Key="BackdropTypeDisabledToolTip">Backdrop je podporovaný od Windows 11 zostava 22000 a novších</system:String>
     <system:String x:Key="BackdropTypesNone">Žiadna</system:String>
     <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
