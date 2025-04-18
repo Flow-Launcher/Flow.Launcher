@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using System.Text.Json.Serialization;
 using System.Windows;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -32,8 +31,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         {
             _storage.Save();
         }
-
-        private string language = Constant.SystemLanguageCode;
+        
         private string _theme = Constant.DefaultTheme;
         public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
         public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
@@ -58,12 +56,13 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool AutoQuickSwitch { get; set; } = false;
         public bool ShowQuickSwitchWindow { get; set; } = true;
 
+        private string _language = Constant.SystemLanguageCode;
         public string Language
         {
-            get => language;
+            get => _language;
             set
             {
-                language = value;
+                _language = value;
                 OnPropertyChanged();
             }
         }
@@ -86,18 +85,18 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /* Appearance Settings. It should be separated from the setting later.*/
         public double WindowHeightSize { get; set; } = 42;
         public double ItemHeightSize { get; set; } = 58;
-        public double QueryBoxFontSize { get; set; } = 20;
+        public double QueryBoxFontSize { get; set; } = 16;
         public double ResultItemFontSize { get; set; } = 16;
         public double ResultSubItemFontSize { get; set; } = 13;
-        public string QueryBoxFont { get; set; } = FontFamily.GenericSansSerif.Name;
+        public string QueryBoxFont { get; set; } = Win32Helper.GetSystemDefaultFont();
         public string QueryBoxFontStyle { get; set; }
         public string QueryBoxFontWeight { get; set; }
         public string QueryBoxFontStretch { get; set; }
-        public string ResultFont { get; set; } = FontFamily.GenericSansSerif.Name;
+        public string ResultFont { get; set; } = Win32Helper.GetSystemDefaultFont();
         public string ResultFontStyle { get; set; }
         public string ResultFontWeight { get; set; }
         public string ResultFontStretch { get; set; }
-        public string ResultSubFont { get; set; } = FontFamily.GenericSansSerif.Name;
+        public string ResultSubFont { get; set; } = Win32Helper.GetSystemDefaultFont();
         public string ResultSubFontStyle { get; set; }
         public string ResultSubFontWeight { get; set; }
         public string ResultSubFontStretch { get; set; }
@@ -120,7 +119,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public double? SettingWindowLeft { get; set; } = null;
         public WindowState SettingWindowState { get; set; } = WindowState.Normal;
 
-        bool _showPlaceholder { get; set; } = false;
+        private bool _showPlaceholder { get; set; } = true;
         public bool ShowPlaceholder
         {
             get => _showPlaceholder;
@@ -133,7 +132,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 }
             }
         }
-        string _placeholderText { get; set; } = string.Empty;
+        private string _placeholderText { get; set; } = string.Empty;
         public string PlaceholderText
         {
             get => _placeholderText;
@@ -146,7 +145,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 }
             }
         }
-
         public int CustomExplorerIndex { get; set; } = 0;
 
         [JsonIgnore]
@@ -313,7 +311,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool StartFlowLauncherOnSystemStartup { get; set; } = false;
         public bool UseLogonTaskForStartup { get; set; } = false;
         public bool HideOnStartup { get; set; } = true;
-        bool _hideNotifyIcon { get; set; }
+        private bool _hideNotifyIcon;
         public bool HideNotifyIcon
         {
             get => _hideNotifyIcon;
