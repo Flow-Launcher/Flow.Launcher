@@ -708,7 +708,7 @@ namespace Flow.Launcher.Infrastructure
             return DirFileJump(dirPath, null, dialogHandle, altD);
         }
 
-        private static bool DirFileJump(string dirPath, string filePath, HWND dialogHandle, bool altD = true, bool editFileName = false)
+        private static unsafe bool DirFileJump(string dirPath, string filePath, HWND dialogHandle, bool altD = true, bool editFileName = false)
         {
             // Directly edit file name input box.
             if (editFileName)
@@ -719,12 +719,26 @@ namespace Flow.Launcher.Infrastructure
             // Alt-D or Ctrl-L to focus on the path input box
             if (altD)
             {
-                _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LMENU, VirtualKeyCode.VK_D);
+                _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LMENU, VirtualKeyCode.VK_D);     
             }
             else
             {
                 _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LCONTROL, VirtualKeyCode.VK_L);
             }
+            /*if (altD)
+            {
+                SendKey(dialogHandle, VIRTUAL_KEY.VK_LMENU, false);     // Press Left Alt
+                SendKey(dialogHandle, VIRTUAL_KEY.VK_D, false);         // Press D
+                SendKey(dialogHandle, VIRTUAL_KEY.VK_D, true);          // Release D
+                SendKey(dialogHandle, VIRTUAL_KEY.VK_LMENU, true);      // Release Left Alt
+            }
+            else
+            {
+                SendKey(dialogHandle, VIRTUAL_KEY.VK_LCONTROL, false);  // Press Left Ctrl
+                SendKey(dialogHandle, VIRTUAL_KEY.VK_L, false);         // Press L
+                SendKey(dialogHandle, VIRTUAL_KEY.VK_L, true);          // Release L
+                SendKey(dialogHandle, VIRTUAL_KEY.VK_LCONTROL, true);   // Release Left Ctrl
+            }*/
 
             // Get the handle of the path input box and then set the text.
             // The window with class name "ComboBoxEx32" is not visible when the path input box is not with the keyboard focus.
@@ -742,7 +756,7 @@ namespace Flow.Launcher.Infrastructure
 
             var timeOut = !SpinWait.SpinUntil(() =>
             {
-                int style = PInvoke.GetWindowLong(controlHandle, WINDOW_LONG_PTR_INDEX.GWL_STYLE);
+                var style = PInvoke.GetWindowLong(controlHandle, WINDOW_LONG_PTR_INDEX.GWL_STYLE);
                 return (style & (int)WINDOW_STYLE.WS_VISIBLE) != 0;
             }, 1000);
             if (timeOut)
@@ -756,6 +770,19 @@ namespace Flow.Launcher.Infrastructure
             {
                 return false;
             }
+
+            /*var dwMyID = PInvoke.GetCurrentThreadId();
+            var dwCurID = PInvoke.GetWindowThreadProcessId(dialogHandle);
+
+            PInvoke.AttachThreadInput(dwMyID, dwCurID, true);
+
+            var timeOut1 = !SpinWait.SpinUntil(() => PInvoke.GetFocus() == editHandle, 1000);
+            if (timeOut1)
+            {
+                return false;
+            }
+
+            PInvoke.AttachThreadInput(dwMyID, dwCurID, false);*/
 
             SetWindowText(editHandle, dirPath);
             _inputSimulator.Keyboard.KeyPress(VirtualKeyCode.RETURN);
@@ -818,6 +845,43 @@ namespace Flow.Launcher.Infrastructure
                 rect.bottom - rect.top
             );
             return true;
+        }
+
+        private static void SendKey(HWND hWnd, VIRTUAL_KEY virtualKey, bool isKeyUp)
+        {
+            // Get virtual key value
+            var virtualKeyValue = (ushort)virtualKey;
+
+            // Get scan code and extended flag
+            var scanCode = PInvoke.MapVirtualKey(virtualKeyValue, MAP_VIRTUAL_KEY_TYPE.MAPVK_VK_TO_VSC);
+
+            // Check if the key is an extended key (e.g., right Alt/Ctrl)
+            var isExtended = virtualKey == VIRTUAL_KEY.VK_RMENU || virtualKey == VIRTUAL_KEY.VK_RCONTROL;
+
+            // Create lParam
+            var lParam = CreateKeyLParam(scanCode, isExtended, isKeyUp, !isKeyUp);
+
+            // Send message
+            var message = isKeyUp ? PInvoke.WM_KEYUP : PInvoke.WM_KEYDOWN;
+            PInvoke.PostMessage(hWnd, message, virtualKeyValue, new(lParam));
+        }
+
+        private static nint CreateKeyLParam(uint scanCode, bool isExtended, bool isKeyUp, bool wasKeyDown)
+        {
+            uint lParam = 0x00000001; // Repeat count (1 keystroke)
+
+            lParam |= (scanCode << 16); // Scan code
+
+            if (isExtended)
+                lParam |= 0x01000000; // Extended key flag
+
+            if (wasKeyDown)
+                lParam |= 0x40000000; // Previous key state (1 if down before message)
+
+            if (isKeyUp)
+                lParam |= 0x80000000; // Transition state (1 for release)
+
+            return (nint)lParam;
         }
 
         #endregion
