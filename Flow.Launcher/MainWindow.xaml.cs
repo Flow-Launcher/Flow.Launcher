@@ -1170,7 +1170,8 @@ namespace Flow.Launcher
 
         private void UpdateQuickSwitchPosition()
         {
-            if (_viewModel.DialogWindowHandle == nint.Zero) return;
+            if (_viewModel.DialogWindowHandle == nint.Zero ||
+                !_viewModel.MainWindowVisibilityStatus) return;
 
             // Get dialog window rect
             var result = Win32Helper.GetWindowRect(_viewModel.DialogWindowHandle, out var window);
