@@ -59,10 +59,13 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         private static readonly SemaphoreSlim _navigationLock = new(1, 1);
 
-        private static HWINEVENTHOOK _moveSizeHook = HWINEVENTHOOK.Null;
+        // Note: Here we do not start & stop the timer beacause when there are many dialog windows
+        // Unhooking and hooking will take too much time which can make window position weird
+        // So we start & stop the timer when we find a file dialog window
+        /*private static HWINEVENTHOOK _moveSizeHook = HWINEVENTHOOK.Null;
 
         private static HWND _hookedDialogWindowHandle = HWND.Null;
-        private static readonly object _hookedDialogWindowHandleLock = new();
+        private static readonly object _hookedDialogWindowHandleLock = new();*/
 
         private static bool _isInitialized = false;
 
@@ -163,8 +166,12 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             if (_settings.ShowQuickSwitchWindow)
             {
                 ShowQuickSwitchWindow?.Invoke(_dialogWindowHandle.Value);
+                _dragMoveTimer?.Start();
 
-                lock (_hookedDialogWindowHandleLock)
+                // Note: Here we do not start & stop the timer beacause when there are many dialog windows
+                // Unhooking and hooking will take too much time which can make window position weird
+                // So we start & stop the timer when we find a file dialog window
+                /*lock (_hookedDialogWindowHandleLock)
                 {
                     var needHook = _hookedDialogWindowHandle == HWND.Null ||
                         _hookedDialogWindowHandle != _dialogWindowHandle;
@@ -191,7 +198,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     }
 
                     _hookedDialogWindowHandle = _dialogWindowHandle;
-                }
+                }*/
             }
         }
 
@@ -205,8 +212,12 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         {
             // Reset quick switch window
             ResetQuickSwitchWindow?.Invoke();
+            _dragMoveTimer?.Stop();
 
-            lock (_hookedDialogWindowHandleLock)
+            // Note: Here we do not start & stop the timer beacause when there are many dialog windows
+            // Unhooking and hooking will take too much time which can make window position weird
+            // So we start & stop the timer when we find a file dialog window
+            /*lock (_hookedDialogWindowHandleLock)
             {
                 if (!_moveSizeHook.IsNull)
                 {
@@ -215,7 +226,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 }
 
                 _hookedDialogWindowHandle = HWND.Null;
-            }
+            }*/
         }
 
         private static void InvokeHideQuickSwitchWindow()
@@ -223,6 +234,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             // Neither quick switch window nor file dialog window is foreground
             // Hide quick switch window until the file dialog window is brought to the foreground
             HideQuickSwitchWindow?.Invoke();
+            _dragMoveTimer?.Stop();
         }
 
         #endregion
@@ -354,7 +366,10 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
         }
 
-        private static void MoveSizeCallBack(
+        // Note: Here we do not start & stop the timer beacause when there are many dialog windows
+        // Unhooking and hooking will take too much time which can make window position weird
+        // So we start & stop the timer when we find a file dialog window
+        /*private static void MoveSizeCallBack(
             HWINEVENTHOOK hWinEventHook,
             uint eventType,
             HWND hwnd,
@@ -377,7 +392,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                         break;
                 }
             }
-        }
+        }*/
 
         private static void DestroyChangeCallback(
             HWINEVENTHOOK hWinEventHook,
@@ -619,11 +634,11 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 PInvoke.UnhookWinEvent(_locationChangeHook);
                 _locationChangeHook = HWINEVENTHOOK.Null;
             }
-            if (!_moveSizeHook.IsNull)
+            /*if (!_moveSizeHook.IsNull)
             {
                 PInvoke.UnhookWinEvent(_moveSizeHook);
                 _moveSizeHook = HWINEVENTHOOK.Null;
-            }
+            }*/
             if (!_destroyChangeHook.IsNull)
             {
                 PInvoke.UnhookWinEvent(_destroyChangeHook);
