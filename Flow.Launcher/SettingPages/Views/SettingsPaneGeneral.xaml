@@ -243,7 +243,6 @@
                         Type="InsideFit">
                         <ComboBox
                             MinWidth="120"
-                            MaxWidth="210"
                             DisplayMemberPath="Display"
                             ItemsSource="{Binding QuickSwitchWindowPositions}"
                             SelectedValue="{Binding Settings.QuickSwitchWindowPosition}"
