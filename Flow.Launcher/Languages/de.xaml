@@ -56,7 +56,7 @@
     <system:String x:Key="setAutoStartFailed">Fehler bei Einstellungsstart beim Start</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Flow Launcher ausblenden, wenn Fokus verloren geht</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Versionsbenachrichtigungen nicht zeigen</system:String>
-    <system:String x:Key="SearchWindowPosition">Position des Suchfensters</system:String>
+    <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Letzte Position merken</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Monitor mit Mauscursor</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Monitor mit fokussiertem Fenster</system:String>
