@@ -18,7 +18,7 @@
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Failed to register hotkey &quot;{0}&quot;. The hotkey may be in use by another program. Change to a different hotkey, or exit another program.</system:String>
-    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">단축키 &quot;{0}&quot; 등록 해제에 실패했습니다. 다시 시도하시거나 로그를 확인하세요</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">{0}을 실행할 수 없습니다.</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Flow Launcher 플러그인 파일 형식이 유효하지 않습니다.</system:String>
@@ -42,7 +42,7 @@
     <system:String x:Key="GameMode">게임 모드</system:String>
     <system:String x:Key="GameModeToolTip">단축키 사용을 일시중단합니다.</system:String>
     <system:String x:Key="PositionReset">창 위치 초기화</system:String>
-    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
+    <system:String x:Key="PositionResetToolTip">검색창 위치 초기화</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">검색어 입력</system:String>
 
     <!--  Setting General  -->
@@ -106,9 +106,9 @@
     <system:String x:Key="AlwaysPreview">항상 미리보기</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Flow 사용시 항상 미리보기 패널을 열어둡니다. {0} 키를 눌러 프리뷰창을 켜고 끌 수 있습니다.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">반투명 흐림 효과를 사용하는 경우, 그림자 효과를 쓸 수 없습니다.</system:String>
-    <system:String x:Key="searchDelay">지연 검색</system:String>
-    <system:String x:Key="searchDelayToolTip">Adds a short delay while typing to reduce UI flicker and result load. Recommended if your typing speed is average.</system:String>
-    <system:String x:Key="searchDelayNumberBoxToolTip">Enter the wait time (in ms) until input is considered complete. This can only be edited if Search Delay is enabled.</system:String>
+    <system:String x:Key="searchDelay">검색 지연</system:String>
+    <system:String x:Key="searchDelayToolTip">타이핑 중 UI 깜빡임과 결과 로드를 줄이기 위해 짧은 지연을 추가합니다. 타이핑 속도가 평균 수준이라면 권장합니다.</system:String>
+    <system:String x:Key="searchDelayNumberBoxToolTip">입력이 완료된 것으로 감지될 때까지의 대기 시간(밀리초 단위)을 입력하세요. 이 항목은 검색 지연이 활성화된 경우에만 편집할 수 있습니다.</system:String>
     <system:String x:Key="searchDelayTime">기본 검색 지연 시간</system:String>
     <system:String x:Key="searchDelayTimeToolTip">입력이 멈춘 후 결과를 표시하기까지의 대기 시간입니다. 값이 클수록 더 오래 기다립니다. (ms)</system:String>
     <system:String x:Key="KoreanImeTitle">한국어 IME 사용 안내</system:String>
@@ -118,7 +118,7 @@
 
     </system:String>
     <system:String x:Key="KoreanImeOpenLink">시스템의 시간 및 언어 설정 열기</system:String>
-    <system:String x:Key="KoreanImeOpenLinkToolTip">Opens the Korean IME setting location. Go to Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility</system:String>
+    <system:String x:Key="KoreanImeOpenLinkToolTip">한국어 IME 설정 위치를 엽니다. 한국어&gt;언어 옵션&gt;키보드 - Microsoft IME&gt; 호환성으로 이동하세요</system:String>
     <system:String x:Key="KoreanImeOpenLinkButton">열기</system:String>
     <system:String x:Key="KoreanImeRegistry">이전 버전의 Microsoft IME 사용</system:String>
     <system:String x:Key="KoreanImeRegistryTooltip">이전 버전의 IME를 사용하도록 시스템 설정을 변경합니다</system:String>
@@ -143,7 +143,7 @@
     <system:String x:Key="FilterComboboxLabel">고급 설정:</system:String>
     <system:String x:Key="DisplayModeOnOff">켬</system:String>
     <system:String x:Key="DisplayModePriority">중요</system:String>
-    <system:String x:Key="DisplayModeSearchDelay">지연 검색</system:String>
+    <system:String x:Key="DisplayModeSearchDelay">검색 지연</system:String>
     <system:String x:Key="currentPriority">현재 중요도:</system:String>
     <system:String x:Key="newPriority">새 중요도:</system:String>
     <system:String x:Key="priority">중요도</system:String>
