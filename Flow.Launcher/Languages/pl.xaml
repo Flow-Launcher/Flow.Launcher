@@ -56,7 +56,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="setAutoStartFailed">Błąd uruchamiania ustawień przy starcie</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ukryj okno Flow Launcher kiedy przestanie ono być aktywne</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Nie pokazuj powiadomienia o nowej wersji</system:String>
-    <system:String x:Key="SearchWindowPosition">Pozycja okna wyszukiwania</system:String>
+    <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Zapamiętaj Ostatnią Pozycję</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Monitoruj kursorem myszy</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Monitor z Dostosowanym Oknem</system:String>
