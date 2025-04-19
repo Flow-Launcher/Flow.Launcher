@@ -56,7 +56,7 @@
     <system:String x:Key="setAutoStartFailed">Při nastavování spouštění došlo k chybě</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Skrýt Flow Launcher při vykliknutí</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Nezobrazovat oznámení o nové verzi</system:String>
-    <system:String x:Key="SearchWindowPosition">Pozice vyhledávacího okna</system:String>
+    <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Zapamatovat poslední pozici</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Obrazovka s kurzorem</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Obrazovka s aktivním oknem</system:String>
