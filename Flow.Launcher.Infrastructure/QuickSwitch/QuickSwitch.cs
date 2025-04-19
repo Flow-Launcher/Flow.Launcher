@@ -39,13 +39,13 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         private static IWebBrowser2 _lastExplorerView = null;
 
-        private static UnhookWinEventSafeHandle _foregroundChangeHook = null;
+        private static HWINEVENTHOOK _foregroundChangeHook = HWINEVENTHOOK.Null;
 
-        private static UnhookWinEventSafeHandle _locationChangeHook = null;
+        private static HWINEVENTHOOK _locationChangeHook = HWINEVENTHOOK.Null;
 
-        /*private static UnhookWinEventSafeHandle _moveSizeHook = null;*/
+        private static HWINEVENTHOOK _moveSizeHook = HWINEVENTHOOK.Null;
 
-        private static UnhookWinEventSafeHandle _destroyChangeHook = null;
+        private static HWINEVENTHOOK _destroyChangeHook = HWINEVENTHOOK.Null;
 
         private static DispatcherTimer _dragMoveTimer = null;
 
@@ -94,7 +94,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             _foregroundChangeHook = PInvoke.SetWinEventHook(
                 PInvoke.EVENT_SYSTEM_FOREGROUND,
                 PInvoke.EVENT_SYSTEM_FOREGROUND,
-                null,
+                PInvoke.GetModuleHandle((PCWSTR)null),
                 ForegroundChangeCallback,
                 0,
                 0,
@@ -104,36 +104,36 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             _locationChangeHook = PInvoke.SetWinEventHook(
                 PInvoke.EVENT_OBJECT_LOCATIONCHANGE,
                 PInvoke.EVENT_OBJECT_LOCATIONCHANGE,
-                null,
+                PInvoke.GetModuleHandle((PCWSTR)null),
                 LocationChangeCallback,
                 0,
                 0,
                 PInvoke.WINEVENT_OUTOFCONTEXT);
 
             // Call MoveSizeCallBack when the window is moved or resized
-            /*_moveSizeHook = PInvoke.SetWinEventHook(
+            _moveSizeHook = PInvoke.SetWinEventHook(
                 PInvoke.EVENT_SYSTEM_MOVESIZESTART,
                 PInvoke.EVENT_SYSTEM_MOVESIZEEND,
-                null,
+                PInvoke.GetModuleHandle((PCWSTR)null),
                 MoveSizeCallBack,
                 0,
                 0,
-                PInvoke.WINEVENT_OUTOFCONTEXT);*/
+                PInvoke.WINEVENT_OUTOFCONTEXT);
 
             // Call DestroyChange when the window is destroyed
             _destroyChangeHook = PInvoke.SetWinEventHook(
                 PInvoke.EVENT_OBJECT_DESTROY,
                 PInvoke.EVENT_OBJECT_DESTROY,
-                null,
+                PInvoke.GetModuleHandle((PCWSTR)null),
                 DestroyChangeCallback,
                 0,
                 0,
                 PInvoke.WINEVENT_OUTOFCONTEXT);
 
-            if (_foregroundChangeHook.IsInvalid ||
-                _locationChangeHook.IsInvalid ||
-                /*_moveSizeHook.IsInvalid ||*/
-                _destroyChangeHook.IsInvalid)
+            if (_foregroundChangeHook.IsNull ||
+                _locationChangeHook.IsNull ||
+                _moveSizeHook.IsNull ||
+                _destroyChangeHook.IsNull)
             {
                 Log.Error(ClassName, "Failed to initialize QuickSwitch");
                 return;
@@ -439,7 +439,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         // TODO: Use a better way to detect dragging
         // Here we do not start & stop the timer beacause the start time is not accurate (more than 1s delay)
         // So we start & stop the timer when we find a file dialog window
-        /*private static void MoveSizeCallBack(
+        private static void MoveSizeCallBack(
             HWINEVENTHOOK hWinEventHook,
             uint eventType,
             HWND hwnd,
@@ -462,7 +462,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                         break;
                 }
             }
-        }*/
+        }
 
         private static void DestroyChangeCallback(
             HWINEVENTHOOK hWinEventHook,
@@ -522,25 +522,25 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             _isInitialized = false;
 
             // Dispose handle
-            if (_foregroundChangeHook != null)
+            if (!_foregroundChangeHook.IsNull)
             {
-                _foregroundChangeHook.Dispose();
-                _foregroundChangeHook = null;
+                PInvoke.UnhookWinEvent(_foregroundChangeHook);
+                _foregroundChangeHook = HWINEVENTHOOK.Null;
             }
-            if (_locationChangeHook != null)
+            if (!_locationChangeHook.IsNull)
             {
-                _locationChangeHook.Dispose();
-                _locationChangeHook = null;
+                PInvoke.UnhookWinEvent(_locationChangeHook);
+                _locationChangeHook = HWINEVENTHOOK.Null;
             }
-            /*if (_moveSizeHook != null)
+            if (!_moveSizeHook.IsNull)
             {
-                _moveSizeHook.Dispose();
-                _moveSizeHook = null;
-            }*/
-            if (_destroyChangeHook != null)
+                PInvoke.UnhookWinEvent(_moveSizeHook);
+                _moveSizeHook = HWINEVENTHOOK.Null;
+            }
+            if (!_destroyChangeHook.IsNull)
             {
-                _destroyChangeHook.Dispose();
-                _destroyChangeHook = null;
+                PInvoke.UnhookWinEvent(_destroyChangeHook);
+                _destroyChangeHook = HWINEVENTHOOK.Null;
             }
 
             // Release ComObjects
