@@ -56,7 +56,7 @@
     <system:String x:Key="setAutoStartFailed">Fout bij het instellen van uitvoeren bij opstarten</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Verberg Flow Launcher als focus verloren is</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Laat geen nieuwe versie notificaties zien</system:String>
-    <system:String x:Key="SearchWindowPosition">Positie Zoekvenster</system:String>
+    <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Laatste Positie Onthouden</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Monitor met Muiscursor</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Monitor met Gefocust Venster</system:String>
