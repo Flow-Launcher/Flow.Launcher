@@ -382,6 +382,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     // Neither quick switch window nor file dialog window is foreground
                     // Hide quick switch window until the file dialog window is brought to the foreground
                     HideQuickSwitchWindow?.Invoke();
+                    _dragMoveTimer?.Stop();
                 }
 
                 // Check if explorer window is foreground
