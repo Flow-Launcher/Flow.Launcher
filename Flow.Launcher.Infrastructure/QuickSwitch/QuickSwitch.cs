@@ -43,7 +43,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         private static HWINEVENTHOOK _locationChangeHook = HWINEVENTHOOK.Null;
 
-        private static HWINEVENTHOOK _moveSizeHook = HWINEVENTHOOK.Null;
+        /*private static HWINEVENTHOOK _moveSizeHook = HWINEVENTHOOK.Null;*/
 
         private static HWINEVENTHOOK _destroyChangeHook = HWINEVENTHOOK.Null;
 
@@ -111,14 +111,14 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 PInvoke.WINEVENT_OUTOFCONTEXT);
 
             // Call MoveSizeCallBack when the window is moved or resized
-            _moveSizeHook = PInvoke.SetWinEventHook(
+            /*_moveSizeHook = PInvoke.SetWinEventHook(
                 PInvoke.EVENT_SYSTEM_MOVESIZESTART,
                 PInvoke.EVENT_SYSTEM_MOVESIZEEND,
                 PInvoke.GetModuleHandle((PCWSTR)null),
                 MoveSizeCallBack,
                 0,
                 0,
-                PInvoke.WINEVENT_OUTOFCONTEXT);
+                PInvoke.WINEVENT_OUTOFCONTEXT);*/
 
             // Call DestroyChange when the window is destroyed
             _destroyChangeHook = PInvoke.SetWinEventHook(
@@ -132,7 +132,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
             if (_foregroundChangeHook.IsNull ||
                 _locationChangeHook.IsNull ||
-                _moveSizeHook.IsNull ||
+                /*_moveSizeHook.IsNull ||*/
                 _destroyChangeHook.IsNull)
             {
                 Log.Error(ClassName, "Failed to initialize QuickSwitch");
@@ -439,7 +439,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         // TODO: Use a better way to detect dragging
         // Here we do not start & stop the timer beacause the start time is not accurate (more than 1s delay)
         // So we start & stop the timer when we find a file dialog window
-        private static void MoveSizeCallBack(
+        /*private static void MoveSizeCallBack(
             HWINEVENTHOOK hWinEventHook,
             uint eventType,
             HWND hwnd,
@@ -462,7 +462,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                         break;
                 }
             }
-        }
+        }*/
 
         private static void DestroyChangeCallback(
             HWINEVENTHOOK hWinEventHook,
@@ -532,11 +532,11 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 PInvoke.UnhookWinEvent(_locationChangeHook);
                 _locationChangeHook = HWINEVENTHOOK.Null;
             }
-            if (!_moveSizeHook.IsNull)
+            /*if (!_moveSizeHook.IsNull)
             {
                 PInvoke.UnhookWinEvent(_moveSizeHook);
                 _moveSizeHook = HWINEVENTHOOK.Null;
-            }
+            }*/
             if (!_destroyChangeHook.IsNull)
             {
                 PInvoke.UnhookWinEvent(_destroyChangeHook);
