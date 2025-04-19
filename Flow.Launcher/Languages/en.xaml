@@ -313,7 +313,20 @@
     <system:String x:Key="autoQuickSwitch">Quick Switch Automatically</system:String>
     <system:String x:Key="autoQuickSwitchToolTip">Quick switch automatically navigate to the path of the current Explorer when a file dialog is opened.</system:String>
     <system:String x:Key="showQuickSwitchWindow">Show Quick Switch Window</system:String>
-    <system:String x:Key="showQuickSwitchWindowToolTip">Show query window in the center-bottom of a file dialog to navigate its path.</system:String>
+    <system:String x:Key="showQuickSwitchWindowToolTip">Show quick switch search window when file dialogs are open to navigate its path.</system:String>
+    <system:String x:Key="quickSwitchWindowPosition">Quick Switch Window Position</system:String>
+    <system:String x:Key="quickSwitchWindowPositionToolTip">Select position for quick switch window</system:String>
+    <system:String x:Key="QuickSwitchWindowPositionUnderDialog">Fixed in center-bottom of dialogs</system:String>
+    <system:String x:Key="QuickSwitchWindowPositionFollowDefault">Shown and hidden as search window</system:String>
+    <system:String x:Key="quickSwitchResultBehaviour">Quick Switch Result Navigation Behaviour</system:String>
+    <system:String x:Key="quickSwitchResultBehaviourToolTip">Behaviour to navigate file dialogs to paths of the results</system:String>
+    <system:String x:Key="QuickSwitchResultBehaviourLeftClick">Left click</system:String>
+    <system:String x:Key="QuickSwitchResultBehaviourRightClick">Right click</system:String>
+    <system:String x:Key="quickSwitchFileResultBehaviour">Quick Switch File Navigation Behaviour</system:String>
+    <system:String x:Key="quickSwitchFileResultBehaviourToolTip">Behaviour to navigate file dialogs when paths of the results are files</system:String>
+    <system:String x:Key="QuickSwitchFileResultBehaviourFullPath">Open full path in file name box</system:String>
+    <system:String x:Key="QuickSwitchFileResultBehaviourDirectory">Open file directory in path box</system:String>
+    <system:String x:Key="QuickSwitchFileResultBehaviourDirectoryAndFileName">Open file directory in path box and file name in file name box</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP Proxy</system:String>

@@ -238,11 +238,14 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public bool ShowQuickSwitchWindow { get; set; } = true;
 
-        public QuickSwitchResultMethods OpenQuickSwitchResultMethod { get; set; } = QuickSwitchResultMethods.LeftClick;
-
-        public QuickSwitchFileResultMethods OpenQuickSwitchFileResultMethod { get; set; } = QuickSwitchFileResultMethods.FullPath;
-
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public QuickSwitchWindowPositions QuickSwitchWindowPosition { get; set; } = QuickSwitchWindowPositions.UnderDialog;
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public QuickSwitchResultBehaviours QuickSwitchResultBehaviour { get; set; } = QuickSwitchResultBehaviours.LeftClick;
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public QuickSwitchFileResultBehaviours QuickSwitchFileResultBehaviour { get; set; } = QuickSwitchFileResultBehaviours.FullPath;
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public LOGLEVEL LogLevel { get; set; } = LOGLEVEL.INFO;
@@ -501,22 +504,22 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         MicaAlt
     }
 
-    public enum QuickSwitchResultMethods
+    public enum QuickSwitchWindowPositions
+    {
+        UnderDialog,
+        FollowDefault
+    }
+
+    public enum QuickSwitchResultBehaviours
     {
         LeftClick,
         RightClick
     }
 
-    public enum QuickSwitchFileResultMethods
+    public enum QuickSwitchFileResultBehaviours
     {
         FullPath,
         Directory,
         DirectoryAndFileName
-    }
-
-    public enum QuickSwitchWindowPositions
-    {
-        UnderDialog,
-        CenterScreen
     }
 }

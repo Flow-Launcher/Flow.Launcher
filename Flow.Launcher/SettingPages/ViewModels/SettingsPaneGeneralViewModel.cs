@@ -166,6 +166,19 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         }
     }
 
+    public class QuickSwitchWindowPositionData : DropdownDataGeneric<QuickSwitchWindowPositions> { }
+    public class QuickSwitchResultBehaviourData : DropdownDataGeneric<QuickSwitchResultBehaviours> { }
+    public class QuickSwitchFileResultBehaviourData : DropdownDataGeneric<QuickSwitchFileResultBehaviours> { }
+
+    public List<QuickSwitchWindowPositionData> QuickSwitchWindowPositions { get; } =
+        DropdownDataGeneric<QuickSwitchWindowPositions>.GetValues<QuickSwitchWindowPositionData>("QuickSwitchWindowPosition");
+
+    public List<QuickSwitchResultBehaviourData> QuickSwitchResultBehaviours { get; } =
+        DropdownDataGeneric<QuickSwitchResultBehaviours>.GetValues<QuickSwitchResultBehaviourData>("QuickSwitchResultBehaviour");
+
+    public List<QuickSwitchFileResultBehaviourData> QuickSwitchFileResultBehaviours { get; } =
+        DropdownDataGeneric<QuickSwitchFileResultBehaviours>.GetValues<QuickSwitchFileResultBehaviourData>("QuickSwitchFileResultBehaviour");
+
     public int SearchDelayTimeValue
     {
         get => Settings.SearchDelayTime;
@@ -187,6 +200,9 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         DropdownDataGeneric<SearchWindowAligns>.UpdateLabels(SearchWindowAligns);
         DropdownDataGeneric<SearchPrecisionScore>.UpdateLabels(SearchPrecisionScores);
         DropdownDataGeneric<LastQueryMode>.UpdateLabels(LastQueryModes);
+        DropdownDataGeneric<QuickSwitchWindowPositions>.UpdateLabels(QuickSwitchWindowPositions);
+        DropdownDataGeneric<QuickSwitchResultBehaviours>.UpdateLabels(QuickSwitchResultBehaviours);
+        DropdownDataGeneric<QuickSwitchFileResultBehaviours>.UpdateLabels(QuickSwitchFileResultBehaviours);
     }
 
     public string Language

@@ -214,27 +214,67 @@
                         OnContent="{DynamicResource enable}" />
                 </cc:ExCard.SideContent>
 
-                <!--  TODO: Due to many issues, this option is removed from FL  -->
-                <!--  Please see https://github.com/Flow-Launcher/Flow.Launcher/pull/1018  -->
-                <!--<cc:Card
-                    Title="{DynamicResource autoQuickSwitch}"
-                    Sub="{DynamicResource autoQuickSwitchToolTip}"
-                    Type="InsideFit">
-                    <ui:ToggleSwitch
-                        IsOn="{Binding Settings.AutoQuickSwitch}"
-                        OffContent="{DynamicResource disable}"
-                        OnContent="{DynamicResource enable}" />
-                </cc:Card>-->
+                <cc:CardGroup>
+                    <!--  TODO: Due to many issues, this option is removed from FL  -->
+                    <!--  Please see https://github.com/Flow-Launcher/Flow.Launcher/pull/1018  -->
+                    <!--<cc:Card
+                        Title="{DynamicResource autoQuickSwitch}"
+                        Sub="{DynamicResource autoQuickSwitchToolTip}"
+                        Type="InsideFit">
+                        <ui:ToggleSwitch
+                            IsOn="{Binding Settings.AutoQuickSwitch}"
+                            OffContent="{DynamicResource disable}"
+                            OnContent="{DynamicResource enable}" />
+                    </cc:Card>-->
 
-                <cc:Card
-                    Title="{DynamicResource showQuickSwitchWindow}"
-                    Sub="{DynamicResource showQuickSwitchWindowToolTip}"
-                    Type="InsideFit">
-                    <ui:ToggleSwitch
-                        IsOn="{Binding Settings.ShowQuickSwitchWindow}"
-                        OffContent="{DynamicResource disable}"
-                        OnContent="{DynamicResource enable}" />
-                </cc:Card>
+                    <cc:Card
+                        Title="{DynamicResource showQuickSwitchWindow}"
+                        Sub="{DynamicResource showQuickSwitchWindowToolTip}"
+                        Type="InsideFit">
+                        <ui:ToggleSwitch
+                            IsOn="{Binding Settings.ShowQuickSwitchWindow}"
+                            OffContent="{DynamicResource disable}"
+                            OnContent="{DynamicResource enable}" />
+                    </cc:Card>
+
+                    <cc:Card
+                        Title="{DynamicResource quickSwitchWindowPosition}"
+                        Sub="{DynamicResource quickSwitchWindowPositionToolTip}"
+                        Type="InsideFit">
+                        <ComboBox
+                            MinWidth="120"
+                            MaxWidth="210"
+                            DisplayMemberPath="Display"
+                            ItemsSource="{Binding QuickSwitchWindowPositions}"
+                            SelectedValue="{Binding Settings.QuickSwitchWindowPosition}"
+                            SelectedValuePath="Value" />
+                    </cc:Card>
+
+                    <cc:Card
+                        Title="{DynamicResource quickSwitchResultBehaviour}"
+                        Sub="{DynamicResource quickSwitchResultBehaviourToolTip}"
+                        Type="InsideFit">
+                        <ComboBox
+                            MinWidth="120"
+                            DisplayMemberPath="Display"
+                            ItemsSource="{Binding QuickSwitchResultBehaviours}"
+                            SelectedValue="{Binding Settings.QuickSwitchResultBehaviour}"
+                            SelectedValuePath="Value" />
+                    </cc:Card>
+
+                    <cc:Card
+                        Title="{DynamicResource quickSwitchFileResultBehaviour}"
+                        Sub="{DynamicResource quickSwitchFileResultBehaviourToolTip}"
+                        Type="InsideFit">
+                        <ComboBox
+                            MinWidth="120"
+                            MaxWidth="210"
+                            DisplayMemberPath="Display"
+                            ItemsSource="{Binding QuickSwitchFileResultBehaviours}"
+                            SelectedValue="{Binding Settings.QuickSwitchFileResultBehaviour}"
+                            SelectedValuePath="Value" />
+                    </cc:Card>
+                </cc:CardGroup>
             </cc:ExCard>
 
             <cc:ExCard
