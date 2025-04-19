@@ -1595,6 +1595,7 @@ namespace Flow.Launcher.ViewModel
         public nint DialogWindowHandle { get; private set; } = nint.Zero;
         
         private bool PreviousMainWindowVisibilityStatus { get; set; }
+        private bool ResetWindowOnNextShow { get; set; } = false;
 
         public void InitializeVisibilityStatus(bool visibilityStatus)
         {
@@ -1630,17 +1631,19 @@ namespace Flow.Launcher.ViewModel
                     {
                         (Application.Current?.MainWindow as MainWindow).UpdatePosition();
                     });
+
+                    _ = ResetWindowAsync();
                 }
             }
             else
             {
                 Show();
+
+                _ = ResetWindowAsync();
             }
         }
 
-#pragma warning restore VSTHRD100 // Avoid async void methods
-
-        public void ResetQuickSwitch()
+        public async void ResetQuickSwitch()
         {
             if (DialogWindowHandle == nint.Zero) return;
 
@@ -1653,24 +1656,36 @@ namespace Flow.Launcher.ViewModel
                 if (PreviousMainWindowVisibilityStatus)
                 {
                     Show();
+
+                    _ = ResetWindowAsync();
                 }
                 else
                 {
-                    Hide();
+                    await ResetWindowAsync();
+
+                    Hide(false);
                 }
             }
             else
             {
-                // Only update the position
                 if (PreviousMainWindowVisibilityStatus)
                 {
+                    // Only update the position
                     Application.Current?.Dispatcher.Invoke(() =>
                     {
                         (Application.Current?.MainWindow as MainWindow).UpdatePosition();
                     });
+
+                    _ = ResetWindowAsync();
+                }
+                else
+                {
+                    ResetWindowOnNextShow = true;
                 }
             }
         }
+
+#pragma warning restore VSTHRD100 // Avoid async void methods
 
         public void HideQuickSwitch()
         {
@@ -1681,6 +1696,24 @@ namespace Flow.Launcher.ViewModel
                     Hide();
                 }
             }
+        }
+
+        // Reset index & preview & selected results & query text
+        private async Task ResetWindowAsync()
+        {
+            lastHistoryIndex = 1;
+
+            if (ExternalPreviewVisible)
+            {
+                await CloseExternalPreviewAsync();
+            }
+
+            if (!QueryResultsSelected())
+            {
+                SelectedResults = Results;
+            }
+
+            await ChangeQueryTextAsync(string.Empty);
         }
 
         #endregion
@@ -1728,42 +1761,51 @@ namespace Flow.Launcher.ViewModel
             {
                 Win32Helper.SwitchToEnglishKeyboardLayout(true);
             }
+
+            if (ResetWindowOnNextShow)
+            {
+                ResetWindowOnNextShow = false;
+                _ = ResetWindowAsync();
+            }
         }
 
-        public async void Hide()
+        public async void Hide(bool reset = true)
         {
-            lastHistoryIndex = 1;
-
-            if (ExternalPreviewVisible)
+            if (reset)
             {
-                await CloseExternalPreviewAsync();
-            }
+                lastHistoryIndex = 1;
 
-            if (!QueryResultsSelected())
-            {
-                SelectedResults = Results;
-            }
+                if (ExternalPreviewVisible)
+                {
+                    await CloseExternalPreviewAsync();
+                }
 
-            switch (Settings.LastQueryMode)
-            {
-                case LastQueryMode.Empty:
-                    await ChangeQueryTextAsync(string.Empty);
-                    break;
-                case LastQueryMode.Preserved:
-                case LastQueryMode.Selected:
-                    LastQuerySelected = Settings.LastQueryMode == LastQueryMode.Preserved;
-                    break;
-                case LastQueryMode.ActionKeywordPreserved:
-                case LastQueryMode.ActionKeywordSelected:
-                    var newQuery = _lastQuery.ActionKeyword;
+                if (!QueryResultsSelected())
+                {
+                    SelectedResults = Results;
+                }
 
-                    if (!string.IsNullOrEmpty(newQuery))
-                        newQuery += " ";
-                    await ChangeQueryTextAsync(newQuery);
+                switch (Settings.LastQueryMode)
+                {
+                    case LastQueryMode.Empty:
+                        await ChangeQueryTextAsync(string.Empty);
+                        break;
+                    case LastQueryMode.Preserved:
+                    case LastQueryMode.Selected:
+                        LastQuerySelected = Settings.LastQueryMode == LastQueryMode.Preserved;
+                        break;
+                    case LastQueryMode.ActionKeywordPreserved:
+                    case LastQueryMode.ActionKeywordSelected:
+                        var newQuery = _lastQuery.ActionKeyword;
 
-                    if (Settings.LastQueryMode == LastQueryMode.ActionKeywordSelected)
-                        LastQuerySelected = false;
-                    break;
+                        if (!string.IsNullOrEmpty(newQuery))
+                            newQuery += " ";
+                        await ChangeQueryTextAsync(newQuery);
+
+                        if (Settings.LastQueryMode == LastQueryMode.ActionKeywordSelected)
+                            LastQuerySelected = false;
+                        break;
+                }
             }
 
             // When application is exiting, the Application.Current will be null
