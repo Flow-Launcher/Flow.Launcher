@@ -42,7 +42,7 @@
     <system:String x:Key="GameMode">ゲームモード</system:String>
     <system:String x:Key="GameModeToolTip">ホットキーの使用を一時停止します。</system:String>
     <system:String x:Key="PositionReset">位置のリセット</system:String>
-    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
+    <system:String x:Key="PositionResetToolTip">検索ウィンドウの位置をリセット</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
 
     <!--  Setting General  -->
@@ -56,7 +56,7 @@
     <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">フォーカスを失った時にFlow Launcherを隠す</system:String>
     <system:String x:Key="dontPromptUpdateMsg">最新版が入手可能であっても、アップグレードメッセージを表示しない</system:String>
-    <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
+    <system:String x:Key="SearchWindowPosition">検索ウィンドウの位置</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">最後の表示位置を記憶する</system:String>
     <system:String x:Key="SearchWindowScreenCursor">マウスカーソルがあるモニター</system:String>
     <system:String x:Key="SearchWindowScreenFocus">フォーカス中のウィンドウがあるモニター</system:String>
@@ -152,7 +152,7 @@
     <system:String x:Key="FilterComboboxLabel">Advanced Settings:</system:String>
     <system:String x:Key="DisplayModeOnOff">Enabled</system:String>
     <system:String x:Key="DisplayModePriority">重要度</system:String>
-    <system:String x:Key="DisplayModeSearchDelay">Search Delay</system:String>
+    <system:String x:Key="DisplayModeSearchDelay">検索遅延</system:String>
     <system:String x:Key="currentPriority">Current Priority</system:String>
     <system:String x:Key="newPriority">New Priority</system:String>
     <system:String x:Key="priority">重要度</system:String>
@@ -262,8 +262,8 @@
     <system:String x:Key="openResultModifiersToolTip">Select a modifier key to open selected result via keyboard.</system:String>
     <system:String x:Key="showOpenResultHotkey">ホットキーを表示</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Show result selection hotkey with results.</system:String>
-    <system:String x:Key="autoCompleteHotkey">Auto Complete</system:String>
-    <system:String x:Key="autoCompleteHotkeyToolTip">Runs autocomplete for the selected items.</system:String>
+    <system:String x:Key="autoCompleteHotkey">自動補完</system:String>
+    <system:String x:Key="autoCompleteHotkeyToolTip">選択された項目に対して自動補完を実行します。</system:String>
     <system:String x:Key="SelectNextItemHotkey">Select Next Item</system:String>
     <system:String x:Key="SelectPrevItemHotkey">Select Previous Item</system:String>
     <system:String x:Key="SelectNextPageHotkey">Next Page</system:String>
