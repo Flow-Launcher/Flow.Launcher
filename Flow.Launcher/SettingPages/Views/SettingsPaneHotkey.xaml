@@ -50,7 +50,7 @@
                     WindowTitle="{DynamicResource previewHotkey}" />
             </cc:Card>
 
-            <cc:CardGroup Margin="0 12 0 0">
+            <cc:CardGroup Margin="0 14 0 0">
                 <cc:Card Title="{DynamicResource openResultModifiers}" Sub="{DynamicResource openResultModifiersToolTip}">
                     <ComboBox
                         Width="120"
@@ -67,31 +67,17 @@
                 </cc:Card>
             </cc:CardGroup>
 
-            <cc:CardGroup Margin="0 12 0 0">
-                <cc:Card Title="{DynamicResource quickSwitchHotkey}" Sub="{DynamicResource quickSwitchHotkeyToolTip}">
-                    <flowlauncher:HotkeyControl
-                        ChangeHotkey="{Binding SetQuickSwitchHotkeyCommand}"
-                        DefaultHotkey="Alt+G"
-                        Type="QuickSwitchHotkey"
-                        ValidateKeyGesture="False"
-                        WindowTitle="{DynamicResource quickSwitchHotkey}" />
-                </cc:Card>
-
-                <!--  Due to many issues, this option is removed from FL  -->
-                <!-- <cc:Card Title="{DynamicResource autoQuickSwitch}" Sub="{DynamicResource autoQuickSwitchToolTip}">
-                    <ui:ToggleSwitch
-                        IsOn="{Binding Settings.AutoQuickSwitch}"
-                        OffContent="{DynamicResource disable}"
-                        OnContent="{DynamicResource enable}" />
-                </cc:Card>-->
-
-                <cc:Card Title="{DynamicResource showQuickSwitchWindow}" Sub="{DynamicResource showQuickSwitchWindowToolTip}">
-                    <ui:ToggleSwitch
-                        IsOn="{Binding Settings.ShowQuickSwitchWindow}"
-                        OffContent="{DynamicResource disable}"
-                        OnContent="{DynamicResource enable}" />
-                </cc:Card>
-            </cc:CardGroup>
+            <cc:Card
+                Title="{DynamicResource quickSwitchHotkey}"
+                Margin="0 14 0 0"
+                Sub="{DynamicResource quickSwitchHotkeyToolTip}">
+                <flowlauncher:HotkeyControl
+                    ChangeHotkey="{Binding SetQuickSwitchHotkeyCommand}"
+                    DefaultHotkey="Alt+G"
+                    Type="QuickSwitchHotkey"
+                    ValidateKeyGesture="False"
+                    WindowTitle="{DynamicResource quickSwitchHotkey}" />
+            </cc:Card>
 
             <cc:ExCard
                 Title="{DynamicResource hotkeyPresets}"

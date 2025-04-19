@@ -185,7 +185,8 @@ namespace Flow.Launcher
                 // main windows needs initialized before theme change because of blur settings
                 Ioc.Default.GetRequiredService<Theme>().ChangeTheme();
 
-                QuickSwitch.Initialize();
+                QuickSwitch.InitializeQuickSwitch();
+                QuickSwitch.SetupQuickSwitch(_settings.EnableQuickSwitch);
 
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 

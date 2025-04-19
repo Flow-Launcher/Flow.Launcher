@@ -67,81 +67,16 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         private static HWND _hookedDialogWindowHandle = HWND.Null;
         private static readonly object _hookedDialogWindowHandleLock = new();*/
 
-        private static bool _isInitialized = false;
+        private static bool _initialized = false;
+        private static bool _enabled = false;
 
         #endregion
 
-        #region Initialization
+        #region Initialize & Setup
 
-        public static void Initialize()
+        public static void InitializeQuickSwitch()
         {
-            if (_isInitialized) return;
-
-            // Check all foreground windows and check if there are explorer windows
-            lock (_lastExplorerViewLock)
-            {
-                var explorerInitialized = false;
-                EnumerateShellWindows((shellWindow) =>
-                {
-                    if (shellWindow is not IWebBrowser2 explorer)
-                    {
-                        return;
-                    }
-
-                    // Initialize one explorer window even if it is not foreground
-                    if (!explorerInitialized)
-                    {
-                        _lastExplorerView = explorer;
-
-                        Log.Debug(ClassName, $"Explorer Window: {explorer.HWND.Value}");
-                    }
-                    // Force update explorer window if it is foreground
-                    else if (Win32Helper.IsForegroundWindow(explorer.HWND.Value))
-                    {
-                        _lastExplorerView = explorer;
-
-                        Log.Debug(ClassName, $"Explorer Window: {explorer.HWND.Value}");
-                    }
-                });
-            }
-
-            // Call ForegroundChange when the foreground window changes
-            _foregroundChangeHook = PInvoke.SetWinEventHook(
-                PInvoke.EVENT_SYSTEM_FOREGROUND,
-                PInvoke.EVENT_SYSTEM_FOREGROUND,
-                PInvoke.GetModuleHandle((PCWSTR)null),
-                ForegroundChangeCallback,
-                0,
-                0,
-                PInvoke.WINEVENT_OUTOFCONTEXT);
-
-            // Call LocationChange when the location of the window changes
-            _locationChangeHook = PInvoke.SetWinEventHook(
-                PInvoke.EVENT_OBJECT_LOCATIONCHANGE,
-                PInvoke.EVENT_OBJECT_LOCATIONCHANGE,
-                PInvoke.GetModuleHandle((PCWSTR)null),
-                LocationChangeCallback,
-                0,
-                0,
-                PInvoke.WINEVENT_OUTOFCONTEXT);
-
-            // Call DestroyChange when the window is destroyed
-            _destroyChangeHook = PInvoke.SetWinEventHook(
-                PInvoke.EVENT_OBJECT_DESTROY,
-                PInvoke.EVENT_OBJECT_DESTROY,
-                PInvoke.GetModuleHandle((PCWSTR)null),
-                DestroyChangeCallback,
-                0,
-                0,
-                PInvoke.WINEVENT_OUTOFCONTEXT);
-
-            if (_foregroundChangeHook.IsNull ||
-                _locationChangeHook.IsNull ||
-                _destroyChangeHook.IsNull)
-            {
-                Log.Error(ClassName, "Failed to initialize QuickSwitch");
-                return;
-            }
+            if (_initialized) return;
 
             // Initialize main window handle
             _mainWindowHandle = Win32Helper.GetMainWindowHandle();
@@ -150,8 +85,119 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             _dragMoveTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(10) };
             _dragMoveTimer.Tick += (s, e) => InvokeUpdateQuickSwitchWindow();
 
-            _isInitialized = true;
-            return;
+            _initialized = true;
+        }
+
+        public static void SetupQuickSwitch(bool enabled)
+        {
+            if (enabled == _enabled) return;
+
+            if (enabled)
+            {
+                // Check all foreground windows and check if there are explorer windows
+                lock (_lastExplorerViewLock)
+                {
+                    var explorerInitialized = false;
+                    EnumerateShellWindows((shellWindow) =>
+                    {
+                        if (shellWindow is not IWebBrowser2 explorer)
+                        {
+                            return;
+                        }
+
+                        // Initialize one explorer window even if it is not foreground
+                        if (!explorerInitialized)
+                        {
+                            _lastExplorerView = explorer;
+
+                            Log.Debug(ClassName, $"Explorer Window: {explorer.HWND.Value}");
+                        }
+
+                        // Force update explorer window if it is foreground
+                        else if (Win32Helper.IsForegroundWindow(explorer.HWND.Value))
+                        {
+                            _lastExplorerView = explorer;
+
+                            Log.Debug(ClassName, $"Explorer Window: {explorer.HWND.Value}");
+                        }
+                    });
+                }
+
+                // Unhook events
+                if (!_foregroundChangeHook.IsNull)
+                {
+                    PInvoke.UnhookWinEvent(_foregroundChangeHook);
+                    _foregroundChangeHook = HWINEVENTHOOK.Null;
+                }
+                if (!_locationChangeHook.IsNull)
+                {
+                    PInvoke.UnhookWinEvent(_locationChangeHook);
+                    _locationChangeHook = HWINEVENTHOOK.Null;
+                }
+                if (!_destroyChangeHook.IsNull)
+                {
+                    PInvoke.UnhookWinEvent(_destroyChangeHook);
+                    _destroyChangeHook = HWINEVENTHOOK.Null;
+                }
+
+                // Hook events
+                _foregroundChangeHook = PInvoke.SetWinEventHook(
+                    PInvoke.EVENT_SYSTEM_FOREGROUND,
+                    PInvoke.EVENT_SYSTEM_FOREGROUND,
+                    PInvoke.GetModuleHandle((PCWSTR)null),
+                    ForegroundChangeCallback,
+                    0,
+                    0,
+                    PInvoke.WINEVENT_OUTOFCONTEXT);
+                _locationChangeHook = PInvoke.SetWinEventHook(
+                    PInvoke.EVENT_OBJECT_LOCATIONCHANGE,
+                    PInvoke.EVENT_OBJECT_LOCATIONCHANGE,
+                    PInvoke.GetModuleHandle((PCWSTR)null),
+                    LocationChangeCallback,
+                    0,
+                    0,
+                    PInvoke.WINEVENT_OUTOFCONTEXT);
+                _destroyChangeHook = PInvoke.SetWinEventHook(
+                    PInvoke.EVENT_OBJECT_DESTROY,
+                    PInvoke.EVENT_OBJECT_DESTROY,
+                    PInvoke.GetModuleHandle((PCWSTR)null),
+                    DestroyChangeCallback,
+                    0,
+                    0,
+                    PInvoke.WINEVENT_OUTOFCONTEXT);
+
+                if (_foregroundChangeHook.IsNull ||
+                    _locationChangeHook.IsNull ||
+                    _destroyChangeHook.IsNull)
+                {
+                    Log.Error(ClassName, "Failed to enable QuickSwitch");
+                    return;
+                }
+            }
+            else
+            {
+                // Unhook events
+                if (!_foregroundChangeHook.IsNull)
+                {
+                    PInvoke.UnhookWinEvent(_foregroundChangeHook);
+                    _foregroundChangeHook = HWINEVENTHOOK.Null;
+                }
+                if (!_locationChangeHook.IsNull)
+                {
+                    PInvoke.UnhookWinEvent(_locationChangeHook);
+                    _locationChangeHook = HWINEVENTHOOK.Null;
+                }
+                if (!_destroyChangeHook.IsNull)
+                {
+                    PInvoke.UnhookWinEvent(_destroyChangeHook);
+                    _destroyChangeHook = HWINEVENTHOOK.Null;
+                }
+
+                // Stop drag move timer
+                _dragMoveTimer?.Stop();
+            }
+
+            _enabled = enabled;
         }
 
         #endregion
@@ -243,10 +289,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         public static void OnToggleHotkey(object sender, HotkeyEventArgs args)
         {
-            if (_isInitialized)
-            {
-                NavigateDialogPath(Win32Helper.GetForegroundWindowHWND());
-            }
+            NavigateDialogPath(Win32Helper.GetForegroundWindowHWND());
         }
 
         #endregion
@@ -620,10 +663,11 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         public static void Dispose()
         {
-            // Reset initialize flag
-            _isInitialized = false;
+            // Reset flags
+            _enabled = false;
+            _initialized = false;
 
-            // Dispose handle
+            // Unhook events
             if (!_foregroundChangeHook.IsNull)
             {
                 PInvoke.UnhookWinEvent(_foregroundChangeHook);
@@ -646,9 +690,16 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
 
             // Release ComObjects
-            if (_lastExplorerView != null)
+            try
             {
-                Marshal.ReleaseComObject(_lastExplorerView);
+                if (_lastExplorerView != null)
+                {
+                    Marshal.ReleaseComObject(_lastExplorerView);
+                    _lastExplorerView = null;
+                }
+            }
+            catch (COMException)
+            {
                 _lastExplorerView = null;
             }
 

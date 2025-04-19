@@ -308,6 +308,8 @@
     <system:String x:Key="showBadgesGlobalOnlyToolTip">Show badges for global query results only</system:String>
     <system:String x:Key="quickSwitchHotkey">Quick Switch</system:String>
     <system:String x:Key="quickSwitchHotkeyToolTip">Enter shortcut to quickly navigate the path of a file dialog to the path of the current Explorer.</system:String>
+    <system:String x:Key="quickSwitch">Quick Switch</system:String>
+    <system:String x:Key="quickSwitchToolTip">Quickly navigate to the path of the current Explorer when a file dialog is opened.</system:String>
     <system:String x:Key="autoQuickSwitch">Quick Switch Automatically</system:String>
     <system:String x:Key="autoQuickSwitchToolTip">Quick switch automatically navigate to the path of the current Explorer when a file dialog is opened.</system:String>
     <system:String x:Key="showQuickSwitchWindow">Show Quick Switch Window</system:String>

@@ -38,7 +38,10 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
     [RelayCommand]
     private void SetQuickSwitchHotkey(HotkeyModel hotkey)
     {
-        HotKeyMapper.SetHotkey(hotkey, QuickSwitch.OnToggleHotkey);
+        if (Settings.EnableQuickSwitch)
+        {
+            HotKeyMapper.SetHotkey(hotkey, QuickSwitch.OnToggleHotkey);
+        }
     }
 
     [RelayCommand]
