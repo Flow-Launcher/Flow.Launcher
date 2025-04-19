@@ -96,7 +96,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string ResultSubFontStyle { get; set; }
         public string ResultSubFontWeight { get; set; }
         public string ResultSubFontStretch { get; set; }
-        public string SettingWindowFont { get; set; } = GetSystemDefaultFont(false);
+        public string SettingWindowFont { get; set; } = Win32Helper.GetSystemDefaultFont(false);
         public bool UseGlyphIcons { get; set; } = true;
         public bool UseAnimation { get; set; } = true;
         public bool UseSound { get; set; } = true;
