@@ -59,7 +59,6 @@ SetWinEventHook
 SendMessage
 EVENT_SYSTEM_FOREGROUND
 WINEVENT_OUTOFCONTEXT
-WM_KEYDOWN
 WM_SETTEXT
 IShellFolderViewDual2
 CoCreateInstance
