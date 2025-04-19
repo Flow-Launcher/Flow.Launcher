@@ -56,7 +56,7 @@
     <system:String x:Key="setAutoStartFailed">خطأ في إعداد التشغيل عند بدء التشغيل</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">إخفاء Flow Launcher عند فقدان التركيز</system:String>
     <system:String x:Key="dontPromptUpdateMsg">عدم عرض إشعارات الإصدار الجديد</system:String>
-    <system:String x:Key="SearchWindowPosition">موضع نافذة البحث</system:String>
+    <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">تذكر آخر موقع</system:String>
     <system:String x:Key="SearchWindowScreenCursor">الشاشة مع مؤشر الماوس</system:String>
     <system:String x:Key="SearchWindowScreenFocus">الشاشة مع النافذة المركزة</system:String>
