@@ -56,7 +56,7 @@
     <system:String x:Key="setAutoStartFailed">Feil ved å sette kjør ved oppstart</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Skjul Flow Launcher når fokus forsvinner</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Ikke vis varsler om nye versjoner</system:String>
-    <system:String x:Key="SearchWindowPosition">Posisjon til søkevindu</system:String>
+    <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Husk siste posisjon</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Skjerm med musepekeren</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Skjerm med fokusert vindu</system:String>
