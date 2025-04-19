@@ -53,9 +53,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string CycleHistoryDownHotkey { get; set; } = $"{KeyConstant.Alt} + Down";
         public string QuickSwitchHotkey { get; set; } = $"{KeyConstant.Alt} + G";
 
-        public bool AutoQuickSwitch { get; set; } = false;
-        public bool ShowQuickSwitchWindow { get; set; } = true;
-
         private string _language = Constant.SystemLanguageCode;
         public string Language
         {
@@ -80,7 +77,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
         public bool UseDropShadowEffect { get; set; } = true;
-        public BackdropTypes BackdropType{ get; set; } = BackdropTypes.None;
+        public BackdropTypes BackdropType { get; set; } = BackdropTypes.None;
 
         /* Appearance Settings. It should be separated from the setting later.*/
         public double WindowHeightSize { get; set; } = 42;
@@ -232,6 +229,14 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 Editable = false
             }
         };
+
+        public bool AutoQuickSwitch { get; set; } = false; // Unused due to many issues
+
+        public bool ShowQuickSwitchWindow { get; set; } = true;
+
+        public QuickSwitchResultMethods OpenQuickSwitchResultMethod { get; set; } = QuickSwitchResultMethods.LeftClick;
+
+        public QuickSwitchFileResultMethods OpenQuickSwitchFileResultMethod { get; set; } = QuickSwitchFileResultMethods.FullPath;
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public LOGLEVEL LogLevel { get; set; } = LOGLEVEL.INFO;
@@ -488,5 +493,18 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         Acrylic,
         Mica,
         MicaAlt
+    }
+
+    public enum QuickSwitchResultMethods
+    {
+        LeftClick,
+        RightClick
+    }
+
+    public enum QuickSwitchFileResultMethods
+    {
+        FullPath,
+        Directory,
+        DirectoryAndFileName
     }
 }
