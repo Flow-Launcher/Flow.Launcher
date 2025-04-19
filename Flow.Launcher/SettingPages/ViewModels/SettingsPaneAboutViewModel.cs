@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core;
 using Flow.Launcher.Infrastructure;
@@ -271,14 +269,6 @@ public partial class SettingsPaneAboutViewModel : BaseModel
         return "0 B";
     }
     
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected virtual void OnPropertyChanged(string propertyName)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-    
-    private string _settingWindowFont;
-
     public string SettingWindowFont
     {
         get => _settings.SettingWindowFont;
@@ -287,7 +277,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
             if (_settings.SettingWindowFont != value)
             {
                 _settings.SettingWindowFont = value;
-                OnPropertyChanged(nameof(SettingWindowFont));
+                OnPropertyChanged();
             }
         }
     }
@@ -295,26 +285,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     [RelayCommand]
     private void ResetSettingWindowFont()
     {
-        string defaultFont = GetSystemDefaultFont();
+        string defaultFont = Win32Helper.GetSystemDefaultFont(false);
         _settings.SettingWindowFont = defaultFont;
     }
-
-    public static string GetSystemDefaultFont()
-    {
-        try
-        {
-            var font = SystemFonts.MessageFontFamily;
-            if (font.FamilyNames.TryGetValue(System.Windows.Markup.XmlLanguage.GetLanguage("en-US"), out var englishName))
-            {
-                return englishName;
-            }
-
-            return font.Source ?? "Segoe UI";
-        }
-        catch
-        {
-            return "Segoe UI";
-        }
-    }
-
 }
