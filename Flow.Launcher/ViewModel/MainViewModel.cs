@@ -358,8 +358,8 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void LoadContextMenu()
         {
-            // For quick switch mode, we need to navigate to the path 
-            if (IsQuickSwitch)
+            // For quick switch and right click mode, we need to navigate to the path 
+            if (IsQuickSwitch && Settings.QuickSwitchResultBehaviour == QuickSwitchResultBehaviours.RightClick)
             {
                 if (SelectedResults.SelectedItem != null && DialogWindowHandle != nint.Zero)
                 {
@@ -367,26 +367,25 @@ namespace Flow.Launcher.ViewModel
                     if (result is QuickSwitchResult quickSwitchResult)
                     {
                         Win32Helper.SetForegroundWindow(DialogWindowHandle);
-                        QuickSwitch.JumpToPath(Win32Helper.GetForegroundWindow(), quickSwitchResult.QuickSwitchPath);
+                        QuickSwitch.JumpToPath(DialogWindowHandle, quickSwitchResult.QuickSwitchPath);
                     }
+                }
+                return;
+            }
+
+            // For query mode, we load context menu
+            if (QueryResultsSelected())
+            {
+                // When switch to ContextMenu from QueryResults, but no item being chosen, should do nothing
+                // i.e. Shift+Enter/Ctrl+O right after Alt + Space should do nothing
+                if (SelectedResults.SelectedItem != null)
+                {
+                    SelectedResults = ContextMenu;
                 }
             }
-            // For query mode, we load context menu
             else
             {
-                if (QueryResultsSelected())
-                {
-                    // When switch to ContextMenu from QueryResults, but no item being chosen, should do nothing
-                    // i.e. Shift+Enter/Ctrl+O right after Alt + Space should do nothing
-                    if (SelectedResults.SelectedItem != null)
-                    {
-                        SelectedResults = ContextMenu;
-                    }
-                }
-                else
-                {
-                    SelectedResults = Results;
-                }
+                SelectedResults = Results;
             }
         }
 
@@ -452,16 +451,31 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
-            var hideWindow = await result.ExecuteAsync(new ActionContext
+            // For quick switch and left click mode, we need to navigate to the path
+            if (IsQuickSwitch && Settings.QuickSwitchResultBehaviour == QuickSwitchResultBehaviours.LeftClick)
             {
-                // not null means pressing modifier key + number, should ignore the modifier key
-                SpecialKeyState = index is not null ? SpecialKeyState.Default : GlobalHotkey.CheckModifiers()
-            })
-                .ConfigureAwait(false);
+                if (SelectedResults.SelectedItem != null && DialogWindowHandle != nint.Zero)
+                {
+                    if (result is QuickSwitchResult quickSwitchResult)
+                    {
+                        Win32Helper.SetForegroundWindow(DialogWindowHandle);
+                        QuickSwitch.JumpToPath(DialogWindowHandle, quickSwitchResult.QuickSwitchPath);
+                    }
+                }
+            }
+            // For query mode, we execute the result
+            else
+            {
+                var hideWindow = await result.ExecuteAsync(new ActionContext
+                {
+                    // not null means pressing modifier key + number, should ignore the modifier key
+                    SpecialKeyState = index is not null ? SpecialKeyState.Default : GlobalHotkey.CheckModifiers()
+                }).ConfigureAwait(false);
 
-            if (hideWindow)
-            {
-                Hide();
+                if (hideWindow)
+                {
+                    Hide();
+                }
             }
 
             if (QueryResultsSelected())
@@ -1109,10 +1123,6 @@ namespace Flow.Launcher.ViewModel
             {
                 await QueryResultsAsync(searchDelay, isReQuery);
             }
-            else if (IsQuickSwitch)
-            {
-                return;
-            }
             else if (ContextMenuSelected())
             {
                 QueryContextMenu();
@@ -1581,7 +1591,7 @@ namespace Flow.Launcher.ViewModel
 
         #region Quick Switch
 
-        public bool IsQuickSwitch { get; private set; }
+        public bool IsQuickSwitch { get; private set; } = false;
         public nint DialogWindowHandle { get; private set; } = nint.Zero;
         
         private bool PreviousMainWindowVisibilityStatus { get; set; }
@@ -1632,6 +1642,8 @@ namespace Flow.Launcher.ViewModel
 
         public void ResetQuickSwitch()
         {
+            if (DialogWindowHandle == nint.Zero) return;
+
             DialogWindowHandle = nint.Zero;
             IsQuickSwitch = false;
 
@@ -1712,7 +1724,7 @@ namespace Flow.Launcher.ViewModel
             VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
 
             // Switch keyboard layout
-            if (StartWithEnglishMode && !IsQuickSwitch)
+            if (StartWithEnglishMode)
             {
                 Win32Helper.SwitchToEnglishKeyboardLayout(true);
             }
@@ -1779,7 +1791,7 @@ namespace Flow.Launcher.ViewModel
             }, DispatcherPriority.Render);
 
             // Switch keyboard layout
-            if (StartWithEnglishMode && !IsQuickSwitch)
+            if (StartWithEnglishMode)
             {
                 Win32Helper.RestorePreviousKeyboardLayout();
             }
