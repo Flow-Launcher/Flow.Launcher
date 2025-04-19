@@ -173,7 +173,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         #region Events
 
-        #region Invoke Properties
+        #region Invoke Property Events
 
         private static void InvokeShowQuickSwitchWindow(HWND hwnd)
         {
