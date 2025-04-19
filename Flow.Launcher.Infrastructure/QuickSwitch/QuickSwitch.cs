@@ -176,6 +176,29 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
             else
             {
+                // Remove last explorer
+                lock (_lastExplorerViewLock)
+                {
+                    _lastExplorerView = null;
+                }
+
+                // Remove dialog window handle
+                var dialogWindowExists = false;
+                lock (_dialogWindowHandleLock)
+                {
+                    if (_dialogWindowHandle != HWND.Null)
+                    {
+                        _dialogWindowHandle = HWND.Null;
+                        dialogWindowExists = true;
+                    }
+                }
+
+                // Remove auto switched dialogs
+                lock (_autoSwitchedDialogsLock)
+                {
+                    _autoSwitchedDialogs.Clear();
+                }
+
                 // Unhook events
                 if (!_foregroundChangeHook.IsNull)
                 {
@@ -195,6 +218,12 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
                 // Stop drag move timer
                 _dragMoveTimer?.Stop();
+
+                // Reset quick switch window
+                if (dialogWindowExists)
+                {
+                    InvokeResetQuickSwitchWindow();
+                }
             }
 
             _enabled = enabled;
