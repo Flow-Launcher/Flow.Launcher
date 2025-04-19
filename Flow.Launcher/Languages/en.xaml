@@ -142,8 +142,8 @@
     <system:String x:Key="currentActionKeywords">Current action keyword</system:String>
     <system:String x:Key="newActionKeyword">New action keyword</system:String>
     <system:String x:Key="actionKeywordsTooltip">Change Action Keywords</system:String>
-    <system:String x:Key="pluginSearchDelayTime">Plugin seach delay time</system:String>
-    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Seach Delay Time</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Plugin search delay time</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Search Delay Time</system:String>
     <system:String x:Key="FilterComboboxLabel">Advanced Settings:</system:String>
     <system:String x:Key="DisplayModeOnOff">Enabled</system:String>
     <system:String x:Key="DisplayModePriority">Priority</system:String>
