@@ -17,6 +17,22 @@ namespace Flow.Launcher
 
         public Settings Settings { get; }
 
+        public string SettingWindowFont
+        {
+            get => Settings.SettingWindowFont;
+            set
+            {
+                if (Settings.SettingWindowFont != value)
+                {
+                    Settings.SettingWindowFont = value;
+                    OnPropertyChanged(nameof(SettingWindowFont));
+                }
+            }
+        }
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         public int SelectedCustomExplorerIndex
         {
             get => selectedCustomExplorerIndex; set

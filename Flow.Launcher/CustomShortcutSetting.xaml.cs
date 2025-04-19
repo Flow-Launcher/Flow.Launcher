@@ -1,6 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
+using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.SettingPages.ViewModels;
 
 namespace Flow.Launcher
@@ -13,7 +15,26 @@ namespace Flow.Launcher
         private string originalKey { get; } = null;
         private string originalValue { get; } = null;
         private bool update { get; } = false;
-
+        private readonly Settings _settings;
+        public event PropertyChangedEventHandler PropertyChanged;
+        
+        public string SettingWindowFont
+        {
+            get => _settings.SettingWindowFont;
+            set
+            {
+                if (_settings.SettingWindowFont != value)
+                {
+                    _settings.SettingWindowFont = value;
+                    OnPropertyChanged(nameof(SettingWindowFont));
+                }
+            }
+        }
+        
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         public CustomShortcutSetting(SettingsPaneHotkeyViewModel vm)
         {
             _hotkeyVm = vm;

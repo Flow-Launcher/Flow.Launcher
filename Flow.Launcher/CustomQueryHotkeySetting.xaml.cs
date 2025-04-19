@@ -1,6 +1,7 @@
 ﻿using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.UserSettings;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -13,7 +14,25 @@ namespace Flow.Launcher
         private readonly Settings _settings;
         private bool update;
         private CustomPluginHotkey updateCustomHotkey;
-
+        public event PropertyChangedEventHandler PropertyChanged;
+        
+        public string SettingWindowFont
+        {
+            get => _settings.SettingWindowFont;
+            set
+            {
+                if (_settings.SettingWindowFont != value)
+                {
+                    _settings.SettingWindowFont = value;
+                    OnPropertyChanged(nameof(SettingWindowFont));
+                }
+            }
+        }
+        
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         public CustomQueryHotkeySetting(Settings settings)
         {
             _settings = settings;

@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:flowlauncher="clr-namespace:Flow.Launcher"
+    FontFamily="{Binding SettingWindowFont, Mode=TwoWay}"
     Title="{DynamicResource customeQueryHotkeyTitle}"
     Width="530"
     Background="{DynamicResource PopuBGColor}"
