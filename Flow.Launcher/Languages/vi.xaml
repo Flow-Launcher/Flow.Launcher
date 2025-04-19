@@ -56,7 +56,7 @@
     <system:String x:Key="setAutoStartFailed">Không lưu được tính năng tự khởi động khi khởi động hệ thống</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ẩn Flow Launcher khi mất tiêu điểm</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Không hiển thị thông báo khi có phiên bản mới</system:String>
-    <system:String x:Key="SearchWindowPosition">Vị trí Suchfenster</system:String>
+    <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Ghi nhớ vị trí cuối cùng</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Màn hình bằng con trỏ chuột</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Màn hình có cửa sổ được tập trung</system:String>
