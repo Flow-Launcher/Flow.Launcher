@@ -39,32 +39,30 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         private static readonly Settings _settings = Ioc.Default.GetRequiredService<Settings>();
 
+        private static IWebBrowser2 _lastExplorerView = null;
         private static readonly object _lastExplorerViewLock = new();
 
+        private static HWND _mainWindowHandle = HWND.Null;
+
+        private static HWND _dialogWindowHandle = HWND.Null;
         private static readonly object _dialogWindowHandleLock = new();
 
-        private static IWebBrowser2 _lastExplorerView = null;
-
         private static HWINEVENTHOOK _foregroundChangeHook = HWINEVENTHOOK.Null;
-
         private static HWINEVENTHOOK _locationChangeHook = HWINEVENTHOOK.Null;
-
-        /*private static HWINEVENTHOOK _moveSizeHook = HWINEVENTHOOK.Null;*/
-
         private static HWINEVENTHOOK _destroyChangeHook = HWINEVENTHOOK.Null;
 
         private static DispatcherTimer _dragMoveTimer = null;
 
         // A list of all file dialog windows that are auto switched already
         private static readonly List<HWND> _autoSwitchedDialogs = new();
-
         private static readonly object _autoSwitchedDialogsLock = new();
 
         private static readonly SemaphoreSlim _navigationLock = new(1, 1);
 
-        private static HWND _mainWindowHandle = HWND.Null;
+        private static HWINEVENTHOOK _moveSizeHook = HWINEVENTHOOK.Null;
 
-        private static HWND _dialogWindowHandle = HWND.Null;
+        private static HWND _hookedDialogWindowHandle = HWND.Null;
+        private static readonly object _hookedDialogWindowHandleLock = new();
 
         private static bool _isInitialized = false;
 
@@ -124,16 +122,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 0,
                 PInvoke.WINEVENT_OUTOFCONTEXT);
 
-            // Call MoveSizeCallBack when the window is moved or resized
-            /*_moveSizeHook = PInvoke.SetWinEventHook(
-                PInvoke.EVENT_SYSTEM_MOVESIZESTART,
-                PInvoke.EVENT_SYSTEM_MOVESIZEEND,
-                PInvoke.GetModuleHandle((PCWSTR)null),
-                MoveSizeCallBack,
-                0,
-                0,
-                PInvoke.WINEVENT_OUTOFCONTEXT);*/
-
             // Call DestroyChange when the window is destroyed
             _destroyChangeHook = PInvoke.SetWinEventHook(
                 PInvoke.EVENT_OBJECT_DESTROY,
@@ -146,7 +134,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
             if (_foregroundChangeHook.IsNull ||
                 _locationChangeHook.IsNull ||
-                /*_moveSizeHook.IsNull ||*/
                 _destroyChangeHook.IsNull)
             {
                 Log.Error(ClassName, "Failed to initialize QuickSwitch");
@@ -170,13 +157,41 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         #region Invoke Property Events
 
-        private static void InvokeShowQuickSwitchWindow()
+        private static unsafe void InvokeShowQuickSwitchWindow()
         {
             // Show quick switch window
             if (_settings.ShowQuickSwitchWindow)
             {
                 ShowQuickSwitchWindow?.Invoke(_dialogWindowHandle.Value);
-                _dragMoveTimer?.Start();
+
+                lock (_hookedDialogWindowHandleLock)
+                {
+                    var needHook = _hookedDialogWindowHandle == HWND.Null ||
+                        _hookedDialogWindowHandle != _dialogWindowHandle;
+
+                    if (needHook)
+                    {
+                        if (!_moveSizeHook.IsNull)
+                        {
+                            PInvoke.UnhookWinEvent(_moveSizeHook);
+                            _moveSizeHook = HWINEVENTHOOK.Null;
+                        }
+
+                        // Call MoveSizeCallBack when the window is moved or resized
+                        uint processId;
+                        var threadId = PInvoke.GetWindowThreadProcessId(_dialogWindowHandle, &processId);
+                        _moveSizeHook = PInvoke.SetWinEventHook(
+                            PInvoke.EVENT_SYSTEM_MOVESIZESTART,
+                            PInvoke.EVENT_SYSTEM_MOVESIZEEND,
+                            PInvoke.GetModuleHandle((PCWSTR)null),
+                            MoveSizeCallBack,
+                            processId,
+                            threadId,
+                            PInvoke.WINEVENT_OUTOFCONTEXT);
+                    }
+
+                    _hookedDialogWindowHandle = _dialogWindowHandle;
+                }
             }
         }
 
@@ -190,7 +205,17 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         {
             // Reset quick switch window
             ResetQuickSwitchWindow?.Invoke();
-            _dragMoveTimer?.Stop();
+
+            lock (_hookedDialogWindowHandleLock)
+            {
+                if (!_moveSizeHook.IsNull)
+                {
+                    PInvoke.UnhookWinEvent(_moveSizeHook);
+                    _moveSizeHook = HWINEVENTHOOK.Null;
+                }
+
+                _hookedDialogWindowHandle = HWND.Null;
+            }
         }
 
         private static void InvokeHideQuickSwitchWindow()
@@ -198,7 +223,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             // Neither quick switch window nor file dialog window is foreground
             // Hide quick switch window until the file dialog window is brought to the foreground
             HideQuickSwitchWindow?.Invoke();
-            _dragMoveTimer?.Stop();
         }
 
         #endregion
@@ -255,10 +279,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     // Show quick switch window after navigating the path
                     else
                     {
-                        NavigateDialogPath(hwnd, () =>
-                        {
-                            InvokeShowQuickSwitchWindow();
-                        });
+                        NavigateDialogPath(hwnd, InvokeShowQuickSwitchWindow);
                     }
                 }
                 else
@@ -333,9 +354,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
         }
 
-        // Here we do not start & stop the timer beacause the start time is not accurate (more than 1s delay)
-        // So we start & stop the timer when we find a file dialog window
-        /*private static void MoveSizeCallBack(
+        private static void MoveSizeCallBack(
             HWINEVENTHOOK hWinEventHook,
             uint eventType,
             HWND hwnd,
@@ -346,7 +365,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         )
         {
             // If the dialog window is moved or resized, update the quick switch window position
-            if (_dialogWindowHandle != HWND.Null && _dialogWindowHandle == hwnd && _dragMoveTimer != null)
+            if (_dragMoveTimer != null)
             {
                 switch (eventType)
                 {
@@ -358,7 +377,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                         break;
                 }
             }
-        }*/
+        }
 
         private static void DestroyChangeCallback(
             HWINEVENTHOOK hWinEventHook,
@@ -600,11 +619,11 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 PInvoke.UnhookWinEvent(_locationChangeHook);
                 _locationChangeHook = HWINEVENTHOOK.Null;
             }
-            /*if (!_moveSizeHook.IsNull)
+            if (!_moveSizeHook.IsNull)
             {
                 PInvoke.UnhookWinEvent(_moveSizeHook);
                 _moveSizeHook = HWINEVENTHOOK.Null;
-            }*/
+            }
             if (!_destroyChangeHook.IsNull)
             {
                 PInvoke.UnhookWinEvent(_destroyChangeHook);
