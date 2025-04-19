@@ -725,6 +725,7 @@ namespace Flow.Launcher.Infrastructure
             {
                 _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LCONTROL, VirtualKeyCode.VK_L);
             }
+            // Cannot work when activating with hotkey
             /*if (altD)
             {
                 SendKey(dialogHandle, VIRTUAL_KEY.VK_LMENU, false);     // Press Left Alt
@@ -771,18 +772,11 @@ namespace Flow.Launcher.Infrastructure
                 return false;
             }
 
-            /*var dwMyID = PInvoke.GetCurrentThreadId();
-            var dwCurID = PInvoke.GetWindowThreadProcessId(dialogHandle);
-
-            PInvoke.AttachThreadInput(dwMyID, dwCurID, true);
-
-            var timeOut1 = !SpinWait.SpinUntil(() => PInvoke.GetFocus() == editHandle, 1000);
-            if (timeOut1)
+            // Sometimes it is not focused
+            /*if (!CheckFocus(dialogHandle, editHandle))
             {
                 return false;
-            }
-
-            PInvoke.AttachThreadInput(dwMyID, dwCurID, false);*/
+            }*/
 
             SetWindowText(editHandle, dirPath);
             _inputSimulator.Keyboard.KeyPress(VirtualKeyCode.RETURN);
@@ -809,6 +803,12 @@ namespace Flow.Launcher.Infrastructure
                 return false;
             }
 
+            // Sometimes it is not focused
+            /*if (!CheckFocus(dialogHandle, controlHandle))
+            {
+                return false;
+            }*/
+
             SetWindowText(controlHandle, fileName);
 
             // Alt-O (equivalent to press the Open button) twice. In normal cases it suffices to press once,
@@ -816,6 +816,23 @@ namespace Flow.Launcher.Infrastructure
             _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LMENU, VirtualKeyCode.VK_O);
             _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LMENU, VirtualKeyCode.VK_O);
 
+            return true;
+        }
+
+        private static unsafe bool CheckFocus(HWND dialogHandle, HWND inputHandle)
+        {
+            var dwMyID = PInvoke.GetCurrentThreadId();
+            var dwCurID = PInvoke.GetWindowThreadProcessId(dialogHandle);
+
+            PInvoke.AttachThreadInput(dwMyID, dwCurID, true);
+
+            var timeOut1 = !SpinWait.SpinUntil(() => PInvoke.GetFocus() == inputHandle, 1000);
+            if (timeOut1)
+            {
+                return false;
+            }
+
+            PInvoke.AttachThreadInput(dwMyID, dwCurID, false);
             return true;
         }
 
