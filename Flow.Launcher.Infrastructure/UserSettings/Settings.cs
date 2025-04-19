@@ -230,7 +230,10 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         };
 
-        public bool AutoQuickSwitch { get; set; } = false; // Unused due to many issues
+        public bool EnableQuickSwitch { get; set; } = true;
+
+        // TODO: Due to many issues, this option is removed from FL
+        public bool AutoQuickSwitch { get; set; } = false;
 
         public bool ShowQuickSwitchWindow { get; set; } = true;
 
