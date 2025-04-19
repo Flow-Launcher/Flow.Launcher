@@ -18,7 +18,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 {
     public static class QuickSwitch
     {
-        private static readonly string ClassName = nameof(QuickSwitch);
+        #region Public Properties
 
         public static Action<nint> ShowQuickSwitchWindow { get; set; } = null;
 
@@ -28,8 +28,14 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         public static Action HideQuickSwitchWindow { get; set; } = null;
 
+        #endregion
+
+        #region Private Fields
+
         // The class name of a dialog window
         private const string DialogWindowClassName = "#32770";
+
+        private static readonly string ClassName = nameof(QuickSwitch);
 
         private static readonly Settings _settings = Ioc.Default.GetRequiredService<Settings>();
 
@@ -49,6 +55,11 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         private static DispatcherTimer _dragMoveTimer = null;
 
+        // A list of all file dialog windows that are shown quick switch window already
+        private static readonly List<HWND> _shownQuickSwitchWindowDialogs = new();
+
+        private static readonly object _shownQuickSwitchWindowDialogsLock = new();
+
         // A list of all file dialog windows that are auto switched already
         private static readonly List<HWND> _autoSwitchedDialogs = new();
 
@@ -61,6 +72,10 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         private static HWND _dialogWindowHandle = HWND.Null;
 
         private static bool _isInitialized = false;
+
+        #endregion
+
+        #region Initialization
 
         public static void Initialize()
         {
@@ -148,11 +163,52 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
             // Initialize timer
             _dragMoveTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(10) };
-            _dragMoveTimer.Tick += (s, e) => UpdateQuickSwitchWindow?.Invoke();
+            _dragMoveTimer.Tick += (s, e) => InvokeUpdateQuickSwitchWindow();
 
             _isInitialized = true;
             return;
         }
+
+        #endregion
+
+        #region Events
+
+        #region Invoke Properties
+
+        private static void InvokeShowQuickSwitchWindow(bool alreadyShown)
+        {
+            // Show quick switch window
+            if (_settings.ShowQuickSwitchWindow && !alreadyShown)
+            {
+                ShowQuickSwitchWindow?.Invoke(_dialogWindowHandle.Value);
+                _dragMoveTimer?.Start();
+            }
+        }
+
+        private static void InvokeUpdateQuickSwitchWindow()
+        {
+            // Update quick switch window
+            UpdateQuickSwitchWindow?.Invoke();
+        }
+
+        private static void InvokeResetQuickSwitchWindow()
+        {
+            // Reset quick switch window
+            ResetQuickSwitchWindow?.Invoke();
+            _dragMoveTimer?.Stop();
+        }
+
+        private static void InvokeHideQuickSwitchWindow()
+        {
+            // Neither quick switch window nor file dialog window is foreground
+            // Hide quick switch window until the file dialog window is brought to the foreground
+            HideQuickSwitchWindow?.Invoke();
+            _dragMoveTimer?.Stop();
+        }
+
+        #endregion
+
+        #region Hotkey
 
         public static void OnToggleHotkey(object sender, HotkeyEventArgs args)
         {
@@ -161,6 +217,193 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 NavigateDialogPath(Win32Helper.GetForegroundWindowHWND());
             }
         }
+
+        #endregion
+
+        #region Windows Events
+
+        private static void ForegroundChangeCallback(
+            HWINEVENTHOOK hWinEventHook,
+            uint eventType,
+            HWND hwnd,
+            int idObject,
+            int idChild,
+            uint dwEventThread,
+            uint dwmsEventTime
+        )
+        {
+            // File dialog window
+            if (GetWindowClassName(hwnd) == DialogWindowClassName)
+            {
+                Log.Debug(ClassName, $"Dialog Window: {hwnd}");
+
+                lock (_dialogWindowHandleLock)
+                {
+                    _dialogWindowHandle = hwnd;
+                }
+
+                bool alreadyShown;
+                lock (_shownQuickSwitchWindowDialogsLock)
+                {
+                    alreadyShown = _shownQuickSwitchWindowDialogs.Contains(hwnd);
+                }
+
+                // Navigate to path
+                if (_settings.AutoQuickSwitch)
+                {
+                    // Check if we have already switched for this dialog
+                    bool alreadySwitched;
+                    lock (_autoSwitchedDialogsLock)
+                    {
+                        alreadySwitched = _autoSwitchedDialogs.Contains(hwnd);
+                    }
+
+                    // Just show quick switch window
+                    if (alreadySwitched)
+                    {
+                        InvokeShowQuickSwitchWindow(alreadyShown);
+                    }
+                    // Show quick switch window after navigating the path
+                    else
+                    {
+                        NavigateDialogPath(hwnd, () =>
+                        {
+                            InvokeShowQuickSwitchWindow(alreadyShown);
+                        });
+                    }
+                }
+                else
+                {
+                    InvokeShowQuickSwitchWindow(alreadyShown);
+                }
+            }
+            // Quick switch window
+            else if (hwnd == _mainWindowHandle)
+            {
+                // Nothing to do
+                Log.Debug(ClassName, $"Quick Switch Window: {hwnd}");
+            }
+            else
+            {
+                if (_dialogWindowHandle != HWND.Null)
+                {
+                    InvokeHideQuickSwitchWindow();
+                }
+
+                // Check if explorer window is foreground
+                try
+                {
+                    lock (_lastExplorerViewLock)
+                    {
+                        EnumerateShellWindows((shellWindow) =>
+                        {
+                            try
+                            {
+                                if (shellWindow is not IWebBrowser2 explorer)
+                                {
+                                    return;
+                                }
+
+                                if (explorer.HWND != hwnd.Value)
+                                {
+                                    return;
+                                }
+
+                                _lastExplorerView = explorer;
+
+                                Log.Debug(ClassName, $"Explorer Window: {hwnd}");
+                            }
+                            catch (COMException)
+                            {
+                                // Ignored
+                            }
+                        });
+                    }
+                }
+                catch (System.Exception)
+                {
+                    // Ignored
+                }
+            }
+        }
+
+        private static void LocationChangeCallback(
+            HWINEVENTHOOK hWinEventHook,
+            uint eventType,
+            HWND hwnd,
+            int idObject,
+            int idChild,
+            uint dwEventThread,
+            uint dwmsEventTime
+        )
+        {
+            // If the dialog window is moved, update the quick switch window position
+            if (_dialogWindowHandle != HWND.Null && _dialogWindowHandle == hwnd)
+            {
+                InvokeUpdateQuickSwitchWindow();
+            }
+        }
+
+        // Here we do not start & stop the timer beacause the start time is not accurate (more than 1s delay)
+        // So we start & stop the timer when we find a file dialog window
+        /*private static void MoveSizeCallBack(
+            HWINEVENTHOOK hWinEventHook,
+            uint eventType,
+            HWND hwnd,
+            int idObject,
+            int idChild,
+            uint dwEventThread,
+            uint dwmsEventTime
+        )
+        {
+            // If the dialog window is moved or resized, update the quick switch window position
+            if (_dialogWindowHandle != HWND.Null && _dialogWindowHandle == hwnd && _dragMoveTimer != null)
+            {
+                switch (eventType)
+                {
+                    case PInvoke.EVENT_SYSTEM_MOVESIZESTART:
+                        _dragMoveTimer.Start(); // Start dragging position
+                        break;
+                    case PInvoke.EVENT_SYSTEM_MOVESIZEEND:
+                        _dragMoveTimer.Stop(); // Stop dragging
+                        break;
+                }
+            }
+        }*/
+
+        private static void DestroyChangeCallback(
+            HWINEVENTHOOK hWinEventHook,
+            uint eventType,
+            HWND hwnd,
+            int idObject,
+            int idChild,
+            uint dwEventThread,
+            uint dwmsEventTime
+        )
+        {
+            // If the dialog window is destroyed, set _dialogWindowHandle to null
+            if (_dialogWindowHandle != HWND.Null && _dialogWindowHandle == hwnd)
+            {
+                Log.Debug(ClassName, $"Dialog Hwnd: {hwnd}");
+                lock (_dialogWindowHandleLock)
+                {
+                    _dialogWindowHandle = HWND.Null;
+                }
+                lock (_autoSwitchedDialogsLock)
+                {
+                    _autoSwitchedDialogs.Remove(hwnd);
+                }
+                InvokeResetQuickSwitchWindow();
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Helper Methods
+
+        #region Navigate Path
 
         private static void NavigateDialogPath(HWND dialog, Action action = null)
         {
@@ -232,7 +475,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 if (timeOut)
                 {
                     return;
-                };
+                }
+                ;
 
                 // Assume that the dialog is in the foreground now
                 await _navigationLock.WaitAsync();
@@ -272,7 +516,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 {
                     _navigationLock.Release();
                 }
-                
+
                 // Invoke action if provided
                 action?.Invoke();
             });
@@ -295,6 +539,10 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
         }
 
+        #endregion
+
+        #region Class Name
+
         private static string GetWindowClassName(HWND handle)
         {
             return GetClassName(handle);
@@ -312,191 +560,9 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
         }
 
-        private static void ForegroundChangeCallback(
-            HWINEVENTHOOK hWinEventHook,
-            uint eventType,
-            HWND hwnd,
-            int idObject,
-            int idChild,
-            uint dwEventThread,
-            uint dwmsEventTime
-        )
-        {
-            // File dialog window
-            if (GetWindowClassName(hwnd) == DialogWindowClassName)
-            {
-                Log.Debug(ClassName, $"Dialog Window: {hwnd}");
+        #endregion
 
-                lock (_dialogWindowHandleLock)
-                {
-                    _dialogWindowHandle = hwnd;
-                }
-
-                // Navigate to path
-                if (_settings.AutoQuickSwitch)
-                {
-                    // Check if we have already switched for this dialog
-                    bool alreadySwitched;
-                    lock (_autoSwitchedDialogsLock)
-                    {
-                        alreadySwitched = _autoSwitchedDialogs.Contains(hwnd);
-                    }
-
-                    // Just show quick switch window
-                    if (alreadySwitched)
-                    {
-                        if (_settings.ShowQuickSwitchWindow)
-                        {
-                            ShowQuickSwitchWindow?.Invoke(_dialogWindowHandle.Value);
-                            _dragMoveTimer?.Start();
-                        }
-                    }
-                    // Show quick switch window after navigating the path
-                    else
-                    {
-                        NavigateDialogPath(hwnd, () =>
-                        {
-                            if (_settings.ShowQuickSwitchWindow)
-                            {
-                                ShowQuickSwitchWindow?.Invoke(_dialogWindowHandle.Value);
-                                _dragMoveTimer?.Start();
-                            }
-                        });
-                    }
-                }
-                else
-                {
-                    // Show quick switch window
-                    if (_settings.ShowQuickSwitchWindow)
-                    {
-                        ShowQuickSwitchWindow?.Invoke(_dialogWindowHandle.Value);
-                        _dragMoveTimer?.Start();
-                    }
-                }
-            }
-            // Quick switch window
-            else if (hwnd == _mainWindowHandle)
-            {
-                // Nothing to do
-                Log.Debug(ClassName, $"Quick Switch Window: {hwnd}");
-            }
-            else
-            {
-                if (_dialogWindowHandle != HWND.Null)
-                {
-                    // Neither quick switch window nor file dialog window is foreground
-                    // Hide quick switch window until the file dialog window is brought to the foreground
-                    HideQuickSwitchWindow?.Invoke();
-                    _dragMoveTimer?.Stop();
-                }
-
-                // Check if explorer window is foreground
-                try
-                {
-                    lock (_lastExplorerViewLock)
-                    {
-                        EnumerateShellWindows((shellWindow) =>
-                        {
-                            try
-                            {
-                                if (shellWindow is not IWebBrowser2 explorer)
-                                {
-                                    return;
-                                }
-
-                                if (explorer.HWND != hwnd.Value)
-                                {
-                                    return;
-                                }
-
-                                _lastExplorerView = explorer;
-
-                                Log.Debug(ClassName, $"Explorer Window: {hwnd}");
-                            }
-                            catch (COMException)
-                            {
-                                // Ignored
-                            }
-                        });
-                    }
-                }
-                catch (System.Exception)
-                {
-                    // Ignored
-                }
-            }
-        }
-
-        private static void LocationChangeCallback(
-            HWINEVENTHOOK hWinEventHook,
-            uint eventType,
-            HWND hwnd,
-            int idObject,
-            int idChild,
-            uint dwEventThread,
-            uint dwmsEventTime
-        )
-        {
-            // If the dialog window is moved, update the quick switch window position
-            if (_dialogWindowHandle != HWND.Null && _dialogWindowHandle == hwnd)
-            {
-                UpdateQuickSwitchWindow?.Invoke();
-            }
-        }
-
-        // Here we do not start & stop the timer beacause the start time is not accurate (more than 1s delay)
-        // So we start & stop the timer when we find a file dialog window
-        /*private static void MoveSizeCallBack(
-            HWINEVENTHOOK hWinEventHook,
-            uint eventType,
-            HWND hwnd,
-            int idObject,
-            int idChild,
-            uint dwEventThread,
-            uint dwmsEventTime
-        )
-        {
-            // If the dialog window is moved or resized, update the quick switch window position
-            if (_dialogWindowHandle != HWND.Null && _dialogWindowHandle == hwnd && _dragMoveTimer != null)
-            {
-                switch (eventType)
-                {
-                    case PInvoke.EVENT_SYSTEM_MOVESIZESTART:
-                        _dragMoveTimer.Start(); // Start dragging position
-                        break;
-                    case PInvoke.EVENT_SYSTEM_MOVESIZEEND:
-                        _dragMoveTimer.Stop(); // Stop dragging
-                        break;
-                }
-            }
-        }*/
-
-        private static void DestroyChangeCallback(
-            HWINEVENTHOOK hWinEventHook,
-            uint eventType,
-            HWND hwnd,
-            int idObject,
-            int idChild,
-            uint dwEventThread,
-            uint dwmsEventTime
-        )
-        {
-            // If the dialog window is destroyed, set _dialogWindowHandle to null
-            if (_dialogWindowHandle != HWND.Null && _dialogWindowHandle == hwnd)
-            {
-                Log.Debug(ClassName, $"Dialog Hwnd: {hwnd}");
-                lock (_dialogWindowHandleLock)
-                {
-                    _dialogWindowHandle = HWND.Null;
-                }
-                lock (_autoSwitchedDialogsLock)
-                {
-                    _autoSwitchedDialogs.Remove(hwnd);
-                }
-                ResetQuickSwitchWindow?.Invoke();
-                _dragMoveTimer?.Stop();
-            }
-        }
+        #region Enumerate Windows
 
         private static unsafe void EnumerateShellWindows(Action<object> action)
         {
@@ -522,6 +588,12 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 action(shellWindows.Item(i));
             }
         }
+
+        #endregion
+
+        #endregion
+
+        #region Dispose
 
         public static void Dispose()
         {
@@ -564,5 +636,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 _dragMoveTimer = null;
             }
         }
+
+        #endregion
     }
 }
