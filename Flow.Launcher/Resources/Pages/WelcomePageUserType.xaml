@@ -158,12 +158,14 @@
             <StackPanel>
                 <!--  CLI Radio  -->
                 <RadioButton
+                    Checked="OnStyleChecked"
                     Content="{DynamicResource Welcome_Page_UserType_CLI_Title}"
                     GroupName="UserTypeGroup"
                     IsChecked="True"
                     Style="{StaticResource RadioCardStyle}">
                     <RadioButton.Tag>
                         <local:RadioCardData
+                            Key="CLI"
                             Bullet1="{StaticResource Welcome_Page_UserType_CLI_Sub1}"
                             Bullet2="{StaticResource Welcome_Page_UserType_CLI_Sub2}"
                             Description1="{StaticResource Welcome_Page_UserType_CLI_Desc}"
@@ -173,11 +175,13 @@
                 <!--  GUI Radio  -->
                 <RadioButton
                     Margin="0 12 0 0"
+                    Checked="OnStyleChecked"
                     Content="{DynamicResource Welcome_Page_UserType_GUI_Title}"
                     GroupName="UserTypeGroup"
                     Style="{StaticResource RadioCardStyle}">
                     <RadioButton.Tag>
                         <local:RadioCardData
+                            Key="GUI"
                             Bullet1="{StaticResource Welcome_Page_UserType_GUI_Sub1}"
                             Bullet2="{StaticResource Welcome_Page_UserType_GUI_Sub2}"
                             Bullet3="{StaticResource Welcome_Page_UserType_GUI_Sub3}"
