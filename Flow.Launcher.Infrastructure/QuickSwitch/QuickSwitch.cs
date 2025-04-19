@@ -582,8 +582,22 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     bool result;
                     if (isFile)
                     {
-                        result = Win32Helper.FileJump(path, dialogHandle);
-                        Log.Debug(ClassName, $"File Jump: {path}");
+                        switch (_settings.QuickSwitchFileResultBehaviour)
+                        {
+                            case QuickSwitchFileResultBehaviours.FullPath:
+                            default:
+                                result = Win32Helper.FileJump(path, dialogHandle, forceFileName: true);
+                                Log.Debug(ClassName, $"File Jump FullPath: {path}");
+                                break;
+                            case QuickSwitchFileResultBehaviours.Directory:
+                                result = Win32Helper.DirJump(Path.GetDirectoryName(path), dialogHandle);
+                                Log.Debug(ClassName, $"File Jump Directory: {path}");
+                                break;
+                            case QuickSwitchFileResultBehaviours.DirectoryAndFileName:
+                                result = Win32Helper.FileJump(path, dialogHandle);
+                                Log.Debug(ClassName, $"File Jump DirectoryAndFileName: {path}");
+                                break;
+                        }
                     }
                     else
                     {

@@ -698,9 +698,16 @@ namespace Flow.Launcher.Infrastructure
 
         private static readonly InputSimulator _inputSimulator = new();
 
-        internal static bool FileJump(string filePath, HWND dialogHandle, bool altD = true)
+        internal static bool FileJump(string filePath, HWND dialogHandle, bool forceFileName = false, bool altD = true)
         {
-            return DirFileJump(Path.GetDirectoryName(filePath), filePath, dialogHandle, altD);
+            if (forceFileName)
+            {
+                return DirFileJumpForFileName(filePath, dialogHandle);
+            }
+            else
+            {
+                return DirFileJump(Path.GetDirectoryName(filePath), filePath, dialogHandle, altD);
+            }
         }
 
         internal static bool DirJump(string dirPath, HWND dialogHandle, bool altD = true)
@@ -708,14 +715,8 @@ namespace Flow.Launcher.Infrastructure
             return DirFileJump(dirPath, null, dialogHandle, altD);
         }
 
-        private static unsafe bool DirFileJump(string dirPath, string filePath, HWND dialogHandle, bool altD = true, bool editFileName = false)
+        private static unsafe bool DirFileJump(string dirPath, string filePath, HWND dialogHandle, bool altD = true)
         {
-            // Directly edit file name input box.
-            if (editFileName)
-            {
-                return DirFileJumpForFileName(filePath, dialogHandle);
-            }
-
             // Alt-D or Ctrl-L to focus on the path input box
             if (altD)
             {
@@ -752,7 +753,7 @@ namespace Flow.Launcher.Infrastructure
             {
                 // https://github.com/idkidknow/Flow.Launcher.Plugin.DirQuickJump/issues/1
                 // The dialog is a legacy one, so we edit file name text box directly.
-                return DirFileJumpForFileName(string.IsNullOrEmpty(filePath) ? dirPath : filePath, dialogHandle);
+                return DirFileJumpForFileName(string.IsNullOrEmpty(filePath) ? dirPath : filePath, dialogHandle, true);
             }
 
             var timeOut = !SpinWait.SpinUntil(() =>
@@ -784,7 +785,7 @@ namespace Flow.Launcher.Infrastructure
             if (!string.IsNullOrEmpty(filePath))
             {
                 // After navigating to the path, we then set the file name.
-                return DirFileJump(null, Path.GetFileName(filePath), dialogHandle, altD, true);
+                return DirFileJumpForFileName(Path.GetFileName(filePath), dialogHandle, true);
             }
 
             return true;
@@ -793,7 +794,7 @@ namespace Flow.Launcher.Infrastructure
         /// <summary>
         /// Edit file name text box in the file open dialog.
         /// </summary>
-        private static bool DirFileJumpForFileName(string fileName, HWND dialogHandle)
+        private static bool DirFileJumpForFileName(string fileName, HWND dialogHandle, bool openTwice = false)
         {
             var controlHandle = PInvoke.FindWindowEx(dialogHandle, HWND.Null, "ComboBoxEx32", null);
             controlHandle = PInvoke.FindWindowEx(controlHandle, HWND.Null, "ComboBox", null);
@@ -811,10 +812,13 @@ namespace Flow.Launcher.Infrastructure
 
             SetWindowText(controlHandle, fileName);
 
-            // Alt-O (equivalent to press the Open button) twice. In normal cases it suffices to press once,
-            // but when the focus is on an irrelevant folder, that press once will just open the irrelevant one.
             _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LMENU, VirtualKeyCode.VK_O);
-            _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LMENU, VirtualKeyCode.VK_O);
+            if (openTwice)
+            {
+                // Alt-O (equivalent to press the Open button) twice. In normal cases it suffices to press once,
+                // but when the focus is on an irrelevant folder, that press once will just open the irrelevant one.
+                _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LMENU, VirtualKeyCode.VK_O);
+            }
 
             return true;
         }
