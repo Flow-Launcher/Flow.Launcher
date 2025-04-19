@@ -148,7 +148,7 @@
                             SelectedValuePath="Value" />
                     </cc:Card>
                     <cc:Card
-                        Title="Setting Window Font"
+                        Title="{DynamicResource settingWindowFont}"
                         Icon="&#xf259;"
                         Type="Inside">
                         <StackPanel Orientation="Horizontal">
