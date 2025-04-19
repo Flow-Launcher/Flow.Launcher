@@ -81,11 +81,15 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     if (!explorerInitialized)
                     {
                         _lastExplorerView = explorer;
+
+                        Log.Debug(ClassName, $"Explorer Window: {explorer.HWND.Value}");
                     }
                     // Force update explorer window if it is foreground
                     else if (Win32Helper.IsForegroundWindow(explorer.HWND.Value))
                     {
                         _lastExplorerView = explorer;
+
+                        Log.Debug(ClassName, $"Explorer Window: {explorer.HWND.Value}");
                     }
                 });
             }
@@ -321,7 +325,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             // File dialog window
             if (GetWindowClassName(hwnd) == DialogWindowClassName)
             {
-                Log.Debug(ClassName, $"Hwnd: {hwnd}");
+                Log.Debug(ClassName, $"Dialog Window: {hwnd}");
 
                 lock (_dialogWindowHandleLock)
                 {
@@ -374,6 +378,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             else if (hwnd == _mainWindowHandle)
             {
                 // Nothing to do
+                Log.Debug(ClassName, $"Quick Switch Window: {hwnd}");
             }
             else
             {
@@ -405,6 +410,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                                 }
 
                                 _lastExplorerView = explorer;
+
+                                Log.Debug(ClassName, $"Explorer Window: {hwnd}");
                             }
                             catch (COMException)
                             {
