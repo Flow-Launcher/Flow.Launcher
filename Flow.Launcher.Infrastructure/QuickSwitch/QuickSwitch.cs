@@ -175,8 +175,15 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         #region Invoke Properties
 
-        private static void InvokeShowQuickSwitchWindow(bool alreadyShown)
+        private static void InvokeShowQuickSwitchWindow(HWND hwnd)
         {
+            // Check if the quick switch window is already shown for this dialog
+            bool alreadyShown;
+            lock (_shownQuickSwitchWindowDialogsLock)
+            {
+                alreadyShown = _shownQuickSwitchWindowDialogs.Contains(hwnd);
+            }
+
             // Show quick switch window
             if (_settings.ShowQuickSwitchWindow && !alreadyShown)
             {
@@ -191,15 +198,27 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             UpdateQuickSwitchWindow?.Invoke();
         }
 
-        private static void InvokeResetQuickSwitchWindow()
+        private static void InvokeResetQuickSwitchWindow(HWND hwnd)
         {
+            // Remove the dialog from the list of shown quick switch windows
+            lock (_shownQuickSwitchWindowDialogsLock)
+            {
+                _shownQuickSwitchWindowDialogs.Remove(hwnd);
+            }
+
             // Reset quick switch window
             ResetQuickSwitchWindow?.Invoke();
             _dragMoveTimer?.Stop();
         }
 
-        private static void InvokeHideQuickSwitchWindow()
+        private static void InvokeHideQuickSwitchWindow(HWND hwnd)
         {
+            // Remove the dialog from the list of shown quick switch windows
+            lock (_shownQuickSwitchWindowDialogsLock)
+            {
+                _shownQuickSwitchWindowDialogs.Remove(hwnd);
+            }
+
             // Neither quick switch window nor file dialog window is foreground
             // Hide quick switch window until the file dialog window is brought to the foreground
             HideQuickSwitchWindow?.Invoke();
@@ -242,12 +261,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     _dialogWindowHandle = hwnd;
                 }
 
-                bool alreadyShown;
-                lock (_shownQuickSwitchWindowDialogsLock)
-                {
-                    alreadyShown = _shownQuickSwitchWindowDialogs.Contains(hwnd);
-                }
-
                 // Navigate to path
                 if (_settings.AutoQuickSwitch)
                 {
@@ -261,20 +274,20 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     // Just show quick switch window
                     if (alreadySwitched)
                     {
-                        InvokeShowQuickSwitchWindow(alreadyShown);
+                        InvokeShowQuickSwitchWindow(hwnd);
                     }
                     // Show quick switch window after navigating the path
                     else
                     {
                         NavigateDialogPath(hwnd, () =>
                         {
-                            InvokeShowQuickSwitchWindow(alreadyShown);
+                            InvokeShowQuickSwitchWindow(hwnd);
                         });
                     }
                 }
                 else
                 {
-                    InvokeShowQuickSwitchWindow(alreadyShown);
+                    InvokeShowQuickSwitchWindow(hwnd);
                 }
             }
             // Quick switch window
@@ -287,7 +300,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             {
                 if (_dialogWindowHandle != HWND.Null)
                 {
-                    InvokeHideQuickSwitchWindow();
+                    InvokeHideQuickSwitchWindow(_dialogWindowHandle);
                 }
 
                 // Check if explorer window is foreground
@@ -393,7 +406,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 {
                     _autoSwitchedDialogs.Remove(hwnd);
                 }
-                InvokeResetQuickSwitchWindow();
+                InvokeResetQuickSwitchWindow(hwnd);
             }
         }
 
