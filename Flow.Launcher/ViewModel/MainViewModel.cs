@@ -1602,11 +1602,14 @@ namespace Flow.Launcher.ViewModel
                 PreviousMainWindowVisibilityStatus = MainWindowVisibilityStatus;
                 DialogWindowHandle = handle;
                 IsQuickSwitch = true;
+
+                // Wait for a while to make sure the dialog is shown
+                // If don't give a time, Positioning will be weird
+                await Task.Delay(300);
             }
 
-            await Task.Delay(300); // If don't give a time, Positioning will be weird.
-
-            if (DialogWindowHandle == nint.Zero) return; // If handle is cleared, which means the dialog is closed, do nothing
+            // If handle is cleared, which means the dialog is closed, do nothing
+            if (DialogWindowHandle == nint.Zero) return;
 
             if (MainWindowVisibilityStatus)
             {
