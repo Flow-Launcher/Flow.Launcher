@@ -24,7 +24,6 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 using Microsoft.VisualStudio.Threading;
-using Windows.Win32;
 
 namespace Flow.Launcher.ViewModel
 {

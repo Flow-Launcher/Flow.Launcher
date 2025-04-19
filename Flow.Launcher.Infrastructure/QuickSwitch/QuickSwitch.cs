@@ -437,7 +437,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
         }
 
-        // TODO: Use a better way to detect dragging
         // Here we do not start & stop the timer beacause the start time is not accurate (more than 1s delay)
         // So we start & stop the timer when we find a file dialog window
         /*private static void MoveSizeCallBack(
