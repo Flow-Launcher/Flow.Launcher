@@ -56,7 +56,7 @@
     <system:String x:Key="setAutoStartFailed">Ошибка настройки запуска при запуске</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Скрывать Flow Launcher, если потерян фокуc</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Не отображать сообщение об обновлении, когда доступна новая версия</system:String>
-    <system:String x:Key="SearchWindowPosition">Положение окна поиска</system:String>
+    <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Запомнить последнее положение</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Монитор с курсором мыши</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Монитор с фокусированным окном</system:String>
