@@ -56,7 +56,7 @@
     <system:String x:Key="setAutoStartFailed">Erro ao definir para iniciar ao arrancar</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ocultar Flow Launcher ao perder o foco</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Não notificar acerca de novas versões</system:String>
-    <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
+    <system:String x:Key="SearchWindowPosition">Posição da janela de pesquisa</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Memorizar última posição</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Monitor com o cursor do rato</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Monitor com a janela focada</system:String>
