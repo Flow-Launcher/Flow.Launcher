@@ -56,7 +56,7 @@
     <system:String x:Key="setAutoStartFailed">Chybné nastavenie spustenia pri spustení</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Schovať Flow Launcher po strate fokusu</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Nezobrazovať upozornenia na novú verziu</system:String>
-    <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
+    <system:String x:Key="SearchWindowPosition">Poloha vyhľadávacieho okna</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Zapamätať si poslednú pozíciu</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Monitor s kurzorom myši</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Monitor s aktívnym oknom</system:String>
