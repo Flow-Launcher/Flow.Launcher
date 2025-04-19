@@ -56,7 +56,7 @@
     <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Sakri Flow Launcher kada se izgubi fokus</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Ne prikazuj obaveštenje o novoj verziji</system:String>
-    <system:String x:Key="SearchWindowPosition">Search Window Position</system:String>
+    <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Remember Last Position</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Monitor with Mouse Cursor</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Monitor with Focused Window</system:String>
