@@ -56,7 +56,7 @@
     <system:String x:Key="setAutoStartFailed">שגיאה בהגדרת ההפעלה בעת הפעלת windows</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">הסתר את Flow Launcher כאשר הוא אינו החלון הפעיל</system:String>
     <system:String x:Key="dontPromptUpdateMsg">אל תציג התראות על גרסה חדשה</system:String>
-    <system:String x:Key="SearchWindowPosition">מיקום חלון החיפוש</system:String>
+    <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">זכור את המיקום האחרון</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Monitor with Mouse Cursor</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Monitor with Focused Window</system:String>
