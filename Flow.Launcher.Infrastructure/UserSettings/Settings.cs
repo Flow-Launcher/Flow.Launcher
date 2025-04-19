@@ -238,6 +238,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public QuickSwitchFileResultMethods OpenQuickSwitchFileResultMethod { get; set; } = QuickSwitchFileResultMethods.FullPath;
 
+        public QuickSwitchWindowPositions QuickSwitchWindowPosition { get; set; } = QuickSwitchWindowPositions.UnderDialog;
+
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public LOGLEVEL LogLevel { get; set; } = LOGLEVEL.INFO;
 
@@ -506,5 +508,11 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         FullPath,
         Directory,
         DirectoryAndFileName
+    }
+
+    public enum QuickSwitchWindowPositions
+    {
+        UnderDialog,
+        CenterScreen
     }
 }
