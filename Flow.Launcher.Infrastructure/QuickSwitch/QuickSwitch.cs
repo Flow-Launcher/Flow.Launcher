@@ -641,10 +641,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                             _autoSwitchedDialogs.Add(dialogHandle);
                         }
                     }
-                    else
-                    {
-                        Log.Error(ClassName, "Failed to jump to path");
-                    }
                 }
                 catch (System.Exception e)
                 {
@@ -708,6 +704,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             {
                 // https://github.com/idkidknow/Flow.Launcher.Plugin.DirQuickJump/issues/1
                 // The dialog is a legacy one, so we edit file name text box directly.
+                Log.Error(ClassName, "Failed to find control handle");
                 return DirFileJumpForFileName(string.IsNullOrEmpty(filePath) ? dirPath : filePath, dialogHandle, true);
             }
 
@@ -718,6 +715,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }, 1000);
             if (timeOut)
             {
+                Log.Error(ClassName, "Failed to find visible control handle");
                 return false;
             }
 
@@ -725,6 +723,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             editHandle = PInvoke.GetDlgItem(editHandle, 0xA205); // Edit
             if (editHandle == HWND.Null)
             {
+                Log.Error(ClassName, "Failed to find edit handle");
                 return false;
             }
 
@@ -749,6 +748,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             controlHandle = PInvoke.GetDlgItem(controlHandle, 0x047C); // Edit
             if (controlHandle == HWND.Null)
             {
+                Log.Error(ClassName, "Failed to find control handle");
                 return false;
             }
 
@@ -759,6 +759,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 var openHandle = PInvoke.GetDlgItem(dialogHandle, 0x0001); // "&Open" Button
                 if (openHandle == HWND.Null)
                 {
+                    Log.Error(ClassName, "Failed to find open handle");
                     return false;
                 }
 
