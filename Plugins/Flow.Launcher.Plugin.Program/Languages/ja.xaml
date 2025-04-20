@@ -4,8 +4,8 @@
     <!--  Program setting  -->
     <system:String x:Key="flowlauncher_plugin_program_reset">Reset Default</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete">削除</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_edit">編</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_add">追</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit">編集</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_add">追加</system:String>
     <system:String x:Key="flowlauncher_plugin_program_name">Name</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable">有効</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enabled">Enabled</system:String>
@@ -74,7 +74,7 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">別のユーザーとして実行</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">管理者として実行</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Open containing folder</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">プログラムを非表示</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">非表示</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Open target folder</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">プログラム</system:String>
