@@ -147,8 +147,8 @@
     <system:String x:Key="currentActionKeywords">كلمة الفعل الحالية</system:String>
     <system:String x:Key="newActionKeyword">كلمة فعل جديدة</system:String>
     <system:String x:Key="actionKeywordsTooltip">تغيير كلمات الفعل</system:String>
-    <system:String x:Key="pluginSearchDelayTime">Plugin seach delay time</system:String>
-    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Seach Delay Time</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Plugin search delay time</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Search Delay Time</system:String>
     <system:String x:Key="FilterComboboxLabel">Advanced Settings:</system:String>
     <system:String x:Key="DisplayModeOnOff">مفع</system:String>
     <system:String x:Key="DisplayModePriority">الأولوي</system:String>
@@ -240,7 +240,7 @@
     <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
     <system:String x:Key="BackdropTypesMica">Mica</system:String>
     <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
-    <system:String x:Key="TypeIsDarkToolTip">هذه السمة تدعم الوضعين (فاتح/داكن).</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">This theme supports two (light/dark) modes.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">هذه السمة تدعم الخلفية الضبابية الشفافة.</system:String>
     <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
     <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
@@ -308,9 +308,8 @@
     <system:String x:Key="useGlyphUIEffect">استخدام أيقونات Segoe Fluent لنتائج الاستعلام حيثما كان مدعومًا</system:String>
     <system:String x:Key="flowlauncherPressHotkey">اضغط على المفتاح</system:String>
     <system:String x:Key="showBadges">Show Result Badges</system:String>
-    <system:String x:Key="showBadgesToolTip">Show badges for query results where supported</system:String>
+    <system:String x:Key="showBadgesToolTip">For supported plugins, badges are displayed to help distinguish them more easily.</system:String>
     <system:String x:Key="showBadgesGlobalOnly">Show Result Badges for Global Query Only</system:String>
-    <system:String x:Key="showBadgesGlobalOnlyToolTip">Show badges for global query results only</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">بروكسي HTTP</system:String>
