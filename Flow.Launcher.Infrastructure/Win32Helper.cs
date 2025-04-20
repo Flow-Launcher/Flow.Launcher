@@ -696,8 +696,6 @@ namespace Flow.Launcher.Infrastructure
 
         // Edited from: https://github.com/idkidknow/Flow.Launcher.Plugin.DirQuickJump
 
-        private static readonly InputSimulator _inputSimulator = new();
-
         internal static bool FileJump(string filePath, HWND dialogHandle, bool forceFileName = false, bool openFile = false)
         {
             if (forceFileName)
