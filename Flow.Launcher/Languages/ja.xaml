@@ -28,7 +28,7 @@
     <system:String x:Key="lastExecuteTime">最終実行時間:{0}</system:String>
     <system:String x:Key="iconTrayOpen">開く</system:String>
     <system:String x:Key="iconTraySettings">設定</system:String>
-    <system:String x:Key="iconTrayAbout">Flow Launcherについて</system:String>
+    <system:String x:Key="iconTrayAbout">情報</system:String>
     <system:String x:Key="iconTrayExit">終了</system:String>
     <system:String x:Key="closeWindow">閉じる</system:String>
     <system:String x:Key="copy">コピー</system:String>
@@ -329,7 +329,7 @@
     <system:String x:Key="proxyConnectFailed">プロキシ接続に失敗しました</system:String>
 
     <!--  Setting About  -->
-    <system:String x:Key="about">Flow Launcherについて</system:String>
+    <system:String x:Key="about">情報</system:String>
     <system:String x:Key="website">ウェブサイト</system:String>
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">Docs</system:String>
