@@ -8,6 +8,9 @@ using Windows.Win32.UI.Shell;
 
 namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 {
+    /// <summary>
+    /// Class for handling Windows Explorer instances in QuickSwitch.
+    /// </summary>
     internal class WindowsExplorer : IQuickSwitchExplorer
     {
         private static readonly string ClassName = nameof(WindowsExplorer);

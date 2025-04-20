@@ -8,9 +8,11 @@ using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 {
+    /// <summary>
+    /// Class for handling Windows File Dialog instances in QuickSwitch.
+    /// </summary>
     internal class WindowsDialog : IQuickSwitchDialog
     {
-        // The class name of a dialog window
         private const string WindowsDialogClassName = "#32770";
 
         public IQuickSwitchDialogWindow DialogWindow { get; private set; }

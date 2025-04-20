@@ -7,8 +7,9 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Interface
     /// Interface for handling File Dialog instances in QuickSwitch.
     /// </summary>
     /// <remarks>
-    /// Add models in QuickSwitch/Models folder and implement this interface.
-    /// Then add the instance in QuickSwitch._quickSwitchDialogs.
+    /// Add models which implement IQuickSwitchDialog in folder QuickSwitch/Models.
+    /// E.g. Models.WindowsDialog.
+    /// Then add instances in QuickSwitch._quickSwitchDialogs.
     /// </remarks>
     internal interface IQuickSwitchDialog : IDisposable
     {
