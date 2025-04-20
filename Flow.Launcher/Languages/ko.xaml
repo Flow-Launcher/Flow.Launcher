@@ -138,8 +138,8 @@
     <system:String x:Key="currentActionKeywords">현재 액션 키워드</system:String>
     <system:String x:Key="newActionKeyword">새 액션 키워드</system:String>
     <system:String x:Key="actionKeywordsTooltip">액션 키워드 변경</system:String>
-    <system:String x:Key="pluginSearchDelayTime">Plugin seach delay time</system:String>
-    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Seach Delay Time</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Plugin search delay time</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Search Delay Time</system:String>
     <system:String x:Key="FilterComboboxLabel">고급 설정:</system:String>
     <system:String x:Key="DisplayModeOnOff">켬</system:String>
     <system:String x:Key="DisplayModePriority">중요</system:String>
@@ -231,7 +231,7 @@
     <system:String x:Key="BackdropTypesAcrylic">아크릴</system:String>
     <system:String x:Key="BackdropTypesMica">마이카</system:String>
     <system:String x:Key="BackdropTypesMicaAlt">마이카 변형</system:String>
-    <system:String x:Key="TypeIsDarkToolTip">이 테마는 두 가지 모드(라이트/다크)를 지원합니다.</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">This theme supports two (light/dark) modes.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">이 테마는 흐릿한 배경 효과를 지원합니다.</system:String>
     <system:String x:Key="ShowPlaceholder">안내 텍스트 표시</system:String>
     <system:String x:Key="ShowPlaceholderTip">입력 내용이 없을때 입력창 위치를 알 수 있는 텍스트를 표시합니다</system:String>
@@ -299,9 +299,8 @@
     <system:String x:Key="useGlyphUIEffect">결과 및 일부 메뉴에서 플루언트 아이콘을 사용합니다.</system:String>
     <system:String x:Key="flowlauncherPressHotkey">사용할 키를 누르세요</system:String>
     <system:String x:Key="showBadges">결과 뱃지 표시</system:String>
-    <system:String x:Key="showBadgesToolTip">지원하는 경우 검색 결과 항목에 뱃지를 표시합니다</system:String>
+    <system:String x:Key="showBadgesToolTip">For supported plugins, badges are displayed to help distinguish them more easily.</system:String>
     <system:String x:Key="showBadgesGlobalOnly">전역 검색 결과에서만 뱃지 표시</system:String>
-    <system:String x:Key="showBadgesGlobalOnlyToolTip">전역 결과에서만 뱃지를 표시합니다</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP 프록시</system:String>
