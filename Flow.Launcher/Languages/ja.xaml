@@ -43,7 +43,7 @@
     <system:String x:Key="GameModeToolTip">ホットキーの使用を一時停止します。</system:String>
     <system:String x:Key="PositionReset">位置のリセット</system:String>
     <system:String x:Key="PositionResetToolTip">検索ウィンドウの位置をリセット</system:String>
-    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">ここに入力して検索</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">設定</system:String>
@@ -106,8 +106,8 @@
     <system:String x:Key="AlwaysPreview">常にプレビューする</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Flow が有効になったとき、常にプレビューパネルを開きます。 {0} を押してプレビューの表示/非表示を切り替えます。</system:String>
     <system:String x:Key="shadowEffectNotAllowed">現在のテーマでぼかしの効果が有効になっている場合、影の効果を有効にすることはできません</system:String>
-    <system:String x:Key="searchDelay">Search Delay</system:String>
-    <system:String x:Key="searchDelayToolTip">Adds a short delay while typing to reduce UI flicker and result load. Recommended if your typing speed is average.</system:String>
+    <system:String x:Key="searchDelay">検索遅延</system:String>
+    <system:String x:Key="searchDelayToolTip">入力中に短い遅延を追加することで、UIのちらつきや結果の読み込みを軽減します。平均的なタイピング速度のユーザーにおすすめです。</system:String>
     <system:String x:Key="searchDelayNumberBoxToolTip">Enter the wait time (in ms) until input is considered complete. This can only be edited if Search Delay is enabled.</system:String>
     <system:String x:Key="searchDelayTime">Default Search Delay Time</system:String>
     <system:String x:Key="searchDelayTimeToolTip">Wait time before showing results after typing stops. Higher values wait longer. (ms)</system:String>
@@ -149,7 +149,7 @@
     <system:String x:Key="actionKeywordsTooltip">Change Action Keywords</system:String>
     <system:String x:Key="pluginSearchDelayTime">Plugin seach delay time</system:String>
     <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Seach Delay Time</system:String>
-    <system:String x:Key="FilterComboboxLabel">Advanced Settings:</system:String>
+    <system:String x:Key="FilterComboboxLabel">詳細設定:</system:String>
     <system:String x:Key="DisplayModeOnOff">Enabled</system:String>
     <system:String x:Key="DisplayModePriority">重要度</system:String>
     <system:String x:Key="DisplayModeSearchDelay">検索遅延</system:String>
@@ -198,8 +198,8 @@
     <system:String x:Key="SampleSubTitleProgram">管理者または別のユーザーとしてプログラムを起動します</system:String>
     <system:String x:Key="SampleTitleProcessKiller">プロセスキラー</system:String>
     <system:String x:Key="SampleSubTitleProcessKiller">不要なプロセスを終了します</system:String>
-    <system:String x:Key="SearchBarHeight">Search Bar Height</system:String>
-    <system:String x:Key="ItemHeight">Item Height</system:String>
+    <system:String x:Key="SearchBarHeight">検索バーの高さ</system:String>
+    <system:String x:Key="ItemHeight">アイテムの高さ</system:String>
     <system:String x:Key="queryBoxFont">検索ボックスのフォント</system:String>
     <system:String x:Key="resultItemFont">Result Title Font</system:String>
     <system:String x:Key="resultSubItemFont">Result Subtitle Font</system:String>
@@ -233,20 +233,20 @@
     <system:String x:Key="AnimationSpeedCustom">カスタム</system:String>
     <system:String x:Key="Clock">時刻</system:String>
     <system:String x:Key="Date">日付</system:String>
-    <system:String x:Key="BackdropType">Backdrop Type</system:String>
-    <system:String x:Key="BackdropInfo">The backdrop effect is not applied in the preview.</system:String>
-    <system:String x:Key="BackdropTypeDisabledToolTip">Backdrop supported starting from Windows 11 build 22000 and above</system:String>
-    <system:String x:Key="BackdropTypesNone">None</system:String>
-    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
-    <system:String x:Key="BackdropTypesMica">Mica</system:String>
-    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
-    <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
+    <system:String x:Key="BackdropType">バックドロップの種類</system:String>
+    <system:String x:Key="BackdropInfo">プレビューではバックドロップ効果が適用されません。</system:String>
+    <system:String x:Key="BackdropTypeDisabledToolTip">バックドロップは Windows 11 ビルド 22000 以降でサポートされています。</system:String>
+    <system:String x:Key="BackdropTypesNone">なし</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">アクリル</system:String>
+    <system:String x:Key="BackdropTypesMica">マイカ</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">マイカ（代替）</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">このテーマはライト／ダークの2モードに対応しています。</system:String>
     <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
     <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
     <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
-    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
+    <system:String x:Key="PlaceholderText">検索欄の案内文</system:String>
     <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
-    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
+    <system:String x:Key="KeepMaxResults">ウィンドウサイズの固定</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
 
     <!--  Setting Hotkey  -->
