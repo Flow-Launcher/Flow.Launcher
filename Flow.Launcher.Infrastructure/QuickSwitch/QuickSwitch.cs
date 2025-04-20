@@ -113,8 +113,14 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                             // Use HWND.Null here because we want to check all windows
                             if (explorer.CheckExplorerWindow(HWND.Null))
                             {
-                                // Set last explorer view if not set, this is beacuse default WindowsExplorer is the first element
-                                _lastExplorer ??= explorer;
+                                if (_lastExplorer == null)
+                                {
+                                    Log.Debug(ClassName, $"Explorer window");
+                                    // Set last explorer view if not set,
+                                    // this is beacuse default WindowsExplorer is the first element
+                                    _lastExplorer = explorer;
+                                    break;
+                                }
                             }
                         }
                     }
@@ -403,6 +409,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                         {
                             if (explorer.CheckExplorerWindow(hwnd))
                             {
+                                Log.Debug(ClassName, $"Explorer window: {hwnd}");
                                 _lastExplorer = explorer;
                                 break;
                             }
@@ -474,7 +481,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             // If the dialog window is destroyed, set _dialogWindowHandle to null
             if (_dialogWindow != null && _dialogWindow.Handle == hwnd)
             {
-                Log.Debug(ClassName, $"Dialog Hwnd: {hwnd}");
+                Log.Debug(ClassName, $"Destory dialog: {hwnd}");
                 lock (_dialogWindowLock)
                 {
                     _dialogWindow = null;
@@ -525,20 +532,20 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                         switch (_settings.QuickSwitchFileResultBehaviour)
                         {
                             case QuickSwitchFileResultBehaviours.FullPath:
-                                result = FileJump(path, dialogHandle, forceFileName: true);
                                 Log.Debug(ClassName, $"File Jump FullPath: {path}");
+                                result = FileJump(path, dialogHandle, forceFileName: true);
                                 break;
                             case QuickSwitchFileResultBehaviours.FullPathOpen:
-                                result = FileJump(path, dialogHandle, forceFileName: true, openFile: true);
                                 Log.Debug(ClassName, $"File Jump FullPathOpen: {path}");
+                                result = FileJump(path, dialogHandle, forceFileName: true, openFile: true);
                                 break;
                             case QuickSwitchFileResultBehaviours.Directory:
-                                result = DirJump(Path.GetDirectoryName(path), dialogHandle);
                                 Log.Debug(ClassName, $"File Jump Directory: {path}");
+                                result = DirJump(Path.GetDirectoryName(path), dialogHandle);
                                 break;
                             case QuickSwitchFileResultBehaviours.DirectoryAndFileName:
-                                result = FileJump(path, dialogHandle);
                                 Log.Debug(ClassName, $"File Jump DirectoryAndFileName: {path}");
+                                result = FileJump(path, dialogHandle);
                                 break;
                             default:
                                 throw new ArgumentOutOfRangeException(
@@ -550,8 +557,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     }
                     else
                     {
-                        result = DirJump(path, dialogHandle);
                         Log.Debug(ClassName, $"Dir Jump: {path}");
+                        result = DirJump(path, dialogHandle);
                     }
 
                     if (result)

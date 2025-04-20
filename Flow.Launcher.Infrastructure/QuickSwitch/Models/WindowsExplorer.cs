@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.QuickSwitch.Interface;
 using Windows.Win32;
 using Windows.Win32.Foundation;
@@ -37,8 +36,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 
                         _lastExplorerView = explorer;
                         isExplorer = true;
-
-                        Log.Debug(ClassName, $"{explorer.HWND.Value}");
                     }
                     catch (COMException)
                     {
