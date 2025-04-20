@@ -74,7 +74,7 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">הפעל כמשתמש אחר</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">הפעל כמנהל</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">פתח תיקייה מכילה</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">Hide</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">הסתר</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_target_folder">פתח תיקיית יעד</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">תוכנה</system:String>
