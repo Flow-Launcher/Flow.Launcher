@@ -698,58 +698,26 @@ namespace Flow.Launcher.Infrastructure
 
         private static readonly InputSimulator _inputSimulator = new();
 
-        internal static bool FileJump(string filePath, HWND dialogHandle, bool forceFileName = false, bool altD = true)
+        internal static bool FileJump(string filePath, HWND dialogHandle, bool forceFileName = false, bool openFile = false)
         {
             if (forceFileName)
             {
-                return DirFileJumpForFileName(filePath, dialogHandle);
+                return DirFileJumpForFileName(filePath, dialogHandle, openFile);
             }
             else
             {
-                return DirFileJump(Path.GetDirectoryName(filePath), filePath, dialogHandle, altD);
+                return DirFileJump(Path.GetDirectoryName(filePath), filePath, dialogHandle);
             }
         }
 
-        internal static bool DirJump(string dirPath, HWND dialogHandle, bool altD = true)
+        internal static bool DirJump(string dirPath, HWND dialogHandle)
         {
-            return DirFileJump(dirPath, null, dialogHandle, altD);
+            return DirFileJump(dirPath, null, dialogHandle);
         }
 
-        private static unsafe bool DirFileJump(string dirPath, string filePath, HWND dialogHandle, bool altD = true)
+        private static unsafe bool DirFileJump(string dirPath, string filePath, HWND dialogHandle)
         {
-            // Alt-D or Ctrl-L to focus on the path input box
-            if (altD)
-            {
-                _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LMENU, VirtualKeyCode.VK_D);     
-            }
-            else
-            {
-                _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LCONTROL, VirtualKeyCode.VK_L);
-            }
-            // Cannot work when activating with hotkey
-            /*if (altD)
-            {
-                SendKey(dialogHandle, VIRTUAL_KEY.VK_LMENU, false);     // Press Left Alt
-                SendKey(dialogHandle, VIRTUAL_KEY.VK_D, false);         // Press D
-                SendKey(dialogHandle, VIRTUAL_KEY.VK_D, true);          // Release D
-                SendKey(dialogHandle, VIRTUAL_KEY.VK_LMENU, true);      // Release Left Alt
-            }
-            else
-            {
-                SendKey(dialogHandle, VIRTUAL_KEY.VK_LCONTROL, false);  // Press Left Ctrl
-                SendKey(dialogHandle, VIRTUAL_KEY.VK_L, false);         // Press L
-                SendKey(dialogHandle, VIRTUAL_KEY.VK_L, true);          // Release L
-                SendKey(dialogHandle, VIRTUAL_KEY.VK_LCONTROL, true);   // Release Left Ctrl
-            }*/
-
-            // Sometimes it is not focused
-            /*if (!CheckFocus(dialogHandle, editHandle))
-            {
-                return false;
-            }*/
-
             // Get the handle of the path input box and then set the text.
-            // The window with class name "ComboBoxEx32" is not visible when the path input box is not with the keyboard focus.
             var controlHandle = PInvoke.GetDlgItem(dialogHandle, 0x0000); // WorkerW
             controlHandle = PInvoke.GetDlgItem(controlHandle, 0xA005); // ReBarWindow32
             controlHandle = PInvoke.GetDlgItem(controlHandle, 0xA205); // Address Band Root
@@ -780,12 +748,11 @@ namespace Flow.Launcher.Infrastructure
             }
 
             SetWindowText(editHandle, dirPath);
-            _inputSimulator.Keyboard.KeyPress(VirtualKeyCode.RETURN);
 
             if (!string.IsNullOrEmpty(filePath))
             {
-                // After navigating to the path, we then set the file name.
-                return DirFileJumpForFileName(Path.GetFileName(filePath), dialogHandle);
+                // Note: I don't know why even openFile is set to false, the dialog still opens the file.
+                return DirFileJumpForFileName(Path.GetFileName(filePath), dialogHandle, false);
             }
 
             return true;
@@ -794,7 +761,7 @@ namespace Flow.Launcher.Infrastructure
         /// <summary>
         /// Edit file name text box in the file open dialog.
         /// </summary>
-        private static bool DirFileJumpForFileName(string fileName, HWND dialogHandle, bool open = false)
+        private static bool DirFileJumpForFileName(string fileName, HWND dialogHandle, bool openFile)
         {
             var controlHandle = PInvoke.GetDlgItem(dialogHandle, 0x047C); // ComboBoxEx32
             controlHandle = PInvoke.GetDlgItem(controlHandle, 0x047C); // ComboBox
@@ -806,7 +773,7 @@ namespace Flow.Launcher.Infrastructure
 
             SetWindowText(controlHandle, fileName);
 
-            if (open)
+            if (openFile)
             {
                 var openHandle = PInvoke.GetDlgItem(dialogHandle, 0x0001); // "&Open" Button
                 if (openHandle == HWND.Null)
@@ -817,23 +784,6 @@ namespace Flow.Launcher.Infrastructure
                 ClickButton(openHandle);
             }
 
-            return true;
-        }
-
-        private static unsafe bool CheckFocus(HWND dialogHandle, HWND inputHandle)
-        {
-            var dwMyID = PInvoke.GetCurrentThreadId();
-            var dwCurID = PInvoke.GetWindowThreadProcessId(dialogHandle);
-
-            PInvoke.AttachThreadInput(dwMyID, dwCurID, true);
-
-            var timeOut1 = !SpinWait.SpinUntil(() => PInvoke.GetFocus() == inputHandle, 1000);
-            if (timeOut1)
-            {
-                return false;
-            }
-
-            PInvoke.AttachThreadInput(dwMyID, dwCurID, false);
             return true;
         }
 
@@ -868,43 +818,6 @@ namespace Flow.Launcher.Infrastructure
                 rect.bottom - rect.top
             );
             return true;
-        }
-
-        private static void SendKey(HWND hWnd, VIRTUAL_KEY virtualKey, bool isKeyUp)
-        {
-            // Get virtual key value
-            var virtualKeyValue = (ushort)virtualKey;
-
-            // Get scan code and extended flag
-            var scanCode = PInvoke.MapVirtualKey(virtualKeyValue, MAP_VIRTUAL_KEY_TYPE.MAPVK_VK_TO_VSC);
-
-            // Check if the key is an extended key (e.g., right Alt/Ctrl)
-            var isExtended = virtualKey == VIRTUAL_KEY.VK_RMENU || virtualKey == VIRTUAL_KEY.VK_RCONTROL;
-
-            // Create lParam
-            var lParam = CreateKeyLParam(scanCode, isExtended, isKeyUp, !isKeyUp);
-
-            // Send message
-            var message = isKeyUp ? PInvoke.WM_KEYUP : PInvoke.WM_KEYDOWN;
-            PInvoke.PostMessage(hWnd, message, virtualKeyValue, new(lParam));
-        }
-
-        private static nint CreateKeyLParam(uint scanCode, bool isExtended, bool isKeyUp, bool wasKeyDown)
-        {
-            uint lParam = 0x00000001; // Repeat count (1 keystroke)
-
-            lParam |= (scanCode << 16); // Scan code
-
-            if (isExtended)
-                lParam |= 0x01000000; // Extended key flag
-
-            if (wasKeyDown)
-                lParam |= 0x40000000; // Previous key state (1 if down before message)
-
-            if (isKeyUp)
-                lParam |= 0x80000000; // Transition state (1 for release)
-
-            return (nint)lParam;
         }
 
         #endregion

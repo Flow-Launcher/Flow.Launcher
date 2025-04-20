@@ -585,9 +585,12 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                         switch (_settings.QuickSwitchFileResultBehaviour)
                         {
                             case QuickSwitchFileResultBehaviours.FullPath:
-                            default:
                                 result = Win32Helper.FileJump(path, dialogHandle, forceFileName: true);
                                 Log.Debug(ClassName, $"File Jump FullPath: {path}");
+                                break;
+                            case QuickSwitchFileResultBehaviours.FullPathOpen:
+                                result = Win32Helper.FileJump(path, dialogHandle, forceFileName: true, openFile: true);
+                                Log.Debug(ClassName, $"File Jump FullPathOpen: {path}");
                                 break;
                             case QuickSwitchFileResultBehaviours.Directory:
                                 result = Win32Helper.DirJump(Path.GetDirectoryName(path), dialogHandle);
@@ -597,6 +600,12 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                                 result = Win32Helper.FileJump(path, dialogHandle);
                                 Log.Debug(ClassName, $"File Jump DirectoryAndFileName: {path}");
                                 break;
+                            default:
+                                throw new ArgumentOutOfRangeException(
+                                    nameof(_settings.QuickSwitchFileResultBehaviour),
+                                    _settings.QuickSwitchFileResultBehaviour,
+                                    "Invalid QuickSwitchFileResultBehaviour"
+                                );
                         }
                     }
                     else

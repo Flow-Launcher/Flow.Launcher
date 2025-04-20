@@ -267,7 +267,7 @@
                         Type="InsideFit">
                         <ComboBox
                             MinWidth="120"
-                            MaxWidth="210"
+                            MaxWidth="240"
                             DisplayMemberPath="Display"
                             ItemsSource="{Binding QuickSwitchFileResultBehaviours}"
                             SelectedValue="{Binding Settings.QuickSwitchFileResultBehaviour}"

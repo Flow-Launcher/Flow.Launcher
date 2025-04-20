@@ -519,6 +519,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
     public enum QuickSwitchFileResultBehaviours
     {
         FullPath,
+        FullPathOpen,
         Directory,
         DirectoryAndFileName
     }
