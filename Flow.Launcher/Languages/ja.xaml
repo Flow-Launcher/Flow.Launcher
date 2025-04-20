@@ -51,8 +51,8 @@
     <system:String x:Key="portableMode">ポータブルモード</system:String>
     <system:String x:Key="portableModeToolTIp">すべての設定とユーザーデータを1つのフォルダに保存します(リムーバブルドライブやクラウドサービスで使用する場合に便利です)。</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">スタートアップ時にFlow Launcherを起動する</system:String>
-    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
-    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
+    <system:String x:Key="useLogonTaskForStartup">高速起動のためにスタートアップではなくログオンタスクを使用</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">アンインストール後は、「タスク スケジューラ」からこのタスク（Flow.Launcher Startup）を手動で削除する必要があります。</system:String>
     <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">フォーカスを失った時にFlow Launcherを隠す</system:String>
     <system:String x:Key="dontPromptUpdateMsg">最新版が入手可能であっても、アップグレードメッセージを表示しない</system:String>
@@ -430,7 +430,7 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">保存</system:String>
     <system:String x:Key="commonOverwrite">Overwrite</system:String>
-    <system:String x:Key="commonCancel"></system:String>
+    <system:String x:Key="commonCancel">キャンセル</system:String>
     <system:String x:Key="commonReset">Reset</system:String>
     <system:String x:Key="commonDelete">削除</system:String>
     <system:String x:Key="commonOK">Update</system:String>
