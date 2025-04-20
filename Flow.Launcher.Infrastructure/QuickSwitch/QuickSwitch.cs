@@ -56,9 +56,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         private static IQuickSwitchDialogWindow _dialogWindow = null;
         private static readonly object _dialogWindowLock = new();
 
-        private static IQuickSwitchDialogWindow _currentDialogWindow = null;
-        private static readonly object _currentDialogWindowLock = new();
-
         private static HWINEVENTHOOK _foregroundChangeHook = HWINEVENTHOOK.Null;
         private static HWINEVENTHOOK _locationChangeHook = HWINEVENTHOOK.Null;
         private static HWINEVENTHOOK _destroyChangeHook = HWINEVENTHOOK.Null;
@@ -197,15 +194,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                         dialogWindowExists = true;
                     }
                 }
-                lock (_currentDialogWindowLock)
-                {
-                    if (_currentDialogWindow != null)
-                    {
-                        _currentDialogWindow.Dispose();
-                        _currentDialogWindow = null;
-                        dialogWindowExists = true;
-                    }
-                }
 
                 // Remove auto switched dialogs
                 lock (_autoSwitchedDialogsLock)
@@ -249,26 +237,15 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         #region Invoke Property Events
 
-        private static unsafe void InvokeShowQuickSwitchWindow()
+        private static unsafe void InvokeShowQuickSwitchWindow(bool dialogWindowChanged)
         {
             // Show quick switch window
             if (_settings.ShowQuickSwitchWindow)
             {
-                lock (_currentDialogWindowLock)
+                if (dialogWindowChanged)
                 {
-                    lock (_dialogWindowLock)
-                    {
-                        var currentDialogWindowChanged = _currentDialogWindow == null ||
-                            _currentDialogWindow != _dialogWindow;
-
-                        if (currentDialogWindowChanged)
-                        {
-                            // Save quick switch window position for one file dialog
-                            QuickSwitchWindowPosition = _settings.QuickSwitchWindowPosition;
-                        }
-
-                        _currentDialogWindow = _dialogWindow;
-                    }
+                    // Save quick switch window position for one file dialog
+                    QuickSwitchWindowPosition = _settings.QuickSwitchWindowPosition;
                 }
 
                 ShowQuickSwitchWindow?.Invoke(_dialogWindow.Handle);
@@ -278,34 +255,25 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     // Note: Here we do not start & stop the timer beacause when there are many dialog windows
                     // Unhooking and hooking will take too much time which can make window position weird
                     // So we start & stop the timer when we find a file dialog window
-                    /*lock (_currentDialogWindowLock)
+                    /*if (dialogWindowChanged)
                     {
-                        lock (_dialogWindowLock)
+                        if (!_moveSizeHook.IsNull)
                         {
-                            var currentDialogWindowChanged = _currentDialogWindow == null ||
-                            _currentDialogWindow != _dialogWindow;
-
-                            if (currentDialogWindowChanged)
-                            {
-                                if (!_moveSizeHook.IsNull)
-                                {
-                                    PInvoke.UnhookWinEvent(_moveSizeHook);
-                                    _moveSizeHook = HWINEVENTHOOK.Null;
-                                }
-
-                                // Call MoveSizeCallBack when the window is moved or resized
-                                uint processId;
-                                var threadId = PInvoke.GetWindowThreadProcessId(_dialogWindow.Handle, &processId);
-                                _moveSizeHook = PInvoke.SetWinEventHook(
-                                    PInvoke.EVENT_SYSTEM_MOVESIZESTART,
-                                    PInvoke.EVENT_SYSTEM_MOVESIZEEND,
-                                    PInvoke.GetModuleHandle((PCWSTR)null),
-                                    MoveSizeCallBack,
-                                    processId,
-                                    threadId,
-                                    PInvoke.WINEVENT_OUTOFCONTEXT);
-                            }
+                            PInvoke.UnhookWinEvent(_moveSizeHook);
+                            _moveSizeHook = HWINEVENTHOOK.Null;
                         }
+
+                        // Call MoveSizeCallBack when the window is moved or resized
+                        uint processId;
+                        var threadId = PInvoke.GetWindowThreadProcessId(_dialogWindow.Handle, &processId);
+                        _moveSizeHook = PInvoke.SetWinEventHook(
+                            PInvoke.EVENT_SYSTEM_MOVESIZESTART,
+                            PInvoke.EVENT_SYSTEM_MOVESIZEEND,
+                            PInvoke.GetModuleHandle((PCWSTR)null),
+                            MoveSizeCallBack,
+                            processId,
+                            threadId,
+                            PInvoke.WINEVENT_OUTOFCONTEXT);
                     }*/
                 }
             }
@@ -334,10 +302,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             lock (_dialogWindowLock)
             {
                 _dialogWindow = null;
-            }
-            lock (_currentDialogWindowLock)
-            {
-                _currentDialogWindow = null;
             }
         }
 
@@ -374,12 +338,14 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         {
             // File dialog window
             var findDialogWindow = false;
+            var dialogWindowChanged = false;
             foreach (var dialog in _quickSwitchDialogs)
             {
                 if (dialog.CheckDialogWindow(hwnd))
                 {
                     lock (_dialogWindowLock)
                     {
+                        dialogWindowChanged = _dialogWindow == null || _dialogWindow.Handle != hwnd;
                         _dialogWindow = dialog.DialogWindow;
                     }
 
@@ -403,17 +369,17 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     // Just show quick switch window
                     if (alreadySwitched)
                     {
-                        InvokeShowQuickSwitchWindow();
+                        InvokeShowQuickSwitchWindow(dialogWindowChanged);
                     }
                     // Show quick switch window after navigating the path
                     else
                     {
-                        NavigateDialogPath(hwnd, InvokeShowQuickSwitchWindow);
+                        NavigateDialogPath(hwnd, () => InvokeShowQuickSwitchWindow(dialogWindowChanged));
                     }
                 }
                 else
                 {
-                    InvokeShowQuickSwitchWindow();
+                    InvokeShowQuickSwitchWindow(dialogWindowChanged);
                 }
             }
             // Quick switch window
@@ -668,7 +634,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
             // Get explorer path
             string path;
-            lock (_dialogWindowLock)
+            lock (_lastExplorerLock)
             {
                 path = _lastExplorer?.GetExplorerPath();
             }
@@ -842,10 +808,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             lock (_dialogWindowLock)
             {
                 _dialogWindow = null;
-            }
-            lock (_currentDialogWindowLock)
-            {
-                _currentDialogWindow = null;
             }
 
             // Stop drag move timer
