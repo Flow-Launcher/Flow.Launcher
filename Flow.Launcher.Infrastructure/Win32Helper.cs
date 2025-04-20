@@ -744,11 +744,11 @@ namespace Flow.Launcher.Infrastructure
 
             // Get the handle of the path input box and then set the text.
             // The window with class name "ComboBoxEx32" is not visible when the path input box is not with the keyboard focus.
-            var controlHandle = PInvoke.FindWindowEx(dialogHandle, HWND.Null, "WorkerW", null);
-            controlHandle = PInvoke.FindWindowEx(controlHandle, HWND.Null, "ReBarWindow32", null);
-            controlHandle = PInvoke.FindWindowEx(controlHandle, HWND.Null, "Address Band Root", null);
-            controlHandle = PInvoke.FindWindowEx(controlHandle, HWND.Null, "msctls_progress32", null);
-            controlHandle = PInvoke.FindWindowEx(controlHandle, HWND.Null, "ComboBoxEx32", null);
+            var controlHandle = PInvoke.GetDlgItem(dialogHandle, 0x0000); // WorkerW
+            controlHandle = PInvoke.GetDlgItem(controlHandle, 0xA005); // ReBarWindow32
+            controlHandle = PInvoke.GetDlgItem(controlHandle, 0xA205); // Address Band Root
+            controlHandle = PInvoke.GetDlgItem(controlHandle, 0x0000); // msctls_progress32
+            controlHandle = PInvoke.GetDlgItem(controlHandle, 0xA205); // ComboBoxEx32
             if (controlHandle == HWND.Null)
             {
                 // https://github.com/idkidknow/Flow.Launcher.Plugin.DirQuickJump/issues/1
@@ -766,8 +766,8 @@ namespace Flow.Launcher.Infrastructure
                 return false;
             }
 
-            var editHandle = PInvoke.FindWindowEx(controlHandle, HWND.Null, "ComboBox", null);
-            editHandle = PInvoke.FindWindowEx(editHandle, HWND.Null, "Edit", null);
+            var editHandle = PInvoke.GetDlgItem(controlHandle, 0xA205); // ComboBox
+            editHandle = PInvoke.GetDlgItem(editHandle, 0xA205); // Edit
             if (editHandle == HWND.Null)
             {
                 return false;
@@ -796,9 +796,9 @@ namespace Flow.Launcher.Infrastructure
         /// </summary>
         private static bool DirFileJumpForFileName(string fileName, HWND dialogHandle, bool openTwice = false)
         {
-            var controlHandle = PInvoke.FindWindowEx(dialogHandle, HWND.Null, "ComboBoxEx32", null);
-            controlHandle = PInvoke.FindWindowEx(controlHandle, HWND.Null, "ComboBox", null);
-            controlHandle = PInvoke.FindWindowEx(controlHandle, HWND.Null, "Edit", null);
+            var controlHandle = PInvoke.GetDlgItem(dialogHandle, 0x047C); // ComboBoxEx32
+            controlHandle = PInvoke.GetDlgItem(controlHandle, 0x047C); // ComboBox
+            controlHandle = PInvoke.GetDlgItem(controlHandle, 0x047C); // Edit
             if (controlHandle == HWND.Null)
             {
                 return false;

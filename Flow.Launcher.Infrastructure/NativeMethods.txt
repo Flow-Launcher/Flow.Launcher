@@ -77,3 +77,4 @@ WM_KEYUP
 WM_KEYDOWN
 GetCurrentThreadId
 AttachThreadInput
+GetDlgItem
