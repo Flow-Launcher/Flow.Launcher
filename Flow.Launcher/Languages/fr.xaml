@@ -147,8 +147,8 @@
     <system:String x:Key="currentActionKeywords">Mot-clé d'action actuel</system:String>
     <system:String x:Key="newActionKeyword">Nouveau mot-clé d'action</system:String>
     <system:String x:Key="actionKeywordsTooltip">Changer les mots-clés d'action</system:String>
-    <system:String x:Key="pluginSearchDelayTime">Délai de recherche du plugin</system:String>
-    <system:String x:Key="pluginSearchDelayTimeTooltip">Modifier le délai de recherche du plugin</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Plugin search delay time</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Search Delay Time</system:String>
     <system:String x:Key="FilterComboboxLabel">Paramètres avancés :</system:String>
     <system:String x:Key="DisplayModeOnOff">Activé</system:String>
     <system:String x:Key="DisplayModePriority">Priorité</system:String>
@@ -240,7 +240,7 @@
     <system:String x:Key="BackdropTypesAcrylic">Acrylique</system:String>
     <system:String x:Key="BackdropTypesMica">Mica</system:String>
     <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
-    <system:String x:Key="TypeIsDarkToolTip">Ce thème prend en charge deux modes (clair/sombre).</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">This theme supports two (light/dark) modes.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Ce thème prend en charge l'arrière-plan flou et transparent.</system:String>
     <system:String x:Key="ShowPlaceholder">Afficher l'espace réservé</system:String>
     <system:String x:Key="ShowPlaceholderTip">Afficher un espace réservé lorsque la requête est vide</system:String>
@@ -308,9 +308,8 @@
     <system:String x:Key="useGlyphUIEffect">Utiliser les icônes Segoe Fluent pour les résultats de requête lorsque pris en charge</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Appuyez sur une touche</system:String>
     <system:String x:Key="showBadges">Afficher les badges de résultats</system:String>
-    <system:String x:Key="showBadgesToolTip">Afficher des badges pour les résultats des requêtes lorsque cela est possible</system:String>
+    <system:String x:Key="showBadgesToolTip">For supported plugins, badges are displayed to help distinguish them more easily.</system:String>
     <system:String x:Key="showBadgesGlobalOnly">Afficher les badges de résultats pour la requête globale uniquement</system:String>
-    <system:String x:Key="showBadgesGlobalOnlyToolTip">Afficher les badges pour les résultats des requêtes globales uniquement</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">Proxy HTTP</system:String>
