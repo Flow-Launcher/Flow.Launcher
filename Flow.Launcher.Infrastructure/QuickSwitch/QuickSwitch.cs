@@ -12,7 +12,6 @@ using NHotkey;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.UI.Accessibility;
-using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace Flow.Launcher.Infrastructure.QuickSwitch
 {
@@ -380,7 +379,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     // Show quick switch window after navigating the path
                     else
                     {
-                        NavigateDialogPath(hwnd, () => InvokeShowQuickSwitchWindow(dialogWindowChanged));
+                        NavigateDialogPath(hwnd, true, () => InvokeShowQuickSwitchWindow(dialogWindowChanged));
                     }
                 }
                 else
@@ -498,14 +497,79 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         #endregion
 
-        #region Helper Methods
-
-        #region Navigate Path
+        #region Path Navigation
 
         // Edited from: https://github.com/idkidknow/Flow.Launcher.Plugin.DirQuickJump
 
+        public static void JumpToPath(nint hwnd, string path, Action action = null)
+        {
+            if (hwnd == nint.Zero) return;
+
+            var dialogWindow = GetDialogWindow(new(hwnd));
+            if (dialogWindow == null) return;
+
+            var dialogWindowTab = dialogWindow.GetCurrentTab();
+            if (dialogWindowTab == null) return;
+
+            JumpToPath(dialogWindowTab, path, false, action);
+        }
+
+        private static void NavigateDialogPath(HWND hwnd, bool auto = false, Action action = null)
+        {
+            if (hwnd == HWND.Null) return;
+
+            var dialogWindow = GetDialogWindow(hwnd);
+            if (dialogWindow == null) return;
+
+            var dialogWindowTab = dialogWindow.GetCurrentTab();
+            if (dialogWindowTab == null) return;
+
+            // Get explorer path
+            string path;
+            lock (_lastExplorerLock)
+            {
+                path = _lastExplorer?.GetExplorerPath();
+            }
+            if (string.IsNullOrEmpty(path)) return;
+
+            // Jump to path
+            JumpToPath(dialogWindowTab, path, auto, action);
+        }
+
+        private static IQuickSwitchDialogWindow GetDialogWindow(HWND hwnd)
+        {
+            // First check dialog window
+            lock (_dialogWindowLock)
+            {
+                if (_dialogWindow != null && _dialogWindow.Handle == hwnd)
+                {
+                    return _dialogWindow;
+                }
+            }
+
+            // Then check all dialog windows
+            foreach (var dialog in _quickSwitchDialogs)
+            {
+                if (dialog.DialogWindow.Handle == hwnd)
+                {
+                    return dialog.DialogWindow;
+                }
+            }
+
+            // Finally search for the dialog window
+            foreach (var dialog in _quickSwitchDialogs)
+            {
+                if (dialog.CheckDialogWindow(hwnd))
+                {
+                    return dialog.DialogWindow;
+                }
+            }
+
+            return null;
+        }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD101:Avoid unsupported async delegates", Justification = "<Pending>")]
-        public static void JumpToPath(nint dialog, string path, Action action = null)
+        private static void JumpToPath(IQuickSwitchDialogWindowTab dialog, string path, bool auto = false, Action action = null)
         {
             if (!CheckPath(path, out var isFile)) return;
 
@@ -513,19 +577,17 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             {
                 // Jump after flow launcher window vanished (after JumpAction returned true)
                 // and the dialog had been in the foreground.
-                var timeOut = !SpinWait.SpinUntil(() => Win32Helper.GetForegroundWindow() == dialog, 1000);
+                var dialogHandle = dialog.Handle;
+                var timeOut = !SpinWait.SpinUntil(() => Win32Helper.GetForegroundWindowHWND() == dialogHandle, 1000);
                 if (timeOut)
                 {
                     return;
                 }
-                ;
 
                 // Assume that the dialog is in the foreground now
                 await _navigationLock.WaitAsync();
                 try
                 {
-                    var dialogHandle = new HWND(dialog);
-
                     bool result;
                     if (isFile)
                     {
@@ -533,19 +595,15 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                         {
                             case QuickSwitchFileResultBehaviours.FullPath:
                                 Log.Debug(ClassName, $"File Jump FullPath: {path}");
-                                result = FileJump(path, dialogHandle, forceFileName: true);
+                                result = FileJump(path, dialog);
                                 break;
                             case QuickSwitchFileResultBehaviours.FullPathOpen:
                                 Log.Debug(ClassName, $"File Jump FullPathOpen: {path}");
-                                result = FileJump(path, dialogHandle, forceFileName: true, openFile: true);
+                                result = FileJump(path, dialog, openFile: true);
                                 break;
                             case QuickSwitchFileResultBehaviours.Directory:
                                 Log.Debug(ClassName, $"File Jump Directory: {path}");
-                                result = DirJump(Path.GetDirectoryName(path), dialogHandle);
-                                break;
-                            case QuickSwitchFileResultBehaviours.DirectoryAndFileName:
-                                Log.Debug(ClassName, $"File Jump DirectoryAndFileName: {path}");
-                                result = FileJump(path, dialogHandle);
+                                result = DirJump(Path.GetDirectoryName(path), dialog, auto);
                                 break;
                             default:
                                 throw new ArgumentOutOfRangeException(
@@ -558,7 +616,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     else
                     {
                         Log.Debug(ClassName, $"Dir Jump: {path}");
-                        result = DirJump(path, dialogHandle);
+                        result = DirJump(path, dialog, auto);
                     }
 
                     if (result)
@@ -600,165 +658,33 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
         }
 
-        private static void NavigateDialogPath(HWND hwnd, Action action = null)
+        private static bool FileJump(string filePath, IQuickSwitchDialogWindowTab dialog, bool openFile = false)
         {
-            if (hwnd == HWND.Null) return;
-
-            IQuickSwitchDialogWindow dialogWindow = null;
-            // First check dialog window
-            lock (_dialogWindowLock)
+            if (!dialog.JumpFile(filePath))
             {
-                if (_dialogWindow != null && _dialogWindow.Handle == hwnd)
-                {
-                    dialogWindow = _dialogWindow;
-                }
-            }
-            // Then check all dialog windows
-            if (dialogWindow == null)
-            {
-                foreach (var dialog in _quickSwitchDialogs)
-                {
-                    if (dialog.DialogWindow.Handle == hwnd)
-                    {
-                        dialogWindow = dialog.DialogWindow;
-                        break;
-                    }
-                }
-            }
-            // Finally search for the dialog window
-            if (dialogWindow == null)
-            {
-                foreach (var dialog in _quickSwitchDialogs)
-                {
-                    if (dialog.CheckDialogWindow(hwnd))
-                    {
-                        dialogWindow = dialog.DialogWindow;
-                        break;
-                    }
-                }
-            }
-            if (dialogWindow == null) return;
-
-            // Get explorer path
-            string path;
-            lock (_lastExplorerLock)
-            {
-                path = _lastExplorer?.GetExplorerPath();
-            }
-            if (string.IsNullOrEmpty(path)) return;
-
-            // Jump to path
-            JumpToPath(hwnd.Value, path, action);
-        }
-
-        private static bool FileJump(string filePath, HWND dialogHandle, bool forceFileName = false, bool openFile = false)
-        {
-            if (forceFileName)
-            {
-                return DirFileJumpForFileName(filePath, dialogHandle, openFile);
-            }
-            else
-            {
-                return DirFileJump(Path.GetDirectoryName(filePath), filePath, dialogHandle);
-            }
-        }
-
-        private static bool DirJump(string dirPath, HWND dialogHandle)
-        {
-            return DirFileJump(dirPath, null, dialogHandle);
-        }
-
-        private static unsafe bool DirFileJump(string dirPath, string filePath, HWND dialogHandle)
-        {
-            // Get the handle of the path input box and then set the text.
-            var controlHandle = PInvoke.GetDlgItem(dialogHandle, 0x0000); // WorkerW
-            controlHandle = PInvoke.GetDlgItem(controlHandle, 0xA005); // ReBarWindow32
-            controlHandle = PInvoke.GetDlgItem(controlHandle, 0xA205); // Address Band Root
-            controlHandle = PInvoke.GetDlgItem(controlHandle, 0x0000); // msctls_progress32
-            controlHandle = PInvoke.GetDlgItem(controlHandle, 0xA205); // ComboBoxEx32
-            if (controlHandle == HWND.Null)
-            {
-                // https://github.com/idkidknow/Flow.Launcher.Plugin.DirQuickJump/issues/1
-                // The dialog is a legacy one, so we edit file name text box directly.
-                Log.Error(ClassName, "Failed to find control handle");
-                return DirFileJumpForFileName(string.IsNullOrEmpty(filePath) ? dirPath : filePath, dialogHandle, true);
-            }
-
-            var timeOut = !SpinWait.SpinUntil(() =>
-            {
-                var style = PInvoke.GetWindowLong(controlHandle, WINDOW_LONG_PTR_INDEX.GWL_STYLE);
-                return (style & (int)WINDOW_STYLE.WS_VISIBLE) != 0;
-            }, 1000);
-            if (timeOut)
-            {
-                Log.Error(ClassName, "Failed to find visible control handle");
+                Log.Error(ClassName, "Failed to jump file");
                 return false;
             }
 
-            var editHandle = PInvoke.GetDlgItem(controlHandle, 0xA205); // ComboBox
-            editHandle = PInvoke.GetDlgItem(editHandle, 0xA205); // Edit
-            if (editHandle == HWND.Null)
+            if (openFile && !dialog.Open())
             {
-                Log.Error(ClassName, "Failed to find edit handle");
+                Log.Error(ClassName, "Failed to open file");
                 return false;
-            }
-
-            SetWindowText(editHandle, dirPath);
-
-            if (!string.IsNullOrEmpty(filePath))
-            {
-                // Note: I don't know why even openFile is set to false, the dialog still opens the file.
-                return DirFileJumpForFileName(Path.GetFileName(filePath), dialogHandle, false);
             }
 
             return true;
         }
 
-        /// <summary>
-        /// Edit file name text box in the file open dialog.
-        /// </summary>
-        private static bool DirFileJumpForFileName(string fileName, HWND dialogHandle, bool openFile)
+        private static bool DirJump(string dirPath, IQuickSwitchDialogWindowTab dialog, bool auto = false)
         {
-            var controlHandle = PInvoke.GetDlgItem(dialogHandle, 0x047C); // ComboBoxEx32
-            controlHandle = PInvoke.GetDlgItem(controlHandle, 0x047C); // ComboBox
-            controlHandle = PInvoke.GetDlgItem(controlHandle, 0x047C); // Edit
-            if (controlHandle == HWND.Null)
+            if (!dialog.JumpFolder(dirPath, auto))
             {
-                Log.Error(ClassName, "Failed to find control handle");
+                Log.Error(ClassName, "Failed to jump folder");
                 return false;
-            }
-
-            SetWindowText(controlHandle, fileName);
-
-            if (openFile)
-            {
-                var openHandle = PInvoke.GetDlgItem(dialogHandle, 0x0001); // "&Open" Button
-                if (openHandle == HWND.Null)
-                {
-                    Log.Error(ClassName, "Failed to find open handle");
-                    return false;
-                }
-
-                ClickButton(openHandle);
             }
 
             return true;
         }
-
-        private static unsafe nint SetWindowText(HWND handle, string text)
-        {
-            fixed (char* textPtr = text + '\0')
-            {
-                return PInvoke.SendMessage(handle, PInvoke.WM_SETTEXT, 0, (nint)textPtr).Value;
-            }
-        }
-
-        private static unsafe nint ClickButton(HWND handle)
-        {
-            return PInvoke.PostMessage(handle, PInvoke.BM_CLICK, 0, 0).Value;
-        }
-
-        #endregion
 
         #endregion
 

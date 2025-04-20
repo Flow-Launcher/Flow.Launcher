@@ -7,6 +7,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Interface
     {
         internal HWND Handle { get; }
 
-        internal IQuickSwitchDialogTab GetCurrentTab();
+        internal IQuickSwitchDialogWindowTab GetCurrentTab();
     }
 }
