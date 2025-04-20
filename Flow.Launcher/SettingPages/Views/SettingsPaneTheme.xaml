@@ -740,10 +740,7 @@
                         OffContent="{DynamicResource disable}"
                         OnContent="{DynamicResource enable}" />
                 </cc:ExCard.SideContent>
-                <cc:Card
-                    Title="{DynamicResource showBadgesGlobalOnly}"
-                    Sub="{DynamicResource showBadgesGlobalOnlyToolTip}"
-                    Type="InsideFit">
+                <cc:Card Title="{DynamicResource showBadgesGlobalOnly}" Type="InsideFit">
                     <ui:ToggleSwitch
                         IsOn="{Binding Settings.ShowBadgesGlobalOnly}"
                         OffContent="{DynamicResource disable}"
