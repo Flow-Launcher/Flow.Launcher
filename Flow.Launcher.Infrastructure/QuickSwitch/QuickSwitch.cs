@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.QuickSwitch.Interface;
+using Flow.Launcher.Infrastructure.QuickSwitch.Models;
 using Flow.Launcher.Infrastructure.UserSettings;
 using NHotkey;
 using Windows.Win32;
 using Windows.Win32.Foundation;
-using Windows.Win32.System.Com;
 using Windows.Win32.UI.Accessibility;
-using Windows.Win32.UI.Shell;
 using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace Flow.Launcher.Infrastructure.QuickSwitch
@@ -42,8 +41,13 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         private static readonly Settings _settings = Ioc.Default.GetRequiredService<Settings>();
 
-        private static IWebBrowser2 _lastExplorerView = null;
-        private static readonly object _lastExplorerViewLock = new();
+        private static IQuickSwitchExplorer _lastExplorer = null;
+        private static readonly object _lastExplorerLock = new();
+
+        private static readonly List<IQuickSwitchExplorer> _quickSwitchExplorers = new()
+        {
+            new WindowsExplorer()
+        };
 
         private static HWND _mainWindowHandle = HWND.Null;
 
@@ -100,33 +104,25 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
             if (enabled)
             {
-                // Check all foreground windows and check if there are explorer windows
-                lock (_lastExplorerViewLock)
+                // Check if there are explorer windows
+                try
                 {
-                    var explorerInitialized = false;
-                    EnumerateShellWindows((shellWindow) =>
+                    lock (_lastExplorerLock)
                     {
-                        if (shellWindow is not IWebBrowser2 explorer)
+                        foreach (var explorer in _quickSwitchExplorers)
                         {
-                            return;
+                            // Use HWND.Null here because we want to check all windows
+                            if (explorer.CheckExplorerWindow(HWND.Null))
+                            {
+                                // Set last explorer view if not set, this is beacuse default WindowsExplorer is the first element
+                                _lastExplorer ??= explorer;
+                            }
                         }
-
-                        // Initialize one explorer window even if it is not foreground
-                        if (!explorerInitialized)
-                        {
-                            _lastExplorerView = explorer;
-
-                            Log.Debug(ClassName, $"Explorer Window: {explorer.HWND.Value}");
-                        }
-
-                        // Force update explorer window if it is foreground
-                        else if (Win32Helper.IsForegroundWindow(explorer.HWND.Value))
-                        {
-                            _lastExplorerView = explorer;
-
-                            Log.Debug(ClassName, $"Explorer Window: {explorer.HWND.Value}");
-                        }
-                    });
+                    }
+                }
+                catch (System.Exception)
+                {
+                    // Ignored
                 }
 
                 // Unhook events
@@ -183,9 +179,9 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             else
             {
                 // Remove last explorer
-                lock (_lastExplorerViewLock)
+                foreach (var explorer in _quickSwitchExplorers)
                 {
-                    _lastExplorerView = null;
+                    explorer.RemoveExplorerWindow();
                 }
 
                 // Remove dialog window handle
@@ -404,34 +400,19 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     InvokeHideQuickSwitchWindow();
                 }
 
-                // Check if explorer window is foreground
+                // Check if there are foreground explorer windows
                 try
                 {
-                    lock (_lastExplorerViewLock)
+                    lock (_lastExplorerLock)
                     {
-                        EnumerateShellWindows((shellWindow) =>
+                        foreach (var explorer in _quickSwitchExplorers)
                         {
-                            try
+                            if (explorer.CheckExplorerWindow(hwnd))
                             {
-                                if (shellWindow is not IWebBrowser2 explorer)
-                                {
-                                    return;
-                                }
-
-                                if (explorer.HWND != hwnd.Value)
-                                {
-                                    return;
-                                }
-
-                                _lastExplorerView = explorer;
-
-                                Log.Debug(ClassName, $"Explorer Window: {hwnd}");
+                                _lastExplorer = explorer;
+                                break;
                             }
-                            catch (COMException)
-                            {
-                                // Ignored
-                            }
-                        });
+                        }
                     }
                 }
                 catch (System.Exception)
@@ -621,57 +602,12 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         private static void NavigateDialogPath(HWND dialog, Action action = null)
         {
             if (dialog == HWND.Null || GetWindowClassName(dialog) != DialogWindowClassName) return;
-
-            object document = null;
-            try
-            {
-                lock (_lastExplorerViewLock)
-                {
-                    if (_lastExplorerView != null)
-                    {
-                        // Use dynamic here because using IWebBrower2.Document can cause exception here:
-                        // System.Runtime.InteropServices.InvalidOleVariantTypeException: 'Specified OLE variant is invalid.'
-                        dynamic explorerView = _lastExplorerView;
-                        document = explorerView.Document;
-                    }
-                }
-            }
-            catch (COMException)
-            {
-                return;
-            }
-
-            if (document is not IShellFolderViewDual2 folderView)
-            {
-                return;
-            }
-
             string path;
-            try
+            lock (_dialogWindowHandleLock)
             {
-                // CSWin32 Folder does not have Self, so we need to use dynamic type here
-                // Use dynamic to bypass static typing
-                dynamic folder = folderView.Folder;
-
-                // Access the Self property via dynamic binding
-                dynamic folderItem = folder.Self;
-
-                // Check if the item is part of the file system
-                if (folderItem != null && folderItem.IsFileSystem)
-                {
-                    path = folderItem.Path;
-                }
-                else
-                {
-                    // Handle non-file system paths (e.g., virtual folders)
-                    path = string.Empty;
-                }
+                path = _lastExplorer?.GetExplorerPath();
             }
-            catch
-            {
-                return;
-            }
-
+            if (string.IsNullOrEmpty(path)) return;
             JumpToPath(dialog.Value, path, action);
         }
 
@@ -805,35 +741,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         #endregion
 
-        #region Enumerate Windows
-
-        private static unsafe void EnumerateShellWindows(Action<object> action)
-        {
-            // Create an instance of ShellWindows
-            var clsidShellWindows = new Guid("9BA05972-F6A8-11CF-A442-00A0C90A8F39"); // ShellWindowsClass
-            var iidIShellWindows = typeof(IShellWindows).GUID; // IShellWindows
-
-            var result = PInvoke.CoCreateInstance(
-                &clsidShellWindows,
-                null,
-                CLSCTX.CLSCTX_ALL,
-                &iidIShellWindows,
-                out var shellWindowsObj);
-
-            if (result.Failed) return;
-
-            var shellWindows = (IShellWindows)shellWindowsObj;
-
-            // Enumerate the shell windows
-            var count = shellWindows.Count;
-            for (var i = 0; i < count; i++)
-            {
-                action(shellWindows.Item(i));
-            }
-        }
-
-        #endregion
-
         #endregion
 
         #region Dispose
@@ -869,18 +776,15 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 _destroyChangeHook = HWINEVENTHOOK.Null;
             }
 
-            // Release ComObjects
-            try
+            // Dispose explorers
+            foreach (var explorer in _quickSwitchExplorers)
             {
-                if (_lastExplorerView != null)
-                {
-                    Marshal.ReleaseComObject(_lastExplorerView);
-                    _lastExplorerView = null;
-                }
+                explorer.Dispose();
             }
-            catch (COMException)
+            _quickSwitchExplorers.Clear();
+            lock (_lastExplorerLock)
             {
-                _lastExplorerView = null;
+                _lastExplorer = null;
             }
 
             // Stop drag move timer
