@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Markup;
@@ -18,8 +16,6 @@ using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Dwm;
 using Windows.Win32.UI.Input.KeyboardAndMouse;
 using Windows.Win32.UI.WindowsAndMessaging;
-using WindowsInput;
-using WindowsInput.Native;
 using Point = System.Windows.Point;
 using SystemFonts = System.Windows.SystemFonts;
 
@@ -692,111 +688,7 @@ namespace Flow.Launcher.Infrastructure
 
         #endregion
 
-        #region Quick Switch
-
-        // Edited from: https://github.com/idkidknow/Flow.Launcher.Plugin.DirQuickJump
-
-        internal static bool FileJump(string filePath, HWND dialogHandle, bool forceFileName = false, bool openFile = false)
-        {
-            if (forceFileName)
-            {
-                return DirFileJumpForFileName(filePath, dialogHandle, openFile);
-            }
-            else
-            {
-                return DirFileJump(Path.GetDirectoryName(filePath), filePath, dialogHandle);
-            }
-        }
-
-        internal static bool DirJump(string dirPath, HWND dialogHandle)
-        {
-            return DirFileJump(dirPath, null, dialogHandle);
-        }
-
-        private static unsafe bool DirFileJump(string dirPath, string filePath, HWND dialogHandle)
-        {
-            // Get the handle of the path input box and then set the text.
-            var controlHandle = PInvoke.GetDlgItem(dialogHandle, 0x0000); // WorkerW
-            controlHandle = PInvoke.GetDlgItem(controlHandle, 0xA005); // ReBarWindow32
-            controlHandle = PInvoke.GetDlgItem(controlHandle, 0xA205); // Address Band Root
-            controlHandle = PInvoke.GetDlgItem(controlHandle, 0x0000); // msctls_progress32
-            controlHandle = PInvoke.GetDlgItem(controlHandle, 0xA205); // ComboBoxEx32
-            if (controlHandle == HWND.Null)
-            {
-                // https://github.com/idkidknow/Flow.Launcher.Plugin.DirQuickJump/issues/1
-                // The dialog is a legacy one, so we edit file name text box directly.
-                return DirFileJumpForFileName(string.IsNullOrEmpty(filePath) ? dirPath : filePath, dialogHandle, true);
-            }
-
-            var timeOut = !SpinWait.SpinUntil(() =>
-            {
-                var style = PInvoke.GetWindowLong(controlHandle, WINDOW_LONG_PTR_INDEX.GWL_STYLE);
-                return (style & (int)WINDOW_STYLE.WS_VISIBLE) != 0;
-            }, 1000);
-            if (timeOut)
-            {
-                return false;
-            }
-
-            var editHandle = PInvoke.GetDlgItem(controlHandle, 0xA205); // ComboBox
-            editHandle = PInvoke.GetDlgItem(editHandle, 0xA205); // Edit
-            if (editHandle == HWND.Null)
-            {
-                return false;
-            }
-
-            SetWindowText(editHandle, dirPath);
-
-            if (!string.IsNullOrEmpty(filePath))
-            {
-                // Note: I don't know why even openFile is set to false, the dialog still opens the file.
-                return DirFileJumpForFileName(Path.GetFileName(filePath), dialogHandle, false);
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Edit file name text box in the file open dialog.
-        /// </summary>
-        private static bool DirFileJumpForFileName(string fileName, HWND dialogHandle, bool openFile)
-        {
-            var controlHandle = PInvoke.GetDlgItem(dialogHandle, 0x047C); // ComboBoxEx32
-            controlHandle = PInvoke.GetDlgItem(controlHandle, 0x047C); // ComboBox
-            controlHandle = PInvoke.GetDlgItem(controlHandle, 0x047C); // Edit
-            if (controlHandle == HWND.Null)
-            {
-                return false;
-            }
-
-            SetWindowText(controlHandle, fileName);
-
-            if (openFile)
-            {
-                var openHandle = PInvoke.GetDlgItem(dialogHandle, 0x0001); // "&Open" Button
-                if (openHandle == HWND.Null)
-                {
-                    return false;
-                }
-
-                ClickButton(openHandle);
-            }
-
-            return true;
-        }
-
-        private static unsafe nint SetWindowText(HWND handle, string text)
-        {
-            fixed (char* textPtr = text + '\0')
-            {
-                return PInvoke.SendMessage(handle, PInvoke.WM_SETTEXT, 0, (nint)textPtr).Value;
-            }
-        }
-
-        private static unsafe nint ClickButton(HWND handle)
-        {
-            return PInvoke.PostMessage(handle, PInvoke.BM_CLICK, 0, 0).Value;
-        }
+        #region Window Rect
 
         public static unsafe bool GetWindowRect(nint handle, out Rect outRect)
         {
