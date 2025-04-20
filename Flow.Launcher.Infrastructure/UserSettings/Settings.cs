@@ -518,7 +518,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
     {
         FullPath,
         FullPathOpen,
-        Directory,
-        DirectoryAndFileName
+        Directory
     }
 }
