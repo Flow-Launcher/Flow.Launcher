@@ -147,8 +147,8 @@
     <system:String x:Key="currentActionKeywords">Palabra clave de acción actual</system:String>
     <system:String x:Key="newActionKeyword">Nueva palabra clave de acción</system:String>
     <system:String x:Key="actionKeywordsTooltip">Cambia la palabra clave de acción</system:String>
-    <system:String x:Key="pluginSearchDelayTime">Tiempo de retardo de la búsqueda del complemento</system:String>
-    <system:String x:Key="pluginSearchDelayTimeTooltip">Cambiar tiempo de retardo de la búsqueda del complemento</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Plugin search delay time</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Search Delay Time</system:String>
     <system:String x:Key="FilterComboboxLabel">Configuración avanzada:</system:String>
     <system:String x:Key="DisplayModeOnOff">Activado</system:String>
     <system:String x:Key="DisplayModePriority">Prioridad</system:String>
@@ -240,7 +240,7 @@
     <system:String x:Key="BackdropTypesAcrylic">Acrílico</system:String>
     <system:String x:Key="BackdropTypesMica">Mica</system:String>
     <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
-    <system:String x:Key="TypeIsDarkToolTip">Este tema soporta dos modos (claro/oscuro).</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">This theme supports two (light/dark) modes.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Este tema soporta fondo transparente desenfocado.</system:String>
     <system:String x:Key="ShowPlaceholder">Mostrar marcador de posición</system:String>
     <system:String x:Key="ShowPlaceholderTip">Mostrar marcador de posición cuando la consulta esté vacía</system:String>
@@ -308,9 +308,8 @@
     <system:String x:Key="useGlyphUIEffect">Utiliza iconos Segoe Fluent para los resultados de la consulta cuando sean compatibles</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Pulsar Tecla</system:String>
     <system:String x:Key="showBadges">Mostrar distintivos en resultados</system:String>
-    <system:String x:Key="showBadgesToolTip">Muestra distintivos en los resultados de las consultas cuando sean compatibles</system:String>
+    <system:String x:Key="showBadgesToolTip">For supported plugins, badges are displayed to help distinguish them more easily.</system:String>
     <system:String x:Key="showBadgesGlobalOnly">Mostrar distintivos en resultados solo para consulta global</system:String>
-    <system:String x:Key="showBadgesGlobalOnlyToolTip">Muestra solo distintivos para los resultados de consultas globales</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">Proxy HTTP</system:String>
