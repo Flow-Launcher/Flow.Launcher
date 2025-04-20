@@ -34,25 +34,30 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         #region Private Fields
 
-        // The class name of a dialog window
-        private const string DialogWindowClassName = "#32770";
-
         private static readonly string ClassName = nameof(QuickSwitch);
 
         private static readonly Settings _settings = Ioc.Default.GetRequiredService<Settings>();
 
-        private static IQuickSwitchExplorer _lastExplorer = null;
-        private static readonly object _lastExplorerLock = new();
+        private static HWND _mainWindowHandle = HWND.Null;
 
         private static readonly List<IQuickSwitchExplorer> _quickSwitchExplorers = new()
         {
             new WindowsExplorer()
         };
 
-        private static HWND _mainWindowHandle = HWND.Null;
+        private static IQuickSwitchExplorer _lastExplorer = null;
+        private static readonly object _lastExplorerLock = new();
 
-        private static HWND _dialogWindowHandle = HWND.Null;
-        private static readonly object _dialogWindowHandleLock = new();
+        private static readonly List<IQuickSwitchDialog> _quickSwitchDialogs = new()
+        {
+            new WindowsDialog()
+        };
+
+        private static IQuickSwitchDialogWindow _dialogWindow = null;
+        private static readonly object _dialogWindowLock = new();
+
+        private static IQuickSwitchDialogWindow _currentDialogWindow = null;
+        private static readonly object _currentDialogWindowLock = new();
 
         private static HWINEVENTHOOK _foregroundChangeHook = HWINEVENTHOOK.Null;
         private static HWINEVENTHOOK _locationChangeHook = HWINEVENTHOOK.Null;
@@ -64,15 +69,12 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         private static readonly List<HWND> _autoSwitchedDialogs = new();
         private static readonly object _autoSwitchedDialogsLock = new();
 
-        private static readonly SemaphoreSlim _navigationLock = new(1, 1);
-
         // Note: Here we do not start & stop the timer beacause when there are many dialog windows
         // Unhooking and hooking will take too much time which can make window position weird
         // So we start & stop the timer when we find a file dialog window
         /*private static HWINEVENTHOOK _moveSizeHook = HWINEVENTHOOK.Null;*/
 
-        private static HWND _currentDialogWindowHandle = HWND.Null;
-        private static readonly object _currentDialogWindowHandleLock = new();
+        private static readonly SemaphoreSlim _navigationLock = new(1, 1);
 
         private static bool _initialized = false;
         private static bool _enabled = false;
@@ -186,11 +188,21 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
                 // Remove dialog window handle
                 var dialogWindowExists = false;
-                lock (_dialogWindowHandleLock)
+                lock (_dialogWindowLock)
                 {
-                    if (_dialogWindowHandle != HWND.Null)
+                    if (_dialogWindow != null)
                     {
-                        _dialogWindowHandle = HWND.Null;
+                        _dialogWindow.Dispose();
+                        _dialogWindow = null;
+                        dialogWindowExists = true;
+                    }
+                }
+                lock (_currentDialogWindowLock)
+                {
+                    if (_currentDialogWindow != null)
+                    {
+                        _currentDialogWindow.Dispose();
+                        _currentDialogWindow = null;
                         dialogWindowExists = true;
                     }
                 }
@@ -242,55 +254,57 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             // Show quick switch window
             if (_settings.ShowQuickSwitchWindow)
             {
-                lock (_currentDialogWindowHandleLock)
+                lock (_currentDialogWindowLock)
                 {
-                    var currentDialogWindowChanged = _currentDialogWindowHandle == HWND.Null ||
-                        _currentDialogWindowHandle != _dialogWindowHandle;
-
-                    if (currentDialogWindowChanged)
+                    lock (_dialogWindowLock)
                     {
-                        // Save quick switch window position for one file dialog
-                        QuickSwitchWindowPosition = _settings.QuickSwitchWindowPosition;
-                    }
+                        var currentDialogWindowChanged = _currentDialogWindow == null ||
+                            _currentDialogWindow != _dialogWindow;
 
-                    _currentDialogWindowHandle = _dialogWindowHandle;
+                        if (currentDialogWindowChanged)
+                        {
+                            // Save quick switch window position for one file dialog
+                            QuickSwitchWindowPosition = _settings.QuickSwitchWindowPosition;
+                        }
+
+                        _currentDialogWindow = _dialogWindow;
+                    }
                 }
 
-                ShowQuickSwitchWindow?.Invoke(_dialogWindowHandle.Value);
+                ShowQuickSwitchWindow?.Invoke(_dialogWindow.Handle);
                 if (QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog)
                 {
                     _dragMoveTimer?.Start();
-                }
-
-                // Note: Here we do not start & stop the timer beacause when there are many dialog windows
-                // Unhooking and hooking will take too much time which can make window position weird
-                // So we start & stop the timer when we find a file dialog window
-                /*lock (_currentDialogWindowHandleLock)
-                {
-                    var currentDialogWindowChanged = _currentDialogWindowHandle == HWND.Null ||
-                        _currentDialogWindowHandle != _dialogWindowHandle;
-
-                    if (currentDialogWindowChanged)
+                    // Note: Here we do not start & stop the timer beacause when there are many dialog windows
+                    // Unhooking and hooking will take too much time which can make window position weird
+                    // So we start & stop the timer when we find a file dialog window
+                    /*lock (_currentDialogWindowLock)
                     {
-                        if (!_moveSizeHook.IsNull)
-                        {
-                            PInvoke.UnhookWinEvent(_moveSizeHook);
-                            _moveSizeHook = HWINEVENTHOOK.Null;
-                        }
+                        var currentDialogWindowChanged = _currentDialogWindow == null ||
+                            _currentDialogWindow != _dialogWindow;
 
-                        // Call MoveSizeCallBack when the window is moved or resized
-                        uint processId;
-                        var threadId = PInvoke.GetWindowThreadProcessId(_dialogWindowHandle, &processId);
-                        _moveSizeHook = PInvoke.SetWinEventHook(
-                            PInvoke.EVENT_SYSTEM_MOVESIZESTART,
-                            PInvoke.EVENT_SYSTEM_MOVESIZEEND,
-                            PInvoke.GetModuleHandle((PCWSTR)null),
-                            MoveSizeCallBack,
-                            processId,
-                            threadId,
-                            PInvoke.WINEVENT_OUTOFCONTEXT);
-                    }
-                }*/
+                        if (currentDialogWindowChanged)
+                        {
+                            if (!_moveSizeHook.IsNull)
+                            {
+                                PInvoke.UnhookWinEvent(_moveSizeHook);
+                                _moveSizeHook = HWINEVENTHOOK.Null;
+                            }
+
+                            // Call MoveSizeCallBack when the window is moved or resized
+                            uint processId;
+                            var threadId = PInvoke.GetWindowThreadProcessId(_dialogWindow.Handle, &processId);
+                            _moveSizeHook = PInvoke.SetWinEventHook(
+                                PInvoke.EVENT_SYSTEM_MOVESIZESTART,
+                                PInvoke.EVENT_SYSTEM_MOVESIZEEND,
+                                PInvoke.GetModuleHandle((PCWSTR)null),
+                                MoveSizeCallBack,
+                                processId,
+                                threadId,
+                                PInvoke.WINEVENT_OUTOFCONTEXT);
+                        }
+                    }*/
+                }
             }
         }
 
@@ -305,19 +319,22 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             // Reset quick switch window
             ResetQuickSwitchWindow?.Invoke();
             _dragMoveTimer?.Stop();
-
-            lock (_currentDialogWindowHandleLock)
+            // Note: Here we do not start & stop the timer beacause when there are many dialog windows
+            // Unhooking and hooking will take too much time which can make window position weird
+            // So we start & stop the timer when we find a file dialog window
+            /*if (!_moveSizeHook.IsNull)
             {
-                // Note: Here we do not start & stop the timer beacause when there are many dialog windows
-                // Unhooking and hooking will take too much time which can make window position weird
-                // So we start & stop the timer when we find a file dialog window
-                /*if (!_moveSizeHook.IsNull)
-                {
-                    PInvoke.UnhookWinEvent(_moveSizeHook);
-                    _moveSizeHook = HWINEVENTHOOK.Null;
-                }*/
+                PInvoke.UnhookWinEvent(_moveSizeHook);
+                _moveSizeHook = HWINEVENTHOOK.Null;
+            }*/
 
-                _currentDialogWindowHandle = HWND.Null;
+            lock (_dialogWindowLock)
+            {
+                _dialogWindow = null;
+            }
+            lock (_currentDialogWindowLock)
+            {
+                _currentDialogWindow = null;
             }
         }
 
@@ -353,15 +370,23 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         )
         {
             // File dialog window
-            if (GetWindowClassName(hwnd) == DialogWindowClassName)
+            var findDialogWindow = false;
+            foreach (var dialog in _quickSwitchDialogs)
             {
-                Log.Debug(ClassName, $"Dialog Window: {hwnd}");
-
-                lock (_dialogWindowHandleLock)
+                if (dialog.CheckDialogWindow(hwnd))
                 {
-                    _dialogWindowHandle = hwnd;
-                }
+                    lock (_dialogWindowLock)
+                    {
+                        _dialogWindow = dialog.DialogWindow;
+                    }
 
+                    findDialogWindow = true;
+                    Log.Debug(ClassName, $"Dialog Window: {hwnd}");
+                    break;
+                }
+            }
+            if (findDialogWindow)
+            {
                 // Navigate to path
                 if (_settings.AutoQuickSwitch)
                 {
@@ -395,7 +420,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
             else
             {
-                if (_dialogWindowHandle != HWND.Null)
+                if (_dialogWindow != null)
                 {
                     InvokeHideQuickSwitchWindow();
                 }
@@ -433,7 +458,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         )
         {
             // If the dialog window is moved, update the quick switch window position
-            if (_dialogWindowHandle != HWND.Null && _dialogWindowHandle == hwnd)
+            if (_dialogWindow != null && _dialogWindow.Handle == hwnd)
             {
                 InvokeUpdateQuickSwitchWindow();
             }
@@ -478,12 +503,12 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         )
         {
             // If the dialog window is destroyed, set _dialogWindowHandle to null
-            if (_dialogWindowHandle != HWND.Null && _dialogWindowHandle == hwnd)
+            if (_dialogWindow != null && _dialogWindow.Handle == hwnd)
             {
                 Log.Debug(ClassName, $"Dialog Hwnd: {hwnd}");
-                lock (_dialogWindowHandleLock)
+                lock (_dialogWindowLock)
                 {
-                    _dialogWindowHandle = HWND.Null;
+                    _dialogWindow = null;
                 }
                 lock (_autoSwitchedDialogsLock)
                 {
@@ -599,16 +624,66 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
         }
 
-        private static void NavigateDialogPath(HWND dialog, Action action = null)
+        private static void NavigateDialogPath(HWND hwnd, Action action = null)
         {
-            if (dialog == HWND.Null || GetWindowClassName(dialog) != DialogWindowClassName) return;
+            if (hwnd == HWND.Null) return;
+
+            IQuickSwitchDialogWindow dialogWindow = null;
+            // First check dialog window
+            lock (_dialogWindowLock)
+            {
+                if (_dialogWindow != null && _dialogWindow.Handle == hwnd)
+                {
+                    dialogWindow = _dialogWindow;
+                }
+            }
+            if (dialogWindow == null)
+            {
+                // Then check current dialog window
+                lock (_currentDialogWindowLock)
+                {
+                    if (_currentDialogWindow != null && _currentDialogWindow.Handle == hwnd)
+                    {
+                        dialogWindow = _currentDialogWindow;
+                    }
+                }
+            }
+            if (dialogWindow == null)
+            {
+                // After that check all dialog windows
+                foreach (var dialog in _quickSwitchDialogs)
+                {
+                    if (dialog.DialogWindow.Handle == hwnd)
+                    {
+                        dialogWindow = dialog.DialogWindow;
+                        break;
+                    }
+                }
+            }
+            if (dialogWindow == null)
+            {
+                // Finally search for the dialog window
+                foreach (var dialog in _quickSwitchDialogs)
+                {
+                    if (dialog.CheckDialogWindow(hwnd))
+                    {
+                        dialogWindow = dialog.DialogWindow;
+                        break;
+                    }
+                }
+            }
+            if (dialogWindow == null) return;
+
+            // Get explorer path
             string path;
-            lock (_dialogWindowHandleLock)
+            lock (_dialogWindowLock)
             {
                 path = _lastExplorer?.GetExplorerPath();
             }
             if (string.IsNullOrEmpty(path)) return;
-            JumpToPath(dialog.Value, path, action);
+
+            // Jump to path
+            JumpToPath(hwnd.Value, path, action);
         }
 
         private static bool FileJump(string filePath, HWND dialogHandle, bool forceFileName = false, bool openFile = false)
@@ -720,27 +795,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         #endregion
 
-        #region Class Name
-
-        private static string GetWindowClassName(HWND handle)
-        {
-            return GetClassName(handle);
-
-            static unsafe string GetClassName(HWND handle)
-            {
-                fixed (char* buf = new char[256])
-                {
-                    return PInvoke.GetClassName(handle, buf, 256) switch
-                    {
-                        0 => null,
-                        _ => new string(buf),
-                    };
-                }
-            }
-        }
-
-        #endregion
-
         #endregion
 
         #region Dispose
@@ -785,6 +839,21 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             lock (_lastExplorerLock)
             {
                 _lastExplorer = null;
+            }
+
+            // Dispose dialogs
+            foreach (var dialog in _quickSwitchDialogs)
+            {
+                dialog.Dispose();
+            }
+            _quickSwitchDialogs.Clear();
+            lock (_dialogWindowLock)
+            {
+                _dialogWindow = null;
+            }
+            lock (_currentDialogWindowLock)
+            {
+                _currentDialogWindow = null;
             }
 
             // Stop drag move timer
