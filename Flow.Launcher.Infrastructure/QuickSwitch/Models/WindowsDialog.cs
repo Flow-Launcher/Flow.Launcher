@@ -80,20 +80,26 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 
         private static readonly string ClassName = nameof(WindowsDialogTab);
 
-        private readonly bool _legacy = false;
+        private bool _legacy { get; set; } = false;
 
-        private readonly HWND _pathControl;
-        private readonly HWND _pathEditor;
-        private readonly HWND _fileEditor;
-        private readonly HWND _openButton;
+        private HWND _pathControl { get; set; } = HWND.Null;
+        private HWND _pathEditor { get; set; } = HWND.Null;
+        private HWND _fileEditor { get; set; } = HWND.Null;
+        private HWND _openButton { get; set; } = HWND.Null;
 
         public WindowsDialogTab(HWND handle)
         {
             Handle = handle;
+            GetPathControlEditor();
+            GetFileEditor();
+            GetOpenButton();
+        }
 
+        private bool GetPathControlEditor()
+        {
             // Get the handle of the path editor
             // The window with class name "ComboBoxEx32" is not visible when the path editor is not with the keyboard focus
-            _pathControl = PInvoke.GetDlgItem(handle, 0x0000); // WorkerW
+            _pathControl = PInvoke.GetDlgItem(Handle, 0x0000); // WorkerW
             _pathControl = PInvoke.GetDlgItem(_pathControl, 0xA005); // ReBarWindow32
             _pathControl = PInvoke.GetDlgItem(_pathControl, 0xA205); // Address Band Root
             _pathControl = PInvoke.GetDlgItem(_pathControl, 0x0000); // msctls_progress32
@@ -108,22 +114,29 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
             }
             else
             {
+                _legacy = false;
                 _pathEditor = PInvoke.GetDlgItem(_pathControl, 0xA205); // ComboBox
                 _pathEditor = PInvoke.GetDlgItem(_pathEditor, 0xA205); // Edit
                 if (_pathEditor == HWND.Null)
                 {
                     Log.Error(ClassName, "Failed to find path editor handle");
+                    return false;
                 }
             }
 
+            return true;
+        }
+
+        private bool GetFileEditor()
+        {
             // Get the handle of the file name editor of Open file dialog
-            _fileEditor = PInvoke.GetDlgItem(handle, 0x047C); // ComboBoxEx32
+            _fileEditor = PInvoke.GetDlgItem(Handle, 0x047C); // ComboBoxEx32
             _fileEditor = PInvoke.GetDlgItem(_fileEditor, 0x047C); // ComboBox
             _fileEditor = PInvoke.GetDlgItem(_fileEditor, 0x047C); // Edit
             if (_fileEditor == HWND.Null)
             {
                 // Get the handle of the file name editor of Save/SaveAs file dialog
-                _fileEditor = PInvoke.GetDlgItem(handle, 0x0000); // DUIViewWndClassName
+                _fileEditor = PInvoke.GetDlgItem(Handle, 0x0000); // DUIViewWndClassName
                 _fileEditor = PInvoke.GetDlgItem(_fileEditor, 0x0000); // DirectUIHWND
                 _fileEditor = PInvoke.GetDlgItem(_fileEditor, 0x0000); // FloatNotifySink
                 _fileEditor = PInvoke.GetDlgItem(_fileEditor, 0x0000); // ComboBox
@@ -131,26 +144,35 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
                 if (_fileEditor == HWND.Null)
                 {
                     Log.Error(ClassName, "Failed to find file name editor handle");
+                    return false;
                 }
             }
 
+            return true;
+        }
+
+        private bool GetOpenButton()
+        {
             // Get the handle of the open button
-            _openButton = PInvoke.GetDlgItem(handle, 0x0001); // Open/Save/SaveAs Button
+            _openButton = PInvoke.GetDlgItem(Handle, 0x0001); // Open/Save/SaveAs Button
             if (_openButton == HWND.Null)
             {
                 Log.Error(ClassName, "Failed to find open button handle");
+                return false;
             }
+
+            return true;
         }
 
         public string GetCurrentFolder()
         {
-            if (_pathEditor.IsNull) return string.Empty;
+            if (_pathEditor.IsNull && !GetPathControlEditor()) return string.Empty;
             return GetWindowText(_pathEditor);
         }
 
         public string GetCurrentFile()
         {
-            if (_fileEditor.IsNull) return string.Empty;
+            if (_fileEditor.IsNull && !GetFileEditor()) return string.Empty;
             return GetWindowText(_fileEditor);
         }
 
@@ -160,16 +182,16 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
             {
                 // https://github.com/idkidknow/Flow.Launcher.Plugin.DirQuickJump/issues/1
                 // The dialog is a legacy one, so we edit file name text box directly
-                if (_fileEditor.IsNull) return false;
+                if (_fileEditor.IsNull && !GetFileEditor()) return false;
                 SetWindowText(_fileEditor, path);
 
-                if (_openButton.IsNull) return false;
+                if (_openButton.IsNull && !GetOpenButton()) return false;
                 PInvoke.SendMessage(_openButton, PInvoke.BM_CLICK, 0, 0);
 
                 return true;
             }
 
-            if (_pathControl.IsNull) return false;
+            if (_pathControl.IsNull && !GetPathControlEditor()) return false;
 
             var timeOut = !SpinWait.SpinUntil(() =>
             {
@@ -182,23 +204,25 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
                 return false;
             }
 
-            if (_pathEditor.IsNull) return false;
-
+            if (_pathEditor.IsNull && !GetPathControlEditor()) return false;
             SetWindowText(_pathEditor, path);
+
             return true;
         }
 
         public bool JumpFile(string path)
         {
-            if (_fileEditor.IsNull) return false;
+            if (_fileEditor.IsNull && !GetPathControlEditor()) return false;
             SetWindowText(_fileEditor, path);
+
             return true;
         }
 
         public bool Open()
         {
-            if (_openButton.IsNull) return false;
+            if (_openButton.IsNull && !GetOpenButton()) return false;
             PInvoke.PostMessage(_openButton, PInvoke.BM_CLICK, 0, 0);
+
             return true;
         }
 
