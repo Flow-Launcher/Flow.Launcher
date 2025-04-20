@@ -520,62 +520,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         #region Navigate Path
 
-        private static void NavigateDialogPath(HWND dialog, Action action = null)
-        {
-            if (dialog == HWND.Null || GetWindowClassName(dialog) != DialogWindowClassName) return;
-
-            object document = null;
-            try
-            {
-                lock (_lastExplorerViewLock)
-                {
-                    if (_lastExplorerView != null)
-                    {
-                        // Use dynamic here because using IWebBrower2.Document can cause exception here:
-                        // System.Runtime.InteropServices.InvalidOleVariantTypeException: 'Specified OLE variant is invalid.'
-                        dynamic explorerView = _lastExplorerView;
-                        document = explorerView.Document;
-                    }
-                }
-            }
-            catch (COMException)
-            {
-                return;
-            }
-
-            if (document is not IShellFolderViewDual2 folderView)
-            {
-                return;
-            }
-
-            string path;
-            try
-            {
-                // CSWin32 Folder does not have Self, so we need to use dynamic type here
-                // Use dynamic to bypass static typing
-                dynamic folder = folderView.Folder;
-
-                // Access the Self property via dynamic binding
-                dynamic folderItem = folder.Self;
-
-                // Check if the item is part of the file system
-                if (folderItem != null && folderItem.IsFileSystem)
-                {
-                    path = folderItem.Path;
-                }
-                else
-                {
-                    // Handle non-file system paths (e.g., virtual folders)
-                    path = string.Empty;
-                }
-            }
-            catch
-            {
-                return;
-            }
-
-            JumpToPath(dialog.Value, path, action);
-        }
+        // Edited from: https://github.com/idkidknow/Flow.Launcher.Plugin.DirQuickJump
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD101:Avoid unsupported async delegates", Justification = "<Pending>")]
         public static void JumpToPath(nint dialog, string path, Action action = null)
@@ -673,9 +618,64 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
         }
 
-        // Edited from: https://github.com/idkidknow/Flow.Launcher.Plugin.DirQuickJump
+        private static void NavigateDialogPath(HWND dialog, Action action = null)
+        {
+            if (dialog == HWND.Null || GetWindowClassName(dialog) != DialogWindowClassName) return;
 
-        internal static bool FileJump(string filePath, HWND dialogHandle, bool forceFileName = false, bool openFile = false)
+            object document = null;
+            try
+            {
+                lock (_lastExplorerViewLock)
+                {
+                    if (_lastExplorerView != null)
+                    {
+                        // Use dynamic here because using IWebBrower2.Document can cause exception here:
+                        // System.Runtime.InteropServices.InvalidOleVariantTypeException: 'Specified OLE variant is invalid.'
+                        dynamic explorerView = _lastExplorerView;
+                        document = explorerView.Document;
+                    }
+                }
+            }
+            catch (COMException)
+            {
+                return;
+            }
+
+            if (document is not IShellFolderViewDual2 folderView)
+            {
+                return;
+            }
+
+            string path;
+            try
+            {
+                // CSWin32 Folder does not have Self, so we need to use dynamic type here
+                // Use dynamic to bypass static typing
+                dynamic folder = folderView.Folder;
+
+                // Access the Self property via dynamic binding
+                dynamic folderItem = folder.Self;
+
+                // Check if the item is part of the file system
+                if (folderItem != null && folderItem.IsFileSystem)
+                {
+                    path = folderItem.Path;
+                }
+                else
+                {
+                    // Handle non-file system paths (e.g., virtual folders)
+                    path = string.Empty;
+                }
+            }
+            catch
+            {
+                return;
+            }
+
+            JumpToPath(dialog.Value, path, action);
+        }
+
+        private static bool FileJump(string filePath, HWND dialogHandle, bool forceFileName = false, bool openFile = false)
         {
             if (forceFileName)
             {
@@ -687,7 +687,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
         }
 
-        internal static bool DirJump(string dirPath, HWND dialogHandle)
+        private static bool DirJump(string dirPath, HWND dialogHandle)
         {
             return DirFileJump(dirPath, null, dialogHandle);
         }
