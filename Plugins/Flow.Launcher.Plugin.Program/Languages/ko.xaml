@@ -74,7 +74,7 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">다른 유저 권한으로 실행</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">관리자 권한으로 실행</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">포함된 폴더 열기</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">숨기기</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">Hide</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_target_folder">대상 폴더 열기</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">프로그램</system:String>
