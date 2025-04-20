@@ -242,12 +242,12 @@
     <system:String x:Key="BackdropTypesMicaAlt">マイカ（代替）</system:String>
     <system:String x:Key="TypeIsDarkToolTip">このテーマはライト／ダークの2モードに対応しています。</system:String>
     <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
-    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
+    <system:String x:Key="ShowPlaceholder">プレースホルダーを表示</system:String>
     <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
     <system:String x:Key="PlaceholderText">検索欄の案内文</system:String>
     <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
     <system:String x:Key="KeepMaxResults">ウィンドウサイズの固定</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">ウィンドウのサイズを固定し、ドラッグでの変更を無効にします。</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">ホットキー</system:String>
@@ -277,7 +277,7 @@
     <system:String x:Key="ToggleGameModeHotkey">Toggle Game Mode</system:String>
     <system:String x:Key="ToggleHistoryHotkey">Toggle History</system:String>
     <system:String x:Key="OpenContainFolderHotkey">Open Containing Folder</system:String>
-    <system:String x:Key="RunAsAdminHotkey">Run As Admin</system:String>
+    <system:String x:Key="RunAsAdminHotkey">管理者として実行</system:String>
     <system:String x:Key="RequeryHotkey">Refresh Search Results</system:String>
     <system:String x:Key="ReloadPluginHotkey">Reload Plugins Data</system:String>
     <system:String x:Key="QuickWidthHotkey">Quick Adjust Window Width</system:String>
@@ -332,12 +332,12 @@
     <system:String x:Key="about">情報</system:String>
     <system:String x:Key="website">ウェブサイト</system:String>
     <system:String x:Key="github">GitHub</system:String>
-    <system:String x:Key="docs">Docs</system:String>
+    <system:String x:Key="docs">ドキュメント</system:String>
     <system:String x:Key="version">バージョン</system:String>
     <system:String x:Key="icons">Icons</system:String>
     <system:String x:Key="about_activate_times">あなたはFlow Launcherを {0} 回利用しました</system:String>
     <system:String x:Key="checkUpdates">アップデートを確認する</system:String>
-    <system:String x:Key="BecomeASponsor">Become A Sponsor</system:String>
+    <system:String x:Key="BecomeASponsor">スポンサーになる</system:String>
     <system:String x:Key="newVersionTips">新しいバージョン {0} が利用可能です。Flow Launcherを再起動してください。</system:String>
     <system:String x:Key="checkUpdatesFailed">アップデートの確認に失敗しました、api.github.com への接続とプロキシ設定を確認してください。</system:String>
     <system:String x:Key="downloadUpdatesFailed">
