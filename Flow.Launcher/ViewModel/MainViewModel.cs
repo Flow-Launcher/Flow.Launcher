@@ -1213,6 +1213,7 @@ namespace Flow.Launcher.ViewModel
         private async Task QueryResultsAsync(bool searchDelay, bool isReQuery = false, bool reSelect = true)
         {
             _updateSource?.Cancel();
+            _runningQuery = null;
 
             Infrastructure.Logger.Log.Debug(ClassName, $"Query construct for QueryText: {QueryText}");
 
@@ -1379,6 +1380,10 @@ namespace Flow.Launcher.ViewModel
             finally
             {
                 Infrastructure.Logger.Log.Debug(ClassName, $"Query return for QueryText: {query.RawQuery}");
+                // this make sures running query is null even if the query is canceled
+                _runningQuery = null;
+
+                // release the lock so that other query can be executed
                 _updateLock.Release();
             }
 
