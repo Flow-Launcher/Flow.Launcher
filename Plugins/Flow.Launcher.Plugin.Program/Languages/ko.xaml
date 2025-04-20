@@ -34,7 +34,7 @@
     <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">Unins000처럼 일반적으로 사용되는 설치 삭제(Uninstaller) 프로그램의 이름을 숨깁니다.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">프로그램 설명 검색</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow will search program's description</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp">Hide duplicated apps</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp">중복된 앱 숨기기</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp_tooltip">Hide duplicated Win32 programs that are already in the UWP list</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">확장자</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">최대 깊이</system:String>
@@ -74,8 +74,8 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">다른 유저 권한으로 실행</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">관리자 권한으로 실행</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">포함된 폴더 열기</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">이 프로그램 표시 비활성화</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Open target folder</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">숨기기</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_open_target_folder">대상 폴더 열기</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">프로그램</system:String>
     <system:String x:Key="flowlauncher_plugin_program_plugin_description">Flow Launcher에서 프로그램을 검색합니다</system:String>
