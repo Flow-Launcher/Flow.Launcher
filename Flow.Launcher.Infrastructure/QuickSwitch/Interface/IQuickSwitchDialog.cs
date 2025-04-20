@@ -12,8 +12,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Interface
     /// </remarks>
     internal interface IQuickSwitchDialog : IDisposable
     {
-        internal IQuickSwitchDialogWindow DialogWindow { get; }
+        IQuickSwitchDialogWindow DialogWindow { get; }
 
-        internal bool CheckDialogWindow(HWND hwnd);
+        bool CheckDialogWindow(HWND hwnd);
     }
 }

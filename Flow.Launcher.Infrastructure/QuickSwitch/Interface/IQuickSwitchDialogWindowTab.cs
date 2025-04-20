@@ -5,16 +5,16 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Interface
 {
     internal interface IQuickSwitchDialogWindowTab : IDisposable
     {
-        internal HWND Handle { get; }
+        HWND Handle { get; }
 
-        internal string GetCurrentFolder();
+        string GetCurrentFolder();
 
-        internal string GetCurrentFile();
+        string GetCurrentFile();
 
-        internal bool JumpFolder(string path, bool auto);
+        bool JumpFolder(string path, bool auto);
 
-        internal bool JumpFile(string path);
+        bool JumpFile(string path);
 
-        internal bool Open();
+        bool Open();
     }
 }

@@ -5,8 +5,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Interface
 {
     internal interface IQuickSwitchDialogWindow : IDisposable
     {
-        internal HWND Handle { get; }
+        HWND Handle { get; }
 
-        internal IQuickSwitchDialogWindowTab GetCurrentTab();
+        IQuickSwitchDialogWindowTab GetCurrentTab();
     }
 }
