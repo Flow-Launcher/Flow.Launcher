@@ -1608,11 +1608,15 @@ namespace Flow.Launcher.ViewModel
         {
             if (handle == nint.Zero) return;
 
-            if (DialogWindowHandle != handle) // Only set once for one file dialog
+            // Only set flag & reset window once for one file dialog
+            var needReset = false;
+            if (DialogWindowHandle != handle)
             {
                 PreviousMainWindowVisibilityStatus = MainWindowVisibilityStatus;
                 DialogWindowHandle = handle;
                 IsQuickSwitch = true;
+
+                needReset = true;
 
                 // Wait for a while to make sure the dialog is shown
                 // If don't give a time, Positioning will be weird
@@ -1632,14 +1636,20 @@ namespace Flow.Launcher.ViewModel
                         (Application.Current?.MainWindow as MainWindow).UpdatePosition();
                     });
 
-                    _ = ResetWindowAsync();
+                    if (needReset)
+                    {
+                        _ = ResetWindowAsync();
+                    }
                 }
             }
             else
             {
                 Show();
 
-                _ = ResetWindowAsync();
+                if (needReset)
+                {
+                    _ = ResetWindowAsync();
+                }
             }
         }
 
