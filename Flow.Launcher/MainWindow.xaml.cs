@@ -196,7 +196,7 @@ namespace Flow.Launcher
                                 if (_viewModel.MainWindowVisibilityStatus)
                                 {
                                     // Play sound effect before activing the window
-                                    if (_settings.UseSound && !_viewModel.IsQuickSwitch)
+                                    if (_settings.UseSound && !_viewModel.IsQuickSwitchWindowUnderDialog())
                                     {
                                         SoundPlay();
                                     }
@@ -219,7 +219,7 @@ namespace Flow.Launcher
                                     QueryTextBox.Focus();
 
                                     // Play window animation
-                                    if (_settings.UseAnimation && !_viewModel.IsQuickSwitch)
+                                    if (_settings.UseAnimation && !_viewModel.IsQuickSwitchWindowUnderDialog())
                                     {
                                         WindowAnimation();
                                     }
@@ -326,7 +326,7 @@ namespace Flow.Launcher
 
         private void OnLocationChanged(object sender, EventArgs e)
         {
-            if (_viewModel.IsQuickSwitch)
+            if (_viewModel.IsQuickSwitchWindowUnderDialog())
             {
                 return;
             }
@@ -340,7 +340,7 @@ namespace Flow.Launcher
 
         private async void OnDeactivated(object sender, EventArgs e)
         {
-            if (_viewModel.IsQuickSwitch)
+            if (_viewModel.IsQuickSwitchWindowUnderDialog())
             {
                 return;
             }
@@ -483,7 +483,7 @@ namespace Flow.Launcher
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            if (_viewModel.IsQuickSwitch)
+            if (_viewModel.IsQuickSwitchWindowUnderDialog())
             {
                 return IntPtr.Zero;
             }
@@ -669,7 +669,7 @@ namespace Flow.Launcher
 
         public void UpdatePosition()
         {
-            if (_viewModel.IsQuickSwitch)
+            if (_viewModel.IsQuickSwitchWindowUnderDialog())
             {
                 UpdateQuickSwitchPosition();
             }
@@ -1170,8 +1170,8 @@ namespace Flow.Launcher
 
         private void UpdateQuickSwitchPosition()
         {
-            if (_viewModel.DialogWindowHandle == nint.Zero ||
-                !_viewModel.MainWindowVisibilityStatus) return;
+            if (_viewModel.DialogWindowHandle == nint.Zero || !_viewModel.MainWindowVisibilityStatus) return;
+            if (!_viewModel.IsQuickSwitchWindowUnderDialog()) return;
 
             // Get dialog window rect
             var result = Win32Helper.GetWindowRect(_viewModel.DialogWindowHandle, out var window);

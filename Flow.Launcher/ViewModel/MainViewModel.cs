@@ -1593,15 +1593,22 @@ namespace Flow.Launcher.ViewModel
 
         #region Quick Switch
 
-        public bool IsQuickSwitch { get; private set; } = false;
         public nint DialogWindowHandle { get; private set; } = nint.Zero;
-        
+
+        private bool IsQuickSwitch { get; set; } = false;
+
+        private static QuickSwitchWindowPositions QuickSwitchWindowPosition => QuickSwitch.QuickSwitchWindowPosition;
+
         private bool PreviousMainWindowVisibilityStatus { get; set; }
-        private bool ResetWindowOnNextShow { get; set; } = false;
 
         public void InitializeVisibilityStatus(bool visibilityStatus)
         {
             PreviousMainWindowVisibilityStatus = visibilityStatus;
+        }
+
+        public bool IsQuickSwitchWindowUnderDialog()
+        {
+            return IsQuickSwitch && QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog;
         }
 
 #pragma warning disable VSTHRD100 // Avoid async void methods
@@ -1611,14 +1618,14 @@ namespace Flow.Launcher.ViewModel
             if (handle == nint.Zero) return;
 
             // Only set flag & reset window once for one file dialog
-            var needReset = false;
+            var dialogWindowHandleChanged = false;
             if (DialogWindowHandle != handle)
             {
                 PreviousMainWindowVisibilityStatus = MainWindowVisibilityStatus;
                 DialogWindowHandle = handle;
                 IsQuickSwitch = true;
 
-                needReset = true;
+                dialogWindowHandleChanged = true;
 
                 // Wait for a while to make sure the dialog is shown
                 // If don't give a time, Positioning will be weird
@@ -1630,27 +1637,34 @@ namespace Flow.Launcher.ViewModel
 
             if (MainWindowVisibilityStatus)
             {
-                // Only update the position
-                if (PreviousMainWindowVisibilityStatus)
+                if (dialogWindowHandleChanged)
                 {
+                    // Only update the position
                     Application.Current?.Dispatcher.Invoke(() =>
                     {
                         (Application.Current?.MainWindow as MainWindow).UpdatePosition();
                     });
 
-                    if (needReset)
-                    {
-                        _ = ResetWindowAsync();
-                    }
+                    _ = ResetWindowAsync();
                 }
             }
             else
             {
-                Show();
-
-                if (needReset)
+                if (QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog)
                 {
-                    _ = ResetWindowAsync();
+                    Show();
+
+                    if (dialogWindowHandleChanged)
+                    {
+                        _ = ResetWindowAsync();
+                    }
+                }
+                else
+                {
+                    if (dialogWindowHandleChanged)
+                    {
+                        _ = ResetWindowAsync();
+                    }
                 }
             }
         }
@@ -1692,7 +1706,7 @@ namespace Flow.Launcher.ViewModel
                 }
                 else
                 {
-                    ResetWindowOnNextShow = true;
+                    _ = ResetWindowAsync();
                 }
             }
         }
@@ -1703,9 +1717,12 @@ namespace Flow.Launcher.ViewModel
         {
             if (DialogWindowHandle != nint.Zero)
             {
-                if (MainWindowVisibilityStatus)
+                if (QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog)
                 {
-                    Hide();
+                    if (MainWindowVisibilityStatus)
+                    {
+                        Hide();
+                    }
                 }
             }
         }
@@ -1772,12 +1789,6 @@ namespace Flow.Launcher.ViewModel
             if (StartWithEnglishMode)
             {
                 Win32Helper.SwitchToEnglishKeyboardLayout(true);
-            }
-
-            if (ResetWindowOnNextShow)
-            {
-                ResetWindowOnNextShow = false;
-                _ = ResetWindowAsync();
             }
         }
 
