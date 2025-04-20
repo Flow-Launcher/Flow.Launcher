@@ -454,6 +454,8 @@ namespace Flow.Launcher.ViewModel
             // For quick switch and left click mode, we need to navigate to the path
             if (IsQuickSwitch && Settings.QuickSwitchResultBehaviour == QuickSwitchResultBehaviours.LeftClick)
             {
+                Hide();
+
                 if (SelectedResults.SelectedItem != null && DialogWindowHandle != nint.Zero)
                 {
                     if (result is QuickSwitchResult quickSwitchResult)
