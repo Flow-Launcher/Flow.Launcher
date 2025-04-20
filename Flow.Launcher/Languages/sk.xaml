@@ -147,8 +147,8 @@
     <system:String x:Key="currentActionKeywords">Aktuálny aktivačný príkaz</system:String>
     <system:String x:Key="newActionKeyword">Nový aktivačný príkaz</system:String>
     <system:String x:Key="actionKeywordsTooltip">Upraviť aktivačný príkaz</system:String>
-    <system:String x:Key="pluginSearchDelayTime">Plugin search delay time</system:String>
-    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Search Delay Time</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Oneskorenie vyhľadávania pluginu</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Zmení oneskorenie vyhľadávania pluginu</system:String>
     <system:String x:Key="FilterComboboxLabel">Rozšírené nastavenia:</system:String>
     <system:String x:Key="DisplayModeOnOff">Povolené</system:String>
     <system:String x:Key="DisplayModePriority">Priorita</system:String>
@@ -240,7 +240,7 @@
     <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
     <system:String x:Key="BackdropTypesMica">Mica</system:String>
     <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
-    <system:String x:Key="TypeIsDarkToolTip">This theme supports two (light/dark) modes.</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">Tento motív podporuje 2 režimy (svetlý/tmavý).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Tento motív podporuje rozostrenie priehľadného pozadia.</system:String>
     <system:String x:Key="ShowPlaceholder">Zobraziť zástupný text</system:String>
     <system:String x:Key="ShowPlaceholderTip">Zobrazí zástupný text v prázdnom vyhľadávacom poli</system:String>
@@ -308,7 +308,7 @@
     <system:String x:Key="useGlyphUIEffect">Použiť ikony Segoe Fluent, ak sú podporované</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Stlačte kláves</system:String>
     <system:String x:Key="showBadges">Zobraziť výsledok v odznaku</system:String>
-    <system:String x:Key="showBadgesToolTip">For supported plugins, badges are displayed to help distinguish them more easily.</system:String>
+    <system:String x:Key="showBadgesToolTip">Ak to plugin podporuje, zobrazí sa jeho ikona v odznaku na jednoduchšie odlíšenie.</system:String>
     <system:String x:Key="showBadgesGlobalOnly">Zobraziť výsledok v odznaku len pre globálne vyhľadávanie</system:String>
 
     <!--  Setting Proxy  -->
