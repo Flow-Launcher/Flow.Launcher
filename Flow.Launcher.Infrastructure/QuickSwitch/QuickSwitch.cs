@@ -59,6 +59,10 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         private static HWINEVENTHOOK _locationChangeHook = HWINEVENTHOOK.Null;
         private static HWINEVENTHOOK _destroyChangeHook = HWINEVENTHOOK.Null;
 
+        private static readonly WINEVENTPROC _fgProc = ForegroundChangeCallback;
+        private static readonly WINEVENTPROC _locProc = LocationChangeCallback;
+        private static readonly WINEVENTPROC _desProc = DestroyChangeCallback;
+
         private static DispatcherTimer _dragMoveTimer = null;
 
         // A list of all file dialog windows that are auto switched already
@@ -68,7 +72,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         // Note: Here we do not start & stop the timer beacause when there are many dialog windows
         // Unhooking and hooking will take too much time which can make window position weird
         // So we start & stop the timer when we find a file dialog window
-        /*private static HWINEVENTHOOK _moveSizeHook = HWINEVENTHOOK.Null;*/
+        /*private static HWINEVENTHOOK _moveSizeHook = HWINEVENTHOOK.Null;
+        private static HWINEVENTHOOK _moveProc = MoveSizeCallBack;*/
 
         private static readonly SemaphoreSlim _navigationLock = new(1, 1);
 
@@ -151,7 +156,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     PInvoke.EVENT_SYSTEM_FOREGROUND,
                     PInvoke.EVENT_SYSTEM_FOREGROUND,
                     PInvoke.GetModuleHandle((PCWSTR)null),
-                    ForegroundChangeCallback,
+                    _fgProc,
                     0,
                     0,
                     PInvoke.WINEVENT_OUTOFCONTEXT);
@@ -159,7 +164,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     PInvoke.EVENT_OBJECT_LOCATIONCHANGE,
                     PInvoke.EVENT_OBJECT_LOCATIONCHANGE,
                     PInvoke.GetModuleHandle((PCWSTR)null),
-                    LocationChangeCallback,
+                    _locProc,
                     0,
                     0,
                     PInvoke.WINEVENT_OUTOFCONTEXT);
@@ -167,7 +172,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     PInvoke.EVENT_OBJECT_DESTROY,
                     PInvoke.EVENT_OBJECT_DESTROY,
                     PInvoke.GetModuleHandle((PCWSTR)null),
-                    DestroyChangeCallback,
+                    _desProc,
                     0,
                     0,
                     PInvoke.WINEVENT_OUTOFCONTEXT);
@@ -268,14 +273,14 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                             _moveSizeHook = HWINEVENTHOOK.Null;
                         }
 
-                        // Call MoveSizeCallBack when the window is moved or resized
+                        // Call _moveProc when the window is moved or resized
                         uint processId;
                         var threadId = PInvoke.GetWindowThreadProcessId(_dialogWindow.Handle, &processId);
                         _moveSizeHook = PInvoke.SetWinEventHook(
                             PInvoke.EVENT_SYSTEM_MOVESIZESTART,
                             PInvoke.EVENT_SYSTEM_MOVESIZEEND,
                             PInvoke.GetModuleHandle((PCWSTR)null),
-                            MoveSizeCallBack,
+                            _moveProc,
                             processId,
                             threadId,
                             PInvoke.WINEVENT_OUTOFCONTEXT);
