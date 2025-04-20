@@ -9,7 +9,7 @@
     <system:String x:Key="flowlauncher_plugin_program_name">Name</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable">有効</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enabled">Enabled</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable">Disable</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable">無効</system:String>
     <system:String x:Key="flowlauncher_plugin_program_status">Status</system:String>
     <system:String x:Key="flowlauncher_plugin_program_true">Enabled</system:String>
     <system:String x:Key="flowlauncher_plugin_program_false">Disabled</system:String>
@@ -71,14 +71,14 @@
         Insert protocols of .url files you want to index. Protocols should be separated by ';', and should end with &quot;://&quot;. (ex&gt;ftp://;mailto://)
     </system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Run As Different User</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Run As Administrator</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">別のユーザーとして実行</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">管理者として実行</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Open containing folder</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">Disable this program from displaying</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">プログラムを非表示</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Open target folder</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_plugin_name">Program</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_plugin_description">Search programs in Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_plugin_name">プログラム</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_plugin_description">Flow Launcherでプログラムを検索</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_invalid_path">Invalid Path</system:String>
 
