@@ -56,7 +56,7 @@
     <system:String x:Key="setAutoStartFailed">שגיאה בהגדרת ההפעלה בעת הפעלת windows</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">הסתר את Flow Launcher כאשר הוא אינו החלון הפעיל</system:String>
     <system:String x:Key="dontPromptUpdateMsg">אל תציג התראות על גרסה חדשה</system:String>
-    <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
+    <system:String x:Key="SearchWindowPosition">מיקום חלון חיפוש</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">זכור את המיקום האחרון</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Monitor with Mouse Cursor</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Monitor with Focused Window</system:String>
@@ -108,29 +108,28 @@
     <system:String x:Key="shadowEffectNotAllowed">לא ניתן להחיל אפקט צל כאשר העיצוב הנוכחי מוגדר לאפקט טשטוש</system:String>
     <system:String x:Key="searchDelay">Search Delay</system:String>
     <system:String x:Key="searchDelayToolTip">מוסיף עיכוב קצר בזמן ההקלדה כדי להפחית קפיצות בממשק המשתמש ועומס בתוצאות. מומלץ אם מהירות ההקלדה שלך ממוצעת.</system:String>
-    <system:String x:Key="searchDelayNumberBoxToolTip">Enter the wait time (in ms) until input is considered complete. This can only be edited if Search Delay is enabled.</system:String>
+    <system:String x:Key="searchDelayNumberBoxToolTip">הזן את זמן ההמתנה (בשניות) עד שהקלט נחשב כמושלם. ניתן לערוך זאת רק אם השהיית חיפוש מופעלת.</system:String>
     <system:String x:Key="searchDelayTime">זמן עיכוב חיפוש ברירת מחדל</system:String>
     <system:String x:Key="searchDelayTimeToolTip">זמן המתנה להצגת התוצאות לאחר שתפסיק להקליד. ערכים גבוהים יותר מייצגים המתנה רבה יותר. (שניות)</system:String>
     <system:String x:Key="KoreanImeTitle">Information for Korean IME user</system:String>
     <system:String x:Key="KoreanImeGuide">
-        The Korean input method used in Windows 11 may cause some issues in Flow Launcher.
+        שיטת הקלט הקוריאנית שמשמשת ב־Windows 11 עלולה לגרום לבעיות מסוימות ב־Flow Launcher.
 
-        If you experience any problems, you may need to enable &quot;Use previous version of Korean IME&quot;.
+        אם אתה נתקל בבעיות, ייתכן שתצטרך להפעיל את האפשרות &quot;השתמש בגרסה הקודמת של IME הקוריאני&quot;.
 
+        פתח את ההגדרות ב־Windows 11 וגש אל:
 
-        Open Setting in Windows 11 and go to:
+        זמן ושפה &gt; שפה ואזור &gt; קוריאנית &gt; אפשרויות שפה &gt; מקלדת - Microsoft IME &gt; תאימות,
 
-        Time &amp; Language &gt; Language &amp; Region &gt; Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility,
-
-        and enable &quot;Use previous version of Microsoft IME&quot;.
+        והפעל את האפשרות &quot;השתמש בגרסה הקודמת של Microsoft IME&quot;.
 
 
     </system:String>
-    <system:String x:Key="KoreanImeOpenLink">Open Language and Region System Settings</system:String>
-    <system:String x:Key="KoreanImeOpenLinkToolTip">Opens the Korean IME setting location. Go to Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility</system:String>
+    <system:String x:Key="KoreanImeOpenLink">פתח את הגדרות מערכת שפה ואזור</system:String>
+    <system:String x:Key="KoreanImeOpenLinkToolTip">פותח את מיקום הגדרות ה־IME הקוריאני. עבור אל קוריאנית &gt; אפשרויות שפה &gt; מקלדת - Microsoft IME &gt; תאימות</system:String>
     <system:String x:Key="KoreanImeOpenLinkButton">פתח</system:String>
-    <system:String x:Key="KoreanImeRegistry">Use Previous Korean IME</system:String>
-    <system:String x:Key="KoreanImeRegistryTooltip">You can change the Previous Korean IME settings directly from here</system:String>
+    <system:String x:Key="KoreanImeRegistry">השתמש ב־IME הקוריאני הקודם</system:String>
+    <system:String x:Key="KoreanImeRegistryTooltip">באפשרותך לשנות את הגדרות ה־IME הקוריאני הקודם ישירות מכאן</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">חפש תוסף</system:String>
@@ -148,7 +147,7 @@
     <system:String x:Key="newActionKeyword">מילת מפתח חדשה לפעולה</system:String>
     <system:String x:Key="actionKeywordsTooltip">שנה מילות מפתח לפעולה</system:String>
     <system:String x:Key="pluginSearchDelayTime">Plugin seach delay time</system:String>
-    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Seach Delay Time</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">שנה את זמן השהיית חיפוש של תוסף</system:String>
     <system:String x:Key="FilterComboboxLabel">הגדרות מתקדמות:</system:String>
     <system:String x:Key="DisplayModeOnOff">מופעל</system:String>
     <system:String x:Key="DisplayModePriority">עדיפות</system:String>
@@ -204,8 +203,8 @@
     <system:String x:Key="resultItemFont">גופן הכותרת לתוצאה</system:String>
     <system:String x:Key="resultSubItemFont">גופן כותרת המשנה לתוצאה</system:String>
     <system:String x:Key="resetCustomize">אפס</system:String>
-    <system:String x:Key="resetCustomizeToolTip">Reset to the recommended font and size settings.</system:String>
-    <system:String x:Key="ImportThemeSize">Import Theme Size</system:String>
+    <system:String x:Key="resetCustomizeToolTip">אפס להגדרות הגופן והגודל המומלצות.</system:String>
+    <system:String x:Key="ImportThemeSize">ייבוא ​​גודל ערכת נושא</system:String>
     <system:String x:Key="ImportThemeSizeToolTip">If a size value intended by the theme designer is available, it will be retrieved and applied.</system:String>
     <system:String x:Key="CustomizeToolTip">התאם אישית</system:String>
     <system:String x:Key="windowMode">מצב חלון</system:String>
@@ -234,7 +233,7 @@
     <system:String x:Key="Clock">שעון</system:String>
     <system:String x:Key="Date">תאריך</system:String>
     <system:String x:Key="BackdropType">סוג רקע</system:String>
-    <system:String x:Key="BackdropInfo">The backdrop effect is not applied in the preview.</system:String>
+    <system:String x:Key="BackdropInfo">אפקט הרקע אינו מוחל בתצוגה המקדימה.</system:String>
     <system:String x:Key="BackdropTypeDisabledToolTip">התמיכה ב-Backdrop קיימת החל מ-Windows 11 build 22000 ומעלה</system:String>
     <system:String x:Key="BackdropTypesNone">ללא</system:String>
     <system:String x:Key="BackdropTypesAcrylic">אקריליק</system:String>
@@ -358,7 +357,7 @@
     <system:String x:Key="userdatapath">מיקום נתוני משתמש</system:String>
     <system:String x:Key="userdatapathToolTip">הגדרות המשתמש והתוספים המותקנים נשמרים בתיקיית נתוני המשתמש. מיקום זה עשוי להשתנות אם התוכנה במצב נייד.</system:String>
     <system:String x:Key="userdatapathButton">פתח תיקיה</system:String>
-    <system:String x:Key="logLevel">Log Level</system:String>
+    <system:String x:Key="logLevel">רמת יומן</system:String>
     <system:String x:Key="LogLevelDEBUG">ניפוי שגיאות</system:String>
     <system:String x:Key="LogLevelINFO">מידע</system:String>
 
@@ -401,7 +400,7 @@
     <system:String x:Key="actionkeyword_tips">הזן את מילות הפעולה שבהן תרצה להשתמש כדי להפעיל את התוסף, והשתמש ברווחים כדי להפריד ביניהן. השתמש ב-* אם אינך רוצה להגדיר כלל, והתוסף יופעל ללא מילות פעולה.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
-    <system:String x:Key="searchDelayTimeTitle">Search Delay Time Setting</system:String>
+    <system:String x:Key="searchDelayTimeTitle">הגדרת זמן עיכוב החיפוש</system:String>
     <system:String x:Key="searchDelayTimeTips">הזן את זמן עיכוב החיפוש בשניות שבו אתה רוצה להשתמש עבור התוסף. השאר ריק אם אינך רוצה לציין, והתוסף ישתמש בזמן ברירת המחדל לעיכוב חיפוש.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
