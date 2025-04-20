@@ -280,28 +280,31 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     // So we start & stop the timer when we find a file dialog window
                     /*lock (_currentDialogWindowLock)
                     {
-                        var currentDialogWindowChanged = _currentDialogWindow == null ||
+                        lock (_dialogWindowLock)
+                        {
+                            var currentDialogWindowChanged = _currentDialogWindow == null ||
                             _currentDialogWindow != _dialogWindow;
 
-                        if (currentDialogWindowChanged)
-                        {
-                            if (!_moveSizeHook.IsNull)
+                            if (currentDialogWindowChanged)
                             {
-                                PInvoke.UnhookWinEvent(_moveSizeHook);
-                                _moveSizeHook = HWINEVENTHOOK.Null;
-                            }
+                                if (!_moveSizeHook.IsNull)
+                                {
+                                    PInvoke.UnhookWinEvent(_moveSizeHook);
+                                    _moveSizeHook = HWINEVENTHOOK.Null;
+                                }
 
-                            // Call MoveSizeCallBack when the window is moved or resized
-                            uint processId;
-                            var threadId = PInvoke.GetWindowThreadProcessId(_dialogWindow.Handle, &processId);
-                            _moveSizeHook = PInvoke.SetWinEventHook(
-                                PInvoke.EVENT_SYSTEM_MOVESIZESTART,
-                                PInvoke.EVENT_SYSTEM_MOVESIZEEND,
-                                PInvoke.GetModuleHandle((PCWSTR)null),
-                                MoveSizeCallBack,
-                                processId,
-                                threadId,
-                                PInvoke.WINEVENT_OUTOFCONTEXT);
+                                // Call MoveSizeCallBack when the window is moved or resized
+                                uint processId;
+                                var threadId = PInvoke.GetWindowThreadProcessId(_dialogWindow.Handle, &processId);
+                                _moveSizeHook = PInvoke.SetWinEventHook(
+                                    PInvoke.EVENT_SYSTEM_MOVESIZESTART,
+                                    PInvoke.EVENT_SYSTEM_MOVESIZEEND,
+                                    PInvoke.GetModuleHandle((PCWSTR)null),
+                                    MoveSizeCallBack,
+                                    processId,
+                                    threadId,
+                                    PInvoke.WINEVENT_OUTOFCONTEXT);
+                            }
                         }
                     }*/
                 }
@@ -637,20 +640,9 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     dialogWindow = _dialogWindow;
                 }
             }
+            // Then check all dialog windows
             if (dialogWindow == null)
             {
-                // Then check current dialog window
-                lock (_currentDialogWindowLock)
-                {
-                    if (_currentDialogWindow != null && _currentDialogWindow.Handle == hwnd)
-                    {
-                        dialogWindow = _currentDialogWindow;
-                    }
-                }
-            }
-            if (dialogWindow == null)
-            {
-                // After that check all dialog windows
                 foreach (var dialog in _quickSwitchDialogs)
                 {
                     if (dialog.DialogWindow.Handle == hwnd)
@@ -660,9 +652,9 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     }
                 }
             }
+            // Finally search for the dialog window
             if (dialogWindow == null)
             {
-                // Finally search for the dialog window
                 foreach (var dialog in _quickSwitchDialogs)
                 {
                     if (dialog.CheckDialogWindow(hwnd))
