@@ -742,6 +742,12 @@ namespace Flow.Launcher.Infrastructure
                 SendKey(dialogHandle, VIRTUAL_KEY.VK_LCONTROL, true);   // Release Left Ctrl
             }*/
 
+            // Sometimes it is not focused
+            /*if (!CheckFocus(dialogHandle, editHandle))
+            {
+                return false;
+            }*/
+
             // Get the handle of the path input box and then set the text.
             // The window with class name "ComboBoxEx32" is not visible when the path input box is not with the keyboard focus.
             var controlHandle = PInvoke.GetDlgItem(dialogHandle, 0x0000); // WorkerW
@@ -773,19 +779,13 @@ namespace Flow.Launcher.Infrastructure
                 return false;
             }
 
-            // Sometimes it is not focused
-            /*if (!CheckFocus(dialogHandle, editHandle))
-            {
-                return false;
-            }*/
-
             SetWindowText(editHandle, dirPath);
             _inputSimulator.Keyboard.KeyPress(VirtualKeyCode.RETURN);
 
             if (!string.IsNullOrEmpty(filePath))
             {
                 // After navigating to the path, we then set the file name.
-                return DirFileJumpForFileName(Path.GetFileName(filePath), dialogHandle, true);
+                return DirFileJumpForFileName(Path.GetFileName(filePath), dialogHandle);
             }
 
             return true;
@@ -794,7 +794,7 @@ namespace Flow.Launcher.Infrastructure
         /// <summary>
         /// Edit file name text box in the file open dialog.
         /// </summary>
-        private static bool DirFileJumpForFileName(string fileName, HWND dialogHandle, bool openTwice = false)
+        private static bool DirFileJumpForFileName(string fileName, HWND dialogHandle, bool open = false)
         {
             var controlHandle = PInvoke.GetDlgItem(dialogHandle, 0x047C); // ComboBoxEx32
             controlHandle = PInvoke.GetDlgItem(controlHandle, 0x047C); // ComboBox
@@ -804,20 +804,17 @@ namespace Flow.Launcher.Infrastructure
                 return false;
             }
 
-            // Sometimes it is not focused
-            /*if (!CheckFocus(dialogHandle, controlHandle))
-            {
-                return false;
-            }*/
-
             SetWindowText(controlHandle, fileName);
 
-            _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LMENU, VirtualKeyCode.VK_O);
-            if (openTwice)
+            if (open)
             {
-                // Alt-O (equivalent to press the Open button) twice. In normal cases it suffices to press once,
-                // but when the focus is on an irrelevant folder, that press once will just open the irrelevant one.
-                _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LMENU, VirtualKeyCode.VK_O);
+                var openHandle = PInvoke.GetDlgItem(dialogHandle, 0x0001); // "&Open" Button
+                if (openHandle == HWND.Null)
+                {
+                    return false;
+                }
+
+                ClickButton(openHandle);
             }
 
             return true;
@@ -846,6 +843,11 @@ namespace Flow.Launcher.Infrastructure
             {
                 return PInvoke.SendMessage(handle, PInvoke.WM_SETTEXT, 0, (nint)textPtr).Value;
             }
+        }
+
+        private static unsafe nint ClickButton(HWND handle)
+        {
+            return PInvoke.PostMessage(handle, PInvoke.BM_CLICK, 0, 0).Value;
         }
 
         public static unsafe bool GetWindowRect(nint handle, out Rect outRect)

@@ -78,3 +78,5 @@ WM_KEYDOWN
 GetCurrentThreadId
 AttachThreadInput
 GetDlgItem
+PostMessage
+BM_CLICK
