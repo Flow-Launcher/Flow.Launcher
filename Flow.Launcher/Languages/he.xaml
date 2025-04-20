@@ -146,8 +146,8 @@
     <system:String x:Key="currentActionKeywords">מילת מפתח נוכחית לפעולה</system:String>
     <system:String x:Key="newActionKeyword">מילת מפתח חדשה לפעולה</system:String>
     <system:String x:Key="actionKeywordsTooltip">שנה מילות מפתח לפעולה</system:String>
-    <system:String x:Key="pluginSearchDelayTime">Plugin seach delay time</system:String>
-    <system:String x:Key="pluginSearchDelayTimeTooltip">שנה את זמן השהיית חיפוש של תוסף</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Plugin search delay time</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Search Delay Time</system:String>
     <system:String x:Key="FilterComboboxLabel">הגדרות מתקדמות:</system:String>
     <system:String x:Key="DisplayModeOnOff">מופעל</system:String>
     <system:String x:Key="DisplayModePriority">עדיפות</system:String>
@@ -239,7 +239,7 @@
     <system:String x:Key="BackdropTypesAcrylic">אקריליק</system:String>
     <system:String x:Key="BackdropTypesMica">מיקה</system:String>
     <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
-    <system:String x:Key="TypeIsDarkToolTip">ערכת נושא זאת תומך בשני מצבים (בהיר/כהה).</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">This theme supports two (light/dark) modes.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">ערכת נושא זו תומכת בטשטוש רקע שקוף.</system:String>
     <system:String x:Key="ShowPlaceholder">הצג מציין מיקום</system:String>
     <system:String x:Key="ShowPlaceholderTip">הצג מציין מיקום כאשר השאילתה ריקה</system:String>
@@ -307,9 +307,8 @@
     <system:String x:Key="useGlyphUIEffect">השתמש ב-Segoe Fluent Icons לתוצאות חיפוש כאשר נתמך</system:String>
     <system:String x:Key="flowlauncherPressHotkey">הקש על מקש</system:String>
     <system:String x:Key="showBadges">הצג תגי תוצאות</system:String>
-    <system:String x:Key="showBadgesToolTip">הצג תגים עבור תוצאות שאילתות כאשר הם נתמכים</system:String>
+    <system:String x:Key="showBadgesToolTip">For supported plugins, badges are displayed to help distinguish them more easily.</system:String>
     <system:String x:Key="showBadgesGlobalOnly">Show Result Badges for Global Query Only</system:String>
-    <system:String x:Key="showBadgesGlobalOnlyToolTip">Show badges for global query results only</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP Proxy</system:String>
