@@ -40,7 +40,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
                 {
                     return PInvoke.GetClassName(handle, buf, 256) switch
                     {
-                        0 => null,
+                        0 => string.Empty,
                         _ => new string(buf),
                     };
                 }
@@ -91,6 +91,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 
         public bool OpenFolder(string path)
         {
+            // TODO
             return false;
         }
 
