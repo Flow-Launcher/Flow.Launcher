@@ -340,8 +340,9 @@ namespace Flow.Launcher.Core.Plugin
                 // null will be fine since the results will only be added into queue if the token hasn't been cancelled
                 return null;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                API.LogException(ClassName, $"Failed to query quick switch for plugin: {metadata.Name}", e);
                 return null;
             }
             return results;
