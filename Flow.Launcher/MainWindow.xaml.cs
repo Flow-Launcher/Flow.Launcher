@@ -1125,6 +1125,13 @@ namespace Flow.Launcher
         {
             var textBox = (TextBox)sender;
             _viewModel.QueryText = textBox.Text;
+    
+            // Reset Index when query null
+            if (string.IsNullOrEmpty(textBox.Text))
+            {
+                _viewModel.Results.ResetSelectedIndex();
+            }
+    
             _viewModel.Query(_settings.SearchQueryResultsWithDelay);
         }
 
