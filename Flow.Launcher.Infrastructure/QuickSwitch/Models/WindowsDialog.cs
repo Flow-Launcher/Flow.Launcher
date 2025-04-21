@@ -132,7 +132,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
             {
                 // Use legacy jump folder method for auto quick switch because file editor is default value.
                 // After setting path using file editor, we do not need to revert its value.
-                return JumpFolderWithFileEditor(path);
+                return JumpFolderWithFileEditor(path, false);
             }
 
             // Alt-D or Ctrl-L to focus on the path input box
@@ -145,7 +145,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
                 // https://github.com/idkidknow/Flow.Launcher.Plugin.DirQuickJump/issues/1
                 // The dialog is a legacy one, so we can only edit file editor directly.
                 Log.Debug(ClassName, "Legacy dialog, using legacy jump folder method");
-                return JumpFolderWithFileEditor(path);
+                return JumpFolderWithFileEditor(path, true);
             }
 
             var timeOut = !SpinWait.SpinUntil(() =>
@@ -157,14 +157,14 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
             {
                 // Path control is not visible, so we can only edit file editor directly.
                 Log.Debug(ClassName, "Path control is not visible, using legacy jump folder method");
-                return JumpFolderWithFileEditor(path);
+                return JumpFolderWithFileEditor(path, true);
             }
 
             if (_pathEditor.IsNull && !GetPathControlEditor())
             {
                 // Path editor cannot be found, so we can only edit file editor directly.
                 Log.Debug(ClassName, "Path editor cannot be found, using legacy jump folder method");
-                return JumpFolderWithFileEditor(path);
+                return JumpFolderWithFileEditor(path, true);
             }
             SetWindowText(_pathEditor, path);
 
@@ -306,8 +306,11 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 
         #region Legacy Jump Folder
 
-        private bool JumpFolderWithFileEditor(string path)
+        private bool JumpFolderWithFileEditor(string path, bool resetFocus)
         {
+            // For Save / Save As dialog, the default value in file editor is not null and it can cause strange behaviors.
+            if (resetFocus && _type == DialogType.SaveOrSaveAs) return false;
+
             if (_fileEditor.IsNull && !GetFileEditor()) return false;
             SetWindowText(_fileEditor, path);
 
