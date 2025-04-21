@@ -15,9 +15,9 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
     /// </summary>
     internal class WindowsDialog : IQuickSwitchDialog
     {
-        private const string WindowsDialogClassName = "#32770";
-
         public IQuickSwitchDialogWindow DialogWindow { get; private set; }
+
+        private const string WindowsDialogClassName = "#32770";
 
         public bool CheckDialogWindow(HWND hwnd)
         {
@@ -38,7 +38,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
             DialogWindow = null;
         }
 
-        public static string GetWindowClassName(HWND handle)
+        private static string GetWindowClassName(HWND handle)
         {
             return GetClassName(handle);
 
