@@ -5,6 +5,8 @@ using Flow.Launcher.Infrastructure.QuickSwitch.Interface;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.UI.WindowsAndMessaging;
+using WindowsInput;
+using WindowsInput.Native;
 
 namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 {
@@ -80,7 +82,10 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 
         private static readonly string ClassName = nameof(WindowsDialogTab);
 
+        private static readonly InputSimulator _inputSimulator = new();
+
         private bool _legacy { get; set; } = false;
+        private DialogType _type { get; set; } = DialogType.None;
 
         private HWND _pathControl { get; set; } = HWND.Null;
         private HWND _pathEditor { get; set; } = HWND.Null;
@@ -90,15 +95,22 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
         public WindowsDialogTab(HWND handle)
         {
             Handle = handle;
-            GetPathControlEditor();
+            GetPathControlEditor(true);
             GetFileEditor();
             GetOpenButton();
         }
 
-        private bool GetPathControlEditor()
+        private bool GetPathControlEditor(bool focus)
         {
+            if (focus)
+            {
+                // Alt-D or Ctrl-L to focus on the path input box
+                _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LMENU, VirtualKeyCode.VK_D);
+                // _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LCONTROL, VirtualKeyCode.VK_L);
+            }
+
             // Get the handle of the path editor
-            // The window with class name "ComboBoxEx32" is not visible when the path editor is not with the keyboard focus
+            // "ComboBoxEx32" is not visible when the path editor is not with the keyboard focus
             _pathControl = PInvoke.GetDlgItem(Handle, 0x0000); // WorkerW
             _pathControl = PInvoke.GetDlgItem(_pathControl, 0xA005); // ReBarWindow32
             _pathControl = PInvoke.GetDlgItem(_pathControl, 0xA205); // Address Band Root
@@ -106,15 +118,13 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
             _pathControl = PInvoke.GetDlgItem(_pathControl, 0xA205); // ComboBoxEx32
             if (_pathControl == HWND.Null)
             {
-                // https://github.com/idkidknow/Flow.Launcher.Plugin.DirQuickJump/issues/1
-                // The dialog is a legacy one, so we edit file name editor directly.
-                _legacy = true;
                 _pathEditor = HWND.Null;
-                Log.Info(ClassName, "Failed to find path control handle - Legacy dialog");
+                _legacy = true;
+                Log.Info(ClassName, "Legacy dialog");
+                return false;
             }
             else
             {
-                _legacy = false;
                 _pathEditor = PInvoke.GetDlgItem(_pathControl, 0xA205); // ComboBox
                 _pathEditor = PInvoke.GetDlgItem(_pathEditor, 0xA205); // Edit
                 if (_pathEditor == HWND.Null)
@@ -135,7 +145,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
             _fileEditor = PInvoke.GetDlgItem(_fileEditor, 0x047C); // Edit
             if (_fileEditor == HWND.Null)
             {
-                // Get the handle of the file name editor of Save/SaveAs file dialog
+                // Get the handle of the file name editor of Save / SaveAs file dialog
                 _fileEditor = PInvoke.GetDlgItem(Handle, 0x0000); // DUIViewWndClassName
                 _fileEditor = PInvoke.GetDlgItem(_fileEditor, 0x0000); // DirectUIHWND
                 _fileEditor = PInvoke.GetDlgItem(_fileEditor, 0x0000); // FloatNotifySink
@@ -144,8 +154,19 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
                 if (_fileEditor == HWND.Null)
                 {
                     Log.Error(ClassName, "Failed to find file name editor handle");
+                    _type = DialogType.None;
                     return false;
                 }
+                else
+                {
+                    Log.Debug(ClassName, "File dialog type: Save / Save As");
+                    _type = DialogType.SaveOrSaveAs;
+                }
+            }
+            else
+            {
+                Log.Debug(ClassName, "File dialog type: Open");
+                _type = DialogType.Open;
             }
 
             return true;
@@ -166,7 +187,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 
         public string GetCurrentFolder()
         {
-            if (_pathEditor.IsNull && !GetPathControlEditor()) return string.Empty;
+            if (_pathEditor.IsNull) return string.Empty;
             return GetWindowText(_pathEditor);
         }
 
@@ -178,20 +199,23 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 
         public bool JumpFolder(string path, bool auto)
         {
-            if (_legacy || auto)
+            if (auto)
             {
-                // https://github.com/idkidknow/Flow.Launcher.Plugin.DirQuickJump/issues/1
-                // The dialog is a legacy one, so we edit file name text box directly
-                if (_fileEditor.IsNull && !GetFileEditor()) return false;
-                SetWindowText(_fileEditor, path);
-
-                if (_openButton.IsNull && !GetOpenButton()) return false;
-                PInvoke.SendMessage(_openButton, PInvoke.BM_CLICK, 0, 0);
-
-                return true;
+                // Use legacy jump folder method for auto quick switch because file editor is default value.
+                // After setting path using file editor, we do not need to revert its value.
+                return JumpFolderWithFileEditor(path);
             }
 
-            if (_pathControl.IsNull && !GetPathControlEditor()) return false;
+            if (_legacy)
+            {
+                // https://github.com/idkidknow/Flow.Launcher.Plugin.DirQuickJump/issues/1
+                // The dialog is a legacy one, so we can only edit file editor directly.
+                return JumpFolderWithFileEditor(path);
+            }
+
+            // Alt-D or Ctrl-L to focus on the path input box
+            _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LMENU, VirtualKeyCode.VK_D);
+            // _inputSimulator.Keyboard.ModifiedKeyStroke(VirtualKeyCode.LCONTROL, VirtualKeyCode.VK_L);
 
             var timeOut = !SpinWait.SpinUntil(() =>
             {
@@ -204,15 +228,28 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
                 return false;
             }
 
-            if (_pathEditor.IsNull && !GetPathControlEditor()) return false;
+            if (_pathEditor.IsNull) return false;
             SetWindowText(_pathEditor, path);
+
+            _inputSimulator.Keyboard.KeyPress(VirtualKeyCode.RETURN);
+
+            return true;
+        }
+
+        private bool JumpFolderWithFileEditor(string path)
+        {
+            if (_fileEditor.IsNull && !GetFileEditor()) return false;
+            SetWindowText(_fileEditor, path);
+
+            if (_openButton.IsNull && !GetOpenButton()) return false;
+            PInvoke.SendMessage(_openButton, PInvoke.BM_CLICK, 0, 0);
 
             return true;
         }
 
         public bool JumpFile(string path)
         {
-            if (_fileEditor.IsNull && !GetPathControlEditor()) return false;
+            if (_fileEditor.IsNull && !GetFileEditor()) return false;
             SetWindowText(_fileEditor, path);
 
             return true;
@@ -250,6 +287,13 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
         public void Dispose()
         {
             Handle = HWND.Null;
+        }
+
+        private enum DialogType
+        {
+            None,
+            Open,
+            SaveOrSaveAs
         }
     }
 }
