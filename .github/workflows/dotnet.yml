@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Set Flow.Launcher.csproj version
         id: update
-        uses: vers-one/dotnet-project-version-updater@v1.5
+        uses: vers-one/dotnet-project-version-updater@v1.7
         with:
           file: |
             "**/SolutionAssemblyInfo.cs"
