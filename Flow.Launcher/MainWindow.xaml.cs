@@ -669,11 +669,11 @@ namespace Flow.Launcher
 
         public void UpdatePosition()
         {
-            // Intialize or update call twice to work around multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
+            // Intialize call twice to work around multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
             if (_viewModel.IsQuickSwitchWindowUnderDialog())
             {
-                UpdateQuickSwitchPosition();
-                UpdateQuickSwitchPosition();
+                InitializeQuickSwitchPosition();
+                InitializeQuickSwitchPosition();
             }
             else
             {
@@ -1156,12 +1156,12 @@ namespace Flow.Launcher
         private void InitializeQuickSwitch()
         {
             QuickSwitch.ShowQuickSwitchWindow = _viewModel.SetupQuickSwitch;
-            QuickSwitch.UpdateQuickSwitchWindow = UpdateQuickSwitchPosition;
+            QuickSwitch.UpdateQuickSwitchWindow = InitializeQuickSwitchPosition;
             QuickSwitch.ResetQuickSwitchWindow = _viewModel.ResetQuickSwitch;
             QuickSwitch.HideQuickSwitchWindow = _viewModel.HideQuickSwitch;
         }
 
-        private void UpdateQuickSwitchPosition()
+        private void InitializeQuickSwitchPosition()
         {
             if (_viewModel.DialogWindowHandle == nint.Zero || !_viewModel.MainWindowVisibilityStatus) return;
             if (!_viewModel.IsQuickSwitchWindowUnderDialog()) return;
