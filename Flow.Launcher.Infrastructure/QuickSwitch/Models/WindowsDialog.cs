@@ -58,7 +58,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 
     internal class WindowsDialogWindow : IQuickSwitchDialogWindow
     {
-        public HWND Handle { get; private set; }
+        public HWND Handle { get; private set; } = HWND.Null;
 
         // After jumping folder, file editor handle of Save / SaveAs file dialogs cannot be found anymore
         // So we need to cache the current tab and use the original handle
@@ -84,7 +84,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
     {
         #region Public Properties
 
-        public HWND Handle { get; private set; }
+        public HWND Handle { get; private set; } = HWND.Null;
 
         #endregion
 

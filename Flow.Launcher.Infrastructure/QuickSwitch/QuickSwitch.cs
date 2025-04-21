@@ -258,7 +258,19 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     QuickSwitchWindowPosition = _settings.QuickSwitchWindowPosition;
                 }
 
-                ShowQuickSwitchWindow?.Invoke(_dialogWindow.Handle);
+                IQuickSwitchDialogWindow dialogWindow = null;
+                lock (_dialogWindowLock)
+                {
+                    if (_dialogWindow != null)
+                    {
+                        dialogWindow = _dialogWindow;
+                    }
+                }
+                if (dialogWindow != null)
+                {
+                    ShowQuickSwitchWindow?.Invoke(dialogWindow.Handle);
+                }
+
                 if (QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog)
                 {
                     _dragMoveTimer?.Start();
@@ -267,6 +279,17 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     // So we start & stop the timer when we find a file dialog window
                     /*if (dialogWindowChanged)
                     {
+                        HWND dialogWindowHandle = HWND.Null;
+                        lock (_dialogWindowLock)
+                        {
+                            if (_dialogWindow != null)
+                            {
+                                dialogWindowHandle = _dialogWindow.Handle;
+                            }
+                        }
+
+                        if (dialogWindowHandle == HWND.Null) return;
+
                         if (!_moveSizeHook.IsNull)
                         {
                             PInvoke.UnhookWinEvent(_moveSizeHook);
@@ -275,7 +298,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
                         // Call _moveProc when the window is moved or resized
                         uint processId;
-                        var threadId = PInvoke.GetWindowThreadProcessId(_dialogWindow.Handle, &processId);
+                        var threadId = PInvoke.GetWindowThreadProcessId(dialogWindowHandle, &processId);
                         _moveSizeHook = PInvoke.SetWinEventHook(
                             PInvoke.EVENT_SYSTEM_MOVESIZESTART,
                             PInvoke.EVENT_SYSTEM_MOVESIZEEND,
@@ -297,6 +320,11 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         private static void InvokeResetQuickSwitchWindow()
         {
+            lock (_dialogWindowLock)
+            {
+                _dialogWindow = null;
+            }
+
             // Reset quick switch window
             ResetQuickSwitchWindow?.Invoke();
             _dragMoveTimer?.Stop();
@@ -308,11 +336,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 PInvoke.UnhookWinEvent(_moveSizeHook);
                 _moveSizeHook = HWINEVENTHOOK.Null;
             }*/
-
-            lock (_dialogWindowLock)
-            {
-                _dialogWindow = null;
-            }
         }
 
         private static void InvokeHideQuickSwitchWindow()
@@ -402,7 +425,15 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
             else
             {
-                if (_dialogWindow != null)
+                var dialogWindowExist = false;
+                lock (_dialogWindowLock)
+                {
+                    if (_dialogWindow != null)
+                    {
+                        dialogWindowExist = true;
+                    }
+                }
+                if (dialogWindowExist)
                 {
                     InvokeHideQuickSwitchWindow();
                 }
@@ -441,7 +472,15 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         )
         {
             // If the dialog window is moved, update the quick switch window position
-            if (_dialogWindow != null && _dialogWindow.Handle == hwnd)
+            var dialogWindowExist = false;
+            lock (_dialogWindowLock)
+            {
+                if (_dialogWindow != null && _dialogWindow.Handle == hwnd)
+                {
+                    dialogWindowExist = true;
+                }
+            }
+            if (dialogWindowExist)
             {
                 InvokeUpdateQuickSwitchWindow();
             }
@@ -486,13 +525,18 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         )
         {
             // If the dialog window is destroyed, set _dialogWindowHandle to null
-            if (_dialogWindow != null && _dialogWindow.Handle == hwnd)
+            var dialogWindowExist = false;
+            lock (_dialogWindowLock)
             {
-                Log.Debug(ClassName, $"Destory dialog: {hwnd}");
-                lock (_dialogWindowLock)
+                if (_dialogWindow != null && _dialogWindow.Handle == hwnd)
                 {
+                    Log.Debug(ClassName, $"Destory dialog: {hwnd}");
                     _dialogWindow = null;
+                    dialogWindowExist = true;
                 }
+            }
+            if (dialogWindowExist)
+            {
                 lock (_autoSwitchedDialogsLock)
                 {
                     _autoSwitchedDialogs.Remove(hwnd);
