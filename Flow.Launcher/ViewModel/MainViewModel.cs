@@ -34,6 +34,7 @@ namespace Flow.Launcher.ViewModel
         private bool _isQueryRunning;
         private Query _lastQuery;
         private string _queryTextBeforeLeaveResults;
+        private bool _blockQueryExecution = false;
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
@@ -638,20 +639,19 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         /// <param name="queryText"></param>
         /// <param name="isReQuery">Force query even when Query Text doesn't change</param>
-        public void ChangeQueryText(string queryText, bool isReQuery = false)
+        public void ChangeQueryText(string queryText, bool isReQuery = false, bool suppressQueryExecution = false)
         {
-            _ = ChangeQueryTextAsync(queryText, isReQuery);
+            _ = ChangeQueryTextAsync(queryText, isReQuery, suppressQueryExecution);
         }
-
         /// <summary>
         /// Async version of <see cref="ChangeQueryText"/>
         /// </summary>
-        private async Task ChangeQueryTextAsync(string queryText, bool isReQuery = false)
+        private async Task ChangeQueryTextAsync(string queryText, bool isReQuery = false, bool suppressQueryExecution = false)
         {
             // Must check access so that we will not block the UI thread which cause window visibility issue
             if (!Application.Current.Dispatcher.CheckAccess())
             {
-                await Application.Current.Dispatcher.InvokeAsync(() => ChangeQueryText(queryText, isReQuery));
+                await Application.Current.Dispatcher.InvokeAsync(() => ChangeQueryText(queryText, isReQuery, suppressQueryExecution));
                 return;
             }
 
@@ -659,14 +659,24 @@ namespace Flow.Launcher.ViewModel
             {
                 // Change query text first
                 QueryText = queryText;
-                // When we are changing query from codes, we should not delay the query
-                await QueryAsync(false, isReQuery: false);
+                
+                if (string.IsNullOrEmpty(queryText))
+                {
+                    Results.ResetSelectedIndex();
+                }
+        
+                // Check if we are in the process of changing query text
+                if (!suppressQueryExecution)
+                {
+                    // When we are changing query from codes, we should not delay the query
+                    await QueryAsync(false, isReQuery: false);
+                }
 
                 // set to false so the subsequent set true triggers
                 // PropertyChanged and MoveQueryTextToEnd is called
                 QueryTextCursorMovedToEnd = false;
             }
-            else if (isReQuery)
+            else if (isReQuery && !suppressQueryExecution)
             {
                 // When we are re-querying, we should not delay the query
                 await QueryAsync(false, isReQuery: true);
@@ -681,6 +691,8 @@ namespace Flow.Launcher.ViewModel
         public bool QueryTextCursorMovedToEnd { get; set; }
 
         private ResultsViewModel _selectedResults;
+        private ResultViewModel _lastSelectedResultItem;
+        private int _lastSelectedResultIndex = -1;
 
         private ResultsViewModel SelectedResults
         {
@@ -690,6 +702,14 @@ namespace Flow.Launcher.ViewModel
                 var isReturningFromQueryResults = QueryResultsSelected();
                 var isReturningFromContextMenu = ContextMenuSelected();
                 var isReturningFromHistory = HistorySelected();
+                
+                // save the index of the selected index before changing the selected results
+                if (QueryResultsSelected() && value != Results)
+                {
+                    _lastSelectedResultItem = Results.SelectedItem;
+                    _lastSelectedResultIndex = Results.SelectedIndex;
+                }
+                
                 _selectedResults = value;
                 if (QueryResultsSelected())
                 {
@@ -701,11 +721,31 @@ namespace Flow.Launcher.ViewModel
                     // result from the one that was selected before going into the context menu to the first result.
                     // The code below correctly restores QueryText and puts the text caret at the end without
                     // running the query again when returning from the context menu.
-                    if (isReturningFromContextMenu)
+                    if (isReturningFromContextMenu && _lastSelectedResultItem != null)
                     {
-                        _queryText = _queryTextBeforeLeaveResults;
-                        OnPropertyChanged(nameof(QueryText));
-                        QueryTextCursorMovedToEnd = true;
+                        try
+                        {
+                            _blockQueryExecution = true;
+                            // Set querytext without running the query for keep index. if not use this, index will be 0.
+                            _queryText = _queryTextBeforeLeaveResults;
+                            OnPropertyChanged(nameof(QueryText));
+                            QueryTextCursorMovedToEnd = true;
+                        }
+                        finally
+                        {
+                            _blockQueryExecution = false;
+                        }
+                        // restore selected item
+                        if (Results.Results.Contains(_lastSelectedResultItem))
+                        {
+                            Results.SelectedItem = _lastSelectedResultItem;
+                            Results.SelectedIndex = Results.Results.IndexOf(_lastSelectedResultItem);
+                        }
+                        else if (_lastSelectedResultIndex >= 0 && _lastSelectedResultIndex < Results.Results.Count)
+                        {
+                            Results.SelectedIndex = _lastSelectedResultIndex;
+                            Results.SelectedItem = Results.Results[_lastSelectedResultIndex];
+                        }
                     }
                     else
                     {
@@ -1055,6 +1095,8 @@ namespace Flow.Launcher.ViewModel
 
         private async Task QueryAsync(bool searchDelay, bool isReQuery = false)
         {
+            if (_blockQueryExecution)
+                return;
             if (QueryResultsSelected())
             {
                 await QueryResultsAsync(searchDelay, isReQuery);
@@ -1620,67 +1662,27 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         public void UpdateResultView(ICollection<ResultsForUpdate> resultsForUpdates)
         {
-            if (!resultsForUpdates.Any())
+            if (resultsForUpdates == null || !resultsForUpdates.Any())
                 return;
-            CancellationToken token;
 
+            // Block the query execution when Open ContextMenu is called
+            if (!QueryResultsSelected())
+                return;
+
+            CancellationToken token;
             try
             {
-                // Don't know why sometimes even resultsForUpdates is empty, the method won't return;
                 token = resultsForUpdates.Select(r => r.Token).Distinct().SingleOrDefault();
             }
-#if DEBUG
-            catch
-            {
-                throw new ArgumentException("Unacceptable token");
-            }
-#else
             catch
             {
                 token = default;
             }
-#endif
 
-            foreach (var metaResults in resultsForUpdates)
-            {
-                foreach (var result in metaResults.Results)
-                {
-                    if (_topMostRecord.IsTopMost(result))
-                    {
-                        result.Score = Result.MaxScore;
-                    }
-                    else
-                    {
-                        var priorityScore = metaResults.Metadata.Priority * 150;
-                        if (result.AddSelectedCount)
-                        {
-                            if ((long)result.Score + _userSelectedRecord.GetSelectedCount(result) + priorityScore > Result.MaxScore)
-                            {
-                                result.Score = Result.MaxScore;
-                            }
-                            else
-                            {
-                                result.Score += _userSelectedRecord.GetSelectedCount(result) + priorityScore;
-                            }
-                        }
-                        else
-                        {
-                            if ((long)result.Score + priorityScore > Result.MaxScore)
-                            {
-                                result.Score = Result.MaxScore;
-                            }
-                            else
-                            {
-                                result.Score += priorityScore;
-                            }
-                        }
-                    }
-                }
-            }
-
-            // it should be the same for all results
+            // Reselect the first result if the first result is selected
             bool reSelect = resultsForUpdates.First().ReSelectFirstResult;
 
+            // Update results while remembering the currently selected item
             Results.AddResults(resultsForUpdates, token, reSelect);
         }
 

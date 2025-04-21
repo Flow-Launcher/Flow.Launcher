@@ -22,6 +22,9 @@ namespace Flow.Launcher.ViewModel
         private readonly object _collectionLock = new();
         private readonly Settings _settings;
         private int MaxResults => _settings?.MaxResultsToShow ?? 6;
+        
+        private ResultViewModel _lastSelectedItem;
+        private int _lastSelectedIndex = -1;
 
         public ResultsViewModel()
         {
@@ -170,6 +173,16 @@ namespace Flow.Launcher.ViewModel
                 Results.Update(Results.Where(r => r.Result.PluginID != metadata.ID).ToList());
         }
 
+        public void ResetSelectedIndex()
+        {
+            _lastSelectedIndex = 0;
+            if (Results.Any())
+            {
+                SelectedIndex = 0;
+                SelectedItem = Results[0];
+            }
+        }
+        
         /// <summary>
         /// To avoid deadlock, this method should not called from main thread
         /// </summary>
@@ -184,35 +197,87 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         public void AddResults(ICollection<ResultsForUpdate> resultsForUpdates, CancellationToken token, bool reselect = true)
         {
+            if (resultsForUpdates == null || !resultsForUpdates.Any())
+                return;
+
+            // Save the currently selected item
+            if (SelectedItem != null)
+            {
+                _lastSelectedItem = SelectedItem;
+                _lastSelectedIndex = SelectedIndex;
+            }
+
+            // Generate new results
             var newResults = NewResults(resultsForUpdates);
 
             if (token.IsCancellationRequested)
                 return;
 
+            // Update results (includes logic for restoring selection)
             UpdateResults(newResults, reselect, token);
         }
 
-        private void UpdateResults(List<ResultViewModel> newResults, bool reselect = true, CancellationToken token = default)
+        private void UpdateResults(List<ResultViewModel> newResults, bool reselect = true,
+            CancellationToken token = default)
         {
             lock (_collectionLock)
             {
-                // update UI in one run, so it can avoid UI flickering
+                // Update previous results and UI
                 Results.Update(newResults, token);
+
+                // Only perform selection logic if reselect is true
                 if (reselect && Results.Any())
-                    SelectedItem = Results[0];
+                {
+                    // If a previously selected item exists and still remains in the list, reselect it
+                    if (_lastSelectedItem != null && Results.Contains(_lastSelectedItem))
+                    {
+                        SelectedItem = _lastSelectedItem;
+                        SelectedIndex = Results.IndexOf(_lastSelectedItem);
+                    }
+                    // If previous index is still within valid range, use that index
+                    else if (_lastSelectedIndex >= 0 && _lastSelectedIndex < Results.Count)
+                    {
+                        SelectedIndex = _lastSelectedIndex;
+                        SelectedItem = Results[SelectedIndex];
+                    }
+                    // If nothing else is valid, select the first item
+                    else if (Results.Count > 0)
+                    {
+                        SelectedItem = Results[0];
+                        SelectedIndex = 0;
+                    }
+                }
+            }
+            
+            // If no item is selected, select the first one
+            if (Results.Count > 0 && (SelectedIndex == -1 || SelectedItem == null))
+            {
+                SelectedIndex = 0;
+                SelectedItem = Results[0];
             }
 
-            switch (Visibility)
+            // Visibility update - fix for related issue
+            if (Results.Count > 0)
             {
-                case Visibility.Collapsed when Results.Count > 0:
+                // 1. Always ensure index is valid when there are results
+                if (SelectedIndex == -1 || SelectedItem == null)
+                {
                     SelectedIndex = 0;
+                    SelectedItem = Results[0];
+                }
+
+                // 2. Update visibility
+                if (Visibility == Visibility.Collapsed)
+                {
                     Visibility = Visibility.Visible;
-                    break;
-                case Visibility.Visible when Results.Count == 0:
-                    Visibility = Visibility.Collapsed;
-                    break;
+                }
+            }
+            else if (Visibility == Visibility.Visible && Results.Count == 0)
+            {
+                Visibility = Visibility.Collapsed;
             }
         }
+
 
         private List<ResultViewModel> NewResults(List<Result> newRawResults, string resultId)
         {
