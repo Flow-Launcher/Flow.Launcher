@@ -607,7 +607,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                                 result = FileJump(path, dialog, openFile: true);
                                 break;
                             case QuickSwitchFileResultBehaviours.Directory:
-                                Log.Debug(ClassName, $"File Jump Directory: {path}");
+                                Log.Debug(ClassName, $"File Jump Directory (Auto: {auto}): {path}");
                                 result = DirJump(Path.GetDirectoryName(path), dialog, auto);
                                 break;
                             default:

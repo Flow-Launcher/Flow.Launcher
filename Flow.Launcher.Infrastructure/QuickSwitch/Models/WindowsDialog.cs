@@ -144,6 +144,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
             {
                 // https://github.com/idkidknow/Flow.Launcher.Plugin.DirQuickJump/issues/1
                 // The dialog is a legacy one, so we can only edit file editor directly.
+                Log.Debug(ClassName, "Legacy dialog, using legacy jump folder method");
                 return JumpFolderWithFileEditor(path);
             }
 
@@ -154,11 +155,17 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
             }, 1000);
             if (timeOut)
             {
-                Log.Error(ClassName, "Path control is not visible");
-                return false;
+                // Path control is not visible, so we can only edit file editor directly.
+                Log.Debug(ClassName, "Path control is not visible, using legacy jump folder method");
+                return JumpFolderWithFileEditor(path);
             }
 
-            if (_pathEditor.IsNull) return false;
+            if (_pathEditor.IsNull && !GetPathControlEditor())
+            {
+                // Path editor cannot be found, so we can only edit file editor directly.
+                Log.Debug(ClassName, "Path editor cannot be found, using legacy jump folder method");
+                return JumpFolderWithFileEditor(path);
+            }
             SetWindowText(_pathEditor, path);
 
             _inputSimulator.Keyboard.KeyPress(VirtualKeyCode.RETURN);
