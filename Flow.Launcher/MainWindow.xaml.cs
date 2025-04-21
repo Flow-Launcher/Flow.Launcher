@@ -669,13 +669,14 @@ namespace Flow.Launcher
 
         public void UpdatePosition()
         {
+            // Intialize or update call twice to work around multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
             if (_viewModel.IsQuickSwitchWindowUnderDialog())
             {
+                UpdateQuickSwitchPosition();
                 UpdateQuickSwitchPosition();
             }
             else
             {
-                // Initialize call twice to work around multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
                 InitializePosition();
                 InitializePosition();
             }
@@ -692,46 +693,38 @@ namespace Flow.Launcher
 
         private void InitializePosition()
         {
-            // Initialize call twice to work around multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
-            InitializePositionInner();
-            InitializePositionInner();
-            return;
-
-            void InitializePositionInner()
+            if (_settings.SearchWindowScreen == SearchWindowScreens.RememberLastLaunchLocation)
             {
-                if (_settings.SearchWindowScreen == SearchWindowScreens.RememberLastLaunchLocation)
+                Top = _settings.WindowTop;
+                Left = _settings.WindowLeft;
+            }
+            else
+            {
+                var screen = SelectedScreen();
+                switch (_settings.SearchWindowAlign)
                 {
-                    Top = _settings.WindowTop;
-                    Left = _settings.WindowLeft;
-                }
-                else
-                {
-                    var screen = SelectedScreen();
-                    switch (_settings.SearchWindowAlign)
-                    {
-                        case SearchWindowAligns.Center:
-                            Left = HorizonCenter(screen);
-                            Top = VerticalCenter(screen);
-                            break;
-                        case SearchWindowAligns.CenterTop:
-                            Left = HorizonCenter(screen);
-                            Top = 10;
-                            break;
-                        case SearchWindowAligns.LeftTop:
-                            Left = HorizonLeft(screen);
-                            Top = 10;
-                            break;
-                        case SearchWindowAligns.RightTop:
-                            Left = HorizonRight(screen);
-                            Top = 10;
-                            break;
-                        case SearchWindowAligns.Custom:
-                            Left = Win32Helper.TransformPixelsToDIP(this,
-                                screen.WorkingArea.X + _settings.CustomWindowLeft, 0).X;
-                            Top = Win32Helper.TransformPixelsToDIP(this, 0,
-                                screen.WorkingArea.Y + _settings.CustomWindowTop).Y;
-                            break;
-                    }
+                    case SearchWindowAligns.Center:
+                        Left = HorizonCenter(screen);
+                        Top = VerticalCenter(screen);
+                        break;
+                    case SearchWindowAligns.CenterTop:
+                        Left = HorizonCenter(screen);
+                        Top = 10;
+                        break;
+                    case SearchWindowAligns.LeftTop:
+                        Left = HorizonLeft(screen);
+                        Top = 10;
+                        break;
+                    case SearchWindowAligns.RightTop:
+                        Left = HorizonRight(screen);
+                        Top = 10;
+                        break;
+                    case SearchWindowAligns.Custom:
+                        Left = Win32Helper.TransformPixelsToDIP(this,
+                            screen.WorkingArea.X + _settings.CustomWindowLeft, 0).X;
+                        Top = Win32Helper.TransformPixelsToDIP(this, 0,
+                            screen.WorkingArea.Y + _settings.CustomWindowTop).Y;
+                        break;
                 }
             }
         }
