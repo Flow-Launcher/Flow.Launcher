@@ -296,7 +296,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 }
             }
 
-            unsafe void SetMoveProc(HWND handle)
+            static unsafe void SetMoveProc(HWND handle)
             {
                 uint processId;
                 var threadId = PInvoke.GetWindowThreadProcessId(handle, &processId);
