@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Logger;
@@ -19,7 +20,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
     {
         #region Public Properties
 
-        public static Action<nint> ShowQuickSwitchWindow { get; set; } = null;
+        public static Func<nint, Task> ShowQuickSwitchWindow { get; set; } = null;
 
         public static Action UpdateQuickSwitchWindow { get; set; } = null;
 
@@ -244,7 +245,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         #region Invoke Property Events
 
-        private static unsafe void InvokeShowQuickSwitchWindow(bool dialogWindowChanged)
+        private static async Task InvokeShowQuickSwitchWindowAsync(bool dialogWindowChanged)
         {
             // Show quick switch window
             if (_settings.ShowQuickSwitchWindow)
@@ -263,9 +264,9 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                         dialogWindow = _dialogWindow;
                     }
                 }
-                if (dialogWindow != null)
+                if (dialogWindow != null && ShowQuickSwitchWindow != null)
                 {
-                    ShowQuickSwitchWindow?.Invoke(dialogWindow.Handle);
+                    await ShowQuickSwitchWindow.Invoke(dialogWindow.Handle);
                 }
 
                 if (QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog)
@@ -290,18 +291,23 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                         }
 
                         // Call _moveProc when the window is moved or resized
-                        uint processId;
-                        var threadId = PInvoke.GetWindowThreadProcessId(dialogWindowHandle, &processId);
-                        _moveSizeHook = PInvoke.SetWinEventHook(
-                            PInvoke.EVENT_SYSTEM_MOVESIZESTART,
-                            PInvoke.EVENT_SYSTEM_MOVESIZEEND,
-                            PInvoke.GetModuleHandle((PCWSTR)null),
-                            _moveProc,
-                            processId,
-                            threadId,
-                            PInvoke.WINEVENT_OUTOFCONTEXT);
+                        SetMoveProc(dialogWindowHandle);
                     }
                 }
+            }
+
+            unsafe void SetMoveProc(HWND handle)
+            {
+                uint processId;
+                var threadId = PInvoke.GetWindowThreadProcessId(handle, &processId);
+                _moveSizeHook = PInvoke.SetWinEventHook(
+                    PInvoke.EVENT_SYSTEM_MOVESIZESTART,
+                    PInvoke.EVENT_SYSTEM_MOVESIZEEND,
+                    PInvoke.GetModuleHandle((PCWSTR)null),
+                    _moveProc,
+                    processId,
+                    threadId,
+                    PInvoke.WINEVENT_OUTOFCONTEXT);
             }
         }
 
@@ -342,14 +348,15 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         public static void OnToggleHotkey(object sender, HotkeyEventArgs args)
         {
-            NavigateDialogPath(Win32Helper.GetForegroundWindowHWND());
+            _ = Task.Run(() => NavigateDialogPathAsync(Win32Helper.GetForegroundWindowHWND()));
         }
 
         #endregion
 
         #region Windows Events
 
-        private static void ForegroundChangeCallback(
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
+        private static async void ForegroundChangeCallback(
             HWINEVENTHOOK hWinEventHook,
             uint eventType,
             HWND hwnd,
@@ -392,20 +399,20 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     // Just show quick switch window
                     if (alreadySwitched)
                     {
-                        InvokeShowQuickSwitchWindow(dialogWindowChanged);
+                        await InvokeShowQuickSwitchWindowAsync(dialogWindowChanged);
                     }
                     // Show quick switch window after navigating the path
                     else
                     {
-                        if (!NavigateDialogPath(hwnd, true, () => InvokeShowQuickSwitchWindow(dialogWindowChanged)))
+                        if (!await Task.Run(() => NavigateDialogPathAsync(hwnd, true)))
                         {
-                            InvokeShowQuickSwitchWindow(dialogWindowChanged);
+                            await InvokeShowQuickSwitchWindowAsync(dialogWindowChanged);
                         }
                     }
                 }
                 else
                 {
-                    InvokeShowQuickSwitchWindow(dialogWindowChanged);
+                    await InvokeShowQuickSwitchWindowAsync(dialogWindowChanged);
                 }
             }
             // Quick switch window
@@ -425,6 +432,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 }
                 if (dialogWindowExist)
                 {
+                    Log.Debug(ClassName, $"InvokeHideQuickSwitchWindow");
                     InvokeHideQuickSwitchWindow();
                 }
 
@@ -540,7 +548,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         // Edited from: https://github.com/idkidknow/Flow.Launcher.Plugin.DirQuickJump
 
-        public static void JumpToPath(nint hwnd, string path, Action action = null)
+        public static async Task JumpToPathAsync(nint hwnd, string path)
         {
             if (hwnd == nint.Zero) return;
 
@@ -550,10 +558,10 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             var dialogWindowTab = dialogWindow.GetCurrentTab();
             if (dialogWindowTab == null) return;
 
-            JumpToPath(dialogWindowTab, path, false, action);
+            await JumpToPathAsync(dialogWindowTab, path, false);
         }
 
-        private static bool NavigateDialogPath(HWND hwnd, bool auto = false, Action action = null)
+        private static async Task<bool> NavigateDialogPathAsync(HWND hwnd, bool auto = false)
         {
             if (hwnd == HWND.Null) return false;
 
@@ -572,7 +580,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             if (string.IsNullOrEmpty(path)) return false;
 
             // Jump to path
-            return JumpToPath(dialogWindowTab, path, auto, action);
+            return await JumpToPathAsync(dialogWindowTab, path, auto);
         }
 
         private static IQuickSwitchDialogWindow GetDialogWindow(HWND hwnd)
@@ -607,79 +615,67 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             return null;
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD101:Avoid unsupported async delegates", Justification = "<Pending>")]
-        private static bool JumpToPath(IQuickSwitchDialogWindowTab dialog, string path, bool auto = false, Action action = null)
+        private static async Task<bool> JumpToPathAsync(IQuickSwitchDialogWindowTab dialog, string path, bool auto = false)
         {
             if (!CheckPath(path, out var isFile)) return false;
 
-            var t = new Thread(async () =>
+            // Jump after flow launcher window vanished (after JumpAction returned true)
+            // and the dialog had been in the foreground.
+            var dialogHandle = dialog.Handle;
+            var timeOut = !SpinWait.SpinUntil(() => Win32Helper.GetForegroundWindowHWND() == dialogHandle, 1000);
+            if (timeOut) return false;
+
+            // Assume that the dialog is in the foreground now
+            await _navigationLock.WaitAsync();
+            try
             {
-                // Jump after flow launcher window vanished (after JumpAction returned true)
-                // and the dialog had been in the foreground.
-                var dialogHandle = dialog.Handle;
-                var timeOut = !SpinWait.SpinUntil(() => Win32Helper.GetForegroundWindowHWND() == dialogHandle, 1000);
-                if (timeOut)
+                bool result;
+                if (isFile)
                 {
-                    action?.Invoke();
-                    return;
-                }
-
-                // Assume that the dialog is in the foreground now
-                await _navigationLock.WaitAsync();
-                try
-                {
-                    bool result;
-                    if (isFile)
+                    switch (_settings.QuickSwitchFileResultBehaviour)
                     {
-                        switch (_settings.QuickSwitchFileResultBehaviour)
-                        {
-                            case QuickSwitchFileResultBehaviours.FullPath:
-                                Log.Debug(ClassName, $"File Jump FullPath: {path}");
-                                result = FileJump(path, dialog);
-                                break;
-                            case QuickSwitchFileResultBehaviours.FullPathOpen:
-                                Log.Debug(ClassName, $"File Jump FullPathOpen: {path}");
-                                result = FileJump(path, dialog, openFile: true);
-                                break;
-                            case QuickSwitchFileResultBehaviours.Directory:
-                                Log.Debug(ClassName, $"File Jump Directory (Auto: {auto}): {path}");
-                                result = DirJump(Path.GetDirectoryName(path), dialog, auto);
-                                break;
-                            default:
-                                throw new ArgumentOutOfRangeException(
-                                    nameof(_settings.QuickSwitchFileResultBehaviour),
-                                    _settings.QuickSwitchFileResultBehaviour,
-                                    "Invalid QuickSwitchFileResultBehaviour"
-                                );
-                        }
-                    }
-                    else
-                    {
-                        Log.Debug(ClassName, $"Dir Jump: {path}");
-                        result = DirJump(path, dialog, auto);
-                    }
-
-                    if (result)
-                    {
-                        lock (_autoSwitchedDialogsLock)
-                        {
-                            _autoSwitchedDialogs.Add(dialogHandle);
-                        }
+                        case QuickSwitchFileResultBehaviours.FullPath:
+                            Log.Debug(ClassName, $"File Jump FullPath: {path}");
+                            result = FileJump(path, dialog);
+                            break;
+                        case QuickSwitchFileResultBehaviours.FullPathOpen:
+                            Log.Debug(ClassName, $"File Jump FullPathOpen: {path}");
+                            result = FileJump(path, dialog, openFile: true);
+                            break;
+                        case QuickSwitchFileResultBehaviours.Directory:
+                            Log.Debug(ClassName, $"File Jump Directory (Auto: {auto}): {path}");
+                            result = DirJump(Path.GetDirectoryName(path), dialog, auto);
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException(
+                                nameof(_settings.QuickSwitchFileResultBehaviour),
+                                _settings.QuickSwitchFileResultBehaviour,
+                                "Invalid QuickSwitchFileResultBehaviour"
+                            );
                     }
                 }
-                catch (System.Exception e)
+                else
                 {
-                    Log.Exception(ClassName, "Failed to jump to path", e);
-                }
-                finally
-                {
-                    _navigationLock.Release();
+                    Log.Debug(ClassName, $"Dir Jump: {path}");
+                    result = DirJump(path, dialog, auto);
                 }
 
-                // Invoke action if provided
-                action?.Invoke();
-            });
-            t.Start();
+                if (result)
+                {
+                    lock (_autoSwitchedDialogsLock)
+                    {
+                        _autoSwitchedDialogs.Add(dialogHandle);
+                    }
+                }
+            }
+            catch (System.Exception e)
+            {
+                Log.Exception(ClassName, "Failed to jump to path", e);
+            }
+            finally
+            {
+                _navigationLock.Release();
+            }
             return true;
 
             static bool CheckPath(string path, out bool file)

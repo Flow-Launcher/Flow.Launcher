@@ -368,7 +368,7 @@ namespace Flow.Launcher.ViewModel
                     if (result is QuickSwitchResult quickSwitchResult)
                     {
                         Win32Helper.SetForegroundWindow(DialogWindowHandle);
-                        QuickSwitch.JumpToPath(DialogWindowHandle, quickSwitchResult.QuickSwitchPath);
+                        _ = Task.Run(() => QuickSwitch.JumpToPathAsync(DialogWindowHandle, quickSwitchResult.QuickSwitchPath));
                     }
                 }
                 return;
@@ -462,7 +462,7 @@ namespace Flow.Launcher.ViewModel
                     if (result is QuickSwitchResult quickSwitchResult)
                     {
                         Win32Helper.SetForegroundWindow(DialogWindowHandle);
-                        QuickSwitch.JumpToPath(DialogWindowHandle, quickSwitchResult.QuickSwitchPath);
+                        _ = Task.Run(() => QuickSwitch.JumpToPathAsync(DialogWindowHandle, quickSwitchResult.QuickSwitchPath));
                     }
                 }
             }
@@ -1613,7 +1613,7 @@ namespace Flow.Launcher.ViewModel
 
 #pragma warning disable VSTHRD100 // Avoid async void methods
 
-        public async void SetupQuickSwitch(nint handle)
+        public async Task SetupQuickSwitchAsync(nint handle)
         {
             if (handle == nint.Zero) return;
 
