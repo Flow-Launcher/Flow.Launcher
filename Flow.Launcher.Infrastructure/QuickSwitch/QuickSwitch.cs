@@ -384,7 +384,10 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     // Show quick switch window after navigating the path
                     else
                     {
-                        NavigateDialogPath(hwnd, true, () => InvokeShowQuickSwitchWindow(dialogWindowChanged));
+                        if (!NavigateDialogPath(hwnd, true, () => InvokeShowQuickSwitchWindow(dialogWindowChanged)))
+                        {
+                            InvokeShowQuickSwitchWindow(dialogWindowChanged);
+                        }
                     }
                 }
                 else
@@ -519,15 +522,15 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             JumpToPath(dialogWindowTab, path, false, action);
         }
 
-        private static void NavigateDialogPath(HWND hwnd, bool auto = false, Action action = null)
+        private static bool NavigateDialogPath(HWND hwnd, bool auto = false, Action action = null)
         {
-            if (hwnd == HWND.Null) return;
+            if (hwnd == HWND.Null) return false;
 
             var dialogWindow = GetDialogWindow(hwnd);
-            if (dialogWindow == null) return;
+            if (dialogWindow == null) return false;
 
             var dialogWindowTab = dialogWindow.GetCurrentTab();
-            if (dialogWindowTab == null) return;
+            if (dialogWindowTab == null) return false;
 
             // Get explorer path
             string path;
@@ -535,10 +538,10 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             {
                 path = _lastExplorer?.GetExplorerPath();
             }
-            if (string.IsNullOrEmpty(path)) return;
+            if (string.IsNullOrEmpty(path)) return false;
 
             // Jump to path
-            JumpToPath(dialogWindowTab, path, auto, action);
+            return JumpToPath(dialogWindowTab, path, auto, action);
         }
 
         private static IQuickSwitchDialogWindow GetDialogWindow(HWND hwnd)
@@ -574,9 +577,9 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD101:Avoid unsupported async delegates", Justification = "<Pending>")]
-        private static void JumpToPath(IQuickSwitchDialogWindowTab dialog, string path, bool auto = false, Action action = null)
+        private static bool JumpToPath(IQuickSwitchDialogWindowTab dialog, string path, bool auto = false, Action action = null)
         {
-            if (!CheckPath(path, out var isFile)) return;
+            if (!CheckPath(path, out var isFile)) return false;
 
             var t = new Thread(async () =>
             {
@@ -586,6 +589,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 var timeOut = !SpinWait.SpinUntil(() => Win32Helper.GetForegroundWindowHWND() == dialogHandle, 1000);
                 if (timeOut)
                 {
+                    action?.Invoke();
                     return;
                 }
 
@@ -645,7 +649,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 action?.Invoke();
             });
             t.Start();
-            return;
+            return true;
 
             static bool CheckPath(string path, out bool file)
             {
