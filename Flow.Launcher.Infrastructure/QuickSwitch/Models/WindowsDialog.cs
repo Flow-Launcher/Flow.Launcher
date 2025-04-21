@@ -21,13 +21,23 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 
         public bool CheckDialogWindow(HWND hwnd)
         {
-            if (GetWindowClassName(hwnd) == WindowsDialogClassName)
+            // Has it been checked?
+            if (DialogWindow != null && DialogWindow.Handle == hwnd)
             {
-                if (DialogWindow == null || DialogWindow.Handle != hwnd)
-                {
-                    DialogWindow = new WindowsDialogWindow(hwnd);
-                }
                 return true;
+            }
+
+            // Is it a Win32 dialog box?
+            if (GetClassName(hwnd) == WindowsDialogClassName)
+            {
+                // Is it a windows file dialog?
+                var dialogType = GetFileDialogType(hwnd);
+                if (dialogType != DialogType.Others)
+                {
+                    DialogWindow = new WindowsDialogWindow(hwnd, dialogType);
+
+                    return true;
+                }
             }
             return false;
         }
@@ -38,22 +48,34 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
             DialogWindow = null;
         }
 
-        private static string GetWindowClassName(HWND handle)
-        {
-            return GetClassName(handle);
+        #region Help Methods
 
-            static unsafe string GetClassName(HWND handle)
+        private static unsafe string GetClassName(HWND handle)
+        {
+            fixed (char* buf = new char[256])
             {
-                fixed (char* buf = new char[256])
+                return PInvoke.GetClassName(handle, buf, 256) switch
                 {
-                    return PInvoke.GetClassName(handle, buf, 256) switch
-                    {
-                        0 => string.Empty,
-                        _ => new string(buf),
-                    };
-                }
+                    0 => string.Empty,
+                    _ => new string(buf),
+                };
             }
         }
+
+        private static DialogType GetFileDialogType(HWND handle)
+        {
+            // Is it a Windows Open file dialog?
+            var fileEditor = PInvoke.GetDlgItem(handle, 0x047C);
+            if (fileEditor != HWND.Null && GetClassName(fileEditor) == "ComboBoxEx32") return DialogType.Open;
+
+            // Is it a Windows Save or Save As file dialog?
+            fileEditor = PInvoke.GetDlgItem(handle, 0x0000);
+            if (fileEditor != HWND.Null && GetClassName(fileEditor) == "DUIViewWndClassName") return DialogType.SaveOrSaveAs;
+
+            return DialogType.Others;
+        }
+
+        #endregion
     }
 
     internal class WindowsDialogWindow : IQuickSwitchDialogWindow
@@ -64,14 +86,17 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
         // So we need to cache the current tab and use the original handle
         private IQuickSwitchDialogWindowTab _currentTab { get; set; } = null;
 
-        public WindowsDialogWindow(HWND handle)
+        private readonly DialogType _dialogType;
+
+        public WindowsDialogWindow(HWND handle, DialogType dialogType)
         {
             Handle = handle;
+            _dialogType = dialogType;
         }
 
         public IQuickSwitchDialogWindowTab GetCurrentTab()
         {
-            return _currentTab ??= new WindowsDialogTab(Handle);
+            return _currentTab ??= new WindowsDialogTab(Handle, _dialogType);
         }
 
         public void Dispose()
@@ -94,9 +119,9 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 
         private static readonly InputSimulator _inputSimulator = new();
 
-        private bool _legacy { get; set; } = false;
-        private DialogType _type { get; set; } = DialogType.None;
+        private readonly DialogType _dialogType;
 
+        private bool _legacy { get; set; } = false;
         private HWND _pathControl { get; set; } = HWND.Null;
         private HWND _pathEditor { get; set; } = HWND.Null;
         private HWND _fileEditor { get; set; } = HWND.Null;
@@ -106,9 +131,11 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 
         #region Constructor
 
-        public WindowsDialogTab(HWND handle)
+        public WindowsDialogTab(HWND handle, DialogType dialogType)
         {
             Handle = handle;
+            _dialogType = dialogType;
+            Log.Debug(ClassName, $"File dialog type: {dialogType}");
         }
 
         #endregion
@@ -232,11 +259,14 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 
         private bool GetFileEditor()
         {
-            // Get the handle of the file name editor of Open file dialog
-            _fileEditor = PInvoke.GetDlgItem(Handle, 0x047C); // ComboBoxEx32
-            _fileEditor = PInvoke.GetDlgItem(_fileEditor, 0x047C); // ComboBox
-            _fileEditor = PInvoke.GetDlgItem(_fileEditor, 0x047C); // Edit
-            if (_fileEditor == HWND.Null)
+            if (_dialogType == DialogType.Open)
+            {
+                // Get the handle of the file name editor of Open file dialog
+                _fileEditor = PInvoke.GetDlgItem(Handle, 0x047C); // ComboBoxEx32
+                _fileEditor = PInvoke.GetDlgItem(_fileEditor, 0x047C); // ComboBox
+                _fileEditor = PInvoke.GetDlgItem(_fileEditor, 0x047C); // Edit
+            }
+            else
             {
                 // Get the handle of the file name editor of Save / SaveAs file dialog
                 _fileEditor = PInvoke.GetDlgItem(Handle, 0x0000); // DUIViewWndClassName
@@ -244,22 +274,12 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
                 _fileEditor = PInvoke.GetDlgItem(_fileEditor, 0x0000); // FloatNotifySink
                 _fileEditor = PInvoke.GetDlgItem(_fileEditor, 0x0000); // ComboBox
                 _fileEditor = PInvoke.GetDlgItem(_fileEditor, 0x03E9); // Edit
-                if (_fileEditor == HWND.Null)
-                {
-                    Log.Error(ClassName, "Failed to find file name editor handle");
-                    _type = DialogType.None;
-                    return false;
-                }
-                else
-                {
-                    Log.Debug(ClassName, "File dialog type: Save / Save As");
-                    _type = DialogType.SaveOrSaveAs;
-                }
             }
-            else
+
+            if (_fileEditor == HWND.Null)
             {
-                Log.Debug(ClassName, "File dialog type: Open");
-                _type = DialogType.Open;
+                Log.Error(ClassName, "Failed to find file name editor handle");
+                return false;
             }
 
             return true;
@@ -310,7 +330,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
         private bool JumpFolderWithFileEditor(string path, bool resetFocus)
         {
             // For Save / Save As dialog, the default value in file editor is not null and it can cause strange behaviors.
-            if (resetFocus && _type == DialogType.SaveOrSaveAs) return false;
+            if (resetFocus && _dialogType == DialogType.SaveOrSaveAs) return false;
 
             if (_fileEditor.IsNull && !GetFileEditor()) return false;
             SetWindowText(_fileEditor, path);
@@ -324,16 +344,12 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
         #endregion
 
         #endregion
+    }
 
-        #region Classes
-
-        private enum DialogType
-        {
-            None,
-            Open,
-            SaveOrSaveAs
-        }
-
-        #endregion
+    internal enum DialogType
+    {
+        Others,
+        Open,
+        SaveOrSaveAs
     }
 }
