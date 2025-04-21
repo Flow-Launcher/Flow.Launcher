@@ -24,6 +24,7 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 using Microsoft.VisualStudio.Threading;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -1627,7 +1628,6 @@ namespace Flow.Launcher.ViewModel
 
                 dialogWindowHandleChanged = true;
 
-                // Wait for a while to make sure the dialog is shown
                 // If don't give a time, Positioning will be weird
                 await Task.Delay(300);
             }
@@ -1666,6 +1666,22 @@ namespace Flow.Launcher.ViewModel
                         _ = ResetWindowAsync();
                     }
                 }
+            }
+
+            if (QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog)
+            {
+                _ = Task.Run(() =>
+                {
+                    // Wait for a while to make sure the dialog is shown and quick switch window has gotten the focus
+                    var timeOut = !SpinWait.SpinUntil(() => Win32Helper.GetForegroundWindowHWND() != DialogWindowHandle, 1000);
+                    if (timeOut)
+                    {
+                        return;
+                    }
+
+                    // Bring focus back to the the dialog
+                    Win32Helper.SetForegroundWindow(DialogWindowHandle);
+                });
             }
         }
 
