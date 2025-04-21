@@ -109,9 +109,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
         public WindowsDialogTab(HWND handle)
         {
             Handle = handle;
-            GetPathControlEditor();
-            GetFileEditor();
-            GetOpenButton();
         }
 
         #endregion
@@ -120,7 +117,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 
         public string GetCurrentFolder()
         {
-            if (_pathEditor.IsNull) return string.Empty;
+            if (_pathEditor.IsNull && !GetPathControlEditor()) return string.Empty;
             return GetWindowText(_pathEditor);
         }
 
@@ -164,7 +161,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
                 return JumpFolderWithFileEditor(path, true);
             }
 
-            if (_pathEditor.IsNull && !GetPathControlEditor())
+            if (_pathEditor.IsNull)
             {
                 // Path editor cannot be found, so we can only edit file editor directly.
                 Log.Debug(ClassName, "Path editor cannot be found, using legacy jump folder method");
@@ -207,7 +204,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
         private bool GetPathControlEditor()
         {
             // Get the handle of the path editor
-            // (Must use PInvoke.FindWindowEx instead of PInvoke.GetDlgItem, or ReBarWindow32 will be null)
+            // Must use PInvoke.FindWindowEx because PInvoke.GetDlgItem(Handle, 0x0000) will get another control
             _pathControl = PInvoke.FindWindowEx(Handle, HWND.Null, "WorkerW", null); // 0x0000
             _pathControl = PInvoke.FindWindowEx(_pathControl, HWND.Null, "ReBarWindow32", null); // 0xA005
             _pathControl = PInvoke.FindWindowEx(_pathControl, HWND.Null, "Address Band Root", null); // 0xA205
