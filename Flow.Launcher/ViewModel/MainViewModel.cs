@@ -1598,8 +1598,6 @@ namespace Flow.Launcher.ViewModel
 
         private bool IsQuickSwitch { get; set; } = false;
 
-        private static QuickSwitchWindowPositions QuickSwitchWindowPosition => QuickSwitch.QuickSwitchWindowPosition;
-
         private bool PreviousMainWindowVisibilityStatus { get; set; }
 
         public void InitializeVisibilityStatus(bool visibilityStatus)
@@ -1609,7 +1607,8 @@ namespace Flow.Launcher.ViewModel
 
         public bool IsQuickSwitchWindowUnderDialog()
         {
-            return IsQuickSwitch && QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog;
+            return IsQuickSwitch &&
+                QuickSwitch.QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog;
         }
 
 #pragma warning disable VSTHRD100 // Avoid async void methods
@@ -1650,7 +1649,7 @@ namespace Flow.Launcher.ViewModel
             }
             else
             {
-                if (QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog)
+                if (QuickSwitch.QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog)
                 {
                     Show();
 
@@ -1668,7 +1667,7 @@ namespace Flow.Launcher.ViewModel
                 }
             }
 
-            if (QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog)
+            if (QuickSwitch.QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog)
             {
                 _ = Task.Run(() =>
                 {
@@ -1733,7 +1732,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (DialogWindowHandle != nint.Zero)
             {
-                if (QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog)
+                if (QuickSwitch.QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog)
                 {
                     if (MainWindowVisibilityStatus)
                     {
