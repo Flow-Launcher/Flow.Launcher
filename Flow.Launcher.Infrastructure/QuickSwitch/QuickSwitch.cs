@@ -418,7 +418,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             // Quick switch window
             else if (hwnd == _mainWindowHandle)
             {
-                // Nothing to do
+                Log.Debug(ClassName, $"Main Window: {hwnd}");
             }
             else
             {
@@ -432,7 +432,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 }
                 if (dialogWindowExist)
                 {
-                    Log.Debug(ClassName, $"InvokeHideQuickSwitchWindow");
                     InvokeHideQuickSwitchWindow();
                 }
 
