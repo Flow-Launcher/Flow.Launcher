@@ -176,11 +176,14 @@ namespace Flow.Launcher.ViewModel
         public void ResetSelectedIndex()
         {
             _lastSelectedIndex = 0;
+            _lastSelectedItem  = null;           // prevent accidental reselection of stale item
             if (Results.Any())
             {
                 SelectedIndex = 0;
-                SelectedItem = Results[0];
+                SelectedItem  = Results[0];
             }
+            OnPropertyChanged(nameof(SelectedIndex));
+            OnPropertyChanged(nameof(SelectedItem));
         }
         
         /// <summary>
@@ -201,11 +204,21 @@ namespace Flow.Launcher.ViewModel
                 return;
 
             // Save the currently selected item
-            if (SelectedItem != null)
+            ResultViewModel lastSelectedItem = null;
+            int lastSelectedIndex = -1;
+            
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                _lastSelectedItem = SelectedItem;
-                _lastSelectedIndex = SelectedIndex;
-            }
+                if (SelectedItem != null)
+                {
+                    lastSelectedItem = SelectedItem;
+                    lastSelectedIndex = SelectedIndex;
+                }
+            });
+
+            // 캡처한 값 저장
+            _lastSelectedItem = lastSelectedItem;
+            _lastSelectedIndex = lastSelectedIndex;
 
             // Generate new results
             var newResults = NewResults(resultsForUpdates);
