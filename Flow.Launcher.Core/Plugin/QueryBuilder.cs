@@ -11,7 +11,8 @@ namespace Flow.Launcher.Core.Plugin
             // replace multiple white spaces with one white space
             var terms = text.Split(Query.TermSeparator, StringSplitOptions.RemoveEmptyEntries);
             if (terms.Length == 0)
-            { // nothing was typed
+            {
+                // nothing was typed
                 return null;
             }
 

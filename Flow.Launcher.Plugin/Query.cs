@@ -15,7 +15,7 @@ namespace Flow.Launcher.Plugin
 
         /// <summary>
         /// Raw query, this includes action keyword if it has.
-        /// It has handled buildin custom hotkeys and user custom hotkeys, and it trims the whitespace.
+        /// It has handled buildin custom query shortkeys and build-in shortcuts, and it trims the whitespace.
         /// We didn't recommend use this property directly. You should always use Search property.
         /// </summary>
         public string RawQuery { get; internal init; }
