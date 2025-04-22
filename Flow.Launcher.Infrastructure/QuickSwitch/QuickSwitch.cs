@@ -250,25 +250,24 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             // Show quick switch window
             if (_settings.ShowQuickSwitchWindow)
             {
+                // Save quick switch window position for one file dialog
                 if (dialogWindowChanged)
                 {
-                    // Save quick switch window position for one file dialog
                     QuickSwitchWindowPosition = _settings.QuickSwitchWindowPosition;
                 }
 
-                IQuickSwitchDialogWindow dialogWindow = null;
+                // Call show quick switch window
+                IQuickSwitchDialogWindow dialogWindow;
                 lock (_dialogWindowLock)
                 {
-                    if (_dialogWindow != null)
-                    {
                         dialogWindow = _dialogWindow;
                     }
-                }
                 if (dialogWindow != null && ShowQuickSwitchWindow != null)
                 {
                     await ShowQuickSwitchWindow.Invoke(dialogWindow.Handle);
                 }
 
+                // Hook move size event if quick switch window is under dialog & dialog window changed
                 if (QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog)
                 {
                     if (dialogWindowChanged)
@@ -326,7 +325,11 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
             // Reset quick switch window
             ResetQuickSwitchWindow?.Invoke();
+
+            // Stop drag move timer
             _dragMoveTimer?.Stop();
+
+            // Unhook move size event
             if (!_moveSizeHook.IsNull)
             {
                 PInvoke.UnhookWinEvent(_moveSizeHook);
@@ -336,9 +339,10 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         private static void InvokeHideQuickSwitchWindow()
         {
-            // Neither quick switch window nor file dialog window is foreground
-            // Hide quick switch window until the file dialog window is brought to the foreground
+            // Hide quick switch window
             HideQuickSwitchWindow?.Invoke();
+
+            // Stop drag move timer
             _dragMoveTimer?.Stop();
         }
 
@@ -366,8 +370,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             uint dwmsEventTime
         )
         {
-            // File dialog window
-            var findDialogWindow = false;
+            // Check if it is a file dialog window
+            var isDialogWindow = false;
             var dialogWindowChanged = false;
             foreach (var dialog in _quickSwitchDialogs)
             {
@@ -379,13 +383,15 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                         _dialogWindow = dialog.DialogWindow;
                     }
 
-                    findDialogWindow = true;
-                    Log.Debug(ClassName, $"Dialog Window: {hwnd}");
+                    isDialogWindow = true;
                     break;
                 }
             }
-            if (findDialogWindow)
+
+            // Handle window based on its type
+            if (isDialogWindow)
             {
+                Log.Debug(ClassName, $"Dialog Window: {hwnd}");
                 // Navigate to path
                 if (_settings.AutoQuickSwitch)
                 {
@@ -433,6 +439,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 }
                 if (dialogWindowExist)
                 {
+                    // Hide quick switch window until the file dialog window is brought to the foreground
                     InvokeHideQuickSwitchWindow();
                 }
 
