@@ -215,8 +215,7 @@ namespace Flow.Launcher.ViewModel
                     lastSelectedIndex = SelectedIndex;
                 }
             });
-
-            // 캡처한 값 저장
+            
             _lastSelectedItem = lastSelectedItem;
             _lastSelectedIndex = lastSelectedIndex;
 
