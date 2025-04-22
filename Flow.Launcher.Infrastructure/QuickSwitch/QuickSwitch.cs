@@ -564,28 +564,25 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         // Edited from: https://github.com/idkidknow/Flow.Launcher.Plugin.DirQuickJump
 
-        public static async Task JumpToPathAsync(nint hwnd, string path)
+        public static async Task<bool> JumpToPathAsync(nint hwnd, string path)
         {
-            if (hwnd == nint.Zero) return;
+            // Check handle
+            if (hwnd == nint.Zero) return false;
 
-            var dialogWindow = GetDialogWindow(new(hwnd));
-            if (dialogWindow == null) return;
+            // Check path
+            if (!CheckPath(path, out var isFile)) return false;
 
-            var dialogWindowTab = dialogWindow.GetCurrentTab();
-            if (dialogWindowTab == null) return;
+            // Get dialog tab
+            var dialogWindowTab = GetDialogWindowTab(new(hwnd));
+            if (dialogWindowTab == null) return false;
 
-            await JumpToPathAsync(dialogWindowTab, path, false);
+            return await JumpToPathAsync(dialogWindowTab, path, isFile, false);
         }
 
         private static async Task<bool> NavigateDialogPathAsync(HWND hwnd, bool auto = false)
         {
+            // Check handle
             if (hwnd == HWND.Null) return false;
-
-            var dialogWindow = GetDialogWindow(hwnd);
-            if (dialogWindow == null) return false;
-
-            var dialogWindowTab = dialogWindow.GetCurrentTab();
-            if (dialogWindowTab == null) return false;
 
             // Get explorer path
             string path;
@@ -595,8 +592,38 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
             if (string.IsNullOrEmpty(path)) return false;
 
+            // Check path
+            if (!CheckPath(path, out var isFile)) return false;
+
+            // Get dialog tab
+            var dialogWindowTab = GetDialogWindowTab(hwnd);
+            if (dialogWindowTab == null) return false;
+
             // Jump to path
-            return await JumpToPathAsync(dialogWindowTab, path, auto);
+            return await JumpToPathAsync(dialogWindowTab, path, isFile, auto);
+        }
+
+        private static bool CheckPath(string path, out bool file)
+        {
+            file = false;
+            // Is non-null?
+            if (string.IsNullOrEmpty(path)) return false;
+            // Is absolute?
+            if (!Path.IsPathRooted(path)) return false;
+            // Is folder?
+            var isFolder = Directory.Exists(path);
+            // Is file?
+            var isFile = File.Exists(path);
+            file = isFile;
+            return isFolder || isFile;
+        }
+
+        private static IQuickSwitchDialogWindowTab GetDialogWindowTab(HWND hwnd)
+        {
+            var dialogWindow = GetDialogWindow(hwnd);
+            if (dialogWindow == null) return null;
+            var dialogWindowTab = dialogWindow.GetCurrentTab();
+            return dialogWindowTab;
         }
 
         private static IQuickSwitchDialogWindow GetDialogWindow(HWND hwnd)
@@ -631,10 +658,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             return null;
         }
 
-        private static async Task<bool> JumpToPathAsync(IQuickSwitchDialogWindowTab dialog, string path, bool auto = false)
+        private static async Task<bool> JumpToPathAsync(IQuickSwitchDialogWindowTab dialog, string path, bool isFile, bool auto = false)
         {
-            if (!CheckPath(path, out var isFile)) return false;
-
             // Jump after flow launcher window vanished (after JumpAction returned true)
             // and the dialog had been in the foreground.
             var dialogHandle = dialog.Handle;
@@ -690,21 +715,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             finally
             {
                 _navigationLock.Release();
-            }
-
-            static bool CheckPath(string path, out bool file)
-            {
-                file = false;
-                // Is non-null?
-                if (string.IsNullOrEmpty(path)) return false;
-                // Is absolute?
-                if (!Path.IsPathRooted(path)) return false;
-                // Is folder?
-                var isFolder = Directory.Exists(path);
-                // Is file?
-                var isFile = File.Exists(path);
-                file = isFile;
-                return isFolder || isFile;
             }
         }
 
