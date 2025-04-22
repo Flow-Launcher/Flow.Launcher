@@ -146,8 +146,8 @@
     <system:String x:Key="currentActionKeywords">Palavra-chave atual</system:String>
     <system:String x:Key="newActionKeyword">Nova palavra-chave</system:String>
     <system:String x:Key="actionKeywordsTooltip">Alterar palavras-chave</system:String>
-    <system:String x:Key="pluginSearchDelayTime">Plugin search delay time</system:String>
-    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Search Delay Time</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Tempo de espera do plugin</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Alterar tempo de espera do plugin</system:String>
     <system:String x:Key="FilterComboboxLabel">Definições avançadas:</system:String>
     <system:String x:Key="DisplayModeOnOff">Ativo</system:String>
     <system:String x:Key="DisplayModePriority">Prioridade</system:String>
@@ -239,7 +239,7 @@
     <system:String x:Key="BackdropTypesAcrylic">Acrílico</system:String>
     <system:String x:Key="BackdropTypesMica">Mica</system:String>
     <system:String x:Key="BackdropTypesMicaAlt">Mica alternativo</system:String>
-    <system:String x:Key="TypeIsDarkToolTip">This theme supports two (light/dark) modes.</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">Este tema tem suporte a dois modos (claro/escuro).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Este tema tem suporte a fundo transparente desfocado.</system:String>
     <system:String x:Key="ShowPlaceholder">Mostrar marcador de posição</system:String>
     <system:String x:Key="ShowPlaceholderTip">Mostrar marcador de posição se a consulta estiver vazia</system:String>
@@ -307,7 +307,7 @@
     <system:String x:Key="useGlyphUIEffect">Se possível, utilizar ícones Segoe Fluent para os resultados</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Prima a tecla</system:String>
     <system:String x:Key="showBadges">Mostrar emblemas dos resultados</system:String>
-    <system:String x:Key="showBadgesToolTip">For supported plugins, badges are displayed to help distinguish them more easily.</system:String>
+    <system:String x:Key="showBadgesToolTip">Para plugins suportados, são mostrados emblemas para nos ajudar a distingui-los mais facilmente.</system:String>
     <system:String x:Key="showBadgesGlobalOnly">Mostrar emblemas apenas para a consulta global</system:String>
 
     <!--  Setting Proxy  -->
