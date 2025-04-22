@@ -1633,6 +1633,7 @@ namespace Flow.Launcher.ViewModel
             // If handle is cleared, which means the dialog is closed, do nothing
             if (DialogWindowHandle == nint.Zero) return;
 
+            // Initialize quick switch window
             if (MainWindowVisibilityStatus)
             {
                 if (dialogWindowHandleChanged)
@@ -1674,22 +1675,28 @@ namespace Flow.Launcher.ViewModel
                 // Create a new cancellation token source
                 _quickSwitchSource = new CancellationTokenSource();
 
-                // Wait 30ms for the dialog to be shown
-                _ = Task.Delay(30, _quickSwitchSource.Token).ContinueWith(_ =>
+                _ = Task.Run(() =>
                     {
-                        // Check dialog handle
-                        if (DialogWindowHandle == nint.Zero) return;
+                        try
+                        {
+                            // Check task cancellation
+                            if (_quickSwitchSource.Token.IsCancellationRequested) return;
 
-                        // Wait for a while to make sure the dialog is shown and quick switch window has gotten the focus
-                        var timeOut = !SpinWait.SpinUntil(() => !Win32Helper.IsForegroundWindow(DialogWindowHandle), 1000);
-                        if (timeOut) return;
+                            // Check dialog handle
+                            if (DialogWindowHandle == nint.Zero) return;
 
-                        // Bring focus back to the the dialog
-                        Win32Helper.SetForegroundWindow(DialogWindowHandle);
-                    },
-                    _quickSwitchSource.Token,
-                    TaskContinuationOptions.NotOnCanceled,
-                    TaskScheduler.Default);
+                            // Wait 150ms to check if quick switch window gets the focus
+                            var timeOut = !SpinWait.SpinUntil(() => !Win32Helper.IsForegroundWindow(DialogWindowHandle), 150);
+                            if (timeOut) return;
+
+                            // Bring focus back to the the dialog
+                            Win32Helper.SetForegroundWindow(DialogWindowHandle);
+                        }
+                        catch (Exception e)
+                        {
+                            App.API.LogException(ClassName, "Failed to focus on dialog window", e);
+                        }
+                    });
             }
         }
 
@@ -1745,6 +1752,9 @@ namespace Flow.Launcher.ViewModel
             {
                 if (QuickSwitch.QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog)
                 {
+                    // Warning: Main window is already in foreground
+                    // This is because if you click popup menus in other applications to hide quick switch window,
+                    // they can steal focus before showing main window
                     if (MainWindowVisibilityStatus)
                     {
                         Hide();

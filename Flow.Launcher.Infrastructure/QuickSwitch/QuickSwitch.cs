@@ -20,7 +20,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
     {
         #region Public Properties
 
-        public static Func<nint, Task> ShowQuickSwitchWindow { get; set; } = null;
+        public static Func<nint, Task> ShowQuickSwitchWindowAsync { get; set; } = null;
 
         public static Action UpdateQuickSwitchWindow { get; set; } = null;
 
@@ -73,6 +73,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         private static HWINEVENTHOOK _moveSizeHook = HWINEVENTHOOK.Null;
         private static readonly WINEVENTPROC _moveProc = MoveSizeCallBack;
 
+        private static readonly SemaphoreSlim _foregroundChangeLock = new(1, 1);
         private static readonly SemaphoreSlim _navigationLock = new(1, 1);
 
         private static bool _initialized = false;
@@ -260,11 +261,11 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 IQuickSwitchDialogWindow dialogWindow;
                 lock (_dialogWindowLock)
                 {
-                        dialogWindow = _dialogWindow;
-                    }
-                if (dialogWindow != null && ShowQuickSwitchWindow != null)
+                    dialogWindow = _dialogWindow;
+                }
+                if (dialogWindow != null && ShowQuickSwitchWindowAsync != null)
                 {
-                    await ShowQuickSwitchWindow.Invoke(dialogWindow.Handle);
+                    await ShowQuickSwitchWindowAsync.Invoke(dialogWindow.Handle);
                 }
 
                 // Hook move size event if quick switch window is under dialog & dialog window changed
@@ -369,99 +370,108 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             uint dwmsEventTime
         )
         {
-            // Check if it is a file dialog window
-            var isDialogWindow = false;
-            var dialogWindowChanged = false;
-            foreach (var dialog in _quickSwitchDialogs)
+            await _foregroundChangeLock.WaitAsync();
+            try
             {
-                if (dialog.CheckDialogWindow(hwnd))
+                // Check if it is a file dialog window
+                var isDialogWindow = false;
+                var dialogWindowChanged = false;
+                foreach (var dialog in _quickSwitchDialogs)
                 {
-                    lock (_dialogWindowLock)
+                    if (dialog.CheckDialogWindow(hwnd))
                     {
-                        dialogWindowChanged = _dialogWindow == null || _dialogWindow.Handle != hwnd;
-                        _dialogWindow = dialog.DialogWindow;
-                    }
+                        lock (_dialogWindowLock)
+                        {
+                            dialogWindowChanged = _dialogWindow == null || _dialogWindow.Handle != hwnd;
+                            _dialogWindow = dialog.DialogWindow;
+                        }
 
-                    isDialogWindow = true;
-                    break;
+                        isDialogWindow = true;
+                        break;
+                    }
                 }
-            }
 
-            // Handle window based on its type
-            if (isDialogWindow)
-            {
-                Log.Debug(ClassName, $"Dialog Window: {hwnd}");
-                // Navigate to path
-                if (_settings.AutoQuickSwitch)
+                // Handle window based on its type
+                if (isDialogWindow)
                 {
-                    // Check if we have already switched for this dialog
-                    bool alreadySwitched;
-                    lock (_autoSwitchedDialogsLock)
+                    Log.Debug(ClassName, $"Dialog Window: {hwnd}");
+                    // Navigate to path
+                    if (_settings.AutoQuickSwitch)
                     {
-                        alreadySwitched = _autoSwitchedDialogs.Contains(hwnd);
-                    }
+                        // Check if we have already switched for this dialog
+                        bool alreadySwitched;
+                        lock (_autoSwitchedDialogsLock)
+                        {
+                            alreadySwitched = _autoSwitchedDialogs.Contains(hwnd);
+                        }
 
-                    // Just show quick switch window
-                    if (alreadySwitched)
-                    {
-                        await InvokeShowQuickSwitchWindowAsync(dialogWindowChanged);
-                    }
-                    // Show quick switch window after navigating the path
-                    else
-                    {
-                        if (!await Task.Run(() => NavigateDialogPathAsync(hwnd, true)))
+                        // Just show quick switch window
+                        if (alreadySwitched)
                         {
                             await InvokeShowQuickSwitchWindowAsync(dialogWindowChanged);
                         }
-                    }
-                }
-                else
-                {
-                    await InvokeShowQuickSwitchWindowAsync(dialogWindowChanged);
-                }
-            }
-            // Quick switch window
-            else if (hwnd == _mainWindowHandle)
-            {
-                Log.Debug(ClassName, $"Main Window: {hwnd}");
-            }
-            else
-            {
-                Log.Debug(ClassName, $"Other Window: {hwnd}");
-                var dialogWindowExist = false;
-                lock (_dialogWindowLock)
-                {
-                    if (_dialogWindow != null)
-                    {
-                        dialogWindowExist = true;
-                    }
-                }
-                if (dialogWindowExist) // Neither quick switch window nor file dialog window is foreground
-                {
-                    // Hide quick switch window until the file dialog window is brought to the foreground
-                    InvokeHideQuickSwitchWindow();
-                }
-
-                // Check if there are foreground explorer windows
-                try
-                {
-                    lock (_lastExplorerLock)
-                    {
-                        foreach (var explorer in _quickSwitchExplorers)
+                        // Show quick switch window after navigating the path
+                        else
                         {
-                            if (explorer.CheckExplorerWindow(hwnd))
+                            if (!await Task.Run(() => NavigateDialogPathAsync(hwnd, true)))
                             {
-                                Log.Debug(ClassName, $"Explorer window: {hwnd}");
-                                _lastExplorer = explorer;
-                                break;
+                                await InvokeShowQuickSwitchWindowAsync(dialogWindowChanged);
                             }
                         }
                     }
+                    else
+                    {
+                        await InvokeShowQuickSwitchWindowAsync(dialogWindowChanged);
+                    }
                 }
-                catch (System.Exception)
+                // Quick switch window
+                else if (hwnd == _mainWindowHandle)
                 {
-                    // Ignored
+                    Log.Debug(ClassName, $"Main Window: {hwnd}");
                 }
+                // Other window
+                else
+                {
+                    Log.Debug(ClassName, $"Other Window: {hwnd}");
+                    var dialogWindowExist = false;
+                    lock (_dialogWindowLock)
+                    {
+                        if (_dialogWindow != null)
+                        {
+                            dialogWindowExist = true;
+                        }
+                    }
+                    if (dialogWindowExist) // Neither quick switch window nor file dialog window is foreground
+                    {
+                        // Hide quick switch window until the file dialog window is brought to the foreground
+                        InvokeHideQuickSwitchWindow();
+                    }
+
+                    // Check if there are foreground explorer windows
+                    try
+                    {
+                        lock (_lastExplorerLock)
+                        {
+                            foreach (var explorer in _quickSwitchExplorers)
+                            {
+                                if (explorer.CheckExplorerWindow(hwnd))
+                                {
+                                    Log.Debug(ClassName, $"Explorer window: {hwnd}");
+                                    _lastExplorer = explorer;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    catch (System.Exception)
+                    {
+                        // Ignored
+                    }
+                }
+            }
+            finally
+            {
+                _foregroundChangeLock.Release();
             }
         }
 
@@ -779,6 +789,10 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             {
                 _dialogWindow = null;
             }
+
+            // Dispose locks
+            _foregroundChangeLock.Dispose();
+            _navigationLock.Dispose();
 
             // Stop drag move timer
             if (_dragMoveTimer != null)
