@@ -666,16 +666,18 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                         _autoSwitchedDialogs.Add(dialogHandle);
                     }
                 }
+
+                return result;
             }
             catch (System.Exception e)
             {
                 Log.Exception(ClassName, "Failed to jump to path", e);
+                return false;
             }
             finally
             {
                 _navigationLock.Release();
             }
-            return true;
 
             static bool CheckPath(string path, out bool file)
             {
