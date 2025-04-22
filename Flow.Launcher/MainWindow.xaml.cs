@@ -1124,14 +1124,9 @@ namespace Flow.Launcher
         private void QueryTextBox_TextChanged1(object sender, TextChangedEventArgs e)
         {
             var textBox = (TextBox)sender;
-            _viewModel.QueryText = textBox.Text;
-    
-            // Reset Index when query null
-            if (string.IsNullOrEmpty(textBox.Text))
-            {
-                _viewModel.Results.ResetSelectedIndex();
-            }
-    
+            var text = textBox.Text;
+            _viewModel.QueryText = text;
+            _viewModel.ResetSelectionIfQueryEmpty(text);
             _viewModel.Query(_settings.SearchQueryResultsWithDelay);
         }
 

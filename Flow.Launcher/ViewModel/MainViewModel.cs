@@ -659,21 +659,11 @@ namespace Flow.Launcher.ViewModel
             {
                 // Change query text first
                 QueryText = queryText;
-                
-                if (string.IsNullOrEmpty(queryText))
-                {
-                    Results.ResetSelectedIndex();
-                }
-        
-                // Check if we are in the process of changing query text
+                ResetSelectionIfQueryEmpty(queryText);
                 if (!suppressQueryExecution)
                 {
-                    // When we are changing query from codes, we should not delay the query
                     await QueryAsync(false, isReQuery: false);
                 }
-
-                // set to false so the subsequent set true triggers
-                // PropertyChanged and MoveQueryTextToEnd is called
                 QueryTextCursorMovedToEnd = false;
             }
             else if (isReQuery && !suppressQueryExecution)
@@ -1348,6 +1338,14 @@ namespace Flow.Launcher.ViewModel
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
+            }
+        }
+        
+        public void ResetSelectionIfQueryEmpty(string queryText)
+        {
+            if (string.IsNullOrEmpty(queryText))
+            {
+                Results.ResetSelectedIndex();
             }
         }
 

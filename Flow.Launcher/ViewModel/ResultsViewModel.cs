@@ -229,14 +229,13 @@ namespace Flow.Launcher.ViewModel
             UpdateResults(newResults, reselect, token);
         }
 
-        private void UpdateResults(List<ResultViewModel> newResults, bool reselect = true,
+                private void UpdateResults(List<ResultViewModel> newResults, bool reselect = true,
             CancellationToken token = default)
         {
             lock (_collectionLock)
             {
                 // Update previous results and UI
                 Results.Update(newResults, token);
-
                 // Only perform selection logic if reselect is true
                 if (reselect && Results.Any())
                 {
@@ -267,7 +266,6 @@ namespace Flow.Launcher.ViewModel
                 SelectedIndex = 0;
                 SelectedItem = Results[0];
             }
-
             // Visibility update - fix for related issue
             if (Results.Count > 0)
             {
@@ -277,7 +275,6 @@ namespace Flow.Launcher.ViewModel
                     SelectedIndex = 0;
                     SelectedItem = Results[0];
                 }
-
                 // 2. Update visibility
                 if (Visibility == Visibility.Collapsed)
                 {
@@ -288,6 +285,9 @@ namespace Flow.Launcher.ViewModel
             {
                 Visibility = Visibility.Collapsed;
             }
+            // Notify property changes to update UI bindings
+            OnPropertyChanged(nameof(SelectedIndex));
+            OnPropertyChanged(nameof(SelectedItem));
         }
 
 
