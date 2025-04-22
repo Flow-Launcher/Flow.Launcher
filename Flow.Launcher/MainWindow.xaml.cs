@@ -138,8 +138,12 @@ namespace Flow.Launcher
             else
             {
                 _viewModel.Show();
+                if (_settings.UseAnimation)
+                {
+                    WindowAnimation();
+                }
             }
-
+            
             // Show notify icon when flowlauncher is hidden
             InitializeNotifyIcon();
 
