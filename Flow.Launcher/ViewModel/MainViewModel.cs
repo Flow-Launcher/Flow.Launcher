@@ -195,7 +195,8 @@ namespace Flow.Launcher.ViewModel
             var resultUpdateChannel = Channel.CreateUnbounded<ResultsForUpdate>();
             _resultsUpdateChannelWriter = resultUpdateChannel.Writer;
             _resultsViewUpdateTask =
-                Task.Run(UpdateActionAsync).ContinueWith(continueAction, CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.Default);
+                Task.Run(UpdateActionAsync).ContinueWith(continueAction,
+                    CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.Default);
 
             async Task UpdateActionAsync()
             {

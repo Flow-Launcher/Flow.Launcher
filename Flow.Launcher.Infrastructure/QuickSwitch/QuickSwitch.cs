@@ -312,7 +312,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         private static void InvokeUpdateQuickSwitchWindow()
         {
-            // Update quick switch window
             UpdateQuickSwitchWindow?.Invoke();
         }
 
@@ -437,7 +436,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                         dialogWindowExist = true;
                     }
                 }
-                if (dialogWindowExist)
+                if (dialogWindowExist) // Neither quick switch window nor file dialog window is foreground
                 {
                     // Hide quick switch window until the file dialog window is brought to the foreground
                     InvokeHideQuickSwitchWindow();
