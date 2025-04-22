@@ -348,7 +348,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         public static void OnToggleHotkey(object sender, HotkeyEventArgs args)
         {
-            _ = Task.Run(() => NavigateDialogPathAsync(Win32Helper.GetForegroundWindowHWND()));
+            _ = Task.Run(() => NavigateDialogPathAsync(PInvoke.GetForegroundWindow()));
         }
 
         #endregion
@@ -622,7 +622,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             // Jump after flow launcher window vanished (after JumpAction returned true)
             // and the dialog had been in the foreground.
             var dialogHandle = dialog.Handle;
-            var timeOut = !SpinWait.SpinUntil(() => Win32Helper.GetForegroundWindowHWND() == dialogHandle, 1000);
+            var timeOut = !SpinWait.SpinUntil(() => Win32Helper.IsForegroundWindow(dialogHandle), 1000);
             if (timeOut) return false;
 
             // Assume that the dialog is in the foreground now
@@ -647,11 +647,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                             result = DirJump(Path.GetDirectoryName(path), dialog, auto);
                             break;
                         default:
-                            throw new ArgumentOutOfRangeException(
-                                nameof(_settings.QuickSwitchFileResultBehaviour),
-                                _settings.QuickSwitchFileResultBehaviour,
-                                "Invalid QuickSwitchFileResultBehaviour"
-                            );
+                            return false;
                     }
                 }
                 else

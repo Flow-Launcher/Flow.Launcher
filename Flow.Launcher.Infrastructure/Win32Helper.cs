@@ -116,12 +116,7 @@ namespace Flow.Launcher.Infrastructure
 
         public static nint GetForegroundWindow()
         {
-            return GetForegroundWindowHWND().Value;
-        }
-
-        internal static HWND GetForegroundWindowHWND()
-        {
-            return PInvoke.GetForegroundWindow();
+            return PInvoke.GetForegroundWindow().Value;
         }
 
         public static bool SetForegroundWindow(Window window)

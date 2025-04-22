@@ -1680,7 +1680,7 @@ namespace Flow.Launcher.ViewModel
                         if (DialogWindowHandle == nint.Zero) return;
 
                         // Wait for a while to make sure the dialog is shown and quick switch window has gotten the focus
-                        var timeOut = !SpinWait.SpinUntil(() => Win32Helper.GetForegroundWindowHWND() != DialogWindowHandle, 1000);
+                        var timeOut = !SpinWait.SpinUntil(() => !Win32Helper.IsForegroundWindow(DialogWindowHandle), 1000);
                         if (timeOut) return;
 
                         // Bring focus back to the the dialog
