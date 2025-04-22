@@ -359,7 +359,7 @@ namespace Flow.Launcher.ViewModel
         private void LoadContextMenu()
         {
             // For quick switch and right click mode, we need to navigate to the path 
-            if (IsQuickSwitch && Settings.QuickSwitchResultBehaviour == QuickSwitchResultBehaviours.RightClick)
+            if (_isQuickSwitch && Settings.QuickSwitchResultBehaviour == QuickSwitchResultBehaviours.RightClick)
             {
                 if (SelectedResults.SelectedItem != null && DialogWindowHandle != nint.Zero)
                 {
@@ -452,7 +452,7 @@ namespace Flow.Launcher.ViewModel
             }
 
             // For quick switch and left click mode, we need to navigate to the path
-            if (IsQuickSwitch && Settings.QuickSwitchResultBehaviour == QuickSwitchResultBehaviours.LeftClick)
+            if (_isQuickSwitch && Settings.QuickSwitchResultBehaviour == QuickSwitchResultBehaviours.LeftClick)
             {
                 Hide();
 
@@ -1229,7 +1229,7 @@ namespace Flow.Launcher.ViewModel
             var query = ConstructQuery(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
 
             var plugins = PluginManager.ValidPluginsForQuery(query);
-            var quickSwitch = IsQuickSwitch; // save quick switch state
+            var quickSwitch = _isQuickSwitch; // save quick switch state
 
             if (quickSwitch)
             {
@@ -1595,18 +1595,20 @@ namespace Flow.Launcher.ViewModel
 
         public nint DialogWindowHandle { get; private set; } = nint.Zero;
 
-        private bool IsQuickSwitch { get; set; } = false;
+        private bool _isQuickSwitch = false;
 
-        private bool PreviousMainWindowVisibilityStatus { get; set; }
+        private bool _previousMainWindowVisibilityStatus;
+
+        private CancellationTokenSource _quickSwitchSource;
 
         public void InitializeVisibilityStatus(bool visibilityStatus)
         {
-            PreviousMainWindowVisibilityStatus = visibilityStatus;
+            _previousMainWindowVisibilityStatus = visibilityStatus;
         }
 
         public bool IsQuickSwitchWindowUnderDialog()
         {
-            return IsQuickSwitch && QuickSwitch.QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog;
+            return _isQuickSwitch && QuickSwitch.QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog;
         }
 
         public async Task SetupQuickSwitchAsync(nint handle)
@@ -1617,9 +1619,9 @@ namespace Flow.Launcher.ViewModel
             var dialogWindowHandleChanged = false;
             if (DialogWindowHandle != handle)
             {
-                PreviousMainWindowVisibilityStatus = MainWindowVisibilityStatus;
                 DialogWindowHandle = handle;
-                IsQuickSwitch = true;
+                _previousMainWindowVisibilityStatus = MainWindowVisibilityStatus;
+                _isQuickSwitch = true;
 
                 dialogWindowHandleChanged = true;
 
@@ -1665,18 +1667,28 @@ namespace Flow.Launcher.ViewModel
 
             if (QuickSwitch.QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog)
             {
-                _ = Task.Run(() =>
-                {
-                    // Wait for a while to make sure the dialog is shown and quick switch window has gotten the focus
-                    var timeOut = !SpinWait.SpinUntil(() => Win32Helper.GetForegroundWindowHWND() != DialogWindowHandle, 1000);
-                    if (timeOut)
-                    {
-                        return;
-                    }
+                // Cancel the previous quick switch task
+                _quickSwitchSource?.Cancel();
 
-                    // Bring focus back to the the dialog
-                    Win32Helper.SetForegroundWindow(DialogWindowHandle);
-                });
+                // Create a new cancellation token source
+                _quickSwitchSource = new CancellationTokenSource();
+
+                // Wait 30ms for the dialog to be shown
+                _ = Task.Delay(30, _quickSwitchSource.Token).ContinueWith(_ =>
+                    {
+                        // Check dialog handle
+                        if (DialogWindowHandle == nint.Zero) return;
+
+                        // Wait for a while to make sure the dialog is shown and quick switch window has gotten the focus
+                        var timeOut = !SpinWait.SpinUntil(() => Win32Helper.GetForegroundWindowHWND() != DialogWindowHandle, 1000);
+                        if (timeOut) return;
+
+                        // Bring focus back to the the dialog
+                        Win32Helper.SetForegroundWindow(DialogWindowHandle);
+                    },
+                    _quickSwitchSource.Token,
+                    TaskContinuationOptions.NotOnCanceled,
+                    TaskScheduler.Default);
             }
         }
 
@@ -1687,12 +1699,12 @@ namespace Flow.Launcher.ViewModel
             if (DialogWindowHandle == nint.Zero) return;
 
             DialogWindowHandle = nint.Zero;
-            IsQuickSwitch = false;
+            _isQuickSwitch = false;
 
-            if (PreviousMainWindowVisibilityStatus != MainWindowVisibilityStatus)
+            if (_previousMainWindowVisibilityStatus != MainWindowVisibilityStatus)
             {
                 // Show or hide to change visibility
-                if (PreviousMainWindowVisibilityStatus)
+                if (_previousMainWindowVisibilityStatus)
                 {
                     Show();
 
@@ -1707,7 +1719,7 @@ namespace Flow.Launcher.ViewModel
             }
             else
             {
-                if (PreviousMainWindowVisibilityStatus)
+                if (_previousMainWindowVisibilityStatus)
                 {
                     // Only update the position
                     Application.Current?.Dispatcher.Invoke(() =>
@@ -1776,7 +1788,7 @@ namespace Flow.Launcher.ViewModel
                     Win32Helper.DWMSetCloakForWindow(mainWindow, false);
 
                     // Set clock and search icon opacity
-                    var opacity = (Settings.UseAnimation && !IsQuickSwitch) ? 0.0 : 1.0;
+                    var opacity = (Settings.UseAnimation && !_isQuickSwitch) ? 0.0 : 1.0;
                     ClockPanelOpacity = opacity;
                     SearchIconOpacity = opacity;
 
@@ -1851,7 +1863,7 @@ namespace Flow.Launcher.ViewModel
                 if (Application.Current?.MainWindow is MainWindow mainWindow)
                 {
                     // Set clock and search icon opacity
-                    var opacity = (Settings.UseAnimation && !IsQuickSwitch) ? 0.0 : 1.0;
+                    var opacity = (Settings.UseAnimation && !_isQuickSwitch) ? 0.0 : 1.0;
                     ClockPanelOpacity = opacity;
                     SearchIconOpacity = opacity;
 
@@ -1977,6 +1989,7 @@ namespace Flow.Launcher.ViewModel
                 if (disposing)
                 {
                     _updateSource?.Dispose();
+                    _quickSwitchSource?.Dispose();
                     _resultsUpdateChannelWriter?.Complete();
                     if (_resultsViewUpdateTask?.IsCompleted == true)
                     {
