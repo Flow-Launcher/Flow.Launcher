@@ -24,7 +24,6 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 using Microsoft.VisualStudio.Threading;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -1607,11 +1606,8 @@ namespace Flow.Launcher.ViewModel
 
         public bool IsQuickSwitchWindowUnderDialog()
         {
-            return IsQuickSwitch &&
-                QuickSwitch.QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog;
+            return IsQuickSwitch && QuickSwitch.QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog;
         }
-
-#pragma warning disable VSTHRD100 // Avoid async void methods
 
         public async Task SetupQuickSwitchAsync(nint handle)
         {
@@ -1683,6 +1679,8 @@ namespace Flow.Launcher.ViewModel
                 });
             }
         }
+
+#pragma warning disable VSTHRD100 // Avoid async void methods
 
         public async void ResetQuickSwitch()
         {
