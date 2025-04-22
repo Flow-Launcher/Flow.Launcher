@@ -203,7 +203,7 @@ namespace Flow.Launcher
 #pragma warning restore VSTHRD100 // Avoid async void methods
 
         /// <summary>
-        /// check auto startup only for Debug
+        /// check startup only for Release
         /// </summary>
         [Conditional("RELEASE")]
         private void AutoStartup()
