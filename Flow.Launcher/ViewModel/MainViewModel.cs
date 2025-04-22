@@ -1268,8 +1268,7 @@ namespace Flow.Launcher.ViewModel
                     return;
                 }
 
-                var currentUpdateSource = new CancellationTokenSource();
-                _updateSource = currentUpdateSource;
+                _updateSource = new CancellationTokenSource();
                 _updateToken = _updateSource.Token;
 
                 ProgressBarVisibility = Visibility.Hidden;
