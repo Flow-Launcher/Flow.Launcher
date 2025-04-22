@@ -44,7 +44,6 @@ namespace Flow.Launcher.ViewModel
         private readonly TopMostRecord _topMostRecord;
 
         private CancellationTokenSource _updateSource; // Used to cancel old query flows
-        private CancellationToken _updateToken;
         private readonly SemaphoreSlim _updateLock = new(1, 1); // Used to ensure one updating flow
 
         private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
@@ -245,7 +244,7 @@ namespace Flow.Launcher.ViewModel
                         return;
                     }
 
-                    var token = e.Token == default ? _updateToken : e.Token;
+                    var token = e.Token == default ? _updateSource.Token : e.Token;
 
                     // make a clone to avoid possible issue that plugin will also change the list and items when updating view model
                     var resultsCopy = DeepCloneResults(e.Results, token);
@@ -1269,7 +1268,6 @@ namespace Flow.Launcher.ViewModel
                 }
 
                 _updateSource = new CancellationTokenSource();
-                _updateToken = _updateSource.Token;
 
                 ProgressBarVisibility = Visibility.Hidden;
 
