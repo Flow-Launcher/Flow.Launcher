@@ -74,7 +74,7 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Executar com outro utilizador</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Executar como administrador</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Abrir pasta de destino</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">Hide</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">Ocultar</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Abrir pasta de destino</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Programas</system:String>
