@@ -380,7 +380,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void Backspace(object index)
         {
-            var query = QueryBuilder.Build(QueryText.Trim(), PluginManager.NonGlobalPlugins);
+            var query = QueryBuilder.Build(QueryText, QueryText.Trim(), PluginManager.NonGlobalPlugins);
 
             // GetPreviousExistingDirectory does not require trailing '\', otherwise will return empty string
             var path = FilesFolders.GetPreviousExistingDirectory((_) => true, query.Search.TrimEnd('\\'));
@@ -1262,7 +1262,7 @@ namespace Flow.Launcher.ViewModel
             {
                 // Check if the query has changed because query can be changed so fast that
                 // token of the query between two queries has not been created yet
-                if (query.RawQuery != QueryText)
+                if (query.Input != QueryText && query.RawQuery != QueryText.Trim())
                 {
                     Infrastructure.Logger.Log.Debug(ClassName, $"Cancel for QueryText 0: {query.RawQuery}");
                     return;
@@ -1476,7 +1476,7 @@ namespace Flow.Launcher.ViewModel
             // Applying builtin shortcuts
             BuildQuery(builtInShortcuts, queryBuilder, queryBuilderTmp);
 
-            return QueryBuilder.Build(queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
+            return QueryBuilder.Build(queryText, queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
         }
 
         private void BuildQuery(IEnumerable<BaseBuiltinShortcutModel> builtInShortcuts,
