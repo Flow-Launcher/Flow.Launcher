@@ -422,6 +422,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
             else
             {
+                Log.Debug(ClassName, $"Other Window: {hwnd}");
                 var dialogWindowExist = false;
                 lock (_dialogWindowLock)
                 {
