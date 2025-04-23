@@ -49,6 +49,7 @@
                     HorizontalContentAlignment="Left"
                     Background="{DynamicResource Color00B}"
                     DisplayMemberPath="Display"
+                    FontFamily="{DynamicResource SettingWindowFont}"
                     ItemsSource="{Binding DisplayModes}"
                     SelectedValue="{Binding SelectedDisplayMode, Mode=TwoWay}"
                     SelectedValuePath="Value" />
@@ -75,6 +76,7 @@
                     ToolTipService.Placement="Top">
                     <TextBox.Style>
                         <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
+                            <Setter Property="FontFamily" Value="{DynamicResource SettingWindowFont}" />
                             <Style.Resources>
                                 <VisualBrush
                                     x:Key="CueBannerBrush"
@@ -85,6 +87,7 @@
                                         <Label
                                             Padding="10 0 0 0"
                                             Content="{DynamicResource searchplugin}"
+                                            FontFamily="{DynamicResource SettingWindowFont}"
                                             Foreground="{DynamicResource CustomContextDisabled}" />
                                     </VisualBrush.Visual>
                                 </VisualBrush>
@@ -113,6 +116,7 @@
             <ListBox
                 Margin="5 0 7 10"
                 Background="{DynamicResource Color01B}"
+                FontFamily="{DynamicResource SettingWindowFont}"
                 FontSize="14"
                 ItemContainerStyle="{StaticResource PluginList}"
                 ItemsSource="{Binding FilteredPluginViewModels}"

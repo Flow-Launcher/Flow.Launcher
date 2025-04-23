@@ -43,6 +43,7 @@
                 Content="{Binding ActionKeywordsText}"
                 Cursor="Hand"
                 DockPanel.Dock="Right"
+                FontFamily="{DynamicResource SettingWindowFont}"
                 FontWeight="Bold"
                 ToolTip="{DynamicResource actionKeywordsTooltip}" />
         </DockPanel>
