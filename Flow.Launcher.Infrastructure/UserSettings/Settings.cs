@@ -96,13 +96,26 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string ResultSubFontStyle { get; set; }
         public string ResultSubFontWeight { get; set; }
         public string ResultSubFontStretch { get; set; }
-        public string SettingWindowFont { get; set; } = Win32Helper.GetSystemDefaultFont(false);
         public bool UseGlyphIcons { get; set; } = true;
         public bool UseAnimation { get; set; } = true;
         public bool UseSound { get; set; } = true;
         public double SoundVolume { get; set; } = 50;
         public bool ShowBadges { get; set; } = false;
         public bool ShowBadgesGlobalOnly { get; set; } = false;
+
+        private string _settingWindowFont { get; set; } = Win32Helper.GetSystemDefaultFont(false);
+        public string SettingWindowFont
+        {
+            get => _settingWindowFont;
+            set
+            {
+                if (_settingWindowFont != value)
+                {
+                    _settingWindowFont = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public bool UseClock { get; set; } = true;
         public bool UseDate { get; set; } = false;

@@ -160,8 +160,7 @@
                                 DisplayMemberPath="Source"
                                 ItemsSource="{Binding Source={StaticResource SortedFonts}}"
                                 SelectedValue="{Binding SettingWindowFont, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                SelectedValuePath="Source"
-                                SelectionChanged="SettingWindowFontComboBox_SelectionChanged" />
+                                SelectedValuePath="Source" />
                         </StackPanel>
                     </cc:Card>
                 </StackPanel>

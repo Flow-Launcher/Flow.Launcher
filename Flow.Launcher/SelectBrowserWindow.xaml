@@ -10,7 +10,7 @@
     Width="550"
     Background="{DynamicResource PopuBGColor}"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
-    FontFamily="{Binding SettingWindowFont, Mode=TwoWay}"
+    FontFamily="{Binding Settings.SettingWindowFont, Mode=TwoWay}"
     Foreground="{DynamicResource PopupTextColor}"
     ResizeMode="NoResize"
     SizeToContent="Height"
