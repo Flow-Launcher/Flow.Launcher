@@ -31,7 +31,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         {
             _storage.Save();
         }
-        
+
         private string _theme = Constant.DefaultTheme;
         public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
         public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
@@ -102,6 +102,20 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public double SoundVolume { get; set; } = 50;
         public bool ShowBadges { get; set; } = false;
         public bool ShowBadgesGlobalOnly { get; set; } = false;
+
+        private string _settingWindowFont { get; set; } = Win32Helper.GetSystemDefaultFont(false);
+        public string SettingWindowFont
+        {
+            get => _settingWindowFont;
+            set
+            {
+                if (_settingWindowFont != value)
+                {
+                    _settingWindowFont = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public bool UseClock { get; set; } = true;
         public bool UseDate { get; set; } = false;
