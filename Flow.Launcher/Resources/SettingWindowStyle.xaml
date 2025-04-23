@@ -8,6 +8,9 @@
     <converters:TextConverter x:Key="TextConverter" />
     <core:TranslationConverter x:Key="TranslationConverter" />
 
+    <!--  Setting Window Font  -->
+    <FontFamily x:Key="SettingWindowFont">Segoe UI</FontFamily>
+
     <!--  Icon for Theme Type Label  -->
     <Geometry x:Key="circle_half_stroke_solid">F1 M512,512z M0,0z M448,256C448,150,362,64,256,64L256,448C362,448,448,362,448,256z M0,256A256,256,0,1,1,512,256A256,256,0,1,1,0,256z</Geometry>
     <Style x:Key="StoreItemFocusVisualStyleKey">
@@ -371,10 +374,14 @@
                             <Grid Margin="20 0 0 0">
                                 <StackPanel>
                                     <TextBlock
-                                        Margin="0 20 0 4"
+                                        Margin="0 20 0 0"
+                                        FontFamily="{DynamicResource SettingWindowFont}"
                                         FontWeight="Bold"
                                         Text="{DynamicResource searchplugin_Noresult_Title}" />
-                                    <TextBlock Text="{DynamicResource searchplugin_Noresult_Subtitle}" />
+                                    <TextBlock
+                                        Margin="0 4 0 0"
+                                        FontFamily="{DynamicResource SettingWindowFont}"
+                                        Text="{DynamicResource searchplugin_Noresult_Subtitle}" />
                                 </StackPanel>
                             </Grid>
                         </ControlTemplate>

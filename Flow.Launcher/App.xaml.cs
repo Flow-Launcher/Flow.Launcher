@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core;
 using Flow.Launcher.Core.Configuration;
@@ -149,7 +150,7 @@ namespace Flow.Launcher
                 Ioc.Default.GetRequiredService<Portable>().PreStartCleanUpAfterPortabilityUpdate();
 
                 API.LogInfo(ClassName, "Begin Flow Launcher startup ----------------------------------------------------");
-                API.LogInfo(ClassName, "Runtime info:{ErrorReporting.RuntimeInfo()}");
+                API.LogInfo(ClassName, $"Runtime info:{ErrorReporting.RuntimeInfo()}");
 
                 RegisterAppDomainExceptions();
                 RegisterDispatcherUnhandledException();
@@ -169,19 +170,18 @@ namespace Flow.Launcher
                 await PluginManager.InitializePluginsAsync();
 
                 // Change language after all plugins are initialized because we need to update plugin title based on their api
-                // TODO: Clean InternationalizationManager.Instance and InternationalizationManager.Instance.GetTranslation in future
                 await Ioc.Default.GetRequiredService<Internationalization>().InitializeLanguageAsync();
-
                 await imageLoadertask;
 
-                _mainWindow = new MainWindow();
+                // Update dynamic resources base on settings
+                Current.Resources["SettingWindowFont"] = new FontFamily(_settings.SettingWindowFont);
 
-                API.LogInfo(ClassName, "Dependencies Info:{ErrorReporting.DependenciesInfo()}");
+                _mainWindow = new MainWindow();
 
                 Current.MainWindow = _mainWindow;
                 Current.MainWindow.Title = Constant.FlowLauncher;
 
-                // main windows needs initialized before theme change because of blur settings
+                // Main windows needs initialized before theme change because of blur settings
                 Ioc.Default.GetRequiredService<Theme>().ChangeTheme();
 
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
