@@ -5,7 +5,7 @@ namespace Flow.Launcher.ViewModel;
 
 public partial class SettingWindowViewModel : BaseModel
 {
-    public Settings Settings { get; set; }
+    public Settings Settings { get; }
 
     public SettingWindowViewModel(Settings settings)
     {

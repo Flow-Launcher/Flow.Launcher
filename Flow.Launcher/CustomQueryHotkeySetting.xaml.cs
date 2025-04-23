@@ -10,7 +10,7 @@ namespace Flow.Launcher
 {
     public partial class CustomQueryHotkeySetting : Window
     {
-        public Settings Settings { get; set; }
+        public Settings Settings { get; }
 
         private bool update;
         private CustomPluginHotkey updateCustomHotkey;

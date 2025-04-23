@@ -8,7 +8,7 @@ namespace Flow.Launcher
 {
     public partial class CustomShortcutSetting : Window
     {
-        public Settings Settings { get; set; } = Ioc.Default.GetRequiredService<Settings>();
+        public Settings Settings { get; } = Ioc.Default.GetRequiredService<Settings>();
 
         private readonly SettingsPaneHotkeyViewModel _hotkeyVm;
         public string Key { get; set; } = string.Empty;
