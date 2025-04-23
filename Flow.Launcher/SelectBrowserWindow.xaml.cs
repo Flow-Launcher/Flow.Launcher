@@ -1,27 +1,25 @@
-﻿using Flow.Launcher.Infrastructure.UserSettings;
-using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher
 {
-    public partial class SelectBrowserWindow : Window, INotifyPropertyChanged
+    [INotifyPropertyChanged]
+    public partial class SelectBrowserWindow : Window
     {
-        private int selectedCustomBrowserIndex;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public Settings Settings { get; }
+
+        private int selectedCustomBrowserIndex;
 
         public int SelectedCustomBrowserIndex
         {
             get => selectedCustomBrowserIndex; set
             {
                 selectedCustomBrowserIndex = value;
-                PropertyChanged?.Invoke(this, new(nameof(CustomBrowser)));
+                OnPropertyChanged(nameof(CustomBrowser));
             }
         }
         public ObservableCollection<CustomBrowserViewModel> CustomBrowsers { get; set; }
@@ -64,8 +62,7 @@ namespace Flow.Launcher
         private void btnBrowseFile_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-            Nullable<bool> result = dlg.ShowDialog();
-
+            var result = dlg.ShowDialog();
             if (result == true)
             {
                 TextBox path = (TextBox)(((FrameworkElement)sender).Parent as FrameworkElement).FindName("PathTextBox");
