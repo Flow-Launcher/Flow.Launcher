@@ -7,7 +7,7 @@
     Width="530"
     Background="{DynamicResource PopuBGColor}"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
-    FontFamily="{Binding Settings.SettingWindowFont, Mode=TwoWay}"
+    FontFamily="{DynamicResource SettingWindowFont}"
     Foreground="{DynamicResource PopupTextColor}"
     Icon="Images\app.png"
     ResizeMode="NoResize"
@@ -109,6 +109,7 @@
                             Width="180"
                             Margin="10"
                             HorizontalAlignment="Left"
+                            FontFamily="{DynamicResource SettingWindowFont}"
                             Text="{Binding Key}" />
                         <TextBlock
                             Grid.Row="1"
@@ -129,12 +130,14 @@
                                 Padding="10 5 10 5"
                                 Click="BtnTestShortcut_OnClick"
                                 Content="{DynamicResource preview}"
-                                DockPanel.Dock="Right" />
+                                DockPanel.Dock="Right"
+                                FontFamily="{DynamicResource SettingWindowFont}" />
                             <TextBox
                                 x:Name="tbExpand"
                                 Margin="10 0 10 0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
+                                FontFamily="{DynamicResource SettingWindowFont}"
                                 Text="{Binding Value}" />
                         </DockPanel>
                     </Grid>
@@ -153,12 +156,14 @@
                     MinWidth="140"
                     Margin="10 0 5 0"
                     Click="BtnCancel_OnClick"
-                    Content="{DynamicResource cancel}" />
+                    Content="{DynamicResource cancel}"
+                    FontFamily="{DynamicResource SettingWindowFont}" />
                 <Button
                     x:Name="btnAdd"
                     MinWidth="140"
                     Margin="5 0 10 0"
                     Click="BtnAdd_OnClick"
+                    FontFamily="{DynamicResource SettingWindowFont}"
                     Style="{StaticResource AccentButtonStyle}">
                     <TextBlock x:Name="lblAdd" Text="{DynamicResource done}" />
                 </Button>
