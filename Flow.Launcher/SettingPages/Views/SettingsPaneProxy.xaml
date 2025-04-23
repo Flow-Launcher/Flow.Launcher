@@ -2,11 +2,11 @@
     x:Class="Flow.Launcher.SettingPages.Views.SettingsPaneProxy"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cc="clr-namespace:Flow.Launcher.Resources.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:ui="http://schemas.modernwpf.com/2019"
-    xmlns:cc="clr-namespace:Flow.Launcher.Resources.Controls"
     xmlns:viewModels="clr-namespace:Flow.Launcher.SettingPages.ViewModels"
     Title="Proxy"
     d:DataContext="{d:DesignInstance viewModels:SettingsPaneProxyViewModel}"
@@ -18,8 +18,8 @@
     </Page.Resources>
     <ScrollViewer
         Padding="5 0 24 0"
-        FontSize="14"
         CanContentScroll="True"
+        FontSize="14"
         VirtualizingStackPanel.IsVirtualizing="True"
         VirtualizingStackPanel.ScrollUnit="Pixel">
 
@@ -34,6 +34,7 @@
             <cc:CardGroup>
                 <cc:Card Title="{DynamicResource enableProxy}">
                     <ui:ToggleSwitch
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         IsOn="{Binding Settings.Proxy.Enabled}"
                         OffContent="{DynamicResource disable}"
                         OnContent="{DynamicResource enable}" />
@@ -42,6 +43,7 @@
                 <cc:Card Title="{DynamicResource server}">
                     <TextBox
                         Width="300"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         IsEnabled="{Binding Settings.Proxy.Enabled}"
                         Text="{Binding Settings.Proxy.Server}" />
                 </cc:Card>
@@ -49,6 +51,7 @@
                 <cc:Card Title="{DynamicResource port}">
                     <TextBox
                         Width="100"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         IsEnabled="{Binding Settings.Proxy.Enabled}"
                         Text="{Binding Settings.Proxy.Port, TargetNullValue={x:Static sys:String.Empty}}" />
                 </cc:Card>
@@ -56,6 +59,7 @@
                 <cc:Card Title="{DynamicResource userName}">
                     <TextBox
                         Width="200"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         IsEnabled="{Binding Settings.Proxy.Enabled}"
                         Text="{Binding Settings.Proxy.UserName}" />
                 </cc:Card>
@@ -63,6 +67,7 @@
                 <cc:Card Title="{DynamicResource password}">
                     <TextBox
                         Width="200"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         IsEnabled="{Binding Settings.Proxy.Enabled}"
                         Text="{Binding Settings.Proxy.Password}" />
                 </cc:Card>
@@ -71,9 +76,10 @@
             <cc:Card Title="{DynamicResource testProxy}" Margin="0 8 0 0">
                 <Button
                     Width="150"
+                    Command="{Binding TestProxyClickedCommand}"
                     Content="{DynamicResource testProxy}"
-                    IsEnabled="{Binding Settings.Proxy.Enabled}"
-                    Command="{Binding TestProxyClickedCommand}"/>
+                    FontFamily="{DynamicResource SettingWindowFont}"
+                    IsEnabled="{Binding Settings.Proxy.Enabled}" />
             </cc:Card>
         </StackPanel>
     </ScrollViewer>

@@ -8,13 +8,14 @@ namespace Flow.Launcher.SettingPages.ViewModels;
 
 public partial class SettingsPaneProxyViewModel : BaseModel
 {
-    private readonly Updater _updater;
     public Settings Settings { get; }
+
+    private readonly Updater _updater;
 
     public SettingsPaneProxyViewModel(Settings settings, Updater updater)
     {
-        _updater = updater;
         Settings = settings;
+        _updater = updater;
     }
 
     [RelayCommand]
