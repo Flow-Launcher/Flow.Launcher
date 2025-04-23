@@ -360,6 +360,7 @@
     <system:String x:Key="logLevel">Nivel de registro</system:String>
     <system:String x:Key="LogLevelDEBUG">Depurar</system:String>
     <system:String x:Key="LogLevelINFO">Información</system:String>
+    <system:String x:Key="settingWindowFont">Setting Window Font</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Seleccionar administrador de archivos</system:String>
