@@ -100,6 +100,7 @@
                                 VerticalAlignment="Center"
                                 ui:ControlHelper.Header="{DynamicResource SearchBarHeight}"
                                 AutoToolTipPlacement="TopLeft"
+                                FontFamily="{DynamicResource SettingWindowFont}"
                                 IsMoveToPointEnabled="True"
                                 IsSnapToTickEnabled="True"
                                 Maximum="60"
@@ -116,6 +117,7 @@
                                 VerticalAlignment="Center"
                                 ui:ControlHelper.Header="{DynamicResource queryBoxFont}"
                                 AutoToolTipPlacement="TopLeft"
+                                FontFamily="{DynamicResource SettingWindowFont}"
                                 IsMoveToPointEnabled="True"
                                 IsSnapToTickEnabled="True"
                                 Maximum="{Binding ElementName=WindowHeightValue, Path=Value, UpdateSourceTrigger=PropertyChanged}"
@@ -127,6 +129,7 @@
                                 Margin="12 4 12 0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Top"
+                                FontFamily="{DynamicResource SettingWindowFont}"
                                 IsSynchronizedWithCurrentItem="False"
                                 ItemsSource="{Binding Source={StaticResource SortedFonts}}"
                                 SelectedItem="{Binding SelectedQueryBoxFont}" />
@@ -135,6 +138,7 @@
                                 Margin="12 8 12 8"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Top"
+                                FontFamily="{DynamicResource SettingWindowFont}"
                                 ItemsSource="{Binding SelectedQueryBoxFont.FamilyTypefaces}"
                                 SelectedItem="{Binding SelectedQueryBoxFontFaces}">
                                 <ComboBox.ItemTemplate>
@@ -159,6 +163,7 @@
                                 VerticalAlignment="Stretch"
                                 ui:ControlHelper.Header="{DynamicResource ItemHeight}"
                                 AutoToolTipPlacement="TopLeft"
+                                FontFamily="{DynamicResource SettingWindowFont}"
                                 IsMoveToPointEnabled="True"
                                 IsSnapToTickEnabled="True"
                                 Maximum="100"
@@ -175,6 +180,7 @@
                                 VerticalAlignment="Center"
                                 ui:ControlHelper.Header="{DynamicResource resultItemFont}"
                                 AutoToolTipPlacement="TopLeft"
+                                FontFamily="{DynamicResource SettingWindowFont}"
                                 IsMoveToPointEnabled="True"
                                 IsSnapToTickEnabled="True"
                                 Maximum="80"
@@ -186,6 +192,7 @@
                                 Margin="12 4 12 0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Top"
+                                FontFamily="{DynamicResource SettingWindowFont}"
                                 IsSynchronizedWithCurrentItem="False"
                                 ItemsSource="{Binding Source={StaticResource SortedFonts}}"
                                 SelectedItem="{Binding SelectedResultFont}" />
@@ -194,6 +201,7 @@
                                 Margin="12 4 12 8"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Top"
+                                FontFamily="{DynamicResource SettingWindowFont}"
                                 ItemsSource="{Binding SelectedResultFont.FamilyTypefaces}"
                                 SelectedItem="{Binding SelectedResultFontFaces}">
                                 <ComboBox.ItemTemplate>
@@ -218,6 +226,7 @@
                                 VerticalAlignment="Center"
                                 ui:ControlHelper.Header="{DynamicResource resultSubItemFont}"
                                 AutoToolTipPlacement="TopLeft"
+                                FontFamily="{DynamicResource SettingWindowFont}"
                                 IsMoveToPointEnabled="True"
                                 IsSnapToTickEnabled="True"
                                 Maximum="80"
@@ -229,6 +238,7 @@
                                 Margin="12 4 12 0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Top"
+                                FontFamily="{DynamicResource SettingWindowFont}"
                                 IsSynchronizedWithCurrentItem="False"
                                 ItemsSource="{Binding Source={StaticResource SortedFonts}}"
                                 SelectedItem="{Binding SelectedResultSubFont}" />
@@ -237,6 +247,7 @@
                                 Margin="12 4 12 8"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Top"
+                                FontFamily="{DynamicResource SettingWindowFont}"
                                 ItemsSource="{Binding SelectedResultSubFont.FamilyTypefaces}"
                                 SelectedItem="{Binding SelectedResultSubFontFaces}">
                                 <ComboBox.ItemTemplate>
@@ -260,12 +271,14 @@
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding ImportCommand}"
                                 Content="{DynamicResource ImportThemeSize}"
+                                FontFamily="{DynamicResource SettingWindowFont}"
                                 ToolTip="{DynamicResource ImportThemeSizeToolTip}" />
                             <Button
                                 Margin="12 4 12 12"
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding ResetCommand}"
                                 Content="{DynamicResource resetCustomize}"
+                                FontFamily="{DynamicResource SettingWindowFont}"
                                 ToolTip="{DynamicResource resetCustomizeToolTip}" />
                         </StackPanel>
                     </ScrollViewer>
@@ -331,7 +344,6 @@
                                                 IsReadOnly="True"
                                                 Style="{DynamicResource QueryBoxStyle}"
                                                 Text="{DynamicResource hiThere}" />
-
                                         </Border>
                                         <StackPanel
                                             x:Name="ClockPanel"
@@ -340,11 +352,13 @@
                                             Visibility="Visible">
                                             <TextBlock
                                                 x:Name="ClockBox"
+                                                FontFamily="{Binding ClockPanelFont, Mode=OneTime}"
                                                 Style="{DynamicResource ClockBox}"
                                                 Text="{Binding ClockText}"
                                                 Visibility="{Binding UseClock, Converter={StaticResource BoolToVisibilityConverter}}" />
                                             <TextBlock
                                                 x:Name="DateBox"
+                                                FontFamily="{Binding ClockPanelFont, Mode=OneTime}"
                                                 Style="{DynamicResource DateBox}"
                                                 Text="{Binding DateText}"
                                                 Visibility="{Binding UseDate, Converter={StaticResource BoolToVisibilityConverter}}" />
@@ -446,6 +460,7 @@
                                         Margin="0 0 0 0"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
+                                        FontFamily="{DynamicResource SettingWindowFont}"
                                         Text="{Binding Name}"
                                         TextWrapping="Wrap" />
                                     <ui:PathIcon
@@ -492,6 +507,7 @@
                         MinWidth="160"
                         VerticalAlignment="Center"
                         DisplayMemberPath="Display"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         FontSize="14"
                         IsEnabled="{Binding IsBackdropEnabled}"
                         ItemsSource="{Binding BackdropTypesList}"
@@ -526,6 +542,7 @@
                 <cc:ExCard.SideContent>
                     <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                         <ui:ToggleSwitch
+                            FontFamily="{DynamicResource SettingWindowFont}"
                             IsOn="{Binding KeepMaxResults}"
                             OffContent="{DynamicResource disable}"
                             OnContent="{DynamicResource enable}" />
@@ -537,6 +554,7 @@
                     Type="InsideFit">
                     <ComboBox
                         Width="100"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         ItemsSource="{Binding MaxResultsRange}"
                         SelectedItem="{Binding Settings.MaxResultsToShow}" />
                 </cc:Card>
@@ -555,10 +573,12 @@
                             MinWidth="180"
                             Margin="10 0 18 0"
                             VerticalAlignment="Center"
+                            FontFamily="{DynamicResource SettingWindowFont}"
                             FontSize="14"
                             ItemsSource="{Binding TimeFormatList}"
                             SelectedItem="{Binding TimeFormat}" />
                         <ui:ToggleSwitch
+                            FontFamily="{DynamicResource SettingWindowFont}"
                             IsOn="{Binding UseClock}"
                             OffContent="{DynamicResource disable}"
                             OnContent="{DynamicResource enable}" />
@@ -576,10 +596,12 @@
                             MinWidth="180"
                             Margin="10 0 18 0"
                             VerticalAlignment="Center"
+                            FontFamily="{DynamicResource SettingWindowFont}"
                             FontSize="14"
                             ItemsSource="{Binding DateFormatList}"
                             SelectedItem="{Binding DateFormat}" />
                         <ui:ToggleSwitch
+                            FontFamily="{DynamicResource SettingWindowFont}"
                             IsOn="{Binding UseDate}"
                             OffContent="{DynamicResource disable}"
                             OnContent="{DynamicResource enable}" />
@@ -595,6 +617,7 @@
                 Sub="{DynamicResource ShowPlaceholderTip}">
                 <cc:ExCard.SideContent>
                     <ui:ToggleSwitch
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         IsOn="{Binding ShowPlaceholder}"
                         OffContent="{DynamicResource disable}"
                         OnContent="{DynamicResource enable}" />
@@ -605,6 +628,7 @@
                     Type="InsideFit">
                     <TextBox
                         MinWidth="150"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         Text="{Binding PlaceholderText}"
                         TextWrapping="NoWrap" />
                 </cc:Card>
@@ -618,6 +642,7 @@
                 Sub="{DynamicResource AnimationTip}">
                 <cc:ExCard.SideContent>
                     <ui:ToggleSwitch
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         IsOn="{Binding UseAnimation}"
                         OffContent="{DynamicResource disable}"
                         OnContent="{DynamicResource enable}" />
@@ -631,6 +656,7 @@
                             MinWidth="160"
                             VerticalAlignment="Center"
                             DisplayMemberPath="Display"
+                            FontFamily="{DynamicResource SettingWindowFont}"
                             FontSize="14"
                             ItemsSource="{Binding AnimationSpeeds}"
                             SelectedValue="{Binding Settings.AnimationSpeed}"
@@ -655,6 +681,7 @@
                 Sub="{DynamicResource SoundEffectTip}">
                 <cc:ExCard.SideContent>
                     <ui:ToggleSwitch
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         IsOn="{Binding UseSound}"
                         OffContent="{DynamicResource disable}"
                         OnContent="{DynamicResource enable}" />
@@ -672,6 +699,7 @@
                         <Slider
                             Width="250"
                             VerticalAlignment="Center"
+                            FontFamily="{DynamicResource SettingWindowFont}"
                             IsMoveToPointEnabled="True"
                             IsSnapToTickEnabled="True"
                             Maximum="100"
@@ -723,6 +751,7 @@
                 Icon="&#xf6b8;"
                 Sub="{DynamicResource useGlyphUIEffect}">
                 <ui:ToggleSwitch
+                    FontFamily="{DynamicResource SettingWindowFont}"
                     IsOn="{Binding UseGlyphIcons}"
                     OffContent="{DynamicResource disable}"
                     OnContent="{DynamicResource enable}" />
@@ -736,12 +765,14 @@
                 Sub="{DynamicResource showBadgesToolTip}">
                 <cc:ExCard.SideContent>
                     <ui:ToggleSwitch
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         IsOn="{Binding Settings.ShowBadges}"
                         OffContent="{DynamicResource disable}"
                         OnContent="{DynamicResource enable}" />
                 </cc:ExCard.SideContent>
                 <cc:Card Title="{DynamicResource showBadgesGlobalOnly}" Type="InsideFit">
                     <ui:ToggleSwitch
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         IsOn="{Binding Settings.ShowBadgesGlobalOnly}"
                         OffContent="{DynamicResource disable}"
                         OnContent="{DynamicResource enable}" />
@@ -756,6 +787,7 @@
                 <ComboBox
                     MinWidth="180"
                     DisplayMemberPath="Display"
+                    FontFamily="{DynamicResource SettingWindowFont}"
                     FontSize="14"
                     ItemsSource="{Binding ColorSchemes}"
                     SelectedValue="{Binding ColorScheme, Mode=TwoWay}"
@@ -770,7 +802,8 @@
                 <Button
                     MinWidth="180"
                     Command="{Binding OpenThemesFolderCommand}"
-                    Content="{DynamicResource OpenThemeFolder}" />
+                    Content="{DynamicResource OpenThemeFolder}"
+                    FontFamily="{DynamicResource SettingWindowFont}" />
             </cc:Card>
 
             <!--  How to create theme link  -->
