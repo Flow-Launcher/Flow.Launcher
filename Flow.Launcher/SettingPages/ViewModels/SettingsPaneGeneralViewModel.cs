@@ -17,6 +17,7 @@ namespace Flow.Launcher.SettingPages.ViewModels;
 public partial class SettingsPaneGeneralViewModel : BaseModel
 {
     public Settings Settings { get; }
+
     private readonly Updater _updater;
     private readonly IPortable _portable;
     private readonly Internationalization _translater;

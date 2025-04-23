@@ -39,6 +39,7 @@
                 Icon="&#xe8fc;">
                 <cc:ExCard.SideContent>
                     <ui:ToggleSwitch
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         IsOn="{Binding StartFlowLauncherOnSystemStartup}"
                         OffContent="{DynamicResource disable}"
                         OnContent="{DynamicResource enable}" />
@@ -48,6 +49,7 @@
                     Sub="{DynamicResource useLogonTaskForStartupTooltip}"
                     Type="InsideFit">
                     <ui:ToggleSwitch
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         IsOn="{Binding UseLogonTaskForStartup}"
                         OffContent="{DynamicResource disable}"
                         OnContent="{DynamicResource enable}" />
@@ -58,6 +60,7 @@
                 Icon="&#xed1a;"
                 Sub="{DynamicResource hideOnStartupToolTip}">
                 <ui:ToggleSwitch
+                    FontFamily="{DynamicResource SettingWindowFont}"
                     IsOn="{Binding Settings.HideOnStartup}"
                     OffContent="{DynamicResource disable}"
                     OnContent="{DynamicResource enable}" />
@@ -65,6 +68,7 @@
 
             <cc:Card Title="{DynamicResource hideFlowLauncherWhenLoseFocus}" Margin="0 14 0 0">
                 <ui:ToggleSwitch
+                    FontFamily="{DynamicResource SettingWindowFont}"
                     IsOn="{Binding Settings.HideWhenDeactivated}"
                     OffContent="{DynamicResource disable}"
                     OnContent="{DynamicResource enable}" />
@@ -72,6 +76,7 @@
 
             <cc:Card Title="{DynamicResource hideNotifyIcon}" Sub="{DynamicResource hideNotifyIconToolTip}">
                 <ui:ToggleSwitch
+                    FontFamily="{DynamicResource SettingWindowFont}"
                     IsOn="{Binding Settings.HideNotifyIcon}"
                     OffContent="{DynamicResource disable}"
                     OnContent="{DynamicResource enable}" />
@@ -84,6 +89,7 @@
                             MinWidth="220"
                             VerticalAlignment="Center"
                             DisplayMemberPath="Display"
+                            FontFamily="{DynamicResource SettingWindowFont}"
                             FontSize="14"
                             ItemsSource="{Binding SearchWindowScreens}"
                             SelectedValue="{Binding Settings.SearchWindowScreen}"
@@ -92,6 +98,7 @@
                             MinWidth="160"
                             Margin="18 0 0 0"
                             VerticalAlignment="Center"
+                            FontFamily="{DynamicResource SettingWindowFont}"
                             FontSize="14"
                             ItemsSource="{Binding ScreenNumbers}"
                             SelectedValue="{Binding Settings.CustomScreenNumber}"
@@ -110,6 +117,7 @@
                             MinWidth="160"
                             VerticalAlignment="Center"
                             DisplayMemberPath="Display"
+                            FontFamily="{DynamicResource SettingWindowFont}"
                             FontSize="14"
                             ItemsSource="{Binding SearchWindowAligns}"
                             SelectedValue="{Binding Settings.SearchWindowAlign}"
@@ -145,6 +153,7 @@
                 Icon="&#xe7fc;"
                 Sub="{DynamicResource ignoreHotkeysOnFullscreenToolTip}">
                 <ui:ToggleSwitch
+                    FontFamily="{DynamicResource SettingWindowFont}"
                     IsOn="{Binding Settings.IgnoreHotkeysOnFullscreen}"
                     OffContent="{DynamicResource disable}"
                     OnContent="{DynamicResource enable}" />
@@ -156,6 +165,7 @@
                 Icon="&#xe8a1;"
                 Sub="{Binding AlwaysPreviewToolTip}">
                 <ui:ToggleSwitch
+                    FontFamily="{DynamicResource SettingWindowFont}"
                     IsOn="{Binding Settings.AlwaysPreview}"
                     OffContent="{DynamicResource disable}"
                     OnContent="{DynamicResource enable}"
@@ -167,6 +177,7 @@
                 Margin="0 14 0 0"
                 Icon="&#xecc5;">
                 <ui:ToggleSwitch
+                    FontFamily="{DynamicResource SettingWindowFont}"
                     IsOn="{Binding AutoUpdates}"
                     OffContent="{DynamicResource disable}"
                     OnContent="{DynamicResource enable}" />
@@ -177,6 +188,7 @@
                 Icon="&#xe88e;"
                 Sub="{DynamicResource portableModeToolTIp}">
                 <ui:ToggleSwitch
+                    FontFamily="{DynamicResource SettingWindowFont}"
                     IsOn="{Binding PortableMode}"
                     OffContent="{DynamicResource disable}"
                     OnContent="{DynamicResource enable}" />
@@ -187,6 +199,7 @@
                     <ComboBox
                         MaxWidth="200"
                         DisplayMemberPath="Display"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         ItemsSource="{Binding SearchPrecisionScores}"
                         SelectedValue="{Binding Settings.QuerySearchPrecision}"
                         SelectedValuePath="Value" />
@@ -196,6 +209,7 @@
                     <ComboBox
                         MinWidth="210"
                         DisplayMemberPath="Display"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         ItemsSource="{Binding LastQueryModes}"
                         SelectedValue="{Binding Settings.LastQueryMode}"
                         SelectedValuePath="Value" />
@@ -209,6 +223,7 @@
                 Sub="{DynamicResource searchDelayToolTip}">
                 <cc:ExCard.SideContent>
                     <ui:ToggleSwitch
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         IsOn="{Binding Settings.SearchQueryResultsWithDelay}"
                         OffContent="{DynamicResource disable}"
                         OnContent="{DynamicResource enable}" />
@@ -221,6 +236,7 @@
                         <ui:NumberBox
                             Width="120"
                             Margin="0 0 0 0"
+                            FontFamily="{DynamicResource SettingWindowFont}"
                             Maximum="1000"
                             Minimum="0"
                             SmallChange="10"
@@ -241,7 +257,8 @@
                     MaxWidth="250"
                     Margin="10 0 0 0"
                     Command="{Binding SelectFileManagerCommand}"
-                    Content="{Binding Settings.CustomExplorer.Name}" />
+                    Content="{Binding Settings.CustomExplorer.Name}"
+                    FontFamily="{DynamicResource SettingWindowFont}" />
             </cc:Card>
 
             <cc:Card
@@ -253,7 +270,8 @@
                     MaxWidth="250"
                     Margin="10 0 0 0"
                     Command="{Binding SelectBrowserCommand}"
-                    Content="{Binding Settings.CustomBrowser.Name}" />
+                    Content="{Binding Settings.CustomBrowser.Name}"
+                    FontFamily="{DynamicResource SettingWindowFont}" />
             </cc:Card>
 
             <cc:Card Title="{DynamicResource pythonFilePath}" Margin="0 14 0 0">
@@ -261,12 +279,14 @@
                     <TextBox
                         Width="300"
                         Height="34"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         Text="{Binding Settings.PluginSettings.PythonExecutablePath, TargetNullValue='None'}" />
                     <Button
                         Height="34"
                         Margin="10 0 0 0"
                         Command="{Binding SelectPythonCommand}"
-                        Content="{DynamicResource select}" />
+                        Content="{DynamicResource select}"
+                        FontFamily="{DynamicResource SettingWindowFont}" />
                 </StackPanel>
             </cc:Card>
 
@@ -275,12 +295,14 @@
                     <TextBox
                         Width="300"
                         Height="34"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         Text="{Binding Settings.PluginSettings.NodeExecutablePath, TargetNullValue='None'}" />
                     <Button
                         Height="34"
                         Margin="10 0 0 0"
                         Command="{Binding SelectNodeCommand}"
-                        Content="{DynamicResource select}" />
+                        Content="{DynamicResource select}"
+                        FontFamily="{DynamicResource SettingWindowFont}" />
                 </StackPanel>
             </cc:Card>
 
@@ -290,6 +312,7 @@
                 Icon="&#xe8d3;"
                 Sub="{DynamicResource typingStartEnTooltip}">
                 <ui:ToggleSwitch
+                    FontFamily="{DynamicResource SettingWindowFont}"
                     IsOn="{Binding Settings.AlwaysStartEn}"
                     OffContent="{DynamicResource disable}"
                     OnContent="{DynamicResource enable}" />
@@ -300,6 +323,7 @@
                 Icon="&#xe98a;"
                 Sub="{DynamicResource ShouldUsePinyinToolTip}">
                 <ui:ToggleSwitch
+                    FontFamily="{DynamicResource SettingWindowFont}"
                     IsOn="{Binding Settings.ShouldUsePinyin}"
                     OffContent="{DynamicResource disable}"
                     OnContent="{DynamicResource enable}"
@@ -314,10 +338,12 @@
                     MaxWidth="200"
                     Margin="10 0 0 0"
                     DisplayMemberPath="Display"
+                    FontFamily="{DynamicResource SettingWindowFont}"
                     ItemsSource="{Binding Languages}"
                     SelectedValue="{Binding Language}"
                     SelectedValuePath="LanguageCode" />
             </cc:Card>
+
             <Border Visibility="{Binding KoreanIMERegistryKeyExists, Converter={StaticResource BoolToVisibilityConverter}}">
                 <cc:InfoBar
                     Title="{DynamicResource KoreanImeTitle}"
@@ -336,6 +362,7 @@
                     Icon="&#xe88b;"
                     Sub="{DynamicResource KoreanImeRegistryTooltip}">
                     <ui:ToggleSwitch
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         IsOn="{Binding LegacyKoreanIMEEnabled}"
                         OffContent="{DynamicResource disable}"
                         OnContent="{DynamicResource enable}" />
@@ -344,7 +371,10 @@
                     Title="{DynamicResource KoreanImeOpenLink}"
                     Icon="&#xF210;"
                     Sub="{DynamicResource KoreanImeOpenLinkToolTip}">
-                    <Button Command="{Binding OpenImeSettingsCommand}" Content="{DynamicResource KoreanImeOpenLinkButton}" />
+                    <Button
+                        Command="{Binding OpenImeSettingsCommand}"
+                        Content="{DynamicResource KoreanImeOpenLinkButton}"
+                        FontFamily="{DynamicResource SettingWindowFont}" />
                 </cc:Card>
             </cc:CardGroup>
         </VirtualizingStackPanel>
