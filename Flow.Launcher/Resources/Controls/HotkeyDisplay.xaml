@@ -63,7 +63,10 @@
                                         </Style.Triggers>
                                     </Style>
                                 </Border.Style>
-                                <TextBlock Foreground="{DynamicResource AccentButtonForegroundPointerOver}" Text="{Binding}" />
+                                <TextBlock
+                                    FontFamily="{DynamicResource SettingWindowFont}"
+                                    Foreground="{DynamicResource AccentButtonForegroundPointerOver}"
+                                    Text="{Binding}" />
                             </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
