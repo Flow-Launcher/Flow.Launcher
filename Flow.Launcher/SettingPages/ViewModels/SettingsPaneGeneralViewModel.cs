@@ -79,7 +79,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             {
                 try
                 {
-                    if (UseLogonTaskForStartup)
+                    if (value)
                     {
                         AutoStartup.ChangeToViaLogonTask();
                     }

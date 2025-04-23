@@ -98,6 +98,15 @@
                             Style="{DynamicResource DefaultCheckBoxStyle}"
                             Unchecked="OnAutoStartupUncheck" />
                     </StackPanel>
+                    <StackPanel Margin="0 30 0 0" Orientation="Horizontal">
+                        <CheckBox
+                            Checked="OnUseLogonTaskChecked"
+                            Content="{DynamicResource useLogonTaskForStartup}"
+                            IsChecked="{Binding Settings.UseLogonTaskForStartup}"
+                            Style="{DynamicResource DefaultCheckBoxStyle}"
+                            ToolTip="{DynamicResource useLogonTaskForStartupTooltip}"
+                            Unchecked="OnUseLogonTaskUncheck" />
+                    </StackPanel>
                     <StackPanel Margin="0 0 0 0" Orientation="Horizontal">
                         <CheckBox
                             Checked="OnHideOnStartupChecked"
