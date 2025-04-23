@@ -16,7 +16,6 @@ using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Image;
@@ -174,9 +173,6 @@ namespace Flow.Launcher
             // Set the initial state of the QueryTextBoxCursorMovedToEnd property
             // Without this part, when shown for the first time, switching the context menu does not move the cursor to the end.
             _viewModel.QueryTextCursorMovedToEnd = false;
-            
-            // Initialize hotkey mapper after window is loaded
-            HotKeyMapper.Initialize();
 
             // View model property changed event
             _viewModel.PropertyChanged += (o, e) =>

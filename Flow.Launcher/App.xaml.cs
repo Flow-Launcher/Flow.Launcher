@@ -182,6 +182,9 @@ namespace Flow.Launcher
                 Current.MainWindow = _mainWindow;
                 Current.MainWindow.Title = Constant.FlowLauncher;
 
+                // Initialize hotkey mapper instantly after main window is created because it will steal focus from main window
+                HotKeyMapper.Initialize();
+
                 // main windows needs initialized before theme change because of blur settings
                 Ioc.Default.GetRequiredService<Theme>().ChangeTheme();
 
