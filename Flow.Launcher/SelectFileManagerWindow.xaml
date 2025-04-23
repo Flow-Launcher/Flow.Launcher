@@ -10,7 +10,7 @@
     Width="600"
     Background="{DynamicResource PopuBGColor}"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
-    FontFamily="{Binding Settings.SettingWindowFont, Mode=TwoWay}"
+    FontFamily="{DynamicResource SettingWindowFont}"
     Foreground="{DynamicResource PopupTextColor}"
     ResizeMode="NoResize"
     SizeToContent="Height"
@@ -90,6 +90,7 @@
                             Margin="14 0 0 0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
+                            FontFamily="{DynamicResource SettingWindowFont}"
                             ItemsSource="{Binding CustomExplorers}"
                             SelectedIndex="{Binding SelectedCustomExplorerIndex}">
                             <ComboBox.ItemTemplate>
@@ -101,11 +102,13 @@
                         <Button
                             Margin="10 0 0 0"
                             Click="btnAdd_Click"
-                            Content="{DynamicResource add}" />
+                            Content="{DynamicResource add}"
+                            FontFamily="{DynamicResource SettingWindowFont}" />
                         <Button
                             Margin="10 0 0 0"
                             Click="btnDelete_Click"
                             Content="{DynamicResource delete}"
+                            FontFamily="{DynamicResource SettingWindowFont}"
                             IsEnabled="{Binding CustomExplorer.Editable}" />
 
                     </StackPanel>
@@ -145,6 +148,7 @@
                                 Margin="10 5 15 0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
+                                FontFamily="{DynamicResource SettingWindowFont}"
                                 IsEnabled="{Binding Editable}"
                                 Text="{Binding Name}" />
                             <TextBlock
@@ -166,6 +170,9 @@
                                     DockPanel.Dock="Right">
                                     <Button.Style>
                                         <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="{x:Type Button}">
+                                            <Style.Setters>
+                                                <Setter Property="FontFamily" Value="{DynamicResource SettingWindowFont}" />
+                                            </Style.Setters>
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding ElementName=ProfileTextBox, UpdateSourceTrigger=PropertyChanged, Path=IsEnabled}" Value="False">
                                                     <Setter Property="IsEnabled" Value="False" />
@@ -179,6 +186,7 @@
                                     Margin="10 10 10 0"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Center"
+                                    FontFamily="{DynamicResource SettingWindowFont}"
                                     IsEnabled="{Binding Editable}"
                                     Text="{Binding Path}" />
                             </DockPanel>
@@ -199,6 +207,7 @@
                                 Margin="10 10 15 0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
+                                FontFamily="{DynamicResource SettingWindowFont}"
                                 IsEnabled="{Binding Editable}"
                                 Text="{Binding DirectoryArgument}" />
                             <TextBlock
@@ -218,6 +227,7 @@
                                 Margin="10 10 15 20"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
+                                FontFamily="{DynamicResource SettingWindowFont}"
                                 IsEnabled="{Binding Editable}"
                                 Text="{Binding FileArgument}" />
                         </Grid>
@@ -237,7 +247,8 @@
                     Width="145"
                     Margin="0 0 5 0"
                     Click="btnCancel_Click"
-                    Content="{DynamicResource cancel}" />
+                    Content="{DynamicResource cancel}"
+                    FontFamily="{DynamicResource SettingWindowFont}" />
                 <Button
                     x:Name="btnDone"
                     Width="145"
@@ -247,6 +258,9 @@
                     ForceCursor="True">
                     <Button.Style>
                         <Style BasedOn="{StaticResource AccentButtonStyle}" TargetType="{x:Type Button}">
+                            <Style.Setters>
+                                <Setter Property="FontFamily" Value="{DynamicResource SettingWindowFont}" />
+                            </Style.Setters>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding Text.Length, ElementName=ProfileTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
                                     <Setter Property="IsEnabled" Value="False" />

@@ -10,7 +10,7 @@
     Width="550"
     Background="{DynamicResource PopuBGColor}"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
-    FontFamily="{Binding Settings.SettingWindowFont, Mode=TwoWay}"
+    FontFamily="{DynamicResource SettingWindowFont}"
     Foreground="{DynamicResource PopupTextColor}"
     ResizeMode="NoResize"
     SizeToContent="Height"
@@ -88,6 +88,7 @@
                         Margin="14 0 0 0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         ItemsSource="{Binding CustomBrowsers}"
                         SelectedIndex="{Binding SelectedCustomBrowserIndex}">
                         <ComboBox.ItemTemplate>
@@ -99,11 +100,13 @@
                     <Button
                         Margin="10 0 0 0"
                         Click="btnAdd_Click"
-                        Content="{DynamicResource add}" />
+                        Content="{DynamicResource add}"
+                        FontFamily="{DynamicResource SettingWindowFont}" />
                     <Button
                         Margin="10 0 0 0"
                         Click="btnDelete_Click"
                         Content="{DynamicResource delete}"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         IsEnabled="{Binding CustomBrowser.Editable}" />
 
                 </StackPanel>
@@ -143,6 +146,7 @@
                             Margin="10 5 0 0"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Center"
+                            FontFamily="{DynamicResource SettingWindowFont}"
                             IsEnabled="{Binding Editable}"
                             Text="{Binding Name}" />
                         <TextBlock
@@ -168,6 +172,9 @@
                                 DockPanel.Dock="Right">
                                 <Button.Style>
                                     <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="{x:Type Button}">
+                                        <Style.Setters>
+                                            <Setter Property="FontFamily" Value="{DynamicResource SettingWindowFont}" />
+                                        </Style.Setters>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding ElementName=PathTextBox, UpdateSourceTrigger=PropertyChanged, Path=IsEnabled}" Value="False">
                                                 <Setter Property="IsEnabled" Value="False" />
@@ -181,6 +188,7 @@
                                 Margin="10 10 5 0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
+                                FontFamily="{DynamicResource SettingWindowFont}"
                                 IsEnabled="{Binding Editable}"
                                 Text="{Binding Path}" />
                         </DockPanel>
@@ -192,8 +200,14 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Orientation="Horizontal">
-                            <RadioButton Content="{DynamicResource defaultBrowser_newTab}" IsChecked="{Binding OpenInTab}" />
-                            <RadioButton Content="{DynamicResource defaultBrowser_newWindow}" IsChecked="{Binding OpenInNewWindow, Mode=OneTime}" />
+                            <RadioButton
+                                Content="{DynamicResource defaultBrowser_newTab}"
+                                FontFamily="{DynamicResource SettingWindowFont}"
+                                IsChecked="{Binding OpenInTab}" />
+                            <RadioButton
+                                Content="{DynamicResource defaultBrowser_newWindow}"
+                                FontFamily="{DynamicResource SettingWindowFont}"
+                                IsChecked="{Binding OpenInNewWindow, Mode=OneTime}" />
                         </StackPanel>
                         <TextBlock
                             Grid.Row="3"
@@ -214,6 +228,7 @@
                                 x:Name="fileArgTextBox"
                                 Width="180"
                                 Margin="10 0 0 0"
+                                FontFamily="{DynamicResource SettingWindowFont}"
                                 Text="{Binding PrivateArg}" />
                             <CheckBox
                                 Margin="12 0 0 0"
@@ -245,13 +260,15 @@
                     Width="145"
                     Margin="0 0 5 0"
                     Click="btnCancel_Click"
-                    Content="{DynamicResource cancel}" />
+                    Content="{DynamicResource cancel}"
+                    FontFamily="{DynamicResource SettingWindowFont}" />
                 <Button
                     x:Name="btnDone"
                     Width="145"
                     Margin="5 0 0 0"
                     Click="btnDone_Click"
                     Content="{DynamicResource done}"
+                    FontFamily="{DynamicResource SettingWindowFont}"
                     ForceCursor="True"
                     Style="{DynamicResource AccentButtonStyle}" />
             </StackPanel>
