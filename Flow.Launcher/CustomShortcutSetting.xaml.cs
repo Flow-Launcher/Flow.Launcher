@@ -9,13 +9,14 @@ namespace Flow.Launcher
 {
     public partial class CustomShortcutSetting : Window
     {
+        private static readonly Settings _settings = Ioc.Default.GetRequiredService<Settings>();
+
         private readonly SettingsPaneHotkeyViewModel _hotkeyVm;
         public string Key { get; set; } = String.Empty;
         public string Value { get; set; } = String.Empty;
         private string originalKey { get; } = null;
         private string originalValue { get; } = null;
         private bool update { get; } = false;
-        private readonly Settings _settings;
         public event PropertyChangedEventHandler PropertyChanged;
         
         public string SettingWindowFont
