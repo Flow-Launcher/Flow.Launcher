@@ -1,21 +1,25 @@
-﻿using CommunityToolkit.Mvvm.DependencyInjection;
+﻿using System.Windows.Navigation;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.ViewModel;
-using System.Windows.Navigation;
 
 namespace Flow.Launcher.Resources.Pages
 {
     public partial class WelcomePage4
     {
+        public Settings Settings { get; private set; }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Settings = Ioc.Default.GetRequiredService<Settings>();
+            if (!IsInitialized)
+            {
+                Settings = Ioc.Default.GetRequiredService<Settings>();
+                InitializeComponent();
+            }
             // Sometimes the navigation is not triggered by button click,
             // so we need to reset the page number
             Ioc.Default.GetRequiredService<WelcomeViewModel>().PageNum = 4;
-            InitializeComponent();
+            base.OnNavigatedTo(e);
         }
-
-        public Settings Settings { get; set; }
     }
 }

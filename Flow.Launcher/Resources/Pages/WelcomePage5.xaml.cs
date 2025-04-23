@@ -1,26 +1,31 @@
 ﻿using System.Windows;
 using System.Windows.Navigation;
-using Flow.Launcher.Infrastructure.UserSettings;
-using Microsoft.Win32;
-using Flow.Launcher.Infrastructure;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.ViewModel;
+using Microsoft.Win32;
 
 namespace Flow.Launcher.Resources.Pages
 {
     public partial class WelcomePage5
     {
+        public Settings Settings { get; private set; }
+
         private const string StartupPath = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
-        public Settings Settings { get; set; }
         public bool HideOnStartup { get; set; }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Settings = Ioc.Default.GetRequiredService<Settings>();
+            if (!IsInitialized)
+            {
+                Settings = Ioc.Default.GetRequiredService<Settings>();
+                InitializeComponent();
+            }
             // Sometimes the navigation is not triggered by button click,
             // so we need to reset the page number
             Ioc.Default.GetRequiredService<WelcomeViewModel>().PageNum = 5;
-            InitializeComponent();
+            base.OnNavigatedTo(e);
         }
 
         private void OnAutoStartupChecked(object sender, RoutedEventArgs e)
@@ -59,6 +64,5 @@ namespace Flow.Launcher.Resources.Pages
             var window = Window.GetWindow(this);
             window.Close();
         }
-
     }
 }
