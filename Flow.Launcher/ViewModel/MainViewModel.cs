@@ -729,7 +729,6 @@ namespace Flow.Launcher.ViewModel
                         if (_lastSelectedResultIndex >= 0 && _lastSelectedResultIndex < Results.Results.Count)
                         {
                             Results.SelectedIndex = _lastSelectedResultIndex;
-                            Results.SelectedItem = Results.Results[_lastSelectedResultIndex];
                         }
                     }
                     else
