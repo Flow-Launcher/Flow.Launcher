@@ -285,7 +285,6 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     [RelayCommand]
     private void ResetSettingWindowFont()
     {
-        string defaultFont = Win32Helper.GetSystemDefaultFont(false);
-        SettingWindowFont = defaultFont;
+        SettingWindowFont = Win32Helper.GetSystemDefaultFont(false);
     }
 }
