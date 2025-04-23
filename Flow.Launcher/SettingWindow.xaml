@@ -13,7 +13,7 @@
     MinHeight="600"
     d:DataContext="{d:DesignInstance vm:SettingWindowViewModel}"
     Closed="OnClosed"
-    FontFamily="{Binding Settings.SettingWindowFont, Mode=TwoWay}"
+    FontFamily="{DynamicResource SettingWindowFont}"
     Icon="Images\app.ico"
     Left="{Binding SettingWindowLeft, Mode=TwoWay}"
     Loaded="OnLoaded"
@@ -213,13 +213,19 @@
                     </ui:NavigationView.PaneCustomContent>
                     <ui:NavigationView.MenuItems>
 
-                        <ui:NavigationViewItem x:Name="General" Content="{DynamicResource general}">
+                        <ui:NavigationViewItem
+                            x:Name="General"
+                            Content="{DynamicResource general}"
+                            FontFamily="{DynamicResource SettingWindowFont}">
                             <ui:NavigationViewItem.Icon>
                                 <ui:BitmapIcon ShowAsMonochrome="False" UriSource="/Images/settings.png" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
 
-                        <ui:NavigationViewItem x:Name="Plugins" Content="{DynamicResource plugins}">
+                        <ui:NavigationViewItem
+                            x:Name="Plugins"
+                            Content="{DynamicResource plugins}"
+                            FontFamily="{DynamicResource SettingWindowFont}">
                             <ui:NavigationViewItem.Icon>
                                 <ui:BitmapIcon ShowAsMonochrome="False" UriSource="/Images/plugins.png" />
                             </ui:NavigationViewItem.Icon>
@@ -228,31 +234,44 @@
                         <ui:NavigationViewItem
                             x:Name="PluginStore"
                             Content="{DynamicResource pluginStore}"
+                            FontFamily="{DynamicResource SettingWindowFont}"
                             Tag="PluginStore">
                             <ui:NavigationViewItem.Icon>
                                 <ui:BitmapIcon ShowAsMonochrome="False" UriSource="/Images/store.png" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
 
-                        <ui:NavigationViewItem x:Name="Theme" Content="{DynamicResource appearance}">
+                        <ui:NavigationViewItem
+                            x:Name="Theme"
+                            Content="{DynamicResource appearance}"
+                            FontFamily="{DynamicResource SettingWindowFont}">
                             <ui:NavigationViewItem.Icon>
                                 <ui:BitmapIcon ShowAsMonochrome="False" UriSource="/Images/theme.png" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
 
-                        <ui:NavigationViewItem x:Name="Hotkey" Content="{DynamicResource hotkeys}">
+                        <ui:NavigationViewItem
+                            x:Name="Hotkey"
+                            Content="{DynamicResource hotkeys}"
+                            FontFamily="{DynamicResource SettingWindowFont}">
                             <ui:NavigationViewItem.Icon>
                                 <ui:BitmapIcon ShowAsMonochrome="False" UriSource="/Images/keyboard.png" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
 
-                        <ui:NavigationViewItem x:Name="Proxy" Content="{DynamicResource proxy}">
+                        <ui:NavigationViewItem
+                            x:Name="Proxy"
+                            Content="{DynamicResource proxy}"
+                            FontFamily="{DynamicResource SettingWindowFont}">
                             <ui:NavigationViewItem.Icon>
                                 <ui:BitmapIcon ShowAsMonochrome="False" UriSource="/Images/proxy.png" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
 
-                        <ui:NavigationViewItem x:Name="About" Content="{DynamicResource about}">
+                        <ui:NavigationViewItem
+                            x:Name="About"
+                            Content="{DynamicResource about}"
+                            FontFamily="{DynamicResource SettingWindowFont}">
                             <ui:NavigationViewItem.Icon>
                                 <ui:BitmapIcon ShowAsMonochrome="False" UriSource="/Images/info.png" />
                             </ui:NavigationViewItem.Icon>
@@ -265,8 +284,5 @@
                 </ui:NavigationView>
             </Grid>
         </Border>
-
-
-
     </Grid>
 </Window>
