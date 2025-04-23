@@ -32,6 +32,7 @@
                     Name="UWPEnabled"
                     Margin="{StaticResource SettingPanelItemRightMargin}"
                     Content="{DynamicResource flowlauncher_plugin_program_index_uwp}"
+                    FontFamily="{DynamicResource SettingWindowFont}"
                     IsChecked="{Binding EnableUWP}"
                     ToolTip="{DynamicResource flowlauncher_plugin_program_index_uwp_tooltip}"
                     Visibility="{Binding ShowUWPCheckbox, Converter={StaticResource BooleanToVisibilityConverter}}" />
@@ -39,17 +40,20 @@
                     Name="StartMenuEnabled"
                     Margin="{StaticResource SettingPanelItemRightMargin}"
                     Content="{DynamicResource flowlauncher_plugin_program_index_start}"
+                    FontFamily="{DynamicResource SettingWindowFont}"
                     IsChecked="{Binding EnableStartMenuSource}"
                     ToolTip="{DynamicResource flowlauncher_plugin_program_index_start_tooltip}" />
                 <CheckBox
                     Name="RegistryEnabled"
                     Margin="{StaticResource SettingPanelItemRightMargin}"
                     Content="{DynamicResource flowlauncher_plugin_program_index_registry}"
+                    FontFamily="{DynamicResource SettingWindowFont}"
                     IsChecked="{Binding EnableRegistrySource}"
                     ToolTip="{DynamicResource flowlauncher_plugin_program_index_registry_tooltip}" />
                 <CheckBox
                     Name="PATHEnabled"
                     Content="{DynamicResource flowlauncher_plugin_program_index_PATH}"
+                    FontFamily="{DynamicResource SettingWindowFont}"
                     IsChecked="{Binding EnablePATHSource}"
                     ToolTip="{DynamicResource flowlauncher_plugin_program_index_PATH_tooltip}" />
             </WrapPanel>
@@ -72,20 +76,24 @@
                     <CheckBox
                         Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
                         Content="{DynamicResource flowlauncher_plugin_program_enable_hidelnkpath}"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         IsChecked="{Binding HideAppsPath}"
                         ToolTip="{DynamicResource flowlauncher_plugin_program_enable_hidelnkpath_tooltip}" />
                     <CheckBox
                         Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
                         Content="{DynamicResource flowlauncher_plugin_program_enable_hideuninstallers}"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         IsChecked="{Binding HideUninstallers}"
                         ToolTip="{DynamicResource flowlauncher_plugin_program_enable_hideuninstallers_tooltip}" />
                     <CheckBox
                         Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
                         Content="{DynamicResource flowlauncher_plugin_program_enable_description}"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         IsChecked="{Binding EnableDescription}"
                         ToolTip="{DynamicResource flowlauncher_plugin_program_enable_description_tooltip}" />
                     <CheckBox
                         Content="{DynamicResource flowlauncher_plugin_program_enable_hideduplicatedwindowsapp}"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         IsChecked="{Binding HideDuplicatedWindowsApp}"
                         ToolTip="{DynamicResource flowlauncher_plugin_program_enable_hideduplicatedwindowsapp_tooltip}" />
                 </WrapPanel>
@@ -101,21 +109,24 @@
                     Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
                     HorizontalAlignment="Right"
                     Click="btnLoadAllProgramSource_OnClick"
-                    Content="{DynamicResource flowlauncher_plugin_program_all_programs}" />
+                    Content="{DynamicResource flowlauncher_plugin_program_all_programs}"
+                    FontFamily="{DynamicResource SettingWindowFont}" />
                 <Button
                     x:Name="btnProgramSuffixes"
                     MinWidth="120"
                     Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
                     HorizontalAlignment="Right"
                     Click="BtnProgramSuffixes_OnClick"
-                    Content="{DynamicResource flowlauncher_plugin_program_suffixes}" />
+                    Content="{DynamicResource flowlauncher_plugin_program_suffixes}"
+                    FontFamily="{DynamicResource SettingWindowFont}" />
                 <Button
                     x:Name="btnReindex"
                     MinWidth="120"
                     Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
                     HorizontalAlignment="Right"
                     Click="btnReindex_Click"
-                    Content="{DynamicResource flowlauncher_plugin_program_reindex}" />
+                    Content="{DynamicResource flowlauncher_plugin_program_reindex}"
+                    FontFamily="{DynamicResource SettingWindowFont}" />
                 <StackPanel
                     x:Name="indexingPanel"
                     HorizontalAlignment="Left"
@@ -196,19 +207,22 @@
                     MinWidth="100"
                     Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                     Click="btnProgramSourceStatus_OnClick"
-                    Content="{DynamicResource flowlauncher_plugin_program_disable}" />
+                    Content="{DynamicResource flowlauncher_plugin_program_disable}"
+                    FontFamily="{DynamicResource SettingWindowFont}" />
                 <Button
                     x:Name="btnEditProgramSource"
                     MinWidth="100"
                     Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                     Click="btnEditProgramSource_OnClick"
-                    Content="{DynamicResource flowlauncher_plugin_program_edit}" />
+                    Content="{DynamicResource flowlauncher_plugin_program_edit}"
+                    FontFamily="{DynamicResource SettingWindowFont}" />
                 <Button
                     x:Name="btnAddProgramSource"
                     MinWidth="100"
                     Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                     Click="btnAddProgramSource_OnClick"
-                    Content="{DynamicResource flowlauncher_plugin_program_add}" />
+                    Content="{DynamicResource flowlauncher_plugin_program_add}"
+                    FontFamily="{DynamicResource SettingWindowFont}" />
             </StackPanel>
         </DockPanel>
     </Grid>

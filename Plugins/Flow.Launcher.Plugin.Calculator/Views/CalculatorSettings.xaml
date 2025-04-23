@@ -42,6 +42,7 @@
             Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
+            FontFamily="{DynamicResource SettingWindowFont}"
             ItemsSource="{Binding Source={ui:EnumBindingSource {x:Type calculator:DecimalSeparator}}}"
             SelectedItem="{Binding Settings.DecimalSeparator}">
             <ComboBox.ItemTemplate>
@@ -65,6 +66,7 @@
             Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
+            FontFamily="{DynamicResource SettingWindowFont}"
             ItemsSource="{Binding MaxDecimalPlacesRange}"
             SelectedItem="{Binding Settings.MaxDecimalPlaces}" />
 

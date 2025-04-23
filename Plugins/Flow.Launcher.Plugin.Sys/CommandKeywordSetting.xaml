@@ -7,6 +7,7 @@
     Title="{DynamicResource lowlauncher_plugin_sys_command_keyword_setting_window_title}"
     Width="550"
     Background="{DynamicResource PopupBGColor}"
+    FontFamily="{DynamicResource SettingWindowFont}"
     Foreground="{DynamicResource PopupTextColor}"
     ResizeMode="NoResize"
     SizeToContent="Height"
@@ -86,15 +87,17 @@
                         x:Name="CommandKeyword"
                         Grid.Column="1"
                         Margin="10"
-                        HorizontalAlignment="Stretch" />
+                        HorizontalAlignment="Stretch"
+                        FontFamily="{DynamicResource SettingWindowFont}" />
                     <Button
-                        x:Name="btnTestActionKeyword"
+                        x:Name="btnResetCommand"
                         Grid.Row="1"
                         Grid.Column="2"
                         Margin="0 0 10 0"
                         Padding="10 5 10 5"
                         Click="OnResetButtonClick"
-                        Content="{DynamicResource flowlauncher_plugin_sys_reset}" />
+                        Content="{DynamicResource flowlauncher_plugin_sys_reset}"
+                        FontFamily="{DynamicResource SettingWindowFont}" />
                 </Grid>
             </StackPanel>
         </StackPanel>
@@ -108,12 +111,14 @@
                     MinWidth="140"
                     Margin="10 0 5 0"
                     Click="OnCancelButtonClick"
-                    Content="{DynamicResource flowlauncher_plugin_sys_cancel}" />
+                    Content="{DynamicResource flowlauncher_plugin_sys_cancel}"
+                    FontFamily="{DynamicResource SettingWindowFont}" />
                 <Button
                     MinWidth="140"
                     Margin="5 0 10 0"
                     Click="OnConfirmButtonClick"
                     Content="{DynamicResource flowlauncher_plugin_sys_confirm}"
+                    FontFamily="{DynamicResource SettingWindowFont}"
                     Style="{DynamicResource AccentButtonStyle}" />
             </StackPanel>
         </Border>

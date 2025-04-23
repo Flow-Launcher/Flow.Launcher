@@ -65,7 +65,8 @@
                 Width="100"
                 Margin="{StaticResource SettingPanelItemLeftMargin}"
                 Click="OnEditCommandKeywordClick"
-                Content="{DynamicResource flowlauncher_plugin_sys_edit}" />
+                Content="{DynamicResource flowlauncher_plugin_sys_edit}"
+                FontFamily="{DynamicResource SettingWindowFont}" />
         </StackPanel>
     </Grid>
 </UserControl>

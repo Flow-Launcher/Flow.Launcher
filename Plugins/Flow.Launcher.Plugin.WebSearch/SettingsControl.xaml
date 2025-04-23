@@ -109,17 +109,20 @@
                 Width="100"
                 Margin="{StaticResource SettingPanelItemLeftMargin}"
                 Click="OnDeleteSearchSearchClick"
-                Content="{DynamicResource flowlauncher_plugin_websearch_delete}" />
+                Content="{DynamicResource flowlauncher_plugin_websearch_delete}"
+                FontFamily="{DynamicResource SettingWindowFont}" />
             <Button
                 Width="100"
                 Margin="{StaticResource SettingPanelItemLeftMargin}"
                 Click="OnEditSearchSourceClick"
-                Content="{DynamicResource flowlauncher_plugin_websearch_edit}" />
+                Content="{DynamicResource flowlauncher_plugin_websearch_edit}"
+                FontFamily="{DynamicResource SettingWindowFont}" />
             <Button
                 Width="100"
                 Margin="{StaticResource SettingPanelItemLeftMargin}"
                 Click="OnAddSearchSearchClick"
-                Content="{DynamicResource flowlauncher_plugin_websearch_add}" />
+                Content="{DynamicResource flowlauncher_plugin_websearch_add}"
+                FontFamily="{DynamicResource SettingWindowFont}" />
         </StackPanel>
 
         <Separator Grid.Row="2" Style="{StaticResource SettingPanelSeparatorStyle}" />
@@ -137,6 +140,7 @@
                     Height="30"
                     Margin="{StaticResource SettingPanelItemLeftMargin}"
                     VerticalAlignment="Center"
+                    FontFamily="{DynamicResource SettingWindowFont}"
                     FontSize="11"
                     IsEnabled="{Binding ElementName=EnableSuggestion, Path=IsChecked}"
                     ItemsSource="{Binding Settings.Suggestions}"
@@ -147,6 +151,7 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Content="{DynamicResource flowlauncher_plugin_websearch_enable_suggestion}"
+                    FontFamily="{DynamicResource SettingWindowFont}"
                     IsChecked="{Binding Settings.EnableSuggestion}" />
             </StackPanel>
             <!--  Not sure why binding IsEnabled directly to Settings.EnableWebSearchSuggestion is not working  -->

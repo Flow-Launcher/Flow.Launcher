@@ -17,11 +17,13 @@
             Grid.Row="0"
             Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             Content="{DynamicResource plugin_pluginsmanager_plugin_settings_unknown_source}"
+            FontFamily="{DynamicResource SettingWindowFont}"
             IsChecked="{Binding WarnFromUnknownSource}" />
         <CheckBox
             Grid.Row="1"
             Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             Content="{DynamicResource plugin_pluginsmanager_plugin_settings_auto_restart}"
+            FontFamily="{DynamicResource SettingWindowFont}"
             IsChecked="{Binding AutoRestartAfterChanging}" />
     </Grid>
 </UserControl>

@@ -174,6 +174,7 @@
             Margin="-25 -10 0 0"
             Background="{DynamicResource Color00B}"
             BorderThickness="0"
+            FontFamily="{DynamicResource SettingWindowFont}"
             SelectedIndex="0"
             TabStripPlacement="Top">
             <TabControl.ItemsPanel>
@@ -211,6 +212,7 @@
                         Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                         HorizontalAlignment="Left"
                         Content="{DynamicResource plugin_explorer_use_location_as_working_dir}"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         IsChecked="{Binding Settings.UseLocationAsWorkingDir}" />
 
                     <CheckBox
@@ -220,6 +222,7 @@
                         Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                         HorizontalAlignment="Left"
                         Content="{DynamicResource plugin_explorer_default_open_in_file_manager}"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         IsChecked="{Binding Settings.DefaultOpenFolderInFileManager}" />
 
                     <TextBlock
@@ -239,6 +242,7 @@
                             Width="{StaticResource SettingPanelPathTextBoxWidth}"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
+                            FontFamily="{DynamicResource SettingWindowFont}"
                             Text="{Binding FileEditorPath}"
                             TextWrapping="NoWrap" />
                         <Button
@@ -246,7 +250,8 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Command="{Binding OpenFileEditorPathCommand}"
-                            Content="{DynamicResource select}" />
+                            Content="{DynamicResource select}"
+                            FontFamily="{DynamicResource SettingWindowFont}" />
                     </StackPanel>
 
                     <TextBlock
@@ -266,6 +271,7 @@
                             Width="{StaticResource SettingPanelPathTextBoxWidth}"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
+                            FontFamily="{DynamicResource SettingWindowFont}"
                             Text="{Binding FolderEditorPath}"
                             TextWrapping="NoWrap" />
                         <Button
@@ -273,7 +279,8 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Command="{Binding OpenFolderEditorPathCommand}"
-                            Content="{DynamicResource select}" />
+                            Content="{DynamicResource select}"
+                            FontFamily="{DynamicResource SettingWindowFont}" />
                     </StackPanel>
 
                     <TextBlock
@@ -293,6 +300,7 @@
                             Width="{StaticResource SettingPanelPathTextBoxWidth}"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
+                            FontFamily="{DynamicResource SettingWindowFont}"
                             Text="{Binding ShellPath}"
                             TextWrapping="NoWrap" />
                         <Button
@@ -300,7 +308,8 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Command="{Binding OpenShellPathCommand}"
-                            Content="{DynamicResource select}" />
+                            Content="{DynamicResource select}"
+                            FontFamily="{DynamicResource SettingWindowFont}" />
                     </StackPanel>
 
                     <TextBlock
@@ -317,6 +326,7 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         DisplayMemberPath="Description"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         ItemsSource="{Binding IndexSearchEngines}"
                         SelectedItem="{Binding SelectedIndexSearchEngine}" />
 
@@ -334,6 +344,7 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         DisplayMemberPath="Description"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         ItemsSource="{Binding ContentIndexSearchEngines}"
                         SelectedItem="{Binding SelectedContentSearchEngine}" />
 
@@ -351,6 +362,7 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         DisplayMemberPath="Description"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         ItemsSource="{Binding PathEnumerationEngines}"
                         SelectedItem="{Binding SelectedPathEnumerationEngine}" />
 
@@ -367,6 +379,7 @@
                         MinWidth="{StaticResource SettingPanelTextBoxMinWidth}"
                         Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                         HorizontalAlignment="Left"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         Text="{Binding ExcludedFileTypes}"
                         ToolTip="{DynamicResource plugin_explorer_Excluded_File_Types_Tooltip}" />
 
@@ -384,6 +397,7 @@
                         Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         MaxLength="6"
                         PreviewTextInput="AllowOnlyNumericInput"
                         Text="{Binding MaxResult}"
@@ -395,7 +409,8 @@
                         Grid.ColumnSpan="2"
                         Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                         Click="btnOpenIndexingOptions_Click"
-                        Content="{DynamicResource plugin_explorer_Open_Window_Index_Option}" />
+                        Content="{DynamicResource plugin_explorer_Open_Window_Index_Option}"
+                        FontFamily="{DynamicResource SettingWindowFont}" />
                 </Grid>
             </TabItem>
             <TabItem
@@ -421,6 +436,7 @@
                         Grid.ColumnSpan="2"
                         Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                         Content="{DynamicResource plugin_explorer_native_context_menu_display_context_menu}"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         IsChecked="{Binding ShowWindowsContextMenu}" />
 
                     <TextBlock
@@ -440,6 +456,7 @@
                         Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                         HorizontalAlignment="Stretch"
                         AcceptsReturn="True"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         Text="{Binding WindowsContextMenuIncludedItems}"
                         TextWrapping="Wrap" />
 
@@ -460,6 +477,7 @@
                         Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                         HorizontalAlignment="Stretch"
                         AcceptsReturn="True"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         Text="{Binding WindowsContextMenuExcludedItems}"
                         TextWrapping="Wrap" />
                 </Grid>
@@ -496,14 +514,17 @@
                             <CheckBox
                                 Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                                 Content="{DynamicResource plugin_explorer_previewpanel_display_file_size_checkbox}"
+                                FontFamily="{DynamicResource SettingWindowFont}"
                                 IsChecked="{Binding ShowFileSizeInPreviewPanel}" />
                             <CheckBox
                                 Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                                 Content="{DynamicResource plugin_explorer_previewpanel_display_file_creation_checkbox}"
+                                FontFamily="{DynamicResource SettingWindowFont}"
                                 IsChecked="{Binding ShowCreatedDateInPreviewPanel}" />
                             <CheckBox
                                 Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                                 Content="{DynamicResource plugin_explorer_previewpanel_display_file_modification_checkbox}"
+                                FontFamily="{DynamicResource SettingWindowFont}"
                                 IsChecked="{Binding ShowModifiedDateInPreviewPanel}" />
                         </WrapPanel>
                     </DockPanel>
@@ -530,6 +551,7 @@
                             <StackPanel Margin="{StaticResource SettingPanelItemTopBottomMargin}" Orientation="Horizontal">
                                 <ComboBox
                                     Margin="{StaticResource SettingPanelItemLeftMargin}"
+                                    FontFamily="{DynamicResource SettingWindowFont}"
                                     ItemsSource="{Binding DateFormatList}"
                                     SelectedItem="{Binding PreviewPanelDateFormat}" />
                                 <TextBlock
@@ -541,6 +563,7 @@
                             <StackPanel Margin="{StaticResource SettingPanelItemTopBottomMargin}" Orientation="Horizontal">
                                 <ComboBox
                                     Margin="{StaticResource SettingPanelItemLeftMargin}"
+                                    FontFamily="{DynamicResource SettingWindowFont}"
                                     ItemsSource="{Binding TimeFormatList}"
                                     SelectedItem="{Binding PreviewPanelTimeFormat}" />
                                 <TextBlock
@@ -577,6 +600,7 @@
                         Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                         HorizontalAlignment="Left"
                         Content="{DynamicResource flowlauncher_plugin_everything_search_fullpath}"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         IsChecked="{Binding Settings.EverythingSearchFullPath}" />
 
                     <CheckBox
@@ -586,6 +610,7 @@
                         Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                         HorizontalAlignment="Left"
                         Content="{DynamicResource flowlauncher_plugin_everything_enable_run_count}"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         IsChecked="{Binding Settings.EverythingEnableRunCount}" />
 
                     <TextBlock
@@ -600,6 +625,7 @@
                         Grid.Column="1"
                         Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                         VerticalAlignment="Center"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         ItemsSource="{Binding Settings.SortOptions, Mode=OneWay}"
                         SelectedItem="{Binding Settings.SortOption}"
                         SelectionChanged="EverythingSortOptionChanged">
@@ -625,6 +651,7 @@
                         Width="{StaticResource SettingPanelPathTextBoxWidth}"
                         Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                         HorizontalAlignment="Left"
+                        FontFamily="{DynamicResource SettingWindowFont}"
                         Text="{Binding EverythingInstalledPath}" />
 
                     <TextBlock
@@ -679,7 +706,8 @@
                         <Button
                             MinWidth="100"
                             Command="{Binding EditActionKeywordCommand}"
-                            Content="{DynamicResource plugin_explorer_edit}" />
+                            Content="{DynamicResource plugin_explorer_edit}"
+                            FontFamily="{DynamicResource SettingWindowFont}" />
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -729,19 +757,22 @@
                             MinWidth="100"
                             Command="{Binding RemoveLinkCommand}"
                             CommandParameter="QuickAccessLink"
-                            Content="{DynamicResource plugin_explorer_delete}" />
+                            Content="{DynamicResource plugin_explorer_delete}"
+                            FontFamily="{DynamicResource SettingWindowFont}" />
                         <Button
                             MinWidth="100"
                             Margin="{StaticResource SettingPanelItemLeftMargin}"
                             Command="{Binding EditLinkCommand}"
                             CommandParameter="QuickAccessLink"
-                            Content="{DynamicResource plugin_explorer_edit}" />
+                            Content="{DynamicResource plugin_explorer_edit}"
+                            FontFamily="{DynamicResource SettingWindowFont}" />
                         <Button
                             MinWidth="100"
                             Margin="{StaticResource SettingPanelItemLeftMargin}"
                             Command="{Binding AddLinkCommand}"
                             CommandParameter="QuickAccessLink"
-                            Content="{DynamicResource plugin_explorer_add}" />
+                            Content="{DynamicResource plugin_explorer_add}"
+                            FontFamily="{DynamicResource SettingWindowFont}" />
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -789,19 +820,22 @@
                             MinWidth="100"
                             Command="{Binding RemoveLinkCommand}"
                             CommandParameter="IndexSearchExcludedPaths"
-                            Content="{DynamicResource plugin_explorer_delete}" />
+                            Content="{DynamicResource plugin_explorer_delete}"
+                            FontFamily="{DynamicResource SettingWindowFont}" />
                         <Button
                             MinWidth="100"
                             Margin="{StaticResource SettingPanelItemLeftMargin}"
                             Command="{Binding EditLinkCommand}"
                             CommandParameter="IndexSearchExcludedPaths"
-                            Content="{DynamicResource plugin_explorer_edit}" />
+                            Content="{DynamicResource plugin_explorer_edit}"
+                            FontFamily="{DynamicResource SettingWindowFont}" />
                         <Button
                             MinWidth="100"
                             Margin="{StaticResource SettingPanelItemLeftMargin}"
                             Command="{Binding AddLinkCommand}"
                             CommandParameter="IndexSearchExcludedPaths"
-                            Content="{DynamicResource plugin_explorer_add}" />
+                            Content="{DynamicResource plugin_explorer_add}"
+                            FontFamily="{DynamicResource SettingWindowFont}" />
                     </StackPanel>
                 </Grid>
             </TabItem>

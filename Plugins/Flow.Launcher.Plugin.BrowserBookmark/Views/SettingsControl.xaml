@@ -24,19 +24,23 @@
             <CheckBox
                 Margin="{StaticResource SettingPanelItemRightMargin}"
                 Content="Chrome"
+                FontFamily="{DynamicResource SettingWindowFont}"
                 IsChecked="{Binding LoadChromeBookmark}" />
             <CheckBox
                 Margin="{StaticResource SettingPanelItemRightMargin}"
                 Content="Edge"
+                FontFamily="{DynamicResource SettingWindowFont}"
                 IsChecked="{Binding LoadEdgeBookmark}" />
             <CheckBox
                 Margin="{StaticResource SettingPanelItemRightMargin}"
                 Content="Firefox"
+                FontFamily="{DynamicResource SettingWindowFont}"
                 IsChecked="{Binding LoadFirefoxBookmark}" />
             <Button
                 Margin="{StaticResource SettingPanelItemRightMargin}"
                 Click="Others_Click"
-                Content="{DynamicResource flowlauncher_plugin_browserbookmark_others}" />
+                Content="{DynamicResource flowlauncher_plugin_browserbookmark_others}"
+                FontFamily="{DynamicResource SettingWindowFont}" />
         </StackPanel>
         <StackPanel
             Name="CustomBrowsersList"
@@ -67,7 +71,8 @@
                 <Button
                     Width="100"
                     Click="NewCustomBrowser"
-                    Content="{DynamicResource flowlauncher_plugin_browserbookmark_addBrowserBookmark}" />
+                    Content="{DynamicResource flowlauncher_plugin_browserbookmark_addBrowserBookmark}"
+                    FontFamily="{DynamicResource SettingWindowFont}" />
                 <Button
                     Width="100"
                     Margin="{StaticResource SettingPanelItemLeftMargin}"
@@ -75,7 +80,10 @@
                     Content="{DynamicResource flowlauncher_plugin_browserbookmark_editBrowserBookmark}">
                     <Button.Style>
                         <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
-                            <Setter Property="IsEnabled" Value="true" />
+                            <Style.Setters>
+                                <Setter Property="IsEnabled" Value="true" />
+                                <Setter Property="FontFamily" Value="{DynamicResource SettingWindowFont}" />
+                            </Style.Setters>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding ElementName=CustomBrowsers, Path=SelectedItems.Count}" Value="0">
                                     <Setter Property="IsEnabled" Value="false" />
@@ -88,7 +96,8 @@
                     Width="100"
                     Margin="{StaticResource SettingPanelItemLeftMargin}"
                     Click="DeleteCustomBrowser"
-                    Content="{DynamicResource flowlauncher_plugin_browserbookmark_removeBrowserBookmark}" />
+                    Content="{DynamicResource flowlauncher_plugin_browserbookmark_removeBrowserBookmark}"
+                    FontFamily="{DynamicResource SettingWindowFont}" />
             </StackPanel>
         </StackPanel>
     </Grid>

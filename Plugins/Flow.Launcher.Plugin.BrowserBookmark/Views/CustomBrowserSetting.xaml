@@ -9,6 +9,7 @@
     Title="{DynamicResource flowlauncher_plugin_browserbookmark_bookmarkDataSetting}"
     Width="550"
     Background="{DynamicResource PopuBGColor}"
+    FontFamily="{DynamicResource SettingWindowFont}"
     Foreground="{DynamicResource PopupTextColor}"
     KeyDown="WindowKeyDown"
     ResizeMode="NoResize"
@@ -60,17 +61,17 @@
                     </Button>
                 </Grid>
             </StackPanel>
-            <StackPanel Margin="26,0,26,0">
-                <StackPanel Margin="0,0,0,12">
+            <StackPanel Margin="26 0 26 0">
+                <StackPanel Margin="0 0 0 12">
                     <TextBlock
-                        Margin="0,0,0,0"
+                        Margin="0 0 0 0"
                         FontSize="20"
                         FontWeight="SemiBold"
                         Text="{DynamicResource flowlauncher_plugin_browserbookmark_bookmarkDataSetting}"
                         TextAlignment="Left" />
                 </StackPanel>
 
-                <StackPanel Margin="0,0,0,20" Orientation="Horizontal">
+                <StackPanel Margin="0 0 0 20" Orientation="Horizontal">
                     <Grid Width="474" HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -86,23 +87,23 @@
                             Grid.Row="0"
                             Grid.Column="0"
                             Grid.ColumnSpan="2"
-                            Margin="5,0,0,20">
+                            Margin="5 0 0 20">
                             <TextBlock
-                                Margin="0,0,0,4"
+                                Margin="0 0 0 4"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 FontSize="14"
                                 Text="{DynamicResource flowlauncher_plugin_browserbookmark_guideMessage01}"
                                 TextWrapping="WrapWithOverflow" />
                             <TextBlock
-                                Margin="0,4,0,4"
+                                Margin="0 4 0 4"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 FontSize="14"
                                 Text="{DynamicResource flowlauncher_plugin_browserbookmark_guideMessage02}"
                                 TextWrapping="WrapWithOverflow" />
                             <TextBlock
-                                Margin="0,4,0,0"
+                                Margin="0 4 0 0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 FontSize="14"
@@ -112,7 +113,7 @@
                         <TextBlock
                             Grid.Row="1"
                             Grid.Column="0"
-                            Margin="5,0,20,0"
+                            Margin="5 0 20 0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             FontSize="14"
@@ -122,14 +123,15 @@
                             Grid.Column="1"
                             Width="120"
                             Height="34"
-                            Margin="5,0,10,0"
+                            Margin="5 0 10 0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
+                            FontFamily="{DynamicResource SettingWindowFont}"
                             Text="{Binding Name}" />
                         <TextBlock
                             Grid.Row="2"
                             Grid.Column="0"
-                            Margin="5,10,20,0"
+                            Margin="5 10 20 0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             FontSize="14"
@@ -139,15 +141,16 @@
                             Grid.Column="1"
                             Width="120"
                             Height="34"
-                            Margin="5,10,10,0"
+                            Margin="5 10 10 0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
+                            FontFamily="{DynamicResource SettingWindowFont}"
                             ItemsSource="{Binding Source={ui:EnumBindingSource {x:Type local:BrowserType}}}"
                             SelectedItem="{Binding BrowserType}" />
                         <TextBlock
                             Grid.Row="3"
                             Grid.Column="0"
-                            Margin="5,10,20,0"
+                            Margin="5 10 20 0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             FontSize="14"
@@ -159,17 +162,19 @@
                             <Button
                                 Height="34"
                                 MinWidth="100"
-                                Margin="5,10,0,0"
+                                Margin="5 10 0 0"
                                 VerticalContentAlignment="Stretch"
                                 Click="OnSelectPathClick"
                                 Content="{DynamicResource flowlauncher_plugin_browserbookmark_browseBrowserBookmark}"
-                                DockPanel.Dock="Right" />
+                                DockPanel.Dock="Right"
+                                FontFamily="{DynamicResource SettingWindowFont}" />
                             <TextBox
                                 Name="PathTextBox"
                                 Height="34"
-                                Margin="5,10,0,0"
+                                Margin="5 10 0 0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
+                                FontFamily="{DynamicResource SettingWindowFont}"
                                 Text="{Binding DataDirectoryPath}" />
                         </DockPanel>
                     </Grid>
@@ -180,19 +185,21 @@
             Grid.Row="1"
             Background="{DynamicResource PopupButtonAreaBGColor}"
             BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
-            BorderThickness="0,1,0,0">
+            BorderThickness="0 1 0 0">
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <Button
                     x:Name="btnCancel"
                     MinWidth="145"
-                    Margin="0,0,5,0"
+                    Margin="0 0 5 0"
                     Click="CancelEditCustomBrowser"
-                    Content="{DynamicResource cancel}" />
+                    Content="{DynamicResource cancel}"
+                    FontFamily="{DynamicResource SettingWindowFont}" />
                 <Button
                     Name="btnConfirm"
                     MinWidth="145"
-                    Margin="5,0,0,0"
+                    Margin="5 0 0 0"
                     Click="ConfirmEditCustomBrowser"
+                    FontFamily="{DynamicResource SettingWindowFont}"
                     Style="{StaticResource AccentButtonStyle}">
                     <TextBlock x:Name="lblAdd" Text="{DynamicResource done}" />
                 </Button>

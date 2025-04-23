@@ -9,6 +9,7 @@
     Width="550"
     d:DataContext="{d:DesignInstance vm:SearchSourceViewModel}"
     Background="{DynamicResource PopupBGColor}"
+    FontFamily="{DynamicResource SettingWindowFont}"
     Foreground="{DynamicResource PopupTextColor}"
     ResizeMode="NoResize"
     SizeToContent="Height"
@@ -76,6 +77,7 @@
                                 TextWrapping="WrapWithOverflow" />
                             <TextBox
                                 Margin="0 12 0 12"
+                                FontFamily="{DynamicResource SettingWindowFont}"
                                 FontSize="14"
                                 FontWeight="SemiBold"
                                 IsReadOnly="True"
@@ -116,6 +118,7 @@
                                     Margin="10"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Center"
+                                    FontFamily="{DynamicResource SettingWindowFont}"
                                     Text="{Binding SearchSource.Title}" />
                                 <TextBlock
                                     Grid.Row="1"
@@ -134,7 +137,8 @@
                                         Margin="10 0 0 0"
                                         VerticalAlignment="Center"
                                         Click="OnSelectIconClick"
-                                        Content="{DynamicResource flowlauncher_plugin_websearch_select_icon}" />
+                                        Content="{DynamicResource flowlauncher_plugin_websearch_select_icon}"
+                                        FontFamily="{DynamicResource SettingWindowFont}" />
                                     <Image
                                         Name="imgPreviewIcon"
                                         Width="24"
@@ -156,6 +160,7 @@
                                     Margin="10"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Center"
+                                    FontFamily="{DynamicResource SettingWindowFont}"
                                     Text="{Binding SearchSource.Url}" />
                                 <TextBlock
                                     Grid.Row="3"
@@ -172,6 +177,7 @@
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Center"
                                     DataObject.Pasting="TextBox_Pasting"
+                                    FontFamily="{DynamicResource SettingWindowFont}"
                                     PreviewKeyDown="TextBox_PreviewKeyDown"
                                     Text="{Binding SearchSource.ActionKeyword}" />
                                 <TextBlock
@@ -187,6 +193,7 @@
                                     Grid.Column="1"
                                     Margin="10 10 10 15"
                                     VerticalAlignment="Center"
+                                    FontFamily="{DynamicResource SettingWindowFont}"
                                     IsChecked="{Binding SearchSource.Enabled}" />
                             </Grid>
                         </StackPanel>
