@@ -726,12 +726,7 @@ namespace Flow.Launcher.ViewModel
                             _blockQueryExecution = false;
                         }
                         // restore selected item
-                        if (Results.Results.Contains(_lastSelectedResultItem))
-                        {
-                            Results.SelectedItem = _lastSelectedResultItem;
-                            Results.SelectedIndex = Results.Results.IndexOf(_lastSelectedResultItem);
-                        }
-                        else if (_lastSelectedResultIndex >= 0 && _lastSelectedResultIndex < Results.Results.Count)
+                        if (_lastSelectedResultIndex >= 0 && _lastSelectedResultIndex < Results.Results.Count)
                         {
                             Results.SelectedIndex = _lastSelectedResultIndex;
                             Results.SelectedItem = Results.Results[_lastSelectedResultIndex];
