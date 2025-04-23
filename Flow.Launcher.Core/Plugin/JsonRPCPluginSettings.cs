@@ -215,7 +215,7 @@ namespace Flow.Launcher.Core.Plugin
                             TextWrapping = TextWrapping.WrapWithOverflow
                         };
 
-                        desc.SetResourceReference(TextBlock.StyleProperty, "SettingPanelTextBlockDescriptionStyle"); // for theme change
+                        desc.SetResourceReference(FrameworkElement.StyleProperty, "SettingPanelTextBlockDescriptionStyle"); // for theme change
                     }
 
                     // Add the name and description to the panel
@@ -251,6 +251,8 @@ namespace Flow.Launcher.Core.Plugin
                                 ToolTip = attributes.Description
                             };
 
+                            textBox.SetResourceReference(Control.FontFamilyProperty, "SettingWindowFont"); // for theme change
+
                             textBox.TextChanged += (_, _) =>
                             {
                                 Settings[attributes.Name] = textBox.Text;
@@ -273,12 +275,14 @@ namespace Flow.Launcher.Core.Plugin
                                 ToolTip = attributes.Description
                             };
 
+                            textBox.SetResourceReference(Control.FontFamilyProperty, "SettingWindowFont"); // for theme change
+
                             textBox.TextChanged += (_, _) =>
                             {
                                 Settings[attributes.Name] = textBox.Text;
                             };
 
-                            var Btn = new Button()
+                            var btn = new Button()
                             {
                                 HorizontalAlignment = HorizontalAlignment.Left,
                                 VerticalAlignment = VerticalAlignment.Center,
@@ -286,7 +290,9 @@ namespace Flow.Launcher.Core.Plugin
                                 Content = API.GetTranslation("select")
                             };
 
-                            Btn.Click += (_, _) =>
+                            btn.SetResourceReference(Control.FontFamilyProperty, "SettingWindowFont"); // for theme change
+
+                            btn.Click += (_, _) =>
                             {
                                 using System.Windows.Forms.CommonDialog dialog = type switch
                                 {
@@ -320,7 +326,7 @@ namespace Flow.Launcher.Core.Plugin
 
                             // Create a stack panel to wrap the button and text box
                             stackPanel.Children.Add(textBox);
-                            stackPanel.Children.Add(Btn);
+                            stackPanel.Children.Add(btn);
 
                             contentControl = stackPanel;
 
@@ -339,6 +345,8 @@ namespace Flow.Launcher.Core.Plugin
                                 Text = Settings[attributes.Name] as string ?? string.Empty,
                                 ToolTip = attributes.Description
                             };
+
+                            textBox.SetResourceReference(Control.FontFamilyProperty, "SettingWindowFont"); // for theme change
 
                             textBox.TextChanged += (sender, _) =>
                             {
@@ -362,6 +370,8 @@ namespace Flow.Launcher.Core.Plugin
                                 ToolTip = attributes.Description,
                             };
 
+                            passwordBox.SetResourceReference(Control.FontFamilyProperty, "SettingWindowFont"); // for theme change
+
                             passwordBox.PasswordChanged += (sender, _) =>
                             {
                                 Settings[attributes.Name] = ((PasswordBox)sender).Password;
@@ -382,6 +392,8 @@ namespace Flow.Launcher.Core.Plugin
                                 Margin = SettingPanelItemLeftTopBottomMargin,
                                 ToolTip = attributes.Description
                             };
+
+                            comboBox.SetResourceReference(Control.FontFamilyProperty, "SettingWindowFont"); // for theme change
 
                             comboBox.SelectionChanged += (sender, _) =>
                             {
@@ -408,6 +420,8 @@ namespace Flow.Launcher.Core.Plugin
                                 Content = attributes.Label,
                                 ToolTip = attributes.Description
                             };
+
+                            checkBox.SetResourceReference(Control.FontFamilyProperty, "SettingWindowFont"); // for theme change
 
                             checkBox.Click += (sender, _) =>
                             {
@@ -451,7 +465,7 @@ namespace Flow.Launcher.Core.Plugin
                         {
                             var sep = new Separator();
 
-                            sep.SetResourceReference(Separator.StyleProperty, "SettingPanelSeparatorStyle");
+                            sep.SetResourceReference(FrameworkElement.StyleProperty, "SettingPanelSeparatorStyle");
 
                             contentControl = sep;
 
