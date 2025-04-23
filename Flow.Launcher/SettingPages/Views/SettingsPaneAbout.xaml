@@ -39,8 +39,12 @@
                     <Button
                         Margin="0 0 10 0"
                         Command="{Binding UpdateAppCommand}"
-                        Content="{DynamicResource checkUpdates}" />
-                    <Button Padding="0" Style="{StaticResource AccentButtonStyle}">
+                        Content="{DynamicResource checkUpdates}"
+                        FontFamily="{DynamicResource SettingWindowFont}" />
+                    <Button
+                        Padding="0"
+                        FontFamily="{DynamicResource SettingWindowFont}"
+                        Style="{StaticResource AccentButtonStyle}">
                         <Hyperlink
                             NavigateUri="{Binding SponsorPage}"
                             RequestNavigate="OnRequestNavigate"
@@ -58,14 +62,16 @@
                 <cc:HyperLink Text="{DynamicResource releaseNotes}" Uri="{Binding ReleaseNotes}" />
             </cc:Card>
 
-
             <cc:Card
                 Title="{DynamicResource userdatapath}"
                 Margin="0 14 0 0"
                 Icon="&#xEC25;;"
                 Sub="{DynamicResource userdatapathToolTip}">
                 <StackPanel Orientation="Horizontal">
-                    <Button Command="{Binding OpenParentOfSettingsFolderCommand}" Content="{DynamicResource userdatapathButton}" />
+                    <Button
+                        Command="{Binding OpenParentOfSettingsFolderCommand}"
+                        Content="{DynamicResource userdatapathButton}"
+                        FontFamily="{DynamicResource SettingWindowFont}" />
                 </StackPanel>
             </cc:Card>
 
@@ -98,30 +104,41 @@
                     <Button
                         Margin="0 0 12 0"
                         Command="{Binding AskClearCacheFolderConfirmationCommand}"
-                        Content="{Binding CacheFolderSize, Mode=OneWay}" />
+                        Content="{Binding CacheFolderSize, Mode=OneWay}"
+                        FontFamily="{DynamicResource SettingWindowFont}" />
                     <Button
                         Margin="0 0 12 0"
                         Command="{Binding AskClearLogFolderConfirmationCommand}"
-                        Content="{Binding LogFolderSize, Mode=OneWay}" />
+                        Content="{Binding LogFolderSize, Mode=OneWay}"
+                        FontFamily="{DynamicResource SettingWindowFont}" />
                     <Button
                         Content="&#xec7a;"
                         FontFamily="/Resources/#Segoe Fluent Icons"
                         FontSize="20">
                         <ui:FlyoutService.Flyout>
                             <ui:MenuFlyout>
-                                <MenuItem Command="{Binding OpenWelcomeWindowCommand}" Header="{DynamicResource welcomewindow}">
+                                <MenuItem
+                                    Command="{Binding OpenWelcomeWindowCommand}"
+                                    FontFamily="{DynamicResource SettingWindowFont}"
+                                    Header="{DynamicResource welcomewindow}">
                                     <MenuItem.Icon>
                                         <ui:FontIcon Glyph="&#xe939;" />
                                     </MenuItem.Icon>
                                 </MenuItem>
 
-                                <MenuItem Command="{Binding OpenSettingsFolderCommand}" Header="{DynamicResource settingfolder}">
+                                <MenuItem
+                                    Command="{Binding OpenSettingsFolderCommand}"
+                                    FontFamily="{DynamicResource SettingWindowFont}"
+                                    Header="{DynamicResource settingfolder}">
                                     <MenuItem.Icon>
                                         <ui:FontIcon Glyph="&#xe8b7;" />
                                     </MenuItem.Icon>
                                 </MenuItem>
 
-                                <MenuItem Command="{Binding OpenLogsFolderCommand}" Header="{DynamicResource logfolder}">
+                                <MenuItem
+                                    Command="{Binding OpenLogsFolderCommand}"
+                                    FontFamily="{DynamicResource SettingWindowFont}"
+                                    Header="{DynamicResource logfolder}">
                                     <MenuItem.Icon>
                                         <ui:FontIcon Glyph="&#xe8b7;" />
                                     </MenuItem.Icon>
@@ -143,6 +160,7 @@
                         Type="Inside">
                         <ComboBox
                             DisplayMemberPath="Display"
+                            FontFamily="{DynamicResource SettingWindowFont}"
                             ItemsSource="{Binding LogLevels}"
                             SelectedValue="{Binding LogLevel}"
                             SelectedValuePath="Value" />
@@ -152,12 +170,16 @@
                         Icon="&#xf259;"
                         Type="Inside">
                         <StackPanel Orientation="Horizontal">
-                            <Button Command="{Binding ResetSettingWindowFontCommand}" Content="Reset" />
+                            <Button
+                                Command="{Binding ResetSettingWindowFontCommand}"
+                                Content="Reset"
+                                FontFamily="{DynamicResource SettingWindowFont}" />
                             <ComboBox
                                 Margin="12 8 0 8"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Top"
                                 DisplayMemberPath="Source"
+                                FontFamily="{DynamicResource SettingWindowFont}"
                                 ItemsSource="{Binding Source={StaticResource SortedFonts}}"
                                 SelectedValue="{Binding SettingWindowFont, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 SelectedValuePath="Source" />
