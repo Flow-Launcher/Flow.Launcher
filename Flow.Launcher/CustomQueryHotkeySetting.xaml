@@ -8,7 +8,7 @@
     Width="530"
     Background="{DynamicResource PopuBGColor}"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
-    FontFamily="{Binding Settings.SettingWindowFont, Mode=TwoWay}"
+    FontFamily="{DynamicResource SettingWindowFont}"
     Foreground="{DynamicResource PopupTextColor}"
     Icon="Images\app.png"
     MouseDown="window_MouseDown"
@@ -120,7 +120,8 @@
                         Grid.Column="1"
                         Margin="10"
                         HorizontalAlignment="Stretch"
-                        VerticalAlignment="Center" />
+                        VerticalAlignment="Center"
+                        FontFamily="{DynamicResource SettingWindowFont}" />
                     <Button
                         x:Name="btnTestActionKeyword"
                         Grid.Row="1"
@@ -128,7 +129,8 @@
                         Margin="0 0 10 0"
                         Padding="10 5 10 5"
                         Click="BtnTestActionKeyword_OnClick"
-                        Content="{DynamicResource preview}" />
+                        Content="{DynamicResource preview}"
+                        FontFamily="{DynamicResource SettingWindowFont}" />
                 </Grid>
             </StackPanel>
         </StackPanel>
@@ -144,12 +146,14 @@
                     MinWidth="140"
                     Margin="10 0 5 0"
                     Click="BtnCancel_OnClick"
-                    Content="{DynamicResource cancel}" />
+                    Content="{DynamicResource cancel}"
+                    FontFamily="{DynamicResource SettingWindowFont}" />
                 <Button
                     x:Name="btnAdd"
                     MinWidth="140"
                     Margin="5 0 10 0"
                     Click="btnAdd_OnClick"
+                    FontFamily="{DynamicResource SettingWindowFont}"
                     Style="{StaticResource AccentButtonStyle}">
                     <TextBlock x:Name="lblAdd" Text="{DynamicResource done}" />
                 </Button>
