@@ -42,11 +42,9 @@ namespace Flow.Launcher.Resources.Controls
 
         private static void keyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var control = d as UserControl;
-            if (null == control) return; // This should not be possible
+            if (d is not UserControl) return; // This should not be possible
 
-            var newValue = e.NewValue as string;
-            if (null == newValue) return;
+            if (e.NewValue is not string newValue) return;
 
             if (d is not HotkeyDisplay hotkeyDisplay)
                 return;
