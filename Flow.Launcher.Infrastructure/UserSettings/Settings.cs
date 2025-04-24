@@ -113,6 +113,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 if (_settingWindowFont != value)
                 {
                     _settingWindowFont = value;
+                    OnPropertyChanged();
                     Application.Current.Resources["SettingWindowFont"] = new FontFamily(value);
                     Application.Current.Resources["ContentControlThemeFontFamily"] = new FontFamily(value);
                 }
