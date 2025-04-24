@@ -7,15 +7,15 @@
     mc:Ignorable="d">
     <Button
         Width="Auto"
+        Click="GetNewHotkey"
         FontSize="13"
         FontWeight="Bold"
-        Foreground="{DynamicResource Color01B}"
-        Click="GetNewHotkey">
+        Foreground="{DynamicResource Color01B}">
         <Button.Template>
             <ControlTemplate TargetType="Button">
                 <Border
                     x:Name="ButtonBorder"
-                    Padding="5,0,5,0"
+                    Padding="5 0 5 0"
                     Background="{DynamicResource ButtonBackgroundColor}"
                     BorderBrush="{DynamicResource ButtonInsideBorder}"
                     BorderThickness="1"
@@ -28,26 +28,21 @@
                             <Condition Property="IsMouseOver" Value="True" />
                             <Condition Property="IsPressed" Value="True" />
                         </MultiTrigger.Conditions>
-                        <Setter TargetName="ButtonBorder" Property="Background"
-                                Value="{DynamicResource ButtonMousePressed}" />
-                        <Setter TargetName="ButtonBorder" Property="BorderBrush"
-                                Value="{DynamicResource ButtonMousePressedInsideBorder}" />
+                        <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource ButtonMousePressed}" />
+                        <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{DynamicResource ButtonMousePressedInsideBorder}" />
                     </MultiTrigger>
                     <MultiTrigger>
                         <MultiTrigger.Conditions>
                             <Condition Property="IsMouseOver" Value="True" />
                         </MultiTrigger.Conditions>
-                        <Setter TargetName="ButtonBorder" Property="Background"
-                                Value="{DynamicResource ButtonMouseOver}" />
+                        <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource ButtonMouseOver}" />
                     </MultiTrigger>
                     <MultiTrigger>
                         <MultiTrigger.Conditions>
                             <Condition Property="IsPressed" Value="True" />
                         </MultiTrigger.Conditions>
-                        <Setter TargetName="ButtonBorder" Property="Background"
-                                Value="{DynamicResource ButtonMousePressed}" />
-                        <Setter TargetName="ButtonBorder" Property="BorderBrush"
-                                Value="{DynamicResource CustomContextHover}" />
+                        <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource ButtonMousePressed}" />
+                        <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{DynamicResource CustomContextHover}" />
                     </MultiTrigger>
                 </ControlTemplate.Triggers>
             </ControlTemplate>
@@ -62,8 +57,8 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border
-                            Margin="2,5,2,5"
-                            Padding="10,5,10,5"
+                            Margin="2 5 2 5"
+                            Padding="10 5 10 5"
                             Background="{DynamicResource AccentButtonBackground}"
                             BorderThickness="1"
                             CornerRadius="5">
