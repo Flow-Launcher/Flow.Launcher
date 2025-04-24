@@ -154,7 +154,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public Control CreateSettingPanel()
         {
-            if (!NeedCreateSettingPanel()) return null;
+            if (!NeedCreateSettingPanel()) return null!;
 
             // Create main grid with two columns (Column 1: Auto, Column 2: *)
             var mainPanel = new Grid { Margin = SettingPanelMargin, VerticalAlignment = VerticalAlignment.Center };
