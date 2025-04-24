@@ -177,6 +177,7 @@ namespace Flow.Launcher
 
                 _mainWindow = new MainWindow();
                 Current.Resources["SettingWindowFont"] = new FontFamily(_settings.SettingWindowFont);
+                Current.Resources["ContentControlThemeFontFamily"] = new FontFamily(_settings.SettingWindowFont);
 
                 API.LogInfo(ClassName, "Dependencies Info:{ErrorReporting.DependenciesInfo()}");
 
