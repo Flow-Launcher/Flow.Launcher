@@ -5,6 +5,7 @@
     xmlns:ui="http://schemas.modernwpf.com/2019">
 
     <!--  Setting Window Font  -->
+    <FontFamily x:Key="SettingWindowFont">Segoe UI</FontFamily>
     <Style TargetType="ui:FontIcon">
         <Setter Property="FontFamily" Value="/Resources/#Segoe Fluent Icons" />
     </Style>
