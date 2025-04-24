@@ -154,7 +154,7 @@ namespace Flow.Launcher
                 Ioc.Default.GetRequiredService<Portable>().PreStartCleanUpAfterPortabilityUpdate();
 
                 API.LogInfo(ClassName, "Begin Flow Launcher startup ----------------------------------------------------");
-                API.LogInfo(ClassName, "Runtime info:{ErrorReporting.RuntimeInfo()}");
+                API.LogInfo(ClassName, $"Runtime info:{ErrorReporting.RuntimeInfo()}");
 
                 RegisterAppDomainExceptions();
                 RegisterDispatcherUnhandledException();
@@ -174,19 +174,16 @@ namespace Flow.Launcher
                 await PluginManager.InitializePluginsAsync();
 
                 // Change language after all plugins are initialized because we need to update plugin title based on their api
-                // TODO: Clean InternationalizationManager.Instance and InternationalizationManager.Instance.GetTranslation in future
                 await Ioc.Default.GetRequiredService<Internationalization>().InitializeLanguageAsync();
 
                 await imageLoadertask;
 
                 _mainWindow = new MainWindow();
 
-                API.LogInfo(ClassName, "Dependencies Info:{ErrorReporting.DependenciesInfo()}");
-
                 Current.MainWindow = _mainWindow;
                 Current.MainWindow.Title = Constant.FlowLauncher;
 
-                // main windows needs initialized before theme change because of blur settings
+                // Main windows needs initialized before theme change because of blur settings
                 Ioc.Default.GetRequiredService<Theme>().ChangeTheme();
 
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -270,7 +267,7 @@ namespace Flow.Launcher
         }
 
         /// <summary>
-        /// let exception throw as normal is better for Debug
+        /// Let exception throw as normal is better for Debug
         /// </summary>
         [Conditional("RELEASE")]
         private void RegisterDispatcherUnhandledException()
@@ -279,7 +276,7 @@ namespace Flow.Launcher
         }
 
         /// <summary>
-        /// let exception throw as normal is better for Debug
+        /// Let exception throw as normal is better for Debug
         /// </summary>
         [Conditional("RELEASE")]
         private static void RegisterAppDomainExceptions()
@@ -288,7 +285,7 @@ namespace Flow.Launcher
         }
 
         /// <summary>
-        /// let exception throw as normal is better for Debug
+        /// Let exception throw as normal is better for Debug
         /// </summary>
         [Conditional("RELEASE")]
         private static void RegisterTaskSchedulerUnhandledException()
