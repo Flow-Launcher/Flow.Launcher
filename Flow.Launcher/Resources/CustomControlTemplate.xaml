@@ -1360,6 +1360,7 @@
         <Setter Property="SelectionBrush" Value="{DynamicResource TextControlSelectionHighlightColor}" />
         <Setter Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThickness}" />
         <Setter Property="FontFamily" Value="{DynamicResource ContentControlThemeFontFamily}" />
+        <Setter Property="FontFamily" Value="{DynamicResource SettingWindowFont}" />
         <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
