@@ -147,6 +147,10 @@ namespace Flow.Launcher
 
                 Log.SetLogLevel(_settings.LogLevel);
 
+                // Update dynamic resources base on settings
+                Current.Resources["SettingWindowFont"] = new FontFamily(_settings.SettingWindowFont);
+                Current.Resources["ContentControlThemeFontFamily"] = new FontFamily(_settings.SettingWindowFont);
+
                 Ioc.Default.GetRequiredService<Portable>().PreStartCleanUpAfterPortabilityUpdate();
 
                 API.LogInfo(ClassName, "Begin Flow Launcher startup ----------------------------------------------------");
@@ -176,8 +180,6 @@ namespace Flow.Launcher
                 await imageLoadertask;
 
                 _mainWindow = new MainWindow();
-                Current.Resources["SettingWindowFont"] = new FontFamily(_settings.SettingWindowFont);
-                Current.Resources["ContentControlThemeFontFamily"] = new FontFamily(_settings.SettingWindowFont);
 
                 API.LogInfo(ClassName, "Dependencies Info:{ErrorReporting.DependenciesInfo()}");
 
