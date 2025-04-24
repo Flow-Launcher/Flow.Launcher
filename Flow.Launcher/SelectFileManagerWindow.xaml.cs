@@ -12,13 +12,14 @@ namespace Flow.Launcher
     [INotifyPropertyChanged]
     public partial class SelectFileManagerWindow : Window
     {
-        public Settings Settings { get; }
+        private readonly Settings _settings;
 
         private int selectedCustomExplorerIndex;
 
         public int SelectedCustomExplorerIndex
         {
-            get => selectedCustomExplorerIndex; set
+            get => selectedCustomExplorerIndex;
+            set
             {
                 selectedCustomExplorerIndex = value;
                 OnPropertyChanged(nameof(CustomExplorer));
@@ -29,9 +30,9 @@ namespace Flow.Launcher
         public CustomExplorerViewModel CustomExplorer => CustomExplorers[SelectedCustomExplorerIndex];
         public SelectFileManagerWindow(Settings settings)
         {
-            Settings = settings;
-            CustomExplorers = new ObservableCollection<CustomExplorerViewModel>(Settings.CustomExplorerList.Select(x => x.Copy()));
-            SelectedCustomExplorerIndex = Settings.CustomExplorerIndex;
+            _settings = settings;
+            CustomExplorers = new ObservableCollection<CustomExplorerViewModel>(_settings.CustomExplorerList.Select(x => x.Copy()));
+            SelectedCustomExplorerIndex = _settings.CustomExplorerIndex;
             InitializeComponent();
         }
 
@@ -42,8 +43,8 @@ namespace Flow.Launcher
 
         private void btnDone_Click(object sender, RoutedEventArgs e)
         {
-            Settings.CustomExplorerList = CustomExplorers.ToList();
-            Settings.CustomExplorerIndex = SelectedCustomExplorerIndex;
+            _settings.CustomExplorerList = CustomExplorers.ToList();
+            _settings.CustomExplorerIndex = SelectedCustomExplorerIndex;
             Close();
         }
 

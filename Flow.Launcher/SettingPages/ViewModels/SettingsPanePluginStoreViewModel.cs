@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
-using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
 
