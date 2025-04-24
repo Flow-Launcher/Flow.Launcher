@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core;
 using Flow.Launcher.Core.Configuration;
@@ -175,6 +176,7 @@ namespace Flow.Launcher
                 await imageLoadertask;
 
                 _mainWindow = new MainWindow();
+                Current.Resources["SettingWindowFont"] = new FontFamily(_settings.SettingWindowFont);
 
                 API.LogInfo(ClassName, "Dependencies Info:{ErrorReporting.DependenciesInfo()}");
 
