@@ -140,7 +140,8 @@ namespace Flow.Launcher
                 _viewModel.Show();
             }
 
-            // Show notify icon when flowlauncher is hidden
+            // Initialize context menu & notify icon
+            InitializeContextMenu();
             InitializeNotifyIcon();
 
             // Initialize color scheme
@@ -269,6 +270,9 @@ namespace Flow.Launcher
                         break;
                     case nameof(Settings.KeepMaxResults):
                         SetupResizeMode();
+                        break;
+                    case nameof(Settings.SettingWindowFont):
+                        InitializeContextMenu();
                         break;
                 }
             };
@@ -563,6 +567,44 @@ namespace Flow.Launcher
                 Icon = Constant.Version == "1.0.0" ? Properties.Resources.dev : Properties.Resources.app,
                 Visible = !_settings.HideNotifyIcon
             };
+
+            _notifyIcon.MouseClick += (o, e) =>
+            {
+                switch (e.Button)
+                {
+                    case MouseButtons.Left:
+                        _viewModel.ToggleFlowLauncher();
+                        break;
+                    case MouseButtons.Right:
+
+                        _contextMenu.IsOpen = true;
+                        // Get context menu handle and bring it to the foreground
+                        if (PresentationSource.FromVisual(_contextMenu) is HwndSource hwndSource)
+                        {
+                            Win32Helper.SetForegroundWindow(hwndSource.Handle);
+                        }
+
+                        _contextMenu.Focus();
+                        break;
+                }
+            };
+        }
+
+        private void UpdateNotifyIconText()
+        {
+            var menu = _contextMenu;
+            ((MenuItem)menu.Items[0]).Header = App.API.GetTranslation("iconTrayOpen") +
+                                               " (" + _settings.Hotkey + ")";
+            ((MenuItem)menu.Items[1]).Header = App.API.GetTranslation("GameMode");
+            ((MenuItem)menu.Items[2]).Header = App.API.GetTranslation("PositionReset");
+            ((MenuItem)menu.Items[3]).Header = App.API.GetTranslation("iconTraySettings");
+            ((MenuItem)menu.Items[4]).Header = App.API.GetTranslation("iconTrayExit");
+        }
+
+        private void InitializeContextMenu()
+        {
+            var menu = _contextMenu;
+            menu.Items.Clear();
             var openIcon = new FontIcon { Glyph = "\ue71e" };
             var open = new MenuItem
             {
@@ -608,38 +650,6 @@ namespace Flow.Launcher
             _contextMenu.Items.Add(positionreset);
             _contextMenu.Items.Add(settings);
             _contextMenu.Items.Add(exit);
-
-            _notifyIcon.MouseClick += (o, e) =>
-            {
-                switch (e.Button)
-                {
-                    case MouseButtons.Left:
-                        _viewModel.ToggleFlowLauncher();
-                        break;
-                    case MouseButtons.Right:
-
-                        _contextMenu.IsOpen = true;
-                        // Get context menu handle and bring it to the foreground
-                        if (PresentationSource.FromVisual(_contextMenu) is HwndSource hwndSource)
-                        {
-                            Win32Helper.SetForegroundWindow(hwndSource.Handle);
-                        }
-
-                        _contextMenu.Focus();
-                        break;
-                }
-            };
-        }
-
-        private void UpdateNotifyIconText()
-        {
-            var menu = _contextMenu;
-            ((MenuItem)menu.Items[0]).Header = App.API.GetTranslation("iconTrayOpen") +
-                                               " (" + _settings.Hotkey + ")";
-            ((MenuItem)menu.Items[1]).Header = App.API.GetTranslation("GameMode");
-            ((MenuItem)menu.Items[2]).Header = App.API.GetTranslation("PositionReset");
-            ((MenuItem)menu.Items[3]).Header = App.API.GetTranslation("iconTraySettings");
-            ((MenuItem)menu.Items[4]).Header = App.API.GetTranslation("iconTrayExit");
         }
 
         #endregion

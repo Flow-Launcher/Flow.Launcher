@@ -115,7 +115,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                     _settingWindowFont = value;
                     Application.Current.Resources["SettingWindowFont"] = new FontFamily(value);
                     Application.Current.Resources["ContentControlThemeFontFamily"] = new FontFamily(value);
-                    // TODO: Context Menu Font
                 }
             }
         }
