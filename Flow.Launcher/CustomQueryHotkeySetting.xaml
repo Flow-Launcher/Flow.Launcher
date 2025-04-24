@@ -8,7 +8,6 @@
     Width="530"
     Background="{DynamicResource PopuBGColor}"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
-    FontFamily="{Binding Settings.SettingWindowFont, Mode=TwoWay}"
     Foreground="{DynamicResource PopupTextColor}"
     Icon="Images\app.png"
     MouseDown="window_MouseDown"

@@ -4,6 +4,20 @@
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:ui="http://schemas.modernwpf.com/2019">
 
+    <!--  Setting Window Font  -->
+    <Style TargetType="ui:FontIcon">
+        <Setter Property="FontFamily" Value="/Resources/#Segoe Fluent Icons" />
+    </Style>
+    <Style TargetType="Control">
+        <Setter Property="FontFamily" Value="{DynamicResource SettingWindowFont}" />
+    </Style>
+    <Style TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{DynamicResource SettingWindowFont}" />
+    </Style>
+    <Style TargetType="Window">
+        <Setter Property="FontFamily" Value="{DynamicResource SettingWindowFont}" />
+    </Style>
+
     <ContextMenu x:Key="TextBoxContextMenu">
         <MenuItem Command="ApplicationCommands.Cut" Header="{DynamicResource cut}">
             <MenuItem.Icon>
