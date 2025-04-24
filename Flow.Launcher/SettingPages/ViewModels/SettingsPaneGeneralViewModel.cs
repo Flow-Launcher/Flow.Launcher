@@ -19,10 +19,10 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public Settings Settings { get; }
 
     private readonly Updater _updater;
-    private readonly IPortable _portable;
+    private readonly Portable _portable;
     private readonly Internationalization _translater;
 
-    public SettingsPaneGeneralViewModel(Settings settings, Updater updater, IPortable portable, Internationalization translater)
+    public SettingsPaneGeneralViewModel(Settings settings, Updater updater, Portable portable, Internationalization translater)
     {
         Settings = settings;
         _updater = updater;

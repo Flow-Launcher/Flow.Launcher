@@ -19,6 +19,7 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.SettingPages.ViewModels;
 using Flow.Launcher.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -74,14 +75,23 @@ namespace Flow.Launcher
                         .AddSingleton(_ => _settings)
                         .AddSingleton(sp => new Updater(sp.GetRequiredService<IPublicAPI>(), Launcher.Properties.Settings.Default.GithubRepo))
                         .AddSingleton<Portable>()
-                        .AddSingleton<SettingWindowViewModel>()
                         .AddSingleton<IAlphabet, PinyinAlphabet>()
                         .AddSingleton<StringMatcher>()
                         .AddSingleton<Internationalization>()
                         .AddSingleton<IPublicAPI, PublicAPIInstance>()
                         .AddSingleton<MainViewModel>()
                         .AddSingleton<Theme>()
+                        // Welcome view model & setting window view model is very simple so we just use one instance
+                        .AddSingleton<SettingWindowViewModel>()
                         .AddSingleton<WelcomeViewModel>()
+                        // Setting page view models are complex so we use transient instance
+                        .AddTransient<SettingsPaneAboutViewModel>()
+                        .AddTransient<SettingsPaneGeneralViewModel>()
+                        .AddTransient<SettingsPaneHotkeyViewModel>()
+                        .AddTransient<SettingsPanePluginsViewModel>()
+                        .AddTransient<SettingsPanePluginStoreViewModel>()
+                        .AddTransient<SettingsPaneProxyViewModel>()
+                        .AddTransient<SettingsPaneThemeViewModel>()
                     ).Build();
                 Ioc.Default.ConfigureServices(host.Services);
             }
