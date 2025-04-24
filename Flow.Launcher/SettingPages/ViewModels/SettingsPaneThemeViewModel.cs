@@ -6,7 +6,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Media;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
@@ -22,10 +21,12 @@ namespace Flow.Launcher.SettingPages.ViewModels;
 
 public partial class SettingsPaneThemeViewModel : BaseModel
 {
+    public Settings Settings { get; }
+
+    private readonly Theme _theme;
+
     private readonly string DefaultFont = Win32Helper.GetSystemDefaultFont();
     public string BackdropSubText => !Win32Helper.IsBackdropSupported() ? App.API.GetTranslation("BackdropTypeDisabledToolTip") : ""; 
-    public Settings Settings { get; }
-    private readonly Theme _theme = Ioc.Default.GetRequiredService<Theme>();
 
     public static string LinkHowToCreateTheme => @"https://www.flowlauncher.com/theme-builder/";
     public static string LinkThemeGallery => "https://github.com/Flow-Launcher/Flow.Launcher/discussions/1438";
@@ -289,59 +290,14 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         set => Settings.UseDate = value;
     }
 
+    public FontFamily ClockPanelFont { get; }
+
     public Brush PreviewBackground
     {
         get => WallpaperPathRetrieval.GetWallpaperBrush();
     }
 
-    public ResultsViewModel PreviewResults
-    {
-        get
-        {
-            var results = new List<Result>
-            {
-                new()
-                {
-                    Title = App.API.GetTranslation("SampleTitleExplorer"),
-                    SubTitle = App.API.GetTranslation("SampleSubTitleExplorer"),
-                    IcoPath = Path.Combine(
-                        Constant.ProgramDirectory,
-                        @"Plugins\Flow.Launcher.Plugin.Explorer\Images\explorer.png"
-                    )
-                },
-                new()
-                {
-                    Title = App.API.GetTranslation("SampleTitleWebSearch"),
-                    SubTitle = App.API.GetTranslation("SampleSubTitleWebSearch"),
-                    IcoPath = Path.Combine(
-                        Constant.ProgramDirectory,
-                        @"Plugins\Flow.Launcher.Plugin.WebSearch\Images\web_search.png"
-                    )
-                },
-                new()
-                {
-                    Title = App.API.GetTranslation("SampleTitleProgram"),
-                    SubTitle = App.API.GetTranslation("SampleSubTitleProgram"),
-                    IcoPath = Path.Combine(
-                        Constant.ProgramDirectory,
-                        @"Plugins\Flow.Launcher.Plugin.Program\Images\program.png"
-                    )
-                },
-                new()
-                {
-                    Title = App.API.GetTranslation("SampleTitleProcessKiller"),
-                    SubTitle = App.API.GetTranslation("SampleSubTitleProcessKiller"),
-                    IcoPath = Path.Combine(
-                        Constant.ProgramDirectory,
-                        @"Plugins\Flow.Launcher.Plugin.ProcessKiller\Images\app.png"
-                    )
-                }
-            };
-            var vm = new ResultsViewModel(Settings);
-            vm.AddResults(results, "PREVIEW");
-            return vm;
-        }
-    }
+    public ResultsViewModel PreviewResults { get; }
 
     public FontFamily SelectedQueryBoxFont
     {
@@ -479,9 +435,53 @@ public partial class SettingsPaneThemeViewModel : BaseModel
 
     public string ThemeImage => Constant.QueryTextBoxIconImagePath;
 
-    public SettingsPaneThemeViewModel(Settings settings)
+    public SettingsPaneThemeViewModel(Settings settings, Theme theme)
     {
         Settings = settings;
+        _theme = theme;
+        ClockPanelFont = new FontFamily(DefaultFont);
+        var results = new List<Result>
+            {
+                new()
+                {
+                    Title = App.API.GetTranslation("SampleTitleExplorer"),
+                    SubTitle = App.API.GetTranslation("SampleSubTitleExplorer"),
+                    IcoPath = Path.Combine(
+                        Constant.ProgramDirectory,
+                        @"Plugins\Flow.Launcher.Plugin.Explorer\Images\explorer.png"
+                    )
+                },
+                new()
+                {
+                    Title = App.API.GetTranslation("SampleTitleWebSearch"),
+                    SubTitle = App.API.GetTranslation("SampleSubTitleWebSearch"),
+                    IcoPath = Path.Combine(
+                        Constant.ProgramDirectory,
+                        @"Plugins\Flow.Launcher.Plugin.WebSearch\Images\web_search.png"
+                    )
+                },
+                new()
+                {
+                    Title = App.API.GetTranslation("SampleTitleProgram"),
+                    SubTitle = App.API.GetTranslation("SampleSubTitleProgram"),
+                    IcoPath = Path.Combine(
+                        Constant.ProgramDirectory,
+                        @"Plugins\Flow.Launcher.Plugin.Program\Images\program.png"
+                    )
+                },
+                new()
+                {
+                    Title = App.API.GetTranslation("SampleTitleProcessKiller"),
+                    SubTitle = App.API.GetTranslation("SampleSubTitleProcessKiller"),
+                    IcoPath = Path.Combine(
+                        Constant.ProgramDirectory,
+                        @"Plugins\Flow.Launcher.Plugin.ProcessKiller\Images\app.png"
+                    )
+                }
+            };
+        var vm = new ResultsViewModel(Settings);
+        vm.AddResults(results, "PREVIEW");
+        PreviewResults = vm;
     }
 
     [RelayCommand]

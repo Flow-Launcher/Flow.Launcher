@@ -331,20 +331,22 @@
                                                 IsReadOnly="True"
                                                 Style="{DynamicResource QueryBoxStyle}"
                                                 Text="{DynamicResource hiThere}" />
-
                                         </Border>
                                         <StackPanel
                                             x:Name="ClockPanel"
                                             IsHitTestVisible="False"
                                             Style="{DynamicResource ClockPanel}"
                                             Visibility="Visible">
+                                            <!--  Because these two textblock follow SettingWindowFont, we need to revert its font family explictly  -->
                                             <TextBlock
                                                 x:Name="ClockBox"
+                                                FontFamily="{Binding ClockPanelFont, Mode=OneTime}"
                                                 Style="{DynamicResource ClockBox}"
                                                 Text="{Binding ClockText}"
                                                 Visibility="{Binding UseClock, Converter={StaticResource BoolToVisibilityConverter}}" />
                                             <TextBlock
                                                 x:Name="DateBox"
+                                                FontFamily="{Binding ClockPanelFont, Mode=OneTime}"
                                                 Style="{DynamicResource DateBox}"
                                                 Text="{Binding DateText}"
                                                 Visibility="{Binding UseDate, Converter={StaticResource BoolToVisibilityConverter}}" />
