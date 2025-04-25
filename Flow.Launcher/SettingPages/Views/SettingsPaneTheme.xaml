@@ -337,7 +337,7 @@
                                             IsHitTestVisible="False"
                                             Style="{DynamicResource ClockPanel}"
                                             Visibility="Visible">
-                                            <!--  Because these two textblock follow SettingWindowFont, we need to revert its font family explictly  -->
+                                            <!--  Because these two textblock follow SettingWindowFont, we need to revert their font family explictly  -->
                                             <TextBlock
                                                 x:Name="ClockBox"
                                                 FontFamily="{Binding ClockPanelFont, Mode=OneTime}"
