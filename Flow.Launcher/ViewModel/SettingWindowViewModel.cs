@@ -12,14 +12,6 @@ public partial class SettingWindowViewModel : BaseModel
         _settings = settings;
     }
 
-    /// <summary>
-    /// Save Flow settings. Plugins settings are not included.
-    /// </summary>
-    public void Save()
-    {
-        _settings.Save();
-    }
-
     public double SettingWindowWidth
     {
         get => _settings.SettingWindowWidth;

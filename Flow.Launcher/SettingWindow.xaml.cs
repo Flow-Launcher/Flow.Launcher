@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Forms;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -9,35 +9,45 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.SettingPages.Views;
 using Flow.Launcher.ViewModel;
 using ModernWpf.Controls;
-using TextBox = System.Windows.Controls.TextBox;
+using Screen = System.Windows.Forms.Screen;
 
 namespace Flow.Launcher;
 
 public partial class SettingWindow
 {
+    #region Private Fields
+
     private readonly Settings _settings;
-    private readonly SettingWindowViewModel _viewModel;
+
+    #endregion
+
+    #region Constructor
 
     public SettingWindow()
     {
-        var viewModel = Ioc.Default.GetRequiredService<SettingWindowViewModel>();
         _settings = Ioc.Default.GetRequiredService<Settings>();
+        var viewModel = Ioc.Default.GetRequiredService<SettingWindowViewModel>();
         DataContext = viewModel;
-        _viewModel = viewModel;
-        InitializePosition();
         InitializeComponent();
+
+        UpdatePositionAndState();
     }
+
+    #endregion
+
+    #region Window Events
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
         RefreshMaximizeRestoreButton();
+
         // Fix (workaround) for the window freezes after lock screen (Win+L) or sleep
         // https://stackoverflow.com/questions/4951058/software-rendering-mode-wpf
         HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
         HwndTarget hwndTarget = hwndSource.CompositionTarget;
         hwndTarget.RenderMode = RenderMode.SoftwareOnly;  // Must use software only render mode here
 
-        InitializePosition();
+        UpdatePositionAndState();
     }
 
     private void OnClosed(object sender, EventArgs e)
@@ -45,7 +55,7 @@ public partial class SettingWindow
         _settings.SettingWindowState = WindowState;
         _settings.SettingWindowTop = Top;
         _settings.SettingWindowLeft = Left;
-        _viewModel.Save();
+        _settings.Save();
         App.API.SavePluginSettings();
     }
 
@@ -104,7 +114,11 @@ public partial class SettingWindow
         RefreshMaximizeRestoreButton();
     }
 
-    public void InitializePosition()
+    #endregion
+
+    #region Window Position
+
+    public void UpdatePositionAndState()
     {
         var previousTop = _settings.SettingWindowTop;
         var previousLeft = _settings.SettingWindowLeft;
@@ -119,6 +133,7 @@ public partial class SettingWindow
             Top = previousTop.Value;
             Left = previousLeft.Value;
         }
+
         WindowState = _settings.SettingWindowState;
     }
 
@@ -154,6 +169,10 @@ public partial class SettingWindow
         var top = (dip2.Y - ActualHeight) / 2 + dip1.Y - 20;
         return top;
     }
+
+    #endregion
+
+    #region Navigation View Events
 
     private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
     {
@@ -201,4 +220,6 @@ public partial class SettingWindow
     {
         NavView.SelectedItem ??= NavView.MenuItems[0]; /* Set First Page */
     }
+
+    #endregion
 }

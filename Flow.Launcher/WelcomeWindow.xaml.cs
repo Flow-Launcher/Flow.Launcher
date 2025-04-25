@@ -2,16 +2,17 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
-using Flow.Launcher.Resources.Pages;
-using ModernWpf.Media.Animation;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using Flow.Launcher.ViewModel;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Resources.Pages;
+using Flow.Launcher.ViewModel;
+using ModernWpf.Media.Animation;
 
 namespace Flow.Launcher
 {
     public partial class WelcomeWindow : Window
     {
+        private readonly Settings _settings;
         private readonly WelcomeViewModel _viewModel;
 
         private readonly NavigationTransitionInfo _forwardTransitionInfo = new SlideNavigationTransitionInfo()
@@ -25,6 +26,7 @@ namespace Flow.Launcher
 
         public WelcomeWindow()
         {
+            _settings = Ioc.Default.GetRequiredService<Settings>();
             _viewModel = Ioc.Default.GetRequiredService<WelcomeViewModel>();
             DataContext = _viewModel;
             InitializeComponent();
@@ -97,7 +99,7 @@ namespace Flow.Launcher
         private void Window_Closed(object sender, EventArgs e)
         {
             // Save settings when window is closed
-            Ioc.Default.GetRequiredService<Settings>().Save();
+            _settings.Save();
         }
     }
 }
