@@ -40,7 +40,7 @@ namespace Flow.Launcher
         private readonly Settings _settings;
         private readonly MainViewModel _mainVM;
 
-        // Must use getter to access Application.Current.Resources.MergedDictionaries so earlier
+        // Must use getter to avoid accessing Application.Current.Resources.MergedDictionaries so earlier in theme constructor
         private Theme _theme;
         private Theme Theme => _theme ??= Ioc.Default.GetRequiredService<Theme>();
 
