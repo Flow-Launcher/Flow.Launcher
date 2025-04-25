@@ -140,7 +140,7 @@ namespace Flow.Launcher
                 _viewModel.Show();
                 // When HideOnStartup is off and UseAnimation is on,
                 // there was a bug where the clock would not appear at all on the initial launch
-                // So we need to forcibly trigger animation here to ensure the clock visible
+                // So we need to forcibly trigger animation here to ensure the clock is visible
                 if (_settings.UseAnimation)
                 {
                     WindowAnimation();
