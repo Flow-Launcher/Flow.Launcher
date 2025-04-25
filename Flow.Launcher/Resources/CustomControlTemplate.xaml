@@ -4,6 +4,24 @@
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:ui="http://schemas.modernwpf.com/2019">
 
+    <!--  Setting Window Font  -->
+    <FontFamily x:Key="SettingWindowFont">Segoe UI</FontFamily>
+    <Style TargetType="ui:FontIcon">
+        <Setter Property="FontFamily" Value="/Resources/#Segoe Fluent Icons" />
+    </Style>
+    <Style TargetType="Control">
+        <Setter Property="FontFamily" Value="{DynamicResource SettingWindowFont}" />
+    </Style>
+    <Style TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{DynamicResource SettingWindowFont}" />
+    </Style>
+    <Style TargetType="Window">
+        <Setter Property="FontFamily" Value="{DynamicResource SettingWindowFont}" />
+    </Style>
+    <FontFamily x:Key="ContentControlThemeFontFamily">
+        {DynamicResource SettingWindowFont}
+    </FontFamily>
+
     <ContextMenu x:Key="TextBoxContextMenu">
         <MenuItem Command="ApplicationCommands.Cut" Header="{DynamicResource cut}">
             <MenuItem.Icon>
@@ -1568,6 +1586,7 @@
 
     <Style BasedOn="{StaticResource DefaultPasswordBoxStyle}" TargetType="PasswordBox">
         <Setter Property="ContextMenu" Value="{StaticResource TextBoxContextMenu}" />
+        <Setter Property="FontFamily" Value="{DynamicResource SettingWindowFont}" />
     </Style>
 
     <Style
@@ -2728,6 +2747,7 @@
                             Margin="{TemplateBinding BorderThickness}"
                             Padding="{TemplateBinding Padding}"
                             Focusable="False"
+                            FontFamily="{DynamicResource ContentControlThemeFontFamily}"
                             HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
                             IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
                             IsTabStop="False"
@@ -2740,6 +2760,7 @@
                             Grid.ColumnSpan="2"
                             Margin="{TemplateBinding BorderThickness}"
                             Padding="{TemplateBinding Padding}"
+                            FontFamily="{DynamicResource ContentControlThemeFontFamily}"
                             Foreground="{TemplateBinding ui:ControlHelper.PlaceholderForeground}"
                             IsHitTestVisible="False"
                             Text="{TemplateBinding ui:ControlHelper.PlaceholderText}"

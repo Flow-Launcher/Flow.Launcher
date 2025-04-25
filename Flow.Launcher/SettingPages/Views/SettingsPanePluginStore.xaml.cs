@@ -5,7 +5,6 @@ using System.Windows.Navigation;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.SettingPages.ViewModels;
 using Flow.Launcher.ViewModel;
-using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.SettingPages.Views;
 
@@ -17,8 +16,7 @@ public partial class SettingsPanePluginStore
     {
         if (!IsInitialized)
         {
-            var settings = Ioc.Default.GetRequiredService<Settings>();
-            _viewModel = new SettingsPanePluginStoreViewModel();
+            _viewModel = Ioc.Default.GetRequiredService<SettingsPanePluginStoreViewModel>();
             DataContext = _viewModel;
             InitializeComponent();
         }

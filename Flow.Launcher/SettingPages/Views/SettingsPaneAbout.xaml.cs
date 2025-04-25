@@ -1,8 +1,6 @@
 ﻿using System.Windows.Navigation;
-using Flow.Launcher.Core;
-using Flow.Launcher.SettingPages.ViewModels;
-using Flow.Launcher.Infrastructure.UserSettings;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.SettingPages.ViewModels;
 
 namespace Flow.Launcher.SettingPages.Views;
 
@@ -14,9 +12,7 @@ public partial class SettingsPaneAbout
     {
         if (!IsInitialized)
         {
-            var settings = Ioc.Default.GetRequiredService<Settings>();
-            var updater = Ioc.Default.GetRequiredService<Updater>();
-            _viewModel = new SettingsPaneAboutViewModel(settings, updater);
+            _viewModel = Ioc.Default.GetRequiredService<SettingsPaneAboutViewModel>();
             DataContext = _viewModel;
             InitializeComponent();
         }

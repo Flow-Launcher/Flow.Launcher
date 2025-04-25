@@ -16,6 +16,7 @@
     Icon="Images\app.ico"
     Left="{Binding SettingWindowLeft, Mode=TwoWay}"
     Loaded="OnLoaded"
+    LocationChanged="Window_LocationChanged"
     MouseDown="window_MouseDown"
     ResizeMode="CanResize"
     SnapsToDevicePixels="True"

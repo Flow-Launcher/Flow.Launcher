@@ -643,21 +643,33 @@ namespace Flow.Launcher.Infrastructure
             { "pt", "Noto Sans" }
         };
 
-        public static string GetSystemDefaultFont()
+        /// <summary>
+        /// Gets the system default font.
+        /// </summary>
+        /// <param name="useNoto">
+        /// If true, it will try to find the Noto font for the current culture.
+        /// </param>
+        /// <returns>
+        /// The name of the system default font.
+        /// </returns>
+        public static string GetSystemDefaultFont(bool useNoto = true)
         {
             try
             {
-                var culture = CultureInfo.CurrentCulture;
-                var language = culture.Name; // e.g., "zh-TW"
-                var langPrefix = language.Split('-')[0]; // e.g., "zh"
-
-                // First, try to find by full name, and if not found, fallback to prefix
-                if (TryGetNotoFont(language, out var notoFont) || TryGetNotoFont(langPrefix, out notoFont))
+                if (useNoto)
                 {
-                    // If the font is installed, return it
-                    if (Fonts.SystemFontFamilies.Any(f => f.Source.Equals(notoFont)))
+                    var culture = CultureInfo.CurrentCulture;
+                    var language = culture.Name; // e.g., "zh-TW"
+                    var langPrefix = language.Split('-')[0]; // e.g., "zh"
+
+                    // First, try to find by full name, and if not found, fallback to prefix
+                    if (TryGetNotoFont(language, out var notoFont) || TryGetNotoFont(langPrefix, out notoFont))
                     {
-                        return notoFont;
+                        // If the font is installed, return it
+                        if (Fonts.SystemFontFamilies.Any(f => f.Source.Equals(notoFont)))
+                        {
+                            return notoFont;
+                        }
                     }
                 }
 

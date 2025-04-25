@@ -1,28 +1,28 @@
-﻿using Flow.Launcher.Infrastructure.UserSettings;
-using Flow.Launcher.ViewModel;
-using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher
 {
-    public partial class SelectFileManagerWindow : Window, INotifyPropertyChanged
+    [INotifyPropertyChanged]
+    public partial class SelectFileManagerWindow : Window
     {
+        private readonly Settings _settings;
+
         private int selectedCustomExplorerIndex;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public Settings Settings { get; }
 
         public int SelectedCustomExplorerIndex
         {
-            get => selectedCustomExplorerIndex; set
+            get => selectedCustomExplorerIndex;
+            set
             {
                 selectedCustomExplorerIndex = value;
-                PropertyChanged?.Invoke(this, new(nameof(CustomExplorer)));
+                OnPropertyChanged(nameof(CustomExplorer));
             }
         }
         public ObservableCollection<CustomExplorerViewModel> CustomExplorers { get; set; }
@@ -30,9 +30,9 @@ namespace Flow.Launcher
         public CustomExplorerViewModel CustomExplorer => CustomExplorers[SelectedCustomExplorerIndex];
         public SelectFileManagerWindow(Settings settings)
         {
-            Settings = settings;
-            CustomExplorers = new ObservableCollection<CustomExplorerViewModel>(Settings.CustomExplorerList.Select(x => x.Copy()));
-            SelectedCustomExplorerIndex = Settings.CustomExplorerIndex;
+            _settings = settings;
+            CustomExplorers = new ObservableCollection<CustomExplorerViewModel>(_settings.CustomExplorerList.Select(x => x.Copy()));
+            SelectedCustomExplorerIndex = _settings.CustomExplorerIndex;
             InitializeComponent();
         }
 
@@ -43,8 +43,8 @@ namespace Flow.Launcher
 
         private void btnDone_Click(object sender, RoutedEventArgs e)
         {
-            Settings.CustomExplorerList = CustomExplorers.ToList();
-            Settings.CustomExplorerIndex = SelectedCustomExplorerIndex;
+            _settings.CustomExplorerList = CustomExplorers.ToList();
+            _settings.CustomExplorerIndex = SelectedCustomExplorerIndex;
             Close();
         }
 
@@ -65,8 +65,7 @@ namespace Flow.Launcher
         private void btnBrowseFile_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-            Nullable<bool> result = dlg.ShowDialog();
-
+            var result = dlg.ShowDialog();
             if (result == true)
             {
                 TextBox path = (TextBox)(((FrameworkElement)sender).Parent as FrameworkElement).FindName("PathTextBox");
