@@ -324,7 +324,7 @@ namespace Flow.Launcher
 
         private void OnLocationChanged(object sender, EventArgs e)
         {
-            if (_settings.SearchWindowScreen == SearchWindowScreens.RememberLastLaunchLocation)
+            if (IsLoaded)
             {
                 _settings.WindowLeft = Left;
                 _settings.WindowTop = Top;
