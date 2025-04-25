@@ -2823,7 +2823,6 @@
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter TargetName="HeaderContentPresenter" Property="Foreground" Value="{DynamicResource TextControlHeaderForegroundDisabled}" />
-                            <Setter Property="Background" Value="{DynamicResource CustomNumberBoxBGDisabled}" />
                             <Setter TargetName="BorderElementInline" Property="Background" Value="{DynamicResource TextControlBackgroundDisabled}" />
                             <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushDisabled}" />
                             <Setter TargetName="BorderElement" Property="BorderThickness" Value="0 0 0 0" />
