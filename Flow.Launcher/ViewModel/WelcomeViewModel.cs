@@ -18,6 +18,7 @@ namespace Flow.Launcher.ViewModel
                 {
                     _pageNum = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(PageDisplay));
                     UpdateView();
                 }
             }
@@ -47,7 +48,6 @@ namespace Flow.Launcher.ViewModel
 
         private void UpdateView()
         {
-            OnPropertyChanged(nameof(PageDisplay));
             if (PageNum == 1)
             {
                 BackEnabled = false;

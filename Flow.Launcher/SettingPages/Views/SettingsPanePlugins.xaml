@@ -58,9 +58,9 @@
                     Margin="0 0 20 0"
                     Command="{Binding OpenHelperCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
-                    Content="&#xe9ce;"
-                    FontFamily="{DynamicResource SymbolThemeFontFamily}"
-                    FontSize="14" />
+                    FontSize="14">
+                    <ui:FontIcon FontSize="14" Glyph="&#xe9ce;" />
+                </Button>
                 <TextBox
                     Name="PluginFilterTextbox"
                     Width="150"

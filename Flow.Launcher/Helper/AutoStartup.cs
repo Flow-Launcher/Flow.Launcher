@@ -1,10 +1,11 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using System.Security.Principal;
 using Flow.Launcher.Infrastructure;
 using Microsoft.Win32;
 using Microsoft.Win32.TaskScheduler;
+
+#nullable enable
 
 namespace Flow.Launcher.Helper;
 
@@ -59,11 +60,15 @@ public class AutoStartup
             try
             {
                 // Check if the action is the same as the current executable path
-                var action = task.Definition.Actions.FirstOrDefault()!.ToString().Trim();
-                if (!Constant.ExecutablePath.Equals(action, StringComparison.OrdinalIgnoreCase) && !File.Exists(action))
+                // If not, we need to unschedule and reschedule the task
+                if (task.Definition.Actions.FirstOrDefault() is Microsoft.Win32.TaskScheduler.Action taskAction)
                 {
-                    UnscheduleLogonTask();
-                    ScheduleLogonTask();
+                    var action = taskAction.ToString().Trim();
+                    if (!action.Equals(Constant.ExecutablePath, StringComparison.OrdinalIgnoreCase))
+                    {
+                        UnscheduleLogonTask();
+                        ScheduleLogonTask();
+                    }
                 }
 
                 return true;
@@ -71,6 +76,7 @@ public class AutoStartup
             catch (Exception e)
             {
                 App.API.LogError(ClassName, $"Failed to check logon task: {e}");
+                throw; // Throw exception so that App.AutoStartup can show error message
             }
         }
 
@@ -82,15 +88,27 @@ public class AutoStartup
         try
         {
             using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
-            var path = key?.GetValue(Constant.FlowLauncher) as string;
-            return path == Constant.ExecutablePath;
+            if (key != null)
+            {
+                // Check if the action is the same as the current executable path
+                // If not, we need to unschedule and reschedule the task
+                var action = (key.GetValue(Constant.FlowLauncher) as string) ?? string.Empty;
+                if (!action.Equals(Constant.ExecutablePath, StringComparison.OrdinalIgnoreCase))
+                {
+                    UnscheduleRegistry();
+                    ScheduleRegistry();
+                }
+
+                return true;
+            }
+
+            return false;
         }
         catch (Exception e)
         {
-            App.API.LogError(ClassName, $"Ignoring non-critical registry error (querying if enabled): {e}");
+            App.API.LogError(ClassName, $"Failed to check registry: {e}");
+            throw; // Throw exception so that App.AutoStartup can show error message
         }
-
-        return false;
     }
 
     public static void DisableViaLogonTaskAndRegistry()
@@ -121,8 +139,7 @@ public class AutoStartup
             }
             else
             {
-                using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
-                key?.DeleteValue(Constant.FlowLauncher, false);
+                UnscheduleRegistry();
             }
         }
         catch (Exception e)
@@ -142,8 +159,7 @@ public class AutoStartup
             }
             else
             {
-                using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
-                key?.SetValue(Constant.FlowLauncher, $"\"{Constant.ExecutablePath}\"");
+                ScheduleRegistry();
             }
         }
         catch (Exception e)
@@ -201,5 +217,19 @@ public class AutoStartup
         var identity = WindowsIdentity.GetCurrent();
         var principal = new WindowsPrincipal(identity);
         return principal.IsInRole(WindowsBuiltInRole.Administrator);
+    }
+
+    private static bool UnscheduleRegistry()
+    {
+        using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
+        key?.DeleteValue(Constant.FlowLauncher, false);
+        return true;
+    }
+
+    private static bool ScheduleRegistry()
+    {
+        using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
+        key?.SetValue(Constant.FlowLauncher, $"\"{Constant.ExecutablePath}\"");
+        return true;
     }
 }
