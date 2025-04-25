@@ -9,10 +9,22 @@ namespace Flow.Launcher.SettingPages.ViewModels;
 
 public partial class SettingsPanePluginStoreViewModel : BaseModel
 {
-    public string FilterText { get; set; } = string.Empty;
+    private string filterText = string.Empty;
+    public string FilterText
+    {
+        get => filterText;
+        set
+        {
+            if (filterText != value)
+            {
+                filterText = value;
+                OnPropertyChanged();
+            }
+        }
+    }
 
-    public IList<PluginStoreItemViewModel> ExternalPlugins => 
-        App.API.GetPluginManifest()?.Select(p => new PluginStoreItemViewModel(p))
+    public IList<PluginStoreItemViewModel> ExternalPlugins => App.API.GetPluginManifest()?
+        .Select(p => new PluginStoreItemViewModel(p))
         .OrderByDescending(p => p.Category == PluginStoreItemViewModel.NewRelease)
         .ThenByDescending(p => p.Category == PluginStoreItemViewModel.RecentlyUpdated)
         .ThenByDescending(p => p.Category == PluginStoreItemViewModel.None)
@@ -31,7 +43,7 @@ public partial class SettingsPanePluginStoreViewModel : BaseModel
     public bool SatisfiesFilter(PluginStoreItemViewModel plugin)
     {
         return string.IsNullOrEmpty(FilterText) ||
-               App.API.FuzzySearch(FilterText, plugin.Name).IsSearchPrecisionScoreMet() ||
-               App.API.FuzzySearch(FilterText, plugin.Description).IsSearchPrecisionScoreMet();
+            App.API.FuzzySearch(FilterText, plugin.Name).IsSearchPrecisionScoreMet() ||
+            App.API.FuzzySearch(FilterText, plugin.Description).IsSearchPrecisionScoreMet();
     }
 }
