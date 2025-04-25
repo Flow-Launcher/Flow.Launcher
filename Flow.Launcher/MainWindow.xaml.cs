@@ -889,10 +889,10 @@ namespace Flow.Launcher
                 FillBehavior = FillBehavior.HoldEnd
             };
 
-            Storyboard.SetTargetProperty(ClockOpacity, new PropertyPath(OpacityProperty));
             Storyboard.SetTarget(ClockOpacity, ClockPanel);
+            Storyboard.SetTargetProperty(ClockOpacity, new PropertyPath(OpacityProperty));
 
-            Storyboard.SetTargetName(thicknessAnimation, "ClockPanel");
+            Storyboard.SetTarget(thicknessAnimation, ClockPanel);
             Storyboard.SetTargetProperty(thicknessAnimation, new PropertyPath(MarginProperty));
 
             Storyboard.SetTarget(IconMotion, SearchIcon);
