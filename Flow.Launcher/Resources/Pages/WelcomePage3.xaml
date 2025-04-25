@@ -13,15 +13,15 @@
     <Page.Resources>
         <Style x:Key="KbdLine" TargetType="Border">
             <Setter Property="CornerRadius" Value="8" />
-            <Setter Property="Margin" Value="0,3,0,3" />
+            <Setter Property="Margin" Value="0 3 0 3" />
             <Setter Property="Background" Value="{DynamicResource Color01B}" />
         </Style>
         <Style x:Key="Kbd" TargetType="Border">
             <Setter Property="CornerRadius" Value="4" />
-            <Setter Property="Padding" Value="12,4,12,4" />
+            <Setter Property="Padding" Value="12 4 12 4" />
             <Setter Property="Background" Value="{DynamicResource Color00B}" />
             <Setter Property="BorderBrush" Value="{DynamicResource Color18B}" />
-            <Setter Property="BorderThickness" Value="1,1,1,2" />
+            <Setter Property="BorderThickness" Value="1 1 1 2" />
         </Style>
         <Style x:Key="KbdText" TargetType="TextBlock">
             <Setter Property="TextAlignment" Value="Center" />
@@ -36,17 +36,17 @@
         </Grid.RowDefinitions>
         <TextBlock
             Grid.Row="0"
-            Margin="24,20,24,14"
+            Margin="24 20 24 14"
             FontSize="20"
             FontWeight="SemiBold"
             Text="{DynamicResource Welcome_Page3_Title}" />
         <ScrollViewer
             Grid.Row="1"
             Height="478"
-            Margin="0,0,0,0"
+            Margin="0 0 0 0"
             HorizontalAlignment="Stretch"
             FontSize="13">
-            <StackPanel Margin="24,0,24,0">
+            <StackPanel Margin="24 0 24 0">
                 <Border
                     BorderBrush="{DynamicResource Color03B}"
                     BorderThickness="0"
@@ -54,7 +54,7 @@
                     <StackPanel>
                         <cc:Card
                             Title="{DynamicResource HotkeyUpDownDesc}"
-                            BorderThickness="0,0,0,0"
+                            BorderThickness="0 0 0 0"
                             Type="Inside">
                             <StackPanel Orientation="Horizontal">
                                 <cc:HotkeyDisplay Keys="←+→" Type="Small" />
@@ -62,7 +62,7 @@
                         </cc:Card>
                         <cc:Card
                             Title="{DynamicResource HotkeyLeftRightDesc}"
-                            BorderThickness="0,0,0,0"
+                            BorderThickness="0 0 0 0"
                             Type="Inside">
                             <StackPanel Orientation="Horizontal">
                                 <cc:HotkeyDisplay Keys="↑+↓" Type="Small" />
@@ -70,7 +70,7 @@
                         </cc:Card>
                         <cc:Card
                             Title="{DynamicResource HotkeyESCDesc}"
-                            BorderThickness="0,0,0,0"
+                            BorderThickness="0 0 0 0"
                             Type="Inside">
                             <StackPanel Orientation="Horizontal">
                                 <cc:HotkeyDisplay Keys="ESC" Type="Small" />
@@ -78,13 +78,13 @@
                         </cc:Card>
                         <cc:Card
                             Title="{DynamicResource HotkeyRunDesc}"
-                            BorderThickness="0,0,0,0"
+                            BorderThickness="0 0 0 0"
                             Type="Inside">
                             <cc:HotkeyDisplay Keys="ENTER" Type="Small" />
                         </cc:Card>
                         <cc:Card
                             Title="{DynamicResource HotkeyShiftEnterDesc}"
-                            BorderThickness="0,0,0,0"
+                            BorderThickness="0 0 0 0"
                             Type="Inside">
                             <StackPanel Orientation="Horizontal">
                                 <cc:HotkeyDisplay Keys="SHIFT+ENTER" Type="Small" />
@@ -92,7 +92,7 @@
                         </cc:Card>
                         <cc:Card
                             Title="{DynamicResource HotkeyCtrlEnterDesc}"
-                            BorderThickness="0,0,0,0"
+                            BorderThickness="0 0 0 0"
                             Type="Inside">
                             <StackPanel Orientation="Horizontal">
                                 <cc:HotkeyDisplay Keys="CTRL+ENTER" Type="Small" />
@@ -100,7 +100,7 @@
                         </cc:Card>
                         <cc:Card
                             Title="{DynamicResource HotkeyCtrlShiftEnterDesc}"
-                            BorderThickness="0,0,0,0"
+                            BorderThickness="0 0 0 0"
                             Type="Inside">
                             <StackPanel Orientation="Horizontal">
                                 <cc:HotkeyDisplay Keys="CTRL+SHIFT+ENTER" Type="Small" />

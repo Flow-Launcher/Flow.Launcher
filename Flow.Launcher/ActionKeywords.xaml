@@ -53,11 +53,11 @@
                         </Button>
                     </Grid>
                 </StackPanel>
-                <StackPanel Margin="26,12,26,0">
-                    <StackPanel Grid.Row="0" Margin="0,0,0,12">
+                <StackPanel Margin="26 12 26 0">
+                    <StackPanel Grid.Row="0" Margin="0 0 0 12">
                         <TextBlock
                             Grid.Column="0"
-                            Margin="0,0,0,0"
+                            Margin="0 0 0 0"
                             FontSize="20"
                             FontWeight="SemiBold"
                             Text="{DynamicResource actionKeywordsTitle}"
@@ -71,7 +71,7 @@
                             TextWrapping="WrapWithOverflow" />
                     </StackPanel>
 
-                    <StackPanel Margin="0,18,0,0" Orientation="Horizontal">
+                    <StackPanel Margin="0 18 0 0" Orientation="Horizontal">
                         <TextBlock
                             Grid.Row="0"
                             Grid.Column="1"
@@ -83,14 +83,14 @@
                             x:Name="tbOldActionKeyword"
                             Grid.Row="0"
                             Grid.Column="1"
-                            Margin="14,10,10,10"
+                            Margin="14 10 10 10"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             FontSize="14"
                             FontWeight="SemiBold"
                             Foreground="{DynamicResource Color05B}" />
                     </StackPanel>
-                    <StackPanel Margin="0,0,0,10" Orientation="Horizontal">
+                    <StackPanel Margin="0 0 0 10" Orientation="Horizontal">
                         <TextBlock
                             Grid.Row="1"
                             Grid.Column="1"
@@ -101,7 +101,7 @@
                         <TextBox
                             x:Name="tbAction"
                             Width="105"
-                            Margin="10,10,15,10"
+                            Margin="10 10 15 10"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center" />
                     </StackPanel>
@@ -112,20 +112,20 @@
             Grid.Row="1"
             Background="{DynamicResource PopupButtonAreaBGColor}"
             BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
-            BorderThickness="0,1,0,0">
+            BorderThickness="0 1 0 0">
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <Button
                     x:Name="btnCancel"
                     Width="145"
                     Height="30"
-                    Margin="10,0,5,0"
+                    Margin="10 0 5 0"
                     Click="BtnCancel_OnClick"
                     Content="{DynamicResource cancel}" />
                 <Button
                     x:Name="btnDone"
                     Width="145"
                     Height="30"
-                    Margin="5,0,10,0"
+                    Margin="5 0 10 0"
                     Click="btnDone_OnClick"
                     Style="{StaticResource AccentButtonStyle}">
                     <TextBlock x:Name="lblAdd" Text="{DynamicResource done}" />

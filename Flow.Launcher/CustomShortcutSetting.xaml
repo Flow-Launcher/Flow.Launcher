@@ -56,11 +56,11 @@
                     </Button>
                 </Grid>
             </StackPanel>
-            <StackPanel Margin="26,0,26,0">
-                <StackPanel Grid.Row="0" Margin="0,0,0,12">
+            <StackPanel Margin="26 0 26 0">
+                <StackPanel Grid.Row="0" Margin="0 0 0 12">
                     <TextBlock
                         Grid.Column="0"
-                        Margin="0,0,0,0"
+                        Margin="0 0 0 0"
                         FontSize="20"
                         FontWeight="SemiBold"
                         Text="{DynamicResource customQueryShortcut}"
@@ -73,18 +73,18 @@
                         TextAlignment="Left"
                         TextWrapping="WrapWithOverflow" />
                     <TextBlock
-                        Margin="0,20,0,0"
+                        Margin="0 20 0 0"
                         FontSize="14"
                         Text="{DynamicResource customeQueryShortcutGuide}"
                         TextAlignment="Left"
                         TextWrapping="WrapWithOverflow" />
                     <Image
                         Width="478"
-                        Margin="0,20,0,0"
+                        Margin="0 20 0 0"
                         Source="/Images/illustration_02.png" />
                 </StackPanel>
 
-                <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
+                <StackPanel Margin="0 10 0 10" Orientation="Horizontal">
                     <Grid Width="478">
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -124,14 +124,14 @@
                             LastChildFill="True">
                             <Button
                                 x:Name="btnTestShortcut"
-                                Margin="0,0,10,0"
-                                Padding="10,5,10,5"
+                                Margin="0 0 10 0"
+                                Padding="10 5 10 5"
                                 Click="BtnTestShortcut_OnClick"
                                 Content="{DynamicResource preview}"
                                 DockPanel.Dock="Right" />
                             <TextBox
                                 x:Name="tbExpand"
-                                Margin="10,0,10,0"
+                                Margin="10 0 10 0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
                                 Text="{Binding Value}" />
@@ -142,21 +142,21 @@
         </StackPanel>
         <Border
             Grid.Row="1"
-            Margin="0,10,0,0"
+            Margin="0 10 0 0"
             Background="{DynamicResource PopupButtonAreaBGColor}"
             BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
-            BorderThickness="0,1,0,0">
+            BorderThickness="0 1 0 0">
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <Button
                     x:Name="btnCancel"
                     MinWidth="140"
-                    Margin="10,0,5,0"
+                    Margin="10 0 5 0"
                     Click="BtnCancel_OnClick"
                     Content="{DynamicResource cancel}" />
                 <Button
                     x:Name="btnAdd"
                     MinWidth="140"
-                    Margin="5,0,10,0"
+                    Margin="5 0 10 0"
                     Click="BtnAdd_OnClick"
                     Style="{StaticResource AccentButtonStyle}">
                     <TextBlock x:Name="lblAdd" Text="{DynamicResource done}" />

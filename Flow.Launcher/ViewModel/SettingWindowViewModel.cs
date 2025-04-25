@@ -5,19 +5,11 @@ namespace Flow.Launcher.ViewModel;
 
 public partial class SettingWindowViewModel : BaseModel
 {
-    private readonly Settings _settings; 
+    private readonly Settings _settings;
 
     public SettingWindowViewModel(Settings settings)
     {
         _settings = settings;
-    }
-
-    /// <summary>
-    /// Save Flow settings. Plugins settings are not included.
-    /// </summary>
-    public void Save()
-    {
-        _settings.Save();
     }
 
     public double SettingWindowWidth
