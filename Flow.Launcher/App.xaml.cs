@@ -31,6 +31,7 @@ namespace Flow.Launcher
         #region Public Properties
 
         public static IPublicAPI API { get; private set; }
+        public static bool Exiting => _mainWindow.CanClose;
 
         #endregion
 
@@ -39,7 +40,7 @@ namespace Flow.Launcher
         private static readonly string ClassName = nameof(App);
 
         private static bool _disposed;
-        private MainWindow _mainWindow;
+        private static MainWindow _mainWindow;
         private readonly MainViewModel _mainVM;
         private readonly Settings _settings;
 

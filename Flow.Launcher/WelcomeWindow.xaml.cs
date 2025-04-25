@@ -78,10 +78,7 @@ namespace Flow.Launcher
 
         private void window_MouseDown(object sender, MouseButtonEventArgs e) /* for close hotkey popup */
         {
-            if (Keyboard.FocusedElement is not TextBox textBox)
-            {
-                return;
-            }
+            if (Keyboard.FocusedElement is not TextBox textBox) return;
             var tRequest = new TraversalRequest(FocusNavigationDirection.Next);
             textBox.MoveFocus(tRequest);
         }
@@ -98,6 +95,8 @@ namespace Flow.Launcher
 
         private void Window_Closed(object sender, EventArgs e)
         {
+            // If app is exiting, settings save is not needed because main window closing event will handle this
+            if (App.Exiting) return;
             // Save settings when window is closed
             _settings.Save();
         }

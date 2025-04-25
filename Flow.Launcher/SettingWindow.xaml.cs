@@ -52,9 +52,9 @@ public partial class SettingWindow
 
     private void OnClosed(object sender, EventArgs e)
     {
-        _settings.SettingWindowState = WindowState;
-        _settings.SettingWindowTop = Top;
-        _settings.SettingWindowLeft = Left;
+        // If app is exiting, settings save is not needed because main window closing event will handle this
+        if (App.Exiting) return;
+        // Save settings when window is closed
         _settings.Save();
         App.API.SavePluginSettings();
     }
@@ -66,15 +66,32 @@ public partial class SettingWindow
 
     private void window_MouseDown(object sender, MouseButtonEventArgs e) /* for close hotkey popup */
     {
-        if (Keyboard.FocusedElement is not TextBox textBox)
-        {
-            return;
-        }
+        if (Keyboard.FocusedElement is not TextBox textBox) return;
         var tRequest = new TraversalRequest(FocusNavigationDirection.Next);
         textBox.MoveFocus(tRequest);
     }
 
-    /* Custom TitleBar */
+    private void Window_StateChanged(object sender, EventArgs e)
+    {
+        RefreshMaximizeRestoreButton();
+        if (IsLoaded)
+        {
+            _settings.SettingWindowState = WindowState;
+        }
+    }
+
+    private void Window_LocationChanged(object sender, EventArgs e)
+    {
+        if (IsLoaded)
+        {
+            _settings.SettingWindowTop = Top;
+            _settings.SettingWindowLeft = Left;
+        }
+    }
+
+    #endregion
+
+    #region Window Custom TitleBar
 
     private void OnMinimizeButtonClick(object sender, RoutedEventArgs e)
     {
@@ -107,11 +124,6 @@ public partial class SettingWindow
             MaximizeButton.Visibility = Visibility.Visible;
             RestoreButton.Visibility = Visibility.Hidden;
         }
-    }
-
-    private void Window_StateChanged(object sender, EventArgs e)
-    {
-        RefreshMaximizeRestoreButton();
     }
 
     #endregion
