@@ -358,7 +358,7 @@
     <system:String x:Key="logLevel">Nível de registo</system:String>
     <system:String x:Key="LogLevelDEBUG">Depuração</system:String>
     <system:String x:Key="LogLevelINFO">Informação</system:String>
-    <system:String x:Key="settingWindowFont">Setting Window Font</system:String>
+    <system:String x:Key="settingWindowFontTitle">Setting Window Font</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Selecione o gestor de ficheiros</system:String>
