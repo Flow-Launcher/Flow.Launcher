@@ -31,7 +31,7 @@ namespace Flow.Launcher
 
         public static IPublicAPI API { get; private set; }
         public static JoinableTaskFactory JTF { get; } = new JoinableTaskFactory(new JoinableTaskContext());
-        public static bool Exitting => _mainWindow.CanClose;
+        public static bool Exiting => _mainWindow.CanClose;
 
         #endregion
 
