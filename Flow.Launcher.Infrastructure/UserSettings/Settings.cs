@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 using System.Windows;
+using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Logger;
@@ -113,6 +114,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 {
                     _settingWindowFont = value;
                     OnPropertyChanged();
+                    Application.Current.Resources["SettingWindowFont"] = new FontFamily(value);
+                    Application.Current.Resources["ContentControlThemeFontFamily"] = new FontFamily(value);
                 }
             }
         }
