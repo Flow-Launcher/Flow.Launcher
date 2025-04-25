@@ -79,12 +79,16 @@ namespace Flow.Launcher
                         .AddSingleton<StringMatcher>()
                         .AddSingleton<Internationalization>()
                         .AddSingleton<IPublicAPI, PublicAPIInstance>()
-                        .AddSingleton<MainViewModel>()
                         .AddSingleton<Theme>()
-                        // Welcome view model & setting window view model is very simple so we just use one instance
-                        .AddSingleton<SettingWindowViewModel>()
+                        // Use one instance for main window view model because we only have one main window
+                        .AddSingleton<MainViewModel>()
+                        // Use one instance for welcome window view model & setting window view model because
+                        // pages in welcome window & setting window need to share the same instance and
+                        // these two view models do not need to be reset when creating new windows
                         .AddSingleton<WelcomeViewModel>()
-                        // Setting page view models are complex so we use transient instance
+                        .AddSingleton<SettingWindowViewModel>()
+                        // Use transient instance for setting window page view models because
+                        // pages in setting window need to be recreated when setting window is closed
                         .AddTransient<SettingsPaneAboutViewModel>()
                         .AddTransient<SettingsPaneGeneralViewModel>()
                         .AddTransient<SettingsPaneHotkeyViewModel>()
