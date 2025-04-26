@@ -56,7 +56,7 @@
     <system:String x:Key="setAutoStartFailed">Error de configuración de arranque al iniciar</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ocultar Flow Launcher cuando se pierde el foco</system:String>
     <system:String x:Key="dontPromptUpdateMsg">No mostrar notificaciones de nuevas versiones</system:String>
-    <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
+    <system:String x:Key="SearchWindowPosition">Ubicación de la ventana de búsqueda</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Recordar última ubicación</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Monitor con cursor del ratón</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Monitor con ventana enfocada</system:String>
@@ -147,8 +147,8 @@
     <system:String x:Key="currentActionKeywords">Palabra clave de acción actual</system:String>
     <system:String x:Key="newActionKeyword">Nueva palabra clave de acción</system:String>
     <system:String x:Key="actionKeywordsTooltip">Cambia la palabra clave de acción</system:String>
-    <system:String x:Key="pluginSearchDelayTime">Plugin search delay time</system:String>
-    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Search Delay Time</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Tiempo de retardo de la búsqueda del complemento</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Cambia el tiempo de retardo de la búsqueda del complemento</system:String>
     <system:String x:Key="FilterComboboxLabel">Configuración avanzada:</system:String>
     <system:String x:Key="DisplayModeOnOff">Activado</system:String>
     <system:String x:Key="DisplayModePriority">Prioridad</system:String>
@@ -204,9 +204,9 @@
     <system:String x:Key="resultItemFont">Fuente del título del resultado</system:String>
     <system:String x:Key="resultSubItemFont">Fuente del subtítulo del resultado</system:String>
     <system:String x:Key="resetCustomize">Restablecer</system:String>
-    <system:String x:Key="resetCustomizeToolTip">Reset to the recommended font and size settings.</system:String>
-    <system:String x:Key="ImportThemeSize">Import Theme Size</system:String>
-    <system:String x:Key="ImportThemeSizeToolTip">If a size value intended by the theme designer is available, it will be retrieved and applied.</system:String>
+    <system:String x:Key="resetCustomizeToolTip">Restablece la configuración recomendada para la fuente y el tamaño.</system:String>
+    <system:String x:Key="ImportThemeSize">Importar tamaño del tema</system:String>
+    <system:String x:Key="ImportThemeSizeToolTip">Si existe un valor de tamaño del tema previsto por el diseñador, este se recuperará y aplicará.</system:String>
     <system:String x:Key="CustomizeToolTip">Personaliza</system:String>
     <system:String x:Key="windowMode">Modo Ventana</system:String>
     <system:String x:Key="opacity">Opacidad</system:String>
@@ -234,13 +234,13 @@
     <system:String x:Key="Clock">Reloj</system:String>
     <system:String x:Key="Date">Fecha</system:String>
     <system:String x:Key="BackdropType">Tipo de telón de fondo</system:String>
-    <system:String x:Key="BackdropInfo">The backdrop effect is not applied in the preview.</system:String>
+    <system:String x:Key="BackdropInfo">El efecto de telón de fondo no se aplica en la vista previa.</system:String>
     <system:String x:Key="BackdropTypeDisabledToolTip">Telón de fondo compatible a partir de Windows 11 build 22000 y superiores</system:String>
     <system:String x:Key="BackdropTypesNone">Ninguno</system:String>
     <system:String x:Key="BackdropTypesAcrylic">Acrílico</system:String>
     <system:String x:Key="BackdropTypesMica">Mica</system:String>
     <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
-    <system:String x:Key="TypeIsDarkToolTip">This theme supports two (light/dark) modes.</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">Este tema soporta dos modos (claro/oscuro).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Este tema soporta fondo transparente desenfocado.</system:String>
     <system:String x:Key="ShowPlaceholder">Mostrar marcador de posición</system:String>
     <system:String x:Key="ShowPlaceholderTip">Mostrar marcador de posición cuando la consulta esté vacía</system:String>
@@ -308,7 +308,7 @@
     <system:String x:Key="useGlyphUIEffect">Utiliza iconos Segoe Fluent para los resultados de la consulta cuando sean compatibles</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Pulsar Tecla</system:String>
     <system:String x:Key="showBadges">Mostrar distintivos en resultados</system:String>
-    <system:String x:Key="showBadgesToolTip">For supported plugins, badges are displayed to help distinguish them more easily.</system:String>
+    <system:String x:Key="showBadgesToolTip">Para los complementos compatibles, se muestran distintivos que ayudan a distinguirlos más fácilmente.</system:String>
     <system:String x:Key="showBadgesGlobalOnly">Mostrar distintivos en resultados solo para consulta global</system:String>
 
     <!--  Setting Proxy  -->
@@ -360,7 +360,7 @@
     <system:String x:Key="logLevel">Nivel de registro</system:String>
     <system:String x:Key="LogLevelDEBUG">Depurar</system:String>
     <system:String x:Key="LogLevelINFO">Información</system:String>
-    <system:String x:Key="settingWindowFontTitle">Setting Window Font</system:String>
+    <system:String x:Key="settingWindowFontTitle">Configuración de fuente de la ventana</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Seleccionar administrador de archivos</system:String>
