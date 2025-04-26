@@ -110,7 +110,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="searchDelayToolTip">Dodaje krótkie opóźnienie podczas pisania, aby zmniejszyć migotanie interfejsu i obciążenie wynikami. Zalecane przy przeciętnej szybkości pisania.</system:String>
     <system:String x:Key="searchDelayNumberBoxToolTip">Wprowadź czas oczekiwania (w ms), po którym wprowadzanie zostanie uznane za zakończone. Edycja jest możliwa tylko, gdy włączone jest Opóźnienie wyszukiwania.</system:String>
     <system:String x:Key="searchDelayTime">Domyślne opóźnienie wyszukiwania</system:String>
-    <system:String x:Key="searchDelayTimeToolTip">Wait time before showing results after typing stops. Higher values wait longer. (ms)</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Opóźnienie (ms) przed pokazaniem wyników po zakończeniu pisania. Wyższe wartości oznaczają dłuższe oczekiwanie.</system:String>
     <system:String x:Key="KoreanImeTitle">Information for Korean IME user</system:String>
     <system:String x:Key="KoreanImeGuide">
         The Korean input method used in Windows 11 may cause some issues in Flow Launcher.
@@ -147,9 +147,9 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="currentActionKeywords">Bieżące słowo kluczowe akcji</system:String>
     <system:String x:Key="newActionKeyword">Nowe słowo kluczowe akcji</system:String>
     <system:String x:Key="actionKeywordsTooltip">Zmień słowa kluczowe akcji</system:String>
-    <system:String x:Key="pluginSearchDelayTime">Plugin search delay time</system:String>
-    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Search Delay Time</system:String>
-    <system:String x:Key="FilterComboboxLabel">Advanced Settings:</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Opóźnienie wyszukiwania wtyczek</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Zmień opóźnienie wyszukiwania wtyczek</system:String>
+    <system:String x:Key="FilterComboboxLabel">Ustawienia zaawansowane:</system:String>
     <system:String x:Key="DisplayModeOnOff">Aktywny</system:String>
     <system:String x:Key="DisplayModePriority">Priorytet</system:String>
     <system:String x:Key="DisplayModeSearchDelay">Opóźnienie wyszukiwania</system:String>
@@ -166,8 +166,8 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="plugin_uninstall">Odinstalowywanie</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Nie udało się usunąć ustawień wtyczki</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Wtyczki: {0} – nie udało się usunąć plików ustawień wtyczek, usuń je ręcznie</system:String>
-    <system:String x:Key="failedToRemovePluginCacheTitle">Fail to remove plugin cache</system:String>
-    <system:String x:Key="failedToRemovePluginCacheMessage">Plugins: {0} - Fail to remove plugin cache files, please remove them manually</system:String>
+    <system:String x:Key="failedToRemovePluginCacheTitle">Nie udało się usunąć cache wtyczki</system:String>
+    <system:String x:Key="failedToRemovePluginCacheMessage">Wtyczki: {0} - Nie udało się usunąć plików cache wtyczki, usuń je ręcznie</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Sklep z wtyczkami</system:String>
@@ -204,9 +204,9 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="resultItemFont">Czcionka tytułu wyniku</system:String>
     <system:String x:Key="resultSubItemFont">Czcionka podtytułu wyniku</system:String>
     <system:String x:Key="resetCustomize">Resetuj</system:String>
-    <system:String x:Key="resetCustomizeToolTip">Reset to the recommended font and size settings.</system:String>
-    <system:String x:Key="ImportThemeSize">Import Theme Size</system:String>
-    <system:String x:Key="ImportThemeSizeToolTip">If a size value intended by the theme designer is available, it will be retrieved and applied.</system:String>
+    <system:String x:Key="resetCustomizeToolTip">Przywróć zalecane ustawienia czcionki i rozmiaru.</system:String>
+    <system:String x:Key="ImportThemeSize">Rozmiar importu motywu</system:String>
+    <system:String x:Key="ImportThemeSizeToolTip">Jeśli wartość rozmiaru przewidziana przez projektanta motywu jest dostępna, zostanie pobrana i zastosowana.</system:String>
     <system:String x:Key="CustomizeToolTip">Personalizuj</system:String>
     <system:String x:Key="windowMode">Tryb w oknie</system:String>
     <system:String x:Key="opacity">Przeźroczystość</system:String>
@@ -233,21 +233,21 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="AnimationSpeedCustom">Niestandardowa</system:String>
     <system:String x:Key="Clock">Zegar</system:String>
     <system:String x:Key="Date">Data</system:String>
-    <system:String x:Key="BackdropType">Backdrop Type</system:String>
-    <system:String x:Key="BackdropInfo">The backdrop effect is not applied in the preview.</system:String>
-    <system:String x:Key="BackdropTypeDisabledToolTip">Backdrop supported starting from Windows 11 build 22000 and above</system:String>
+    <system:String x:Key="BackdropType">Typ tła</system:String>
+    <system:String x:Key="BackdropInfo">Efekt tła nie jest stosowany w podglądzie.</system:String>
+    <system:String x:Key="BackdropTypeDisabledToolTip">Efekt tła obsługiwany od Windows 11 kompilacja 22000 i nowszych</system:String>
     <system:String x:Key="BackdropTypesNone">Brak</system:String>
-    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
-    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Akryl</system:String>
+    <system:String x:Key="BackdropTypesMica">Mika</system:String>
     <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
-    <system:String x:Key="TypeIsDarkToolTip">This theme supports two (light/dark) modes.</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">Ten motyw obsługuje dwa tryby (jasny/ciemny).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Ten motyw obsługuje rozmyte przezroczyste tło.</system:String>
-    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
-    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
-    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
-    <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
-    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
+    <system:String x:Key="ShowPlaceholder">Pokaż placeholder</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Wyświetlaj placeholder, gdy zapytanie jest puste</system:String>
+    <system:String x:Key="PlaceholderText">Tekst placeholdera</system:String>
+    <system:String x:Key="PlaceholderTextTip">Zmień tekst placeholdera. Jeśli pole będzie puste, zostanie użyty: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Stały rozmiar okna</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">Nie można zmienić rozmiaru okna, przeciągając.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Skrót klawiszowy</system:String>
@@ -307,9 +307,9 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="useGlyphUI">Użyj ikon Segoe Fluent</system:String>
     <system:String x:Key="useGlyphUIEffect">Użyj ikon Segoe Fluent dla wyników wyszukiwania, gdzie jest to obsługiwane</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Naciśnij klawisz</system:String>
-    <system:String x:Key="showBadges">Show Result Badges</system:String>
-    <system:String x:Key="showBadgesToolTip">For supported plugins, badges are displayed to help distinguish them more easily.</system:String>
-    <system:String x:Key="showBadgesGlobalOnly">Show Result Badges for Global Query Only</system:String>
+    <system:String x:Key="showBadges">Pokaż odznaki wyników</system:String>
+    <system:String x:Key="showBadgesToolTip">W przypadku wspieranych wtyczek wyświetlane są odznaki, aby łatwiej je rozróżnić.</system:String>
+    <system:String x:Key="showBadgesGlobalOnly">Pokaż odznaki wyników tylko dla zapytań globalnych</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">Serwer proxy HTTP</system:String>
@@ -350,17 +350,17 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="logfolder">Folder dziennika</system:String>
     <system:String x:Key="clearlogfolder">Wyczyść logi</system:String>
     <system:String x:Key="clearlogfolderMessage">Czy na pewno chcesz usunąć wszystkie logi?</system:String>
-    <system:String x:Key="clearcachefolder">Clear Caches</system:String>
-    <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
-    <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
+    <system:String x:Key="clearcachefolder">Wyczyść pamięć podręczną</system:String>
+    <system:String x:Key="clearcachefolderMessage">Czy na pewno chcesz usunąć wszystkie pamięci podręczne?</system:String>
+    <system:String x:Key="clearfolderfailMessage">Nie udało się wyczyścić części folderów i plików. Więcej informacji w pliku dziennika</system:String>
     <system:String x:Key="welcomewindow">Kreator</system:String>
     <system:String x:Key="userdatapath">Lokalizacja danych użytkownika</system:String>
     <system:String x:Key="userdatapathToolTip">Ustawienia użytkownika i zainstalowane wtyczki są zapisywane w folderze danych użytkownika. Ta lokalizacja może się różnić w zależności od tego, czy aplikacja jest w trybie przenośnym, czy nie.</system:String>
     <system:String x:Key="userdatapathButton">Otwórz folder</system:String>
-    <system:String x:Key="logLevel">Log Level</system:String>
+    <system:String x:Key="logLevel">Poziom logowania</system:String>
     <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="LogLevelINFO">Info</system:String>
-    <system:String x:Key="settingWindowFontTitle">Setting Window Font</system:String>
+    <system:String x:Key="settingWindowFontTitle">Ustawienia czcionki okna</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Wybierz menedżer plików</system:String>
@@ -395,14 +395,14 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="cannotFindSpecifiedPlugin">Nie można odnaleźć podanej wtyczki</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Nowy wyzwalacz nie może być pusty</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Ten wyzwalacz został już przypisany do innej wtyczki, musisz podać inny wyzwalacz.</system:String>
-    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">Nowe słowo kluczowe akcji jest takie samo jak poprzednie. Wybierz inne</system:String>
     <system:String x:Key="success">Sukces</system:String>
     <system:String x:Key="completedSuccessfully">Zakończono pomyślnie</system:String>
-    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
+    <system:String x:Key="actionkeyword_tips">Wpisz słowa kluczowe uruchamiające wtyczkę (oddzielone spacją). Wpisz *, aby uruchamiać wtyczkę bez słów kluczowych.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
-    <system:String x:Key="searchDelayTimeTitle">Search Delay Time Setting</system:String>
-    <system:String x:Key="searchDelayTimeTips">Input the search delay time in ms you like to use for the plugin. Input empty if you don't want to specify any, and the plugin will use default search delay time.</system:String>
+    <system:String x:Key="searchDelayTimeTitle">Ustawienie opóźnienia wyszukiwania</system:String>
+    <system:String x:Key="searchDelayTimeTips">Podaj czas opóźnienia wyszukiwania (w ms) dla wtyczki. Pozostaw puste, aby użyć wartości domyślnej.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Skrót klawiszowy niestandardowych zapyta</system:String>
