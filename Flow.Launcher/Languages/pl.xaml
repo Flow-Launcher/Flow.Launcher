@@ -8,9 +8,9 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Wybierz plik wykonywalny {0}</system:String>
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
-        Your selected {0} executable is invalid.
+        Wybrany plik wykonywalny {0} jest nieprawidłowy.
         {2}{2}
-        Click yes if you would like select the {0} executable agian. Click no if you would like to download {1}
+        Kliknij Tak, jeśli chcesz ponownie wybrać plik wykonywalny {0}. Kliknij Nie, jeśli chcesz pobrać {1}
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Nie można ustawić ścieżki do pliku wykonywalnego {0}. Spróbuj ponownie w ustawieniach Flow (przewiń na sam dół).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Nie udało się zainicjować wtyczek</system:String>
@@ -42,8 +42,8 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="GameMode">Tryb grania</system:String>
     <system:String x:Key="GameModeToolTip">Wstrzymaj używanie skrótów.</system:String>
     <system:String x:Key="PositionReset">Resetowanie pozycji</system:String>
-    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
-    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
+    <system:String x:Key="PositionResetToolTip">Zresetuj pozycję okna wyszukiwania</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Wpisz tutaj, aby wyszukać</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Ustawienia</system:String>
@@ -56,7 +56,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="setAutoStartFailed">Błąd uruchamiania ustawień przy starcie</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ukryj okno Flow Launcher kiedy przestanie ono być aktywne</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Nie pokazuj powiadomienia o nowej wersji</system:String>
-    <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
+    <system:String x:Key="SearchWindowPosition">Pozycja okna wyszukiwania</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Zapamiętaj Ostatnią Pozycję</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Monitoruj kursorem myszy</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Monitor z Dostosowanym Oknem</system:String>
@@ -106,10 +106,10 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="AlwaysPreview">Zawsze podgląd</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Zawsze otwieraj panel podglądu, gdy aktywowany jest Flow. Naciśnij {0}, aby przełączyć podgląd.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Efekt cienia jest niedozwolony, gdy bieżący motyw ma włączony efekt rozmycia</system:String>
-    <system:String x:Key="searchDelay">Search Delay</system:String>
-    <system:String x:Key="searchDelayToolTip">Adds a short delay while typing to reduce UI flicker and result load. Recommended if your typing speed is average.</system:String>
-    <system:String x:Key="searchDelayNumberBoxToolTip">Enter the wait time (in ms) until input is considered complete. This can only be edited if Search Delay is enabled.</system:String>
-    <system:String x:Key="searchDelayTime">Default Search Delay Time</system:String>
+    <system:String x:Key="searchDelay">Opóźnienie wyszukiwania</system:String>
+    <system:String x:Key="searchDelayToolTip">Dodaje krótkie opóźnienie podczas pisania, aby zmniejszyć migotanie interfejsu i obciążenie wynikami. Zalecane przy przeciętnej szybkości pisania.</system:String>
+    <system:String x:Key="searchDelayNumberBoxToolTip">Wprowadź czas oczekiwania (w ms), po którym wprowadzanie zostanie uznane za zakończone. Edycja jest możliwa tylko, gdy włączone jest Opóźnienie wyszukiwania.</system:String>
+    <system:String x:Key="searchDelayTime">Domyślne opóźnienie wyszukiwania</system:String>
     <system:String x:Key="searchDelayTimeToolTip">Wait time before showing results after typing stops. Higher values wait longer. (ms)</system:String>
     <system:String x:Key="KoreanImeTitle">Information for Korean IME user</system:String>
     <system:String x:Key="KoreanImeGuide">
@@ -152,7 +152,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="FilterComboboxLabel">Advanced Settings:</system:String>
     <system:String x:Key="DisplayModeOnOff">Aktywny</system:String>
     <system:String x:Key="DisplayModePriority">Priorytet</system:String>
-    <system:String x:Key="DisplayModeSearchDelay">Search Delay</system:String>
+    <system:String x:Key="DisplayModeSearchDelay">Opóźnienie wyszukiwania</system:String>
     <system:String x:Key="currentPriority">Obecny Priorytet</system:String>
     <system:String x:Key="newPriority">Nowy Priorytet</system:String>
     <system:String x:Key="priority">Priorytet</system:String>
