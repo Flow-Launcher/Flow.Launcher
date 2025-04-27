@@ -32,7 +32,8 @@ namespace Flow.Launcher.ViewModel
         private static readonly string ClassName = nameof(MainViewModel);
 
         private Query _lastQuery;
-        private Query _runningQuery;
+        private Query _runningQuery; // Used for QueryResultAsync
+        private Query _currentQuery; // Used for ResultsUpdated
         private string _queryTextBeforeLeaveResults;
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
@@ -237,7 +238,7 @@ namespace Flow.Launcher.ViewModel
                 {
                     Infrastructure.Logger.Log.Debug(ClassName, $"Call IResultsUpdated for QueryText: {e.Query.RawQuery}");
 
-                    if (_runningQuery == null || e.Query.RawQuery != _runningQuery.RawQuery || e.Token.IsCancellationRequested)
+                    if (_currentQuery == null || e.Query.RawQuery != _currentQuery.RawQuery || e.Token.IsCancellationRequested)
                     {
                         Infrastructure.Logger.Log.Debug(ClassName, $"Cancel for QueryText 6: {e.Query.RawQuery}");
                         return;
@@ -258,7 +259,7 @@ namespace Flow.Launcher.ViewModel
 
                     PluginManager.UpdatePluginMetadata(resultsCopy, pair.Metadata, e.Query);
 
-                    if (_runningQuery == null || e.Query.RawQuery != _runningQuery.RawQuery || token.IsCancellationRequested)
+                    if (_currentQuery == null || e.Query.RawQuery != _currentQuery.RawQuery || token.IsCancellationRequested)
                     {
                         Infrastructure.Logger.Log.Debug(ClassName, $"Cancel for QueryText 7: {e.Query.RawQuery}");
                         return;
@@ -1253,6 +1254,7 @@ namespace Flow.Launcher.ViewModel
                 Infrastructure.Logger.Log.Debug(ClassName, $"ProgressBar: {Visibility.Hidden}");
 
                 _runningQuery = query;
+                _currentQuery = query;
 
                 // Switch to ThreadPool thread
                 await TaskScheduler.Default;
