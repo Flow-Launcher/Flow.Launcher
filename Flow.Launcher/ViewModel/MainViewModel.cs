@@ -44,7 +44,7 @@ namespace Flow.Launcher.ViewModel
         private readonly TopMostRecord _topMostRecord;
 
         private CancellationTokenSource _updateSource; // Used to cancel old query flows
-        private readonly SemaphoreSlim _updateLock = new(1, 1); // Used to ensure one updating flow
+        private readonly SemaphoreSlim _updateLock = new(1, 6); // Used to ensure up to six update flows
 
         private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
         private Task _resultsViewUpdateTask;
