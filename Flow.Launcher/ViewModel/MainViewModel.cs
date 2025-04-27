@@ -44,7 +44,6 @@ namespace Flow.Launcher.ViewModel
         private readonly TopMostRecord _topMostRecord;
 
         private CancellationTokenSource _updateSource; // Used to cancel old query flows
-        private readonly SemaphoreSlim _updateLock = new(1, 6); // Used to ensure up to six update flows
 
         private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
         private Task _resultsViewUpdateTask;
@@ -1222,41 +1221,20 @@ namespace Flow.Launcher.ViewModel
             {
                 Infrastructure.Logger.Log.Debug(ClassName, $"Query null for QueryText");
 
-                // Hide and clear results fast because results are already invalid although query is still running
+                // Hide and clear results again because running query may show and add some results
                 Results.Visibility = Visibility.Collapsed;
                 Results.Clear();
 
-                // Hide progress bar because running query is already invalid
+                // Reset plugin icon
+                PluginIconPath = null;
+                PluginIconSource = null;
+                SearchIconVisibility = Visibility.Visible;
+
+                // Hide progress bar again because running query may set this to visible
                 ProgressBarVisibility = Visibility.Hidden;
-
-                // Wait last query to be canceled and then reset UI elements
-                await _updateLock.WaitAsync(CancellationToken.None);
-                try
-                {
-                    Infrastructure.Logger.Log.Debug(ClassName, $"Clear for QueryText");
-
-                    // Hide and clear results again because running query may show and add some results
-                    Results.Visibility = Visibility.Collapsed;
-                    Results.Clear();
-
-                    // Reset plugin icon
-                    PluginIconPath = null;
-                    PluginIconSource = null;
-                    SearchIconVisibility = Visibility.Visible;
-
-                    // Hide progress bar again because running query may set this to visible
-                    ProgressBarVisibility = Visibility.Hidden;
-                }
-                finally
-                {
-                    _updateLock.Release();
-                }
                 return;
             }
 
-            Infrastructure.Logger.Log.Debug(ClassName, $"Wait for QueryText: {query.RawQuery}");
-
-            await _updateLock.WaitAsync(CancellationToken.None);
             try
             {
                 // Check if the query has changed because query can be changed so fast that
@@ -1379,9 +1357,6 @@ namespace Flow.Launcher.ViewModel
                 Infrastructure.Logger.Log.Debug(ClassName, $"Query return for QueryText: {query.RawQuery}");
                 // this make sures running query is null even if the query is canceled
                 _runningQuery = null;
-
-                // release the lock so that other query can be executed
-                _updateLock.Release();
             }
 
             // Local function
@@ -1865,7 +1840,6 @@ namespace Flow.Launcher.ViewModel
                     {
                         _resultsViewUpdateTask.Dispose();
                     }
-                    _updateLock?.Dispose();
                     _disposed = true;
                 }
             }
