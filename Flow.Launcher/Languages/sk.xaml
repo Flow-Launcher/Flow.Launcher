@@ -350,7 +350,7 @@
     <system:String x:Key="logfolder">Priečinok s logmi</system:String>
     <system:String x:Key="clearlogfolder">Vymazať logy</system:String>
     <system:String x:Key="clearlogfolderMessage">Naozaj chcete odstrániť všetky logy?</system:String>
-    <system:String x:Key="cachefolder">Cache Folder</system:String>
+    <system:String x:Key="cachefolder">Priečinok vyrovnávacej pamäte</system:String>
     <system:String x:Key="clearcachefolder">Vymazať vyrovnávaciu pamäť</system:String>
     <system:String x:Key="clearcachefolderMessage">Naozaj chcete vymazať všetky vyrovnávacie pamäte?</system:String>
     <system:String x:Key="clearfolderfailMessage">Nepodarilo sa odstrániť niektoré priečinky a súbory. Pre viac informácií si pozrite súbor logu</system:String>
