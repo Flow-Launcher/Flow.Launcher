@@ -124,6 +124,12 @@
                                         <ui:FontIcon Glyph="&#xe8b7;" />
                                     </MenuItem.Icon>
                                 </MenuItem>
+
+                                <MenuItem Command="{Binding OpenCacheFolderCommand}" Header="{DynamicResource cachefolder}">
+                                    <MenuItem.Icon>
+                                        <ui:FontIcon Glyph="&#xe8b7;" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
                             </ui:MenuFlyout>
                         </ui:FlyoutService.Flyout>
                     </Button>
