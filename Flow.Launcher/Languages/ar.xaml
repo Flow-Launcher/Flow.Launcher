@@ -350,6 +350,7 @@
     <system:String x:Key="logfolder">مجلد السجلات</system:String>
     <system:String x:Key="clearlogfolder">مسح السجلات</system:String>
     <system:String x:Key="clearlogfolderMessage">هل أنت متأكد أنك تريد حذف جميع السجلات؟</system:String>
+    <system:String x:Key="cachefolder">Cache Folder</system:String>
     <system:String x:Key="clearcachefolder">Clear Caches</system:String>
     <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
     <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
