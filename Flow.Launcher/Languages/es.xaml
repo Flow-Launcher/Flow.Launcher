@@ -350,6 +350,7 @@
     <system:String x:Key="logfolder">Carpeta de registros</system:String>
     <system:String x:Key="clearlogfolder">Eliminar registros</system:String>
     <system:String x:Key="clearlogfolderMessage">¿Está seguro de que desea eliminar todos los registros?</system:String>
+    <system:String x:Key="cachefolder">Cache Folder</system:String>
     <system:String x:Key="clearcachefolder">Limpiar cachés</system:String>
     <system:String x:Key="clearcachefolderMessage">¿Está seguro de que desea eliminar todos los cachés?</system:String>
     <system:String x:Key="clearfolderfailMessage">No se pudo eliminar parte de las carpetas y archivos. Por favor, consulte el archivo de registro para más información</system:String>
