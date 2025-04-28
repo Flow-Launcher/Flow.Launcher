@@ -145,6 +145,12 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     }
 
     [RelayCommand]
+    private void OpenCacheFolder()
+    {
+        App.API.OpenDirectory(DataLocation.CacheDirectory);
+    }
+
+    [RelayCommand]
     private void OpenLogsFolder()
     {
         App.API.OpenDirectory(GetLogDir(Constant.Version).FullName);
