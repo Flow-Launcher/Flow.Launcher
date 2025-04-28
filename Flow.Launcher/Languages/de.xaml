@@ -350,6 +350,7 @@
     <system:String x:Key="logfolder">Ordner »Logs«</system:String>
     <system:String x:Key="clearlogfolder">Logs löschen</system:String>
     <system:String x:Key="clearlogfolderMessage">Sind Sie sicher, dass Sie alle Logs löschen wollen?</system:String>
+    <system:String x:Key="cachefolder">Cache Folder</system:String>
     <system:String x:Key="clearcachefolder">Clear Caches</system:String>
     <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
     <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
