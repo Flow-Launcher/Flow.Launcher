@@ -350,6 +350,7 @@
     <system:String x:Key="logfolder">Loggmappe</system:String>
     <system:String x:Key="clearlogfolder">Tøm logger</system:String>
     <system:String x:Key="clearlogfolderMessage">Er du sikker på at du vil slette alle loggene?</system:String>
+    <system:String x:Key="cachefolder">Cache Folder</system:String>
     <system:String x:Key="clearcachefolder">Clear Caches</system:String>
     <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
     <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
