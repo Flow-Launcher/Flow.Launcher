@@ -341,6 +341,7 @@
     <system:String x:Key="logfolder">로그 폴더</system:String>
     <system:String x:Key="clearlogfolder">로그 삭제</system:String>
     <system:String x:Key="clearlogfolderMessage">정말 모든 로그를 삭제하시겠습니까?</system:String>
+    <system:String x:Key="cachefolder">Cache Folder</system:String>
     <system:String x:Key="clearcachefolder">캐시 지우기</system:String>
     <system:String x:Key="clearcachefolderMessage">모든 캐시를 삭제하시겠습니까?</system:String>
     <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
