@@ -349,6 +349,7 @@
     <system:String x:Key="logfolder">תיקיית יומני רישום</system:String>
     <system:String x:Key="clearlogfolder">נקה יומני רישום</system:String>
     <system:String x:Key="clearlogfolderMessage">האם אתה בטוח שברצונך למחוק את כל היומנים?</system:String>
+    <system:String x:Key="cachefolder">Cache Folder</system:String>
     <system:String x:Key="clearcachefolder">נקה נתוני מטמון</system:String>
     <system:String x:Key="clearcachefolderMessage">האם אתה בטוח שברצונך למחוק את כל הנתונים שבמטמון?</system:String>
     <system:String x:Key="clearfolderfailMessage">נכשל ניקוי חלק מהתיקיות והקבצים. עיין בלוג לקבלת מידע נוסף</system:String>
