@@ -350,6 +350,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="logfolder">Folder dziennika</system:String>
     <system:String x:Key="clearlogfolder">Wyczyść logi</system:String>
     <system:String x:Key="clearlogfolderMessage">Czy na pewno chcesz usunąć wszystkie logi?</system:String>
+    <system:String x:Key="cachefolder">Cache Folder</system:String>
     <system:String x:Key="clearcachefolder">Wyczyść pamięć podręczną</system:String>
     <system:String x:Key="clearcachefolderMessage">Czy na pewno chcesz usunąć wszystkie pamięci podręczne?</system:String>
     <system:String x:Key="clearfolderfailMessage">Nie udało się wyczyścić części folderów i plików. Więcej informacji w pliku dziennika</system:String>
