@@ -65,34 +65,33 @@
                     Command="{Binding RefreshExternalPluginsCommand}"
                     Content="{DynamicResource refresh}"
                     FontSize="13" />
-                <CheckBox
-                    Height="34"
-                    Margin="0 5 5 5"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    Content=".Net"
-                    IsChecked="{Binding ShowDotNet}" />
-                <CheckBox
-                    Height="34"
-                    Margin="0 5 5 5"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    Content="Python"
-                    IsChecked="{Binding ShowPython}" />
-                <CheckBox
-                    Height="34"
-                    Margin="0 5 5 5"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    Content="Node"
-                    IsChecked="{Binding ShowNodeJs}" />
-                <CheckBox
-                    Height="34"
-                    Margin="0 5 8 5"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    Content="Exe"
-                    IsChecked="{Binding ShowExecutable}" />
+                <Button Height="34" Margin="0 0 8 0">
+                    <ui:FontIcon FontSize="14" Glyph="&#xe71c;" />
+                    <ui:FlyoutService.Flyout>
+                        <ui:MenuFlyout x:Name="FilterFlyout">
+                            <MenuItem
+                                Header=".Net"
+                                IsCheckable="True"
+                                IsChecked="{Binding ShowDotNet, Mode=TwoWay}"
+                                StaysOpenOnClick="True" />
+                            <MenuItem
+                                Header="Python"
+                                IsCheckable="True"
+                                IsChecked="{Binding ShowPython, Mode=TwoWay}"
+                                StaysOpenOnClick="True" />
+                            <MenuItem
+                                Header="Node"
+                                IsCheckable="True"
+                                IsChecked="{Binding ShowNodeJs, Mode=TwoWay}"
+                                StaysOpenOnClick="True" />
+                            <MenuItem
+                                Header="Exe"
+                                IsCheckable="True"
+                                IsChecked="{Binding ShowExecutable, Mode=TwoWay}"
+                                StaysOpenOnClick="True" />
+                        </ui:MenuFlyout>
+                    </ui:FlyoutService.Flyout>
+                </Button>
                 <TextBox
                     Name="PluginStoreFilterTextbox"
                     Width="150"
