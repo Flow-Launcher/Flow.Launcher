@@ -26,9 +26,15 @@ public partial class SettingsPanePluginStore
 
     private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(SettingsPanePluginStoreViewModel.FilterText))
+        switch (e.PropertyName)
         {
-            ((CollectionViewSource)FindResource("PluginStoreCollectionView")).View.Refresh();
+            case nameof(SettingsPanePluginStoreViewModel.FilterText):
+            case nameof(SettingsPanePluginStoreViewModel.ShowDotNet):
+            case nameof(SettingsPanePluginStoreViewModel.ShowPython):
+            case nameof(SettingsPanePluginStoreViewModel.ShowNodeJs):
+            case nameof(SettingsPanePluginStoreViewModel.ShowExecutable):
+                ((CollectionViewSource)FindResource("PluginStoreCollectionView")).View.Refresh();
+                break;
         }
     }
 
