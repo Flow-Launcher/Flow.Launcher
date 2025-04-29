@@ -377,9 +377,7 @@
                                     Text="{Binding Description, Mode=OneWay}"
                                     TextTrimming="WordEllipsis"
                                     TextWrapping="Wrap" />
-
                             </StackPanel>
-
                         </Grid>
                     </Button>
                 </DataTemplate>
