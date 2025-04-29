@@ -68,7 +68,7 @@
                 <Button Height="34" Margin="0 0 10 0">
                     <ui:FontIcon FontSize="14" Glyph="&#xe71c;" />
                     <ui:FlyoutService.Flyout>
-                        <ui:MenuFlyout x:Name="FilterFlyout">
+                        <ui:MenuFlyout x:Name="FilterFlyout" Placement="Bottom">
                             <MenuItem
                                 Header=".Net"
                                 IsCheckable="True"
