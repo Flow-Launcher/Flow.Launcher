@@ -27,8 +27,8 @@
     </ui:Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="72" />
@@ -51,60 +51,94 @@
             Grid.Column="1"
             Margin="5 24 0 0">
 
-            <TextBox
-                Name="PluginStoreFilterTextbox"
-                Width="150"
-                Height="34"
-                Margin="0 0 26 0"
-                HorizontalAlignment="Right"
-                ContextMenu="{StaticResource TextBoxContextMenu}"
-                DockPanel.Dock="Right"
-                FontSize="14"
-                Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"
-                TextAlignment="Left"
-                ToolTip="{DynamicResource searchpluginToolTip}"
-                ToolTipService.InitialShowDelay="200"
-                ToolTipService.Placement="Top">
-                <TextBox.Style>
-                    <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
-                        <Style.Resources>
-                            <VisualBrush
-                                x:Key="CueBannerBrush"
-                                AlignmentX="Left"
-                                AlignmentY="Center"
-                                Stretch="None">
-                                <VisualBrush.Visual>
-                                    <Label
-                                        Padding="10 0 0 0"
-                                        Content="{DynamicResource searchplugin}"
-                                        Foreground="{DynamicResource CustomContextDisabled}" />
-                                </VisualBrush.Visual>
-                            </VisualBrush>
-                        </Style.Resources>
-                        <Style.Triggers>
-                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
-                                <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
-                            </Trigger>
-                            <Trigger Property="Text" Value="{x:Null}">
-                                <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
-                            </Trigger>
-                            <Trigger Property="IsKeyboardFocused" Value="True">
-                                <Setter Property="Background" Value="{DynamicResource Color02B}" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBox.Style>
-            </TextBox>
-            <Button
-                Height="34"
-                Margin="0 5 10 5"
-                Padding="12 4"
+            <StackPanel
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
-                Command="{Binding RefreshExternalPluginsCommand}"
-                Content="{DynamicResource refresh}"
                 DockPanel.Dock="Right"
-                FontSize="13" />
+                Orientation="Horizontal">
+                <Button
+                    Height="34"
+                    Margin="0 5 8 5"
+                    Padding="12 4"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Command="{Binding RefreshExternalPluginsCommand}"
+                    Content="{DynamicResource refresh}"
+                    FontSize="13" />
+                <CheckBox
+                    Height="34"
+                    Margin="0 5 5 5"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Content=".Net"
+                    IsChecked="{Binding ShowDotNet}" />
+                <CheckBox
+                    Height="34"
+                    Margin="0 5 5 5"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Content="Python"
+                    IsChecked="{Binding ShowPython}" />
+                <CheckBox
+                    Height="34"
+                    Margin="0 5 5 5"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Content="Node"
+                    IsChecked="{Binding ShowNodeJs}" />
+                <CheckBox
+                    Height="34"
+                    Margin="0 5 8 5"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Content="Exe"
+                    IsChecked="{Binding ShowExecutable}" />
+                <TextBox
+                    Name="PluginStoreFilterTextbox"
+                    Width="150"
+                    Height="34"
+                    Margin="0 0 26 0"
+                    HorizontalAlignment="Right"
+                    ContextMenu="{StaticResource TextBoxContextMenu}"
+                    DockPanel.Dock="Right"
+                    FontSize="14"
+                    Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"
+                    TextAlignment="Left"
+                    ToolTip="{DynamicResource searchpluginToolTip}"
+                    ToolTipService.InitialShowDelay="200"
+                    ToolTipService.Placement="Top">
+                    <TextBox.Style>
+                        <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
+                            <Style.Resources>
+                                <VisualBrush
+                                    x:Key="CueBannerBrush"
+                                    AlignmentX="Left"
+                                    AlignmentY="Center"
+                                    Stretch="None">
+                                    <VisualBrush.Visual>
+                                        <Label
+                                            Padding="10 0 0 0"
+                                            Content="{DynamicResource searchplugin}"
+                                            Foreground="{DynamicResource CustomContextDisabled}" />
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Style.Resources>
+                            <Style.Triggers>
+                                <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                </Trigger>
+                                <Trigger Property="Text" Value="{x:Null}">
+                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                </Trigger>
+                                <Trigger Property="IsKeyboardFocused" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource Color02B}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+            </StackPanel>
+
         </DockPanel>
         <ListView
             x:Name="StoreListBox"
