@@ -58,14 +58,14 @@
                 Orientation="Horizontal">
                 <Button
                     Height="34"
-                    Margin="0 5 8 5"
+                    Margin="0 5 10 5"
                     Padding="12 4"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Command="{Binding RefreshExternalPluginsCommand}"
                     Content="{DynamicResource refresh}"
                     FontSize="13" />
-                <Button Height="34" Margin="0 0 8 0">
+                <Button Height="34" Margin="0 0 10 0">
                     <ui:FontIcon FontSize="14" Glyph="&#xe71c;" />
                     <ui:FlyoutService.Flyout>
                         <ui:MenuFlyout x:Name="FilterFlyout">
@@ -80,7 +80,7 @@
                                 IsChecked="{Binding ShowPython, Mode=TwoWay}"
                                 StaysOpenOnClick="True" />
                             <MenuItem
-                                Header="Node"
+                                Header="Node.js"
                                 IsCheckable="True"
                                 IsChecked="{Binding ShowNodeJs, Mode=TwoWay}"
                                 StaysOpenOnClick="True" />
