@@ -252,7 +252,6 @@ public partial class SettingsPaneAboutViewModel : BaseModel
         var dir = GetPluginCacheDir();
         try
         {
-            // Log folders are the last level of folders
             dir.Delete(recursive: false);
         }
         catch (Exception e)
