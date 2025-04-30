@@ -187,7 +187,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
                 try
                 {
                     // Log folders are the last level of folders
-                    dir.Delete(false);
+                    dir.Delete(recursive: false);
                 }
                 catch (Exception e)
                 {
@@ -239,7 +239,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
                 try
                 {
                     // Plugin may create directories in its cache directory
-                    dir.Delete(true);
+                    dir.Delete(recursive: true);
                 }
                 catch (Exception e)
                 {
@@ -249,10 +249,11 @@ public partial class SettingsPaneAboutViewModel : BaseModel
             });
 
         // Then, delete plugin directory
+        var dir = GetPluginCacheDir();
         try
         {
             // Log folders are the last level of folders
-            GetPluginCacheDir().Delete(false);
+            dir.Delete(recursive: false);
         }
         catch (Exception e)
         {
