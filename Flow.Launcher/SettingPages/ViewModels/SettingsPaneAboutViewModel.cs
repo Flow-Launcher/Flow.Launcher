@@ -186,8 +186,8 @@ public partial class SettingsPaneAboutViewModel : BaseModel
             {
                 try
                 {
-                    // Make sure directory clean
-                    dir.Delete(true);
+                    // Log folders are the last level of folders
+                    dir.Delete(false);
                 }
                 catch (Exception e)
                 {
@@ -249,21 +249,16 @@ public partial class SettingsPaneAboutViewModel : BaseModel
             });
 
         // Then, delete plugin directory
-        cacheDirectory.EnumerateDirectories("*", SearchOption.TopDirectoryOnly)
-            .ToList()
-            .ForEach(dir =>
-            {
-                try
-                {
-                    // Make sure directory clean
-                    dir.Delete(true);
-                }
-                catch (Exception e)
-                {
-                    App.API.LogException(ClassName, $"Failed to delete cache directory: {dir.Name}", e);
-                    success = false;
-                }
-            });
+        try
+        {
+            // Log folders are the last level of folders
+            GetPluginCacheDir().Delete(false);
+        }
+        catch (Exception e)
+        {
+            App.API.LogException(ClassName, $"Failed to delete cache directory: {dir.Name}", e);
+            success = false;
+        }
 
         OnPropertyChanged(nameof(CacheFolderSize));
 
