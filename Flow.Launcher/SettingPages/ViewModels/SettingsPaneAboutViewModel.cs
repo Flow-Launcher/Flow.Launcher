@@ -186,7 +186,8 @@ public partial class SettingsPaneAboutViewModel : BaseModel
             {
                 try
                 {
-                    dir.Delete(true);
+                    // Log folders are the last level of folders
+                    dir.Delete(recursive: false);
                 }
                 catch (Exception e)
                 {
@@ -214,6 +215,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     {
         var success = true;
         var cacheDirectory = GetCacheDir();
+        var pluginCacheDirectory = GetPluginCacheDir();
         var cacheFiles = GetCacheFiles();
 
         cacheFiles.ForEach(f =>
@@ -229,13 +231,15 @@ public partial class SettingsPaneAboutViewModel : BaseModel
             }
         });
 
-        cacheDirectory.EnumerateDirectories("*", SearchOption.TopDirectoryOnly)
+        // Firstly, delete plugin cache directories
+        pluginCacheDirectory.EnumerateDirectories("*", SearchOption.TopDirectoryOnly)
             .ToList()
             .ForEach(dir =>
             {
                 try
                 {
-                    dir.Delete(true);
+                    // Plugin may create directories in its cache directory
+                    dir.Delete(recursive: true);
                 }
                 catch (Exception e)
                 {
@@ -243,6 +247,18 @@ public partial class SettingsPaneAboutViewModel : BaseModel
                     success = false;
                 }
             });
+
+        // Then, delete plugin directory
+        var dir = GetPluginCacheDir();
+        try
+        {
+            dir.Delete(recursive: false);
+        }
+        catch (Exception e)
+        {
+            App.API.LogException(ClassName, $"Failed to delete cache directory: {dir.Name}", e);
+            success = false;
+        }
 
         OnPropertyChanged(nameof(CacheFolderSize));
 
@@ -252,6 +268,11 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     private static DirectoryInfo GetCacheDir()
     {
         return new DirectoryInfo(DataLocation.CacheDirectory);
+    }
+
+    private static DirectoryInfo GetPluginCacheDir()
+    {
+        return new DirectoryInfo(DataLocation.PluginCacheDirectory);
     }
 
     private static List<FileInfo> GetCacheFiles()
