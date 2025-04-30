@@ -186,6 +186,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
             {
                 try
                 {
+                    // Make sure directory clean
                     dir.Delete(true);
                 }
                 catch (Exception e)
@@ -214,6 +215,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     {
         var success = true;
         var cacheDirectory = GetCacheDir();
+        var pluginCacheDirectory = GetPluginCacheDir();
         var cacheFiles = GetCacheFiles();
 
         cacheFiles.ForEach(f =>
@@ -229,12 +231,31 @@ public partial class SettingsPaneAboutViewModel : BaseModel
             }
         });
 
+        // Firstly, delete plugin cache directories
+        pluginCacheDirectory.EnumerateDirectories("*", SearchOption.TopDirectoryOnly)
+            .ToList()
+            .ForEach(dir =>
+            {
+                try
+                {
+                    // Plugin may create directories in its cache directory
+                    dir.Delete(true);
+                }
+                catch (Exception e)
+                {
+                    App.API.LogException(ClassName, $"Failed to delete cache directory: {dir.Name}", e);
+                    success = false;
+                }
+            });
+
+        // Then, delete plugin directory
         cacheDirectory.EnumerateDirectories("*", SearchOption.TopDirectoryOnly)
             .ToList()
             .ForEach(dir =>
             {
                 try
                 {
+                    // Make sure directory clean
                     dir.Delete(true);
                 }
                 catch (Exception e)
@@ -252,6 +273,11 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     private static DirectoryInfo GetCacheDir()
     {
         return new DirectoryInfo(DataLocation.CacheDirectory);
+    }
+
+    private static DirectoryInfo GetPluginCacheDir()
+    {
+        return new DirectoryInfo(DataLocation.PluginCacheDirectory);
     }
 
     private static List<FileInfo> GetCacheFiles()
