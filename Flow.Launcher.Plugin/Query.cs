@@ -8,12 +8,6 @@ namespace Flow.Launcher.Plugin
     public class Query
     {
         /// <summary>
-        /// Input text in query box.
-        /// We didn't recommend use this property directly. You should always use Search property.
-        /// </summary>
-        public string Input { get; internal init; }
-
-        /// <summary>
         /// Raw query, this includes action keyword if it has.
         /// It has handled buildin custom query shortkeys and build-in shortcuts, and it trims the whitespace.
         /// We didn't recommend use this property directly. You should always use Search property.
@@ -70,10 +64,10 @@ namespace Flow.Launcher.Plugin
         /// </remarks>
         [JsonIgnore]
         public string FirstSearch => SplitSearch(0);
-        
+
         [JsonIgnore]
         private string _secondToEndSearch;
-        
+
         /// <summary>
         /// strings from second search (including) to last search
         /// </summary>

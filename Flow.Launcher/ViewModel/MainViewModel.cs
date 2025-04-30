@@ -31,9 +31,8 @@ namespace Flow.Launcher.ViewModel
 
         private static readonly string ClassName = nameof(MainViewModel);
 
+        private bool _isQueryRunning;
         private Query _lastQuery;
-        private Query _runningQuery; // Used for QueryResultAsync
-        private Query _currentQuery; // Used for ResultsUpdated
         private string _queryTextBeforeLeaveResults;
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
@@ -236,11 +235,8 @@ namespace Flow.Launcher.ViewModel
                 var plugin = (IResultUpdated)pair.Plugin;
                 plugin.ResultsUpdated += (s, e) =>
                 {
-                    Infrastructure.Logger.Log.Debug(ClassName, $"Call IResultsUpdated for QueryText: {e.Query.RawQuery}");
-
-                    if (_currentQuery == null || e.Query.RawQuery != _currentQuery.RawQuery || e.Token.IsCancellationRequested)
+                    if (e.Query.RawQuery != QueryText || e.Token.IsCancellationRequested)
                     {
-                        Infrastructure.Logger.Log.Debug(ClassName, $"Cancel for QueryText 6: {e.Query.RawQuery}");
                         return;
                     }
 
@@ -259,20 +255,12 @@ namespace Flow.Launcher.ViewModel
 
                     PluginManager.UpdatePluginMetadata(resultsCopy, pair.Metadata, e.Query);
 
-                    if (_currentQuery == null || e.Query.RawQuery != _currentQuery.RawQuery || token.IsCancellationRequested)
-                    {
-                        Infrastructure.Logger.Log.Debug(ClassName, $"Cancel for QueryText 7: {e.Query.RawQuery}");
-                        return;
-                    }
+                    if (token.IsCancellationRequested) return;
 
                     if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query, 
                         token)))
                     {
                         App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
-                    }
-                    else
-                    {
-                        Infrastructure.Logger.Log.Debug(ClassName, $"Write updates for QueryText 1: {e.Query.RawQuery}");
                     }
                 };
             }
@@ -320,7 +308,6 @@ namespace Flow.Launcher.ViewModel
         {
             if (QueryResultsSelected())
             {
-                Infrastructure.Logger.Log.Debug(ClassName, $"Search Delay: {false}, Is Requery: {true}, Reselect: {true}");
                 // When we are re-querying, we should not delay the query
                 _ = QueryResultsAsync(false, isReQuery: true);
             }
@@ -329,7 +316,6 @@ namespace Flow.Launcher.ViewModel
         public void ReQuery(bool reselect)
         {
             BackToQueryResults();
-            Infrastructure.Logger.Log.Debug(ClassName, $"Search Delay: {false}, Is Requery: {true}, Reselect: {reselect}");
             // When we are re-querying, we should not delay the query
             _ = QueryResultsAsync(false, isReQuery: true, reSelect: reselect);
         }
@@ -379,7 +365,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void Backspace(object index)
         {
-            var query = QueryBuilder.Build(QueryText, QueryText.Trim(), PluginManager.NonGlobalPlugins);
+            var query = QueryBuilder.Build(QueryText.Trim(), PluginManager.NonGlobalPlugins);
 
             // GetPreviousExistingDirectory does not require trailing '\', otherwise will return empty string
             var path = FilesFolders.GetPreviousExistingDirectory((_) => true, query.Search.TrimEnd('\\'));
@@ -1092,7 +1078,6 @@ namespace Flow.Launcher.ViewModel
         {
             if (QueryResultsSelected())
             {
-                Infrastructure.Logger.Log.Debug(ClassName, $"Search Delay: {searchDelay}, Is Requery: {isReQuery}, Reselect: {true}");
                 _ = QueryResultsAsync(searchDelay, isReQuery);
             }
             else if (ContextMenuSelected())
@@ -1109,7 +1094,6 @@ namespace Flow.Launcher.ViewModel
         {
             if (QueryResultsSelected())
             {
-                Infrastructure.Logger.Log.Debug(ClassName, $"Search Delay: {searchDelay}, Is Requery: {isReQuery}, Reselect: {true}");
                 await QueryResultsAsync(searchDelay, isReQuery);
             }
             else if (ContextMenuSelected())
@@ -1212,16 +1196,11 @@ namespace Flow.Launcher.ViewModel
         private async Task QueryResultsAsync(bool searchDelay, bool isReQuery = false, bool reSelect = true)
         {
             _updateSource?.Cancel();
-            _runningQuery = null;
-
-            Infrastructure.Logger.Log.Debug(ClassName, $"Query construct for QueryText: {QueryText}");
 
             var query = ConstructQuery(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
 
             if (query == null) // shortcut expanded
             {
-                Infrastructure.Logger.Log.Debug(ClassName, $"Query null for QueryText");
-
                 // Hide and clear results again because running query may show and add some results
                 Results.Visibility = Visibility.Collapsed;
                 Results.Clear();
@@ -1236,129 +1215,89 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
+            _updateSource = new CancellationTokenSource();
+
+            ProgressBarVisibility = Visibility.Hidden;
+            _isQueryRunning = true;
+
+            // Switch to ThreadPool thread
+            await TaskScheduler.Default;
+
+            if (_updateSource.Token.IsCancellationRequested) return;
+
+            // Update the query's IsReQuery property to true if this is a re-query
+            query.IsReQuery = isReQuery;
+
+            // handle the exclusiveness of plugin using action keyword
+            RemoveOldQueryResults(query);
+
+            _lastQuery = query;
+
+            var plugins = PluginManager.ValidPluginsForQuery(query);
+
+            if (plugins.Count == 1)
+            {
+                PluginIconPath = plugins.Single().Metadata.IcoPath;
+                PluginIconSource = await App.API.LoadImageAsync(PluginIconPath);
+                SearchIconVisibility = Visibility.Hidden;
+            }
+            else
+            {
+                PluginIconPath = null;
+                PluginIconSource = null;
+                SearchIconVisibility = Visibility.Visible;
+            }
+
+            // Do not wait for performance improvement
+            /*if (string.IsNullOrEmpty(query.ActionKeyword))
+            {
+                // Wait 15 millisecond for query change in global query
+                // if query changes, return so that it won't be calculated
+                await Task.Delay(15, _updateSource.Token);
+                if (_updateSource.Token.IsCancellationRequested)
+                    return;
+            }*/
+
+            _ = Task.Delay(200, _updateSource.Token).ContinueWith(_ =>
+                {
+                    // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
+                    if (_isQueryRunning)
+                    {
+                        ProgressBarVisibility = Visibility.Visible;
+                    }
+                },
+                _updateSource.Token,
+                TaskContinuationOptions.NotOnCanceled,
+                TaskScheduler.Default);
+
+            // plugins are ICollection, meaning LINQ will get the Count and preallocate Array
+
+            var tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
+            {
+                false => QueryTaskAsync(plugin, _updateSource.Token),
+                true => Task.CompletedTask
+            }).ToArray();
+
             try
             {
-                // Check if the query has changed because query can be changed so fast that
-                // token of the query between two queries has not been created yet
-                if (query.Input != QueryText && query.RawQuery != QueryText.Trim())
-                {
-                    Infrastructure.Logger.Log.Debug(ClassName, $"Cancel for QueryText 0: {query.RawQuery}");
-                    return;
-                }
-
-                _updateSource = new CancellationTokenSource();
-
-                ProgressBarVisibility = Visibility.Hidden;
-
-                Infrastructure.Logger.Log.Debug(ClassName, $"Start for QueryText: {query.RawQuery}");
-                Infrastructure.Logger.Log.Debug(ClassName, $"ProgressBar: {Visibility.Hidden}");
-
-                _runningQuery = query;
-                _currentQuery = query;
-
-                // Switch to ThreadPool thread
-                await TaskScheduler.Default;
-
-                if (_updateSource.Token.IsCancellationRequested)
-                {
-                    Infrastructure.Logger.Log.Debug(ClassName, $"Cancel for QueryText 1: {query.RawQuery}");
-                    return;
-                }
-
-                // Update the query's IsReQuery property to true if this is a re-query
-                query.IsReQuery = isReQuery;
-
-                // handle the exclusiveness of plugin using action keyword
-                RemoveOldQueryResults(query);
-
-                Infrastructure.Logger.Log.Debug(ClassName, $"Remove old for QueryText: {query.RawQuery}");
-
-                _lastQuery = query;
-
-                var plugins = PluginManager.ValidPluginsForQuery(query);
-
-                Infrastructure.Logger.Log.Debug(ClassName, $"Valid {plugins.Count} plugins QueryText: {query.RawQuery}");
-
-                if (plugins.Count == 1)
-                {
-                    PluginIconPath = plugins.Single().Metadata.IcoPath;
-                    PluginIconSource = await App.API.LoadImageAsync(PluginIconPath);
-                    SearchIconVisibility = Visibility.Hidden;
-                }
-                else
-                {
-                    PluginIconPath = null;
-                    PluginIconSource = null;
-                    SearchIconVisibility = Visibility.Visible;
-                }
-
-                // Do not wait for performance improvement
-                /*if (string.IsNullOrEmpty(query.ActionKeyword))
-                {
-                    // Wait 15 millisecond for query change in global query
-                    // if query changes, return so that it won't be calculated
-                    await Task.Delay(15, _updateSource.Token);
-                    if (_updateSource.Token.IsCancellationRequested)
-                        return;
-                }*/
-
-                _ = Task.Delay(200, _updateSource.Token).ContinueWith(_ =>
-                    {
-                        Infrastructure.Logger.Log.Debug(ClassName, $"Check ProgressBar for QueryText: running: {_runningQuery?.RawQuery ?? "null"} query: {query.RawQuery}");
-
-                        // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
-                        if (_runningQuery != null && _runningQuery == query)
-                        {
-                            ProgressBarVisibility = Visibility.Visible;
-
-                            Infrastructure.Logger.Log.Debug(ClassName, $"ProgressBar: {Visibility.Visible}");
-                        }
-                    },
-                    _updateSource.Token,
-                    TaskContinuationOptions.NotOnCanceled,
-                    TaskScheduler.Default);
-
-                // plugins are ICollection, meaning LINQ will get the Count and preallocate Array
-
-                var tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
-                {
-                    false => QueryTaskAsync(plugin, _updateSource.Token),
-                    true => Task.CompletedTask
-                }).ToArray();
-
-                try
-                {
-                    // Check the code, WhenAll will translate all type of IEnumerable or Collection to Array, so make an array at first
-                    await Task.WhenAll(tasks);
-                }
-                catch (OperationCanceledException)
-                {
-                    // nothing to do here
-                }
-
-                if (_updateSource.Token.IsCancellationRequested)
-                {
-                    Infrastructure.Logger.Log.Debug(ClassName, $"Cancel for QueryText 2: {query.RawQuery}");
-                    return;
-                }
-
-                // this should happen once after all queries are done so progress bar should continue
-                // until the end of all querying
-                _runningQuery = null;
-
-                if (!_updateSource.Token.IsCancellationRequested)
-                {
-                    // update to hidden if this is still the current query
-                    ProgressBarVisibility = Visibility.Hidden;
-
-                    Infrastructure.Logger.Log.Debug(ClassName, $"ProgressBar: {Visibility.Hidden}");
-                }
+                // Check the code, WhenAll will translate all type of IEnumerable or Collection to Array, so make an array at first
+                await Task.WhenAll(tasks);
             }
-            finally
+            catch (OperationCanceledException)
             {
-                Infrastructure.Logger.Log.Debug(ClassName, $"Query return for QueryText: {query.RawQuery}");
-                // this make sures running query is null even if the query is canceled
-                _runningQuery = null;
+                // nothing to do here
+            }
+
+            if (_updateSource.Token.IsCancellationRequested) return;
+
+            // this should happen once after all queries are done so progress bar should continue
+            // until the end of all querying
+            _isQueryRunning = false;
+
+            if (!_updateSource.Token.IsCancellationRequested)
+            {
+                // update to hidden if this is still the current query
+                ProgressBarVisibility = Visibility.Hidden;
             }
 
             // Local function
@@ -1370,11 +1309,7 @@ namespace Flow.Launcher.ViewModel
 
                     await Task.Delay(searchDelayTime, token);
 
-                    if (token.IsCancellationRequested)
-                    {
-                        Infrastructure.Logger.Log.Debug(ClassName, $"Cancel for QueryText 3: {QueryText}");
-                        return;
-                    }
+                    if (token.IsCancellationRequested) return;
                 }
 
                 // Since it is wrapped within a ThreadPool Thread, the synchronous context is null
@@ -1383,11 +1318,7 @@ namespace Flow.Launcher.ViewModel
 
                 var results = await PluginManager.QueryForPluginAsync(plugin, query, token);
 
-                if (token.IsCancellationRequested)
-                {
-                    Infrastructure.Logger.Log.Debug(ClassName, $"Cancel for QueryText 4: {query.RawQuery}");
-                    return;
-                }
+                if (token.IsCancellationRequested) return;
 
                 IReadOnlyList<Result> resultsCopy;
                 if (results == null)
@@ -1408,20 +1339,12 @@ namespace Flow.Launcher.ViewModel
                     }
                 }
 
-                if (token.IsCancellationRequested)
-                {
-                    Infrastructure.Logger.Log.Debug(ClassName, $"Cancel for QueryText 5: {query.RawQuery}");
-                    return;
-                }
+                if (token.IsCancellationRequested) return;
 
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
                     token, reSelect)))
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
-                }
-                else
-                {
-                    Infrastructure.Logger.Log.Debug(ClassName, $"Write updates for QueryText: {query.RawQuery}");
                 }
             }
         }
@@ -1451,7 +1374,7 @@ namespace Flow.Launcher.ViewModel
             // Applying builtin shortcuts
             BuildQuery(builtInShortcuts, queryBuilder, queryBuilderTmp);
 
-            return QueryBuilder.Build(queryText, queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
+            return QueryBuilder.Build(queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
         }
 
         private void BuildQuery(IEnumerable<BaseBuiltinShortcutModel> builtInShortcuts,
