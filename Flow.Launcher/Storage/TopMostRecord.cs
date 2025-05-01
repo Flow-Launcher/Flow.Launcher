@@ -189,11 +189,8 @@ namespace Flow.Launcher.Storage
             }
 
             // remove the record from the bag
-            var recordToRemove = value.FirstOrDefault(r => r.Equals(result));
-            if (recordToRemove != null)
-            {
-                value.TryTake(out recordToRemove);
-            }
+            var bag = new ConcurrentQueue<Record>(value.Where(r => !r.Equals(result)));
+            records[result.OriginQuery.RawQuery] = new ConcurrentBag<Record>(bag);
 
             // if the bag is empty, remove the bag from the dictionary
             if (value.IsEmpty)
@@ -230,21 +227,9 @@ namespace Flow.Launcher.Storage
             else
             {
                 // add or update the record in the bag
-                if (value.Any(r => r.Equals(result)))
-                {
-                    // update the record
-                    var recordToUpdate = value.FirstOrDefault(r => r.Equals(result));
-                    if (recordToUpdate != null)
-                    {
-                        value.TryTake(out recordToUpdate);
-                        value.Add(record);
-                    }
-                }
-                else
-                {
-                    // add the record
-                    value.Add(record);
-                }
+                var bag = new ConcurrentQueue<Record>(value.Where(r => !r.Equals(result))); // make sure we don't have duplicates
+                bag.Enqueue(record);
+                records[result.OriginQuery.RawQuery] = new ConcurrentBag<Record>(bag);
             }
         }
     }
