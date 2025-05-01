@@ -52,17 +52,12 @@ namespace Flow.Launcher.Infrastructure.Storage
 
         public void Delete()
         {
-            if (File.Exists(FilePath))
+            foreach (var path in new[] { FilePath, BackupFilePath, TempFilePath })
             {
-                File.Delete(FilePath);
-            }
-            if (File.Exists(BackupFilePath))
-            {
-                File.Delete(BackupFilePath);
-            }
-            if (File.Exists(TempFilePath))
-            {
-                File.Delete(TempFilePath);
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
             }
         }
 
