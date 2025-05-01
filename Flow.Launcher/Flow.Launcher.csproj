@@ -96,7 +96,9 @@
     <!-- ModernWpfUI v0.9.5 introduced WinRT changes that causes Notification platform unavailable error on some machines -->
     <!-- https://github.com/Flow-Launcher/Flow.Launcher/issues/1772#issuecomment-1502440801 -->
     <PackageReference Include="ModernWpfUI" Version="0.9.4" />
-    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
+    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="SemanticVersioning" Version="3.0.0" />
     <PackageReference Include="TaskScheduler" Version="2.12.1" />
     <PackageReference Include="VirtualizingWrapPanel" Version="2.1.1" />
