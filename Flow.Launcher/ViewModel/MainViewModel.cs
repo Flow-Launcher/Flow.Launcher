@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -54,6 +54,9 @@ namespace Flow.Launcher.ViewModel
 
         #region Constructor
 
+        /// <summary>
+        /// Initializes a new instance of the MainViewModel class, setting up application state, loading persistent data, configuring results view models, and registering property change handlers and background update tasks.
+        /// </summary>
         public MainViewModel()
         {
             _queryTextBeforeLeaveResults = "";
@@ -1605,6 +1608,8 @@ namespace Flow.Launcher.ViewModel
 
         /// <summary>
         /// Save history, user selected records and top most records
+        /// <summary>
+        /// Persists the current history, user-selected records, and top-most records to storage.
         /// </summary>
         public void Save()
         {

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +14,12 @@ namespace Flow.Launcher.Storage
         private readonly FlowLauncherJsonStorage<MultipleTopMostRecord> _topMostRecordStorage;
         private readonly MultipleTopMostRecord _topMostRecord;
 
+        /// <summary>
+        /// Initializes the top most records storage, handling migration from the old single-record-per-query format to the new multiple-records-per-query format if necessary.
+        /// </summary>
+        /// <remarks>
+        /// If new-format data exists, it loads it and deletes any old-format data. If only old-format data exists, it migrates the data to the new format, deletes the old data, and saves the new structure. If neither exists, it initializes an empty new-format storage.
+        /// </remarks>
         public FlowLauncherJsonStorageTopMostRecord()
         {
             // Get old data & new data
@@ -63,21 +69,35 @@ namespace Flow.Launcher.Storage
             }
         }
 
+        /// <summary>
+        /// Persists the current top most records to storage.
+        /// </summary>
         public void Save()
         {
             _topMostRecordStorage.Save();
         }
 
+        /// <summary>
+        /// Determines whether the specified result is marked as top most in the current records.
+        /// </summary>
+        /// <param name="result">The result to check.</param>
+        /// <returns>True if the result is marked as top most; otherwise, false.</returns>
         public bool IsTopMost(Result result)
         {
             return _topMostRecord.IsTopMost(result);
         }
 
+        /// <summary>
+        /// Removes the specified result from the top most records if it exists.
+        /// </summary>
         public void Remove(Result result)
         {
             _topMostRecord.Remove(result);
         }
 
+        /// <summary>
+        /// Adds a result to the top most records or updates it if it already exists.
+        /// </summary>
         public void AddOrUpdate(Result result)
         {
             _topMostRecord.AddOrUpdate(result);
@@ -92,6 +112,11 @@ namespace Flow.Launcher.Storage
         [JsonInclude]
         public ConcurrentDictionary<string, Record> records { get; private set; } = new();
 
+        /// <summary>
+        /// Determines whether the specified result is the top most record for its originating query.
+        /// </summary>
+        /// <param name="result">The result to check.</param>
+        /// <returns>True if the result matches the stored top most record for its query; otherwise, false.</returns>
         internal bool IsTopMost(Result result)
         {
             // origin query is null when user select the context menu item directly of one item from query list
@@ -118,6 +143,10 @@ namespace Flow.Launcher.Storage
             records.Remove(result.OriginQuery.RawQuery, out _);
         }
 
+        /// <summary>
+        /// Adds or updates the top most record for the specified result's query, replacing any existing record for that query.
+        /// </summary>
+        /// <param name="result">The result whose information is to be stored as the top most record for its originating query. If <c>OriginQuery</c> is null, no action is taken.</param>
         internal void AddOrUpdate(Result result)
         {
             // origin query is null when user select the context menu item directly of one item from query list
@@ -147,6 +176,10 @@ namespace Flow.Launcher.Storage
         [JsonConverter(typeof(ConcurrentDictionaryConcurrentBagConverter))]
         public ConcurrentDictionary<string, ConcurrentBag<Record>> records { get; private set; } = new();
 
+        /// <summary>
+        /// Migrates all records from an existing <see cref="TopMostRecord"/> into this multiple-records-per-query structure.
+        /// </summary>
+        /// <param name="topMostRecord">The old single-record-per-query data structure to migrate from.</param>
         internal void Add(TopMostRecord topMostRecord)
         {
             if (topMostRecord == null || topMostRecord.records.IsEmpty)
@@ -164,6 +197,11 @@ namespace Flow.Launcher.Storage
             }
         }
 
+        /// <summary>
+        /// Determines whether the specified result is marked as top most for its originating query.
+        /// </summary>
+        /// <param name="result">The result to check.</param>
+        /// <returns>True if the result is a top most record for its query; otherwise, false.</returns>
         internal bool IsTopMost(Result result)
         {
             // origin query is null when user select the context menu item directly of one item from query list
@@ -178,6 +216,10 @@ namespace Flow.Launcher.Storage
             return value.Any(record => record.Equals(result));
         }
 
+        /// <summary>
+        /// Removes a matching record for the given result from the collection of top most records for its query.
+        /// </summary>
+        /// <param name="result">The result whose corresponding record should be removed.</param>
         internal void Remove(Result result)
         {
             // origin query is null when user select the context menu item directly of one item from query list
@@ -202,6 +244,10 @@ namespace Flow.Launcher.Storage
             }
         }
 
+        /// <summary>
+        /// Adds a result as a top most record for its originating query, or updates the existing record if it already exists.
+        /// </summary>
+        /// <param name="result">The result to add or update as top most for its query. Ignored if the result's OriginQuery is null.</param>
         internal void AddOrUpdate(Result result)
         {
             // origin query is null when user select the context menu item directly of one item from query list
@@ -254,6 +300,13 @@ namespace Flow.Launcher.Storage
     /// </summary>
     internal class ConcurrentDictionaryConcurrentBagConverter : JsonConverter<ConcurrentDictionary<string, ConcurrentBag<Record>>>
     {
+        /// <summary>
+        /// Deserializes JSON into a <see cref="ConcurrentDictionary{TKey, TValue}"/> mapping strings to <see cref="ConcurrentBag{T}"/> of <see cref="Record"/>.
+        /// </summary>
+        /// <param name="reader">The JSON reader positioned at the start of the object.</param>
+        /// <param name="typeToConvert">The type to convert (ignored).</param>
+        /// <param name="options">Serialization options to use during deserialization.</param>
+        /// <returns>A concurrent dictionary where each key maps to a concurrent bag of records.</returns>
         public override ConcurrentDictionary<string, ConcurrentBag<Record>> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             var dictionary = JsonSerializer.Deserialize<Dictionary<string, List<Record>>>(ref reader, options);
@@ -265,6 +318,12 @@ namespace Flow.Launcher.Storage
             return concurrentDictionary;
         }
 
+        /// <summary>
+        /// Serializes a <see cref="ConcurrentDictionary{TKey, TValue}"/> of <see cref="ConcurrentBag{T}"/> records to JSON by converting each bag to a list.
+        /// </summary>
+        /// <param name="writer">The JSON writer to which the data will be serialized.</param>
+        /// <param name="value">The concurrent dictionary containing bags of records to serialize.</param>
+        /// <param name="options">Serialization options to use.</param>
         public override void Write(Utf8JsonWriter writer, ConcurrentDictionary<string, ConcurrentBag<Record>> value, JsonSerializerOptions options)
         {
             var dict = new Dictionary<string, List<Record>>();
@@ -283,6 +342,11 @@ namespace Flow.Launcher.Storage
         public string PluginID { get; init; }
         public string RecordKey { get; init; }
 
+        /// <summary>
+        /// Determines whether the current record is equal to the specified result based on key or identifying properties.
+        /// </summary>
+        /// <param name="r">The result to compare with this record.</param>
+        /// <returns>True if the records are considered equal; otherwise, false.</returns>
         public bool Equals(Result r)
         {
             if (string.IsNullOrEmpty(RecordKey) || string.IsNullOrEmpty(r.RecordKey))

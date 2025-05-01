@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.IO;
 using System.Text.Json;
@@ -37,6 +37,11 @@ namespace Flow.Launcher.Infrastructure.Storage
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <c>JsonStorage&lt;T&gt;</c> class for the specified file path.
+        /// </summary>
+        /// <param name="filePath">The full path to the JSON file used for storage.</param>
+        /// <exception cref="ArgumentException">Thrown if the provided file path does not contain a valid directory.</exception>
         public JsonStorage(string filePath)
         {
             FilePath = filePath;
@@ -45,11 +50,18 @@ namespace Flow.Launcher.Infrastructure.Storage
             FilesFolders.ValidateDirectory(DirectoryPath);
         }
 
+        /// <summary>
+        /// Determines whether the main JSON storage file exists on disk.
+        /// </summary>
+        /// <returns>True if the storage file exists; otherwise, false.</returns>
         public bool Exists()
         {
             return File.Exists(FilePath);
         }
 
+        /// <summary>
+        /// Deletes the main JSON storage file, its backup, and temporary file if they exist.
+        /// </summary>
         public void Delete()
         {
             foreach (var path in new[] { FilePath, BackupFilePath, TempFilePath })
@@ -61,6 +73,10 @@ namespace Flow.Launcher.Infrastructure.Storage
             }
         }
 
+        /// <summary>
+        /// Asynchronously loads and deserializes the JSON file into <c>Data</c>, falling back to a backup or a default instance if necessary.
+        /// </summary>
+        /// <returns>The loaded or newly created instance of <typeparamref name="T"/>.</returns>
         public async Task<T> LoadAsync()
         {
             if (Data != null)
