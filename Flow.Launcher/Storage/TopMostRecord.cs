@@ -188,6 +188,12 @@ namespace Flow.Launcher.Storage
             {
                 value.TryTake(out recordToRemove);
             }
+
+            // if the bag is empty, remove the bag from the dictionary
+            if (value.IsEmpty)
+            {
+                records.TryRemove(result.OriginQuery.RawQuery, out _);
+            }
         }
 
         internal void AddOrUpdate(Result result)
