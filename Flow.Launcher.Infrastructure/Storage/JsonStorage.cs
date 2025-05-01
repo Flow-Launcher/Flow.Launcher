@@ -50,6 +50,22 @@ namespace Flow.Launcher.Infrastructure.Storage
             return File.Exists(FilePath);
         }
 
+        public void Delete()
+        {
+            if (File.Exists(FilePath))
+            {
+                File.Delete(FilePath);
+            }
+            if (File.Exists(BackupFilePath))
+            {
+                File.Delete(BackupFilePath);
+            }
+            if (File.Exists(TempFilePath))
+            {
+                File.Delete(TempFilePath);
+            }
+        }
+
         public async Task<T> LoadAsync()
         {
             if (Data != null)

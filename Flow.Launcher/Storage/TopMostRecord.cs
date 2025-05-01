@@ -1,35 +1,64 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Storage
 {
-    public class FlowLauncherJsonStorageTopMostRecord : ISavable
+    public class FlowLauncherJsonStorageTopMostRecord
     {
         private readonly FlowLauncherJsonStorage<MultipleTopMostRecord> _topMostRecordStorage;
         private readonly MultipleTopMostRecord _topMostRecord;
 
         public FlowLauncherJsonStorageTopMostRecord()
         {
+            // Get old data & new data
             var topMostRecordStorage = new FlowLauncherJsonStorage<TopMostRecord>();
-            var exist = topMostRecordStorage.Exists();
-            if (exist)
-            {
-                // Get old data
-                var topMostRecord = topMostRecordStorage.Load();
+            _topMostRecordStorage = new FlowLauncherJsonStorage<MultipleTopMostRecord>();
 
-                // Convert to new data
-                _topMostRecordStorage = new FlowLauncherJsonStorage<MultipleTopMostRecord>();
+            // Check if data exist
+            var oldDataExist = topMostRecordStorage.Exists();
+            var newDataExist = _topMostRecordStorage.Exists();
+
+            // If new data exist, it means we have already migrated the old data
+            // So we can safely delete the old data and load the new data
+            if (newDataExist)
+            {
+                try
+                {
+                    topMostRecordStorage.Delete();
+                }
+                catch
+                {
+                    // Ignored
+                }
                 _topMostRecord = _topMostRecordStorage.Load();
-                _topMostRecord.Add(topMostRecord);
             }
+            // If new data does not exist and old data exist, we need to migrate the old data to the new data
+            else if (oldDataExist)
+            {
+                // Migrate old data to new data
+                _topMostRecord = _topMostRecordStorage.Load();
+                _topMostRecord.Add(topMostRecordStorage.Load());
+
+                // Delete old data and save the new data
+                try
+                {
+                    topMostRecordStorage.Delete();
+                }
+                catch
+                {
+                    // Ignored
+                }
+                Save();
+            }
+            // If both data do not exist, we just need to create a new data
             else
             {
-                // Get new data
-                _topMostRecordStorage = new FlowLauncherJsonStorage<MultipleTopMostRecord>();
                 _topMostRecord = _topMostRecordStorage.Load();
             }
         }
@@ -109,6 +138,7 @@ namespace Flow.Launcher.Storage
     public class MultipleTopMostRecord
     {
         [JsonInclude]
+        [JsonConverter(typeof(ConcurrentDictionaryConcurrentBagConverter))]
         public ConcurrentDictionary<string, ConcurrentBag<Record>> records { get; private set; } = new();
 
         internal void Add(TopMostRecord topMostRecord)
@@ -204,6 +234,30 @@ namespace Flow.Launcher.Storage
                     value.Add(record);
                 }
             }
+        }
+    }
+
+    public class ConcurrentDictionaryConcurrentBagConverter : JsonConverter<ConcurrentDictionary<string, ConcurrentBag<Record>>>
+    {
+        public override ConcurrentDictionary<string, ConcurrentBag<Record>> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            var dictionary = JsonSerializer.Deserialize<Dictionary<string, List<Record>>>(ref reader, options);
+            var concurrentDictionary = new ConcurrentDictionary<string, ConcurrentBag<Record>>();
+            foreach (var kvp in dictionary)
+            {
+                concurrentDictionary.TryAdd(kvp.Key, new ConcurrentBag<Record>(kvp.Value));
+            }
+            return concurrentDictionary;
+        }
+
+        public override void Write(Utf8JsonWriter writer, ConcurrentDictionary<string, ConcurrentBag<Record>> value, JsonSerializerOptions options)
+        {
+            var dict = new Dictionary<string, List<Record>>();
+            foreach (var kvp in value)
+            {
+                dict.Add(kvp.Key, kvp.Value.ToList());
+            }
+            JsonSerializer.Serialize(writer, dict, options);
         }
     }
 
