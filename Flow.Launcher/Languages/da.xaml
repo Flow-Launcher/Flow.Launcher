@@ -105,7 +105,7 @@
     <system:String x:Key="ShouldUsePinyinToolTip">Allows using Pinyin to search. Pinyin is the standard system of romanized spelling for translating Chinese.</system:String>
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
-    <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
+    <system:String x:Key="shadowEffectNotAllowed">Skyggeeffekt er ikke tilladt, når det aktuelle tema har sløringseffekt aktiveret</system:String>
     <system:String x:Key="searchDelay">Search Delay</system:String>
     <system:String x:Key="searchDelayToolTip">Adds a short delay while typing to reduce UI flicker and result load. Recommended if your typing speed is average.</system:String>
     <system:String x:Key="searchDelayNumberBoxToolTip">Enter the wait time (in ms) until input is considered complete. This can only be edited if Search Delay is enabled.</system:String>
@@ -140,7 +140,7 @@
     <system:String x:Key="plugin">Plugin</system:String>
     <system:String x:Key="plugins">Plugins</system:String>
     <system:String x:Key="browserMorePlugins">Find flere plugins</system:String>
-    <system:String x:Key="enable">On</system:String>
+    <system:String x:Key="enable">Til</system:String>
     <system:String x:Key="disable">Deaktiver</system:String>
     <system:String x:Key="actionKeywordsTitle">Action keyword Setting</system:String>
     <system:String x:Key="actionKeywords">Nøgleord</system:String>
@@ -151,18 +151,18 @@
     <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Search Delay Time</system:String>
     <system:String x:Key="FilterComboboxLabel">Advanced Settings:</system:String>
     <system:String x:Key="DisplayModeOnOff">Enabled</system:String>
-    <system:String x:Key="DisplayModePriority">Priority</system:String>
+    <system:String x:Key="DisplayModePriority">Prioritet</system:String>
     <system:String x:Key="DisplayModeSearchDelay">Search Delay</system:String>
-    <system:String x:Key="currentPriority">Current Priority</system:String>
-    <system:String x:Key="newPriority">New Priority</system:String>
-    <system:String x:Key="priority">Priority</system:String>
+    <system:String x:Key="currentPriority">Nuværende prioritet</system:String>
+    <system:String x:Key="newPriority">Ny prioritet</system:String>
+    <system:String x:Key="priority">Prioritet</system:String>
     <system:String x:Key="priorityToolTip">Change Plugin Results Priority</system:String>
     <system:String x:Key="pluginDirectory">Plugin bibliotek</system:String>
     <system:String x:Key="author">af</system:String>
     <system:String x:Key="plugin_init_time">Initaliseringstid:</system:String>
     <system:String x:Key="plugin_query_time">Søgetid:</system:String>
     <system:String x:Key="plugin_query_version">Version</system:String>
-    <system:String x:Key="plugin_query_web">Website</system:String>
+    <system:String x:Key="plugin_query_web">Hjemmeside</system:String>
     <system:String x:Key="plugin_uninstall">Uninstall</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
@@ -170,13 +170,13 @@
     <system:String x:Key="failedToRemovePluginCacheMessage">Plugins: {0} - Fail to remove plugin cache files, please remove them manually</system:String>
 
     <!--  Setting Plugin Store  -->
-    <system:String x:Key="pluginStore">Plugin Store</system:String>
+    <system:String x:Key="pluginStore">Plugin-butik</system:String>
     <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
     <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
     <system:String x:Key="pluginStore_None">Plugins</system:String>
     <system:String x:Key="pluginStore_Installed">Installed</system:String>
     <system:String x:Key="refresh">Refresh</system:String>
-    <system:String x:Key="installbtn">Install</system:String>
+    <system:String x:Key="installbtn">Installer</system:String>
     <system:String x:Key="uninstallbtn">Uninstall</system:String>
     <system:String x:Key="updatebtn">Opdater</system:String>
     <system:String x:Key="LabelInstalledToolTip">Plugin already installed</system:String>
@@ -329,7 +329,7 @@
 
     <!--  Setting About  -->
     <system:String x:Key="about">Om</system:String>
-    <system:String x:Key="website">Website</system:String>
+    <system:String x:Key="website">Hjemmeside</system:String>
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">Docs</system:String>
     <system:String x:Key="version">Version</system:String>
