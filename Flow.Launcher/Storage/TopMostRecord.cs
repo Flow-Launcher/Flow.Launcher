@@ -243,6 +243,9 @@ namespace Flow.Launcher.Storage
         }
     }
 
+    /// <summary>
+    /// Because ConcurrentBag does not support serialization, we need to convert it to a List
+    /// </summary>
     public class ConcurrentDictionaryConcurrentBagConverter : JsonConverter<ConcurrentDictionary<string, ConcurrentBag<Record>>>
     {
         public override ConcurrentDictionary<string, ConcurrentBag<Record>> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
