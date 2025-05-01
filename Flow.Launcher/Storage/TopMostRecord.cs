@@ -1,10 +1,44 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Storage
 {
+    public class FlowLauncherJsonStorageTopMostRecord : ISavable
+    {
+        private readonly FlowLauncherJsonStorage<TopMostRecord> _topMostRecordStorage;
+
+        private readonly TopMostRecord _topMostRecord;
+
+        public FlowLauncherJsonStorageTopMostRecord()
+        {
+            _topMostRecordStorage = new FlowLauncherJsonStorage<TopMostRecord>();
+            _topMostRecord = _topMostRecordStorage.Load();
+        }
+
+        public void Save()
+        {
+            _topMostRecordStorage.Save();
+        }
+
+        public bool IsTopMost(Result result)
+        {
+            return _topMostRecord.IsTopMost(result);
+        }
+
+        public void Remove(Result result)
+        {
+            _topMostRecord.Remove(result);
+        }
+
+        public void AddOrUpdate(Result result)
+        {
+            _topMostRecord.AddOrUpdate(result);
+        }
+    }
+
     public class TopMostRecord
     {
         [JsonInclude]

@@ -37,11 +37,10 @@ namespace Flow.Launcher.ViewModel
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
-        private readonly FlowLauncherJsonStorage<TopMostRecord> _topMostRecordStorage;
+        private readonly FlowLauncherJsonStorageTopMostRecord _topMostRecord;
         private readonly History _history;
         private int lastHistoryIndex = 1;
         private readonly UserSelectedRecord _userSelectedRecord;
-        private readonly TopMostRecord _topMostRecord;
 
         private CancellationTokenSource _updateSource;
         private CancellationToken _updateToken;
@@ -134,10 +133,9 @@ namespace Flow.Launcher.ViewModel
 
             _historyItemsStorage = new FlowLauncherJsonStorage<History>();
             _userSelectedRecordStorage = new FlowLauncherJsonStorage<UserSelectedRecord>();
-            _topMostRecordStorage = new FlowLauncherJsonStorage<TopMostRecord>();
+            _topMostRecord = new FlowLauncherJsonStorageTopMostRecord();
             _history = _historyItemsStorage.Load();
             _userSelectedRecord = _userSelectedRecordStorage.Load();
-            _topMostRecord = _topMostRecordStorage.Load();
 
             ContextMenu = new ResultsViewModel(Settings)
             {
@@ -1612,7 +1610,7 @@ namespace Flow.Launcher.ViewModel
         {
             _historyItemsStorage.Save();
             _userSelectedRecordStorage.Save();
-            _topMostRecordStorage.Save();
+            _topMostRecord.Save();
         }
 
         /// <summary>
