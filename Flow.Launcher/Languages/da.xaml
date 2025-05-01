@@ -214,11 +214,11 @@
     <system:String x:Key="theme_load_failure_parse_error">Kunne ikke indlæse temaet {0}. Falder tilbage til standardtema</system:String>
     <system:String x:Key="ThemeFolder">Temamappe</system:String>
     <system:String x:Key="OpenThemeFolder">Åbn temamappe</system:String>
-    <system:String x:Key="ColorScheme">Color Scheme</system:String>
-    <system:String x:Key="ColorSchemeSystem">System Default</system:String>
-    <system:String x:Key="ColorSchemeLight">Light</system:String>
-    <system:String x:Key="ColorSchemeDark">Dark</system:String>
-    <system:String x:Key="SoundEffect">Sound Effect</system:String>
+    <system:String x:Key="ColorScheme">Farveskema</system:String>
+    <system:String x:Key="ColorSchemeSystem">Systemstandard</system:String>
+    <system:String x:Key="ColorSchemeLight">Lys</system:String>
+    <system:String x:Key="ColorSchemeDark">Mørk</system:String>
+    <system:String x:Key="SoundEffect">Lydeffekt</system:String>
     <system:String x:Key="SoundEffectTip">Play a small sound when the search window opens</system:String>
     <system:String x:Key="SoundEffectVolume">Sound Effect Volume</system:String>
     <system:String x:Key="SoundEffectVolumeTip">Adjust the volume of the sound effect</system:String>
@@ -367,24 +367,24 @@
     <system:String x:Key="fileManagerWindow">Select File Manager</system:String>
     <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments as required. The &quot;%d&quot; represents the directory path to open for, used by the Arg for Folder field and for commands opening specific directories. The &quot;%f&quot; represents the file path to open for, used by the Arg for File field and for commands opening specific files.</system:String>
     <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fileds blank.</system:String>
-    <system:String x:Key="fileManager_name">File Manager</system:String>
-    <system:String x:Key="fileManager_profile_name">Profile Name</system:String>
-    <system:String x:Key="fileManager_path">File Manager Path</system:String>
-    <system:String x:Key="fileManager_directory_arg">Arg For Folder</system:String>
-    <system:String x:Key="fileManager_file_arg">Arg For File</system:String>
+    <system:String x:Key="fileManager_name">Filhåndtering</system:String>
+    <system:String x:Key="fileManager_profile_name">Profilnavn</system:String>
+    <system:String x:Key="fileManager_path">Sti til filhåndtering</system:String>
+    <system:String x:Key="fileManager_directory_arg">Arg for mappe</system:String>
+    <system:String x:Key="fileManager_file_arg">Arg for fil</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Default Web Browser</system:String>
     <system:String x:Key="defaultBrowser_tips">The default setting follows the OS default browser setting. If specified separately, flow uses that browser.</system:String>
     <system:String x:Key="defaultBrowser_name">Browser</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Browser Name</system:String>
-    <system:String x:Key="defaultBrowser_path">Browser Path</system:String>
+    <system:String x:Key="defaultBrowser_path">Sti til browser</system:String>
     <system:String x:Key="defaultBrowser_newWindow">New Window</system:String>
     <system:String x:Key="defaultBrowser_newTab">New Tab</system:String>
-    <system:String x:Key="defaultBrowser_parameter">Private Mode</system:String>
+    <system:String x:Key="defaultBrowser_parameter">Privattilstand</system:String>
 
     <!--  Priority Setting Dialog  -->
-    <system:String x:Key="changePriorityWindow">Change Priority</system:String>
+    <system:String x:Key="changePriorityWindow">Skift prioritet</system:String>
     <system:String x:Key="priority_tips">Greater the number, the higher the result will be ranked. Try setting it as 5. If you want the results to be lower than any other plugin's, provide a negative number</system:String>
     <system:String x:Key="invalidPriority">Please provide an valid integer for Priority!</system:String>
 
