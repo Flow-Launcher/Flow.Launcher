@@ -34,7 +34,7 @@ namespace Flow.Launcher.Storage
                 }
                 catch
                 {
-                    // Ignored
+                    // Ignored - Flow will delete the old data during next startup
                 }
                 _topMostRecord = _topMostRecordStorage.Load();
             }
@@ -52,7 +52,7 @@ namespace Flow.Launcher.Storage
                 }
                 catch
                 {
-                    // Ignored
+                    // Ignored - Flow will delete the old data during next startup
                 }
                 Save();
             }
@@ -84,7 +84,10 @@ namespace Flow.Launcher.Storage
         }
     }
 
-    public class TopMostRecord
+    /// <summary>
+    /// Old data structure to support only one top most record for the same query
+    /// </summary>
+    internal class TopMostRecord
     {
         [JsonInclude]
         public ConcurrentDictionary<string, Record> records { get; private set; } = new();
@@ -135,7 +138,10 @@ namespace Flow.Launcher.Storage
         }
     }
 
-    public class MultipleTopMostRecord
+    /// <summary>
+    /// New data structure to support multiple top most records for the same query
+    /// </summary>
+    internal class MultipleTopMostRecord
     {
         [JsonInclude]
         [JsonConverter(typeof(ConcurrentDictionaryConcurrentBagConverter))]
@@ -246,7 +252,7 @@ namespace Flow.Launcher.Storage
     /// <summary>
     /// Because ConcurrentBag does not support serialization, we need to convert it to a List
     /// </summary>
-    public class ConcurrentDictionaryConcurrentBagConverter : JsonConverter<ConcurrentDictionary<string, ConcurrentBag<Record>>>
+    internal class ConcurrentDictionaryConcurrentBagConverter : JsonConverter<ConcurrentDictionary<string, ConcurrentBag<Record>>>
     {
         public override ConcurrentDictionary<string, ConcurrentBag<Record>> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
@@ -270,7 +276,7 @@ namespace Flow.Launcher.Storage
         }
     }
 
-    public class Record
+    internal class Record
     {
         public string Title { get; init; }
         public string SubTitle { get; init; }
