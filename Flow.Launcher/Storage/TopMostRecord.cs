@@ -190,12 +190,15 @@ namespace Flow.Launcher.Storage
 
             // remove the record from the bag
             var bag = new ConcurrentQueue<Record>(value.Where(r => !r.Equals(result)));
-            records[result.OriginQuery.RawQuery] = new ConcurrentBag<Record>(bag);
-
-            // if the bag is empty, remove the bag from the dictionary
-            if (value.IsEmpty)
+            if (bag.IsEmpty)
             {
+                // if the bag is empty, remove the bag from the dictionary
                 records.TryRemove(result.OriginQuery.RawQuery, out _);
+            }
+            else
+            {
+                // change the bag in the dictionary
+                records[result.OriginQuery.RawQuery] = new ConcurrentBag<Record>(bag);
             }
         }
 
