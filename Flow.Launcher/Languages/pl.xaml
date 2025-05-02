@@ -399,6 +399,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="newActionKeywordsSameAsOld">Nowe słowo kluczowe akcji jest takie samo jak poprzednie. Wybierz inne</system:String>
     <system:String x:Key="success">Sukces</system:String>
     <system:String x:Key="completedSuccessfully">Zakończono pomyślnie</system:String>
+    <system:String x:Key="failedToCopy">Failed to copy</system:String>
     <system:String x:Key="actionkeyword_tips">Wpisz słowa kluczowe uruchamiające wtyczkę (oddzielone spacją). Wpisz *, aby uruchamiać wtyczkę bez słów kluczowych.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
