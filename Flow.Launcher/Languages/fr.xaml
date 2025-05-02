@@ -398,6 +398,7 @@
     <system:String x:Key="newActionKeywordsSameAsOld">Ce nouveau mot-clé d'action est identique à l'ancien, veuillez en choisir un autre</system:String>
     <system:String x:Key="success">Ajout</system:String>
     <system:String x:Key="completedSuccessfully">Terminé avec succès</system:String>
+    <system:String x:Key="failedToCopy">Failed to copy</system:String>
     <system:String x:Key="actionkeyword_tips">Saisissez les mots-clés d'action que vous souhaitez utiliser pour lancer le plugin et séparez-les par des espaces. Utilisez * si vous ne voulez en spécifier aucun, et le plugin sera déclenché sans aucun mot-clé d'action.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
