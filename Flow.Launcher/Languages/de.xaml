@@ -399,6 +399,7 @@
     <system:String x:Key="newActionKeywordsSameAsOld">Dieses neue Aktions-Schlüsselwort ist dasselbe wie das alte, bitte wählen Sie ein anderes</system:String>
     <system:String x:Key="success">Erfolg</system:String>
     <system:String x:Key="completedSuccessfully">Erfolgreich abgeschlossen</system:String>
+    <system:String x:Key="failedToCopy">Failed to copy</system:String>
     <system:String x:Key="actionkeyword_tips">Geben Sie die Aktions-Schlüsselwörter ein, die Sie zum Starten des Plug-ins verwenden möchten, und trennen Sie sie durch Leerzeichen voneinander ab. Verwenden Sie *, wenn Sie keine spezifizieren möchten, und das Plug-in wird ohne jegliche Aktions-Schlüsselwörter ausgelöst.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
