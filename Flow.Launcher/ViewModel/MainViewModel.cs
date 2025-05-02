@@ -1432,10 +1432,10 @@ namespace Flow.Launcher.ViewModel
                 }
             }
 
+            // Show expanded builtin shortcuts
             if (queryChanged)
             {
-                // show expanded builtin shortcuts
-                // use private field to avoid infinite recursion
+                // Use private field to avoid infinite recursion
                 _queryText = queryBuilderTmp.ToString();
                 OnPropertyChanged(nameof(QueryText));
             }
