@@ -1437,6 +1437,9 @@ namespace Flow.Launcher.ViewModel
             {
                 // Use private field to avoid infinite recursion
                 _queryText = queryBuilderTmp.ToString();
+                // When executing OnPropertyChanged, QueryTextBox_TextChanged1 and Query will be called
+                // So we need to ignore it so that we will not call Query again
+                _ignoredQueryText = _queryText;
                 OnPropertyChanged(nameof(QueryText));
             }
         }
