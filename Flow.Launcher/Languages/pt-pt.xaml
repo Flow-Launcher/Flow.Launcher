@@ -397,6 +397,7 @@
     <system:String x:Key="newActionKeywordsSameAsOld">A palavra-chave escolhida é igual à anterior. Por favor escolha outra.</system:String>
     <system:String x:Key="success">Sucesso</system:String>
     <system:String x:Key="completedSuccessfully">Terminado com sucesso</system:String>
+    <system:String x:Key="failedToCopy">Failed to copy</system:String>
     <system:String x:Key="actionkeyword_tips">Introduza as palavras-chave que pretende utilizar para iniciar o plugin e um espaço vazio caso queira mais do que uma. Utilize * se não quiser especificar uma palavra-chave e o plugin será ativado sem palavras-chave.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
