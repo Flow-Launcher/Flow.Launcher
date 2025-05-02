@@ -399,6 +399,7 @@
     <system:String x:Key="newActionKeywordsSameAsOld">Esta nueva palabra clave de acción es la misma que la anterior, por favor elija una diferente</system:String>
     <system:String x:Key="success">Correcto</system:String>
     <system:String x:Key="completedSuccessfully">Finalizado correctamente</system:String>
+    <system:String x:Key="failedToCopy">Failed to copy</system:String>
     <system:String x:Key="actionkeyword_tips">Introduzca las palabras clave de acción que desea utilizar para iniciar el complemento y utilice espacios en blanco para separarlas. Utilice * si no desea especificar ninguna, para que el complemento se inicie sin ninguna palabra clave de acción.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
