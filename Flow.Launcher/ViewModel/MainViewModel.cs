@@ -1646,6 +1646,8 @@ namespace Flow.Launcher.ViewModel
                     var deviationIndex = _topMostRecord.GetTopMostIndex(result);
                     if (deviationIndex != -1)
                     {
+                        // Adjust the score based on the result's position in the top-most list.
+                        // A lower deviationIndex (closer to the top) results in a higher score.
                         result.Score = Result.MaxScore - deviationIndex;
                     }
                     else
