@@ -1643,9 +1643,10 @@ namespace Flow.Launcher.ViewModel
             {
                 foreach (var result in metaResults.Results)
                 {
-                    if (_topMostRecord.IsTopMost(result))
+                    var deviationIndex = _topMostRecord.GetTopMostIndex(result);
+                    if (deviationIndex != -1)
                     {
-                        result.Score = Result.MaxScore;
+                        result.Score = Result.MaxScore - deviationIndex;
                     }
                     else
                     {

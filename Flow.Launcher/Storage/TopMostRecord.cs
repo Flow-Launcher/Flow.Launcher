@@ -49,9 +49,11 @@ namespace Flow.Launcher.Storage
                 if (oldTopMostRecord == null || oldTopMostRecord.records.IsEmpty) return;
                 foreach (var record in oldTopMostRecord.records)
                 {
-                    _topMostRecord.records.AddOrUpdate(record.Key, new ConcurrentBag<Record> { record.Value }, (key, oldValue) =>
+                    var newValue = new ConcurrentQueue<Record>();
+                    newValue.Enqueue(record.Value);
+                    _topMostRecord.records.AddOrUpdate(record.Key, newValue, (key, oldValue) =>
                     {
-                        oldValue.Add(record.Value);
+                        oldValue.Enqueue(record.Value);
                         return oldValue;
                     });
                 }
@@ -82,6 +84,11 @@ namespace Flow.Launcher.Storage
         public bool IsTopMost(Result result)
         {
             return _topMostRecord.IsTopMost(result);
+        }
+
+        public int GetTopMostIndex(Result result)
+        {
+            return _topMostRecord.GetTopMostIndex(result);
         }
 
         public void Remove(Result result)
@@ -156,8 +163,8 @@ namespace Flow.Launcher.Storage
     internal class MultipleTopMostRecord
     {
         [JsonInclude]
-        [JsonConverter(typeof(ConcurrentDictionaryConcurrentBagConverter))]
-        public ConcurrentDictionary<string, ConcurrentBag<Record>> records { get; private set; } = new();
+        [JsonConverter(typeof(ConcurrentDictionaryConcurrentQueueConverter))]
+        public ConcurrentDictionary<string, ConcurrentQueue<Record>> records { get; private set; } = new();
 
         internal bool IsTopMost(Result result)
         {
@@ -173,6 +180,32 @@ namespace Flow.Launcher.Storage
             return value.Any(record => record.Equals(result));
         }
 
+        internal int GetTopMostIndex(Result result)
+        {
+            // origin query is null when user select the context menu item directly of one item from query list
+            // in this case, we do not need to check if the result is top most
+            if (records.IsEmpty || result.OriginQuery == null ||
+                !records.TryGetValue(result.OriginQuery.RawQuery, out var value))
+            {
+                return -1;
+            }
+
+            // since this dictionary should be very small (or empty) going over it should be pretty fast.
+            // since the latter items should be more recent, we should return the smaller index for score to subtract
+            // which can make them more topmost
+            // A, B, C => 2, 1, 0 => (max - 2), (max - 1), (max - 0)
+            var index = 0;
+            foreach (var record in value)
+            {
+                if (record.Equals(result))
+                {
+                    return value.Count - 1 - index;
+                }
+                index++;
+            }
+            return -1;
+        }
+
         internal void Remove(Result result)
         {
             // origin query is null when user select the context menu item directly of one item from query list
@@ -183,17 +216,17 @@ namespace Flow.Launcher.Storage
                 return;
             }
 
-            // remove the record from the bag
-            var bag = new ConcurrentQueue<Record>(value.Where(r => !r.Equals(result)));
-            if (bag.IsEmpty)
+            // remove the record from the queue
+            var queue = new ConcurrentQueue<Record>(value.Where(r => !r.Equals(result)));
+            if (queue.IsEmpty)
             {
-                // if the bag is empty, remove the bag from the dictionary
+                // if the queue is empty, remove the queue from the dictionary
                 records.TryRemove(result.OriginQuery.RawQuery, out _);
             }
             else
             {
-                // change the bag in the dictionary
-                records[result.OriginQuery.RawQuery] = new ConcurrentBag<Record>(bag);
+                // change the queue in the dictionary
+                records[result.OriginQuery.RawQuery] = queue;
             }
         }
 
@@ -215,40 +248,38 @@ namespace Flow.Launcher.Storage
             };
             if (!records.TryGetValue(result.OriginQuery.RawQuery, out var value))
             {
-                // create a new bag if it does not exist
-                value = new ConcurrentBag<Record>()
-                {
-                    record
-                };
+                // create a new queue if it does not exist
+                value = new ConcurrentQueue<Record>();
+                value.Enqueue(record);
                 records.TryAdd(result.OriginQuery.RawQuery, value);
             }
             else
             {
-                // add or update the record in the bag
-                var bag = new ConcurrentQueue<Record>(value.Where(r => !r.Equals(result))); // make sure we don't have duplicates
-                bag.Enqueue(record);
-                records[result.OriginQuery.RawQuery] = new ConcurrentBag<Record>(bag);
+                // add or update the record in the queue
+                var queue = new ConcurrentQueue<Record>(value.Where(r => !r.Equals(result))); // make sure we don't have duplicates
+                queue.Enqueue(record);
+                records[result.OriginQuery.RawQuery] = queue;
             }
         }
     }
 
     /// <summary>
-    /// Because ConcurrentBag does not support serialization, we need to convert it to a List
+    /// Because ConcurrentQueue does not support serialization, we need to convert it to a List
     /// </summary>
-    internal class ConcurrentDictionaryConcurrentBagConverter : JsonConverter<ConcurrentDictionary<string, ConcurrentBag<Record>>>
+    internal class ConcurrentDictionaryConcurrentQueueConverter : JsonConverter<ConcurrentDictionary<string, ConcurrentQueue<Record>>>
     {
-        public override ConcurrentDictionary<string, ConcurrentBag<Record>> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override ConcurrentDictionary<string, ConcurrentQueue<Record>> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             var dictionary = JsonSerializer.Deserialize<Dictionary<string, List<Record>>>(ref reader, options);
-            var concurrentDictionary = new ConcurrentDictionary<string, ConcurrentBag<Record>>();
+            var concurrentDictionary = new ConcurrentDictionary<string, ConcurrentQueue<Record>>();
             foreach (var kvp in dictionary)
             {
-                concurrentDictionary.TryAdd(kvp.Key, new ConcurrentBag<Record>(kvp.Value));
+                concurrentDictionary.TryAdd(kvp.Key, new ConcurrentQueue<Record>(kvp.Value));
             }
             return concurrentDictionary;
         }
 
-        public override void Write(Utf8JsonWriter writer, ConcurrentDictionary<string, ConcurrentBag<Record>> value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, ConcurrentDictionary<string, ConcurrentQueue<Record>> value, JsonSerializerOptions options)
         {
             var dict = new Dictionary<string, List<Record>>();
             foreach (var kvp in value)
