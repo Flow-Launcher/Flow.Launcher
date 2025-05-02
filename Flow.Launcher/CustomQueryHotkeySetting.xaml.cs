@@ -10,14 +10,14 @@ namespace Flow.Launcher
 {
     public partial class CustomQueryHotkeySetting : Window
     {
-        public Settings Settings { get; }
+        private readonly Settings _settings;
 
         private bool update;
         private CustomPluginHotkey updateCustomHotkey;
 
         public CustomQueryHotkeySetting(Settings settings)
         {
-            Settings = settings;
+            _settings = settings;
             InitializeComponent();
         }
 
@@ -30,13 +30,13 @@ namespace Flow.Launcher
         {
             if (!update)
             {
-                Settings.CustomPluginHotkeys ??= new ObservableCollection<CustomPluginHotkey>();
+                _settings.CustomPluginHotkeys ??= new ObservableCollection<CustomPluginHotkey>();
 
                 var pluginHotkey = new CustomPluginHotkey
                 {
                     Hotkey = HotkeyControl.CurrentHotkey.ToString(), ActionKeyword = tbAction.Text
                 };
-                Settings.CustomPluginHotkeys.Add(pluginHotkey);
+                _settings.CustomPluginHotkeys.Add(pluginHotkey);
 
                 HotKeyMapper.SetCustomQueryHotkey(pluginHotkey);
             }
@@ -55,7 +55,7 @@ namespace Flow.Launcher
 
         public void UpdateItem(CustomPluginHotkey item)
         {
-            updateCustomHotkey = Settings.CustomPluginHotkeys.FirstOrDefault(o =>
+            updateCustomHotkey = _settings.CustomPluginHotkeys.FirstOrDefault(o =>
                 o.ActionKeyword == item.ActionKeyword && o.Hotkey == item.Hotkey);
             if (updateCustomHotkey == null)
             {

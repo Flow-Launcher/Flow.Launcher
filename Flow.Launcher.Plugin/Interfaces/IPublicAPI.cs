@@ -471,8 +471,11 @@ namespace Flow.Launcher.Plugin
         public Task<bool> UpdatePluginManifestAsync(bool usePrimaryUrlOnly = false, CancellationToken token = default);
 
         /// <summary>
-        /// Get the plugin manifest
+        /// Get the plugin manifest.
         /// </summary>
+        /// <remarks>
+        /// If Flow cannot get manifest data, this could be null
+        /// </remarks>
         /// <returns></returns>
         public IReadOnlyList<UserPlugin> GetPluginManifest();
 

@@ -103,10 +103,8 @@
                         Margin="0 0 12 0"
                         Command="{Binding AskClearLogFolderConfirmationCommand}"
                         Content="{Binding LogFolderSize, Mode=OneWay}" />
-                    <Button
-                        Content="&#xec7a;"
-                        FontFamily="/Resources/#Segoe Fluent Icons"
-                        FontSize="20">
+                    <Button>
+                        <ui:FontIcon FontSize="20" Glyph="&#xec7a;" />
                         <ui:FlyoutService.Flyout>
                             <ui:MenuFlyout>
                                 <MenuItem Command="{Binding OpenWelcomeWindowCommand}" Header="{DynamicResource welcomewindow}">
@@ -122,6 +120,12 @@
                                 </MenuItem>
 
                                 <MenuItem Command="{Binding OpenLogsFolderCommand}" Header="{DynamicResource logfolder}">
+                                    <MenuItem.Icon>
+                                        <ui:FontIcon Glyph="&#xe8b7;" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+
+                                <MenuItem Command="{Binding OpenCacheFolderCommand}" Header="{DynamicResource cachefolder}">
                                     <MenuItem.Icon>
                                         <ui:FontIcon Glyph="&#xe8b7;" />
                                     </MenuItem.Icon>
@@ -148,7 +152,7 @@
                             SelectedValuePath="Value" />
                     </cc:Card>
                     <cc:Card
-                        Title="{DynamicResource settingWindowFont}"
+                        Title="{DynamicResource settingWindowFontTitle}"
                         Icon="&#xf259;"
                         Type="Inside">
                         <StackPanel Orientation="Horizontal">

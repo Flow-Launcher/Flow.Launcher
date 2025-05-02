@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 using System.Windows;
+using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Logger;
@@ -113,6 +114,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 {
                     _settingWindowFont = value;
                     OnPropertyChanged();
+                    Application.Current.Resources["SettingWindowFont"] = new FontFamily(value);
+                    Application.Current.Resources["ContentControlThemeFontFamily"] = new FontFamily(value);
                 }
             }
         }
@@ -309,9 +312,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public ObservableCollection<CustomShortcutModel> CustomShortcuts { get; set; } = new ObservableCollection<CustomShortcutModel>();
 
         [JsonIgnore]
-        public ObservableCollection<BuiltinShortcutModel> BuiltinShortcuts { get; set; } = new()
+        public ObservableCollection<BaseBuiltinShortcutModel> BuiltinShortcuts { get; set; } = new()
         {
-            new BuiltinShortcutModel("{clipboard}", "shortcut_clipboard_description", Clipboard.GetText),
+            new AsyncBuiltinShortcutModel("{clipboard}", "shortcut_clipboard_description", () => Win32Helper.StartSTATaskAsync(Clipboard.GetText)),
             new BuiltinShortcutModel("{active_explorer_path}", "shortcut_active_explorer_path", FileExplorerHelper.GetActiveExplorerPath)
         };
 

@@ -155,14 +155,9 @@ namespace Flow.Launcher.ViewModel
         public bool SearchDelayEnabled => Settings.SearchQueryResultsWithDelay;
         public string DefaultSearchDelay => Settings.SearchDelayTime.ToString();
 
-        public void OnActionKeywordsChanged()
+        public void OnActionKeywordsTextChanged()
         {
             OnPropertyChanged(nameof(ActionKeywordsText));
-        }
-
-        public void OnSearchDelayTimeChanged()
-        {
-            OnPropertyChanged(nameof(SearchDelayTimeText));
         }
 
         [RelayCommand]

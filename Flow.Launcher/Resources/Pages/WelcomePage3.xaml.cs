@@ -7,15 +7,21 @@ namespace Flow.Launcher.Resources.Pages
 {
     public partial class WelcomePage3
     {
+        public Settings Settings { get; private set; }
+        private WelcomeViewModel _viewModel;
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Settings = Ioc.Default.GetRequiredService<Settings>();
+            if (!IsInitialized)
+            {
+                Settings = Ioc.Default.GetRequiredService<Settings>();
+                _viewModel = Ioc.Default.GetRequiredService<WelcomeViewModel>();
+                InitializeComponent();
+            }
             // Sometimes the navigation is not triggered by button click,
             // so we need to reset the page number
-            Ioc.Default.GetRequiredService<WelcomeViewModel>().PageNum = 3;
-            InitializeComponent();
+            _viewModel.PageNum = 3;
+            base.OnNavigatedTo(e);
         }
-
-        public Settings Settings { get; set; }
     }
 }
