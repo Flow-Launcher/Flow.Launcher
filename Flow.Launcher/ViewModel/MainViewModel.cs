@@ -32,8 +32,8 @@ namespace Flow.Launcher.ViewModel
         private static readonly string ClassName = nameof(MainViewModel);
 
         private Query _lastQuery;
-        private Query _runningQuery; // Used for QueryResultAsync
-        private Query _currentQuery; // Used for ResultsUpdated
+        private Query _progressQuery; // Used for QueryResultAsync
+        private Query _updateQuery; // Used for ResultsUpdated
         private string _queryTextBeforeLeaveResults;
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
@@ -236,7 +236,7 @@ namespace Flow.Launcher.ViewModel
                 var plugin = (IResultUpdated)pair.Plugin;
                 plugin.ResultsUpdated += (s, e) =>
                 {
-                    if (_currentQuery == null || e.Query.RawQuery != _currentQuery.RawQuery || e.Token.IsCancellationRequested)
+                    if (_updateQuery == null || e.Query.RawQuery != _updateQuery.RawQuery || e.Token.IsCancellationRequested)
                     {
                         return;
                     }
@@ -256,7 +256,7 @@ namespace Flow.Launcher.ViewModel
 
                     PluginManager.UpdatePluginMetadata(resultsCopy, pair.Metadata, e.Query);
 
-                    if (_currentQuery == null || e.Query.RawQuery != _currentQuery.RawQuery || token.IsCancellationRequested)
+                    if (_updateQuery == null || e.Query.RawQuery != _updateQuery.RawQuery || token.IsCancellationRequested)
                     {
                         return;
                     }
@@ -1200,7 +1200,7 @@ namespace Flow.Launcher.ViewModel
         private async Task QueryResultsAsync(bool searchDelay, bool isReQuery = false, bool reSelect = true)
         {
             _updateSource?.Cancel();
-            _runningQuery = null;
+            _progressQuery = null;
 
             var query = await ConstructQueryAsync(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
 
@@ -1230,8 +1230,8 @@ namespace Flow.Launcher.ViewModel
 
                 ProgressBarVisibility = Visibility.Hidden;
 
-                _runningQuery = query;
-                _currentQuery = query;
+                _progressQuery = query;
+                _updateQuery = query;
 
                 // Switch to ThreadPool thread
                 await TaskScheduler.Default;
@@ -1274,7 +1274,7 @@ namespace Flow.Launcher.ViewModel
                 _ = Task.Delay(200, _updateSource.Token).ContinueWith(_ =>
                 {
                     // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
-                    if (_runningQuery != null && _runningQuery == query)
+                    if (_progressQuery != null && _progressQuery == query)
                     {
                         ProgressBarVisibility = Visibility.Visible;
                     }
@@ -1305,7 +1305,7 @@ namespace Flow.Launcher.ViewModel
 
                 // this should happen once after all queries are done so progress bar should continue
                 // until the end of all querying
-                _runningQuery = null;
+                _progressQuery = null;
 
                 if (!_updateSource.Token.IsCancellationRequested)
                 {
@@ -1316,7 +1316,7 @@ namespace Flow.Launcher.ViewModel
             finally
             {
                 // this make sures running query is null even if the query is canceled
-                _runningQuery = null;
+                _progressQuery = null;
             }
 
             // Local function
