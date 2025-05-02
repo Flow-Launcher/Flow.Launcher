@@ -31,8 +31,9 @@ namespace Flow.Launcher.ViewModel
 
         private static readonly string ClassName = nameof(MainViewModel);
 
-        private bool _isQueryRunning;
         private Query _lastQuery;
+        private Query _runningQuery; // Used for QueryResultAsync
+        private Query _currentQuery; // Used for ResultsUpdated
         private string _queryTextBeforeLeaveResults;
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
@@ -235,7 +236,7 @@ namespace Flow.Launcher.ViewModel
                 var plugin = (IResultUpdated)pair.Plugin;
                 plugin.ResultsUpdated += (s, e) =>
                 {
-                    if (e.Query.RawQuery != QueryText || e.Token.IsCancellationRequested)
+                    if (_currentQuery == null || e.Query.RawQuery != _currentQuery.RawQuery || e.Token.IsCancellationRequested)
                     {
                         return;
                     }
@@ -255,9 +256,12 @@ namespace Flow.Launcher.ViewModel
 
                     PluginManager.UpdatePluginMetadata(resultsCopy, pair.Metadata, e.Query);
 
-                    if (token.IsCancellationRequested) return;
+                    if (_currentQuery == null || e.Query.RawQuery != _currentQuery.RawQuery || token.IsCancellationRequested)
+                    {
+                        return;
+                    }
 
-                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query, 
+                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query,
                         token)))
                     {
                         App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
@@ -365,7 +369,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void Backspace(object index)
         {
-            var query = QueryBuilder.Build(QueryText.Trim(), PluginManager.NonGlobalPlugins);
+            var query = QueryBuilder.Build(QueryText, QueryText.Trim(), PluginManager.NonGlobalPlugins);
 
             // GetPreviousExistingDirectory does not require trailing '\', otherwise will return empty string
             var path = FilesFolders.GetPreviousExistingDirectory((_) => true, query.Search.TrimEnd('\\'));
@@ -786,7 +790,7 @@ namespace Flow.Launcher.ViewModel
 
         public Visibility ProgressBarVisibility { get; set; }
         public Visibility MainWindowVisibility { get; set; }
-        
+
         // This is to be used for determining the visibility status of the main window instead of MainWindowVisibility
         // because it is more accurate and reliable representation than using Visibility as a condition check
         public bool MainWindowVisibilityStatus { get; set; } = true;
@@ -1063,7 +1067,7 @@ namespace Flow.Launcher.ViewModel
             path = QueryResultsPreviewed() ? Results.SelectedItem?.Result?.Preview.FilePath : string.Empty;
             return !string.IsNullOrEmpty(path);
         }
-        
+
         private bool QueryResultsPreviewed()
         {
             var previewed = PreviewSelectedItem == Results.SelectedItem;
@@ -1196,6 +1200,7 @@ namespace Flow.Launcher.ViewModel
         private async Task QueryResultsAsync(bool searchDelay, bool isReQuery = false, bool reSelect = true)
         {
             _updateSource?.Cancel();
+            _runningQuery = null;
 
             var query = await ConstructQueryAsync(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
 
@@ -1215,89 +1220,103 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
-            _updateSource = new CancellationTokenSource();
-
-            ProgressBarVisibility = Visibility.Hidden;
-            _isQueryRunning = true;
-
-            // Switch to ThreadPool thread
-            await TaskScheduler.Default;
-
-            if (_updateSource.Token.IsCancellationRequested) return;
-
-            // Update the query's IsReQuery property to true if this is a re-query
-            query.IsReQuery = isReQuery;
-
-            // handle the exclusiveness of plugin using action keyword
-            RemoveOldQueryResults(query);
-
-            _lastQuery = query;
-
-            var plugins = PluginManager.ValidPluginsForQuery(query);
-
-            if (plugins.Count == 1)
+            try
             {
-                PluginIconPath = plugins.Single().Metadata.IcoPath;
-                PluginIconSource = await App.API.LoadImageAsync(PluginIconPath);
-                SearchIconVisibility = Visibility.Hidden;
-            }
-            else
-            {
-                PluginIconPath = null;
-                PluginIconSource = null;
-                SearchIconVisibility = Visibility.Visible;
-            }
+                // Check if the query has changed because query can be changed so fast that
+                // token of the query between two queries has not been created yet
+                if (query.Input != QueryText) return;
 
-            // Do not wait for performance improvement
-            /*if (string.IsNullOrEmpty(query.ActionKeyword))
-            {
-                // Wait 15 millisecond for query change in global query
-                // if query changes, return so that it won't be calculated
-                await Task.Delay(15, _updateSource.Token);
-                if (_updateSource.Token.IsCancellationRequested)
-                    return;
-            }*/
+                _updateSource = new CancellationTokenSource();
 
-            _ = Task.Delay(200, _updateSource.Token).ContinueWith(_ =>
+                ProgressBarVisibility = Visibility.Hidden;
+
+                _runningQuery = query;
+                _currentQuery = query;
+
+                // Switch to ThreadPool thread
+                await TaskScheduler.Default;
+
+                if (_updateSource.Token.IsCancellationRequested) return;
+
+                // Update the query's IsReQuery property to true if this is a re-query
+                query.IsReQuery = isReQuery;
+
+                // handle the exclusiveness of plugin using action keyword
+                RemoveOldQueryResults(query);
+
+                _lastQuery = query;
+
+                var plugins = PluginManager.ValidPluginsForQuery(query);
+
+                if (plugins.Count == 1)
+                {
+                    PluginIconPath = plugins.Single().Metadata.IcoPath;
+                    PluginIconSource = await App.API.LoadImageAsync(PluginIconPath);
+                    SearchIconVisibility = Visibility.Hidden;
+                }
+                else
+                {
+                    PluginIconPath = null;
+                    PluginIconSource = null;
+                    SearchIconVisibility = Visibility.Visible;
+                }
+
+                // Do not wait for performance improvement
+                /*if (string.IsNullOrEmpty(query.ActionKeyword))
+                {
+                    // Wait 15 millisecond for query change in global query
+                    // if query changes, return so that it won't be calculated
+                    await Task.Delay(15, _updateSource.Token);
+                    if (_updateSource.Token.IsCancellationRequested)
+                        return;
+                }*/
+
+                _ = Task.Delay(200, _updateSource.Token).ContinueWith(_ =>
                 {
                     // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
-                    if (_isQueryRunning)
+                    if (_runningQuery != null && _runningQuery == query)
                     {
                         ProgressBarVisibility = Visibility.Visible;
                     }
                 },
-                _updateSource.Token,
-                TaskContinuationOptions.NotOnCanceled,
-                TaskScheduler.Default);
+                    _updateSource.Token,
+                    TaskContinuationOptions.NotOnCanceled,
+                    TaskScheduler.Default);
 
-            // plugins are ICollection, meaning LINQ will get the Count and preallocate Array
+                // plugins are ICollection, meaning LINQ will get the Count and preallocate Array
 
-            var tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
-            {
-                false => QueryTaskAsync(plugin, _updateSource.Token),
-                true => Task.CompletedTask
-            }).ToArray();
+                var tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
+                {
+                    false => QueryTaskAsync(plugin, _updateSource.Token),
+                    true => Task.CompletedTask
+                }).ToArray();
 
-            try
-            {
-                // Check the code, WhenAll will translate all type of IEnumerable or Collection to Array, so make an array at first
-                await Task.WhenAll(tasks);
+                try
+                {
+                    // Check the code, WhenAll will translate all type of IEnumerable or Collection to Array, so make an array at first
+                    await Task.WhenAll(tasks);
+                }
+                catch (OperationCanceledException)
+                {
+                    // nothing to do here
+                }
+
+                if (_updateSource.Token.IsCancellationRequested) return;
+
+                // this should happen once after all queries are done so progress bar should continue
+                // until the end of all querying
+                _runningQuery = null;
+
+                if (!_updateSource.Token.IsCancellationRequested)
+                {
+                    // update to hidden if this is still the current query
+                    ProgressBarVisibility = Visibility.Hidden;
+                }
             }
-            catch (OperationCanceledException)
+            finally
             {
-                // nothing to do here
-            }
-
-            if (_updateSource.Token.IsCancellationRequested) return;
-
-            // this should happen once after all queries are done so progress bar should continue
-            // until the end of all querying
-            _isQueryRunning = false;
-
-            if (!_updateSource.Token.IsCancellationRequested)
-            {
-                // update to hidden if this is still the current query
-                ProgressBarVisibility = Visibility.Hidden;
+                // this make sures running query is null even if the query is canceled
+                _runningQuery = null;
             }
 
             // Local function
@@ -1374,7 +1393,7 @@ namespace Flow.Launcher.ViewModel
             // Applying builtin shortcuts
             await BuildQueryAsync(builtInShortcuts, queryBuilder, queryBuilderTmp);
 
-            return QueryBuilder.Build(queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
+            return QueryBuilder.Build(QueryText, queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
         }
 
         private async Task BuildQueryAsync(IEnumerable<BaseBuiltinShortcutModel> builtInShortcuts,
@@ -1549,9 +1568,6 @@ namespace Flow.Launcher.ViewModel
 
         public void Show()
         {
-            // When application is exiting, we should not show the main window
-            if (App.Exiting) return;
-
             // When application is exiting, the Application.Current will be null
             Application.Current?.Dispatcher.Invoke(() =>
             {

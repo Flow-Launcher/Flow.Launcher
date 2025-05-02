@@ -6,12 +6,13 @@ namespace Flow.Launcher.Core.Plugin
 {
     public static class QueryBuilder
     {
-        public static Query Build(string text, Dictionary<string, PluginPair> nonGlobalPlugins)
+        public static Query Build(string input, string text, Dictionary<string, PluginPair> nonGlobalPlugins)
         {
             // replace multiple white spaces with one white space
             var terms = text.Split(Query.TermSeparator, StringSplitOptions.RemoveEmptyEntries);
             if (terms.Length == 0)
-            { // nothing was typed
+            {
+                // nothing was typed
                 return null;
             }
 
@@ -21,13 +22,15 @@ namespace Flow.Launcher.Core.Plugin
             string[] searchTerms;
 
             if (nonGlobalPlugins.TryGetValue(possibleActionKeyword, out var pluginPair) && !pluginPair.Metadata.Disabled)
-            { // use non global plugin for query
+            {
+                // use non global plugin for query
                 actionKeyword = possibleActionKeyword;
                 search = terms.Length > 1 ? rawQuery[(actionKeyword.Length + 1)..].TrimStart() : string.Empty;
                 searchTerms = terms[1..];
             }
             else
-            { // non action keyword
+            {
+                // non action keyword
                 actionKeyword = string.Empty;
                 search = rawQuery.TrimStart();
                 searchTerms = terms;
@@ -36,6 +39,7 @@ namespace Flow.Launcher.Core.Plugin
             return new Query()
             {
                 Search = search,
+                Input = input,
                 RawQuery = rawQuery,
                 SearchTerms = searchTerms,
                 ActionKeyword = actionKeyword
