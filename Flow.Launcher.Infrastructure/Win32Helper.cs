@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Markup;
@@ -348,6 +350,78 @@ namespace Flow.Launcher.Infrastructure
             // Get the FL main window
             var hwnd = GetWindowHandle(Application.Current.MainWindow, true);
             return hwnd;
+        }
+
+        #endregion
+
+        #region STA Thread
+
+        /*
+        Inspired by https://github.com/files-community/Files code on STA Thread handling.
+        */
+
+        public static Task StartSTATaskAsync(Action action)
+        {
+            var taskCompletionSource = new TaskCompletionSource();
+            Thread thread = new(() =>
+            {
+                PInvoke.OleInitialize();
+
+                try
+                {
+                    action();
+                    taskCompletionSource.SetResult();
+                }
+                catch (System.Exception ex)
+                {
+                    taskCompletionSource.SetException(ex);
+                }
+                finally
+                {
+                    PInvoke.OleUninitialize();
+                }
+            })
+            {
+                IsBackground = true,
+                Priority = ThreadPriority.Normal
+            };
+
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+
+            return taskCompletionSource.Task;
+        }
+
+        public static Task<T> StartSTATaskAsync<T>(Func<T> func)
+        {
+            var taskCompletionSource = new TaskCompletionSource<T>();
+
+            Thread thread = new(() =>
+            {
+                PInvoke.OleInitialize();
+
+                try
+                {
+                    taskCompletionSource.SetResult(func());
+                }
+                catch (System.Exception ex)
+                {
+                    taskCompletionSource.SetException(ex);
+                }
+                finally
+                {
+                    PInvoke.OleUninitialize();
+                }
+            })
+            {
+                IsBackground = true,
+                Priority = ThreadPriority.Normal
+            };
+
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+
+            return taskCompletionSource.Task;
         }
 
         #endregion

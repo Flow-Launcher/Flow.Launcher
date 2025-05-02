@@ -86,12 +86,22 @@ public partial class SettingsPanePluginsViewModel : BaseModel
         UpdateEnumDropdownLocalizations();
     }
 
-    public string FilterText { get; set; } = string.Empty;
+    private string filterText = string.Empty;
+    public string FilterText
+    {
+        get => filterText;
+        set
+        {
+            if (filterText != value)
+            {
+                filterText = value;
+                OnPropertyChanged();
+            }
+        }
+    }
 
-    public PluginViewModel? SelectedPlugin { get; set; }
-
-    private IEnumerable<PluginViewModel>? _pluginViewModels;
-    private IEnumerable<PluginViewModel> PluginViewModels => _pluginViewModels ??= PluginManager.AllPlugins
+    private IList<PluginViewModel>? _pluginViewModels;
+    public IList<PluginViewModel> PluginViewModels => _pluginViewModels ??= PluginManager.AllPlugins
         .OrderBy(plugin => plugin.Metadata.Disabled)
         .ThenBy(plugin => plugin.Metadata.Name)
         .Select(plugin => new PluginViewModel
@@ -102,13 +112,12 @@ public partial class SettingsPanePluginsViewModel : BaseModel
         .Where(plugin => plugin.PluginSettingsObject != null)
         .ToList();
 
-    public List<PluginViewModel> FilteredPluginViewModels => PluginViewModels
-        .Where(v =>
-            string.IsNullOrEmpty(FilterText) ||
-            App.API.FuzzySearch(FilterText, v.PluginPair.Metadata.Name).IsSearchPrecisionScoreMet() ||
-            App.API.FuzzySearch(FilterText, v.PluginPair.Metadata.Description).IsSearchPrecisionScoreMet()
-        )
-        .ToList();
+    public bool SatisfiesFilter(PluginViewModel plugin)
+    {
+        return string.IsNullOrEmpty(FilterText) ||
+            App.API.FuzzySearch(FilterText, plugin.PluginPair.Metadata.Name).IsSearchPrecisionScoreMet() ||
+            App.API.FuzzySearch(FilterText, plugin.PluginPair.Metadata.Description).IsSearchPrecisionScoreMet();
+    }
 
     [RelayCommand]
     private async Task OpenHelperAsync(Button button)

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Flow.Launcher.Plugin;
 
@@ -33,7 +33,7 @@ namespace Flow.Launcher.Core.Plugin
                 searchTerms = terms;
             }
 
-            return new Query ()
+            return new Query()
             {
                 Search = search,
                 RawQuery = rawQuery,

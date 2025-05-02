@@ -45,8 +45,7 @@ namespace Flow.Launcher.ViewModel
         private readonly UserSelectedRecord _userSelectedRecord;
         private readonly TopMostRecord _topMostRecord;
 
-        private CancellationTokenSource _updateSource;
-        private CancellationToken _updateToken;
+        private CancellationTokenSource _updateSource; // Used to cancel old query flows
 
         private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
         private Task _resultsViewUpdateTask;
@@ -245,7 +244,7 @@ namespace Flow.Launcher.ViewModel
                         return;
                     }
 
-                    var token = e.Token == default ? _updateToken : e.Token;
+                    var token = e.Token == default ? _updateSource.Token : e.Token;
 
                     IReadOnlyList<Result> resultsCopy;
                     if (e.Results == null)
@@ -267,8 +266,11 @@ namespace Flow.Launcher.ViewModel
                     }
 
                     PluginManager.UpdatePluginMetadata(resultsCopy, pair.Metadata, e.Query);
-                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query,
-                            token)))
+
+                    if (token.IsCancellationRequested) return;
+
+                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query, 
+                        token)))
                     {
                         App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                     }
@@ -707,7 +709,31 @@ namespace Flow.Launcher.ViewModel
         /// <param name="isReQuery">Force query even when Query Text doesn't change</param>
         public void ChangeQueryText(string queryText, bool isReQuery = false)
         {
-            _ = ChangeQueryTextAsync(queryText, isReQuery);
+            // Must check access so that we will not block the UI thread which causes window visibility issue
+            if (!Application.Current.Dispatcher.CheckAccess())
+            {
+                Application.Current.Dispatcher.Invoke(() => ChangeQueryText(queryText, isReQuery));
+                return;
+            }
+
+            if (QueryText != queryText)
+            {
+                // Change query text first
+                QueryText = queryText;
+                // When we are changing query from codes, we should not delay the query
+                Query(false, isReQuery: false);
+
+                // set to false so the subsequent set true triggers
+                // PropertyChanged and MoveQueryTextToEnd is called
+                QueryTextCursorMovedToEnd = false;
+            }
+            else if (isReQuery)
+            {
+                // When we are re-querying, we should not delay the query
+                Query(false, isReQuery: true);
+            }
+
+            QueryTextCursorMovedToEnd = true;
         }
 
         /// <summary>
@@ -715,10 +741,10 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         private async Task ChangeQueryTextAsync(string queryText, bool isReQuery = false)
         {
-            // Must check access so that we will not block the UI thread which cause window visibility issue
+            // Must check access so that we will not block the UI thread which causes window visibility issue
             if (!Application.Current.Dispatcher.CheckAccess())
             {
-                await Application.Current.Dispatcher.InvokeAsync(() => ChangeQueryText(queryText, isReQuery));
+                await Application.Current.Dispatcher.InvokeAsync(() => ChangeQueryTextAsync(queryText, isReQuery));
                 return;
             }
 
@@ -1117,7 +1143,18 @@ namespace Flow.Launcher.ViewModel
 
         public void Query(bool searchDelay, bool isReQuery = false)
         {
-            _ = QueryAsync(searchDelay, isReQuery);
+            if (QueryResultsSelected())
+            {
+                _ = QueryResultsAsync(searchDelay, isReQuery);
+            }
+            else if (ContextMenuSelected())
+            {
+                QueryContextMenu();
+            }
+            else if (HistorySelected())
+            {
+                QueryHistory();
+            }
         }
 
         private async Task QueryAsync(bool searchDelay, bool isReQuery = false)
@@ -1227,10 +1264,45 @@ namespace Flow.Launcher.ViewModel
         {
             _updateSource?.Cancel();
 
-            var query = ConstructQuery(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
+            var query = await ConstructQueryAsync(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
+
+            var quickSwitch = _isQuickSwitch; // save quick switch state
+
+            if (query == null) // shortcut expanded
+            {
+                // Hide and clear results again because running query may show and add some results
+                Results.Visibility = Visibility.Collapsed;
+                Results.Clear();
+
+                // Reset plugin icon
+                PluginIconPath = null;
+                PluginIconSource = null;
+                SearchIconVisibility = Visibility.Visible;
+
+                // Hide progress bar again because running query may set this to visible
+                ProgressBarVisibility = Visibility.Hidden;
+                return;
+            }
+
+            _updateSource = new CancellationTokenSource();
+
+            ProgressBarVisibility = Visibility.Hidden;
+            _isQueryRunning = true;
+
+            // Switch to ThreadPool thread
+            await TaskScheduler.Default;
+
+            if (_updateSource.Token.IsCancellationRequested) return;
+
+            // Update the query's IsReQuery property to true if this is a re-query
+            query.IsReQuery = isReQuery;
+
+            // handle the exclusiveness of plugin using action keyword
+            RemoveOldQueryResults(query);
+
+            _lastQuery = query;
 
             var plugins = PluginManager.ValidPluginsForQuery(query);
-            var quickSwitch = _isQuickSwitch; // save quick switch state
 
             if (quickSwitch)
             {
@@ -1238,16 +1310,7 @@ namespace Flow.Launcher.ViewModel
                 plugins = new Collection<PluginPair>(plugins.Where(p => p.Plugin is IAsyncQuickSwitch).ToList());
             }
 
-            if (query == null || plugins.Count == 0) // shortcut expanded
-            {
-                Results.Clear();
-                Results.Visibility = Visibility.Collapsed;
-                PluginIconPath = null;
-                PluginIconSource = null;
-                SearchIconVisibility = Visibility.Visible;
-                return;
-            }
-            else if (plugins.Count == 1)
+            if (plugins.Count == 1)
             {
                 PluginIconPath = plugins.Single().Metadata.IcoPath;
                 PluginIconSource = await App.API.LoadImageAsync(PluginIconPath);
@@ -1260,42 +1323,20 @@ namespace Flow.Launcher.ViewModel
                 SearchIconVisibility = Visibility.Visible;
             }
 
-            _updateSource?.Dispose();
-
-            var currentUpdateSource = new CancellationTokenSource();
-            _updateSource = currentUpdateSource;
-            _updateToken = _updateSource.Token;
-
-            ProgressBarVisibility = Visibility.Hidden;
-            _isQueryRunning = true;
-
-            // Switch to ThreadPool thread
-            await TaskScheduler.Default;
-
-            if (_updateSource.Token.IsCancellationRequested)
-                return;
-
-            // Update the query's IsReQuery property to true if this is a re-query
-            query.IsReQuery = isReQuery;
-
-            // handle the exclusiveness of plugin using action keyword
-            RemoveOldQueryResults(query);
-
-            _lastQuery = query;
-
-            if (string.IsNullOrEmpty(query.ActionKeyword))
+            // Do not wait for performance improvement
+            /*if (string.IsNullOrEmpty(query.ActionKeyword))
             {
                 // Wait 15 millisecond for query change in global query
                 // if query changes, return so that it won't be calculated
                 await Task.Delay(15, _updateSource.Token);
                 if (_updateSource.Token.IsCancellationRequested)
                     return;
-            }
+            }*/
 
             _ = Task.Delay(200, _updateSource.Token).ContinueWith(_ =>
                 {
                     // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
-                    if (!_updateSource.Token.IsCancellationRequested && _isQueryRunning)
+                    if (_isQueryRunning)
                     {
                         ProgressBarVisibility = Visibility.Visible;
                     }
@@ -1322,12 +1363,12 @@ namespace Flow.Launcher.ViewModel
                 // nothing to do here
             }
 
-            if (_updateSource.Token.IsCancellationRequested)
-                return;
+            if (_updateSource.Token.IsCancellationRequested) return;
 
             // this should happen once after all queries are done so progress bar should continue
             // until the end of all querying
             _isQueryRunning = false;
+
             if (!_updateSource.Token.IsCancellationRequested)
             {
                 // update to hidden if this is still the current query
@@ -1343,8 +1384,7 @@ namespace Flow.Launcher.ViewModel
 
                     await Task.Delay(searchDelayTime, token);
 
-                    if (token.IsCancellationRequested)
-                        return;
+                    if (token.IsCancellationRequested) return;
                 }
 
                 // Since it is wrapped within a ThreadPool Thread, the synchronous context is null
@@ -1355,8 +1395,7 @@ namespace Flow.Launcher.ViewModel
                 {
                     var results = await PluginManager.QueryQuickSwitchForPluginAsync(plugin, query, token);
 
-                    if (token.IsCancellationRequested)
-                        return;
+                    if (token.IsCancellationRequested) return;
 
                     IReadOnlyList<QuickSwitchResult> resultsCopy;
                     if (results == null)
@@ -1376,6 +1415,8 @@ namespace Flow.Launcher.ViewModel
                             result.BadgeIcoPath = plugin.Metadata.IcoPath;
                         }
                     }
+                    
+                    if (token.IsCancellationRequested) return;
 
                     if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
                         token, reSelect)))
@@ -1409,6 +1450,8 @@ namespace Flow.Launcher.ViewModel
                         }
                     }
 
+                    if (token.IsCancellationRequested) return;
+
                     if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
                         token, reSelect)))
                     {
@@ -1418,16 +1461,16 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private Query ConstructQuery(string queryText, IEnumerable<CustomShortcutModel> customShortcuts,
-            IEnumerable<BuiltinShortcutModel> builtInShortcuts)
+        private async Task<Query> ConstructQueryAsync(string queryText, IEnumerable<CustomShortcutModel> customShortcuts,
+            IEnumerable<BaseBuiltinShortcutModel> builtInShortcuts)
         {
             if (string.IsNullOrWhiteSpace(queryText))
             {
                 return null;
             }
 
-            StringBuilder queryBuilder = new(queryText);
-            StringBuilder queryBuilderTmp = new(queryText);
+            var queryBuilder = new StringBuilder(queryText);
+            var queryBuilderTmp = new StringBuilder(queryText);
 
             // Sorting order is important here, the reason is for matching longest shortcut by default
             foreach (var shortcut in customShortcuts.OrderByDescending(x => x.Key.Length))
@@ -1440,36 +1483,56 @@ namespace Flow.Launcher.ViewModel
                 queryBuilder.Replace('@' + shortcut.Key, shortcut.Expand());
             }
 
-            string customExpanded = queryBuilder.ToString();
+            // Applying builtin shortcuts
+            await BuildQueryAsync(builtInShortcuts, queryBuilder, queryBuilderTmp);
 
-            Application.Current.Dispatcher.Invoke(() =>
+            return QueryBuilder.Build(queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
+        }
+
+        private async Task BuildQueryAsync(IEnumerable<BaseBuiltinShortcutModel> builtInShortcuts,
+            StringBuilder queryBuilder, StringBuilder queryBuilderTmp)
+        {
+            var customExpanded = queryBuilder.ToString();
+
+            var queryChanged = false;
+
+            foreach (var shortcut in builtInShortcuts)
             {
-                foreach (var shortcut in builtInShortcuts)
+                try
                 {
-                    try
+                    if (customExpanded.Contains(shortcut.Key))
                     {
-                        if (customExpanded.Contains(shortcut.Key))
+                        string expansion;
+                        if (shortcut is BuiltinShortcutModel syncShortcut)
                         {
-                            var expansion = shortcut.Expand();
-                            queryBuilder.Replace(shortcut.Key, expansion);
-                            queryBuilderTmp.Replace(shortcut.Key, expansion);
+                            expansion = syncShortcut.Expand();
                         }
-                    }
-                    catch (Exception e)
-                    {
-                        App.API.LogException(ClassName,
-                            $"Error when expanding shortcut {shortcut.Key}",
-                            e);
+                        else if (shortcut is AsyncBuiltinShortcutModel asyncShortcut)
+                        {
+                            expansion = await asyncShortcut.ExpandAsync();
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                        queryBuilder.Replace(shortcut.Key, expansion);
+                        queryBuilderTmp.Replace(shortcut.Key, expansion);
+                        queryChanged = true;
                     }
                 }
-            });
+                catch (Exception e)
+                {
+                    App.API.LogException(ClassName, $"Error when expanding shortcut {shortcut.Key}", e);
+                }
+            }
 
-            // show expanded builtin shortcuts
-            // use private field to avoid infinite recursion
-            _queryText = queryBuilderTmp.ToString();
-
-            var query = QueryBuilder.Build(queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
-            return query;
+            if (queryChanged)
+            {
+                // show expanded builtin shortcuts
+                // use private field to avoid infinite recursion
+                _queryText = queryBuilderTmp.ToString();
+                OnPropertyChanged(nameof(QueryText));
+            }
         }
 
         private void RemoveOldQueryResults(Query query)
@@ -1789,6 +1852,9 @@ namespace Flow.Launcher.ViewModel
 
         public void Show()
         {
+            // When application is exiting, we should not show the main window
+            if (App.Exiting) return;
+
             // When application is exiting, the Application.Current will be null
             Application.Current?.Dispatcher.Invoke(() =>
             {
