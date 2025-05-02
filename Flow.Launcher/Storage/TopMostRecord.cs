@@ -16,8 +16,10 @@ namespace Flow.Launcher.Storage
 
         public FlowLauncherJsonStorageTopMostRecord()
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             // Get old data & new data
             var topMostRecordStorage = new FlowLauncherJsonStorage<TopMostRecord>();
+#pragma warning restore CS0618 // Type or member is obsolete
             _topMostRecordStorage = new FlowLauncherJsonStorage<MultipleTopMostRecord>();
 
             // Check if data exist
@@ -43,7 +45,16 @@ namespace Flow.Launcher.Storage
             {
                 // Migrate old data to new data
                 _topMostRecord = _topMostRecordStorage.Load();
-                _topMostRecord.Add(topMostRecordStorage.Load());
+                var oldTopMostRecord = topMostRecordStorage.Load();
+                if (oldTopMostRecord == null || oldTopMostRecord.records.IsEmpty) return;
+                foreach (var record in oldTopMostRecord.records)
+                {
+                    _topMostRecord.records.AddOrUpdate(record.Key, new ConcurrentBag<Record> { record.Value }, (key, oldValue) =>
+                    {
+                        oldValue.Add(record.Value);
+                        return oldValue;
+                    });
+                }
 
                 // Delete old data and save the new data
                 try
@@ -87,6 +98,7 @@ namespace Flow.Launcher.Storage
     /// <summary>
     /// Old data structure to support only one top most record for the same query
     /// </summary>
+    [Obsolete("Use MultipleTopMostRecord instead. This class will be removed in future versions.")]
     internal class TopMostRecord
     {
         [JsonInclude]
@@ -146,23 +158,6 @@ namespace Flow.Launcher.Storage
         [JsonInclude]
         [JsonConverter(typeof(ConcurrentDictionaryConcurrentBagConverter))]
         public ConcurrentDictionary<string, ConcurrentBag<Record>> records { get; private set; } = new();
-
-        internal void Add(TopMostRecord topMostRecord)
-        {
-            if (topMostRecord == null || topMostRecord.records.IsEmpty)
-            {
-                return;
-            }
-
-            foreach (var record in topMostRecord.records)
-            {
-                records.AddOrUpdate(record.Key, new ConcurrentBag<Record> { record.Value }, (key, oldValue) =>
-                {
-                    oldValue.Add(record.Value);
-                    return oldValue;
-                });
-            }
-        }
 
         internal bool IsTopMost(Result result)
         {
