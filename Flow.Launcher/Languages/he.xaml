@@ -398,6 +398,7 @@
     <system:String x:Key="newActionKeywordsSameAsOld">מילת הפעולה החדשה זהה לישנה, נא לבחור מילת פעולה שונה</system:String>
     <system:String x:Key="success">הצליח</system:String>
     <system:String x:Key="completedSuccessfully">הושלם בהצלחה</system:String>
+    <system:String x:Key="failedToCopy">Failed to copy</system:String>
     <system:String x:Key="actionkeyword_tips">הזן את מילות הפעולה שבהן תרצה להשתמש כדי להפעיל את התוסף, והשתמש ברווחים כדי להפריד ביניהן. השתמש ב-* אם אינך רוצה להגדיר כלל, והתוסף יופעל ללא מילות פעולה.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
