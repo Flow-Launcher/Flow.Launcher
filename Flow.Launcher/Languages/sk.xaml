@@ -399,7 +399,7 @@
     <system:String x:Key="newActionKeywordsSameAsOld">Tento nový aktivačný príkaz je rovnaký ako starý, vyberte iný</system:String>
     <system:String x:Key="success">Úspešné</system:String>
     <system:String x:Key="completedSuccessfully">Úspešne dokončené</system:String>
-    <system:String x:Key="failedToCopy">Failed to copy</system:String>
+    <system:String x:Key="failedToCopy">Nepodarilo sa skopírovať</system:String>
     <system:String x:Key="actionkeyword_tips">Zadajte aktivačné príkazy, ktoré chcete používať na spustenie pluginu a oddeľte ich medzerou. Ak nechcete zadať aktivačný príkaz, použite * a plugin bude spustený bez aktivačného príkazu.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
