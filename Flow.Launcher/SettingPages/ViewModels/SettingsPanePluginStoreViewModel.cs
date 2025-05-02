@@ -79,8 +79,8 @@ public partial class SettingsPanePluginStoreViewModel : BaseModel
         }
     }
 
-    public IList<PluginStoreItemViewModel> ExternalPlugins => 
-        App.API.GetPluginManifest()?.Select(p => new PluginStoreItemViewModel(p))
+    public IList<PluginStoreItemViewModel> ExternalPlugins => App.API.GetPluginManifest()?
+        .Select(p => new PluginStoreItemViewModel(p))
         .OrderByDescending(p => p.Category == PluginStoreItemViewModel.NewRelease)
         .ThenByDescending(p => p.Category == PluginStoreItemViewModel.RecentlyUpdated)
         .ThenByDescending(p => p.Category == PluginStoreItemViewModel.None)

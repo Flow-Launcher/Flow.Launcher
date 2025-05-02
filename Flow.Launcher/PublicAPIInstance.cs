@@ -40,7 +40,7 @@ namespace Flow.Launcher
         private readonly Settings _settings;
         private readonly MainViewModel _mainVM;
 
-        // Must use getter to access Application.Current.Resources.MergedDictionaries so earlier
+        // Must use getter to avoid accessing Application.Current.Resources.MergedDictionaries so earlier in theme constructor
         private Theme _theme;
         private Theme Theme => _theme ??= Ioc.Default.GetRequiredService<Theme>();
 
@@ -69,8 +69,7 @@ namespace Flow.Launcher
             _mainVM.ChangeQueryText(query, requery);
         }
 
-#pragma warning disable VSTHRD100 // Avoid async void methods
-
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         public async void RestartApp()
         {
             _mainVM.Hide();
@@ -88,8 +87,6 @@ namespace Flow.Launcher
             // the project may not restart or just terminates. This is expected.
             UpdateManager.RestartApp(Constant.ApplicationFileName);
         }
-
-#pragma warning restore VSTHRD100 // Avoid async void methods
 
         public void ShowMainWindow() => _mainVM.Show();
 
@@ -145,35 +142,90 @@ namespace Flow.Launcher
             ShellCommand.Execute(startInfo);
         }
 
-        public void CopyToClipboard(string stringToCopy, bool directCopy = false, bool showDefaultNotification = true)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
+        public async void CopyToClipboard(string stringToCopy, bool directCopy = false, bool showDefaultNotification = true)
         {
             if (string.IsNullOrEmpty(stringToCopy))
+            {
                 return;
+            }
 
             var isFile = File.Exists(stringToCopy);
             if (directCopy && (isFile || Directory.Exists(stringToCopy)))
             {
-                var paths = new StringCollection
+                // Sometimes the clipboard is locked and cannot be accessed,
+                // we need to retry a few times before giving up
+                var exception = await RetryActionOnSTAThreadAsync(() =>
+                {
+                    var paths = new StringCollection
                     {
                         stringToCopy
                     };
 
-                Clipboard.SetFileDropList(paths);
-
-                if (showDefaultNotification)
-                    ShowMsg(
-                        $"{GetTranslation("copy")} {(isFile ? GetTranslation("fileTitle") : GetTranslation("folderTitle"))}",
-                        GetTranslation("completedSuccessfully"));
+                    Clipboard.SetFileDropList(paths);
+                });
+                
+                if (exception == null)
+                {
+                    if (showDefaultNotification)
+                    {
+                        ShowMsg(
+                            $"{GetTranslation("copy")} {(isFile ? GetTranslation("fileTitle") : GetTranslation("folderTitle"))}",
+                            GetTranslation("completedSuccessfully"));
+                    }
+                }
+                else
+                {
+                    LogException(nameof(PublicAPIInstance), "Failed to copy file/folder to clipboard", exception);
+                    ShowMsgError(GetTranslation("failedToCopy"));
+                }
             }
             else
             {
-                Clipboard.SetDataObject(stringToCopy);
+                // Sometimes the clipboard is locked and cannot be accessed,
+                // we need to retry a few times before giving up
+                var exception = await RetryActionOnSTAThreadAsync(() =>
+                {
+                    // We should use SetText instead of SetDataObject to avoid the clipboard being locked by other applications
+                    Clipboard.SetText(stringToCopy);
+                });
 
-                if (showDefaultNotification)
-                    ShowMsg(
-                        $"{GetTranslation("copy")} {GetTranslation("textTitle")}",
-                        GetTranslation("completedSuccessfully"));
+                if (exception == null)
+                {
+                    if (showDefaultNotification)
+                    {
+                        ShowMsg(
+                            $"{GetTranslation("copy")} {GetTranslation("textTitle")}",
+                            GetTranslation("completedSuccessfully"));
+                    }
+                }
+                else
+                {
+                    LogException(nameof(PublicAPIInstance), "Failed to copy text to clipboard", exception);
+                    ShowMsgError(GetTranslation("failedToCopy"));
+                }  
             }
+        }
+
+        private static async Task<Exception> RetryActionOnSTAThreadAsync(Action action, int retryCount = 6, int retryDelay = 150)
+        {
+            for (var i = 0; i < retryCount; i++)
+            {
+                try
+                {
+                    await Win32Helper.StartSTATaskAsync(action).ConfigureAwait(false);
+                    break;
+                }
+                catch (Exception e)
+                {
+                    if (i == retryCount - 1)
+                    {
+                        return e;
+                    }
+                    await Task.Delay(retryDelay);
+                }
+            }
+            return null;
         }
 
         public void StartLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Visible;

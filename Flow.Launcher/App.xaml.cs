@@ -23,6 +23,7 @@ using Flow.Launcher.SettingPages.ViewModels;
 using Flow.Launcher.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.VisualStudio.Threading;
 
 namespace Flow.Launcher
 {
@@ -198,6 +199,10 @@ namespace Flow.Launcher
                 Current.MainWindow = _mainWindow;
                 Current.MainWindow.Title = Constant.FlowLauncher;
 
+                // Initialize hotkey mapper instantly after main window is created because
+                // it will steal focus from main window which causes window hide
+                HotKeyMapper.Initialize();
+
                 // Main windows needs initialized before theme change because of blur settings
                 Ioc.Default.GetRequiredService<Theme>().ChangeTheme();
 
@@ -239,6 +244,7 @@ namespace Flow.Launcher
             }
         }
 
+        [Conditional("RELEASE")]
         private void AutoUpdates()
         {
             _ = Task.Run(async () =>
@@ -296,13 +302,12 @@ namespace Flow.Launcher
         [Conditional("RELEASE")]
         private static void RegisterAppDomainExceptions()
         {
-            AppDomain.CurrentDomain.UnhandledException += ErrorReporting.UnhandledExceptionHandle;
+            AppDomain.CurrentDomain.UnhandledException += ErrorReporting.UnhandledException;
         }
 
         /// <summary>
         /// Let exception throw as normal is better for Debug
         /// </summary>
-        [Conditional("RELEASE")]
         private static void RegisterTaskSchedulerUnhandledException()
         {
             TaskScheduler.UnobservedTaskException += ErrorReporting.TaskSchedulerUnobservedTaskException;

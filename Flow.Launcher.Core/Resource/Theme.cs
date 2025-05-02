@@ -76,7 +76,7 @@ namespace Flow.Launcher.Core.Resource
             {
                 _api.LogError(ClassName, "Current theme resource not found. Initializing with default theme.");
                 _oldTheme = Constant.DefaultTheme;
-            };
+            }
         }
 
         #endregion
@@ -126,7 +126,7 @@ namespace Flow.Launcher.Core.Resource
                 // Load a ResourceDictionary for the specified theme.
                 var themeName = _settings.Theme;
                 var dict = GetThemeResourceDictionary(themeName);
-                
+
                 // Apply font settings to the theme resource.
                 ApplyFontSettings(dict);
                 UpdateResourceDictionary(dict);
@@ -152,11 +152,11 @@ namespace Flow.Launcher.Core.Resource
                 var fontStyle = FontHelper.GetFontStyleFromInvariantStringOrNormal(_settings.QueryBoxFontStyle);
                 var fontWeight = FontHelper.GetFontWeightFromInvariantStringOrNormal(_settings.QueryBoxFontWeight);
                 var fontStretch = FontHelper.GetFontStretchFromInvariantStringOrNormal(_settings.QueryBoxFontStretch);
-                
+
                 SetFontProperties(queryBoxStyle, fontFamily, fontStyle, fontWeight, fontStretch, true);
                 SetFontProperties(querySuggestionBoxStyle, fontFamily, fontStyle, fontWeight, fontStretch, false);
             }
-            
+
             if (dict["ItemTitleStyle"] is Style resultItemStyle &&
                 dict["ItemTitleSelectedStyle"] is Style resultItemSelectedStyle &&
                 dict["ItemHotkeyStyle"] is Style resultHotkeyItemStyle &&
@@ -172,7 +172,7 @@ namespace Flow.Launcher.Core.Resource
                 SetFontProperties(resultHotkeyItemStyle, fontFamily, fontStyle, fontWeight, fontStretch, false);
                 SetFontProperties(resultHotkeyItemSelectedStyle, fontFamily, fontStyle, fontWeight, fontStretch, false);
             }
-            
+
             if (dict["ItemSubTitleStyle"] is Style resultSubItemStyle &&
                 dict["ItemSubTitleSelectedStyle"] is Style resultSubItemSelectedStyle)
             {
@@ -197,7 +197,7 @@ namespace Flow.Launcher.Core.Resource
                 //  First, find the setters to remove and store them in a list  
                 var settersToRemove = style.Setters
                     .OfType<Setter>()
-                    .Where(setter => 
+                    .Where(setter =>
                         setter.Property == Control.FontFamilyProperty ||
                         setter.Property == Control.FontStyleProperty ||
                         setter.Property == Control.FontWeightProperty ||
@@ -227,18 +227,18 @@ namespace Flow.Launcher.Core.Resource
             {
                 var settersToRemove = style.Setters
                     .OfType<Setter>()
-                    .Where(setter => 
+                    .Where(setter =>
                         setter.Property == TextBlock.FontFamilyProperty ||
                         setter.Property == TextBlock.FontStyleProperty ||
                         setter.Property == TextBlock.FontWeightProperty ||
                         setter.Property == TextBlock.FontStretchProperty)
                     .ToList();
-                
+
                 foreach (var setter in settersToRemove)
                 {
                     style.Setters.Remove(setter);
                 }
-                
+
                 style.Setters.Add(new Setter(TextBlock.FontFamilyProperty, fontFamily));
                 style.Setters.Add(new Setter(TextBlock.FontStyleProperty, fontStyle));
                 style.Setters.Add(new Setter(TextBlock.FontWeightProperty, fontWeight));
@@ -421,7 +421,7 @@ namespace Flow.Launcher.Core.Resource
 
                 // Retrieve theme resource – always use the resource with font settings applied.
                 var resourceDict = GetResourceDictionary(theme);
-                
+
                 UpdateResourceDictionary(resourceDict);
 
                 _settings.Theme = theme;
