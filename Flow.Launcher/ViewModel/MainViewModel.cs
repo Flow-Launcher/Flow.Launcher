@@ -1170,7 +1170,7 @@ namespace Flow.Launcher.ViewModel
                     OriginQuery = new Query { RawQuery = h.Query },
                     Action = _ =>
                     {
-                        SelectedResults = Results;
+                        App.API.BackToQueryResults();
                         App.API.ChangeQuery(h.Query);
                         return false;
                     }
@@ -1600,10 +1600,7 @@ namespace Flow.Launcher.ViewModel
                 await CloseExternalPreviewAsync();
             }
 
-            if (!QueryResultsSelected())
-            {
-                SelectedResults = Results;
-            }
+            BackToQueryResults();
 
             switch (Settings.LastQueryMode)
             {
