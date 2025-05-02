@@ -390,6 +390,7 @@
     <system:String x:Key="newActionKeywordsSameAsOld">이 새로운 액션 키워드는 기존 것과 동일합니다. 다른 키워드를 선택해주세요.</system:String>
     <system:String x:Key="success">성공</system:String>
     <system:String x:Key="completedSuccessfully">성공적으로 완료했습니다.</system:String>
+    <system:String x:Key="failedToCopy">Failed to copy</system:String>
     <system:String x:Key="actionkeyword_tips">플러그인을 실행할 때 사용할 액션 키워드를 입력하세요. 여러 개를 입력할 경우 공백으로 구분하세요. 아무 키워드도 지정하지 않으려면 * 를 입력하세요. 이 경우 액션 키워드 없이도 플러그인이 실행됩니다.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
