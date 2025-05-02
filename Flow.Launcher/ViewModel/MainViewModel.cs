@@ -1197,7 +1197,7 @@ namespace Flow.Launcher.ViewModel
         {
             _updateSource?.Cancel();
 
-            var query = ConstructQuery(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
+            var query = await ConstructQueryAsync(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
 
             if (query == null) // shortcut expanded
             {
@@ -1349,7 +1349,7 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private Query ConstructQuery(string queryText, IEnumerable<CustomShortcutModel> customShortcuts,
+        private async Task<Query> ConstructQueryAsync(string queryText, IEnumerable<CustomShortcutModel> customShortcuts,
             IEnumerable<BaseBuiltinShortcutModel> builtInShortcuts)
         {
             if (string.IsNullOrWhiteSpace(queryText))
@@ -1372,12 +1372,12 @@ namespace Flow.Launcher.ViewModel
             }
 
             // Applying builtin shortcuts
-            BuildQuery(builtInShortcuts, queryBuilder, queryBuilderTmp);
+            await BuildQueryAsync(builtInShortcuts, queryBuilder, queryBuilderTmp);
 
             return QueryBuilder.Build(queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
         }
 
-        private void BuildQuery(IEnumerable<BaseBuiltinShortcutModel> builtInShortcuts,
+        private async Task BuildQueryAsync(IEnumerable<BaseBuiltinShortcutModel> builtInShortcuts,
             StringBuilder queryBuilder, StringBuilder queryBuilderTmp)
         {
             var customExpanded = queryBuilder.ToString();
@@ -1397,7 +1397,7 @@ namespace Flow.Launcher.ViewModel
                         }
                         else if (shortcut is AsyncBuiltinShortcutModel asyncShortcut)
                         {
-                            expansion = App.JTF.Run(() => asyncShortcut.ExpandAsync());
+                            expansion = await asyncShortcut.ExpandAsync();
                         }
                         else
                         {
