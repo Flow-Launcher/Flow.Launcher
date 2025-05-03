@@ -75,6 +75,16 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public bool PluginHomeState
+        {
+            get => !PluginPair.Metadata.HomeDisabled;
+            set
+            {
+                PluginPair.Metadata.HomeDisabled = !value;
+                PluginSettingsObject.HomeDiabled = !value;
+            }
+        }
+
         public bool IsExpanded
         {
             get => _isExpanded;
@@ -154,6 +164,7 @@ namespace Flow.Launcher.ViewModel
         public Infrastructure.UserSettings.Plugin PluginSettingsObject{ get; init; }
         public bool SearchDelayEnabled => Settings.SearchQueryResultsWithDelay;
         public string DefaultSearchDelay => Settings.SearchDelayTime.ToString();
+        public bool HomeEnabled => Settings.ShowHomePage && PluginManager.IsHomePlugin(PluginPair.Metadata.ID);
 
         public void OnActionKeywordsTextChanged()
         {

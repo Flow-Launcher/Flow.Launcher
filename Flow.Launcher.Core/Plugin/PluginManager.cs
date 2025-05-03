@@ -221,6 +221,7 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     API.LogException(ClassName, $"Fail to Init plugin: {pair.Metadata.Name}", e);
                     pair.Metadata.Disabled = true;
+                    pair.Metadata.HomeDisabled = true;
                     failedPlugins.Enqueue(pair);
                 }
             }));
@@ -427,6 +428,11 @@ namespace Flow.Launcher.Core.Plugin
             }
 
             return results;
+        }
+
+        public static bool IsHomePlugin(string id)
+        {
+            return _homePlugins.Any(p => p.Metadata.ID == id);
         }
 
         public static bool ActionKeywordRegistered(string actionKeyword)
