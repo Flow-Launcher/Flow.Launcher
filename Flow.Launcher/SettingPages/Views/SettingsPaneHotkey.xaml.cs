@@ -1,7 +1,6 @@
 ﻿using System.Windows.Navigation;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.SettingPages.ViewModels;
-using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.SettingPages.Views;
 
@@ -13,8 +12,7 @@ public partial class SettingsPaneHotkey
     {
         if (!IsInitialized)
         {
-            var settings = Ioc.Default.GetRequiredService<Settings>();
-            _viewModel = new SettingsPaneHotkeyViewModel(settings);
+            _viewModel = Ioc.Default.GetRequiredService<SettingsPaneHotkeyViewModel>();
             DataContext = _viewModel;
             InitializeComponent();
         }

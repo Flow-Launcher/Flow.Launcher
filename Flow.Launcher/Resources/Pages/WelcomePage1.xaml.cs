@@ -1,26 +1,34 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Navigation;
-using Flow.Launcher.Infrastructure.UserSettings;
-using Flow.Launcher.Core.Resource;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.Resources.Pages
 {
     public partial class WelcomePage1
     {
+        public Settings Settings { get; private set; }
+        private WelcomeViewModel _viewModel;
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Settings = Ioc.Default.GetRequiredService<Settings>();
+            if (!IsInitialized)
+            {
+                Settings = Ioc.Default.GetRequiredService<Settings>();
+                _viewModel = Ioc.Default.GetRequiredService<WelcomeViewModel>();
+                InitializeComponent();
+            }
             // Sometimes the navigation is not triggered by button click,
             // so we need to reset the page number
-            Ioc.Default.GetRequiredService<WelcomeViewModel>().PageNum = 1;
-            InitializeComponent();
+            _viewModel.PageNum = 1;
+            base.OnNavigatedTo(e);
         }
-        private Internationalization _translater => InternationalizationManager.Instance;
-        public List<Language> Languages => _translater.LoadAvailableLanguages();
 
-        public Settings Settings { get; set; }
+        private readonly Internationalization _translater = Ioc.Default.GetRequiredService<Internationalization>();
+
+        public List<Language> Languages => _translater.LoadAvailableLanguages();
 
         public string CustomLanguage
         {
@@ -30,12 +38,11 @@ namespace Flow.Launcher.Resources.Pages
             }
             set
             {
-                InternationalizationManager.Instance.ChangeLanguage(value);
+                _translater.ChangeLanguage(value);
 
-                if (InternationalizationManager.Instance.PromptShouldUsePinyin(value))
+                if (_translater.PromptShouldUsePinyin(value))
                     Settings.ShouldUsePinyin = true;
             }
         }
-
     }
 }

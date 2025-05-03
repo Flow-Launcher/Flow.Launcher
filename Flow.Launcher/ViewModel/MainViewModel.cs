@@ -16,8 +16,6 @@ using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
-using Flow.Launcher.Infrastructure.Image;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -31,6 +29,8 @@ namespace Flow.Launcher.ViewModel
     {
         #region Private Fields
 
+        private static readonly string ClassName = nameof(MainViewModel);
+
         private bool _isQueryRunning;
         private Query _lastQuery;
         private string _queryTextBeforeLeaveResults;
@@ -43,8 +43,7 @@ namespace Flow.Launcher.ViewModel
         private readonly UserSelectedRecord _userSelectedRecord;
         private readonly TopMostRecord _topMostRecord;
 
-        private CancellationTokenSource _updateSource;
-        private CancellationToken _updateToken;
+        private CancellationTokenSource _updateSource; // Used to cancel old query flows
 
         private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
         private Task _resultsViewUpdateTask;
@@ -159,7 +158,7 @@ namespace Flow.Launcher.ViewModel
             };
             _selectedResults = Results;
 
-            Results.PropertyChanged += (_, args) =>
+            Results.PropertyChanged += (o, args) =>
             {
                 switch (args.PropertyName)
                 {
@@ -171,7 +170,7 @@ namespace Flow.Launcher.ViewModel
                 }
             };
 
-            History.PropertyChanged += (_, args) =>
+            History.PropertyChanged += (o, args) =>
             {
                 switch (args.PropertyName)
                 {
@@ -214,7 +213,7 @@ namespace Flow.Launcher.ViewModel
                 }
 
                 if (!_disposed)
-                    Log.Error("MainViewModel", "Unexpected ResultViewUpdate ends");
+                    App.API.LogError(ClassName, "Unexpected ResultViewUpdate ends");
             }
 
             void continueAction(Task t)
@@ -222,7 +221,7 @@ namespace Flow.Launcher.ViewModel
 #if DEBUG
                 throw t.Exception;
 #else
-                Log.Error($"Error happen in task dealing with viewupdate for results. {t.Exception}");
+                App.API.LogError(ClassName, $"Error happen in task dealing with viewupdate for results. {t.Exception}");
                 _resultsViewUpdateTask =
                     Task.Run(UpdateActionAsync).ContinueWith(continueAction, CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.Default);
 #endif
@@ -241,16 +240,27 @@ namespace Flow.Launcher.ViewModel
                         return;
                     }
 
-                    var token = e.Token == default ? _updateToken : e.Token;
+                    var token = e.Token == default ? _updateSource.Token : e.Token;
 
                     // make a clone to avoid possible issue that plugin will also change the list and items when updating view model
                     var resultsCopy = DeepCloneResults(e.Results, token);
 
-                    PluginManager.UpdatePluginMetadata(resultsCopy, pair.Metadata, e.Query);
-                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query,
-                            token)))
+                    foreach (var result in resultsCopy)
                     {
-                        Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
+                        if (string.IsNullOrEmpty(result.BadgeIcoPath))
+                        {
+                            result.BadgeIcoPath = pair.Metadata.IcoPath;
+                        }
+                    }
+
+                    PluginManager.UpdatePluginMetadata(resultsCopy, pair.Metadata, e.Query);
+
+                    if (token.IsCancellationRequested) return;
+
+                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query, 
+                        token)))
+                    {
+                        App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                     }
                 };
             }
@@ -275,7 +285,7 @@ namespace Flow.Launcher.ViewModel
             Hide();
 
             await PluginManager.ReloadDataAsync().ConfigureAwait(false);
-            Notification.Show(App.API.GetTranslation("success"),
+            App.API.ShowMsg(App.API.GetTranslation("success"),
                 App.API.GetTranslation("completedSuccessfully"));
         }
 
@@ -298,14 +308,16 @@ namespace Flow.Launcher.ViewModel
         {
             if (QueryResultsSelected())
             {
-                _ = QueryResultsAsync(isReQuery: true);
+                // When we are re-querying, we should not delay the query
+                _ = QueryResultsAsync(false, isReQuery: true);
             }
         }
 
         public void ReQuery(bool reselect)
         {
             BackToQueryResults();
-            _ = QueryResultsAsync(isReQuery: true, reSelect: reselect);
+            // When we are re-querying, we should not delay the query
+            _ = QueryResultsAsync(false, isReQuery: true, reSelect: reselect);
         }
 
         [RelayCommand]
@@ -313,7 +325,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (_history.Items.Count > 0)
             {
-                ChangeQueryText(_history.Items[^lastHistoryIndex].Query.ToString());
+                ChangeQueryText(_history.Items[^lastHistoryIndex].Query);
                 if (lastHistoryIndex < _history.Items.Count)
                 {
                     lastHistoryIndex++;
@@ -326,7 +338,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (_history.Items.Count > 0)
             {
-                ChangeQueryText(_history.Items[^lastHistoryIndex].Query.ToString());
+                ChangeQueryText(_history.Items[^lastHistoryIndex].Query);
                 if (lastHistoryIndex > 1)
                 {
                     lastHistoryIndex--;
@@ -577,7 +589,6 @@ namespace Flow.Launcher.ViewModel
             {
                 _queryText = value;
                 OnPropertyChanged();
-                Query();
             }
         }
 
@@ -631,7 +642,31 @@ namespace Flow.Launcher.ViewModel
         /// <param name="isReQuery">Force query even when Query Text doesn't change</param>
         public void ChangeQueryText(string queryText, bool isReQuery = false)
         {
-            _ = ChangeQueryTextAsync(queryText, isReQuery);
+            // Must check access so that we will not block the UI thread which causes window visibility issue
+            if (!Application.Current.Dispatcher.CheckAccess())
+            {
+                Application.Current.Dispatcher.Invoke(() => ChangeQueryText(queryText, isReQuery));
+                return;
+            }
+
+            if (QueryText != queryText)
+            {
+                // Change query text first
+                QueryText = queryText;
+                // When we are changing query from codes, we should not delay the query
+                Query(false, isReQuery: false);
+
+                // set to false so the subsequent set true triggers
+                // PropertyChanged and MoveQueryTextToEnd is called
+                QueryTextCursorMovedToEnd = false;
+            }
+            else if (isReQuery)
+            {
+                // When we are re-querying, we should not delay the query
+                Query(false, isReQuery: true);
+            }
+
+            QueryTextCursorMovedToEnd = true;
         }
 
         /// <summary>
@@ -639,26 +674,28 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         private async Task ChangeQueryTextAsync(string queryText, bool isReQuery = false)
         {
-            // Must check access so that we will not block the UI thread which cause window visibility issue
+            // Must check access so that we will not block the UI thread which causes window visibility issue
             if (!Application.Current.Dispatcher.CheckAccess())
             {
-                await Application.Current.Dispatcher.InvokeAsync(() => ChangeQueryText(queryText, isReQuery));
+                await Application.Current.Dispatcher.InvokeAsync(() => ChangeQueryTextAsync(queryText, isReQuery));
                 return;
             }
 
-            BackToQueryResults();
-
             if (QueryText != queryText)
             {
-                // re-query is done in QueryText's setter method
+                // Change query text first
                 QueryText = queryText;
+                // When we are changing query from codes, we should not delay the query
+                await QueryAsync(false, isReQuery: false);
+
                 // set to false so the subsequent set true triggers
                 // PropertyChanged and MoveQueryTextToEnd is called
                 QueryTextCursorMovedToEnd = false;
             }
             else if (isReQuery)
             {
-                await QueryAsync(isReQuery: true);
+                // When we are re-querying, we should not delay the query
+                await QueryAsync(false, isReQuery: true);
             }
 
             QueryTextCursorMovedToEnd = true;
@@ -727,14 +764,10 @@ namespace Flow.Launcher.ViewModel
                     // setter won't be called when property value is not changed.
                     // so we need manually call Query()
                     // http://stackoverflow.com/posts/25895769/revisions
-                    if (string.IsNullOrEmpty(QueryText))
-                    {
-                        Query();
-                    }
-                    else
-                    {
-                        QueryText = string.Empty;
-                    }
+                    QueryText = string.Empty;
+                    // When we are changing query because selected results are changed to history or context menu,
+                    // we should not delay the query
+                    Query(false);
 
                     if (HistorySelected())
                     {
@@ -754,7 +787,7 @@ namespace Flow.Launcher.ViewModel
         public Visibility ProgressBarVisibility { get; set; }
         public Visibility MainWindowVisibility { get; set; }
         
-        // This is to be used for determining the visibility status of the mainwindow instead of MainWindowVisibility
+        // This is to be used for determining the visibility status of the main window instead of MainWindowVisibility
         // because it is more accurate and reliable representation than using Visibility as a condition check
         public bool MainWindowVisibilityStatus { get; set; } = true;
 
@@ -885,7 +918,7 @@ namespace Flow.Launcher.ViewModel
 #if DEBUG
                 throw new NotImplementedException("ResultAreaColumn should match ResultAreaColumnPreviewShown/ResultAreaColumnPreviewHidden value");
 #else
-                Log.Error("MainViewModel", "ResultAreaColumnPreviewHidden/ResultAreaColumnPreviewShown int value not implemented", "InternalPreviewVisible");
+                App.API.LogError(ClassName, "ResultAreaColumnPreviewHidden/ResultAreaColumnPreviewShown int value not implemented", "InternalPreviewVisible");
                 return false;
 #endif
             }
@@ -1041,16 +1074,27 @@ namespace Flow.Launcher.ViewModel
 
         #region Query
 
-        private void Query(bool isReQuery = false)
-        {
-            _ = QueryAsync(isReQuery);
-        }
-
-        private async Task QueryAsync(bool isReQuery = false)
+        public void Query(bool searchDelay, bool isReQuery = false)
         {
             if (QueryResultsSelected())
             {
-                await QueryResultsAsync(isReQuery);
+                _ = QueryResultsAsync(searchDelay, isReQuery);
+            }
+            else if (ContextMenuSelected())
+            {
+                QueryContextMenu();
+            }
+            else if (HistorySelected())
+            {
+                QueryHistory();
+            }
+        }
+
+        private async Task QueryAsync(bool searchDelay, bool isReQuery = false)
+        {
+            if (QueryResultsSelected())
+            {
+                await QueryResultsAsync(searchDelay, isReQuery);
             }
             else if (ContextMenuSelected())
             {
@@ -1072,9 +1116,7 @@ namespace Flow.Launcher.ViewModel
 
             if (selected != null) // SelectedItem returns null if selection is empty.
             {
-                List<Result> results;
-
-                results = PluginManager.GetContextMenusForPlugin(selected);
+                var results = PluginManager.GetContextMenusForPlugin(selected);
                 results.Add(ContextMenuTopMost(selected));
                 results.Add(ContextMenuPluginInfo(selected.PluginID));
 
@@ -1151,27 +1193,29 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private async Task QueryResultsAsync(bool isReQuery = false, bool reSelect = true)
+        private async Task QueryResultsAsync(bool searchDelay, bool isReQuery = false, bool reSelect = true)
         {
             _updateSource?.Cancel();
 
-            var query = ConstructQuery(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
+            var query = await ConstructQueryAsync(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
 
             if (query == null) // shortcut expanded
             {
-                Results.Clear();
+                // Hide and clear results again because running query may show and add some results
                 Results.Visibility = Visibility.Collapsed;
+                Results.Clear();
+
+                // Reset plugin icon
                 PluginIconPath = null;
                 PluginIconSource = null;
                 SearchIconVisibility = Visibility.Visible;
+
+                // Hide progress bar again because running query may set this to visible
+                ProgressBarVisibility = Visibility.Hidden;
                 return;
             }
 
-            _updateSource?.Dispose();
-
-            var currentUpdateSource = new CancellationTokenSource();
-            _updateSource = currentUpdateSource;
-            _updateToken = _updateSource.Token;
+            _updateSource = new CancellationTokenSource();
 
             ProgressBarVisibility = Visibility.Hidden;
             _isQueryRunning = true;
@@ -1179,8 +1223,7 @@ namespace Flow.Launcher.ViewModel
             // Switch to ThreadPool thread
             await TaskScheduler.Default;
 
-            if (_updateSource.Token.IsCancellationRequested)
-                return;
+            if (_updateSource.Token.IsCancellationRequested) return;
 
             // Update the query's IsReQuery property to true if this is a re-query
             query.IsReQuery = isReQuery;
@@ -1195,7 +1238,7 @@ namespace Flow.Launcher.ViewModel
             if (plugins.Count == 1)
             {
                 PluginIconPath = plugins.Single().Metadata.IcoPath;
-                PluginIconSource = await ImageLoader.LoadAsync(PluginIconPath);
+                PluginIconSource = await App.API.LoadImageAsync(PluginIconPath);
                 SearchIconVisibility = Visibility.Hidden;
             }
             else
@@ -1205,29 +1248,33 @@ namespace Flow.Launcher.ViewModel
                 SearchIconVisibility = Visibility.Visible;
             }
 
-            if (query.ActionKeyword == Plugin.Query.GlobalPluginWildcardSign)
+            // Do not wait for performance improvement
+            /*if (string.IsNullOrEmpty(query.ActionKeyword))
             {
-                // Wait 45 millisecond for query change in global query
+                // Wait 15 millisecond for query change in global query
                 // if query changes, return so that it won't be calculated
-                await Task.Delay(45, _updateSource.Token);
+                await Task.Delay(15, _updateSource.Token);
                 if (_updateSource.Token.IsCancellationRequested)
                     return;
-            }
+            }*/
 
             _ = Task.Delay(200, _updateSource.Token).ContinueWith(_ =>
-            {
-                // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
-                if (!_updateSource.Token.IsCancellationRequested && _isQueryRunning)
                 {
-                    ProgressBarVisibility = Visibility.Visible;
-                }
-            }, _updateSource.Token, TaskContinuationOptions.NotOnCanceled, TaskScheduler.Default);
+                    // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
+                    if (_isQueryRunning)
+                    {
+                        ProgressBarVisibility = Visibility.Visible;
+                    }
+                },
+                _updateSource.Token,
+                TaskContinuationOptions.NotOnCanceled,
+                TaskScheduler.Default);
 
-            // plugins is ICollection, meaning LINQ will get the Count and preallocate Array
+            // plugins are ICollection, meaning LINQ will get the Count and preallocate Array
 
             var tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
             {
-                false => QueryTaskAsync(plugin, reSelect),
+                false => QueryTaskAsync(plugin, _updateSource.Token),
                 true => Task.CompletedTask
             }).ToArray();
 
@@ -1241,12 +1288,12 @@ namespace Flow.Launcher.ViewModel
                 // nothing to do here
             }
 
-            if (_updateSource.Token.IsCancellationRequested)
-                return;
+            if (_updateSource.Token.IsCancellationRequested) return;
 
             // this should happen once after all queries are done so progress bar should continue
             // until the end of all querying
             _isQueryRunning = false;
+
             if (!_updateSource.Token.IsCancellationRequested)
             {
                 // update to hidden if this is still the current query
@@ -1254,16 +1301,24 @@ namespace Flow.Launcher.ViewModel
             }
 
             // Local function
-            async Task QueryTaskAsync(PluginPair plugin, bool reSelect = true)
+            async Task QueryTaskAsync(PluginPair plugin, CancellationToken token)
             {
+                if (searchDelay)
+                {
+                    var searchDelayTime = plugin.Metadata.SearchDelayTime ?? Settings.SearchDelayTime;
+
+                    await Task.Delay(searchDelayTime, token);
+
+                    if (token.IsCancellationRequested) return;
+                }
+
                 // Since it is wrapped within a ThreadPool Thread, the synchronous context is null
                 // Task.Yield will force it to run in ThreadPool
                 await Task.Yield();
 
-                IReadOnlyList<Result> results =
-                    await PluginManager.QueryForPluginAsync(plugin, query, _updateSource.Token);
+                var results = await PluginManager.QueryForPluginAsync(plugin, query, token);
 
-                _updateSource.Token.ThrowIfCancellationRequested();
+                if (token.IsCancellationRequested) return;
 
                 IReadOnlyList<Result> resultsCopy;
                 if (results == null)
@@ -1273,27 +1328,37 @@ namespace Flow.Launcher.ViewModel
                 else
                 {
                     // make a copy of results to avoid possible issue that FL changes some properties of the records, like score, etc.
-                    resultsCopy = DeepCloneResults(results);
+                    resultsCopy = DeepCloneResults(results, token);
                 }
 
-                if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
-                    _updateSource.Token, reSelect)))
+                foreach (var result in resultsCopy)
                 {
-                    Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
+                    if (string.IsNullOrEmpty(result.BadgeIcoPath))
+                    {
+                        result.BadgeIcoPath = plugin.Metadata.IcoPath;
+                    }
+                }
+
+                if (token.IsCancellationRequested) return;
+
+                if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
+                    token, reSelect)))
+                {
+                    App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
             }
         }
 
-        private Query ConstructQuery(string queryText, IEnumerable<CustomShortcutModel> customShortcuts,
-            IEnumerable<BuiltinShortcutModel> builtInShortcuts)
+        private async Task<Query> ConstructQueryAsync(string queryText, IEnumerable<CustomShortcutModel> customShortcuts,
+            IEnumerable<BaseBuiltinShortcutModel> builtInShortcuts)
         {
             if (string.IsNullOrWhiteSpace(queryText))
             {
                 return null;
             }
 
-            StringBuilder queryBuilder = new(queryText);
-            StringBuilder queryBuilderTmp = new(queryText);
+            var queryBuilder = new StringBuilder(queryText);
+            var queryBuilderTmp = new StringBuilder(queryText);
 
             // Sorting order is important here, the reason is for matching longest shortcut by default
             foreach (var shortcut in customShortcuts.OrderByDescending(x => x.Key.Length))
@@ -1306,36 +1371,56 @@ namespace Flow.Launcher.ViewModel
                 queryBuilder.Replace('@' + shortcut.Key, shortcut.Expand());
             }
 
-            string customExpanded = queryBuilder.ToString();
+            // Applying builtin shortcuts
+            await BuildQueryAsync(builtInShortcuts, queryBuilder, queryBuilderTmp);
 
-            Application.Current.Dispatcher.Invoke(() =>
+            return QueryBuilder.Build(queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
+        }
+
+        private async Task BuildQueryAsync(IEnumerable<BaseBuiltinShortcutModel> builtInShortcuts,
+            StringBuilder queryBuilder, StringBuilder queryBuilderTmp)
+        {
+            var customExpanded = queryBuilder.ToString();
+
+            var queryChanged = false;
+
+            foreach (var shortcut in builtInShortcuts)
             {
-                foreach (var shortcut in builtInShortcuts)
+                try
                 {
-                    try
+                    if (customExpanded.Contains(shortcut.Key))
                     {
-                        if (customExpanded.Contains(shortcut.Key))
+                        string expansion;
+                        if (shortcut is BuiltinShortcutModel syncShortcut)
                         {
-                            var expansion = shortcut.Expand();
-                            queryBuilder.Replace(shortcut.Key, expansion);
-                            queryBuilderTmp.Replace(shortcut.Key, expansion);
+                            expansion = syncShortcut.Expand();
                         }
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Exception(
-                            $"{nameof(MainViewModel)}.{nameof(ConstructQuery)}|Error when expanding shortcut {shortcut.Key}",
-                            e);
+                        else if (shortcut is AsyncBuiltinShortcutModel asyncShortcut)
+                        {
+                            expansion = await asyncShortcut.ExpandAsync();
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                        queryBuilder.Replace(shortcut.Key, expansion);
+                        queryBuilderTmp.Replace(shortcut.Key, expansion);
+                        queryChanged = true;
                     }
                 }
-            });
+                catch (Exception e)
+                {
+                    App.API.LogException(ClassName, $"Error when expanding shortcut {shortcut.Key}", e);
+                }
+            }
 
-            // show expanded builtin shortcuts
-            // use private field to avoid infinite recursion
-            _queryText = queryBuilderTmp.ToString();
-
-            var query = QueryBuilder.Build(queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
-            return query;
+            if (queryChanged)
+            {
+                // show expanded builtin shortcuts
+                // use private field to avoid infinite recursion
+                _queryText = queryBuilderTmp.ToString();
+                OnPropertyChanged(nameof(QueryText));
+            }
         }
 
         private void RemoveOldQueryResults(Query query)
@@ -1464,10 +1549,13 @@ namespace Flow.Launcher.ViewModel
 
         public void Show()
         {
-            // Invoke on UI thread
-            Application.Current.Dispatcher.Invoke(() =>
+            // When application is exiting, we should not show the main window
+            if (App.Exiting) return;
+
+            // When application is exiting, the Application.Current will be null
+            Application.Current?.Dispatcher.Invoke(() =>
             {
-                // When application is exitting, the Application.Current will be null
+                // When application is exiting, the Application.Current will be null
                 if (Application.Current?.MainWindow is MainWindow mainWindow)
                 {
                     // 📌 Remove DWM Cloak (Make the window visible normally)
@@ -1539,10 +1627,10 @@ namespace Flow.Launcher.ViewModel
                     break;
             }
 
-            // Invoke on UI thread
-            Application.Current.Dispatcher.Invoke(() =>
+            // When application is exiting, the Application.Current will be null
+            Application.Current?.Dispatcher.Invoke(() =>
             {
-                // When application is exitting, the Application.Current will be null
+                // When application is exiting, the Application.Current will be null
                 if (Application.Current?.MainWindow is MainWindow mainWindow)
                 {
                     // Set clock and search icon opacity
@@ -1591,7 +1679,7 @@ namespace Flow.Launcher.ViewModel
         }
 
         /// <summary>
-        /// To avoid deadlock, this method should not called from main thread
+        /// To avoid deadlock, this method should not be called from main thread
         /// </summary>
         public void UpdateResultView(ICollection<ResultsForUpdate> resultsForUpdates)
         {

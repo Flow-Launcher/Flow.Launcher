@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Windows.Win32;
 using Windows.Win32.Foundation;
@@ -20,6 +18,8 @@ namespace Flow.Launcher.Plugin.Sys
 {
     public class Main : IPlugin, ISettingProvider, IPluginI18n
     {
+        private static readonly string ClassName = nameof(Main);
+
         private readonly Dictionary<string, string> KeywordTitleMappings = new()
         {
             {"Shutdown", "flowlauncher_plugin_sys_shutdown_computer_cmd"},
@@ -107,7 +107,7 @@ namespace Flow.Launcher.Plugin.Sys
         {
             if (!KeywordTitleMappings.TryGetValue(key, out var translationKey))
             {
-                Log.Error("Flow.Launcher.Plugin.Sys.Main", $"Title not found for: {key}");
+                _context.API.LogError(ClassName, $"Title not found for: {key}");
                 return "Title Not Found";
             }
 
@@ -118,7 +118,7 @@ namespace Flow.Launcher.Plugin.Sys
         {
             if (!KeywordDescriptionMappings.TryGetValue(key, out var translationKey))
             {
-                Log.Error("Flow.Launcher.Plugin.Sys.Main", $"Description not found for: {key}");
+                _context.API.LogError(ClassName, $"Description not found for: {key}");
                 return "Description Not Found";
             }
 
@@ -191,8 +191,6 @@ namespace Flow.Launcher.Plugin.Sys
         private List<Result> Commands()
         {
             var results = new List<Result>();
-            var logPath = Path.Combine(DataLocation.DataDirectory(), "Logs", Constant.Version);
-            var userDataPath = DataLocation.DataDirectory();
             var recycleBinFolder = "shell:RecycleBinFolder";
             results.AddRange(new[]
             {
@@ -364,6 +362,7 @@ namespace Flow.Launcher.Plugin.Sys
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe89f"),
                     Action = c =>
                     {
+                        _context.API.HideMainWindow();
                         Application.Current.MainWindow.Close();
                         return true;
                     }
@@ -440,11 +439,11 @@ namespace Flow.Launcher.Plugin.Sys
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xf12b"),
                     Title = "Open Log Location",
                     IcoPath = "Images\\app.png",
-                    CopyText = logPath,
-                    AutoCompleteText = logPath,
+                    CopyText = DataLocation.VersionLogDirectory,
+                    AutoCompleteText = DataLocation.VersionLogDirectory,
                     Action = c =>
                     {
-                        _context.API.OpenDirectory(logPath);
+                        _context.API.OpenDirectory(DataLocation.VersionLogDirectory);
                         return true;
                     }
                 },
@@ -466,11 +465,11 @@ namespace Flow.Launcher.Plugin.Sys
                     Title = "Flow Launcher UserData Folder",
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xf12b"),
                     IcoPath = "Images\\app.png",
-                    CopyText = userDataPath,
-                    AutoCompleteText = userDataPath,
+                    CopyText = DataLocation.DataDirectory(),
+                    AutoCompleteText = DataLocation.DataDirectory(),
                     Action = c =>
                     {
-                        _context.API.OpenDirectory(userDataPath);
+                        _context.API.OpenDirectory(DataLocation.DataDirectory());
                         return true;
                     }
                 },

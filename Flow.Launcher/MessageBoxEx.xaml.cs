@@ -4,13 +4,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Image;
-using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher
 {
     public partial class MessageBoxEx : Window
     {
+        private static readonly string ClassName = nameof(MessageBoxEx);
+
         private static MessageBoxEx msgBox;
         private static MessageBoxResult _result = MessageBoxResult.None;
 
@@ -59,7 +59,7 @@ namespace Flow.Launcher
             }
             catch (Exception e)
             {
-                Log.Error($"|MessageBoxEx.Show|An error occurred: {e.Message}");
+                App.API.LogError(ClassName, $"An error occurred: {e.Message}");
                 msgBox = null;
                 return MessageBoxResult.None;
             }
@@ -156,7 +156,7 @@ namespace Flow.Launcher
         private async Task SetImageAsync(string imageName)
         {
             var imagePath = Path.Combine(Constant.ProgramDirectory, "Images", imageName);
-            var imageSource = await ImageLoader.LoadAsync(imagePath);
+            var imageSource = await App.API.LoadImageAsync(imagePath);
             Img.Source = imageSource;
         }
 

@@ -1,9 +1,11 @@
-﻿using Microsoft.Win32.SafeHandles;
-using System;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using Microsoft.Win32.SafeHandles;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.System.Threading;
@@ -12,6 +14,8 @@ namespace Flow.Launcher.Plugin.ProcessKiller
 {
     internal class ProcessHelper
     {
+        private static readonly string ClassName = nameof(ProcessHelper);
+
         private readonly HashSet<string> _systemProcessList = new()
         {
             "conhost",
@@ -70,8 +74,21 @@ namespace Flow.Launcher.Plugin.ProcessKiller
         /// </summary>
         public static unsafe Dictionary<int, string> GetProcessesWithNonEmptyWindowTitle()
         {
-            var processDict = new Dictionary<int, string>();
+            // Collect all window handles
+            var windowHandles = new List<HWND>();
             PInvoke.EnumWindows((hWnd, _) =>
+            {
+                if (PInvoke.IsWindowVisible(hWnd))
+                {
+                    windowHandles.Add(hWnd);
+                }
+                return true;
+            }, IntPtr.Zero);
+
+            // Concurrently process each window handle
+            var processDict = new ConcurrentDictionary<int, string>();
+            var processedProcessIds = new ConcurrentDictionary<int, byte>();
+            Parallel.ForEach(windowHandles, hWnd =>
             {
                 var windowTitle = GetWindowTitle(hWnd);
                 if (!string.IsNullOrWhiteSpace(windowTitle) && PInvoke.IsWindowVisible(hWnd))
@@ -80,20 +97,26 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                     var result = PInvoke.GetWindowThreadProcessId(hWnd, &processId);
                     if (result == 0u || processId == 0u)
                     {
-                        return false;
+                        return;
                     }
 
-                    var process = Process.GetProcessById((int)processId);
-                    if (!processDict.ContainsKey((int)processId))
+                    // Ensure each process ID is processed only once
+                    if (processedProcessIds.TryAdd((int)processId, 0))
                     {
-                        processDict.Add((int)processId, windowTitle);
+                        try
+                        {
+                            var process = Process.GetProcessById((int)processId);
+                            processDict.TryAdd((int)processId, windowTitle);
+                        }
+                        catch
+                        {
+                            // Handle exceptions (e.g., process exited)
+                        }
                     }
                 }
+            });
 
-                return true;
-            }, IntPtr.Zero);
-
-            return processDict;
+            return new Dictionary<int, string>(processDict);
         }
 
         private static unsafe string GetWindowTitle(HWND hwnd)
@@ -131,7 +154,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             }
             catch (Exception e)
             {
-                context.API.LogException($"{nameof(ProcessHelper)}", $"Failed to kill process {p.ProcessName}", e);
+                context.API.LogException(ClassName, $"Failed to kill process {p.ProcessName}", e);
             }
         }
 

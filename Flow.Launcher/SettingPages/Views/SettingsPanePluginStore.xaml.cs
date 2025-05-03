@@ -5,7 +5,6 @@ using System.Windows.Navigation;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.SettingPages.ViewModels;
 using Flow.Launcher.ViewModel;
-using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.SettingPages.Views;
 
@@ -17,8 +16,7 @@ public partial class SettingsPanePluginStore
     {
         if (!IsInitialized)
         {
-            var settings = Ioc.Default.GetRequiredService<Settings>();
-            _viewModel = new SettingsPanePluginStoreViewModel();
+            _viewModel = Ioc.Default.GetRequiredService<SettingsPanePluginStoreViewModel>();
             DataContext = _viewModel;
             InitializeComponent();
         }
@@ -28,9 +26,15 @@ public partial class SettingsPanePluginStore
 
     private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(SettingsPanePluginStoreViewModel.FilterText))
+        switch (e.PropertyName)
         {
-            ((CollectionViewSource)FindResource("PluginStoreCollectionView")).View.Refresh();
+            case nameof(SettingsPanePluginStoreViewModel.FilterText):
+            case nameof(SettingsPanePluginStoreViewModel.ShowDotNet):
+            case nameof(SettingsPanePluginStoreViewModel.ShowPython):
+            case nameof(SettingsPanePluginStoreViewModel.ShowNodeJs):
+            case nameof(SettingsPanePluginStoreViewModel.ShowExecutable):
+                ((CollectionViewSource)FindResource("PluginStoreCollectionView")).View.Refresh();
+                break;
         }
     }
 

@@ -17,8 +17,8 @@
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Aktions-Schlüsselwort</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">Suche</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Autovervollständigung von Suchanfragen verwenden:</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Daten automatisch vervollständigen aus:</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Autovervollständigung von Suchanfragen verwenden</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Autovervollständigung der Daten aus:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Bitte wählen Sie eine Websuche aus</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Sind Sie sicher, dass Sie {0} löschen wollen?</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_1">Wenn Sie Flow eine Suche nach einer bestimmten Website hinzufügen möchten, geben Sie zunächst eine Dummy-Textzeichenfolge in die Suchleiste dieser Website ein und starten Sie die Suche. Kopieren Sie jetzt den Inhalt der Adressleiste des Browsers und fügen Sie ihn in das URL-Feld unten ein. Ersetzen Sie Ihre Testzeichenfolge durch {q}. Zum Beispiel, wenn Sie auf Netflix nach casino suchen, steht in der Adressleiste</system:String>
@@ -30,8 +30,8 @@
 https://www.netflix.com/search?q={q}
     </system:String>
 
-    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">Copy URL</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">Copy search URL to clipboard</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">URL kopieren</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">Such-URL in Zwischenablage kopieren</system:String>
 
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">Titel</system:String>

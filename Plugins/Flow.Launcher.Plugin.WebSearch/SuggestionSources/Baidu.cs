@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Flow.Launcher.Infrastructure.Http;
-using Flow.Launcher.Infrastructure.Logger;
 using System.Net.Http;
 using System.Threading;
 
@@ -13,6 +11,8 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
 {
     public class Baidu : SuggestionSource
     {
+        private static readonly string ClassName = nameof(Baidu);
+
         private readonly Regex _reg = new Regex("window.baidu.sug\\((.*)\\)");
 
         public override async Task<List<string>> SuggestionsAsync(string query, CancellationToken token)
@@ -22,11 +22,11 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
             try
             {
                 const string api = "http://suggestion.baidu.com/su?json=1&wd=";
-                result = await Http.GetAsync(api + Uri.EscapeDataString(query), token).ConfigureAwait(false);
+                result = await Main._context.API.HttpGetStringAsync(api + Uri.EscapeDataString(query), token).ConfigureAwait(false);
             }
             catch (Exception e) when (e is HttpRequestException or {InnerException: TimeoutException})
             {
-                Log.Exception("|Baidu.Suggestions|Can't get suggestion from baidu", e);
+                Main._context.API.LogException(ClassName, "Can't get suggestion from Baidu", e);
                 return null;
             }
 
@@ -41,7 +41,7 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
                 }
                 catch (JsonException e)
                 {
-                    Log.Exception("|Baidu.Suggestions|can't parse suggestions", e);
+                    Main._context.API.LogException(ClassName, "Can't parse suggestions", e);
                     return new List<string>();
                 }
 

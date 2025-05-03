@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.Converters;
 
 public class QuerySuggestionBoxConverter : IMultiValueConverter
 {
+    private static readonly string ClassName = nameof(QuerySuggestionBoxConverter);
+
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
         // values[0] is TextBox: The textbox displaying the autocomplete suggestion
@@ -43,8 +45,16 @@ public class QuerySuggestionBoxConverter : IMultiValueConverter
 
             // Check if Text will be larger than our QueryTextBox
             Typeface typeface = new Typeface(queryTextBox.FontFamily, queryTextBox.FontStyle, queryTextBox.FontWeight, queryTextBox.FontStretch);
-            // TODO: Obsolete warning?
-            var ft = new FormattedText(queryTextBox.Text, CultureInfo.CurrentCulture, System.Windows.FlowDirection.LeftToRight, typeface, queryTextBox.FontSize, Brushes.Black);
+            var dpi = VisualTreeHelper.GetDpi(queryTextBox);
+            var ft = new FormattedText(
+                queryTextBox.Text,
+                CultureInfo.CurrentCulture,
+                FlowDirection.LeftToRight,
+                typeface,
+                queryTextBox.FontSize,
+                Brushes.Black,
+                dpi.PixelsPerDip
+            );
 
             var offset = queryTextBox.Padding.Right;
 
@@ -55,7 +65,7 @@ public class QuerySuggestionBoxConverter : IMultiValueConverter
         }
         catch (Exception e)
         {
-            Log.Exception(nameof(QuerySuggestionBoxConverter), "fail to convert text for suggestion box", e);
+            App.API.LogException(ClassName, "fail to convert text for suggestion box", e);
             return string.Empty;
         }
     }

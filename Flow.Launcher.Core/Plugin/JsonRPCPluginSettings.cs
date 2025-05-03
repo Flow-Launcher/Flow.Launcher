@@ -23,6 +23,8 @@ namespace Flow.Launcher.Core.Plugin
         protected ConcurrentDictionary<string, object?> Settings { get; set; } = null!;
         public required IPublicAPI API { get; init; }
 
+        private static readonly string ClassName = nameof(JsonRPCPluginSettings);
+
         private JsonStorage<ConcurrentDictionary<string, object?>> _storage = null!;
 
         private static readonly Thickness SettingPanelMargin = (Thickness)Application.Current.FindResource("SettingPanelMargin");
@@ -111,7 +113,7 @@ namespace Flow.Launcher.Core.Plugin
                                 // If can parse the default value to bool, use it, otherwise use false
                                 : value is string stringValue && bool.TryParse(stringValue, out var boolValueFromString)
                                     && boolValueFromString;
-                            checkBox.Dispatcher.Invoke(() =>checkBox.IsChecked = isChecked);
+                            checkBox.Dispatcher.Invoke(() => checkBox.IsChecked = isChecked);
                             break;
                     }
                 }
@@ -122,12 +124,26 @@ namespace Flow.Launcher.Core.Plugin
 
         public async Task SaveAsync()
         {
-            await _storage.SaveAsync();
+            try
+            {
+                await _storage.SaveAsync();
+            }
+            catch (System.Exception e)
+            {
+                API.LogException(ClassName, $"Failed to save plugin settings to path: {SettingPath}", e);
+            }
         }
 
         public void Save()
         {
-            _storage.Save();
+            try
+            {
+                _storage.Save();
+            }
+            catch (System.Exception e)
+            {
+                API.LogException(ClassName, $"Failed to save plugin settings to path: {SettingPath}", e);
+            }
         }
         
         public bool NeedCreateSettingPanel()
@@ -138,8 +154,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public Control CreateSettingPanel()
         {
-            // No need to check if NeedCreateSettingPanel is true because CreateSettingPanel will only be called if it's true
-            // if (!NeedCreateSettingPanel()) return null;
+            if (!NeedCreateSettingPanel()) return null!;
 
             // Create main grid with two columns (Column 1: Auto, Column 2: *)
             var mainPanel = new Grid { Margin = SettingPanelMargin, VerticalAlignment = VerticalAlignment.Center };

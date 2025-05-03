@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using CommunityToolkit.Mvvm.DependencyInjection;
-using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Plugin.SharedModels;
 
 namespace Flow.Launcher.Plugin.Sys
 {
@@ -9,60 +8,39 @@ namespace Flow.Launcher.Plugin.Sys
     {
         public const string Keyword = "fltheme";
 
-        private readonly Theme _theme;
         private readonly PluginInitContext _context;
-
-        #region Theme Selection
-
-        // Theme select codes simplified from SettingsPaneThemeViewModel.cs
-
-        private Theme.ThemeData _selectedTheme;
-        public Theme.ThemeData SelectedTheme
-        {
-            get => _selectedTheme ??= Themes.Find(v => v.FileNameWithoutExtension == _theme.GetCurrentTheme());
-            set
-            {
-                _selectedTheme = value;
-                _theme.ChangeTheme(value.FileNameWithoutExtension);
-
-                _ = _theme.RefreshFrameAsync();
-            }
-        }
-
-        private List<Theme.ThemeData> Themes => _theme.LoadAvailableThemes();
-
-        #endregion
 
         public ThemeSelector(PluginInitContext context)
         {
             _context = context;
-            _theme = Ioc.Default.GetRequiredService<Theme>();
         }
 
         public List<Result> Query(Query query)
         {
+            var themes = _context.API.GetAvailableThemes();
+            var selectedTheme = _context.API.GetCurrentTheme();
+
             var search = query.SecondToEndSearch;
             if (string.IsNullOrWhiteSpace(search))
             {
-                return Themes.Select(CreateThemeResult)
+                return themes.Select(x => CreateThemeResult(x, selectedTheme))
                     .OrderBy(x => x.Title)
                     .ToList();
             }
 
-            return Themes.Select(theme => (theme, matchResult: _context.API.FuzzySearch(search, theme.Name)))
+            return themes.Select(theme => (theme, matchResult: _context.API.FuzzySearch(search, theme.Name)))
                 .Where(x => x.matchResult.IsSearchPrecisionScoreMet())
-                .Select(x => CreateThemeResult(x.theme, x.matchResult.Score, x.matchResult.MatchData))
+                .Select(x => CreateThemeResult(x.theme, selectedTheme, x.matchResult.Score, x.matchResult.MatchData))
                 .OrderBy(x => x.Title)
                 .ToList();
         }
 
-        private Result CreateThemeResult(Theme.ThemeData theme) => CreateThemeResult(theme, 0, null);
+        private Result CreateThemeResult(ThemeData theme, ThemeData selectedTheme) => CreateThemeResult(theme, selectedTheme, 0, null);
 
-        private Result CreateThemeResult(Theme.ThemeData theme, int score, IList<int> highlightData)
+        private Result CreateThemeResult(ThemeData theme, ThemeData selectedTheme, int score, IList<int> highlightData)
         {
-            string themeName = theme.Name;
             string title;
-            if (theme == SelectedTheme)
+            if (theme == selectedTheme)
             {
                 title = $"{theme.Name} ★";
                 // Set current theme to the top
@@ -98,8 +76,10 @@ namespace Flow.Launcher.Plugin.Sys
                 Score = score,
                 Action = c =>
                 {
-                    SelectedTheme = theme;
-                    _context.API.ReQuery();
+                    if (_context.API.SetCurrentTheme(theme))
+                    {
+                        _context.API.ReQuery();
+                    }
                     return false;
                 }
             };

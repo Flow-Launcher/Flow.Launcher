@@ -1,20 +1,19 @@
-﻿using Flow.Launcher.Core.ExternalPlugins;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using ISavable = Flow.Launcher.Plugin.ISavable;
 using Flow.Launcher.Plugin.SharedCommands;
-using System.Text.Json;
-using Flow.Launcher.Core.Resource;
-using CommunityToolkit.Mvvm.DependencyInjection;
+using IRemovable = Flow.Launcher.Core.Storage.IRemovable;
+using ISavable = Flow.Launcher.Plugin.ISavable;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -23,6 +22,8 @@ namespace Flow.Launcher.Core.Plugin
     /// </summary>
     public static class PluginManager
     {
+        private static readonly string ClassName = nameof(PluginManager);
+
         private static IEnumerable<PluginPair> _contextMenuPlugins;
 
         public static List<PluginPair> AllPlugins { get; private set; }
@@ -35,7 +36,7 @@ namespace Flow.Launcher.Core.Plugin
 
         private static PluginsSettings Settings;
         private static List<PluginMetadata> _metadatas;
-        private static List<string> _modifiedPlugins = new List<string>();
+        private static readonly List<string> _modifiedPlugins = new();
 
         /// <summary>
         /// Directories that will hold Flow Launcher plugin directory
@@ -59,18 +60,34 @@ namespace Flow.Launcher.Core.Plugin
         /// </summary>
         public static void Save()
         {
-            foreach (var plugin in AllPlugins)
+            foreach (var pluginPair in AllPlugins)
             {
-                var savable = plugin.Plugin as ISavable;
-                savable?.Save();
+                var savable = pluginPair.Plugin as ISavable;
+                try
+                {
+                    savable?.Save();
+                }
+                catch (Exception e)
+                {
+                    API.LogException(ClassName, $"Failed to save plugin {pluginPair.Metadata.Name}", e);
+                }
             }
 
             API.SavePluginSettings();
+            API.SavePluginCaches();
         }
 
         public static async ValueTask DisposePluginsAsync()
         {
             foreach (var pluginPair in AllPlugins)
+            {
+                await DisposePluginAsync(pluginPair);
+            }
+        }
+
+        private static async Task DisposePluginAsync(PluginPair pluginPair)
+        {
+            try
             {
                 switch (pluginPair.Plugin)
                 {
@@ -81,6 +98,10 @@ namespace Flow.Launcher.Core.Plugin
                         await asyncDisposable.DisposeAsync();
                         break;
                 }
+            }
+            catch (Exception e)
+            {
+                API.LogException(ClassName, $"Failed to dispose plugin {pluginPair.Metadata.Name}", e);
             }
         }
 
@@ -155,6 +176,25 @@ namespace Flow.Launcher.Core.Plugin
             Settings = settings;
             Settings.UpdatePluginSettings(_metadatas);
             AllPlugins = PluginsLoader.Plugins(_metadatas, Settings);
+            // Since dotnet plugins need to get assembly name first, we should update plugin directory after loading plugins
+            UpdatePluginDirectory(_metadatas);
+        }
+
+        private static void UpdatePluginDirectory(List<PluginMetadata> metadatas)
+        {
+            foreach (var metadata in metadatas)
+            {
+                if (AllowedLanguage.IsDotNet(metadata.Language))
+                {
+                    metadata.PluginSettingsDirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, metadata.AssemblyName);
+                    metadata.PluginCacheDirectoryPath = Path.Combine(DataLocation.PluginCacheDirectory, metadata.AssemblyName);
+                }
+                else
+                {
+                    metadata.PluginSettingsDirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, metadata.Name);
+                    metadata.PluginCacheDirectoryPath = Path.Combine(DataLocation.PluginCacheDirectory, metadata.Name);
+                }
+            }
         }
 
         /// <summary>
@@ -169,16 +209,16 @@ namespace Flow.Launcher.Core.Plugin
             {
                 try
                 {
-                    var milliseconds = await Stopwatch.DebugAsync($"|PluginManager.InitializePlugins|Init method time cost for <{pair.Metadata.Name}>",
+                    var milliseconds = await API.StopwatchLogDebugAsync(ClassName, $"Init method time cost for <{pair.Metadata.Name}>",
                         () => pair.Plugin.InitAsync(new PluginInitContext(pair.Metadata, API)));
 
                     pair.Metadata.InitTime += milliseconds;
-                    Log.Info(
-                        $"|PluginManager.InitializePlugins|Total init cost for <{pair.Metadata.Name}> is <{pair.Metadata.InitTime}ms>");
+                    API.LogInfo(ClassName,
+                        $"Total init cost for <{pair.Metadata.Name}> is <{pair.Metadata.InitTime}ms>");
                 }
                 catch (Exception e)
                 {
-                    Log.Exception(nameof(PluginManager), $"Fail to Init plugin: {pair.Metadata.Name}", e);
+                    API.LogException(ClassName, $"Fail to Init plugin: {pair.Metadata.Name}", e);
                     pair.Metadata.Disabled = true;
                     failedPlugins.Enqueue(pair);
                 }
@@ -225,10 +265,9 @@ namespace Flow.Launcher.Core.Plugin
             if (query is null)
                 return Array.Empty<PluginPair>();
 
-            if (!NonGlobalPlugins.ContainsKey(query.ActionKeyword))
+            if (!NonGlobalPlugins.TryGetValue(query.ActionKeyword, out var plugin))
                 return GlobalPlugins;
 
-            var plugin = NonGlobalPlugins[query.ActionKeyword];
             return new List<PluginPair>
             {
                 plugin
@@ -242,7 +281,7 @@ namespace Flow.Launcher.Core.Plugin
 
             try
             {
-                var milliseconds = await Stopwatch.DebugAsync($"|PluginManager.QueryForPlugin|Cost for {metadata.Name}",
+                var milliseconds = await API.StopwatchLogDebugAsync(ClassName, $"Cost for {metadata.Name}",
                     async () => results = await pair.Plugin.QueryAsync(query, token).ConfigureAwait(false));
 
                 token.ThrowIfCancellationRequested();
@@ -266,7 +305,7 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     Title = $"{metadata.Name}: Failed to respond!",
                     SubTitle = "Select this result for more info",
-                    IcoPath = Flow.Launcher.Infrastructure.Constant.ErrorIcon,
+                    IcoPath = Constant.ErrorIcon,
                     PluginDirectory = metadata.PluginDirectory,
                     ActionKeywordAssigned = query.ActionKeyword,
                     PluginID = metadata.ID,
@@ -330,8 +369,8 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 catch (Exception e)
                 {
-                    Log.Exception(
-                        $"|PluginManager.GetContextMenusForPlugin|Can't load context menus for plugin <{pluginPair.Metadata.Name}>",
+                    API.LogException(ClassName, 
+                        $"Can't load context menus for plugin <{pluginPair.Metadata.Name}>",
                         e);
                 }
             }
@@ -343,8 +382,8 @@ namespace Flow.Launcher.Core.Plugin
         {
             // this method is only checking for action keywords (defined as not '*') registration
             // hence the actionKeyword != Query.GlobalPluginWildcardSign logic
-            return actionKeyword != Query.GlobalPluginWildcardSign
-                   && NonGlobalPlugins.ContainsKey(actionKeyword);
+            return actionKeyword != Query.GlobalPluginWildcardSign 
+                && NonGlobalPlugins.ContainsKey(actionKeyword);
         }
 
         /// <summary>
@@ -432,37 +471,26 @@ namespace Flow.Launcher.Core.Plugin
 
         #region Public functions
 
-        public static bool PluginModified(string uuid)
+        public static bool PluginModified(string id)
         {
-            return _modifiedPlugins.Contains(uuid);
+            return _modifiedPlugins.Contains(id);
         }
 
-
-        /// <summary>
-        /// Update a plugin to new version, from a zip file. By default will remove the zip file if update is via url,
-        /// unless it's a local path installation
-        /// </summary>
-        public static void UpdatePlugin(PluginMetadata existingVersion, UserPlugin newVersion, string zipFilePath)
+        public static async Task UpdatePluginAsync(PluginMetadata existingVersion, UserPlugin newVersion, string zipFilePath)
         {
             InstallPlugin(newVersion, zipFilePath, checkModified:false);
-            UninstallPlugin(existingVersion, removePluginFromSettings:false, removePluginSettings:false, checkModified: false);
+            await UninstallPluginAsync(existingVersion, removePluginFromSettings:false, removePluginSettings:false, checkModified: false);
             _modifiedPlugins.Add(existingVersion.ID);
         }
 
-        /// <summary>
-        /// Install a plugin. By default will remove the zip file if installation is from url, unless it's a local path installation
-        /// </summary>
         public static void InstallPlugin(UserPlugin plugin, string zipFilePath)
         {
             InstallPlugin(plugin, zipFilePath, checkModified: true);
         }
 
-        /// <summary>
-        /// Uninstall a plugin.
-        /// </summary>
-        public static void UninstallPlugin(PluginMetadata plugin, bool removePluginFromSettings = true, bool removePluginSettings = false)
+        public static async Task UninstallPluginAsync(PluginMetadata plugin, bool removePluginFromSettings = true, bool removePluginSettings = false)
         {
-            UninstallPlugin(plugin, removePluginFromSettings, removePluginSettings, true);
+            await UninstallPluginAsync(plugin, removePluginFromSettings, removePluginSettings, true);
         }
 
         #endregion
@@ -503,20 +531,20 @@ namespace Flow.Launcher.Core.Plugin
             var folderName = string.IsNullOrEmpty(plugin.Version) ? $"{plugin.Name}-{Guid.NewGuid()}" : $"{plugin.Name}-{plugin.Version}";
 
             var defaultPluginIDs = new List<string>
-                                    {
-                                        "0ECADE17459B49F587BF81DC3A125110", // BrowserBookmark
-                                        "CEA0FDFC6D3B4085823D60DC76F28855", // Calculator
-                                        "572be03c74c642baae319fc283e561a8", // Explorer
-                                        "6A122269676E40EB86EB543B945932B9", // PluginIndicator
-                                        "9f8f9b14-2518-4907-b211-35ab6290dee7", // PluginsManager
-                                        "b64d0a79-329a-48b0-b53f-d658318a1bf6", // ProcessKiller
-                                        "791FC278BA414111B8D1886DFE447410", // Program
-                                        "D409510CD0D2481F853690A07E6DC426", // Shell
-                                        "CEA08895D2544B019B2E9C5009600DF4", // Sys
-                                        "0308FD86DE0A4DEE8D62B9B535370992", // URL
-                                        "565B73353DBF4806919830B9202EE3BF", // WebSearch
-                                        "5043CETYU6A748679OPA02D27D99677A" // WindowsSettings
-                                    };
+                {
+                    "0ECADE17459B49F587BF81DC3A125110", // BrowserBookmark
+                    "CEA0FDFC6D3B4085823D60DC76F28855", // Calculator
+                    "572be03c74c642baae319fc283e561a8", // Explorer
+                    "6A122269676E40EB86EB543B945932B9", // PluginIndicator
+                    "9f8f9b14-2518-4907-b211-35ab6290dee7", // PluginsManager
+                    "b64d0a79-329a-48b0-b53f-d658318a1bf6", // ProcessKiller
+                    "791FC278BA414111B8D1886DFE447410", // Program
+                    "D409510CD0D2481F853690A07E6DC426", // Shell
+                    "CEA08895D2544B019B2E9C5009600DF4", // Sys
+                    "0308FD86DE0A4DEE8D62B9B535370992", // URL
+                    "565B73353DBF4806919830B9202EE3BF", // WebSearch
+                    "5043CETYU6A748679OPA02D27D99677A" // WindowsSettings
+                };
 
             // Treat default plugin differently, it needs to be removable along with each flow release
             var installDirectory = !defaultPluginIDs.Any(x => x == plugin.ID)
@@ -534,7 +562,7 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch (Exception e)
             {
-                Log.Exception($"|PluginManager.InstallPlugin|Failed to delete temp folder {tempFolderPluginPath}", e);
+                API.LogException(ClassName, $"Failed to delete temp folder {tempFolderPluginPath}", e);
             }
 
             if (checkModified)
@@ -543,64 +571,63 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        internal static void UninstallPlugin(PluginMetadata plugin, bool removePluginFromSettings, bool removePluginSettings, bool checkModified)
+        internal static async Task UninstallPluginAsync(PluginMetadata plugin, bool removePluginFromSettings, bool removePluginSettings, bool checkModified)
         {
             if (checkModified && PluginModified(plugin.ID))
             {
                 throw new ArgumentException($"Plugin {plugin.Name} has been modified");
             }
 
+            if (removePluginSettings || removePluginFromSettings)
+            {
+                // If we want to remove plugin from AllPlugins,
+                // we need to dispose them so that they can release file handles
+                // which can help FL to delete the plugin settings & cache folders successfully
+                var pluginPairs = AllPlugins.FindAll(p => p.Metadata.ID == plugin.ID);
+                foreach (var pluginPair in pluginPairs)
+                {
+                    await DisposePluginAsync(pluginPair);
+                }
+            }
+
             if (removePluginSettings)
             {
-                if (AllowedLanguage.IsDotNet(plugin.Language))  // for the plugin in .NET, we can use assembly loader
+                // For dotnet plugins, we need to remove their PluginJsonStorage and PluginBinaryStorage instances
+                if (AllowedLanguage.IsDotNet(plugin.Language) && API is IRemovable removable)
                 {
-                    var assemblyLoader = new PluginAssemblyLoader(plugin.ExecuteFilePath);
-                    var assembly = assemblyLoader.LoadAssemblyAndDependencies();
-                    var assemblyName = assembly.GetName().Name;
-
-                    // if user want to remove the plugin settings, we cannot call save method for the plugin json storage instance of this plugin
-                    // so we need to remove it from the api instance
-                    var method = API.GetType().GetMethod("RemovePluginSettings");
-                    var pluginJsonStorage = method?.Invoke(API, new object[] { assemblyName });
-
-                    // if there exists a json storage for current plugin, we need to delete the directory path
-                    if (pluginJsonStorage != null)
-                    {
-                        var deleteMethod = pluginJsonStorage.GetType().GetMethod("DeleteDirectory");
-                        try
-                        {
-                            deleteMethod?.Invoke(pluginJsonStorage, null);
-                        }
-                        catch (Exception e)
-                        {
-                            Log.Exception($"|PluginManager.UninstallPlugin|Failed to delete plugin json folder for {plugin.Name}", e);
-                            API.ShowMsg(API.GetTranslation("failedToRemovePluginSettingsTitle"),
-                                string.Format(API.GetTranslation("failedToRemovePluginSettingsMessage"), plugin.Name));
-                        }
-                    }
+                    removable.RemovePluginSettings(plugin.AssemblyName);
+                    removable.RemovePluginCaches(plugin.PluginCacheDirectoryPath);
                 }
-                else  // the plugin with json prc interface
+
+                try
                 {
-                    var pluginPair = AllPlugins.FirstOrDefault(p => p.Metadata.ID == plugin.ID);
-                    if (pluginPair != null && pluginPair.Plugin is JsonRPCPlugin jsonRpcPlugin)
-                    {
-                        try
-                        {
-                            jsonRpcPlugin.DeletePluginSettingsDirectory();
-                        }
-                        catch (Exception e)
-                        {
-                            Log.Exception($"|PluginManager.UninstallPlugin|Failed to delete plugin json folder for {plugin.Name}", e);
-                            API.ShowMsg(API.GetTranslation("failedToRemovePluginSettingsTitle"),
-                                string.Format(API.GetTranslation("failedToRemovePluginSettingsMessage"), plugin.Name));
-                        }
-                    }
+                    var pluginSettingsDirectory = plugin.PluginSettingsDirectoryPath;
+                    if (Directory.Exists(pluginSettingsDirectory))
+                        Directory.Delete(pluginSettingsDirectory, true);
+                }
+                catch (Exception e)
+                {
+                    API.LogException(ClassName, $"Failed to delete plugin settings folder for {plugin.Name}", e);
+                    API.ShowMsg(API.GetTranslation("failedToRemovePluginSettingsTitle"),
+                        string.Format(API.GetTranslation("failedToRemovePluginSettingsMessage"), plugin.Name));
                 }
             }
 
             if (removePluginFromSettings)
             {
-                Settings.Plugins.Remove(plugin.ID);
+                try
+                {
+                    var pluginCacheDirectory = plugin.PluginCacheDirectoryPath;
+                    if (Directory.Exists(pluginCacheDirectory))
+                        Directory.Delete(pluginCacheDirectory, true);
+                }
+                catch (Exception e)
+                {
+                    API.LogException(ClassName, $"Failed to delete plugin cache folder for {plugin.Name}", e);
+                    API.ShowMsg(API.GetTranslation("failedToRemovePluginCacheTitle"),
+                        string.Format(API.GetTranslation("failedToRemovePluginCacheMessage"), plugin.Name));
+                }
+                Settings.RemovePluginSettings(plugin.ID);
                 AllPlugins.RemoveAll(p => p.Metadata.ID == plugin.ID);
             }
 

@@ -1,43 +1,53 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using System.Security.Principal;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.Win32;
 using Microsoft.Win32.TaskScheduler;
+
+#nullable enable
 
 namespace Flow.Launcher.Helper;
 
 public class AutoStartup
 {
+    private static readonly string ClassName = nameof(AutoStartup);
+
     private const string StartupPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
     private const string LogonTaskName = $"{Constant.FlowLauncher} Startup";
     private const string LogonTaskDesc = $"{Constant.FlowLauncher} Auto Startup";
 
-    public static bool IsEnabled
+    public static void CheckIsEnabled(bool useLogonTaskForStartup)
     {
-        get
+        // We need to check both because if both of them are enabled,
+        // Hide Flow Launcher on startup will not work since the later one will trigger main window show event
+        var logonTaskEnabled = CheckLogonTask();
+        var registryEnabled = CheckRegistry();
+        if (useLogonTaskForStartup)
         {
-            // Check if logon task is enabled
-            if (CheckLogonTask())
+            // Enable logon task
+            if (!logonTaskEnabled)
             {
-                return true;
+                Enable(true);
             }
-
-            // Check if registry is enabled
-            try
+            // Disable registry
+            if (registryEnabled)
             {
-                using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
-                var path = key?.GetValue(Constant.FlowLauncher) as string;
-                return path == Constant.ExecutablePath;
+                Disable(false);
             }
-            catch (Exception e)
+        }
+        else
+        {
+            // Enable registry
+            if (!registryEnabled)
             {
-                Log.Error("AutoStartup", $"Ignoring non-critical registry error (querying if enabled): {e}");
+                Enable(false);
             }
-
-            return false;
+            // Disable logon task
+            if (logonTaskEnabled)
+            {
+                Disable(true);
+            }
         }
     }
 
@@ -50,38 +60,61 @@ public class AutoStartup
             try
             {
                 // Check if the action is the same as the current executable path
-                var action = task.Definition.Actions.FirstOrDefault()!.ToString().Trim();
-                if (!Constant.ExecutablePath.Equals(action, StringComparison.OrdinalIgnoreCase) && !File.Exists(action))
+                // If not, we need to unschedule and reschedule the task
+                if (task.Definition.Actions.FirstOrDefault() is Microsoft.Win32.TaskScheduler.Action taskAction)
                 {
-                    UnscheduleLogonTask();
-                    ScheduleLogonTask();
+                    var action = taskAction.ToString().Trim();
+                    if (!action.Equals(Constant.ExecutablePath, StringComparison.OrdinalIgnoreCase))
+                    {
+                        UnscheduleLogonTask();
+                        ScheduleLogonTask();
+                    }
                 }
 
                 return true;
             }
             catch (Exception e)
             {
-                Log.Error("AutoStartup", $"Failed to check logon task: {e}");
+                App.API.LogError(ClassName, $"Failed to check logon task: {e}");
+                throw; // Throw exception so that App.AutoStartup can show error message
             }
         }
 
         return false;
     }
 
+    private static bool CheckRegistry()
+    {
+        try
+        {
+            using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
+            if (key != null)
+            {
+                // Check if the action is the same as the current executable path
+                // If not, we need to unschedule and reschedule the task
+                var action = (key.GetValue(Constant.FlowLauncher) as string) ?? string.Empty;
+                if (!action.Equals(Constant.ExecutablePath, StringComparison.OrdinalIgnoreCase))
+                {
+                    UnscheduleRegistry();
+                    ScheduleRegistry();
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+        catch (Exception e)
+        {
+            App.API.LogError(ClassName, $"Failed to check registry: {e}");
+            throw; // Throw exception so that App.AutoStartup can show error message
+        }
+    }
+
     public static void DisableViaLogonTaskAndRegistry()
     {
         Disable(true);
         Disable(false);
-    }
-
-    public static void EnableViaLogonTask()
-    {
-        Enable(true);
-    }
-
-    public static void EnableViaRegistry()
-    {
-        Enable(false);
     }
 
     public static void ChangeToViaLogonTask()
@@ -106,13 +139,12 @@ public class AutoStartup
             }
             else
             {
-                using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
-                key?.DeleteValue(Constant.FlowLauncher, false);
+                UnscheduleRegistry();
             }
         }
         catch (Exception e)
         {
-            Log.Error("AutoStartup", $"Failed to disable auto-startup: {e}");
+            App.API.LogError(ClassName, $"Failed to disable auto-startup: {e}");
             throw;
         }
     }
@@ -127,13 +159,12 @@ public class AutoStartup
             }
             else
             {
-                using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
-                key?.SetValue(Constant.FlowLauncher, $"\"{Constant.ExecutablePath}\"");
+                ScheduleRegistry();
             }
         }
         catch (Exception e)
         {
-            Log.Error("AutoStartup", $"Failed to enable auto-startup: {e}");
+            App.API.LogError(ClassName, $"Failed to enable auto-startup: {e}");
             throw;
         }
     }
@@ -161,7 +192,7 @@ public class AutoStartup
         }
         catch (Exception e)
         {
-            Log.Error("AutoStartup", $"Failed to schedule logon task: {e}");
+            App.API.LogError(ClassName, $"Failed to schedule logon task: {e}");
             return false;
         }
     }
@@ -176,7 +207,7 @@ public class AutoStartup
         }
         catch (Exception e)
         {
-            Log.Error("AutoStartup", $"Failed to unschedule logon task: {e}");
+            App.API.LogError(ClassName, $"Failed to unschedule logon task: {e}");
             return false;
         }
     }
@@ -186,5 +217,19 @@ public class AutoStartup
         var identity = WindowsIdentity.GetCurrent();
         var principal = new WindowsPrincipal(identity);
         return principal.IsInRole(WindowsBuiltInRole.Administrator);
+    }
+
+    private static bool UnscheduleRegistry()
+    {
+        using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
+        key?.DeleteValue(Constant.FlowLauncher, false);
+        return true;
+    }
+
+    private static bool ScheduleRegistry()
+    {
+        using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
+        key?.SetValue(Constant.FlowLauncher, $"\"{Constant.ExecutablePath}\"");
+        return true;
     }
 }

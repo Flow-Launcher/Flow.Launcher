@@ -5,7 +5,6 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Image;
 
 namespace Flow.Launcher
 {
@@ -43,7 +42,7 @@ namespace Flow.Launcher
 
         private async System.Threading.Tasks.Task LoadImageAsync()
         {
-            imgClose.Source = await ImageLoader.LoadAsync(Path.Combine(Infrastructure.Constant.ProgramDirectory, "Images\\close.png"));
+            imgClose.Source = await App.API.LoadImageAsync(Path.Combine(Constant.ProgramDirectory, "Images\\close.png"));
         }
 
         void imgClose_MouseUp(object sender, MouseButtonEventArgs e)
@@ -60,6 +59,7 @@ namespace Flow.Launcher
             Close();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         public async void Show(string title, string subTitle, string iconPath)
         {
             tbTitle.Text = title;
@@ -71,11 +71,11 @@ namespace Flow.Launcher
             
             if (!File.Exists(iconPath))
             {
-                imgIco.Source = await ImageLoader.LoadAsync(Path.Combine(Constant.ProgramDirectory, "Images\\app.png"));
+                imgIco.Source = await App.API.LoadImageAsync(Path.Combine(Constant.ProgramDirectory, "Images\\app.png"));
             }
             else 
             {
-                imgIco.Source = await ImageLoader.LoadAsync(iconPath);
+                imgIco.Source = await App.API.LoadImageAsync(iconPath);
             }
 
             Show();

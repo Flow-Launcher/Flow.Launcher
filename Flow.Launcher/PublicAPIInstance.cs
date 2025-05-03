@@ -10,10 +10,13 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using Squirrel;
 using Flow.Launcher.Core;
 using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Core.ExternalPlugins;
+using Flow.Launcher.Core.Storage;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Http;
@@ -27,22 +30,31 @@ using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
 using JetBrains.Annotations;
-using Flow.Launcher.Core.Resource;
+using Squirrel;
+using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher
 {
-    public class PublicAPIInstance : IPublicAPI
+    public class PublicAPIInstance : IPublicAPI, IRemovable
     {
         private readonly Settings _settings;
-        private readonly Internationalization _translater;
         private readonly MainViewModel _mainVM;
+
+        // Must use getter to avoid accessing Application.Current.Resources.MergedDictionaries so earlier in theme constructor
+        private Theme _theme;
+        private Theme Theme => _theme ??= Ioc.Default.GetRequiredService<Theme>();
+
+        // Must use getter to avoid circular dependency
+        private Updater _updater;
+        private Updater Updater => _updater ??= Ioc.Default.GetRequiredService<Updater>();
+
+        private readonly object _saveSettingsLock = new();
 
         #region Constructor
 
-        public PublicAPIInstance(Settings settings, Internationalization translater, MainViewModel mainVM)
+        public PublicAPIInstance(Settings settings, MainViewModel mainVM)
         {
             _settings = settings;
-            _translater = translater;
             _mainVM = mainVM;
             GlobalHotkey.hookedKeyboardCallback = KListener_hookedKeyboardCallback;
             WebRequest.RegisterPrefix("data", new DataWebRequestFactory());
@@ -57,14 +69,18 @@ namespace Flow.Launcher
             _mainVM.ChangeQueryText(query, requery);
         }
 
-        public void RestartApp()
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
+        public async void RestartApp()
         {
             _mainVM.Hide();
 
-            // we must manually save
+            // We must manually save
             // UpdateManager.RestartApp() will call Environment.Exit(0)
             // which will cause ungraceful exit
             SaveAppAllSettings();
+
+            // Wait for all image caches to be saved before restarting
+            await ImageLoader.WaitSaveAsync();
 
             // Restart requires Squirrel's Update.exe to be present in the parent folder, 
             // it is only published from the project's release pipeline. When debugging without it,
@@ -78,17 +94,23 @@ namespace Flow.Launcher
 
         public bool IsMainWindowVisible() => _mainVM.MainWindowVisibilityStatus;
 
-        public event VisibilityChangedEventHandler VisibilityChanged { add => _mainVM.VisibilityChanged += value; remove => _mainVM.VisibilityChanged -= value; }
+        public event VisibilityChangedEventHandler VisibilityChanged
+        {
+            add => _mainVM.VisibilityChanged += value;
+            remove => _mainVM.VisibilityChanged -= value;
+        }
 
-        // Must use Ioc.Default.GetRequiredService<Updater>() to avoid circular dependency
-        public void CheckForNewUpdate() => _ = Ioc.Default.GetRequiredService<Updater>().UpdateAppAsync(false);
+        public void CheckForNewUpdate() => _ = Updater.UpdateAppAsync(false);
 
         public void SaveAppAllSettings()
         {
-            PluginManager.Save();
-            _mainVM.Save();
-            _settings.Save();
-            _ = ImageLoader.Save();
+            lock (_saveSettingsLock)
+            {
+                _settings.Save();
+                PluginManager.Save();
+                _mainVM.Save();
+            }
+            _ = ImageLoader.SaveAsync();
         }
 
         public Task ReloadAllPluginData() => PluginManager.ReloadDataAsync();
@@ -120,55 +142,111 @@ namespace Flow.Launcher
             ShellCommand.Execute(startInfo);
         }
 
-        public void CopyToClipboard(string stringToCopy, bool directCopy = false, bool showDefaultNotification = true)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
+        public async void CopyToClipboard(string stringToCopy, bool directCopy = false, bool showDefaultNotification = true)
         {
             if (string.IsNullOrEmpty(stringToCopy))
+            {
                 return;
+            }
 
             var isFile = File.Exists(stringToCopy);
             if (directCopy && (isFile || Directory.Exists(stringToCopy)))
             {
-                var paths = new StringCollection
+                // Sometimes the clipboard is locked and cannot be accessed,
+                // we need to retry a few times before giving up
+                var exception = await RetryActionOnSTAThreadAsync(() =>
+                {
+                    var paths = new StringCollection
                     {
                         stringToCopy
                     };
 
-                Clipboard.SetFileDropList(paths);
-
-                if (showDefaultNotification)
-                    ShowMsg(
-                        $"{GetTranslation("copy")} {(isFile ? GetTranslation("fileTitle") : GetTranslation("folderTitle"))}",
-                        GetTranslation("completedSuccessfully"));
+                    Clipboard.SetFileDropList(paths);
+                });
+                
+                if (exception == null)
+                {
+                    if (showDefaultNotification)
+                    {
+                        ShowMsg(
+                            $"{GetTranslation("copy")} {(isFile ? GetTranslation("fileTitle") : GetTranslation("folderTitle"))}",
+                            GetTranslation("completedSuccessfully"));
+                    }
+                }
+                else
+                {
+                    LogException(nameof(PublicAPIInstance), "Failed to copy file/folder to clipboard", exception);
+                    ShowMsgError(GetTranslation("failedToCopy"));
+                }
             }
             else
             {
-                Clipboard.SetDataObject(stringToCopy);
+                // Sometimes the clipboard is locked and cannot be accessed,
+                // we need to retry a few times before giving up
+                var exception = await RetryActionOnSTAThreadAsync(() =>
+                {
+                    // We should use SetText instead of SetDataObject to avoid the clipboard being locked by other applications
+                    Clipboard.SetText(stringToCopy);
+                });
 
-                if (showDefaultNotification)
-                    ShowMsg(
-                        $"{GetTranslation("copy")} {GetTranslation("textTitle")}",
-                        GetTranslation("completedSuccessfully"));
+                if (exception == null)
+                {
+                    if (showDefaultNotification)
+                    {
+                        ShowMsg(
+                            $"{GetTranslation("copy")} {GetTranslation("textTitle")}",
+                            GetTranslation("completedSuccessfully"));
+                    }
+                }
+                else
+                {
+                    LogException(nameof(PublicAPIInstance), "Failed to copy text to clipboard", exception);
+                    ShowMsgError(GetTranslation("failedToCopy"));
+                }  
             }
+        }
+
+        private static async Task<Exception> RetryActionOnSTAThreadAsync(Action action, int retryCount = 6, int retryDelay = 150)
+        {
+            for (var i = 0; i < retryCount; i++)
+            {
+                try
+                {
+                    await Win32Helper.StartSTATaskAsync(action).ConfigureAwait(false);
+                    break;
+                }
+                catch (Exception e)
+                {
+                    if (i == retryCount - 1)
+                    {
+                        return e;
+                    }
+                    await Task.Delay(retryDelay);
+                }
+            }
+            return null;
         }
 
         public void StartLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Visible;
 
         public void StopLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Collapsed;
 
-        public string GetTranslation(string key) => _translater.GetTranslation(key);
+        public string GetTranslation(string key) => Internationalization.GetTranslation(key);
 
         public List<PluginPair> GetAllPlugins() => PluginManager.AllPlugins.ToList();
 
         public MatchResult FuzzySearch(string query, string stringToCompare) =>
             StringMatcher.FuzzySearch(query, stringToCompare);
 
-        public Task<string> HttpGetStringAsync(string url, CancellationToken token = default) => Http.GetAsync(url, token);
+        public Task<string> HttpGetStringAsync(string url, CancellationToken token = default) =>
+            Http.GetAsync(url, token);
 
         public Task<Stream> HttpGetStreamAsync(string url, CancellationToken token = default) =>
             Http.GetStreamAsync(url, token);
 
         public Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath, Action<double> reportProgress = null,
-            CancellationToken token = default) => Http.DownloadAsync(url, filePath, reportProgress, token);
+            CancellationToken token = default) =>Http.DownloadAsync(url, filePath, reportProgress, token);
 
         public void AddActionKeyword(string pluginId, string newActionKeyword) =>
             PluginManager.AddActionKeyword(pluginId, newActionKeyword);
@@ -187,12 +265,15 @@ namespace Flow.Launcher
         public void LogWarn(string className, string message, [CallerMemberName] string methodName = "") =>
             Log.Warn(className, message, methodName);
 
-        public void LogException(string className, string message, Exception e,
-            [CallerMemberName] string methodName = "") => Log.Exception(className, message, e, methodName);
+        public void LogError(string className, string message, [CallerMemberName] string methodName = "") =>
+            Log.Error(className, message, methodName);
+
+        public void LogException(string className, string message, Exception e, [CallerMemberName] string methodName = "") =>
+            Log.Exception(className, message, e, methodName);
 
         private readonly ConcurrentDictionary<Type, object> _pluginJsonStorages = new();
 
-        public object RemovePluginSettings(string assemblyName)
+        public void RemovePluginSettings(string assemblyName)
         {
             foreach (var keyValuePair in _pluginJsonStorages)
             {
@@ -201,23 +282,17 @@ namespace Flow.Launcher
                 var name = value.GetType().GetField("AssemblyName")?.GetValue(value)?.ToString();
                 if (name == assemblyName)
                 {
-                    _pluginJsonStorages.Remove(key, out var pluginJsonStorage);
-                    return pluginJsonStorage;
+                    _pluginJsonStorages.TryRemove(key, out var _);
                 }
             }
-
-            return null;
         }
 
-        /// <summary>
-        /// Save plugin settings.
-        /// </summary>
         public void SavePluginSettings()
         {
             foreach (var value in _pluginJsonStorages.Values)
             {
-                var method = value.GetType().GetMethod("Save");
-                method?.Invoke(value, null);
+                var savable = value as ISavable;
+                savable?.Save();
             }
         }
 
@@ -235,14 +310,6 @@ namespace Flow.Launcher
             var type = typeof(T);
             if (!_pluginJsonStorages.ContainsKey(type))
                 _pluginJsonStorages[type] = new PluginJsonStorage<T>();
-
-            ((PluginJsonStorage<T>)_pluginJsonStorages[type]).Save();
-        }
-
-        public void SaveJsonStorage<T>(T settings) where T : new()
-        {
-            var type = typeof(T);
-            _pluginJsonStorages[type] = new PluginJsonStorage<T>(settings);
 
             ((PluginJsonStorage<T>)_pluginJsonStorages[type]).Save();
         }
@@ -333,17 +400,103 @@ namespace Flow.Launcher
 
         private readonly List<Func<int, int, SpecialKeyState, bool>> _globalKeyboardHandlers = new();
 
-        public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) => _globalKeyboardHandlers.Add(callback);
-        public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) => _globalKeyboardHandlers.Remove(callback);
+        public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) =>
+            _globalKeyboardHandlers.Add(callback);
+
+        public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) =>
+            _globalKeyboardHandlers.Remove(callback);
 
         public void ReQuery(bool reselect = true) => _mainVM.ReQuery(reselect);
 
         public void BackToQueryResults() => _mainVM.BackToQueryResults();
 
-        public MessageBoxResult ShowMsgBox(string messageBoxText, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.None, MessageBoxResult defaultResult = MessageBoxResult.OK) =>
+        public MessageBoxResult ShowMsgBox(string messageBoxText, string caption = "",
+            MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.None,
+            MessageBoxResult defaultResult = MessageBoxResult.OK) =>
             MessageBoxEx.Show(messageBoxText, caption, button, icon, defaultResult);
 
-        public Task ShowProgressBoxAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action cancelProgress = null) => ProgressBoxEx.ShowAsync(caption, reportProgressAsync, cancelProgress);
+        public Task ShowProgressBoxAsync(string caption, Func<Action<double>, Task> reportProgressAsync,
+            Action cancelProgress = null) => ProgressBoxEx.ShowAsync(caption, reportProgressAsync, cancelProgress);
+
+        public List<ThemeData> GetAvailableThemes() => Theme.GetAvailableThemes();
+
+        public ThemeData GetCurrentTheme() => Theme.GetCurrentTheme();
+
+        public bool SetCurrentTheme(ThemeData theme) =>
+            Theme.ChangeTheme(theme.FileNameWithoutExtension);
+
+        private readonly ConcurrentDictionary<(string, string, Type), object> _pluginBinaryStorages = new();
+
+        public void RemovePluginCaches(string cacheDirectory)
+        {
+            foreach (var keyValuePair in _pluginBinaryStorages)
+            {
+                var key = keyValuePair.Key;
+                var currentCacheDirectory = key.Item2;
+                if (cacheDirectory == currentCacheDirectory)
+                {
+                    _pluginBinaryStorages.TryRemove(key, out var _);
+                }
+            }
+        }
+
+        public void SavePluginCaches()
+        {
+            foreach (var value in _pluginBinaryStorages.Values)
+            {
+                var savable = value as ISavable;
+                savable?.Save();
+            }
+        }
+
+        public async Task<T> LoadCacheBinaryStorageAsync<T>(string cacheName, string cacheDirectory, T defaultData) where T : new()
+        {
+            var type = typeof(T);
+            if (!_pluginBinaryStorages.ContainsKey((cacheName, cacheDirectory, type)))
+                _pluginBinaryStorages[(cacheName, cacheDirectory, type)] = new PluginBinaryStorage<T>(cacheName, cacheDirectory);
+
+            return await ((PluginBinaryStorage<T>)_pluginBinaryStorages[(cacheName, cacheDirectory, type)]).TryLoadAsync(defaultData);
+        }
+
+        public async Task SaveCacheBinaryStorageAsync<T>(string cacheName, string cacheDirectory) where T : new()
+        {
+            var type = typeof(T);
+            if (!_pluginBinaryStorages.ContainsKey((cacheName, cacheDirectory, type)))
+                _pluginBinaryStorages[(cacheName, cacheDirectory, type)] = new PluginBinaryStorage<T>(cacheName, cacheDirectory);
+
+            await ((PluginBinaryStorage<T>)_pluginBinaryStorages[(cacheName, cacheDirectory, type)]).SaveAsync();
+        }
+
+        public ValueTask<ImageSource> LoadImageAsync(string path, bool loadFullImage = false, bool cacheImage = true) =>
+            ImageLoader.LoadAsync(path, loadFullImage, cacheImage);
+
+        public Task<bool> UpdatePluginManifestAsync(bool usePrimaryUrlOnly = false, CancellationToken token = default) =>
+            PluginsManifest.UpdateManifestAsync(usePrimaryUrlOnly, token);
+
+        public IReadOnlyList<UserPlugin> GetPluginManifest() => PluginsManifest.UserPlugins;
+
+        public bool PluginModified(string id) => PluginManager.PluginModified(id);
+
+        public Task UpdatePluginAsync(PluginMetadata pluginMetadata, UserPlugin plugin, string zipFilePath) =>
+            PluginManager.UpdatePluginAsync(pluginMetadata, plugin, zipFilePath);
+
+        public void InstallPlugin(UserPlugin plugin, string zipFilePath) =>
+            PluginManager.InstallPlugin(plugin, zipFilePath);
+
+        public Task UninstallPluginAsync(PluginMetadata pluginMetadata, bool removePluginSettings = false) =>
+            PluginManager.UninstallPluginAsync(pluginMetadata, removePluginSettings);
+
+        public long StopwatchLogDebug(string className, string message, Action action, [CallerMemberName] string methodName = "") =>
+            Stopwatch.Debug(className, message, action, methodName);
+
+        public Task<long> StopwatchLogDebugAsync(string className, string message, Func<Task> action, [CallerMemberName] string methodName = "") =>
+            Stopwatch.DebugAsync(className, message, action, methodName);
+
+        public long StopwatchLogInfo(string className, string message, Action action, [CallerMemberName] string methodName = "") =>
+            Stopwatch.Info(className, message, action, methodName);
+
+        public Task<long> StopwatchLogInfoAsync(string className, string message, Func<Task> action, [CallerMemberName] string methodName = "") =>
+            Stopwatch.InfoAsync(className, message, action, methodName);
 
         #endregion
 

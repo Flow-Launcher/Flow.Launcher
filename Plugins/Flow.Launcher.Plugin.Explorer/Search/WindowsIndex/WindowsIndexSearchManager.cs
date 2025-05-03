@@ -82,14 +82,17 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 return HandledEngineNotAvailableExceptionAsync();
             }
         }
+
         public IAsyncEnumerable<SearchResult> SearchAsync(string search, CancellationToken token)
         {
             return WindowsIndexFilesAndFoldersSearchAsync(search, token: token);
         }
+
         public IAsyncEnumerable<SearchResult> ContentSearchAsync(string plainSearch, string contentSearch, CancellationToken token)
         {
             return WindowsIndexFileContentSearchAsync(contentSearch, token);
         }
+
         public IAsyncEnumerable<SearchResult> EnumerateAsync(string path, string search, bool recursive, CancellationToken token)
         {
             return WindowsIndexTopLevelFolderSearchAsync(search, path, recursive, token);
@@ -100,19 +103,17 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             if (!Settings.WarnWindowsSearchServiceOff)
                 return AsyncEnumerable.Empty<SearchResult>();
 
-            var api = Main.Context.API;
-
             throw new EngineNotAvailableException(
                 "Windows Index",
-                api.GetTranslation("plugin_explorer_windowsSearchServiceFix"),
-                api.GetTranslation("plugin_explorer_windowsSearchServiceNotRunning"),
+                Main.Context.API.GetTranslation("plugin_explorer_windowsSearchServiceFix"),
+                Main.Context.API.GetTranslation("plugin_explorer_windowsSearchServiceNotRunning"),
                 Constants.WindowsIndexErrorImagePath,
                 c =>
                 {
                     Settings.WarnWindowsSearchServiceOff = false;
 
                     // Clears the warning message so user is not mistaken that it has not worked
-                    api.ChangeQuery(string.Empty);
+                    Main.Context.API.ChangeQuery(string.Empty);
 
                     return ValueTask.FromResult(false);
                 });
