@@ -7,7 +7,7 @@ namespace Flow.Launcher.Plugin
     /// <summary>
     /// Asynchronous Quick Switch Model
     /// </summary>
-    public interface IAsyncQuickSwitch
+    public interface IAsyncQuickSwitch : IFeatures
     {
         /// <summary>
         /// Asynchronous querying for quick switch window
