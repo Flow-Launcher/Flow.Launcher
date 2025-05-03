@@ -1076,7 +1076,7 @@ namespace Flow.Launcher.ViewModel
 
         public void InitializeQuery()
         {
-            if (Settings.ShowHomeQuery)
+            if (Settings.ShowHomePage)
             {
                 _ = QueryResultsAsync(false);
             }
@@ -1211,7 +1211,7 @@ namespace Flow.Launcher.ViewModel
 
             if (query == null) // shortcut expanded
             {
-                if (Settings.ShowHomeQuery)
+                if (Settings.ShowHomePage)
                 {
                     plugins = PluginManager.ValidPluginsForHomeQuery(query);
                 }
