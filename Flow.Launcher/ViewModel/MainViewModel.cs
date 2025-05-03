@@ -50,6 +50,12 @@ namespace Flow.Launcher.ViewModel
 
         private readonly IReadOnlyList<Result> _emptyResult = new List<Result>();
 
+        private readonly PluginMetadata _historyMetadata = new()
+        {
+            ID = "298303A65D128A845D28A7B83B3968C2",
+            Priority = 0
+        };
+
         #endregion
 
         #region Constructor
@@ -1300,11 +1306,30 @@ namespace Flow.Launcher.ViewModel
 
             // plugins are ICollection, meaning LINQ will get the Count and preallocate Array
 
-            var tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
+            Task[] tasks;
+            if (homeQuery)
             {
-                false => QueryTaskAsync(plugin, _updateSource.Token),
-                true => Task.CompletedTask
-            }).ToArray();
+                var homeTasks = plugins.Select(plugin => plugin.Metadata.HomeDisabled switch
+                {
+                    false => QueryTaskAsync(plugin, _updateSource.Token),
+                    true => Task.CompletedTask
+                }).ToList();
+
+                if (Settings.ShowHistoryResultsForHomePage)
+                {
+                    homeTasks.Add(QueryHistoryTaskAsync());
+                }
+
+                tasks = homeTasks.ToArray();
+            }
+            else
+            {
+                tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
+                {
+                    false => QueryTaskAsync(plugin, _updateSource.Token),
+                    true => Task.CompletedTask
+                }).ToArray();
+            }
 
             try
             {
@@ -1376,6 +1401,54 @@ namespace Flow.Launcher.ViewModel
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
+            }
+
+            async Task QueryHistoryTaskAsync()
+            {
+                // Since it is wrapped within a ThreadPool Thread, the synchronous context is null
+                // Task.Yield will force it to run in ThreadPool
+                await Task.Yield();
+
+                // Select last history results and revert its order to make sure last history results are on top
+                var lastHistoryResults = _history.Items.TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
+
+                var historyResults = new List<Result>();
+                foreach (var h in lastHistoryResults)
+                {
+                    var title = App.API.GetTranslation("executeQuery");
+                    var time = App.API.GetTranslation("lastExecuteTime");
+                    var result = new Result
+                    {
+                        Title = string.Format(title, h.Query),
+                        SubTitle = string.Format(time, h.ExecutedDateTime),
+                        IcoPath = "Images\\history.png",
+                        Preview = new Result.PreviewInfo
+                        {
+                            PreviewImagePath = Constant.HistoryIcon,
+                            Description = string.Format(time, h.ExecutedDateTime)
+                        },
+                        OriginQuery = new Query { RawQuery = h.Query },
+                        Action = _ =>
+                        {
+                            SelectedResults = Results;
+                            App.API.ChangeQuery(h.Query);
+                            return false;
+                        }
+                    };
+                    historyResults.Add(result);
+                }
+
+                // No need to make copy of results and update badge ico property
+
+                if (_updateSource.Token.IsCancellationRequested) return;
+
+                if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(historyResults, _historyMetadata, query,
+                    _updateSource.Token)))
+                {
+                    App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
+                }
+
+                await Task.CompletedTask;
             }
         }
 
