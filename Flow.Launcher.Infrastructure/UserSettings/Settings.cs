@@ -159,7 +159,20 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
-        public bool ShowHomePage { get; set; } = true;
+        private bool _showHomePage { get; set; } = true;
+        public bool ShowHomePage
+        {
+            get => _showHomePage;
+            set
+            {
+                if (_showHomePage != value)
+                {
+                    _showHomePage = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public bool ShowHistoryResultsForHomePage { get; set; } = false;
         public int MaxHistoryResultsToShowForHomePage { get; set; } = 5;
 

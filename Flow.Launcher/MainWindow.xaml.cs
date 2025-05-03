@@ -277,6 +277,17 @@ namespace Flow.Launcher
                     case nameof(Settings.SettingWindowFont):
                         InitializeContextMenu();
                         break;
+                    case nameof(Settings.ShowHomePage):
+                    // We should refresh results when these two settings are changed but we cannot do that
+                    // Because the order of the results will change, making the interface look weird
+                    // So we would better refresh results when query text is changed next time
+                    /*case nameof(Settings.ShowHistoryResultsForHomePage):
+                    case nameof(Settings.MaxHistoryResultsToShowForHomePage):*/
+                        if (string.IsNullOrEmpty(_viewModel.QueryText))
+                        {
+                            _viewModel.QueryResults();
+                        }
+                        break;
                 }
             };
 
@@ -294,7 +305,10 @@ namespace Flow.Launcher
                 .AddValueChanged(History, (s, e) => UpdateClockPanelVisibility());
 
             // Initialize query state
-            _viewModel.InitializeQuery();
+            if (_settings.ShowHomePage && string.IsNullOrEmpty(_viewModel.QueryText))
+            {
+                _viewModel.QueryResults();
+            }
         }
 
         private async void OnClosing(object sender, CancelEventArgs e)

@@ -82,6 +82,9 @@ namespace Flow.Launcher.ViewModel
             {
                 PluginPair.Metadata.HomeDisabled = !value;
                 PluginSettingsObject.HomeDiabled = !value;
+                // We should refresh results when these two settings are changed but we cannot do that
+                // Because the order of the results will change, making the interface look weird
+                // So we would better refresh results when query text is changed next time
             }
         }
 
