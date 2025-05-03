@@ -126,6 +126,10 @@
     <system:String x:Key="KoreanImeOpenLinkButton">Open</system:String>
     <system:String x:Key="KoreanImeRegistry">Use Previous Korean IME</system:String>
     <system:String x:Key="KoreanImeRegistryTooltip">You can change the Previous Korean IME settings directly from here</system:String>
+    <system:String x:Key="homePage">Home Page</system:String>
+    <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
+    <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Search Plugin</system:String>
