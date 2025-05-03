@@ -35,6 +35,7 @@ namespace Flow.Launcher.ViewModel
         private Query _progressQuery; // Used for QueryResultAsync
         private Query _updateQuery; // Used for ResultsUpdated
         private string _queryTextBeforeLeaveResults;
+        private string _ignoredQueryText = null;
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
@@ -734,6 +735,9 @@ namespace Flow.Launcher.ViewModel
                     if (isReturningFromContextMenu)
                     {
                         _queryText = _queryTextBeforeLeaveResults;
+                        // When executing OnPropertyChanged, QueryTextBox_TextChanged1 and Query will be called
+                        // So we need to ignore it so that we will not call Query again
+                        _ignoredQueryText = _queryText;
                         OnPropertyChanged(nameof(QueryText));
                         QueryTextCursorMovedToEnd = true;
                     }
@@ -1080,6 +1084,20 @@ namespace Flow.Launcher.ViewModel
 
         public void Query(bool searchDelay, bool isReQuery = false)
         {
+            if (_ignoredQueryText != null)
+            {
+                if (_ignoredQueryText == QueryText)
+                {
+                    _ignoredQueryText = null;
+                    return;
+                }
+                else
+                {
+                    // If _ignoredQueryText does not match current QueryText, we should still execute Query
+                    _ignoredQueryText = null;
+                }
+            }
+
             if (QueryResultsSelected())
             {
                 _ = QueryResultsAsync(searchDelay, isReQuery);
@@ -1174,7 +1192,7 @@ namespace Flow.Launcher.ViewModel
                     OriginQuery = new Query { RawQuery = h.Query },
                     Action = _ =>
                     {
-                        SelectedResults = Results;
+                        App.API.BackToQueryResults();
                         App.API.ChangeQuery(h.Query);
                         return false;
                     }
@@ -1433,11 +1451,14 @@ namespace Flow.Launcher.ViewModel
                 }
             }
 
+            // Show expanded builtin shortcuts
             if (queryChanged)
             {
-                // show expanded builtin shortcuts
-                // use private field to avoid infinite recursion
+                // Use private field to avoid infinite recursion
                 _queryText = queryBuilderTmp.ToString();
+                // When executing OnPropertyChanged, QueryTextBox_TextChanged1 and Query will be called
+                // So we need to ignore it so that we will not call Query again
+                _ignoredQueryText = _queryText;
                 OnPropertyChanged(nameof(QueryText));
             }
         }
@@ -1616,10 +1637,7 @@ namespace Flow.Launcher.ViewModel
                 await CloseExternalPreviewAsync();
             }
 
-            if (!QueryResultsSelected())
-            {
-                SelectedResults = Results;
-            }
+            BackToQueryResults();
 
             switch (Settings.LastQueryMode)
             {
