@@ -1302,13 +1302,7 @@ namespace Flow.Launcher.ViewModel
 
             _lastQuery = query;
 
-            var plugins = PluginManager.ValidPluginsForQuery(query);
-
-            if (quickSwitch)
-            {
-                // Select for IAsyncQuickSwitch
-                plugins = new Collection<PluginPair>(plugins.Where(p => p.Plugin is IAsyncQuickSwitch).ToList());
-            }
+            var plugins = PluginManager.ValidPluginsForQuery(query, quickSwitch);
 
             if (plugins.Count == 1)
             {
