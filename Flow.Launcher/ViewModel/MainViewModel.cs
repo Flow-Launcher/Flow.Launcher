@@ -1074,6 +1074,14 @@ namespace Flow.Launcher.ViewModel
 
         #region Query
 
+        public void InitializeQuery()
+        {
+            if (Settings.ShowHomeQuery)
+            {
+                _ = QueryResultsAsync(false);
+            }
+        }
+
         public void Query(bool searchDelay, bool isReQuery = false)
         {
             if (QueryResultsSelected())

@@ -292,6 +292,9 @@ namespace Flow.Launcher
             DependencyPropertyDescriptor
                 .FromProperty(VisibilityProperty, typeof(StackPanel))
                 .AddValueChanged(History, (s, e) => UpdateClockPanelVisibility());
+
+            // Initialize query state
+            _viewModel.InitializeQuery();
         }
 
         private async void OnClosing(object sender, CancelEventArgs e)
