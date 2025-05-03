@@ -158,6 +158,11 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 }
             }
         }
+
+        public bool ShowHomeQuery { get; set; } = true;
+        public bool ShowHistoryRecordsForHomeQuery { get; set; } = false;
+        public int HistoryRecordsCountForHomeQuery { get; set; } = 5;
+
         public int CustomExplorerIndex { get; set; } = 0;
 
         [JsonIgnore]

@@ -174,6 +174,9 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Query information associated with the result
         /// </summary>
+        /// <remarks>
+        /// If the query is for home query, this will be null
+        /// </remarks>
         internal Query OriginQuery { get; set; }
 
         /// <summary>

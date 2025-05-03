@@ -25,6 +25,7 @@ namespace Flow.Launcher.Core.Plugin
         private static readonly string ClassName = nameof(PluginManager);
 
         private static IEnumerable<PluginPair> _contextMenuPlugins;
+        private static IEnumerable<PluginPair> _homePlugins;
 
         public static List<PluginPair> AllPlugins { get; private set; }
         public static readonly HashSet<PluginPair> GlobalPlugins = new();
@@ -227,6 +228,8 @@ namespace Flow.Launcher.Core.Plugin
             await Task.WhenAll(InitTasks);
 
             _contextMenuPlugins = GetPluginsForInterface<IContextMenu>();
+            _homePlugins = GetPluginsForInterface<IAsyncHomeQuery>();
+
             foreach (var plugin in AllPlugins)
             {
                 // set distinct on each plugin's action keywords helps only firing global(*) and action keywords once where a plugin
@@ -274,6 +277,14 @@ namespace Flow.Launcher.Core.Plugin
             };
         }
 
+        public static ICollection<PluginPair> ValidPluginsForHomeQuery(Query query)
+        {
+            if (query is not null)
+                return Array.Empty<PluginPair>();
+
+            return _homePlugins.ToList();
+        }
+
         public static async Task<List<Result>> QueryForPluginAsync(PluginPair pair, Query query, CancellationToken token)
         {
             var results = new List<Result>();
@@ -318,6 +329,36 @@ namespace Flow.Launcher.Core.Plugin
             return results;
         }
 
+        public static async Task<List<Result>> QueryHomeForPluginAsync(PluginPair pair, CancellationToken token)
+        {
+            var results = new List<Result>();
+            var metadata = pair.Metadata;
+
+            try
+            {
+                var milliseconds = await API.StopwatchLogDebugAsync(ClassName, $"Cost for {metadata.Name}",
+                    async () => results = await ((IAsyncHomeQuery)pair.Plugin).HomeQueryAsync(token).ConfigureAwait(false));
+
+                token.ThrowIfCancellationRequested();
+                if (results == null)
+                    return null;
+                UpdatePluginMetadata(results, metadata);
+
+                token.ThrowIfCancellationRequested();
+            }
+            catch (OperationCanceledException)
+            {
+                // null will be fine since the results will only be added into queue if the token hasn't been cancelled
+                return null;
+            }
+            catch (Exception e)
+            {
+                API.LogException(ClassName, $"Failed to query home for plugin: {metadata.Name}", e);
+                return null;
+            }
+            return results;
+        }
+
         public static void UpdatePluginMetadata(IReadOnlyList<Result> results, PluginMetadata metadata, Query query)
         {
             foreach (var r in results)
@@ -330,6 +371,16 @@ namespace Flow.Launcher.Core.Plugin
                 // Plugins may have multi-actionkeywords eg. WebSearches. In this scenario it needs to be overriden on the plugin level
                 if (metadata.ActionKeywords.Count == 1)
                     r.ActionKeywordAssigned = query.ActionKeyword;
+            }
+        }
+
+        private static void UpdatePluginMetadata(IReadOnlyList<Result> results, PluginMetadata metadata)
+        {
+            foreach (var r in results)
+            {
+                r.PluginDirectory = metadata.PluginDirectory;
+                r.PluginID = metadata.ID;
+                r.OriginQuery = null;
             }
         }
 

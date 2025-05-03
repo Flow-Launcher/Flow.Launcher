@@ -1198,21 +1198,31 @@ namespace Flow.Launcher.ViewModel
             _updateSource?.Cancel();
 
             var query = await ConstructQueryAsync(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
+            var homeQuery = query == null;
+            ICollection<PluginPair> plugins = Array.Empty<PluginPair>();
 
             if (query == null) // shortcut expanded
             {
-                // Hide and clear results again because running query may show and add some results
-                Results.Visibility = Visibility.Collapsed;
-                Results.Clear();
+                if (Settings.ShowHomeQuery)
+                {
+                    plugins = PluginManager.ValidPluginsForHomeQuery(query);
+                }
+                
+                if (plugins.Count == 0)
+                {
+                    // Hide and clear results again because running query may show and add some results
+                    Results.Visibility = Visibility.Collapsed;
+                    Results.Clear();
 
-                // Reset plugin icon
-                PluginIconPath = null;
-                PluginIconSource = null;
-                SearchIconVisibility = Visibility.Visible;
+                    // Reset plugin icon
+                    PluginIconPath = null;
+                    PluginIconSource = null;
+                    SearchIconVisibility = Visibility.Visible;
 
-                // Hide progress bar again because running query may set this to visible
-                ProgressBarVisibility = Visibility.Hidden;
-                return;
+                    // Hide progress bar again because running query may set this to visible
+                    ProgressBarVisibility = Visibility.Hidden;
+                    return;
+                }
             }
 
             _updateSource = new CancellationTokenSource();
@@ -1226,26 +1236,36 @@ namespace Flow.Launcher.ViewModel
             if (_updateSource.Token.IsCancellationRequested) return;
 
             // Update the query's IsReQuery property to true if this is a re-query
-            query.IsReQuery = isReQuery;
+            if (!homeQuery) query.IsReQuery = isReQuery;
 
             // handle the exclusiveness of plugin using action keyword
             RemoveOldQueryResults(query);
 
             _lastQuery = query;
 
-            var plugins = PluginManager.ValidPluginsForQuery(query);
-
-            if (plugins.Count == 1)
+            if (homeQuery)
             {
-                PluginIconPath = plugins.Single().Metadata.IcoPath;
-                PluginIconSource = await App.API.LoadImageAsync(PluginIconPath);
-                SearchIconVisibility = Visibility.Hidden;
-            }
-            else
-            {
+                // Do not show plugin icon if this is a home query
                 PluginIconPath = null;
                 PluginIconSource = null;
                 SearchIconVisibility = Visibility.Visible;
+            }
+            else
+            {
+                plugins = PluginManager.ValidPluginsForQuery(query);
+
+                if (plugins.Count == 1)
+                {
+                    PluginIconPath = plugins.Single().Metadata.IcoPath;
+                    PluginIconSource = await App.API.LoadImageAsync(PluginIconPath);
+                    SearchIconVisibility = Visibility.Hidden;
+                }
+                else
+                {
+                    PluginIconPath = null;
+                    PluginIconSource = null;
+                    SearchIconVisibility = Visibility.Visible;
+                }
             }
 
             // Do not wait for performance improvement
@@ -1303,7 +1323,7 @@ namespace Flow.Launcher.ViewModel
             // Local function
             async Task QueryTaskAsync(PluginPair plugin, CancellationToken token)
             {
-                if (searchDelay)
+                if (searchDelay && !homeQuery) // Do not delay for home query
                 {
                     var searchDelayTime = plugin.Metadata.SearchDelayTime ?? Settings.SearchDelayTime;
 
@@ -1316,7 +1336,9 @@ namespace Flow.Launcher.ViewModel
                 // Task.Yield will force it to run in ThreadPool
                 await Task.Yield();
 
-                var results = await PluginManager.QueryForPluginAsync(plugin, query, token);
+                var results = homeQuery ?
+                    await PluginManager.QueryHomeForPluginAsync(plugin, token) :
+                    await PluginManager.QueryForPluginAsync(plugin, query, token);
 
                 if (token.IsCancellationRequested) return;
 
@@ -1616,7 +1638,7 @@ namespace Flow.Launcher.ViewModel
                     break;
                 case LastQueryMode.ActionKeywordPreserved:
                 case LastQueryMode.ActionKeywordSelected:
-                    var newQuery = _lastQuery.ActionKeyword;
+                    var newQuery = _lastQuery?.ActionKeyword;
 
                     if (!string.IsNullOrEmpty(newQuery))
                         newQuery += " ";
