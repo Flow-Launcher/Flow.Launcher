@@ -8,10 +8,10 @@ namespace Flow.Launcher.Plugin
     /// Synchronous Query Model for Flow Launcher When Query Text is Empty
     /// <para>
     /// If the Querying method requires high IO transmission
-    /// or performaing CPU intense jobs (performing better with cancellation), please try the IAsyncEmptyQuery interface
+    /// or performaing CPU intense jobs (performing better with cancellation), please try the IAsyncHomeQuery interface
     /// </para>
     /// </summary>
-    public interface IEmptyQuery : IAsyncEmptyQuery
+    public interface IHomeQuery : IAsyncHomeQuery
     {
         /// <summary>
         /// Querying When Query Text is Empty
@@ -21,8 +21,8 @@ namespace Flow.Launcher.Plugin
         /// </para>
         /// </summary>
         /// <returns></returns>
-        List<Result> EmptyQuery();
+        List<Result> HomeQuery();
 
-        Task<List<Result>> IAsyncEmptyQuery.EmptyQueryAsync(CancellationToken token) => Task.Run(EmptyQuery);
+        Task<List<Result>> IAsyncHomeQuery.HomeQueryAsync(CancellationToken token) => Task.Run(HomeQuery);
     }
 }
