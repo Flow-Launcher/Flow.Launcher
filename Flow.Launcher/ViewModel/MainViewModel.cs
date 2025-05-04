@@ -1220,31 +1220,21 @@ namespace Flow.Launcher.ViewModel
             _updateSource?.Cancel();
 
             var query = await ConstructQueryAsync(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
-            var homeQuery = query == null;
-            ICollection<PluginPair> plugins = Array.Empty<PluginPair>();
 
             if (query == null) // shortcut expanded
             {
-                if (Settings.ShowHomePage)
-                {
-                    plugins = PluginManager.ValidPluginsForHomeQuery(query);
-                }
-                
-                if (plugins.Count == 0)
-                {
-                    // Hide and clear results again because running query may show and add some results
-                    Results.Visibility = Visibility.Collapsed;
-                    Results.Clear();
+                // Hide and clear results again because running query may show and add some results
+                Results.Visibility = Visibility.Collapsed;
+                Results.Clear();
 
-                    // Reset plugin icon
-                    PluginIconPath = null;
-                    PluginIconSource = null;
-                    SearchIconVisibility = Visibility.Visible;
+                // Reset plugin icon
+                PluginIconPath = null;
+                PluginIconSource = null;
+                SearchIconVisibility = Visibility.Visible;
 
-                    // Hide progress bar again because running query may set this to visible
-                    ProgressBarVisibility = Visibility.Hidden;
-                    return;
-                }
+                // Hide progress bar again because running query may set this to visible
+                ProgressBarVisibility = Visibility.Hidden;
+                return;
             }
 
             _updateSource = new CancellationTokenSource();
@@ -1258,16 +1248,22 @@ namespace Flow.Launcher.ViewModel
             if (_updateSource.Token.IsCancellationRequested) return;
 
             // Update the query's IsReQuery property to true if this is a re-query
-            if (!homeQuery) query.IsReQuery = isReQuery;
+            query.IsReQuery = isReQuery;
 
             // handle the exclusiveness of plugin using action keyword
             RemoveOldQueryResults(query);
 
             _lastQuery = query;
 
+            var homeQuery = query.RawQuery == string.Empty;
+            ICollection<PluginPair> plugins = Array.Empty<PluginPair>();
             if (homeQuery)
             {
-                // Do not show plugin icon if this is a home query
+                if (Settings.ShowHomePage)
+                {
+                    plugins = PluginManager.ValidPluginsForHomeQuery();
+                }
+
                 PluginIconPath = null;
                 PluginIconSource = null;
                 SearchIconVisibility = Visibility.Visible;
@@ -1317,18 +1313,17 @@ namespace Flow.Launcher.ViewModel
             Task[] tasks;
             if (homeQuery)
             {
-                var homeTasks = plugins.Select(plugin => plugin.Metadata.HomeDisabled switch
+                tasks = plugins.Select(plugin => plugin.Metadata.HomeDisabled switch
                 {
                     false => QueryTaskAsync(plugin, _updateSource.Token),
                     true => Task.CompletedTask
-                }).ToList();
+                }).ToArray();
 
+                // Query history results for home page firstly so it will be put on top of the results
                 if (Settings.ShowHistoryResultsForHomePage)
                 {
-                    homeTasks.Add(QueryHistoryTaskAsync());
+                    await QueryHistoryTaskAsync();
                 }
-
-                tasks = homeTasks.ToArray();
             }
             else
             {
@@ -1465,7 +1460,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (string.IsNullOrWhiteSpace(queryText))
             {
-                return null;
+                return QueryBuilder.Build(string.Empty, PluginManager.NonGlobalPlugins);
             }
 
             var queryBuilder = new StringBuilder(queryText);

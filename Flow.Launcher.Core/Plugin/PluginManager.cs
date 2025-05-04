@@ -278,11 +278,8 @@ namespace Flow.Launcher.Core.Plugin
             };
         }
 
-        public static ICollection<PluginPair> ValidPluginsForHomeQuery(Query query)
+        public static ICollection<PluginPair> ValidPluginsForHomeQuery()
         {
-            if (query is not null)
-                return Array.Empty<PluginPair>();
-
             return _homePlugins.ToList();
         }
 
