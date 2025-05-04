@@ -1215,10 +1215,14 @@ namespace Flow.Launcher.ViewModel
         {
             _updateSource?.Cancel();
 
+            App.API.LogDebug(ClassName, $"Start query with text: <{QueryText}>");
+
             var query = await ConstructQueryAsync(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
 
             if (query == null) // shortcut expanded
             {
+                App.API.LogDebug(ClassName, $"Clear query results");
+
                 // Hide and clear results again because running query may show and add some results
                 Results.Visibility = Visibility.Collapsed;
                 Results.Clear();
@@ -1232,6 +1236,8 @@ namespace Flow.Launcher.ViewModel
                 ProgressBarVisibility = Visibility.Hidden;
                 return;
             }
+
+            App.API.LogDebug(ClassName, $"Start query with ActionKeyword <{query.ActionKeyword}> and RawQuery <{query.RawQuery}>");
 
             _updateSource = new CancellationTokenSource();
 
@@ -1252,6 +1258,9 @@ namespace Flow.Launcher.ViewModel
             _lastQuery = query;
 
             var plugins = PluginManager.ValidPluginsForQuery(query);
+
+            var validPluginNames = plugins.Select(x => $"<{x.Metadata.Name}>");
+            App.API.LogDebug(ClassName, $"Valid <{plugins.Count}> plugins: {string.Join(" ", validPluginNames)}");
 
             if (plugins.Count == 1)
             {
@@ -1321,6 +1330,8 @@ namespace Flow.Launcher.ViewModel
             // Local function
             async Task QueryTaskAsync(PluginPair plugin, CancellationToken token)
             {
+                App.API.LogDebug(ClassName, $"Wait for querying plugin <{plugin.Metadata.Name}>");
+
                 if (searchDelay)
                 {
                     var searchDelayTime = plugin.Metadata.SearchDelayTime ?? Settings.SearchDelayTime;
@@ -1358,6 +1369,8 @@ namespace Flow.Launcher.ViewModel
                 }
 
                 if (token.IsCancellationRequested) return;
+
+                App.API.LogDebug(ClassName, $"Update results for plugin <{plugin.Metadata.Name}>");
 
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
                     token, reSelect)))
@@ -1448,6 +1461,8 @@ namespace Flow.Launcher.ViewModel
         {
             if (_lastQuery?.ActionKeyword != query?.ActionKeyword)
             {
+                App.API.LogDebug(ClassName, $"Remove old results");
+
                 Results.Clear();
             }
         }
