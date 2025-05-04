@@ -8,7 +8,7 @@ namespace Flow.Launcher.Plugin
     /// Synchronous Query Model for Flow Launcher When Query Text is Empty
     /// <para>
     /// If the Querying method requires high IO transmission
-    /// or performaing CPU intense jobs (performing better with cancellation), please try the IAsyncHomeQuery interface
+    /// or performing CPU intense jobs (performing better with cancellation), please try the IAsyncHomeQuery interface
     /// </para>
     /// </summary>
     public interface IHomeQuery : IAsyncHomeQuery
