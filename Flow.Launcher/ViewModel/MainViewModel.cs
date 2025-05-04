@@ -1215,7 +1215,7 @@ namespace Flow.Launcher.ViewModel
         {
             _updateSource?.Cancel();
 
-            App.API.LogDebug(ClassName, $"Start query with text: {QueryText}");
+            App.API.LogDebug(ClassName, $"Start query with text: <{QueryText}>");
 
             var query = await ConstructQueryAsync(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
 
