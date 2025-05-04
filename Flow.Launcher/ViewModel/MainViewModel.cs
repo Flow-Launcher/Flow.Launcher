@@ -1346,7 +1346,7 @@ namespace Flow.Launcher.ViewModel
                 // Query history results for home page firstly so it will be put on top of the results
                 if (Settings.ShowHistoryResultsForHomePage)
                 {
-                    await QueryHistoryTaskAsync();
+                    QueryHistoryTask();
                 }
             }
             else
@@ -1430,12 +1430,8 @@ namespace Flow.Launcher.ViewModel
                 }
             }
 
-            async Task QueryHistoryTaskAsync()
+            void QueryHistoryTask()
             {
-                // Since it is wrapped within a ThreadPool Thread, the synchronous context is null
-                // Task.Yield will force it to run in ThreadPool
-                await Task.Yield();
-
                 // Select last history results and revert its order to make sure last history results are on top
                 var historyItems = _history.Items.TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
 
@@ -1448,8 +1444,6 @@ namespace Flow.Launcher.ViewModel
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
-
-                await Task.CompletedTask;
             }
         }
 
