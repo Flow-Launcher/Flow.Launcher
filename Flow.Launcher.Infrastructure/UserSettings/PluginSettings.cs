@@ -67,7 +67,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                     metadata.Disabled = settings.Disabled;
                     metadata.Priority = settings.Priority;
                     metadata.SearchDelayTime = settings.SearchDelayTime;
-                    metadata.HomeDisabled = settings.HomeDiabled;
+                    metadata.HomeDisabled = settings.HomeDisabled;
                 }
                 else
                 {
@@ -80,7 +80,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                         DefaultActionKeywords = metadata.ActionKeywords, // metadata provides default values
                         ActionKeywords = metadata.ActionKeywords, // use default value
                         Disabled = metadata.Disabled,
-                        HomeDiabled = metadata.HomeDisabled,
+                        HomeDisabled = metadata.HomeDisabled,
                         Priority = metadata.Priority,
                         DefaultSearchDelayTime = metadata.SearchDelayTime, // metadata provides default values
                         SearchDelayTime = metadata.SearchDelayTime, // use default value
@@ -130,6 +130,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /// Used only to save the state of the plugin in settings
         /// </summary>
         public bool Disabled { get; set; }
-        public bool HomeDiabled { get; set; }
+        public bool HomeDisabled { get; set; }
     }
 }

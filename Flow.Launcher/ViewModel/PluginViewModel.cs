@@ -81,7 +81,7 @@ namespace Flow.Launcher.ViewModel
             set
             {
                 PluginPair.Metadata.HomeDisabled = !value;
-                PluginSettingsObject.HomeDiabled = !value;
+                PluginSettingsObject.HomeDisabled = !value;
             }
         }
 
