@@ -1413,10 +1413,10 @@ namespace Flow.Launcher.ViewModel
                 await Task.Yield();
 
                 // Select last history results and revert its order to make sure last history results are on top
-                var lastHistoryResults = _history.Items.TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
+                var historyResults = _history.Items.TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
 
-                var historyResults = new List<Result>();
-                foreach (var h in lastHistoryResults)
+                var results = new List<Result>();
+                foreach (var h in historyResults)
                 {
                     var title = App.API.GetTranslation("executeQuery");
                     var time = App.API.GetTranslation("lastExecuteTime");
@@ -1438,14 +1438,12 @@ namespace Flow.Launcher.ViewModel
                             return false;
                         }
                     };
-                    historyResults.Add(result);
+                    results.Add(result);
                 }
-
-                // No need to make copy of results and update badge ico property
 
                 if (_updateSource.Token.IsCancellationRequested) return;
 
-                if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(historyResults, _historyMetadata, query,
+                if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, _historyMetadata, query,
                     _updateSource.Token)))
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
