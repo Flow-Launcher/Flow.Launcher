@@ -16,8 +16,7 @@ namespace Flow.Launcher.Core.Plugin
                     Search = string.Empty,
                     RawQuery = string.Empty,
                     SearchTerms = Array.Empty<string>(),
-                    // must use null because we need to distinguish between home query and global query
-                    ActionKeyword = null
+                    ActionKeyword = string.Empty
                 };
             }
 

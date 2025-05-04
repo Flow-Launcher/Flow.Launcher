@@ -33,6 +33,7 @@ namespace Flow.Launcher.ViewModel
 
         private bool _isQueryRunning;
         private Query _lastQuery;
+        private bool _lastHomeQuery;
         private string _queryTextBeforeLeaveResults;
         private string _ignoredQueryText = null;
 
@@ -1261,6 +1262,8 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
+            var homeQuery = query.RawQuery == string.Empty;
+
             _updateSource = new CancellationTokenSource();
 
             ProgressBarVisibility = Visibility.Hidden;
@@ -1275,11 +1278,11 @@ namespace Flow.Launcher.ViewModel
             query.IsReQuery = isReQuery;
 
             // handle the exclusiveness of plugin using action keyword
-            RemoveOldQueryResults(query);
+            RemoveOldQueryResults(query, homeQuery);
 
             _lastQuery = query;
+            _lastHomeQuery = homeQuery;
 
-            var homeQuery = query.RawQuery == string.Empty;
             ICollection<PluginPair> plugins = Array.Empty<PluginPair>();
             if (homeQuery)
             {
@@ -1524,9 +1527,15 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private void RemoveOldQueryResults(Query query)
+        private void RemoveOldQueryResults(Query query, bool homeQuery)
         {
-            if (_lastQuery?.ActionKeyword != query?.ActionKeyword)
+            // If last or current query is home query, we need to clear the results
+            if (_lastHomeQuery || homeQuery)
+            {
+                Results.Clear();
+            }
+            // If last and current query are not home query, we need to check action keyword
+            else if (_lastQuery?.ActionKeyword != query?.ActionKeyword)
             {
                 Results.Clear();
             }
