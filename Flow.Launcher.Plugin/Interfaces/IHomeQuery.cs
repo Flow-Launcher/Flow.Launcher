@@ -17,7 +17,7 @@ namespace Flow.Launcher.Plugin
         /// Querying When Query Text is Empty
         /// <para>
         /// This method will be called within a Task.Run,
-        /// so please avoid synchrously wait for long.
+        /// so please avoid synchronously wait for long.
         /// </para>
         /// </summary>
         /// <returns></returns>
