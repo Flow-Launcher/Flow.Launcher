@@ -1192,8 +1192,27 @@ namespace Flow.Launcher.ViewModel
             var query = QueryText.ToLower().Trim();
             History.Clear();
 
+            var results = GetHistoryItems(_history.Items);
+
+            if (!string.IsNullOrEmpty(query))
+            {
+                var filtered = results.Where
+                (
+                    r => App.API.FuzzySearch(query, r.Title).IsSearchPrecisionScoreMet() ||
+                         App.API.FuzzySearch(query, r.SubTitle).IsSearchPrecisionScoreMet()
+                ).ToList();
+                History.AddResults(filtered, id);
+            }
+            else
+            {
+                History.AddResults(results, id);
+            }
+        }
+
+        private static List<Result> GetHistoryItems(IEnumerable<HistoryItem> historyItems)
+        {
             var results = new List<Result>();
-            foreach (var h in _history.Items)
+            foreach (var h in historyItems)
             {
                 var title = App.API.GetTranslation("executeQuery");
                 var time = App.API.GetTranslation("lastExecuteTime");
@@ -1217,20 +1236,7 @@ namespace Flow.Launcher.ViewModel
                 };
                 results.Add(result);
             }
-
-            if (!string.IsNullOrEmpty(query))
-            {
-                var filtered = results.Where
-                (
-                    r => App.API.FuzzySearch(query, r.Title).IsSearchPrecisionScoreMet() ||
-                         App.API.FuzzySearch(query, r.SubTitle).IsSearchPrecisionScoreMet()
-                ).ToList();
-                History.AddResults(filtered, id);
-            }
-            else
-            {
-                History.AddResults(results, id);
-            }
+            return results;
         }
 
         private async Task QueryResultsAsync(bool searchDelay, bool isReQuery = false, bool reSelect = true)
@@ -1431,33 +1437,9 @@ namespace Flow.Launcher.ViewModel
                 await Task.Yield();
 
                 // Select last history results and revert its order to make sure last history results are on top
-                var historyResults = _history.Items.TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
+                var historyItems = _history.Items.TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
 
-                var results = new List<Result>();
-                foreach (var h in historyResults)
-                {
-                    var title = App.API.GetTranslation("executeQuery");
-                    var time = App.API.GetTranslation("lastExecuteTime");
-                    var result = new Result
-                    {
-                        Title = string.Format(title, h.Query),
-                        SubTitle = string.Format(time, h.ExecutedDateTime),
-                        IcoPath = "Images\\history.png",
-                        Preview = new Result.PreviewInfo
-                        {
-                            PreviewImagePath = Constant.HistoryIcon,
-                            Description = string.Format(time, h.ExecutedDateTime)
-                        },
-                        OriginQuery = new Query { RawQuery = h.Query },
-                        Action = _ =>
-                        {
-                            SelectedResults = Results;
-                            App.API.ChangeQuery(h.Query);
-                            return false;
-                        }
-                    };
-                    results.Add(result);
-                }
+                var results = GetHistoryItems(historyItems);
 
                 if (_updateSource.Token.IsCancellationRequested) return;
 
