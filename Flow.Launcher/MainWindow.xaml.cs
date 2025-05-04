@@ -278,12 +278,7 @@ namespace Flow.Launcher
                         InitializeContextMenu();
                         break;
                     case nameof(Settings.ShowHomePage):
-                    // We should refresh results when these two settings are changed but we cannot do that
-                    // Because the order of the results will change, making the interface look weird
-                    // So we would better refresh results when query text is changed next time
-                    /*case nameof(Settings.ShowHistoryResultsForHomePage):
-                    case nameof(Settings.MaxHistoryResultsToShowForHomePage):*/
-                        if (string.IsNullOrEmpty(_viewModel.QueryText))
+                        if (_viewModel.QueryResultsSelected() && string.IsNullOrEmpty(_viewModel.QueryText))
                         {
                             _viewModel.QueryResults();
                         }
