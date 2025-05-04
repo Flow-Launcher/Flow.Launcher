@@ -1373,7 +1373,7 @@ namespace Flow.Launcher.ViewModel
                 await Task.Yield();
 
                 var results = homeQuery ?
-                    await PluginManager.QueryHomeForPluginAsync(plugin, token) :
+                    await PluginManager.QueryHomeForPluginAsync(plugin, query, token) :
                     await PluginManager.QueryForPluginAsync(plugin, query, token);
 
                 if (token.IsCancellationRequested) return;

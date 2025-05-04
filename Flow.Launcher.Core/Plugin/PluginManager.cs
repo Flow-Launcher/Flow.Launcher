@@ -327,7 +327,7 @@ namespace Flow.Launcher.Core.Plugin
             return results;
         }
 
-        public static async Task<List<Result>> QueryHomeForPluginAsync(PluginPair pair, CancellationToken token)
+        public static async Task<List<Result>> QueryHomeForPluginAsync(PluginPair pair, Query query, CancellationToken token)
         {
             var results = new List<Result>();
             var metadata = pair.Metadata;
@@ -340,7 +340,7 @@ namespace Flow.Launcher.Core.Plugin
                 token.ThrowIfCancellationRequested();
                 if (results == null)
                     return null;
-                UpdatePluginMetadata(results, metadata);
+                UpdatePluginMetadata(results, metadata, query);
 
                 token.ThrowIfCancellationRequested();
             }
@@ -369,16 +369,6 @@ namespace Flow.Launcher.Core.Plugin
                 // Plugins may have multi-actionkeywords eg. WebSearches. In this scenario it needs to be overriden on the plugin level
                 if (metadata.ActionKeywords.Count == 1)
                     r.ActionKeywordAssigned = query.ActionKeyword;
-            }
-        }
-
-        private static void UpdatePluginMetadata(IReadOnlyList<Result> results, PluginMetadata metadata)
-        {
-            foreach (var r in results)
-            {
-                r.PluginDirectory = metadata.PluginDirectory;
-                r.PluginID = metadata.ID;
-                r.OriginQuery = null;
             }
         }
 
