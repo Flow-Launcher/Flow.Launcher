@@ -1127,9 +1127,20 @@ namespace Flow.Launcher.ViewModel
 
             if (selected != null) // SelectedItem returns null if selection is empty.
             {
-                var results = PluginManager.GetContextMenusForPlugin(selected);
-                results.Add(ContextMenuTopMost(selected));
-                results.Add(ContextMenuPluginInfo(selected.PluginID));
+                List<Result> results;
+                if (selected.PluginID == null) // SelectedItem from history in home page.
+                {
+                    results = new()
+                    {
+                        ContextMenuTopMost(selected)
+                    };
+                }
+                else
+                {
+                    results = PluginManager.GetContextMenusForPlugin(selected);
+                    results.Add(ContextMenuTopMost(selected));
+                    results.Add(ContextMenuPluginInfo(selected.PluginID));
+                }
 
                 if (!string.IsNullOrEmpty(query))
                 {
