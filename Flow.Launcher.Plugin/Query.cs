@@ -53,6 +53,7 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// The action keyword part of this query.
         /// For global plugins this value will be empty.
+        /// For home query this value will be null.
         /// </summary>
         public string ActionKeyword { get; init; }
 
