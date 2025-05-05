@@ -319,6 +319,7 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch (Exception e)
             {
+                API.LogDebug(ClassName, $"i");
                 Result r = new()
                 {
                     Title = $"{metadata.Name}: Failed to respond!",
@@ -333,6 +334,7 @@ namespace Flow.Launcher.Core.Plugin
                 };
                 results.Add(r);
             }
+            API.LogDebug(ClassName, $"j");
             return results;
         }
 
