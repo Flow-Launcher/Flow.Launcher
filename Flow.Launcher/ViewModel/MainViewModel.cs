@@ -1341,13 +1341,21 @@ namespace Flow.Launcher.ViewModel
                     if (token.IsCancellationRequested) return;
                 }
 
+                App.API.LogDebug(ClassName, $"1");
+
                 // Since it is wrapped within a ThreadPool Thread, the synchronous context is null
                 // Task.Yield will force it to run in ThreadPool
                 await Task.Yield();
 
+                App.API.LogDebug(ClassName, $"2");
+
                 var results = await PluginManager.QueryForPluginAsync(plugin, query, token);
 
+                App.API.LogDebug(ClassName, $"3");
+
                 if (token.IsCancellationRequested) return;
+
+                App.API.LogDebug(ClassName, $"4");
 
                 IReadOnlyList<Result> resultsCopy;
                 if (results == null)
@@ -1360,6 +1368,8 @@ namespace Flow.Launcher.ViewModel
                     resultsCopy = DeepCloneResults(results, token);
                 }
 
+                App.API.LogDebug(ClassName, $"5");
+
                 foreach (var result in resultsCopy)
                 {
                     if (string.IsNullOrEmpty(result.BadgeIcoPath))
@@ -1367,6 +1377,8 @@ namespace Flow.Launcher.ViewModel
                         result.BadgeIcoPath = plugin.Metadata.IcoPath;
                     }
                 }
+
+                App.API.LogDebug(ClassName, $"6");
 
                 if (token.IsCancellationRequested) return;
 
