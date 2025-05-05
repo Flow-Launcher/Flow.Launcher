@@ -1313,19 +1313,7 @@ namespace Flow.Launcher.ViewModel
 
             if (query == null) // shortcut expanded
             {
-                App.API.LogDebug(ClassName, $"Clear query results");
-
-                // Hide and clear results again because running query may show and add some results
-                Results.Visibility = Visibility.Collapsed;
-                Results.Clear();
-
-                // Reset plugin icon
-                PluginIconPath = null;
-                PluginIconSource = null;
-                SearchIconVisibility = Visibility.Visible;
-
-                // Hide progress bar again because running query may set this to visible
-                ProgressBarVisibility = Visibility.Hidden;
+                ClearResults();
                 return;
             }
 
@@ -1336,19 +1324,7 @@ namespace Flow.Launcher.ViewModel
             // Do not show home page for quick switch window
             if (quickSwitch && isHomeQuery)
             {
-                App.API.LogDebug(ClassName, $"Clear query results");
-
-                // Hide and clear results again because running query may show and add some results
-                Results.Visibility = Visibility.Collapsed;
-                Results.Clear();
-
-                // Reset plugin icon
-                PluginIconPath = null;
-                PluginIconSource = null;
-                SearchIconVisibility = Visibility.Visible;
-
-                // Hide progress bar again because running query may set this to visible
-                ProgressBarVisibility = Visibility.Hidden;
+                ClearResults();
                 return;
             }
 
@@ -1583,6 +1559,23 @@ namespace Flow.Launcher.ViewModel
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
             }
+        }
+
+        private void ClearResults()
+        {
+            App.API.LogDebug(ClassName, $"Clear query results");
+
+            // Hide and clear results again because running query may show and add some results
+            Results.Visibility = Visibility.Collapsed;
+            Results.Clear();
+
+            // Reset plugin icon
+            PluginIconPath = null;
+            PluginIconSource = null;
+            SearchIconVisibility = Visibility.Visible;
+
+            // Hide progress bar again because running query may set this to visible
+            ProgressBarVisibility = Visibility.Hidden;
         }
 
         private async Task<Query> ConstructQueryAsync(string queryText, IEnumerable<CustomShortcutModel> customShortcuts,
