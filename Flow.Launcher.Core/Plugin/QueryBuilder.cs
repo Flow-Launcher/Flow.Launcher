@@ -8,6 +8,18 @@ namespace Flow.Launcher.Core.Plugin
     {
         public static Query Build(string input, string text, Dictionary<string, PluginPair> nonGlobalPlugins)
         {
+            // home query
+            if (string.IsNullOrEmpty(text))
+            {
+                return new Query()
+                {
+                    Search = string.Empty,
+                    RawQuery = string.Empty,
+                    SearchTerms = Array.Empty<string>(),
+                    ActionKeyword = string.Empty
+                };
+            }
+
             // replace multiple white spaces with one white space
             var terms = text.Split(Query.TermSeparator, StringSplitOptions.RemoveEmptyEntries);
             if (terms.Length == 0)
