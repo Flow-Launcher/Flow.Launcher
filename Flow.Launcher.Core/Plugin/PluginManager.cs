@@ -25,6 +25,7 @@ namespace Flow.Launcher.Core.Plugin
         private static readonly string ClassName = nameof(PluginManager);
 
         private static IEnumerable<PluginPair> _contextMenuPlugins;
+        private static IEnumerable<PluginPair> _homePlugins;
 
         public static List<PluginPair> AllPlugins { get; private set; }
         public static readonly HashSet<PluginPair> GlobalPlugins = new();
@@ -220,6 +221,7 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     API.LogException(ClassName, $"Fail to Init plugin: {pair.Metadata.Name}", e);
                     pair.Metadata.Disabled = true;
+                    pair.Metadata.HomeDisabled = true;
                     failedPlugins.Enqueue(pair);
                 }
             }));
@@ -227,6 +229,8 @@ namespace Flow.Launcher.Core.Plugin
             await Task.WhenAll(InitTasks);
 
             _contextMenuPlugins = GetPluginsForInterface<IContextMenu>();
+            _homePlugins = GetPluginsForInterface<IAsyncHomeQuery>();
+
             foreach (var plugin in AllPlugins)
             {
                 // set distinct on each plugin's action keywords helps only firing global(*) and action keywords once where a plugin
@@ -277,6 +281,11 @@ namespace Flow.Launcher.Core.Plugin
             };
         }
 
+        public static ICollection<PluginPair> ValidPluginsForHomeQuery()
+        {
+            return _homePlugins.ToList();
+        }
+
         public static async Task<List<Result>> QueryForPluginAsync(PluginPair pair, Query query, CancellationToken token)
         {
             var results = new List<Result>();
@@ -321,6 +330,36 @@ namespace Flow.Launcher.Core.Plugin
             return results;
         }
 
+        public static async Task<List<Result>> QueryHomeForPluginAsync(PluginPair pair, Query query, CancellationToken token)
+        {
+            var results = new List<Result>();
+            var metadata = pair.Metadata;
+
+            try
+            {
+                var milliseconds = await API.StopwatchLogDebugAsync(ClassName, $"Cost for {metadata.Name}",
+                    async () => results = await ((IAsyncHomeQuery)pair.Plugin).HomeQueryAsync(token).ConfigureAwait(false));
+
+                token.ThrowIfCancellationRequested();
+                if (results == null)
+                    return null;
+                UpdatePluginMetadata(results, metadata, query);
+
+                token.ThrowIfCancellationRequested();
+            }
+            catch (OperationCanceledException)
+            {
+                // null will be fine since the results will only be added into queue if the token hasn't been cancelled
+                return null;
+            }
+            catch (Exception e)
+            {
+                API.LogException(ClassName, $"Failed to query home for plugin: {metadata.Name}", e);
+                return null;
+            }
+            return results;
+        }
+  
         public static async Task<List<QuickSwitchResult>> QueryQuickSwitchForPluginAsync(PluginPair pair, Query query, CancellationToken token)
         {
             var results = new List<QuickSwitchResult>();
@@ -409,6 +448,11 @@ namespace Flow.Launcher.Core.Plugin
             }
 
             return results;
+        }
+
+        public static bool IsHomePlugin(string id)
+        {
+            return _homePlugins.Any(p => p.Metadata.ID == id);
         }
 
         public static bool ActionKeywordRegistered(string actionKeyword)

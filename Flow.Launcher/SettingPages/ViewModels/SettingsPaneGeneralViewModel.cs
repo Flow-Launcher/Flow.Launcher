@@ -189,11 +189,22 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             {
                 Settings.SearchDelayTime = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(SearchDelayTimeDisplay));
             }
         }
     }
-    public string SearchDelayTimeDisplay => $"{SearchDelayTimeValue}ms";
+
+    public int MaxHistoryResultsToShowValue
+    {
+        get => Settings.MaxHistoryResultsToShowForHomePage;
+        set
+        {
+            if (Settings.MaxHistoryResultsToShowForHomePage != value)
+            {
+                Settings.MaxHistoryResultsToShowForHomePage = value;
+                OnPropertyChanged();
+            }
+        }
+    }
 
     private void UpdateEnumDropdownLocalizations()
     {

@@ -283,6 +283,12 @@ namespace Flow.Launcher
                     case nameof(Settings.SettingWindowFont):
                         InitializeContextMenu();
                         break;
+                    case nameof(Settings.ShowHomePage):
+                        if (_viewModel.QueryResultsSelected() && string.IsNullOrEmpty(_viewModel.QueryText))
+                        {
+                            _viewModel.QueryResults();
+                        }
+                        break;
                 }
             };
 
@@ -298,6 +304,12 @@ namespace Flow.Launcher
             DependencyPropertyDescriptor
                 .FromProperty(VisibilityProperty, typeof(StackPanel))
                 .AddValueChanged(History, (s, e) => UpdateClockPanelVisibility());
+
+            // Initialize query state
+            if (_settings.ShowHomePage && string.IsNullOrEmpty(_viewModel.QueryText))
+            {
+                _viewModel.QueryResults();
+            }
         }
 
         private async void OnClosing(object sender, CancelEventArgs e)
