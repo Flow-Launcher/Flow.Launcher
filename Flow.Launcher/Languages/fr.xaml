@@ -131,6 +131,11 @@
     <system:String x:Key="KoreanImeOpenLinkButton">Ouvrir</system:String>
     <system:String x:Key="KoreanImeRegistry">Utilisez l'IME coréenne précédente</system:String>
     <system:String x:Key="KoreanImeRegistryTooltip">Vous pouvez modifier les paramètres de l'IME coréen précédent directement à partir d'ici</system:String>
+    <system:String x:Key="homePage">Home Page</system:String>
+    <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
+    <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Rechercher des plugins</system:String>
@@ -153,6 +158,7 @@
     <system:String x:Key="DisplayModeOnOff">Activé</system:String>
     <system:String x:Key="DisplayModePriority">Priorité</system:String>
     <system:String x:Key="DisplayModeSearchDelay">Délai de recherche</system:String>
+    <system:String x:Key="DisplayModeHomeOnOff">Home Page</system:String>
     <system:String x:Key="currentPriority">Priorité actuelle</system:String>
     <system:String x:Key="newPriority">Nouvelle priorité</system:String>
     <system:String x:Key="priority">Priorité</system:String>
@@ -404,6 +410,10 @@
     <!--  Search Delay Settings Dialog  -->
     <system:String x:Key="searchDelayTimeTitle">Réglage du délai de recherche</system:String>
     <system:String x:Key="searchDelayTimeTips">Entrez le délai de recherche en ms que vous souhaitez utiliser pour le plugin. Laissez la case vide et le plugin utilisera le délai de recherche par défaut.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="homeTitle">Home Page</system:String>
+    <system:String x:Key="homeTips">Enable the plugin home page state if you like to show the plugin results when query is empty.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Requêtes personnalisées</system:String>
