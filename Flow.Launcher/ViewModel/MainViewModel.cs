@@ -1221,19 +1221,15 @@ namespace Flow.Launcher.ViewModel
                 {
                     Title = string.Format(title, h.Query),
                     SubTitle = string.Format(time, h.ExecutedDateTime),
-                    IcoPath = "Images\\history.png",
-                    Preview = new Result.PreviewInfo
-                    {
-                        PreviewImagePath = Constant.HistoryIcon,
-                        Description = string.Format(time, h.ExecutedDateTime)
-                    },
+                    IcoPath = Constant.HistoryIcon,
                     OriginQuery = new Query { RawQuery = h.Query },
                     Action = _ =>
                     {
                         App.API.BackToQueryResults();
                         App.API.ChangeQuery(h.Query);
                         return false;
-                    }
+                    },
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C")
                 };
                 results.Add(result);
             }
@@ -1579,7 +1575,8 @@ namespace Flow.Launcher.ViewModel
                         App.API.ShowMsg(App.API.GetTranslation("success"));
                         App.API.ReQuery();
                         return false;
-                    }
+                    },
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE74B")
                 };
             }
             else
@@ -1588,7 +1585,6 @@ namespace Flow.Launcher.ViewModel
                 {
                     Title = App.API.GetTranslation("setAsTopMostInThisQuery"),
                     IcoPath = "Images\\up.png",
-                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xeac2"),
                     PluginDirectory = Constant.ProgramDirectory,
                     Action = _ =>
                     {
@@ -1596,7 +1592,8 @@ namespace Flow.Launcher.ViewModel
                         App.API.ShowMsg(App.API.GetTranslation("success"));
                         App.API.ReQuery();
                         return false;
-                    }
+                    },
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE74A")
                 };
             }
 
