@@ -1339,13 +1339,13 @@ namespace Flow.Launcher.ViewModel
                 }*/
 
                 _ = Task.Delay(200, _updateSource.Token).ContinueWith(_ =>
-                  {
-                      // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
-                      if (_progressQuery != null && _progressQuery == query)
-                      {
-                          ProgressBarVisibility = Visibility.Visible;
-                      }
-                  },
+                    {
+                        // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
+                        if (_progressQuery != null && _progressQuery == query)
+                        {
+                            ProgressBarVisibility = Visibility.Visible;
+                        }
+                    },
                     _updateSource.Token,
                     TaskContinuationOptions.NotOnCanceled,
                     TaskScheduler.Default);
@@ -1357,7 +1357,7 @@ namespace Flow.Launcher.ViewModel
                 {
                     tasks = plugins.Select(plugin => plugin.Metadata.HomeDisabled switch
                     {
-                        false => QueryTaskAsync(plugin, _updateSource.Token),
+                        false => QueryTaskAsync(plugin, true, _updateSource.Token),
                         true => Task.CompletedTask
                     }).ToArray();
 
@@ -1371,7 +1371,7 @@ namespace Flow.Launcher.ViewModel
                 {
                     tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
                     {
-                        false => QueryTaskAsync(plugin, _updateSource.Token),
+                        false => QueryTaskAsync(plugin, false, _updateSource.Token),
                         true => Task.CompletedTask
                     }).ToArray();
                 }
@@ -1405,7 +1405,7 @@ namespace Flow.Launcher.ViewModel
             }
 
             // Local function
-            async Task QueryTaskAsync(PluginPair plugin, CancellationToken token)
+            async Task QueryTaskAsync(PluginPair plugin, bool isHomeQuery, CancellationToken token)
             {
                 App.API.LogDebug(ClassName, $"Wait for querying plugin <{plugin.Metadata.Name}>");
 
@@ -1482,7 +1482,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (string.IsNullOrWhiteSpace(queryText))
             {
-                return QueryBuilder.Build(string.Empty, PluginManager.NonGlobalPlugins);
+                return QueryBuilder.Build(string.Empty, string.Empty, PluginManager.NonGlobalPlugins);
             }
 
             var queryBuilder = new StringBuilder(queryText);
