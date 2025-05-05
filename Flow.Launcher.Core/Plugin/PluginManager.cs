@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Droplex;
 using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
@@ -276,27 +277,44 @@ namespace Flow.Launcher.Core.Plugin
 
         public static async Task<List<Result>> QueryForPluginAsync(PluginPair pair, Query query, CancellationToken token)
         {
+            API.LogDebug(ClassName, $"a");
+
             var results = new List<Result>();
             var metadata = pair.Metadata;
 
             try
             {
+                API.LogDebug(ClassName, $"b");
+
                 var milliseconds = await API.StopwatchLogDebugAsync(ClassName, $"Cost for {metadata.Name}",
                     async () => results = await pair.Plugin.QueryAsync(query, token).ConfigureAwait(false));
 
+                API.LogDebug(ClassName, $"c");
+
                 token.ThrowIfCancellationRequested();
+
+                API.LogDebug(ClassName, $"d");
+
                 if (results == null)
                     return null;
+
+                API.LogDebug(ClassName, $"e");
+
                 UpdatePluginMetadata(results, metadata, query);
+
+                API.LogDebug(ClassName, $"f");
 
                 metadata.QueryCount += 1;
                 metadata.AvgQueryTime =
                     metadata.QueryCount == 1 ? milliseconds : (metadata.AvgQueryTime + milliseconds) / 2;
                 token.ThrowIfCancellationRequested();
+
+                API.LogDebug(ClassName, $"g");
             }
             catch (OperationCanceledException)
             {
                 // null will be fine since the results will only be added into queue if the token hasn't been cancelled
+                API.LogDebug(ClassName, $"h");
                 return null;
             }
             catch (Exception e)
