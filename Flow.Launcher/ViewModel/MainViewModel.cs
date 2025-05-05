@@ -54,8 +54,8 @@ namespace Flow.Launcher.ViewModel
 
         private readonly PluginMetadata _historyMetadata = new()
         {
-            ID = "298303A65D128A845D28A7B83B3968C2",
-            Priority = 0
+            ID = "298303A65D128A845D28A7B83B3968C2", // ID is for ResultsForUpdate constructor
+            Priority = 0 // Priority is for calculating scores in UpdateResultView
         };
 
         #endregion
