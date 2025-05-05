@@ -790,8 +790,6 @@ namespace Flow.Launcher.ViewModel
                         }
                     }
                 }
-
-                _selectedResults.Visibility = Visibility.Visible;
             }
         }
 
