@@ -36,6 +36,7 @@ namespace Flow.Launcher.ViewModel
         private bool _isQueryRunning;
         private Query _lastQuery;
         private string _queryTextBeforeLeaveResults;
+        private string _ignoredQueryText = null;
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
@@ -797,6 +798,9 @@ namespace Flow.Launcher.ViewModel
                     if (isReturningFromContextMenu)
                     {
                         _queryText = _queryTextBeforeLeaveResults;
+                        // When executing OnPropertyChanged, QueryTextBox_TextChanged1 and Query will be called
+                        // So we need to ignore it so that we will not call Query again
+                        _ignoredQueryText = _queryText;
                         OnPropertyChanged(nameof(QueryText));
                         QueryTextCursorMovedToEnd = true;
                     }
@@ -1143,6 +1147,20 @@ namespace Flow.Launcher.ViewModel
 
         public void Query(bool searchDelay, bool isReQuery = false)
         {
+            if (_ignoredQueryText != null)
+            {
+                if (_ignoredQueryText == QueryText)
+                {
+                    _ignoredQueryText = null;
+                    return;
+                }
+                else
+                {
+                    // If _ignoredQueryText does not match current QueryText, we should still execute Query
+                    _ignoredQueryText = null;
+                }
+            }
+
             if (QueryResultsSelected())
             {
                 _ = QueryResultsAsync(searchDelay, isReQuery);
@@ -1237,7 +1255,7 @@ namespace Flow.Launcher.ViewModel
                     OriginQuery = new Query { RawQuery = h.Query },
                     Action = _ =>
                     {
-                        SelectedResults = Results;
+                        App.API.BackToQueryResults();
                         App.API.ChangeQuery(h.Query);
                         return false;
                     }
@@ -1264,12 +1282,16 @@ namespace Flow.Launcher.ViewModel
         {
             _updateSource?.Cancel();
 
+            App.API.LogDebug(ClassName, $"Start query with text: <{QueryText}>");
+
             var query = await ConstructQueryAsync(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
 
             var quickSwitch = _isQuickSwitch; // save quick switch state
 
             if (query == null) // shortcut expanded
             {
+                App.API.LogDebug(ClassName, $"Clear query results");
+
                 // Hide and clear results again because running query may show and add some results
                 Results.Visibility = Visibility.Collapsed;
                 Results.Clear();
@@ -1283,6 +1305,8 @@ namespace Flow.Launcher.ViewModel
                 ProgressBarVisibility = Visibility.Hidden;
                 return;
             }
+
+            App.API.LogDebug(ClassName, $"Start query with ActionKeyword <{query.ActionKeyword}> and RawQuery <{query.RawQuery}>");
 
             _updateSource = new CancellationTokenSource();
 
@@ -1303,6 +1327,9 @@ namespace Flow.Launcher.ViewModel
             _lastQuery = query;
 
             var plugins = PluginManager.ValidPluginsForQuery(query, quickSwitch);
+
+            var validPluginNames = plugins.Select(x => $"<{x.Metadata.Name}>");
+            App.API.LogDebug(ClassName, $"Valid <{plugins.Count}> plugins: {string.Join(" ", validPluginNames)}");
 
             if (plugins.Count == 1)
             {
@@ -1372,6 +1399,8 @@ namespace Flow.Launcher.ViewModel
             // Local function
             async Task QueryTaskAsync(PluginPair plugin, CancellationToken token)
             {
+                App.API.LogDebug(ClassName, $"Wait for querying plugin <{plugin.Metadata.Name}>");
+
                 if (searchDelay)
                 {
                     var searchDelayTime = plugin.Metadata.SearchDelayTime ?? Settings.SearchDelayTime;
@@ -1411,6 +1440,8 @@ namespace Flow.Launcher.ViewModel
                     }
                     
                     if (token.IsCancellationRequested) return;
+                    
+                    App.API.LogDebug(ClassName, $"Update results for plugin <{plugin.Metadata.Name}>");
 
                     if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
                         token, reSelect)))
@@ -1445,6 +1476,8 @@ namespace Flow.Launcher.ViewModel
                     }
 
                     if (token.IsCancellationRequested) return;
+                    
+                    App.API.LogDebug(ClassName, $"Update results for plugin <{plugin.Metadata.Name}>");
 
                     if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
                         token, reSelect)))
@@ -1520,11 +1553,14 @@ namespace Flow.Launcher.ViewModel
                 }
             }
 
+            // Show expanded builtin shortcuts
             if (queryChanged)
             {
-                // show expanded builtin shortcuts
-                // use private field to avoid infinite recursion
+                // Use private field to avoid infinite recursion
                 _queryText = queryBuilderTmp.ToString();
+                // When executing OnPropertyChanged, QueryTextBox_TextChanged1 and Query will be called
+                // So we need to ignore it so that we will not call Query again
+                _ignoredQueryText = _queryText;
                 OnPropertyChanged(nameof(QueryText));
             }
         }
@@ -1533,6 +1569,8 @@ namespace Flow.Launcher.ViewModel
         {
             if (_lastQuery?.ActionKeyword != query?.ActionKeyword)
             {
+                App.API.LogDebug(ClassName, $"Remove old results");
+
                 Results.Clear();
             }
         }
@@ -1899,10 +1937,7 @@ namespace Flow.Launcher.ViewModel
                     await CloseExternalPreviewAsync();
                 }
 
-                if (!QueryResultsSelected())
-                {
-                    SelectedResults = Results;
-                }
+                BackToQueryResults();
 
                 switch (Settings.LastQueryMode)
                 {
