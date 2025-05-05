@@ -80,6 +80,20 @@ public partial class SettingsPanePluginsViewModel : BaseModel
         }
     }
 
+    private bool _isHomeOnOffSelected;
+    public bool IsHomeOnOffSelected
+    {
+        get => _isHomeOnOffSelected;
+        set
+        {
+            if (_isHomeOnOffSelected != value)
+            {
+                _isHomeOnOffSelected = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
     public SettingsPanePluginsViewModel(Settings settings)
     {
         _settings = settings;
@@ -152,6 +166,18 @@ public partial class SettingsPanePluginsViewModel : BaseModel
                     {
                         Text = (string)Application.Current.Resources["searchDelayTimeTips"],
                         TextWrapping = TextWrapping.Wrap
+                    },
+                    new TextBlock
+                    {
+                        Text = (string)Application.Current.Resources["homeTitle"],
+                        FontSize = 18,
+                        Margin = new Thickness(0, 24, 0, 10),
+                        TextWrapping = TextWrapping.Wrap
+                    },
+                    new TextBlock
+                    {
+                        Text = (string)Application.Current.Resources["homeTips"],
+                        TextWrapping = TextWrapping.Wrap
                     }
                 }
             },
@@ -176,16 +202,25 @@ public partial class SettingsPanePluginsViewModel : BaseModel
                 IsOnOffSelected = false;
                 IsPrioritySelected = true;
                 IsSearchDelaySelected = false;
+                IsHomeOnOffSelected = false;
                 break;
             case DisplayMode.SearchDelay:
                 IsOnOffSelected = false;
                 IsPrioritySelected = false;
                 IsSearchDelaySelected = true;
+                IsHomeOnOffSelected = false;
+                break;
+            case DisplayMode.HomeOnOff:
+                IsOnOffSelected = false;
+                IsPrioritySelected = false;
+                IsSearchDelaySelected = false;
+                IsHomeOnOffSelected = true;
                 break;
             default:
                 IsOnOffSelected = true;
                 IsPrioritySelected = false;
                 IsSearchDelaySelected = false;
+                IsHomeOnOffSelected = false;
                 break;
         }
     }
@@ -195,5 +230,6 @@ public enum DisplayMode
 {
     OnOff,
     Priority,
-    SearchDelay
+    SearchDelay,
+    HomeOnOff
 }

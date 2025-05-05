@@ -33,6 +33,7 @@ namespace Flow.Launcher.ViewModel
 
         private bool _isQueryRunning;
         private Query _lastQuery;
+        private bool _lastIsHomeQuery;
         private string _queryTextBeforeLeaveResults;
         private string _ignoredQueryText = null;
 
@@ -50,6 +51,12 @@ namespace Flow.Launcher.ViewModel
         private Task _resultsViewUpdateTask;
 
         private readonly IReadOnlyList<Result> _emptyResult = new List<Result>();
+
+        private readonly PluginMetadata _historyMetadata = new()
+        {
+            ID = "298303A65D128A845D28A7B83B3968C2", // ID is for identifying the update plugin in UpdateActionAsync
+            Priority = 0 // Priority is for calculating scores in UpdateResultView
+        };
 
         #endregion
 
@@ -783,8 +790,6 @@ namespace Flow.Launcher.ViewModel
                         }
                     }
                 }
-
-                _selectedResults.Visibility = Visibility.Visible;
             }
         }
 
@@ -1078,6 +1083,11 @@ namespace Flow.Launcher.ViewModel
 
         #region Query
 
+        public void QueryResults()
+        {
+            _ = QueryResultsAsync(false);
+        }
+
         public void Query(bool searchDelay, bool isReQuery = false)
         {
             if (_ignoredQueryText != null)
@@ -1134,9 +1144,20 @@ namespace Flow.Launcher.ViewModel
 
             if (selected != null) // SelectedItem returns null if selection is empty.
             {
-                var results = PluginManager.GetContextMenusForPlugin(selected);
-                results.Add(ContextMenuTopMost(selected));
-                results.Add(ContextMenuPluginInfo(selected.PluginID));
+                List<Result> results;
+                if (selected.PluginID == null) // SelectedItem from history in home page.
+                {
+                    results = new()
+                    {
+                        ContextMenuTopMost(selected)
+                    };
+                }
+                else
+                {
+                    results = PluginManager.GetContextMenusForPlugin(selected);
+                    results.Add(ContextMenuTopMost(selected));
+                    results.Add(ContextMenuPluginInfo(selected.PluginID));
+                }
 
                 if (!string.IsNullOrEmpty(query))
                 {
@@ -1170,31 +1191,7 @@ namespace Flow.Launcher.ViewModel
             var query = QueryText.ToLower().Trim();
             History.Clear();
 
-            var results = new List<Result>();
-            foreach (var h in _history.Items)
-            {
-                var title = App.API.GetTranslation("executeQuery");
-                var time = App.API.GetTranslation("lastExecuteTime");
-                var result = new Result
-                {
-                    Title = string.Format(title, h.Query),
-                    SubTitle = string.Format(time, h.ExecutedDateTime),
-                    IcoPath = "Images\\history.png",
-                    Preview = new Result.PreviewInfo
-                    {
-                        PreviewImagePath = Constant.HistoryIcon,
-                        Description = string.Format(time, h.ExecutedDateTime)
-                    },
-                    OriginQuery = new Query { RawQuery = h.Query },
-                    Action = _ =>
-                    {
-                        App.API.BackToQueryResults();
-                        App.API.ChangeQuery(h.Query);
-                        return false;
-                    }
-                };
-                results.Add(result);
-            }
+            var results = GetHistoryItems(_history.Items);
 
             if (!string.IsNullOrEmpty(query))
             {
@@ -1209,6 +1206,32 @@ namespace Flow.Launcher.ViewModel
             {
                 History.AddResults(results, id);
             }
+        }
+
+        private static List<Result> GetHistoryItems(IEnumerable<HistoryItem> historyItems)
+        {
+            var results = new List<Result>();
+            foreach (var h in historyItems)
+            {
+                var title = App.API.GetTranslation("executeQuery");
+                var time = App.API.GetTranslation("lastExecuteTime");
+                var result = new Result
+                {
+                    Title = string.Format(title, h.Query),
+                    SubTitle = string.Format(time, h.ExecutedDateTime),
+                    IcoPath = Constant.HistoryIcon,
+                    OriginQuery = new Query { RawQuery = h.Query },
+                    Action = _ =>
+                    {
+                        App.API.BackToQueryResults();
+                        App.API.ChangeQuery(h.Query);
+                        return false;
+                    },
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE81C")
+                };
+                results.Add(result);
+            }
+            return results;
         }
 
         private async Task QueryResultsAsync(bool searchDelay, bool isReQuery = false, bool reSelect = true)
@@ -1239,6 +1262,8 @@ namespace Flow.Launcher.ViewModel
 
             App.API.LogDebug(ClassName, $"Start query with ActionKeyword <{query.ActionKeyword}> and RawQuery <{query.RawQuery}>");
 
+            var isHomeQuery = query.RawQuery == string.Empty;
+
             _updateSource = new CancellationTokenSource();
 
             ProgressBarVisibility = Visibility.Hidden;
@@ -1253,27 +1278,43 @@ namespace Flow.Launcher.ViewModel
             query.IsReQuery = isReQuery;
 
             // handle the exclusiveness of plugin using action keyword
-            RemoveOldQueryResults(query);
+            RemoveOldQueryResults(query, isHomeQuery);
 
             _lastQuery = query;
+            _lastIsHomeQuery = isHomeQuery;
 
-            var plugins = PluginManager.ValidPluginsForQuery(query);
-
-            var validPluginNames = plugins.Select(x => $"<{x.Metadata.Name}>");
-            App.API.LogDebug(ClassName, $"Valid <{plugins.Count}> plugins: {string.Join(" ", validPluginNames)}");
-
-            if (plugins.Count == 1)
+            ICollection<PluginPair> plugins = Array.Empty<PluginPair>();
+            if (isHomeQuery)
             {
-                PluginIconPath = plugins.Single().Metadata.IcoPath;
-                PluginIconSource = await App.API.LoadImageAsync(PluginIconPath);
-                SearchIconVisibility = Visibility.Hidden;
-            }
-            else
-            {
+                if (Settings.ShowHomePage)
+                {
+                    plugins = PluginManager.ValidPluginsForHomeQuery();
+                }
+
                 PluginIconPath = null;
                 PluginIconSource = null;
                 SearchIconVisibility = Visibility.Visible;
             }
+            else
+            {
+                plugins = PluginManager.ValidPluginsForQuery(query);
+
+                if (plugins.Count == 1)
+                {
+                    PluginIconPath = plugins.Single().Metadata.IcoPath;
+                    PluginIconSource = await App.API.LoadImageAsync(PluginIconPath);
+                    SearchIconVisibility = Visibility.Hidden;
+                }
+                else
+                {
+                    PluginIconPath = null;
+                    PluginIconSource = null;
+                    SearchIconVisibility = Visibility.Visible;
+                }
+            }
+
+            var validPluginNames = plugins.Select(x => $"<{x.Metadata.Name}>");
+            App.API.LogDebug(ClassName, $"Valid <{plugins.Count}> plugins: {string.Join(" ", validPluginNames)}");
 
             // Do not wait for performance improvement
             /*if (string.IsNullOrEmpty(query.ActionKeyword))
@@ -1299,11 +1340,29 @@ namespace Flow.Launcher.ViewModel
 
             // plugins are ICollection, meaning LINQ will get the Count and preallocate Array
 
-            var tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
+            Task[] tasks;
+            if (isHomeQuery)
             {
-                false => QueryTaskAsync(plugin, _updateSource.Token),
-                true => Task.CompletedTask
-            }).ToArray();
+                tasks = plugins.Select(plugin => plugin.Metadata.HomeDisabled switch
+                {
+                    false => QueryTaskAsync(plugin, _updateSource.Token),
+                    true => Task.CompletedTask
+                }).ToArray();
+
+                // Query history results for home page firstly so it will be put on top of the results
+                if (Settings.ShowHistoryResultsForHomePage)
+                {
+                    QueryHistoryTask();
+                }
+            }
+            else
+            {
+                tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
+                {
+                    false => QueryTaskAsync(plugin, _updateSource.Token),
+                    true => Task.CompletedTask
+                }).ToArray();
+            }
 
             try
             {
@@ -1332,7 +1391,7 @@ namespace Flow.Launcher.ViewModel
             {
                 App.API.LogDebug(ClassName, $"Wait for querying plugin <{plugin.Metadata.Name}>");
 
-                if (searchDelay)
+                if (searchDelay && !isHomeQuery) // Do not delay for home query
                 {
                     var searchDelayTime = plugin.Metadata.SearchDelayTime ?? Settings.SearchDelayTime;
 
@@ -1345,7 +1404,9 @@ namespace Flow.Launcher.ViewModel
                 // Task.Yield will force it to run in ThreadPool
                 await Task.Yield();
 
-                var results = await PluginManager.QueryForPluginAsync(plugin, query, token);
+                var results = isHomeQuery ?
+                    await PluginManager.QueryHomeForPluginAsync(plugin, query, token) :
+                    await PluginManager.QueryForPluginAsync(plugin, query, token);
 
                 if (token.IsCancellationRequested) return;
 
@@ -1378,6 +1439,24 @@ namespace Flow.Launcher.ViewModel
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
             }
+
+            void QueryHistoryTask()
+            {
+                // Select last history results and revert its order to make sure last history results are on top
+                var historyItems = _history.Items.TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
+
+                var results = GetHistoryItems(historyItems);
+
+                if (_updateSource.Token.IsCancellationRequested) return;
+
+                App.API.LogDebug(ClassName, $"Update results for history");
+
+                if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, _historyMetadata, query,
+                    _updateSource.Token)))
+                {
+                    App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
+                }
+            }
         }
 
         private async Task<Query> ConstructQueryAsync(string queryText, IEnumerable<CustomShortcutModel> customShortcuts,
@@ -1385,7 +1464,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (string.IsNullOrWhiteSpace(queryText))
             {
-                return null;
+                return QueryBuilder.Build(string.Empty, PluginManager.NonGlobalPlugins);
             }
 
             var queryBuilder = new StringBuilder(queryText);
@@ -1457,12 +1536,23 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private void RemoveOldQueryResults(Query query)
+        private void RemoveOldQueryResults(Query query, bool isHomeQuery)
         {
-            if (_lastQuery?.ActionKeyword != query?.ActionKeyword)
+            // If last and current query are home query, we don't need to clear the results
+            if (_lastIsHomeQuery && isHomeQuery)
+            {
+                return;
+            }
+            // If last or current query is home query, we need to clear the results
+            else if (_lastIsHomeQuery || isHomeQuery)
             {
                 App.API.LogDebug(ClassName, $"Remove old results");
-
+                Results.Clear();
+            }
+            // If last and current query are not home query, we need to check action keyword
+            else if (_lastQuery?.ActionKeyword != query?.ActionKeyword)
+            {
+                App.API.LogDebug(ClassName, $"Remove old results");
                 Results.Clear();
             }
         }
@@ -1483,7 +1573,8 @@ namespace Flow.Launcher.ViewModel
                         App.API.ShowMsg(App.API.GetTranslation("success"));
                         App.API.ReQuery();
                         return false;
-                    }
+                    },
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE74B")
                 };
             }
             else
@@ -1492,7 +1583,6 @@ namespace Flow.Launcher.ViewModel
                 {
                     Title = App.API.GetTranslation("setAsTopMostInThisQuery"),
                     IcoPath = "Images\\up.png",
-                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xeac2"),
                     PluginDirectory = Constant.ProgramDirectory,
                     Action = _ =>
                     {
@@ -1500,7 +1590,8 @@ namespace Flow.Launcher.ViewModel
                         App.API.ShowMsg(App.API.GetTranslation("success"));
                         App.API.ReQuery();
                         return false;
-                    }
+                    },
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE74A")
                 };
             }
 
@@ -1649,7 +1740,7 @@ namespace Flow.Launcher.ViewModel
                     break;
                 case LastQueryMode.ActionKeywordPreserved:
                 case LastQueryMode.ActionKeywordSelected:
-                    var newQuery = _lastQuery.ActionKeyword;
+                    var newQuery = _lastQuery?.ActionKeyword;
 
                     if (!string.IsNullOrEmpty(newQuery))
                         newQuery += " ";
