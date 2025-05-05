@@ -122,6 +122,11 @@
     <system:String x:Key="KoreanImeOpenLinkButton">열기</system:String>
     <system:String x:Key="KoreanImeRegistry">이전 버전의 Microsoft IME 사용</system:String>
     <system:String x:Key="KoreanImeRegistryTooltip">이전 버전의 IME를 사용하도록 시스템 설정을 변경합니다</system:String>
+    <system:String x:Key="homePage">Home Page</system:String>
+    <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
+    <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">플러그인 검색</system:String>
@@ -144,6 +149,7 @@
     <system:String x:Key="DisplayModeOnOff">켬</system:String>
     <system:String x:Key="DisplayModePriority">중요</system:String>
     <system:String x:Key="DisplayModeSearchDelay">검색 지연</system:String>
+    <system:String x:Key="DisplayModeHomeOnOff">Home Page</system:String>
     <system:String x:Key="currentPriority">현재 중요도:</system:String>
     <system:String x:Key="newPriority">새 중요도:</system:String>
     <system:String x:Key="priority">중요도</system:String>
@@ -396,6 +402,10 @@
     <!--  Search Delay Settings Dialog  -->
     <system:String x:Key="searchDelayTimeTitle">검색 지연 시간 설정</system:String>
     <system:String x:Key="searchDelayTimeTips">플러그인에서 사용할 검색 지연 시간(ms)을 입력하세요. 지정하지 않으려면 비워두세요. 기본 검색 지연 시간이 사용됩니다.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="homeTitle">Home Page</system:String>
+    <system:String x:Key="homeTips">Enable the plugin home page state if you like to show the plugin results when query is empty.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">사용자지정 쿼리 단축키</system:String>
