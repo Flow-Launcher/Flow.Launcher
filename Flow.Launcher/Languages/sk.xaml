@@ -131,11 +131,11 @@
     <system:String x:Key="KoreanImeOpenLinkButton">Otvoriť</system:String>
     <system:String x:Key="KoreanImeRegistry">Použiť predchádzajúcu verziu editora Microsoft IME</system:String>
     <system:String x:Key="KoreanImeRegistryTooltip">Zmeniť na predchádzajúcu verziu editora Microsoft IME môžete priamo tu</system:String>
-    <system:String x:Key="homePage">Home Page</system:String>
-    <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
-    <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
-    <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
-    <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
+    <system:String x:Key="homePage">Domovská stránka</system:String>
+    <system:String x:Key="homePageToolTip">Zobraziť výsledky Domovskej stránky, keď je text dopytu prázdny.</system:String>
+    <system:String x:Key="historyResultsForHomePage">Zobraziť výsledky histórie na Domovskej stránke</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Maximálny počet histórie výsledkov zobrazenej na Domovskej stránke</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">Úprava je možná len vtedy, ak plugin podporuje funkciu Domovská stránka a Domovská stránka je povolená.</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Vyhľadať plugin</system:String>
@@ -158,7 +158,7 @@
     <system:String x:Key="DisplayModeOnOff">Povolené</system:String>
     <system:String x:Key="DisplayModePriority">Priorita</system:String>
     <system:String x:Key="DisplayModeSearchDelay">Oneskorenie vyhľadávania</system:String>
-    <system:String x:Key="DisplayModeHomeOnOff">Home Page</system:String>
+    <system:String x:Key="DisplayModeHomeOnOff">Domovská stránka</system:String>
     <system:String x:Key="currentPriority">Aktuálna priorita</system:String>
     <system:String x:Key="newPriority">Nová priorita</system:String>
     <system:String x:Key="priority">Priorita</system:String>
@@ -413,8 +413,8 @@
     <system:String x:Key="searchDelayTimeTips">Zadajte oneskorenie vyhľadávania v ms, ktoré chcete použiť pre plugin. Nechajte prázdne, ak nechcete zadať žiadne, plugin použije predvolené oneskorenie vyhľadávania.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
-    <system:String x:Key="homeTitle">Home Page</system:String>
-    <system:String x:Key="homeTips">Enable the plugin home page state if you like to show the plugin results when query is empty.</system:String>
+    <system:String x:Key="homeTitle">Domovská stránka</system:String>
+    <system:String x:Key="homeTips">Ak chcete zobrazovať výsledky pluginu, keď je dopyt prázdny, povoľte funkciu Domovská stránka.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Klávesová skratka vlastného vyhľadávania</system:String>
