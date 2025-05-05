@@ -1544,8 +1544,13 @@ namespace Flow.Launcher.ViewModel
 
         private void RemoveOldQueryResults(Query query, bool isHomeQuery)
         {
+            // If last and current query are home query, we don't need to clear the results
+            if (_lastIsHomeQuery && isHomeQuery)
+            {
+                return;
+            }
             // If last or current query is home query, we need to clear the results
-            if (_lastIsHomeQuery || isHomeQuery)
+            else if (_lastIsHomeQuery || isHomeQuery)
             {
                 App.API.LogDebug(ClassName, $"Remove old results");
                 Results.Clear();
