@@ -130,6 +130,11 @@
     <system:String x:Key="KoreanImeOpenLinkButton">פתח</system:String>
     <system:String x:Key="KoreanImeRegistry">השתמש ב־IME הקוריאני הקודם</system:String>
     <system:String x:Key="KoreanImeRegistryTooltip">באפשרותך לשנות את הגדרות ה־IME הקוריאני הקודם ישירות מכאן</system:String>
+    <system:String x:Key="homePage">Home Page</system:String>
+    <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
+    <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">חפש תוסף</system:String>
@@ -152,6 +157,7 @@
     <system:String x:Key="DisplayModeOnOff">מופעל</system:String>
     <system:String x:Key="DisplayModePriority">עדיפות</system:String>
     <system:String x:Key="DisplayModeSearchDelay">עיכוב חיפוש</system:String>
+    <system:String x:Key="DisplayModeHomeOnOff">Home Page</system:String>
     <system:String x:Key="currentPriority">עדיפות נוכחית</system:String>
     <system:String x:Key="newPriority">עדיפות חדשה</system:String>
     <system:String x:Key="priority">עדיפות</system:String>
@@ -404,6 +410,10 @@
     <!--  Search Delay Settings Dialog  -->
     <system:String x:Key="searchDelayTimeTitle">הגדרת זמן עיכוב החיפוש</system:String>
     <system:String x:Key="searchDelayTimeTips">הזן את זמן עיכוב החיפוש בשניות שבו אתה רוצה להשתמש עבור התוסף. השאר ריק אם אינך רוצה לציין, והתוסף ישתמש בזמן ברירת המחדל לעיכוב חיפוש.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="homeTitle">Home Page</system:String>
+    <system:String x:Key="homeTips">Enable the plugin home page state if you like to show the plugin results when query is empty.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">מקש קיצור לשאילתה מותאמת אישית</system:String>
