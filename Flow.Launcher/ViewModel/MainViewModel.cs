@@ -33,7 +33,7 @@ namespace Flow.Launcher.ViewModel
 
         private bool _isQueryRunning;
         private Query _lastQuery;
-        private bool _lastHomeQuery;
+        private bool _lastIsHomeQuery;
         private string _queryTextBeforeLeaveResults;
         private string _ignoredQueryText = null;
 
@@ -1268,7 +1268,7 @@ namespace Flow.Launcher.ViewModel
 
             App.API.LogDebug(ClassName, $"Start query with ActionKeyword <{query.ActionKeyword}> and RawQuery <{query.RawQuery}>");
 
-            var homeQuery = query.RawQuery == string.Empty;
+            var isHomeQuery = query.RawQuery == string.Empty;
 
             _updateSource = new CancellationTokenSource();
 
@@ -1284,13 +1284,13 @@ namespace Flow.Launcher.ViewModel
             query.IsReQuery = isReQuery;
 
             // handle the exclusiveness of plugin using action keyword
-            RemoveOldQueryResults(query, homeQuery);
+            RemoveOldQueryResults(query, isHomeQuery);
 
             _lastQuery = query;
-            _lastHomeQuery = homeQuery;
+            _lastIsHomeQuery = isHomeQuery;
 
             ICollection<PluginPair> plugins = Array.Empty<PluginPair>();
-            if (homeQuery)
+            if (isHomeQuery)
             {
                 if (Settings.ShowHomePage)
                 {
@@ -1347,7 +1347,7 @@ namespace Flow.Launcher.ViewModel
             // plugins are ICollection, meaning LINQ will get the Count and preallocate Array
 
             Task[] tasks;
-            if (homeQuery)
+            if (isHomeQuery)
             {
                 tasks = plugins.Select(plugin => plugin.Metadata.HomeDisabled switch
                 {
@@ -1397,7 +1397,7 @@ namespace Flow.Launcher.ViewModel
             {
                 App.API.LogDebug(ClassName, $"Wait for querying plugin <{plugin.Metadata.Name}>");
 
-                if (searchDelay && !homeQuery) // Do not delay for home query
+                if (searchDelay && !isHomeQuery) // Do not delay for home query
                 {
                     var searchDelayTime = plugin.Metadata.SearchDelayTime ?? Settings.SearchDelayTime;
 
@@ -1410,7 +1410,7 @@ namespace Flow.Launcher.ViewModel
                 // Task.Yield will force it to run in ThreadPool
                 await Task.Yield();
 
-                var results = homeQuery ?
+                var results = isHomeQuery ?
                     await PluginManager.QueryHomeForPluginAsync(plugin, query, token) :
                     await PluginManager.QueryForPluginAsync(plugin, query, token);
 
@@ -1542,10 +1542,10 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private void RemoveOldQueryResults(Query query, bool homeQuery)
+        private void RemoveOldQueryResults(Query query, bool isHomeQuery)
         {
             // If last or current query is home query, we need to clear the results
-            if (_lastHomeQuery || homeQuery)
+            if (_lastIsHomeQuery || isHomeQuery)
             {
                 Results.Clear();
             }
