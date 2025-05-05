@@ -1547,13 +1547,13 @@ namespace Flow.Launcher.ViewModel
             // If last or current query is home query, we need to clear the results
             if (_lastIsHomeQuery || isHomeQuery)
             {
+                App.API.LogDebug(ClassName, $"Remove old results");
                 Results.Clear();
             }
             // If last and current query are not home query, we need to check action keyword
             else if (_lastQuery?.ActionKeyword != query?.ActionKeyword)
             {
                 App.API.LogDebug(ClassName, $"Remove old results");
-
                 Results.Clear();
             }
         }
