@@ -255,7 +255,7 @@ namespace Flow.Launcher.ViewModel
                     else
                     {
                         // make a clone to avoid possible issue that plugin will also change the list and items when updating view model
-                        resultsCopy = DeepClone(e.Results, token);
+                        resultsCopy = DeepCloneResults(e.Results, token);
                     }
 
                     foreach (var result in resultsCopy)
@@ -497,7 +497,7 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private static IReadOnlyList<Result> DeepClone(IReadOnlyList<Result> results, CancellationToken token = default)
+        private static IReadOnlyList<Result> DeepCloneResults(IReadOnlyList<Result> results, CancellationToken token = default)
         {
             var resultsCopy = new List<Result>();
 
@@ -515,7 +515,7 @@ namespace Flow.Launcher.ViewModel
             return resultsCopy;
         }
 
-        private static IReadOnlyList<QuickSwitchResult> DeepClone(IReadOnlyList<QuickSwitchResult> results, CancellationToken token = default)
+        private static IReadOnlyList<QuickSwitchResult> DeepCloneResults(IReadOnlyList<QuickSwitchResult> results, CancellationToken token = default)
         {
             var resultsCopy = new List<QuickSwitchResult>();
 
@@ -1428,7 +1428,7 @@ namespace Flow.Launcher.ViewModel
                     else
                     {
                         // make a copy of results to avoid possible issue that FL changes some properties of the records, like score, etc.
-                        resultsCopy = DeepClone(results, token);
+                        resultsCopy = DeepCloneResults(results, token);
                     }
 
                     foreach (var result in resultsCopy)
@@ -1453,8 +1453,7 @@ namespace Flow.Launcher.ViewModel
                 {
                     var results = await PluginManager.QueryForPluginAsync(plugin, query, token);
 
-                    if (token.IsCancellationRequested)
-                        return;
+                    if (token.IsCancellationRequested) return;
 
                     IReadOnlyList<Result> resultsCopy;
                     if (results == null)
@@ -1464,7 +1463,7 @@ namespace Flow.Launcher.ViewModel
                     else
                     {
                         // make a copy of results to avoid possible issue that FL changes some properties of the records, like score, etc.
-                        resultsCopy = DeepClone(results, token);
+                        resultsCopy = DeepCloneResults(results, token);
                     }
 
                     foreach (var result in resultsCopy)
