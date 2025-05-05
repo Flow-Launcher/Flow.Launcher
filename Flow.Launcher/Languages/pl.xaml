@@ -131,6 +131,11 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="KoreanImeOpenLinkButton">Otwórz</system:String>
     <system:String x:Key="KoreanImeRegistry">Use Previous Korean IME</system:String>
     <system:String x:Key="KoreanImeRegistryTooltip">You can change the Previous Korean IME settings directly from here</system:String>
+    <system:String x:Key="homePage">Home Page</system:String>
+    <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
+    <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Szukaj wtyczek</system:String>
@@ -153,6 +158,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="DisplayModeOnOff">Aktywny</system:String>
     <system:String x:Key="DisplayModePriority">Priorytet</system:String>
     <system:String x:Key="DisplayModeSearchDelay">Opóźnienie wyszukiwania</system:String>
+    <system:String x:Key="DisplayModeHomeOnOff">Home Page</system:String>
     <system:String x:Key="currentPriority">Obecny Priorytet</system:String>
     <system:String x:Key="newPriority">Nowy Priorytet</system:String>
     <system:String x:Key="priority">Priorytet</system:String>
@@ -405,6 +411,10 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <!--  Search Delay Settings Dialog  -->
     <system:String x:Key="searchDelayTimeTitle">Ustawienie opóźnienia wyszukiwania</system:String>
     <system:String x:Key="searchDelayTimeTips">Podaj czas opóźnienia wyszukiwania (w ms) dla wtyczki. Pozostaw puste, aby użyć wartości domyślnej.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="homeTitle">Home Page</system:String>
+    <system:String x:Key="homeTips">Enable the plugin home page state if you like to show the plugin results when query is empty.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Skrót klawiszowy niestandardowych zapyta</system:String>
