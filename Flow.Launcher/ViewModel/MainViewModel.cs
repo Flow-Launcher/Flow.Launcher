@@ -35,7 +35,7 @@ namespace Flow.Launcher.ViewModel
         private Query _lastQuery;
         private bool _lastIsHomeQuery;
         private string _queryTextBeforeLeaveResults;
-        private string _ignoredQueryText = null;
+        private string _ignoredQueryText; // Used to ignore query text change when switching between context menu and query results
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
@@ -67,6 +67,7 @@ namespace Flow.Launcher.ViewModel
             _queryTextBeforeLeaveResults = "";
             _queryText = "";
             _lastQuery = new Query();
+            _ignoredQueryText = null; // null as invalid value
 
             Settings = Ioc.Default.GetRequiredService<Settings>();
             Settings.PropertyChanged += (_, args) =>
