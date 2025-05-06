@@ -13,6 +13,7 @@ namespace Flow.Launcher.Core.Plugin
             {
                 return new Query()
                 {
+                    Input = string.Empty,
                     Search = string.Empty,
                     RawQuery = string.Empty,
                     SearchTerms = Array.Empty<string>(),
