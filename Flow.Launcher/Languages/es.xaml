@@ -131,11 +131,11 @@
     <system:String x:Key="KoreanImeOpenLinkButton">Abrir</system:String>
     <system:String x:Key="KoreanImeRegistry">Utilizar IME Coreano anterior</system:String>
     <system:String x:Key="KoreanImeRegistryTooltip">Se puede cambiar la configuración anterior del IME coreano directamente desde aquí</system:String>
-    <system:String x:Key="homePage">Home Page</system:String>
-    <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
-    <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
-    <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
-    <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
+    <system:String x:Key="homePage">Página de inicio</system:String>
+    <system:String x:Key="homePageToolTip">Muestra los resultados de la página de inicio cuando el texto de la consulta está vacío.</system:String>
+    <system:String x:Key="historyResultsForHomePage">Mostrar historial de resultados en la página de inicio</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Número máximo de resultados del historial en la página de inicio</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">Esto solo se puede editar si el complemento soporta la función de Inicio y la Página de Inicio está activada.</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Buscar complemento</system:String>
@@ -158,7 +158,7 @@
     <system:String x:Key="DisplayModeOnOff">Activado</system:String>
     <system:String x:Key="DisplayModePriority">Prioridad</system:String>
     <system:String x:Key="DisplayModeSearchDelay">Retardo de búsqueda</system:String>
-    <system:String x:Key="DisplayModeHomeOnOff">Home Page</system:String>
+    <system:String x:Key="DisplayModeHomeOnOff">Página de inicio</system:String>
     <system:String x:Key="currentPriority">Prioridad actual</system:String>
     <system:String x:Key="newPriority">Nueva prioridad</system:String>
     <system:String x:Key="priority">Prioridad</system:String>
@@ -356,7 +356,7 @@
     <system:String x:Key="logfolder">Carpeta de registros</system:String>
     <system:String x:Key="clearlogfolder">Eliminar registros</system:String>
     <system:String x:Key="clearlogfolderMessage">¿Está seguro de que desea eliminar todos los registros?</system:String>
-    <system:String x:Key="cachefolder">Cache Folder</system:String>
+    <system:String x:Key="cachefolder">Carpeta del caché</system:String>
     <system:String x:Key="clearcachefolder">Limpiar cachés</system:String>
     <system:String x:Key="clearcachefolderMessage">¿Está seguro de que desea eliminar todos los cachés?</system:String>
     <system:String x:Key="clearfolderfailMessage">No se pudo eliminar parte de las carpetas y archivos. Por favor, consulte el archivo de registro para más información</system:String>
@@ -405,7 +405,7 @@
     <system:String x:Key="newActionKeywordsSameAsOld">Esta nueva palabra clave de acción es la misma que la anterior, por favor elija una diferente</system:String>
     <system:String x:Key="success">Correcto</system:String>
     <system:String x:Key="completedSuccessfully">Finalizado correctamente</system:String>
-    <system:String x:Key="failedToCopy">Failed to copy</system:String>
+    <system:String x:Key="failedToCopy">No se pudo copiar</system:String>
     <system:String x:Key="actionkeyword_tips">Introduzca las palabras clave de acción que desea utilizar para iniciar el complemento y utilice espacios en blanco para separarlas. Utilice * si no desea especificar ninguna, para que el complemento se inicie sin ninguna palabra clave de acción.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
@@ -413,8 +413,8 @@
     <system:String x:Key="searchDelayTimeTips">Introducir el tiempo de retardo de búsqueda en ms que se desea utilizar para el complemento. Introducir un espacio vacío si no desea especificar ninguno, y el complemento utilizará el tiempo de retardo de búsqueda predeterminado.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
-    <system:String x:Key="homeTitle">Home Page</system:String>
-    <system:String x:Key="homeTips">Enable the plugin home page state if you like to show the plugin results when query is empty.</system:String>
+    <system:String x:Key="homeTitle">Página de inicio</system:String>
+    <system:String x:Key="homeTips">Activar el estado de la página de inicio del complemento si se desea mostrar los resultados del complemento cuando la consulta está vacía.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Atajo de teclado de consulta personalizada</system:String>
