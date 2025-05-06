@@ -34,7 +34,7 @@ namespace Flow.Launcher.ViewModel
         private bool _isQueryRunning;
         private Query _lastQuery;
         private string _queryTextBeforeLeaveResults;
-        private string _ignoredQueryText = null;
+        private string _ignoredQueryText; // Used to ignore query text change when switching between context menu and query results
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
@@ -45,6 +45,7 @@ namespace Flow.Launcher.ViewModel
         private readonly TopMostRecord _topMostRecord;
 
         private CancellationTokenSource _updateSource; // Used to cancel old query flows
+        private CancellationToken _updateToken; // Used to avoid ObjectDisposedException of _updateSource.Token
 
         private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
         private Task _resultsViewUpdateTask;
@@ -60,6 +61,9 @@ namespace Flow.Launcher.ViewModel
             _queryTextBeforeLeaveResults = "";
             _queryText = "";
             _lastQuery = new Query();
+            _ignoredQueryText = null;
+            _updateSource = new CancellationTokenSource();
+            _updateToken = _updateSource.Token;
 
             Settings = Ioc.Default.GetRequiredService<Settings>();
             Settings.PropertyChanged += (_, args) =>
@@ -241,7 +245,7 @@ namespace Flow.Launcher.ViewModel
                         return;
                     }
 
-                    var token = e.Token == default ? _updateSource.Token : e.Token;
+                    var token = e.Token == default ? _updateToken : e.Token;
 
                     // make a clone to avoid possible issue that plugin will also change the list and items when updating view model
                     var resultsCopy = DeepCloneResults(e.Results, token);
@@ -1213,7 +1217,7 @@ namespace Flow.Launcher.ViewModel
 
         private async Task QueryResultsAsync(bool searchDelay, bool isReQuery = false, bool reSelect = true)
         {
-            _updateSource?.Cancel();
+            _updateSource.Cancel();
 
             App.API.LogDebug(ClassName, $"Start query with text: <{QueryText}>");
 
@@ -1239,7 +1243,9 @@ namespace Flow.Launcher.ViewModel
 
             App.API.LogDebug(ClassName, $"Start query with ActionKeyword <{query.ActionKeyword}> and RawQuery <{query.RawQuery}>");
 
+            _updateSource.Dispose();
             _updateSource = new CancellationTokenSource();
+            _updateToken = _updateSource.Token;
 
             ProgressBarVisibility = Visibility.Hidden;
             _isQueryRunning = true;
@@ -1247,7 +1253,7 @@ namespace Flow.Launcher.ViewModel
             // Switch to ThreadPool thread
             await TaskScheduler.Default;
 
-            if (_updateSource.Token.IsCancellationRequested) return;
+            if (_updateToken.IsCancellationRequested) return;
 
             // Update the query's IsReQuery property to true if this is a re-query
             query.IsReQuery = isReQuery;
@@ -1280,12 +1286,11 @@ namespace Flow.Launcher.ViewModel
             {
                 // Wait 15 millisecond for query change in global query
                 // if query changes, return so that it won't be calculated
-                await Task.Delay(15, _updateSource.Token);
-                if (_updateSource.Token.IsCancellationRequested)
-                    return;
+                await Task.Delay(15, _updateToken);
+                if (_updateToken.IsCancellationRequested) return;
             }*/
 
-            _ = Task.Delay(200, _updateSource.Token).ContinueWith(_ =>
+            _ = Task.Delay(200, _updateToken).ContinueWith(_ =>
                 {
                     // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
                     if (_isQueryRunning)
@@ -1293,7 +1298,7 @@ namespace Flow.Launcher.ViewModel
                         ProgressBarVisibility = Visibility.Visible;
                     }
                 },
-                _updateSource.Token,
+                _updateToken,
                 TaskContinuationOptions.NotOnCanceled,
                 TaskScheduler.Default);
 
@@ -1301,7 +1306,7 @@ namespace Flow.Launcher.ViewModel
 
             var tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
             {
-                false => QueryTaskAsync(plugin, _updateSource.Token),
+                false => QueryTaskAsync(plugin, _updateToken),
                 true => Task.CompletedTask
             }).ToArray();
 
@@ -1315,13 +1320,13 @@ namespace Flow.Launcher.ViewModel
                 // nothing to do here
             }
 
-            if (_updateSource.Token.IsCancellationRequested) return;
+            if (_updateToken.IsCancellationRequested) return;
 
             // this should happen once after all queries are done so progress bar should continue
             // until the end of all querying
             _isQueryRunning = false;
 
-            if (!_updateSource.Token.IsCancellationRequested)
+            if (!_updateToken.IsCancellationRequested)
             {
                 // update to hidden if this is still the current query
                 ProgressBarVisibility = Visibility.Hidden;
