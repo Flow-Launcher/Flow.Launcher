@@ -69,8 +69,6 @@ namespace Flow.Launcher.ViewModel
             _queryText = "";
             _lastQuery = new Query();
             _ignoredQueryText = null; // null as invalid value
-            _updateSource = new CancellationTokenSource();
-            _updateToken = _updateSource.Token;
 
             Settings = Ioc.Default.GetRequiredService<Settings>();
             Settings.PropertyChanged += (_, args) =>
