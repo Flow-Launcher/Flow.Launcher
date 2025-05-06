@@ -1268,9 +1268,9 @@ namespace Flow.Launcher.ViewModel
 
             var isHomeQuery = query.RawQuery == string.Empty;
 
-            var oldSource = Interlocked.Exchange(ref _updateSource, new CancellationTokenSource());
+            _updateSource?.Dispose(); // Dispose old update source to fix possible cancellation issue
+            _updateSource = new CancellationTokenSource();
             _updateToken = _updateSource.Token;
-            oldSource?.Dispose(); // Dispose old update source to fix possible cancellation issue
 
             ProgressBarVisibility = Visibility.Hidden;
             _isQueryRunning = true;
