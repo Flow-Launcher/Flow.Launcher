@@ -47,6 +47,7 @@ namespace Flow.Launcher.ViewModel
 
         private CancellationTokenSource _updateSource; // Used to cancel old query flows
         private CancellationToken _updateToken; // Used to avoid ObjectDisposedException of _updateSource.Token
+        private readonly object _updateSourceLock = new();
 
         private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
         private Task _resultsViewUpdateTask;
@@ -69,8 +70,11 @@ namespace Flow.Launcher.ViewModel
             _queryText = "";
             _lastQuery = new Query();
             _ignoredQueryText = null; // null as invalid value
-            _updateSource = new CancellationTokenSource();
-            _updateToken = _updateSource.Token;
+            lock (_updateSourceLock)
+            {
+                _updateSource = new CancellationTokenSource();
+                _updateToken = _updateSource.Token;
+            }
 
             Settings = Ioc.Default.GetRequiredService<Settings>();
             Settings.PropertyChanged += (_, args) =>
@@ -1240,7 +1244,10 @@ namespace Flow.Launcher.ViewModel
 
         private async Task QueryResultsAsync(bool searchDelay, bool isReQuery = false, bool reSelect = true)
         {
-            _updateSource?.Cancel();
+            lock (_updateSourceLock)
+            {
+                _updateSource.Cancel();
+            }
 
             App.API.LogDebug(ClassName, $"Start query with text: <{QueryText}>");
 
@@ -1268,9 +1275,12 @@ namespace Flow.Launcher.ViewModel
 
             var isHomeQuery = query.RawQuery == string.Empty;
 
-            _updateSource?.Dispose(); // Dispose old update source to fix possible cancellation issue
-            _updateSource = new CancellationTokenSource();
-            _updateToken = _updateSource.Token;
+            lock (_updateSourceLock)
+            {
+                _updateSource.Dispose(); // Dispose old update source to fix possible cancellation issue
+                _updateSource = new CancellationTokenSource();
+                _updateToken = _updateSource.Token;
+            }
 
             ProgressBarVisibility = Visibility.Hidden;
             _isQueryRunning = true;
@@ -1888,7 +1898,10 @@ namespace Flow.Launcher.ViewModel
             {
                 if (disposing)
                 {
-                    _updateSource?.Dispose();
+                    lock (_updateSourceLock)
+                    {
+                        _updateSource?.Dispose();
+                    }
                     _resultsUpdateChannelWriter?.Complete();
                     if (_resultsViewUpdateTask?.IsCompleted == true)
                     {
