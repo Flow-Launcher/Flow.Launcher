@@ -37,7 +37,7 @@ namespace Flow.Launcher.ViewModel
         private Query _lastQuery;
         private bool _lastIsHomeQuery;
         private string _queryTextBeforeLeaveResults;
-        private string _ignoredQueryText = null;
+        private string _ignoredQueryText; // Used to ignore query text change when switching between context menu and query results
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
@@ -48,6 +48,7 @@ namespace Flow.Launcher.ViewModel
         private readonly TopMostRecord _topMostRecord;
 
         private CancellationTokenSource _updateSource; // Used to cancel old query flows
+        private CancellationToken _updateToken; // Used to avoid ObjectDisposedException of _updateSource.Token
 
         private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
         private Task _resultsViewUpdateTask;
@@ -70,6 +71,7 @@ namespace Flow.Launcher.ViewModel
             _queryTextBeforeLeaveResults = "";
             _queryText = "";
             _lastQuery = new Query();
+            _ignoredQueryText = null; // null as invalid value
 
             Settings = Ioc.Default.GetRequiredService<Settings>();
             Settings.PropertyChanged += (_, args) =>
@@ -252,7 +254,7 @@ namespace Flow.Launcher.ViewModel
                         return;
                     }
 
-                    var token = e.Token == default ? _updateSource.Token : e.Token;
+                    var token = e.Token == default ? _updateToken : e.Token;
 
                     IReadOnlyList<Result> resultsCopy;
                     if (e.Results == null)
@@ -1328,7 +1330,12 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
-            _updateSource = new CancellationTokenSource();
+            _updateSource?.Dispose();
+
+            var currentUpdateSource = new CancellationTokenSource();
+            _updateSource = currentUpdateSource;
+            var currentCancellationToken = _updateSource.Token;
+            _updateToken = currentCancellationToken;
 
             ProgressBarVisibility = Visibility.Hidden;
             _isQueryRunning = true;
@@ -1336,7 +1343,7 @@ namespace Flow.Launcher.ViewModel
             // Switch to ThreadPool thread
             await TaskScheduler.Default;
 
-            if (_updateSource.Token.IsCancellationRequested) return;
+            if (currentCancellationToken.IsCancellationRequested) return;
 
             // Update the query's IsReQuery property to true if this is a re-query
             query.IsReQuery = isReQuery;
@@ -1385,12 +1392,11 @@ namespace Flow.Launcher.ViewModel
             {
                 // Wait 15 millisecond for query change in global query
                 // if query changes, return so that it won't be calculated
-                await Task.Delay(15, _updateSource.Token);
-                if (_updateSource.Token.IsCancellationRequested)
-                    return;
+                await Task.Delay(15, currentCancellationToken);
+                if (currentCancellationToken.IsCancellationRequested) return;
             }*/
 
-            _ = Task.Delay(200, _updateSource.Token).ContinueWith(_ =>
+            _ = Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
                 {
                     // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
                     if (_isQueryRunning)
@@ -1398,7 +1404,7 @@ namespace Flow.Launcher.ViewModel
                         ProgressBarVisibility = Visibility.Visible;
                     }
                 },
-                _updateSource.Token,
+                currentCancellationToken,
                 TaskContinuationOptions.NotOnCanceled,
                 TaskScheduler.Default);
 
@@ -1409,21 +1415,21 @@ namespace Flow.Launcher.ViewModel
             {
                 tasks = plugins.Select(plugin => plugin.Metadata.HomeDisabled switch
                 {
-                    false => QueryTaskAsync(plugin, _updateSource.Token),
+                    false => QueryTaskAsync(plugin, currentCancellationToken),
                     true => Task.CompletedTask
                 }).ToArray();
 
                 // Query history results for home page firstly so it will be put on top of the results
                 if (Settings.ShowHistoryResultsForHomePage)
                 {
-                    QueryHistoryTask();
+                    QueryHistoryTask(currentCancellationToken);
                 }
             }
             else
             {
                 tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
                 {
-                    false => QueryTaskAsync(plugin, _updateSource.Token),
+                    false => QueryTaskAsync(plugin, currentCancellationToken),
                     true => Task.CompletedTask
                 }).ToArray();
             }
@@ -1438,13 +1444,13 @@ namespace Flow.Launcher.ViewModel
                 // nothing to do here
             }
 
-            if (_updateSource.Token.IsCancellationRequested) return;
+            if (currentCancellationToken.IsCancellationRequested) return;
 
             // this should happen once after all queries are done so progress bar should continue
             // until the end of all querying
             _isQueryRunning = false;
 
-            if (!_updateSource.Token.IsCancellationRequested)
+            if (!currentCancellationToken.IsCancellationRequested)
             {
                 // update to hidden if this is still the current query
                 ProgressBarVisibility = Visibility.Hidden;
@@ -1542,19 +1548,19 @@ namespace Flow.Launcher.ViewModel
                 }
             }
 
-            void QueryHistoryTask()
+            void QueryHistoryTask(CancellationToken token)
             {
                 // Select last history results and revert its order to make sure last history results are on top
                 var historyItems = _history.Items.TakeLast(Settings.MaxHistoryResultsToShowForHomePage).Reverse();
 
                 var results = GetHistoryItems(historyItems);
 
-                if (_updateSource.Token.IsCancellationRequested) return;
+                if (token.IsCancellationRequested) return;
 
                 App.API.LogDebug(ClassName, $"Update results for history");
 
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, _historyMetadata, query,
-                    _updateSource.Token)))
+                    token)))
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
