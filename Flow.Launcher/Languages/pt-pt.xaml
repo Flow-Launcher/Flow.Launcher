@@ -133,8 +133,8 @@
     <system:String x:Key="homePage">Página inicial</system:String>
     <system:String x:Key="homePageToolTip">Mostrar resultados da página inicial se o termo de pesquisa estiver vazio.</system:String>
     <system:String x:Key="historyResultsForHomePage">Mostrar histórico na página inicial</system:String>
-    <system:String x:Key="historyResultsCountForHomePage">Máximo de resultados a mostrar na página inicial</system:String>
-    <system:String x:Key="homeToggleBoxToolTip">Esta opção apenas pode ser editada se o plugin tiver suporte a Página inicial e se esta estiver ativa.</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Máximo de resultados a mostrar na Página inicial</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">Esta opção apenas pode ser editada se o plugin tiver suporte a Página inicial e se estiver ativo.</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Pesquisar plugins</system:String>
@@ -403,7 +403,7 @@
     <system:String x:Key="newActionKeywordsSameAsOld">A palavra-chave escolhida é igual à anterior. Por favor escolha outra.</system:String>
     <system:String x:Key="success">Sucesso</system:String>
     <system:String x:Key="completedSuccessfully">Terminado com sucesso</system:String>
-    <system:String x:Key="failedToCopy">Failed to copy</system:String>
+    <system:String x:Key="failedToCopy">Falha ao copiar</system:String>
     <system:String x:Key="actionkeyword_tips">Introduza as palavras-chave que pretende utilizar para iniciar o plugin e um espaço vazio caso queira mais do que uma. Utilize * se não quiser especificar uma palavra-chave e o plugin será ativado sem palavras-chave.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
@@ -412,7 +412,7 @@
 
     <!--  Search Delay Settings Dialog  -->
     <system:String x:Key="homeTitle">Página inicial</system:String>
-    <system:String x:Key="homeTips">Enable the plugin home page state if you like to show the plugin results when query is empty.</system:String>
+    <system:String x:Key="homeTips">Ative o plugin Página inicial se quiser mostrar os seus resultados so termo de pesquisa estiver vazio.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Tecla de atalho personalizada</system:String>
