@@ -1333,8 +1333,8 @@ namespace Flow.Launcher.ViewModel
                     }
                 }
 
-                var validPluginNames = plugins.Select(x => $"<{x.Metadata.Name}>");
-                App.API.LogDebug(ClassName, $"Valid <{plugins.Count}> plugins: {string.Join(" ", validPluginNames)}");
+                App.API.LogDebug(ClassName, $"Valid <{plugins.Count}> plugins: " +
+                    $"{string.Join(" ", plugins.Select(x => $"<{x.Metadata.Name}>"))}");
 
                 // Do not wait for performance improvement
                 /*if (string.IsNullOrEmpty(query.ActionKeyword))
