@@ -1267,6 +1267,8 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
+            var isHomeQuery = query.RawQuery == string.Empty;
+
             try
             {
                 // Check if the query has changed because query can be changed so fast that
@@ -1274,8 +1276,6 @@ namespace Flow.Launcher.ViewModel
                 if (query.Input != QueryText) return;
 
                 App.API.LogDebug(ClassName, $"Start query with ActionKeyword <{query.ActionKeyword}> and RawQuery <{query.RawQuery}>");
-
-                var isHomeQuery = query.RawQuery == string.Empty;
 
                 _updateSource?.Dispose();
 
@@ -1364,7 +1364,7 @@ namespace Flow.Launcher.ViewModel
                 {
                     tasks = plugins.Select(plugin => plugin.Metadata.HomeDisabled switch
                     {
-                        false => QueryTaskAsync(plugin, true, currentCancellationToken),
+                        false => QueryTaskAsync(plugin, currentCancellationToken),
                         true => Task.CompletedTask
                     }).ToArray();
 
@@ -1378,7 +1378,7 @@ namespace Flow.Launcher.ViewModel
                 {
                     tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
                     {
-                        false => QueryTaskAsync(plugin, false, currentCancellationToken),
+                        false => QueryTaskAsync(plugin, currentCancellationToken),
                         true => Task.CompletedTask
                     }).ToArray();
                 }
@@ -1412,7 +1412,7 @@ namespace Flow.Launcher.ViewModel
             }
 
             // Local function
-            async Task QueryTaskAsync(PluginPair plugin, bool isHomeQuery, CancellationToken token)
+            async Task QueryTaskAsync(PluginPair plugin, CancellationToken token)
             {
                 App.API.LogDebug(ClassName, $"Wait for querying plugin <{plugin.Metadata.Name}>");
 
