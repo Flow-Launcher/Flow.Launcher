@@ -1292,7 +1292,7 @@ namespace Flow.Launcher.ViewModel
                 // Switch to ThreadPool thread
                 await TaskScheduler.Default;
 
-                if (_updateSource.Token.IsCancellationRequested) return;
+                if (currentCancellationToken.IsCancellationRequested) return;
 
                 // Update the query's IsReQuery property to true if this is a re-query
                 query.IsReQuery = isReQuery;
