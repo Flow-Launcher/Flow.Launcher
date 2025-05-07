@@ -130,11 +130,11 @@
     <system:String x:Key="KoreanImeOpenLinkButton">Abrir</system:String>
     <system:String x:Key="KoreanImeRegistry">Utilizar versão anterior de IME Coreano</system:String>
     <system:String x:Key="KoreanImeRegistryTooltip">Pode alterar as definições do método de introdução coreano aqui</system:String>
-    <system:String x:Key="homePage">Home Page</system:String>
-    <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
-    <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
-    <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
-    <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
+    <system:String x:Key="homePage">Página inicial</system:String>
+    <system:String x:Key="homePageToolTip">Mostrar resultados da página inicial se o termo de pesquisa estiver vazio.</system:String>
+    <system:String x:Key="historyResultsForHomePage">Mostrar histórico na página inicial</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Máximo de resultados a mostrar na página inicial</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">Esta opção apenas pode ser editada se o plugin tiver suporte a Página inicial e se esta estiver ativa.</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Pesquisar plugins</system:String>
@@ -157,7 +157,7 @@
     <system:String x:Key="DisplayModeOnOff">Ativo</system:String>
     <system:String x:Key="DisplayModePriority">Prioridade</system:String>
     <system:String x:Key="DisplayModeSearchDelay">Atraso da pesquisa</system:String>
-    <system:String x:Key="DisplayModeHomeOnOff">Home Page</system:String>
+    <system:String x:Key="DisplayModeHomeOnOff">Página inicial</system:String>
     <system:String x:Key="currentPriority">Prioridade atual</system:String>
     <system:String x:Key="newPriority">Nova prioridade</system:String>
     <system:String x:Key="priority">Prioridade</system:String>
@@ -411,7 +411,7 @@
     <system:String x:Key="searchDelayTimeTips">Indique o tempo de espera que pretende utilizar com este plugin. Nada escreva se não o quiser especificar e o plugin irá utilizar o tempo de espera padrão.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
-    <system:String x:Key="homeTitle">Home Page</system:String>
+    <system:String x:Key="homeTitle">Página inicial</system:String>
     <system:String x:Key="homeTips">Enable the plugin home page state if you like to show the plugin results when query is empty.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
