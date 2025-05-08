@@ -106,7 +106,7 @@
     <system:String x:Key="AlwaysPreview">הצג תמיד תצוגה מקדימה</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">פתח תמיד את לוח התצוגה המקדימה כאשר Flow מופעל. הקש על {0} כדי להחליף את התצוגה המקדימה.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">לא ניתן להחיל אפקט צל כאשר העיצוב הנוכחי מוגדר לאפקט טשטוש</system:String>
-    <system:String x:Key="searchDelay">Search Delay</system:String>
+    <system:String x:Key="searchDelay">השהיית חיפוש</system:String>
     <system:String x:Key="searchDelayToolTip">מוסיף עיכוב קצר בזמן ההקלדה כדי להפחית קפיצות בממשק המשתמש ועומס בתוצאות. מומלץ אם מהירות ההקלדה שלך ממוצעת.</system:String>
     <system:String x:Key="searchDelayNumberBoxToolTip">הזן את זמן ההמתנה (בשניות) עד שהקלט נחשב כמושלם. ניתן לערוך זאת רק אם השהיית חיפוש מופעלת.</system:String>
     <system:String x:Key="searchDelayTime">זמן עיכוב חיפוש ברירת מחדל</system:String>
@@ -355,7 +355,7 @@
     <system:String x:Key="logfolder">תיקיית יומני רישום</system:String>
     <system:String x:Key="clearlogfolder">נקה יומני רישום</system:String>
     <system:String x:Key="clearlogfolderMessage">האם אתה בטוח שברצונך למחוק את כל היומנים?</system:String>
-    <system:String x:Key="cachefolder">Cache Folder</system:String>
+    <system:String x:Key="cachefolder">תיקיית מטמון</system:String>
     <system:String x:Key="clearcachefolder">נקה נתוני מטמון</system:String>
     <system:String x:Key="clearcachefolderMessage">האם אתה בטוח שברצונך למחוק את כל הנתונים שבמטמון?</system:String>
     <system:String x:Key="clearfolderfailMessage">נכשל ניקוי חלק מהתיקיות והקבצים. עיין בלוג לקבלת מידע נוסף</system:String>
@@ -404,7 +404,7 @@
     <system:String x:Key="newActionKeywordsSameAsOld">מילת הפעולה החדשה זהה לישנה, נא לבחור מילת פעולה שונה</system:String>
     <system:String x:Key="success">הצליח</system:String>
     <system:String x:Key="completedSuccessfully">הושלם בהצלחה</system:String>
-    <system:String x:Key="failedToCopy">Failed to copy</system:String>
+    <system:String x:Key="failedToCopy">ההעתקה נכשלה</system:String>
     <system:String x:Key="actionkeyword_tips">הזן את מילות הפעולה שבהן תרצה להשתמש כדי להפעיל את התוסף, והשתמש ברווחים כדי להפריד ביניהן. השתמש ב-* אם אינך רוצה להגדיר כלל, והתוסף יופעל ללא מילות פעולה.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
