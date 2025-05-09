@@ -77,3 +77,5 @@ GetDlgItem
 PostMessage
 BM_CLICK
 WM_GETTEXT
+OpenProcess
+QueryFullProcessImageName

@@ -42,7 +42,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         private static readonly List<IQuickSwitchExplorer> _quickSwitchExplorers = new()
         {
-            new WindowsExplorer()
+            new WindowsExplorer(),
+            new FilesExplorer()
         };
 
         private static IQuickSwitchExplorer _lastExplorer = null;
