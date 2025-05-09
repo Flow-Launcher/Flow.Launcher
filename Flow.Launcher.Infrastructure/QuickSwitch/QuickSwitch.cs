@@ -107,26 +107,12 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
             if (enabled)
             {
-                // Check if there are explorer windows
+                // Check if there are explorer windows and get the topmost one
                 try
                 {
-                    lock (_lastExplorerLock)
+                    if (RefreshLastExplorer())
                     {
-                        foreach (var explorer in _quickSwitchExplorers)
-                        {
-                            // Use HWND.Null here because we want to check all windows
-                            if (explorer.CheckExplorerWindow(HWND.Null))
-                            {
-                                if (_lastExplorer == null)
-                                {
-                                    Log.Debug(ClassName, $"Explorer window");
-                                    // Set last explorer view if not set,
-                                    // this is beacuse default WindowsExplorer is the first element
-                                    _lastExplorer = explorer;
-                                    break;
-                                }
-                            }
-                        }
+                        Log.Debug(ClassName, $"Explorer window found");
                     }
                 }
                 catch (System.Exception)
@@ -239,6 +225,42 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
 
             _enabled = enabled;
+        }
+
+        private static bool RefreshLastExplorer()
+        {
+            var found = false;
+
+            lock (_lastExplorerLock)
+            {
+                // Enum windows from the top to the bottom
+                PInvoke.EnumWindows((hWnd, _) =>
+                {
+                    foreach (var explorer in _quickSwitchExplorers)
+                    {
+                        if (explorer.CheckExplorerWindow(hWnd))
+                        {
+                            _lastExplorer = explorer;
+                            found = true;
+                            return false;
+                        }
+                    }
+
+                    // If we reach here, it means that the window is not a file explorer
+                    return true;
+                }, IntPtr.Zero);
+            }
+
+            return found;
+        }
+
+        #endregion
+
+        #region Active Explorer
+
+        public static string GetActiveExplorerPath()
+        {
+            return RefreshLastExplorer() ? _lastExplorer.GetExplorerPath() : string.Empty;
         }
 
         #endregion
