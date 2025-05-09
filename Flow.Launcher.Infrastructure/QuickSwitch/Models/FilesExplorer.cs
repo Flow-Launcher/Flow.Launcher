@@ -5,10 +5,7 @@ using FlaUI.Core.AutomationElements;
 using FlaUI.UIA3;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.QuickSwitch.Interface;
-using Microsoft.Win32.SafeHandles;
-using Windows.Win32;
 using Windows.Win32.Foundation;
-using Windows.Win32.System.Threading;
 
 namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 {
@@ -29,7 +26,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
         {
             var isExplorer = false;
             // Is it from Files?
-            var processName = Path.GetFileName(GetProcessPathFromHwnd(foreground));
+            var processName = Win32Helper.GetProcessPathFromHwnd(foreground);
             if (processName.ToLower() == "files.exe")
             {
                 // Is it Files's file window?
@@ -57,32 +54,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
                 }
             }
             return isExplorer;
-        }
-
-        public static unsafe string GetProcessPathFromHwnd(HWND hWnd)
-        {
-            uint pid;
-            var threadId = PInvoke.GetWindowThreadProcessId(hWnd, &pid);
-            if (threadId == 0) return string.Empty;
-
-            var process = PInvoke.OpenProcess(PROCESS_ACCESS_RIGHTS.PROCESS_QUERY_LIMITED_INFORMATION, false, pid);
-            if (process.Value != IntPtr.Zero)
-            {
-                using var safeHandle = new SafeProcessHandle(process.Value, true);
-                uint capacity = 2000;
-                Span<char> buffer = new char[capacity];
-                fixed (char* pBuffer = buffer)
-                {
-                    if (!PInvoke.QueryFullProcessImageName(safeHandle, PROCESS_NAME_FORMAT.PROCESS_NAME_WIN32, (PWSTR)pBuffer, ref capacity))
-                    {
-                        return string.Empty;
-                    }
-
-                    return buffer[..(int)capacity].ToString();
-                }
-            }
-
-            return string.Empty;
         }
 
         public string GetExplorerPath()

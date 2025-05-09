@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -13,9 +14,11 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Microsoft.Win32;
+using Microsoft.Win32.SafeHandles;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Dwm;
+using Windows.Win32.System.Threading;
 using Windows.Win32.UI.Input.KeyboardAndMouse;
 using Windows.Win32.UI.WindowsAndMessaging;
 using Point = System.Windows.Point;
@@ -789,6 +792,41 @@ namespace Flow.Launcher.Infrastructure
                 rect.bottom - rect.top
             );
             return true;
+        }
+
+        #endregion
+
+        #region Window Process
+
+        internal static unsafe string GetProcessNameFromHwnd(HWND hWnd)
+        {
+            return Path.GetFileName(GetProcessPathFromHwnd(hWnd));
+        }
+
+        internal static unsafe string GetProcessPathFromHwnd(HWND hWnd)
+        {
+            uint pid;
+            var threadId = PInvoke.GetWindowThreadProcessId(hWnd, &pid);
+            if (threadId == 0) return string.Empty;
+
+            var process = PInvoke.OpenProcess(PROCESS_ACCESS_RIGHTS.PROCESS_QUERY_LIMITED_INFORMATION, false, pid);
+            if (process.Value != IntPtr.Zero)
+            {
+                using var safeHandle = new SafeProcessHandle(process.Value, true);
+                uint capacity = 2000;
+                Span<char> buffer = new char[capacity];
+                fixed (char* pBuffer = buffer)
+                {
+                    if (!PInvoke.QueryFullProcessImageName(safeHandle, PROCESS_NAME_FORMAT.PROCESS_NAME_WIN32, (PWSTR)pBuffer, ref capacity))
+                    {
+                        return string.Empty;
+                    }
+
+                    return buffer[..(int)capacity].ToString();
+                }
+            }
+
+            return string.Empty;
         }
 
         #endregion
