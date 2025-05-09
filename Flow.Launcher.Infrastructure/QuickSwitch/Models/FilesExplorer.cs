@@ -25,23 +25,23 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
         private static FilesWindow _lastExplorerView = null;
         private static readonly object _lastExplorerViewLock = new();
 
-        public bool CheckExplorerWindow(HWND hWnd)
+        public bool CheckExplorerWindow(HWND foreground)
         {
             var isExplorer = false;
             lock (_lastExplorerViewLock)
             {
                 // Is it from Files?
-                var processName = Path.GetFileName(GetProcessPathFromHwnd(hWnd));
+                var processName = Path.GetFileName(GetProcessPathFromHwnd(foreground));
                 if (processName == "Files.exe")
                 {
                     // Is it Files's file window?
                     try
                     {
                         var automation = new UIA3Automation();
-                        var Files = automation.FromHandle(hWnd);
+                        var Files = automation.FromHandle(foreground);
                         if (Files.Name == "Files" || Files.Name.Contains("- Files"))
                         {
-                            _lastExplorerView = new FilesWindow(hWnd, automation, Files);
+                            _lastExplorerView = new FilesWindow(foreground, automation, Files);
                             isExplorer = true;
                         }
                     }
