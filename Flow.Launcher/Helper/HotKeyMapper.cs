@@ -30,11 +30,6 @@ internal static class HotKeyMapper
         LoadCustomPluginHotkey();
     }
 
-    internal static void Dispose()
-    {
-        QuickSwitch.Dispose();
-    }
-
     internal static void OnToggleHotkey(object sender, HotkeyEventArgs args)
     {
         if (!_mainViewModel.ShouldIgnoreHotkeys())
