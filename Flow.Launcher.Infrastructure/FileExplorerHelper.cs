@@ -10,9 +10,9 @@ namespace Flow.Launcher.Infrastructure
         public static string GetActiveExplorerPath()
         {
             var explorerPath = QuickSwitch.QuickSwitch.GetActiveExplorerPath();
-            if (string.IsNullOrEmpty(explorerPath)) return null;
-
-            return GetDirectoryPath(new Uri(explorerPath).LocalPath);
+            return !string.IsNullOrEmpty(explorerPath) ? 
+                GetDirectoryPath(new Uri(explorerPath).LocalPath) : 
+                null;
         }
 
         /// <summary>
