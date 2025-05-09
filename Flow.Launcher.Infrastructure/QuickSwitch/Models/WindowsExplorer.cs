@@ -21,35 +21,37 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
         public bool CheckExplorerWindow(HWND foreground)
         {
             var isExplorer = false;
-            lock (_lastExplorerViewLock)
+            // Is it from Explorer?
+            var processName = Win32Helper.GetProcessNameFromHwnd(foreground);
+            if (processName.ToLower() == "explorer.exe")
             {
                 EnumerateShellWindows((shellWindow) =>
                 {
                     try
                     {
-                        if (shellWindow is not IWebBrowser2 explorer)
-                        {
-                            return;
-                        }
+                        if (shellWindow is not IWebBrowser2 explorer) return true;
 
-                        if (explorer.HWND != foreground.Value)
-                        {
-                            return;
-                        }
+                        if (explorer.HWND != foreground.Value) return true;
 
-                        _lastExplorerView = explorer;
+                        lock (_lastExplorerViewLock)
+                        {
+                            _lastExplorerView = explorer;
+                        }
                         isExplorer = true;
+                        return false;
                     }
                     catch (COMException)
                     {
                         // Ignored
                     }
+
+                    return true;
                 });
             }
             return isExplorer;
         }
 
-        private static unsafe void EnumerateShellWindows(Action<object> action)
+        private static unsafe void EnumerateShellWindows(Func<object, bool> action)
         {
             // Create an instance of ShellWindows
             var clsidShellWindows = new Guid("9BA05972-F6A8-11CF-A442-00A0C90A8F39"); // ShellWindowsClass
@@ -70,7 +72,10 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
             var count = shellWindows.Count;
             for (var i = 0; i < count; i++)
             {
-                action(shellWindows.Item(i));
+                if (!action(shellWindows.Item(i)))
+                {
+                    return;
+                }
             }
         }
 
