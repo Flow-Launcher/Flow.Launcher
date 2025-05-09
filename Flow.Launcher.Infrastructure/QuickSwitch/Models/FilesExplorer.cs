@@ -28,37 +28,38 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
         public bool CheckExplorerWindow(HWND foreground)
         {
             var isExplorer = false;
-            lock (_lastExplorerViewLock)
+            // Is it from Files?
+            var processName = Path.GetFileName(GetProcessPathFromHwnd(foreground));
+            if (processName.ToLower() == "files.exe")
             {
-                // Is it from Files?
-                var processName = Path.GetFileName(GetProcessPathFromHwnd(foreground));
-                if (processName == "Files.exe")
+                // Is it Files's file window?
+                try
                 {
-                    // Is it Files's file window?
-                    try
+                    var automation = new UIA3Automation();
+                    var Files = automation.FromHandle(foreground);
+                    var lowerFilesName = Files.Name.ToLower();
+                    if (lowerFilesName == "files" || lowerFilesName.Contains("- files"))
                     {
-                        var automation = new UIA3Automation();
-                        var Files = automation.FromHandle(foreground);
-                        if (Files.Name == "Files" || Files.Name.Contains("- Files"))
+                        lock (_lastExplorerViewLock)
                         {
                             _lastExplorerView = new FilesWindow(foreground, automation, Files);
-                            isExplorer = true;
                         }
+                        isExplorer = true;
                     }
-                    catch (TimeoutException e)
-                    {
-                        Log.Warn(ClassName, $"UIA timeout: {e}");
-                    }
-                    catch (System.Exception e)
-                    {
-                        Log.Warn(ClassName, $"Failed to bind window: {e}");
-                    }
+                }
+                catch (TimeoutException e)
+                {
+                    Log.Warn(ClassName, $"UIA timeout: {e}");
+                }
+                catch (System.Exception e)
+                {
+                    Log.Warn(ClassName, $"Failed to bind window: {e}");
                 }
             }
             return isExplorer;
         }
 
-        private static unsafe string GetProcessPathFromHwnd(HWND hWnd)
+        public static unsafe string GetProcessPathFromHwnd(HWND hWnd)
         {
             uint pid;
             var threadId = PInvoke.GetWindowThreadProcessId(hWnd, &pid);
