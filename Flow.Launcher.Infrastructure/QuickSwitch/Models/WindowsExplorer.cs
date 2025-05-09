@@ -32,7 +32,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
                             return;
                         }
 
-                        if (foreground != HWND.Null && explorer.HWND != foreground.Value)
+                        if (explorer.HWND != foreground.Value)
                         {
                             return;
                         }
