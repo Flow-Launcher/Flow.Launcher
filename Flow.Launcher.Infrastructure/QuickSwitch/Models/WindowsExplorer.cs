@@ -47,30 +47,30 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
                 });
             }
             return isExplorer;
+        }
 
-            static unsafe void EnumerateShellWindows(Action<object> action)
+        private static unsafe void EnumerateShellWindows(Action<object> action)
+        {
+            // Create an instance of ShellWindows
+            var clsidShellWindows = new Guid("9BA05972-F6A8-11CF-A442-00A0C90A8F39"); // ShellWindowsClass
+            var iidIShellWindows = typeof(IShellWindows).GUID; // IShellWindows
+
+            var result = PInvoke.CoCreateInstance(
+                &clsidShellWindows,
+                null,
+                CLSCTX.CLSCTX_ALL,
+                &iidIShellWindows,
+                out var shellWindowsObj);
+
+            if (result.Failed) return;
+
+            var shellWindows = (IShellWindows)shellWindowsObj;
+
+            // Enumerate the shell windows
+            var count = shellWindows.Count;
+            for (var i = 0; i < count; i++)
             {
-                // Create an instance of ShellWindows
-                var clsidShellWindows = new Guid("9BA05972-F6A8-11CF-A442-00A0C90A8F39"); // ShellWindowsClass
-                var iidIShellWindows = typeof(IShellWindows).GUID; // IShellWindows
-
-                var result = PInvoke.CoCreateInstance(
-                    &clsidShellWindows,
-                    null,
-                    CLSCTX.CLSCTX_ALL,
-                    &iidIShellWindows,
-                    out var shellWindowsObj);
-
-                if (result.Failed) return;
-
-                var shellWindows = (IShellWindows)shellWindowsObj;
-
-                // Enumerate the shell windows
-                var count = shellWindows.Count;
-                for (var i = 0; i < count; i++)
-                {
-                    action(shellWindows.Item(i));
-                }
+                action(shellWindows.Item(i));
             }
         }
 
