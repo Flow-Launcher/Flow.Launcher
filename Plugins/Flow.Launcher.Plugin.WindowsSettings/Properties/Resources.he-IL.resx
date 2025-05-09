@@ -1544,7 +1544,7 @@
     <value>שקיפות</value>
   </data>
   <data name="tritanopia" xml:space="preserve">
-    <value>tritanopia</value>
+    <value>עיוורון צבעים – כחול</value>
     <comment>Medical: Mean you don't can see yellow and blue colors</comment>
   </data>
   <data name="Troubleshoot" xml:space="preserve">
