@@ -106,7 +106,7 @@ namespace Flow.Launcher
             Win32Helper.DisableControlBox(this);
         }
 
-        private async void OnLoaded(object sender, RoutedEventArgs e)
+        private void OnLoaded(object sender, RoutedEventArgs e)
         {
             // Check first launch
             if (_settings.FirstLaunch)
@@ -715,38 +715,46 @@ namespace Flow.Launcher
 
         private void InitializePosition()
         {
-            if (_settings.SearchWindowScreen == SearchWindowScreens.RememberLastLaunchLocation)
+            // Initialize call twice to work around multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
+            InitializePositionInner();
+            InitializePositionInner();
+            return;
+
+            void InitializePositionInner()
             {
-                Top = _settings.WindowTop;
-                Left = _settings.WindowLeft;
-            }
-            else
-            {
-                var screen = SelectedScreen();
-                switch (_settings.SearchWindowAlign)
+                if (_settings.SearchWindowScreen == SearchWindowScreens.RememberLastLaunchLocation)
                 {
-                    case SearchWindowAligns.Center:
-                        Left = HorizonCenter(screen);
-                        Top = VerticalCenter(screen);
-                        break;
-                    case SearchWindowAligns.CenterTop:
-                        Left = HorizonCenter(screen);
-                        Top = 10;
-                        break;
-                    case SearchWindowAligns.LeftTop:
-                        Left = HorizonLeft(screen);
-                        Top = 10;
-                        break;
-                    case SearchWindowAligns.RightTop:
-                        Left = HorizonRight(screen);
-                        Top = 10;
-                        break;
-                    case SearchWindowAligns.Custom:
-                        Left = Win32Helper.TransformPixelsToDIP(this,
-                            screen.WorkingArea.X + _settings.CustomWindowLeft, 0).X;
-                        Top = Win32Helper.TransformPixelsToDIP(this, 0,
-                            screen.WorkingArea.Y + _settings.CustomWindowTop).Y;
-                        break;
+                    Top = _settings.WindowTop;
+                    Left = _settings.WindowLeft;
+                }
+                else
+                {
+                    var screen = SelectedScreen();
+                    switch (_settings.SearchWindowAlign)
+                    {
+                        case SearchWindowAligns.Center:
+                            Left = HorizonCenter(screen);
+                            Top = VerticalCenter(screen);
+                            break;
+                        case SearchWindowAligns.CenterTop:
+                            Left = HorizonCenter(screen);
+                            Top = 10;
+                            break;
+                        case SearchWindowAligns.LeftTop:
+                            Left = HorizonLeft(screen);
+                            Top = 10;
+                            break;
+                        case SearchWindowAligns.RightTop:
+                            Left = HorizonRight(screen);
+                            Top = 10;
+                            break;
+                        case SearchWindowAligns.Custom:
+                            Left = Win32Helper.TransformPixelsToDIP(this,
+                                screen.WorkingArea.X + _settings.CustomWindowLeft, 0).X;
+                            Top = Win32Helper.TransformPixelsToDIP(this, 0,
+                                screen.WorkingArea.Y + _settings.CustomWindowTop).Y;
+                            break;
+                    }
                 }
             }
         }
