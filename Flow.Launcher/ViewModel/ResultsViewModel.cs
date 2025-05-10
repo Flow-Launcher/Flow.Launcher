@@ -234,7 +234,7 @@ namespace Flow.Launcher.ViewModel
 
             var newResults = resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings));
 
-            if (resultsForUpdates.Any(x => x.requireClearExistingResults))
+            if (resultsForUpdates.Any(x => x.shouldClearExistingResults))
                 return newResults.OrderByDescending(rv => rv.Result.Score).ToList();
 
             return Results.Where(r => r?.Result != null && resultsForUpdates.All(u => u.ID != r.Result.PluginID))

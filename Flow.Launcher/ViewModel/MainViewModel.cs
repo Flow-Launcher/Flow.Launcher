@@ -1436,12 +1436,12 @@ namespace Flow.Launcher.ViewModel
                 App.API.LogDebug(ClassName, $"Update results for plugin <{plugin.Metadata.Name}>");
 
                 // Indicate if to clear existing results so to show only ones from plugins with action keywords
-                var clearExistingResultsRequired = RequireClearExistingResults(query, currentIsHomeQuery);
+                var shouldClearExistingResults = ShouldClearExistingResults(query, currentIsHomeQuery);
                 _lastQuery = query;
                 _previousIsHomeQuery = currentIsHomeQuery;
 
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
-                    token, reSelect, clearExistingResultsRequired)))
+                    token, reSelect, shouldClearExistingResults)))
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
@@ -1556,7 +1556,7 @@ namespace Flow.Launcher.ViewModel
         /// <param name="query">The current query.</param>
         /// <param name="currentIsHomeQuery">A flag indicating if the current query is a home query.</param>
         /// <returns>True if the existing results should be cleared, false otherwise.</returns>
-        private bool RequireClearExistingResults(Query query, bool currentIsHomeQuery)
+        private bool ShouldClearExistingResults(Query query, bool currentIsHomeQuery)
         {
             // If previous or current results are from home query, we need to clear them
             if (_previousIsHomeQuery || currentIsHomeQuery)
