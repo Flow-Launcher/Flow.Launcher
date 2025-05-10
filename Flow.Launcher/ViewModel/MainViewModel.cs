@@ -1503,14 +1503,14 @@ namespace Flow.Launcher.ViewModel
                 }
 
                 if (token.IsCancellationRequested) return;
-                    
+
                 App.API.LogDebug(ClassName, $"Update results for plugin <{plugin.Metadata.Name}>");
 
                 // Indicate if to clear existing results so to show only ones from plugins with action keywords
                 var shouldClearExistingResults = ShouldClearExistingResults(query, currentIsHomeQuery);
                 _lastQuery = query;
                 _previousIsHomeQuery = currentIsHomeQuery;
-                
+
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
                     token, reSelect, shouldClearExistingResults)))
                 {
