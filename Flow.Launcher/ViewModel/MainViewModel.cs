@@ -1323,7 +1323,7 @@ namespace Flow.Launcher.ViewModel
             var currentIsHomeQuery = query.RawQuery == string.Empty;
 
             // Do not show home page for quick switch window
-            if (quickSwitch && isHomeQuery)
+            if (quickSwitch && currentIsHomeQuery)
             {
                 ClearResults();
                 return;
