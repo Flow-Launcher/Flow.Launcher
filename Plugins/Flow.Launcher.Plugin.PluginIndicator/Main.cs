@@ -3,21 +3,33 @@ using System.Linq;
 
 namespace Flow.Launcher.Plugin.PluginIndicator
 {
-    public class Main : IPlugin, IPluginI18n
+    public class Main : IPlugin, IPluginI18n, IHomeQuery
     {
         internal PluginInitContext Context { get; private set; }
 
         public List<Result> Query(Query query)
         {
+            return QueryResults(query);
+        }
+
+        public List<Result> HomeQuery()
+        {
+            return QueryResults();
+        }
+
+        private List<Result> QueryResults(Query query = null)
+        {
             var nonGlobalPlugins = GetNonGlobalPlugins();
+            var querySearch = query?.Search ?? string.Empty;
+
             var results =
                 from keyword in nonGlobalPlugins.Keys
                 let plugin = nonGlobalPlugins[keyword].Metadata
-                let keywordSearchResult = Context.API.FuzzySearch(query.Search, keyword)
-                let searchResult = keywordSearchResult.IsSearchPrecisionScoreMet() ? keywordSearchResult : Context.API.FuzzySearch(query.Search, plugin.Name)
+                let keywordSearchResult = Context.API.FuzzySearch(querySearch, keyword)
+                let searchResult = keywordSearchResult.IsSearchPrecisionScoreMet() ? keywordSearchResult : Context.API.FuzzySearch(querySearch, plugin.Name)
                 let score = searchResult.Score
                 where (searchResult.IsSearchPrecisionScoreMet()
-                        || string.IsNullOrEmpty(query.Search)) // To list all available action keywords
+                        || string.IsNullOrEmpty(querySearch)) // To list all available action keywords
                     && !plugin.Disabled
                 select new Result
                 {

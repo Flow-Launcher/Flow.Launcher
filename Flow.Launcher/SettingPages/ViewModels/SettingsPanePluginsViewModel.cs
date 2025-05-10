@@ -80,18 +80,42 @@ public partial class SettingsPanePluginsViewModel : BaseModel
         }
     }
 
+    private bool _isHomeOnOffSelected;
+    public bool IsHomeOnOffSelected
+    {
+        get => _isHomeOnOffSelected;
+        set
+        {
+            if (_isHomeOnOffSelected != value)
+            {
+                _isHomeOnOffSelected = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
     public SettingsPanePluginsViewModel(Settings settings)
     {
         _settings = settings;
         UpdateEnumDropdownLocalizations();
     }
 
-    public string FilterText { get; set; } = string.Empty;
+    private string filterText = string.Empty;
+    public string FilterText
+    {
+        get => filterText;
+        set
+        {
+            if (filterText != value)
+            {
+                filterText = value;
+                OnPropertyChanged();
+            }
+        }
+    }
 
-    public PluginViewModel? SelectedPlugin { get; set; }
-
-    private IEnumerable<PluginViewModel>? _pluginViewModels;
-    private IEnumerable<PluginViewModel> PluginViewModels => _pluginViewModels ??= PluginManager.AllPlugins
+    private IList<PluginViewModel>? _pluginViewModels;
+    public IList<PluginViewModel> PluginViewModels => _pluginViewModels ??= PluginManager.AllPlugins
         .OrderBy(plugin => plugin.Metadata.Disabled)
         .ThenBy(plugin => plugin.Metadata.Name)
         .Select(plugin => new PluginViewModel
@@ -102,13 +126,12 @@ public partial class SettingsPanePluginsViewModel : BaseModel
         .Where(plugin => plugin.PluginSettingsObject != null)
         .ToList();
 
-    public List<PluginViewModel> FilteredPluginViewModels => PluginViewModels
-        .Where(v =>
-            string.IsNullOrEmpty(FilterText) ||
-            App.API.FuzzySearch(FilterText, v.PluginPair.Metadata.Name).IsSearchPrecisionScoreMet() ||
-            App.API.FuzzySearch(FilterText, v.PluginPair.Metadata.Description).IsSearchPrecisionScoreMet()
-        )
-        .ToList();
+    public bool SatisfiesFilter(PluginViewModel plugin)
+    {
+        return string.IsNullOrEmpty(FilterText) ||
+            App.API.FuzzySearch(FilterText, plugin.PluginPair.Metadata.Name).IsSearchPrecisionScoreMet() ||
+            App.API.FuzzySearch(FilterText, plugin.PluginPair.Metadata.Description).IsSearchPrecisionScoreMet();
+    }
 
     [RelayCommand]
     private async Task OpenHelperAsync(Button button)
@@ -143,6 +166,18 @@ public partial class SettingsPanePluginsViewModel : BaseModel
                     {
                         Text = (string)Application.Current.Resources["searchDelayTimeTips"],
                         TextWrapping = TextWrapping.Wrap
+                    },
+                    new TextBlock
+                    {
+                        Text = (string)Application.Current.Resources["homeTitle"],
+                        FontSize = 18,
+                        Margin = new Thickness(0, 24, 0, 10),
+                        TextWrapping = TextWrapping.Wrap
+                    },
+                    new TextBlock
+                    {
+                        Text = (string)Application.Current.Resources["homeTips"],
+                        TextWrapping = TextWrapping.Wrap
                     }
                 }
             },
@@ -167,16 +202,25 @@ public partial class SettingsPanePluginsViewModel : BaseModel
                 IsOnOffSelected = false;
                 IsPrioritySelected = true;
                 IsSearchDelaySelected = false;
+                IsHomeOnOffSelected = false;
                 break;
             case DisplayMode.SearchDelay:
                 IsOnOffSelected = false;
                 IsPrioritySelected = false;
                 IsSearchDelaySelected = true;
+                IsHomeOnOffSelected = false;
+                break;
+            case DisplayMode.HomeOnOff:
+                IsOnOffSelected = false;
+                IsPrioritySelected = false;
+                IsSearchDelaySelected = false;
+                IsHomeOnOffSelected = true;
                 break;
             default:
                 IsOnOffSelected = true;
                 IsPrioritySelected = false;
                 IsSearchDelaySelected = false;
+                IsHomeOnOffSelected = false;
                 break;
         }
     }
@@ -186,5 +230,6 @@ public enum DisplayMode
 {
     OnOff,
     Priority,
-    SearchDelay
+    SearchDelay,
+    HomeOnOff
 }

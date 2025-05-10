@@ -158,6 +158,24 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 }
             }
         }
+
+        private bool _showHomePage { get; set; } = true;
+        public bool ShowHomePage
+        {
+            get => _showHomePage;
+            set
+            {
+                if (_showHomePage != value)
+                {
+                    _showHomePage = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool ShowHistoryResultsForHomePage { get; set; } = false;
+        public int MaxHistoryResultsToShowForHomePage { get; set; } = 5;
+
         public int CustomExplorerIndex { get; set; } = 0;
 
         [JsonIgnore]
@@ -312,9 +330,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public ObservableCollection<CustomShortcutModel> CustomShortcuts { get; set; } = new ObservableCollection<CustomShortcutModel>();
 
         [JsonIgnore]
-        public ObservableCollection<BuiltinShortcutModel> BuiltinShortcuts { get; set; } = new()
+        public ObservableCollection<BaseBuiltinShortcutModel> BuiltinShortcuts { get; set; } = new()
         {
-            new BuiltinShortcutModel("{clipboard}", "shortcut_clipboard_description", Clipboard.GetText),
+            new AsyncBuiltinShortcutModel("{clipboard}", "shortcut_clipboard_description", () => Win32Helper.StartSTATaskAsync(Clipboard.GetText)),
             new BuiltinShortcutModel("{active_explorer_path}", "shortcut_active_explorer_path", FileExplorerHelper.GetActiveExplorerPath)
         };
 
