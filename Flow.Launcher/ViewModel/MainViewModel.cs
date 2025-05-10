@@ -1284,8 +1284,6 @@ namespace Flow.Launcher.ViewModel
             // Update the query's IsReQuery property to true if this is a re-query
             query.IsReQuery = isReQuery;
 
-            
-
             ICollection<PluginPair> plugins = Array.Empty<PluginPair>();
             if (currentIsHomeQuery)
             {
@@ -1458,8 +1456,13 @@ namespace Flow.Launcher.ViewModel
 
                 App.API.LogDebug(ClassName, $"Update results for history");
 
+                // Indicate if to clear existing results so to show only ones from plugins with action keywords
+                var shouldClearExistingResults = ShouldClearExistingResults(query, currentIsHomeQuery);
+                _lastQuery = query;
+                _previousIsHomeQuery = currentIsHomeQuery;
+
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, _historyMetadata, query,
-                    token)))
+                    token, reSelect, shouldClearExistingResults)))
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
