@@ -203,7 +203,7 @@ namespace Flow.Launcher
                 // it will steal focus from main window which causes window hide
                 HotKeyMapper.Initialize();
 
-                // Main windows needs initialized before theme change because of blur settings
+                // Initialize theme for main window
                 Ioc.Default.GetRequiredService<Theme>().ChangeTheme();
 
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);

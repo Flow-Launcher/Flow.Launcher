@@ -166,9 +166,6 @@ namespace Flow.Launcher
             // Force update position
             UpdatePosition();
 
-            // Refresh frame
-            await _theme.RefreshFrameAsync();
-
             // Initialize resize mode after refreshing frame
             SetupResizeMode();
 
