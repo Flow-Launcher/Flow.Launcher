@@ -1813,7 +1813,7 @@ namespace Flow.Launcher.ViewModel
                         (Application.Current?.MainWindow as MainWindow).UpdatePosition();
                     });
 
-                    _ = ResetWindowAsync(true);
+                    _ = ResetWindowAsync();
                 }
             }
             else
@@ -1824,14 +1824,14 @@ namespace Flow.Launcher.ViewModel
 
                     if (dialogWindowHandleChanged)
                     {
-                        _ = ResetWindowAsync(true);
+                        _ = ResetWindowAsync();
                     }
                 }
                 else
                 {
                     if (dialogWindowHandleChanged)
                     {
-                        _ = ResetWindowAsync(true);
+                        _ = ResetWindowAsync();
                     }
                 }
             }
@@ -1933,7 +1933,7 @@ namespace Flow.Launcher.ViewModel
         }
 
         // Reset index & preview & selected results & query text
-        private async Task ResetWindowAsync(bool clearResults = false)
+        private async Task ResetWindowAsync()
         {
             lastHistoryIndex = 1;
 
@@ -1947,12 +1947,7 @@ namespace Flow.Launcher.ViewModel
                 SelectedResults = Results;
             }
 
-            await ChangeQueryTextAsync(string.Empty);
-
-            if (clearResults)
-            {
-                ClearResults();
-            }
+            await ChangeQueryTextAsync(string.Empty, true);
         }
 
         #endregion
