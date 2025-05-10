@@ -1310,8 +1310,6 @@ namespace Flow.Launcher.ViewModel
 
             var query = await ConstructQueryAsync(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
 
-            var quickSwitch = _isQuickSwitch; // save quick switch state
-
             if (query == null) // shortcut expanded
             {
                 ClearResults();
@@ -1321,9 +1319,10 @@ namespace Flow.Launcher.ViewModel
             App.API.LogDebug(ClassName, $"Start query with ActionKeyword <{query.ActionKeyword}> and RawQuery <{query.RawQuery}>");
 
             var currentIsHomeQuery = query.RawQuery == string.Empty;
+            var currentIsQuickSwitch = _isQuickSwitch;
 
             // Do not show home page for quick switch window
-            if (quickSwitch && currentIsHomeQuery)
+            if (currentIsQuickSwitch && currentIsHomeQuery)
             {
                 ClearResults();
                 return;
@@ -1361,7 +1360,7 @@ namespace Flow.Launcher.ViewModel
             }
             else
             {
-                plugins = PluginManager.ValidPluginsForQuery(query, quickSwitch);
+                plugins = PluginManager.ValidPluginsForQuery(query, currentIsQuickSwitch);
 
                 if (plugins.Count == 1)
                 {
@@ -1467,7 +1466,7 @@ namespace Flow.Launcher.ViewModel
                 // Task.Yield will force it to run in ThreadPool
                 await Task.Yield();
 
-                if (quickSwitch)
+                if (currentIsQuickSwitch)
                 {
                     var results = await PluginManager.QueryQuickSwitchForPluginAsync(plugin, query, token);
 
