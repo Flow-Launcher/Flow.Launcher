@@ -1322,7 +1322,7 @@ namespace Flow.Launcher.ViewModel
             var currentIsQuickSwitch = _isQuickSwitch;
 
             // Do not show home page for quick switch window
-            if (currentIsQuickSwitch && currentIsHomeQuery)
+            if (currentIsHomeQuery && currentIsQuickSwitch)
             {
                 ClearResults();
                 return;
