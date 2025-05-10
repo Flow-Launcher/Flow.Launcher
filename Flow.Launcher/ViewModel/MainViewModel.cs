@@ -1441,6 +1441,23 @@ namespace Flow.Launcher.ViewModel
             }
 
             // Local function
+            void ClearResults()
+            {
+                App.API.LogDebug(ClassName, $"Clear query results");
+
+                // Hide and clear results again because running query may show and add some results
+                Results.Visibility = Visibility.Collapsed;
+                Results.Clear();
+
+                // Reset plugin icon
+                PluginIconPath = null;
+                PluginIconSource = null;
+                SearchIconVisibility = Visibility.Visible;
+
+                // Hide progress bar again because running query may set this to visible
+                ProgressBarVisibility = Visibility.Hidden;
+            }
+
             async Task QueryTaskAsync(PluginPair plugin, CancellationToken token)
             {
                 App.API.LogDebug(ClassName, $"Wait for querying plugin <{plugin.Metadata.Name}>");
@@ -1458,48 +1475,46 @@ namespace Flow.Launcher.ViewModel
                 // Task.Yield will force it to run in ThreadPool
                 await Task.Yield();
 
+                IReadOnlyList<Result> results = currentIsQuickSwitch ?
+                    await PluginManager.QueryQuickSwitchForPluginAsync(plugin, query, token) :
+                        currentIsHomeQuery ?
+                            await PluginManager.QueryHomeForPluginAsync(plugin, query, token) :
+                            await PluginManager.QueryForPluginAsync(plugin, query, token);
+
+                if (token.IsCancellationRequested) return;
+
+                IReadOnlyList<Result> resultsCopy;
+                if (results == null)
                 {
-                    IReadOnlyList<Result> results = currentIsQuickSwitch ?
-                        await PluginManager.QueryQuickSwitchForPluginAsync(plugin, query, token) :
-                            currentIsHomeQuery ?
-                                await PluginManager.QueryHomeForPluginAsync(plugin, query, token) :
-                                await PluginManager.QueryForPluginAsync(plugin, query, token);
+                    resultsCopy = _emptyResult;
+                }
+                else
+                {
+                    // make a copy of results to avoid possible issue that FL changes some properties of the records, like score, etc.
+                    resultsCopy = DeepCloneResults(results, currentIsQuickSwitch, token);
+                }
 
-                    if (token.IsCancellationRequested) return;
-
-                    IReadOnlyList<Result> resultsCopy;
-                    if (results == null)
+                foreach (var result in resultsCopy)
+                {
+                    if (string.IsNullOrEmpty(result.BadgeIcoPath))
                     {
-                        resultsCopy = _emptyResult;
+                        result.BadgeIcoPath = plugin.Metadata.IcoPath;
                     }
-                    else
-                    {
-                        // make a copy of results to avoid possible issue that FL changes some properties of the records, like score, etc.
-                        resultsCopy = DeepCloneResults(results, currentIsQuickSwitch, token);
-                    }
+                }
 
-                    foreach (var result in resultsCopy)
-                    {
-                        if (string.IsNullOrEmpty(result.BadgeIcoPath))
-                        {
-                            result.BadgeIcoPath = plugin.Metadata.IcoPath;
-                        }
-                    }
-
-                    if (token.IsCancellationRequested) return;
+                if (token.IsCancellationRequested) return;
                     
-                    App.API.LogDebug(ClassName, $"Update results for plugin <{plugin.Metadata.Name}>");
+                App.API.LogDebug(ClassName, $"Update results for plugin <{plugin.Metadata.Name}>");
 
-                    // Indicate if to clear existing results so to show only ones from plugins with action keywords
-                    var shouldClearExistingResults = ShouldClearExistingResults(query, currentIsHomeQuery);
-                    _lastQuery = query;
-                    _previousIsHomeQuery = currentIsHomeQuery;
+                // Indicate if to clear existing results so to show only ones from plugins with action keywords
+                var shouldClearExistingResults = ShouldClearExistingResults(query, currentIsHomeQuery);
+                _lastQuery = query;
+                _previousIsHomeQuery = currentIsHomeQuery;
                 
-                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
-                        token, reSelect, shouldClearExistingResults)))
-                    {
-                        App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
-                    }
+                if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
+                    token, reSelect, shouldClearExistingResults)))
+                {
+                    App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
             }
 
@@ -1520,23 +1535,6 @@ namespace Flow.Launcher.ViewModel
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
             }
-        }
-
-        private void ClearResults()
-        {
-            App.API.LogDebug(ClassName, $"Clear query results");
-
-            // Hide and clear results again because running query may show and add some results
-            Results.Visibility = Visibility.Collapsed;
-            Results.Clear();
-
-            // Reset plugin icon
-            PluginIconPath = null;
-            PluginIconSource = null;
-            SearchIconVisibility = Visibility.Visible;
-
-            // Hide progress bar again because running query may set this to visible
-            ProgressBarVisibility = Visibility.Hidden;
         }
 
         private async Task<Query> ConstructQueryAsync(string queryText, IEnumerable<CustomShortcutModel> customShortcuts,
