@@ -33,7 +33,7 @@ namespace Flow.Launcher.ViewModel
 
         private bool _isQueryRunning;
         private Query _lastQuery;
-        private bool _lastIsHomeQuery;
+        private bool _previousIsHomeQuery;
         private string _queryTextBeforeLeaveResults;
         private string _ignoredQueryText; // Used to ignore query text change when switching between context menu and query results
 
@@ -1264,7 +1264,7 @@ namespace Flow.Launcher.ViewModel
 
             App.API.LogDebug(ClassName, $"Start query with ActionKeyword <{query.ActionKeyword}> and RawQuery <{query.RawQuery}>");
 
-            var isHomeQuery = query.RawQuery == string.Empty;
+            var currentIsHomeQuery = query.RawQuery == string.Empty;
 
             _updateSource?.Dispose();
 
@@ -1284,14 +1284,10 @@ namespace Flow.Launcher.ViewModel
             // Update the query's IsReQuery property to true if this is a re-query
             query.IsReQuery = isReQuery;
 
-            // handle the exclusiveness of plugin using action keyword
-            RemoveOldQueryResults(query, isHomeQuery);
-
-            _lastQuery = query;
-            _lastIsHomeQuery = isHomeQuery;
+            
 
             ICollection<PluginPair> plugins = Array.Empty<PluginPair>();
-            if (isHomeQuery)
+            if (currentIsHomeQuery)
             {
                 if (Settings.ShowHomePage)
                 {
@@ -1347,7 +1343,7 @@ namespace Flow.Launcher.ViewModel
             // plugins are ICollection, meaning LINQ will get the Count and preallocate Array
 
             Task[] tasks;
-            if (isHomeQuery)
+            if (currentIsHomeQuery)
             {
                 tasks = plugins.Select(plugin => plugin.Metadata.HomeDisabled switch
                 {
@@ -1397,7 +1393,7 @@ namespace Flow.Launcher.ViewModel
             {
                 App.API.LogDebug(ClassName, $"Wait for querying plugin <{plugin.Metadata.Name}>");
 
-                if (searchDelay && !isHomeQuery) // Do not delay for home query
+                if (searchDelay && !currentIsHomeQuery) // Do not delay for home query
                 {
                     var searchDelayTime = plugin.Metadata.SearchDelayTime ?? Settings.SearchDelayTime;
 
@@ -1410,7 +1406,7 @@ namespace Flow.Launcher.ViewModel
                 // Task.Yield will force it to run in ThreadPool
                 await Task.Yield();
 
-                var results = isHomeQuery ?
+                var results = currentIsHomeQuery ?
                     await PluginManager.QueryHomeForPluginAsync(plugin, query, token) :
                     await PluginManager.QueryForPluginAsync(plugin, query, token);
 
@@ -1439,8 +1435,13 @@ namespace Flow.Launcher.ViewModel
 
                 App.API.LogDebug(ClassName, $"Update results for plugin <{plugin.Metadata.Name}>");
 
+                // Indicate if to clear existing results so to show only ones from plugins with action keywords
+                var shouldClearExistingResults = ShouldClearExistingResults(query, currentIsHomeQuery);
+                _lastQuery = query;
+                _previousIsHomeQuery = currentIsHomeQuery;
+
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
-                    token, reSelect)))
+                    token, reSelect, shouldClearExistingResults)))
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
@@ -1542,25 +1543,36 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private void RemoveOldQueryResults(Query query, bool isHomeQuery)
+        /// <summary>
+        /// Determines whether the existing search results should be cleared based on the current query and the previous query type.
+        /// This is needed because of the design that treats plugins with action keywords and global action keywords separately. Results are gathered
+        /// either from plugins with matching action keywords or global action keyword, but not both. So when the current results are from plugins
+        /// with a matching action keyword and a new result set comes from a new query with the global action keyword, the existing results need to be cleared,
+        /// and vice versa. The same applies to home page query results.
+        /// 
+        /// There is no need to clear results from global action keyword if a new set of results comes along that is also from global action keywords.
+        /// This is because the removal of obsolete results is handled in ResultsViewModel.NewResults(ICollection<ResultsForUpdate>).
+        /// </summary>
+        /// <param name="query">The current query.</param>
+        /// <param name="currentIsHomeQuery">A flag indicating if the current query is a home query.</param>
+        /// <returns>True if the existing results should be cleared, false otherwise.</returns>
+        private bool ShouldClearExistingResults(Query query, bool currentIsHomeQuery)
         {
-            // If last and current query are home query, we don't need to clear the results
-            if (_lastIsHomeQuery && isHomeQuery)
+            // If previous or current results are from home query, we need to clear them
+            if (_previousIsHomeQuery || currentIsHomeQuery)
             {
-                return;
+                App.API.LogDebug(ClassName, $"Cleared old results");
+                return true;
             }
-            // If last or current query is home query, we need to clear the results
-            else if (_lastIsHomeQuery || isHomeQuery)
+
+            // If the last and current query are not home query type, we need to check the action keyword
+            if (_lastQuery?.ActionKeyword != query?.ActionKeyword)
             {
-                App.API.LogDebug(ClassName, $"Remove old results");
-                Results.Clear();
+                App.API.LogDebug(ClassName, $"Cleared old results");
+                return true;
             }
-            // If last and current query are not home query, we need to check action keyword
-            else if (_lastQuery?.ActionKeyword != query?.ActionKeyword)
-            {
-                App.API.LogDebug(ClassName, $"Remove old results");
-                Results.Clear();
-            }
+
+            return false;
         }
 
         private Result ContextMenuTopMost(Result result)
