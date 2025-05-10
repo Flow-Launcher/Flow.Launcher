@@ -263,7 +263,7 @@ namespace Flow.Launcher.ViewModel
                     else
                     {
                         // make a clone to avoid possible issue that plugin will also change the list and items when updating view model
-                        resultsCopy = DeepCloneResults(e.Results, token);
+                        resultsCopy = DeepCloneResults(e.Results, false, token);
                     }
 
                     foreach (var result in resultsCopy)
@@ -505,39 +505,31 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private static IReadOnlyList<Result> DeepCloneResults(IReadOnlyList<Result> results, CancellationToken token = default)
+        private static IReadOnlyList<Result> DeepCloneResults(IReadOnlyList<Result> results, bool isQuickSwitch, CancellationToken token = default)
         {
             var resultsCopy = new List<Result>();
 
-            foreach (var result in results.ToList())
+            if (isQuickSwitch)
             {
-                if (token.IsCancellationRequested)
+                foreach (var result in results.ToList())
                 {
-                    break;
+                    if (token.IsCancellationRequested) break;
+
+                    var resultCopy = ((QuickSwitchResult)result).Clone();
+                    resultsCopy.Add(resultCopy);
                 }
-
-                var resultCopy = result.Clone();
-                resultsCopy.Add(resultCopy);
             }
-
-            return resultsCopy;
-        }
-
-        private static IReadOnlyList<QuickSwitchResult> DeepCloneResults(IReadOnlyList<QuickSwitchResult> results, CancellationToken token = default)
-        {
-            var resultsCopy = new List<QuickSwitchResult>();
-
-            foreach (var result in results.ToList())
+            else
             {
-                if (token.IsCancellationRequested)
+                foreach (var result in results.ToList())
                 {
-                    break;
+                    if (token.IsCancellationRequested) break;
+
+                    var resultCopy = result.Clone();
+                    resultsCopy.Add(resultCopy);
                 }
-
-                var resultCopy = result.Clone();
-                resultsCopy.Add(resultCopy);
             }
-
+            
             return resultsCopy;
         }
 
@@ -1466,51 +1458,12 @@ namespace Flow.Launcher.ViewModel
                 // Task.Yield will force it to run in ThreadPool
                 await Task.Yield();
 
-                if (currentIsQuickSwitch)
                 {
-                    var results = await PluginManager.QueryQuickSwitchForPluginAsync(plugin, query, token);
-
-                    if (token.IsCancellationRequested) return;
-
-                    IReadOnlyList<QuickSwitchResult> resultsCopy;
-                    if (results == null)
-                    {
-                        resultsCopy = _emptyQuickSwitchResult;
-                    }
-                    else
-                    {
-                        // make a copy of results to avoid possible issue that FL changes some properties of the records, like score, etc.
-                        resultsCopy = DeepCloneResults(results, token);
-                    }
-
-                    foreach (var result in resultsCopy)
-                    {
-                        if (string.IsNullOrEmpty(result.BadgeIcoPath))
-                        {
-                            result.BadgeIcoPath = plugin.Metadata.IcoPath;
-                        }
-                    }
-                    
-                    if (token.IsCancellationRequested) return;
-                    
-                    App.API.LogDebug(ClassName, $"Update results for plugin <{plugin.Metadata.Name}>");
-                    
-                    // Indicate if to clear existing results so to show only ones from plugins with action keywords
-                    var shouldClearExistingResults = ShouldClearExistingResults(query, currentIsHomeQuery);
-                    _lastQuery = query;
-                    _previousIsHomeQuery = currentIsHomeQuery;
-
-                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
-                        token, reSelect, shouldClearExistingResults)))
-                    {
-                        App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
-                    }
-                }
-                else
-                {
-                    var results = currentIsHomeQuery ?
-                        await PluginManager.QueryHomeForPluginAsync(plugin, query, token) :
-                        await PluginManager.QueryForPluginAsync(plugin, query, token);
+                    IReadOnlyList<Result> results = currentIsQuickSwitch ?
+                        await PluginManager.QueryQuickSwitchForPluginAsync(plugin, query, token) :
+                            currentIsHomeQuery ?
+                                await PluginManager.QueryHomeForPluginAsync(plugin, query, token) :
+                                await PluginManager.QueryForPluginAsync(plugin, query, token);
 
                     if (token.IsCancellationRequested) return;
 
@@ -1522,7 +1475,7 @@ namespace Flow.Launcher.ViewModel
                     else
                     {
                         // make a copy of results to avoid possible issue that FL changes some properties of the records, like score, etc.
-                        resultsCopy = DeepCloneResults(results, token);
+                        resultsCopy = DeepCloneResults(results, currentIsQuickSwitch, token);
                     }
 
                     foreach (var result in resultsCopy)
