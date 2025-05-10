@@ -232,10 +232,15 @@ namespace Flow.Launcher.ViewModel
             if (!resultsForUpdates.Any())
                 return Results;
 
+            var newResults = resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings));
+
+            if (resultsForUpdates.Any(x => x.requireClearExistingResults))
+                return newResults.OrderByDescending(rv => rv.Result.Score).ToList();
+
             return Results.Where(r => r?.Result != null && resultsForUpdates.All(u => u.ID != r.Result.PluginID))
-                          .Concat(resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings)))
-                          .OrderByDescending(rv => rv.Result.Score)
-                          .ToList();
+                              .Concat(newResults)
+                              .OrderByDescending(rv => rv.Result.Score)
+                              .ToList();
         }
         #endregion
 
