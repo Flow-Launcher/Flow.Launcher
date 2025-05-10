@@ -1298,7 +1298,7 @@ namespace Flow.Launcher.ViewModel
                 query.IsReQuery = isReQuery;
 
                 ICollection<PluginPair> plugins = Array.Empty<PluginPair>();
-                if (isHomeQuery)
+                if (currentIsHomeQuery)
                 {
                     if (Settings.ShowHomePage)
                     {
