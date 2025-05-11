@@ -444,12 +444,7 @@ namespace Flow.Launcher.ViewModel
             if (QueryResultsSelected())
             {
                 _userSelectedRecord.Add(result);
-                // origin query is null when user select the context menu item directly of one item from query list
-                // so we don't want to add it to history
-                if (result.OriginQuery != null)
-                {
-                    _history.Add(result.OriginQuery.RawQuery);
-                }
+                _history.Add(result.OriginQuery.RawQuery);
                 lastHistoryIndex = 1;
             }
 
@@ -1159,7 +1154,7 @@ namespace Flow.Launcher.ViewModel
                 {
                     results = PluginManager.GetContextMenusForPlugin(selected);
                     results.Add(ContextMenuTopMost(selected));
-                    results.Add(ContextMenuPluginInfo(selected.PluginID));
+                    results.Add(ContextMenuPluginInfo(selected));
                 }
 
                 if (!string.IsNullOrEmpty(query))
@@ -1593,7 +1588,8 @@ namespace Flow.Launcher.ViewModel
                         App.API.ReQuery();
                         return false;
                     },
-                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE74B")
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE74B"),
+                    OriginQuery = result.OriginQuery
                 };
             }
             else
@@ -1610,15 +1606,17 @@ namespace Flow.Launcher.ViewModel
                         App.API.ReQuery();
                         return false;
                     },
-                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE74A")
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE74A"),
+                    OriginQuery = result.OriginQuery
                 };
             }
 
             return menu;
         }
 
-        private static Result ContextMenuPluginInfo(string id)
+        private static Result ContextMenuPluginInfo(Result result)
         {
+            var id = result.PluginID;
             var metadata = PluginManager.GetPluginForId(id).Metadata;
             var translator = App.API;
 
@@ -1640,7 +1638,8 @@ namespace Flow.Launcher.ViewModel
                 {
                     App.API.OpenUrl(metadata.Website);
                     return true;
-                }
+                },
+                OriginQuery = result.OriginQuery
             };
             return menu;
         }
