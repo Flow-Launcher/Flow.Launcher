@@ -520,7 +520,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (QueryResultsSelected() // Results selected
                 && string.IsNullOrEmpty(QueryText) // No input
-                && Results.Visibility != Visibility.Visible // Results closed which means no items in Results 
+                && Results.Visibility != Visibility.Visible // No items in result list, e.g. when home page is off and no query text is entered, therefore the view is collapsed.
                 && _history.Items.Count > 0) // Have history items
             {
                 lastHistoryIndex = 1;
