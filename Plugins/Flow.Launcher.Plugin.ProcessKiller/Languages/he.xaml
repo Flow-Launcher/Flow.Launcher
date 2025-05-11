@@ -8,6 +8,7 @@
     <system:String x:Key="flowlauncher_plugin_processkiller_kill_all_count">סגור {0} תהליכים</system:String>
     <system:String x:Key="flowlauncher_plugin_processkiller_kill_instances">סגור את כל המופעים</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_processkiller_show_window_title">הצג כותרת עבור תהליכים בעלי חלונות גלויים</system:String>
     <system:String x:Key="flowlauncher_plugin_processkiller_put_visible_window_process_top">הצב תהליכים עם חלונות גלויים בחלק העליון</system:String>
 
 </ResourceDictionary>
