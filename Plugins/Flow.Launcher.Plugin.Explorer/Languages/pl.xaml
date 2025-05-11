@@ -80,6 +80,8 @@
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">Skopiuj Ścieżkę</system:String>
     <system:String x:Key="plugin_explorer_copypath_subtitle">Kopiuj ścieżkę bieżącego elementu do schowka</system:String>
+    <system:String x:Key="plugin_explorer_copyname">Copy name</system:String>
+    <system:String x:Key="plugin_explorer_copyname_subtitle">Copy name of current item to clipboard</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">Kopiuj</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">Kopiuj bieżący plik do schowka</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">Kopiuj bieżący folder do schowka</system:String>
