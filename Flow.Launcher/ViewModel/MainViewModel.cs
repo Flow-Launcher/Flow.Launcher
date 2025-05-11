@@ -1340,6 +1340,7 @@ namespace Flow.Launcher.ViewModel
 
             // plugins are ICollection, meaning LINQ will get the Count and preallocate Array
 
+            var resultsCleared = false;
             Task[] tasks;
             if (currentIsHomeQuery)
             {
@@ -1373,6 +1374,9 @@ namespace Flow.Launcher.ViewModel
             {
                 // nothing to do here
             }
+
+            // If results are not cleared, we need to clear the results
+            if (!resultsCleared) Results.Clear();
 
             if (currentCancellationToken.IsCancellationRequested) return;
 
@@ -1443,6 +1447,11 @@ namespace Flow.Launcher.ViewModel
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
+                else
+                {
+                    // Only update the clear flag when we successfully write to the channel
+                    resultsCleared = true;
+                }
             }
 
             void QueryHistoryTask(CancellationToken token)
@@ -1465,6 +1474,11 @@ namespace Flow.Launcher.ViewModel
                     token, reSelect, shouldClearExistingResults)))
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
+                }
+                else
+                {
+                    // Only update the clear flag when we successfully write to the channel
+                    resultsCleared = true;
                 }
             }
         }
