@@ -9,12 +9,9 @@ using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using CommunityToolkit.Mvvm.DependencyInjection;
-using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Http;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using JetBrains.Annotations;
@@ -25,6 +22,8 @@ namespace Flow.Launcher.Core
     public class Updater
     {
         public string GitHubRepository { get; init; }
+
+        private static readonly string ClassName = nameof(Updater);
 
         private readonly IPublicAPI _api;
 
@@ -53,7 +52,7 @@ namespace Flow.Launcher.Core
                 var newReleaseVersion = Version.Parse(newUpdateInfo.FutureReleaseEntry.Version.ToString());
                 var currentVersion = Version.Parse(Constant.Version);
 
-                Log.Info($"|Updater.UpdateApp|Future Release <{Formatted(newUpdateInfo.FutureReleaseEntry)}>");
+                _api.LogInfo(ClassName, $"Future Release <{Formatted(newUpdateInfo.FutureReleaseEntry)}>");
 
                 if (newReleaseVersion <= currentVersion)
                 {
@@ -86,7 +85,7 @@ namespace Flow.Launcher.Core
 
                 var newVersionTips = NewVersionTips(newReleaseVersion.ToString());
 
-                Log.Info($"|Updater.UpdateApp|Update success:{newVersionTips}");
+                _api.LogInfo(ClassName, $"Update success:{newVersionTips}");
 
                 if (_api.ShowMsgBox(newVersionTips, _api.GetTranslation("update_flowlauncher_new_update"), MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
@@ -95,10 +94,14 @@ namespace Flow.Launcher.Core
             }
             catch (Exception e)
             {
-                if ((e is HttpRequestException or WebException or SocketException || e.InnerException is TimeoutException))
-                    Log.Exception($"|Updater.UpdateApp|Check your connection and proxy settings to github-cloud.s3.amazonaws.com.", e);
+                if (e is HttpRequestException or WebException or SocketException || e.InnerException is TimeoutException)
+                {
+                    _api.LogException(ClassName, $"Check your connection and proxy settings to github-cloud.s3.amazonaws.com.", e);
+                }
                 else
-                    Log.Exception($"|Updater.UpdateApp|Error Occurred", e);
+                {
+                    _api.LogException(ClassName, $"Error Occurred", e);
+                }
                 
                 if (!silentUpdate)
                     _api.ShowMsg(_api.GetTranslation("update_flowlauncher_fail"),
@@ -131,7 +134,7 @@ namespace Flow.Launcher.Core
 
             await using var jsonStream = await Http.GetStreamAsync(api).ConfigureAwait(false);
 
-            var releases = await System.Text.Json.JsonSerializer.DeserializeAsync<List<GithubRelease>>(jsonStream).ConfigureAwait(false);
+            var releases = await JsonSerializer.DeserializeAsync<List<GithubRelease>>(jsonStream).ConfigureAwait(false);
             var latest = releases.Where(r => !r.Prerelease).OrderByDescending(r => r.PublishedAt).First();
             var latestUrl = latest.HtmlUrl.Replace("/tag/", "/download/");
 
@@ -146,10 +149,9 @@ namespace Flow.Launcher.Core
             return manager;
         }
 
-        private static string NewVersionTips(string version)
+        private string NewVersionTips(string version)
         {
-            var translator = Ioc.Default.GetRequiredService<Internationalization>();
-            var tips = string.Format(translator.GetTranslation("newVersionTips"), version);
+            var tips = string.Format(_api.GetTranslation("newVersionTips"), version);
 
             return tips;
         }

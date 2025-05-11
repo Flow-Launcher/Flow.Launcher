@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using System.Text.Json.Serialization;
 using System.Windows;
+using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Logger;
@@ -33,7 +33,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             _storage.Save();
         }
 
-        private string language = Constant.SystemLanguageCode;
         private string _theme = Constant.DefaultTheme;
         public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
         public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
@@ -54,12 +53,13 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string CycleHistoryUpHotkey { get; set; } = $"{KeyConstant.Alt} + Up";
         public string CycleHistoryDownHotkey { get; set; } = $"{KeyConstant.Alt} + Down";
 
+        private string _language = Constant.SystemLanguageCode;
         public string Language
         {
-            get => language;
+            get => _language;
             set
             {
-                language = value;
+                _language = value;
                 OnPropertyChanged();
             }
         }
@@ -82,18 +82,18 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /* Appearance Settings. It should be separated from the setting later.*/
         public double WindowHeightSize { get; set; } = 42;
         public double ItemHeightSize { get; set; } = 58;
-        public double QueryBoxFontSize { get; set; } = 20;
+        public double QueryBoxFontSize { get; set; } = 16;
         public double ResultItemFontSize { get; set; } = 16;
         public double ResultSubItemFontSize { get; set; } = 13;
-        public string QueryBoxFont { get; set; } = FontFamily.GenericSansSerif.Name;
+        public string QueryBoxFont { get; set; } = Win32Helper.GetSystemDefaultFont();
         public string QueryBoxFontStyle { get; set; }
         public string QueryBoxFontWeight { get; set; }
         public string QueryBoxFontStretch { get; set; }
-        public string ResultFont { get; set; } = FontFamily.GenericSansSerif.Name;
+        public string ResultFont { get; set; } = Win32Helper.GetSystemDefaultFont();
         public string ResultFontStyle { get; set; }
         public string ResultFontWeight { get; set; }
         public string ResultFontStretch { get; set; }
-        public string ResultSubFont { get; set; } = FontFamily.GenericSansSerif.Name;
+        public string ResultSubFont { get; set; } = Win32Helper.GetSystemDefaultFont();
         public string ResultSubFontStyle { get; set; }
         public string ResultSubFontWeight { get; set; }
         public string ResultSubFontStretch { get; set; }
@@ -101,6 +101,24 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool UseAnimation { get; set; } = true;
         public bool UseSound { get; set; } = true;
         public double SoundVolume { get; set; } = 50;
+        public bool ShowBadges { get; set; } = false;
+        public bool ShowBadgesGlobalOnly { get; set; } = false;
+
+        private string _settingWindowFont { get; set; } = Win32Helper.GetSystemDefaultFont(false);
+        public string SettingWindowFont
+        {
+            get => _settingWindowFont;
+            set
+            {
+                if (_settingWindowFont != value)
+                {
+                    _settingWindowFont = value;
+                    OnPropertyChanged();
+                    Application.Current.Resources["SettingWindowFont"] = new FontFamily(value);
+                    Application.Current.Resources["ContentControlThemeFontFamily"] = new FontFamily(value);
+                }
+            }
+        }
 
         public bool UseClock { get; set; } = true;
         public bool UseDate { get; set; } = false;
@@ -114,7 +132,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public double? SettingWindowLeft { get; set; } = null;
         public WindowState SettingWindowState { get; set; } = WindowState.Normal;
 
-        bool _showPlaceholder { get; set; } = false;
+        private bool _showPlaceholder { get; set; } = true;
         public bool ShowPlaceholder
         {
             get => _showPlaceholder;
@@ -127,7 +145,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 }
             }
         }
-        string _placeholderText { get; set; } = string.Empty;
+        private string _placeholderText { get; set; } = string.Empty;
         public string PlaceholderText
         {
             get => _placeholderText;
@@ -140,6 +158,23 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 }
             }
         }
+
+        private bool _showHomePage { get; set; } = true;
+        public bool ShowHomePage
+        {
+            get => _showHomePage;
+            set
+            {
+                if (_showHomePage != value)
+                {
+                    _showHomePage = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool ShowHistoryResultsForHomePage { get; set; } = false;
+        public int MaxHistoryResultsToShowForHomePage { get; set; } = 5;
 
         public int CustomExplorerIndex { get; set; } = 0;
 
@@ -295,9 +330,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public ObservableCollection<CustomShortcutModel> CustomShortcuts { get; set; } = new ObservableCollection<CustomShortcutModel>();
 
         [JsonIgnore]
-        public ObservableCollection<BuiltinShortcutModel> BuiltinShortcuts { get; set; } = new()
+        public ObservableCollection<BaseBuiltinShortcutModel> BuiltinShortcuts { get; set; } = new()
         {
-            new BuiltinShortcutModel("{clipboard}", "shortcut_clipboard_description", Clipboard.GetText),
+            new AsyncBuiltinShortcutModel("{clipboard}", "shortcut_clipboard_description", () => Win32Helper.StartSTATaskAsync(Clipboard.GetText)),
             new BuiltinShortcutModel("{active_explorer_path}", "shortcut_active_explorer_path", FileExplorerHelper.GetActiveExplorerPath)
         };
 
@@ -307,7 +342,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool StartFlowLauncherOnSystemStartup { get; set; } = false;
         public bool UseLogonTaskForStartup { get; set; } = false;
         public bool HideOnStartup { get; set; } = true;
-        bool _hideNotifyIcon { get; set; }
+        private bool _hideNotifyIcon;
         public bool HideNotifyIcon
         {
             get => _hideNotifyIcon;

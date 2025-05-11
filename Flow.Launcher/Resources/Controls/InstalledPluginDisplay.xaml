@@ -96,11 +96,23 @@
                                 PlaceholderText="{Binding DefaultSearchDelay}"
                                 SmallChange="10"
                                 SpinButtonPlacementMode="Compact"
-                                ToolTip="{DynamicResource searchDelayToolTip}"
+                                ToolTip="{DynamicResource searchDelayNumberBoxToolTip}"
+                                ToolTipService.InitialShowDelay="0"
+                                ToolTipService.ShowOnDisabled="True"
                                 Value="{Binding PluginSearchDelayTime, Mode=TwoWay}" />
                         </StackPanel>
 
                         <!--  Put OnOffControl after PriorityControl & SearchDelayControl so that it can display correctly  -->
+                        <ui:ToggleSwitch
+                            x:Name="HomeOnOffControl"
+                            Margin="0 0 8 0"
+                            IsEnabled="{Binding HomeEnabled}"
+                            IsOn="{Binding PluginHomeState}"
+                            OffContent="{DynamicResource disable}"
+                            OnContent="{DynamicResource enable}"
+                            ToolTip="{DynamicResource homeToggleBoxToolTip}"
+                            Visibility="{Binding DataContext.IsHomeOnOffSelected, RelativeSource={RelativeSource AncestorType=ListBox}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
                         <ui:ToggleSwitch
                             x:Name="OnOffControl"
                             Margin="0 0 8 0"

@@ -1,15 +1,16 @@
-using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Plugin.SharedCommands;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
 {
     public static class DirectoryInfoSearch
     {
+        private static readonly string ClassName = nameof(DirectoryInfoSearch);
+
         internal static IEnumerable<SearchResult> TopLevelDirectorySearch(Query query, string search, CancellationToken token)
         {
             var criteria = ConstructSearchCriteria(search);
@@ -76,7 +77,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             }
             catch (Exception e)
             {
-                Log.Exception(nameof(DirectoryInfoSearch), "Error occurred while searching path", e);
+                Main.Context.API.LogException(ClassName, "Error occurred while searching path", e);
                 
                 throw;
             }

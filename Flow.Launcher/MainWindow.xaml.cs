@@ -16,7 +16,6 @@ using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Image;
@@ -138,9 +137,17 @@ namespace Flow.Launcher
             else
             {
                 _viewModel.Show();
+                // When HideOnStartup is off and UseAnimation is on,
+                // there was a bug where the clock would not appear at all on the initial launch
+                // So we need to forcibly trigger animation here to ensure the clock is visible
+                if (_settings.UseAnimation)
+                {
+                    WindowAnimation();
+                }
             }
 
-            // Show notify icon when flowlauncher is hidden
+            // Initialize context menu & notify icon
+            InitializeContextMenu();
             InitializeNotifyIcon();
 
             // Initialize color scheme
@@ -159,9 +166,6 @@ namespace Flow.Launcher
             // Force update position
             UpdatePosition();
 
-            // Refresh frame
-            await _theme.RefreshFrameAsync();
-
             // Initialize resize mode after refreshing frame
             SetupResizeMode();
 
@@ -174,9 +178,6 @@ namespace Flow.Launcher
             // Set the initial state of the QueryTextBoxCursorMovedToEnd property
             // Without this part, when shown for the first time, switching the context menu does not move the cursor to the end.
             _viewModel.QueryTextCursorMovedToEnd = false;
-            
-            // Initialize hotkey mapper after window is loaded
-            HotKeyMapper.Initialize();
 
             // View model property changed event
             _viewModel.PropertyChanged += (o, e) =>
@@ -270,6 +271,15 @@ namespace Flow.Launcher
                     case nameof(Settings.KeepMaxResults):
                         SetupResizeMode();
                         break;
+                    case nameof(Settings.SettingWindowFont):
+                        InitializeContextMenu();
+                        break;
+                    case nameof(Settings.ShowHomePage):
+                        if (_viewModel.QueryResultsSelected() && string.IsNullOrEmpty(_viewModel.QueryText))
+                        {
+                            _viewModel.QueryResults();
+                        }
+                        break;
                 }
             };
 
@@ -285,21 +295,27 @@ namespace Flow.Launcher
             DependencyPropertyDescriptor
                 .FromProperty(VisibilityProperty, typeof(StackPanel))
                 .AddValueChanged(History, (s, e) => UpdateClockPanelVisibility());
+
+            // Initialize query state
+            if (_settings.ShowHomePage && string.IsNullOrEmpty(_viewModel.QueryText))
+            {
+                _viewModel.QueryResults();
+            }
         }
 
         private async void OnClosing(object sender, CancelEventArgs e)
         {
             if (!CanClose)
             {
+                CanClose = true;
                 _notifyIcon.Visible = false;
                 App.API.SaveAppAllSettings();
                 e.Cancel = true;
                 await ImageLoader.WaitSaveAsync();
                 await PluginManager.DisposePluginsAsync();
                 Notification.Uninstall();
-                // After plugins are all disposed, we can close the main window
-                CanClose = true;
-                // Use this instead of Close() to avoid InvalidOperationException when calling Close() in OnClosing event
+                // After plugins are all disposed, we shutdown application to close app
+                // We use this instead of Close() to avoid InvalidOperationException when calling Close() in OnClosing event
                 Application.Current.Shutdown();
             }
         }
@@ -320,7 +336,7 @@ namespace Flow.Launcher
 
         private void OnLocationChanged(object sender, EventArgs e)
         {
-            if (_settings.SearchWindowScreen == SearchWindowScreens.RememberLastLaunchLocation)
+            if (IsLoaded)
             {
                 _settings.WindowLeft = Left;
                 _settings.WindowTop = Top;
@@ -563,6 +579,44 @@ namespace Flow.Launcher
                 Icon = Constant.Version == "1.0.0" ? Properties.Resources.dev : Properties.Resources.app,
                 Visible = !_settings.HideNotifyIcon
             };
+
+            _notifyIcon.MouseClick += (o, e) =>
+            {
+                switch (e.Button)
+                {
+                    case MouseButtons.Left:
+                        _viewModel.ToggleFlowLauncher();
+                        break;
+                    case MouseButtons.Right:
+
+                        _contextMenu.IsOpen = true;
+                        // Get context menu handle and bring it to the foreground
+                        if (PresentationSource.FromVisual(_contextMenu) is HwndSource hwndSource)
+                        {
+                            Win32Helper.SetForegroundWindow(hwndSource.Handle);
+                        }
+
+                        _contextMenu.Focus();
+                        break;
+                }
+            };
+        }
+
+        private void UpdateNotifyIconText()
+        {
+            var menu = _contextMenu;
+            ((MenuItem)menu.Items[0]).Header = App.API.GetTranslation("iconTrayOpen") +
+                                               " (" + _settings.Hotkey + ")";
+            ((MenuItem)menu.Items[1]).Header = App.API.GetTranslation("GameMode");
+            ((MenuItem)menu.Items[2]).Header = App.API.GetTranslation("PositionReset");
+            ((MenuItem)menu.Items[3]).Header = App.API.GetTranslation("iconTraySettings");
+            ((MenuItem)menu.Items[4]).Header = App.API.GetTranslation("iconTrayExit");
+        }
+
+        private void InitializeContextMenu()
+        {
+            var menu = _contextMenu;
+            menu.Items.Clear();
             var openIcon = new FontIcon { Glyph = "\ue71e" };
             var open = new MenuItem
             {
@@ -608,38 +662,6 @@ namespace Flow.Launcher
             _contextMenu.Items.Add(positionreset);
             _contextMenu.Items.Add(settings);
             _contextMenu.Items.Add(exit);
-
-            _notifyIcon.MouseClick += (o, e) =>
-            {
-                switch (e.Button)
-                {
-                    case MouseButtons.Left:
-                        _viewModel.ToggleFlowLauncher();
-                        break;
-                    case MouseButtons.Right:
-
-                        _contextMenu.IsOpen = true;
-                        // Get context menu handle and bring it to the foreground
-                        if (PresentationSource.FromVisual(_contextMenu) is HwndSource hwndSource)
-                        {
-                            Win32Helper.SetForegroundWindow(hwndSource.Handle);
-                        }
-
-                        _contextMenu.Focus();
-                        break;
-                }
-            };
-        }
-
-        private void UpdateNotifyIconText()
-        {
-            var menu = _contextMenu;
-            ((MenuItem)menu.Items[0]).Header = App.API.GetTranslation("iconTrayOpen") +
-                                               " (" + _settings.Hotkey + ")";
-            ((MenuItem)menu.Items[1]).Header = App.API.GetTranslation("GameMode");
-            ((MenuItem)menu.Items[2]).Header = App.API.GetTranslation("PositionReset");
-            ((MenuItem)menu.Items[3]).Header = App.API.GetTranslation("iconTraySettings");
-            ((MenuItem)menu.Items[4]).Header = App.API.GetTranslation("iconTrayExit");
         }
 
         #endregion
@@ -875,10 +897,10 @@ namespace Flow.Launcher
                 FillBehavior = FillBehavior.HoldEnd
             };
 
-            Storyboard.SetTargetProperty(ClockOpacity, new PropertyPath(OpacityProperty));
             Storyboard.SetTarget(ClockOpacity, ClockPanel);
+            Storyboard.SetTargetProperty(ClockOpacity, new PropertyPath(OpacityProperty));
 
-            Storyboard.SetTargetName(thicknessAnimation, "ClockPanel");
+            Storyboard.SetTarget(thicknessAnimation, ClockPanel);
             Storyboard.SetTargetProperty(thicknessAnimation, new PropertyPath(MarginProperty));
 
             Storyboard.SetTarget(IconMotion, SearchIcon);

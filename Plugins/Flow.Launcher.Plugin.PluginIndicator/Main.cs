@@ -1,53 +1,84 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Flow.Launcher.Core.Plugin;
 
 namespace Flow.Launcher.Plugin.PluginIndicator
 {
-    public class Main : IPlugin, IPluginI18n
+    public class Main : IPlugin, IPluginI18n, IHomeQuery
     {
-        private PluginInitContext context;
+        internal PluginInitContext Context { get; private set; }
 
         public List<Result> Query(Query query)
         {
+            return QueryResults(query);
+        }
+
+        public List<Result> HomeQuery()
+        {
+            return QueryResults();
+        }
+
+        private List<Result> QueryResults(Query query = null)
+        {
+            var nonGlobalPlugins = GetNonGlobalPlugins();
+            var querySearch = query?.Search ?? string.Empty;
+
             var results =
-                from keyword in PluginManager.NonGlobalPlugins.Keys
-                let plugin = PluginManager.NonGlobalPlugins[keyword].Metadata
-                let keywordSearchResult = context.API.FuzzySearch(query.Search, keyword)
-                let searchResult = keywordSearchResult.IsSearchPrecisionScoreMet() ? keywordSearchResult : context.API.FuzzySearch(query.Search, plugin.Name)
+                from keyword in nonGlobalPlugins.Keys
+                let plugin = nonGlobalPlugins[keyword].Metadata
+                let keywordSearchResult = Context.API.FuzzySearch(querySearch, keyword)
+                let searchResult = keywordSearchResult.IsSearchPrecisionScoreMet() ? keywordSearchResult : Context.API.FuzzySearch(querySearch, plugin.Name)
                 let score = searchResult.Score
                 where (searchResult.IsSearchPrecisionScoreMet()
-                        || string.IsNullOrEmpty(query.Search)) // To list all available action keywords
+                        || string.IsNullOrEmpty(querySearch)) // To list all available action keywords
                     && !plugin.Disabled
                 select new Result
                 {
                     Title = keyword,
-                    SubTitle = string.Format(context.API.GetTranslation("flowlauncher_plugin_pluginindicator_result_subtitle"), plugin.Name),
+                    SubTitle = string.Format(Context.API.GetTranslation("flowlauncher_plugin_pluginindicator_result_subtitle"), plugin.Name),
                     Score = score,
                     IcoPath = plugin.IcoPath,
                     AutoCompleteText = $"{keyword}{Plugin.Query.TermSeparator}",
                     Action = c =>
                     {
-                        context.API.ChangeQuery($"{keyword}{Plugin.Query.TermSeparator}");
+                        Context.API.ChangeQuery($"{keyword}{Plugin.Query.TermSeparator}");
                         return false;
                     }
                 };
             return results.ToList();
         }
 
+        private Dictionary<string, PluginPair> GetNonGlobalPlugins()
+        {
+            var nonGlobalPlugins = new Dictionary<string, PluginPair>();
+            foreach (var plugin in Context.API.GetAllPlugins())
+            {
+                foreach (var actionKeyword in plugin.Metadata.ActionKeywords)
+                {
+                    // Skip global keywords
+                    if (actionKeyword == Plugin.Query.GlobalPluginWildcardSign) continue;
+
+                    // Skip dulpicated keywords
+                    if (nonGlobalPlugins.ContainsKey(actionKeyword)) continue;
+
+                    nonGlobalPlugins.Add(actionKeyword, plugin);
+                }
+            }
+            return nonGlobalPlugins;
+        }
+
         public void Init(PluginInitContext context)
         {
-            this.context = context;
+            Context = context;
         }
 
         public string GetTranslatedPluginTitle()
         {
-            return context.API.GetTranslation("flowlauncher_plugin_pluginindicator_plugin_name");
+            return Context.API.GetTranslation("flowlauncher_plugin_pluginindicator_plugin_name");
         }
 
         public string GetTranslatedPluginDescription()
         {
-            return context.API.GetTranslation("flowlauncher_plugin_pluginindicator_plugin_description");
+            return Context.API.GetTranslation("flowlauncher_plugin_pluginindicator_plugin_description");
         }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using System.Windows;
-using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
-using Flow.Launcher.Core;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -10,20 +8,19 @@ namespace Flow.Launcher
 {
     public partial class ActionKeywords
     {
-        private readonly PluginPair plugin;
-        private readonly Internationalization translater = InternationalizationManager.Instance;
-        private readonly PluginViewModel pluginViewModel;
+        private readonly PluginPair _plugin;
+        private readonly PluginViewModel _pluginViewModel;
 
         public ActionKeywords(PluginViewModel pluginViewModel)
         {
             InitializeComponent();
-            plugin = pluginViewModel.PluginPair;
-            this.pluginViewModel = pluginViewModel;
+            _plugin = pluginViewModel.PluginPair;
+            _pluginViewModel = pluginViewModel;
         }
 
         private void ActionKeyword_OnLoaded(object sender, RoutedEventArgs e)
         {
-            tbOldActionKeyword.Text = string.Join(Query.ActionKeywordSeparator, plugin.Metadata.ActionKeywords.ToArray());
+            tbOldActionKeyword.Text = string.Join(Query.ActionKeywordSeparator, _plugin.Metadata.ActionKeywords.ToArray());
             tbAction.Focus();
         }
 
@@ -34,7 +31,7 @@ namespace Flow.Launcher
 
         private void btnDone_OnClick(object sender, RoutedEventArgs _)
         {
-            var oldActionKeywords = plugin.Metadata.ActionKeywords;
+            var oldActionKeywords = _plugin.Metadata.ActionKeywords;
 
             var newActionKeywords = tbAction.Text.Split(Query.ActionKeywordSeparator).ToList();
             newActionKeywords.RemoveAll(string.IsNullOrEmpty);
@@ -48,7 +45,7 @@ namespace Flow.Launcher
             {
                 if (oldActionKeywords.Count != newActionKeywords.Count)
                 {
-                    ReplaceActionKeyword(plugin.Metadata.ID, removedActionKeywords, addedActionKeywords);
+                    ReplaceActionKeyword(_plugin.Metadata.ID, removedActionKeywords, addedActionKeywords);
                     return;
                 }
 
@@ -58,18 +55,16 @@ namespace Flow.Launcher
                 if (sortedOldActionKeywords.SequenceEqual(sortedNewActionKeywords))
                 {
                     // User just changes the sequence of action keywords
-                    var msg = translater.GetTranslation("newActionKeywordsSameAsOld");
-                    MessageBoxEx.Show(msg);
+                    App.API.ShowMsgBox(App.API.GetTranslation("newActionKeywordsSameAsOld"));
                 }
                 else
                 {
-                    ReplaceActionKeyword(plugin.Metadata.ID, removedActionKeywords, addedActionKeywords);
+                    ReplaceActionKeyword(_plugin.Metadata.ID, removedActionKeywords, addedActionKeywords);
                 }
             }
             else
             {
-                string msg = translater.GetTranslation("newActionKeywordsHasBeenAssigned");
-                App.API.ShowMsgBox(msg);
+                App.API.ShowMsgBox(App.API.GetTranslation("newActionKeywordsHasBeenAssigned"));
             }
         }
 
@@ -85,7 +80,7 @@ namespace Flow.Launcher
             }
 
             // Update action keywords text and close window
-            pluginViewModel.OnActionKeywordsChanged();
+            _pluginViewModel.OnActionKeywordsTextChanged();
             Close();
         }
     }

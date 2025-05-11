@@ -14,8 +14,8 @@
     </ResourceDictionary.MergedDictionaries>
     <system:Boolean x:Key="ThemeBlurEnabled">True</system:Boolean>
     <system:String x:Key="SystemBG">Auto</system:String>
-    <Color x:Key="LightBG">#BFFAFAFA</Color>
-    <Color x:Key="DarkBG">#DD202020</Color>
+    <Color x:Key="LightBG">#CEFAFAFA</Color>
+    <Color x:Key="DarkBG">#D6202020</Color>
     <Style
         x:Key="BulletStyle"
         BasedOn="{StaticResource BaseBulletStyle}"
@@ -31,14 +31,19 @@
         <Setter Property="Width" Value="4" />
         <Setter Property="Height" Value="38" />
         <Setter Property="CornerRadius" Value="2" />
-        <Setter Property="Background" Value="{StaticResource SystemAccentColorLight1Brush}" />
+        <Setter Property="Background" Value="{DynamicResource BasicSystemAccentColor}" />
+    </Style>
+    <Style x:Key="ImageIconStyle" TargetType="{x:Type Image}">
+        <Setter Property="Height" Value="32" />
+        <Setter Property="Width" Value="32" />
+        <Setter Property="Margin" Value="-2 0 0 0" />
     </Style>
     <Style
         x:Key="ItemGlyph"
         BasedOn="{StaticResource BaseGlyphStyle}"
         TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
-        <Setter Property="Margin" Value="-4 0 0 0" />
+        <Setter Property="Margin" Value="-2 0 0 0" />
     </Style>
     <Style
         x:Key="QueryBoxStyle"
@@ -48,7 +53,7 @@
         <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
         <Setter Property="CaretBrush" Value="{DynamicResource Color05B}" />
         <Setter Property="SelectionBrush" Value="{StaticResource SystemAccentColorLight1Brush}" />
-        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontSize" Value="16" />
         <Setter Property="Height" Value="42" />
     </Style>
 
@@ -59,7 +64,7 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Padding" Value="0 0 50 0" />
         <Setter Property="Height" Value="42" />
-        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontSize" Value="16" />
         <Setter Property="Foreground" Value="{DynamicResource QuerySuggestionBoxForeground}" />
     </Style>
 
@@ -79,7 +84,9 @@
     <Style
         x:Key="PendingLineStyle"
         BasedOn="{StaticResource BasePendingLineStyle}"
-        TargetType="{x:Type Line}" />
+        TargetType="{x:Type Line}">
+        <Setter Property="Stroke" Value="{DynamicResource BasicSystemAccentColor}" />
+    </Style>
 
     <!--  Item Style  -->
     <Style
@@ -180,7 +187,7 @@
         <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="Margin" Value="-4 0 0 0" />
+        <Setter Property="Margin" Value="-2 0 0 0" />
         <Setter Property="Width" Value="25" />
         <Setter Property="Height" Value="25" />
         <Setter Property="FontSize" Value="25" />
@@ -188,6 +195,7 @@
     <CornerRadius x:Key="ItemRadius">5</CornerRadius>
     <Thickness x:Key="ItemMargin">10 0 10 0</Thickness>
     <Thickness x:Key="ResultMargin">0 10 0 10</Thickness>
+    <system:Double x:Key="ResultItemHeight">58</system:Double>
     <Style
         x:Key="ClockPanel"
         BasedOn="{StaticResource ClockPanel}"

@@ -6,7 +6,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Windows.Win32;
 using Windows.Win32.Foundation;
@@ -19,6 +18,8 @@ namespace Flow.Launcher.Plugin.Sys
 {
     public class Main : IPlugin, ISettingProvider, IPluginI18n
     {
+        private static readonly string ClassName = nameof(Main);
+
         private readonly Dictionary<string, string> KeywordTitleMappings = new()
         {
             {"Shutdown", "flowlauncher_plugin_sys_shutdown_computer_cmd"},
@@ -106,7 +107,7 @@ namespace Flow.Launcher.Plugin.Sys
         {
             if (!KeywordTitleMappings.TryGetValue(key, out var translationKey))
             {
-                Log.Error("Flow.Launcher.Plugin.Sys.Main", $"Title not found for: {key}");
+                _context.API.LogError(ClassName, $"Title not found for: {key}");
                 return "Title Not Found";
             }
 
@@ -117,7 +118,7 @@ namespace Flow.Launcher.Plugin.Sys
         {
             if (!KeywordDescriptionMappings.TryGetValue(key, out var translationKey))
             {
-                Log.Error("Flow.Launcher.Plugin.Sys.Main", $"Description not found for: {key}");
+                _context.API.LogError(ClassName, $"Description not found for: {key}");
                 return "Description Not Found";
             }
 
@@ -361,6 +362,7 @@ namespace Flow.Launcher.Plugin.Sys
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe89f"),
                     Action = c =>
                     {
+                        _context.API.HideMainWindow();
                         Application.Current.MainWindow.Close();
                         return true;
                     }

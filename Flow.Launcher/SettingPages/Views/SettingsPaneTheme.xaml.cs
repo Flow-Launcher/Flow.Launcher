@@ -1,12 +1,10 @@
-using System.Windows.Navigation;
+﻿using System.Windows.Navigation;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.SettingPages.ViewModels;
-using Page = ModernWpf.Controls.Page;
-using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.SettingPages.Views;
 
-public partial class SettingsPaneTheme : Page
+public partial class SettingsPaneTheme
 {
     private SettingsPaneThemeViewModel _viewModel = null!;
 
@@ -14,12 +12,10 @@ public partial class SettingsPaneTheme : Page
     {
         if (!IsInitialized)
         {
-            var settings = Ioc.Default.GetRequiredService<Settings>();
-            _viewModel = new SettingsPaneThemeViewModel(settings);
+            _viewModel = Ioc.Default.GetRequiredService<SettingsPaneThemeViewModel>();
             DataContext = _viewModel;
             InitializeComponent();
         }
-
         base.OnNavigatedTo(e);
     }
 }

@@ -19,7 +19,7 @@ namespace Flow.Launcher.ViewModel
 
         public ResultCollection Results { get; }
 
-        private readonly object _collectionLock = new object();
+        private readonly object _collectionLock = new();
         private readonly Settings _settings;
         private int MaxResults => _settings?.MaxResultsToShow ?? 6;
 
@@ -89,7 +89,7 @@ namespace Flow.Launcher.ViewModel
 
         #region Private Methods
 
-        private int InsertIndexOf(int newScore, IList<ResultViewModel> list)
+        private static int InsertIndexOf(int newScore, IList<ResultViewModel> list)
         {
             int index = 0;
             for (; index < list.Count; index++)
@@ -117,7 +117,6 @@ namespace Flow.Launcher.ViewModel
                 return -1;
             }
         }
-
 
         #endregion
 
@@ -190,10 +189,10 @@ namespace Flow.Launcher.ViewModel
             if (token.IsCancellationRequested)
                 return;
 
-            UpdateResults(newResults, token, reselect);
+            UpdateResults(newResults, reselect, token);
         }
 
-        private void UpdateResults(List<ResultViewModel> newResults, CancellationToken token = default, bool reselect = true)
+        private void UpdateResults(List<ResultViewModel> newResults, bool reselect = true, CancellationToken token = default)
         {
             lock (_collectionLock)
             {
@@ -233,10 +232,15 @@ namespace Flow.Launcher.ViewModel
             if (!resultsForUpdates.Any())
                 return Results;
 
+            var newResults = resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings));
+
+            if (resultsForUpdates.Any(x => x.shouldClearExistingResults))
+                return newResults.OrderByDescending(rv => rv.Result.Score).ToList();
+
             return Results.Where(r => r?.Result != null && resultsForUpdates.All(u => u.ID != r.Result.PluginID))
-                          .Concat(resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings)))
-                          .OrderByDescending(rv => rv.Result.Score)
-                          .ToList();
+                              .Concat(newResults)
+                              .OrderByDescending(rv => rv.Result.Score)
+                              .ToList();
         }
         #endregion
 

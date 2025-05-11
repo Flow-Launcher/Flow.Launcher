@@ -11,11 +11,6 @@ GetModuleHandle
 GetKeyState
 VIRTUAL_KEY
 
-WM_KEYDOWN
-WM_KEYUP
-WM_SYSKEYDOWN
-WM_SYSKEYUP
-
 EnumWindows
 
 DwmSetWindowAttribute
@@ -47,6 +42,9 @@ MONITORINFOEXW
 
 WM_ENTERSIZEMOVE
 WM_EXITSIZEMOVE
+
+OleInitialize
+OleUninitialize
 
 GetKeyboardLayout
 GetWindowThreadProcessId

@@ -15,6 +15,12 @@
     FocusManager.FocusedElement="{Binding ElementName=PluginFilterTextbox}"
     KeyDown="SettingsPanePlugins_OnKeyDown"
     mc:Ignorable="d">
+    <ui:Page.Resources>
+        <CollectionViewSource
+            x:Key="PluginCollectionView"
+            Filter="PluginCollectionView_OnFilter"
+            Source="{Binding PluginViewModels}" />
+    </ui:Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="73" />
@@ -57,9 +63,10 @@
                     Height="34"
                     Margin="0 0 20 0"
                     Command="{Binding OpenHelperCommand}"
-                    Content="&#xe9ce;"
-                    FontFamily="{DynamicResource SymbolThemeFontFamily}"
-                    FontSize="14" />
+                    CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
+                    FontSize="14">
+                    <ui:FontIcon FontSize="14" Glyph="&#xe9ce;" />
+                </Button>
                 <TextBox
                     Name="PluginFilterTextbox"
                     Width="150"
@@ -114,10 +121,9 @@
                 Background="{DynamicResource Color01B}"
                 FontSize="14"
                 ItemContainerStyle="{StaticResource PluginList}"
-                ItemsSource="{Binding FilteredPluginViewModels}"
+                ItemsSource="{Binding Source={StaticResource PluginCollectionView}}"
                 ScrollViewer.CanContentScroll="False"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                SelectedItem="{Binding SelectedPlugin}"
                 SnapsToDevicePixels="True"
                 Style="{DynamicResource PluginListStyle}"
                 VirtualizingPanel.ScrollUnit="Pixel"

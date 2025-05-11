@@ -1,27 +1,26 @@
-﻿using Flow.Launcher.Infrastructure.UserSettings;
-using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher
 {
-    public partial class SelectBrowserWindow : Window, INotifyPropertyChanged
+    [INotifyPropertyChanged]
+    public partial class SelectBrowserWindow : Window
     {
+        private readonly Settings _settings;
+
         private int selectedCustomBrowserIndex;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public Settings Settings { get; }
 
         public int SelectedCustomBrowserIndex
         {
-            get => selectedCustomBrowserIndex; set
+            get => selectedCustomBrowserIndex;
+            set
             {
                 selectedCustomBrowserIndex = value;
-                PropertyChanged?.Invoke(this, new(nameof(CustomBrowser)));
+                OnPropertyChanged(nameof(CustomBrowser));
             }
         }
         public ObservableCollection<CustomBrowserViewModel> CustomBrowsers { get; set; }
@@ -29,9 +28,9 @@ namespace Flow.Launcher
         public CustomBrowserViewModel CustomBrowser => CustomBrowsers[SelectedCustomBrowserIndex];
         public SelectBrowserWindow(Settings settings)
         {
-            Settings = settings;
-            CustomBrowsers = new ObservableCollection<CustomBrowserViewModel>(Settings.CustomBrowserList.Select(x => x.Copy()));
-            SelectedCustomBrowserIndex = Settings.CustomBrowserIndex;
+            _settings = settings;
+            CustomBrowsers = new ObservableCollection<CustomBrowserViewModel>(_settings.CustomBrowserList.Select(x => x.Copy()));
+            SelectedCustomBrowserIndex = _settings.CustomBrowserIndex;
             InitializeComponent();
         }
 
@@ -42,8 +41,8 @@ namespace Flow.Launcher
 
         private void btnDone_Click(object sender, RoutedEventArgs e)
         {
-            Settings.CustomBrowserList = CustomBrowsers.ToList();
-            Settings.CustomBrowserIndex = SelectedCustomBrowserIndex;
+            _settings.CustomBrowserList = CustomBrowsers.ToList();
+            _settings.CustomBrowserIndex = SelectedCustomBrowserIndex;
             Close();
         }
 
@@ -64,8 +63,7 @@ namespace Flow.Launcher
         private void btnBrowseFile_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-            Nullable<bool> result = dlg.ShowDialog();
-
+            var result = dlg.ShowDialog();
             if (result == true)
             {
                 TextBox path = (TextBox)(((FrameworkElement)sender).Parent as FrameworkElement).FindName("PathTextBox");

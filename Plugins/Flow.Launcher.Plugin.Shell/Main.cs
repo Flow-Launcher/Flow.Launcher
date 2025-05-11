@@ -7,20 +7,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using WindowsInput;
 using WindowsInput.Native;
-using Flow.Launcher.Infrastructure.Hotkey;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
 using Control = System.Windows.Controls.Control;
 using Keys = System.Windows.Forms.Keys;
 
 namespace Flow.Launcher.Plugin.Shell
 {
-    public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu
+    public class Main : IPlugin, ISettingProvider, IPluginI18n, IContextMenu, IDisposable
     {
+        private static readonly string ClassName = nameof(Main);
+
+        internal PluginInitContext Context { get; private set; }
+
         private const string Image = "Images/shell.png";
-        private PluginInitContext context;
         private bool _winRStroked;
-        private readonly KeyboardSimulator _keyboardSimulator = new KeyboardSimulator(new InputSimulator());
+        private readonly KeyboardSimulator _keyboardSimulator = new(new InputSimulator());
 
         private Settings _settings;
 
@@ -53,7 +54,7 @@ namespace Flow.Launcher.Plugin.Shell
                     {
                         basedir = Path.GetDirectoryName(excmd);
                         var dirName = Path.GetDirectoryName(cmd);
-                        dir = (dirName.EndsWith("/") || dirName.EndsWith(@"\")) ? dirName : cmd.Substring(0, dirName.Length + 1);
+                        dir = (dirName.EndsWith("/") || dirName.EndsWith(@"\")) ? dirName : cmd[..(dirName.Length + 1)];
                     }
 
                     if (basedir != null)
@@ -88,7 +89,7 @@ namespace Flow.Launcher.Plugin.Shell
                 }
                 catch (Exception e)
                 {
-                    Log.Exception($"|Flow.Launcher.Plugin.Shell.Main.Query|Exception when query for <{query}>", e);
+                    Context.API.LogException(ClassName, $"Exception when query for <{query}>", e);
                 }
                 return results;
             }
@@ -102,14 +103,14 @@ namespace Flow.Launcher.Plugin.Shell
                 {
                     if (m.Key == cmd)
                     {
-                        result.SubTitle = string.Format(context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value);
+                        result.SubTitle = string.Format(Context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value);
                         return null;
                     }
 
                     var ret = new Result
                     {
                         Title = m.Key,
-                        SubTitle = string.Format(context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value),
+                        SubTitle = string.Format(Context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value),
                         IcoPath = Image,
                         Action = c =>
                         {
@@ -139,7 +140,7 @@ namespace Flow.Launcher.Plugin.Shell
             {
                 Title = cmd,
                 Score = 5000,
-                SubTitle = context.API.GetTranslation("flowlauncher_plugin_cmd_execute_through_shell"),
+                SubTitle = Context.API.GetTranslation("flowlauncher_plugin_cmd_execute_through_shell"),
                 IcoPath = Image,
                 Action = c =>
                 {
@@ -164,7 +165,7 @@ namespace Flow.Launcher.Plugin.Shell
                 .Select(m => new Result
                 {
                     Title = m.Key,
-                    SubTitle = string.Format(context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value),
+                    SubTitle = string.Format(Context.API.GetTranslation("flowlauncher_plugin_cmd_cmd_has_been_executed_times"), m.Value),
                     IcoPath = Image,
                     Action = c =>
                     {
@@ -211,7 +212,7 @@ namespace Flow.Launcher.Plugin.Shell
                         info.FileName = "cmd.exe";
                     }
 
-                    info.ArgumentList.Add($"{(_settings.LeaveShellOpen ? "/k" : "/c")} {command} {(_settings.CloseShellAfterPress ? $"&& echo {context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")} && pause > nul /c" : "")}");
+                    info.ArgumentList.Add($"{(_settings.LeaveShellOpen ? "/k" : "/c")} {command} {(_settings.CloseShellAfterPress ? $"&& echo {Context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")} && pause > nul /c" : "")}");
                     break;
                 }
 
@@ -234,7 +235,7 @@ namespace Flow.Launcher.Plugin.Shell
                     else
                     {
                         info.ArgumentList.Add("-Command");
-                        info.ArgumentList.Add($"{command}\\; {(_settings.CloseShellAfterPress ? $"Write-Host '{context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")}'\\; [System.Console]::ReadKey()\\; exit" : "")}");
+                        info.ArgumentList.Add($"{command}\\; {(_settings.CloseShellAfterPress ? $"Write-Host '{Context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")}'\\; [System.Console]::ReadKey()\\; exit" : "")}");
                     }
                     break;
                 }
@@ -255,7 +256,7 @@ namespace Flow.Launcher.Plugin.Shell
                         info.ArgumentList.Add("-NoExit");
                     }
                     info.ArgumentList.Add("-Command");
-                    info.ArgumentList.Add($"{command}\\; {(_settings.CloseShellAfterPress ? $"Write-Host '{context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")}'\\; [System.Console]::ReadKey()\\; exit" : "")}");
+                    info.ArgumentList.Add($"{command}\\; {(_settings.CloseShellAfterPress ? $"Write-Host '{Context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")}'\\; [System.Console]::ReadKey()\\; exit" : "")}");
                     break;
                 }
 
@@ -309,17 +310,17 @@ namespace Flow.Launcher.Plugin.Shell
             {
                 var name = "Plugin: Shell";
                 var message = $"Command not found: {e.Message}";
-                context.API.ShowMsg(name, message);
+                Context.API.ShowMsg(name, message);
             }
             catch (Win32Exception e)
             {
                 var name = "Plugin: Shell";
                 var message = $"Error running the command: {e.Message}";
-                context.API.ShowMsg(name, message);
+                Context.API.ShowMsg(name, message);
             }
         }
 
-        private bool ExistInPath(string filename)
+        private static bool ExistInPath(string filename)
         {
             if (File.Exists(filename))
             {
@@ -350,14 +351,14 @@ namespace Flow.Launcher.Plugin.Shell
 
         public void Init(PluginInitContext context)
         {
-            this.context = context;
+            Context = context;
             _settings = context.API.LoadSettingJsonStorage<Settings>();
             context.API.RegisterGlobalKeyboardCallback(API_GlobalKeyboardEvent);
         }
 
         bool API_GlobalKeyboardEvent(int keyevent, int vkcode, SpecialKeyState state)
         {
-            if (!context.CurrentPluginMetadata.Disabled && _settings.ReplaceWinR)
+            if (!Context.CurrentPluginMetadata.Disabled && _settings.ReplaceWinR)
             {
                 if (keyevent == (int)KeyEvent.WM_KEYDOWN && vkcode == (int)Keys.R && state.WinPressed)
                 {
@@ -380,10 +381,9 @@ namespace Flow.Launcher.Plugin.Shell
             // show the main window and set focus to the query box
             _ = Task.Run(() =>
             {
-                context.API.ShowMainWindow();
-                context.API.ChangeQuery($"{context.CurrentPluginMetadata.ActionKeywords[0]}{Plugin.Query.TermSeparator}");
+                Context.API.ShowMainWindow();
+                Context.API.ChangeQuery($"{Context.CurrentPluginMetadata.ActionKeywords[0]}{Plugin.Query.TermSeparator}");
             });
-
         }
 
         public Control CreateSettingPanel()
@@ -393,12 +393,12 @@ namespace Flow.Launcher.Plugin.Shell
 
         public string GetTranslatedPluginTitle()
         {
-            return context.API.GetTranslation("flowlauncher_plugin_cmd_plugin_name");
+            return Context.API.GetTranslation("flowlauncher_plugin_cmd_plugin_name");
         }
 
         public string GetTranslatedPluginDescription()
         {
-            return context.API.GetTranslation("flowlauncher_plugin_cmd_plugin_description");
+            return Context.API.GetTranslation("flowlauncher_plugin_cmd_plugin_description");
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
@@ -407,8 +407,8 @@ namespace Flow.Launcher.Plugin.Shell
             {
                 new()
                 {
-                    Title = context.API.GetTranslation("flowlauncher_plugin_cmd_run_as_different_user"),
-                    AsyncAction = async c =>
+                    Title = Context.API.GetTranslation("flowlauncher_plugin_cmd_run_as_different_user"),
+                    Action = c =>
                     {
                         Execute(ShellCommand.RunAsDifferentUser, PrepareProcessStartInfo(selectedResult.Title));
                         return true;
@@ -418,7 +418,7 @@ namespace Flow.Launcher.Plugin.Shell
                 },
                 new()
                 {
-                    Title = context.API.GetTranslation("flowlauncher_plugin_cmd_run_as_administrator"),
+                    Title = Context.API.GetTranslation("flowlauncher_plugin_cmd_run_as_administrator"),
                     Action = c =>
                     {
                         Execute(Process.Start, PrepareProcessStartInfo(selectedResult.Title, true));
@@ -429,10 +429,10 @@ namespace Flow.Launcher.Plugin.Shell
                 },
                 new()
                 {
-                    Title = context.API.GetTranslation("flowlauncher_plugin_cmd_copy"),
+                    Title = Context.API.GetTranslation("flowlauncher_plugin_cmd_copy"),
                     Action = c =>
                     {
-                        context.API.CopyToClipboard(selectedResult.Title);
+                        Context.API.CopyToClipboard(selectedResult.Title);
                         return true;
                     },
                     IcoPath = "Images/copy.png",
@@ -441,6 +441,11 @@ namespace Flow.Launcher.Plugin.Shell
             };
 
             return results;
+        }
+
+        public void Dispose()
+        {
+            Context.API.RemoveGlobalKeyboardCallback(API_GlobalKeyboardEvent);
         }
     }
 }
