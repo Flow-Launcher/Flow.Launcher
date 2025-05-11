@@ -488,7 +488,7 @@ Jeśli dodasz prefiks '@' podczas wprowadzania skrótu, będzie on pasował do d
     <system:String x:Key="update_flowlauncher_update_cancel">Anuluj</system:String>
     <system:String x:Key="update_flowlauncher_fail">Aktualizacja nie powiodła się</system:String>
     <system:String x:Key="update_flowlauncher_check_connection">Sprawdź połączenie i spróbuj zaktualizować ustawienia proxy do github-cloud.s3.amazonaws.com.</system:String>
-    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Aby dokończyć proces aktualizacji Flow Launcher musi zostać zresetowany</system:String>
+    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Aby dokończyć proces aktualizacji Flow Launcher musi zostać zrestartowany</system:String>
     <system:String x:Key="update_flowlauncher_update_update_files">Następujące pliki zostaną zaktualizowane</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Aktualizuj pliki</system:String>
     <system:String x:Key="update_flowlauncher_update_update_description">Opis aktualizacji</system:String>
