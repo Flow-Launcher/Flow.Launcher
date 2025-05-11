@@ -12,9 +12,7 @@ namespace Flow.Launcher.Storage
 
         internal bool IsTopMost(Result result)
         {
-            // origin query is null when user select the context menu item directly of one item from query list
-            // in this case, we do not need to check if the result is top most
-            if (records.IsEmpty || result.OriginQuery == null ||
+            if (records.IsEmpty ||
                 !records.TryGetValue(result.OriginQuery.RawQuery, out var value))
             {
                 return false;
@@ -26,25 +24,11 @@ namespace Flow.Launcher.Storage
 
         internal void Remove(Result result)
         {
-            // origin query is null when user select the context menu item directly of one item from query list
-            // in this case, we do not need to remove the record
-            if (result.OriginQuery == null)
-            {
-                return;
-            }
-
             records.Remove(result.OriginQuery.RawQuery, out _);
         }
 
         internal void AddOrUpdate(Result result)
         {
-            // origin query is null when user select the context menu item directly of one item from query list
-            // in this case, we do not need to add or update the record
-            if (result.OriginQuery == null)
-            {
-                return;
-            }
-
             var record = new Record
             {
                 PluginID = result.PluginID,
