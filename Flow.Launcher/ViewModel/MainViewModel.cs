@@ -518,9 +518,10 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void SelectPrevItem()
         {
-            if (_history.Items.Count > 0
-                && QueryText == string.Empty
-                && QueryResultsSelected())
+            if (QueryResultsSelected() // Results selected
+                && string.IsNullOrEmpty(QueryText) // No input
+                && Results.Visibility != Visibility.Visible // Results closed which means no items in Results 
+                && _history.Items.Count > 0) // Have history items
             {
                 lastHistoryIndex = 1;
                 ReverseHistory();
