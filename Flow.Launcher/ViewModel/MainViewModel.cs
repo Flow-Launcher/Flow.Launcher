@@ -518,9 +518,10 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void SelectPrevItem()
         {
-            if (_history.Items.Count > 0
-                && QueryText == string.Empty
-                && QueryResultsSelected())
+            if (QueryResultsSelected() // Results selected
+                && string.IsNullOrEmpty(QueryText) // No input
+                && Results.Visibility != Visibility.Visible // No items in result list, e.g. when home page is off and no query text is entered, therefore the view is collapsed.
+                && _history.Items.Count > 0) // Have history items
             {
                 lastHistoryIndex = 1;
                 ReverseHistory();
