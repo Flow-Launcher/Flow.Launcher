@@ -12,8 +12,7 @@ namespace Flow.Launcher.Storage
 
         internal bool IsTopMost(Result result)
         {
-            if (records.IsEmpty ||
-                !records.TryGetValue(result.OriginQuery.RawQuery, out var value))
+            if (records.IsEmpty || !records.TryGetValue(result.OriginQuery.RawQuery, out var value))
             {
                 return false;
             }
