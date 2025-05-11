@@ -1375,7 +1375,8 @@ namespace Flow.Launcher.ViewModel
                 // nothing to do here
             }
 
-            // If results are not cleared, we need to clear the results
+            // If QueryTaskAsync or QueryHistoryTask is not called which means that results are not cleared
+            // we need to clear the results
             if (!resultsCleared) Results.Clear();
 
             if (currentCancellationToken.IsCancellationRequested) return;
@@ -1441,14 +1442,13 @@ namespace Flow.Launcher.ViewModel
                 var shouldClearExistingResults = ShouldClearExistingResults(query, currentIsHomeQuery);
                 _lastQuery = query;
                 _previousIsHomeQuery = currentIsHomeQuery;
+                resultsCleared = true;
 
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
                     token, reSelect, shouldClearExistingResults)))
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
-
-                resultsCleared = true;
             }
 
             void QueryHistoryTask(CancellationToken token)
@@ -1466,14 +1466,13 @@ namespace Flow.Launcher.ViewModel
                 var shouldClearExistingResults = ShouldClearExistingResults(query, currentIsHomeQuery);
                 _lastQuery = query;
                 _previousIsHomeQuery = currentIsHomeQuery;
+                resultsCleared = true;
 
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, _historyMetadata, query,
                     token, reSelect, shouldClearExistingResults)))
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
-
-                resultsCleared = true;
             }
         }
 
