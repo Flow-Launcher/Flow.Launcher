@@ -1447,11 +1447,8 @@ namespace Flow.Launcher.ViewModel
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
-                else
-                {
-                    // Only update the clear flag when we successfully write to the channel
-                    resultsCleared = true;
-                }
+
+                resultsCleared = true;
             }
 
             void QueryHistoryTask(CancellationToken token)
@@ -1475,11 +1472,8 @@ namespace Flow.Launcher.ViewModel
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
-                else
-                {
-                    // Only update the clear flag when we successfully write to the channel
-                    resultsCleared = true;
-                }
+
+                resultsCleared = true;
             }
         }
 
