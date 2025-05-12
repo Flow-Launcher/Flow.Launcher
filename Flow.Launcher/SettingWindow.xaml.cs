@@ -137,16 +137,38 @@ public partial class SettingWindow
 
         if (previousTop == null || previousLeft == null || !IsPositionValid(previousTop.Value, previousLeft.Value))
         {
-            Top = WindowTop();
-            Left = WindowLeft();
+            SetWindowPosition(WindowTop(), WindowLeft());
         }
         else
         {
-            Top = previousTop.Value;
-            Left = previousLeft.Value;
+            var left = _settings.SettingWindowLeft.Value;
+            var top = _settings.SettingWindowTop.Value;
+            AdjustWindowPosition(ref top, ref left);
+            SetWindowPosition(top, left);
         }
 
         WindowState = _settings.SettingWindowState;
+    }
+
+    private void SetWindowPosition(double top, double left)
+    {
+        // Ensure window does not exceed screen boundaries
+        top = Math.Max(top, SystemParameters.VirtualScreenTop);
+        left = Math.Max(left, SystemParameters.VirtualScreenLeft);
+        top = Math.Min(top, SystemParameters.VirtualScreenHeight - ActualHeight);
+        left = Math.Min(left, SystemParameters.VirtualScreenWidth - ActualWidth);
+
+        Top = top;
+        Left = left;
+    }
+
+    private void AdjustWindowPosition(ref double top, ref double left)
+    {
+        // Adjust window position if it exceeds screen boundaries
+        top = Math.Max(top, SystemParameters.VirtualScreenTop);
+        left = Math.Max(left, SystemParameters.VirtualScreenLeft);
+        top = Math.Min(top, SystemParameters.VirtualScreenHeight - ActualHeight);
+        left = Math.Min(left, SystemParameters.VirtualScreenWidth - ActualWidth);
     }
 
     private static bool IsPositionValid(double top, double left)
