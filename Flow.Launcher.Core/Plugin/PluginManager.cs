@@ -220,9 +220,17 @@ namespace Flow.Launcher.Core.Plugin
                 catch (Exception e)
                 {
                     API.LogException(ClassName, $"Fail to Init plugin: {pair.Metadata.Name}", e);
-                    pair.Metadata.Disabled = true;
-                    pair.Metadata.HomeDisabled = true;
-                    failedPlugins.Enqueue(pair);
+                    if (pair.Metadata.Disabled && pair.Metadata.HomeDisabled)
+                    {
+                        // If this plugin is already disabled, do not show error message again
+                        // Or else it will be shown every time
+                    }
+                    else
+                    {
+                        pair.Metadata.Disabled = true;
+                        pair.Metadata.HomeDisabled = true;
+                        failedPlugins.Enqueue(pair);
+                    }
                 }
             }));
 
