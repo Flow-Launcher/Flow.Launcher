@@ -74,7 +74,7 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">التشغيل كمستخدم مختلف</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">التشغيل كمسؤول</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">فتح المجلد المحتوي</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">تعطيل عرض هذا البرنامج</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">Hide</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_target_folder">فتح المجلد الهدف</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">البرنامج</system:String>

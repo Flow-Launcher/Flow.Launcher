@@ -41,9 +41,8 @@ on:
 #     tags-ignore:
 #     - "**"
   pull_request_target:
-    branches:
-    - '**'
-    # - '!l10n_dev'
+    branches-ignore:
+      - master
     tags-ignore:
     - "**"
     types:

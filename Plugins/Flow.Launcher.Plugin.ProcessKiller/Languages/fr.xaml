@@ -8,6 +8,7 @@
     <system:String x:Key="flowlauncher_plugin_processkiller_kill_all_count">Tuer {0} processus</system:String>
     <system:String x:Key="flowlauncher_plugin_processkiller_kill_instances">Tuer toutes les instances</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_processkiller_show_window_title">Afficher le titre des processus avec des fenêtres visibles</system:String>
     <system:String x:Key="flowlauncher_plugin_processkiller_put_visible_window_process_top">Placer les processus dont les fenêtres sont visibles en haut de la page</system:String>
 
 </ResourceDictionary>

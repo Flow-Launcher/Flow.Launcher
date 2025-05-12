@@ -23,6 +23,7 @@ using Flow.Launcher.Infrastructure.QuickSwitch;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
+using Microsoft.Win32;
 using ModernWpf.Controls;
 using DataObject = System.Windows.DataObject;
 using Key = System.Windows.Input.Key;
@@ -89,6 +90,8 @@ namespace Flow.Launcher
 
             InitSoundEffects();
             DataObject.AddPastingHandler(QueryTextBox, QueryTextBox_OnPaste);
+
+            SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
         }
 
         #endregion
@@ -561,16 +564,29 @@ namespace Flow.Launcher
 
         #region Window Sound Effects
 
+        private void SystemEvents_PowerModeChanged(object sender, PowerModeChangedEventArgs e)
+        {
+            // Fix for sound not playing after sleep / hibernate
+            // https://stackoverflow.com/questions/64805186/mediaplayer-doesnt-play-after-computer-sleeps
+            if (e.Mode == PowerModes.Resume)
+            {
+                InitSoundEffects();
+            }
+        }
+
         private void InitSoundEffects()
         {
             if (_settings.WMPInstalled)
             {
+                animationSoundWMP?.Close();
                 animationSoundWMP = new MediaPlayer();
                 animationSoundWMP.Open(new Uri(AppContext.BaseDirectory + "Resources\\open.wav"));
             }
             else
             {
+                animationSoundWPF?.Dispose();
                 animationSoundWPF = new SoundPlayer(AppContext.BaseDirectory + "Resources\\open.wav");
+                animationSoundWPF.Load();
             }
         }
 
@@ -845,7 +861,7 @@ namespace Flow.Launcher
             {
                 Name = progressBarAnimationName, Storyboard = progressBarStoryBoard
             };
-            
+
             var stopStoryboard = new StopStoryboard()
             {
                 BeginStoryboardName = progressBarAnimationName
@@ -866,7 +882,7 @@ namespace Flow.Launcher
             progressStyle.Triggers.Add(trigger);
 
             ProgressBar.Style = progressStyle;
-          
+
             _viewModel.ProgressBarVisibility = Visibility.Hidden;
         }
 
@@ -914,7 +930,7 @@ namespace Flow.Launcher
                 Duration = TimeSpan.FromMilliseconds(animationLength),
                 FillBehavior = FillBehavior.HoldEnd
             };
-            
+
             var rightMargin = GetThicknessFromStyle(ClockPanel.Style, new Thickness(0, 0, DefaultRightMargin, 0)).Right;
 
             var thicknessAnimation = new ThicknessAnimation
@@ -942,10 +958,10 @@ namespace Flow.Launcher
             clocksb.Children.Add(ClockOpacity);
             iconsb.Children.Add(IconMotion);
             iconsb.Children.Add(IconOpacity);
-            
+
             _settings.WindowLeft = Left;
             _isArrowKeyPressed = false;
-            
+
             clocksb.Begin(ClockPanel);
             iconsb.Begin(SearchIcon);
         }
@@ -1117,7 +1133,7 @@ namespace Flow.Launcher
         {
             e.Handled = true;
         }
-        
+
         #endregion
 
         #region Placeholder
@@ -1169,7 +1185,7 @@ namespace Flow.Launcher
         }
 
         #endregion
-        
+
         #region Search Delay
 
         private void QueryTextBox_TextChanged1(object sender, TextChangedEventArgs e)
@@ -1231,6 +1247,9 @@ namespace Flow.Launcher
                 {
                     _hwndSource?.Dispose();
                     _notifyIcon?.Dispose();
+                    animationSoundWMP?.Close();
+                    animationSoundWPF?.Dispose();
+                    SystemEvents.PowerModeChanged -= SystemEvents_PowerModeChanged;
                 }
 
                 _disposed = true;

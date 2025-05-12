@@ -74,7 +74,7 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Xóa lựa chọn đã chọn</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Chạy với quyền quản trị</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Mở thư mục chứa</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">Vô hiệu hóa chương trình này hiển thị</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">Hide</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Mở thư mục đích</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Chương trình</system:String>
