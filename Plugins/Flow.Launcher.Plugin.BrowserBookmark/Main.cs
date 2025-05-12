@@ -37,8 +37,6 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
             context.CurrentPluginMetadata.PluginCacheDirectoryPath,
             "FaviconCache");
 
-        FilesFolders.ValidateDirectory(_faviconCacheDir);
-
         LoadBookmarksIfEnabled();
     }
 
@@ -49,6 +47,9 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
             // Don't load or monitor files if disabled
             return;
         }
+
+        // Validate the cache directory before loading all bookmarks because Flow needs this directory to storage favicons
+        FilesFolders.ValidateDirectory(_faviconCacheDir);
 
         _cachedBookmarks = BookmarkLoader.LoadAllBookmarks(_settings);
         _ = MonitorRefreshQueueAsync();
