@@ -219,6 +219,7 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 catch (Exception e)
                 {
+                    API.LogException(ClassName, $"Fail to Init plugin: {pair.Metadata.Name}", e);
                     if (pair.Metadata.Disabled && pair.Metadata.HomeDisabled)
                     {
                         // If this plugin is already disabled, do not show error message again
@@ -230,7 +231,7 @@ namespace Flow.Launcher.Core.Plugin
                         pair.Metadata.Disabled = true;
                         pair.Metadata.HomeDisabled = true;
                         failedPlugins.Enqueue(pair);
-                        API.LogException(ClassName, $"Fail to Init plugin: {pair.Metadata.Name}", e);
+                        API.LogDebug(ClassName, $"Disable plugin <{pair.Metadata.Name}> because init failed");
                     }
                 }
             }));
