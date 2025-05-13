@@ -10,6 +10,6 @@
 
         public bool WarnFromUnknownSource { get; set; } = true;
         
-        public bool AutoRestartAfterChanging { get; set; } = true;
+        public bool AutoRestartAfterChanging { get; set; } = false;
     }
 }
