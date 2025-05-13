@@ -21,6 +21,7 @@ namespace Flow.Launcher.ViewModel
 
         private readonly object _collectionLock = new();
         private readonly Settings _settings;
+        private readonly MainViewModel _mainVM;
         private int MaxResults => _settings?.MaxResultsToShow ?? 6;
 
         public ResultsViewModel()
@@ -29,9 +30,10 @@ namespace Flow.Launcher.ViewModel
             BindingOperations.EnableCollectionSynchronization(Results, _collectionLock);
         }
 
-        public ResultsViewModel(Settings settings) : this()
+        public ResultsViewModel(Settings settings, MainViewModel mainVM) : this()
         {
             _settings = settings;
+            _mainVM = mainVM;
             _settings.PropertyChanged += (s, e) =>
             {
                 switch (e.PropertyName)
@@ -179,6 +181,7 @@ namespace Flow.Launcher.ViewModel
 
             UpdateResults(newResults);
         }
+
         /// <summary>
         /// To avoid deadlock, this method should not called from main thread
         /// </summary>
@@ -202,11 +205,18 @@ namespace Flow.Launcher.ViewModel
                     SelectedItem = Results[0];
             }
 
+            if (token.IsCancellationRequested)
+                return;
+
             switch (Visibility)
             {
                 case Visibility.Collapsed when Results.Count > 0:
-                    SelectedIndex = 0;
-                    Visibility = Visibility.Visible;
+                    // Show it only if the results are selected
+                    if (_mainVM == null || _mainVM.ResultsSelected(this))
+                    {
+                        SelectedIndex = 0;
+                        Visibility = Visibility.Visible;
+                    }
                     break;
                 case Visibility.Visible when Results.Count == 0:
                     Visibility = Visibility.Collapsed;

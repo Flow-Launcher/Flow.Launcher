@@ -479,7 +479,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
                     )
                 }
             };
-        var vm = new ResultsViewModel(Settings);
+        var vm = new ResultsViewModel(Settings, null);
         vm.AddResults(results, "PREVIEW");
         PreviewResults = vm;
     }
