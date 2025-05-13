@@ -303,6 +303,13 @@ namespace Flow.Launcher.Plugin.Program.Views
                 return;
             }
 
+            if (IsAllItemsUserAdded(selectedItems))
+            {
+                var msg1 = context.API.GetTranslation("flowlauncher_plugin_program_delete_program_source_not_user_added");
+                context.API.ShowMsgBox(msg1);
+                return;
+            }
+
             if (HasMoreOrEqualEnabledItems(selectedItems))
             {
                 await ProgramSettingDisplay.SetProgramSourcesStatusAsync(selectedItems, false);
