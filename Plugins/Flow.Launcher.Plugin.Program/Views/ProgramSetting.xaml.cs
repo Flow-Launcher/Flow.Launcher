@@ -428,7 +428,7 @@ namespace Flow.Launcher.Plugin.Program.Views
 
             if (!IsAllItemsUserAdded(selectedItems))
             {
-                var msg1 = context.API.GetTranslation("flowlauncher_plugin_program_delete_program_source_not_user_added");
+                var msg1 = context.API.GetTranslation("flowlauncher_plugin_program_delete_program_source_user_added");
                 context.API.ShowMsgBox(msg1);
                 return;
             }
