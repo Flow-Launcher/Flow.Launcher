@@ -224,7 +224,7 @@ namespace Flow.Launcher.Core.Plugin
                     {
                         // If this plugin is already disabled, do not show error message again
                         // Or else it will be shown every time
-                        API.LogDebug(ClassName, $"Skip init for <{pair.Metadata.Name}>");
+                        API.LogDebug(ClassName, $"Skipped init for <{pair.Metadata.Name}> due to error");
                     }
                     else
                     {
