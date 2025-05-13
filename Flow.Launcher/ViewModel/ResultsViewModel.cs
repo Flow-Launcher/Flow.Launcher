@@ -211,7 +211,7 @@ namespace Flow.Launcher.ViewModel
             switch (Visibility)
             {
                 case Visibility.Collapsed when Results.Count > 0:
-                    if (_mainVM == null || // The results are for preview only in apprerance page
+                    if (_mainVM == null || // The results are for preview only in appearance page
                         _mainVM.ResultsSelected(this)) // The results are selected
                     {
                         SelectedIndex = 0;
