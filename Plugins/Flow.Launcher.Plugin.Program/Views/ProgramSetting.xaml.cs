@@ -133,6 +133,7 @@ namespace Flow.Launcher.Plugin.Program.Views
             {
                 btnProgramSourceStatus.Visibility = Visibility.Hidden;
                 btnEditProgramSource.Visibility = Visibility.Hidden;
+                btnDeleteProgramSource.Visibility = Visibility.Hidden;
             }
 
             if (programSourceView.Items.Count > 0
@@ -141,6 +142,7 @@ namespace Flow.Launcher.Plugin.Program.Views
             {
                 btnProgramSourceStatus.Visibility = Visibility.Visible;
                 btnEditProgramSource.Visibility = Visibility.Visible;
+                btnDeleteProgramSource.Visibility = Visibility.Visible;
             }
 
             programSourceView.Items.Refresh();
@@ -270,8 +272,8 @@ namespace Flow.Launcher.Plugin.Program.Views
 
                 if (directoriesToAdd.Count > 0)
                 {
-                    directoriesToAdd.ForEach(x => _settings.ProgramSources.Add(x));
-                    directoriesToAdd.ForEach(x => ProgramSettingDisplayList.Add(x));
+                    directoriesToAdd.ForEach(_settings.ProgramSources.Add);
+                    directoriesToAdd.ForEach(ProgramSettingDisplayList.Add);
 
                     ViewRefresh();
                     ReIndexing();
@@ -296,24 +298,12 @@ namespace Flow.Launcher.Plugin.Program.Views
 
             if (selectedItems.Count == 0)
             {
-                string msg = context.API.GetTranslation("flowlauncher_plugin_program_pls_select_program_source");
+                var msg = context.API.GetTranslation("flowlauncher_plugin_program_pls_select_program_source");
                 context.API.ShowMsgBox(msg);
                 return;
             }
 
-            if (IsAllItemsUserAdded(selectedItems))
-            {
-                var msg = string.Format(
-                    context.API.GetTranslation("flowlauncher_plugin_program_delete_program_source"));
-
-                if (context.API.ShowMsgBox(msg, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
-                {
-                    return;
-                }
-
-                DeleteProgramSources(selectedItems);
-            }
-            else if (HasMoreOrEqualEnabledItems(selectedItems))
+            if (HasMoreOrEqualEnabledItems(selectedItems))
             {
                 await ProgramSettingDisplay.SetProgramSourcesStatusAsync(selectedItems, false);
 
@@ -341,10 +331,9 @@ namespace Flow.Launcher.Plugin.Program.Views
 
         private void GridViewColumnHeaderClickedHandler(object sender, RoutedEventArgs e)
         {
-            var headerClicked = e.OriginalSource as GridViewColumnHeader;
             ListSortDirection direction;
 
-            if (headerClicked != null)
+            if (e.OriginalSource is GridViewColumnHeader headerClicked)
             {
                 if (headerClicked.Role != GridViewColumnHeaderRole.Padding)
                 {
@@ -397,11 +386,7 @@ namespace Flow.Launcher.Plugin.Program.Views
                 .SelectedItems.Cast<ProgramSource>()
                 .ToList();
 
-            if (IsAllItemsUserAdded(selectedItems))
-            {
-                btnProgramSourceStatus.Content = context.API.GetTranslation("flowlauncher_plugin_program_delete");
-            }
-            else if (HasMoreOrEqualEnabledItems(selectedItems))
+            if (HasMoreOrEqualEnabledItems(selectedItems))
             {
                 btnProgramSourceStatus.Content = context.API.GetTranslation("flowlauncher_plugin_program_disable");
             }
@@ -420,6 +405,43 @@ namespace Flow.Launcher.Plugin.Program.Views
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
+        private async void btnDeleteProgramSource_OnClick(object sender, RoutedEventArgs e)
+        {
+            var selectedItems = programSourceView
+                .SelectedItems.Cast<ProgramSource>()
+                .ToList();
+
+            if (selectedItems.Count == 0)
+            {
+                var msg = context.API.GetTranslation("flowlauncher_plugin_program_pls_select_program_source");
+                context.API.ShowMsgBox(msg);
+                return;
+            }
+
+            if (!IsAllItemsUserAdded(selectedItems))
+            {
+                var msg1 = context.API.GetTranslation("flowlauncher_plugin_program_delete_program_source_not_user_added");
+                context.API.ShowMsgBox(msg1);
+                return;
+            }
+
+            var msg2 = context.API.GetTranslation("flowlauncher_plugin_program_delete_program_source");
+            if (context.API.ShowMsgBox(msg2, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
+            {
+                return;
+            }
+
+            DeleteProgramSources(selectedItems);
+
+            if (await selectedItems.IsReindexRequiredAsync())
+                ReIndexing();
+
+            programSourceView.SelectedItems.Clear();
+
+            ViewRefresh();
+        }
+
         private bool IsAllItemsUserAdded(List<ProgramSource> items)
         {
             return items.All(x => _settings.ProgramSources.Any(y => y.UniqueIdentifier == x.UniqueIdentifier));
@@ -427,8 +449,8 @@ namespace Flow.Launcher.Plugin.Program.Views
 
         private void ListView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            ListView listView = sender as ListView;
-            GridView gView = listView.View as GridView;
+            var listView = sender as ListView;
+            var gView = listView.View as GridView;
 
             var workingWidth =
                 listView.ActualWidth - SystemParameters.VerticalScrollBarWidth; // take into account vertical scrollbar
