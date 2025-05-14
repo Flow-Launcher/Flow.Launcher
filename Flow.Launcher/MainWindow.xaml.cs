@@ -89,7 +89,7 @@ namespace Flow.Launcher
 
             InitSoundEffects();
             DataObject.AddPastingHandler(QueryTextBox, QueryTextBox_OnPaste);
-
+            ModernWpf.ThemeManager.Current.ActualApplicationThemeChanged += ThemeManager_ActualApplicationThemeChanged;
             SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
         }
 
@@ -98,6 +98,11 @@ namespace Flow.Launcher
         #region Window Event
 
 #pragma warning disable VSTHRD100 // Avoid async void methods
+
+        private void ThemeManager_ActualApplicationThemeChanged(ModernWpf.ThemeManager sender, object args)
+        {
+            _theme.RefreshFrameAsync();
+        }
 
         private void OnSourceInitialized(object sender, EventArgs e)
         {
@@ -1251,6 +1256,7 @@ namespace Flow.Launcher
                     _notifyIcon?.Dispose();
                     animationSoundWMP?.Close();
                     animationSoundWPF?.Dispose();
+                    ModernWpf.ThemeManager.Current.ActualApplicationThemeChanged -= ThemeManager_ActualApplicationThemeChanged;
                     SystemEvents.PowerModeChanged -= SystemEvents_PowerModeChanged;
                 }
 
