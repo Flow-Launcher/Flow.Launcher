@@ -1375,6 +1375,8 @@ namespace Flow.Launcher.ViewModel
                 // nothing to do here
             }
 
+            if (currentCancellationToken.IsCancellationRequested) return;
+
             // If QueryTaskAsync or QueryHistoryTask is not called which means that results are not cleared
             // we need to clear the results
             if (!resultsCleared) Results.Clear();
