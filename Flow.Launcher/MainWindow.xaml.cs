@@ -99,6 +99,11 @@ namespace Flow.Launcher
 
 #pragma warning disable VSTHRD100 // Avoid async void methods
 
+        private void ThemeManager_ActualApplicationThemeChanged(ModernWpf.ThemeManager sender, object args)
+        {
+            _theme.RefreshFrameAsync();
+        }
+
         private void OnSourceInitialized(object sender, EventArgs e)
         {
             var handle = Win32Helper.GetWindowHandle(this, true);
@@ -543,10 +548,6 @@ namespace Flow.Launcher
 
         #region Window Sound Effects
 
-        private void ThemeManager_ActualApplicationThemeChanged(ModernWpf.ThemeManager sender, object args)
-        {
-            _theme.RefreshFrameAsync();
-        }
         private void SystemEvents_PowerModeChanged(object sender, PowerModeChangedEventArgs e)
         {
             // Fix for sound not playing after sleep / hibernate
@@ -1184,6 +1185,7 @@ namespace Flow.Launcher
                     _notifyIcon?.Dispose();
                     animationSoundWMP?.Close();
                     animationSoundWPF?.Dispose();
+                    ModernWpf.ThemeManager.Current.ActualApplicationThemeChanged -= ThemeManager_ActualApplicationThemeChanged;
                     SystemEvents.PowerModeChanged -= SystemEvents_PowerModeChanged;
                 }
 
