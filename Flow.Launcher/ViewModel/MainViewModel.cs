@@ -34,6 +34,7 @@ namespace Flow.Launcher.ViewModel
         private bool _isQueryRunning;
         private Query _lastQuery;
         private bool _previousIsHomeQuery;
+        private bool _needClearResults;
         private string _queryTextBeforeLeaveResults;
         private string _ignoredQueryText; // Used to ignore query text change when switching between context menu and query results
 
@@ -1375,7 +1376,15 @@ namespace Flow.Launcher.ViewModel
                 // nothing to do here
             }
 
-            if (currentCancellationToken.IsCancellationRequested) return;
+            // If the query is cancelled, part of results may be added to the results already.
+            // But we should not clear results now
+            // because typing very fast will cause many calls to Results.Clear() which leads to flickering issue
+            // Instead, we should clear the results next time we update the results
+            if (currentCancellationToken.IsCancellationRequested)
+            {
+                _needClearResults = true;
+                return;
+            }
 
             // If QueryTaskAsync or QueryHistoryTask is not called which means that results are not cleared
             // we need to clear the results
@@ -1581,6 +1590,13 @@ namespace Flow.Launcher.ViewModel
             if (_lastQuery?.ActionKeyword != query?.ActionKeyword)
             {
                 App.API.LogDebug(ClassName, $"Cleared old results");
+                return true;
+            }
+
+            // If the results are not cleared temporarily, we need to clear this time
+            if (_needClearResults)
+            {
+                _needClearResults = false;
                 return true;
             }
 
