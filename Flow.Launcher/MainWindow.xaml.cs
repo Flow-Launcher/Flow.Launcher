@@ -90,7 +90,7 @@ namespace Flow.Launcher
 
             InitSoundEffects();
             DataObject.AddPastingHandler(QueryTextBox, QueryTextBox_OnPaste);
-
+            ModernWpf.ThemeManager.Current.ActualApplicationThemeChanged += ThemeManager_ActualApplicationThemeChanged;
             SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
         }
 
@@ -99,6 +99,11 @@ namespace Flow.Launcher
         #region Window Event
 
 #pragma warning disable VSTHRD100 // Avoid async void methods
+
+        private void ThemeManager_ActualApplicationThemeChanged(ModernWpf.ThemeManager sender, object args)
+        {
+            _theme.RefreshFrameAsync();
+        }
 
         private void OnSourceInitialized(object sender, EventArgs e)
         {
@@ -740,8 +745,26 @@ namespace Flow.Launcher
             {
                 if (_settings.SearchWindowScreen == SearchWindowScreens.RememberLastLaunchLocation)
                 {
-                    Top = _settings.WindowTop;
+                    var previousScreenWidth = _settings.PreviousScreenWidth;
+                    var previousScreenHeight = _settings.PreviousScreenHeight;
+                    GetDpi(out var previousDpiX, out var previousDpiY);
+
+                    _settings.PreviousScreenWidth = SystemParameters.VirtualScreenWidth;
+                    _settings.PreviousScreenHeight = SystemParameters.VirtualScreenHeight;
+                    GetDpi(out var currentDpiX, out var currentDpiY);
+
+                    if (previousScreenWidth != 0 && previousScreenHeight != 0 &&
+                        previousDpiX != 0 && previousDpiY != 0 &&
+                        (previousScreenWidth != SystemParameters.VirtualScreenWidth ||
+                         previousScreenHeight != SystemParameters.VirtualScreenHeight ||
+                         previousDpiX != currentDpiX || previousDpiY != currentDpiY))
+                    {
+                        AdjustPositionForResolutionChange();
+                        return;
+                    }
+
                     Left = _settings.WindowLeft;
+                    Top = _settings.WindowTop;
                 }
                 else
                 {
@@ -754,24 +777,70 @@ namespace Flow.Launcher
                             break;
                         case SearchWindowAligns.CenterTop:
                             Left = HorizonCenter(screen);
-                            Top = 10;
+                            Top = VerticalTop(screen);
                             break;
                         case SearchWindowAligns.LeftTop:
                             Left = HorizonLeft(screen);
-                            Top = 10;
+                            Top = VerticalTop(screen);
                             break;
                         case SearchWindowAligns.RightTop:
                             Left = HorizonRight(screen);
-                            Top = 10;
+                            Top = VerticalTop(screen);
                             break;
                         case SearchWindowAligns.Custom:
-                            Left = Win32Helper.TransformPixelsToDIP(this,
-                                screen.WorkingArea.X + _settings.CustomWindowLeft, 0).X;
-                            Top = Win32Helper.TransformPixelsToDIP(this, 0,
-                                screen.WorkingArea.Y + _settings.CustomWindowTop).Y;
+                            var customLeft = Win32Helper.TransformPixelsToDIP(this,
+                                screen.WorkingArea.X + _settings.CustomWindowLeft, 0);
+                            var customTop = Win32Helper.TransformPixelsToDIP(this, 0,
+                                screen.WorkingArea.Y + _settings.CustomWindowTop);
+                            Left = customLeft.X;
+                            Top = customTop.Y;
                             break;
                     }
                 }
+            }
+        }
+
+        private void AdjustPositionForResolutionChange()
+        {
+            var screenWidth = SystemParameters.VirtualScreenWidth;
+            var screenHeight = SystemParameters.VirtualScreenHeight;
+            GetDpi(out var currentDpiX, out var currentDpiY);
+
+            var previousLeft = _settings.WindowLeft;
+            var previousTop = _settings.WindowTop;
+            GetDpi(out var previousDpiX, out var previousDpiY);
+
+            var widthRatio = screenWidth / _settings.PreviousScreenWidth;
+            var heightRatio = screenHeight / _settings.PreviousScreenHeight;
+            var dpiXRatio = currentDpiX / previousDpiX;
+            var dpiYRatio = currentDpiY / previousDpiY;
+
+            var newLeft = previousLeft * widthRatio * dpiXRatio;
+            var newTop = previousTop * heightRatio * dpiYRatio;
+
+            var screenLeft = SystemParameters.VirtualScreenLeft;
+            var screenTop = SystemParameters.VirtualScreenTop;
+
+            var maxX = screenLeft + screenWidth - ActualWidth;
+            var maxY = screenTop + screenHeight - ActualHeight;
+
+            Left = Math.Max(screenLeft, Math.Min(newLeft, maxX));
+            Top = Math.Max(screenTop, Math.Min(newTop, maxY));
+        }
+
+        private void GetDpi(out double dpiX, out double dpiY)
+        {
+            var source = PresentationSource.FromVisual(this);
+            if (source != null && source.CompositionTarget != null)
+            {
+                var matrix = source.CompositionTarget.TransformToDevice;
+                dpiX = 96 * matrix.M11;
+                dpiY = 96 * matrix.M22;
+            }
+            else
+            {
+                dpiX = 96;
+                dpiY = 96;
             }
         }
 
@@ -833,6 +902,13 @@ namespace Flow.Launcher
             var dip1 = Win32Helper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
             var left = dip1.X + 10;
             return left;
+        }
+
+        public double VerticalTop(Screen screen)
+        {
+            var dip1 = Win32Helper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
+            var top = dip1.Y + 10;
+            return top;
         }
 
         #endregion
@@ -1249,6 +1325,7 @@ namespace Flow.Launcher
                     _notifyIcon?.Dispose();
                     animationSoundWMP?.Close();
                     animationSoundWPF?.Dispose();
+                    ModernWpf.ThemeManager.Current.ActualApplicationThemeChanged -= ThemeManager_ActualApplicationThemeChanged;
                     SystemEvents.PowerModeChanged -= SystemEvents_PowerModeChanged;
                 }
 
