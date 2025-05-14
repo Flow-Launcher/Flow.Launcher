@@ -89,7 +89,7 @@ namespace Flow.Launcher
 
             InitSoundEffects();
             DataObject.AddPastingHandler(QueryTextBox, QueryTextBox_OnPaste);
-
+            ModernWpf.ThemeManager.Current.ActualApplicationThemeChanged += ThemeManager_ActualApplicationThemeChanged;
             SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
         }
 
@@ -543,6 +543,10 @@ namespace Flow.Launcher
 
         #region Window Sound Effects
 
+        private void ThemeManager_ActualApplicationThemeChanged(ModernWpf.ThemeManager sender, object args)
+        {
+            _theme.RefreshFrameAsync();
+        }
         private void SystemEvents_PowerModeChanged(object sender, PowerModeChangedEventArgs e)
         {
             // Fix for sound not playing after sleep / hibernate
