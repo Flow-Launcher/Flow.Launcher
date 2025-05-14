@@ -42,6 +42,7 @@
     <system:String x:Key="GameMode">Modo de jogo</system:String>
     <system:String x:Key="GameModeToolTip">Suspender utilização das teclas de atalho</system:String>
     <system:String x:Key="PositionReset">Repor posição</system:String>
+    <system:String x:Key="PositionResetToolTip">Repor posição da janela de pesquisa</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">Escreva aqui para pesquisar</system:String>
 
     <!--  Setting General  -->
@@ -106,14 +107,34 @@
     <system:String x:Key="AlwaysPreviewToolTip">Abrir painel de pré-visualização ao ativar Flow Launcher. Prima {0} para comutar a pré-visualização.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">O efeito sombra não é permitido com este tema porque o efeito desfocar está ativo</system:String>
     <system:String x:Key="searchDelay">Atraso da pesquisa</system:String>
-    <system:String x:Key="searchDelayToolTip">Tempo a esperar após a digitação. Esta definição melhora o carregamento dos resultados.</system:String>
+    <system:String x:Key="searchDelayToolTip">Adiciona um pequeno atraso durante a escrita para reduzir a oscilação ao carregar os resultados. Recomendado se a sua velocidade de escrita for média.</system:String>
+    <system:String x:Key="searchDelayNumberBoxToolTip">Introduza o tempo de espera (ms) até que a entrada seja considerada completa. Apenas pode editar se ativara opção Atraso de pesquisa.</system:String>
     <system:String x:Key="searchDelayTime">Tempo de espera padrão</system:String>
-    <system:String x:Key="searchDelayTimeToolTip">O valor padrão a esperar, antes de iniciar a pesquisa após terminar a digitação.</system:String>
-    <system:String x:Key="SearchDelayTimeVeryLong">Muito longo</system:String>
-    <system:String x:Key="SearchDelayTimeLong">Longo</system:String>
-    <system:String x:Key="SearchDelayTimeNormal">Normal</system:String>
-    <system:String x:Key="SearchDelayTimeShort">Curto</system:String>
-    <system:String x:Key="SearchDelayTimeVeryShort">Muito curto</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Tempo a aguardar antes de mostrar os resultados. Valores mais altos resultam num atraso maior (ms).</system:String>
+    <system:String x:Key="KoreanImeTitle">Informações para utilizadores coreanos</system:String>
+    <system:String x:Key="KoreanImeGuide">
+        O método de introdução Coreano em sistemas Windows 11 pode causar erros no Flow Launcher.
+
+        Se estiver a sofrer problemas, pode ser necessário ativar &quot;Utilizar versão anterior do IME Coreano&quot;.
+
+        Abra as definições no seu sistema e aceda a:
+
+        Hora e Idioma &gt; Idioma e Região &gt; Coreano &gt; Opções de idioma &gt; Teclado - Microsoft IME &gt; Compatibilidade
+
+        e ative &quot;Utilizar versão anterior de Microsoft IME&quot;.
+
+
+    </system:String>
+    <system:String x:Key="KoreanImeOpenLink">Abrir definições de Idioma e Região</system:String>
+    <system:String x:Key="KoreanImeOpenLinkToolTip">Abra a definição do método de introdução coreano. Aceda a Corano &gt; Opções de idioma &gt; Teclado - Microsoft IME &gt; Compatibilidade</system:String>
+    <system:String x:Key="KoreanImeOpenLinkButton">Abrir</system:String>
+    <system:String x:Key="KoreanImeRegistry">Utilizar versão anterior de IME Coreano</system:String>
+    <system:String x:Key="KoreanImeRegistryTooltip">Pode alterar as definições do método de introdução coreano aqui</system:String>
+    <system:String x:Key="homePage">Página inicial</system:String>
+    <system:String x:Key="homePageToolTip">Mostrar resultados da página inicial se o termo de pesquisa estiver vazio.</system:String>
+    <system:String x:Key="historyResultsForHomePage">Mostrar histórico na página inicial</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Máximo de resultados a mostrar na Página inicial</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">Esta opção apenas pode ser editada se o plugin tiver suporte a Página inicial e se estiver ativo.</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Pesquisar plugins</system:String>
@@ -132,6 +153,11 @@
     <system:String x:Key="actionKeywordsTooltip">Alterar palavras-chave</system:String>
     <system:String x:Key="pluginSearchDelayTime">Tempo de espera do plugin</system:String>
     <system:String x:Key="pluginSearchDelayTimeTooltip">Alterar tempo de espera do plugin</system:String>
+    <system:String x:Key="FilterComboboxLabel">Definições avançadas:</system:String>
+    <system:String x:Key="DisplayModeOnOff">Ativo</system:String>
+    <system:String x:Key="DisplayModePriority">Prioridade</system:String>
+    <system:String x:Key="DisplayModeSearchDelay">Atraso da pesquisa</system:String>
+    <system:String x:Key="DisplayModeHomeOnOff">Página inicial</system:String>
     <system:String x:Key="currentPriority">Prioridade atual</system:String>
     <system:String x:Key="newPriority">Nova prioridade</system:String>
     <system:String x:Key="priority">Prioridade</system:String>
@@ -147,7 +173,6 @@
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugin: {0} - Falha ao remover o ficheiro de definições do plugin. Experimente remover manualmente.</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Falha ao limpar a cache do plugin</system:String>
     <system:String x:Key="failedToRemovePluginCacheMessage">Plugin: {0} - Falha ao remover os ficheiros em cache do plugin. Experimente remover manualmente.</system:String>
-    <system:String x:Key="default">Padrão</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Loja de plugins</system:String>
@@ -184,6 +209,9 @@
     <system:String x:Key="resultItemFont">Tipo de letra dos títulos</system:String>
     <system:String x:Key="resultSubItemFont">Tipo de letra dos subtítulos</system:String>
     <system:String x:Key="resetCustomize">Repor</system:String>
+    <system:String x:Key="resetCustomizeToolTip">Repor definições recomendadas para fontes e tamanho.</system:String>
+    <system:String x:Key="ImportThemeSize">Tamanho do tema importado</system:String>
+    <system:String x:Key="ImportThemeSizeToolTip">Se o programador do tema tiver disponibilizado o valor, este será utilizado.</system:String>
     <system:String x:Key="CustomizeToolTip">Personalizar</system:String>
     <system:String x:Key="windowMode">Modo da janela</system:String>
     <system:String x:Key="opacity">Opacidade</system:String>
@@ -211,6 +239,7 @@
     <system:String x:Key="Clock">Relógio</system:String>
     <system:String x:Key="Date">Data</system:String>
     <system:String x:Key="BackdropType">Tipo de fundo</system:String>
+    <system:String x:Key="BackdropInfo">O efeito de fundo não é aplicado na pré-visualização.</system:String>
     <system:String x:Key="BackdropTypeDisabledToolTip">Esta opção apenas está disponível em sistemas após Windows 11 Build 22000</system:String>
     <system:String x:Key="BackdropTypesNone">Nenhuma</system:String>
     <system:String x:Key="BackdropTypesAcrylic">Acrílico</system:String>
@@ -283,6 +312,9 @@
     <system:String x:Key="useGlyphUI">Utilizar ícones Segoe Fluent</system:String>
     <system:String x:Key="useGlyphUIEffect">Se possível, utilizar ícones Segoe Fluent para os resultados</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Prima a tecla</system:String>
+    <system:String x:Key="showBadges">Mostrar emblemas dos resultados</system:String>
+    <system:String x:Key="showBadgesToolTip">Para plugins suportados, são mostrados emblemas para nos ajudar a distingui-los mais facilmente.</system:String>
+    <system:String x:Key="showBadgesGlobalOnly">Mostrar emblemas apenas para a consulta global</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">Proxy HTTP</system:String>
@@ -322,6 +354,7 @@
     <system:String x:Key="logfolder">Pasta de registos</system:String>
     <system:String x:Key="clearlogfolder">Limpar registos</system:String>
     <system:String x:Key="clearlogfolderMessage">Tem a certeza de que deseja remover todos os registos?</system:String>
+    <system:String x:Key="cachefolder">Pasta de cache</system:String>
     <system:String x:Key="clearcachefolder">Limpar cache</system:String>
     <system:String x:Key="clearcachefolderMessage">Tem a certeza de que pretende limpar todas as caches?</system:String>
     <system:String x:Key="clearfolderfailMessage">Não foi possível limpar todas as pastas e ficheiros. Consulte o ficheiro de registo para mais informações.</system:String>
@@ -332,6 +365,7 @@
     <system:String x:Key="logLevel">Nível de registo</system:String>
     <system:String x:Key="LogLevelDEBUG">Depuração</system:String>
     <system:String x:Key="LogLevelINFO">Informação</system:String>
+    <system:String x:Key="settingWindowFontTitle">Setting Window Font</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Selecione o gestor de ficheiros</system:String>
@@ -369,13 +403,16 @@
     <system:String x:Key="newActionKeywordsSameAsOld">A palavra-chave escolhida é igual à anterior. Por favor escolha outra.</system:String>
     <system:String x:Key="success">Sucesso</system:String>
     <system:String x:Key="completedSuccessfully">Terminado com sucesso</system:String>
+    <system:String x:Key="failedToCopy">Falha ao copiar</system:String>
     <system:String x:Key="actionkeyword_tips">Introduza as palavras-chave que pretende utilizar para iniciar o plugin e um espaço vazio caso queira mais do que uma. Utilize * se não quiser especificar uma palavra-chave e o plugin será ativado sem palavras-chave.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
     <system:String x:Key="searchDelayTimeTitle">Definição do tempo de espera</system:String>
-    <system:String x:Key="searchDelayTime_tips">Selecione o tempo de espera que pretende utilizar com este plugin. Selecione &quot;{0}&quot; se não o quiser especificar e, desta forma, o plugin irá utilizar o tempo de espera padrão.</system:String>
-    <system:String x:Key="currentSearchDelayTime">Tempo de espera atual</system:String>
-    <system:String x:Key="newSearchDelayTime">Novo tempo de espera</system:String>
+    <system:String x:Key="searchDelayTimeTips">Indique o tempo de espera que pretende utilizar com este plugin. Nada escreva se não o quiser especificar e o plugin irá utilizar o tempo de espera padrão.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="homeTitle">Página inicial</system:String>
+    <system:String x:Key="homeTips">Ative o plugin Página inicial se quiser mostrar os seus resultados so termo de pesquisa estiver vazio.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Tecla de atalho personalizada</system:String>

@@ -40,11 +40,10 @@ namespace Flow.Launcher.ViewModel
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
-        private readonly FlowLauncherJsonStorage<TopMostRecord> _topMostRecordStorage;
+        private readonly FlowLauncherJsonStorageTopMostRecord _topMostRecord;
         private readonly History _history;
         private int lastHistoryIndex = 1;
         private readonly UserSelectedRecord _userSelectedRecord;
-        private readonly TopMostRecord _topMostRecord;
 
         private CancellationTokenSource _updateSource; // Used to cancel old query flows
         private CancellationToken _updateToken; // Used to avoid ObjectDisposedException of _updateSource.Token
@@ -144,24 +143,23 @@ namespace Flow.Launcher.ViewModel
 
             _historyItemsStorage = new FlowLauncherJsonStorage<History>();
             _userSelectedRecordStorage = new FlowLauncherJsonStorage<UserSelectedRecord>();
-            _topMostRecordStorage = new FlowLauncherJsonStorage<TopMostRecord>();
+            _topMostRecord = new FlowLauncherJsonStorageTopMostRecord();
             _history = _historyItemsStorage.Load();
             _userSelectedRecord = _userSelectedRecordStorage.Load();
-            _topMostRecord = _topMostRecordStorage.Load();
 
-            ContextMenu = new ResultsViewModel(Settings)
+            ContextMenu = new ResultsViewModel(Settings, this)
             {
                 LeftClickResultCommand = OpenResultCommand,
                 RightClickResultCommand = LoadContextMenuCommand,
                 IsPreviewOn = Settings.AlwaysPreview
             };
-            Results = new ResultsViewModel(Settings)
+            Results = new ResultsViewModel(Settings, this)
             {
                 LeftClickResultCommand = OpenResultCommand,
                 RightClickResultCommand = LoadContextMenuCommand,
                 IsPreviewOn = Settings.AlwaysPreview
             };
-            History = new ResultsViewModel(Settings)
+            History = new ResultsViewModel(Settings, this)
             {
                 LeftClickResultCommand = OpenResultCommand,
                 RightClickResultCommand = LoadContextMenuCommand,
@@ -448,12 +446,7 @@ namespace Flow.Launcher.ViewModel
             if (QueryResultsSelected())
             {
                 _userSelectedRecord.Add(result);
-                // origin query is null when user select the context menu item directly of one item from query list
-                // so we don't want to add it to history
-                if (result.OriginQuery != null)
-                {
-                    _history.Add(result.OriginQuery.RawQuery);
-                }
+                _history.Add(result.OriginQuery.RawQuery);
                 lastHistoryIndex = 1;
             }
 
@@ -522,9 +515,10 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void SelectPrevItem()
         {
-            if (_history.Items.Count > 0
-                && QueryText == string.Empty
-                && QueryResultsSelected())
+            if (QueryResultsSelected() // Results selected
+                && string.IsNullOrEmpty(QueryText) // No input
+                && Results.Visibility != Visibility.Visible // No items in result list, e.g. when home page is off and no query text is entered, therefore the view is collapsed.
+                && _history.Items.Count > 0) // Have history items
             {
                 lastHistoryIndex = 1;
                 ReverseHistory();
@@ -1162,7 +1156,7 @@ namespace Flow.Launcher.ViewModel
                 {
                     results = PluginManager.GetContextMenusForPlugin(selected);
                     results.Add(ContextMenuTopMost(selected));
-                    results.Add(ContextMenuPluginInfo(selected.PluginID));
+                    results.Add(ContextMenuPluginInfo(selected));
                 }
 
                 if (!string.IsNullOrEmpty(query))
@@ -1609,7 +1603,8 @@ namespace Flow.Launcher.ViewModel
                         App.API.ReQuery();
                         return false;
                     },
-                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE74B")
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE74B"),
+                    OriginQuery = result.OriginQuery
                 };
             }
             else
@@ -1626,15 +1621,17 @@ namespace Flow.Launcher.ViewModel
                         App.API.ReQuery();
                         return false;
                     },
-                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE74A")
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE74A"),
+                    OriginQuery = result.OriginQuery
                 };
             }
 
             return menu;
         }
 
-        private static Result ContextMenuPluginInfo(string id)
+        private static Result ContextMenuPluginInfo(Result result)
         {
+            var id = result.PluginID;
             var metadata = PluginManager.GetPluginForId(id).Metadata;
             var translator = App.API;
 
@@ -1656,7 +1653,8 @@ namespace Flow.Launcher.ViewModel
                 {
                     App.API.OpenUrl(metadata.Website);
                     return true;
-                }
+                },
+                OriginQuery = result.OriginQuery
             };
             return menu;
         }
@@ -1676,6 +1674,12 @@ namespace Flow.Launcher.ViewModel
         private bool HistorySelected()
         {
             var selected = SelectedResults == History;
+            return selected;
+        }
+
+        internal bool ResultsSelected(ResultsViewModel results)
+        {
+            var selected = SelectedResults == results;
             return selected;
         }
 
@@ -1834,7 +1838,7 @@ namespace Flow.Launcher.ViewModel
         {
             _historyItemsStorage.Save();
             _userSelectedRecordStorage.Save();
-            _topMostRecordStorage.Save();
+            _topMostRecord.Save();
         }
 
         /// <summary>
@@ -1867,9 +1871,12 @@ namespace Flow.Launcher.ViewModel
             {
                 foreach (var result in metaResults.Results)
                 {
-                    if (_topMostRecord.IsTopMost(result))
+                    var deviationIndex = _topMostRecord.GetTopMostIndex(result);
+                    if (deviationIndex != -1)
                     {
-                        result.Score = Result.MaxScore;
+                        // Adjust the score based on the result's position in the top-most list.
+                        // A lower deviationIndex (closer to the top) results in a higher score.
+                        result.Score = Result.MaxScore - deviationIndex;
                     }
                     else
                     {

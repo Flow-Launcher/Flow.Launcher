@@ -479,7 +479,8 @@ public partial class SettingsPaneThemeViewModel : BaseModel
                     )
                 }
             };
-        var vm = new ResultsViewModel(Settings);
+        // Set main view model to null because the results are for preview only
+        var vm = new ResultsViewModel(Settings, null);
         vm.AddResults(results, "PREVIEW");
         PreviewResults = vm;
     }
