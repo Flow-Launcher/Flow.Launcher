@@ -1579,6 +1579,13 @@ namespace Flow.Launcher.ViewModel
         /// <returns>True if the existing results should be cleared, false otherwise.</returns>
         private bool ShouldClearExistingResults(Query query, bool currentIsHomeQuery)
         {
+            // If the results are not cleared temporarily, we need to clear this time
+            if (_needClearResults)
+            {
+                _needClearResults = false;
+                return true;
+            }
+
             // If previous or current results are from home query, we need to clear them
             if (_previousIsHomeQuery || currentIsHomeQuery)
             {
@@ -1590,13 +1597,6 @@ namespace Flow.Launcher.ViewModel
             if (_lastQuery?.ActionKeyword != query?.ActionKeyword)
             {
                 App.API.LogDebug(ClassName, $"Cleared old results");
-                return true;
-            }
-
-            // If the results are not cleared temporarily, we need to clear this time
-            if (_needClearResults)
-            {
-                _needClearResults = false;
                 return true;
             }
 
