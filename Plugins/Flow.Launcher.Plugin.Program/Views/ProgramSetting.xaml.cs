@@ -298,15 +298,7 @@ namespace Flow.Launcher.Plugin.Program.Views
 
             if (selectedItems.Count == 0)
             {
-                var msg = context.API.GetTranslation("flowlauncher_plugin_program_pls_select_program_source");
-                context.API.ShowMsgBox(msg);
-                return;
-            }
-
-            if (IsAllItemsUserAdded(selectedItems))
-            {
-                var msg1 = context.API.GetTranslation("flowlauncher_plugin_program_delete_program_source_select_not_user_added");
-                context.API.ShowMsgBox(msg1);
+                context.API.ShowMsgBox(context.API.GetTranslation("flowlauncher_plugin_program_pls_select_program_source"));
                 return;
             }
 
@@ -376,7 +368,7 @@ namespace Flow.Launcher.Plugin.Program.Views
             var dataView = CollectionViewSource.GetDefaultView(programSourceView.ItemsSource);
 
             dataView.SortDescriptions.Clear();
-            SortDescription sd = new SortDescription(sortBy, direction);
+            var sd = new SortDescription(sortBy, direction);
             dataView.SortDescriptions.Add(sd);
             dataView.Refresh();
         }
@@ -421,20 +413,18 @@ namespace Flow.Launcher.Plugin.Program.Views
 
             if (selectedItems.Count == 0)
             {
-                var msg = context.API.GetTranslation("flowlauncher_plugin_program_pls_select_program_source");
-                context.API.ShowMsgBox(msg);
+                context.API.ShowMsgBox(context.API.GetTranslation("flowlauncher_plugin_program_pls_select_program_source"));
                 return;
             }
 
             if (!IsAllItemsUserAdded(selectedItems))
             {
-                var msg1 = context.API.GetTranslation("flowlauncher_plugin_program_delete_program_source_select_user_added");
-                context.API.ShowMsgBox(msg1);
+                context.API.ShowMsgBox(context.API.GetTranslation("flowlauncher_plugin_program_delete_program_source_select_user_added"));
                 return;
             }
 
-            var msg2 = context.API.GetTranslation("flowlauncher_plugin_program_delete_program_source");
-            if (context.API.ShowMsgBox(msg2, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
+            if (context.API.ShowMsgBox(context.API.GetTranslation("flowlauncher_plugin_program_delete_program_source"),
+                string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
             {
                 return;
             }
