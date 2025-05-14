@@ -432,6 +432,9 @@ namespace Flow.Launcher.Plugin.Program.Views
 
             var workingWidth =
                 listView.ActualWidth - SystemParameters.VerticalScrollBarWidth; // take into account vertical scrollbar
+
+            if (workingWidth <= 0) return;
+
             var col1 = 0.25;
             var col2 = 0.15;
             var col3 = 0.60;
