@@ -1184,6 +1184,7 @@ namespace Flow.Launcher
                     _notifyIcon?.Dispose();
                     animationSoundWMP?.Close();
                     animationSoundWPF?.Dispose();
+                    ModernWpf.ThemeManager.Current.ActualApplicationThemeChanged -= ThemeManager_ActualApplicationThemeChanged;
                     SystemEvents.PowerModeChanged -= SystemEvents_PowerModeChanged;
                 }
 
