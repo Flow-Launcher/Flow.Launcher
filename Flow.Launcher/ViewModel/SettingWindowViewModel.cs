@@ -14,6 +14,11 @@ public partial class SettingWindowViewModel : BaseModel
         _settings = settings;
     }
 
+    public void SetPageType(Type pageType)
+    {
+        _pageType = pageType;
+    }
+
     private Type _pageType = typeof(SettingsPaneGeneral);
     public Type PageType
     {

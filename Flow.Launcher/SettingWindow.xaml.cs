@@ -263,6 +263,7 @@ public partial class SettingWindow
                 nameof(About) => typeof(SettingsPaneAbout),
                 _ => typeof(SettingsPaneGeneral)
             };
+            _viewModel.SetPageType(pageType);
             ContentFrame.Navigate(pageType);
         }
     }
