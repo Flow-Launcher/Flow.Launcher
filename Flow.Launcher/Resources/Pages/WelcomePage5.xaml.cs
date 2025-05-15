@@ -15,10 +15,14 @@ namespace Flow.Launcher.Resources.Pages
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            // If the navigation is not triggered by button click, view model will be null again
             if (_viewModel == null)
             {
                 Settings = Ioc.Default.GetRequiredService<Settings>();
                 _viewModel = Ioc.Default.GetRequiredService<WelcomeViewModel>();
+            }
+            if (!IsInitialized)
+            {
                 InitializeComponent();
             }
             // Sometimes the navigation is not triggered by button click,

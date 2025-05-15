@@ -12,11 +12,15 @@ public partial class SettingsPaneHotkey
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
+        // If the navigation is not triggered by button click, view model will be null again
         if (_viewModel == null)
         {
             _viewModel = Ioc.Default.GetRequiredService<SettingsPaneHotkeyViewModel>();
             _settingViewModel = Ioc.Default.GetRequiredService<SettingWindowViewModel>();
             DataContext = _viewModel;
+        }
+        if (!IsInitialized)
+        {
             InitializeComponent();
         }
         // Sometimes the navigation is not triggered by button click,
