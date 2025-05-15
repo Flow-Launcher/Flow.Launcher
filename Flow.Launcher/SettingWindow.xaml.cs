@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -18,6 +19,7 @@ public partial class SettingWindow
     #region Private Fields
 
     private readonly Settings _settings;
+    private readonly SettingWindowViewModel _viewModel;
 
     #endregion
 
@@ -26,8 +28,8 @@ public partial class SettingWindow
     public SettingWindow()
     {
         _settings = Ioc.Default.GetRequiredService<Settings>();
-        var viewModel = Ioc.Default.GetRequiredService<SettingWindowViewModel>();
-        DataContext = viewModel;
+        _viewModel = Ioc.Default.GetRequiredService<SettingWindowViewModel>();
+        DataContext = _viewModel;
         InitializeComponent();
 
         UpdatePositionAndState();
@@ -48,10 +50,37 @@ public partial class SettingWindow
         hwndTarget.RenderMode = RenderMode.SoftwareOnly;  // Must use software only render mode here
 
         UpdatePositionAndState();
+
+        _viewModel.PropertyChanged += ViewModel_PropertyChanged;
+    }
+
+    // Sometimes the navigation is not triggered by button click,
+    // so we need to update the selected item here
+    private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+            case nameof(SettingWindowViewModel.PageType):
+                var selectedIndex = _viewModel.PageType.Name switch
+                {
+                    nameof(SettingsPaneGeneral) => 0,
+                    nameof(SettingsPanePlugins) => 1,
+                    nameof(SettingsPanePluginStore) => 2,
+                    nameof(SettingsPaneTheme) => 3,
+                    nameof(SettingsPaneHotkey) => 4,
+                    nameof(SettingsPaneProxy) => 5,
+                    nameof(SettingsPaneAbout) => 6,
+                    _ => 0
+                };
+                NavView.SelectedItem = NavView.MenuItems[selectedIndex];
+                break;
+        }
     }
 
     private void OnClosed(object sender, EventArgs e)
     {
+        _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
+
         // If app is exiting, settings save is not needed because main window closing event will handle this
         if (App.Exiting) return;
         // Save settings when window is closed

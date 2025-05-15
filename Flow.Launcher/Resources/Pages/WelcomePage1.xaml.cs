@@ -14,7 +14,7 @@ namespace Flow.Launcher.Resources.Pages
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (!IsInitialized)
+            if (_viewModel == null)
             {
                 Settings = Ioc.Default.GetRequiredService<Settings>();
                 _viewModel = Ioc.Default.GetRequiredService<WelcomeViewModel>();
