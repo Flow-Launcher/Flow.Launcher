@@ -241,6 +241,7 @@ public partial class SettingWindow
     {
         if (args.IsSettingsSelected)
         {
+            _viewModel.SetPageType(typeof(SettingsPaneGeneral));
             ContentFrame.Navigate(typeof(SettingsPaneGeneral));
         }
         else
@@ -263,8 +264,11 @@ public partial class SettingWindow
                 nameof(About) => typeof(SettingsPaneAbout),
                 _ => typeof(SettingsPaneGeneral)
             };
-            _viewModel.SetPageType(pageType);
-            ContentFrame.Navigate(pageType);
+            // Only navigate if the page type changes to fix navigation forward/back issue
+            if (_viewModel.SetPageType(pageType))
+            {
+                ContentFrame.Navigate(pageType);
+            }
         }
     }
 
@@ -282,7 +286,8 @@ public partial class SettingWindow
 
     private void ContentFrame_Loaded(object sender, RoutedEventArgs e)
     {
-        NavView.SelectedItem ??= NavView.MenuItems[0]; /* Set First Page */
+        _viewModel.SetPageType(null); // Set page type to null so that NavigationView_SelectionChanged can navigate the frame
+        NavView.SelectedItem = NavView.MenuItems[0]; /* Set First Page */
     }
 
     #endregion

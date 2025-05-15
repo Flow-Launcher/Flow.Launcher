@@ -1,7 +1,6 @@
 ﻿using System;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using Flow.Launcher.SettingPages.Views;
 
 namespace Flow.Launcher.ViewModel;
 
@@ -14,12 +13,15 @@ public partial class SettingWindowViewModel : BaseModel
         _settings = settings;
     }
 
-    public void SetPageType(Type pageType)
+    public bool SetPageType(Type pageType)
     {
+        if (_pageType == pageType) return false;
+
         _pageType = pageType;
+        return true;
     }
 
-    private Type _pageType = typeof(SettingsPaneGeneral);
+    private Type _pageType = null;
     public Type PageType
     {
         get => _pageType;

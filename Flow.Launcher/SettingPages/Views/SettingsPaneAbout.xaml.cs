@@ -8,24 +8,24 @@ namespace Flow.Launcher.SettingPages.Views;
 public partial class SettingsPaneAbout
 {
     private SettingsPaneAboutViewModel _viewModel = null!;
-    private SettingWindowViewModel _settingViewModel = null;
+    private readonly SettingWindowViewModel _settingViewModel = Ioc.Default.GetRequiredService<SettingWindowViewModel>();
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
+        // Sometimes the navigation is not triggered by button click,
+        // so we need to reset the page type
+        _settingViewModel.PageType = typeof(SettingsPaneAbout);
+
         // If the navigation is not triggered by button click, view model will be null again
         if (_viewModel == null)
         {
             _viewModel = Ioc.Default.GetRequiredService<SettingsPaneAboutViewModel>();
-            _settingViewModel = Ioc.Default.GetRequiredService<SettingWindowViewModel>();
             DataContext = _viewModel;
         }
         if (!IsInitialized)
         {
             InitializeComponent();
         }
-        // Sometimes the navigation is not triggered by button click,
-        // so we need to reset the page type
-        _settingViewModel.PageType = typeof(SettingsPaneAbout);
         base.OnNavigatedTo(e);
     }
 
