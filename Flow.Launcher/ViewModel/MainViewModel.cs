@@ -1247,19 +1247,7 @@ namespace Flow.Launcher.ViewModel
 
             if (query == null) // shortcut expanded
             {
-                App.API.LogDebug(ClassName, $"Clear query results");
-
-                // Hide and clear results again because running query may show and add some results
-                Results.Visibility = Visibility.Collapsed;
-                Results.Clear();
-
-                // Reset plugin icon
-                PluginIconPath = null;
-                PluginIconSource = null;
-                SearchIconVisibility = Visibility.Visible;
-
-                // Hide progress bar again because running query may set this to visible
-                ProgressBarVisibility = Visibility.Hidden;
+                ClearResults();
                 return;
             }
 
@@ -1388,7 +1376,11 @@ namespace Flow.Launcher.ViewModel
 
             // If QueryTaskAsync or QueryHistoryTask is not called which means that results are not cleared
             // we need to clear the results
-            if (!resultsCleared) Results.Clear();
+            if (!resultsCleared)
+            {
+                ClearResults();
+                return;
+            }
 
             if (currentCancellationToken.IsCancellationRequested) return;
 
@@ -1403,6 +1395,23 @@ namespace Flow.Launcher.ViewModel
             }
 
             // Local function
+            void ClearResults()
+            {
+                App.API.LogDebug(ClassName, $"Clear query results");
+
+                // Hide and clear results again because running query may show and add some results
+                Results.Visibility = Visibility.Collapsed;
+                Results.Clear();
+
+                // Reset plugin icon
+                PluginIconPath = null;
+                PluginIconSource = null;
+                SearchIconVisibility = Visibility.Visible;
+
+                // Hide progress bar again because running query may set this to visible
+                ProgressBarVisibility = Visibility.Hidden;
+            }
+
             async Task QueryTaskAsync(PluginPair plugin, CancellationToken token)
             {
                 App.API.LogDebug(ClassName, $"Wait for querying plugin <{plugin.Metadata.Name}>");
