@@ -80,8 +80,8 @@
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">Copiar caminho</system:String>
     <system:String x:Key="plugin_explorer_copypath_subtitle">Copiar caminho do item atual para área de transferência</system:String>
-    <system:String x:Key="plugin_explorer_copyname">Copy name</system:String>
-    <system:String x:Key="plugin_explorer_copyname_subtitle">Copy name of current item to clipboard</system:String>
+    <system:String x:Key="plugin_explorer_copyname">Copiar nome</system:String>
+    <system:String x:Key="plugin_explorer_copyname_subtitle">Copiar nome do item para a área de transferência</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">Copiar</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">Copiar ficheiro atual para a área de transferência</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">Copiar pasta atual para a área de transferência</system:String>
