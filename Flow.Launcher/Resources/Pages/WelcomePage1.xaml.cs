@@ -9,24 +9,19 @@ namespace Flow.Launcher.Resources.Pages
 {
     public partial class WelcomePage1
     {
-        public Settings Settings { get; private set; }
-        private WelcomeViewModel _viewModel;
+        public Settings Settings { get; } = Ioc.Default.GetRequiredService<Settings>();
+        private readonly WelcomeViewModel _viewModel = Ioc.Default.GetRequiredService<WelcomeViewModel>();
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            // If the navigation is not triggered by button click, view model will be null again
-            if (_viewModel == null)
-            {
-                Settings = Ioc.Default.GetRequiredService<Settings>();
-                _viewModel = Ioc.Default.GetRequiredService<WelcomeViewModel>();
-            }
+            // Sometimes the navigation is not triggered by button click,
+            // so we need to reset the page number
+            _viewModel.PageNum = 1;
+
             if (!IsInitialized)
             {
                 InitializeComponent();
             }
-            // Sometimes the navigation is not triggered by button click,
-            // so we need to reset the page number
-            _viewModel.PageNum = 1;
             base.OnNavigatedTo(e);
         }
 
