@@ -30,9 +30,9 @@ public partial class SettingWindow
         _settings = Ioc.Default.GetRequiredService<Settings>();
         _viewModel = Ioc.Default.GetRequiredService<SettingWindowViewModel>();
         DataContext = _viewModel;
-        InitializeComponent();
-
+        // Because WindowStartupLocation is Manual, so we need to initialize position before InitializeComponent
         UpdatePositionAndState();
+        InitializeComponent();
     }
 
     #endregion
