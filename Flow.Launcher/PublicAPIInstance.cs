@@ -349,8 +349,6 @@ namespace Flow.Launcher
                             .Replace("%f", targetPath)
                 };
             }
-
-            // Start the process
             explorer.Start();
         }
 
