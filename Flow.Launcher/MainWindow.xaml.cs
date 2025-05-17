@@ -105,7 +105,7 @@ namespace Flow.Launcher
             Win32Helper.DisableControlBox(this);
         }
 
-        private async void OnLoaded(object sender, RoutedEventArgs _)
+        private void OnLoaded(object sender, RoutedEventArgs _)
         {
             // Check first launch
             if (_settings.FirstLaunch)
