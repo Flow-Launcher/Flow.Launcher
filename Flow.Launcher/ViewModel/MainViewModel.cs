@@ -267,7 +267,7 @@ namespace Flow.Launcher.ViewModel
 
                     if (token.IsCancellationRequested) return;
 
-                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query, 
+                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query,
                         token)))
                     {
                         App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
@@ -793,7 +793,7 @@ namespace Flow.Launcher.ViewModel
 
         public Visibility ProgressBarVisibility { get; set; }
         public Visibility MainWindowVisibility { get; set; }
-        
+
         // This is to be used for determining the visibility status of the main window instead of MainWindowVisibility
         // because it is more accurate and reliable representation than using Visibility as a condition check
         public bool MainWindowVisibilityStatus { get; set; } = true;
@@ -1070,7 +1070,7 @@ namespace Flow.Launcher.ViewModel
             path = QueryResultsPreviewed() ? Results.SelectedItem?.Result?.Preview.FilePath : string.Empty;
             return !string.IsNullOrEmpty(path);
         }
-        
+
         private bool QueryResultsPreviewed()
         {
             var previewed = PreviewSelectedItem == Results.SelectedItem;
@@ -1280,7 +1280,7 @@ namespace Flow.Launcher.ViewModel
             // Update the query's IsReQuery property to true if this is a re-query
             query.IsReQuery = isReQuery;
 
-            
+
 
             ICollection<PluginPair> plugins = Array.Empty<PluginPair>();
             if (currentIsHomeQuery)
@@ -1312,8 +1312,7 @@ namespace Flow.Launcher.ViewModel
                 }
             }
 
-            var validPluginNames = plugins.Select(x => $"<{x.Metadata.Name}>");
-            App.API.LogDebug(ClassName, $"Valid <{plugins.Count}> plugins: {string.Join(" ", validPluginNames)}");
+            App.API.LogDebug(ClassName, $"Valid <{plugins.Count}> plugins: {string.Join(" ", plugins.Select(x => $"<{x.Metadata.Name}>"))}");
 
             // Do not wait for performance improvement
             /*if (string.IsNullOrEmpty(query.ActionKeyword))
@@ -1341,6 +1340,9 @@ namespace Flow.Launcher.ViewModel
             Task[] tasks;
             if (currentIsHomeQuery)
             {
+                if (ShouldClearExistingResultsForNonQuery(plugins))
+                    Results.Clear();
+
                 tasks = plugins.Select(plugin => plugin.Metadata.HomeDisabled switch
                 {
                     false => QueryTaskAsync(plugin, currentCancellationToken),
@@ -1432,7 +1434,7 @@ namespace Flow.Launcher.ViewModel
                 App.API.LogDebug(ClassName, $"Update results for plugin <{plugin.Metadata.Name}>");
 
                 // Indicate if to clear existing results so to show only ones from plugins with action keywords
-                var shouldClearExistingResults = ShouldClearExistingResults(query, currentIsHomeQuery);
+                var shouldClearExistingResults = ShouldClearExistingResultsForQuery(query, currentIsHomeQuery);
                 _lastQuery = query;
                 _previousIsHomeQuery = currentIsHomeQuery;
 
@@ -1454,8 +1456,13 @@ namespace Flow.Launcher.ViewModel
 
                 App.API.LogDebug(ClassName, $"Update results for history");
 
+                // Indicate if to clear existing results so to show only ones from plugins with action keywords
+                var shouldClearExistingResults = ShouldClearExistingResultsForQuery(query, currentIsHomeQuery);
+                _lastQuery = query;
+                _previousIsHomeQuery = currentIsHomeQuery;
+
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, _historyMetadata, query,
-                    token)))
+                    token, reSelect, shouldClearExistingResults)))
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
@@ -1552,7 +1559,7 @@ namespace Flow.Launcher.ViewModel
         /// <param name="query">The current query.</param>
         /// <param name="currentIsHomeQuery">A flag indicating if the current query is a home query.</param>
         /// <returns>True if the existing results should be cleared, false otherwise.</returns>
-        private bool ShouldClearExistingResults(Query query, bool currentIsHomeQuery)
+        private bool ShouldClearExistingResultsForQuery(Query query, bool currentIsHomeQuery)
         {
             // If previous or current results are from home query, we need to clear them
             if (_previousIsHomeQuery || currentIsHomeQuery)
@@ -1563,6 +1570,17 @@ namespace Flow.Launcher.ViewModel
 
             // If the last and current query are not home query type, we need to check the action keyword
             if (_lastQuery?.ActionKeyword != query?.ActionKeyword)
+            {
+                App.API.LogDebug(ClassName, $"Cleared old results");
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool ShouldClearExistingResultsForNonQuery(ICollection<PluginPair> plugins)
+        {
+            if (!Settings.ShowHistoryResultsForHomePage && (plugins.Count == 0 || plugins.All(x => x.Metadata.HomeDisabled == true)))
             {
                 App.API.LogDebug(ClassName, $"Cleared old results");
                 return true;
