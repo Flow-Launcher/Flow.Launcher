@@ -1341,7 +1341,11 @@ namespace Flow.Launcher.ViewModel
             if (currentIsHomeQuery)
             {
                 if (ShouldClearExistingResultsForNonQuery(plugins))
+                {
                     Results.Clear();
+                    App.API.LogDebug(ClassName, $"Existing results are cleared for non-query");
+                }
+                    
 
                 tasks = plugins.Select(plugin => plugin.Metadata.HomeDisabled switch
                 {
@@ -1548,7 +1552,9 @@ namespace Flow.Launcher.ViewModel
 
         /// <summary>
         /// Determines whether the existing search results should be cleared based on the current query and the previous query type.
-        /// This is needed because of the design that treats plugins with action keywords and global action keywords separately. Results are gathered
+        /// This is used to indicate to QueryTaskAsync or QueryHistoryTask whether to clear results. If both QueryTaskAsync and QueryHistoryTask
+        /// are not called then use ShouldClearExistingResultsForNonQuery instead.
+        /// This method needed because of the design that treats plugins with action keywords and global action keywords separately. Results are gathered
         /// either from plugins with matching action keywords or global action keyword, but not both. So when the current results are from plugins
         /// with a matching action keyword and a new result set comes from a new query with the global action keyword, the existing results need to be cleared,
         /// and vice versa. The same applies to home page query results.
@@ -1564,25 +1570,34 @@ namespace Flow.Launcher.ViewModel
             // If previous or current results are from home query, we need to clear them
             if (_previousIsHomeQuery || currentIsHomeQuery)
             {
-                App.API.LogDebug(ClassName, $"Cleared old results");
+                App.API.LogDebug(ClassName, $"Existing results should be cleared for query");
                 return true;
             }
 
             // If the last and current query are not home query type, we need to check the action keyword
             if (_lastQuery?.ActionKeyword != query?.ActionKeyword)
             {
-                App.API.LogDebug(ClassName, $"Cleared old results");
+                App.API.LogDebug(ClassName, $"Existing results should be cleared for query");
                 return true;
             }
 
             return false;
         }
 
+        /// <summary>
+        /// Determines whether existing results should be cleared for non-query calls.
+        /// A non-query call is where QueryTaskAsync and QueryHistoryTask methods are both not called.
+        /// QueryTaskAsync and QueryHistoryTask both handle result updating (clearing if required) so directly calling
+        /// Results.Clear() is not required. However when both are not called, we need to directly clear results and this
+        /// method determines on the condition when clear results should happen.
+        /// </summary>
+        /// <param name="plugins">The collection of plugins to check.</param>
+        /// <returns>True if existing results should be cleared, false otherwise.</returns>
         private bool ShouldClearExistingResultsForNonQuery(ICollection<PluginPair> plugins)
         {
             if (!Settings.ShowHistoryResultsForHomePage && (plugins.Count == 0 || plugins.All(x => x.Metadata.HomeDisabled == true)))
             {
-                App.API.LogDebug(ClassName, $"Cleared old results");
+                App.API.LogDebug(ClassName, $"Existing results should be cleared for non-query");
                 return true;
             }
 
