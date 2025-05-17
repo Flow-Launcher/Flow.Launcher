@@ -314,19 +314,19 @@ namespace Flow.Launcher
             ((PluginJsonStorage<T>)_pluginJsonStorages[type]).Save();
         }
 
-        public void OpenDirectory(string directoryPath, string fileNameOrFilePath = null)
+        public void OpenDirectory(string DirectoryPath, string FileNameOrFilePath = null)
         {
             string targetPath;
 
-            if (fileNameOrFilePath is null)
+            if (FileNameOrFilePath is null)
             {
-                targetPath = directoryPath;
+                targetPath = DirectoryPath;
             }
             else
             {
-                targetPath = Path.IsPathRooted(fileNameOrFilePath)
-                    ? fileNameOrFilePath
-                    : Path.Combine(directoryPath, fileNameOrFilePath);
+                targetPath = Path.IsPathRooted(FileNameOrFilePath)
+                    ? FileNameOrFilePath
+                    : Path.Combine(DirectoryPath, FileNameOrFilePath);
             }
 
             var explorerInfo = _settings.CustomExplorer;
@@ -346,12 +346,12 @@ namespace Flow.Launcher
             // Custom File Manager
             var psi = new ProcessStartInfo
             {
-                FileName = explorerInfo.Path.Replace("%d", directoryPath),
+                FileName = explorerInfo.Path.Replace("%d", DirectoryPath),
                 UseShellExecute = true,
-                Arguments = fileNameOrFilePath is null
-                    ? explorerInfo.DirectoryArgument.Replace("%d", directoryPath)
+                Arguments = FileNameOrFilePath is null
+                    ? explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath)
                     : explorerInfo.FileArgument
-                        .Replace("%d", directoryPath)
+                        .Replace("%d", DirectoryPath)
                         .Replace("%f", targetPath)
             };
 
