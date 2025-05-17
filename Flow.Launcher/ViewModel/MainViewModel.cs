@@ -1280,8 +1280,6 @@ namespace Flow.Launcher.ViewModel
             // Update the query's IsReQuery property to true if this is a re-query
             query.IsReQuery = isReQuery;
 
-
-
             ICollection<PluginPair> plugins = Array.Empty<PluginPair>();
             if (currentIsHomeQuery)
             {
@@ -1345,7 +1343,6 @@ namespace Flow.Launcher.ViewModel
                     Results.Clear();
                     App.API.LogDebug(ClassName, $"Existing results are cleared for non-query");
                 }
-                    
 
                 tasks = plugins.Select(plugin => plugin.Metadata.HomeDisabled switch
                 {
