@@ -173,7 +173,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
-        public bool _showHistoryResultsForHomePage { get; set; } = false;
+        private bool _showHistoryResultsForHomePage = false;
         public bool ShowHistoryResultsForHomePage
         {
             get => _showHistoryResultsForHomePage;
