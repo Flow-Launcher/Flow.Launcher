@@ -314,24 +314,48 @@ namespace Flow.Launcher
             ((PluginJsonStorage<T>)_pluginJsonStorages[type]).Save();
         }
 
-        public void OpenDirectory(string DirectoryPath, string FileNameOrFilePath = null)
+        public void OpenDirectory(string directoryPath, string fileNameOrFilePath = null)
         {
-            using var explorer = new Process();
-            var explorerInfo = _settings.CustomExplorer;
+            string targetPath;
 
-            explorer.StartInfo = new ProcessStartInfo
+            if (fileNameOrFilePath is null)
             {
-                FileName = explorerInfo.Path.Replace("%d", DirectoryPath),
+                targetPath = directoryPath;
+            }
+            else
+            {
+                targetPath = Path.IsPathRooted(fileNameOrFilePath)
+                    ? fileNameOrFilePath
+                    : Path.Combine(directoryPath, fileNameOrFilePath);
+            }
+
+            var explorerInfo = _settings.CustomExplorer;
+            var explorerPath = explorerInfo.Path.Trim().ToLowerInvariant();
+            
+            // If explorer.exe, ignore and pass only the path to Shell
+            if (Path.GetFileNameWithoutExtension(explorerPath) == "explorer")
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = targetPath,         // Not explorer, Only path.
+                    UseShellExecute = true         // Must be true to open folder
+                });
+                return;
+            }
+
+            // Custom File Manager
+            var psi = new ProcessStartInfo
+            {
+                FileName = explorerInfo.Path.Replace("%d", directoryPath),
                 UseShellExecute = true,
-                Arguments = FileNameOrFilePath is null
-                    ? explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath)
+                Arguments = fileNameOrFilePath is null
+                    ? explorerInfo.DirectoryArgument.Replace("%d", directoryPath)
                     : explorerInfo.FileArgument
-                        .Replace("%d", DirectoryPath)
-                        .Replace("%f",
-                            Path.IsPathRooted(FileNameOrFilePath) ? FileNameOrFilePath : Path.Combine(DirectoryPath, FileNameOrFilePath)
-                        )
+                        .Replace("%d", directoryPath)
+                        .Replace("%f", targetPath)
             };
-            explorer.Start();
+
+            Process.Start(psi);
         }
 
         private void OpenUri(Uri uri, bool? inPrivate = null)
