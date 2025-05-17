@@ -173,7 +173,20 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
-        public bool ShowHistoryResultsForHomePage { get; set; } = false;
+        public bool _showHistoryResultsForHomePage { get; set; } = false;
+        public bool ShowHistoryResultsForHomePage
+        {
+            get => _showHistoryResultsForHomePage;
+            set
+            {
+                if(_showHistoryResultsForHomePage != value)
+                {
+                    _showHistoryResultsForHomePage = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        
         public int MaxHistoryResultsToShowForHomePage { get; set; } = 5;
 
         public int CustomExplorerIndex { get; set; } = 0;
