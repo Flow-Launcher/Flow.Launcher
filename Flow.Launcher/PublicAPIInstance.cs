@@ -316,46 +316,42 @@ namespace Flow.Launcher
 
         public void OpenDirectory(string DirectoryPath, string FileNameOrFilePath = null)
         {
-            string targetPath;
-
-            if (FileNameOrFilePath is null)
-            {
-                targetPath = DirectoryPath;
-            }
-            else
-            {
-                targetPath = Path.IsPathRooted(FileNameOrFilePath)
-                    ? FileNameOrFilePath
-                    : Path.Combine(DirectoryPath, FileNameOrFilePath);
-            }
-
             var explorerInfo = _settings.CustomExplorer;
             var explorerPath = explorerInfo.Path.Trim().ToLowerInvariant();
-            
-            // If explorer.exe, ignore and pass only the path to Shell
+            var targetPath = FileNameOrFilePath is null
+                ? DirectoryPath
+                : Path.IsPathRooted(FileNameOrFilePath)
+                    ? FileNameOrFilePath
+                    : Path.Combine(DirectoryPath, FileNameOrFilePath);
+
+            using var explorer = new Process();
             if (Path.GetFileNameWithoutExtension(explorerPath) == "explorer")
             {
-                Process.Start(new ProcessStartInfo
+                // Windows File Manager
+                // We should ignore and pass only the path to Shell to prevent zombie explorer.exe processes
+                explorer.StartInfo = new ProcessStartInfo
                 {
                     FileName = targetPath,         // Not explorer, Only path.
                     UseShellExecute = true         // Must be true to open folder
-                });
-                return;
+                };
+            }
+            else
+            {
+                // Custom File Manager
+                explorer.StartInfo = new ProcessStartInfo
+                {
+                    FileName = explorerInfo.Path.Replace("%d", DirectoryPath),
+                    UseShellExecute = true,
+                    Arguments = FileNameOrFilePath is null
+                        ? explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath)
+                        : explorerInfo.FileArgument
+                            .Replace("%d", DirectoryPath)
+                            .Replace("%f", targetPath)
+                };
             }
 
-            // Custom File Manager
-            var psi = new ProcessStartInfo
-            {
-                FileName = explorerInfo.Path.Replace("%d", DirectoryPath),
-                UseShellExecute = true,
-                Arguments = FileNameOrFilePath is null
-                    ? explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath)
-                    : explorerInfo.FileArgument
-                        .Replace("%d", DirectoryPath)
-                        .Replace("%f", targetPath)
-            };
-
-            Process.Start(psi);
+            // Start the process
+            explorer.Start();
         }
 
         private void OpenUri(Uri uri, bool? inPrivate = null)
