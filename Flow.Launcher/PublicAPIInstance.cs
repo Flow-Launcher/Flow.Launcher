@@ -316,6 +316,7 @@ namespace Flow.Launcher
 
         public void OpenDirectory(string DirectoryPath, string FileNameOrFilePath = null)
         {
+            using var explorer = new Process();
             var explorerInfo = _settings.CustomExplorer;
             var explorerPath = explorerInfo.Path.Trim().ToLowerInvariant();
             var targetPath = FileNameOrFilePath is null
@@ -324,7 +325,6 @@ namespace Flow.Launcher
                     ? FileNameOrFilePath
                     : Path.Combine(DirectoryPath, FileNameOrFilePath);
 
-            using var explorer = new Process();
             if (Path.GetFileNameWithoutExtension(explorerPath) == "explorer")
             {
                 // Windows File Manager
