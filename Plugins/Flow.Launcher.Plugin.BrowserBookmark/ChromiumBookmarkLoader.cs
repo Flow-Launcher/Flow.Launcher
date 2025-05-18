@@ -131,7 +131,17 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
         }
         catch (Exception ex)
         {
-            File.Delete(tempDbPath);
+            try
+            {
+                if (File.Exists(tempDbPath))
+                {
+                    File.Delete(tempDbPath);
+                }
+            }
+            catch (Exception ex1)
+            {
+                Main._context.API.LogException(ClassName, $"Failed to delete temporary favicon DB: {tempDbPath}", ex1);
+            }
             Main._context.API.LogException(ClassName, $"Failed to copy favicon DB: {dbPath}", ex);
             return;
         }

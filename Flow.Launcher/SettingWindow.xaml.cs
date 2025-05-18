@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -18,6 +19,7 @@ public partial class SettingWindow
     #region Private Fields
 
     private readonly Settings _settings;
+    private readonly SettingWindowViewModel _viewModel;
 
     #endregion
 
@@ -26,11 +28,11 @@ public partial class SettingWindow
     public SettingWindow()
     {
         _settings = Ioc.Default.GetRequiredService<Settings>();
-        var viewModel = Ioc.Default.GetRequiredService<SettingWindowViewModel>();
-        DataContext = viewModel;
-        InitializeComponent();
-
+        _viewModel = Ioc.Default.GetRequiredService<SettingWindowViewModel>();
+        DataContext = _viewModel;
+        // Since WindowStartupLocation is set to Manual, initialize the window position before calling InitializeComponent
         UpdatePositionAndState();
+        InitializeComponent();
     }
 
     #endregion
@@ -48,10 +50,37 @@ public partial class SettingWindow
         hwndTarget.RenderMode = RenderMode.SoftwareOnly;  // Must use software only render mode here
 
         UpdatePositionAndState();
+
+        _viewModel.PropertyChanged += ViewModel_PropertyChanged;
+    }
+
+    // Sometimes the navigation is not triggered by button click,
+    // so we need to update the selected item here
+    private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+            case nameof(SettingWindowViewModel.PageType):
+                var selectedIndex = _viewModel.PageType.Name switch
+                {
+                    nameof(SettingsPaneGeneral) => 0,
+                    nameof(SettingsPanePlugins) => 1,
+                    nameof(SettingsPanePluginStore) => 2,
+                    nameof(SettingsPaneTheme) => 3,
+                    nameof(SettingsPaneHotkey) => 4,
+                    nameof(SettingsPaneProxy) => 5,
+                    nameof(SettingsPaneAbout) => 6,
+                    _ => 0
+                };
+                NavView.SelectedItem = NavView.MenuItems[selectedIndex];
+                break;
+        }
     }
 
     private void OnClosed(object sender, EventArgs e)
     {
+        _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
+
         // If app is exiting, settings save is not needed because main window closing event will handle this
         if (App.Exiting) return;
         // Save settings when window is closed
@@ -137,16 +166,38 @@ public partial class SettingWindow
 
         if (previousTop == null || previousLeft == null || !IsPositionValid(previousTop.Value, previousLeft.Value))
         {
-            Top = WindowTop();
-            Left = WindowLeft();
+            SetWindowPosition(WindowTop(), WindowLeft());
         }
         else
         {
-            Top = previousTop.Value;
-            Left = previousLeft.Value;
+            var left = _settings.SettingWindowLeft.Value;
+            var top = _settings.SettingWindowTop.Value;
+            AdjustWindowPosition(ref top, ref left);
+            SetWindowPosition(top, left);
         }
 
         WindowState = _settings.SettingWindowState;
+    }
+
+    private void SetWindowPosition(double top, double left)
+    {
+        // Ensure window does not exceed screen boundaries
+        top = Math.Max(top, SystemParameters.VirtualScreenTop);
+        left = Math.Max(left, SystemParameters.VirtualScreenLeft);
+        top = Math.Min(top, SystemParameters.VirtualScreenHeight - ActualHeight);
+        left = Math.Min(left, SystemParameters.VirtualScreenWidth - ActualWidth);
+
+        Top = top;
+        Left = left;
+    }
+
+    private void AdjustWindowPosition(ref double top, ref double left)
+    {
+        // Adjust window position if it exceeds screen boundaries
+        top = Math.Max(top, SystemParameters.VirtualScreenTop);
+        left = Math.Max(left, SystemParameters.VirtualScreenLeft);
+        top = Math.Min(top, SystemParameters.VirtualScreenHeight - ActualHeight);
+        left = Math.Min(left, SystemParameters.VirtualScreenWidth - ActualWidth);
     }
 
     private static bool IsPositionValid(double top, double left)
@@ -190,6 +241,7 @@ public partial class SettingWindow
     {
         if (args.IsSettingsSelected)
         {
+            _viewModel.SetPageType(typeof(SettingsPaneGeneral));
             ContentFrame.Navigate(typeof(SettingsPaneGeneral));
         }
         else
@@ -212,7 +264,11 @@ public partial class SettingWindow
                 nameof(About) => typeof(SettingsPaneAbout),
                 _ => typeof(SettingsPaneGeneral)
             };
-            ContentFrame.Navigate(pageType);
+            // Only navigate if the page type changes to fix navigation forward/back issue
+            if (_viewModel.SetPageType(pageType))
+            {
+                ContentFrame.Navigate(pageType);
+            }
         }
     }
 
@@ -230,7 +286,8 @@ public partial class SettingWindow
 
     private void ContentFrame_Loaded(object sender, RoutedEventArgs e)
     {
-        NavView.SelectedItem ??= NavView.MenuItems[0]; /* Set First Page */
+        _viewModel.SetPageType(null); // Set page type to null so that NavigationView_SelectionChanged can navigate the frame
+        NavView.SelectedItem = NavView.MenuItems[0]; /* Set First Page */
     }
 
     #endregion
