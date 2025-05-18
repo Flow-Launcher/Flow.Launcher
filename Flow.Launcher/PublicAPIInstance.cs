@@ -318,19 +318,37 @@ namespace Flow.Launcher
         {
             using var explorer = new Process();
             var explorerInfo = _settings.CustomExplorer;
+            var explorerPath = explorerInfo.Path.Trim().ToLowerInvariant();
+            var targetPath = FileNameOrFilePath is null
+                ? DirectoryPath
+                : Path.IsPathRooted(FileNameOrFilePath)
+                    ? FileNameOrFilePath
+                    : Path.Combine(DirectoryPath, FileNameOrFilePath);
 
-            explorer.StartInfo = new ProcessStartInfo
+            if (Path.GetFileNameWithoutExtension(explorerPath) == "explorer")
             {
-                FileName = explorerInfo.Path.Replace("%d", DirectoryPath),
-                UseShellExecute = true,
-                Arguments = FileNameOrFilePath is null
-                    ? explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath)
-                    : explorerInfo.FileArgument
-                        .Replace("%d", DirectoryPath)
-                        .Replace("%f",
-                            Path.IsPathRooted(FileNameOrFilePath) ? FileNameOrFilePath : Path.Combine(DirectoryPath, FileNameOrFilePath)
-                        )
-            };
+                // Windows File Manager
+                // We should ignore and pass only the path to Shell to prevent zombie explorer.exe processes
+                explorer.StartInfo = new ProcessStartInfo
+                {
+                    FileName = targetPath,         // Not explorer, Only path.
+                    UseShellExecute = true         // Must be true to open folder
+                };
+            }
+            else
+            {
+                // Custom File Manager
+                explorer.StartInfo = new ProcessStartInfo
+                {
+                    FileName = explorerInfo.Path.Replace("%d", DirectoryPath),
+                    UseShellExecute = true,
+                    Arguments = FileNameOrFilePath is null
+                        ? explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath)
+                        : explorerInfo.FileArgument
+                            .Replace("%d", DirectoryPath)
+                            .Replace("%f", targetPath)
+                };
+            }
             explorer.Start();
         }
 

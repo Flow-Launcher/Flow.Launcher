@@ -46,6 +46,8 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">Vennligst velg en programkilde</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">Er du sikker på at du vil slette de valgte programkildene?</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_not_user_added">Please select program sources that are not added by you</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_user_added">Please select program sources that are added by you</system:String>
     <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Det finnes allerede en annen programkilde med samme plassering.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Programkilde</system:String>

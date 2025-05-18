@@ -142,6 +142,29 @@ namespace Flow.Launcher.Plugin.Explorer
 
                 contextMenus.Add(new Result
                 {
+                    Title = Context.API.GetTranslation("plugin_explorer_copyname"),
+                    SubTitle = Context.API.GetTranslation("plugin_explorer_copyname_subtitle"),
+                    Action = _ =>
+                    {
+                        try
+                        {
+                            Context.API.CopyToClipboard(Path.GetFileName(record.FullPath));
+                            return true;
+                        }
+                        catch (Exception e)
+                        {
+                            var message = "Fail to set text in clipboard";
+                            LogException(message, e);
+                            Context.API.ShowMsg(message);
+                            return false;
+                        }
+                    },
+                    IcoPath = Constants.CopyImagePath,
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue8c8")
+                });
+
+                contextMenus.Add(new Result
+                {
                     Title = Context.API.GetTranslation("plugin_explorer_copyfilefolder"),
                     SubTitle = isFile ? Context.API.GetTranslation("plugin_explorer_copyfile_subtitle") : Context.API.GetTranslation("plugin_explorer_copyfolder_subtitle"),
                     Action = _ =>

@@ -21,15 +21,14 @@ namespace Flow.Launcher.Plugin.Sys
             ListView listView = sender as ListView;
             GridView gView = listView.View as GridView;
 
-            var workingWidth = listView.ActualWidth - SystemParameters.VerticalScrollBarWidth; // take into account vertical scrollbar
+            var workingWidth =
+                listView.ActualWidth - SystemParameters.VerticalScrollBarWidth; // take into account vertical scrollbar
+
+            if (workingWidth <= 0) return;
+
             var col1 = 0.2;
             var col2 = 0.6;
             var col3 = 0.2;
-
-            if (workingWidth <= 0)
-            {
-                return;
-            }
 
             gView.Columns[0].Width = workingWidth * col1;
             gView.Columns[1].Width = workingWidth * col2;

@@ -45,6 +45,22 @@ namespace Flow.Launcher.Infrastructure.Storage
             FilesFolders.ValidateDirectory(DirectoryPath);
         }
 
+        public bool Exists()
+        {
+            return File.Exists(FilePath);
+        }
+
+        public void Delete()
+        {
+            foreach (var path in new[] { FilePath, BackupFilePath, TempFilePath })
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
+        }
+
         public async Task<T> LoadAsync()
         {
             if (Data != null)

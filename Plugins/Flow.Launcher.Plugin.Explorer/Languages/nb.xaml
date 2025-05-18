@@ -80,6 +80,8 @@
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">Kopier sti</system:String>
     <system:String x:Key="plugin_explorer_copypath_subtitle">Kopier sti til gjeldende element til utklippstavlen</system:String>
+    <system:String x:Key="plugin_explorer_copyname">Copy name</system:String>
+    <system:String x:Key="plugin_explorer_copyname_subtitle">Copy name of current item to clipboard</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">Kopier</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">Kopier gjeldende fil til utklippstavlen</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">Kopier gjeldende mappe til utklippstavlen</system:String>

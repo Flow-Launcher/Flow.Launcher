@@ -39,11 +39,10 @@ namespace Flow.Launcher.ViewModel
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
-        private readonly FlowLauncherJsonStorage<TopMostRecord> _topMostRecordStorage;
+        private readonly FlowLauncherJsonStorageTopMostRecord _topMostRecord;
         private readonly History _history;
         private int lastHistoryIndex = 1;
         private readonly UserSelectedRecord _userSelectedRecord;
-        private readonly TopMostRecord _topMostRecord;
 
         private CancellationTokenSource _updateSource; // Used to cancel old query flows
         private CancellationToken _updateToken; // Used to avoid ObjectDisposedException of _updateSource.Token
@@ -143,24 +142,23 @@ namespace Flow.Launcher.ViewModel
 
             _historyItemsStorage = new FlowLauncherJsonStorage<History>();
             _userSelectedRecordStorage = new FlowLauncherJsonStorage<UserSelectedRecord>();
-            _topMostRecordStorage = new FlowLauncherJsonStorage<TopMostRecord>();
+            _topMostRecord = new FlowLauncherJsonStorageTopMostRecord();
             _history = _historyItemsStorage.Load();
             _userSelectedRecord = _userSelectedRecordStorage.Load();
-            _topMostRecord = _topMostRecordStorage.Load();
 
-            ContextMenu = new ResultsViewModel(Settings)
+            ContextMenu = new ResultsViewModel(Settings, this)
             {
                 LeftClickResultCommand = OpenResultCommand,
                 RightClickResultCommand = LoadContextMenuCommand,
                 IsPreviewOn = Settings.AlwaysPreview
             };
-            Results = new ResultsViewModel(Settings)
+            Results = new ResultsViewModel(Settings, this)
             {
                 LeftClickResultCommand = OpenResultCommand,
                 RightClickResultCommand = LoadContextMenuCommand,
                 IsPreviewOn = Settings.AlwaysPreview
             };
-            History = new ResultsViewModel(Settings)
+            History = new ResultsViewModel(Settings, this)
             {
                 LeftClickResultCommand = OpenResultCommand,
                 RightClickResultCommand = LoadContextMenuCommand,
@@ -1692,6 +1690,12 @@ namespace Flow.Launcher.ViewModel
             return selected;
         }
 
+        internal bool ResultsSelected(ResultsViewModel results)
+        {
+            var selected = SelectedResults == results;
+            return selected;
+        }
+
         #endregion
 
         #region Hotkey
@@ -1847,7 +1851,7 @@ namespace Flow.Launcher.ViewModel
         {
             _historyItemsStorage.Save();
             _userSelectedRecordStorage.Save();
-            _topMostRecordStorage.Save();
+            _topMostRecord.Save();
         }
 
         /// <summary>
@@ -1880,9 +1884,12 @@ namespace Flow.Launcher.ViewModel
             {
                 foreach (var result in metaResults.Results)
                 {
-                    if (_topMostRecord.IsTopMost(result))
+                    var deviationIndex = _topMostRecord.GetTopMostIndex(result);
+                    if (deviationIndex != -1)
                     {
-                        result.Score = Result.MaxScore;
+                        // Adjust the score based on the result's position in the top-most list.
+                        // A lower deviationIndex (closer to the top) results in a higher score.
+                        result.Score = Result.MaxScore - deviationIndex;
                     }
                     else
                     {
