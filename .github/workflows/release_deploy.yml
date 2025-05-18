@@ -31,4 +31,4 @@ jobs:
             -H "Authorization: Bearer ${{ secrets.Publish_Chocolatey }}" \
             https://api.github.com/repos/Flow-Launcher/chocolatey-package/dispatches \
             -d '{"event_type":"publish"}')
-          if [ "$http_status" -ne 204 ]; then echo "Error: Publish Chocolatey Packaged failed, HTTP status code is $http_status"; exit 1; fi
+          if [ "$http_status" -ne 204 ]; then echo "Error: Publish Chocolatey package failed, HTTP status code is $http_status"; exit 1; fi
