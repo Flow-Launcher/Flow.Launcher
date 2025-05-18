@@ -80,6 +80,8 @@
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">העתק נתיב</system:String>
     <system:String x:Key="plugin_explorer_copypath_subtitle">העתק את הנתיב של הפריט הנוכחי ללוח</system:String>
+    <system:String x:Key="plugin_explorer_copyname">העתק שם</system:String>
+    <system:String x:Key="plugin_explorer_copyname_subtitle">העתק את שם הפריט הנוכחי ללוח</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">העתק</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">העתק את הקובץ הנוכחי ללוח</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">העתק את התיקייה הנוכחית ללוח</system:String>

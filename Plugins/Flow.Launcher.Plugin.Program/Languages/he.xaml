@@ -46,6 +46,8 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">אנא בחר מקור תוכנה</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">האם אתה בטוח שברצונך למחוק את מקורות התוכניות שנבחרו?</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_not_user_added">Please select program sources that are not added by you</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_user_added">Please select program sources that are added by you</system:String>
     <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">מקור תוכנה נוסף עם אותו מיקום כבר קיים.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">מקור תוכנה</system:String>

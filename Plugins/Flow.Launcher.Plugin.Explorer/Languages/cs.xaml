@@ -80,6 +80,8 @@
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">Kopírovat cestu</system:String>
     <system:String x:Key="plugin_explorer_copypath_subtitle">Zkopírovat cestu k aktuální položce do schránky</system:String>
+    <system:String x:Key="plugin_explorer_copyname">Copy name</system:String>
+    <system:String x:Key="plugin_explorer_copyname_subtitle">Copy name of current item to clipboard</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">Kopírovat</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">Kopírovat aktuální soubor do schránky</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">Kopírovat aktuální složku do schránky</system:String>

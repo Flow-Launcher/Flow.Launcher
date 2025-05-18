@@ -80,6 +80,8 @@
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">复制路径</system:String>
     <system:String x:Key="plugin_explorer_copypath_subtitle">复制当前结果的路径到剪贴板</system:String>
+    <system:String x:Key="plugin_explorer_copyname">Copy name</system:String>
+    <system:String x:Key="plugin_explorer_copyname_subtitle">Copy name of current item to clipboard</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">复制</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">复制当前文件到剪贴板</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">复制当前文件夹到剪贴板</system:String>
