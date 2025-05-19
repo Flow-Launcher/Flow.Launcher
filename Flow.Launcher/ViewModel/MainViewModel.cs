@@ -1245,19 +1245,7 @@ namespace Flow.Launcher.ViewModel
 
             if (query == null) // shortcut expanded
             {
-                App.API.LogDebug(ClassName, $"Clear query results");
-
-                // Hide and clear results again because running query may show and add some results
-                Results.Visibility = Visibility.Collapsed;
-                Results.Clear();
-
-                // Reset plugin icon
-                PluginIconPath = null;
-                PluginIconSource = null;
-                SearchIconVisibility = Visibility.Visible;
-
-                // Hide progress bar again because running query may set this to visible
-                ProgressBarVisibility = Visibility.Hidden;
+                ClearResults();
                 return;
             }
 
@@ -1351,8 +1339,9 @@ namespace Flow.Launcher.ViewModel
                 {
                     if (ShouldClearExistingResultsForNonQuery(plugins))
                     {
-                        Results.Clear();
-                        App.API.LogDebug(ClassName, $"Existing results are cleared for non-query");
+                        // No update tasks and just return
+                        ClearResults();
+                        return;
                     }
 
                     tasks = plugins.Select(plugin => plugin.Metadata.HomeDisabled switch
@@ -1405,6 +1394,23 @@ namespace Flow.Launcher.ViewModel
             }
 
             // Local function
+            void ClearResults()
+            {
+                App.API.LogDebug(ClassName, $"Clear query results");
+
+                // Hide and clear results again because running query may show and add some results
+                Results.Visibility = Visibility.Collapsed;
+                Results.Clear();
+
+                // Reset plugin icon
+                PluginIconPath = null;
+                PluginIconSource = null;
+                SearchIconVisibility = Visibility.Visible;
+
+                // Hide progress bar again because running query may set this to visible
+                ProgressBarVisibility = Visibility.Hidden;
+            }
+
             async Task QueryTaskAsync(PluginPair plugin, CancellationToken token)
             {
                 App.API.LogDebug(ClassName, $"Wait for querying plugin <{plugin.Metadata.Name}>");
