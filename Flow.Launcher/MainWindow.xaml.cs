@@ -113,7 +113,7 @@ namespace Flow.Launcher
             Win32Helper.DisableControlBox(this);
         }
 
-        private async void OnLoaded(object sender, RoutedEventArgs _)
+        private void OnLoaded(object sender, RoutedEventArgs _)
         {
             // Check first launch
             if (_settings.FirstLaunch)
@@ -283,6 +283,7 @@ namespace Flow.Launcher
                         InitializeContextMenu();
                         break;
                     case nameof(Settings.ShowHomePage):
+                    case nameof(Settings.ShowHistoryResultsForHomePage):
                         if (_viewModel.QueryResultsSelected() && string.IsNullOrEmpty(_viewModel.QueryText))
                         {
                             _viewModel.QueryResults();
