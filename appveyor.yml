@@ -8,6 +8,14 @@ init:
       {
         $env:prereleaseTag = "{0}.{1}.{2}.{3}" -f $version.Major, $version.Minor, $version.Build, $version.Revision
       }
+
+      $jsonFiles = Get-ChildItem -Path ".\Plugins\*\plugin.json"
+      foreach ($file in $jsonFiles) {
+          $plugin_old_ver = Get-Content $file.FullName -Raw | ConvertFrom-Json
+          (Get-Content $file) -replace '"Version"\s*:\s*".*?"', "`"Version`": `"$env:flowVersion`"" | Set-Content $file
+          $plugin_new_ver = Get-Content $file.FullName -Raw | ConvertFrom-Json
+          Write-Host "Updated" $plugin_old_ver.Name "version from" $plugin_old_ver.Version "to" $plugin_new_ver.Version
+      }
 - sc config WSearch start= auto # Starts Windows Search service- Needed for running ExplorerTest
 - net start WSearch
 
