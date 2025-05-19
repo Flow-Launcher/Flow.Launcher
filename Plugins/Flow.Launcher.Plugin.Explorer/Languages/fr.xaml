@@ -80,6 +80,8 @@
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">Copier le chemin</system:String>
     <system:String x:Key="plugin_explorer_copypath_subtitle">Copier le chemin de l'élément actuel dans le presse-papiers</system:String>
+    <system:String x:Key="plugin_explorer_copyname">Copier le nom</system:String>
+    <system:String x:Key="plugin_explorer_copyname_subtitle">Copier le nom de l'élément actuel dans le presse-papiers</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">Copier</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">Copier le fichier actuel dans le presse-papiers</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">Copier le dossier actuel dans le presse-papiers</system:String>

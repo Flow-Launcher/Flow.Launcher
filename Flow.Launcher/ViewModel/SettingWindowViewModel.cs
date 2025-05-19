@@ -1,4 +1,5 @@
-﻿using Flow.Launcher.Infrastructure.UserSettings;
+﻿using System;
+using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.ViewModel;
@@ -10,6 +11,28 @@ public partial class SettingWindowViewModel : BaseModel
     public SettingWindowViewModel(Settings settings)
     {
         _settings = settings;
+    }
+
+    public bool SetPageType(Type pageType)
+    {
+        if (_pageType == pageType) return false;
+
+        _pageType = pageType;
+        return true;
+    }
+
+    private Type _pageType = null;
+    public Type PageType
+    {
+        get => _pageType;
+        set
+        {
+            if (_pageType != value)
+            {
+                _pageType = value;
+                OnPropertyChanged();
+            }
+        }
     }
 
     public double SettingWindowWidth

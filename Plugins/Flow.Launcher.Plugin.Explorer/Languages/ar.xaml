@@ -80,6 +80,8 @@
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">نسخ المسار</system:String>
     <system:String x:Key="plugin_explorer_copypath_subtitle">نسخ مسار العنصر الحالي إلى الحافظة</system:String>
+    <system:String x:Key="plugin_explorer_copyname">Copy name</system:String>
+    <system:String x:Key="plugin_explorer_copyname_subtitle">Copy name of current item to clipboard</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">نسخ</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">نسخ الملف الحالي إلى الحافظة</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">نسخ المجلد الحالي إلى الحافظة</system:String>
