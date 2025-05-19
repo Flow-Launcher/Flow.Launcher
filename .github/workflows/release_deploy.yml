@@ -1,0 +1,34 @@
+---
+
+name: New Release Deployments
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  deploy-website:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger dispatch event for deploying website
+        run: |
+          http_status=$(curl -L -f -s -o /dev/null -w "%{http_code}" \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.DEPLOY_FLOW_WEBSITE }}" \
+            https://api.github.com/repos/Flow-Launcher/flow-launcher.github.io/dispatches \
+            -d '{"event_type":"deploy"}')
+          if [ "$http_status" -ne 204 ]; then echo "Error: Deploy website failed, HTTP status code is $http_status"; exit 1; fi
+  
+  publish-chocolatey:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger dispatch event for publishing to Chocolatey
+        run: |
+          http_status=$(curl -L -f -s -o /dev/null -w "%{http_code}" \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.Publish_Chocolatey }}" \
+            https://api.github.com/repos/Flow-Launcher/chocolatey-package/dispatches \
+            -d '{"event_type":"publish"}')
+          if [ "$http_status" -ne 204 ]; then echo "Error: Publish Chocolatey package failed, HTTP status code is $http_status"; exit 1; fi

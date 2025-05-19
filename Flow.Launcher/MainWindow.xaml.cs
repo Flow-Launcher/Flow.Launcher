@@ -289,6 +289,7 @@ namespace Flow.Launcher
                         InitializeContextMenu();
                         break;
                     case nameof(Settings.ShowHomePage):
+                    case nameof(Settings.ShowHistoryResultsForHomePage):
                         if (_viewModel.QueryResultsSelected() && string.IsNullOrEmpty(_viewModel.QueryText))
                         {
                             _viewModel.QueryResults();

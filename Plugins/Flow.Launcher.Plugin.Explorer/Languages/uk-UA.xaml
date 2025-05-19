@@ -80,6 +80,8 @@
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">Копіювати шлях</system:String>
     <system:String x:Key="plugin_explorer_copypath_subtitle">Копіювати шлях до поточного елемента в буфер обміну</system:String>
+    <system:String x:Key="plugin_explorer_copyname">Copy name</system:String>
+    <system:String x:Key="plugin_explorer_copyname_subtitle">Copy name of current item to clipboard</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">Копіювати</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">Копіювання поточного файлу в буфер обміну</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">Копіювати поточну папку в буфер обміну</system:String>
@@ -161,6 +163,5 @@
     <system:String x:Key="plugin_explorer_native_context_menu_header">Рідне контекстне меню</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Відображати рідне контекстне меню (експериментально)</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Нижче ви можете вказати елементи, які хочете включити до контекстного меню, вони можуть бути частковими (наприклад, «шир пера») або повними («Відкрити за допомогою»).</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Нижче ви можете вказати елементи, які хочете виключити з контекстного меню, вони можуть бути частковими (наприклад, «шир пера») або повними («Відкрити за допомогою»).</system:String>
-
+    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Below you can specify items you want to exclude from context menu, they can be partial (e.g. 'pen wit') or complete ('Open with').</system:String>
 </ResourceDictionary>
