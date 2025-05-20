@@ -316,40 +316,63 @@ namespace Flow.Launcher
 
         public void OpenDirectory(string DirectoryPath, string FileNameOrFilePath = null)
         {
-            using var explorer = new Process();
-            var explorerInfo = _settings.CustomExplorer;
-            var explorerPath = explorerInfo.Path.Trim().ToLowerInvariant();
-            var targetPath = FileNameOrFilePath is null
-                ? DirectoryPath
-                : Path.IsPathRooted(FileNameOrFilePath)
-                    ? FileNameOrFilePath
-                    : Path.Combine(DirectoryPath, FileNameOrFilePath);
+            try
+            {
+                using var explorer = new Process();
+                var explorerInfo = _settings.CustomExplorer;
+                var explorerPath = explorerInfo.Path.Trim().ToLowerInvariant();
+                var targetPath = FileNameOrFilePath is null
+                    ? DirectoryPath
+                    : Path.IsPathRooted(FileNameOrFilePath)
+                        ? FileNameOrFilePath
+                        : Path.Combine(DirectoryPath, FileNameOrFilePath);
 
-            if (Path.GetFileNameWithoutExtension(explorerPath) == "explorer")
-            {
-                // Windows File Manager
-                // We should ignore and pass only the path to Shell to prevent zombie explorer.exe processes
-                explorer.StartInfo = new ProcessStartInfo
+                if (Path.GetFileNameWithoutExtension(explorerPath) == "explorer")
                 {
-                    FileName = targetPath,         // Not explorer, Only path.
-                    UseShellExecute = true         // Must be true to open folder
-                };
-            }
-            else
-            {
-                // Custom File Manager
-                explorer.StartInfo = new ProcessStartInfo
+                    // Windows File Manager
+                    explorer.StartInfo = new ProcessStartInfo
+                    {
+                        FileName = targetPath,
+                        UseShellExecute = true
+                    };
+                }
+                else
                 {
-                    FileName = explorerInfo.Path.Replace("%d", DirectoryPath),
-                    UseShellExecute = true,
-                    Arguments = FileNameOrFilePath is null
-                        ? explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath)
-                        : explorerInfo.FileArgument
-                            .Replace("%d", DirectoryPath)
-                            .Replace("%f", targetPath)
-                };
+                    // Custom File Manager
+                    explorer.StartInfo = new ProcessStartInfo
+                    {
+                        FileName = explorerInfo.Path.Replace("%d", DirectoryPath),
+                        UseShellExecute = true,
+                        Arguments = FileNameOrFilePath is null
+                            ? explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath)
+                            : explorerInfo.FileArgument
+                                .Replace("%d", DirectoryPath)
+                                .Replace("%f", targetPath)
+                    };
+                }
+
+                explorer.Start();
             }
-            explorer.Start();
+            catch (System.ComponentModel.Win32Exception ex) when (ex.NativeErrorCode == 2)
+            {
+                // File Manager not found
+                MessageBoxEx.Show(
+                    string.Format(GetTranslation("fileManagerNotFound"), ex.Message),
+                    GetTranslation("fileManagerNotFoundTitle"),
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+            }
+            catch (Exception ex)
+            {
+                // Other exceptions
+                MessageBoxEx.Show(
+                    string.Format(GetTranslation("folderOpenError"), ex.Message),
+                    GetTranslation("errorTitle"),
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+            }
         }
 
         private void OpenUri(Uri uri, bool? inPrivate = null)
