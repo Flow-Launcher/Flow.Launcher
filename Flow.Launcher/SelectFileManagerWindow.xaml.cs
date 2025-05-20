@@ -6,9 +6,11 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.ViewModel;
+using ModernWpf.Controls;
 
 namespace Flow.Launcher
 {
@@ -102,6 +104,50 @@ namespace Flow.Launcher
             }
         }
 
+        private async void btnTips_Click(object sender, RoutedEventArgs e)
+        {
+            string tipText = (string)Application.Current.Resources["fileManager_files_tips"];
+            string url = "https://files.community/docs/contributing/updates";
+    
+            var textBlock = new TextBlock
+            {
+                FontSize = 14,
+                TextWrapping = TextWrapping.Wrap,
+                Margin = new Thickness(0, 0, 0, 0)
+            };
+            
+            textBlock.Inlines.Add(tipText);
+            
+            Hyperlink hyperlink = new Hyperlink
+            {
+                NavigateUri = new Uri(url)
+            };
+            hyperlink.Inlines.Add(url);
+            hyperlink.RequestNavigate += (s, args) =>
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = args.Uri.AbsoluteUri,
+                    UseShellExecute = true
+                });
+                args.Handled = true;
+            };
+    
+            textBlock.Inlines.Add(hyperlink);
+    
+            var tipsDialog = new ContentDialog()
+            {
+                Owner = Window.GetWindow(sender as DependencyObject),
+                Title = (string)Application.Current.Resources["fileManager_files_btn"],
+                Content = textBlock,
+                PrimaryButtonText = (string)Application.Current.Resources["commonOK"],
+                CornerRadius = new CornerRadius(8),
+                Style = (Style)Application.Current.Resources["ContentDialog"]
+            };
+
+            await tipsDialog.ShowAsync();
+        }
+        
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             CustomExplorers.Add(new()
