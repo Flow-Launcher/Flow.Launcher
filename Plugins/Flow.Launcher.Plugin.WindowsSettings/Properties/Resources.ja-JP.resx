@@ -456,7 +456,7 @@
     <comment>Area Personalization</comment>
   </data>
   <data name="Command" xml:space="preserve">
-    <value/>
+    <value></value>
     <comment>The command to direct start a setting</comment>
   </data>
   <data name="ConnectedDevices" xml:space="preserve">
@@ -1117,7 +1117,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Password" xml:space="preserve">
-    <value/>
+    <value></value>
   </data>
   <data name="password.cpl" xml:space="preserve">
     <value>password.cpl</value>
@@ -1572,7 +1572,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Version" xml:space="preserve">
-    <value/>
+    <value></value>
     <comment>Means The "Windows Version"</comment>
   </data>
   <data name="VideoPlayback" xml:space="preserve">
