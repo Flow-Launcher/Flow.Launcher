@@ -45,6 +45,16 @@ namespace Flow.Launcher
         {
             Close();
         }
+        
+        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = e.Uri.AbsoluteUri,
+                UseShellExecute = true
+            });
+            e.Handled = true;
+        }
 
         private void btnDone_Click(object sender, RoutedEventArgs e)
         {
