@@ -114,10 +114,11 @@ namespace Flow.Launcher
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         private async void btnTips_Click(object sender, RoutedEventArgs e)
         {
-            string tipText = (string)Application.Current.Resources["fileManager_files_tips"];
-            string url = "https://files.community/docs/contributing/updates";
+            var tipText = (string)Application.Current.Resources["fileManager_files_tips"];
+            var url = "https://files.community/docs/contributing/updates";
     
             var textBlock = new TextBlock
             {
@@ -128,7 +129,7 @@ namespace Flow.Launcher
             
             textBlock.Inlines.Add(tipText);
             
-            Hyperlink hyperlink = new Hyperlink
+            var hyperlink = new Hyperlink
             {
                 NavigateUri = new Uri(url)
             };
@@ -147,7 +148,7 @@ namespace Flow.Launcher
     
             var tipsDialog = new ContentDialog()
             {
-                Owner = Window.GetWindow(sender as DependencyObject),
+                Owner = Window.GetWindow((DependencyObject)sender),
                 Title = (string)Application.Current.Resources["fileManager_files_btn"],
                 Content = textBlock,
                 PrimaryButtonText = (string)Application.Current.Resources["commonOK"],
