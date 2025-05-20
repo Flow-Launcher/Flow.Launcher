@@ -4,7 +4,7 @@
   "Name": "Shell",
   "Description": "Provide executing commands from Flow Launcher",
   "Author": "qianlifeng",
-  "Version": "3.2.5",
+  "Version": "1.0.0",
   "Language": "csharp",
   "Website": "https://github.com/Flow-Launcher/Flow.Launcher",
   "ExecuteFileName": "Flow.Launcher.Plugin.Shell.dll",
