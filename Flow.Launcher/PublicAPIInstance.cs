@@ -356,7 +356,7 @@ namespace Flow.Launcher
             catch (System.ComponentModel.Win32Exception ex) when (ex.NativeErrorCode == 2)
             {
                 // File Manager not found
-                MessageBoxEx.Show(
+                ShowMsgBox(
                     string.Format(GetTranslation("fileManagerNotFound"), ex.Message),
                     GetTranslation("fileManagerNotFoundTitle"),
                     MessageBoxButton.OK,
@@ -366,7 +366,7 @@ namespace Flow.Launcher
             catch (Exception ex)
             {
                 // Other exceptions
-                MessageBoxEx.Show(
+                ShowMsgBox(
                     string.Format(GetTranslation("folderOpenError"), ex.Message),
                     GetTranslation("errorTitle"),
                     MessageBoxButton.OK,

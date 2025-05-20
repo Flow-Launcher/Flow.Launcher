@@ -61,7 +61,7 @@ namespace Flow.Launcher
             // Check if the selected file manager path is valid
             if (!IsFileManagerValid(CustomExplorer.Path))
             {
-                MessageBoxResult result = MessageBoxEx.Show(
+                var result = App.API.ShowMsgBox(
                     string.Format((string)Application.Current.FindResource("fileManagerPathNotFound"), 
                         CustomExplorer.Name, CustomExplorer.Path),
                     (string)Application.Current.FindResource("fileManagerPathError"),
