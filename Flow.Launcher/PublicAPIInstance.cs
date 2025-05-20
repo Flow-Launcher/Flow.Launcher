@@ -32,11 +32,14 @@ using Flow.Launcher.ViewModel;
 using JetBrains.Annotations;
 using Squirrel;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
+using System.ComponentModel;
 
 namespace Flow.Launcher
 {
     public class PublicAPIInstance : IPublicAPI, IRemovable
     {
+        private static readonly string ClassName = nameof(PublicAPIInstance);
+
         private readonly Settings _settings;
         private readonly MainViewModel _mainVM;
 
@@ -353,9 +356,9 @@ namespace Flow.Launcher
 
                 explorer.Start();
             }
-            catch (System.ComponentModel.Win32Exception ex) when (ex.NativeErrorCode == 2)
+            catch (Win32Exception ex) when (ex.NativeErrorCode == 2)
             {
-                // File Manager not found
+                LogError(ClassName, "File Manager not found");
                 ShowMsgBox(
                     string.Format(GetTranslation("fileManagerNotFound"), ex.Message),
                     GetTranslation("fileManagerNotFoundTitle"),
@@ -365,7 +368,7 @@ namespace Flow.Launcher
             }
             catch (Exception ex)
             {
-                // Other exceptions
+                LogException(ClassName, "Failed to open folder", ex);
                 ShowMsgBox(
                     string.Format(GetTranslation("folderOpenError"), ex.Message),
                     GetTranslation("errorTitle"),
