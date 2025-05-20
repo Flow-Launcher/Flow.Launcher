@@ -226,8 +226,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             new()
             {
                 Name = "Files",
-                Path = "Files",
-                DirectoryArgument = "-select \"%d\"",
+                Path = "Files-Stable",
+                DirectoryArgument = "\"%d\"",
                 FileArgument = "-select \"%f\""
             }
         };
