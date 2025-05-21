@@ -4,7 +4,7 @@
   "Name": "Calculator",
   "Description": "Provide mathematical calculations.(Try 5*3-2 in Flow Launcher)",
   "Author": "cxfksword",
-  "Version": "3.1.5",
+  "Version": "1.0.0",
   "Language": "csharp",
   "Website": "https://github.com/Flow-Launcher/Flow.Launcher",
   "ExecuteFileName": "Flow.Launcher.Plugin.Calculator.dll",

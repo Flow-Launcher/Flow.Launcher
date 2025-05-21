@@ -22,9 +22,6 @@ namespace Flow.Launcher
             InitializeComponent();
         }
 
-        public static MessageBoxResult Show(string messageBoxText)
-            => Show(messageBoxText, string.Empty, MessageBoxButton.OK, MessageBoxImage.None, MessageBoxResult.OK);
-
         public static MessageBoxResult Show(
             string messageBoxText,
             string caption = "",
