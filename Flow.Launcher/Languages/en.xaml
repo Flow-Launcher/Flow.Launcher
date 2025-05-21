@@ -468,7 +468,7 @@
     <!--  File Open Error  -->
     <system:String x:Key="fileManagerNotFoundTitle">File Manager Error</system:String>
     <system:String x:Key="fileManagerNotFound">
-        The specified file manager could not be found. Please check the Custom File Manager setting under Settings >General.
+        The specified file manager could not be found. Please check the Custom File Manager setting under Settings > General.
     </system:String>
     <system:String x:Key="errorTitle">Error</system:String>
     <system:String x:Key="folderOpenError">An error occurred while opening the folder. {0}</system:String>
