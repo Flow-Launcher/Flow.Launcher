@@ -369,6 +369,7 @@
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Selecione o gestor de ficheiros</system:String>
+    <system:String x:Key="fileManager_learnMore">Learn more</system:String>
     <system:String x:Key="fileManager_tips">Por favor, especifique a localização do executável do seu gestor de ficheiros e adicione os argumentos necessários. &quot;%d&quot; representa o caminho do diretório a abrir, usado pelo argumento do campo Pasta e para comandos que abrem diretórios específicos. &quot;%f&quot; representa o caminho do ficheiro a abrir, usado pelo argumento do campo Ficheiro e para comandos que abrem ficheiros específicos.</system:String>
     <system:String x:Key="fileManager_tips2">Por exemplo, se o gestor de ficheiros utilizar o comando &quot;totalcmd.exe /A c:\windows&quot; para abrir o diretório c:\windows , o caminho para o gestor de ficheiros será totalcmd. exe e os argumentos para a Pasta serão /A &quot;%d&quot;. Alguns gestores de ficheiros, como QTTabBar podem apenas exigir que especifique o caminho. Para estes, deve utilizar &quot;%d&quot; como caminho para o gestor de ficheiros e deixar o resto dos campos em branco.</system:String>
     <system:String x:Key="fileManager_name">Gestor de ficheiros</system:String>
@@ -376,6 +377,8 @@
     <system:String x:Key="fileManager_path">Caminho do gestor de ficheiros</system:String>
     <system:String x:Key="fileManager_directory_arg">Argumento para pasta</system:String>
     <system:String x:Key="fileManager_file_arg">Argumento para ficheiro</system:String>
+    <system:String x:Key="fileManagerPathNotFound">The file manager '{0}' could not be located at '{1}'. Would you like to continue?</system:String>
+    <system:String x:Key="fileManagerPathError">File Manager Path Error</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Navegador web padrão</system:String>
@@ -466,6 +469,14 @@ Se adicionar o prefixo '@' durante a introdução do atalho, será utilizada qua
     <system:String x:Key="reportWindow_please_open_issue">Abra um relatório de erro em</system:String>
     <system:String x:Key="reportWindow_upload_log">1. Carregue o ficheiro de registos: {0}</system:String>
     <system:String x:Key="reportWindow_copy_below">2. Copie a mensagem abaixo</system:String>
+
+    <!--  File Open Error  -->
+    <system:String x:Key="fileManagerNotFoundTitle">File Manager Error</system:String>
+    <system:String x:Key="fileManagerNotFound">
+        The specified file manager could not be found. Please check the Custom File Manager setting under Settings &gt; General.
+    </system:String>
+    <system:String x:Key="errorTitle">Erro</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder. {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Por favor aguarde...</system:String>
