@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -38,6 +39,16 @@ public partial class SelectBrowserViewModel : BaseModel
         _settings.CustomBrowserList = CustomBrowsers.ToList();
         _settings.CustomBrowserIndex = SelectedCustomBrowserIndex;
         return true;
+    }
+
+    internal string SelectFile()
+    {
+        var dlg = new Microsoft.Win32.OpenFileDialog();
+        var result = dlg.ShowDialog();
+        if (result == true)
+            return dlg.FileName;
+
+        return string.Empty;
     }
 
     [RelayCommand]

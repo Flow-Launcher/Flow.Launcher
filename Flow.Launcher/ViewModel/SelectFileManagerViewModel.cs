@@ -108,9 +108,7 @@ public partial class SelectFileManagerViewModel : BaseModel
         var dlg = new Microsoft.Win32.OpenFileDialog();
         var result = dlg.ShowDialog();
         if (result == true)
-        {
             return dlg.FileName;
-        }
 
         return string.Empty;
     }
