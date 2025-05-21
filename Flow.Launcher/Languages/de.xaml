@@ -371,6 +371,7 @@
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Dateimanager auswählen</system:String>
+    <system:String x:Key="fileManager_learnMore">Learn more</system:String>
     <system:String x:Key="fileManager_tips">Bitte geben Sie den Dateiort des von Ihnen verwendeten Dateimanagers an und fügen Sie bei Bedarf Argumente hinzu. Das „%d“ repräsentiert den dafür zu öffnenden Verzeichnispfad, der vom Feld Arg for Folder und für Befehle zum Öffnen bestimmter Verzeichnisse verwendet wird. Das „%f“ repräsentiert den dafür zu öffnenden Dateipfad, der vom Feld Arg for File und für Befehle zum Öffnen bestimmter Dateien verwendet wird.</system:String>
     <system:String x:Key="fileManager_tips2">Zum Beispiel, wenn der Dateimanager einen Befehl wie „totalcmd.exe /A c:\windows“ verwendet, um das Verzeichnis c:\windows zu öffnen, lautet der Dateimanager-Pfad „totalcmd.exe“ und der Arg for Folder „/A %d“. Bestimmte Dateimanager wie QTTabBar kann nur die Angabe eines Pfades erfordern, in diesem Fall verwenden Sie „%d“ als den Dateimanager-Pfad und lassen den Rest der Felder blank.</system:String>
     <system:String x:Key="fileManager_name">Dateimanager</system:String>
@@ -378,6 +379,8 @@
     <system:String x:Key="fileManager_path">Dateimanager-Pfad</system:String>
     <system:String x:Key="fileManager_directory_arg">Arg For Folder</system:String>
     <system:String x:Key="fileManager_file_arg">Arg For File</system:String>
+    <system:String x:Key="fileManagerPathNotFound">The file manager '{0}' could not be located at '{1}'. Would you like to continue?</system:String>
+    <system:String x:Key="fileManagerPathError">File Manager Path Error</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Webbrowser per Default</system:String>
@@ -468,6 +471,14 @@ Wenn Sie bei der Eingabe eines Shortcuts ein '@'-Präfix hinzufügen, stimmt die
     <system:String x:Key="reportWindow_please_open_issue">Bitte öffnen Sie einen neuen Fall in</system:String>
     <system:String x:Key="reportWindow_upload_log">1. Logdatei hochladen: {0}</system:String>
     <system:String x:Key="reportWindow_copy_below">2. Kopieren Sie die Ausnahmemeldung unterhalb</system:String>
+
+    <!--  File Open Error  -->
+    <system:String x:Key="fileManagerNotFoundTitle">File Manager Error</system:String>
+    <system:String x:Key="fileManagerNotFound">
+        The specified file manager could not be found. Please check the Custom File Manager setting under Settings &gt; General.
+    </system:String>
+    <system:String x:Key="errorTitle">Fehler</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder. {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Bitte warten Sie ...</system:String>
