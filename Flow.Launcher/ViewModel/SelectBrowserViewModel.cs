@@ -53,6 +53,11 @@ public partial class SelectBrowserViewModel : BaseModel
     [RelayCommand]
     private void Delete()
     {
-        CustomBrowsers.RemoveAt(SelectedCustomBrowserIndex--);
+        var currentIndex = SelectedCustomBrowserIndex;
+        if (currentIndex >= 0 && currentIndex < CustomBrowsers.Count)
+        {
+            CustomBrowsers.RemoveAt(currentIndex);
+            SelectedCustomBrowserIndex = currentIndex > 0 ? currentIndex - 1 : 0;
+        }
     }
 }

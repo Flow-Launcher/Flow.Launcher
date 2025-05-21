@@ -3,14 +3,10 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using ModernWpf.Controls;
 
 namespace Flow.Launcher.ViewModel;
 
@@ -115,6 +111,11 @@ public partial class SelectFileManagerViewModel : BaseModel
     [RelayCommand]
     private void Delete()
     {
-        CustomExplorers.RemoveAt(SelectedCustomExplorerIndex--);
+        var currentIndex = SelectedCustomExplorerIndex;
+        if (currentIndex >= 0 && currentIndex < CustomExplorers.Count)
+        {
+            CustomExplorers.RemoveAt(currentIndex);
+            SelectedCustomExplorerIndex = currentIndex > 0 ? currentIndex - 1 : 0;
+        }
     }
 }
