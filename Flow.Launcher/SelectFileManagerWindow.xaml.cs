@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Navigation;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.ViewModel;
@@ -33,6 +34,7 @@ namespace Flow.Launcher
         public ObservableCollection<CustomExplorerViewModel> CustomExplorers { get; set; }
 
         public CustomExplorerViewModel CustomExplorer => CustomExplorers[SelectedCustomExplorerIndex];
+
         public SelectFileManagerWindow(Settings settings)
         {
             _settings = settings;
@@ -46,13 +48,9 @@ namespace Flow.Launcher
             Close();
         }
         
-        private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
-            Process.Start(new ProcessStartInfo
-            {
-                FileName = e.Uri.AbsoluteUri,
-                UseShellExecute = true
-            });
+            App.API.OpenUrl(e.Uri.AbsoluteUri);
             e.Handled = true;
         }
 
@@ -62,9 +60,9 @@ namespace Flow.Launcher
             if (!IsFileManagerValid(CustomExplorer.Path))
             {
                 var result = App.API.ShowMsgBox(
-                    string.Format((string)Application.Current.FindResource("fileManagerPathNotFound"), 
+                    string.Format(App.API.GetTranslation("fileManagerPathNotFound"), 
                         CustomExplorer.Name, CustomExplorer.Path),
-                    (string)Application.Current.FindResource("fileManagerPathError"),
+                        App.API.GetTranslation("fileManagerPathError"),
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Warning);
 
@@ -136,11 +134,7 @@ namespace Flow.Launcher
             hyperlink.Inlines.Add(url);
             hyperlink.RequestNavigate += (s, args) =>
             {
-                Process.Start(new ProcessStartInfo
-                {
-                    FileName = args.Uri.AbsoluteUri,
-                    UseShellExecute = true
-                });
+                App.API.OpenUrl(args.Uri.AbsoluteUri);
                 args.Handled = true;
             };
     
