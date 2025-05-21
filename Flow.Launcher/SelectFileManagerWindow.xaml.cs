@@ -32,18 +32,18 @@ namespace Flow.Launcher
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
-            App.API.OpenUrl(e.Uri.AbsoluteUri);
+            _viewModel.OpenUrl(e.Uri.AbsoluteUri);
             e.Handled = true;
         }
 
         private void btnBrowseFile_Click(object sender, RoutedEventArgs e)
         {
-            var dlg = new Microsoft.Win32.OpenFileDialog();
-            var result = dlg.ShowDialog();
-            if (result == true)
+            var selectedFilePath = _viewModel.SelectFile();
+
+            if (!string.IsNullOrEmpty(selectedFilePath))
             {
                 var path = (TextBox)(((FrameworkElement)sender).Parent as FrameworkElement).FindName("PathTextBox");
-                path.Text = dlg.FileName;
+                path.Text = selectedFilePath;
                 path.Focus();
                 ((Button)sender).Focus();
             }
