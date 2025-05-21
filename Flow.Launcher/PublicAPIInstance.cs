@@ -32,11 +32,14 @@ using Flow.Launcher.ViewModel;
 using JetBrains.Annotations;
 using Squirrel;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
+using System.ComponentModel;
 
 namespace Flow.Launcher
 {
     public class PublicAPIInstance : IPublicAPI, IRemovable
     {
+        private static readonly string ClassName = nameof(PublicAPIInstance);
+
         private readonly Settings _settings;
         private readonly MainViewModel _mainVM;
 
@@ -316,40 +319,63 @@ namespace Flow.Launcher
 
         public void OpenDirectory(string DirectoryPath, string FileNameOrFilePath = null)
         {
-            using var explorer = new Process();
-            var explorerInfo = _settings.CustomExplorer;
-            var explorerPath = explorerInfo.Path.Trim().ToLowerInvariant();
-            var targetPath = FileNameOrFilePath is null
-                ? DirectoryPath
-                : Path.IsPathRooted(FileNameOrFilePath)
-                    ? FileNameOrFilePath
-                    : Path.Combine(DirectoryPath, FileNameOrFilePath);
+            try
+            {
+                using var explorer = new Process();
+                var explorerInfo = _settings.CustomExplorer;
+                var explorerPath = explorerInfo.Path.Trim().ToLowerInvariant();
+                var targetPath = FileNameOrFilePath is null
+                    ? DirectoryPath
+                    : Path.IsPathRooted(FileNameOrFilePath)
+                        ? FileNameOrFilePath
+                        : Path.Combine(DirectoryPath, FileNameOrFilePath);
 
-            if (Path.GetFileNameWithoutExtension(explorerPath) == "explorer")
-            {
-                // Windows File Manager
-                // We should ignore and pass only the path to Shell to prevent zombie explorer.exe processes
-                explorer.StartInfo = new ProcessStartInfo
+                if (Path.GetFileNameWithoutExtension(explorerPath) == "explorer")
                 {
-                    FileName = targetPath,         // Not explorer, Only path.
-                    UseShellExecute = true         // Must be true to open folder
-                };
-            }
-            else
-            {
-                // Custom File Manager
-                explorer.StartInfo = new ProcessStartInfo
+                    // Windows File Manager
+                    explorer.StartInfo = new ProcessStartInfo
+                    {
+                        FileName = targetPath,
+                        UseShellExecute = true
+                    };
+                }
+                else
                 {
-                    FileName = explorerInfo.Path.Replace("%d", DirectoryPath),
-                    UseShellExecute = true,
-                    Arguments = FileNameOrFilePath is null
-                        ? explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath)
-                        : explorerInfo.FileArgument
-                            .Replace("%d", DirectoryPath)
-                            .Replace("%f", targetPath)
-                };
+                    // Custom File Manager
+                    explorer.StartInfo = new ProcessStartInfo
+                    {
+                        FileName = explorerInfo.Path.Replace("%d", DirectoryPath),
+                        UseShellExecute = true,
+                        Arguments = FileNameOrFilePath is null
+                            ? explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath)
+                            : explorerInfo.FileArgument
+                                .Replace("%d", DirectoryPath)
+                                .Replace("%f", targetPath)
+                    };
+                }
+
+                explorer.Start();
             }
-            explorer.Start();
+            catch (Win32Exception ex) when (ex.NativeErrorCode == 2)
+            {
+                LogError(ClassName, "File Manager not found");
+                ShowMsgBox(
+                    string.Format(GetTranslation("fileManagerNotFound"), ex.Message),
+                    GetTranslation("fileManagerNotFoundTitle"),
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+            }
+            catch (Exception ex)
+            {
+                LogException(ClassName, "Failed to open folder", ex);
+                ShowMsgBox(
+                    string.Format(GetTranslation("folderOpenError"), ex.Message),
+                    GetTranslation("errorTitle"),
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+            }
         }
 
         private void OpenUri(Uri uri, bool? inPrivate = null)
