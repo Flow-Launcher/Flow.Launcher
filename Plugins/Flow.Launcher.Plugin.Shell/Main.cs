@@ -378,10 +378,13 @@ namespace Flow.Launcher.Plugin.Shell
 
         private void OnWinRPressed()
         {
+            Context.API.ShowMainWindow();
             // show the main window and set focus to the query box
-            _ = Task.Run(() =>
+            _ = Task.Run(async () =>
             {
-                Context.API.ShowMainWindow();
+                await Task.Delay(50);  // 💡 키보드 이벤트 처리가 끝난 뒤
+                Context.API.FocusQueryTextBox();
+
                 Context.API.ChangeQuery($"{Context.CurrentPluginMetadata.ActionKeywords[0]}{Plugin.Query.TermSeparator}");
             });
         }

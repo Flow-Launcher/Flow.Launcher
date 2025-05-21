@@ -88,6 +88,11 @@ namespace Flow.Launcher.Plugin
         /// Show the MainWindow when hiding
         /// </summary>
         void ShowMainWindow();
+        
+        /// <summary>
+        /// Focus the query text box in the main window
+        /// </summary>
+        void FocusQueryTextBox();
 
         /// <summary>
         /// Hide MainWindow

@@ -33,6 +33,7 @@ using JetBrains.Annotations;
 using Squirrel;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 using System.ComponentModel;
+using System.Windows.Input;
 
 namespace Flow.Launcher
 {
@@ -92,6 +93,18 @@ namespace Flow.Launcher
         }
 
         public void ShowMainWindow() => _mainVM.Show();
+        
+        public void FocusQueryTextBox()
+        {
+            Application.Current.Dispatcher.Invoke(new Action(() =>
+            {
+                if (Application.Current.MainWindow is MainWindow mw)
+                {
+                    mw.QueryTextBox.Focus();
+                    Keyboard.Focus(mw.QueryTextBox);
+                }
+            }));
+        }
 
         public void HideMainWindow() => _mainVM.Hide();
 
