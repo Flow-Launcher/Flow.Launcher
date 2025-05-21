@@ -184,7 +184,15 @@ namespace Flow.Launcher.Core.Resource
         {
             // Culture of main thread
             // Use CreateSpecificCulture to preserve possible user-override settings in Windows, if Flow's language culture is the same as Windows's
-            var currentCulture = CultureInfo.CreateSpecificCulture(languageCode);
+            CultureInfo currentCulture;
+            try
+            {
+                currentCulture = CultureInfo.CreateSpecificCulture(languageCode);
+            }
+            catch (CultureNotFoundException)
+            {
+                currentCulture = CultureInfo.CreateSpecificCulture(SystemLanguageCode);
+            }
             CultureInfo.CurrentCulture = currentCulture;
             CultureInfo.CurrentUICulture = currentCulture;
             var thread = Thread.CurrentThread;
