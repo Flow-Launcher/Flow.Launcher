@@ -371,6 +371,7 @@
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">اختر مدير الملفات</system:String>
+    <system:String x:Key="fileManager_learnMore">Learn more</system:String>
     <system:String x:Key="fileManager_tips">يرجى تحديد موقع ملف مدير الملفات الذي تستخدمه وإضافة الحجج حسب الحاجة. يمثل &quot;%d&quot; مسار الدليل المفتوح، ويستخدمه الحقل &quot;الحجة للمجلد&quot; للأوامر التي تفتح أدلة محددة. يمثل &quot;%f&quot; مسار الملف المفتوح، ويستخدمه الحقل &quot;الحجة للملف&quot; للأوامر التي تفتح ملفات محددة.</system:String>
     <system:String x:Key="fileManager_tips2">على سبيل المثال، إذا كان مدير الملفات يستخدم أمرًا مثل &quot;totalcmd.exe /A c:\windows&quot; لفتح دليل c:\windows، فإن مسار مدير الملفات سيكون totalcmd.exe، وحجة المجلد ستكون /A &quot;%d&quot;. قد تحتاج بعض مديري الملفات مثل QTTabBar فقط إلى توفير مسار، في هذه الحالة استخدم &quot;%d&quot; كمسار مدير الملفات واترك باقي الحقول فارغة.</system:String>
     <system:String x:Key="fileManager_name">مدير الملفات</system:String>
@@ -378,6 +379,8 @@
     <system:String x:Key="fileManager_path">مسار مدير الملفات</system:String>
     <system:String x:Key="fileManager_directory_arg">حجة للمجلد</system:String>
     <system:String x:Key="fileManager_file_arg">حجة للملف</system:String>
+    <system:String x:Key="fileManagerPathNotFound">The file manager '{0}' could not be located at '{1}'. Would you like to continue?</system:String>
+    <system:String x:Key="fileManagerPathError">File Manager Path Error</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">متصفح الويب الافتراضي</system:String>
@@ -468,6 +471,14 @@
     <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
     <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
     <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
+
+    <!--  File Open Error  -->
+    <system:String x:Key="fileManagerNotFoundTitle">File Manager Error</system:String>
+    <system:String x:Key="fileManagerNotFound">
+        The specified file manager could not be found. Please check the Custom File Manager setting under Settings &gt; General.
+    </system:String>
+    <system:String x:Key="errorTitle">خطأ</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder. {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">يرجى الانتظار...</system:String>
