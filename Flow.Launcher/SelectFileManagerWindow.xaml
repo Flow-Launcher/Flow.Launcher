@@ -74,20 +74,11 @@
                         <TextBlock Margin="0 14 0 0" FontSize="14">
                             <TextBlock Text="{DynamicResource fileManager_tips2}" TextWrapping="WrapWithOverflow" />
                         </TextBlock>
-                        <StackPanel Margin="0 14 0 0" Orientation="Horizontal">
-                            <Button
-                                x:Name="btnTips"
-                                Margin="0 7 0 7"
-                                HorizontalAlignment="Left"
-                                Command="{Binding OpenFilesTipsCommand}"
-                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
-                                Content="{DynamicResource fileManager_files_btn}" />
-                            <TextBlock Margin="10 4 0 4" VerticalAlignment="Center">
-                                <Hyperlink NavigateUri="https://www.flowlauncher.com/docs/#/filemanager" RequestNavigate="Hyperlink_RequestNavigate">
-                                    <TextBlock FontSize="14" Text="{DynamicResource fileManager_learnMore}" />
-                                </Hyperlink>
-                            </TextBlock>
-                        </StackPanel>
+                        <TextBlock Margin="0 14 0 0" VerticalAlignment="Center">
+                            <Hyperlink NavigateUri="https://www.flowlauncher.com/docs/#/filemanager" RequestNavigate="Hyperlink_RequestNavigate">
+                                <TextBlock FontSize="14" Text="{DynamicResource fileManager_learnMore}" />
+                            </Hyperlink>
+                        </TextBlock>
                     </StackPanel>
                     <Rectangle
                         Height="1"

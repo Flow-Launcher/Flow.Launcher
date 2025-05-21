@@ -103,47 +103,6 @@ public partial class SelectFileManagerViewModel : BaseModel
     }
 
     [RelayCommand]
-    private async Task OpenFilesTipsAsync(Button button)
-    {
-        var tipText = App.API.GetTranslation("fileManager_files_tips");
-        var url = "https://files.community/docs/contributing/updates";
-
-        var textBlock = new TextBlock
-        {
-            FontSize = 14,
-            TextWrapping = TextWrapping.Wrap,
-            Margin = new Thickness(0, 0, 0, 0)
-        };
-
-        textBlock.Inlines.Add(tipText);
-
-        var hyperlink = new Hyperlink
-        {
-            NavigateUri = new Uri(url)
-        };
-        hyperlink.Inlines.Add(url);
-        hyperlink.RequestNavigate += (s, args) =>
-        {
-            App.API.OpenUrl(args.Uri.AbsoluteUri);
-            args.Handled = true;
-        };
-
-        textBlock.Inlines.Add(hyperlink);
-
-        var tipsDialog = new ContentDialog()
-        {
-            Owner = Window.GetWindow(button),
-            Title = (string)Application.Current.Resources["fileManager_files_btn"],
-            Content = textBlock,
-            PrimaryButtonText = (string)Application.Current.Resources["commonOK"],
-            CornerRadius = new CornerRadius(8),
-            Style = (Style)Application.Current.Resources["ContentDialog"]
-        };
-
-        await tipsDialog.ShowAsync();
-    }
-
-    [RelayCommand]
     private void Add()
     {
         CustomExplorers.Add(new()
