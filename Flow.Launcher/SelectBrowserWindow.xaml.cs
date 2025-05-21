@@ -23,9 +23,11 @@ namespace Flow.Launcher
                 OnPropertyChanged(nameof(CustomBrowser));
             }
         }
-        public ObservableCollection<CustomBrowserViewModel> CustomBrowsers { get; set; }
+
+        public ObservableCollection<CustomBrowserViewModel> CustomBrowsers { get; }
 
         public CustomBrowserViewModel CustomBrowser => CustomBrowsers[SelectedCustomBrowserIndex];
+
         public SelectBrowserWindow(Settings settings)
         {
             _settings = settings;

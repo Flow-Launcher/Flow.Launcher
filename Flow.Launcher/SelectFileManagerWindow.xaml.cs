@@ -31,7 +31,8 @@ namespace Flow.Launcher
                 OnPropertyChanged(nameof(CustomExplorer));
             }
         }
-        public ObservableCollection<CustomExplorerViewModel> CustomExplorers { get; set; }
+
+        public ObservableCollection<CustomExplorerViewModel> CustomExplorers { get; }
 
         public CustomExplorerViewModel CustomExplorer => CustomExplorers[SelectedCustomExplorerIndex];
 
