@@ -142,6 +142,7 @@ namespace Flow.Launcher.ViewModel
             {
                 App.API.LogException(ClassName, "Failed to install plugin", e);
                 App.API.ShowMsgError(App.API.GetTranslation("ErrorInstallingPlugin"));
+                return; // don’t restart on failure
             }
 
             if (Settings.AutoRestartAfterChanging)
@@ -181,6 +182,7 @@ namespace Flow.Launcher.ViewModel
             {
                 App.API.LogException(ClassName, "Failed to uninstall plugin", e);
                 App.API.ShowMsgError(App.API.GetTranslation("ErrorUninstallingPlugin"));
+                return; // don’t restart on failure
             }
 
             if (Settings.AutoRestartAfterChanging)
@@ -238,6 +240,7 @@ namespace Flow.Launcher.ViewModel
             {
                 App.API.LogException(ClassName, "Failed to update plugin", e);
                 App.API.ShowMsgError(App.API.GetTranslation("ErrorUpdatingPlugin"));
+                return; // don’t restart on failure
             }
 
             if (Settings.AutoRestartAfterChanging)
