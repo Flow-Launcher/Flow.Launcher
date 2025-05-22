@@ -82,6 +82,8 @@ namespace Flow.Launcher.ViewModel
                 case "update":
                     await UpdatePluginAsync(_newPlugin, _oldPluginPair.Metadata);
                     break;
+                default:
+                    break;
             }
         }
 
