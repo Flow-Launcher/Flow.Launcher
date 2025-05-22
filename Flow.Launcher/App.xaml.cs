@@ -32,7 +32,7 @@ namespace Flow.Launcher
         #region Public Properties
 
         public static IPublicAPI API { get; private set; }
-        public static bool Exiting => _mainWindow.CanClose;
+        public static bool LoadingOrExiting => _mainWindow == null || _mainWindow.CanClose;
 
         #endregion
 
