@@ -239,7 +239,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 }
             }
 
-            _ = Task.Run(() => Main.StartProcess(Process.Start, info)).ConfigureAwait(false); ;
+            _ = Task.Run(() => Main.StartProcess(Process.Start, info)).ConfigureAwait(false);
         }
 
         public List<Result> ContextMenus(IPublicAPI api)
