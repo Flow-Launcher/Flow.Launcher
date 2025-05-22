@@ -64,7 +64,8 @@ public class AutoStartup
                 if (task.Definition.Actions.FirstOrDefault() is Microsoft.Win32.TaskScheduler.Action taskAction)
                 {
                     var action = taskAction.ToString().Trim();
-                    if (!action.Equals(Constant.ExecutablePath, StringComparison.OrdinalIgnoreCase))
+                    if (!action.Equals(Constant.ExecutablePath, StringComparison.OrdinalIgnoreCase) || // Path issue
+                        !CheckRunLevel(task.Definition.Principal, alwaysRunAsAdministrator)) // Run level issue
                     {
                         UnscheduleLogonTask();
                         ScheduleLogonTask(alwaysRunAsAdministrator);
@@ -81,6 +82,11 @@ public class AutoStartup
         }
 
         return false;
+    }
+
+    private static bool CheckRunLevel(TaskPrincipal tp, bool alwaysRunAsAdministrator)
+    {
+        return alwaysRunAsAdministrator ? tp.RunLevel == TaskRunLevel.Highest : tp.RunLevel != TaskRunLevel.Highest;
     }
 
     private static bool CheckRegistry()
