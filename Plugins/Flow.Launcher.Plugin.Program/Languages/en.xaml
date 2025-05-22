@@ -99,5 +99,6 @@
     <system:String x:Key="flowlauncher_plugin_program_run_failed">Unable to run {0}</system:String>
     <system:String x:Key="flowlauncher_plugin_program_user_account_control_title">User Account Control</system:String>
     <system:String x:Key="flowlauncher_plugin_program_user_account_control_subtitle">Do you want to allow this app to make changes to your device?</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_user_account_control_program_location">Program location: {0}</system:String>
 
 </ResourceDictionary>

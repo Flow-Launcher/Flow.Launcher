@@ -221,10 +221,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 if (elevated)
                 {
                     // Since we are already elevated, we need to create UAC dialog manually
-                    if (Main.Context.API.ShowMsgBox(
-                        Main.Context.API.GetTranslation("flowlauncher_plugin_program_user_account_control_subtitle"),
-                        Main.Context.API.GetTranslation("flowlauncher_plugin_program_user_account_control_title"),
-                        MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+                    if (UACDialog.Show(IcoPath, Name, FullPath) != MessageBoxResult.Yes)
                     {
                         return;
                     }
