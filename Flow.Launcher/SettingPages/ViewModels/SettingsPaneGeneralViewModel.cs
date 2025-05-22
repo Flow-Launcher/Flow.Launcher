@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using System.Windows.Forms;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core;
@@ -21,6 +22,8 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     private readonly Updater _updater;
     private readonly Portable _portable;
     private readonly Internationalization _translater;
+
+    private static readonly bool _isAdministrator = Win32Helper.IsAdministrator();
 
     public SettingsPaneGeneralViewModel(Settings settings, Updater updater, Portable portable, Internationalization translater)
     {
@@ -65,6 +68,13 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             {
                 App.API.ShowMsg(App.API.GetTranslation("setAutoStartFailed"), e.Message);
             }
+
+            // If we have enabled logon task startup, we need to check if we need to restart the app
+            // even if we encounter an error while setting the startup method
+            if (value && UseLogonTaskForStartup)
+            {
+                CheckAdminChangeAndAskForRestart();
+            }
         }
     }
 
@@ -92,8 +102,55 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
                 {
                     App.API.ShowMsg(App.API.GetTranslation("setAutoStartFailed"), e.Message);
                 }
-            } 
+            }
+
+            // If we have enabled logon task startup, we need to check if we need to restart the app
+            // even if we encounter an error while setting the startup method
+            if (StartFlowLauncherOnSystemStartup && value)
+            {
+                CheckAdminChangeAndAskForRestart();
+            }
         }
+    }
+
+    public bool AlwaysRunAsAdministrator
+    {
+        get => Settings.AlwaysRunAsAdministrator;
+        set
+        {
+            Settings.AlwaysRunAsAdministrator = value;
+
+            if (StartFlowLauncherOnSystemStartup && UseLogonTaskForStartup)
+            {
+                try
+                {
+                    AutoStartup.ChangeToViaLogonTask(value);
+                }
+                catch (Exception e)
+                {
+                    App.API.ShowMsg(App.API.GetTranslation("setAutoStartFailed"), e.Message);
+                }
+
+                // If we have enabled logon task startup, we need to check if we need to restart the app
+                // even if we encounter an error while setting the startup method
+                CheckAdminChangeAndAskForRestart();
+            }
+        }
+    }
+
+    private void CheckAdminChangeAndAskForRestart()
+    {
+        if ((AlwaysRunAsAdministrator && !_isAdministrator) || // Change from non-admin to admin
+            (!AlwaysRunAsAdministrator && _isAdministrator)) // Change from admin to non-admin
+        {
+            if (App.API.ShowMsgBox(
+                App.API.GetTranslation("runAsAdministratorChangeAndRestart"),
+                App.API.GetTranslation("runAsAdministratorChange"),
+                MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                App.API.RestartApp(AlwaysRunAsAdministrator ? "runas" : string.Empty);
+            }
+        }  
     }
 
     public List<SearchWindowScreenData> SearchWindowScreens { get; } =

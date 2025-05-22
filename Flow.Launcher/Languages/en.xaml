@@ -132,6 +132,10 @@
     <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
     <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
+    <system:String x:Key="alwaysRunAsAdministrator">Always run as administrator</system:String>
+    <system:String x:Key="alwaysRunAsAdministratorToolTip">Run Flow Launcher as administrator on system startup</system:String>
+    <system:String x:Key="runAsAdministratorChange">Administrator Mode Change</system:String>
+    <system:String x:Key="runAsAdministratorChangeAndRestart">Do you want to restart to apply administrator mode change?</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Search Plugin</system:String>
