@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -750,6 +751,17 @@ namespace Flow.Launcher.Infrastructure
         private static bool TryGetNotoFont(string langKey, out string notoFont)
         {
             return _languageToNotoSans.TryGetValue(langKey, out notoFont);
+        }
+
+        #endregion
+
+        #region Administrator Mode
+
+        public static bool IsAdministrator()
+        {
+            using var identity = WindowsIdentity.GetCurrent();
+            var principal = new WindowsPrincipal(identity);
+            return principal.IsInRole(WindowsBuiltInRole.Administrator);
         }
 
         #endregion
