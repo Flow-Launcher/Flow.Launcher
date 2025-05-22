@@ -198,7 +198,7 @@
     <system:String x:Key="InstallPromptSubtitle">{0} by {1} {2}{2}Would you like to install this plugin?</system:String>
     <system:String x:Key="UninstallPromptTitle">Plugin uninstall</system:String>
     <system:String x:Key="UninstallPromptSubtitle">{0} by {1} {2}{2}Would you like to uninstall this plugin?</system:String>
-    <system:String x:Key="UpdatePromptTitle">Plugin udpate</system:String>
+    <system:String x:Key="UpdatePromptTitle">Plugin update</system:String>
     <system:String x:Key="UpdatePromptSubtitle">{0} by {1} {2}{2}Would you like to update this plugin?</system:String>
     <system:String x:Key="DownloadingPlugin">Downloading plugin</system:String>
     <system:String x:Key="AutoRestartAfterChange">Automatically restart after installing/uninstalling/updating plugins in plugin store</system:String>
