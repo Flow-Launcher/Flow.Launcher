@@ -49,7 +49,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
                 {
                     if (UseLogonTaskForStartup)
                     {
-                        AutoStartup.ChangeToViaLogonTask();
+                        AutoStartup.ChangeToViaLogonTask(AlwaysRunAsAdministrator);
                     }
                     else
                     {
@@ -81,7 +81,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
                 {
                     if (value)
                     {
-                        AutoStartup.ChangeToViaLogonTask();
+                        AutoStartup.ChangeToViaLogonTask(AlwaysRunAsAdministrator);
                     }
                     else
                     {

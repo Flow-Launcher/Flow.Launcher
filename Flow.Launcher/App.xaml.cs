@@ -236,7 +236,7 @@ namespace Flow.Launcher
             {
                 try
                 {
-                    Helper.AutoStartup.CheckIsEnabled(_settings.UseLogonTaskForStartup);
+                    Helper.AutoStartup.CheckIsEnabled(_settings.UseLogonTaskForStartup, _settings.AlwaysRunAsAdministrator);
                 }
                 catch (Exception e)
                 {
