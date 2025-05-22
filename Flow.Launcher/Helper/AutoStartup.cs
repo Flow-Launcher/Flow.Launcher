@@ -126,12 +126,14 @@ public class AutoStartup
     public static void ChangeToViaLogonTask(bool alwaysRunAsAdministrator)
     {
         Disable(false);
+        Disable(true); // Remove old logon task so that we can create a new one
         Enable(true, alwaysRunAsAdministrator);
     }
 
     public static void ChangeToViaRegistry()
     {
         Disable(true);
+        Disable(false); // Remove old registry so that we can create a new one
         // We do not need to use alwaysRunAsAdministrator for registry, so we just set false here
         Enable(false, false);
     }
