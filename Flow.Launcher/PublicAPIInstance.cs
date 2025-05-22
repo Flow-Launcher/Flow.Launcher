@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -10,6 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core;
@@ -32,8 +34,6 @@ using Flow.Launcher.ViewModel;
 using JetBrains.Annotations;
 using Squirrel;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
-using System.ComponentModel;
-using System.Windows.Input;
 
 namespace Flow.Launcher
 {
@@ -93,18 +93,8 @@ namespace Flow.Launcher
         }
 
         public void ShowMainWindow() => _mainVM.Show();
-        
-        public void FocusQueryTextBox()
-        {
-            Application.Current.Dispatcher.Invoke(new Action(() =>
-            {
-                if (Application.Current.MainWindow is MainWindow mw)
-                {
-                    mw.QueryTextBox.Focus();
-                    Keyboard.Focus(mw.QueryTextBox);
-                }
-            }));
-        }
+
+        public void FocusQueryTextBox() => _mainVM.FocusQueryTextBox();
 
         public void HideMainWindow() => _mainVM.Hide();
 
