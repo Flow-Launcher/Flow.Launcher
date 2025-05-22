@@ -371,6 +371,7 @@
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Vyberte správcu súborov</system:String>
+    <system:String x:Key="fileManager_learnMore">Viac informácií</system:String>
     <system:String x:Key="fileManager_tips">Zadajte umiestnenie súboru správcu súborov, ktorý používate, a podľa potreby pridajte argumenty. &quot;%d&quot; predstavuje cestu k priečinku, ktorý sa má otvoriť, používa sa v poli Arg pre priečinok a pri príkazoch na otvorenie konkrétnych priečinkov. &quot;%f&quot; predstavuje cestu k súboru, ktorá sa má otvoriť a používa sa v poli Arg pre súbor a pri príkazoch na otvorenie konkrétnych súborov.</system:String>
     <system:String x:Key="fileManager_tips2">Napríklad, ak správca súborov používa príkaz ako &quot;totalcmd.exe /A c:\windows&quot; na otvorenie priečinka c:\windows, cesta správcu súborov bude totalcmd.exe a Arg pre priečinok bude /A &quot;%d&quot;. Niektorí správcovia súborov, ako napríklad QTTabBar, môžu vyžadovať len zadanie cesty, v tomto prípade použite &quot;%d&quot; ako cestu správcu súborov a zvyšok súborov nechajte prázdny.</system:String>
     <system:String x:Key="fileManager_name">Správca súborov</system:String>
@@ -378,6 +379,8 @@
     <system:String x:Key="fileManager_path">Cesta k správcovi súborov</system:String>
     <system:String x:Key="fileManager_directory_arg">Arg. pre priečinok</system:String>
     <system:String x:Key="fileManager_file_arg">Arg. pre súbor</system:String>
+    <system:String x:Key="fileManagerPathNotFound">Správca súborov '{0}' sa nenachádza na '{1}'. Chcete pokračovať?</system:String>
+    <system:String x:Key="fileManagerPathError">Chyba v ceste k správcovi súborov</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Predvolený webový prehliadač</system:String>
@@ -445,7 +448,7 @@ Ak pri zadávaní skratky pred ňu pridáte &quot;@&quot;, bude sa zhodovať s �
     <system:String x:Key="commonCancel">Zrušiť</system:String>
     <system:String x:Key="commonReset">Resetovať</system:String>
     <system:String x:Key="commonDelete">Odstrániť</system:String>
-    <system:String x:Key="commonOK">Aktualizovať</system:String>
+    <system:String x:Key="commonOK">OK</system:String>
     <system:String x:Key="commonYes">Áno</system:String>
     <system:String x:Key="commonNo">Nie</system:String>
     <system:String x:Key="commonBackground">Pozadie</system:String>
@@ -468,6 +471,14 @@ Ak pri zadávaní skratky pred ňu pridáte &quot;@&quot;, bude sa zhodovať s �
     <system:String x:Key="reportWindow_please_open_issue">Prosím, otvorte nové issue na</system:String>
     <system:String x:Key="reportWindow_upload_log">1. Nahrajte súbor logu: {0}</system:String>
     <system:String x:Key="reportWindow_copy_below">2. Skopírujte nižšie uvedenú správu o výnimke</system:String>
+
+    <!--  File Open Error  -->
+    <system:String x:Key="fileManagerNotFoundTitle">Chyba správcu súborov</system:String>
+    <system:String x:Key="fileManagerNotFound">
+        Zadaný správca súborov sa nenašiel. Skontrolujte nastavenie vlastného správcu súborov v Nastavenia &gt; Všeobecné.
+    </system:String>
+    <system:String x:Key="errorTitle">Chyba</system:String>
+    <system:String x:Key="folderOpenError">Počas otvárania priečinka sa vyskytla chyba. {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Čakajte, prosím...</system:String>

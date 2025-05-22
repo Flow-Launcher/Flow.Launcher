@@ -371,6 +371,7 @@
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">默认文件管理器</system:String>
+    <system:String x:Key="fileManager_learnMore">Learn more</system:String>
     <system:String x:Key="fileManager_tips">请指定您使用的文件管理器的文件位置并根据需要添加参数。“%d”表示要打开的目录路径，由文件夹字段的参数和打开特定目录的命令使用。“%f”表示要打开的文件路径，由文件字段的参数和打开特定文件的命令使用。</system:String>
     <system:String x:Key="fileManager_tips2">例如，如果文件管理器使用诸如“totalcmd.exe /A c:\windows”之类的命令来打开 c:\windows 目录，则文件管理器路径将为 totalcmd.exe，文件夹参数将为 /A &quot;%d&quot;。某些文件管理器（如 QTTabBar）可能只需要提供路径，在本例中，使用“%d”作为文件管理器路径，其余字段留空。</system:String>
     <system:String x:Key="fileManager_name">文件管理器</system:String>
@@ -378,6 +379,8 @@
     <system:String x:Key="fileManager_path">文件管理器路径</system:String>
     <system:String x:Key="fileManager_directory_arg">文件夹路径参数</system:String>
     <system:String x:Key="fileManager_file_arg">选中文件路径参数</system:String>
+    <system:String x:Key="fileManagerPathNotFound">The file manager '{0}' could not be located at '{1}'. Would you like to continue?</system:String>
+    <system:String x:Key="fileManagerPathError">File Manager Path Error</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">默认浏览器</system:String>
@@ -468,6 +471,14 @@
     <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
     <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
     <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
+
+    <!--  File Open Error  -->
+    <system:String x:Key="fileManagerNotFoundTitle">File Manager Error</system:String>
+    <system:String x:Key="fileManagerNotFound">
+        The specified file manager could not be found. Please check the Custom File Manager setting under Settings &gt; General.
+    </system:String>
+    <system:String x:Key="errorTitle">错误</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder. {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">请稍等...</system:String>

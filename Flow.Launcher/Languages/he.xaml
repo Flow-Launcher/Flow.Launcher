@@ -370,6 +370,7 @@
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">בחר מנהל קבצים</system:String>
+    <system:String x:Key="fileManager_learnMore">Learn more</system:String>
     <system:String x:Key="fileManager_tips">אנא ציין את מיקום הקובץ של מנהל הקבצים שבו אתה משתמש והוסף ארגומנטים כנדרש. &quot;%d&quot; מייצג את נתיב התיקייה שיש לפתוח, ומשמש בשדה ארגומנט לתיקייה ובפקודות לפתיחת תיקיות מסוימות. &quot;%f&quot; מייצג את נתיב הקובץ שיש לפתוח, ומשמש בשדה ארגומנט לקובץ ובפקודות לפתיחת קבצים מסוימים.</system:String>
     <system:String x:Key="fileManager_tips2">לדוגמה, אם מנהל הקבצים משתמש בפקודה כגון &quot;totalcmd.exe /A c:\windows&quot; כדי לפתוח את התיקייה c:\windows, נתיב מנהל הקבצים יהיה totalcmd.exe, והארגומנט לתיקייה יהיה /A &quot;%d&quot;. מנהלי קבצים מסוימים, כגון QTTabBar, עשויים לדרוש רק ציון נתיב, במקרה כזה השתמש ב-&quot;%d&quot; כנתיב מנהל הקבצים והשאר את שאר השדות ריקים.</system:String>
     <system:String x:Key="fileManager_name">מנהל קבצים</system:String>
@@ -377,6 +378,8 @@
     <system:String x:Key="fileManager_path">נתיב מנהל קבצים</system:String>
     <system:String x:Key="fileManager_directory_arg">ארגומנט לתיקייה</system:String>
     <system:String x:Key="fileManager_file_arg">ארגומנט לקובץ</system:String>
+    <system:String x:Key="fileManagerPathNotFound">The file manager '{0}' could not be located at '{1}'. Would you like to continue?</system:String>
+    <system:String x:Key="fileManagerPathError">File Manager Path Error</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">דפדפן ברירת מחדל</system:String>
@@ -467,6 +470,14 @@
     <system:String x:Key="reportWindow_please_open_issue">אנא פתח דיווח חדש ב</system:String>
     <system:String x:Key="reportWindow_upload_log">1. העלה קובץ יומן: {0}</system:String>
     <system:String x:Key="reportWindow_copy_below">2. העתק את הודעת החריגה למטה</system:String>
+
+    <!--  File Open Error  -->
+    <system:String x:Key="fileManagerNotFoundTitle">File Manager Error</system:String>
+    <system:String x:Key="fileManagerNotFound">
+        The specified file manager could not be found. Please check the Custom File Manager setting under Settings &gt; General.
+    </system:String>
+    <system:String x:Key="errorTitle">שגיאה</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder. {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">אנא המתן...</system:String>
