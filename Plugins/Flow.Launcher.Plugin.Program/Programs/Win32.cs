@@ -256,7 +256,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                             FileName = FullPath, WorkingDirectory = ParentDirectory, UseShellExecute = true
                         };
 
-                        _ = Task.Run(() => Main.StartProcess(ShellCommand.RunAsDifferentUser, info)).ConfigureAwait(false);;
+                        _ = Task.Run(() => Main.StartProcess(ShellCommand.RunAsDifferentUser, info)).ConfigureAwait(false);
 
                         return true;
                     },
