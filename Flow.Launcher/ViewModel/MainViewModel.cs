@@ -1926,6 +1926,21 @@ namespace Flow.Launcher.ViewModel
             Results.AddResults(resultsForUpdates, token, reSelect);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
+        public void FocusQueryTextBox()
+        {
+            // When application is exiting, the Application.Current will be null
+            Application.Current?.Dispatcher.Invoke(() =>
+            {
+                // When application is exiting, the Application.Current will be null
+                if (Application.Current?.MainWindow is MainWindow window)
+                {
+                    window.QueryTextBox.Focus();
+                    Keyboard.Focus(window.QueryTextBox);
+                }
+            });
+        }
+
         #endregion
 
         #region IDisposable
