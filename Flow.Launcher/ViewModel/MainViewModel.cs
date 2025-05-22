@@ -1729,7 +1729,7 @@ namespace Flow.Launcher.ViewModel
         public void Show()
         {
             // When application is exiting, we should not show the main window
-            if (App.Exiting) return;
+            if (App.LoadingOrExiting) return;
 
             // When application is exiting, the Application.Current will be null
             Application.Current?.Dispatcher.Invoke(() =>

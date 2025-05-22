@@ -82,7 +82,7 @@ public partial class SettingWindow
         _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
 
         // If app is exiting, settings save is not needed because main window closing event will handle this
-        if (App.Exiting) return;
+        if (App.LoadingOrExiting) return;
         // Save settings when window is closed
         _settings.Save();
         App.API.SavePluginSettings();
