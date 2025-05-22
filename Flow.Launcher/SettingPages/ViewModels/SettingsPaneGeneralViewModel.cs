@@ -44,6 +44,8 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         get => Settings.StartFlowLauncherOnSystemStartup;
         set
         {
+            if (Settings.StartFlowLauncherOnSystemStartup == value) return;
+
             Settings.StartFlowLauncherOnSystemStartup = value;
 
             try
@@ -83,6 +85,8 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         get => Settings.UseLogonTaskForStartup;
         set
         {
+            if (UseLogonTaskForStartup == value) return;
+
             Settings.UseLogonTaskForStartup = value;
 
             if (StartFlowLauncherOnSystemStartup)
@@ -118,6 +122,8 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         get => Settings.AlwaysRunAsAdministrator;
         set
         {
+            if (AlwaysRunAsAdministrator == value) return;
+
             Settings.AlwaysRunAsAdministrator = value;
 
             if (StartFlowLauncherOnSystemStartup && UseLogonTaskForStartup)
