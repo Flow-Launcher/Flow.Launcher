@@ -240,10 +240,21 @@ namespace Flow.Launcher
                 {
                     Helper.AutoStartup.CheckIsEnabled(_settings.UseLogonTaskForStartup, _settings.AlwaysRunAsAdministrator);
                 }
+                catch (UnauthorizedAccessException)
+                {
+                    // If it fails for permission, we need to ask the user to restart as administrator
+                    if (API.ShowMsgBox(
+                        API.GetTranslation("runAsAdministratorChangeAndRestart"),
+                        API.GetTranslation("runAsAdministratorChange"),
+                        MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        RestartAppAsAdministrator();
+                    }
+                }
                 catch (Exception e)
                 {
-                    // but if it fails (permissions, etc) then don't keep retrying
-                    // this also gives the user a visual indication in the Settings widget
+                    // But if it fails for other reasons then do not keep retrying,
+                    // set startup to false to give users a visual indication in the general page
                     _settings.StartFlowLauncherOnSystemStartup = false;
                     API.ShowMsg(API.GetTranslation("setAutoStartFailed"), e.Message);
                 }
