@@ -212,7 +212,7 @@ namespace Flow.Launcher.ViewModel
                     await Task.Delay(20);
                     while (channelReader.TryRead(out var item))
                     {
-                        // If this update task is for clearing existing results, we must need to add it to the queue
+                        // If the update task is not canceled or requires clearing existing results, add it to the queue
                         if (!item.Token.IsCancellationRequested || item.shouldClearExistingResults)
                             queue[item.ID] = item;
                     }
