@@ -96,6 +96,9 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
     {
         DateTime now = DateTime.Now;
         TimeSpan difference = now - fileDateTime;
+        
+        if (fileDateTime > now)
+            return "In the future";
 
         if (difference.TotalDays < 1)
             return "Today";
