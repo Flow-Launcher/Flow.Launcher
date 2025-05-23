@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using CommunityToolkit.Mvvm.Input;
@@ -9,6 +11,7 @@ using Flow.Launcher.Core.Configuration;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
@@ -75,7 +78,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             // even if we encounter an error while setting the startup method
             if (value && UseLogonTaskForStartup)
             {
-                CheckAdminChangeAndAskForRestart();
+                _ = CheckAdminChangeAndAskForRestartAsync();
             }
         }
     }
@@ -112,7 +115,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             // even if we encounter an error while setting the startup method
             if (StartFlowLauncherOnSystemStartup && value)
             {
-                CheckAdminChangeAndAskForRestart();
+                _ = CheckAdminChangeAndAskForRestartAsync();
             }
         }
     }
@@ -139,22 +142,41 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
 
                 // If we have enabled logon task startup, we need to check if we need to restart the app
                 // even if we encounter an error while setting the startup method
-                CheckAdminChangeAndAskForRestart();
+                _ = CheckAdminChangeAndAskForRestartAsync();
             }
         }
     }
 
-    private void CheckAdminChangeAndAskForRestart()
+    private async Task CheckAdminChangeAndAskForRestartAsync()
     {
-        if ((AlwaysRunAsAdministrator && !_isAdministrator) || // Change from non-admin to admin
-            (!AlwaysRunAsAdministrator && _isAdministrator)) // Change from admin to non-admin
+        // When we change from non-admin to admin, we need to restart the app as administrator to apply the changes
+        // Under non-administrator, we cannot delete or set the logon task which is run as administrator
+        if (AlwaysRunAsAdministrator && !_isAdministrator)
         {
             if (App.API.ShowMsgBox(
                 App.API.GetTranslation("runAsAdministratorChangeAndRestart"),
                 App.API.GetTranslation("runAsAdministratorChange"),
                 MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                App.API.RestartApp(AlwaysRunAsAdministrator ? "runas" : string.Empty);
+                App.API.HideMainWindow();
+
+                // We must manually save because of Environment.Exit(0)
+                // which will cause ungraceful exit
+                App.API.SaveAppAllSettings();
+
+                // Wait for all image caches to be saved before restarting
+                await ImageLoader.WaitSaveAsync();
+
+                // Restart the app as administrator
+                var startInfo = new ProcessStartInfo
+                {
+                    UseShellExecute = true,
+                    WorkingDirectory = Environment.CurrentDirectory,
+                    FileName = Constant.ExecutablePath,
+                    Verb = "runas"
+                };
+                Process.Start(startInfo);
+                Environment.Exit(0);
             }
         }  
     }
