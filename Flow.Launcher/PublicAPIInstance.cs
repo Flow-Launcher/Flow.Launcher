@@ -11,6 +11,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core;
@@ -72,10 +73,8 @@ namespace Flow.Launcher
             _mainVM.ChangeQueryText(query, requery);
         }
 
-        public void RestartApp() => RestartApp(null);
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
-        public async void RestartApp(string arguments)
+        public async void RestartApp()
         {
             _mainVM.Hide();
 
@@ -90,7 +89,7 @@ namespace Flow.Launcher
             // Restart requires Squirrel's Update.exe to be present in the parent folder, 
             // it is only published from the project's release pipeline. When debugging without it,
             // the project may not restart or just terminates. This is expected.
-            UpdateManager.RestartApp(Constant.ApplicationFileName, arguments);
+            UpdateManager.RestartApp(Constant.ApplicationFileName);
         }
 
         public void ShowMainWindow() => _mainVM.Show();

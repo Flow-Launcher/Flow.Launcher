@@ -34,12 +34,6 @@ namespace Flow.Launcher.Plugin
         void RestartApp();
 
         /// <summary>
-        /// Restart Flow Launcher with arguments
-        /// </summary>
-        /// <param name="arguments">Application start arguments</param>
-        void RestartApp(string arguments);
-
-        /// <summary>
         /// Run a shell command
         /// </summary>
         /// <param name="cmd">The command or program to run</param>
