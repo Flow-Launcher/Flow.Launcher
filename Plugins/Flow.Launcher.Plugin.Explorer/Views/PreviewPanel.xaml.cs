@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -65,22 +66,22 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
 
         if (Settings.ShowCreatedDateInPreviewPanel)
         {
-            CreatedAt = File
-                .GetCreationTime(filePath)
-                .ToString(
-                    $"{Settings.PreviewPanelDateFormat} {Settings.PreviewPanelTimeFormat}",
-                    CultureInfo.CurrentCulture
-                );
+            DateTime createdDate = File.GetCreationTime(filePath);
+            string formattedDate = createdDate.ToString(
+                $"{Settings.PreviewPanelDateFormat} {Settings.PreviewPanelTimeFormat}",
+                CultureInfo.CurrentCulture
+            );
+            CreatedAt = $"{GetDiffTimeString(createdDate)} - {formattedDate}";
         }
 
         if (Settings.ShowModifiedDateInPreviewPanel)
         {
-            LastModifiedAt = File
-                .GetLastWriteTime(filePath)
-                .ToString(
-                    $"{Settings.PreviewPanelDateFormat} {Settings.PreviewPanelTimeFormat}",
-                    CultureInfo.CurrentCulture
-                );
+            DateTime lastModifiedDate = File.GetLastWriteTime(filePath);
+            string formattedDate = lastModifiedDate.ToString(
+                $"{Settings.PreviewPanelDateFormat} {Settings.PreviewPanelTimeFormat}",
+                CultureInfo.CurrentCulture
+            );
+            LastModifiedAt = $"{GetDiffTimeString(lastModifiedDate)} - {formattedDate}";
         }
 
         _ = LoadImageAsync();
@@ -90,7 +91,27 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
     {
         PreviewImage = await Main.Context.API.LoadImageAsync(FilePath, true).ConfigureAwait(false);
     }
+    
+    private string GetDiffTimeString(DateTime fileDateTime)
+    {
+        DateTime now = DateTime.Now;
+        TimeSpan difference = now - fileDateTime;
 
+        if (difference.TotalDays < 1)
+            return "Today";
+        if (difference.TotalDays < 30)
+            return $"{(int)difference.TotalDays} days ago";
+
+        int monthsDiff = (now.Year - fileDateTime.Year) * 12 + now.Month - fileDateTime.Month;
+        if (monthsDiff < 12)
+            return monthsDiff == 1 ? "1 month ago" : $"{monthsDiff} months ago";
+
+        int yearsDiff = now.Year - fileDateTime.Year;
+        if (now.Month < fileDateTime.Month || (now.Month == fileDateTime.Month && now.Day < fileDateTime.Day))
+            yearsDiff--; 
+
+        return yearsDiff == 1 ? "1 year ago" : $"{yearsDiff} years ago";
+    }
     public event PropertyChangedEventHandler? PropertyChanged;
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
