@@ -78,8 +78,11 @@ public class AutoStartup
                     }
                     else
                     {
-                        // If run level is not correct, we cannot edit it because we are not administrator
-                        if (!runLevelCorrect)
+                        // If run level is not correct or we need to change a highest run level task,
+                        // we cannot edit it because we are not administrator
+                        // So we just throw an exception to let the user know
+                        if (!runLevelCorrect || // run level is not correct
+                            alwaysRunAsAdministrator) // we need to change a highest run level task
                         {
                             throw new UnauthorizedAccessException("Cannot edit task run level because the app is not running as administrator.");
                         }
