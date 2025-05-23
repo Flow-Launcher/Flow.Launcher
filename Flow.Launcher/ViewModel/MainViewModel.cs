@@ -212,7 +212,8 @@ namespace Flow.Launcher.ViewModel
                     await Task.Delay(20);
                     while (channelReader.TryRead(out var item))
                     {
-                        if (!item.Token.IsCancellationRequested)
+                        // If this update task is for clearing existing results, we must need to add it to the queue
+                        if (!item.Token.IsCancellationRequested || item.shouldClearExistingResults)
                             queue[item.ID] = item;
                     }
 
@@ -1861,12 +1862,21 @@ namespace Flow.Launcher.ViewModel
         {
             if (!resultsForUpdates.Any())
                 return;
+
             CancellationToken token;
 
             try
             {
-                // Don't know why sometimes even resultsForUpdates is empty, the method won't return;
-                token = resultsForUpdates.Select(r => r.Token).Distinct().SingleOrDefault();
+                // If there are any update tasks for clearing existing results, we need to set token to default so that it will not be cancelled
+                if (resultsForUpdates.Any(r => r.shouldClearExistingResults))
+                {
+                    token = default;
+                }
+                else
+                {
+                    // Don't know why sometimes even resultsForUpdates is empty, the method won't return;
+                    token = resultsForUpdates.Select(r => r.Token).Distinct().SingleOrDefault();
+                }
             }
 #if DEBUG
             catch
