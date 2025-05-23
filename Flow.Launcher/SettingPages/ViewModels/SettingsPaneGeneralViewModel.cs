@@ -176,6 +176,8 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         }  
     }
 
+    // Since Squirrel does not provide a way to restart the app as administrator,
+    // we need to do it manually by starting the update.exe with the runas verb
     private static void RestartAppAsAdministrator(string exeToStart)
     {
         var startInfo = new ProcessStartInfo
@@ -188,24 +190,25 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         Process.Start(startInfo);
         Thread.Sleep(500);
         Environment.Exit(0);
-    }
 
-    private static string getUpdateExe()
-    {
-        Assembly entryAssembly = Assembly.GetEntryAssembly();
-        if (entryAssembly != null && Path.GetFileName(entryAssembly.Location).Equals("update.exe", StringComparison.OrdinalIgnoreCase) && entryAssembly.Location.IndexOf("app-", StringComparison.OrdinalIgnoreCase) == -1 && entryAssembly.Location.IndexOf("SquirrelTemp", StringComparison.OrdinalIgnoreCase) == -1)
+        // Local function
+        static string getUpdateExe()
         {
-            return Path.GetFullPath(entryAssembly.Location);
-        }
+            Assembly entryAssembly = Assembly.GetEntryAssembly();
+            if (entryAssembly != null && Path.GetFileName(entryAssembly.Location).Equals("update.exe", StringComparison.OrdinalIgnoreCase) && entryAssembly.Location.IndexOf("app-", StringComparison.OrdinalIgnoreCase) == -1 && entryAssembly.Location.IndexOf("SquirrelTemp", StringComparison.OrdinalIgnoreCase) == -1)
+            {
+                return Path.GetFullPath(entryAssembly.Location);
+            }
 
-        entryAssembly = Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
-        FileInfo fileInfo = new FileInfo(Path.Combine(Path.GetDirectoryName(entryAssembly.Location), "..\\Update.exe"));
-        if (!fileInfo.Exists)
-        {
-            throw new Exception("Update.exe not found, not a Squirrel-installed app?");
-        }
+            entryAssembly = Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
+            FileInfo fileInfo = new FileInfo(Path.Combine(Path.GetDirectoryName(entryAssembly.Location), "..\\Update.exe"));
+            if (!fileInfo.Exists)
+            {
+                throw new Exception("Update.exe not found, not a Squirrel-installed app?");
+            }
 
-        return fileInfo.FullName;
+            return fileInfo.FullName;
+        }
     }
 
     public List<SearchWindowScreenData> SearchWindowScreens { get; } =
