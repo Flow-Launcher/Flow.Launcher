@@ -61,20 +61,44 @@ public class AutoStartup
         {
             try
             {
-                // Check if the action is the same as the current executable path
-                // If not, we need to unschedule and reschedule the task
                 if (task.Definition.Actions.FirstOrDefault() is Microsoft.Win32.TaskScheduler.Action taskAction)
                 {
                     var action = taskAction.ToString().Trim();
-                    if (!action.Equals(Constant.ExecutablePath, StringComparison.OrdinalIgnoreCase) || // Path issue
-                        !CheckRunLevel(task.Definition.Principal, alwaysRunAsAdministrator)) // Run level issue
+                    var pathCorrect = action.Equals(Constant.ExecutablePath, StringComparison.OrdinalIgnoreCase);
+                    var runLevelCorrect = CheckRunLevel(task.Definition.Principal.RunLevel, alwaysRunAsAdministrator);
+
+                    if (_isAdministrator)
                     {
-                        UnscheduleLogonTask();
-                        ScheduleLogonTask(alwaysRunAsAdministrator);
+                        // If path or run level is not correct, we need to unschedule and reschedule the task
+                        if (!pathCorrect || !runLevelCorrect)
+                        {
+                            UnscheduleLogonTask();
+                            ScheduleLogonTask(alwaysRunAsAdministrator);
+                        }
+                    }
+                    else
+                    {
+                        // If run level is not correct, we cannot edit it because we are not administrator
+                        if (!runLevelCorrect)
+                        {
+                            throw new UnauthorizedAccessException("Cannot edit task run level because the app is not running as administrator.");
+                        }
+
+                        // If run level is correct and path is not correct, we need to unschedule and reschedule the task
+                        if (!pathCorrect)
+                        {
+                            UnscheduleLogonTask();
+                            ScheduleLogonTask(alwaysRunAsAdministrator);
+                        }
                     }
                 }
 
                 return true;
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                App.API.LogError(ClassName, $"Failed to check logon task: {e}");
+                throw; // Throw exception so that App.AutoStartup can show error message
             }
             catch (Exception e)
             {
@@ -86,9 +110,9 @@ public class AutoStartup
         return false;
     }
 
-    private static bool CheckRunLevel(TaskPrincipal tp, bool alwaysRunAsAdministrator)
+    private static bool CheckRunLevel(TaskRunLevel rl, bool alwaysRunAsAdministrator)
     {
-        return alwaysRunAsAdministrator ? tp.RunLevel == TaskRunLevel.Highest : tp.RunLevel != TaskRunLevel.Highest;
+        return alwaysRunAsAdministrator ? rl == TaskRunLevel.Highest : rl != TaskRunLevel.Highest;
     }
 
     private static bool CheckRegistry()
