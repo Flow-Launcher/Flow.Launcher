@@ -172,7 +172,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private async Task OpenDeletePluginWindowAsync()
         {
-            await PluginStoreItemViewModel.UninstallPluginAsync(PluginPair.Metadata);
+            await PluginManager.UninstallPluginAndCheckRestartAsync(PluginPair.Metadata);
         }
 
         [RelayCommand]
