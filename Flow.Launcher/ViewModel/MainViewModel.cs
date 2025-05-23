@@ -1438,8 +1438,9 @@ namespace Flow.Launcher.ViewModel
                 _lastQuery = query;
                 _previousIsHomeQuery = currentIsHomeQuery;
 
+                // If this update task is for clearing existing results, do not pass token to make sure it is handled
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
-                    token, reSelect, shouldClearExistingResults)))
+                    shouldClearExistingResults ? default : token, reSelect, shouldClearExistingResults)))
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
@@ -1461,8 +1462,9 @@ namespace Flow.Launcher.ViewModel
                 _lastQuery = query;
                 _previousIsHomeQuery = currentIsHomeQuery;
 
+                // If this update task is for clearing existing results, do not pass token to make sure it is handled
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, _historyMetadata, query,
-                    token, reSelect, shouldClearExistingResults)))
+                    shouldClearExistingResults ? default : token, reSelect, shouldClearExistingResults)))
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
