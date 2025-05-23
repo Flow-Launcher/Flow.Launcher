@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -315,6 +317,45 @@ namespace Flow.Launcher
         private static void RegisterTaskSchedulerUnhandledException()
         {
             TaskScheduler.UnobservedTaskException += ErrorReporting.TaskSchedulerUnobservedTaskException;
+        }
+
+        #endregion
+
+        #region Restart
+
+        // Since Squirrel does not provide a way to restart the app as administrator,
+        // we need to do it manually by starting the update.exe with the runas verb
+        public static void RestartAppAsAdministrator()
+        {
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = getUpdateExe(),
+                Arguments = $"--processStartAndWait {Constant.ExecutablePath}",
+                UseShellExecute = true,
+                Verb = "runas",
+            };
+            Process.Start(startInfo);
+            Thread.Sleep(500);
+            Environment.Exit(0);
+
+            // Local function
+            static string getUpdateExe()
+            {
+                Assembly entryAssembly = Assembly.GetEntryAssembly();
+                if (entryAssembly != null && Path.GetFileName(entryAssembly.Location).Equals("update.exe", StringComparison.OrdinalIgnoreCase) && entryAssembly.Location.IndexOf("app-", StringComparison.OrdinalIgnoreCase) == -1 && entryAssembly.Location.IndexOf("SquirrelTemp", StringComparison.OrdinalIgnoreCase) == -1)
+                {
+                    return Path.GetFullPath(entryAssembly.Location);
+                }
+
+                entryAssembly = Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
+                FileInfo fileInfo = new FileInfo(Path.Combine(Path.GetDirectoryName(entryAssembly.Location), "..\\Update.exe"));
+                if (!fileInfo.Exists)
+                {
+                    throw new Exception("Update.exe not found, not a Squirrel-installed app?");
+                }
+
+                return fileInfo.FullName;
+            }
         }
 
         #endregion

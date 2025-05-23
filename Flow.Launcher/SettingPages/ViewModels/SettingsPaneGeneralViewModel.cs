@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
@@ -171,44 +167,9 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
                 await ImageLoader.WaitSaveAsync();
 
                 // Restart the app as administrator
-                RestartAppAsAdministrator(Constant.ExecutablePath);
+                App.RestartAppAsAdministrator();
             }
         }  
-    }
-
-    // Since Squirrel does not provide a way to restart the app as administrator,
-    // we need to do it manually by starting the update.exe with the runas verb
-    private static void RestartAppAsAdministrator(string exeToStart)
-    {
-        var startInfo = new ProcessStartInfo
-        {
-            FileName = getUpdateExe(),
-            Arguments = $"--processStartAndWait {exeToStart}",
-            UseShellExecute = true,
-            Verb = "runas",
-        };
-        Process.Start(startInfo);
-        Thread.Sleep(500);
-        Environment.Exit(0);
-
-        // Local function
-        static string getUpdateExe()
-        {
-            Assembly entryAssembly = Assembly.GetEntryAssembly();
-            if (entryAssembly != null && Path.GetFileName(entryAssembly.Location).Equals("update.exe", StringComparison.OrdinalIgnoreCase) && entryAssembly.Location.IndexOf("app-", StringComparison.OrdinalIgnoreCase) == -1 && entryAssembly.Location.IndexOf("SquirrelTemp", StringComparison.OrdinalIgnoreCase) == -1)
-            {
-                return Path.GetFullPath(entryAssembly.Location);
-            }
-
-            entryAssembly = Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
-            FileInfo fileInfo = new FileInfo(Path.Combine(Path.GetDirectoryName(entryAssembly.Location), "..\\Update.exe"));
-            if (!fileInfo.Exists)
-            {
-                throw new Exception("Update.exe not found, not a Squirrel-installed app?");
-            }
-
-            return fileInfo.FullName;
-        }
     }
 
     public List<SearchWindowScreenData> SearchWindowScreens { get; } =
