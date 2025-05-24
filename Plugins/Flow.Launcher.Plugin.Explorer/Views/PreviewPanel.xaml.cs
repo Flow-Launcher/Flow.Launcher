@@ -103,19 +103,22 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
         var difference = now - fileDateTime;
 
         if (difference.TotalDays < 1)
-            return "Today";
+            return Main.Context.API.GetTranslation("Today");
         if (difference.TotalDays < 30)
-            return $"{(int)difference.TotalDays} days ago";
+            return string.Format(Main.Context.API.GetTranslation("DaysAgo"), (int)difference.TotalDays);
 
         var monthsDiff = (now.Year - fileDateTime.Year) * 12 + now.Month - fileDateTime.Month;
+        if (monthsDiff == 1)
+            return Main.Context.API.GetTranslation("OneMonthAgo");
         if (monthsDiff < 12)
-            return monthsDiff == 1 ? "1 month ago" : $"{monthsDiff} months ago";
+            return string.Format(Main.Context.API.GetTranslation("MonthsAgo"), monthsDiff);
 
         var yearsDiff = now.Year - fileDateTime.Year;
         if (now.Month < fileDateTime.Month || (now.Month == fileDateTime.Month && now.Day < fileDateTime.Day))
             yearsDiff--; 
 
-        return yearsDiff == 1 ? "1 year ago" : $"{yearsDiff} years ago";
+        return yearsDiff == 1 ? Main.Context.API.GetTranslation("OneYearAgo") :
+            string.Format(Main.Context.API.GetTranslation("YearsAgo"), yearsDiff);
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
