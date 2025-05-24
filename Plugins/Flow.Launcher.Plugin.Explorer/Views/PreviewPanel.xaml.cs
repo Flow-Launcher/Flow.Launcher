@@ -97,26 +97,27 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
         PreviewImage = await Main.Context.API.LoadImageAsync(FilePath, true).ConfigureAwait(false);
     }
     
-    private string GetFileAge(DateTime fileDateTime)
+    private static string GetFileAge(DateTime fileDateTime)
     {
-        DateTime now = DateTime.Now;
-        TimeSpan difference = now - fileDateTime;
+        var now = DateTime.Now;
+        var difference = now - fileDateTime;
 
         if (difference.TotalDays < 1)
             return "Today";
         if (difference.TotalDays < 30)
             return $"{(int)difference.TotalDays} days ago";
 
-        int monthsDiff = (now.Year - fileDateTime.Year) * 12 + now.Month - fileDateTime.Month;
+        var monthsDiff = (now.Year - fileDateTime.Year) * 12 + now.Month - fileDateTime.Month;
         if (monthsDiff < 12)
             return monthsDiff == 1 ? "1 month ago" : $"{monthsDiff} months ago";
 
-        int yearsDiff = now.Year - fileDateTime.Year;
+        var yearsDiff = now.Year - fileDateTime.Year;
         if (now.Month < fileDateTime.Month || (now.Month == fileDateTime.Month && now.Day < fileDateTime.Day))
             yearsDiff--; 
 
         return yearsDiff == 1 ? "1 year ago" : $"{yearsDiff} years ago";
     }
+
     public event PropertyChangedEventHandler? PropertyChanged;
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
