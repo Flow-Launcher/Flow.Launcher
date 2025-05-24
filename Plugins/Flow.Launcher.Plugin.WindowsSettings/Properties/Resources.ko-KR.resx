@@ -1857,13 +1857,13 @@
     <value>Make changes to accounts</value>
   </data>
   <data name="EditLocalUsersAndGroups" xml:space="preserve">
-    <value>Edit local users and groups</value>
+    <value>로컬 사용자 및 그룹 편집</value>
   </data>
   <data name="ViewNetworkComputersAndDevices" xml:space="preserve">
-    <value>View network computers and devices</value>
+    <value>네트워크 컴퓨터 및 장치 보기</value>
   </data>
   <data name="InstallAProgramFromTheNetwork" xml:space="preserve">
-    <value>Install a program from the network</value>
+    <value>네트워크에서 프로그램 설치</value>
   </data>
   <data name="ViewScannersAndCameras" xml:space="preserve">
     <value>View scanners and cameras</value>
@@ -1872,7 +1872,7 @@
     <value>Microsoft IME Register Word (Japanese)</value>
   </data>
   <data name="RestoreYourFilesWithFileHistory" xml:space="preserve">
-    <value>Restore your files with File History</value>
+    <value>파일 기록으로 파일 복원</value>
   </data>
   <data name="TurnOnScreenKeyboardOnOrOff" xml:space="preserve">
     <value>Turn On-Screen keyboard on or off</value>
@@ -1884,22 +1884,22 @@
     <value>Find and fix audio recording problems</value>
   </data>
   <data name="CreateARecoveryDrive" xml:space="preserve">
-    <value>Create a recovery drive</value>
+    <value>복구 드라이브 만들기</value>
   </data>
   <data name="MicrosoftNewPhoneticSettings" xml:space="preserve">
     <value>Microsoft New Phonetic Settings</value>
   </data>
   <data name="GenerateASystemHealthReport" xml:space="preserve">
-    <value>Generate a system health report</value>
+    <value>시스템 건강 보고서 생성</value>
   </data>
   <data name="FixProblemsWithYourComputer" xml:space="preserve">
     <value>Fix problems with your computer</value>
   </data>
   <data name="BackUpAndRestoreWindows7" xml:space="preserve">
-    <value>Back up and Restore (Windows 7)</value>
+    <value>파일 백업 또는 복원 (Windows 7)</value>
   </data>
   <data name="PreviewDeleteShowOrHideFonts" xml:space="preserve">
-    <value>Preview, delete, show or hide fonts</value>
+    <value>글꼴 미리 보기, 삭제, 표시 또는 숨기기</value>
   </data>
   <data name="MicrosoftQuickSettings" xml:space="preserve">
     <value>Microsoft Quick Settings</value>
@@ -1908,7 +1908,7 @@
     <value>View reliability history</value>
   </data>
   <data name="AccessRemoteappAndDesktops" xml:space="preserve">
-    <value>Access RemoteApp and desktops</value>
+    <value>RemoteApp 및 데스크톱 액세스</value>
   </data>
   <data name="SetUpODBCDataSources" xml:space="preserve">
     <value>Set up ODBC data sources</value>
@@ -1929,19 +1929,19 @@
     <value>Change what closing the lid does</value>
   </data>
   <data name="TurnOffUnnecessaryAnimations" xml:space="preserve">
-    <value>Turn off unnecessary animations</value>
+    <value>불필요한 애니메이션 끄기</value>
   </data>
   <data name="CreateARestorePoint" xml:space="preserve">
-    <value>Create a restore point</value>
+    <value>복원 지점 만들기</value>
   </data>
   <data name="TurnOffAutomaticWindowArrangement" xml:space="preserve">
-    <value>Turn off automatic window arrangement</value>
+    <value>자동 창 배열 끄기</value>
   </data>
   <data name="TroubleshootingHistory" xml:space="preserve">
-    <value>Troubleshooting History</value>
+    <value>문제 해결 기록</value>
   </data>
   <data name="DiagnoseYourComputersMemoryProblems" xml:space="preserve">
-    <value>Diagnose your computer's memory problems</value>
+    <value>컴퓨터의 메모리 문제 진단</value>
   </data>
   <data name="ViewRecommendedActionsToKeepWindowsRunningSmoothly" xml:space="preserve">
     <value>View recommended actions to keep Windows running smoothly</value>
@@ -1992,13 +1992,13 @@
     <value>Change the order of Windows SideShow gadgets</value>
   </data>
   <data name="CheckKeyboardStatus" xml:space="preserve">
-    <value>Check keyboard status</value>
+    <value>키보드 상태 확인</value>
   </data>
   <data name="ControlTheComputerWithoutTheMouseOrKeyboard" xml:space="preserve">
     <value>마우스 또는 키보드가 없는 컴퓨터 사용</value>
   </data>
   <data name="ChangeOrRemoveAProgram" xml:space="preserve">
-    <value>Change or remove a program</value>
+    <value>프로그램 변경 또는 제거</value>
   </data>
   <data name="ChangeMultiTouchGestureSettings" xml:space="preserve">
     <value>Change multi-touch gesture settings</value>
@@ -2143,10 +2143,10 @@
     <value>Turn Windows features on or off</value>
   </data>
   <data name="ShowWhichOperatingSystemYourComputerIsRunning" xml:space="preserve">
-    <value>Show which operating system your computer is running</value>
+    <value>내 컴퓨터가 실행 중인 운영 체제를 표시</value>
   </data>
   <data name="ViewLocalServices" xml:space="preserve">
-    <value>View local services</value>
+    <value>로컬 서비스 보기</value>
   </data>
   <data name="ManageWorkFolders" xml:space="preserve">
     <value>Manage Work Folders</value>
@@ -2164,28 +2164,28 @@
     <value>Change default printer</value>
   </data>
   <data name="EditEnvironmentVariablesForYourAccount" xml:space="preserve">
-    <value>Edit environment variables for your account</value>
+    <value>내 계정의 환경 변수 수정</value>
   </data>
   <data name="OptimiseVisualDisplay" xml:space="preserve">
     <value>Optimise visual display</value>
   </data>
   <data name="ChangeMouseClickSettings" xml:space="preserve">
-    <value>Change mouse click settings</value>
+    <value>마우스 클릭 설정 변경</value>
   </data>
   <data name="ChangeAdvancedColourManagementSettingsForDisplaysScannersAndPrinters" xml:space="preserve">
-    <value>Change advanced colour management settings for displays, scanners and printers</value>
+    <value>디스플레이, 스캐너 및 프린터의 고급 색 관리 설정 변경</value>
   </data>
   <data name="LetWindowsSuggestEaseOfAccessSettings" xml:space="preserve">
     <value>Let Windows suggest Ease of Access settings</value>
   </data>
   <data name="ClearDiskSpaceByDeletingUnnecessaryFiles" xml:space="preserve">
-    <value>Clear disk space by deleting unnecessary files</value>
+    <value>불필요한 파일을 삭제하여 디스크 공간 확보</value>
   </data>
   <data name="ViewDevicesAndPrinters" xml:space="preserve">
-    <value>View devices and printers</value>
+    <value>장치 및 프린터 보기</value>
   </data>
   <data name="PrivateCharacterEditor" xml:space="preserve">
-    <value>Private Character Editor</value>
+    <value>개인 문자 편집기</value>
   </data>
   <data name="RecordStepsToReproduceAProblem" xml:space="preserve">
     <value>Record steps to reproduce a problem</value>
@@ -2248,7 +2248,7 @@
     <value>Turn flicks on or off</value>
   </data>
   <data name="AddALanguage" xml:space="preserve">
-    <value>Add a language</value>
+    <value>언어 추가</value>
   </data>
   <data name="ViewNetworkStatusAndTasks" xml:space="preserve">
     <value>View network status and tasks</value>
