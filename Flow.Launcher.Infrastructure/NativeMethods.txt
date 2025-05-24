@@ -22,7 +22,7 @@ SystemParametersInfo
 
 SetForegroundWindow
 
-GetWindowLong
+WINDOW_LONG_PTR_INDEX
 GetForegroundWindow
 GetDesktopWindow
 GetShellWindow

@@ -192,9 +192,9 @@ namespace Flow.Launcher.Infrastructure
             SetWindowStyle(hwnd, WINDOW_LONG_PTR_INDEX.GWL_STYLE, style);
         }
 
-        private static int GetWindowStyle(HWND hWnd, WINDOW_LONG_PTR_INDEX nIndex)
+        private static nint GetWindowStyle(HWND hWnd, WINDOW_LONG_PTR_INDEX nIndex)
         {
-            var style = PInvoke.GetWindowLong(hWnd, nIndex);
+            var style = PInvoke.GetWindowLongPtr(hWnd, nIndex);
             if (style == 0 && Marshal.GetLastPInvokeError() != 0)
             {
                 throw new Win32Exception(Marshal.GetLastPInvokeError());
@@ -202,7 +202,7 @@ namespace Flow.Launcher.Infrastructure
             return style;
         }
 
-        private static nint SetWindowStyle(HWND hWnd, WINDOW_LONG_PTR_INDEX nIndex, int dwNewLong)
+        private static nint SetWindowStyle(HWND hWnd, WINDOW_LONG_PTR_INDEX nIndex, nint dwNewLong)
         {
             PInvoke.SetLastError(WIN32_ERROR.NO_ERROR); // Clear any existing error
 
