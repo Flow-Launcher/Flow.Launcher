@@ -505,6 +505,11 @@
                                 Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                                 Content="{DynamicResource plugin_explorer_previewpanel_display_file_modification_checkbox}"
                                 IsChecked="{Binding ShowModifiedDateInPreviewPanel}" />
+                            
+                            <CheckBox
+                                Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
+                                Content="{DynamicResource plugin_explorer_previewpanel_display_file_age_checkbox}"
+                                IsChecked="{Binding ShowFileAgeInPreviewPanel}" />
                         </WrapPanel>
                     </DockPanel>
 
