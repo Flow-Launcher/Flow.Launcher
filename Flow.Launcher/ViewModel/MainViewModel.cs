@@ -194,6 +194,8 @@ namespace Flow.Launcher.ViewModel
             _ = RegisterClockAndDateUpdateAsync();
         }
 
+        private int cancelIndex = 0;
+
         private void RegisterViewUpdate()
         {
             var resultUpdateChannel = Channel.CreateUnbounded<ResultsForUpdate>();
@@ -212,6 +214,17 @@ namespace Flow.Launcher.ViewModel
                     await Task.Delay(20);
                     while (channelReader.TryRead(out var item))
                     {
+                        if (item.shouldClearExistingResults)
+                        {
+                            cancelIndex++;
+                            if (cancelIndex > 1)
+                            {
+                                // Assume one task for clearing existing results is cancelled
+                                continue;
+                            }
+                        }
+                            
+
                         if (!item.Token.IsCancellationRequested)
                             queue[item.ID] = item;
                     }
