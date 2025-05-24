@@ -126,8 +126,6 @@
     <system:String x:Key="plugin_explorer_openresultfolder_subtitle">
         Use '>' to search in this directory, '*' to search for file extensions or '>*' to combine both searches.
     </system:String>
-    
-    
 
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Failed to load Everything SDK</system:String>

@@ -27,7 +27,6 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public string ExcludedFileTypes { get; set; } = "";
 
-
         public bool UseLocationAsWorkingDir { get; set; } = false;
 
         public bool ShowInlinedWindowsContextMenu { get; set; } = false;
