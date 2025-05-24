@@ -29,8 +29,8 @@
     <system:String x:Key="plugin_explorer_everything_setting_header">Everything Setting</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">Preview Panel</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Tamanho</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Data Criação</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Data Modificação</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Data de Criação</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Data de Modificação</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_relative_date_checkbox">Data Relativa</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Display File Info</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Date and time format</system:String>
