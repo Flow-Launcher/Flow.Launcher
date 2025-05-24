@@ -66,6 +66,9 @@ namespace Flow.Launcher.Plugin.Explorer
         public bool ShowCreatedDateInPreviewPanel { get; set; } = true;
 
         public bool ShowModifiedDateInPreviewPanel { get; set; } = true;
+        
+        public bool ShowRelativeDateInPreviewPanel { get; set; } = true;
+
 
         public string PreviewPanelDateFormat { get; set; } = "yyyy-MM-dd";
 

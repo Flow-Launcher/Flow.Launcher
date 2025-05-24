@@ -71,7 +71,10 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
                 $"{Settings.PreviewPanelDateFormat} {Settings.PreviewPanelTimeFormat}",
                 CultureInfo.CurrentCulture
             );
-            CreatedAt = $"{GetDiffTimeString(createdDate)} - {formattedDate}";
+
+            string result = formattedDate;
+            if (Settings.ShowRelativeDateInPreviewPanel) result = $"{GetFileAge(createdDate)} - {formattedDate}";
+            CreatedAt = result;
         }
 
         if (Settings.ShowModifiedDateInPreviewPanel)
@@ -81,7 +84,9 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
                 $"{Settings.PreviewPanelDateFormat} {Settings.PreviewPanelTimeFormat}",
                 CultureInfo.CurrentCulture
             );
-            LastModifiedAt = $"{GetDiffTimeString(lastModifiedDate)} - {formattedDate}";
+            string result = formattedDate;
+            if (Settings.ShowRelativeDateInPreviewPanel) result = $"{GetFileAge(lastModifiedDate)} - {formattedDate}";
+            LastModifiedAt = result;
         }
 
         _ = LoadImageAsync();
@@ -92,7 +97,7 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
         PreviewImage = await Main.Context.API.LoadImageAsync(FilePath, true).ConfigureAwait(false);
     }
     
-    private string GetDiffTimeString(DateTime fileDateTime)
+    private string GetFileAge(DateTime fileDateTime)
     {
         DateTime now = DateTime.Now;
         TimeSpan difference = now - fileDateTime;

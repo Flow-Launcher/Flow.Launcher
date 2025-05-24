@@ -169,6 +169,18 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             }
         }
 
+        public bool ShowRelativeDateInPreviewPanel
+        {
+            get => Settings.ShowRelativeDateInPreviewPanel;
+            set
+            {
+                Settings.ShowRelativeDateInPreviewPanel = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(ShowPreviewPanelDateTimeChoices));
+                OnPropertyChanged(nameof(PreviewPanelDateTimeChoicesVisibility));
+            }
+        }
+
         public string PreviewPanelDateFormat
         {
             get => Settings.PreviewPanelDateFormat;
