@@ -31,6 +31,7 @@
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">גודל</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">תאריך יצירה</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">תאריך שינוי</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_age_checkbox">File Age</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_file_info_label">הצגת מידע על קובץ</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">תבנית תאריך ושעה</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">אפשרות מיון:</system:String>
@@ -164,4 +165,12 @@
     <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">הצג תפריט הקשר מקורי (ניסיוני)</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">כאן תוכל להגדיר פריטים שברצונך לכלול בתפריט ההקשר, הם יכולים להיות חלקיים (למשל 'pen wit') או שלמים ('Open with').</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">כאן תוכל להגדיר פריטים שברצונך להחריג מתפריט ההקשר, הם יכולים להיות חלקיים (למשל 'pen wit') או שלמים ('Open with').</system:String>
+
+    <!--  Preview Info  -->
+    <system:String x:Key="Today">Today</system:String>
+    <system:String x:Key="DaysAgo">{0} days ago</system:String>
+    <system:String x:Key="OneMonthAgo">1 month ago</system:String>
+    <system:String x:Key="MonthsAgo">{0} months ago</system:String>
+    <system:String x:Key="OneYearAgo">1 year ago</system:String>
+    <system:String x:Key="YearsAgo">{0} years ago</system:String>
 </ResourceDictionary>
