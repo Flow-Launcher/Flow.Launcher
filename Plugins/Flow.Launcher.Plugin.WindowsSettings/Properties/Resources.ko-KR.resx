@@ -468,7 +468,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="ControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>제어판</value>
     <comment>Type of the setting is a "(legacy) Control Panel setting"</comment>
   </data>
   <data name="CopyCommand" xml:space="preserve">
@@ -1524,7 +1524,7 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="timedate.cpl" xml:space="preserve">
-    <value>timedate.cpl</value>
+    <value></value>
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Timeline" xml:space="preserve">
@@ -1740,34 +1740,34 @@
     <value>Change device installation settings</value>
   </data>
   <data name="TurnOffBackgroundImages" xml:space="preserve">
-    <value>Turn off background images</value>
+    <value>배경 이미지 제거</value>
   </data>
   <data name="NavigationProperties" xml:space="preserve">
     <value>Navigation properties</value>
   </data>
   <data name="MediaStreamingOptions" xml:space="preserve">
-    <value>Media streaming options</value>
+    <value>미디어 스트리밍 옵션</value>
   </data>
   <data name="MakeAFileTypeAlwaysOpenInASpecificProgram" xml:space="preserve">
-    <value>Make a file type always open in a specific program</value>
+    <value>파일 형식을 항상 특정 프로그램에서 열도록 설정</value>
   </data>
   <data name="ChangeTheNarratorSVoice" xml:space="preserve">
-    <value>Change the Narrator’s voice</value>
+    <value>내레이터 목소리 변경</value>
   </data>
   <data name="FindAndFixKeyboardProblems" xml:space="preserve">
     <value>Find and fix keyboard problems</value>
   </data>
   <data name="UseScreenReader" xml:space="preserve">
-    <value>Use screen reader</value>
+    <value>내레이터 켜기</value>
   </data>
   <data name="ShowWhichWorkgroupThisComputerIsOn" xml:space="preserve">
     <value>Show which workgroup this computer is on</value>
   </data>
   <data name="ChangeMouseWheelSettings" xml:space="preserve">
-    <value>Change mouse wheel settings</value>
+    <value>마우스 휠 설정 변경</value>
   </data>
   <data name="ManageComputerCertificates" xml:space="preserve">
-    <value>Manage computer certificates</value>
+    <value>컴퓨터 인증서 관리</value>
   </data>
   <data name="FindAndFixProblems" xml:space="preserve">
     <value>Find and fix problems</value>
@@ -1776,82 +1776,82 @@
     <value>Change settings for content received using Tap and send</value>
   </data>
   <data name="ChangeDefaultSettingsForMediaOrDevices" xml:space="preserve">
-    <value>Change default settings for media or devices</value>
+    <value>미디어 또는 장치에 대한 기본 설정 변경</value>
   </data>
   <data name="PrintTheSpeechReferenceCard" xml:space="preserve">
     <value>Print the speech reference card</value>
   </data>
   <data name="CalibrateDisplayColour" xml:space="preserve">
-    <value>Calibrate display colour</value>
+    <value>디스플레이 색 보정</value>
   </data>
   <data name="ManageFileEncryptionCertificates" xml:space="preserve">
-    <value>Manage file encryption certificates</value>
+    <value>파일 암호화 인증서 관리</value>
   </data>
   <data name="ViewRecentMessagesAboutYourComputer" xml:space="preserve">
-    <value>View recent messages about your computer</value>
+    <value>최근 메세지 검토 및 문제 해결</value>
   </data>
   <data name="GiveOtherUsersAccessToThisComputer" xml:space="preserve">
-    <value>Give other users access to this computer</value>
+    <value>다른 사용자에게 컴퓨터 액세스 권한 부여</value>
   </data>
   <data name="ShowHiddenFilesAndFolders" xml:space="preserve">
-    <value>Show hidden files and folders</value>
+    <value>숨김 파일 및 폴더 표시</value>
   </data>
   <data name="ChangeWindowsToGoStartUpOptions" xml:space="preserve">
-    <value>Change Windows To Go start-up options</value>
+    <value>Windows To Go 시작 옵션 변경</value>
   </data>
   <data name="SeeWhichProcessesStartUpAutomaticallyWhenYouStartWindows" xml:space="preserve">
-    <value>See which processes start up automatically when you start Windows</value>
+    <value>Windows 시작 시 자동으로 실행되는 프로세스 확인</value>
   </data>
   <data name="TellIfAnRSSFeedIsAvailableOnAWebsite" xml:space="preserve">
     <value>Tell if an RSS feed is available on a website</value>
   </data>
   <data name="AddClocksForDifferentTimeZones" xml:space="preserve">
-    <value>Add clocks for different time zones</value>
+    <value>다양한 시간대의 시계 추가</value>
   </data>
   <data name="AddABluetoothDevice" xml:space="preserve">
-    <value>Add a Bluetooth device</value>
+    <value>Bluetooth 장치 추가</value>
   </data>
   <data name="CustomiseTheMouseButtons" xml:space="preserve">
-    <value>Customise the mouse buttons</value>
+    <value>마우스 버튼 사용자 설정</value>
   </data>
   <data name="SetTabletButtonsToPerformCertainTasks" xml:space="preserve">
-    <value>Set tablet buttons to perform certain tasks</value>
+    <value>태블릿 버튼을 특정 작업에 맞게 설정</value>
   </data>
   <data name="ViewInstalledFonts" xml:space="preserve">
-    <value>View installed fonts</value>
+    <value>설치된 글꼴 보기</value>
   </data>
   <data name="ChangeTheWayCurrencyIsDisplayed" xml:space="preserve">
-    <value>Change the way currency is displayed</value>
+    <value>날짜 및 시간 표시 방식 변경</value>
   </data>
   <data name="EditGroupPolicy" xml:space="preserve">
-    <value>Edit group policy</value>
+    <value>로컬 그룹 정책 편집기</value>
   </data>
   <data name="ManageBrowserAddOns" xml:space="preserve">
     <value>Manage browser add-ons</value>
   </data>
   <data name="CheckProcessorSpeed" xml:space="preserve">
-    <value>Check processor speed</value>
+    <value>프로세서 속도 확인</value>
   </data>
   <data name="CheckFirewallStatus" xml:space="preserve">
-    <value>Check firewall status</value>
+    <value>방화벽 상태 확인</value>
   </data>
   <data name="SendOrReceiveAFile" xml:space="preserve">
     <value>Send or receive a file</value>
   </data>
   <data name="AddOrRemoveUserAccounts" xml:space="preserve">
-    <value>Add or remove user accounts</value>
+    <value>사용자 계정 추가 또는 삭제</value>
   </data>
   <data name="EditTheSystemEnvironmentVariables" xml:space="preserve">
-    <value>Edit the system environment variables</value>
+    <value>시스템 환경 변수 편집</value>
   </data>
   <data name="ManageBitlocker" xml:space="preserve">
-    <value>Manage BitLocker</value>
+    <value>BitLocker 관리</value>
   </data>
   <data name="AutoHideTheTaskbar" xml:space="preserve">
-    <value>Auto-hide the taskbar</value>
+    <value>작업 표시줄 자동 숨기기</value>
   </data>
   <data name="ChangeSoundCardSettings" xml:space="preserve">
-    <value>Change sound card settings</value>
+    <value>사운드 카드 설정 변경</value>
   </data>
   <data name="MakeChangesToAccounts" xml:space="preserve">
     <value>Make changes to accounts</value>
@@ -1995,7 +1995,7 @@
     <value>Check keyboard status</value>
   </data>
   <data name="ControlTheComputerWithoutTheMouseOrKeyboard" xml:space="preserve">
-    <value>Control the computer without the mouse or keyboard</value>
+    <value>마우스 또는 키보드가 없는 컴퓨터 사용</value>
   </data>
   <data name="ChangeOrRemoveAProgram" xml:space="preserve">
     <value>Change or remove a program</value>
@@ -2046,7 +2046,7 @@
     <value>How to change your Windows password</value>
   </data>
   <data name="MakeItEasierToSeeTheMousePointer" xml:space="preserve">
-    <value>Make it easier to see the mouse pointer</value>
+    <value>마우스 포인터를 더 쉽게 보이게 설정</value>
   </data>
   <data name="SetUpIscsiInitiator" xml:space="preserve">
     <value>Set up iSCSI initiator</value>
@@ -2076,7 +2076,7 @@
     <value>Find and fix audio playback problems</value>
   </data>
   <data name="ChangeTheMousePointerDisplayOrSpeed" xml:space="preserve">
-    <value>Change the mouse pointer display or speed</value>
+    <value>마우스 포인터 표시 또는 속도 변경</value>
   </data>
   <data name="BackUpYourRecoveryKey" xml:space="preserve">
     <value>Back up your recovery key</value>
