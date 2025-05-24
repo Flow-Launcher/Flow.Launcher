@@ -508,8 +508,8 @@
                             
                             <CheckBox
                                 Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
-                                Content="{DynamicResource plugin_explorer_previewpanel_display_file_relative_date_checkbox}"
-                                IsChecked="{Binding ShowRelativeDateInPreviewPanel}" />
+                                Content="{DynamicResource plugin_explorer_previewpanel_display_file_age_checkbox}"
+                                IsChecked="{Binding ShowFileAgeInPreviewPanel}" />
                         </WrapPanel>
                     </DockPanel>
 

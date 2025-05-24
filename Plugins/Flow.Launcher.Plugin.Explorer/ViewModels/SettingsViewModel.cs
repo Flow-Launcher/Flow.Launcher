@@ -169,12 +169,12 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             }
         }
 
-        public bool ShowRelativeDateInPreviewPanel
+        public bool ShowFileAgeInPreviewPanel
         {
-            get => Settings.ShowRelativeDateInPreviewPanel;
+            get => Settings.ShowFileAgeInPreviewPanel;
             set
             {
-                Settings.ShowRelativeDateInPreviewPanel = value;
+                Settings.ShowFileAgeInPreviewPanel = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(ShowPreviewPanelDateTimeChoices));
                 OnPropertyChanged(nameof(PreviewPanelDateTimeChoicesVisibility));

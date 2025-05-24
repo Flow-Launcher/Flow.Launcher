@@ -73,7 +73,7 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
             );
 
             string result = formattedDate;
-            if (Settings.ShowRelativeDateInPreviewPanel) result = $"{GetRelativeDate(createdDate)} - {formattedDate}";
+            if (Settings.ShowFileAgeInPreviewPanel) result = $"{GetRelativeDate(createdDate)} - {formattedDate}";
             CreatedAt = result;
         }
 
@@ -85,7 +85,7 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
                 CultureInfo.CurrentCulture
             );
             string result = formattedDate;
-            if (Settings.ShowRelativeDateInPreviewPanel) result = $"{GetRelativeDate(lastModifiedDate)} - {formattedDate}";
+            if (Settings.ShowFileAgeInPreviewPanel) result = $"{GetRelativeDate(lastModifiedDate)} - {formattedDate}";
             LastModifiedAt = result;
         }
 
