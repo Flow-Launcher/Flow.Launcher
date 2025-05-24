@@ -31,6 +31,7 @@
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Tamanho</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Data de criação</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Data de modificação</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_age_checkbox">File Age</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Mostrar informações do ficheiro</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Formato de data e de hora</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Ordenação:</system:String>
@@ -164,4 +165,12 @@
     <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Mostrar menu de contexto nativo (experimental)</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Aqui pode especificar os itens a incluir no menu de contexto. Podem ser parciais (ex.: 'brir co') ou completos ('Abrir com').</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Aqui pode especificar os itens a excluir do menu de contexto. Podem ser parciais (ex.: 'brir co') ou completos ('Abrir com').</system:String>
+
+    <!--  Preview Info  -->
+    <system:String x:Key="Today">Today</system:String>
+    <system:String x:Key="DaysAgo">{0} days ago</system:String>
+    <system:String x:Key="OneMonthAgo">1 month ago</system:String>
+    <system:String x:Key="MonthsAgo">{0} months ago</system:String>
+    <system:String x:Key="OneYearAgo">1 year ago</system:String>
+    <system:String x:Key="YearsAgo">{0} years ago</system:String>
 </ResourceDictionary>
