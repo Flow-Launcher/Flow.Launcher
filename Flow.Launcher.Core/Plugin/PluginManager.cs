@@ -189,7 +189,7 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     if (string.IsNullOrEmpty(metadata.AssemblyName))
                     {
-                        continue; // Skip if AssemblyName is not set, which can happen for errornous plugins
+                        continue; // Skip if AssemblyName is not set, which can happen for erroneous plugins
                     }
                     metadata.PluginSettingsDirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, metadata.AssemblyName);
                     metadata.PluginCacheDirectoryPath = Path.Combine(DataLocation.PluginCacheDirectory, metadata.AssemblyName);
@@ -198,7 +198,7 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     if (string.IsNullOrEmpty(metadata.Name))
                     {
-                        continue; // Skip if Name is not set, which can happen for errornous plugins
+                        continue; // Skip if Name is not set, which can happen for erroneous plugins
                     }
                     metadata.PluginSettingsDirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, metadata.Name);
                     metadata.PluginCacheDirectoryPath = Path.Combine(DataLocation.PluginCacheDirectory, metadata.Name);
