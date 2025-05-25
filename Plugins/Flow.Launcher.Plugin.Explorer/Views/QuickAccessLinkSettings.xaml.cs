@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -53,20 +54,21 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
     private bool IsEdit { get; set; }
     [CanBeNull] private AccessLink SelectedAccessLink { get; set; }
     
-    private Settings Settings { get; }
-    public QuickAccessLinkSettings(Settings settings)
+    public ObservableCollection<AccessLink> QuickAccessLinks { get; set; }
+    
+    public QuickAccessLinkSettings(ObservableCollection<AccessLink> quickAccessLinks)
     {
-        Settings = settings;
+        QuickAccessLinks = quickAccessLinks;
         InitializeComponent();
     }
 
-    public QuickAccessLinkSettings(Settings settings,AccessLink selectedAccessLink)
+    public QuickAccessLinkSettings(ObservableCollection<AccessLink> quickAccessLinks,AccessLink selectedAccessLink)
     {
         IsEdit = true;
         _selectedName = selectedAccessLink.Name;
         _selectedPath = selectedAccessLink.Path;
         SelectedAccessLink = selectedAccessLink;
-        Settings = settings;
+        QuickAccessLinks = quickAccessLinks;
         InitializeComponent();
     }
 
@@ -88,7 +90,7 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
             return;
         }
 
-        if (Settings.QuickAccessLinks.Any(x => x.Path == SelectedPath && x.Name == SelectedName))
+        if (QuickAccessLinks.Any(x => x.Path == SelectedPath && x.Name == SelectedName))
         {
             var warning = Main.Context.API.GetTranslation("plugin_explorer_quick_access_link_select_different_folder");
             Main.Context.API.ShowMsgBox(warning);
@@ -99,9 +101,8 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
             EditAccessLink();
             return;
         }
-        var container = Settings.QuickAccessLinks;
         var newAccessLink = new AccessLink { Name = SelectedName, Path = SelectedPath };
-        container.Add(newAccessLink);
+        QuickAccessLinks.Add(newAccessLink);
         DialogResult = false;
         Close();
     }
@@ -120,12 +121,12 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
     {
         if (SelectedAccessLink == null)throw new ArgumentException("Access Link object is null");
 
-        var obj =  Settings.QuickAccessLinks.FirstOrDefault(x => x.GetHashCode() == SelectedAccessLink.GetHashCode());
-        int index = Settings.QuickAccessLinks.IndexOf(obj);
+        var obj =  QuickAccessLinks.FirstOrDefault(x => x.GetHashCode() == SelectedAccessLink.GetHashCode());
+        int index = QuickAccessLinks.IndexOf(obj);
         if (index >= 0)
         {
             SelectedAccessLink = new AccessLink { Name = SelectedName, Path = SelectedPath };
-            Settings.QuickAccessLinks[index] = SelectedAccessLink;
+            QuickAccessLinks[index] = SelectedAccessLink;
         }
         DialogResult = false;
         IsEdit = false;

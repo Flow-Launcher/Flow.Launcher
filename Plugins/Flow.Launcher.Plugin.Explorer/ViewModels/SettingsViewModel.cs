@@ -383,14 +383,14 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 return;
             }
             
-            var quickAccessLinkSettings = new QuickAccessLinkSettings(Settings,SelectedQuickAccessLink);
+            var quickAccessLinkSettings = new QuickAccessLinkSettings(Settings.QuickAccessLinks,SelectedQuickAccessLink);
             quickAccessLinkSettings.ShowDialog();
         }
         
         [RelayCommand]
         private void AddQuickAccessLink(object commandParameter)
         {
-            var quickAccessLinkSettings = new QuickAccessLinkSettings(Settings);
+            var quickAccessLinkSettings = new QuickAccessLinkSettings(Settings.QuickAccessLinks);
             quickAccessLinkSettings.ShowDialog();
         }
         
