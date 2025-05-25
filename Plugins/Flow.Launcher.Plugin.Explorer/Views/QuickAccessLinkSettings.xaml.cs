@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Forms;
-using Flow.Launcher.Plugin.Explorer.Search;
+using Flow.Launcher.Plugin.Explorer.Helper;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using JetBrains.Annotations;
 
@@ -26,7 +25,7 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
             {
                 _selectedPath = value;
                 OnPropertyChanged();
-                if (string.IsNullOrEmpty(_selectedName))  SelectedName = GetPathName();
+                if (string.IsNullOrEmpty(_selectedName))  SelectedName = _selectedPath.GetPathName();
             }
         }
     }
@@ -38,7 +37,7 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
     {
         get
         {
-            if (string.IsNullOrEmpty(_selectedName)) return GetPathName();
+            if (string.IsNullOrEmpty(_selectedName)) return _selectedPath.GetPathName();
             return _selectedName;
         }
         set
@@ -116,26 +115,11 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
 
         SelectedPath = folderBrowserDialog.SelectedPath;
     }
-
-    private string GetPathName()
-    {
-        if (string.IsNullOrEmpty(SelectedPath)) return "";
-        var path = SelectedPath.EndsWith(Constants.DirectorySeparator) ? SelectedPath[0..^1] : SelectedPath;
-
-        if (path.EndsWith(':'))
-            return path[0..^1] + " Drive";
-
-        return path.Split(new[] { Path.DirectorySeparatorChar }, StringSplitOptions.None)
-            .Last();
-    }
-
+    
     private void EditAccessLink()
     {
         if (SelectedAccessLink == null)throw new ArgumentException("Access Link object is null");
 
-        
-        // Talvez nao seja preciso buscar pelo hash code, mas sim pelo nome ou path
-        // Uma possivel validação, se pode nomes e paths iguais
         var obj =  Settings.QuickAccessLinks.FirstOrDefault(x => x.GetHashCode() == SelectedAccessLink.GetHashCode());
         int index = Settings.QuickAccessLinks.IndexOf(obj);
         if (index >= 0)

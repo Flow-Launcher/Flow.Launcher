@@ -6,6 +6,7 @@ using Flow.Launcher.Plugin.Explorer.Views;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -35,7 +36,8 @@ namespace Flow.Launcher.Plugin.Explorer
             Context = context;
 
             Settings = context.API.LoadSettingJsonStorage<Settings>();
-
+            FixLegacyQuickAccessLinkNames();
+            
             viewModel = new SettingsViewModel(context, Settings);
 
             contextMenu = new ContextMenu(Context, Settings, viewModel);
@@ -94,6 +96,17 @@ namespace Flow.Launcher.Plugin.Explorer
         public string GetTranslatedPluginDescription()
         {
             return Context.API.GetTranslation("plugin_explorer_plugin_description");
+        }
+
+        private void FixLegacyQuickAccessLinkNames()
+        {
+            foreach (var link in Settings.QuickAccessLinks)
+            {
+                if (string.IsNullOrWhiteSpace(link.Name))
+                {
+                    link.Name = link.Path.GetPathName();
+                }
+            }
         }
     }
 }
