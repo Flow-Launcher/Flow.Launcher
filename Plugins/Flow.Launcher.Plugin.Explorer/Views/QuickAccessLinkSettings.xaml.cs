@@ -33,7 +33,11 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
     private string _selectedName;
     public string SelectedName
     {
-        get => _selectedName;
+        get
+        {
+            if (string.IsNullOrEmpty(_selectedName)) return GetPathName();
+            return _selectedName;
+        }
         set
         {
             if (_selectedName != value)
@@ -60,6 +64,12 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
 
     private void OnDoneButtonClick(object sender, RoutedEventArgs e)
     {
+        if (string.IsNullOrEmpty(SelectedName) && string.IsNullOrEmpty(SelectedPath))
+        {
+            var warning = Main.Context.API.GetTranslation("plugin_explorer_quick_access_link_no_folder_selected");
+            Main.Context.API.ShowMsgBox(warning);
+            return;
+        }
         var container = Settings.QuickAccessLinks;
 
         

@@ -61,7 +61,7 @@
                         Margin="0 0 0 0"
                         FontSize="20"
                         FontWeight="SemiBold"
-                        Text="{DynamicResource plugin_explorer_manageactionkeywords_header}"
+                        Text="{DynamicResource plugin_explorer_manage_quick_access_links_header}"
                         TextAlignment="Left" />
                 </StackPanel>
                 <StackPanel Margin="0 10 0 0" Orientation="Horizontal">
@@ -71,11 +71,12 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         FontSize="14"
-                        Text="{DynamicResource plugin_explorer_actionkeyword_current}" />
+                        Text="{DynamicResource plugin_explorer_name}" />
                     <TextBox
-                        Width="135"
-                        HorizontalAlignment="Left"
+                        Margin="10 0 0 0"
                         VerticalAlignment="Center"
+                        FontSize="12"
+                        Width="250"
                         Text="{Binding SelectedName, Mode=TwoWay}" />
                 </StackPanel>
                 
@@ -86,23 +87,23 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         FontSize="14"
-                        Text="Path:" />
+                        Text="{DynamicResource plugin_explorer_path}" />
 
-                    <TextBlock
+
+                    <TextBox
                         Margin="10 0 0 0"
                         VerticalAlignment="Center"
                         FontSize="12"
                         Width="250"
-                        TextTrimming="CharacterEllipsis"
-                        Text="{Binding SelectedPath, Mode=OneWay}" />
-
+                        Text="{Binding SelectedPath, Mode=TwoWay}"
+                        IsReadOnly="True" />
                     <Button
                         Width="80"
-                        Height="25"
+                        Height="Auto"
                         Margin="10 0 0 0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        Content="Adicionar"
+                        Content="{DynamicResource select}"
                         Click="SelectPath_OnClick" />
                 </StackPanel>
 
