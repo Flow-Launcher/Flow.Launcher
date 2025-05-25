@@ -198,6 +198,7 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     if (string.IsNullOrEmpty(metadata.Name))
                     {
+                        Log.Warn($"Plugin with empty Name encountered. Skipping plugin initialization. Metadata: {metadata}");
                         continue; // Skip if Name is not set, which can happen for erroneous plugins
                     }
                     metadata.PluginSettingsDirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, metadata.Name);
