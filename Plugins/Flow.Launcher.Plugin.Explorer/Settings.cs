@@ -15,7 +15,7 @@ namespace Flow.Launcher.Plugin.Explorer
     {
         public int MaxResult { get; set; } = 100;
 
-        public static ObservableCollection<AccessLink> QuickAccessLinks { get; set; } = new();
+        public ObservableCollection<AccessLink> QuickAccessLinks { get; set; } = new();
 
         public ObservableCollection<AccessLink> IndexSearchExcludedSubdirectoryPaths { get; set; } = new ObservableCollection<AccessLink>();
 

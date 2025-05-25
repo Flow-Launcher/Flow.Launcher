@@ -53,17 +53,21 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
 
     private bool IsEdit { get; set; }
     [CanBeNull] private AccessLink SelectedAccessLink { get; set; }
-    public QuickAccessLinkSettings()
+    
+    private Settings Settings { get; }
+    public QuickAccessLinkSettings(Settings settings)
     {
+        Settings = settings;
         InitializeComponent();
     }
 
-    public QuickAccessLinkSettings(AccessLink selectedAccessLink)
+    public QuickAccessLinkSettings(Settings settings,AccessLink selectedAccessLink)
     {
         IsEdit = true;
         _selectedName = selectedAccessLink.Name;
         _selectedPath = selectedAccessLink.Path;
         SelectedAccessLink = selectedAccessLink;
+        Settings = settings;
         InitializeComponent();
     }
 
