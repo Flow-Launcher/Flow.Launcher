@@ -365,27 +365,28 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         }
 
         [RelayCommand]
-        private void AddLink(object commandParameter)
+        private void AddQuickAccessLink(object commandParameter)
         {
-            var container = commandParameter switch
-            {
-                "QuickAccessLink" => Settings.QuickAccessLinks,
-                "IndexSearchExcludedPaths" => Settings.IndexSearchExcludedSubdirectoryPaths,
-                _ => throw new ArgumentOutOfRangeException(nameof(commandParameter))
-            };
-
-            ArgumentNullException.ThrowIfNull(container);
-
+            var quickAccessLinkSettings = new QuickAccessLinkSettings();
+            quickAccessLinkSettings.ShowDialog();
+        }
+        
+        
+        [RelayCommand]
+        private void AddIndexSearchExcludePaths(object commandParameter)
+        {
+            var container = Settings.IndexSearchExcludedSubdirectoryPaths;
+            
             var folderBrowserDialog = new FolderBrowserDialog();
-
+            
             if (folderBrowserDialog.ShowDialog() != DialogResult.OK)
                 return;
-
+            
             var newAccessLink = new AccessLink
             {
                 Path = folderBrowserDialog.SelectedPath
             };
-
+            
             container.Add(newAccessLink);
         }
 

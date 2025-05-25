@@ -762,7 +762,7 @@
                         <Button
                             MinWidth="100"
                             Margin="{StaticResource SettingPanelItemLeftMargin}"
-                            Command="{Binding AddLinkCommand}"
+                            Command="{Binding AddQuickAccessLinkCommand}"
                             CommandParameter="QuickAccessLink"
                             Content="{DynamicResource plugin_explorer_add}" />
                     </StackPanel>
@@ -822,7 +822,7 @@
                         <Button
                             MinWidth="100"
                             Margin="{StaticResource SettingPanelItemLeftMargin}"
-                            Command="{Binding AddLinkCommand}"
+                            Command="{Binding AddIndexSearchExcludePathsCommand}"
                             CommandParameter="IndexSearchExcludedPaths"
                             Content="{DynamicResource plugin_explorer_add}" />
                     </StackPanel>
