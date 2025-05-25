@@ -5,7 +5,7 @@ using Flow.Launcher.Plugin.Explorer.Search;
 
 namespace Flow.Launcher.Plugin.Explorer.Helper;
 
-public static class FolderPathHelper
+public static class PathHelper
 {
     public static string GetPathName(this string selectedPath)
     {
