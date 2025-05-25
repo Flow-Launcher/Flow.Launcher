@@ -327,18 +327,6 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             container.Add(link);
         }
 
-        [RelayCommand]
-        private void EditQuickAccessLink(object commandParameter)
-        {
-            if (SelectedQuickAccessLink is null)
-            {
-                ShowUnselectedMessage();
-                return;
-            }
-            
-            var quickAccessLinkSettings = new QuickAccessLinkSettings(SelectedQuickAccessLink);
-            quickAccessLinkSettings.ShowDialog();
-        }
 
         [RelayCommand]
         private void EditIndexSearchExcludePaths(object commandParameter)
@@ -368,20 +356,6 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             });
         }
 
-        private void ShowUnselectedMessage()
-        {
-            var warning = Context.API.GetTranslation("plugin_explorer_make_selection_warning");
-            Context.API.ShowMsgBox(warning);
-        }
-
-        [RelayCommand]
-        private void AddQuickAccessLink(object commandParameter)
-        {
-            var quickAccessLinkSettings = new QuickAccessLinkSettings();
-            quickAccessLinkSettings.ShowDialog();
-        }
-        
-        
         [RelayCommand]
         private void AddIndexSearchExcludePaths(object commandParameter)
         {
@@ -401,6 +375,28 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         }
 
         [RelayCommand]
+        private void EditQuickAccessLink(object commandParameter)
+        {
+            if (SelectedQuickAccessLink is null)
+            {
+                ShowUnselectedMessage();
+                return;
+            }
+            
+            var quickAccessLinkSettings = new QuickAccessLinkSettings(SelectedQuickAccessLink);
+            quickAccessLinkSettings.ShowDialog();
+        }
+        
+        [RelayCommand]
+        private void AddQuickAccessLink(object commandParameter)
+        {
+            var quickAccessLinkSettings = new QuickAccessLinkSettings();
+            quickAccessLinkSettings.ShowDialog();
+        }
+        
+        
+
+        [RelayCommand]
         private void RemoveLink(object obj)
         {
             if (obj is not string container) return;
@@ -417,6 +413,12 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                     break;
             }
             Save();
+        }
+        
+        private void ShowUnselectedMessage()
+        {
+            var warning = Context.API.GetTranslation("plugin_explorer_make_selection_warning");
+            Context.API.ShowMsgBox(warning);
         }
 
         #endregion

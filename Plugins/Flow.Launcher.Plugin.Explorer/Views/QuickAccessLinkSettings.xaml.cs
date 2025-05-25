@@ -14,9 +14,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views;
 
 public partial class QuickAccessLinkSettings : INotifyPropertyChanged
 {
-
-    private bool IsEdit { get; set; }
-    [CanBeNull] private AccessLink SelectedAccessLink { get; set; }
+    
     private string _selectedPath;
 
     public string SelectedPath
@@ -28,7 +26,7 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
             {
                 _selectedPath = value;
                 OnPropertyChanged();
-                SelectedName = GetPathName();
+                if (string.IsNullOrEmpty(_selectedName))  SelectedName = GetPathName();
             }
         }
     }
@@ -53,6 +51,8 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
         }
     }
 
+    private bool IsEdit { get; set; }
+    [CanBeNull] private AccessLink SelectedAccessLink { get; set; }
     public QuickAccessLinkSettings()
     {
         InitializeComponent();
@@ -78,7 +78,7 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
 
     private void OnDoneButtonClick(object sender, RoutedEventArgs e)
     {
-        if (string.IsNullOrEmpty(SelectedName) && string.IsNullOrEmpty(SelectedPath))
+        if (string.IsNullOrEmpty(SelectedName) || string.IsNullOrEmpty(SelectedPath))
         {
             var warning = Main.Context.API.GetTranslation("plugin_explorer_quick_access_link_no_folder_selected");
             Main.Context.API.ShowMsgBox(warning);
@@ -122,6 +122,9 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
     {
         if (SelectedAccessLink == null)throw new ArgumentException("Access Link object is null");
 
+        
+        // Talvez nao seja preciso buscar pelo hash code, mas sim pelo nome ou path
+        // Uma possivel validação, se pode nomes e paths iguais
         var obj =  Settings.QuickAccessLinks.FirstOrDefault(x => x.GetHashCode() == SelectedAccessLink.GetHashCode());
         int index = Settings.QuickAccessLinks.IndexOf(obj);
         if (index >= 0)
