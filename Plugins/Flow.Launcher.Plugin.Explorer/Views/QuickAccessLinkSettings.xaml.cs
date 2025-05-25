@@ -88,6 +88,13 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
             Main.Context.API.ShowMsgBox(warning);
             return;
         }
+
+        if (Settings.QuickAccessLinks.Any(x => x.Path == SelectedPath && x.Name == SelectedName))
+        {
+            var warning = Main.Context.API.GetTranslation("plugin_explorer_quick_access_link_select_different_folder");
+            Main.Context.API.ShowMsgBox(warning);
+            return;
+        }
         if (IsEdit) 
         {
             EditAccessLink();
