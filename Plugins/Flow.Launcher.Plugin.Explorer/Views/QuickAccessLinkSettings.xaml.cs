@@ -52,9 +52,9 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
     }
 
     private bool IsEdit { get; set; }
-    [CanBeNull] private AccessLink SelectedAccessLink { get; set; }
+    [CanBeNull] private AccessLink SelectedAccessLink { get; }
     
-    public ObservableCollection<AccessLink> QuickAccessLinks { get; set; }
+    public ObservableCollection<AccessLink> QuickAccessLinks { get; }
     
     public QuickAccessLinkSettings(ObservableCollection<AccessLink> quickAccessLinks)
     {
@@ -89,10 +89,12 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
             Main.Context.API.ShowMsgBox(warning);
             return;
         }
-
-        if (QuickAccessLinks.Any(x => x.Path == SelectedPath && x.Name == SelectedName))
+        
+        if (QuickAccessLinks.Any(x =>
+                x.Path.Equals(SelectedPath, StringComparison.OrdinalIgnoreCase) &&
+                                      x.Name.Equals(SelectedName, StringComparison.OrdinalIgnoreCase)))
         {
-            var warning = Main.Context.API.GetTranslation("plugin_explorer_quick_access_link_select_different_folder");
+            var warning = Main.Context.API.GetTranslation("plugin_explorer_quick_access_link_path_already_exists");
             Main.Context.API.ShowMsgBox(warning);
             return;
         }
@@ -103,7 +105,7 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
         }
         var newAccessLink = new AccessLink { Name = SelectedName, Path = SelectedPath };
         QuickAccessLinks.Add(newAccessLink);
-        DialogResult = false;
+        DialogResult = true;
         Close();
     }
 
@@ -121,14 +123,13 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
     {
         if (SelectedAccessLink == null)throw new ArgumentException("Access Link object is null");
 
-        var obj =  QuickAccessLinks.FirstOrDefault(x => x.GetHashCode() == SelectedAccessLink.GetHashCode());
-        int index = QuickAccessLinks.IndexOf(obj);
+        var index = QuickAccessLinks.IndexOf(SelectedAccessLink);
         if (index >= 0)
         {
-            SelectedAccessLink = new AccessLink { Name = SelectedName, Path = SelectedPath };
-            QuickAccessLinks[index] = SelectedAccessLink;
+            var updatedLink = new AccessLink { Name = SelectedName, Path = SelectedPath };
+            QuickAccessLinks[index] = updatedLink;
         }
-        DialogResult = false;
+        DialogResult = true;
         IsEdit = false;
         Close();
     }

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using CommunityToolkit.Mvvm.Input;
+using Flow.Launcher.Plugin.Explorer.Helper;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.Search.Everything.Exceptions;
@@ -352,7 +353,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             collection.Remove(SelectedIndexSearchExcludedPath);
             collection.Add(new AccessLink
             {
-                Path = path, Type = selectedType,
+                Path = path, Type = selectedType, Name = path.GetPathName()
             });
         }
 
@@ -368,10 +369,12 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             
             var newAccessLink = new AccessLink
             {
+                Name = folderBrowserDialog.SelectedPath.GetPathName(),
                 Path = folderBrowserDialog.SelectedPath
             };
             
             container.Add(newAccessLink);
+            Save();
         }
 
         [RelayCommand]
@@ -382,16 +385,15 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 ShowUnselectedMessage();
                 return;
             }
-            
             var quickAccessLinkSettings = new QuickAccessLinkSettings(Settings.QuickAccessLinks,SelectedQuickAccessLink);
-            quickAccessLinkSettings.ShowDialog();
+            if (quickAccessLinkSettings.ShowDialog() == true) Save();
         }
         
         [RelayCommand]
         private void AddQuickAccessLink(object commandParameter)
         {
             var quickAccessLinkSettings = new QuickAccessLinkSettings(Settings.QuickAccessLinks);
-            quickAccessLinkSettings.ShowDialog();
+            if (quickAccessLinkSettings.ShowDialog() == true) Save();
         }
         
         
