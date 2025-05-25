@@ -718,9 +718,27 @@
                             BorderThickness="1"
                             DragEnter="lbxAccessLinks_DragEnter"
                             Drop="LbxAccessLinks_OnDrop"
-                            ItemTemplate="{StaticResource ListViewTemplateAccessLinks}"
                             ItemsSource="{Binding Settings.QuickAccessLinks}"
-                            SelectedItem="{Binding SelectedQuickAccessLink}" />
+                            SelectedItem="{Binding SelectedQuickAccessLink, Mode=TwoWay}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Width="600" Header="{DynamicResource plugin_explorer_name}">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Name}" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Width="900" Header="{DynamicResource plugin_explorer_path}">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Path}" TextTrimming="CharacterEllipsis" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
                     </Border>
 
                     <StackPanel
