@@ -8,13 +8,17 @@ using System.Windows;
 using System.Windows.Forms;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
+using JetBrains.Annotations;
 
 namespace Flow.Launcher.Plugin.Explorer.Views;
 
 public partial class QuickAccessLinkSettings : INotifyPropertyChanged
 {
-    
+
+    private bool IsEdit { get; set; }
+    [CanBeNull] private AccessLink SelectedAccessLink { get; set; }
     private string _selectedPath;
+
     public string SelectedPath
     {
         get => _selectedPath;
@@ -29,8 +33,9 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
         }
     }
 
-    
+
     private string _selectedName;
+
     public string SelectedName
     {
         get
@@ -48,19 +53,28 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
         }
     }
 
-
     public QuickAccessLinkSettings()
     {
         InitializeComponent();
     }
-    
-    
-    
+
+    public QuickAccessLinkSettings(AccessLink selectedAccessLink)
+    {
+        IsEdit = true;
+        _selectedName = selectedAccessLink.Name;
+        _selectedPath = selectedAccessLink.Path;
+        SelectedAccessLink = selectedAccessLink;
+        InitializeComponent();
+    }
+
+
+
     private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
     {
         DialogResult = false;
         Close();
     }
+
 
     private void OnDoneButtonClick(object sender, RoutedEventArgs e)
     {
@@ -70,15 +84,13 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
             Main.Context.API.ShowMsgBox(warning);
             return;
         }
-        var container = Settings.QuickAccessLinks;
-
-        
-        // Lembrar de colocar uma logica pra evitar path e name vazios
-        var newAccessLink = new AccessLink
+        if (IsEdit) 
         {
-            Name = SelectedName,
-            Path = SelectedPath
-        };
+            EditAccessLink();
+            return;
+        }
+        var container = Settings.QuickAccessLinks;
+        var newAccessLink = new AccessLink { Name = SelectedName, Path = SelectedPath };
         container.Add(newAccessLink);
         DialogResult = false;
         Close();
@@ -87,13 +99,13 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
     private void SelectPath_OnClick(object commandParameter, RoutedEventArgs e)
     {
         var folderBrowserDialog = new FolderBrowserDialog();
-        
+
         if (folderBrowserDialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
             return;
 
         SelectedPath = folderBrowserDialog.SelectedPath;
     }
-    
+
     private string GetPathName()
     {
         if (string.IsNullOrEmpty(SelectedPath)) return "";
@@ -105,8 +117,24 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
         return path.Split(new[] { Path.DirectorySeparatorChar }, StringSplitOptions.None)
             .Last();
     }
-    
-    public event PropertyChangedEventHandler PropertyChanged;
+
+    private void EditAccessLink()
+    {
+        if (SelectedAccessLink == null)throw new ArgumentException("Access Link object is null");
+
+        var obj =  Settings.QuickAccessLinks.FirstOrDefault(x => x.GetHashCode() == SelectedAccessLink.GetHashCode());
+        int index = Settings.QuickAccessLinks.IndexOf(obj);
+        if (index >= 0)
+        {
+            SelectedAccessLink = new AccessLink { Name = SelectedName, Path = SelectedPath };
+            Settings.QuickAccessLinks[index] = SelectedAccessLink;
+        }
+        DialogResult = false;
+        IsEdit = false;
+        Close();
+    }
+
+public event PropertyChangedEventHandler PropertyChanged;
 
     protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {

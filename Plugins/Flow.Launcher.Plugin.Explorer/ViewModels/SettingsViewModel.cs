@@ -328,33 +328,43 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         }
 
         [RelayCommand]
-        private void EditLink(object commandParameter)
+        private void EditQuickAccessLink(object commandParameter)
         {
-            var (selectedLink, collection) = commandParameter switch
+            if (SelectedQuickAccessLink is null)
             {
-                "QuickAccessLink" => (SelectedQuickAccessLink, Settings.QuickAccessLinks),
-                "IndexSearchExcludedPaths" => (SelectedIndexSearchExcludedPath, Settings.IndexSearchExcludedSubdirectoryPaths),
-                _ => throw new ArgumentOutOfRangeException(nameof(commandParameter))
-            };
+                ShowUnselectedMessage();
+                return;
+            }
+            
+            var quickAccessLinkSettings = new QuickAccessLinkSettings(SelectedQuickAccessLink);
+            quickAccessLinkSettings.ShowDialog();
+        }
 
-            if (selectedLink is null)
+        [RelayCommand]
+        private void EditIndexSearchExcludePaths(object commandParameter)
+        {
+
+            var collection = Settings.IndexSearchExcludedSubdirectoryPaths;
+
+            if (SelectedIndexSearchExcludedPath is null)
             {
                 ShowUnselectedMessage();
                 return;
             }
 
-            var path = PromptUserSelectPath(selectedLink.Type,
-                selectedLink.Type == ResultType.Folder
-                    ? selectedLink.Path
-                    : Path.GetDirectoryName(selectedLink.Path));
+            var path = PromptUserSelectPath(SelectedIndexSearchExcludedPath.Type,
+                SelectedIndexSearchExcludedPath.Type == ResultType.Folder
+                    ? SelectedIndexSearchExcludedPath.Path
+                    : Path.GetDirectoryName(SelectedIndexSearchExcludedPath.Path));
 
             if (path is null)
                 return;
 
-            collection.Remove(selectedLink);
+            var selectedType = SelectedIndexSearchExcludedPath.Type;
+            collection.Remove(SelectedIndexSearchExcludedPath);
             collection.Add(new AccessLink
             {
-                Path = path, Type = selectedLink.Type,
+                Path = path, Type = selectedType,
             });
         }
 

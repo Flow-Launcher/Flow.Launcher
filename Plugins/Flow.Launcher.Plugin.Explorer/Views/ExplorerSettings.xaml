@@ -756,7 +756,7 @@
                         <Button
                             MinWidth="100"
                             Margin="{StaticResource SettingPanelItemLeftMargin}"
-                            Command="{Binding EditLinkCommand}"
+                            Command="{Binding EditQuickAccessLinkCommand}"
                             CommandParameter="QuickAccessLink"
                             Content="{DynamicResource plugin_explorer_edit}" />
                         <Button
@@ -816,7 +816,7 @@
                         <Button
                             MinWidth="100"
                             Margin="{StaticResource SettingPanelItemLeftMargin}"
-                            Command="{Binding EditLinkCommand}"
+                            Command="{Binding EditIndexSearchExcludePathsCommand}"
                             CommandParameter="IndexSearchExcludedPaths"
                             Content="{DynamicResource plugin_explorer_edit}" />
                         <Button
