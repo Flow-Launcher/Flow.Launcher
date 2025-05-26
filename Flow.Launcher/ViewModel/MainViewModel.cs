@@ -214,18 +214,7 @@ namespace Flow.Launcher.ViewModel
                     await Task.Delay(20);
                     while (channelReader.TryRead(out var item))
                     {
-                        if (item.shouldClearExistingResults)
-                        {
-                            cancelIndex++;
-                            if (cancelIndex > 1)
-                            {
-                                // Assume one task for clearing existing results is cancelled
-                                continue;
-                            }
-                        }
-                            
-
-                        if (!item.Token.IsCancellationRequested)
+                        if (item.shouldClearExistingResults || !item.Token.IsCancellationRequested)
                             queue[item.ID] = item;
                     }
 
@@ -1450,6 +1439,16 @@ namespace Flow.Launcher.ViewModel
                 _lastQuery = query;
                 _previousIsHomeQuery = currentIsHomeQuery;
 
+                // Test: Assume first query task for clearing existing results is cancelled
+                if (shouldClearExistingResults)
+                {
+                    cancelIndex++;
+                    if (cancelIndex == 2)
+                    {
+                        currentUpdateSource.Cancel();
+                    }
+                }
+
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
                     token, reSelect, shouldClearExistingResults)))
                 {
@@ -1874,7 +1873,9 @@ namespace Flow.Launcher.ViewModel
         {
             if (!resultsForUpdates.Any())
                 return;
+
             CancellationToken token;
+            var shouldClearExistingResults = resultsForUpdates.Any(r => r.shouldClearExistingResults);
 
             try
             {
@@ -1936,7 +1937,7 @@ namespace Flow.Launcher.ViewModel
             // it should be the same for all results
             bool reSelect = resultsForUpdates.First().ReSelectFirstResult;
 
-            Results.AddResults(resultsForUpdates, token, reSelect);
+            Results.AddResults(resultsForUpdates, token, reSelect, shouldClearExistingResults);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]

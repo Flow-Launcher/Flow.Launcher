@@ -185,12 +185,21 @@ namespace Flow.Launcher.ViewModel
         /// <summary>
         /// To avoid deadlock, this method should not called from main thread
         /// </summary>
-        public void AddResults(ICollection<ResultsForUpdate> resultsForUpdates, CancellationToken token, bool reselect = true)
+        public void AddResults(ICollection<ResultsForUpdate> resultsForUpdates, CancellationToken token, bool reselect = true, bool shouldClearExistingResults = false)
         {
             var newResults = NewResults(resultsForUpdates);
 
             if (token.IsCancellationRequested)
-                return;
+            {
+                if (shouldClearExistingResults)
+                {
+                    newResults = new List<ResultViewModel>();
+                }
+                else
+                {
+                    return;
+                }
+            }
 
             UpdateResults(newResults, reselect, token);
         }
