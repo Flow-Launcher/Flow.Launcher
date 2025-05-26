@@ -354,6 +354,11 @@ namespace Flow.Launcher.ViewModel
                 {
                     // RemoveAll will not check token cancellation, so it will clear existing results
                     if (Count != 0) RemoveAll(newItems.Count);
+
+                    // After results are removed, we need to check the token cancellation
+                    // so that we will not add new items from the cancelled queries
+                    if (token.IsCancellationRequested) return;
+
                     AddAll(newItems);
                     editTime++;
                     return;
@@ -362,6 +367,11 @@ namespace Flow.Launcher.ViewModel
                 {
                     // Clear will not check token cancellation, so it will clear existing results
                     Clear();
+
+                    // After results are removed, we need to check the token cancellation
+                    // so that we will not add new items from the cancelled queries
+                    if (token.IsCancellationRequested) return;
+
                     BulkAddAll(newItems);
                     if (Capacity > 8000 && newItems.Count < 3000)
                     {
