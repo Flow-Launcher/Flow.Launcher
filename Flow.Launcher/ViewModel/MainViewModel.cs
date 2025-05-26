@@ -1079,6 +1079,8 @@ namespace Flow.Launcher.ViewModel
 
         #region Query
 
+        internal bool ShouldClearExistingResults { get; set; }
+
         public void QueryResults()
         {
             _ = QueryResultsAsync(false);
@@ -1434,11 +1436,16 @@ namespace Flow.Launcher.ViewModel
 
                 // Indicate if to clear existing results so to show only ones from plugins with action keywords
                 var shouldClearExistingResults = ShouldClearExistingResultsForQuery(query, currentIsHomeQuery);
+                if (shouldClearExistingResults)
+                {
+                    // Setup the flag to clear existing results so that ResultsViewModel.NewResults will handle in the next update
+                    ShouldClearExistingResults = true;
+                }
                 _lastQuery = query;
                 _previousIsHomeQuery = currentIsHomeQuery;
 
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
-                    token, reSelect, shouldClearExistingResults)))
+                    token, reSelect)))
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
@@ -1457,11 +1464,16 @@ namespace Flow.Launcher.ViewModel
 
                 // Indicate if to clear existing results so to show only ones from plugins with action keywords
                 var shouldClearExistingResults = ShouldClearExistingResultsForQuery(query, currentIsHomeQuery);
+                if (shouldClearExistingResults)
+                {
+                    // Setup the flag to clear existing results so that ResultsViewModel.NewResults will handle in the next update
+                    ShouldClearExistingResults = true;
+                }
                 _lastQuery = query;
                 _previousIsHomeQuery = currentIsHomeQuery;
 
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, _historyMetadata, query,
-                    token, reSelect, shouldClearExistingResults)))
+                    token, reSelect)))
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }

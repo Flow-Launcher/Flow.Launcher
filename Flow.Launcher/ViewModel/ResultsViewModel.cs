@@ -187,10 +187,11 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         public void AddResults(ICollection<ResultsForUpdate> resultsForUpdates, CancellationToken token, bool reselect = true)
         {
-            var newResults = NewResults(resultsForUpdates);
-
             if (token.IsCancellationRequested)
                 return;
+
+            // Since NewResults may need to clear existing results, do not check token cancellation after this point
+            var newResults = NewResults(resultsForUpdates);
 
             UpdateResults(newResults, reselect, token);
         }
@@ -244,8 +245,10 @@ namespace Flow.Launcher.ViewModel
 
             var newResults = resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings));
 
-            if (resultsForUpdates.Any(x => x.shouldClearExistingResults))
+            // If mainVM has flag to clear existing results, hanlde it here
+            if (_mainVM != null && _mainVM.ShouldClearExistingResults)
             {
+                _mainVM.ShouldClearExistingResults = false;
                 App.API.LogDebug("NewResults", $"Existing results are cleared for query");
                 return newResults.OrderByDescending(rv => rv.Result.Score).ToList();
             }
@@ -343,11 +346,14 @@ namespace Flow.Launcher.ViewModel
             public void Update(List<ResultViewModel> newItems, CancellationToken token = default)
             {
                 _token = token;
-                if (Count == 0 && newItems.Count == 0 || _token.IsCancellationRequested)
+
+                // Since NewResults may need to clear existing results, do not check token cancellation here!
+                if (Count == 0 && newItems.Count == 0)
                     return;
 
                 if (editTime < 10 || newItems.Count < 30)
                 {
+                    // RemoveAll will not check token cancellation, so it will clear existing results
                     if (Count != 0) RemoveAll(newItems.Count);
                     AddAll(newItems);
                     editTime++;
@@ -355,6 +361,7 @@ namespace Flow.Launcher.ViewModel
                 }
                 else
                 {
+                    // Clear will not check token cancellation, so it will clear existing results
                     Clear();
                     BulkAddAll(newItems);
                     if (Capacity > 8000 && newItems.Count < 3000)
