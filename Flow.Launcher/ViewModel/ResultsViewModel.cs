@@ -346,7 +346,7 @@ namespace Flow.Launcher.ViewModel
             {
                 _token = token;
 
-                // Since NewResults may need to clear existing results, do not check token cancellation here!
+                // Since NewResults may need to clear existing results, so we cannot check token cancellation here
                 if (Count == 0 && newItems.Count == 0)
                     return;
 
