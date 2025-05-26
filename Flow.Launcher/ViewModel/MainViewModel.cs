@@ -37,6 +37,9 @@ namespace Flow.Launcher.ViewModel
         private string _queryTextBeforeLeaveResults;
         private string _ignoredQueryText; // Used to ignore query text change when switching between context menu and query results
 
+        private readonly object _shouldClearExistingResultsLock = new();
+        private bool _shouldClearExistingResults;
+
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
         private readonly FlowLauncherJsonStorageTopMostRecord _topMostRecord;
@@ -1079,8 +1082,6 @@ namespace Flow.Launcher.ViewModel
 
         #region Query
 
-        internal bool ShouldClearExistingResults { get; set; }
-
         public void QueryResults()
         {
             _ = QueryResultsAsync(false);
@@ -1439,7 +1440,10 @@ namespace Flow.Launcher.ViewModel
                 if (shouldClearExistingResults)
                 {
                     // Setup the flag to clear existing results so that ResultsViewModel.NewResults will handle in the next update
-                    ShouldClearExistingResults = true;
+                    lock (_shouldClearExistingResultsLock)
+                    {
+                        _shouldClearExistingResults = true;
+                    }
                 }
                 _lastQuery = query;
                 _previousIsHomeQuery = currentIsHomeQuery;
@@ -1467,7 +1471,10 @@ namespace Flow.Launcher.ViewModel
                 if (shouldClearExistingResults)
                 {
                     // Setup the flag to clear existing results so that ResultsViewModel.NewResults will handle in the next update
-                    ShouldClearExistingResults = true;
+                    lock (_shouldClearExistingResultsLock)
+                    {
+                        _shouldClearExistingResults = true;
+                    }
                 }
                 _lastQuery = query;
                 _previousIsHomeQuery = currentIsHomeQuery;
@@ -1706,6 +1713,20 @@ namespace Flow.Launcher.ViewModel
         {
             var selected = SelectedResults == results;
             return selected;
+        }
+
+        internal bool CheckShouldClearExistingResultsAndReset()
+        {
+            lock (_shouldClearExistingResultsLock)
+            {
+                if (_shouldClearExistingResults)
+                {
+                    _shouldClearExistingResults = false;
+                    return true;
+                }
+
+                return false;
+            }
         }
 
         #endregion
