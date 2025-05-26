@@ -245,7 +245,7 @@ namespace Flow.Launcher.ViewModel
 
             var newResults = resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings));
 
-            // If mainVM has flag to clear existing results, hanlde it here
+            // If mainVM has flag to clear existing results, handle it here
             if (_mainVM != null && _mainVM.ShouldClearExistingResults)
             {
                 _mainVM.ShouldClearExistingResults = false;
