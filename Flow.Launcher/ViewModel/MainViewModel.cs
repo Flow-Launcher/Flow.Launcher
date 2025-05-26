@@ -212,6 +212,12 @@ namespace Flow.Launcher.ViewModel
                     await Task.Delay(20);
                     while (channelReader.TryRead(out var item))
                     {
+                        if (item.Token.IsCancellationRequested && item.shouldClearExistingResults)
+                        {
+                            App.API.LogDebug(ClassName, "BLAH- Token cancelled but results marked to clear");
+                            Results.Clear();
+                        }
+
                         if (!item.Token.IsCancellationRequested)
                             queue[item.ID] = item;
                     }
