@@ -1752,7 +1752,7 @@
     <value>Einen Dateityp immer in einem spezifischen Programm öffnen lassen</value>
   </data>
   <data name="ChangeTheNarratorSVoice" xml:space="preserve">
-    <value>Change the Narrator’s voice</value>
+    <value>Stimme ändern</value>
   </data>
   <data name="FindAndFixKeyboardProblems" xml:space="preserve">
     <value>Tastaturprobleme finden und beheben</value>
@@ -1761,7 +1761,7 @@
     <value>Screenreader verwenden</value>
   </data>
   <data name="ShowWhichWorkgroupThisComputerIsOn" xml:space="preserve">
-    <value>Show which workgroup this computer is on</value>
+    <value>Arbeitsgruppe auf diesem Computer Anzeigen</value>
   </data>
   <data name="ChangeMouseWheelSettings" xml:space="preserve">
     <value>Mausrad-Einstellungen ändern</value>
@@ -2176,7 +2176,7 @@
     <value>Change advanced colour management settings for displays, scanners and printers</value>
   </data>
   <data name="LetWindowsSuggestEaseOfAccessSettings" xml:space="preserve">
-    <value>Let Windows suggest Ease of Access settings</value>
+    <value>Lasse Windows Vereinfachte Zugriffseinstellungen vorschlagen</value>
   </data>
   <data name="ClearDiskSpaceByDeletingUnnecessaryFiles" xml:space="preserve">
     <value>Clear disk space by deleting unnecessary files</value>
