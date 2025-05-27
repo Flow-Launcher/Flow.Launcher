@@ -758,6 +758,8 @@ namespace Flow.Launcher.Infrastructure
 
         #region Explorer
 
+        // https://learn.microsoft.com/en-us/windows/win32/api/shlobj_core/nf-shlobj_core-shopenfolderandselectitems
+
         public static unsafe void OpenFolderAndSelectFile(string filePath)
         {
             ITEMIDLIST* pidlFolder = null;
