@@ -11,7 +11,6 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core;
@@ -319,45 +318,55 @@ namespace Flow.Launcher
 
             ((PluginJsonStorage<T>)_pluginJsonStorages[type]).Save();
         }
-
-        public void OpenDirectory(string DirectoryPath, string FileNameOrFilePath = null)
+        
+        public void OpenDirectory(string directoryPath, string fileNameOrFilePath = null)
         {
             try
             {
-                using var explorer = new Process();
                 var explorerInfo = _settings.CustomExplorer;
                 var explorerPath = explorerInfo.Path.Trim().ToLowerInvariant();
-                var targetPath = FileNameOrFilePath is null
-                    ? DirectoryPath
-                    : Path.IsPathRooted(FileNameOrFilePath)
-                        ? FileNameOrFilePath
-                        : Path.Combine(DirectoryPath, FileNameOrFilePath);
+                var targetPath = fileNameOrFilePath is null
+                    ? directoryPath
+                    : Path.IsPathRooted(fileNameOrFilePath)
+                        ? fileNameOrFilePath
+                        : Path.Combine(directoryPath, fileNameOrFilePath);
 
                 if (Path.GetFileNameWithoutExtension(explorerPath) == "explorer")
                 {
                     // Windows File Manager
-                    explorer.StartInfo = new ProcessStartInfo
+                    if (fileNameOrFilePath is null)
                     {
-                        FileName = targetPath,
-                        UseShellExecute = true
-                    };
+                        // Only Open the directory
+                        using var explorer = new Process();
+                        explorer.StartInfo = new ProcessStartInfo
+                        {
+                            FileName = directoryPath,
+                            UseShellExecute = true
+                        };
+                        explorer.Start();
+                    }
+                    else
+                    {
+                        // Open the directory and select the file
+                        Win32Helper.OpenFolderAndSelectFile(targetPath);
+                    }
                 }
                 else
                 {
                     // Custom File Manager
+                    using var explorer = new Process();
                     explorer.StartInfo = new ProcessStartInfo
                     {
-                        FileName = explorerInfo.Path.Replace("%d", DirectoryPath),
+                        FileName = explorerInfo.Path.Replace("%d", directoryPath),
                         UseShellExecute = true,
-                        Arguments = FileNameOrFilePath is null
-                            ? explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath)
+                        Arguments = fileNameOrFilePath is null
+                            ? explorerInfo.DirectoryArgument.Replace("%d", directoryPath)
                             : explorerInfo.FileArgument
-                                .Replace("%d", DirectoryPath)
+                                .Replace("%d", directoryPath)
                                 .Replace("%f", targetPath)
                     };
+                    explorer.Start();
                 }
-
-                explorer.Start();
             }
             catch (Win32Exception ex) when (ex.NativeErrorCode == 2)
             {
@@ -380,6 +389,7 @@ namespace Flow.Launcher
                 );
             }
         }
+
 
         private void OpenUri(Uri uri, bool? inPrivate = null)
         {
