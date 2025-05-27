@@ -24,7 +24,7 @@ def get_github_prs(token, owner, repo, milestone, label, state):
     
     milestone_id = None
     milestone_url = f"https://api.github.com/repos/{owner}/{repo}/milestones"
-    params = {"state": state}
+    params = {"state": open}
     
     try:
         response = requests.get(milestone_url, headers=headers, params=params)
@@ -37,17 +37,19 @@ def get_github_prs(token, owner, repo, milestone, label, state):
         
         if not milestone_id:
             print(f"Milestone '{milestone}' not found in repository '{owner}/{repo}'.")
-            return []
+            exit(1)
 
     except requests.exceptions.RequestException as e:
         print(f"Error fetching milestones: {e}")
-        return []
+        exit(1)
 
-    prs_url = f"https://api.github.com/repos/{owner}/{repo}/pulls"
+    # This endpoint allows filtering by milestone and label. A PR in GH's perspective is a type of issue.
+    prs_url = f"https://api.github.com/repos/{owner}/{repo}/issues"
     params = {
         "state": state,
         "milestone": milestone_id,
         "labels": label,
+        "per_page": 100,
     }
 
     all_prs = []
@@ -61,18 +63,19 @@ def get_github_prs(token, owner, repo, milestone, label, state):
             
             if not prs:
                 break # No more PRs to fetch
-
-            all_prs.extend(prs)
+            
+            # Check for pr key since we are using issues endpoint instead.
+            all_prs.extend([item for item in prs if "pull_request" in item])
             page += 1
 
         except requests.exceptions.RequestException as e:
             print(f"Error fetching pull requests: {e}")
-            break
+            exit(1)
             
     return all_prs
 
 if __name__ == "__main__":
-    github_token = os.environ.get("GITHUB_TOKEN") 
+    github_token = os.environ.get("GITHUB_TOKEN")
     
     if not github_token:
         print("Error: GITHUB_TOKEN environment variable not set.")
