@@ -338,7 +338,10 @@ namespace Flow.Launcher
                     // Windows File Manager
                     explorer.StartInfo = new ProcessStartInfo
                     {
-                        FileName = targetPath,
+                        FileName = "explorer.exe",
+                        Arguments = FileNameOrFilePath is null
+                            ? DirectoryPath  // only open the directory
+                            : $"/select,\"{targetPath}\"", // open the directory and select the file
                         UseShellExecute = true
                     };
                 }
