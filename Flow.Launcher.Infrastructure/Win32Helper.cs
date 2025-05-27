@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -17,6 +18,7 @@ using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Dwm;
 using Windows.Win32.UI.Input.KeyboardAndMouse;
+using Windows.Win32.UI.Shell.Common;
 using Windows.Win32.UI.WindowsAndMessaging;
 using Point = System.Windows.Point;
 using SystemFonts = System.Windows.SystemFonts;
@@ -750,6 +752,35 @@ namespace Flow.Launcher.Infrastructure
         private static bool TryGetNotoFont(string langKey, out string notoFont)
         {
             return _languageToNotoSans.TryGetValue(langKey, out notoFont);
+        }
+
+        #endregion
+
+        #region Explorer
+
+        public static unsafe void OpenFolderAndSelectFile(string filePath)
+        {
+            ITEMIDLIST* pidlFolder = null;
+            ITEMIDLIST* pidlFile = null;
+
+            var folderPath = Path.GetDirectoryName(filePath);
+
+            try
+            {
+                var hrFolder = PInvoke.SHParseDisplayName(folderPath, null, out pidlFolder, 0, null);
+                if (hrFolder.Failed) throw new COMException("Failed to parse folder path", hrFolder);
+
+                var hrFile = PInvoke.SHParseDisplayName(filePath, null, out pidlFile, 0, null);
+                if (hrFile.Failed) throw new COMException("Failed to parse file path", hrFile);
+
+                var hrSelect = PInvoke.SHOpenFolderAndSelectItems(pidlFolder, 1, &pidlFile, 0);
+                if (hrSelect.Failed) throw new COMException("Failed to open folder and select item", hrSelect);
+            }
+            finally
+            {
+                if (pidlFile != null) PInvoke.CoTaskMemFree(pidlFile);
+                if (pidlFolder != null) PInvoke.CoTaskMemFree(pidlFolder);
+            }
         }
 
         #endregion

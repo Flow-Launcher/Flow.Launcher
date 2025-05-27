@@ -8,11 +8,9 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core;
@@ -320,88 +318,44 @@ namespace Flow.Launcher
 
             ((PluginJsonStorage<T>)_pluginJsonStorages[type]).Save();
         }
-
-        [DllImport("shell32.dll", CharSet = CharSet.Unicode)]
-        private static extern int SHParseDisplayName(
-            [MarshalAs(UnmanagedType.LPWStr)] string name,
-            IntPtr bindingContext,
-            out IntPtr pidl,
-            uint sfgaoIn,
-            out uint psfgaoOut
-        );
-
-        [DllImport("shell32.dll")]
-        private static extern int SHOpenFolderAndSelectItems(
-            IntPtr pidlFolder,
-            uint cidl,
-            [MarshalAs(UnmanagedType.LPArray)] IntPtr[] apidl,
-            uint dwFlags
-        );
-
-        [DllImport("ole32.dll")]
-        private static extern void CoTaskMemFree(IntPtr pv);
-        
-        private void OpenFolderAndSelectItem(string filePath)
-        {
-            IntPtr pidlFolder = IntPtr.Zero;
-            IntPtr pidlFile = IntPtr.Zero;
-            uint attr;
-
-            string folderPath = Path.GetDirectoryName(filePath);
-
-            try
-            {
-                SHParseDisplayName(folderPath, IntPtr.Zero, out pidlFolder, 0, out attr);
-                SHParseDisplayName(filePath, IntPtr.Zero, out pidlFile, 0, out attr);
-
-                if (pidlFolder != IntPtr.Zero && pidlFile != IntPtr.Zero)
-                {
-                    SHOpenFolderAndSelectItems(pidlFolder, 1, new[] { pidlFile }, 0);
-                }
-            }
-            finally
-            {
-                if (pidlFile != IntPtr.Zero)
-                    CoTaskMemFree(pidlFile);
-                if (pidlFolder != IntPtr.Zero)
-                    CoTaskMemFree(pidlFolder);
-            }
-        }
         
         public void OpenDirectory(string directoryPath, string fileNameOrFilePath = null)
         {
             try
             {
-                string targetPath = fileNameOrFilePath is null
+                var explorerInfo = _settings.CustomExplorer;
+                var explorerPath = explorerInfo.Path.Trim().ToLowerInvariant();
+                var targetPath = fileNameOrFilePath is null
                     ? directoryPath
                     : Path.IsPathRooted(fileNameOrFilePath)
                         ? fileNameOrFilePath
                         : Path.Combine(directoryPath, fileNameOrFilePath);
 
-                var explorerInfo = _settings.CustomExplorer;
-                var explorerPath = explorerInfo.Path.Trim().ToLowerInvariant();
-
                 if (Path.GetFileNameWithoutExtension(explorerPath) == "explorer")
                 {
+                    // Windows File Manager
                     if (fileNameOrFilePath is null)
                     {
-                        // 폴더만 열기
-                        Process.Start(new ProcessStartInfo
+                        // Only Open the directory
+                        using var explorer = new Process();
+                        explorer.StartInfo = new ProcessStartInfo
                         {
                             FileName = directoryPath,
                             UseShellExecute = true
-                        })?.Dispose();
+                        };
+                        explorer.Start();
                     }
                     else
                     {
-                        // SHOpenFolderAndSelectItems 방식
-                        OpenFolderAndSelectItem(targetPath);
+                        // Open the directory and select the file
+                        Win32Helper.OpenFolderAndSelectFile(targetPath);
                     }
                 }
                 else
                 {
-                    // 커스텀 파일 관리자
-                    var shellProcess = new ProcessStartInfo
+                    // Custom File Manager
+                    using var explorer = new Process();
+                    explorer.StartInfo = new ProcessStartInfo
                     {
                         FileName = explorerInfo.Path.Replace("%d", directoryPath),
                         UseShellExecute = true,
@@ -411,7 +365,7 @@ namespace Flow.Launcher
                                 .Replace("%d", directoryPath)
                                 .Replace("%f", targetPath)
                     };
-                    Process.Start(shellProcess)?.Dispose();
+                    explorer.Start();
                 }
             }
             catch (Win32Exception ex) when (ex.NativeErrorCode == 2)
