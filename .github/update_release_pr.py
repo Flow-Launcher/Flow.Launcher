@@ -79,6 +79,53 @@ def get_github_prs(token, owner, repo, label, state):
             
     return all_prs
 
+def update_pull_request_description(token, owner, repo, pr_number, new_description):
+    """
+    Updates the description (body) of a GitHub Pull Request.
+
+    Args:
+        token (str): Token.
+        owner (str): The owner of the repository.
+        repo (str): The name of the repository.
+        pr_number (int): The number of the pull request to update.
+        new_description (str): The new content for the PR's description.
+
+    Returns:
+        dict or None: The updated PR object (as a dictionary) if successful,
+                      None otherwise.
+    """
+    headers = {
+        "Authorization": f"token {token}",
+        "Accept": "application/vnd.github.v3+json",
+        "Content-Type": "application/json"
+    }
+
+    url = f"https://api.github.com/repos/{owner}/{repo}/pulls/{pr_number}"
+
+    payload = {
+        "body": new_description
+    }
+
+    print(f"Attempting to update PR #{pr_number} in {owner}/{repo}...")
+    print(f"URL: {url}")
+    # print(f"Payload: {payload}") # Uncomment for detailed payload debug
+
+    try:
+        response = requests.patch(url, headers=headers, json=payload)
+        response.raise_for_status()
+
+        updated_pr_data = response.json()
+        print(f"Successfully updated PR #{pr_number}.")
+        return updated_pr_data
+
+    except requests.exceptions.RequestException as e:
+        print(f"Error updating pull request #{pr_number}: {e}")
+        if response is not None:
+            print(f"Response status code: {response.status_code}")
+            print(f"Response text: {response.text}")
+        return None
+
+
 if __name__ == "__main__":
     github_token = os.environ.get("GITHUB_TOKEN")
     
@@ -92,7 +139,7 @@ if __name__ == "__main__":
     state = "closed"
 
     print(f"Fetching PRs for {repository_owner}/{repository_name} with label '{target_label}'...")
-    
+
     pull_requests = get_github_prs(
         github_token, 
         repository_owner, 
@@ -101,9 +148,32 @@ if __name__ == "__main__":
         state
     )
 
-    if pull_requests:
-        print(f"\nFound {len(pull_requests)} pull requests:")
-        for pr in pull_requests:
-            print(f"- {pr['state']} #{pr['number']}: {pr['title']} (URL: {pr['html_url']})")
-    else:
-        print("No matching pull requests found.")
+    if not pull_requests:
+        print("No matching pull requests found")
+        exit(1)
+
+    print(f"\nFound {len(pull_requests)} pull requests:")
+
+    description_content = ""
+    for pr in pull_requests:
+        description_content+= f"- {pr['title']} #{pr['number']}\n"
+
+    returned_pr = pull_requests = get_github_prs(
+        github_token, 
+        repository_owner, 
+        repository_name, 
+        "release",
+        "open"
+    )
+
+    if len(returned_pr) != 1:
+        print(f"Unable to find the exact release PR. Returned result: {returned_pr}")
+        exit(1)
+    
+    release_pr = returned_pr[0]
+
+    print(f"Found release PR: {release_pr['title']}")
+
+    update_pull_request_description(github_token, repository_owner, repository_name, release_pr["number"], description_content)
+
+    print(description_content)
