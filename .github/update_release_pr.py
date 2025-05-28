@@ -1,7 +1,7 @@
 import os
 import requests
 
-def get_github_prs(token, owner, repo, milestone, label, state):
+def get_github_prs(token, owner, repo, label, state):
     """
     Fetches pull requests from a GitHub repository that match a given milestone and label.
 
@@ -9,7 +9,6 @@ def get_github_prs(token, owner, repo, milestone, label, state):
         token (str): GitHub token.
         owner (str): The owner of the repository.
         repo (str): The name of the repository.
-        milestone (str): The milestone title.
         label (str): The label name.
         state (str): State of PR, e.g. open
 
@@ -30,13 +29,19 @@ def get_github_prs(token, owner, repo, milestone, label, state):
         response = requests.get(milestone_url, headers=headers, params=params)
         response.raise_for_status()
         milestones = response.json()
+
+        if len(milestones) > 2:
+            print("More than two milestones found, unable to determine the milestone required.")
+
+        # milestones.pop()
         for ms in milestones:
-            if ms["title"] == milestone:
+            if ms["title"] != "Future":
                 milestone_id = ms["number"]
+                print(f"Gathering PRs with milestone {ms['title']}..." )
                 break
         
         if not milestone_id:
-            print(f"Milestone '{milestone}' not found in repository '{owner}/{repo}'.")
+            print(f"No suitable milestone found in repository '{owner}/{repo}'.")
             exit(1)
 
     except requests.exceptions.RequestException as e:
@@ -83,17 +88,15 @@ if __name__ == "__main__":
 
     repository_owner = "flow-launcher"
     repository_name = "flow.launcher"
-    target_milestone = "1.20.0"
     target_label = "enhancement"
     state = "closed"
 
-    print(f"Fetching PRs for {repository_owner}/{repository_name} with milestone '{target_milestone}' and label '{target_label}'...")
+    print(f"Fetching PRs for {repository_owner}/{repository_name} with label '{target_label}'...")
     
     pull_requests = get_github_prs(
         github_token, 
         repository_owner, 
         repository_name, 
-        target_milestone, 
         target_label,
         state
     )
