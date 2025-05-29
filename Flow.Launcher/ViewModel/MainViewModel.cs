@@ -268,6 +268,24 @@ namespace Flow.Launcher.ViewModel
 
                     if (token.IsCancellationRequested) return;
 
+                    App.API.LogDebug(ClassName, $"Update results for plugin <{pair.Metadata.Name}>");
+
+                    // Home query does not support IResultUpdated, so this flag is false
+                    var currentIsHomeQuery = false;
+
+                    // Indicate if to clear existing results so to show only ones from plugins with action keywords
+                    var shouldClearExistingResults = ShouldClearExistingResultsForQuery(e.Query, currentIsHomeQuery);
+                    if (shouldClearExistingResults)
+                    {
+                        // Setup the flag to clear existing results so that ResultsViewModel.NewResults will handle in the next update
+                        lock (_shouldClearExistingResultsLock)
+                        {
+                            _shouldClearExistingResults = true;
+                        }
+                    }
+                    _lastQuery = e.Query;
+                    _previousIsHomeQuery = currentIsHomeQuery;
+
                     if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query,
                         token)))
                     {
