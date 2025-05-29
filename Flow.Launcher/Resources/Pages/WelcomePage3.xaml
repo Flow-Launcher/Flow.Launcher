@@ -40,7 +40,7 @@
             FontSize="20"
             FontWeight="SemiBold"
             Text="{DynamicResource Welcome_Page3_Title}" />
-        <ScrollViewer
+        <ui:ScrollViewerEx
             Grid.Row="1"
             Height="478"
             Margin="0 0 0 0"
@@ -109,6 +109,6 @@
                     </StackPanel>
                 </Border>
             </StackPanel>
-        </ScrollViewer>
+        </ui:ScrollViewerEx>
     </Grid>
 </ui:Page>

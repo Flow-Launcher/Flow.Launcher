@@ -23,7 +23,7 @@
             <CollectionViewSource x:Key="SortedFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}" />
         </ResourceDictionary>
     </ui:Page.Resources>
-    <ScrollViewer
+    <ui:ScrollViewerEx
         Padding="6 0 24 0"
         CanContentScroll="False"
         FontSize="14"
@@ -89,7 +89,7 @@
                             </Style.Triggers>
                         </Style>
                     </Border.Style>
-                    <ScrollViewer
+                    <ui:ScrollViewerEx
                         ScrollViewer.CanContentScroll="False"
                         VirtualizingStackPanel.IsVirtualizing="True"
                         VirtualizingStackPanel.ScrollUnit="Pixel">
@@ -268,7 +268,7 @@
                                 Content="{DynamicResource resetCustomize}"
                                 ToolTip="{DynamicResource resetCustomizeToolTip}" />
                         </StackPanel>
-                    </ScrollViewer>
+                    </ui:ScrollViewerEx>
                 </Border>
 
                 <!--  Theme preview  -->
@@ -782,5 +782,5 @@
                 Text="{DynamicResource howToCreateTheme}"
                 Uri="{Binding LinkHowToCreateTheme}" />
         </StackPanel>
-    </ScrollViewer>
+    </ui:ScrollViewerEx>
 </ui:Page>

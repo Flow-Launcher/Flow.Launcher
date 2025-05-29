@@ -18,7 +18,7 @@
     <ui:Page.Resources>
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </ui:Page.Resources>
-    <ScrollViewer
+    <ui:ScrollViewerEx
         Margin="0"
         CanContentScroll="False"
         FontSize="14"
@@ -377,5 +377,5 @@
                 </cc:Card>
             </cc:CardGroup>
         </VirtualizingStackPanel>
-    </ScrollViewer>
+    </ui:ScrollViewerEx>
 </ui:Page>

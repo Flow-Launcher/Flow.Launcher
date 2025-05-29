@@ -49,7 +49,7 @@
             </Style.Triggers>
         </Style>
     </Page.Resources>
-    <ScrollViewer>
+    <ui:ScrollViewerEx>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="250" />
@@ -118,5 +118,5 @@
 
             </StackPanel>
         </Grid>
-    </ScrollViewer>
+    </ui:ScrollViewerEx>
 </ui:Page>

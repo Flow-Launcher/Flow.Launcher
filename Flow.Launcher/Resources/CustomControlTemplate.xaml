@@ -900,7 +900,7 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}" />
-                        <ScrollViewer
+                        <ui:ScrollViewerEx
                             x:Name="PART_ContentHost"
                             Margin="{TemplateBinding BorderThickness}"
                             Padding="{TemplateBinding Padding}"
@@ -1169,7 +1169,7 @@
                                         BorderBrush="{DynamicResource CustomComboBorder}"
                                         BorderThickness="{DynamicResource ComboBoxDropdownBorderThickness}"
                                         CornerRadius="{Binding ElementName=PopupBorder, Path=CornerRadius}">
-                                        <ScrollViewer
+                                        <ui:ScrollViewerEx
                                             x:Name="ScrollViewer"
                                             Foreground="{DynamicResource ComboBoxDropDownForeground}"
                                             HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
@@ -1179,7 +1179,7 @@
                                                 Margin="0"
                                                 KeyboardNavigation.DirectionalNavigation="Contained"
                                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                        </ScrollViewer>
+                                        </ui:ScrollViewerEx>
                                     </Border>
                                 </Border>
                             </ui:ThemeShadowChrome>
@@ -1474,7 +1474,7 @@
                                 BorderThickness="{DynamicResource CustomTextBoxInlineThickness}"
                                 CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}" />
                         </Border>
-                        <ScrollViewer
+                        <ui:ScrollViewerEx
                             x:Name="PART_ContentHost"
                             Grid.Row="1"
                             Grid.Column="0"
@@ -2742,7 +2742,7 @@
                                 BorderThickness="{DynamicResource CustomTextBoxInlineThickness}"
                                 CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}" />
                         </Border>
-                        <ScrollViewer
+                        <ui:ScrollViewerEx
                             x:Name="PART_ContentHost"
                             Grid.Row="1"
                             Grid.Column="0"
@@ -3147,7 +3147,7 @@
                         Background="{DynamicResource MenuFlyoutPresenterBackground}"
                         CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}">
                         <Grid>
-                            <ScrollViewer
+                            <ui:ScrollViewerEx
                                 x:Name="SubMenuScrollViewer"
                                 MinWidth="{DynamicResource FlyoutThemeMinWidth}"
                                 Margin="{DynamicResource MenuFlyoutPresenterThemePadding}"
@@ -3159,7 +3159,7 @@
                                     KeyboardNavigation.TabNavigation="Cycle"
                                     RenderOptions.ClearTypeHint="Enabled"
                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                            </ScrollViewer>
+                            </ui:ScrollViewerEx>
                             <Border
                                 x:Name="SubMenuBorder"
                                 BorderBrush="{DynamicResource MenuFlyoutPresenterBorderBrush}"
@@ -3377,7 +3377,7 @@
                             Background="{DynamicResource MenuFlyoutPresenterBackground}"
                             CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}">
                             <Grid>
-                                <ScrollViewer
+                                <ui:ScrollViewerEx
                                     x:Name="SubMenuScrollViewer"
                                     MinWidth="{DynamicResource FlyoutThemeMinWidth}"
                                     Margin="{DynamicResource MenuFlyoutPresenterThemePadding}"
@@ -3389,7 +3389,7 @@
                                         KeyboardNavigation.TabNavigation="Cycle"
                                         RenderOptions.ClearTypeHint="Enabled"
                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                </ScrollViewer>
+                                </ui:ScrollViewerEx>
                                 <Border
                                     x:Name="SubMenuBorder"
                                     BorderBrush="{DynamicResource MenuFlyoutPresenterBorderBrush}"
@@ -3516,7 +3516,7 @@
                             BorderThickness="1"
                             CornerRadius="8">
                             <Grid>
-                                <ScrollViewer
+                                <ui:ScrollViewerEx
                                     x:Name="ContextMenuScrollViewer"
                                     MinWidth="{DynamicResource FlyoutThemeMinWidth}"
                                     Margin="{TemplateBinding Padding}"
@@ -3526,7 +3526,7 @@
                                         KeyboardNavigation.DirectionalNavigation="Cycle"
                                         RenderOptions.ClearTypeHint="Enabled"
                                         SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                </ScrollViewer>
+                                </ui:ScrollViewerEx>
                                 <Border
                                     x:Name="ContextMenuBorder"
                                     BorderBrush="{TemplateBinding BorderBrush}"
@@ -3631,7 +3631,7 @@
                                                 <RowDefinition Height="*" />
                                                 <RowDefinition x:Name="CommandSpaceRow" Height="80" />
                                             </Grid.RowDefinitions>
-                                            <ScrollViewer
+                                            <ui:ScrollViewerEx
                                                 x:Name="ContentScrollViewer"
                                                 Margin="{DynamicResource ContentDialogContentScrollViewerMargin}"
                                                 HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
@@ -3679,7 +3679,7 @@
                                                         TextElement.Foreground="{TemplateBinding Foreground}"
                                                         TextWrapping="Wrap" />
                                                 </Grid>
-                                            </ScrollViewer>
+                                            </ui:ScrollViewerEx>
                                             <Border
                                                 x:Name="ButtonAreaBorder"
                                                 Grid.Row="1"
@@ -4985,13 +4985,13 @@
 
                                     <!--  Top nav ItemsRepeater  -->
                                     <ui:ItemsRepeaterScrollHost Grid.Column="3">
-                                        <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
+                                        <ui:ScrollViewerEx HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
                                             <ui:ItemsRepeater x:Name="TopNavMenuItemsHost" AutomationProperties.Name="{TemplateBinding AutomationProperties.Name}">
                                                 <ui:ItemsRepeater.Layout>
                                                     <ui:StackLayout Orientation="Horizontal" />
                                                 </ui:ItemsRepeater.Layout>
                                             </ui:ItemsRepeater>
-                                        </ScrollViewer>
+                                        </ui:ScrollViewerEx>
                                     </ui:ItemsRepeaterScrollHost>
 
                                     <Button
@@ -5012,9 +5012,9 @@
                                                     </Style>
                                                 </ui:Flyout.FlyoutPresenterStyle>
                                                 <ui:ItemsRepeaterScrollHost>
-                                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                                    <ui:ScrollViewerEx VerticalScrollBarVisibility="Auto">
                                                         <ui:ItemsRepeater x:Name="TopNavMenuItemsOverflowHost" />
-                                                    </ScrollViewer>
+                                                    </ui:ScrollViewerEx>
                                                 </ui:ItemsRepeaterScrollHost>
                                             </ui:Flyout>
                                         </ui:FlyoutService.Flyout>
@@ -5169,13 +5169,13 @@
 
                                             <!--  MenuItems  -->
                                             <ui:ItemsRepeaterScrollHost HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                                <ScrollViewer
+                                                <ui:ScrollViewerEx
                                                     x:Name="MenuItemsScrollViewer"
                                                     KeyboardNavigation.TabNavigation="Local"
                                                     VerticalScrollBarVisibility="Auto">
                                                     <!--  Left nav ItemsRepeater  -->
                                                     <ui:ItemsRepeater x:Name="MenuItemsHost" AutomationProperties.Name="{TemplateBinding AutomationProperties.Name}" />
-                                                </ScrollViewer>
+                                                </ui:ScrollViewerEx>
                                             </ui:ItemsRepeaterScrollHost>
 
                                             <ui:NavigationViewItemSeparator
@@ -5196,10 +5196,10 @@
 
                                             <!--  FooterItems  -->
                                             <ui:ItemsRepeaterScrollHost Grid.Row="3">
-                                                <ScrollViewer x:Name="FooterItemsScrollViewer">
+                                                <ui:ScrollViewerEx x:Name="FooterItemsScrollViewer">
                                                     <!--  contract7Present:VerticalAnchorRatio="1"  -->
                                                     <ui:ItemsRepeater x:Name="FooterMenuItemsHost" />
-                                                </ScrollViewer>
+                                                </ui:ScrollViewerEx>
                                             </ui:ItemsRepeaterScrollHost>
                                         </Grid>
 

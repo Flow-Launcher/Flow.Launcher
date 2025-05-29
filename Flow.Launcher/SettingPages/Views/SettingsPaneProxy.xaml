@@ -16,7 +16,7 @@
     <Page.Resources>
         <ResourceDictionary Source="pack://application:,,,/Resources/SettingWindowStyle.xaml" />
     </Page.Resources>
-    <ScrollViewer
+    <ui:ScrollViewerEx
         Padding="5 0 24 0"
         CanContentScroll="True"
         FontSize="14"
@@ -76,5 +76,5 @@
                     IsEnabled="{Binding Settings.Proxy.Enabled}" />
             </cc:Card>
         </StackPanel>
-    </ScrollViewer>
+    </ui:ScrollViewerEx>
 </ui:Page>

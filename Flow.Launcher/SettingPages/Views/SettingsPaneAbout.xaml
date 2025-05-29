@@ -17,7 +17,7 @@
             <CollectionViewSource x:Key="SortedFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}" />
         </ResourceDictionary>
     </ui:Page.Resources>
-    <ScrollViewer
+    <ui:ScrollViewerEx
         Margin="0"
         CanContentScroll="True"
         FontSize="14"
@@ -180,5 +180,5 @@
                 Text="{Binding ActivatedTimes}"
                 TextWrapping="WrapWithOverflow" />
         </StackPanel>
-    </ScrollViewer>
+    </ui:ScrollViewerEx>
 </ui:Page>

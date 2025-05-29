@@ -14,7 +14,7 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <ScrollViewer
+    <ui:ScrollViewerEx
         Padding="0 0 6 0"
         FontSize="14"
         VirtualizingStackPanel.IsVirtualizing="True"
@@ -437,5 +437,5 @@
 
 
         </StackPanel>
-    </ScrollViewer>
+    </ui:ScrollViewerEx>
 </ui:Page>
