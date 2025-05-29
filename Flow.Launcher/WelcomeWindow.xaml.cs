@@ -6,7 +6,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Resources.Pages;
 using Flow.Launcher.ViewModel;
-using ModernWpf.Media.Animation;
+using iNKORE.UI.WPF.Modern.Media.Animation;
 
 namespace Flow.Launcher
 {

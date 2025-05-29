@@ -9,7 +9,7 @@ using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using ModernWpf.Controls;
+using iNKORE.UI.WPF.Modern.Controls;
 
 namespace Flow.Launcher;
 

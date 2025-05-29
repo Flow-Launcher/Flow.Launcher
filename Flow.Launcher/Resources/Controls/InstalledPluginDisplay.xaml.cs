@@ -1,4 +1,4 @@
-﻿using ModernWpf.Controls;
+﻿using iNKORE.UI.WPF.Modern.Controls;
 
 namespace Flow.Launcher.Resources.Controls;
 

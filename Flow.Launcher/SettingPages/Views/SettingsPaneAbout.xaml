@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:settingsVm="clr-namespace:Flow.Launcher.SettingPages.ViewModels"
-    xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     Title="About"
     d:DataContext="{d:DesignInstance Type=settingsVm:SettingsPaneAboutViewModel}"
     d:DesignHeight="450"

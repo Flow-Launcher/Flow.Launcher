@@ -7,7 +7,7 @@
     xmlns:flowlauncher="clr-namespace:Flow.Launcher"
     xmlns:local="clr-namespace:Flow.Launcher.Resources.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     Title="WelcomePage2"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
     mc:Ignorable="d">

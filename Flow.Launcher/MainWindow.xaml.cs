@@ -22,8 +22,9 @@ using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
+using iNKORE.UI.WPF.Modern;
+using iNKORE.UI.WPF.Modern.Controls;
 using Microsoft.Win32;
-using ModernWpf.Controls;
 using DataObject = System.Windows.DataObject;
 using Key = System.Windows.Input.Key;
 using MouseButtons = System.Windows.Forms.MouseButtons;
@@ -89,7 +90,7 @@ namespace Flow.Launcher
 
             InitSoundEffects();
             DataObject.AddPastingHandler(QueryTextBox, QueryTextBox_OnPaste);
-            ModernWpf.ThemeManager.Current.ActualApplicationThemeChanged += ThemeManager_ActualApplicationThemeChanged;
+            ThemeManager.Current.ActualApplicationThemeChanged += ThemeManager_ActualApplicationThemeChanged;
             SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
         }
 
@@ -99,9 +100,9 @@ namespace Flow.Launcher
 
 #pragma warning disable VSTHRD100 // Avoid async void methods
 
-        private void ThemeManager_ActualApplicationThemeChanged(ModernWpf.ThemeManager sender, object args)
+        private void ThemeManager_ActualApplicationThemeChanged(ThemeManager sender, object args)
         {
-            _theme.RefreshFrameAsync();
+            _ = _theme.RefreshFrameAsync();
         }
 
         private void OnSourceInitialized(object sender, EventArgs e)
@@ -161,11 +162,11 @@ namespace Flow.Launcher
             // Initialize color scheme
             if (_settings.ColorScheme == Constant.Light)
             {
-                ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Light;
+                ThemeManager.Current.ApplicationTheme = ApplicationTheme.Light;
             }
             else if (_settings.ColorScheme == Constant.Dark)
             {
-                ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Dark;
+                ThemeManager.Current.ApplicationTheme = ApplicationTheme.Dark;
             }
 
             // Initialize position
@@ -1257,7 +1258,7 @@ namespace Flow.Launcher
                     _notifyIcon?.Dispose();
                     animationSoundWMP?.Close();
                     animationSoundWPF?.Dispose();
-                    ModernWpf.ThemeManager.Current.ActualApplicationThemeChanged -= ThemeManager_ActualApplicationThemeChanged;
+                    ThemeManager.Current.ActualApplicationThemeChanged -= ThemeManager_ActualApplicationThemeChanged;
                     SystemEvents.PowerModeChanged -= SystemEvents_PowerModeChanged;
                 }
 
