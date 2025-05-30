@@ -200,9 +200,9 @@ namespace Flow.Launcher.Plugin.Explorer
                                 if (Context.API.ShowMsgBox(
                                         string.Format(Context.API.GetTranslation("plugin_explorer_delete_folder_link"), record.FullPath),
                                         Context.API.GetTranslation("plugin_explorer_deletefilefolder"),
-                                        MessageBoxButton.YesNo,
+                                        MessageBoxButton.OKCancel,
                                         MessageBoxImage.Warning)
-                                    == MessageBoxResult.No)
+                                    == MessageBoxResult.Cancel)
                                     return false;
 
                                 if (isFile)
