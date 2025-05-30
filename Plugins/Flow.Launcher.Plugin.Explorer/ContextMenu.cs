@@ -199,7 +199,7 @@ namespace Flow.Launcher.Plugin.Explorer
                             {
                                 if (Context.API.ShowMsgBox(
                                         string.Format(Context.API.GetTranslation("plugin_explorer_delete_folder_link"), record.FullPath),
-                                        string.Empty,
+                                        Context.API.GetTranslation("plugin_explorer_deletefilefolder"),
                                         MessageBoxButton.YesNo,
                                         MessageBoxImage.Warning)
                                     == MessageBoxResult.No)
