@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -217,7 +216,7 @@ namespace Flow.Launcher.ViewModel
                         {
                             // Indicate if to clear existing results so to show only ones from plugins with action keywords
                             var query = item.Query;
-                            var currentIsHomeQuery = item.IsHomeQuery;
+                            var currentIsHomeQuery = query.IsHomeQuery;
                             var shouldClearExistingResults = ShouldClearExistingResultsForQuery(query, currentIsHomeQuery);
                             _lastQuery = item.Query;
                             _previousIsHomeQuery = currentIsHomeQuery;
@@ -279,7 +278,7 @@ namespace Flow.Launcher.ViewModel
                     App.API.LogDebug(ClassName, $"Update results for plugin <{pair.Metadata.Name}>");
 
                     if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query,
-                        false, token)))
+                        token)))
                     {
                         App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                     }
@@ -1271,7 +1270,7 @@ namespace Flow.Launcher.ViewModel
 
             App.API.LogDebug(ClassName, $"Start query with ActionKeyword <{query.ActionKeyword}> and RawQuery <{query.RawQuery}>");
 
-            var currentIsHomeQuery = query.RawQuery == string.Empty;
+            var currentIsHomeQuery = query.IsHomeQuery;
 
             _updateSource?.Dispose();
 
@@ -1446,7 +1445,7 @@ namespace Flow.Launcher.ViewModel
                 App.API.LogDebug(ClassName, $"Update results for plugin <{plugin.Metadata.Name}>");
 
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
-                    currentIsHomeQuery, token, reSelect)))
+                    token, reSelect)))
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
@@ -1464,7 +1463,7 @@ namespace Flow.Launcher.ViewModel
                 App.API.LogDebug(ClassName, $"Update results for history");
 
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, _historyMetadata, query,
-                    currentIsHomeQuery, token, reSelect)))
+                    token, reSelect)))
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
