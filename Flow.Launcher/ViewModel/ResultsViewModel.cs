@@ -187,9 +187,6 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         public void AddResults(ICollection<ResultsForUpdate> resultsForUpdates, CancellationToken token, bool reselect = true)
         {
-            if (token.IsCancellationRequested)
-                return;
-
             // Since NewResults may need to clear existing results, do not check token cancellation after this point
             var newResults = NewResults(resultsForUpdates);
 
@@ -245,8 +242,7 @@ namespace Flow.Launcher.ViewModel
 
             var newResults = resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings));
 
-            // If mainVM has flag to clear existing results, handle it here
-            if (_mainVM != null && _mainVM.CheckShouldClearExistingResultsAndReset())
+            if (resultsForUpdates.Any(x => x.ShouldClearExistingResults))
             {
                 App.API.LogDebug("NewResults", $"Existing results are cleared for query");
                 return newResults.OrderByDescending(rv => rv.Result.Score).ToList();

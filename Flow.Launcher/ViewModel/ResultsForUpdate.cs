@@ -8,8 +8,10 @@ namespace Flow.Launcher.ViewModel
         IReadOnlyList<Result> Results,
         PluginMetadata Metadata,
         Query Query,
+        bool IsHomeQuery,
         CancellationToken Token,
-        bool ReSelectFirstResult = true)
+        bool ReSelectFirstResult = true,
+        bool ShouldClearExistingResults = false)
     {
         public string ID { get; } = Metadata.ID;
     }

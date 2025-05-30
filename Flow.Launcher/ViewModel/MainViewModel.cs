@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -36,9 +37,6 @@ namespace Flow.Launcher.ViewModel
         private bool _previousIsHomeQuery;
         private string _queryTextBeforeLeaveResults;
         private string _ignoredQueryText; // Used to ignore query text change when switching between context menu and query results
-
-        private readonly object _shouldClearExistingResultsLock = new();
-        private bool _shouldClearExistingResults;
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
@@ -216,7 +214,17 @@ namespace Flow.Launcher.ViewModel
                     while (channelReader.TryRead(out var item))
                     {
                         if (!item.Token.IsCancellationRequested)
+                        {
+                            // Indicate if to clear existing results so to show only ones from plugins with action keywords
+                            var query = item.Query;
+                            var currentIsHomeQuery = item.IsHomeQuery;
+                            var shouldClearExistingResults = ShouldClearExistingResultsForQuery(query, currentIsHomeQuery);
+                            _lastQuery = item.Query;
+                            _previousIsHomeQuery = currentIsHomeQuery;
+                            item.ShouldClearExistingResults = shouldClearExistingResults;
+
                             queue[item.ID] = item;
+                        } 
                     }
 
                     UpdateResultView(queue.Values);
@@ -270,24 +278,8 @@ namespace Flow.Launcher.ViewModel
 
                     App.API.LogDebug(ClassName, $"Update results for plugin <{pair.Metadata.Name}>");
 
-                    // Home query does not support IResultUpdated, so this flag is false
-                    var currentIsHomeQuery = false;
-
-                    // Indicate if to clear existing results so to show only ones from plugins with action keywords
-                    var shouldClearExistingResults = ShouldClearExistingResultsForQuery(e.Query, currentIsHomeQuery);
-                    if (shouldClearExistingResults)
-                    {
-                        // Setup the flag to clear existing results so that ResultsViewModel.NewResults will handle in the next update
-                        lock (_shouldClearExistingResultsLock)
-                        {
-                            _shouldClearExistingResults = true;
-                        }
-                    }
-                    _lastQuery = e.Query;
-                    _previousIsHomeQuery = currentIsHomeQuery;
-
                     if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query,
-                        token)))
+                        false, token)))
                     {
                         App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                     }
@@ -1453,21 +1445,8 @@ namespace Flow.Launcher.ViewModel
 
                 App.API.LogDebug(ClassName, $"Update results for plugin <{plugin.Metadata.Name}>");
 
-                // Indicate if to clear existing results so to show only ones from plugins with action keywords
-                var shouldClearExistingResults = ShouldClearExistingResultsForQuery(query, currentIsHomeQuery);
-                if (shouldClearExistingResults)
-                {
-                    // Setup the flag to clear existing results so that ResultsViewModel.NewResults will handle in the next update
-                    lock (_shouldClearExistingResultsLock)
-                    {
-                        _shouldClearExistingResults = true;
-                    }
-                }
-                _lastQuery = query;
-                _previousIsHomeQuery = currentIsHomeQuery;
-
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
-                    token, reSelect)))
+                    currentIsHomeQuery, token, reSelect)))
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
@@ -1484,21 +1463,8 @@ namespace Flow.Launcher.ViewModel
 
                 App.API.LogDebug(ClassName, $"Update results for history");
 
-                // Indicate if to clear existing results so to show only ones from plugins with action keywords
-                var shouldClearExistingResults = ShouldClearExistingResultsForQuery(query, currentIsHomeQuery);
-                if (shouldClearExistingResults)
-                {
-                    // Setup the flag to clear existing results so that ResultsViewModel.NewResults will handle in the next update
-                    lock (_shouldClearExistingResultsLock)
-                    {
-                        _shouldClearExistingResults = true;
-                    }
-                }
-                _lastQuery = query;
-                _previousIsHomeQuery = currentIsHomeQuery;
-
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, _historyMetadata, query,
-                    token, reSelect)))
+                    currentIsHomeQuery, token, reSelect)))
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
@@ -1733,20 +1699,6 @@ namespace Flow.Launcher.ViewModel
             return selected;
         }
 
-        internal bool CheckShouldClearExistingResultsAndReset()
-        {
-            lock (_shouldClearExistingResultsLock)
-            {
-                if (_shouldClearExistingResults)
-                {
-                    _shouldClearExistingResults = false;
-                    return true;
-                }
-
-                return false;
-            }
-        }
-
         #endregion
 
         #region Hotkey
@@ -1912,6 +1864,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (!resultsForUpdates.Any())
                 return;
+
             CancellationToken token;
 
             try
