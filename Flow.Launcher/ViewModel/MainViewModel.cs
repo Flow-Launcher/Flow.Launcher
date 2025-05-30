@@ -283,8 +283,6 @@ namespace Flow.Launcher.ViewModel
                             _shouldClearExistingResults = true;
                         }
                     }
-                    _lastQuery = e.Query;
-                    _previousIsHomeQuery = currentIsHomeQuery;
 
                     if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query,
                         token)))
@@ -1394,6 +1392,10 @@ namespace Flow.Launcher.ViewModel
                 // nothing to do here
             }
 
+            // after all queries are done, we will update the last state
+            _lastQuery = query;
+            _previousIsHomeQuery = currentIsHomeQuery;
+
             if (currentCancellationToken.IsCancellationRequested) return;
 
             // this should happen once after all queries are done so progress bar should continue
@@ -1463,8 +1465,6 @@ namespace Flow.Launcher.ViewModel
                         _shouldClearExistingResults = true;
                     }
                 }
-                _lastQuery = query;
-                _previousIsHomeQuery = currentIsHomeQuery;
 
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
                     token, reSelect)))
@@ -1494,8 +1494,6 @@ namespace Flow.Launcher.ViewModel
                         _shouldClearExistingResults = true;
                     }
                 }
-                _lastQuery = query;
-                _previousIsHomeQuery = currentIsHomeQuery;
 
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, _historyMetadata, query,
                     token, reSelect)))
