@@ -159,19 +159,12 @@ namespace Flow.Launcher
 
         private void KeyEsc_OnPress(object sender, ExecutedRoutedEventArgs e)
         {
-            switch (_button)
-            {
-                case MessageBoxButton.OK:
-                    _result = MessageBoxResult.None; 
-                    break;
-                case MessageBoxButton.OKCancel:
-                case MessageBoxButton.YesNoCancel:
-                    _result = MessageBoxResult.Cancel;
-                    break;
-                case MessageBoxButton.YesNo:
-                    _result = MessageBoxResult.No; 
-                    break;
-            }
+            if (_button == MessageBoxButton.YesNo)
+                return;
+            else if (_button == MessageBoxButton.OK)
+                _result = MessageBoxResult.OK;
+            else
+                _result = MessageBoxResult.Cancel;
             DialogResult = false;
             Close();
         }
