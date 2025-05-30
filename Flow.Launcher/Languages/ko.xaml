@@ -122,10 +122,10 @@
     <system:String x:Key="KoreanImeOpenLinkButton">열기</system:String>
     <system:String x:Key="KoreanImeRegistry">이전 버전의 Microsoft IME 사용</system:String>
     <system:String x:Key="KoreanImeRegistryTooltip">이전 버전의 IME를 사용하도록 시스템 설정을 변경합니다</system:String>
-    <system:String x:Key="homePage">Home Page</system:String>
-    <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
-    <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
-    <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
+    <system:String x:Key="homePage">홈페이지</system:String>
+    <system:String x:Key="homePageToolTip">쿼리 입력창이 비어있을때, 홈페이지의 결과를 표시합니다.</system:String>
+    <system:String x:Key="historyResultsForHomePage">히스토리를 홈페이지에 표시</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">홈페이지에 표시할 최대 히스토리 수</system:String>
     <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
 
     <!--  Setting Plugin  -->
@@ -149,7 +149,7 @@
     <system:String x:Key="DisplayModeOnOff">켬</system:String>
     <system:String x:Key="DisplayModePriority">중요</system:String>
     <system:String x:Key="DisplayModeSearchDelay">검색 지연</system:String>
-    <system:String x:Key="DisplayModeHomeOnOff">Home Page</system:String>
+    <system:String x:Key="DisplayModeHomeOnOff">홈페이지</system:String>
     <system:String x:Key="currentPriority">현재 중요도:</system:String>
     <system:String x:Key="newPriority">새 중요도:</system:String>
     <system:String x:Key="priority">중요도</system:String>
@@ -347,7 +347,7 @@
     <system:String x:Key="logfolder">로그 폴더</system:String>
     <system:String x:Key="clearlogfolder">로그 삭제</system:String>
     <system:String x:Key="clearlogfolderMessage">정말 모든 로그를 삭제하시겠습니까?</system:String>
-    <system:String x:Key="cachefolder">Cache Folder</system:String>
+    <system:String x:Key="cachefolder">캐시 폴더</system:String>
     <system:String x:Key="clearcachefolder">캐시 지우기</system:String>
     <system:String x:Key="clearcachefolderMessage">모든 캐시를 삭제하시겠습니까?</system:String>
     <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
@@ -358,11 +358,11 @@
     <system:String x:Key="logLevel">로그 레벨</system:String>
     <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="LogLevelINFO">Info</system:String>
-    <system:String x:Key="settingWindowFontTitle">Setting Window Font</system:String>
+    <system:String x:Key="settingWindowFontTitle">설정창 글꼴</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">파일관리자 선택</system:String>
-    <system:String x:Key="fileManager_learnMore">Learn more</system:String>
+    <system:String x:Key="fileManager_learnMore">더 알아보기</system:String>
     <system:String x:Key="fileManager_tips">사용 중인 파일 관리자의 파일 위치를 지정하고, 필요한 경우 인수를 추가하세요. &quot;%d&quot;는 열고자 하는 디렉터리 경로를 나타내며, 폴더용 인수 필드 및 특정 디렉터리를 여는 명령어에서 사용됩니다. &quot;%f&quot;는 열고자 하는 파일 경로를 나타내며, 파일용 인수 필드 및 특정 파일을 여는 명령어에서 사용됩니다.</system:String>
     <system:String x:Key="fileManager_tips2">예를 들어, 파일 관리자가 totalcmd.exe /A c:\windows와 같은 명령어로 c:\windows 디렉터리를 연다면, 파일 관리자 경로는 totalcmd.exe가 되고, 폴더용 인수는 /A &quot;%d&quot;가 됩니다. QTTabBar와 같은 일부 파일 관리자는 경로만 전달하면 되는 경우가 있으므로, 이 경우에는 파일 관리자 경로에 &quot;%d&quot;를 입력하고 나머지 필드는 비워두세요.</system:String>
     <system:String x:Key="fileManager_name">파일관리자</system:String>
@@ -407,7 +407,7 @@
     <system:String x:Key="searchDelayTimeTips">플러그인에서 사용할 검색 지연 시간(ms)을 입력하세요. 지정하지 않으려면 비워두세요. 기본 검색 지연 시간이 사용됩니다.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
-    <system:String x:Key="homeTitle">Home Page</system:String>
+    <system:String x:Key="homeTitle">홈페이지</system:String>
     <system:String x:Key="homeTips">Enable the plugin home page state if you like to show the plugin results when query is empty.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
