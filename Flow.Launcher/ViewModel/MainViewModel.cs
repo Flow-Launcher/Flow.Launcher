@@ -137,6 +137,9 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.SettingWindowHotkey):
                         OnPropertyChanged(nameof(SettingWindowHotkey));
                         break;
+                    case nameof(Settings.OpenHistoryHotkey):
+                        OnPropertyChanged(nameof(OpenHistoryHotkey));
+                        break;
                 }
             };
 
@@ -907,6 +910,7 @@ namespace Flow.Launcher.ViewModel
         public string SelectPrevPageHotkey => VerifyOrSetDefaultHotkey(Settings.SelectPrevPageHotkey, "");
         public string OpenContextMenuHotkey => VerifyOrSetDefaultHotkey(Settings.OpenContextMenuHotkey, "Ctrl+O");
         public string SettingWindowHotkey => VerifyOrSetDefaultHotkey(Settings.SettingWindowHotkey, "Ctrl+I");
+        public string OpenHistoryHotkey => VerifyOrSetDefaultHotkey(Settings.OpenHistoryHotkey, "Ctrl+H");
         public string CycleHistoryUpHotkey => VerifyOrSetDefaultHotkey(Settings.CycleHistoryUpHotkey, "Alt+Up");
         public string CycleHistoryDownHotkey => VerifyOrSetDefaultHotkey(Settings.CycleHistoryDownHotkey, "Alt+Down");
 
