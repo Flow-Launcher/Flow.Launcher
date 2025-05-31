@@ -220,7 +220,16 @@ namespace Flow.Launcher.ViewModel
                             var shouldClearExistingResults = ShouldClearExistingResultsForQuery(query, currentIsHomeQuery);
                             _lastQuery = item.Query;
                             _previousIsHomeQuery = currentIsHomeQuery;
-                            item.ShouldClearExistingResults = shouldClearExistingResults;
+
+                            // If the queue already has the item, we need to pass the shouldClearExistingResults flag
+                            if (queue.TryGetValue(item.ID, out var existingItem))
+                            {
+                                item.ShouldClearExistingResults = shouldClearExistingResults || existingItem.ShouldClearExistingResults;
+                            }
+                            else
+                            {
+                                item.ShouldClearExistingResults = shouldClearExistingResults;
+                            }
 
                             queue[item.ID] = item;
                         }
