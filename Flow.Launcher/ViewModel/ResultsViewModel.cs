@@ -17,6 +17,8 @@ namespace Flow.Launcher.ViewModel
     {
         #region Private Fields
 
+        private readonly string ClassName = nameof(ResultsViewModel);
+
         public ResultCollection Results { get; }
 
         private readonly object _collectionLock = new();
@@ -238,16 +240,20 @@ namespace Flow.Launcher.ViewModel
         private List<ResultViewModel> NewResults(ICollection<ResultsForUpdate> resultsForUpdates)
         {
             if (!resultsForUpdates.Any())
+            {
+                App.API.LogDebug(ClassName, "No results for updates, returning existing results");
                 return Results;
+            }
 
             var newResults = resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings));
 
             if (resultsForUpdates.Any(x => x.ShouldClearExistingResults))
             {
-                App.API.LogDebug("NewResults", $"Existing results are cleared for query");
+                App.API.LogDebug(ClassName, $"Existing results are cleared for query");
                 return newResults.OrderByDescending(rv => rv.Result.Score).ToList();
             }
 
+            App.API.LogDebug(ClassName, $"Keeping existing results for {resultsForUpdates.Count} queries");
             return Results.Where(r => r?.Result != null && resultsForUpdates.All(u => u.ID != r.Result.PluginID))
                               .Concat(newResults)
                               .OrderByDescending(rv => rv.Result.Score)
