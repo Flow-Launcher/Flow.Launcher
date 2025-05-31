@@ -359,7 +359,7 @@
                                 <MultiDataTrigger>
                                     <MultiDataTrigger.Conditions>
                                         <Condition Binding="{Binding ElementName=ResultListBox, Path=Items.Count}" Value="0" />
-                                        <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Collapsed" />
+                                        <Condition Binding="{Binding ElementName=ResultContextMenu, Path=Visibility}" Value="Collapsed" />
                                         <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />
                                     </MultiDataTrigger.Conditions>
                                     <MultiDataTrigger.Setters>
@@ -373,7 +373,7 @@
                                 <DataTrigger Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Visible">
                                     <Setter Property="Visibility" Value="Visible" />
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Visible">
+                                <DataTrigger Binding="{Binding ElementName=ResultContextMenu, Path=Visibility}" Value="Visible">
                                     <Setter Property="Visibility" Value="Visible" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding ElementName=History, Path=Visibility}" Value="Visible">
@@ -419,7 +419,7 @@
                         </ContentControl>
                         <ContentControl>
                             <flowlauncher:ResultListBox
-                                x:Name="ContextMenu"
+                                x:Name="ResultContextMenu"
                                 DataContext="{Binding ContextMenu}"
                                 LeftClickResultCommand="{Binding LeftClickResultCommand}"
                                 RightClickResultCommand="{Binding RightClickResultCommand}" />
