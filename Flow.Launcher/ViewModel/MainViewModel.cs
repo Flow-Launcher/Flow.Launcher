@@ -33,7 +33,7 @@ namespace Flow.Launcher.ViewModel
 
         private bool _isQueryRunning;
         private Query _lastQuery;
-        private bool _previousIsHomeQuery = true; // Used to determine if the last query was a home query
+        private bool _previousIsHomeQuery;
         private string _queryTextBeforeLeaveResults;
         private string _ignoredQueryText; // Used to ignore query text change when switching between context menu and query results
 
@@ -223,7 +223,7 @@ namespace Flow.Launcher.ViewModel
                             item.ShouldClearExistingResults = shouldClearExistingResults;
 
                             queue[item.ID] = item;
-                        } 
+                        }
                     }
 
                     UpdateResultView(queue.Values);
