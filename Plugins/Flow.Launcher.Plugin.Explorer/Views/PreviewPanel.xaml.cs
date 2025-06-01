@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -65,22 +66,27 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
 
         if (Settings.ShowCreatedDateInPreviewPanel)
         {
-            CreatedAt = File
-                .GetCreationTime(filePath)
-                .ToString(
-                    $"{Settings.PreviewPanelDateFormat} {Settings.PreviewPanelTimeFormat}",
-                    CultureInfo.CurrentCulture
-                );
+            DateTime createdDate = File.GetCreationTime(filePath);
+            string formattedDate = createdDate.ToString(
+                $"{Settings.PreviewPanelDateFormat} {Settings.PreviewPanelTimeFormat}",
+                CultureInfo.CurrentCulture
+            );
+
+            string result = formattedDate;
+            if (Settings.ShowFileAgeInPreviewPanel) result = $"{GetFileAge(createdDate)} - {formattedDate}";
+            CreatedAt = result;
         }
 
         if (Settings.ShowModifiedDateInPreviewPanel)
         {
-            LastModifiedAt = File
-                .GetLastWriteTime(filePath)
-                .ToString(
-                    $"{Settings.PreviewPanelDateFormat} {Settings.PreviewPanelTimeFormat}",
-                    CultureInfo.CurrentCulture
-                );
+            DateTime lastModifiedDate = File.GetLastWriteTime(filePath);
+            string formattedDate = lastModifiedDate.ToString(
+                $"{Settings.PreviewPanelDateFormat} {Settings.PreviewPanelTimeFormat}",
+                CultureInfo.CurrentCulture
+            );
+            string result = formattedDate;
+            if (Settings.ShowFileAgeInPreviewPanel) result = $"{GetFileAge(lastModifiedDate)} - {formattedDate}";
+            LastModifiedAt = result;
         }
 
         _ = LoadImageAsync();
@@ -89,6 +95,30 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
     private async Task LoadImageAsync()
     {
         PreviewImage = await Main.Context.API.LoadImageAsync(FilePath, true).ConfigureAwait(false);
+    }
+    
+    private static string GetFileAge(DateTime fileDateTime)
+    {
+        var now = DateTime.Now;
+        var difference = now - fileDateTime;
+
+        if (difference.TotalDays < 1)
+            return Main.Context.API.GetTranslation("Today");
+        if (difference.TotalDays < 30)
+            return string.Format(Main.Context.API.GetTranslation("DaysAgo"), (int)difference.TotalDays);
+
+        var monthsDiff = (now.Year - fileDateTime.Year) * 12 + now.Month - fileDateTime.Month;
+        if (monthsDiff == 1)
+            return Main.Context.API.GetTranslation("OneMonthAgo");
+        if (monthsDiff < 12)
+            return string.Format(Main.Context.API.GetTranslation("MonthsAgo"), monthsDiff);
+
+        var yearsDiff = now.Year - fileDateTime.Year;
+        if (now.Month < fileDateTime.Month || (now.Month == fileDateTime.Month && now.Day < fileDateTime.Day))
+            yearsDiff--; 
+
+        return yearsDiff == 1 ? Main.Context.API.GetTranslation("OneYearAgo") :
+            string.Format(Main.Context.API.GetTranslation("YearsAgo"), yearsDiff);
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;

@@ -50,6 +50,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string SelectPrevPageHotkey { get; set; } = $"PageDown";
         public string OpenContextMenuHotkey { get; set; } = $"Ctrl+O";
         public string SettingWindowHotkey { get; set; } = $"Ctrl+I";
+        public string OpenHistoryHotkey { get; set; } = $"Ctrl+H";
         public string CycleHistoryUpHotkey { get; set; } = $"{KeyConstant.Alt} + Up";
         public string CycleHistoryDownHotkey { get; set; } = $"{KeyConstant.Alt} + Down";
 
@@ -173,7 +174,20 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
-        public bool ShowHistoryResultsForHomePage { get; set; } = false;
+        private bool _showHistoryResultsForHomePage = false;
+        public bool ShowHistoryResultsForHomePage
+        {
+            get => _showHistoryResultsForHomePage;
+            set
+            {
+                if (_showHistoryResultsForHomePage != value)
+                {
+                    _showHistoryResultsForHomePage = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        
         public int MaxHistoryResultsToShowForHomePage { get; set; } = 5;
 
         public bool AutoRestartAfterChanging { get; set; } = false;
@@ -215,8 +229,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             new()
             {
                 Name = "Files",
-                Path = "Files",
-                DirectoryArgument = "-select \"%d\"",
+                Path = "Files-Stable",
+                DirectoryArgument = "\"%d\"",
                 FileArgument = "-select \"%f\""
             }
         };
@@ -397,29 +411,31 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 var list = FixedHotkeys();
 
                 // Customizeable hotkeys
-                if(!string.IsNullOrEmpty(Hotkey))
+                if (!string.IsNullOrEmpty(Hotkey))
                     list.Add(new(Hotkey, "flowlauncherHotkey", () => Hotkey = ""));
-                if(!string.IsNullOrEmpty(PreviewHotkey))
+                if (!string.IsNullOrEmpty(PreviewHotkey))
                     list.Add(new(PreviewHotkey, "previewHotkey", () => PreviewHotkey = ""));
-                if(!string.IsNullOrEmpty(AutoCompleteHotkey))
+                if (!string.IsNullOrEmpty(AutoCompleteHotkey))
                     list.Add(new(AutoCompleteHotkey, "autoCompleteHotkey", () => AutoCompleteHotkey = ""));
-                if(!string.IsNullOrEmpty(AutoCompleteHotkey2))
+                if (!string.IsNullOrEmpty(AutoCompleteHotkey2))
                     list.Add(new(AutoCompleteHotkey2, "autoCompleteHotkey", () => AutoCompleteHotkey2 = ""));
-                if(!string.IsNullOrEmpty(SelectNextItemHotkey))
+                if (!string.IsNullOrEmpty(SelectNextItemHotkey))
                     list.Add(new(SelectNextItemHotkey, "SelectNextItemHotkey", () => SelectNextItemHotkey = ""));
-                if(!string.IsNullOrEmpty(SelectNextItemHotkey2))
+                if (!string.IsNullOrEmpty(SelectNextItemHotkey2))
                     list.Add(new(SelectNextItemHotkey2, "SelectNextItemHotkey", () => SelectNextItemHotkey2 = ""));
-                if(!string.IsNullOrEmpty(SelectPrevItemHotkey))
+                if (!string.IsNullOrEmpty(SelectPrevItemHotkey))
                     list.Add(new(SelectPrevItemHotkey, "SelectPrevItemHotkey", () => SelectPrevItemHotkey = ""));
-                if(!string.IsNullOrEmpty(SelectPrevItemHotkey2))
+                if (!string.IsNullOrEmpty(SelectPrevItemHotkey2))
                     list.Add(new(SelectPrevItemHotkey2, "SelectPrevItemHotkey", () => SelectPrevItemHotkey2 = ""));
-                if(!string.IsNullOrEmpty(SettingWindowHotkey))
+                if (!string.IsNullOrEmpty(SettingWindowHotkey))
                     list.Add(new(SettingWindowHotkey, "SettingWindowHotkey", () => SettingWindowHotkey = ""));
-                if(!string.IsNullOrEmpty(OpenContextMenuHotkey))
+                if (!string.IsNullOrEmpty(OpenHistoryHotkey))
+                    list.Add(new(OpenHistoryHotkey, "OpenHistoryHotkey", () => OpenHistoryHotkey = ""));                
+                if (!string.IsNullOrEmpty(OpenContextMenuHotkey))
                     list.Add(new(OpenContextMenuHotkey, "OpenContextMenuHotkey", () => OpenContextMenuHotkey = ""));
-                if(!string.IsNullOrEmpty(SelectNextPageHotkey))
+                if (!string.IsNullOrEmpty(SelectNextPageHotkey))
                     list.Add(new(SelectNextPageHotkey, "SelectNextPageHotkey", () => SelectNextPageHotkey = ""));
-                if(!string.IsNullOrEmpty(SelectPrevPageHotkey))
+                if (!string.IsNullOrEmpty(SelectPrevPageHotkey))
                     list.Add(new(SelectPrevPageHotkey, "SelectPrevPageHotkey", () => SelectPrevPageHotkey = ""));
                 if (!string.IsNullOrEmpty(CycleHistoryUpHotkey))
                     list.Add(new(CycleHistoryUpHotkey, "CycleHistoryUpHotkey", () => CycleHistoryUpHotkey = ""));
@@ -450,7 +466,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 new("Alt+Home", "HotkeySelectFirstResult"),
                 new("Alt+End", "HotkeySelectLastResult"),
                 new("Ctrl+R", "HotkeyRequery"),
-                new("Ctrl+H", "ToggleHistoryHotkey"),
                 new("Ctrl+OemCloseBrackets", "QuickWidthHotkey"),
                 new("Ctrl+OemOpenBrackets", "QuickWidthHotkey"),
                 new("Ctrl+OemPlus", "QuickHeightHotkey"),

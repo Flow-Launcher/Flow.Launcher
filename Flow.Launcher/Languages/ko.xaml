@@ -362,6 +362,7 @@
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">파일관리자 선택</system:String>
+    <system:String x:Key="fileManager_learnMore">Learn more</system:String>
     <system:String x:Key="fileManager_tips">사용 중인 파일 관리자의 파일 위치를 지정하고, 필요한 경우 인수를 추가하세요. &quot;%d&quot;는 열고자 하는 디렉터리 경로를 나타내며, 폴더용 인수 필드 및 특정 디렉터리를 여는 명령어에서 사용됩니다. &quot;%f&quot;는 열고자 하는 파일 경로를 나타내며, 파일용 인수 필드 및 특정 파일을 여는 명령어에서 사용됩니다.</system:String>
     <system:String x:Key="fileManager_tips2">예를 들어, 파일 관리자가 totalcmd.exe /A c:\windows와 같은 명령어로 c:\windows 디렉터리를 연다면, 파일 관리자 경로는 totalcmd.exe가 되고, 폴더용 인수는 /A &quot;%d&quot;가 됩니다. QTTabBar와 같은 일부 파일 관리자는 경로만 전달하면 되는 경우가 있으므로, 이 경우에는 파일 관리자 경로에 &quot;%d&quot;를 입력하고 나머지 필드는 비워두세요.</system:String>
     <system:String x:Key="fileManager_name">파일관리자</system:String>
@@ -369,6 +370,8 @@
     <system:String x:Key="fileManager_path">파일관리자 경로</system:String>
     <system:String x:Key="fileManager_directory_arg">폴더경로 인수</system:String>
     <system:String x:Key="fileManager_file_arg">파일경로 인수</system:String>
+    <system:String x:Key="fileManagerPathNotFound">The file manager '{0}' could not be located at '{1}'. Would you like to continue?</system:String>
+    <system:String x:Key="fileManagerPathError">File Manager Path Error</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">기본 웹 브라우저</system:String>
@@ -459,6 +462,14 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
     <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
     <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
+
+    <!--  File Open Error  -->
+    <system:String x:Key="fileManagerNotFoundTitle">File Manager Error</system:String>
+    <system:String x:Key="fileManagerNotFound">
+        The specified file manager could not be found. Please check the Custom File Manager setting under Settings &gt; General.
+    </system:String>
+    <system:String x:Key="errorTitle">Error</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder. {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">잠시 기다려주세요...</system:String>

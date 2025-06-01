@@ -6,10 +6,11 @@
     xmlns:local="clr-namespace:Flow.Launcher"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     Title="{DynamicResource defaultBrowserTitle}"
     Width="550"
+    d:DataContext="{d:DesignInstance vm:SelectBrowserViewModel}"
     Background="{DynamicResource PopuBGColor}"
-    DataContext="{Binding RelativeSource={RelativeSource Self}}"
     Foreground="{DynamicResource PopupTextColor}"
     ResizeMode="NoResize"
     SizeToContent="Height"
@@ -97,11 +98,11 @@
                     </ComboBox>
                     <Button
                         Margin="10 0 0 0"
-                        Click="btnAdd_Click"
+                        Command="{Binding AddCommand}"
                         Content="{DynamicResource add}" />
                     <Button
                         Margin="10 0 0 0"
-                        Click="btnDelete_Click"
+                        Command="{Binding DeleteCommand}"
                         Content="{DynamicResource delete}"
                         IsEnabled="{Binding CustomBrowser.Editable}" />
 

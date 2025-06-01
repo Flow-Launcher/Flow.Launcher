@@ -137,6 +137,9 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.SettingWindowHotkey):
                         OnPropertyChanged(nameof(SettingWindowHotkey));
                         break;
+                    case nameof(Settings.OpenHistoryHotkey):
+                        OnPropertyChanged(nameof(OpenHistoryHotkey));
+                        break;
                 }
             };
 
@@ -265,7 +268,7 @@ namespace Flow.Launcher.ViewModel
 
                     if (token.IsCancellationRequested) return;
 
-                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query, 
+                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query,
                         token)))
                     {
                         App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
@@ -791,7 +794,7 @@ namespace Flow.Launcher.ViewModel
 
         public Visibility ProgressBarVisibility { get; set; }
         public Visibility MainWindowVisibility { get; set; }
-        
+
         // This is to be used for determining the visibility status of the main window instead of MainWindowVisibility
         // because it is more accurate and reliable representation than using Visibility as a condition check
         public bool MainWindowVisibilityStatus { get; set; } = true;
@@ -886,6 +889,7 @@ namespace Flow.Launcher.ViewModel
         public string SelectPrevPageHotkey => VerifyOrSetDefaultHotkey(Settings.SelectPrevPageHotkey, "");
         public string OpenContextMenuHotkey => VerifyOrSetDefaultHotkey(Settings.OpenContextMenuHotkey, "Ctrl+O");
         public string SettingWindowHotkey => VerifyOrSetDefaultHotkey(Settings.SettingWindowHotkey, "Ctrl+I");
+        public string OpenHistoryHotkey => VerifyOrSetDefaultHotkey(Settings.OpenHistoryHotkey, "Ctrl+H");
         public string CycleHistoryUpHotkey => VerifyOrSetDefaultHotkey(Settings.CycleHistoryUpHotkey, "Alt+Up");
         public string CycleHistoryDownHotkey => VerifyOrSetDefaultHotkey(Settings.CycleHistoryDownHotkey, "Alt+Down");
 
@@ -1068,7 +1072,7 @@ namespace Flow.Launcher.ViewModel
             path = QueryResultsPreviewed() ? Results.SelectedItem?.Result?.Preview.FilePath : string.Empty;
             return !string.IsNullOrEmpty(path);
         }
-        
+
         private bool QueryResultsPreviewed()
         {
             var previewed = PreviewSelectedItem == Results.SelectedItem;
@@ -1278,8 +1282,6 @@ namespace Flow.Launcher.ViewModel
             // Update the query's IsReQuery property to true if this is a re-query
             query.IsReQuery = isReQuery;
 
-            
-
             ICollection<PluginPair> plugins = Array.Empty<PluginPair>();
             if (currentIsHomeQuery)
             {
@@ -1310,8 +1312,7 @@ namespace Flow.Launcher.ViewModel
                 }
             }
 
-            var validPluginNames = plugins.Select(x => $"<{x.Metadata.Name}>");
-            App.API.LogDebug(ClassName, $"Valid <{plugins.Count}> plugins: {string.Join(" ", validPluginNames)}");
+            App.API.LogDebug(ClassName, $"Valid <{plugins.Count}> plugins: {string.Join(" ", plugins.Select(x => $"<{x.Metadata.Name}>"))}");
 
             // Do not wait for performance improvement
             /*if (string.IsNullOrEmpty(query.ActionKeyword))
@@ -1339,6 +1340,12 @@ namespace Flow.Launcher.ViewModel
             Task[] tasks;
             if (currentIsHomeQuery)
             {
+                if (ShouldClearExistingResultsForNonQuery(plugins))
+                {
+                    Results.Clear();
+                    App.API.LogDebug(ClassName, $"Existing results are cleared for non-query");
+                }
+
                 tasks = plugins.Select(plugin => plugin.Metadata.HomeDisabled switch
                 {
                     false => QueryTaskAsync(plugin, currentCancellationToken),
@@ -1430,7 +1437,7 @@ namespace Flow.Launcher.ViewModel
                 App.API.LogDebug(ClassName, $"Update results for plugin <{plugin.Metadata.Name}>");
 
                 // Indicate if to clear existing results so to show only ones from plugins with action keywords
-                var shouldClearExistingResults = ShouldClearExistingResults(query, currentIsHomeQuery);
+                var shouldClearExistingResults = ShouldClearExistingResultsForQuery(query, currentIsHomeQuery);
                 _lastQuery = query;
                 _previousIsHomeQuery = currentIsHomeQuery;
 
@@ -1452,8 +1459,13 @@ namespace Flow.Launcher.ViewModel
 
                 App.API.LogDebug(ClassName, $"Update results for history");
 
+                // Indicate if to clear existing results so to show only ones from plugins with action keywords
+                var shouldClearExistingResults = ShouldClearExistingResultsForQuery(query, currentIsHomeQuery);
+                _lastQuery = query;
+                _previousIsHomeQuery = currentIsHomeQuery;
+
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, _historyMetadata, query,
-                    token)))
+                    token, reSelect, shouldClearExistingResults)))
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
@@ -1539,7 +1551,9 @@ namespace Flow.Launcher.ViewModel
 
         /// <summary>
         /// Determines whether the existing search results should be cleared based on the current query and the previous query type.
-        /// This is needed because of the design that treats plugins with action keywords and global action keywords separately. Results are gathered
+        /// This is used to indicate to QueryTaskAsync or QueryHistoryTask whether to clear results. If both QueryTaskAsync and QueryHistoryTask
+        /// are not called then use ShouldClearExistingResultsForNonQuery instead.
+        /// This method needed because of the design that treats plugins with action keywords and global action keywords separately. Results are gathered
         /// either from plugins with matching action keywords or global action keyword, but not both. So when the current results are from plugins
         /// with a matching action keyword and a new result set comes from a new query with the global action keyword, the existing results need to be cleared,
         /// and vice versa. The same applies to home page query results.
@@ -1550,19 +1564,39 @@ namespace Flow.Launcher.ViewModel
         /// <param name="query">The current query.</param>
         /// <param name="currentIsHomeQuery">A flag indicating if the current query is a home query.</param>
         /// <returns>True if the existing results should be cleared, false otherwise.</returns>
-        private bool ShouldClearExistingResults(Query query, bool currentIsHomeQuery)
+        private bool ShouldClearExistingResultsForQuery(Query query, bool currentIsHomeQuery)
         {
             // If previous or current results are from home query, we need to clear them
             if (_previousIsHomeQuery || currentIsHomeQuery)
             {
-                App.API.LogDebug(ClassName, $"Cleared old results");
+                App.API.LogDebug(ClassName, $"Existing results should be cleared for query");
                 return true;
             }
 
             // If the last and current query are not home query type, we need to check the action keyword
             if (_lastQuery?.ActionKeyword != query?.ActionKeyword)
             {
-                App.API.LogDebug(ClassName, $"Cleared old results");
+                App.API.LogDebug(ClassName, $"Existing results should be cleared for query");
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Determines whether existing results should be cleared for non-query calls.
+        /// A non-query call is where QueryTaskAsync and QueryHistoryTask methods are both not called.
+        /// QueryTaskAsync and QueryHistoryTask both handle result updating (clearing if required) so directly calling
+        /// Results.Clear() is not required. However when both are not called, we need to directly clear results and this
+        /// method determines on the condition when clear results should happen.
+        /// </summary>
+        /// <param name="plugins">The collection of plugins to check.</param>
+        /// <returns>True if existing results should be cleared, false otherwise.</returns>
+        private bool ShouldClearExistingResultsForNonQuery(ICollection<PluginPair> plugins)
+        {
+            if (!Settings.ShowHistoryResultsForHomePage && (plugins.Count == 0 || plugins.All(x => x.Metadata.HomeDisabled == true)))
+            {
+                App.API.LogDebug(ClassName, $"Existing results should be cleared for non-query");
                 return true;
             }
 
@@ -1699,7 +1733,7 @@ namespace Flow.Launcher.ViewModel
         public void Show()
         {
             // When application is exiting, we should not show the main window
-            if (App.Exiting) return;
+            if (App.LoadingOrExiting) return;
 
             // When application is exiting, the Application.Current will be null
             Application.Current?.Dispatcher.Invoke(() =>
@@ -1894,6 +1928,21 @@ namespace Flow.Launcher.ViewModel
             bool reSelect = resultsForUpdates.First().ReSelectFirstResult;
 
             Results.AddResults(resultsForUpdates, token, reSelect);
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
+        public void FocusQueryTextBox()
+        {
+            // When application is exiting, the Application.Current will be null
+            Application.Current?.Dispatcher.Invoke(() =>
+            {
+                // When application is exiting, the Application.Current will be null
+                if (Application.Current?.MainWindow is MainWindow window)
+                {
+                    window.QueryTextBox.Focus();
+                    Keyboard.Focus(window.QueryTextBox);
+                }
+            });
         }
 
         #endregion
