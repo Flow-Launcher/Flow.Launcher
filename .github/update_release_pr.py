@@ -1,7 +1,7 @@
 import os
 import requests
 
-def get_github_prs(token, owner, repo, label, state):
+def get_github_prs(token, owner, repo, label = "", state ="all"):
     """
     Fetches pull requests from a GitHub repository that match a given milestone and label.
 
@@ -79,6 +79,25 @@ def get_github_prs(token, owner, repo, label, state):
             
     return all_prs
 
+def get_prs(pull_request_items, label= "", state= "all"):
+    pr_list = []
+    count = 0
+    for pr in pull_request_items:
+        if pr["state"] == state and [item for item in pr["labels"] if item["name"] == label]:
+            pr_list.append(pr)
+            count += 1
+    
+    print(f"Found {count} PRs with {label if label else "no"} label and state as {state}")
+
+    return pr_list
+
+def get_pr_descriptions(pull_request_items):
+    description_content = ""
+    for pr in pull_request_items:
+        description_content+= f"- {pr['title']} #{pr['number']}\n"
+
+    return description_content
+
 def update_pull_request_description(token, owner, repo, pr_number, new_description):
     """
     Updates the description (body) of a GitHub Pull Request.
@@ -108,7 +127,6 @@ def update_pull_request_description(token, owner, repo, pr_number, new_descripti
 
     print(f"Attempting to update PR #{pr_number} in {owner}/{repo}...")
     print(f"URL: {url}")
-    # print(f"Payload: {payload}") # Uncomment for detailed payload debug
 
     try:
         response = requests.patch(url, headers=headers, json=payload)
@@ -136,44 +154,41 @@ if __name__ == "__main__":
     repository_owner = "flow-launcher"
     repository_name = "flow.launcher"
     target_label = "enhancement"
-    state = "closed"
+    state = "all"
 
     print(f"Fetching PRs for {repository_owner}/{repository_name} with label '{target_label}'...")
 
     pull_requests = get_github_prs(
         github_token, 
         repository_owner, 
-        repository_name, 
-        target_label,
-        state
+        repository_name
     )
 
     if not pull_requests:
         print("No matching pull requests found")
         exit(1)
 
-    print(f"\nFound {len(pull_requests)} pull requests:")
+    print(f"\nFound total of {len(pull_requests)} pull requests")
 
-    description_content = ""
-    for pr in pull_requests:
-        description_content+= f"- {pr['title']} #{pr['number']}\n"
-
-    returned_pr = pull_requests = get_github_prs(
-        github_token, 
-        repository_owner, 
-        repository_name, 
+    release_pr = get_prs(
+        pull_requests,
         "release",
         "open"
     )
 
-    if len(returned_pr) != 1:
-        print(f"Unable to find the exact release PR. Returned result: {returned_pr}")
+    if len(release_pr) != 1:
+        print(f"Unable to find the exact release PR. Returned result: {release_pr}")
         exit(1)
     
-    release_pr = returned_pr[0]
+    print(f"Found release PR: {release_pr[0]['title']}")
 
-    print(f"Found release PR: {release_pr['title']}")
+    enhancement_prs = get_prs(pull_requests, "enhancement", "closed")
+    bug_fix_prs = get_prs(pull_requests, "bug", "closed")
 
-    update_pull_request_description(github_token, repository_owner, repository_name, release_pr["number"], description_content)
+    description_content = "# Release notes\n"
+    description_content += f"## Features\n{get_pr_descriptions(enhancement_prs)}" if enhancement_prs else ""
+    description_content += f"## Bug fixes\n{get_pr_descriptions(bug_fix_prs)}" if bug_fix_prs else ""
 
-    print(description_content)
+    update_pull_request_description(github_token, repository_owner, repository_name, release_pr[0]["number"], description_content)
+
+    print(f"PR content updated to:\n{description_content}")
