@@ -313,8 +313,8 @@
     <system:String x:Key="useGlyphUI">使用 Segoe Fluent 图标</system:String>
     <system:String x:Key="useGlyphUIEffect">在支持时在选项中显示 Segoe Fluent 图标</system:String>
     <system:String x:Key="flowlauncherPressHotkey">按下按键</system:String>
-    <system:String x:Key="showBadges">显示结果标记</system:String>
-    <system:String x:Key="showBadgesToolTip">对于支持的插件，将显示标记以帮助更容易区分它们。</system:String>
+    <system:String x:Key="showBadges">显示结果徽章</system:String>
+    <system:String x:Key="showBadgesToolTip">对于支持的插件，将显示徽章以帮助更容易区分它们。</system:String>
     <system:String x:Key="showBadgesGlobalOnly">仅在全局查询下显示结果徽章</system:String>
 
     <!--  Setting Proxy  -->
@@ -364,6 +364,7 @@
     <system:String x:Key="userdatapath">用户数据位置</system:String>
     <system:String x:Key="userdatapathToolTip">用户设置和已安装的插件保存在用户数据文件夹中。此位置可能因是否处于便携模式而异。</system:String>
     <system:String x:Key="userdatapathButton">打开文件夹</system:String>
+    <system:String x:Key="advanced">高级</system:String>
     <system:String x:Key="logLevel">日志等级</system:String>
     <system:String x:Key="LogLevelDEBUG">调试</system:String>
     <system:String x:Key="LogLevelINFO">信息</system:String>
