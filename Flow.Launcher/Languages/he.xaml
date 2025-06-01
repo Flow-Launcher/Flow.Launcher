@@ -363,6 +363,7 @@
     <system:String x:Key="userdatapath">מיקום נתוני משתמש</system:String>
     <system:String x:Key="userdatapathToolTip">הגדרות המשתמש והתוספים המותקנים נשמרים בתיקיית נתוני המשתמש. מיקום זה עשוי להשתנות אם התוכנה במצב נייד.</system:String>
     <system:String x:Key="userdatapathButton">פתח תיקיה</system:String>
+    <system:String x:Key="advanced">Advanced</system:String>
     <system:String x:Key="logLevel">רמת יומן</system:String>
     <system:String x:Key="LogLevelDEBUG">ניפוי שגיאות</system:String>
     <system:String x:Key="LogLevelINFO">מידע</system:String>
