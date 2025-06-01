@@ -362,6 +362,7 @@
     <system:String x:Key="userdatapath">Localização dos dados do utilizador</system:String>
     <system:String x:Key="userdatapathToolTip">As definições e os plugins instalados são guardados na pasta de dados do utilizador. A localização pode variar, tendo em conta se a aplicação está instalada ou no modo portátil</system:String>
     <system:String x:Key="userdatapathButton">Abrir pasta</system:String>
+    <system:String x:Key="advanced">Advanced</system:String>
     <system:String x:Key="logLevel">Nível de registo</system:String>
     <system:String x:Key="LogLevelDEBUG">Depuração</system:String>
     <system:String x:Key="LogLevelINFO">Informação</system:String>
