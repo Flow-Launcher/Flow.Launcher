@@ -366,6 +366,7 @@
     <system:String x:Key="userdatapath">Vị trí dữ liệu người dùng</system:String>
     <system:String x:Key="userdatapathToolTip">Thiết đặt người dùng và plugin đã cài đặt sẽ được lưu trong thư mục dữ liệu người dùng. Vị trí này có thể thay đổi tùy thuộc vào việc nó có ở chế độ di động hay không.</system:String>
     <system:String x:Key="userdatapathButton">Mở thư mục</system:String>
+    <system:String x:Key="advanced">Advanced</system:String>
     <system:String x:Key="logLevel">Log Level</system:String>
     <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="LogLevelINFO">Info</system:String>
