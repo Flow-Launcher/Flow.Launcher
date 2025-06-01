@@ -364,6 +364,7 @@
     <system:String x:Key="userdatapath">Speicherort für Benutzerdaten</system:String>
     <system:String x:Key="userdatapathToolTip">Benutzereinstellungen und installierte Plug-ins werden im Ordner für Benutzerdaten gespeichert. Dieser Speicherort kann variieren, je nachdem, ob sich das Programm im portablen Modus befindet oder nicht.</system:String>
     <system:String x:Key="userdatapathButton">Ordner öffnen</system:String>
+    <system:String x:Key="advanced">Advanced</system:String>
     <system:String x:Key="logLevel">Log-Ebene</system:String>
     <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="LogLevelINFO">Info</system:String>
