@@ -388,7 +388,7 @@
     <system:String x:Key="defaultBrowser_name">浏览器</system:String>
     <system:String x:Key="defaultBrowser_profile_name">浏览器名称</system:String>
     <system:String x:Key="defaultBrowser_path">浏览器路径</system:String>
-    <system:String x:Key="defaultBrowser_newWindow">新窗户</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">新窗口</system:String>
     <system:String x:Key="defaultBrowser_newTab">新标签</system:String>
     <system:String x:Key="defaultBrowser_parameter">隐身模式</system:String>
 

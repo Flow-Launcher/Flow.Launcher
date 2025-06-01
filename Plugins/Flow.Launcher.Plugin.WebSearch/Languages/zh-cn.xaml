@@ -3,7 +3,7 @@
 
     <system:String x:Key="flowlauncher_plugin_websearch_window_title">搜索源设置</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_open_search_in">在以下位置打开</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_new_window">新窗户</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_new_window">新窗口</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_new_tab">新标签页</system:String>
     <system:String x:Key="flowlaucnher_plugin_websearch_set_browser_path">设置浏览器路径:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_choose">选择</system:String>
