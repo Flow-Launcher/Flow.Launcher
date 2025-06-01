@@ -191,6 +191,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public int MaxHistoryResultsToShowForHomePage { get; set; } = 5;
 
         public bool AutoRestartAfterChanging { get; set; } = false;
+        public bool ShowUnknownSourceWarning { get; set; } = true;
 
         public int CustomExplorerIndex { get; set; } = 0;
 

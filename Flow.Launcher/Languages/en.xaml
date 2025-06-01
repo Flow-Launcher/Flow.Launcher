@@ -133,6 +133,8 @@
     <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
     <system:String x:Key="autoRestartAfterChanging">Automatically restart after changing plugins</system:String>
     <system:String x:Key="autoRestartAfterChangingToolTip">Automatically restart Flow Launcher after installing/uninstalling/updating plugins</system:String>
+    <system:String x:Key="showUnknownSourceWarning">Show unknown source warning</system:String>
+    <system:String x:Key="showUnknownSourceWarningToolTip">Show warning when installing plugins from unknown sources</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Search Plugin</system:String>
