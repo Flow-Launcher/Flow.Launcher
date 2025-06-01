@@ -315,7 +315,7 @@
     <system:String x:Key="flowlauncherPressHotkey">按下按键</system:String>
     <system:String x:Key="showBadges">显示结果标记</system:String>
     <system:String x:Key="showBadgesToolTip">对于支持的插件，将显示标记以帮助更容易区分它们。</system:String>
-    <system:String x:Key="showBadgesGlobalOnly">仅显示全局查询的结果标记</system:String>
+    <system:String x:Key="showBadgesGlobalOnly">仅在全局查询下显示结果徽章</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP 代理</system:String>
