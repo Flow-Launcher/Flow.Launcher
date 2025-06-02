@@ -1,3 +1,5 @@
+from os import getenv
+
 import requests
 
 
@@ -169,7 +171,7 @@ def update_pull_request_description(token: str, owner: str, repo: str, pr_number
 
 
 if __name__ == "__main__":
-    github_token = os.environ.get("PR_GET_TOKEN")
+    github_token = getenv("GITHUB_TOKEN")
 
     if not github_token:
         print("Error: GITHUB_TOKEN environment variable not set.")
