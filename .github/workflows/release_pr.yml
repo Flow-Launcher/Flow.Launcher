@@ -9,7 +9,6 @@ on:
 
 jobs:
   update-pr:
-    if: github.head_ref == 'dev'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
