@@ -163,6 +163,13 @@ namespace Flow.Launcher.Infrastructure
             SetWindowStyle(hwnd, WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, (int)newExStyle);
         }
 
+        public static void BlockWindowMaximize(Window window, HwndSourceHook hook)
+        {
+            var handle = GetWindowHandle(window, true);
+            var hwndSource = HwndSource.FromHwnd(handle);
+            hwndSource.AddHook(hook);
+        }
+        
         /// <summary>
         /// Restore window display in the Alt+Tab window list.
         /// </summary>

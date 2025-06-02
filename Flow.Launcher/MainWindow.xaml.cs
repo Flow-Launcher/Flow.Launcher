@@ -490,6 +490,12 @@ namespace Flow.Launcher
 
         #region Window WndProc
 
+        private const int WM_NCLBUTTONDBLCLK = 0x00A3;
+        private const int WM_SYSCOMMAND = 0x0112;
+        private const int SC_MAXIMIZE = 0xF030;
+        private const int SC_RESTORE = 0xF120;
+        private const int SC_MINIMIZE = 0xF020;
+        
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             if (msg == Win32Helper.WM_ENTERSIZEMOVE)
@@ -541,7 +547,20 @@ namespace Flow.Launcher
 
                 handled = true;
             }
-
+            if (msg == WM_NCLBUTTONDBLCLK)
+            {
+                SizeToContent = SizeToContent.Height;
+                handled = true;
+            }
+            else if (msg == WM_SYSCOMMAND)
+            {
+                int command = wParam.ToInt32() & 0xFFF0;
+                if (command == SC_MAXIMIZE || command == SC_MINIMIZE)
+                {
+                    SizeToContent = SizeToContent.Height;
+                    handled = true;
+                }
+            }
             return IntPtr.Zero;
         }
 
