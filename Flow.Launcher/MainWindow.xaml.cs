@@ -471,19 +471,19 @@ namespace Flow.Launcher
                 {
                     if (WindowState == WindowState.Maximized)
                     {
-                        // 최대화된 창의 크기 기준으로 비율 계산
+                        // Calculate ratio based on maximized window dimensions
                         double maxWidth = this.ActualWidth;
                         double maxHeight = this.ActualHeight;
                         var mousePos = e.GetPosition(this);
                         double xRatio = mousePos.X / maxWidth;
                         double yRatio = mousePos.Y / maxHeight;
 
-                        // 현재 모니터 정보
+                        // Current monitor information
                         var screen = Screen.FromHandle(new WindowInteropHelper(this).Handle);
                         var workingArea = screen.WorkingArea;
                         var screenLeftTop = Win32Helper.TransformPixelsToDIP(this, workingArea.X, workingArea.Y);
 
-                        // Normal로 전환
+                        // Switch to Normal state
                         WindowState = WindowState.Normal;
 
                         Dispatcher.BeginInvoke(new Action(() =>
@@ -491,7 +491,7 @@ namespace Flow.Launcher
                             double normalWidth = Width;
                             double normalHeight = Height;
 
-                            // 최대화된 창 크기와 Normal 창 크기 차이만큼 비율 적용
+                            // Apply ratio based on the difference between maximized and normal window sizes
                             Left = screenLeftTop.X + (maxWidth - normalWidth) * xRatio;
                             Top = screenLeftTop.Y + (maxHeight - normalHeight) * yRatio;
 
@@ -508,7 +508,7 @@ namespace Flow.Launcher
                 }
                 catch (InvalidOperationException)
                 {
-                    // 무시
+                    // Ignored - can occur if drag operation is already in progress
                 }
             }
         }
