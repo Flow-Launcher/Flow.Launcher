@@ -73,8 +73,9 @@
         BasedOn="{StaticResource BaseWindowBorderStyle}"
         TargetType="{x:Type Border}">
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="BorderBrush" Value="{DynamicResource SystemThemeBorder}" />
+        <Setter Property="BorderBrush" Value="{m:DynamicColor SystemControlBackgroundChromeMediumBrush}" />
         <Setter Property="Background" Value="{DynamicResource Color01B}" />
+        <Setter Property="CornerRadius" Value="8" />
         <Setter Property="UseLayoutRounding" Value="True" />
     </Style>
     <Style

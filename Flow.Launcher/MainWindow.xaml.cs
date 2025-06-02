@@ -495,19 +495,20 @@ namespace Flow.Launcher
         private const int SC_MAXIMIZE = 0xF030;
         private const int SC_RESTORE = 0xF120;
         private const int SC_MINIMIZE = 0xF020;
-        
-        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-        {
-            if (msg == Win32Helper.WM_ENTERSIZEMOVE)
-            {
-                _initialWidth = (int)Width;
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled) 
+        { 
+            if (msg == Win32Helper.WM_ENTERSIZEMOVE) 
+            { 
+                _initialWidth = (int)Width; 
                 _initialHeight = (int)Height;
-
                 handled = true;
             }
             else if (msg == Win32Helper.WM_EXITSIZEMOVE)
             {
-                if (_initialHeight != (int)Height)
+                //Prevent updating the number of results when the window height is below the height of a single result item.
+                //This situation occurs not only when the user manually resizes the window, but also when the window is released from a side snap, as the OS automatically adjusts the window height.
+                //(Without this check, releasing from a snap can cause the window height to hit the minimum, resulting in only 2 results being shown.)
+                if (_initialHeight != (int)Height && Height> (_settings.WindowHeightSize + _settings.ItemHeightSize))
                 {
                     if (!_settings.KeepMaxResults)
                     {
@@ -531,6 +532,11 @@ namespace Flow.Launcher
                         }
                     }
 
+                    SizeToContent = SizeToContent.Height;
+                }
+                else
+                {
+                    // Update height when exiting maximized snap state.
                     SizeToContent = SizeToContent.Height;
                 }
 
