@@ -34,6 +34,7 @@ def get_github_prs(token: str, owner: str, repo: str, label: str = "", state: st
 
         if len(milestones) > 2:
             print("More than two milestones found, unable to determine the milestone required.")
+            exit(1)
 
         # milestones.pop()
         for ms in milestones:
