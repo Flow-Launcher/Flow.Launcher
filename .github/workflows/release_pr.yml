@@ -1,0 +1,22 @@
+name: Update release PR
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  update-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      
+      - name: Run release PR update
+        env:
+          GITHUB_TOKEN: ${{ secrets.PR_TOKEN }}
+        run: |
+          pwd
+          python ./.github/update)release_pr.py
