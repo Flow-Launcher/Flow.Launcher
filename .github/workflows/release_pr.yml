@@ -1,11 +1,15 @@
 name: Update release PR
 
 on:
-  push:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    branches:
+      - master
   workflow_dispatch:
 
 jobs:
   update-pr:
+    if: github.head_ref == 'dev'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
