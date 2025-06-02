@@ -12,7 +12,7 @@ def get_github_prs(token: str, owner: str, repo: str, label: str = "", state: st
         owner (str): The owner of the repository.
         repo (str): The name of the repository.
         label (str): The label name.
-        state (str): State of PR, e.g. open, close, all
+        state (str): State of PR, e.g. open, closed, all
 
     Returns:
         list: A list of dictionaries, where each dictionary represents a pull request.
@@ -90,7 +90,7 @@ def get_prs(pull_request_items: list[dict], label: str = "", state: str = "all")
     Args:
         pull_request_items (str): List of PR items.
         label (str): The label name.
-        state (str): State of PR, e.g. open, close, all
+        state (str): State of PR, e.g. open, closed, all
 
     Returns:
         list: A list of dictionaries, where each dictionary represents a pull request.
