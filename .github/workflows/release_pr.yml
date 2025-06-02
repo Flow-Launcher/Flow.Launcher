@@ -18,4 +18,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PR_TOKEN }}
         run: |
+          pip install requests
           python ./.github/update_release_pr.py
