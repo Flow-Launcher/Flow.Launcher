@@ -25,7 +25,7 @@ def get_github_prs(token: str, owner: str, repo: str, label: str = "", state: st
 
     milestone_id = None
     milestone_url = f"https://api.github.com/repos/{owner}/{repo}/milestones"
-    params = {"state": open}
+    params = {"state": "open"}
 
     try:
         response = requests.get(milestone_url, headers=headers, params=params)
@@ -103,7 +103,7 @@ def get_prs(pull_request_items: list[dict], label: str = "", state: str = "all")
             pr_list.append(pr)
             count += 1
 
-    print(f"Found {count} PRs with {label if label else "no"} label and state as {state}")
+    print(f"Found {count} PRs with {label if label else 'no'} label and state as {state}")
 
     return pr_list
 
