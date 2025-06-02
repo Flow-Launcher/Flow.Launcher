@@ -101,7 +101,7 @@ namespace Flow.Launcher
 
         private void ThemeManager_ActualApplicationThemeChanged(ModernWpf.ThemeManager sender, object args)
         {
-            _theme.RefreshFrameAsync();
+            _ = _theme.RefreshFrameAsync();
         }
 
         private void OnSourceInitialized(object sender, EventArgs e)
