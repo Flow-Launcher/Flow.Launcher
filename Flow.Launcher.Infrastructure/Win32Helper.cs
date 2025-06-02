@@ -162,7 +162,7 @@ namespace Flow.Launcher.Infrastructure
 
             SetWindowStyle(hwnd, WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, (int)newExStyle);
         }
-        
+
         /// <summary>
         /// Restore window display in the Alt+Tab window list.
         /// </summary>
