@@ -22,4 +22,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.PR_TOKEN }}
         run: |
           pip install requests -q
-          python ./.github/update_release_pr.py
+          python3 ./.github/update_release_pr.py

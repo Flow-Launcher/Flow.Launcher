@@ -88,7 +88,7 @@ def get_prs(pull_request_items: list[dict], label: str = "", state: str = "all")
     Returns a list of pull requests after applying the label and state filters.
 
     Args:
-        pull_request_items (str): List of PR items.
+        pull_request_items (list[dict]): List of PR items.
         label (str): The label name.
         state (str): State of PR, e.g. open, closed, all
 
@@ -158,6 +158,7 @@ def update_pull_request_description(token: str, owner: str, repo: str, pr_number
     print(f"URL: {url}")
 
     try:
+        response = None
         response = requests.patch(url, headers=headers, json=payload)
         response.raise_for_status()
 
@@ -180,10 +181,9 @@ if __name__ == "__main__":
 
     repository_owner = "flow-launcher"
     repository_name = "flow.launcher"
-    target_label = "enhancement"
     state = "all"
 
-    print(f"Fetching PRs for {repository_owner}/{repository_name} with label '{target_label}'...")
+    print(f"Fetching {state} PRs for {repository_owner}/{repository_name} ...")
 
     pull_requests = get_github_prs(github_token, repository_owner, repository_name)
 
