@@ -1,7 +1,9 @@
 import os
+
 import requests
 
-def get_github_prs(token, owner, repo, label = "", state ="all"):
+
+def get_github_prs(token: str, owner: str, repo: str, label: str = "", state: str = "all") -> list[dict]:
     """
     Fetches pull requests from a GitHub repository that match a given milestone and label.
 
@@ -10,7 +12,7 @@ def get_github_prs(token, owner, repo, label = "", state ="all"):
         owner (str): The owner of the repository.
         repo (str): The name of the repository.
         label (str): The label name.
-        state (str): State of PR, e.g. open
+        state (str): State of PR, e.g. open, close, all
 
     Returns:
         list: A list of dictionaries, where each dictionary represents a pull request.
@@ -20,11 +22,11 @@ def get_github_prs(token, owner, repo, label = "", state ="all"):
         "Authorization": f"token {token}",
         "Accept": "application/vnd.github.v3+json",
     }
-    
+
     milestone_id = None
     milestone_url = f"https://api.github.com/repos/{owner}/{repo}/milestones"
     params = {"state": open}
-    
+
     try:
         response = requests.get(milestone_url, headers=headers, params=params)
         response.raise_for_status()
@@ -37,9 +39,9 @@ def get_github_prs(token, owner, repo, label = "", state ="all"):
         for ms in milestones:
             if ms["title"] != "Future":
                 milestone_id = ms["number"]
-                print(f"Gathering PRs with milestone {ms['title']}..." )
+                print(f"Gathering PRs with milestone {ms['title']}...")
                 break
-        
+
         if not milestone_id:
             print(f"No suitable milestone found in repository '{owner}/{repo}'.")
             exit(1)
@@ -63,12 +65,12 @@ def get_github_prs(token, owner, repo, label = "", state ="all"):
         try:
             params["page"] = page
             response = requests.get(prs_url, headers=headers, params=params)
-            response.raise_for_status() # Raise an exception for HTTP errors
+            response.raise_for_status()  # Raise an exception for HTTP errors
             prs = response.json()
-            
+
             if not prs:
-                break # No more PRs to fetch
-            
+                break  # No more PRs to fetch
+
             # Check for pr key since we are using issues endpoint instead.
             all_prs.extend([item for item in prs if "pull_request" in item])
             page += 1
@@ -76,29 +78,57 @@ def get_github_prs(token, owner, repo, label = "", state ="all"):
         except requests.exceptions.RequestException as e:
             print(f"Error fetching pull requests: {e}")
             exit(1)
-            
+
     return all_prs
 
-def get_prs(pull_request_items, label= "", state= "all"):
+
+def get_prs(pull_request_items: list[dict], label: str = "", state: str = "all") -> list[dict]:
+    """
+    Returns a list of pull requests after applying the label and state filters.
+
+    Args:
+        pull_request_items (str): List of PR items.
+        label (str): The label name.
+        state (str): State of PR, e.g. open, close, all
+
+    Returns:
+        list: A list of dictionaries, where each dictionary represents a pull request.
+              Returns an empty list if no PRs are found.
+    """
     pr_list = []
     count = 0
     for pr in pull_request_items:
         if pr["state"] == state and [item for item in pr["labels"] if item["name"] == label]:
             pr_list.append(pr)
             count += 1
-    
+
     print(f"Found {count} PRs with {label if label else "no"} label and state as {state}")
 
     return pr_list
 
-def get_pr_descriptions(pull_request_items):
+
+def get_pr_descriptions(pull_request_items: list[dict]) -> str:
+    """
+    Returns the concatenated string of pr title and number in the format of
+    '- PR title 1 #3651
+     - PR title 2 #3652
+     - PR title 3 #3653
+    '
+
+    Args:
+        pull_request_items (list[dict]): List of PR items.
+
+    Returns:
+        str: a string of PR titles and numbers
+    """
     description_content = ""
     for pr in pull_request_items:
-        description_content+= f"- {pr['title']} #{pr['number']}\n"
+        description_content += f"- {pr['title']} #{pr['number']}\n"
 
     return description_content
 
-def update_pull_request_description(token, owner, repo, pr_number, new_description):
+
+def update_pull_request_description(token: str, owner: str, repo: str, pr_number: int, new_description: str) -> None:
     """
     Updates the description (body) of a GitHub Pull Request.
 
@@ -116,14 +146,12 @@ def update_pull_request_description(token, owner, repo, pr_number, new_descripti
     headers = {
         "Authorization": f"token {token}",
         "Accept": "application/vnd.github.v3+json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
     }
 
     url = f"https://api.github.com/repos/{owner}/{repo}/pulls/{pr_number}"
 
-    payload = {
-        "body": new_description
-    }
+    payload = {"body": new_description}
 
     print(f"Attempting to update PR #{pr_number} in {owner}/{repo}...")
     print(f"URL: {url}")
@@ -132,21 +160,19 @@ def update_pull_request_description(token, owner, repo, pr_number, new_descripti
         response = requests.patch(url, headers=headers, json=payload)
         response.raise_for_status()
 
-        updated_pr_data = response.json()
         print(f"Successfully updated PR #{pr_number}.")
-        return updated_pr_data
 
     except requests.exceptions.RequestException as e:
         print(f"Error updating pull request #{pr_number}: {e}")
         if response is not None:
             print(f"Response status code: {response.status_code}")
             print(f"Response text: {response.text}")
-        return None
+        exit(1)
 
 
 if __name__ == "__main__":
-    github_token = os.environ.get("GITHUB_TOKEN")
-    
+    github_token = os.environ.get("PR_GET_TOKEN")
+
     if not github_token:
         print("Error: GITHUB_TOKEN environment variable not set.")
         exit(1)
@@ -158,11 +184,7 @@ if __name__ == "__main__":
 
     print(f"Fetching PRs for {repository_owner}/{repository_name} with label '{target_label}'...")
 
-    pull_requests = get_github_prs(
-        github_token, 
-        repository_owner, 
-        repository_name
-    )
+    pull_requests = get_github_prs(github_token, repository_owner, repository_name)
 
     if not pull_requests:
         print("No matching pull requests found")
@@ -170,16 +192,12 @@ if __name__ == "__main__":
 
     print(f"\nFound total of {len(pull_requests)} pull requests")
 
-    release_pr = get_prs(
-        pull_requests,
-        "release",
-        "open"
-    )
+    release_pr = get_prs(pull_requests, "release", "open")
 
     if len(release_pr) != 1:
         print(f"Unable to find the exact release PR. Returned result: {release_pr}")
         exit(1)
-    
+
     print(f"Found release PR: {release_pr[0]['title']}")
 
     enhancement_prs = get_prs(pull_requests, "enhancement", "closed")
@@ -189,6 +207,8 @@ if __name__ == "__main__":
     description_content += f"## Features\n{get_pr_descriptions(enhancement_prs)}" if enhancement_prs else ""
     description_content += f"## Bug fixes\n{get_pr_descriptions(bug_fix_prs)}" if bug_fix_prs else ""
 
-    update_pull_request_description(github_token, repository_owner, repository_name, release_pr[0]["number"], description_content)
+    update_pull_request_description(
+        github_token, repository_owner, repository_name, release_pr[0]["number"], description_content
+    )
 
     print(f"PR content updated to:\n{description_content}")
