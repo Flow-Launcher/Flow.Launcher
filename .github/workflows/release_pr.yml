@@ -18,5 +18,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.PR_TOKEN }}
         run: |
-          pwd
-          python ./.github/update)release_pr.py
+          python ./.github/update_release_pr.py
