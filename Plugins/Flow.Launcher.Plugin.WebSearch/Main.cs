@@ -71,7 +71,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                         Score = score,
                         Action = c =>
                         {
-                            _context.API.OpenUrl(searchSource.Url.Replace("{q}", Uri.EscapeDataString(keyword)));
+                            _context.API.OpenWebUrl(searchSource.Url.Replace("{q}", Uri.EscapeDataString(keyword)));
 
                             return true;
                         },
@@ -135,7 +135,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                 ActionKeywordAssigned = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? string.Empty : searchSource.ActionKeyword,
                 Action = c =>
                 {
-                    _context.API.OpenUrl(searchSource.Url.Replace("{q}", Uri.EscapeDataString(o)));
+                    _context.API.OpenWebUrl(searchSource.Url.Replace("{q}", Uri.EscapeDataString(o)));
 
                     return true;
                 },
