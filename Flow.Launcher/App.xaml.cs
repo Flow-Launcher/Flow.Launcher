@@ -26,6 +26,7 @@ using Flow.Launcher.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.Threading;
+using Squirrel;
 
 namespace Flow.Launcher
 {
@@ -334,9 +335,27 @@ namespace Flow.Launcher
 
         #region Restart
 
+        /// <summary>
+        /// Restart the application without changing the user privileges.
+        /// </summary>
+        public static void RestartApp(bool forceAdmin = false)
+        {
+            if (Win32Helper.IsAdministrator() || forceAdmin)
+            {
+                RestartAppAsAdministrator();
+            }
+            else
+            {
+                // Restart requires Squirrel's Update.exe to be present in the parent folder, 
+                // it is only published from the project's release pipeline. When debugging without it,
+                // the project may not restart or just terminates. This is expected.
+                UpdateManager.RestartApp(Constant.ApplicationFileName);
+            }
+        }
+
         // Since Squirrel does not provide a way to restart the app as administrator,
         // we need to do it manually by starting the update.exe with the runas verb
-        public static void RestartAppAsAdministrator()
+        private static void RestartAppAsAdministrator()
         {
             var startInfo = new ProcessStartInfo
             {

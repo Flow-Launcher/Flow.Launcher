@@ -31,7 +31,6 @@ using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
 using JetBrains.Annotations;
-using Squirrel;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher
@@ -85,18 +84,10 @@ namespace Flow.Launcher
             // Wait for all image caches to be saved before restarting
             await ImageLoader.WaitSaveAsync();
 
-            // If app is run as administrator already, we continue to restart app as administrator
-            if (Win32Helper.IsAdministrator())
-            {
-                App.RestartAppAsAdministrator();
-            }
-            else
-            {
-                // Restart requires Squirrel's Update.exe to be present in the parent folder, 
-                // it is only published from the project's release pipeline. When debugging without it,
-                // the project may not restart or just terminates. This is expected.
-                UpdateManager.RestartApp(Constant.ApplicationFileName);
-            }
+            // Restart requires Squirrel's Update.exe to be present in the parent folder, 
+            // it is only published from the project's release pipeline. When debugging without it,
+            // the project may not restart or just terminates. This is expected.
+            App.RestartApp();
         }
 
         public void ShowMainWindow() => _mainVM.Show();
