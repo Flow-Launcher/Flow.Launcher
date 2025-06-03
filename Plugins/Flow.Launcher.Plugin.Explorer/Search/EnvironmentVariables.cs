@@ -47,7 +47,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             foreach (DictionaryEntry special in Environment.GetEnvironmentVariables())
             {
-                var path = special.Value.ToString();
+                var path = special.Value!.ToString();
                 // we add a trailing slash to the path to make sure drive paths become valid absolute paths.
                 // for example, if %systemdrive% is C: we turn it to C:\
                 path = path.EnsureTrailingSlash();
@@ -61,7 +61,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 {
                     // Variables are returned with a mixture of all upper/lower case. 
                     // Call ToUpper() to make the results look consistent
-                    _envStringPaths.Add(special.Key.ToString().ToUpper(), path);
+                    _envStringPaths.Add(special.Key.ToString()!.ToUpper(), path);
                 }
             }
         }

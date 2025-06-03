@@ -1,13 +1,23 @@
-﻿using Flow.Launcher.Plugin.BrowserBookmark.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using Flow.Launcher.Infrastructure.Logger;
+using System;
+using Flow.Launcher.Plugin.BrowserBookmark.Models;
+using Microsoft.Data.Sqlite;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark;
 
 public abstract class ChromiumBookmarkLoader : IBookmarkLoader
 {
+    private static readonly string ClassName = nameof(ChromiumBookmarkLoader);
+
+    private readonly string _faviconCacheDir;
+
+    protected ChromiumBookmarkLoader()
+    {
+        _faviconCacheDir = Main._faviconCacheDir;
+    }
+
     public abstract List<Bookmark> GetBookmarks();
 
     protected List<Bookmark> LoadBookmarks(string browserDataPath, string name)
@@ -22,16 +32,36 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
             if (!File.Exists(bookmarkPath))
                 continue;
 
-            Main.RegisterBookmarkFile(bookmarkPath);
+            // Register bookmark file monitoring (direct call to Main.RegisterBookmarkFile)
+            try
+            {
+                if (File.Exists(bookmarkPath))
+                {
+                    Main.RegisterBookmarkFile(bookmarkPath);
+                }
+            }
+            catch (Exception ex)
+            {
+                Main._context.API.LogException(ClassName, $"Failed to register bookmark file monitoring: {bookmarkPath}", ex);
+            }
 
             var source = name + (Path.GetFileName(profile) == "Default" ? "" : $" ({Path.GetFileName(profile)})");
-            bookmarks.AddRange(LoadBookmarksFromFile(bookmarkPath, source));
+            var profileBookmarks = LoadBookmarksFromFile(bookmarkPath, source);
+
+            // Load favicons after loading bookmarks
+            var faviconDbPath = Path.Combine(profile, "Favicons");
+            if (File.Exists(faviconDbPath))
+            {
+                LoadFaviconsFromDb(faviconDbPath, profileBookmarks);
+            }
+
+            bookmarks.AddRange(profileBookmarks);
         }
 
         return bookmarks;
     }
 
-    protected List<Bookmark> LoadBookmarksFromFile(string path, string source)
+    protected static List<Bookmark> LoadBookmarksFromFile(string path, string source)
     {
         var bookmarks = new List<Bookmark>();
 
@@ -45,15 +75,14 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
         return bookmarks;
     }
 
-    private void EnumerateRoot(JsonElement rootElement, ICollection<Bookmark> bookmarks, string source)
+    private static void EnumerateRoot(JsonElement rootElement, ICollection<Bookmark> bookmarks, string source)
     {
         foreach (var folder in rootElement.EnumerateObject())
         {
             if (folder.Value.ValueKind != JsonValueKind.Object)
                 continue;
 
-            // Fix for Opera. It stores bookmarks slightly different than chrome. See PR and bug report for this change for details.
-            // If various exceptions start to build up here consider splitting this Loader into multiple separate ones.
+            // Fix for Opera. It stores bookmarks slightly different than chrome.
             if (folder.Name == "custom_root")
                 EnumerateRoot(folder.Value, bookmarks, source);
             else
@@ -61,7 +90,7 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
         }
     }
 
-    private void EnumerateFolderBookmark(JsonElement folderElement, ICollection<Bookmark> bookmarks,
+    private static void EnumerateFolderBookmark(JsonElement folderElement, ICollection<Bookmark> bookmarks,
         string source)
     {
         if (!folderElement.TryGetProperty("children", out var childrenElement))
@@ -86,9 +115,117 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
             }
             else
             {
-                Log.Error(
-                    $"ChromiumBookmarkLoader: EnumerateFolderBookmark: type property not found for {subElement.GetString()}");
+                Main._context.API.LogError(ClassName, $"type property not found for {subElement.GetString()}");
             }
+        }
+    }
+
+    private void LoadFaviconsFromDb(string dbPath, List<Bookmark> bookmarks)
+    {
+        // Use a copy to avoid lock issues with the original file
+        var tempDbPath = Path.Combine(_faviconCacheDir, $"tempfavicons_{Guid.NewGuid()}.db");
+
+        try
+        {
+            File.Copy(dbPath, tempDbPath, true);
+        }
+        catch (Exception ex)
+        {
+            try
+            {
+                if (File.Exists(tempDbPath))
+                {
+                    File.Delete(tempDbPath);
+                }
+            }
+            catch (Exception ex1)
+            {
+                Main._context.API.LogException(ClassName, $"Failed to delete temporary favicon DB: {tempDbPath}", ex1);
+            }
+            Main._context.API.LogException(ClassName, $"Failed to copy favicon DB: {dbPath}", ex);
+            return;
+        }
+
+        try
+        {
+            using var connection = new SqliteConnection($"Data Source={tempDbPath}");
+            connection.Open();
+
+            foreach (var bookmark in bookmarks)
+            {
+                try
+                {
+                    var url = bookmark.Url;
+                    if (string.IsNullOrEmpty(url)) continue;
+
+                    // Extract domain from URL
+                    if (!Uri.TryCreate(url, UriKind.Absolute, out Uri uri))
+                        continue;
+
+                    var domain = uri.Host;
+
+                    using var cmd = connection.CreateCommand();
+                    cmd.CommandText = @"
+                            SELECT f.id, b.image_data
+                            FROM favicons f
+                            JOIN favicon_bitmaps b ON f.id = b.icon_id
+                            JOIN icon_mapping m ON f.id = m.icon_id
+                            WHERE m.page_url LIKE @url
+                            ORDER BY b.width DESC
+                            LIMIT 1";
+
+                    cmd.Parameters.AddWithValue("@url", $"%{domain}%");
+
+                    using var reader = cmd.ExecuteReader();
+                    if (!reader.Read() || reader.IsDBNull(1))
+                        continue;
+
+                    var iconId = reader.GetInt64(0).ToString();
+                    var imageData = (byte[])reader["image_data"];
+
+                    if (imageData is not { Length: > 0 })
+                        continue;
+
+                    var faviconPath = Path.Combine(_faviconCacheDir, $"chromium_{domain}_{iconId}.png");
+                    SaveBitmapData(imageData, faviconPath);
+
+                    bookmark.FaviconPath = faviconPath;
+                }
+                catch (Exception ex)
+                {
+                    Main._context.API.LogException(ClassName, $"Failed to extract bookmark favicon: {bookmark.Url}", ex);
+                }
+            }
+
+            // https://github.com/dotnet/efcore/issues/26580
+            SqliteConnection.ClearPool(connection);
+            connection.Close();
+        }
+        catch (Exception ex)
+        {
+            Main._context.API.LogException(ClassName, $"Failed to connect to SQLite: {tempDbPath}", ex);
+        }
+
+        // Delete temporary file
+        try
+        {
+            File.Delete(tempDbPath);
+        }
+        catch (Exception ex)
+        {
+            Main._context.API.LogException(ClassName, $"Failed to delete temporary favicon DB: {tempDbPath}", ex);
+        }
+    }
+
+    private static void SaveBitmapData(byte[] imageData, string outputPath)
+    {
+        try
+        {
+            File.WriteAllBytes(outputPath, imageData);
+        }
+        catch (Exception ex)
+        {
+            Main._context.API.LogException(ClassName, $"Failed to save image: {outputPath}", ex);
         }
     }
 }

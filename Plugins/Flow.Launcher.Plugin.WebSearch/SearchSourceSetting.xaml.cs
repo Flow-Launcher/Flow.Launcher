@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using Microsoft.Win32;
-using Flow.Launcher.Core.Plugin;
 
 namespace Flow.Launcher.Plugin.WebSearch
 {
@@ -16,7 +17,6 @@ namespace Flow.Launcher.Plugin.WebSearch
         private SearchSourceViewModel _viewModel;
         private string selectedNewIconImageFullPath;
 
-
         public SearchSourceSettingWindow(IList<SearchSource> sources, PluginInitContext context, SearchSource old)
         {
             _oldSearchSource = old;
@@ -30,6 +30,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             Initialize(sources, context, Action.Add);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         private async void Initialize(IList<SearchSource> sources, PluginInitContext context, Action action)
         {
             InitializeComponent();
@@ -55,17 +56,17 @@ namespace Flow.Launcher.Plugin.WebSearch
             if (string.IsNullOrEmpty(_searchSource.Title))
             {
                 var warning = _api.GetTranslation("flowlauncher_plugin_websearch_input_title");
-                MessageBox.Show(warning);
+                _context.API.ShowMsgBox(warning);
             }
             else if (string.IsNullOrEmpty(_searchSource.Url))
             {
                 var warning = _api.GetTranslation("flowlauncher_plugin_websearch_input_url");
-                MessageBox.Show(warning);
+                _context.API.ShowMsgBox(warning);
             }
             else if (string.IsNullOrEmpty(_searchSource.ActionKeyword))
             {
                 var warning = _api.GetTranslation("flowlauncher_plugin_websearch_input_action_keyword");
-                MessageBox.Show(warning);
+                _context.API.ShowMsgBox(warning);
             }
             else if (_action == Action.Add)
             {
@@ -80,10 +81,10 @@ namespace Flow.Launcher.Plugin.WebSearch
         private void AddSearchSource()
         {
             var keyword = _searchSource.ActionKeyword;
-            if (!PluginManager.ActionKeywordRegistered(keyword))
+            if (!_context.API.ActionKeywordAssigned(keyword))
             {
                 var id = _context.CurrentPluginMetadata.ID;
-                PluginManager.AddActionKeyword(id, keyword);
+                _context.API.AddActionKeyword(id, keyword);
 
                 _searchSources.Add(_searchSource);
 
@@ -92,7 +93,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             else
             {
                 var warning = _api.GetTranslation("newActionKeywordsHasBeenAssigned");
-                MessageBox.Show(warning);
+                _context.API.ShowMsgBox(warning);
             }
         }
 
@@ -100,10 +101,11 @@ namespace Flow.Launcher.Plugin.WebSearch
         {
             var newKeyword = _searchSource.ActionKeyword;
             var oldKeyword = _oldSearchSource.ActionKeyword;
-            if (!PluginManager.ActionKeywordRegistered(newKeyword) || oldKeyword == newKeyword)
+            if (!_context.API.ActionKeywordAssigned(newKeyword) || oldKeyword == newKeyword)
             {
                 var id = _context.CurrentPluginMetadata.ID;
-                PluginManager.ReplaceActionKeyword(id, oldKeyword, newKeyword);
+                _context.API.RemoveActionKeyword(id, oldKeyword);
+                _context.API.AddActionKeyword(id, newKeyword);
 
                 var index = _searchSources.IndexOf(_oldSearchSource);
                 _searchSources[index] = _searchSource;
@@ -113,7 +115,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             else
             {
                 var warning = _api.GetTranslation("newActionKeywordsHasBeenAssigned");
-                MessageBox.Show(warning);
+                _context.API.ShowMsgBox(warning);
             }
 
             if (!string.IsNullOrEmpty(selectedNewIconImageFullPath))
@@ -125,6 +127,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         private async void OnSelectIconClick(object sender, RoutedEventArgs e)
         {
             const string filter = "Image files (*.jpg, *.jpeg, *.gif, *.png, *.bmp) |*.jpg; *.jpeg; *.gif; *.png; *.bmp";
@@ -138,10 +141,34 @@ namespace Flow.Launcher.Plugin.WebSearch
                 if (!string.IsNullOrEmpty(selectedNewIconImageFullPath))
                 {
                     if (_viewModel.ShouldProvideHint(selectedNewIconImageFullPath))
-                        MessageBox.Show(_api.GetTranslation("flowlauncher_plugin_websearch_iconpath_hint"));
+                        _context.API.ShowMsgBox(_api.GetTranslation("flowlauncher_plugin_websearch_iconpath_hint"));
                     
                     imgPreviewIcon.Source = await _viewModel.LoadPreviewIconAsync(selectedNewIconImageFullPath);
                 }
+            }
+        }
+
+        //Block Space Input
+        private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true;
+            }
+        }
+        private void TextBox_Pasting(object sender, DataObjectPastingEventArgs e)
+        {
+            if (e.DataObject.GetDataPresent(DataFormats.Text))
+            {
+                string text = e.DataObject.GetData(DataFormats.Text) as string;
+                if (!string.IsNullOrEmpty(text) && text.Any(char.IsWhiteSpace))
+                {
+                    e.CancelCommand();
+                }
+            }
+            else
+            {
+                e.CancelCommand();
             }
         }
     }

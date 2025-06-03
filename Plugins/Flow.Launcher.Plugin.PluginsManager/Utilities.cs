@@ -1,10 +1,8 @@
-﻿using Flow.Launcher.Core.ExternalPlugins;
-using Flow.Launcher.Infrastructure.UserSettings;
-using ICSharpCode.SharpZipLib.Zip;
-using Newtonsoft.Json;
+﻿using ICSharpCode.SharpZipLib.Zip;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Text.Json;
 
 namespace Flow.Launcher.Plugin.PluginsManager
 {
@@ -72,12 +70,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
                 if (pluginJsonEntry != null)
                 {
-                    using (StreamReader reader = new StreamReader(pluginJsonEntry.Open()))
-                    {
-                        string pluginJsonContent = reader.ReadToEnd();
-                        plugin = JsonConvert.DeserializeObject<UserPlugin>(pluginJsonContent);
-                        plugin.IcoPath = "Images\\zipfolder.png";
-                    }
+                    using Stream stream = pluginJsonEntry.Open();
+                    plugin = JsonSerializer.Deserialize<UserPlugin>(stream);
+                    plugin.IcoPath = "Images\\zipfolder.png";
                 }
             }
 

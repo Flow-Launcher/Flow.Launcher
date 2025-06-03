@@ -1,5 +1,4 @@
 ﻿using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.Toolkit.Uwp.Notifications;
 using System;
 using System.IO;
@@ -9,8 +8,10 @@ namespace Flow.Launcher
 {
     internal static class Notification
     {
-        internal static bool legacy = Environment.OSVersion.Version.Build < 19041;
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
+        private static readonly string ClassName = nameof(Notification);
+
+        internal static bool legacy = !Win32Helper.IsNotificationSupported();
+
         internal static void Uninstall()
         {
             if (!legacy)
@@ -25,7 +26,6 @@ namespace Flow.Launcher
             });
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
         private static void ShowInternal(string title, string subTitle, string iconPath = null)
         {
             // Handle notification for win7/8/early win10
@@ -52,12 +52,12 @@ namespace Flow.Launcher
             {
                 // Temporary fix for the Windows 11 notification issue
                 // Possibly from 22621.1413 or 22621.1485, judging by post time of #2024
-                Log.Exception("Flow.Launcher.Notification|Notification InvalidOperationException Error", e);
+                App.API.LogException(ClassName, "Notification InvalidOperationException Error", e);
                 LegacyShow(title, subTitle, iconPath);
             }
             catch (Exception e)
             {
-                Log.Exception("Flow.Launcher.Notification|Notification Error", e);
+                App.API.LogException(ClassName, "Notification Error", e);
                 LegacyShow(title, subTitle, iconPath);
             }
         }

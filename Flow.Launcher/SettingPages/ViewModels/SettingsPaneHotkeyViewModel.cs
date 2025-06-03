@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Windows;
 using CommunityToolkit.Mvvm.Input;
-using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
@@ -41,15 +40,15 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
         var item = SelectedCustomPluginHotkey;
         if (item is null)
         {
-            MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
+            App.API.ShowMsgBox(App.API.GetTranslation("pleaseSelectAnItem"));
             return;
         }
 
-        var result = MessageBox.Show(
+        var result = App.API.ShowMsgBox(
             string.Format(
-                InternationalizationManager.Instance.GetTranslation("deleteCustomHotkeyWarning"), item.Hotkey
+                App.API.GetTranslation("deleteCustomHotkeyWarning"), item.Hotkey
             ),
-            InternationalizationManager.Instance.GetTranslation("delete"),
+            App.API.GetTranslation("delete"),
             MessageBoxButton.YesNo
         );
 
@@ -66,11 +65,11 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
         var item = SelectedCustomPluginHotkey;
         if (item is null)
         {
-            MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
+            App.API.ShowMsgBox(App.API.GetTranslation("pleaseSelectAnItem"));
             return;
         }
 
-        var window = new CustomQueryHotkeySetting(null, Settings);
+        var window = new CustomQueryHotkeySetting(Settings);
         window.UpdateItem(item);
         window.ShowDialog();
     }
@@ -78,7 +77,7 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
     [RelayCommand]
     private void CustomHotkeyAdd()
     {
-        new CustomQueryHotkeySetting(null, Settings).ShowDialog();
+        new CustomQueryHotkeySetting(Settings).ShowDialog();
     }
 
     [RelayCommand]
@@ -87,15 +86,15 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
         var item = SelectedCustomShortcut;
         if (item is null)
         {
-            MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
+            App.API.ShowMsgBox(App.API.GetTranslation("pleaseSelectAnItem"));
             return;
         }
 
-        var result = MessageBox.Show(
+        var result = App.API.ShowMsgBox(
             string.Format(
-                InternationalizationManager.Instance.GetTranslation("deleteCustomShortcutWarning"), item.Key, item.Value
+                App.API.GetTranslation("deleteCustomShortcutWarning"), item.Key, item.Value
             ),
-            InternationalizationManager.Instance.GetTranslation("delete"),
+            App.API.GetTranslation("delete"),
             MessageBoxButton.YesNo
         );
 
@@ -111,7 +110,7 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
         var item = SelectedCustomShortcut;
         if (item is null)
         {
-            MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
+            App.API.ShowMsgBox(App.API.GetTranslation("pleaseSelectAnItem"));
             return;
         }
 

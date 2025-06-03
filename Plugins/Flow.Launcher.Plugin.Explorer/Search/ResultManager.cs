@@ -1,17 +1,14 @@
-﻿using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Plugin.SharedCommands;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
-using Flow.Launcher.Plugin.Explorer.Search.Everything;
-using System.Windows.Input;
-using Path = System.IO.Path;
 using System.Windows.Controls;
+using System.Windows.Input;
+using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.Views;
+using Flow.Launcher.Plugin.SharedCommands;
 using Peter;
+using Path = System.IO.Path;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
 {
@@ -67,7 +64,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     CreateFolderResult(Path.GetFileName(result.FullPath), result.FullPath, result.FullPath, query, result.Score, result.WindowsIndexed),
                 ResultType.File =>
                     CreateFileResult(result.FullPath, query, result.Score, result.WindowsIndexed),
-                _ => throw new ArgumentOutOfRangeException()
+                _ => throw new ArgumentOutOfRangeException(null)
             };
         }
 
@@ -100,7 +97,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 IcoPath = path,
                 SubTitle = subtitle,
                 AutoCompleteText = GetAutoCompleteText(title, query, path, ResultType.Folder),
-                TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
+                TitleHighlightData = Context.API.FuzzySearch(query.Search, title).MatchData,
                 CopyText = path,
                 Preview = new Result.PreviewInfo
                 {
@@ -123,7 +120,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(ex.Message, Context.API.GetTranslation("plugin_explorer_opendir_error"));
+                            Context.API.ShowMsgBox(ex.Message, Context.API.GetTranslation("plugin_explorer_opendir_error"));
                             return false;
                         }
                     }
@@ -137,7 +134,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(ex.Message, Context.API.GetTranslation("plugin_explorer_opendir_error"));
+                            Context.API.ShowMsgBox(ex.Message, Context.API.GetTranslation("plugin_explorer_opendir_error"));
                             return false;
                         }
                     }
@@ -152,7 +149,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(ex.Message, Context.API.GetTranslation("plugin_explorer_opendir_error"));
+                            Context.API.ShowMsgBox(ex.Message, Context.API.GetTranslation("plugin_explorer_opendir_error"));
                             return false;
                         }
                     }
@@ -165,7 +162,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     return false;
                 },
                 Score = score,
-                TitleToolTip = InternationalizationManager.Instance.GetTranslation("plugin_explorer_plugin_ToolTipOpenDirectory"),
+                TitleToolTip = Main.Context.API.GetTranslation("plugin_explorer_plugin_ToolTipOpenDirectory"),
                 SubTitleToolTip = path,
                 ContextData = new SearchResult { Type = ResultType.Folder, FullPath = path, WindowsIndexed = windowsIndexed }
             };
@@ -287,7 +284,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     FilePath = filePath,
                 },
                 AutoCompleteText = GetAutoCompleteText(title, query, filePath, ResultType.File),
-                TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
+                TitleHighlightData = Context.API.FuzzySearch(query.Search, title).MatchData,
                 Score = score,
                 CopyText = filePath,
                 PreviewPanel = new Lazy<UserControl>(() => new PreviewPanel(Settings, filePath)),
@@ -315,12 +312,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message, Context.API.GetTranslation("plugin_explorer_openfile_error"));
+                        Context.API.ShowMsgBox(ex.Message, Context.API.GetTranslation("plugin_explorer_openfile_error"));
                     }
 
                     return true;
                 },
-                TitleToolTip = InternationalizationManager.Instance.GetTranslation("plugin_explorer_plugin_ToolTipOpenContainingFolder"),
+                TitleToolTip = Main.Context.API.GetTranslation("plugin_explorer_plugin_ToolTipOpenContainingFolder"),
                 SubTitleToolTip = filePath,
                 ContextData = new SearchResult { Type = ResultType.File, FullPath = filePath, WindowsIndexed = windowsIndexed }
             };
@@ -337,7 +334,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         private static void OpenFile(string filePath, string workingDir = "", bool asAdmin = false)
         {
             IncrementEverythingRunCounterIfNeeded(filePath);
-            FilesFolders.OpenFile(filePath, workingDir, asAdmin);
+            FilesFolders.OpenFile(filePath, workingDir, asAdmin, (string str) => Context.API.ShowMsgBox(str));
         }
 
         private static void OpenFolder(string folderPath, string fileNameOrFilePath = null)

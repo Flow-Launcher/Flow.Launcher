@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
-using System.Windows;
 using System.Windows.Controls;
 using Mages.Core;
 using Flow.Launcher.Plugin.Calculator.ViewModels;
@@ -101,7 +100,7 @@ namespace Flow.Launcher.Plugin.Calculator
                                 }
                                 catch (ExternalException)
                                 {
-                                    MessageBox.Show("Copy failed, please try later");
+                                    Context.API.ShowMsgBox("Copy failed, please try later");
                                     return false;
                                 }
                             }
@@ -156,16 +155,16 @@ namespace Flow.Launcher.Plugin.Calculator
             return value.ToString(numberFormatInfo);
         }
 
-        private string GetDecimalSeparator()
+        private static string GetDecimalSeparator()
         {
-            string systemDecimalSeperator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
-            switch (_settings.DecimalSeparator)
+            string systemDecimalSeparator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+            return _settings.DecimalSeparator switch
             {
-                case DecimalSeparator.UseSystemLocale: return systemDecimalSeperator;
-                case DecimalSeparator.Dot: return dot;
-                case DecimalSeparator.Comma: return comma;
-                default: return systemDecimalSeperator;
-            }
+                DecimalSeparator.UseSystemLocale => systemDecimalSeparator,
+                DecimalSeparator.Dot => dot,
+                DecimalSeparator.Comma => comma,
+                _ => systemDecimalSeparator,
+            };
         }
 
         private bool IsBracketComplete(string query)

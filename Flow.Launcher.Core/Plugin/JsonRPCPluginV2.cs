@@ -10,12 +10,13 @@ using Microsoft.VisualStudio.Threading;
 using StreamJsonRpc;
 using IAsyncDisposable = System.IAsyncDisposable;
 
-
 namespace Flow.Launcher.Core.Plugin
 {
     internal abstract class JsonRPCPluginV2 : JsonRPCPluginBase, IAsyncDisposable, IAsyncReloadable, IResultUpdated
     {
         public const string JsonRpc = "JsonRPC";
+
+        private static readonly string ClassName = nameof(JsonRPCPluginV2);
 
         protected abstract IDuplexPipe ClientPipe { get; set; }
 
@@ -23,59 +24,36 @@ namespace Flow.Launcher.Core.Plugin
 
         private JsonRpc RPC { get; set; }
 
-
         protected override async Task<bool> ExecuteResultAsync(JsonRPCResult result)
         {
-            try
-            {
-                var res = await RPC.InvokeAsync<JsonRPCExecuteResponse>(result.JsonRPCAction.Method,
-                    argument: result.JsonRPCAction.Parameters);
+            var res = await RPC.InvokeAsync<JsonRPCExecuteResponse>(result.JsonRPCAction.Method,
+                argument: result.JsonRPCAction.Parameters);
 
-                return res.Hide;
-            }
-            catch
-            {
-                return false;
-            }
+            return res.Hide;
         }
 
         private JoinableTaskFactory JTF { get; } = new JoinableTaskFactory(new JoinableTaskContext());
 
         public override List<Result> LoadContextMenus(Result selectedResult)
         {
-            try
-            {
-                var res = JTF.Run(() => RPC.InvokeWithCancellationAsync<JsonRPCQueryResponseModel>("context_menu",
-                    new object[] { selectedResult.ContextData }));
+            var res = JTF.Run(() => RPC.InvokeWithCancellationAsync<JsonRPCQueryResponseModel>("context_menu",
+                new object[] { selectedResult.ContextData }));
 
-                var results = ParseResults(res);
+            var results = ParseResults(res);
 
-                return results;
-            }
-            catch
-            {
-                return new List<Result>();
-            }
+            return results;
         }
 
         public override async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
-            try
-            {
-                var res = await RPC.InvokeWithCancellationAsync<JsonRPCQueryResponseModel>("query",
-                    new object[] { query, Settings.Inner },
-                    token);
+            var res = await RPC.InvokeWithCancellationAsync<JsonRPCQueryResponseModel>("query",
+                new object[] { query, Settings.Inner },
+                token);
 
-                var results = ParseResults(res);
+            var results = ParseResults(res);
 
-                return results;
-            }
-            catch
-            {
-                return new List<Result>();
-            }
+            return results;
         }
-
 
         public override async Task InitAsync(PluginInitContext context)
         {
@@ -109,7 +87,6 @@ namespace Flow.Launcher.Core.Plugin
 
         protected abstract MessageHandlerType MessageHandler { get; }
 
-
         private void SetupJsonRPC()
         {
             var formatter = new SystemTextJsonFormatter { JsonSerializerOptions = RequestSerializeOption };
@@ -133,10 +110,24 @@ namespace Flow.Launcher.Core.Plugin
             RPC.StartListening();
         }
 
-        public virtual Task ReloadDataAsync()
+        public virtual async Task ReloadDataAsync()
         {
-            SetupJsonRPC();
-            return Task.CompletedTask;
+            try
+            {
+                await RPC.InvokeAsync("reload_data", Context);
+            }
+            catch (RemoteMethodNotFoundException)
+            {
+                // Ignored
+            }
+            catch (ConnectionLostException)
+            {
+                // Ignored
+            }
+            catch (Exception e)
+            {
+                Context.API.LogException(ClassName, $"Failed to call reload_data for plugin {Context.CurrentPluginMetadata.Name}", e);
+            }
         }
 
         public virtual async ValueTask DisposeAsync()
@@ -145,8 +136,17 @@ namespace Flow.Launcher.Core.Plugin
             {
                 await RPC.InvokeAsync("close");
             }
-            catch (RemoteMethodNotFoundException e)
+            catch (RemoteMethodNotFoundException)
             {
+                // Ignored
+            }
+            catch (ConnectionLostException)
+            {
+                // Ignored
+            }
+            catch (Exception e)
+            {
+                Context.API.LogException(ClassName, $"Failed to call close for plugin {Context.CurrentPluginMetadata.Name}", e);
             }
             finally
             {

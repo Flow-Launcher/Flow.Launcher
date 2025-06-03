@@ -17,7 +17,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Aktivačný príkaz</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">Adresa URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">Hľadať</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Použiť automatické dokončovanie výrazov vyhľadávania:</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Použiť automatické dokončovanie výrazov vyhľadávania</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Automatické dokončovanie údajov z:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Vyberte webové vyhľadávanie</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Naozaj chcete odstrániť {0}?</system:String>

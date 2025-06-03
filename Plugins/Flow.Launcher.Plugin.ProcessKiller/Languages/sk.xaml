@@ -8,4 +8,7 @@
     <system:String x:Key="flowlauncher_plugin_processkiller_kill_all_count">ukončiť {0} procesov</system:String>
     <system:String x:Key="flowlauncher_plugin_processkiller_kill_instances">ukončiť všetky inštancie</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_processkiller_show_window_title">Zobraziť nadpis pre procesy s viditeľnými oknami</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_put_visible_window_process_top">Zobraziť procesy s viditeľným oknom navrchu</system:String>
+
 </ResourceDictionary>

@@ -1,4 +1,4 @@
-version: '1.19.5.{build}'
+version: '1.20.0.{build}'
 
 init:
 - ps: |
@@ -26,7 +26,16 @@ image: Visual Studio 2022
 platform: Any CPU
 configuration: Release
 before_build:
-- ps: nuget restore
+- ps: |
+      nuget restore
+
+      $jsonFiles = Get-ChildItem -Path ".\Plugins\*\plugin.json"
+      foreach ($file in $jsonFiles) {
+          $plugin_old_ver = Get-Content $file.FullName -Raw | ConvertFrom-Json
+          (Get-Content $file) -replace '"Version"\s*:\s*".*?"', "`"Version`": `"$env:flowVersion`"" | Set-Content $file
+          $plugin_new_ver = Get-Content $file.FullName -Raw | ConvertFrom-Json
+          Write-Host "Updated" $plugin_old_ver.Name "version from" $plugin_old_ver.Version "to" $plugin_new_ver.Version
+      }
 build:
   project: Flow.Launcher.sln
   verbosity: minimal

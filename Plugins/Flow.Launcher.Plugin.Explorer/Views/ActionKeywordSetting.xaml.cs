@@ -1,5 +1,6 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -31,13 +32,13 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         }
 
         private string actionKeyword;
-        private readonly IPublicAPI api;
+        private readonly IPublicAPI _api;
         private bool _keywordEnabled;
 
         public ActionKeywordSetting(ActionKeywordModel selectedActionKeyword, IPublicAPI api)
         {
             CurrentActionKeyword = selectedActionKeyword;
-            this.api = api;
+            _api = api;
             ActionKeyword = selectedActionKeyword.Keyword;
             KeywordEnabled = selectedActionKeyword.Enabled;
 
@@ -62,14 +63,14 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 switch (CurrentActionKeyword.KeywordProperty, KeywordEnabled)
                 {
                     case (Settings.ActionKeyword.FileContentSearchActionKeyword, true):
-                        MessageBox.Show(api.GetTranslation("plugin_explorer_globalActionKeywordInvalid"));
+                        _api.ShowMsgBox(_api.GetTranslation("plugin_explorer_globalActionKeywordInvalid"));
                         return;
                     case (Settings.ActionKeyword.QuickAccessActionKeyword, true):
-                        MessageBox.Show(api.GetTranslation("plugin_explorer_quickaccess_globalActionKeywordInvalid"));
+                        _api.ShowMsgBox(_api.GetTranslation("plugin_explorer_quickaccess_globalActionKeywordInvalid"));
                         return;
                 }
 
-            if (!KeywordEnabled || !api.ActionKeywordAssigned(ActionKeyword))
+            if (!KeywordEnabled || !_api.ActionKeywordAssigned(ActionKeyword))
             {
                 DialogResult = true;
                 Close();
@@ -77,7 +78,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             }
 
             // The keyword is not valid, so show message
-            MessageBox.Show(api.GetTranslation("newActionKeywordsHasBeenAssigned"));
+            _api.ShowMsgBox(_api.GetTranslation("newActionKeywordsHasBeenAssigned"));
         }
 
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
@@ -85,6 +86,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             DialogResult = false;
             Close();
         }
+        
         private void TxtCurrentActionKeyword_OnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -93,12 +95,34 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 OnDoneButtonClick(sender, e);
                 e.Handled = true;
             }
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true;
+            }
         }
+        
+        private void TextBox_Pasting(object sender, DataObjectPastingEventArgs e)
+        {
+            if (e.DataObject.GetDataPresent(DataFormats.Text))
+            {
+                string text = e.DataObject.GetData(DataFormats.Text) as string;
+                if (!string.IsNullOrEmpty(text) && text.Any(char.IsWhiteSpace))
+                {
+                    e.CancelCommand();
+                }
+            }
+            else
+            {
+                e.CancelCommand();
+            }
+        }
+        
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        
         private bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
             if (EqualityComparer<T>.Default.Equals(field, value))

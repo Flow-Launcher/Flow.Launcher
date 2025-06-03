@@ -36,6 +36,8 @@
     <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">Hides programs with common uninstaller names, such as unins000.exe</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">Search in Program Description</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow will search program's description</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp">Hide duplicated apps</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp_tooltip">Hide duplicated Win32 programs that are already in the UWP list</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Suffixes</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">Max Depth</system:String>
 
@@ -46,6 +48,8 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">Please select a program source</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">Are you sure you want to delete the selected program sources?</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_not_user_added">Please select program sources that are not added by you</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_user_added">Please select program sources that are added by you</system:String>
     <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Another program source with the same location already exists.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Program Source</system:String>
@@ -74,7 +78,7 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Run As Different User</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Run As Administrator</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Open containing folder</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">Disable this program from displaying</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">Hide</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Open target folder</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Program</system:String>

@@ -1,47 +1,124 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
+using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using Flow.Launcher.Infrastructure;
 using Microsoft.Win32;
 
 namespace Flow.Launcher.Helper;
 
 public static class WallpaperPathRetrieval
 {
-    [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-    private static extern Int32 SystemParametersInfo(UInt32 action,
-        Int32 uParam, StringBuilder vParam, UInt32 winIni);
-    private static readonly UInt32 SPI_GETDESKWALLPAPER = 0x73;
-    private static int MAX_PATH = 260;
+    private static readonly string ClassName = nameof(WallpaperPathRetrieval);
 
-    public static string GetWallpaperPath()
+    private const int MaxCacheSize = 3;
+    private static readonly Dictionary<(string, DateTime), ImageBrush> WallpaperCache = new();
+    private static readonly object CacheLock = new();
+
+    public static Brush GetWallpaperBrush()
     {
-        var wallpaper = new StringBuilder(MAX_PATH);
-        SystemParametersInfo(SPI_GETDESKWALLPAPER, MAX_PATH, wallpaper, 0);
+        // Invoke the method on the UI thread
+        if (!Application.Current.Dispatcher.CheckAccess())
+        {
+            return Application.Current.Dispatcher.Invoke(GetWallpaperBrush);
+        }
 
-        var str = wallpaper.ToString();
-        if (string.IsNullOrEmpty(str))
-            return null;
+        try
+        {
+            var wallpaperPath = Win32Helper.GetWallpaperPath();
+            if (string.IsNullOrEmpty(wallpaperPath) || !File.Exists(wallpaperPath))
+            {
+                App.API.LogInfo(ClassName, $"Wallpaper path is invalid: {wallpaperPath}");
+                var wallpaperColor = GetWallpaperColor();
+                return new SolidColorBrush(wallpaperColor);
+            }
 
-        return str;
+            // Since the wallpaper file name can be the same (TranscodedWallpaper),
+            // we need to add the last modified date to differentiate them
+            var dateModified = File.GetLastWriteTime(wallpaperPath);
+            lock (CacheLock)
+            {
+                WallpaperCache.TryGetValue((wallpaperPath, dateModified), out var cachedWallpaper);
+                if (cachedWallpaper != null)
+                {
+                    return cachedWallpaper;
+                }
+            }
+            
+            using var fileStream = File.OpenRead(wallpaperPath);
+            var decoder = BitmapDecoder.Create(fileStream, BitmapCreateOptions.DelayCreation, BitmapCacheOption.None);
+            var frame = decoder.Frames[0];
+            var originalWidth = frame.PixelWidth;
+            var originalHeight = frame.PixelHeight;
+
+            if (originalWidth == 0 || originalHeight == 0)
+            {
+                App.API.LogInfo(ClassName, $"Failed to load bitmap: Width={originalWidth}, Height={originalHeight}");
+                return new SolidColorBrush(Colors.Transparent);
+            }
+
+            // Calculate the scaling factor to fit the image within 800x600 while preserving aspect ratio
+            var widthRatio = 800.0 / originalWidth;
+            var heightRatio = 600.0 / originalHeight;
+            var scaleFactor = Math.Min(widthRatio, heightRatio);
+            var decodedPixelWidth = (int)(originalWidth * scaleFactor);
+            var decodedPixelHeight = (int)(originalHeight * scaleFactor);
+
+            // Set DecodePixelWidth and DecodePixelHeight to resize the image while preserving aspect ratio
+            var bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.UriSource = new Uri(wallpaperPath);
+            bitmap.DecodePixelWidth = decodedPixelWidth;
+            bitmap.DecodePixelHeight = decodedPixelHeight;
+            bitmap.EndInit();
+            bitmap.Freeze(); // Make the bitmap thread-safe
+            var wallpaperBrush = new ImageBrush(bitmap) { Stretch = Stretch.UniformToFill };
+            wallpaperBrush.Freeze(); // Make the brush thread-safe
+
+            // Manage cache size
+            lock (CacheLock)
+            {
+                if (WallpaperCache.Count >= MaxCacheSize)
+                {
+                    // Remove the oldest wallpaper from the cache
+                    var oldestCache = WallpaperCache.Keys.OrderBy(k => k.Item2).FirstOrDefault();
+                    if (oldestCache != default)
+                    {
+                        WallpaperCache.Remove(oldestCache);
+                    }
+                }
+
+                WallpaperCache.Add((wallpaperPath, dateModified), wallpaperBrush);
+                return wallpaperBrush;
+            }
+        }
+        catch (Exception ex)
+        {
+            App.API.LogException(ClassName, "Error retrieving wallpaper", ex);
+            return new SolidColorBrush(Colors.Transparent);
+        }
     }
 
-    public static Color GetWallpaperColor()
+    private static Color GetWallpaperColor()
     {
-        RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Colors", true);
+        RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Colors", false);
         var result = key?.GetValue("Background", null);
         if (result is string strResult)
         {
             try
             {
-                var parts = strResult.Trim().Split(new[] {' '}, 3).Select(byte.Parse).ToList();
+                var parts = strResult.Trim().Split(new[] { ' ' }, 3).Select(byte.Parse).ToList();
                 return Color.FromRgb(parts[0], parts[1], parts[2]);
             }
-            catch
+            catch (Exception ex)
             {
+                App.API.LogException(ClassName, "Error parsing wallpaper color", ex);
             }
         }
+
         return Colors.Transparent;
     }
 }

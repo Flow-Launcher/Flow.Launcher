@@ -12,6 +12,7 @@
     Foreground="{DynamicResource PopupTextColor}"
     ResizeMode="NoResize"
     SizeToContent="Height"
+    Topmost="True"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <WindowChrome.WindowChrome>
@@ -21,7 +22,7 @@
         <KeyBinding Key="Escape" Command="Close" />
     </Window.InputBindings>
     <Window.CommandBindings>
-        <CommandBinding Command="Close" Executed="cmdEsc_OnPress" />
+        <CommandBinding Command="Close" Executed="KeyEsc_OnPress" />
     </Window.CommandBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -33,14 +34,11 @@
             <StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Button
-                        Grid.Column="4"
+                        Grid.Column="1"
                         Click="Button_Cancel"
                         Style="{StaticResource TitleBarCloseButtonStyle}">
                         <Path
@@ -63,8 +61,12 @@
                 </Grid>
             </StackPanel>
         </StackPanel>
-        <StackPanel Grid.Row="1" Margin="30 0 30 24">
-            <Grid Grid.Column="0" Margin="0 0 0 12">
+        <Grid Grid.Row="1" Margin="30 0 30 24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Margin="0 0 0 12">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
@@ -74,7 +76,7 @@
                     Grid.Column="0"
                     Width="18"
                     Height="18"
-                    Margin="0 0 0 0"
+                    Margin="0 0 10 0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     RenderOptions.BitmapScalingMode="Fant"
@@ -84,7 +86,7 @@
                     x:Name="TitleTextBlock"
                     Grid.Column="1"
                     MaxWidth="400"
-                    Margin="10 0 26 0"
+                    Margin="0 0 26 0"
                     VerticalAlignment="Center"
                     FontFamily="Segoe UI"
                     FontSize="20"
@@ -94,14 +96,26 @@
             </Grid>
             <TextBlock
                 x:Name="DescTextBlock"
-                Grid.Column="1"
+                Grid.Row="1"
                 MaxWidth="400"
                 Margin="0 0 26 0"
                 HorizontalAlignment="Stretch"
                 FontSize="14"
                 TextAlignment="Left"
                 TextWrapping="Wrap" />
-        </StackPanel>
+            <TextBlock
+                x:Name="DescOnlyTextBlock"
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                MaxWidth="400"
+                Margin="0 0 26 0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center"
+                FontSize="14"
+                TextAlignment="Left"
+                TextWrapping="Wrap"
+                Visibility="Collapsed" />
+        </Grid>
         <Border
             Grid.Row="2"
             Margin="0 0 0 0"
@@ -113,29 +127,29 @@
                 VerticalAlignment="Center"
                 Orientation="Horizontal">
                 <Button
-                    x:Name="btnCancel"
-                    MinWidth="140"
-                    Margin="5 0 5 0"
-                    Click="Button_Click"
-                    Content="{DynamicResource commonCancel}" />
-                <Button
-                    x:Name="btnNo"
-                    MinWidth="140"
-                    Margin="5 0 5 0"
-                    Click="Button_Click"
-                    Content="{DynamicResource commonNo}" />
-                <Button
                     x:Name="btnOk"
-                    MinWidth="140"
+                    MinWidth="120"
                     Margin="5 0 5 0"
                     Click="Button_Click"
                     Content="{DynamicResource commonOK}" />
                 <Button
                     x:Name="btnYes"
-                    MinWidth="140"
+                    MinWidth="120"
                     Margin="5 0 5 0"
                     Click="Button_Click"
                     Content="{DynamicResource commonYes}" />
+                <Button
+                    x:Name="btnNo"
+                    MinWidth="120"
+                    Margin="5 0 5 0"
+                    Click="Button_Click"
+                    Content="{DynamicResource commonNo}" />
+                <Button
+                    x:Name="btnCancel"
+                    MinWidth="120"
+                    Margin="5 0 5 0"
+                    Click="Button_Click"
+                    Content="{DynamicResource commonCancel}" />
             </WrapPanel>
         </Border>
     </Grid>

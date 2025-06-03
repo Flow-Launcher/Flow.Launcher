@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
+using Windows.Win32;
 
 namespace Flow.Launcher.Infrastructure
 {
@@ -15,7 +15,20 @@ namespace Flow.Launcher.Infrastructure
         {
             var explorerWindow = GetActiveExplorer();
             string locationUrl = explorerWindow?.LocationURL;
-            return !string.IsNullOrEmpty(locationUrl) ? new Uri(locationUrl).LocalPath + "\\" : null;
+            return !string.IsNullOrEmpty(locationUrl) ? GetDirectoryPath(new Uri(locationUrl).LocalPath) : null;
+        }
+
+        /// <summary>
+        /// Get directory path from a file path
+        /// </summary>
+        private static string GetDirectoryPath(string path)
+        {
+            if (!path.EndsWith("\\"))
+            {
+                return path + "\\";
+            }
+
+            return path;
         }
 
         /// <summary>
@@ -54,12 +67,6 @@ namespace Flow.Launcher.Infrastructure
             return explorerWindows.Zip(zOrders).MinBy(x => x.Second).First;
         }
 
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool EnumWindows(EnumWindowsProc lpEnumFunc, IntPtr lParam);
-
-        private delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
-
         /// <summary>
         /// Gets the z-order for one or more windows atomically with respect to each other. In Windows, smaller z-order is higher. If the window is not top level, the z order is returned as -1. 
         /// </summary>
@@ -70,9 +77,9 @@ namespace Flow.Launcher.Infrastructure
 
             var index = 0;
             var numRemaining = hWnds.Count;
-            EnumWindows((wnd, _) =>
+            PInvoke.EnumWindows((wnd, _) =>
             {
-                var searchIndex = hWnds.FindIndex(x => x.HWND == wnd.ToInt32());
+                var searchIndex = hWnds.FindIndex(x => new IntPtr(x.HWND) == wnd);
                 if (searchIndex != -1)
                 {
                     z[searchIndex] = index;

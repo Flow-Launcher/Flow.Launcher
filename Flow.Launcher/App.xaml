@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     ShutdownMode="OnMainWindowClose"
-    Startup="OnStartupAsync">
+    Startup="OnStartup">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -16,6 +16,11 @@
                             </ResourceDictionary.MergedDictionaries>
                         </ResourceDictionary>
                         <ResourceDictionary x:Key="Dark">
+                            <ResourceDictionary.MergedDictionaries>
+                                <ResourceDictionary Source="pack://application:,,,/Resources/Dark.xaml" />
+                            </ResourceDictionary.MergedDictionaries>
+                        </ResourceDictionary>
+                        <ResourceDictionary x:Key="HighContrast">
                             <ResourceDictionary.MergedDictionaries>
                                 <ResourceDictionary Source="pack://application:,,,/Resources/Dark.xaml" />
                             </ResourceDictionary.MergedDictionaries>

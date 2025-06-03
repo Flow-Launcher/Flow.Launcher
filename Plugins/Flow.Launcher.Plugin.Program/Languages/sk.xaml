@@ -34,6 +34,8 @@
     <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">Schovať odinštalačné programy s bežnými názvami ako unins000.exe</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">Povoliť popis programu</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow bude vyhľadávať v popise programu</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp">Schovať duplicitné aplikácie</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp_tooltip">Schovať duplicitné programy WIn32, ktoré sú už v zozname UWP</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Prípony</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">Max. hĺbka</system:String>
 
@@ -44,6 +46,8 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">Prosím, zadajte zdroj programu</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">Naozaj chcete odstrániť vybrané zdroje programov?</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_not_user_added">Vyberte zdroje programov, ktoré ste nepridali vy</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_user_added">Vyberte zdroje programov, ktoré ste pridali vy</system:String>
     <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Iný zdroj programu s rovnakým umiestnením už existuje.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Zdroj programu</system:String>
@@ -72,7 +76,7 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Spustiť ako iný používateľ</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Spustiť ako správca</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Otvoriť umiestnenie priečinka</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">Zakázať zobrazovanie tohto programu</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">Skryť</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Otvoriť cieľový priečinok</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Program</system:String>

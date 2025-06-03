@@ -9,8 +9,13 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Views;
 public partial class SettingsControl : INotifyPropertyChanged
 {
     public Settings Settings { get; }
-
     public CustomBrowser SelectedCustomBrowser { get; set; }
+
+    public SettingsControl(Settings settings)
+    {
+        Settings = settings;
+        InitializeComponent();
+    }
 
     public bool LoadChromeBookmark
     {
@@ -50,12 +55,6 @@ public partial class SettingsControl : INotifyPropertyChanged
             Settings.OpenInNewBrowserWindow = value;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(OpenInNewBrowserWindow)));
         }
-    }
-
-    public SettingsControl(Settings settings)
-    {
-        Settings = settings;
-        InitializeComponent();
     }
 
     public event PropertyChangedEventHandler PropertyChanged;

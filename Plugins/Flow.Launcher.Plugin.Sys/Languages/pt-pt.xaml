@@ -2,8 +2,9 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Command List  -->
-    <system:String x:Key="flowlauncher_plugin_sys_command">Comando</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_name">Nome</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_desc">Descrição</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_command">Comando</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer_cmd">Desligar</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_computer_cmd">Reiniciar</system:String>
@@ -25,6 +26,9 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips_cmd">Dicas Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location_cmd">Pasta de dados do utilizador Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode_cmd">Comutar modo de jogo</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector_cmd">Definir tema Flow Launcher</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_sys_edit">Editar</system:String>
 
     <!--  Command Descriptions  -->
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">Desligar computador</system:String>
@@ -47,8 +51,9 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">Aceda à documentação para mais informações e dicas de utilização</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Abrir localização onde as definições do Flow Launcher estão guardadas</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode">Comutar modo de jogo</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector">Alterar rapidamente o tema da aplicação</system:String>
 
-        <!--  Dialogs  -->
+    <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">Sucesso</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">Definições guardadas com sucesso</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Recarregar todos os dados aplicáveis ao plugin</system:String>
@@ -56,6 +61,15 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">Tem a certeza que deseja reiniciar o computador?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Tem certeza de que deseja reiniciar o computador com as opções avançadas de arranque?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Tem certeza de que deseja terminar a sessão?</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Definição de palavra-chave</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Palavra-chave personalizada</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword_tip">Indique a palavra-chave para pesquisar o comando: {0}. A aplavra-chave será usada para correspondência com a consulta.</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_command_keyword">Palavra-chave</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_reset">Repor</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_confirm">Confirmar</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_cancel">Cancelar</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_input_command_keyword">Não pode indicar uma palavra-chave vazia</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">Comandos do sistema</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Disponibiliza os comandos relacionados com o sistema tais como: desligar, bloquear, reiniciar...</system:String>
