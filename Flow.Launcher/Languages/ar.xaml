@@ -364,6 +364,7 @@
     <system:String x:Key="userdatapath">موقع بيانات المستخدم</system:String>
     <system:String x:Key="userdatapathToolTip">يتم حفظ إعدادات المستخدم والإضافات المثبتة في مجلد بيانات المستخدم. قد يختلف هذا الموقع اعتمادًا على ما إذا كان في وضع النقل أم لا.</system:String>
     <system:String x:Key="userdatapathButton">فتح المجلد</system:String>
+    <system:String x:Key="advanced">Advanced</system:String>
     <system:String x:Key="logLevel">Log Level</system:String>
     <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="LogLevelINFO">Info</system:String>

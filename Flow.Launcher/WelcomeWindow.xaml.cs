@@ -96,7 +96,7 @@ namespace Flow.Launcher
         private void Window_Closed(object sender, EventArgs e)
         {
             // If app is exiting, settings save is not needed because main window closing event will handle this
-            if (App.Exiting) return;
+            if (App.LoadingOrExiting) return;
             // Save settings when window is closed
             _settings.Save();
         }

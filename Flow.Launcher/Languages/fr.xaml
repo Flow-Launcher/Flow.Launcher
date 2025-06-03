@@ -363,6 +363,7 @@
     <system:String x:Key="userdatapath">Emplacement des données utilisateur</system:String>
     <system:String x:Key="userdatapathToolTip">Les paramètres utilisateur et les plugins installés sont enregistrés dans le dossier des données utilisateur. Cet emplacement peut varier selon que vous soyez en mode portable ou non.</system:String>
     <system:String x:Key="userdatapathButton">Ouvrir le dossier</system:String>
+    <system:String x:Key="advanced">Avancé</system:String>
     <system:String x:Key="logLevel">Niveau de journalisation</system:String>
     <system:String x:Key="LogLevelDEBUG">Débogage</system:String>
     <system:String x:Key="LogLevelINFO">Info</system:String>
@@ -370,7 +371,7 @@
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Sélectionner le gestionnaire de fichiers</system:String>
-    <system:String x:Key="fileManager_learnMore">Learn more</system:String>
+    <system:String x:Key="fileManager_learnMore">En savoir plus</system:String>
     <system:String x:Key="fileManager_tips">Veuillez spécifier l'emplacement du fichier de l'explorateur de fichiers que vous utilisez et ajouter des arguments si nécessaire. Le &quot;%d&quot; représente le chemin du répertoire à ouvrir, utilisé par le champ Arg for Folder et pour les commandes ouvrant des répertoires spécifiques. Le &quot;%f&quot; représente le chemin du fichier à ouvrir, utilisé par le champ Arg for File et pour les commandes ouvrant des fichiers spécifiques.</system:String>
     <system:String x:Key="fileManager_tips2">Par exemple, si l'explorateur de fichiers utilise une commande telle que &quot;totalcmd.exe /A c:\windows&quot; pour ouvrir le répertoire c:\windows, le chemin de l'explorateur de fichiers sera totalcmd.exe et l'argument Arg For Folder sera /A &quot;%d&quot;&quot;. Certains explorateurs de fichiers comme QTTabBar peuvent simplement nécessiter qu'un chemin soit fourni, dans ce cas, utilisez &quot;%d&quot; comme chemin de l'explorateur de fichiers et laissez le reste des fichiers vides.</system:String>
     <system:String x:Key="fileManager_name">Gestionnaire de fichiers</system:String>
@@ -378,8 +379,8 @@
     <system:String x:Key="fileManager_path">Chemin du gestionnaire de fichiers</system:String>
     <system:String x:Key="fileManager_directory_arg">Arguments pour le répertoire</system:String>
     <system:String x:Key="fileManager_file_arg">Arguments pour le fichier</system:String>
-    <system:String x:Key="fileManagerPathNotFound">The file manager '{0}' could not be located at '{1}'. Would you like to continue?</system:String>
-    <system:String x:Key="fileManagerPathError">File Manager Path Error</system:String>
+    <system:String x:Key="fileManagerPathNotFound">Le gestionnaire de fichiers '{0}' n'a pas pu être situé à '{1}'. Souhaitez-vous continuer ?</system:String>
+    <system:String x:Key="fileManagerPathError">Erreur de chemin du gestionnaire de fichiers</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Navigateur web par défaut</system:String>
@@ -472,12 +473,12 @@ Si vous ajoutez un préfixe &quot;@&quot; lors de la saisie d'un raccourci, celu
     <system:String x:Key="reportWindow_copy_below">2. Copiez le message d’exception ci-dessous</system:String>
 
     <!--  File Open Error  -->
-    <system:String x:Key="fileManagerNotFoundTitle">File Manager Error</system:String>
+    <system:String x:Key="fileManagerNotFoundTitle">Erreur du gestionnaire de fichiers</system:String>
     <system:String x:Key="fileManagerNotFound">
-        The specified file manager could not be found. Please check the Custom File Manager setting under Settings &gt; General.
+        Le gestionnaire de fichiers spécifié n'a pas été trouvé. Veuillez vérifier le paramètre Gestionnaire de fichiers personnalisé dans Paramètres &gt; Général.
     </system:String>
     <system:String x:Key="errorTitle">Erreur</system:String>
-    <system:String x:Key="folderOpenError">An error occurred while opening the folder. {0}</system:String>
+    <system:String x:Key="folderOpenError">Une erreur s'est produite lors de l'ouverture du dossier. {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Veuillez patienter...</system:String>

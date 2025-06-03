@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
@@ -18,6 +19,7 @@ using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Dwm;
 using Windows.Win32.UI.Input.KeyboardAndMouse;
+using Windows.Win32.UI.Shell.Common;
 using Windows.Win32.UI.WindowsAndMessaging;
 using Point = System.Windows.Point;
 using SystemFonts = System.Windows.SystemFonts;
@@ -193,9 +195,9 @@ namespace Flow.Launcher.Infrastructure
             SetWindowStyle(hwnd, WINDOW_LONG_PTR_INDEX.GWL_STYLE, style);
         }
 
-        private static int GetWindowStyle(HWND hWnd, WINDOW_LONG_PTR_INDEX nIndex)
+        private static nint GetWindowStyle(HWND hWnd, WINDOW_LONG_PTR_INDEX nIndex)
         {
-            var style = PInvoke.GetWindowLong(hWnd, nIndex);
+            var style = PInvoke.GetWindowLongPtr(hWnd, nIndex);
             if (style == 0 && Marshal.GetLastPInvokeError() != 0)
             {
                 throw new Win32Exception(Marshal.GetLastPInvokeError());
@@ -203,7 +205,7 @@ namespace Flow.Launcher.Infrastructure
             return style;
         }
 
-        private static nint SetWindowStyle(HWND hWnd, WINDOW_LONG_PTR_INDEX nIndex, int dwNewLong)
+        private static nint SetWindowStyle(HWND hWnd, WINDOW_LONG_PTR_INDEX nIndex, nint dwNewLong)
         {
             PInvoke.SetLastError(WIN32_ERROR.NO_ERROR); // Clear any existing error
 
@@ -751,6 +753,37 @@ namespace Flow.Launcher.Infrastructure
         private static bool TryGetNotoFont(string langKey, out string notoFont)
         {
             return _languageToNotoSans.TryGetValue(langKey, out notoFont);
+        }
+
+        #endregion
+
+        #region Explorer
+
+        // https://learn.microsoft.com/en-us/windows/win32/api/shlobj_core/nf-shlobj_core-shopenfolderandselectitems
+
+        public static unsafe void OpenFolderAndSelectFile(string filePath)
+        {
+            ITEMIDLIST* pidlFolder = null;
+            ITEMIDLIST* pidlFile = null;
+
+            var folderPath = Path.GetDirectoryName(filePath);
+
+            try
+            {
+                var hrFolder = PInvoke.SHParseDisplayName(folderPath, null, out pidlFolder, 0, null);
+                if (hrFolder.Failed) throw new COMException("Failed to parse folder path", hrFolder);
+
+                var hrFile = PInvoke.SHParseDisplayName(filePath, null, out pidlFile, 0, null);
+                if (hrFile.Failed) throw new COMException("Failed to parse file path", hrFile);
+
+                var hrSelect = PInvoke.SHOpenFolderAndSelectItems(pidlFolder, 1, &pidlFile, 0);
+                if (hrSelect.Failed) throw new COMException("Failed to open folder and select item", hrSelect);
+            }
+            finally
+            {
+                if (pidlFile != null) PInvoke.CoTaskMemFree(pidlFile);
+                if (pidlFolder != null) PInvoke.CoTaskMemFree(pidlFolder);
+            }
         }
 
         #endregion
