@@ -85,10 +85,18 @@ namespace Flow.Launcher
             // Wait for all image caches to be saved before restarting
             await ImageLoader.WaitSaveAsync();
 
-            // Restart requires Squirrel's Update.exe to be present in the parent folder, 
-            // it is only published from the project's release pipeline. When debugging without it,
-            // the project may not restart or just terminates. This is expected.
-            UpdateManager.RestartApp(Constant.ApplicationFileName);
+            // If app is run as administrator already, we continue to restart app as administrator
+            if (Win32Helper.IsAdministrator())
+            {
+                App.RestartAppAsAdministrator();
+            }
+            else
+            {
+                // Restart requires Squirrel's Update.exe to be present in the parent folder, 
+                // it is only published from the project's release pipeline. When debugging without it,
+                // the project may not restart or just terminates. This is expected.
+                UpdateManager.RestartApp(Constant.ApplicationFileName);
+            }
         }
 
         public void ShowMainWindow() => _mainVM.Show();
