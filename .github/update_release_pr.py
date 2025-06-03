@@ -232,7 +232,7 @@ if __name__ == "__main__":
     assignees = list(set(get_prs_assignees(pull_requests, "enhancement", "closed") + get_prs_assignees(pull_requests, "bug", "closed")))
     assignees.sort(key=str.lower)
 
-    description_content += f"### Authors: {','.join(assignees)}"
+    description_content += f"### Authors:\n{', '.join(assignees)}"
 
     update_pull_request_description(
         github_token, repository_owner, repository_name, release_pr[0]["number"], description_content
