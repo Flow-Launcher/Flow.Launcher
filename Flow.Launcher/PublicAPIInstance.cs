@@ -390,7 +390,6 @@ namespace Flow.Launcher
             }
         }
 
-
         private void OpenUri(Uri uri, bool? inPrivate = null, bool forceBrower = false)
         {
             if (forceBrower || uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
@@ -420,14 +419,14 @@ namespace Flow.Launcher
             }
         }
 
-        public void OpenUrl(string url, bool? inPrivate = null, bool forceBrower = false)
+        public void OpenWebUrl(string url, bool? inPrivate = null)
         {
-            OpenUri(new Uri(url), inPrivate, forceBrower);
+            OpenUri(new Uri(url), inPrivate, true);
         }
 
-        public void OpenUrl(Uri url, bool? inPrivate = null, bool forceBrower = false)
+        public void OpenWebUrl(Uri url, bool? inPrivate = null)
         {
-            OpenUri(url, inPrivate, forceBrower);
+            OpenUri(url, inPrivate, true);
         }
 
         public void OpenUrl(string url, bool? inPrivate = null)

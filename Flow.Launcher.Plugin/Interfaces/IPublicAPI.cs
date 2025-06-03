@@ -309,14 +309,14 @@ namespace Flow.Launcher.Plugin
         /// Opens the URL using the browser with the given Uri object, even if the URL is a local file.
         /// The browser and mode used is based on what's configured in Flow's default browser settings.
         /// </summary>
-        public void OpenWebUrl(Uri url, bool? inPrivate = null, bool forceBrower = false);
+        public void OpenWebUrl(Uri url, bool? inPrivate = null);
 
         /// <summary>
         /// Opens the URL using the browser with the given string, even if the URL is a local file.
         /// The browser and mode used is based on what's configured in Flow's default browser settings.
         /// Non-C# plugins should use this method.
         /// </summary>
-        public void OpenWebUrl(string url, bool? inPrivate = null, bool forceBrower = false);
+        public void OpenWebUrl(string url, bool? inPrivate = null);
 
         /// <summary>
         /// Opens the URL with the given Uri object. 
