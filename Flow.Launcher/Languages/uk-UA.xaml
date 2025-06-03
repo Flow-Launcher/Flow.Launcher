@@ -364,6 +364,7 @@
     <system:String x:Key="userdatapath">Розташування даних користувача</system:String>
     <system:String x:Key="userdatapathToolTip">Налаштування користувача та встановлені плагіни зберігаються у теці даних користувача. Це місце може змінюватися залежно від того, чи перебуває програма в портативному режимі, чи ні.</system:String>
     <system:String x:Key="userdatapathButton">Відкрити теку</system:String>
+    <system:String x:Key="advanced">Advanced</system:String>
     <system:String x:Key="logLevel">Log Level</system:String>
     <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="LogLevelINFO">Info</system:String>
