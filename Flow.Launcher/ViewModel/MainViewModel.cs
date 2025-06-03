@@ -1278,8 +1278,7 @@ namespace Flow.Launcher.ViewModel
 
             try
             {
-                // Check if the query has changed because query can be changed so fast that
-                // token of the query between two queries has not been created yet
+                // Check if the input text matches the query text
                 if (query.Input != QueryText) return;
 
                 App.API.LogDebug(ClassName, $"Start query with ActionKeyword <{query.ActionKeyword}> and RawQuery <{query.RawQuery}>");
