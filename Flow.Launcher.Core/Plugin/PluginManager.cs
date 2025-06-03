@@ -190,11 +190,21 @@ namespace Flow.Launcher.Core.Plugin
             {
                 if (AllowedLanguage.IsDotNet(metadata.Language))
                 {
+                    if (string.IsNullOrEmpty(metadata.AssemblyName))
+                    {
+                        API.LogWarn(ClassName, $"AssemblyName is empty for plugin with metadata: {metadata.Name}");
+                        continue; // Skip if AssemblyName is not set, which can happen for erroneous plugins
+                    }
                     metadata.PluginSettingsDirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, metadata.AssemblyName);
                     metadata.PluginCacheDirectoryPath = Path.Combine(DataLocation.PluginCacheDirectory, metadata.AssemblyName);
                 }
                 else
                 {
+                    if (string.IsNullOrEmpty(metadata.Name))
+                    {
+                        API.LogWarn(ClassName, $"Name is empty for plugin with metadata: {metadata.Name}");
+                        continue; // Skip if Name is not set, which can happen for erroneous plugins
+                    }
                     metadata.PluginSettingsDirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, metadata.Name);
                     metadata.PluginCacheDirectoryPath = Path.Combine(DataLocation.PluginCacheDirectory, metadata.Name);
                 }

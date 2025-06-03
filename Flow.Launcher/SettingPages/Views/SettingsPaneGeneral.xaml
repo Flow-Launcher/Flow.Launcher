@@ -154,7 +154,7 @@
                 Title="{DynamicResource AlwaysPreview}"
                 Margin="0 14 0 0"
                 Icon="&#xe8a1;"
-                Sub="{Binding AlwaysPreviewToolTip}">
+                Sub="{DynamicResource AlwaysPreviewToolTip}">
                 <ui:ToggleSwitch
                     IsOn="{Binding Settings.AlwaysPreview}"
                     OffContent="{DynamicResource disable}"

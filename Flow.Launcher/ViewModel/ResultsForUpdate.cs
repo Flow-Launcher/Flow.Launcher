@@ -10,7 +10,7 @@ namespace Flow.Launcher.ViewModel
         Query Query,
         CancellationToken Token,
         bool ReSelectFirstResult = true,
-        bool shouldClearExistingResults = false)
+        bool ShouldClearExistingResults = false)
     {
         public string ID { get; } = Metadata.ID;
     }
