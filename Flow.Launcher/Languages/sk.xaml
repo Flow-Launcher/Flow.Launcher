@@ -242,7 +242,7 @@
     <system:String x:Key="BackdropType">Typ pozadia (backdrop)</system:String>
     <system:String x:Key="BackdropInfo">Efekt pozadia sa v náhľade nezobrazuje.</system:String>
     <system:String x:Key="BackdropTypeDisabledToolTip">Pozadie je podporované od Windows 11 zostava 22000 a novších</system:String>
-    <system:String x:Key="BackdropTypesNone">Žiadna</system:String>
+    <system:String x:Key="BackdropTypesNone">Žiadny</system:String>
     <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
     <system:String x:Key="BackdropTypesMica">Mica</system:String>
     <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
