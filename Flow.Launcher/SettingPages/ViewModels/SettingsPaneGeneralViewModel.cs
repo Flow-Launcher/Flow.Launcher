@@ -167,7 +167,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
                 await ImageLoader.WaitSaveAsync();
 
                 // Restart the app as administrator
-                App.RestartAppAsAdministrator();
+                App.RestartApp(true);
             }
         }  
     }
