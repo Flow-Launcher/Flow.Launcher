@@ -388,7 +388,7 @@
     <system:String x:Key="defaultBrowser_name">Navigateur</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Nom du navigateur</system:String>
     <system:String x:Key="defaultBrowser_path">Chemin du navigateur</system:String>
-    <system:String x:Key="defaultBrowser_newWindow">Nouvel onglet</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">Nouvelle fenêtre</system:String>
     <system:String x:Key="defaultBrowser_newTab">Nouvel onglet</system:String>
     <system:String x:Key="defaultBrowser_parameter">Mode privé</system:String>
 
