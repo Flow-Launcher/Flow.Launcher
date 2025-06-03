@@ -17,7 +17,8 @@ namespace Flow.Launcher.Core.Plugin
                     Input = string.Empty,
                     RawQuery = string.Empty,
                     SearchTerms = Array.Empty<string>(),
-                    ActionKeyword = string.Empty
+                    ActionKeyword = string.Empty,
+                    IsHomeQuery = true
                 };
             }
 
@@ -55,7 +56,8 @@ namespace Flow.Launcher.Core.Plugin
                 Input = input,
                 RawQuery = rawQuery,
                 SearchTerms = searchTerms,
-                ActionKeyword = actionKeyword
+                ActionKeyword = actionKeyword,
+                IsHomeQuery = false
             };
         }
     }

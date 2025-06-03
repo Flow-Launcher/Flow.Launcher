@@ -138,6 +138,9 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.SettingWindowHotkey):
                         OnPropertyChanged(nameof(SettingWindowHotkey));
                         break;
+                    case nameof(Settings.OpenHistoryHotkey):
+                        OnPropertyChanged(nameof(OpenHistoryHotkey));
+                        break;
                 }
             };
 
@@ -214,7 +217,26 @@ namespace Flow.Launcher.ViewModel
                     while (channelReader.TryRead(out var item))
                     {
                         if (!item.Token.IsCancellationRequested)
+                        {
+                            // Indicate if to clear existing results so to show only ones from plugins with action keywords
+                            var query = item.Query;
+                            var currentIsHomeQuery = query.IsHomeQuery;
+                            var shouldClearExistingResults = ShouldClearExistingResultsForQuery(query, currentIsHomeQuery);
+                            _lastQuery = item.Query;
+                            _previousIsHomeQuery = currentIsHomeQuery;
+
+                            // If the queue already has the item, we need to pass the shouldClearExistingResults flag
+                            if (queue.TryGetValue(item.ID, out var existingItem))
+                            {
+                                item.ShouldClearExistingResults = shouldClearExistingResults || existingItem.ShouldClearExistingResults;
+                            }
+                            else
+                            {
+                                item.ShouldClearExistingResults = shouldClearExistingResults;
+                            }
+
                             queue[item.ID] = item;
+                        }
                     }
 
                     UpdateResultView(queue.Values);
@@ -268,6 +290,8 @@ namespace Flow.Launcher.ViewModel
                     {
                         return;
                     }
+
+                    App.API.LogDebug(ClassName, $"Update results for plugin <{pair.Metadata.Name}>");
 
                     if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query,
                         token)))
@@ -890,6 +914,7 @@ namespace Flow.Launcher.ViewModel
         public string SelectPrevPageHotkey => VerifyOrSetDefaultHotkey(Settings.SelectPrevPageHotkey, "");
         public string OpenContextMenuHotkey => VerifyOrSetDefaultHotkey(Settings.OpenContextMenuHotkey, "Ctrl+O");
         public string SettingWindowHotkey => VerifyOrSetDefaultHotkey(Settings.SettingWindowHotkey, "Ctrl+I");
+        public string OpenHistoryHotkey => VerifyOrSetDefaultHotkey(Settings.OpenHistoryHotkey, "Ctrl+H");
         public string CycleHistoryUpHotkey => VerifyOrSetDefaultHotkey(Settings.CycleHistoryUpHotkey, "Alt+Up");
         public string CycleHistoryDownHotkey => VerifyOrSetDefaultHotkey(Settings.CycleHistoryDownHotkey, "Alt+Down");
 
@@ -1249,7 +1274,7 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
-            var currentIsHomeQuery = query.RawQuery == string.Empty;
+            var currentIsHomeQuery = query.IsHomeQuery;
 
             try
             {
@@ -1457,13 +1482,8 @@ namespace Flow.Launcher.ViewModel
 
                 App.API.LogDebug(ClassName, $"Update results for plugin <{plugin.Metadata.Name}>");
 
-                // Indicate if to clear existing results so to show only ones from plugins with action keywords
-                var shouldClearExistingResults = ShouldClearExistingResultsForQuery(query, currentIsHomeQuery);
-                _lastQuery = query;
-                _previousIsHomeQuery = currentIsHomeQuery;
-
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
-                    token, reSelect, shouldClearExistingResults)))
+                    token, reSelect)))
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
@@ -1480,13 +1500,8 @@ namespace Flow.Launcher.ViewModel
 
                 App.API.LogDebug(ClassName, $"Update results for history");
 
-                // Indicate if to clear existing results so to show only ones from plugins with action keywords
-                var shouldClearExistingResults = ShouldClearExistingResultsForQuery(query, currentIsHomeQuery);
-                _lastQuery = query;
-                _previousIsHomeQuery = currentIsHomeQuery;
-
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, _historyMetadata, query,
-                    token, reSelect, shouldClearExistingResults)))
+                    token, reSelect)))
                 {
                     App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
                 }
@@ -1754,7 +1769,7 @@ namespace Flow.Launcher.ViewModel
         public void Show()
         {
             // When application is exiting, we should not show the main window
-            if (App.Exiting) return;
+            if (App.LoadingOrExiting) return;
 
             // When application is exiting, the Application.Current will be null
             Application.Current?.Dispatcher.Invoke(() =>
@@ -1886,6 +1901,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (!resultsForUpdates.Any())
                 return;
+
             CancellationToken token;
 
             try
@@ -1949,6 +1965,21 @@ namespace Flow.Launcher.ViewModel
             bool reSelect = resultsForUpdates.First().ReSelectFirstResult;
 
             Results.AddResults(resultsForUpdates, token, reSelect);
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
+        public void FocusQueryTextBox()
+        {
+            // When application is exiting, the Application.Current will be null
+            Application.Current?.Dispatcher.Invoke(() =>
+            {
+                // When application is exiting, the Application.Current will be null
+                if (Application.Current?.MainWindow is MainWindow window)
+                {
+                    window.QueryTextBox.Focus();
+                    Keyboard.Focus(window.QueryTextBox);
+                }
+            });
         }
 
         #endregion

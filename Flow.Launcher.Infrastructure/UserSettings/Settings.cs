@@ -50,6 +50,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string SelectPrevPageHotkey { get; set; } = $"PageDown";
         public string OpenContextMenuHotkey { get; set; } = $"Ctrl+O";
         public string SettingWindowHotkey { get; set; } = $"Ctrl+I";
+        public string OpenHistoryHotkey { get; set; } = $"Ctrl+H";
         public string CycleHistoryUpHotkey { get; set; } = $"{KeyConstant.Alt} + Up";
         public string CycleHistoryDownHotkey { get; set; } = $"{KeyConstant.Alt} + Down";
 
@@ -226,8 +227,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             new()
             {
                 Name = "Files",
-                Path = "Files",
-                DirectoryArgument = "-select \"%d\"",
+                Path = "Files-Stable",
+                DirectoryArgument = "\"%d\"",
                 FileArgument = "-select \"%f\""
             }
         };
@@ -426,6 +427,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                     list.Add(new(SelectPrevItemHotkey2, "SelectPrevItemHotkey", () => SelectPrevItemHotkey2 = ""));
                 if (!string.IsNullOrEmpty(SettingWindowHotkey))
                     list.Add(new(SettingWindowHotkey, "SettingWindowHotkey", () => SettingWindowHotkey = ""));
+                if (!string.IsNullOrEmpty(OpenHistoryHotkey))
+                    list.Add(new(OpenHistoryHotkey, "OpenHistoryHotkey", () => OpenHistoryHotkey = ""));                
                 if (!string.IsNullOrEmpty(OpenContextMenuHotkey))
                     list.Add(new(OpenContextMenuHotkey, "OpenContextMenuHotkey", () => OpenContextMenuHotkey = ""));
                 if (!string.IsNullOrEmpty(SelectNextPageHotkey))
@@ -461,7 +464,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 new("Alt+Home", "HotkeySelectFirstResult"),
                 new("Alt+End", "HotkeySelectLastResult"),
                 new("Ctrl+R", "HotkeyRequery"),
-                new("Ctrl+H", "ToggleHistoryHotkey"),
                 new("Ctrl+OemCloseBrackets", "QuickWidthHotkey"),
                 new("Ctrl+OemOpenBrackets", "QuickWidthHotkey"),
                 new("Ctrl+OemPlus", "QuickHeightHotkey"),

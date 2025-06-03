@@ -169,6 +169,18 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             }
         }
 
+        public bool ShowFileAgeInPreviewPanel
+        {
+            get => Settings.ShowFileAgeInPreviewPanel;
+            set
+            {
+                Settings.ShowFileAgeInPreviewPanel = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(ShowPreviewPanelDateTimeChoices));
+                OnPropertyChanged(nameof(PreviewPanelDateTimeChoicesVisibility));
+            }
+        }
+
         public string PreviewPanelDateFormat
         {
             get => Settings.PreviewPanelDateFormat;

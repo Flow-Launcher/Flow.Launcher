@@ -364,6 +364,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="userdatapath">Lokalizacja danych użytkownika</system:String>
     <system:String x:Key="userdatapathToolTip">Ustawienia użytkownika i zainstalowane wtyczki są zapisywane w folderze danych użytkownika. Ta lokalizacja może się różnić w zależności od tego, czy aplikacja jest w trybie przenośnym, czy nie.</system:String>
     <system:String x:Key="userdatapathButton">Otwórz folder</system:String>
+    <system:String x:Key="advanced">Advanced</system:String>
     <system:String x:Key="logLevel">Poziom logowania</system:String>
     <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="LogLevelINFO">Info</system:String>
@@ -371,6 +372,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Wybierz menedżer plików</system:String>
+    <system:String x:Key="fileManager_learnMore">Learn more</system:String>
     <system:String x:Key="fileManager_tips">Proszę określić lokalizację pliku menedżera plików, którego używasz i dodać argumenty według potrzeb. Symbol &quot;%d&quot; reprezentuje ścieżkę katalogu do otwarcia, używaną w polu Arg dla Folderu oraz dla poleceń otwierających konkretne katalogi. Symbol &quot;%f&quot; reprezentuje ścieżkę pliku do otwarcia, używaną w polu Arg dla Pliku oraz dla poleceń otwierających konkretne pliki.</system:String>
     <system:String x:Key="fileManager_tips2">Na przykład, jeśli menedżer plików używa polecenia takiego jak „totalcmd.exe /A c:\windows&quot; do otwarcia katalogu c:\windows, Ścieżka Menedżera Plików będzie totalcmd.exe, a Argument dla Folderu będzie /A &quot;%d&quot;. Niektóre menedżery plików, takie jak QTTabBar, mogą wymagać jedynie podania ścieżki; w takim przypadku użyj &quot;%d&quot; jako Ścieżki Menedżera Plików, a pozostałe pola pozostaw puste.</system:String>
     <system:String x:Key="fileManager_name">Menadżer plików</system:String>
@@ -378,6 +380,8 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="fileManager_path">Ścieżka menedżera plików</system:String>
     <system:String x:Key="fileManager_directory_arg">Arg dla folderu</system:String>
     <system:String x:Key="fileManager_file_arg">Arg dla pliku</system:String>
+    <system:String x:Key="fileManagerPathNotFound">The file manager '{0}' could not be located at '{1}'. Would you like to continue?</system:String>
+    <system:String x:Key="fileManagerPathError">File Manager Path Error</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Domyślna przeglądarka</system:String>
@@ -468,6 +472,14 @@ Jeśli dodasz prefiks '@' podczas wprowadzania skrótu, będzie on pasował do d
     <system:String x:Key="reportWindow_please_open_issue">Otwórz nowe zgłoszenie w</system:String>
     <system:String x:Key="reportWindow_upload_log">1. Prześlij plik dziennika: {0}</system:String>
     <system:String x:Key="reportWindow_copy_below">2. Skopiuj poniższą wiadomość wyjątku</system:String>
+
+    <!--  File Open Error  -->
+    <system:String x:Key="fileManagerNotFoundTitle">File Manager Error</system:String>
+    <system:String x:Key="fileManagerNotFound">
+        The specified file manager could not be found. Please check the Custom File Manager setting under Settings &gt; General.
+    </system:String>
+    <system:String x:Key="errorTitle">Błąd</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder. {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Proszę czekać...</system:String>

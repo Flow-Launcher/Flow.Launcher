@@ -28,6 +28,11 @@ namespace Flow.Launcher.Plugin
         public bool IsReQuery { get; internal set; } = false;
 
         /// <summary>
+        /// Determines whether the query is a home query.
+        /// </summary>
+        public bool IsHomeQuery { get; internal init; } = false;
+
+        /// <summary>
         /// Search part of a query.
         /// This will not include action keyword if exclusive plugin gets it, otherwise it should be same as RawQuery.
         /// Since we allow user to switch a exclusive plugin to generic plugin,

@@ -1752,7 +1752,7 @@
     <value>Einen Dateityp immer in einem spezifischen Programm öffnen lassen</value>
   </data>
   <data name="ChangeTheNarratorSVoice" xml:space="preserve">
-    <value>Change the Narrator’s voice</value>
+    <value>Stimme ändern</value>
   </data>
   <data name="FindAndFixKeyboardProblems" xml:space="preserve">
     <value>Tastaturprobleme finden und beheben</value>
@@ -1761,7 +1761,7 @@
     <value>Screenreader verwenden</value>
   </data>
   <data name="ShowWhichWorkgroupThisComputerIsOn" xml:space="preserve">
-    <value>Show which workgroup this computer is on</value>
+    <value>Arbeitsgruppe auf diesem Computer Anzeigen</value>
   </data>
   <data name="ChangeMouseWheelSettings" xml:space="preserve">
     <value>Mausrad-Einstellungen ändern</value>
@@ -1773,7 +1773,7 @@
     <value>Probleme finden und beheben</value>
   </data>
   <data name="ChangeSettingsForContentReceivedUsingTapAndSend" xml:space="preserve">
-    <value>Change settings for content received using Tap and send</value>
+    <value>Einstellung für empfangene Inhalte von Tippen und Senden</value>
   </data>
   <data name="ChangeDefaultSettingsForMediaOrDevices" xml:space="preserve">
     <value>Change default settings for media or devices</value>
@@ -2176,7 +2176,7 @@
     <value>Change advanced colour management settings for displays, scanners and printers</value>
   </data>
   <data name="LetWindowsSuggestEaseOfAccessSettings" xml:space="preserve">
-    <value>Let Windows suggest Ease of Access settings</value>
+    <value>Lasse Windows Vereinfachte Zugriffseinstellungen vorschlagen</value>
   </data>
   <data name="ClearDiskSpaceByDeletingUnnecessaryFiles" xml:space="preserve">
     <value>Clear disk space by deleting unnecessary files</value>
@@ -2191,16 +2191,16 @@
     <value>Record steps to reproduce a problem</value>
   </data>
   <data name="AdjustTheAppearanceAndPerformanceOfWindows" xml:space="preserve">
-    <value>Adjust the appearance and performance of Windows</value>
+    <value>Aussehen und Leistung von Windows anpassen</value>
   </data>
   <data name="SettingsForMicrosoftIMEJapanese" xml:space="preserve">
-    <value>Settings for Microsoft IME (Japanese)</value>
+    <value>Einstellungen für Microsoft IME (Japanisch)</value>
   </data>
   <data name="InviteSomeoneToConnectToYourPCAndHelpYouOrOfferToHelpSomeoneElse" xml:space="preserve">
-    <value>Invite someone to connect to your PC and help you, or offer to help someone else</value>
+    <value>Lade jemanden ein, sich mit deinem PC zu verbinden und dir zu helfen oder anderen zu helfen</value>
   </data>
   <data name="RunProgramsMadeForPreviousVersionsOfWindows" xml:space="preserve">
-    <value>Run programs made for previous versions of Windows</value>
+    <value>Programme für frühere Versionen von Windows ausführen</value>
   </data>
   <data name="ChooseTheOrderOfHowYourScreenRotates" xml:space="preserve">
     <value>Choose the order of how your screen rotates</value>

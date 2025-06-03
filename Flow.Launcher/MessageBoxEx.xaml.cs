@@ -22,9 +22,6 @@ namespace Flow.Launcher
             InitializeComponent();
         }
 
-        public static MessageBoxResult Show(string messageBoxText)
-            => Show(messageBoxText, string.Empty, MessageBoxButton.OK, MessageBoxImage.None, MessageBoxResult.OK);
-
         public static MessageBoxResult Show(
             string messageBoxText,
             string caption = "",
@@ -163,6 +160,7 @@ namespace Flow.Launcher
         private void KeyEsc_OnPress(object sender, ExecutedRoutedEventArgs e)
         {
             if (_button == MessageBoxButton.YesNo)
+                // Follow System.Windows.MessageBox behavior
                 return;
             else if (_button == MessageBoxButton.OK)
                 _result = MessageBoxResult.OK;
@@ -191,6 +189,7 @@ namespace Flow.Launcher
         private void Button_Cancel(object sender, RoutedEventArgs e)
         {
             if (_button == MessageBoxButton.YesNo)
+                // Follow System.Windows.MessageBox behavior
                 return;
             else if (_button == MessageBoxButton.OK)
                 _result = MessageBoxResult.OK;
