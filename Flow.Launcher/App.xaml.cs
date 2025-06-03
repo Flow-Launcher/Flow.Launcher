@@ -32,7 +32,7 @@ namespace Flow.Launcher
         #region Public Properties
 
         public static IPublicAPI API { get; private set; }
-        public static bool Exiting => _mainWindow.CanClose;
+        public static bool LoadingOrExiting => _mainWindow == null || _mainWindow.CanClose;
 
         #endregion
 
@@ -86,6 +86,10 @@ namespace Flow.Launcher
                         .AddTransient<SettingsPanePluginStoreViewModel>()
                         .AddTransient<SettingsPaneProxyViewModel>()
                         .AddTransient<SettingsPaneThemeViewModel>()
+                        // Use transient instance for dialog view models because
+                        // settings will change and we need to recreate them
+                        .AddTransient<SelectBrowserViewModel>()
+                        .AddTransient<SelectFileManagerViewModel>()
                     ).Build();
                 Ioc.Default.ConfigureServices(host.Services);
             }
