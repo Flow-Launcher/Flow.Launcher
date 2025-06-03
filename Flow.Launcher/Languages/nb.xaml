@@ -364,6 +364,7 @@
     <system:String x:Key="userdatapath">Plassering av brukerdata</system:String>
     <system:String x:Key="userdatapathToolTip">Brukerinnstillinger og installerte programtillegg lagres i brukerens datamappe. Denne plasseringen kan variere avhengig av om den er i portabel modus eller ikke.</system:String>
     <system:String x:Key="userdatapathButton">Åpne mappe</system:String>
+    <system:String x:Key="advanced">Advanced</system:String>
     <system:String x:Key="logLevel">Log Level</system:String>
     <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="LogLevelINFO">Info</system:String>
@@ -371,6 +372,7 @@
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Velg filbehandler</system:String>
+    <system:String x:Key="fileManager_learnMore">Learn more</system:String>
     <system:String x:Key="fileManager_tips">Vennligst spesifiser filplasseringen til filbehandleren du bruker, og legg til argumenter etter behov. &quot;%d&quot; representerer katalogbanen som skal åpnes for, brukt av Arg for mappe-feltet og for kommandoer som åpner spesifikke kataloger. &quot;%f&quot; representerer filbanen som skal åpnes for, brukt av Arg for fil-feltet og for kommandoer som åpner spesifikke filer.</system:String>
     <system:String x:Key="fileManager_tips2">For eksempel, hvis filbehandleren bruker en kommando som &quot;totalcmd.exe /A c:windows&quot; for å åpne c:windows-katalogen, vil filbehandlingsbanen bli totalcmd.exe, og Arg For Folder vil være /A &quot;%d&quot;. Enkelte filbehandlere som QTTabBar kan bare kreve at en bane oppgis, i dette tilfellet bruker du &quot;%d&quot; som filbehandlingsbane og lar resten av feltene stå tomme.</system:String>
     <system:String x:Key="fileManager_name">Filbehandler</system:String>
@@ -378,6 +380,8 @@
     <system:String x:Key="fileManager_path">Filbehandler sti</system:String>
     <system:String x:Key="fileManager_directory_arg">Arg for mappe</system:String>
     <system:String x:Key="fileManager_file_arg">Arg for fil</system:String>
+    <system:String x:Key="fileManagerPathNotFound">The file manager '{0}' could not be located at '{1}'. Would you like to continue?</system:String>
+    <system:String x:Key="fileManagerPathError">File Manager Path Error</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Standard nettleser</system:String>
@@ -468,6 +472,14 @@ Hvis du legger til et @-prefiks mens du legger inn en snarvei, samsvarer det med
     <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
     <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
     <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
+
+    <!--  File Open Error  -->
+    <system:String x:Key="fileManagerNotFoundTitle">File Manager Error</system:String>
+    <system:String x:Key="fileManagerNotFound">
+        The specified file manager could not be found. Please check the Custom File Manager setting under Settings &gt; General.
+    </system:String>
+    <system:String x:Key="errorTitle">Feil</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder. {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Vennligst vent...</system:String>

@@ -1,38 +1,19 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using CommunityToolkit.Mvvm.ComponentModel;
-using Flow.Launcher.Infrastructure.UserSettings;
+using System.Windows.Navigation;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher
 {
-    [INotifyPropertyChanged]
     public partial class SelectFileManagerWindow : Window
     {
-        private readonly Settings _settings;
+        private readonly SelectFileManagerViewModel _viewModel;
 
-        private int selectedCustomExplorerIndex;
-
-        public int SelectedCustomExplorerIndex
+        public SelectFileManagerWindow()
         {
-            get => selectedCustomExplorerIndex;
-            set
-            {
-                selectedCustomExplorerIndex = value;
-                OnPropertyChanged(nameof(CustomExplorer));
-            }
-        }
-        public ObservableCollection<CustomExplorerViewModel> CustomExplorers { get; set; }
-
-        public CustomExplorerViewModel CustomExplorer => CustomExplorers[SelectedCustomExplorerIndex];
-        public SelectFileManagerWindow(Settings settings)
-        {
-            _settings = settings;
-            CustomExplorers = new ObservableCollection<CustomExplorerViewModel>(_settings.CustomExplorerList.Select(x => x.Copy()));
-            SelectedCustomExplorerIndex = _settings.CustomExplorerIndex;
+            _viewModel = Ioc.Default.GetRequiredService<SelectFileManagerViewModel>();
+            DataContext = _viewModel;
             InitializeComponent();
         }
 
@@ -43,33 +24,26 @@ namespace Flow.Launcher
 
         private void btnDone_Click(object sender, RoutedEventArgs e)
         {
-            _settings.CustomExplorerList = CustomExplorers.ToList();
-            _settings.CustomExplorerIndex = SelectedCustomExplorerIndex;
-            Close();
-        }
-
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
-        {
-            CustomExplorers.Add(new()
+            if (_viewModel.SaveSettings())
             {
-                Name = "New Profile"
-            });
-            SelectedCustomExplorerIndex = CustomExplorers.Count - 1;
+                Close();
+            }
         }
 
-        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
-            CustomExplorers.RemoveAt(SelectedCustomExplorerIndex--);
+            _viewModel.OpenUrl(e.Uri.AbsoluteUri);
+            e.Handled = true;
         }
 
         private void btnBrowseFile_Click(object sender, RoutedEventArgs e)
         {
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-            var result = dlg.ShowDialog();
-            if (result == true)
+            var selectedFilePath = _viewModel.SelectFile();
+
+            if (!string.IsNullOrEmpty(selectedFilePath))
             {
-                TextBox path = (TextBox)(((FrameworkElement)sender).Parent as FrameworkElement).FindName("PathTextBox");
-                path.Text = dlg.FileName;
+                var path = (TextBox)(((FrameworkElement)sender).Parent as FrameworkElement).FindName("PathTextBox");
+                path.Text = selectedFilePath;
                 path.Focus();
                 ((Button)sender).Focus();
             }

@@ -67,7 +67,7 @@
     <system:String x:Key="SearchWindowAlignCenterTop">מרכז עליון</system:String>
     <system:String x:Key="SearchWindowAlignLeftTop">שמאל עליון</system:String>
     <system:String x:Key="SearchWindowAlignRightTop">ימין עליון</system:String>
-    <system:String x:Key="SearchWindowAlignCustom">Custom Position</system:String>
+    <system:String x:Key="SearchWindowAlignCustom">מיקום מותאם אישית</system:String>
     <system:String x:Key="language">שפה</system:String>
     <system:String x:Key="lastQueryMode">סגנון שאילתה אחרונה</system:String>
     <system:String x:Key="lastQueryModeToolTip">הצג/הסתר תוצאות קודמות כאשר Flow Launcher מופעל מחדש.</system:String>
@@ -102,7 +102,7 @@
     <system:String x:Key="SearchPrecisionLow">נמוך</system:String>
     <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
     <system:String x:Key="ShouldUsePinyin">חפש באמצעות Pinyin</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">Allows using Pinyin to search. Pinyin is the standard system of romanized spelling for translating Chinese.</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">מאפשר חיפוש באמצעות Pinyin, מערכת הכתיבה הסטנדרטית לתרגום סינית.</system:String>
     <system:String x:Key="AlwaysPreview">הצג תמיד תצוגה מקדימה</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">פתח תמיד את לוח התצוגה המקדימה כאשר Flow מופעל. הקש על {0} כדי להחליף את התצוגה המקדימה.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">לא ניתן להחיל אפקט צל כאשר העיצוב הנוכחי מוגדר לאפקט טשטוש</system:String>
@@ -134,7 +134,7 @@
     <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
     <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
-    <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">ניתן לערוך זאת רק אם התוסף תומך בתכונת הבית ודף הבית מופעל.</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">חפש תוסף</system:String>
@@ -151,7 +151,7 @@
     <system:String x:Key="currentActionKeywords">מילת מפתח נוכחית לפעולה</system:String>
     <system:String x:Key="newActionKeyword">מילת מפתח חדשה לפעולה</system:String>
     <system:String x:Key="actionKeywordsTooltip">שנה מילות מפתח לפעולה</system:String>
-    <system:String x:Key="pluginSearchDelayTime">Plugin search delay time</system:String>
+    <system:String x:Key="pluginSearchDelayTime">זמן השהייה של חיפוש תוסף</system:String>
     <system:String x:Key="pluginSearchDelayTimeTooltip">שנה את זמן השהיית חיפוש של תוסף</system:String>
     <system:String x:Key="FilterComboboxLabel">הגדרות מתקדמות:</system:String>
     <system:String x:Key="DisplayModeOnOff">מופעל</system:String>
@@ -313,7 +313,7 @@
     <system:String x:Key="useGlyphUIEffect">השתמש ב-Segoe Fluent Icons לתוצאות חיפוש כאשר נתמך</system:String>
     <system:String x:Key="flowlauncherPressHotkey">הקש על מקש</system:String>
     <system:String x:Key="showBadges">הצג תגי תוצאות</system:String>
-    <system:String x:Key="showBadgesToolTip">For supported plugins, badges are displayed to help distinguish them more easily.</system:String>
+    <system:String x:Key="showBadgesToolTip">עבור תוספים נתמכים, מוצגים תגים כדי לעזור להבחין ביניהם ביתר קלות.</system:String>
     <system:String x:Key="showBadgesGlobalOnly">Show Result Badges for Global Query Only</system:String>
 
     <!--  Setting Proxy  -->
@@ -363,6 +363,7 @@
     <system:String x:Key="userdatapath">מיקום נתוני משתמש</system:String>
     <system:String x:Key="userdatapathToolTip">הגדרות המשתמש והתוספים המותקנים נשמרים בתיקיית נתוני המשתמש. מיקום זה עשוי להשתנות אם התוכנה במצב נייד.</system:String>
     <system:String x:Key="userdatapathButton">פתח תיקיה</system:String>
+    <system:String x:Key="advanced">Advanced</system:String>
     <system:String x:Key="logLevel">רמת יומן</system:String>
     <system:String x:Key="LogLevelDEBUG">ניפוי שגיאות</system:String>
     <system:String x:Key="LogLevelINFO">מידע</system:String>
@@ -370,6 +371,7 @@
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">בחר מנהל קבצים</system:String>
+    <system:String x:Key="fileManager_learnMore">למד עוד</system:String>
     <system:String x:Key="fileManager_tips">אנא ציין את מיקום הקובץ של מנהל הקבצים שבו אתה משתמש והוסף ארגומנטים כנדרש. &quot;%d&quot; מייצג את נתיב התיקייה שיש לפתוח, ומשמש בשדה ארגומנט לתיקייה ובפקודות לפתיחת תיקיות מסוימות. &quot;%f&quot; מייצג את נתיב הקובץ שיש לפתוח, ומשמש בשדה ארגומנט לקובץ ובפקודות לפתיחת קבצים מסוימים.</system:String>
     <system:String x:Key="fileManager_tips2">לדוגמה, אם מנהל הקבצים משתמש בפקודה כגון &quot;totalcmd.exe /A c:\windows&quot; כדי לפתוח את התיקייה c:\windows, נתיב מנהל הקבצים יהיה totalcmd.exe, והארגומנט לתיקייה יהיה /A &quot;%d&quot;. מנהלי קבצים מסוימים, כגון QTTabBar, עשויים לדרוש רק ציון נתיב, במקרה כזה השתמש ב-&quot;%d&quot; כנתיב מנהל הקבצים והשאר את שאר השדות ריקים.</system:String>
     <system:String x:Key="fileManager_name">מנהל קבצים</system:String>
@@ -377,6 +379,8 @@
     <system:String x:Key="fileManager_path">נתיב מנהל קבצים</system:String>
     <system:String x:Key="fileManager_directory_arg">ארגומנט לתיקייה</system:String>
     <system:String x:Key="fileManager_file_arg">ארגומנט לקובץ</system:String>
+    <system:String x:Key="fileManagerPathNotFound">לא ניתן היה לאתר את מנהל הקבצים '{0}' ב-'{1}'. האם ברצונך להמשיך?</system:String>
+    <system:String x:Key="fileManagerPathError">שגיאת נתיב למנהל הקבצים</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">דפדפן ברירת מחדל</system:String>
@@ -413,7 +417,7 @@
 
     <!--  Search Delay Settings Dialog  -->
     <system:String x:Key="homeTitle">דף הבית</system:String>
-    <system:String x:Key="homeTips">Enable the plugin home page state if you like to show the plugin results when query is empty.</system:String>
+    <system:String x:Key="homeTips">הפעל את מצב דף הבית של התוסף אם ברצונך להציג את תוצאות התוסף כאשר השאילתה ריקה.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">מקש קיצור לשאילתה מותאמת אישית</system:String>
@@ -467,6 +471,14 @@
     <system:String x:Key="reportWindow_please_open_issue">אנא פתח דיווח חדש ב</system:String>
     <system:String x:Key="reportWindow_upload_log">1. העלה קובץ יומן: {0}</system:String>
     <system:String x:Key="reportWindow_copy_below">2. העתק את הודעת החריגה למטה</system:String>
+
+    <!--  File Open Error  -->
+    <system:String x:Key="fileManagerNotFoundTitle">שגיאת מנהל הקבצים</system:String>
+    <system:String x:Key="fileManagerNotFound">
+        לא ניתן היה למצוא את מנהל הקבצים שצוין. אנא בדוק את ההגדרה של מנהל קבצים מותאם אישית תחת הגדרות &gt; כללי.
+    </system:String>
+    <system:String x:Key="errorTitle">שגיאה</system:String>
+    <system:String x:Key="folderOpenError">אירעה שגיאה בעת פתיחת התיקייה. {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">אנא המתן...</system:String>

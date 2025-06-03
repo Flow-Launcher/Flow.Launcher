@@ -103,7 +103,7 @@ namespace Flow.Launcher
 
         private void ThemeManager_ActualApplicationThemeChanged(ModernWpf.ThemeManager sender, object args)
         {
-            _theme.RefreshFrameAsync();
+            _ = _theme.RefreshFrameAsync();
         }
 
         private void OnSourceInitialized(object sender, EventArgs e)
@@ -115,7 +115,7 @@ namespace Flow.Launcher
             Win32Helper.DisableControlBox(this);
         }
 
-        private async void OnLoaded(object sender, RoutedEventArgs _)
+        private void OnLoaded(object sender, RoutedEventArgs _)
         {
             // Check first launch
             if (_settings.FirstLaunch)
@@ -285,6 +285,7 @@ namespace Flow.Launcher
                         InitializeContextMenu();
                         break;
                     case nameof(Settings.ShowHomePage):
+                    case nameof(Settings.ShowHistoryResultsForHomePage):
                         if (_viewModel.QueryResultsSelected() && string.IsNullOrEmpty(_viewModel.QueryText))
                         {
                             _viewModel.QueryResults();
@@ -299,14 +300,14 @@ namespace Flow.Launcher
             // QueryTextBox.Text change detection (modified to only work when character count is 1 or higher)
             QueryTextBox.TextChanged += (s, e) => UpdateClockPanelVisibility();
 
-            // Detecting ContextMenu.Visibility changes
+            // Detecting ResultContextMenu.Visibility changes
             DependencyPropertyDescriptor
-                .FromProperty(VisibilityProperty, typeof(ContextMenu))
-                .AddValueChanged(ContextMenu, (s, e) => UpdateClockPanelVisibility());
+                .FromProperty(VisibilityProperty, typeof(ResultListBox))
+                .AddValueChanged(ResultContextMenu, (s, e) => UpdateClockPanelVisibility());
 
             // Detect History.Visibility changes
             DependencyPropertyDescriptor
-                .FromProperty(VisibilityProperty, typeof(StackPanel))
+                .FromProperty(VisibilityProperty, typeof(ResultListBox))
                 .AddValueChanged(History, (s, e) => UpdateClockPanelVisibility());
 
             // Initialize query state
@@ -1020,7 +1021,7 @@ namespace Flow.Launcher
 
         private void UpdateClockPanelVisibility()
         {
-            if (QueryTextBox == null || ContextMenu == null || History == null || ClockPanel == null)
+            if (QueryTextBox == null || ResultContextMenu == null || History == null || ClockPanel == null)
             {
                 return;
             }
@@ -1035,20 +1036,20 @@ namespace Flow.Launcher
             };
             var animationDuration = TimeSpan.FromMilliseconds(animationLength * 2 / 3);
 
-            // ✅ Conditions for showing ClockPanel (No query input & ContextMenu, History are closed)
+            // ✅ Conditions for showing ClockPanel (No query input / ResultContextMenu & History are closed)
             var shouldShowClock = QueryTextBox.Text.Length == 0 &&
-                ContextMenu.Visibility != Visibility.Visible &&
+                ResultContextMenu.Visibility != Visibility.Visible &&
                 History.Visibility != Visibility.Visible;
 
-            // ✅ 1. When ContextMenu opens, immediately set Visibility.Hidden (force hide without animation)
-            if (ContextMenu.Visibility == Visibility.Visible)
+            // ✅ 1. When ResultContextMenu opens, immediately set Visibility.Hidden (force hide without animation)
+            if (ResultContextMenu.Visibility == Visibility.Visible)
             {
                 _viewModel.ClockPanelVisibility = Visibility.Hidden;
                 _viewModel.ClockPanelOpacity = 0.0;  // Set to 0 in case Opacity animation affects it
                 return;
             }
 
-            // ✅ 2. When ContextMenu is closed, keep it Hidden if there's text in the query (remember previous state)
+            // ✅ 2. When ResultContextMenu is closed, keep it Hidden if there's text in the query (remember previous state)
             else if (QueryTextBox.Text.Length > 0)
             {
                 _viewModel.ClockPanelVisibility = Visibility.Hidden;

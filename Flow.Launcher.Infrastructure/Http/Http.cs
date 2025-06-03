@@ -182,7 +182,6 @@ namespace Flow.Launcher.Infrastructure.Http
         public static Task<Stream> GetStreamAsync([NotNull] string url,
             CancellationToken token = default) => GetStreamAsync(new Uri(url), token);
 
-
         /// <summary>
         /// Send a GET request to the specified Uri with an HTTP completion option and a cancellation token as an asynchronous operation.
         /// </summary>
@@ -212,7 +211,14 @@ namespace Flow.Launcher.Infrastructure.Http
         /// </summary>
         public static async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, CancellationToken token = default)
         {
-            return await client.SendAsync(request, completionOption, token);
+            try
+            {
+                return await client.SendAsync(request, completionOption, token);
+            }
+            catch (System.Exception)
+            {
+                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+            }
         }
     }
 }

@@ -42,8 +42,8 @@
     <system:String x:Key="GameMode">Spielmodus</system:String>
     <system:String x:Key="GameModeToolTip">Aussetzen der Verwendung von Hotkeys.</system:String>
     <system:String x:Key="PositionReset">Position zurücksetzen</system:String>
-    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
-    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
+    <system:String x:Key="PositionResetToolTip">Position des Suchfensters zurücksetzen</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Zum Suchen hier tippen</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Einstellungen</system:String>
@@ -126,12 +126,12 @@
 
 
     </system:String>
-    <system:String x:Key="KoreanImeOpenLink">Open Language and Region System Settings</system:String>
+    <system:String x:Key="KoreanImeOpenLink">Sprach- und Regionen-Systemeinstellungen öffnen</system:String>
     <system:String x:Key="KoreanImeOpenLinkToolTip">Opens the Korean IME setting location. Go to Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility</system:String>
     <system:String x:Key="KoreanImeOpenLinkButton">Öffnen</system:String>
-    <system:String x:Key="KoreanImeRegistry">Use Previous Korean IME</system:String>
+    <system:String x:Key="KoreanImeRegistry">Vorherige koreanische IME verwenden</system:String>
     <system:String x:Key="KoreanImeRegistryTooltip">You can change the Previous Korean IME settings directly from here</system:String>
-    <system:String x:Key="homePage">Home Page</system:String>
+    <system:String x:Key="homePage">Homepage</system:String>
     <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
     <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
@@ -154,11 +154,11 @@
     <system:String x:Key="actionKeywordsTooltip">Aktions-Schlüsselwörter ändern</system:String>
     <system:String x:Key="pluginSearchDelayTime">Plugin search delay time</system:String>
     <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Search Delay Time</system:String>
-    <system:String x:Key="FilterComboboxLabel">Advanced Settings:</system:String>
+    <system:String x:Key="FilterComboboxLabel">Erweiterte Einstellungen</system:String>
     <system:String x:Key="DisplayModeOnOff">Aktiviert</system:String>
     <system:String x:Key="DisplayModePriority">Priorität</system:String>
     <system:String x:Key="DisplayModeSearchDelay">Search Delay</system:String>
-    <system:String x:Key="DisplayModeHomeOnOff">Home Page</system:String>
+    <system:String x:Key="DisplayModeHomeOnOff">Homepage</system:String>
     <system:String x:Key="currentPriority">Aktuelle Priorität</system:String>
     <system:String x:Key="newPriority">Neue Priorität</system:String>
     <system:String x:Key="priority">Priorität</system:String>
@@ -246,13 +246,13 @@
     <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
     <system:String x:Key="BackdropTypesMica">Mica</system:String>
     <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
-    <system:String x:Key="TypeIsDarkToolTip">This theme supports two (light/dark) modes.</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">Dieses Theme unterstützt zwei Modi (hell/dunkel).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Dieses Theme unterstützt Unschärfe und transparenten Hintergrund.</system:String>
-    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
+    <system:String x:Key="ShowPlaceholder">Platzhalter zeigen</system:String>
     <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
-    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
+    <system:String x:Key="PlaceholderText">Platzhaltertext</system:String>
     <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
-    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
+    <system:String x:Key="KeepMaxResults">Festgelegte Fenstergröße</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
 
     <!--  Setting Hotkey  -->
@@ -313,7 +313,7 @@
     <system:String x:Key="useGlyphUI">Segoe Fluent-Icons verwenden</system:String>
     <system:String x:Key="useGlyphUIEffect">Segoe Fluent-Icons für Abfrageergebnisse verwenden, wo unterstützt</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Taste drücken</system:String>
-    <system:String x:Key="showBadges">Show Result Badges</system:String>
+    <system:String x:Key="showBadges">Ergebnis-Badges zeigen</system:String>
     <system:String x:Key="showBadgesToolTip">For supported plugins, badges are displayed to help distinguish them more easily.</system:String>
     <system:String x:Key="showBadgesGlobalOnly">Show Result Badges for Global Query Only</system:String>
 
@@ -356,14 +356,15 @@
     <system:String x:Key="logfolder">Ordner »Logs«</system:String>
     <system:String x:Key="clearlogfolder">Logs löschen</system:String>
     <system:String x:Key="clearlogfolderMessage">Sind Sie sicher, dass Sie alle Logs löschen wollen?</system:String>
-    <system:String x:Key="cachefolder">Cache Folder</system:String>
-    <system:String x:Key="clearcachefolder">Clear Caches</system:String>
+    <system:String x:Key="cachefolder">Cache-Ordner</system:String>
+    <system:String x:Key="clearcachefolder">Cache leeren</system:String>
     <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
     <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
     <system:String x:Key="welcomewindow">Assistent</system:String>
     <system:String x:Key="userdatapath">Speicherort für Benutzerdaten</system:String>
     <system:String x:Key="userdatapathToolTip">Benutzereinstellungen und installierte Plug-ins werden im Ordner für Benutzerdaten gespeichert. Dieser Speicherort kann variieren, je nachdem, ob sich das Programm im portablen Modus befindet oder nicht.</system:String>
     <system:String x:Key="userdatapathButton">Ordner öffnen</system:String>
+    <system:String x:Key="advanced">Advanced</system:String>
     <system:String x:Key="logLevel">Log-Ebene</system:String>
     <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="LogLevelINFO">Info</system:String>
@@ -371,6 +372,7 @@
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Dateimanager auswählen</system:String>
+    <system:String x:Key="fileManager_learnMore">Mehr erfahren</system:String>
     <system:String x:Key="fileManager_tips">Bitte geben Sie den Dateiort des von Ihnen verwendeten Dateimanagers an und fügen Sie bei Bedarf Argumente hinzu. Das „%d“ repräsentiert den dafür zu öffnenden Verzeichnispfad, der vom Feld Arg for Folder und für Befehle zum Öffnen bestimmter Verzeichnisse verwendet wird. Das „%f“ repräsentiert den dafür zu öffnenden Dateipfad, der vom Feld Arg for File und für Befehle zum Öffnen bestimmter Dateien verwendet wird.</system:String>
     <system:String x:Key="fileManager_tips2">Zum Beispiel, wenn der Dateimanager einen Befehl wie „totalcmd.exe /A c:\windows“ verwendet, um das Verzeichnis c:\windows zu öffnen, lautet der Dateimanager-Pfad „totalcmd.exe“ und der Arg for Folder „/A %d“. Bestimmte Dateimanager wie QTTabBar kann nur die Angabe eines Pfades erfordern, in diesem Fall verwenden Sie „%d“ als den Dateimanager-Pfad und lassen den Rest der Felder blank.</system:String>
     <system:String x:Key="fileManager_name">Dateimanager</system:String>
@@ -378,6 +380,8 @@
     <system:String x:Key="fileManager_path">Dateimanager-Pfad</system:String>
     <system:String x:Key="fileManager_directory_arg">Arg For Folder</system:String>
     <system:String x:Key="fileManager_file_arg">Arg For File</system:String>
+    <system:String x:Key="fileManagerPathNotFound">The file manager '{0}' could not be located at '{1}'. Would you like to continue?</system:String>
+    <system:String x:Key="fileManagerPathError">File Manager Path Error</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Webbrowser per Default</system:String>
@@ -413,7 +417,7 @@
     <system:String x:Key="searchDelayTimeTips">Input the search delay time in ms you like to use for the plugin. Input empty if you don't want to specify any, and the plugin will use default search delay time.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
-    <system:String x:Key="homeTitle">Home Page</system:String>
+    <system:String x:Key="homeTitle">Homepage</system:String>
     <system:String x:Key="homeTips">Enable the plugin home page state if you like to show the plugin results when query is empty.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
@@ -468,6 +472,14 @@ Wenn Sie bei der Eingabe eines Shortcuts ein '@'-Präfix hinzufügen, stimmt die
     <system:String x:Key="reportWindow_please_open_issue">Bitte öffnen Sie einen neuen Fall in</system:String>
     <system:String x:Key="reportWindow_upload_log">1. Logdatei hochladen: {0}</system:String>
     <system:String x:Key="reportWindow_copy_below">2. Kopieren Sie die Ausnahmemeldung unterhalb</system:String>
+
+    <!--  File Open Error  -->
+    <system:String x:Key="fileManagerNotFoundTitle">File Manager Error</system:String>
+    <system:String x:Key="fileManagerNotFound">
+        The specified file manager could not be found. Please check the Custom File Manager setting under Settings &gt; General.
+    </system:String>
+    <system:String x:Key="errorTitle">Fehler</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder. {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Bitte warten Sie ...</system:String>

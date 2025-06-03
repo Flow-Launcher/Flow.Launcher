@@ -13,8 +13,8 @@
     <system:String x:Key="plugin_pluginsmanager_installing_plugin">正在安装插件</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">下载与安装 {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">插件卸载</system:String>
-    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_title">Keep plugin settings</system:String>
-    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_subtitle">Do you want to keep the settings of the plugin for the next usage?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_title">保留插件设置</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_subtitle">你想要保留插件设置以便下一次的使用吗？</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_success_restart">插件安装成功。正在重新启动 Flow Launcher，请稍候...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">安装失败：无法从新插件中找到plugin.json元数据文件</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">错误：具有相同或更高版本的 {0} 的插件已经存在。</system:String>
