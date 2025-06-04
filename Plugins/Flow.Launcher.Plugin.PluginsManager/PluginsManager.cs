@@ -436,7 +436,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             catch (Exception ex)
                             {
                                 Context.API.LogException(ClassName, $"Update failed for {plugin.Name}", ex.InnerException);
-                                Context.API.ShowMsg(
+                                Context.API.ShowMsgError(
                                     Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
                                     string.Format(
                                         Context.API.GetTranslation("plugin_pluginsmanager_install_error_subtitle"),
