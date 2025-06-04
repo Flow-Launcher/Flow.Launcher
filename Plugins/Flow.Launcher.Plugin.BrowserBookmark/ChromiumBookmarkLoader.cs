@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using System;
+using System.Threading.Tasks;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using Microsoft.Data.Sqlite;
 
@@ -156,19 +158,24 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
 
         try
         {
-            using var connection = new SqliteConnection($"Data Source={tempDbPath}");
-            connection.Open();
+            // Since some bookmarks may have same favorite icon id, we need to record them to avoid duplicates
+            var savedPaths = new ConcurrentDictionary<string, bool>();
 
-            foreach (var bookmark in bookmarks)
+            // Get favicons based on bookmarks concurrently
+            Parallel.ForEach(bookmarks.ToArray(), bookmark =>
             {
+                // Use read-only connection to avoid locking issues
+                var connection = new SqliteConnection($"Data Source={tempDbPath};Mode=ReadOnly");
+                connection.Open();
+
                 try
                 {
                     var url = bookmark.Url;
-                    if (string.IsNullOrEmpty(url)) continue;
+                    if (string.IsNullOrEmpty(url)) return;
 
                     // Extract domain from URL
                     if (!Uri.TryCreate(url, UriKind.Absolute, out Uri uri))
-                        continue;
+                        return;
 
                     var domain = uri.Host;
 
@@ -186,16 +193,21 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
 
                     using var reader = cmd.ExecuteReader();
                     if (!reader.Read() || reader.IsDBNull(1))
-                        continue;
+                        return;
 
                     var iconId = reader.GetInt64(0).ToString();
                     var imageData = (byte[])reader["image_data"];
 
                     if (imageData is not { Length: > 0 })
-                        continue;
+                        return;
 
                     var faviconPath = Path.Combine(_faviconCacheDir, $"chromium_{domain}_{iconId}.png");
-                    SaveBitmapData(imageData, faviconPath);
+
+                    // Filter out duplicate favorite icons
+                    if (savedPaths.TryAdd(faviconPath, true))
+                    {
+                        SaveBitmapData(imageData, faviconPath);
+                    }
 
                     bookmark.FaviconPath = faviconPath;
                 }
@@ -203,11 +215,14 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
                 {
                     Main._context.API.LogException(ClassName, $"Failed to extract bookmark favicon: {bookmark.Url}", ex);
                 }
-            }
-
-            // https://github.com/dotnet/efcore/issues/26580
-            SqliteConnection.ClearPool(connection);
-            connection.Close();
+                finally
+                {
+                    // https://github.com/dotnet/efcore/issues/26580
+                    SqliteConnection.ClearPool(connection);
+                    connection.Close();
+                    connection.Dispose();
+                }
+            });
         }
         catch (Exception ex)
         {
