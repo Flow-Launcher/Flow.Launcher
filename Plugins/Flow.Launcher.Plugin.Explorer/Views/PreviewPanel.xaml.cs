@@ -150,13 +150,12 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
         {
             var directoryInfo = new DirectoryInfo(folderPath);
             long size = 0;
-            var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+            using var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(3));
             foreach (var file in directoryInfo.EnumerateFiles("*", SearchOption.AllDirectories))
             {
                 if (cancellationTokenSource.Token.IsCancellationRequested)
                 {
                     // Timeout occurred, return unknown size
-                    cancellationTokenSource.Dispose();
                     return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
                 }
                 size += file.Length;
