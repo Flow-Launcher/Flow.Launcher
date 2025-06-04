@@ -473,6 +473,7 @@
     </system:String>
     <system:String x:Key="errorTitle">Error</system:String>
     <system:String x:Key="folderOpenError">An error occurred while opening the folder. {0}</system:String>
+    <system:String x:Key="browserOpenError">An error occurred while opening the url in browser. Please check your setting in Default Web Browser of general page.</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Please wait...</system:String>
