@@ -1,8 +1,9 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using Microsoft.Win32;
 
 namespace Flow.Launcher.Plugin.SharedCommands
 {
@@ -13,7 +14,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
     {
         private static string GetDefaultBrowserPath()
         {
-            string name = string.Empty;
+            var name = string.Empty;
             try
             {
                 using var regDefault = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\Shell\\Associations\\UrlAssociations\\http\\UserChoice", false);
@@ -23,8 +24,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 name = regKey.GetValue(null).ToString().ToLower().Replace("\"", "");
 
                 if (!name.EndsWith("exe"))
-                    name = name.Substring(0, name.LastIndexOf(".exe") + 4);
-
+                    name = name[..(name.LastIndexOf(".exe") + 4)];
             }
             catch
             {
@@ -65,7 +65,8 @@ namespace Flow.Launcher.Plugin.SharedCommands
             {
                 Process.Start(psi)?.Dispose();
             }
-            catch (System.ComponentModel.Win32Exception)
+            // This error may be thrown if browser path is incorrect
+            catch (Win32Exception)
             {
                 Process.Start(new ProcessStartInfo
                 {
@@ -100,7 +101,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 Process.Start(psi)?.Dispose();
             }
             // This error may be thrown if browser path is incorrect
-            catch (System.ComponentModel.Win32Exception)
+            catch (Win32Exception)
             {
                 Process.Start(new ProcessStartInfo
                 {
