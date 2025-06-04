@@ -16,6 +16,8 @@ namespace Flow.Launcher.Plugin.Explorer.Views;
 
 public partial class PreviewPanel : UserControl, INotifyPropertyChanged
 {
+    private static readonly string ClassName = nameof(PreviewPanel);
+
     private string FilePath { get; }
     public string FileSize { get; } = "";
     public string CreatedAt { get; } = "";
@@ -87,78 +89,119 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
 
     public static string GetFileSize(string filePath)
     {
-        var fileInfo = new FileInfo(filePath);
-        return ResultManager.ToReadableSize(fileInfo.Length, 2);
+        try
+        {
+            var fileInfo = new FileInfo(filePath);
+            return ResultManager.ToReadableSize(fileInfo.Length, 2);
+        }
+        catch (Exception e)
+        {
+            Main.Context.API.LogException(ClassName, $"Failed to get file size for {filePath}", e);
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
     }
 
     public static string GetFileCreatedAt(string filePath, string previewPanelDateFormat, string previewPanelTimeFormat, bool showFileAgeInPreviewPanel)
     {
-        var createdDate = File.GetCreationTime(filePath);
-        var formattedDate = createdDate.ToString(
-            $"{previewPanelDateFormat} {previewPanelTimeFormat}",
-            CultureInfo.CurrentCulture
-        );
+        try
+        {
+            var createdDate = File.GetCreationTime(filePath);
+            var formattedDate = createdDate.ToString(
+                $"{previewPanelDateFormat} {previewPanelTimeFormat}",
+                CultureInfo.CurrentCulture
+            );
 
-        var result = formattedDate;
-        if (showFileAgeInPreviewPanel) result = $"{GetFileAge(createdDate)} - {formattedDate}";
-        return result;
+            var result = formattedDate;
+            if (showFileAgeInPreviewPanel) result = $"{GetFileAge(createdDate)} - {formattedDate}";
+            return result;
+        }
+        catch (Exception e)
+        {
+            Main.Context.API.LogException(ClassName, $"Failed to get file created date for {filePath}", e);
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
     }
 
     public static string GetFileLastModifiedAt(string filePath, string previewPanelDateFormat, string previewPanelTimeFormat, bool showFileAgeInPreviewPanel)
     {
-        var lastModifiedDate = File.GetLastWriteTime(filePath);
-        var formattedDate = lastModifiedDate.ToString(
-            $"{previewPanelDateFormat} {previewPanelTimeFormat}",
-            CultureInfo.CurrentCulture
-        );
+        try
+        {
+            var lastModifiedDate = File.GetLastWriteTime(filePath);
+            var formattedDate = lastModifiedDate.ToString(
+                $"{previewPanelDateFormat} {previewPanelTimeFormat}",
+                CultureInfo.CurrentCulture
+            );
 
-        var result = formattedDate;
-        if (showFileAgeInPreviewPanel) result = $"{GetFileAge(lastModifiedDate)} - {formattedDate}";
-        return result;
+            var result = formattedDate;
+            if (showFileAgeInPreviewPanel) result = $"{GetFileAge(lastModifiedDate)} - {formattedDate}";
+            return result;
+        }
+        catch (Exception e)
+        {
+            Main.Context.API.LogException(ClassName, $"Failed to get file modified date for {filePath}", e);
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
     }
 
     public static string GetFolderSize(string folderPath)
     {
-        var directoryInfo = new DirectoryInfo(folderPath);
-        long size = 0;
         try
         {
+            var directoryInfo = new DirectoryInfo(folderPath);
+            long size = 0;
             foreach (var file in directoryInfo.GetFiles("*", SearchOption.AllDirectories))
             {
                 size += file.Length;
             }
+            return ResultManager.ToReadableSize(size, 2);
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            Main.Context.API.LogException(ClassName, $"Failed to get folder size for {folderPath}", e);
             return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
         }
-        return ResultManager.ToReadableSize(size, 2);
     }
 
     public static string GetFolderCreatedAt(string folderPath, string previewPanelDateFormat, string previewPanelTimeFormat, bool showFileAgeInPreviewPanel)
     {
-        var createdDate = Directory.GetCreationTime(folderPath);
-        var formattedDate = createdDate.ToString(
-            $"{previewPanelDateFormat} {previewPanelTimeFormat}",
-            CultureInfo.CurrentCulture
-        );
+        try
+        {
+            var createdDate = Directory.GetCreationTime(folderPath);
+            var formattedDate = createdDate.ToString(
+                $"{previewPanelDateFormat} {previewPanelTimeFormat}",
+                CultureInfo.CurrentCulture
+            );
 
-        var result = formattedDate;
-        if (showFileAgeInPreviewPanel) result = $"{GetFileAge(createdDate)} - {formattedDate}";
-        return result;
+            var result = formattedDate;
+            if (showFileAgeInPreviewPanel) result = $"{GetFileAge(createdDate)} - {formattedDate}";
+            return result;
+        }
+        catch (Exception e)
+        {
+            Main.Context.API.LogException(ClassName, $"Failed to get folder created date for {folderPath}", e);
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
     }
 
     public static string GetFolderLastModifiedAt(string folderPath, string previewPanelDateFormat, string previewPanelTimeFormat, bool showFileAgeInPreviewPanel)
     {
-        var lastModifiedDate = Directory.GetLastWriteTime(folderPath);
-        var formattedDate = lastModifiedDate.ToString(
-            $"{previewPanelDateFormat} {previewPanelTimeFormat}",
-            CultureInfo.CurrentCulture
-        );
+        try
+        {
+            var lastModifiedDate = Directory.GetLastWriteTime(folderPath);
+            var formattedDate = lastModifiedDate.ToString(
+                $"{previewPanelDateFormat} {previewPanelTimeFormat}",
+                CultureInfo.CurrentCulture
+            );
 
-        var result = formattedDate;
-        if (showFileAgeInPreviewPanel) result = $"{GetFileAge(lastModifiedDate)} - {formattedDate}";
-        return result;
+            var result = formattedDate;
+            if (showFileAgeInPreviewPanel) result = $"{GetFileAge(lastModifiedDate)} - {formattedDate}";
+            return result;
+        }
+        catch (Exception e)
+        {
+            Main.Context.API.LogException(ClassName, $"Failed to get folder modified date for {folderPath}", e);
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
     }
 
     private static string GetFileAge(DateTime fileDateTime)
