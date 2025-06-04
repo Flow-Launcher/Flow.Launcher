@@ -41,30 +41,33 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
         if (string.IsNullOrEmpty(placesPath) || !File.Exists(placesPath))
             return bookmarks;
 
+        // Try to register file monitoring
+        try
+        {
+            Main.RegisterBookmarkFile(placesPath);
+        }
+        catch (Exception ex)
+        {
+            Main._context.API.LogException(ClassName, $"Failed to register Firefox bookmark file monitoring: {placesPath}", ex);
+            return bookmarks;
+        }
+
         var tempDbPath = Path.Combine(_faviconCacheDir, $"tempplaces_{Guid.NewGuid()}.sqlite");
 
         try
         {
-            // Try to register file monitoring
-            try
-            {
-                Main.RegisterBookmarkFile(placesPath);
-            }
-            catch (Exception ex)
-            {
-                Main._context.API.LogException(ClassName, $"Failed to register Firefox bookmark file monitoring: {placesPath}", ex);
-            }
-
             // Use a copy to avoid lock issues with the original file
             File.Copy(placesPath, tempDbPath, true);
 
-            // Connect to database and execute query
+            // Create the connection string and init the connection
             string dbPath = string.Format(DbPathFormat, tempDbPath);
             using var dbConnection = new SqliteConnection(dbPath);
+
+            // Open connection to the database file and execute the query
             dbConnection.Open();
             var reader = new SqliteCommand(QueryAllBookmarks, dbConnection).ExecuteReader();
 
-            // Create bookmark list
+            // Get results in List<Bookmark> format
             bookmarks = reader
                 .Select(
                     x => new Bookmark(
@@ -75,12 +78,16 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
                 )
                 .ToList();
 
-            // Path to favicon database
-            var faviconDbPath = Path.Combine(Path.GetDirectoryName(placesPath), "favicons.sqlite");
-            if (File.Exists(faviconDbPath))
+            // Load favicons after loading bookmarks
+            if (Main._settings.EnableFavoriteIcons)
             {
-                LoadFaviconsFromDb(faviconDbPath, bookmarks);
+                var faviconDbPath = Path.Combine(Path.GetDirectoryName(placesPath), "favicons.sqlite");
+                if (File.Exists(faviconDbPath))
+                {
+                    LoadFaviconsFromDb(faviconDbPath, bookmarks);
+                }
             }
+
             // https://github.com/dotnet/efcore/issues/26580
             SqliteConnection.ClearPool(dbConnection);
             dbConnection.Close();
