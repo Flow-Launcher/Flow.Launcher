@@ -390,9 +390,9 @@ namespace Flow.Launcher
             }
         }
 
-        private void OpenUri(Uri uri, bool? inPrivate = null, bool forceBrower = false)
+        private void OpenUri(Uri uri, bool? inPrivate = null, bool forceBrowser = false)
         {
-            if (forceBrower || uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
+            if (forceBrowser || uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
             {
                 var browserInfo = _settings.CustomBrowser;
 
