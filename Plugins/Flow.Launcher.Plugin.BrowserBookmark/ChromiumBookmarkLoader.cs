@@ -55,7 +55,10 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
                 var faviconDbPath = Path.Combine(profile, "Favicons");
                 if (File.Exists(faviconDbPath))
                 {
-                    LoadFaviconsFromDb(faviconDbPath, profileBookmarks);
+                    Main._context.API.StopwatchLogInfo(ClassName, $"Load {profileBookmarks.Count} favorite icons cost", () =>
+                    {
+                        LoadFaviconsFromDb(faviconDbPath, profileBookmarks);
+                    });
                 }
             }
 

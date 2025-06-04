@@ -84,7 +84,10 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
                 var faviconDbPath = Path.Combine(Path.GetDirectoryName(placesPath), "favicons.sqlite");
                 if (File.Exists(faviconDbPath))
                 {
-                    LoadFaviconsFromDb(faviconDbPath, bookmarks);
+                    Main._context.API.StopwatchLogInfo(ClassName, $"Load {bookmarks.Count} favorite icons cost", () =>
+                    {
+                        LoadFaviconsFromDb(faviconDbPath, bookmarks);
+                    });
                 }
             }
 
