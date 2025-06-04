@@ -68,10 +68,18 @@ namespace Flow.Launcher.Plugin.SharedCommands
             // This error may be thrown if browser path is incorrect
             catch (Win32Exception)
             {
-                Process.Start(new ProcessStartInfo
+                try
                 {
-                    FileName = url, UseShellExecute = true
-                });
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = url,
+                        UseShellExecute = true
+                    });
+                }
+                catch
+                {
+                    throw; // Re-throw the exception if we cannot open the URL in the default browser
+                }
             }
         }
 
@@ -103,10 +111,18 @@ namespace Flow.Launcher.Plugin.SharedCommands
             // This error may be thrown if browser path is incorrect
             catch (Win32Exception)
             {
-                Process.Start(new ProcessStartInfo
+                try
                 {
-                    FileName = url, UseShellExecute = true
-                });
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = url,
+                        UseShellExecute = true
+                    });
+                }
+                catch
+                {
+                    throw; // Re-throw the exception if we cannot open the URL in the default browser
+                }
             }
         }
     }
