@@ -60,8 +60,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
             File.Copy(placesPath, tempDbPath, true);
 
             // Create the connection string and init the connection
-            var dbPath = string.Format($"Data Source={tempDbPath};Mode=ReadOnly");
-            using var dbConnection = new SqliteConnection(dbPath);
+            using var dbConnection = new SqliteConnection($"Data Source={tempDbPath};Mode=ReadOnly");
 
             // Open connection to the database file and execute the query
             dbConnection.Open();
