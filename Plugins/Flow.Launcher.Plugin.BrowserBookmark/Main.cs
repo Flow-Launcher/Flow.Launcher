@@ -21,9 +21,9 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
 
     internal static PluginInitContext _context;
 
-    private static List<Bookmark> _cachedBookmarks = new();
+    internal static Settings _settings;
 
-    private static Settings _settings;
+    private static List<Bookmark> _cachedBookmarks = new();
 
     private static bool _initialized = false;
     
