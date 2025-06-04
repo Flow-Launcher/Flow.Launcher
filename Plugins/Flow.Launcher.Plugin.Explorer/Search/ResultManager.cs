@@ -14,6 +14,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 {
     public static class ResultManager
     {
+        private static readonly string ClassName = nameof(ResultManager);
+
         private static readonly string[] SizeUnits = { "B", "KB", "MB", "GB", "TB" };
         private static PluginInitContext Context;
         private static Settings Settings { get; set; }
@@ -350,17 +352,33 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             switch (type)
             {
                 case ResultType.Folder:
-                    var folderSize = PreviewPanel.GetFolderSize(filePath);
-                    var folderCreatedAt = PreviewPanel.GetFolderCreatedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
-                    var folderModifiedAt = PreviewPanel.GetFolderLastModifiedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
-                    return string.Format(Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info"),
-                        filePath, folderSize, folderCreatedAt, folderModifiedAt, Environment.NewLine);
+                    try
+                    {
+                        var folderSize = PreviewPanel.GetFolderSize(filePath);
+                        var folderCreatedAt = PreviewPanel.GetFolderCreatedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
+                        var folderModifiedAt = PreviewPanel.GetFolderLastModifiedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
+                        return string.Format(Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info"),
+                            filePath, folderSize, folderCreatedAt, folderModifiedAt, Environment.NewLine);
+                    }
+                    catch (Exception e)
+                    {
+                        Context.API.LogException(ClassName, $"Failed to load tooltip for {filePath}", e);
+                        return filePath;
+                    }
                 case ResultType.File:
-                    var fileSize = PreviewPanel.GetFileSize(filePath);
-                    var fileCreatedAt = PreviewPanel.GetFileCreatedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
-                    var fileModifiedAt = PreviewPanel.GetFileLastModifiedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
-                    return string.Format(Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info"),
-                        filePath, fileSize, fileCreatedAt, fileModifiedAt, Environment.NewLine);
+                    try
+                    {
+                        var fileSize = PreviewPanel.GetFileSize(filePath);
+                        var fileCreatedAt = PreviewPanel.GetFileCreatedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
+                        var fileModifiedAt = PreviewPanel.GetFileLastModifiedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
+                        return string.Format(Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info"),
+                            filePath, fileSize, fileCreatedAt, fileModifiedAt, Environment.NewLine);
+                    }
+                    catch (Exception e)
+                    {
+                        Context.API.LogException(ClassName, $"Failed to load tooltip for {filePath}", e);
+                        return filePath;
+                    }
                 default:
                     return filePath;
             }
