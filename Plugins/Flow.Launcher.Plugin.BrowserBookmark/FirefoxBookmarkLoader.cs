@@ -101,7 +101,10 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
         // Delete temporary file
         try
         {
-            File.Delete(tempDbPath);
+            if (File.Exists(tempDbPath))
+            {
+                File.Delete(tempDbPath);
+            }
         }
         catch (Exception ex)
         {
