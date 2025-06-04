@@ -88,6 +88,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
                 }
             }
 
+            // Close the connection so that we can delete the temporary file
             // https://github.com/dotnet/efcore/issues/26580
             SqliteConnection.ClearPool(dbConnection);
             dbConnection.Close();
