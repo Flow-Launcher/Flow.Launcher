@@ -122,7 +122,6 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
         // Use a copy to avoid lock issues with the original file
         var tempDbPath = Path.Combine(_faviconCacheDir, $"tempfavicons_{Guid.NewGuid()}.sqlite");
 
-        // Use a copy to avoid lock issues with the original file
         try
         {
             File.Copy(dbPath, tempDbPath, true);
