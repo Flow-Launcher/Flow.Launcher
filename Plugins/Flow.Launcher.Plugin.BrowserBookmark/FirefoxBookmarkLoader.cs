@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using Microsoft.Data.Sqlite;
 
@@ -29,8 +31,6 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
             )
         ORDER BY moz_places.visit_count DESC
         """;
-
-    private const string DbPathFormat = "Data Source={0}";
 
     protected List<Bookmark> GetBookmarksFromPath(string placesPath)
     {
@@ -117,7 +117,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
         return bookmarks;
     }
 
-    private void LoadFaviconsFromDb(string faviconDbPath, List<Bookmark> bookmarks)
+    private void LoadFaviconsFromDb(string dbPath, List<Bookmark> bookmarks)
     {
         // Use a copy to avoid lock issues with the original file
         var tempDbPath = Path.Combine(_faviconCacheDir, $"tempfavicons_{Guid.NewGuid()}.sqlite");
@@ -125,28 +125,45 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
         // Use a copy to avoid lock issues with the original file
         try
         {
-            // Use a copy to avoid lock issues with the original file
-            File.Copy(faviconDbPath, tempDbPath, true);
-            
-            var defaultIconPath = Path.Combine(
-                Path.GetDirectoryName(typeof(FirefoxBookmarkLoaderBase).Assembly.Location),
-                "bookmark.png");
-
-            string dbPath = string.Format(DbPathFormat, tempDbPath);
-            using var connection = new SqliteConnection(dbPath);
-            connection.Open();
-
-            // Get favicons based on bookmark URLs
-            foreach (var bookmark in bookmarks)
+            File.Copy(dbPath, tempDbPath, true);
+        }
+        catch (Exception ex)
+        {
+            try
             {
+                if (File.Exists(tempDbPath))
+                {
+                    File.Delete(tempDbPath);
+                }
+            }
+            catch (Exception ex1)
+            {
+                Main._context.API.LogException(ClassName, $"Failed to delete temporary favicon DB: {tempDbPath}", ex1);
+            }
+            Main._context.API.LogException(ClassName, $"Failed to copy favicon DB: {dbPath}", ex);
+            return;
+        }
+
+        try
+        {
+            // Since some bookmarks may have same favorite icon id, we need to record them to avoid duplicates
+            var savedPaths = new ConcurrentDictionary<string, bool>();
+
+            // Get favicons based on bookmarks concurrently
+            Parallel.ForEach(bookmarks, bookmark =>
+            {
+                // Use read-only connection to avoid locking issues
+                var connection = new SqliteConnection($"Data Source={tempDbPath};Mode=ReadOnly");
+                connection.Open();
+
                 try
                 {
                     if (string.IsNullOrEmpty(bookmark.Url))
-                        continue;
+                        return;
 
                     // Extract domain from URL
                     if (!Uri.TryCreate(bookmark.Url, UriKind.Absolute, out Uri uri))
-                        continue;
+                        return;
 
                     var domain = uri.Host;
 
@@ -166,12 +183,12 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
 
                     using var reader = cmd.ExecuteReader();
                     if (!reader.Read() || reader.IsDBNull(0))
-                        continue;
+                        return;
 
                     var imageData = (byte[])reader["data"];
 
                     if (imageData is not { Length: > 0 })
-                        continue;
+                        return;
 
                     string faviconPath;
                     if (IsSvgData(imageData))
@@ -182,7 +199,12 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
                     {
                         faviconPath = Path.Combine(_faviconCacheDir, $"firefox_{domain}.png");
                     }
-                    SaveBitmapData(imageData, faviconPath);
+
+                    // Filter out duplicate favorite icons
+                    if (savedPaths.TryAdd(faviconPath, true))
+                    {
+                        SaveBitmapData(imageData, faviconPath);
+                    }
 
                     bookmark.FaviconPath = faviconPath;
                 }
@@ -190,15 +212,18 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
                 {
                     Main._context.API.LogException(ClassName, $"Failed to extract Firefox favicon: {bookmark.Url}", ex);
                 }
-            }
-
-            // https://github.com/dotnet/efcore/issues/26580
-            SqliteConnection.ClearPool(connection);
-            connection.Close();
+                finally
+                {
+                    // https://github.com/dotnet/efcore/issues/26580
+                    SqliteConnection.ClearPool(connection);
+                    connection.Close();
+                    connection.Dispose();
+                }
+            });
         }
         catch (Exception ex)
         {
-            Main._context.API.LogException(ClassName, $"Failed to load Firefox favicon DB: {faviconDbPath}", ex);
+            Main._context.API.LogException(ClassName, $"Failed to load Firefox favicon DB: {tempDbPath}", ex);
         }
 
         // Delete temporary file
