@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -149,8 +150,15 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
         {
             var directoryInfo = new DirectoryInfo(folderPath);
             long size = 0;
+            var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(3));
             foreach (var file in directoryInfo.GetFiles("*", SearchOption.AllDirectories))
             {
+                if (cancellationTokenSource.Token.IsCancellationRequested)
+                {
+                    // Timeout occurred, return unknown size
+                    cancellationTokenSource.Dispose();
+                    return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+                }
                 size += file.Length;
             }
             return ResultManager.ToReadableSize(size, 2);
