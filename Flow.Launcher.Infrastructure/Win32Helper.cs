@@ -29,6 +29,92 @@ namespace Flow.Launcher.Infrastructure
     {
         #region Blur Handling
 
+        [StructLayout(LayoutKind.Sequential)]
+        private struct AccentPolicy
+        {
+            public int AccentState;
+            public int AccentFlags;
+            public int GradientColor;
+            public int AnimationId;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct WindowCompositionAttributeData
+        {
+            public int Attribute;
+            public IntPtr Data;
+            public int SizeOfData;
+        }
+
+        private enum AccentState
+        {
+            ACCENT_DISABLED = 0,
+            ACCENT_ENABLE_GRADIENT = 1,
+            ACCENT_ENABLE_TRANSPARENTGRADIENT = 2,
+            ACCENT_ENABLE_BLURBEHIND = 3,
+            ACCENT_ENABLE_ACRYLICBLURBEHIND = 4,
+            ACCENT_ENABLE_HOSTBACKDROP = 5,
+            ACCENT_INVALID_STATE = 6
+        }
+
+        private enum WindowCompositionAttribute
+        {
+            WCA_ACCENT_POLICY = 19
+        }
+
+        [DllImport("user32.dll")]
+        private static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
+
+        public static void SetWindowColorWithAccent(IntPtr hwnd, Color color, byte alpha = 192)
+        {
+            var accent = new AccentPolicy
+            {
+                AccentState = (int)AccentState.ACCENT_ENABLE_ACRYLICBLURBEHIND,
+                AccentFlags = 0x20 | 0x40 | 0x80 | 0x100, // Enable border on all sides
+                GradientColor = (alpha << 24) | (color.B << 16) | (color.G << 8) | color.R
+            };
+
+            var accentSize = Marshal.SizeOf(accent);
+            var accentPtr = Marshal.AllocHGlobal(accentSize);
+            Marshal.StructureToPtr(accent, accentPtr, false);
+
+            var data = new WindowCompositionAttributeData
+            {
+                Attribute = (int)WindowCompositionAttribute.WCA_ACCENT_POLICY,
+                Data = accentPtr,
+                SizeOfData = accentSize
+            };
+
+            SetWindowCompositionAttribute(hwnd, ref data);
+
+            Marshal.FreeHGlobal(accentPtr);
+        }
+        
+        public static void ResetAccentPolicy(IntPtr hwnd)
+        {
+            var accent = new AccentPolicy
+            {
+                AccentState = (int)AccentState.ACCENT_DISABLED,
+                AccentFlags = 0,
+                GradientColor = 0,
+                AnimationId = 0
+            };
+
+            var size = Marshal.SizeOf(accent);
+            var ptr = Marshal.AllocHGlobal(size);
+            Marshal.StructureToPtr(accent, ptr, false);
+
+            var data = new WindowCompositionAttributeData
+            {
+                Attribute = (int)WindowCompositionAttribute.WCA_ACCENT_POLICY,
+                Data = ptr,
+                SizeOfData = size
+            };
+
+            SetWindowCompositionAttribute(hwnd, ref data);
+            Marshal.FreeHGlobal(ptr);
+        }
+
         public static bool IsBackdropSupported()
         {
             // Mica and Acrylic only supported Windows 11 22000+

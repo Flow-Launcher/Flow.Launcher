@@ -645,6 +645,18 @@ namespace Flow.Launcher.Core.Resource
             return (backdropType, useDropShadowEffect);
         }
 
+        private void ApplyCustomAccentColor(Color color, byte alpha)
+        {
+            var mainWindow = Application.Current.MainWindow;
+            if (mainWindow == null)
+                return;
+
+            var handle = new System.Windows.Interop.WindowInteropHelper(mainWindow).Handle;
+            
+            Win32Helper.SetWindowColorWithAccent(handle, color, alpha);
+            
+        }
+
         private void SetBlurForWindow(string theme, BackdropTypes backdropType)
         {
             var dict = GetResourceDictionary(theme);
@@ -655,7 +667,11 @@ namespace Flow.Launcher.Core.Resource
 
             var mainWindow = Application.Current.MainWindow;
             if (mainWindow == null) return;
-
+            
+            //Reset the accent policy to default before applying new one
+            var handle = new System.Windows.Interop.WindowInteropHelper(mainWindow).Handle;
+            Win32Helper.ResetAccentPolicy(handle);
+            
             // Check if the theme supports blur
             bool hasBlur = dict.Contains("ThemeBlurEnabled") && dict["ThemeBlurEnabled"] is bool b && b;
             if (BlurEnabled && hasBlur && Win32Helper.IsBackdropSupported())
@@ -670,8 +686,24 @@ namespace Flow.Launcher.Core.Resource
                 {
                     windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
                     windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Colors.Transparent)));
-                }
+                    // Export Color and Alpha from LightBG/DarkBG
+                    // useDarkMode
+                    string systemBG = dict.Contains("SystemBG") ? dict["SystemBG"] as string : "Auto";
+                    string colorScheme = _settings.ColorScheme;
+                    int themeValue = (int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 1);
+                    bool isSystemDark = themeValue == 0;
+                    bool useDarkMode = systemBG == "Dark" || (systemBG == "Auto" && (colorScheme == "Dark" || (colorScheme != "Light" && isSystemDark)));
 
+                    Color defaultDark = (Color)ColorConverter.ConvertFromString("#FFFAFAFA"); // Black
+                    Color defaultLight = (Color)ColorConverter.ConvertFromString("#FF202020"); // White
+                    Color bgColor = useDarkMode
+                        ? (dict.Contains("DarkBG") ? (Color)dict["DarkBG"] : defaultDark)
+                        : (dict.Contains("LightBG") ? (Color)dict["LightBG"] : defaultLight);
+                    byte alpha = bgColor.A;
+                    Color color = Color.FromRgb(bgColor.R, bgColor.G, bgColor.B);
+
+                    ApplyCustomAccentColor(color, alpha);
+                }
                 // Apply the blur effect
                 Win32Helper.DWMSetBackdropForWindow(mainWindow, backdropType);
                 ColorizeWindow(theme, backdropType);
@@ -897,7 +929,7 @@ namespace Flow.Launcher.Core.Resource
             else
             {
                 // Only set the background to transparent if the theme supports blur
-                if (backdropType == BackdropTypes.Mica || backdropType == BackdropTypes.MicaAlt)
+                if (backdropType == BackdropTypes.Mica || backdropType == BackdropTypes.MicaAlt || backdropType == BackdropTypes.Acrylic)
                 {
                     mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
                 }
@@ -910,7 +942,7 @@ namespace Flow.Launcher.Core.Resource
 
         private static bool IsBlurTheme()
         {
-            if (!Win32Helper.IsBackdropSupported()) // Windows 11 미만이면 무조건 false
+            if (!Win32Helper.IsBackdropSupported()) // If windows 11 under,  return false
                 return false;
 
             var resource = Application.Current.TryFindResource("ThemeBlurEnabled");
