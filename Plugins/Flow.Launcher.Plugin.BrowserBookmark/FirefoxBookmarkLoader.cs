@@ -60,7 +60,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
             File.Copy(placesPath, tempDbPath, true);
 
             // Create the connection string and init the connection
-            string dbPath = string.Format(DbPathFormat, tempDbPath);
+            var dbPath = string.Format($"Data Source={tempDbPath};Mode=ReadOnly");
             using var dbConnection = new SqliteConnection(dbPath);
 
             // Open connection to the database file and execute the query
@@ -119,8 +119,10 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
 
     private void LoadFaviconsFromDb(string faviconDbPath, List<Bookmark> bookmarks)
     {
+        // Use a copy to avoid lock issues with the original file
         var tempDbPath = Path.Combine(_faviconCacheDir, $"tempfavicons_{Guid.NewGuid()}.sqlite");
 
+        // Use a copy to avoid lock issues with the original file
         try
         {
             // Use a copy to avoid lock issues with the original file
