@@ -163,7 +163,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 },
                 Score = score,
                 TitleToolTip = Main.Context.API.GetTranslation("plugin_explorer_plugin_ToolTipOpenDirectory"),
-                SubTitleToolTip = path,
+                SubTitleToolTip = Settings.DisplayMoreInformationInToolTip ? GetMoreInfoToolTip(path, ResultType.Folder) : path,
                 ContextData = new SearchResult { Type = ResultType.Folder, FullPath = path, WindowsIndexed = windowsIndexed }
             };
         }
@@ -269,7 +269,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             bool isMedia = IsMedia(Path.GetExtension(filePath));
             var title = Path.GetFileName(filePath);
 
-
             /* Preview Detail */
 
             var result = new Result
@@ -318,7 +317,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     return true;
                 },
                 TitleToolTip = Main.Context.API.GetTranslation("plugin_explorer_plugin_ToolTipOpenContainingFolder"),
-                SubTitleToolTip = filePath,
+                SubTitleToolTip = Settings.DisplayMoreInformationInToolTip ? GetMoreInfoToolTip(filePath, ResultType.File) : filePath,
                 ContextData = new SearchResult { Type = ResultType.File, FullPath = filePath, WindowsIndexed = windowsIndexed }
             };
             return result;
@@ -347,6 +346,28 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             if (Settings.EverythingEnabled && Settings.EverythingEnableRunCount)
                 _ = Task.Run(() => EverythingApi.IncrementRunCounterAsync(fileOrFolder));
+        }
+
+        private static string GetMoreInfoToolTip(string filePath, ResultType type)
+        {
+            switch (type)
+            {
+                case ResultType.Folder:
+                    var folderSize = PreviewPanel.GetFolderSize(filePath);
+                    if (string.IsNullOrEmpty(folderSize)) folderSize = Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+                    var folderCreatedAt = PreviewPanel.GetFolderCreatedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
+                    var folderModifiedAt = PreviewPanel.GetFolderLastModifiedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
+                    return string.Format(Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info"),
+                        filePath, folderSize, folderCreatedAt, folderModifiedAt, Environment.NewLine);
+                case ResultType.File:
+                    var fileSize = PreviewPanel.GetFileSize(filePath);
+                    var fileCreatedAt = PreviewPanel.GetFileCreatedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
+                    var fileModifiedAt = PreviewPanel.GetFileLastModifiedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
+                    return string.Format(Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info"),
+                        filePath, fileSize, fileCreatedAt, fileModifiedAt, Environment.NewLine);
+                default:
+                    return filePath;
+            }
         }
 
         private static readonly string[] MediaExtensions = { ".jpg", ".png", ".avi", ".mkv", ".bmp", ".gif", ".wmv", ".mp3", ".flac", ".mp4" };

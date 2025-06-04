@@ -65,12 +65,12 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
 
         if (Settings.ShowCreatedDateInPreviewPanel)
         {
-            CreatedAt = GetCreatedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
+            CreatedAt = GetFileCreatedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
         }
 
         if (Settings.ShowModifiedDateInPreviewPanel)
         {
-            LastModifiedAt = GetLastModifiedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
+            LastModifiedAt = GetFileLastModifiedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
         }
 
         _ = LoadImageAsync();
@@ -87,7 +87,7 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
         return ResultManager.ToReadableSize(fileInfo.Length, 2);
     }
 
-    public static string GetCreatedAt(string filePath, string previewPanelDateFormat, string previewPanelTimeFormat, bool showFileAgeInPreviewPanel)
+    public static string GetFileCreatedAt(string filePath, string previewPanelDateFormat, string previewPanelTimeFormat, bool showFileAgeInPreviewPanel)
     {
         var createdDate = File.GetCreationTime(filePath);
         var formattedDate = createdDate.ToString(
@@ -100,9 +100,53 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
         return result;
     }
 
-    public static string GetLastModifiedAt(string filePath, string previewPanelDateFormat, string previewPanelTimeFormat, bool showFileAgeInPreviewPanel)
+    public static string GetFileLastModifiedAt(string filePath, string previewPanelDateFormat, string previewPanelTimeFormat, bool showFileAgeInPreviewPanel)
     {
         var lastModifiedDate = File.GetLastWriteTime(filePath);
+        var formattedDate = lastModifiedDate.ToString(
+            $"{previewPanelDateFormat} {previewPanelTimeFormat}",
+            CultureInfo.CurrentCulture
+        );
+
+        var result = formattedDate;
+        if (showFileAgeInPreviewPanel) result = $"{GetFileAge(lastModifiedDate)} - {formattedDate}";
+        return result;
+    }
+
+    public static string GetFolderSize(string folderPath)
+    {
+        var directoryInfo = new DirectoryInfo(folderPath);
+        long size = 0;
+        try
+        {
+            foreach (var file in directoryInfo.GetFiles("*", SearchOption.AllDirectories))
+            {
+                size += file.Length;
+            }
+        }
+        catch (Exception)
+        {
+            return string.Empty;
+        }
+        return ResultManager.ToReadableSize(size, 2);
+    }
+
+    public static string GetFolderCreatedAt(string folderPath, string previewPanelDateFormat, string previewPanelTimeFormat, bool showFileAgeInPreviewPanel)
+    {
+        var createdDate = Directory.GetCreationTime(folderPath);
+        var formattedDate = createdDate.ToString(
+            $"{previewPanelDateFormat} {previewPanelTimeFormat}",
+            CultureInfo.CurrentCulture
+        );
+
+        var result = formattedDate;
+        if (showFileAgeInPreviewPanel) result = $"{GetFileAge(createdDate)} - {formattedDate}";
+        return result;
+    }
+
+    public static string GetFolderLastModifiedAt(string folderPath, string previewPanelDateFormat, string previewPanelTimeFormat, bool showFileAgeInPreviewPanel)
+    {
+        var lastModifiedDate = Directory.GetLastWriteTime(folderPath);
         var formattedDate = lastModifiedDate.ToString(
             $"{previewPanelDateFormat} {previewPanelTimeFormat}",
             CultureInfo.CurrentCulture
