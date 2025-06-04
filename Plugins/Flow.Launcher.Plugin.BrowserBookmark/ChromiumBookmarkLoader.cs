@@ -43,16 +43,20 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
             catch (Exception ex)
             {
                 Main._context.API.LogException(ClassName, $"Failed to register bookmark file monitoring: {bookmarkPath}", ex);
+                continue;
             }
 
             var source = name + (Path.GetFileName(profile) == "Default" ? "" : $" ({Path.GetFileName(profile)})");
             var profileBookmarks = LoadBookmarksFromFile(bookmarkPath, source);
 
             // Load favicons after loading bookmarks
-            var faviconDbPath = Path.Combine(profile, "Favicons");
-            if (File.Exists(faviconDbPath))
+            if (Main._settings.EnableFavoriteIcons)
             {
-                LoadFaviconsFromDb(faviconDbPath, profileBookmarks);
+                var faviconDbPath = Path.Combine(profile, "Favicons");
+                if (File.Exists(faviconDbPath))
+                {
+                    LoadFaviconsFromDb(faviconDbPath, profileBookmarks);
+                }
             }
 
             bookmarks.AddRange(profileBookmarks);
