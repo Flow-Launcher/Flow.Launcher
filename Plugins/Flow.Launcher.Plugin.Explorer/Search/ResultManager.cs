@@ -99,10 +99,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 AutoCompleteText = GetAutoCompleteText(title, query, path, ResultType.Folder),
                 TitleHighlightData = Context.API.FuzzySearch(query.Search, title).MatchData,
                 CopyText = path,
-                Preview = new Result.PreviewInfo
-                {
-                    FilePath = path,
-                },
+                PreviewPanel = new Lazy<UserControl>(() => new PreviewPanel(Settings, path, ResultType.Folder)),
                 Action = c =>
                 {
                     if (c.SpecialKeyState.ToModifierKeys() == ModifierKeys.Alt)
@@ -286,7 +283,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 TitleHighlightData = Context.API.FuzzySearch(query.Search, title).MatchData,
                 Score = score,
                 CopyText = filePath,
-                PreviewPanel = new Lazy<UserControl>(() => new PreviewPanel(Settings, filePath)),
+                PreviewPanel = new Lazy<UserControl>(() => new PreviewPanel(Settings, filePath, ResultType.File)),
                 Action = c =>
                 {
                     if (c.SpecialKeyState.ToModifierKeys() == ModifierKeys.Alt)
@@ -354,7 +351,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 case ResultType.Folder:
                     var folderSize = PreviewPanel.GetFolderSize(filePath);
-                    if (string.IsNullOrEmpty(folderSize)) folderSize = Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
                     var folderCreatedAt = PreviewPanel.GetFolderCreatedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
                     var folderModifiedAt = PreviewPanel.GetFolderLastModifiedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
                     return string.Format(Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info"),

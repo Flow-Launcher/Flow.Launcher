@@ -50,7 +50,7 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
         ? Visibility.Visible
         : Visibility.Collapsed;
 
-    public PreviewPanel(Settings settings, string filePath)
+    public PreviewPanel(Settings settings, string filePath, ResultType type)
     {
         InitializeComponent();
 
@@ -60,17 +60,21 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
 
         if (Settings.ShowFileSizeInPreviewPanel)
         {
-            FileSize = GetFileSize(filePath);
+            FileSize = type == ResultType.File ? GetFileSize(filePath) : GetFolderSize(filePath);
         }
 
         if (Settings.ShowCreatedDateInPreviewPanel)
         {
-            CreatedAt = GetFileCreatedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
+            CreatedAt = type == ResultType.File ?
+                GetFileCreatedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel) :
+                GetFolderCreatedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
         }
 
         if (Settings.ShowModifiedDateInPreviewPanel)
         {
-            LastModifiedAt = GetFileLastModifiedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
+            LastModifiedAt = type == ResultType.File ? 
+                GetFileLastModifiedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel) :
+                GetFolderLastModifiedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
         }
 
         _ = LoadImageAsync();
@@ -126,7 +130,7 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
         }
         catch (Exception)
         {
-            return string.Empty;
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
         }
         return ResultManager.ToReadableSize(size, 2);
     }
