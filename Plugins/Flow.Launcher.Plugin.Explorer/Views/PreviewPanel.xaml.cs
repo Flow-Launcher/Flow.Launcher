@@ -151,7 +151,7 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
             var directoryInfo = new DirectoryInfo(folderPath);
             long size = 0;
             var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(3));
-            foreach (var file in directoryInfo.GetFiles("*", SearchOption.AllDirectories))
+            foreach (var file in directoryInfo.EnumerateFiles("*", SearchOption.AllDirectories))
             {
                 if (cancellationTokenSource.Token.IsCancellationRequested)
                 {
