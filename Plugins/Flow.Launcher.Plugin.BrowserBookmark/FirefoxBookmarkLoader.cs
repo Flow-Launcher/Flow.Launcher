@@ -324,11 +324,22 @@ public class FirefoxBookmarkLoader : FirefoxBookmarkLoaderBase
                 Version=2
             */
             // Seen in the example above, the IsRelative attribute is always above the Path attribute
+
+            var relativePath = Path.Combine(defaultProfileFolderName, "places.sqlite");
+            var absoluePath = Path.Combine(profileFolderPath, relativePath);
+
+            // If the index is out of range, it means that the default profile is in a custom location or the file is malformed
+            // If the profile is in a custom location, we need to check 
+            if (indexOfDefaultProfileAttributePath - 1 < 0 ||
+                indexOfDefaultProfileAttributePath - 1 >= lines.Count)
+            {
+                return Directory.Exists(absoluePath) ? absoluePath : relativePath;
+            }
+
             var relativeAttribute = lines[indexOfDefaultProfileAttributePath - 1];
 
             return relativeAttribute == "0" // See above, the profile is located in a custom location, path is not relative, so IsRelative=0
-                ? defaultProfileFolderName + @"\places.sqlite"
-                : Path.Combine(profileFolderPath, defaultProfileFolderName) + @"\places.sqlite";
+                ? relativePath : absoluePath;
         }
     }
 }
