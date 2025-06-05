@@ -270,6 +270,7 @@ public class FirefoxBookmarkLoader : FirefoxBookmarkLoaderBase
     /// <summary>
     /// Path to places.sqlite
     /// </summary>
+    /// <remarks></remarks>
     private static string PlacesPath
     {
         get
@@ -295,6 +296,33 @@ public class FirefoxBookmarkLoader : FirefoxBookmarkLoaderBase
 
             var indexOfDefaultProfileAttributePath = lines.IndexOf("Path=" + defaultProfileFolderName);
 
+            /*
+                Current profiles.ini structure example as of Firefox version 69.0.1
+
+                [Install736426B0AF4A39CB]
+                Default=Profiles/7789f565.default-release   <== this is the default profile this plugin will get the bookmarks from. When opened Firefox will load the default profile
+                Locked=1
+
+                [Profile2]
+                Name=newblahprofile
+                IsRelative=0
+                Path=C:\t6h2yuq8.newblahprofile  <== Note this is a custom location path for the profile user can set, we need to cater for this in code.
+
+                [Profile1]
+                Name=default
+                IsRelative=1
+                Path=Profiles/cydum7q4.default
+                Default=1
+
+                [Profile0]
+                Name=default-release
+                IsRelative=1
+                Path=Profiles/7789f565.default-release
+
+                [General]
+                StartWithLastProfile=1
+                Version=2
+            */
             // Seen in the example above, the IsRelative attribute is always above the Path attribute
             var relativeAttribute = lines[indexOfDefaultProfileAttributePath - 1];
 
