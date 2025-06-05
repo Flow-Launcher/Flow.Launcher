@@ -162,7 +162,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 },
                 Score = score,
                 TitleToolTip = Main.Context.API.GetTranslation("plugin_explorer_plugin_ToolTipOpenDirectory"),
-                SubTitleToolTip = Settings.DisplayMoreInformationInToolTip ? GetMoreInfoToolTip(path, ResultType.Folder) : path,
+                SubTitleToolTip = Settings.DisplayMoreInformationInToolTip ? GetFolderMoreInfoTooltip(path) : path,
                 ContextData = new SearchResult { Type = ResultType.Folder, FullPath = path, WindowsIndexed = windowsIndexed }
             };
         }
@@ -183,6 +183,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             if (progressValue >= 90)
                 progressBarColor = "#da2626";
 
+            var tooltip = Settings.DisplayMoreInformationInToolTip
+                ? GetVolumeMoreInfoTooltip(path, freespace, totalspace)
+                : path;
+
             return new Result
             {
                 Title = title,
@@ -201,8 +205,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     OpenFolder(path);
                     return true;
                 },
-                TitleToolTip = path,
-                SubTitleToolTip = path,
+                TitleToolTip = tooltip,
+                SubTitleToolTip = tooltip,
                 ContextData = new SearchResult { Type = ResultType.Volume, FullPath = path, WindowsIndexed = windowsIndexed }
             };
         }
@@ -316,7 +320,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     return true;
                 },
                 TitleToolTip = Main.Context.API.GetTranslation("plugin_explorer_plugin_ToolTipOpenContainingFolder"),
-                SubTitleToolTip = Settings.DisplayMoreInformationInToolTip ? GetMoreInfoToolTip(filePath, ResultType.File) : filePath,
+                SubTitleToolTip = Settings.DisplayMoreInformationInToolTip ? GetFileMoreInfoTooltip(filePath) : filePath,
                 ContextData = new SearchResult { Type = ResultType.File, FullPath = filePath, WindowsIndexed = windowsIndexed }
             };
             return result;
@@ -347,41 +351,44 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 _ = Task.Run(() => EverythingApi.IncrementRunCounterAsync(fileOrFolder));
         }
 
-        private static string GetMoreInfoToolTip(string filePath, ResultType type)
+        private static string GetFileMoreInfoTooltip(string filePath)
         {
-            switch (type)
+            try
             {
-                case ResultType.Folder:
-                    try
-                    {
-                        var folderSize = PreviewPanel.GetFolderSize(filePath);
-                        var folderCreatedAt = PreviewPanel.GetFolderCreatedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
-                        var folderModifiedAt = PreviewPanel.GetFolderLastModifiedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
-                        return string.Format(Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info"),
-                            filePath, folderSize, folderCreatedAt, folderModifiedAt, Environment.NewLine);
-                    }
-                    catch (Exception e)
-                    {
-                        Context.API.LogException(ClassName, $"Failed to load tooltip for {filePath}", e);
-                        return filePath;
-                    }
-                case ResultType.File:
-                    try
-                    {
-                        var fileSize = PreviewPanel.GetFileSize(filePath);
-                        var fileCreatedAt = PreviewPanel.GetFileCreatedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
-                        var fileModifiedAt = PreviewPanel.GetFileLastModifiedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
-                        return string.Format(Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info"),
-                            filePath, fileSize, fileCreatedAt, fileModifiedAt, Environment.NewLine);
-                    }
-                    catch (Exception e)
-                    {
-                        Context.API.LogException(ClassName, $"Failed to load tooltip for {filePath}", e);
-                        return filePath;
-                    }
-                default:
-                    return filePath;
+                var fileSize = PreviewPanel.GetFileSize(filePath);
+                var fileCreatedAt = PreviewPanel.GetFileCreatedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
+                var fileModifiedAt = PreviewPanel.GetFileLastModifiedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
+                return string.Format(Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info"),
+                    filePath, fileSize, fileCreatedAt, fileModifiedAt, Environment.NewLine);
             }
+            catch (Exception e)
+            {
+                Context.API.LogException(ClassName, $"Failed to load tooltip for {filePath}", e);
+                return filePath;
+            }
+        }
+
+        private static string GetFolderMoreInfoTooltip(string folderPath)
+        {
+            try
+            {
+                var folderSize = PreviewPanel.GetFolderSize(folderPath);
+                var folderCreatedAt = PreviewPanel.GetFolderCreatedAt(folderPath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
+                var folderModifiedAt = PreviewPanel.GetFolderLastModifiedAt(folderPath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
+                return string.Format(Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info"),
+                    folderPath, folderSize, folderCreatedAt, folderModifiedAt, Environment.NewLine);
+            }
+            catch (Exception e)
+            {
+                Context.API.LogException(ClassName, $"Failed to load tooltip for {folderPath}", e);
+                return folderPath;
+            }
+        }
+
+        private static string GetVolumeMoreInfoTooltip(string volumePath, string freespace, string totalspace)
+        {
+            return string.Format(Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_volume"),
+                volumePath, freespace, totalspace, Environment.NewLine);
         }
 
         private static readonly string[] MediaExtensions = { ".jpg", ".png", ".avi", ".mkv", ".bmp", ".gif", ".wmv", ".mp3", ".flac", ".mp4" };
