@@ -465,7 +465,52 @@ namespace Flow.Launcher
 
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left) DragMove();
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                try
+                {
+                    if (WindowState == WindowState.Maximized)
+                    {
+                        // Calculate ratio based on maximized window dimensions
+                        double maxWidth = this.ActualWidth;
+                        double maxHeight = this.ActualHeight;
+                        var mousePos = e.GetPosition(this);
+                        double xRatio = mousePos.X / maxWidth;
+                        double yRatio = mousePos.Y / maxHeight;
+
+                        // Current monitor information
+                        var screen = Screen.FromHandle(new WindowInteropHelper(this).Handle);
+                        var workingArea = screen.WorkingArea;
+                        var screenLeftTop = Win32Helper.TransformPixelsToDIP(this, workingArea.X, workingArea.Y);
+
+                        // Switch to Normal state
+                        WindowState = WindowState.Normal;
+
+                        Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            double normalWidth = Width;
+                            double normalHeight = Height;
+
+                            // Apply ratio based on the difference between maximized and normal window sizes
+                            Left = screenLeftTop.X + (maxWidth - normalWidth) * xRatio;
+                            Top = screenLeftTop.Y + (maxHeight - normalHeight) * yRatio;
+
+                            if (Mouse.LeftButton == MouseButtonState.Pressed)
+                            {
+                                DragMove();
+                            }
+                        }), DispatcherPriority.ApplicationIdle);
+                    }
+                    else
+                    {
+                        DragMove();
+                    }
+                }
+                catch (InvalidOperationException)
+                {
+                    // Ignored - can occur if drag operation is already in progress
+                }
+            }
         }
 
         #endregion
@@ -490,18 +535,25 @@ namespace Flow.Launcher
 
         #region Window WndProc
 
-        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-        {
-            if (msg == Win32Helper.WM_ENTERSIZEMOVE)
-            {
-                _initialWidth = (int)Width;
+        private const int WM_NCLBUTTONDBLCLK = 0x00A3;
+        private const int WM_SYSCOMMAND = 0x0112;
+        private const int SC_MAXIMIZE = 0xF030;
+        private const int SC_RESTORE = 0xF120;
+        private const int SC_MINIMIZE = 0xF020;
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled) 
+        { 
+            if (msg == Win32Helper.WM_ENTERSIZEMOVE) 
+            { 
+                _initialWidth = (int)Width; 
                 _initialHeight = (int)Height;
-
                 handled = true;
             }
             else if (msg == Win32Helper.WM_EXITSIZEMOVE)
             {
-                if (_initialHeight != (int)Height)
+                //Prevent updating the number of results when the window height is below the height of a single result item.
+                //This situation occurs not only when the user manually resizes the window, but also when the window is released from a side snap, as the OS automatically adjusts the window height.
+                //(Without this check, releasing from a snap can cause the window height to hit the minimum, resulting in only 2 results being shown.)
+                if (_initialHeight != (int)Height && Height> (_settings.WindowHeightSize + _settings.ItemHeightSize))
                 {
                     if (!_settings.KeepMaxResults)
                     {
@@ -527,6 +579,11 @@ namespace Flow.Launcher
 
                     SizeToContent = SizeToContent.Height;
                 }
+                else
+                {
+                    // Update height when exiting maximized snap state.
+                    SizeToContent = SizeToContent.Height;
+                }
 
                 if (_initialWidth != (int)Width)
                 {
@@ -541,7 +598,20 @@ namespace Flow.Launcher
 
                 handled = true;
             }
-
+            if (msg == WM_NCLBUTTONDBLCLK)
+            {
+                SizeToContent = SizeToContent.Height;
+                handled = true;
+            }
+            else if (msg == WM_SYSCOMMAND)
+            {
+                int command = wParam.ToInt32() & 0xFFF0;
+                if (command == SC_MAXIMIZE || command == SC_MINIMIZE)
+                {
+                    SizeToContent = SizeToContent.Height;
+                    handled = true;
+                }
+            }
             return IntPtr.Zero;
         }
 
