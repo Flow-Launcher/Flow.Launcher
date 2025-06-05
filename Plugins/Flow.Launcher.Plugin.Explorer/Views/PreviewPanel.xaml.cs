@@ -173,6 +173,7 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
         }
         catch (OperationCanceledException)
         {
+            Main.Context.API.LogError(ClassName, $"Operation timed out while calculating folder size for {folderPath}");
             return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
         }
         catch (Exception e)
