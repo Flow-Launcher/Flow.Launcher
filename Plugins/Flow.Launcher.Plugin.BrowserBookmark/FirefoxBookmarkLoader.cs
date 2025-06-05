@@ -78,12 +78,12 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
                 .ToList();
 
             // Load favicons after loading bookmarks
-            if (Main._settings.EnableFavoriteIcons)
+            if (Main._settings.EnableFavicons)
             {
                 var faviconDbPath = Path.Combine(Path.GetDirectoryName(placesPath), "favicons.sqlite");
                 if (File.Exists(faviconDbPath))
                 {
-                    Main._context.API.StopwatchLogInfo(ClassName, $"Load {bookmarks.Count} favorite icons cost", () =>
+                    Main._context.API.StopwatchLogInfo(ClassName, $"Load {bookmarks.Count} favicons cost", () =>
                     {
                         LoadFaviconsFromDb(faviconDbPath, bookmarks);
                     });
@@ -144,7 +144,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
 
         try
         {
-            // Since some bookmarks may have same favorite icon id, we need to record them to avoid duplicates
+            // Since some bookmarks may have same favicon id, we need to record them to avoid duplicates
             var savedPaths = new ConcurrentDictionary<string, bool>();
 
             // Get favicons based on bookmarks concurrently
@@ -198,7 +198,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
                         faviconPath = Path.Combine(_faviconCacheDir, $"firefox_{domain}.png");
                     }
 
-                    // Filter out duplicate favorite icons
+                    // Filter out duplicate favicons
                     if (savedPaths.TryAdd(faviconPath, true))
                     {
                         SaveBitmapData(imageData, faviconPath);

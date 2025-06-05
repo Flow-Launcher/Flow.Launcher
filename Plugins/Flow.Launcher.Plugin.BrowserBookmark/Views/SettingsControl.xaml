@@ -97,7 +97,7 @@
             Margin="{StaticResource SettingPanelItemTopBottomMargin}"
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
-            Content="{DynamicResource flowlauncher_plugin_browserbookmark_enable_favorite_icons}"
-            IsChecked="{Binding Settings.EnableFavoriteIcons}" />
+            Content="{DynamicResource flowlauncher_plugin_browserbookmark_enable_favicons}"
+            IsChecked="{Binding Settings.EnableFavicons}" />
     </Grid>
 </UserControl>

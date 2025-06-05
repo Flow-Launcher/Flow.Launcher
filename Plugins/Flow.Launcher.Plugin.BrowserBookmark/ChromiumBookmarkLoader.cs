@@ -52,12 +52,12 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
             var profileBookmarks = LoadBookmarksFromFile(bookmarkPath, source);
 
             // Load favicons after loading bookmarks
-            if (Main._settings.EnableFavoriteIcons)
+            if (Main._settings.EnableFavicons)
             {
                 var faviconDbPath = Path.Combine(profile, "Favicons");
                 if (File.Exists(faviconDbPath))
                 {
-                    Main._context.API.StopwatchLogInfo(ClassName, $"Load {profileBookmarks.Count} favorite icons cost", () =>
+                    Main._context.API.StopwatchLogInfo(ClassName, $"Load {profileBookmarks.Count} favicons cost", () =>
                     {
                         LoadFaviconsFromDb(faviconDbPath, profileBookmarks);
                     });
@@ -157,7 +157,7 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
 
         try
         {
-            // Since some bookmarks may have same favorite icon id, we need to record them to avoid duplicates
+            // Since some bookmarks may have same favicon id, we need to record them to avoid duplicates
             var savedPaths = new ConcurrentDictionary<string, bool>();
 
             // Get favicons based on bookmarks concurrently
@@ -202,7 +202,7 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
 
                     var faviconPath = Path.Combine(_faviconCacheDir, $"chromium_{domain}_{iconId}.png");
 
-                    // Filter out duplicate favorite icons
+                    // Filter out duplicate favicons
                     if (savedPaths.TryAdd(faviconPath, true))
                     {
                         SaveBitmapData(imageData, faviconPath);

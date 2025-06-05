@@ -8,7 +8,7 @@ public class Settings : BaseModel
 
     public string BrowserPath { get; set; }
 
-    public bool EnableFavoriteIcons { get; set; } = false;
+    public bool EnableFavicons { get; set; } = false;
 
     public bool LoadChromeBookmark { get; set; } = true;
     public bool LoadFirefoxBookmark { get; set; } = true;
