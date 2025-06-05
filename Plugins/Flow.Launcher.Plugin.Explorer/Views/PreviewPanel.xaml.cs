@@ -107,6 +107,16 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
             var fileInfo = new FileInfo(filePath);
             return ResultManager.ToReadableSize(fileInfo.Length, 2);
         }
+        catch (FileNotFoundException)
+        {
+            Main.Context.API.LogError(ClassName, $"File not found: {filePath}");
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
+        catch (UnauthorizedAccessException)
+        {
+            Main.Context.API.LogError(ClassName, $"Access denied to file: {filePath}");
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
         catch (Exception e)
         {
             Main.Context.API.LogException(ClassName, $"Failed to get file size for {filePath}", e);
@@ -127,6 +137,16 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
             var result = formattedDate;
             if (showFileAgeInPreviewPanel) result = $"{GetFileAge(createdDate)} - {formattedDate}";
             return result;
+        }
+        catch (FileNotFoundException)
+        {
+            Main.Context.API.LogError(ClassName, $"File not found: {filePath}");
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
+        catch (UnauthorizedAccessException)
+        {
+            Main.Context.API.LogError(ClassName, $"Access denied to file: {filePath}");
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
         }
         catch (Exception e)
         {
@@ -149,6 +169,16 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
             if (showFileAgeInPreviewPanel) result = $"{GetFileAge(lastModifiedDate)} - {formattedDate}";
             return result;
         }
+        catch (FileNotFoundException)
+        {
+            Main.Context.API.LogError(ClassName, $"File not found: {filePath}");
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
+        catch (UnauthorizedAccessException)
+        {
+            Main.Context.API.LogError(ClassName, $"Access denied to file: {filePath}");
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
         catch (Exception e)
         {
             Main.Context.API.LogException(ClassName, $"Failed to get file modified date for {filePath}", e);
@@ -170,6 +200,16 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
                 .Sum(file => file.Length);
 
             return ResultManager.ToReadableSize(size, 2);
+        }
+        catch (FileNotFoundException)
+        {
+            Main.Context.API.LogError(ClassName, $"Folder not found: {folderPath}");
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
+        catch (UnauthorizedAccessException)
+        {
+            Main.Context.API.LogError(ClassName, $"Access denied to folder: {folderPath}");
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
         }
         catch (OperationCanceledException)
         {
@@ -197,6 +237,16 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
             if (showFileAgeInPreviewPanel) result = $"{GetFileAge(createdDate)} - {formattedDate}";
             return result;
         }
+        catch (FileNotFoundException)
+        {
+            Main.Context.API.LogError(ClassName, $"Folder not found: {folderPath}");
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
+        catch (UnauthorizedAccessException)
+        {
+            Main.Context.API.LogError(ClassName, $"Access denied to folder: {folderPath}");
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
         catch (Exception e)
         {
             Main.Context.API.LogException(ClassName, $"Failed to get folder created date for {folderPath}", e);
@@ -217,6 +267,16 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
             var result = formattedDate;
             if (showFileAgeInPreviewPanel) result = $"{GetFileAge(lastModifiedDate)} - {formattedDate}";
             return result;
+        }
+        catch (FileNotFoundException)
+        {
+            Main.Context.API.LogError(ClassName, $"Folder not found: {folderPath}");
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
+        catch (UnauthorizedAccessException)
+        {
+            Main.Context.API.LogError(ClassName, $"Access denied to folder: {folderPath}");
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
         }
         catch (Exception e)
         {
