@@ -324,6 +324,11 @@ namespace Flow.Launcher.Infrastructure
 
         public const int WM_ENTERSIZEMOVE = (int)PInvoke.WM_ENTERSIZEMOVE;
         public const int WM_EXITSIZEMOVE = (int)PInvoke.WM_EXITSIZEMOVE;
+        public const int WM_NCLBUTTONDBLCLK = (int)PInvoke.WM_NCLBUTTONDBLCLK;
+        public const int WM_SYSCOMMAND = (int)PInvoke.WM_SYSCOMMAND;
+
+        public const int SC_MAXIMIZE = (int)PInvoke.SC_MAXIMIZE;
+        public const int SC_MINIMIZE = (int)PInvoke.SC_MINIMIZE;
 
         #endregion
 
