@@ -25,4 +25,6 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">מנוע דפדפן</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">אם אינך משתמש ב-Chrome, Firefox או Edge, או שאתה משתמש בגרסה הניידת שלהם, עליך להוסיף את ספריית נתוני הסימניות ולבחור את מנוע הדפדפן המתאים כדי שהתוסף יעבוד.</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">לדוגמה: המנוע של Brave הוא Chromium, ומיקום ברירת המחדל של נתוני הסימניות שלו הוא: %LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData. עבור מנוע Firefox, ספריית הסימניות היא תיקיית המשתמש שמכילה את הקובץ places.sqlite.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Load favicons (can be time consuming during startup)</system:String>
+
 </ResourceDictionary>
