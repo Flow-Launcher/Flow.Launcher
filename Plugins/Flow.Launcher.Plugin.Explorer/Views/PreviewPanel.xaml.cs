@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -157,21 +158,22 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
 
     public static string GetFolderSize(string folderPath)
     {
+        using var timeoutCts = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+
         try
         {
+            // Use parallel enumeration for better performance
             var directoryInfo = new DirectoryInfo(folderPath);
-            long size = 0;
-            using var cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(3));
-            foreach (var file in directoryInfo.EnumerateFiles("*", SearchOption.AllDirectories))
-            {
-                if (cancellationTokenSource.Token.IsCancellationRequested)
-                {
-                    // Timeout occurred, return unknown size
-                    return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
-                }
-                size += file.Length;
-            }
+            long size = directoryInfo.EnumerateFiles("*", SearchOption.AllDirectories)
+                .AsParallel()
+                .WithCancellation(timeoutCts.Token)
+                .Sum(file => file.Length);
+
             return ResultManager.ToReadableSize(size, 2);
+        }
+        catch (OperationCanceledException)
+        {
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
         }
         catch (Exception e)
         {
