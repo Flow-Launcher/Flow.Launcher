@@ -242,6 +242,9 @@ namespace Flow.Launcher.Plugin.Shell
 
                 case Shell.Pwsh:
                 {
+                    // Using just a ; doesn't work with wt, as it's used to create a new tab for the terminal window
+                    // \\ must be escaped for it to work properly, or breaking it into multiple arguments
+                    var addedCharacter = _settings.UseWindowsTerminal ? "\\" : "";
                     if (_settings.UseWindowsTerminal)
                     {
                         info.FileName = "wt.exe";
@@ -256,7 +259,7 @@ namespace Flow.Launcher.Plugin.Shell
                         info.ArgumentList.Add("-NoExit");
                     }
                     info.ArgumentList.Add("-Command");
-                    info.ArgumentList.Add($"{command}\\; {(_settings.CloseShellAfterPress ? $"Write-Host '{Context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")}'\\; [System.Console]::ReadKey()\\; exit" : "")}");
+                    info.ArgumentList.Add($"{command}{addedCharacter}; {(_settings.CloseShellAfterPress ? $"Write-Host '{Context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")}'\\; [System.Console]::ReadKey()\\; exit" : "")}");
                     break;
                 }
 
