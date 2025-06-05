@@ -216,6 +216,25 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
             Main.Context.API.LogError(ClassName, $"Operation timed out while calculating folder size for {folderPath}");
             return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
         }
+        // For parallel operations, AggregateException may be thrown if any of the tasks fail
+        catch (AggregateException ae)
+        {
+            switch (ae.InnerException)
+            {
+                case FileNotFoundException:
+                    Main.Context.API.LogError(ClassName, $"Folder not found: {folderPath}");
+                    return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+                case UnauthorizedAccessException:
+                    Main.Context.API.LogError(ClassName, $"Access denied to folder: {folderPath}");
+                    return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+                case OperationCanceledException:
+                    Main.Context.API.LogError(ClassName, $"Operation timed out while calculating folder size for {folderPath}");
+                    return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+                default:
+                    Main.Context.API.LogException(ClassName, $"Failed to get folder size for {folderPath}", ae);
+                    return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+            }
+        }
         catch (Exception e)
         {
             Main.Context.API.LogException(ClassName, $"Failed to get folder size for {folderPath}", e);
