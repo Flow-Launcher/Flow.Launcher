@@ -364,7 +364,7 @@
     <system:String x:Key="userdatapath">Ubicación de datos del usuario</system:String>
     <system:String x:Key="userdatapathToolTip">La configuración del usuario y los complementos instalados se guardan en la carpeta de datos del usuario. Esta ubicación puede variar dependiendo de si está en modo portable o no.</system:String>
     <system:String x:Key="userdatapathButton">Abrir carpeta</system:String>
-    <system:String x:Key="advanced">Advanced</system:String>
+    <system:String x:Key="advanced">Avanzado</system:String>
     <system:String x:Key="logLevel">Nivel de registro</system:String>
     <system:String x:Key="LogLevelDEBUG">Depurar</system:String>
     <system:String x:Key="LogLevelINFO">Información</system:String>
@@ -480,7 +480,7 @@ Si añade un prefijo &quot;@&quot; al introducir un acceso directo, éste coinci
     </system:String>
     <system:String x:Key="errorTitle">Error</system:String>
     <system:String x:Key="folderOpenError">Se ha producido un error al abrir la carpeta. {0}</system:String>
-    <system:String x:Key="browserOpenError">An error occurred while opening the URL in the browser. Please check your Default Web Browser configuration in the General section of the settings window</system:String>
+    <system:String x:Key="browserOpenError">Se ha producido un error al abrir la URL en el navegador. Por favor, compruebe la configuración de su navegador web predeterminado en la sección General de la ventana de configuración</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Por favor espere...</system:String>
