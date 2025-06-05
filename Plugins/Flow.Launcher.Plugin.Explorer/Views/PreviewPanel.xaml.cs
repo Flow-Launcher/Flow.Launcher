@@ -20,7 +20,7 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
     private static readonly string ClassName = nameof(PreviewPanel);
 
     private string FilePath { get; }
-    public string FileSize { get; } = "";
+    public string FileSize { get; private set; } = Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
     public string CreatedAt { get; } = "";
     public string LastModifiedAt { get; } = "";
     private ImageSource _previewImage = new BitmapImage();
@@ -63,7 +63,18 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
 
         if (Settings.ShowFileSizeInPreviewPanel)
         {
-            FileSize = type == ResultType.File ? GetFileSize(filePath) : GetFolderSize(filePath);
+            if (type == ResultType.File)
+            {
+                FileSize = GetFileSize(filePath);
+            }
+            else
+            {
+                _ = Task.Run(() =>
+                {
+                    FileSize = GetFolderSize(filePath);
+                    OnPropertyChanged(nameof(FileSize));
+                }).ConfigureAwait(false);
+            }
         }
 
         if (Settings.ShowCreatedDateInPreviewPanel)
