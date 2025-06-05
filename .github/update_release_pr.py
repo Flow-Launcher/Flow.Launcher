@@ -117,12 +117,13 @@ def get_prs_assignees(pull_request_items: list[dict], label: str = "", state: st
         state (str): State of PR, e.g. open, closed, all
 
     Returns:
-        list: A list of strs, where each string represents an assignee.
+        list: A list of strs, where each string is an assignee name. List is not distinct, so can contain
+              duplicate names.
               Returns an empty list if none are found.
     """
     assignee_list = []
     for pr in pull_request_items:
-        if pr["state"] == state and [item for item in pr["labels"] if item["name"] == label]:
+        if pr["state"] == state and [item for item in pr["labels"] if not label or item["name"] == label]:
             [assignee_list.append(assignee["login"]) for assignee in pr["assignees"] if assignee["login"] != "jjw24" ]
 
     print(f"Found {len(assignee_list)} assignees with {label if label else 'no'} label and state as {state}")
