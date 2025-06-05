@@ -25,4 +25,6 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">محرك المتصفح</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">إذا كنت لا تستخدم Chrome أو Firefox أو Edge، أو كنت تستخدم نسختهم المحمولة، ستحتاج إلى إضافة دليل بيانات الإشارات المرجعية وتحديد محرك المتصفح الصحيح لجعل هذه الإضافة تعمل.</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">على سبيل المثال: محرك Brave هو Chromium؛ وموقع بيانات الإشارات المرجعية الافتراضي هو: &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. بالنسبة لمحرك Firefox، دليل الإشارات المرجعية هو مجلد userdata الذي يحتوي على ملف places.sqlite.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Load favicons (can be time consuming during startup)</system:String>
+
 </ResourceDictionary>
