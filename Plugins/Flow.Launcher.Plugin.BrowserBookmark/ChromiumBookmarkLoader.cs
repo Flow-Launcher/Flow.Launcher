@@ -161,7 +161,7 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
             var savedPaths = new ConcurrentDictionary<string, bool>();
 
             // Get favicons based on bookmarks concurrently
-            Parallel.ForEach(bookmarks.ToArray(), bookmark =>
+            Parallel.ForEach(bookmarks, bookmark =>
             {
                 // Use read-only connection to avoid locking issues
                 var connection = new SqliteConnection($"Data Source={tempDbPath};Mode=ReadOnly");
