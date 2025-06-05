@@ -11,7 +11,7 @@ def get_github_prs(token: str, owner: str, repo: str, label: str = "", state: st
         token (str): GitHub token.
         owner (str): The owner of the repository.
         repo (str): The name of the repository.
-        label (str): The label name.
+        label (str): The label name. Filter is not applied when empty string.
         state (str): State of PR, e.g. open, closed, all
 
     Returns:
@@ -89,7 +89,7 @@ def get_prs(pull_request_items: list[dict], label: str = "", state: str = "all")
 
     Args:
         pull_request_items (list[dict]): List of PR items.
-        label (str): The label name.
+        label (str): The label name. Filter is not applied when empty string.
         state (str): State of PR, e.g. open, closed, all
 
     Returns:
@@ -99,11 +99,11 @@ def get_prs(pull_request_items: list[dict], label: str = "", state: str = "all")
     pr_list = []
     count = 0
     for pr in pull_request_items:
-        if pr["state"] == state and [item for item in pr["labels"] if item["name"] == label]:
+        if state in [pr["state"], "all"] and (not label or [item for item in pr["labels"] if item["name"] == label]):
             pr_list.append(pr)
             count += 1
 
-    print(f"Found {count} PRs with {label if label else 'no'} label and state as {state}")
+    print(f"Found {count} PRs with {label if label else 'no filter on'} label and state as {state}")
 
     return pr_list
 
@@ -113,7 +113,7 @@ def get_prs_assignees(pull_request_items: list[dict], label: str = "", state: st
 
     Args:
         pull_request_items (list[dict]): List of PR items.
-        label (str): The label name.
+        label (str): The label name. Filter is not applied when empty string.
         state (str): State of PR, e.g. open, closed, all
 
     Returns:
@@ -123,10 +123,10 @@ def get_prs_assignees(pull_request_items: list[dict], label: str = "", state: st
     """
     assignee_list = []
     for pr in pull_request_items:
-        if pr["state"] == state and [item for item in pr["labels"] if not label or item["name"] == label]:
+        if state in [pr["state"], "all"] and (not label or [item for item in pr["labels"] if item["name"] == label]):
             [assignee_list.append(assignee["login"]) for assignee in pr["assignees"] if assignee["login"] != "jjw24" ]
 
-    print(f"Found {len(assignee_list)} assignees with {label if label else 'no'} label and state as {state}")
+    print(f"Found {len(assignee_list)} assignees with {label if label else 'no filter on'} label and state as {state}")
 
     return assignee_list
 
