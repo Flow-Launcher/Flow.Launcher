@@ -11,7 +11,7 @@ def get_github_prs(token: str, owner: str, repo: str, label: str = "", state: st
         token (str): GitHub token.
         owner (str): The owner of the repository.
         repo (str): The name of the repository.
-        label (str): The label name.
+        label (str): The label name. Filter is not applied when empty string.
         state (str): State of PR, e.g. open, closed, all
 
     Returns:
@@ -89,7 +89,7 @@ def get_prs(pull_request_items: list[dict], label: str = "", state: str = "all")
 
     Args:
         pull_request_items (list[dict]): List of PR items.
-        label (str): The label name.
+        label (str): The label name. Filter is not applied when empty string.
         state (str): State of PR, e.g. open, closed, all
 
     Returns:
@@ -99,14 +99,36 @@ def get_prs(pull_request_items: list[dict], label: str = "", state: str = "all")
     pr_list = []
     count = 0
     for pr in pull_request_items:
-        if pr["state"] == state and [item for item in pr["labels"] if item["name"] == label]:
+        if state in [pr["state"], "all"] and (not label or [item for item in pr["labels"] if item["name"] == label]):
             pr_list.append(pr)
             count += 1
 
-    print(f"Found {count} PRs with {label if label else 'no'} label and state as {state}")
+    print(f"Found {count} PRs with {label if label else 'no filter on'} label and state as {state}")
 
     return pr_list
 
+def get_prs_assignees(pull_request_items: list[dict], label: str = "", state: str = "all") -> list[str]:
+    """
+    Returns a list of pull request assignees after applying the label and state filters, excludes jjw24.
+
+    Args:
+        pull_request_items (list[dict]): List of PR items.
+        label (str): The label name. Filter is not applied when empty string.
+        state (str): State of PR, e.g. open, closed, all
+
+    Returns:
+        list: A list of strs, where each string is an assignee name. List is not distinct, so can contain
+              duplicate names.
+              Returns an empty list if none are found.
+    """
+    assignee_list = []
+    for pr in pull_request_items:
+        if state in [pr["state"], "all"] and (not label or [item for item in pr["labels"] if item["name"] == label]):
+            [assignee_list.append(assignee["login"]) for assignee in pr["assignees"] if assignee["login"] != "jjw24" ]
+
+    print(f"Found {len(assignee_list)} assignees with {label if label else 'no filter on'} label and state as {state}")
+
+    return assignee_list
 
 def get_pr_descriptions(pull_request_items: list[dict]) -> str:
     """
@@ -207,6 +229,11 @@ if __name__ == "__main__":
     description_content = "# Release notes\n"
     description_content += f"## Features\n{get_pr_descriptions(enhancement_prs)}" if enhancement_prs else ""
     description_content += f"## Bug fixes\n{get_pr_descriptions(bug_fix_prs)}" if bug_fix_prs else ""
+
+    assignees = list(set(get_prs_assignees(pull_requests, "enhancement", "closed") + get_prs_assignees(pull_requests, "bug", "closed")))
+    assignees.sort(key=str.lower)
+
+    description_content += f"### Authors:\n{', '.join(assignees)}"
 
     update_pull_request_description(
         github_token, repository_owner, repository_name, release_pr[0]["number"], description_content
