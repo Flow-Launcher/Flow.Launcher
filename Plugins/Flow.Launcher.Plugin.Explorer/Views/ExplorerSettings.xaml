@@ -86,7 +86,7 @@
             <Setter Property="VerticalContentAlignment" Value="Stretch" />
             <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />
             <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
-            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderThickness" Value="0 1 0 0" />
             <Setter Property="Padding" Value="-8 18 24 14" />
             <Setter Property="Template">
                 <Setter.Value>
