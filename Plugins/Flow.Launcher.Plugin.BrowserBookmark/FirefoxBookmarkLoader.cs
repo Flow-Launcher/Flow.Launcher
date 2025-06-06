@@ -370,7 +370,8 @@ public class FirefoxBookmarkLoader : FirefoxBookmarkLoaderBase
 
         var relativeAttribute = lines[indexOfDefaultProfileAttributePath - 1];
 
-        return relativeAttribute == "0" // See above, the profile is located in a custom location, path is not relative, so IsRelative=0
+        // See above, the profile is located in a custom location, path is not relative, so IsRelative=0
+        return (relativeAttribute == "0" || relativeAttribute == "IsRelative=0")
             ? relativePath : absoluePath;
     }
 }
