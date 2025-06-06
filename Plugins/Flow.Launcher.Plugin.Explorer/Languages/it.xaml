@@ -160,6 +160,9 @@
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Vuoi abilitare la ricerca di contenuti per Everything?</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">Può essere molto lento senza indice (che è supportato solo in Everything v1.5+)</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_everything_not_found">Unable to find Everything.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_install_issue">Failed to install Everything, please install it manually</system:String>
+
     <!--  Native Context Menu  -->
     <system:String x:Key="plugin_explorer_native_context_menu_header">Menu Contestuale Nativo</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Visualizza il menu contestuale nativo (sperimentale)</system:String>
