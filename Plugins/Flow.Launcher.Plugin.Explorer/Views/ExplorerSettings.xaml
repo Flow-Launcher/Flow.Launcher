@@ -88,6 +88,7 @@
                         <TextBlock
                             Margin="10 2 2 5"
                             FontSize="14"
+                            Foreground="{DynamicResource Color05B}"
                             Text="{Binding}" />
                     </DataTemplate>
                 </Setter.Value>
