@@ -160,6 +160,7 @@ namespace Flow.Launcher
         private void KeyEsc_OnPress(object sender, ExecutedRoutedEventArgs e)
         {
             if (_button == MessageBoxButton.YesNo)
+                // Follow System.Windows.MessageBox behavior
                 return;
             else if (_button == MessageBoxButton.OK)
                 _result = MessageBoxResult.OK;
@@ -188,6 +189,7 @@ namespace Flow.Launcher
         private void Button_Cancel(object sender, RoutedEventArgs e)
         {
             if (_button == MessageBoxButton.YesNo)
+                // Follow System.Windows.MessageBox behavior
                 return;
             else if (_button == MessageBoxButton.OK)
                 _result = MessageBoxResult.OK;
