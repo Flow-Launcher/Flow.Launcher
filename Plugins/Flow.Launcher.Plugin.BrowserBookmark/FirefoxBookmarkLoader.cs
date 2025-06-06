@@ -264,83 +264,114 @@ public class FirefoxBookmarkLoader : FirefoxBookmarkLoaderBase
     /// </summary>
     public override List<Bookmark> GetBookmarks()
     {
-        return GetBookmarksFromPath(PlacesPath);
+        var bookmarks1 = GetBookmarksFromPath(PlacesPath);
+        var bookmarks2 = GetBookmarksFromPath(MsixPlacesPath);
+        return bookmarks1.Concat(bookmarks2).ToList();
     }
 
     /// <summary>
-    /// Path to places.sqlite
+    /// Path to places.sqlite of Msi installer
+    /// E.g. C:\Users\{UserName}\AppData\Roaming\Mozilla\Firefox
+    /// <see href="https://support.mozilla.org/en-US/kb/profiles-where-firefox-stores-user-data#w_finding-your-profile-without-opening-firefox"/>
     /// </summary>
-    /// <remarks></remarks>
     private static string PlacesPath
     {
         get
         {
             var profileFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Mozilla\Firefox");
-            var profileIni = Path.Combine(profileFolderPath, @"profiles.ini");
-
-            if (!File.Exists(profileIni))
-                return string.Empty;
-
-            // get firefox default profile directory from profiles.ini
-            using var sReader = new StreamReader(profileIni);
-            var ini = sReader.ReadToEnd();
-
-            var lines = ini.Split("\r\n").ToList();
-
-            var defaultProfileFolderNameRaw = lines.FirstOrDefault(x => x.Contains("Default=") && x != "Default=1") ?? string.Empty;
-
-            if (string.IsNullOrEmpty(defaultProfileFolderNameRaw))
-                return string.Empty;
-
-            var defaultProfileFolderName = defaultProfileFolderNameRaw.Split('=').Last();
-
-            var indexOfDefaultProfileAttributePath = lines.IndexOf("Path=" + defaultProfileFolderName);
-
-            /*
-                Current profiles.ini structure example as of Firefox version 69.0.1
-
-                [Install736426B0AF4A39CB]
-                Default=Profiles/7789f565.default-release   <== this is the default profile this plugin will get the bookmarks from. When opened Firefox will load the default profile
-                Locked=1
-
-                [Profile2]
-                Name=newblahprofile
-                IsRelative=0
-                Path=C:\t6h2yuq8.newblahprofile  <== Note this is a custom location path for the profile user can set, we need to cater for this in code.
-
-                [Profile1]
-                Name=default
-                IsRelative=1
-                Path=Profiles/cydum7q4.default
-                Default=1
-
-                [Profile0]
-                Name=default-release
-                IsRelative=1
-                Path=Profiles/7789f565.default-release
-
-                [General]
-                StartWithLastProfile=1
-                Version=2
-            */
-            // Seen in the example above, the IsRelative attribute is always above the Path attribute
-
-            var relativePath = Path.Combine(defaultProfileFolderName, "places.sqlite");
-            var absoluePath = Path.Combine(profileFolderPath, relativePath);
-
-            // If the index is out of range, it means that the default profile is in a custom location or the file is malformed
-            // If the profile is in a custom location, we need to check 
-            if (indexOfDefaultProfileAttributePath - 1 < 0 ||
-                indexOfDefaultProfileAttributePath - 1 >= lines.Count)
-            {
-                return Directory.Exists(absoluePath) ? absoluePath : relativePath;
-            }
-
-            var relativeAttribute = lines[indexOfDefaultProfileAttributePath - 1];
-
-            return relativeAttribute == "0" // See above, the profile is located in a custom location, path is not relative, so IsRelative=0
-                ? relativePath : absoluePath;
+            return GetProfileIniPath(profileFolderPath);
         }
+    }
+
+    /// <summary>
+    /// Path to places.sqlite of MSIX installer
+    /// E.g. C:\Users\{UserName}\AppData\Local\Packages\Mozilla.Firefox_n80bbvh6b1yt2\LocalCache\Roaming\Mozilla\Firefox
+    /// <see href="https://support.mozilla.org/en-US/kb/profiles-where-firefox-stores-user-data#w_finding-your-profile-without-opening-firefox"/>
+    /// </summary>
+    public static string MsixPlacesPath
+    {
+        get
+        {
+            var platformPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var packagesPath = Path.Combine(platformPath, "Packages");
+            
+            // Search for folder with Mozilla.Firefox prefix
+            var firefoxPackageFolder = Directory.EnumerateDirectories(packagesPath, "Mozilla.Firefox*",
+                SearchOption.TopDirectoryOnly).FirstOrDefault();
+
+            // Msix FireFox not installed
+            if (firefoxPackageFolder == null) return string.Empty;
+
+            var profileFolderPath = Path.Combine(firefoxPackageFolder, @"LocalCache\Roaming\Mozilla\Firefox");
+            return GetProfileIniPath(profileFolderPath);
+        }
+    }
+
+    private static string GetProfileIniPath(string profileFolderPath)
+    {
+        var profileIni = Path.Combine(profileFolderPath, @"profiles.ini");
+        if (!File.Exists(profileIni))
+            return string.Empty;
+
+        // get firefox default profile directory from profiles.ini
+        using var sReader = new StreamReader(profileIni);
+        var ini = sReader.ReadToEnd();
+
+        var lines = ini.Split("\r\n").ToList();
+
+        var defaultProfileFolderNameRaw = lines.FirstOrDefault(x => x.Contains("Default=") && x != "Default=1") ?? string.Empty;
+
+        if (string.IsNullOrEmpty(defaultProfileFolderNameRaw))
+            return string.Empty;
+
+        var defaultProfileFolderName = defaultProfileFolderNameRaw.Split('=').Last();
+
+        var indexOfDefaultProfileAttributePath = lines.IndexOf("Path=" + defaultProfileFolderName);
+
+        /*
+            Current profiles.ini structure example as of Firefox version 69.0.1
+
+            [Install736426B0AF4A39CB]
+            Default=Profiles/7789f565.default-release   <== this is the default profile this plugin will get the bookmarks from. When opened Firefox will load the default profile
+            Locked=1
+
+            [Profile2]
+            Name=newblahprofile
+            IsRelative=0
+            Path=C:\t6h2yuq8.newblahprofile  <== Note this is a custom location path for the profile user can set, we need to cater for this in code.
+
+            [Profile1]
+            Name=default
+            IsRelative=1
+            Path=Profiles/cydum7q4.default
+            Default=1
+
+            [Profile0]
+            Name=default-release
+            IsRelative=1
+            Path=Profiles/7789f565.default-release
+
+            [General]
+            StartWithLastProfile=1
+            Version=2
+        */
+        // Seen in the example above, the IsRelative attribute is always above the Path attribute
+
+        var relativePath = Path.Combine(defaultProfileFolderName, "places.sqlite");
+        var absoluePath = Path.Combine(profileFolderPath, relativePath);
+
+        // If the index is out of range, it means that the default profile is in a custom location or the file is malformed
+        // If the profile is in a custom location, we need to check 
+        if (indexOfDefaultProfileAttributePath - 1 < 0 ||
+            indexOfDefaultProfileAttributePath - 1 >= lines.Count)
+        {
+            return Directory.Exists(absoluePath) ? absoluePath : relativePath;
+        }
+
+        var relativeAttribute = lines[indexOfDefaultProfileAttributePath - 1];
+
+        return relativeAttribute == "0" // See above, the profile is located in a custom location, path is not relative, so IsRelative=0
+            ? relativePath : absoluePath;
     }
 }
 
