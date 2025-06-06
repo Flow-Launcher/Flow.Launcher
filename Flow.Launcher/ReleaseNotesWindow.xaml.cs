@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Flow.Launcher.Infrastructure.Http;
+using MdXaml;
 
 namespace Flow.Launcher
 {
@@ -21,11 +22,9 @@ namespace Flow.Launcher
 
         #region Window Events
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
-        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             RefreshMaximizeRestoreButton();
-            MarkdownViewer.Markdown = await GetReleaseNotesMarkdownAsync();
         }
 
         private void OnCloseExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -82,6 +81,11 @@ namespace Flow.Launcher
         private static async Task<string> GetReleaseNotesMarkdownAsync()
         {
             var releaseNotesJSON = await Http.GetStringAsync("https://api.github.com/repos/Flow-Launcher/Flow.Launcher/releases");
+            
+            if (string.IsNullOrEmpty(releaseNotesJSON))
+            {
+                return string.Empty;
+            }
             var releases = JsonSerializer.Deserialize<List<GitHubReleaseInfo>>(releaseNotesJSON);
 
             // Get the latest releases
@@ -145,5 +149,12 @@ namespace Flow.Launcher
         private static partial Regex ImageUnitRegex();
 
         #endregion
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
+        private async void MarkdownViewer_Loaded(object sender, RoutedEventArgs e)
+        {
+            MarkdownViewer.MarkdownStyle = MarkdownStyle.GithubLike;
+            MarkdownViewer.Markdown = await GetReleaseNotesMarkdownAsync();
+        }
     }
 }

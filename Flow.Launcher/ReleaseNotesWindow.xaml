@@ -161,7 +161,8 @@
                     Margin="15 0 20 0"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
-                    ClickAction="SafetyDisplayWithRelativePath" />
+                    ClickAction="SafetyDisplayWithRelativePath"
+                    Loaded="MarkdownViewer_Loaded" />
             </Grid>
         </Border>
     </Grid>
