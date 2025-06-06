@@ -160,6 +160,9 @@
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Бажаєте увімкнути пошук контенту для Everything?</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">Без індексу (який підтримується лише у версії Everything v1.5+) воно може працювати дуже повільно</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_everything_not_found">Unable to find Everything.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_install_issue">Failed to install Everything, please install it manually</system:String>
+
     <!--  Native Context Menu  -->
     <system:String x:Key="plugin_explorer_native_context_menu_header">Рідне контекстне меню</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Відображати рідне контекстне меню (експериментально)</system:String>
