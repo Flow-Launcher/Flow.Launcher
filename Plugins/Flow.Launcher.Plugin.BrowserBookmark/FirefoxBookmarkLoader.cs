@@ -294,16 +294,22 @@ public class FirefoxBookmarkLoader : FirefoxBookmarkLoaderBase
         {
             var platformPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             var packagesPath = Path.Combine(platformPath, "Packages");
-            
-            // Search for folder with Mozilla.Firefox prefix
-            var firefoxPackageFolder = Directory.EnumerateDirectories(packagesPath, "Mozilla.Firefox*",
-                SearchOption.TopDirectoryOnly).FirstOrDefault();
+            try
+            {
+                // Search for folder with Mozilla.Firefox prefix
+                var firefoxPackageFolder = Directory.EnumerateDirectories(packagesPath, "Mozilla.Firefox*",
+                    SearchOption.TopDirectoryOnly).FirstOrDefault();
 
-            // Msix FireFox not installed
-            if (firefoxPackageFolder == null) return string.Empty;
+                // Msix FireFox not installed
+                if (firefoxPackageFolder == null) return string.Empty;
 
-            var profileFolderPath = Path.Combine(firefoxPackageFolder, @"LocalCache\Roaming\Mozilla\Firefox");
-            return GetProfileIniPath(profileFolderPath);
+                var profileFolderPath = Path.Combine(firefoxPackageFolder, @"LocalCache\Roaming\Mozilla\Firefox");
+                return GetProfileIniPath(profileFolderPath);
+            }
+            catch
+            {
+                return string.Empty;
+            }
         }
     }
 
