@@ -15,7 +15,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
     public partial class ExplorerSettings
     {
         private readonly SettingsViewModel _viewModel;
-        private readonly List<Expander> _expanders;
+        private readonly List<Expander> _expanders = new();
 
         public ExplorerSettings(SettingsViewModel viewModel)
         {
@@ -27,26 +27,6 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             DataContext = viewModel;
 
             ActionKeywordModel.Init(viewModel.Settings);
-
-            // Ensure lbxAccessLinks and lbxExcludedPaths are initialized before accessing Items
-            // This might require Loaded event if they are not immediately available
-            // For now, assuming they are available after InitializeComponent()
-            if (lbxAccessLinks != null)
-                lbxAccessLinks.Items.SortDescriptions.Add(new SortDescription("Path", ListSortDirection.Ascending));
-            
-            if (lbxExcludedPaths != null)
-                lbxExcludedPaths.Items.SortDescriptions.Add(new SortDescription("Path", ListSortDirection.Ascending));
-
-            _expanders = new List<Expander>
-            {
-                GeneralSettingsExpander,
-                ContextMenuExpander,
-                PreviewPanelExpander,
-                EverythingExpander,
-                ActionKeywordsExpander,
-                QuickAccessExpander,
-                ExcludedPathsExpander
-            };
         }
 
         private void AccessLinkDragDrop(string containerName, DragEventArgs e)
@@ -123,6 +103,31 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                     }
                 }
             }
+        }
+
+        private void lbxAccessLinks_Loaded(object sender, RoutedEventArgs e)
+        {
+            lbxAccessLinks.Items.SortDescriptions.Add(new SortDescription("Path", ListSortDirection.Ascending));
+        }
+
+        private void lbxExcludedPaths_Loaded(object sender, RoutedEventArgs e)
+        {
+            lbxExcludedPaths.Items.SortDescriptions.Add(new SortDescription("Path", ListSortDirection.Ascending));
+        }
+
+        private void GeneralSettingsExpander_Loaded(object sender, RoutedEventArgs e)
+        {
+            var expanders = new List<Expander>
+            {
+                GeneralSettingsExpander,
+                ContextMenuExpander,
+                PreviewPanelExpander,
+                EverythingExpander,
+                ActionKeywordsExpander,
+                QuickAccessExpander,
+                ExcludedPathsExpander
+            };
+            _expanders.AddRange(expanders);
         }
     }
 }

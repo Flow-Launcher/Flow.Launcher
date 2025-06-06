@@ -110,6 +110,7 @@
                     Expanded="Expander_Expanded"
                     Header="{DynamicResource plugin_explorer_generalsetting_header}"
                     IsExpanded="False"
+                    Loaded="GeneralSettingsExpander_Loaded"
                     Style="{StaticResource CustomExpanderStyle}">
 
                     <Grid Margin="20 5 0 5">
@@ -664,6 +665,7 @@
                                 Drop="LbxAccessLinks_OnDrop"
                                 ItemTemplate="{StaticResource ListViewTemplateAccessLinks}"
                                 ItemsSource="{Binding Settings.QuickAccessLinks}"
+                                Loaded="lbxAccessLinks_Loaded"
                                 SelectedItem="{Binding SelectedQuickAccessLink}" />
                         </Border>
 
@@ -698,9 +700,11 @@
                 <!--  Index Search Excluded Paths Expander  -->
                 <Expander
                     x:Name="ExcludedPathsExpander"
+                    Margin="0"
+                    BorderThickness="0 0 0 0"
                     Expanded="Expander_Expanded"
                     Header="{DynamicResource plugin_explorer_indexsearchexcludedpaths_header}"
-                    IsExpanded="False" BorderThickness="0 0 0 0" Margin="0"
+                    IsExpanded="False"
                     Style="{StaticResource CustomExpanderStyle}">
                     <Grid Margin="20 5 0 5">
                         <Grid.RowDefinitions>
@@ -728,6 +732,7 @@
                                 Drop="LbxExcludedPaths_OnDrop"
                                 ItemTemplate="{StaticResource ListViewTemplateAccessLinks}"
                                 ItemsSource="{Binding Settings.IndexSearchExcludedSubdirectoryPaths}"
+                                Loaded="lbxExcludedPaths_Loaded"
                                 SelectedItem="{Binding SelectedIndexSearchExcludedPath}" />
                         </Border>
 
