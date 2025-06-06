@@ -1,0 +1,149 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
+using Flow.Launcher.Infrastructure.Http;
+
+namespace Flow.Launcher
+{
+    public partial class ReleaseNotesWindow : Window
+    {
+        public ReleaseNotesWindow()
+        {
+            InitializeComponent();
+        }
+
+        #region Window Events
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            RefreshMaximizeRestoreButton();
+            MarkdownViewer.Markdown = await GetReleaseNotesMarkdownAsync();
+        }
+
+        private void OnCloseExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            Close();
+        }
+
+        #endregion
+
+        #region Window Custom TitleBar
+
+        private void OnMinimizeButtonClick(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void OnMaximizeRestoreButtonClick(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState switch
+            {
+                WindowState.Maximized => WindowState.Normal,
+                _ => WindowState.Maximized
+            };
+        }
+
+        private void OnCloseButtonClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void RefreshMaximizeRestoreButton()
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                MaximizeButton.Visibility = Visibility.Hidden;
+                RestoreButton.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                MaximizeButton.Visibility = Visibility.Visible;
+                RestoreButton.Visibility = Visibility.Hidden;
+            }
+        }
+
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            RefreshMaximizeRestoreButton();
+        }
+
+        #endregion
+
+        #region Release Notes
+
+        private static async Task<string> GetReleaseNotesMarkdownAsync()
+        {
+            var releaseNotesJSON = await Http.GetStringAsync("https://api.github.com/repos/Flow-Launcher/Flow.Launcher/releases");
+            var releases = JsonSerializer.Deserialize<List<GitHubReleaseInfo>>(releaseNotesJSON);
+
+            // Get the latest releases
+            var latestReleases = releases.OrderByDescending(release => release.PublishedDate).Take(3);
+
+            // Build the release notes in Markdown format
+            var releaseNotesHtmlBuilder = new StringBuilder(string.Empty);
+            foreach (var release in latestReleases)
+            {
+                releaseNotesHtmlBuilder.AppendLine("# " + release.Name);
+
+                // Add unit for images: Replace <img src="..." width="500"> with <img src="..." width="500px">
+                var notes = ImageUnitRegex().Replace(release.ReleaseNotes, m =>
+                    {
+                        var prefix = m.Groups[1].Value;
+                        var widthValue = m.Groups[2].Value;
+                        var quote = m.Groups[3].Value;
+                        var suffix = m.Groups[4].Value;
+                        // Only replace if width is number like 500 without units like 500px
+                        if (IsNumber(widthValue))
+                            return $"{prefix}{widthValue}px{quote}{suffix}";
+                        return m.Value;
+                    });
+
+                releaseNotesHtmlBuilder.AppendLine(notes);
+                releaseNotesHtmlBuilder.AppendLine("&nbsp;");
+            }
+
+            return releaseNotesHtmlBuilder.ToString();
+        }
+
+        private static bool IsNumber(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+                return false;
+
+            foreach (char c in input)
+            {
+                if (!char.IsDigit(c))
+                    return false;
+            }
+            return true;
+        }
+
+        private sealed class GitHubReleaseInfo
+        {
+            [JsonPropertyName("published_at")]
+            public DateTimeOffset PublishedDate { get; set; }
+
+            [JsonPropertyName("name")]
+            public string Name { get; set; }
+
+            [JsonPropertyName("tag_name")]
+            public string TagName { get; set; }
+
+            [JsonPropertyName("body")]
+            public string ReleaseNotes { get; set; }
+        }
+
+        [GeneratedRegex("(<img\\s+[^>]*width\\s*=\\s*[\"']?)(\\d+)([\"']?)([^>]*>)", RegexOptions.IgnoreCase, "en-GB")]
+        private static partial Regex ImageUnitRegex();
+
+        #endregion
+    }
+}
