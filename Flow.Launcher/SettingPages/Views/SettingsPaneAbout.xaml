@@ -137,7 +137,7 @@
             </cc:Card>
 
             <cc:ExCard
-                Title="Advanced"
+                Title="{DynamicResource advanced}"
                 Margin="0 14 0 0"
                 Icon="&#xE8B7;">
                 <StackPanel>
@@ -156,7 +156,7 @@
                         Icon="&#xf259;"
                         Type="Inside">
                         <StackPanel Orientation="Horizontal">
-                            <Button Command="{Binding ResetSettingWindowFontCommand}" Content="Reset" />
+                            <Button Command="{Binding ResetSettingWindowFontCommand}" Content="{DynamicResource commonReset}" />
                             <ComboBox
                                 Margin="12 8 0 8"
                                 HorizontalAlignment="Stretch"

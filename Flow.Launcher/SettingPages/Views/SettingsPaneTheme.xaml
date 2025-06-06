@@ -374,7 +374,7 @@
                                                 IsHitTestVisible="False"
                                                 Visibility="Visible" />
                                         </ContentControl>
-                                        <Border x:Name="ContextMenu" Visibility="Collapsed" />
+                                        <Border x:Name="ResultContextMenu" Visibility="Collapsed" />
                                         <Border x:Name="History" Visibility="Collapsed" />
                                     </Grid>
                                 </Border>

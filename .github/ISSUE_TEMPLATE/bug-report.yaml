@@ -16,6 +16,8 @@ body:
             I have checked that this issue has not already been reported.
         - label: >
             I am using the latest version of Flow Launcher.
+        - label: >
+            I am using the prerelease version of Flow Launcher.
         
   - type: textarea
     attributes:
