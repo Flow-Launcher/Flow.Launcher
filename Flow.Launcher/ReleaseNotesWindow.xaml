@@ -157,7 +157,7 @@
                     Grid.Row="1"
                     Grid.Column="0"
                     Grid.ColumnSpan="5"
-                    MaxHeight="510"
+                    Height="510"
                     Margin="15 0 20 0"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
