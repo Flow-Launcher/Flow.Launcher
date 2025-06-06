@@ -1,11 +1,13 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Infrastructure.Storage
 {
-    public class PluginBinaryStorage<T> : BinaryStorage<T> where T : new()
+    // Expose ISaveable interface in derived class to make sure we are calling the new version of Save method
+    public class PluginBinaryStorage<T> : BinaryStorage<T>, ISavable where T : new()
     {
         private static readonly string ClassName = "PluginBinaryStorage";
 
