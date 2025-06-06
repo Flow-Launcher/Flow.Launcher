@@ -163,6 +163,29 @@
                     VerticalAlignment="Stretch"
                     ClickAction="SafetyDisplayWithRelativePath"
                     Loaded="MarkdownViewer_Loaded" />
+
+                <!--  Put this Grid in the same position as MarkdownViewer  -->
+                <Grid
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="5"
+                    Height="510"
+                    Margin="15 0 20 0">
+                    <ui:ProgressRing
+                        x:Name="RefreshProgressRing"
+                        Width="30"
+                        Height="30"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        IsActive="True" />
+                    <Button
+                        x:Name="RefreshButton"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Click="RefreshButton_Click"
+                        Content="{DynamicResource refresh}"
+                        Visibility="Collapsed" />
+                </Grid>
             </Grid>
         </Border>
     </Grid>
