@@ -160,6 +160,9 @@
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Vil du aktivere innholdssøk for Everything?</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">Det kan være veldig tregt uten indeks (som bare støttes i Everything v1.5+)</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_everything_not_found">Unable to find Everything.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_install_issue">Failed to install Everything, please install it manually</system:String>
+
     <!--  Native Context Menu  -->
     <system:String x:Key="plugin_explorer_native_context_menu_header">Opprinnelig hurtigmeny</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Vis opprinnelig hurtigmeny (eksperimentell)</system:String>
