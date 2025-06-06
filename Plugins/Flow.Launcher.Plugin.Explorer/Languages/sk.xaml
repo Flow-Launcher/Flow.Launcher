@@ -160,8 +160,8 @@
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Chcete povoliť vyhľadávanie obsahu cez Everything?</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">Bez indexu (ktorý je podporovaný len v Everything v1.5+) to môže byť veľmi pomalé</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_everything_not_found">Unable to find Everything.exe</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_install_issue">Failed to install Everything, please install it manually</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_not_found">Nedá sa nájsť Everything.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_install_issue">Nepodarilo sa nainštalovať Everything, nainštalujte ho manuálne</system:String>
 
     <!--  Native Context Menu  -->
     <system:String x:Key="plugin_explorer_native_context_menu_header">Natívna kontextová ponuka</system:String>
