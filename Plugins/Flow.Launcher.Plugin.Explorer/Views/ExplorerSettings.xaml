@@ -108,7 +108,6 @@
             Expanded="Expander_Expanded"
             Header="{DynamicResource plugin_explorer_generalsetting_header}"
             IsExpanded="False"
-            Loaded="GeneralSettingsExpander_Loaded"
             Style="{StaticResource CustomExpanderStyle}">
 
             <!--  Margin="32 -10 0 0" is to make sure elements is left aligned to the text in the expander text  -->
