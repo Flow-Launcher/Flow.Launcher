@@ -80,23 +80,96 @@
         <converters:EnumNameConverter x:Key="EnumNameConverter" />
 
         <Style x:Key="CustomExpanderStyle" TargetType="Expander">
-            <Setter Property="Margin" Value="0 0 0 5" />
-            <Setter Property="HeaderTemplate">
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />
+            <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="-8 18 24 14" />
+            <Setter Property="Template">
                 <Setter.Value>
-                    <DataTemplate>
-                        <TextBlock
-                            Margin="8 5 0 5"
-                            FontSize="14"
-                            Foreground="{DynamicResource Color05B}"
-                            Text="{Binding}" />
-                    </DataTemplate>
+                    <ControlTemplate TargetType="Expander">
+                        <Border
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    SnapsToDevicePixels="true">
+                            <DockPanel>
+                                <ToggleButton
+                            x:Name="HeaderSite"
+                            MinWidth="0"
+                            MinHeight="0"
+                            Margin="0"
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Content="{TemplateBinding Header}"
+                            ContentTemplate="{TemplateBinding HeaderTemplate}"
+                            ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                            DockPanel.Dock="Top"
+                            FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}"
+                            FontFamily="{TemplateBinding FontFamily}"
+                            FontSize="{TemplateBinding FontSize}"
+                            FontStretch="{TemplateBinding FontStretch}"
+                            FontStyle="{TemplateBinding FontStyle}"
+                            FontWeight="{TemplateBinding FontWeight}"
+                            Foreground="{TemplateBinding Foreground}"
+                            IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                            Style="{StaticResource ExpanderHeaderRightArrowStyle}" />
+                                <Border x:Name="ContentPresenterBorder"   BorderThickness="0,1,0,0"
+        BorderBrush="{DynamicResource Color03B}">
+                                    <ContentPresenter
+                                x:Name="ExpandSite"
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                DockPanel.Dock="Bottom"
+                                Focusable="false" />
+                                    <Border.LayoutTransform>
+                                        <ScaleTransform ScaleY="0" />
+                                    </Border.LayoutTransform>
+                                </Border>
+                            </DockPanel>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsExpanded" Value="true">
+                                <Setter TargetName="ExpandSite" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="ContentPresenterBorder" Property="BorderThickness" Value="0 1 0 0" />
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
+                                        Storyboard.TargetName="ContentPresenterBorder"
+                                        Storyboard.TargetProperty="(Border.LayoutTransform).(ScaleTransform.ScaleY)"
+                                        From="0.0" To="1.0" Duration="0:0:0" />
+                                            <DoubleAnimation
+                                        Storyboard.TargetName="ContentPresenterBorder"
+                                        Storyboard.TargetProperty="(Border.Opacity)"
+                                        From="0.0" To="1.0" Duration="0:0:0" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation
+                                        Storyboard.TargetName="ContentPresenterBorder"
+                                        Storyboard.TargetProperty="(Border.LayoutTransform).(ScaleTransform.ScaleY)"
+                                        From="1.0" To="0.0" Duration="0:0:0" />
+                                            <DoubleAnimation
+                                        Storyboard.TargetName="ContentPresenterBorder"
+                                        Storyboard.TargetProperty="(Border.Opacity)"
+                                        From="1.0" To="0.0" Duration="0:0:0" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />
-            <Setter Property="BorderThickness" Value="0 0 0 1" />
-            <Setter Property="Background" Value="{DynamicResource Color00B}" />
-            <Setter Property="Padding" Value="20 5 20 10" />
-            <!--  Adjusted padding for content  -->
         </Style>
     </UserControl.Resources>
 

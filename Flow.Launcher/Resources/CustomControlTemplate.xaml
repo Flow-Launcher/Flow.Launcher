@@ -2407,6 +2407,79 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!-- Explorer Plugin Expander -->
+    <Style x:Key="ExpanderHeaderRightArrowStyle" TargetType="ToggleButton">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border x:Name="RootBorder" Background="Transparent" Padding="16,15,16,15">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <ContentPresenter
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            RecognizesAccessKey="True"
+                            SnapsToDevicePixels="True"
+                            Content="{TemplateBinding Content}"
+                            Margin="8 0 0 0"
+                            ContentTemplate="{TemplateBinding ContentTemplate}" />
+
+                            <Grid Grid.Column="1"
+                              Width="20" Height="20"
+                              Margin="8 0 4 0"
+                              VerticalAlignment="Center"
+                              HorizontalAlignment="Right"
+                              Background="Transparent"
+                              RenderTransformOrigin="0.5,0.5"
+                              x:Name="ChevronGrid">
+                                <Grid.RenderTransform>
+                                    <RotateTransform Angle="0"/>
+                                </Grid.RenderTransform>
+                                <Ellipse
+                                x:Name="circle"
+                                Width="19"
+                                Height="19"
+                                Stroke="Transparent"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"/>
+                                <Path
+                                x:Name="arrow"
+                                Data="M 1,1.5 L 4.5,5 L 8,1.5"
+                                Stroke="#666"
+                                StrokeThickness="1"
+                                SnapsToDevicePixels="False"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center" />
+                            </Grid>
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource CustomExpanderHover}" />
+                            <Setter TargetName="circle" Property="Stroke" Value="Transparent" />
+                            <Setter TargetName="arrow" Property="Stroke" Value="{DynamicResource Color05B}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="circle" Property="Stroke" Value="Transparent" />
+                            <Setter TargetName="circle" Property="StrokeThickness" Value="1.5" />
+                            <Setter TargetName="arrow" Property="Stroke" Value="{DynamicResource Color17B}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="ExpanderStyle1" TargetType="{x:Type Expander}">
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
         <Setter Property="Background" Value="Transparent" />
