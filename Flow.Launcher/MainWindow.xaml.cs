@@ -132,6 +132,9 @@ namespace Flow.Launcher
                 welcomeWindow.Show();
             }
 
+            var releaseNotesWindow = new ReleaseNotesWindow();
+            releaseNotesWindow.Show();
+
             // Initialize place holder
             SetupPlaceholderText();
             _viewModel.PlaceholderText = _settings.PlaceholderText;
