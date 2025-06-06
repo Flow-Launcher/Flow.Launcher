@@ -92,41 +92,43 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Expander">
                         <Border
-                    Background="{TemplateBinding Background}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}"
-                    SnapsToDevicePixels="true">
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="true">
                             <DockPanel>
                                 <ToggleButton
-                            x:Name="HeaderSite"
-                            MinWidth="0"
-                            MinHeight="0"
-                            Margin="0"
-                            Padding="{TemplateBinding Padding}"
-                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                            Content="{TemplateBinding Header}"
-                            ContentTemplate="{TemplateBinding HeaderTemplate}"
-                            ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                            DockPanel.Dock="Top"
-                            FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}"
-                            FontFamily="{TemplateBinding FontFamily}"
-                            FontSize="{TemplateBinding FontSize}"
-                            FontStretch="{TemplateBinding FontStretch}"
-                            FontStyle="{TemplateBinding FontStyle}"
-                            FontWeight="{TemplateBinding FontWeight}"
-                            Foreground="{TemplateBinding Foreground}"
-                            IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                            Style="{StaticResource ExpanderHeaderRightArrowStyle}" />
-                                <Border x:Name="ContentPresenterBorder"   BorderThickness="0,1,0,0"
-        BorderBrush="{DynamicResource Color03B}">
+                                    x:Name="HeaderSite"
+                                    MinWidth="0"
+                                    MinHeight="0"
+                                    Margin="0"
+                                    Padding="{TemplateBinding Padding}"
+                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Content="{TemplateBinding Header}"
+                                    ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                    ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                    DockPanel.Dock="Top"
+                                    FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}"
+                                    FontFamily="{TemplateBinding FontFamily}"
+                                    FontSize="{TemplateBinding FontSize}"
+                                    FontStretch="{TemplateBinding FontStretch}"
+                                    FontStyle="{TemplateBinding FontStyle}"
+                                    FontWeight="{TemplateBinding FontWeight}"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Style="{StaticResource ExpanderHeaderRightArrowStyle}" />
+                                <Border
+                                    x:Name="ContentPresenterBorder"
+                                    BorderBrush="{DynamicResource Color03B}"
+                                    BorderThickness="0 1 0 0">
                                     <ContentPresenter
-                                x:Name="ExpandSite"
-                                Margin="{TemplateBinding Padding}"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                DockPanel.Dock="Bottom"
-                                Focusable="false" />
+                                        x:Name="ExpandSite"
+                                        Margin="{TemplateBinding Padding}"
+                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        DockPanel.Dock="Bottom"
+                                        Focusable="false" />
                                     <Border.LayoutTransform>
                                         <ScaleTransform ScaleY="0" />
                                     </Border.LayoutTransform>
@@ -141,13 +143,17 @@
                                     <BeginStoryboard>
                                         <Storyboard>
                                             <DoubleAnimation
-                                        Storyboard.TargetName="ContentPresenterBorder"
-                                        Storyboard.TargetProperty="(Border.LayoutTransform).(ScaleTransform.ScaleY)"
-                                        From="0.0" To="1.0" Duration="0:0:0" />
+                                                Storyboard.TargetName="ContentPresenterBorder"
+                                                Storyboard.TargetProperty="(Border.LayoutTransform).(ScaleTransform.ScaleY)"
+                                                From="0.0"
+                                                To="1.0"
+                                                Duration="0:0:0" />
                                             <DoubleAnimation
-                                        Storyboard.TargetName="ContentPresenterBorder"
-                                        Storyboard.TargetProperty="(Border.Opacity)"
-                                        From="0.0" To="1.0" Duration="0:0:0" />
+                                                Storyboard.TargetName="ContentPresenterBorder"
+                                                Storyboard.TargetProperty="(Border.Opacity)"
+                                                From="0.0"
+                                                To="1.0"
+                                                Duration="0:0:0" />
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </Trigger.EnterActions>
@@ -155,13 +161,17 @@
                                     <BeginStoryboard>
                                         <Storyboard>
                                             <DoubleAnimation
-                                        Storyboard.TargetName="ContentPresenterBorder"
-                                        Storyboard.TargetProperty="(Border.LayoutTransform).(ScaleTransform.ScaleY)"
-                                        From="1.0" To="0.0" Duration="0:0:0" />
+                                                Storyboard.TargetName="ContentPresenterBorder"
+                                                Storyboard.TargetProperty="(Border.LayoutTransform).(ScaleTransform.ScaleY)"
+                                                From="1.0"
+                                                To="0.0"
+                                                Duration="0:0:0" />
                                             <DoubleAnimation
-                                        Storyboard.TargetName="ContentPresenterBorder"
-                                        Storyboard.TargetProperty="(Border.Opacity)"
-                                        From="1.0" To="0.0" Duration="0:0:0" />
+                                                Storyboard.TargetName="ContentPresenterBorder"
+                                                Storyboard.TargetProperty="(Border.Opacity)"
+                                                From="1.0"
+                                                To="0.0"
+                                                Duration="0:0:0" />
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </Trigger.ExitActions>
@@ -367,6 +377,7 @@
                     HorizontalAlignment="Left"
                     Text="{Binding ExcludedFileTypes}"
                     ToolTip="{DynamicResource plugin_explorer_Excluded_File_Types_Tooltip}" />
+
                 <TextBlock
                     Grid.Row="9"
                     Grid.Column="0"
