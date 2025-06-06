@@ -10,7 +10,6 @@
     xmlns:ui="http://schemas.modernwpf.com/2019"
     xmlns:viewModels="clr-namespace:Flow.Launcher.Plugin.Explorer.ViewModels"
     xmlns:views="clr-namespace:Flow.Launcher.Plugin.Explorer.Views"
-    Margin="-72 0 -19 -14"
     d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -86,7 +85,7 @@
                 <Setter.Value>
                     <DataTemplate>
                         <TextBlock
-                            Margin="10 2 2 5"
+                            Margin="8 5 0 5"
                             FontSize="14"
                             Foreground="{DynamicResource Color05B}"
                             Text="{Binding}" />
@@ -101,8 +100,9 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid Margin="{StaticResource SettingPanelMargin}">
-        <ScrollViewer Margin="0 -10 0 0" VerticalScrollBarVisibility="Auto">
+    <!--  Margin="-2 0 -2 0" is to make sure separator between expanders are expanded to left & right boarder  -->
+    <Grid Margin="-2 0 -2 0">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel x:Name="ExpanderContainer">
                 <!--  General Settings Expander  -->
                 <Expander
@@ -113,7 +113,8 @@
                     Loaded="GeneralSettingsExpander_Loaded"
                     Style="{StaticResource CustomExpanderStyle}">
 
-                    <Grid Margin="20 5 0 5">
+                    <!--  Margin="32 -10 0 5" is to make sure elements is left aligned to the text in the expander text  -->
+                    <Grid Margin="32 -10 0 5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
@@ -333,7 +334,7 @@
                     Header="{DynamicResource plugin_explorer_native_context_menu_header}"
                     IsExpanded="False"
                     Style="{StaticResource CustomExpanderStyle}">
-                    <Grid Margin="20 5 0 5">
+                    <Grid Margin="32 -10 0 5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
@@ -403,7 +404,7 @@
                     Header="{DynamicResource plugin_explorer_previewpanel_setting_header}"
                     IsExpanded="False"
                     Style="{StaticResource CustomExpanderStyle}">
-                    <Grid Margin="20 5 0 5">
+                    <Grid Margin="32 -10 0 5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
@@ -500,7 +501,7 @@
                     Header="{DynamicResource plugin_explorer_everything_setting_header}"
                     IsExpanded="False"
                     Style="{StaticResource CustomExpanderStyle}">
-                    <Grid Margin="20 5 0 5">
+                    <Grid Margin="32 -10 0 5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
@@ -592,7 +593,7 @@
                     Header="{DynamicResource plugin_explorer_manageactionkeywords_header}"
                     IsExpanded="False"
                     Style="{StaticResource CustomExpanderStyle}">
-                    <Grid Margin="20 5 0 5">
+                    <Grid Margin="32 -10 0 5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
@@ -638,7 +639,7 @@
                     Header="{DynamicResource plugin_explorer_quickaccesslinks_header}"
                     IsExpanded="False"
                     Style="{StaticResource CustomExpanderStyle}">
-                    <Grid Margin="20 5 0 5">
+                    <Grid Margin="32 -10 0 5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
@@ -706,7 +707,7 @@
                     Header="{DynamicResource plugin_explorer_indexsearchexcludedpaths_header}"
                     IsExpanded="False"
                     Style="{StaticResource CustomExpanderStyle}">
-                    <Grid Margin="20 5 0 5">
+                    <Grid Margin="32 -10 0 5">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
