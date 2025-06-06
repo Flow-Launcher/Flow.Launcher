@@ -173,8 +173,8 @@
                     Margin="15 0 20 0">
                     <ui:ProgressRing
                         x:Name="RefreshProgressRing"
-                        Width="30"
-                        Height="30"
+                        Width="32"
+                        Height="32"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         IsActive="True" />
