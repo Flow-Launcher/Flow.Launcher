@@ -14,15 +14,17 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 {
     public partial class ExplorerSettings
     {
-        private readonly SettingsViewModel viewModel;
-        private List<Expander> _expanders;
+        private readonly SettingsViewModel _viewModel;
+        private readonly List<Expander> _expanders;
 
         public ExplorerSettings(SettingsViewModel viewModel)
         {
+            _viewModel = viewModel;
             DataContext = viewModel;
+
             InitializeComponent();
-            this.viewModel = viewModel;
-            // DataContext = viewModel; // Removed duplicate
+
+            DataContext = viewModel;
 
             ActionKeywordModel.Init(viewModel.Settings);
 
@@ -63,7 +65,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                     {
                         Path = s
                     };
-                    viewModel.AppendLink(containerName, newFolderLink);
+                    _viewModel.AppendLink(containerName, newFolderLink);
                 }
             }
         }
@@ -88,8 +90,8 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         {
             if (tbFastSortWarning is not null)
             {
-                tbFastSortWarning.Visibility = viewModel.FastSortWarningVisibility;
-                tbFastSortWarning.Text = viewModel.SortOptionWarningMessage;
+                tbFastSortWarning.Visibility = _viewModel.FastSortWarningVisibility;
+                tbFastSortWarning.Text = _viewModel.SortOptionWarningMessage;
             }
         }
         private void LbxAccessLinks_OnDrop(object sender, DragEventArgs e)
