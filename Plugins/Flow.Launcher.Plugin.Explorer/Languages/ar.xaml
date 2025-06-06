@@ -160,6 +160,9 @@
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">هل ترغب في تمكين البحث في المحتوى لـ Everything؟</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">قد يكون بطيئًا جدًا بدون فهرسة (المدعومة فقط في Everything v1.5+)</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_everything_not_found">Unable to find Everything.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_install_issue">Failed to install Everything, please install it manually</system:String>
+
     <!--  Native Context Menu  -->
     <system:String x:Key="plugin_explorer_native_context_menu_header">قائمة السياق الأصلية</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">عرض قائمة السياق الأصلية (تجريبي)</system:String>
