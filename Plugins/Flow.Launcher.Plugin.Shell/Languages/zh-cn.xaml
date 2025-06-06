@@ -6,6 +6,7 @@
     <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">按下任意键以关闭此窗口...</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">执行后不关闭命令窗口</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">始终以管理员身份运行</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_use_windows_terminal">使用 Windows 终端</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">以其他用户身份运行</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">命令行</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">允许从 Flow Launcher 中执行系统命令</system:String>

@@ -6,10 +6,11 @@
     xmlns:local="clr-namespace:Flow.Launcher"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     Title="{DynamicResource defaultBrowserTitle}"
     Width="550"
+    d:DataContext="{d:DesignInstance vm:SelectBrowserViewModel}"
     Background="{DynamicResource PopuBGColor}"
-    DataContext="{Binding RelativeSource={RelativeSource Self}}"
     Foreground="{DynamicResource PopupTextColor}"
     ResizeMode="NoResize"
     SizeToContent="Height"
@@ -54,11 +55,11 @@
                     </Button>
                 </Grid>
             </StackPanel>
-            <StackPanel Margin="26,12,26,0">
-                <StackPanel Margin="0,0,0,12">
+            <StackPanel Margin="26 12 26 0">
+                <StackPanel Margin="0 0 0 12">
                     <TextBlock
                         Grid.Column="0"
-                        Margin="0,0,0,0"
+                        Margin="0 0 0 0"
                         FontSize="20"
                         FontWeight="SemiBold"
                         Text="{DynamicResource defaultBrowserTitle}"
@@ -73,7 +74,7 @@
                 </StackPanel>
 
 
-                <StackPanel Margin="14,28,0,0" Orientation="Horizontal">
+                <StackPanel Margin="14 28 0 0" Orientation="Horizontal">
                     <TextBlock
                         Grid.Column="1"
                         HorizontalAlignment="Left"
@@ -84,7 +85,7 @@
                         Name="comboBox"
                         Height="35"
                         MinWidth="200"
-                        Margin="14,0,0,0"
+                        Margin="14 0 0 0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         ItemsSource="{Binding CustomBrowsers}"
@@ -96,22 +97,22 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     <Button
-                        Margin="10,0,0,0"
-                        Click="btnAdd_Click"
+                        Margin="10 0 0 0"
+                        Command="{Binding AddCommand}"
                         Content="{DynamicResource add}" />
                     <Button
-                        Margin="10,0,0,0"
-                        Click="btnDelete_Click"
+                        Margin="10 0 0 0"
+                        Command="{Binding DeleteCommand}"
                         Content="{DynamicResource delete}"
                         IsEnabled="{Binding CustomBrowser.Editable}" />
 
                 </StackPanel>
                 <Rectangle
                     Height="1"
-                    Margin="0,20,0,12"
+                    Margin="0 20 0 12"
                     Fill="{DynamicResource SeparatorForeground}" />
                 <StackPanel
-                    Margin="0,0,0,0"
+                    Margin="0 0 0 0"
                     HorizontalAlignment="Stretch"
                     DataContext="{Binding CustomBrowser}"
                     Orientation="Horizontal">
@@ -129,7 +130,7 @@
                         <TextBlock
                             Grid.Row="0"
                             Grid.Column="0"
-                            Margin="14,5,10,0"
+                            Margin="14 5 10 0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             FontSize="14"
@@ -139,7 +140,7 @@
                             Grid.Row="0"
                             Grid.Column="1"
                             Width="Auto"
-                            Margin="10,5,0,0"
+                            Margin="10 5 0 0"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Center"
                             IsEnabled="{Binding Editable}"
@@ -147,7 +148,7 @@
                         <TextBlock
                             Grid.Row="1"
                             Grid.Column="0"
-                            Margin="14,10,0,0"
+                            Margin="14 10 0 0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             FontSize="14"
@@ -159,7 +160,7 @@
                             LastChildFill="True">
                             <Button
                                 Name="btnBrowseFile"
-                                Margin="0,10,0,0"
+                                Margin="0 10 0 0"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
                                 Click="btnBrowseFile_Click"
@@ -177,7 +178,7 @@
                             </Button>
                             <TextBox
                                 x:Name="PathTextBox"
-                                Margin="10,10,5,0"
+                                Margin="10 10 5 0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
                                 IsEnabled="{Binding Editable}"
@@ -187,19 +188,17 @@
                         <StackPanel
                             Grid.Row="2"
                             Grid.Column="1"
-                            Margin="14,10,14,0"
+                            Margin="14 10 14 0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Orientation="Horizontal">
-                            <RadioButton IsChecked="{Binding OpenInTab}" 
-                                         Content="{DynamicResource defaultBrowser_newTab}"></RadioButton>
-                            <RadioButton IsChecked="{Binding OpenInNewWindow, Mode=OneTime}"
-                                         Content="{DynamicResource defaultBrowser_newWindow}"></RadioButton>
+                            <RadioButton Content="{DynamicResource defaultBrowser_newTab}" IsChecked="{Binding OpenInTab}" />
+                            <RadioButton Content="{DynamicResource defaultBrowser_newWindow}" IsChecked="{Binding OpenInNewWindow, Mode=OneTime}" />
                         </StackPanel>
                         <TextBlock
                             Grid.Row="3"
                             Grid.Column="0"
-                            Margin="14,10,0,20"
+                            Margin="14 10 0 20"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             FontSize="14"
@@ -207,17 +206,17 @@
                         <StackPanel
                             Grid.Row="3"
                             Grid.Column="1"
-                            Margin="0,10,0,15"
+                            Margin="0 10 0 15"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Center"
                             Orientation="Horizontal">
                             <TextBox
                                 x:Name="fileArgTextBox"
                                 Width="180"
-                                Margin="10,0,0,0"
+                                Margin="10 0 0 0"
                                 Text="{Binding PrivateArg}" />
                             <CheckBox
-                                Margin="12,0,0,0"
+                                Margin="12 0 0 0"
                                 VerticalAlignment="Center"
                                 IsChecked="{Binding EnablePrivate}">
                                 <CheckBox.Style>
@@ -239,18 +238,18 @@
             Grid.Row="1"
             Background="{DynamicResource PopupButtonAreaBGColor}"
             BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
-            BorderThickness="0,1,0,0">
+            BorderThickness="0 1 0 0">
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <Button
                     x:Name="btnCancel"
                     Width="145"
-                    Margin="0,0,5,0"
+                    Margin="0 0 5 0"
                     Click="btnCancel_Click"
                     Content="{DynamicResource cancel}" />
                 <Button
                     x:Name="btnDone"
                     Width="145"
-                    Margin="5,0,0,0"
+                    Margin="5 0 0 0"
                     Click="btnDone_Click"
                     Content="{DynamicResource done}"
                     ForceCursor="True"

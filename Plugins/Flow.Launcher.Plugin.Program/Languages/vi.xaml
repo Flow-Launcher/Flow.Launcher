@@ -34,6 +34,8 @@
     <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">Hides programs with common uninstaller names, such as unins000.exe</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">Tìm kiếm trong Mô tả chương trình</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow will search program's description</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp">Hide duplicated apps</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp_tooltip">Hide duplicated Win32 programs that are already in the UWP list</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Hậu tố</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">Độ sâu tối đa:</system:String>
 
@@ -44,6 +46,8 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">Hãy chọn một nguồn dữ liệu</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">Bạn có chắc chắn là muốn xóa các đặt hàng đã chọn?</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_not_user_added">Please select program sources that are not added by you</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_user_added">Please select program sources that are added by you</system:String>
     <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Đã tồn tại một nguồn chương trình khác có cùng vị trí.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Nguồn chương trình</system:String>
@@ -72,7 +76,7 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Xóa lựa chọn đã chọn</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Chạy với quyền quản trị</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Mở thư mục chứa</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">Vô hiệu hóa chương trình này hiển thị</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">Hide</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Mở thư mục đích</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Chương trình</system:String>
@@ -82,8 +86,7 @@
 
     <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Trình khám phá tùy chỉnh</system:String>
     <system:String x:Key="flowlauncher_plugin_program_args">Đối số</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">Bạn có thể tùy chỉnh trình thám hiểm được sử dụng để mở thư mục vùng chứa bằng cách nhập Biến môi trường của trình khám phá mà bạn muốn sử dụng. Sẽ rất hữu ích khi sử dụng CMD để kiểm tra xem Biến môi trường có sẵn hay không.</system:String>
-
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">You can customize the explorer used for opening the container folder by inputing the Environmental Variable of the explorer you want to use. It will be useful to use CMD to test whether the Environmental Variable is available.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Nhập các đối số tùy chỉnh mà bạn muốn thêm cho trình khám phá tùy chỉnh của mình. %s cho thư mục mẹ, %f cho đường dẫn đầy đủ (chỉ hoạt động với win32). Kiểm tra trang web của nhà thám hiểm để biết chi tiết.</system:String>
 
     <!--  Dialogs  -->

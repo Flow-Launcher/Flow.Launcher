@@ -17,24 +17,22 @@
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">액션 키워드</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">검색</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">검색 쿼리 자동완성 사용:</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Use Search Query Autocomplete</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">자동완성 데이터 출처:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">웹 검색을 선택하세요</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Are you sure you want to delete {0}?</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_guide_1">If you want to add a search for a particular website to Flow, first enter a dummy text string in the search bar of that website, and launch the search. Now copy the contents of the browser's address bar, and paste it in the URL field below. Replace your test string with {q}. For example, if you search for casino on Netflix, its address bar reads</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_guide_1">특정 웹사이트의 검색 기능을 Flow에 추가하고 싶다면, 먼저 해당 웹사이트의 검색창에 임의의 텍스트를 입력하고 검색을 실행하세요. 그런 다음 브라우저의 주소 표시줄에 표시된 내용을 복사하여 아래의 URL 필드에 붙여넣습니다. 이때, 검색에 사용한 테스트 문자열을 {q}로 바꿔주세요. 예를 들어, Netflix에서 casino를 검색하면 주소 표시줄에는 다음과 같이 표시됩니다.</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_2">https://www.netflix.com/search?q=Casino</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_3">
-        Now copy this entire string and paste it in the URL field below.
-        Then replace casino with {q}.
-        Thus, the generic formula for a search on Netflix is https://www.netflix.com/search?q={q}
+        이제 이 전체 문자열을 복사해서 아래의 URL 필드에 붙여넣으세요. 그런 다음 casino를 **{q}**로 바꿔주세요. 따라서 Netflix에서의 일반적인 검색 형식은 다음과 같습니다: https://www.netflix.com/search?q={q}
     </system:String>
 
-    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">Copy URL</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">Copy search URL to clipboard</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">URL 복사</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">검색 주소를 클립보드에 복사</system:String>
 
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">이름</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable">Status</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable">상태</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_select_icon">아이콘 선택</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_icon">아이콘</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_cancel">취소</system:String>

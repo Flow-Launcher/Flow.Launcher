@@ -1,8 +1,8 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Navigation;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.SettingPages.ViewModels;
 using Flow.Launcher.ViewModel;
 
@@ -11,15 +11,22 @@ namespace Flow.Launcher.SettingPages.Views;
 public partial class SettingsPanePluginStore
 {
     private SettingsPanePluginStoreViewModel _viewModel = null!;
+    private readonly SettingWindowViewModel _settingViewModel = Ioc.Default.GetRequiredService<SettingWindowViewModel>();
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
+        // Sometimes the navigation is not triggered by button click,
+        // so we need to reset the page type
+        _settingViewModel.PageType = typeof(SettingsPanePluginStore);
+
+        // If the navigation is not triggered by button click, view model will be null again
+        if (_viewModel == null)
+        {
+            _viewModel = Ioc.Default.GetRequiredService<SettingsPanePluginStoreViewModel>();
+            DataContext = _viewModel;
+        }
         if (!IsInitialized)
         {
-            if (e.ExtraData is not SettingWindow.PaneData { Settings: { } settings })
-                throw new ArgumentException($"Settings are required for {nameof(SettingsPanePluginStore)}.");
-            _viewModel = new SettingsPanePluginStoreViewModel();
-            DataContext = _viewModel;
             InitializeComponent();
         }
         _viewModel.PropertyChanged += ViewModel_PropertyChanged;
@@ -28,9 +35,15 @@ public partial class SettingsPanePluginStore
 
     private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(SettingsPanePluginStoreViewModel.FilterText))
+        switch (e.PropertyName)
         {
-            ((CollectionViewSource)FindResource("PluginStoreCollectionView")).View.Refresh();
+            case nameof(SettingsPanePluginStoreViewModel.FilterText):
+            case nameof(SettingsPanePluginStoreViewModel.ShowDotNet):
+            case nameof(SettingsPanePluginStoreViewModel.ShowPython):
+            case nameof(SettingsPanePluginStoreViewModel.ShowNodeJs):
+            case nameof(SettingsPanePluginStoreViewModel.ShowExecutable):
+                ((CollectionViewSource)FindResource("PluginStoreCollectionView")).View.Refresh();
+                break;
         }
     }
 

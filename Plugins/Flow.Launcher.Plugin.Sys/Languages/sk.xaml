@@ -2,8 +2,9 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Command List  -->
-    <system:String x:Key="flowlauncher_plugin_sys_command">Príkaz</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_name">Názov</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_desc">Popis</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_command">Príkaz</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer_cmd">Vypnúť</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_computer_cmd">Reštartovať</system:String>
@@ -25,6 +26,9 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips_cmd">Tipy pre Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location_cmd">Používateľský priečinok Flow Launchera</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode_cmd">Prepnúť herný režim</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector_cmd">Nastaviť motív pre Flow Laucher</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_sys_edit">Upraviť</system:String>
 
     <!--  Command Descriptions  -->
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">Vypnúť počítač</system:String>
@@ -47,8 +51,9 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">V dokumentácii k aplikácii Flow Launcher nájdete ďalšiu pomoc a tipy na používanie</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Otvoriť umiestnenie, kde sú uložené nastavenia Flow Launchera</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode">Prepnúť herný režim</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector">Rýchla zmena motívu Flow Launchera</system:String>
 
-        <!--  Dialogs  -->
+    <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">Úspešné</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">Všetky nastavenia Flow Launchera uložené</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Všetky dáta pluginov aktualizované</system:String>
@@ -56,6 +61,15 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">Naozaj chcete počítač reštartovať?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Naozaj chcete počítač reštartovať s pokročilými možnosťami spúšťania?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Naozaj sa chcete odhlásiť?</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Nastavenia kľúčového slova príkazu</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Vlastné kľúčové slovo príkazu</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword_tip">Na vyhľadanie príkazu zadajte kľúčové slovo: {0}. Toto kľúčové slovo sa použije na vyhľadnie príkazu.</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_command_keyword">Kľúčové slovo príkazu</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_reset">Resetovať</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_confirm">Potvrdiť</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_cancel">Zrušiť</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_input_command_keyword">Prosím, zadajte neprázdne kľúčové slovo príkazu</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">Systémové príkazy</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Poskytuje príkazy súvisiace so systémom ako je vypnutie, uzamknutie počítača atď.</system:String>

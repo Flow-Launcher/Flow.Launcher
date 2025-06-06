@@ -1,5 +1,4 @@
-﻿using Flow.Launcher.Core.ExternalPlugins;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace Flow.Launcher.Plugin.PluginsManager

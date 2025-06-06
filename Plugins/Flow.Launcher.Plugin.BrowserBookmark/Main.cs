@@ -1,33 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Controls;
-using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Plugin.BrowserBookmark.Commands;
-using Flow.Launcher.Plugin.BrowserBookmark.Models;
-using Flow.Launcher.Plugin.BrowserBookmark.Views;
 using System.IO;
+using System.Linq;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Windows.Controls;
+using Flow.Launcher.Plugin.BrowserBookmark.Commands;
+using Flow.Launcher.Plugin.BrowserBookmark.Models;
+using Flow.Launcher.Plugin.BrowserBookmark.Views;
+using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark;
 
 public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContextMenu, IDisposable
 {
-    private static PluginInitContext _context;
+    private static readonly string ClassName = nameof(Main);
 
-    private static List<Bookmark> _cachedBookmarks = new List<Bookmark>();
+    internal static string _faviconCacheDir;
 
-    private static Settings _settings;
+    internal static PluginInitContext _context;
+
+    internal static Settings _settings;
+
+    private static List<Bookmark> _cachedBookmarks = new();
 
     private static bool _initialized = false;
-
+    
     public void Init(PluginInitContext context)
     {
         _context = context;
 
         _settings = context.API.LoadSettingJsonStorage<Settings>();
+
+        _faviconCacheDir = Path.Combine(
+            context.CurrentPluginMetadata.PluginCacheDirectoryPath,
+            "FaviconCache");
 
         LoadBookmarksIfEnabled();
     }
@@ -39,6 +47,9 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
             // Don't load or monitor files if disabled
             return;
         }
+
+        // Validate the cache directory before loading all bookmarks because Flow needs this directory to storage favicons
+        FilesFolders.ValidateDirectory(_faviconCacheDir);
 
         _cachedBookmarks = BookmarkLoader.LoadAllBookmarks(_settings);
         _ = MonitorRefreshQueueAsync();
@@ -58,7 +69,6 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
         // Should top results be returned? (true if no search parameters have been passed)
         var topResults = string.IsNullOrEmpty(param);
 
-
         if (!topResults)
         {
             // Since we mixed chrome and firefox bookmarks, we should order them again
@@ -68,7 +78,9 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
                     {
                         Title = c.Name,
                         SubTitle = c.Url,
-                        IcoPath = @"Images\bookmark.png",
+                        IcoPath = !string.IsNullOrEmpty(c.FaviconPath) && File.Exists(c.FaviconPath)
+                            ? c.FaviconPath
+                            : @"Images\bookmark.png",
                         Score = BookmarkLoader.MatchProgram(c, param).Score,
                         Action = _ =>
                         {
@@ -90,7 +102,9 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
                     {
                         Title = c.Name,
                         SubTitle = c.Url,
-                        IcoPath = @"Images\bookmark.png",
+                        IcoPath = !string.IsNullOrEmpty(c.FaviconPath) && File.Exists(c.FaviconPath)
+                            ? c.FaviconPath
+                            : @"Images\bookmark.png",
                         Score = 5,
                         Action = _ =>
                         {
@@ -104,10 +118,9 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
         }
     }
 
+    private static readonly Channel<byte> _refreshQueue = Channel.CreateBounded<byte>(1);
 
-    private static Channel<byte> _refreshQueue = Channel.CreateBounded<byte>(1);
-
-    private static SemaphoreSlim _fileMonitorSemaphore = new(1, 1);
+    private static readonly SemaphoreSlim _fileMonitorSemaphore = new(1, 1);
 
     private static async Task MonitorRefreshQueueAsync()
     {
@@ -141,12 +154,13 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
             return;
         }
 
-        var watcher = new FileSystemWatcher(directory!);
-        watcher.Filter = Path.GetFileName(path);
-
-        watcher.NotifyFilter = NotifyFilters.FileName |
-                               NotifyFilters.LastWrite |
-                               NotifyFilters.Size;
+        var watcher = new FileSystemWatcher(directory!)
+        {
+            Filter = Path.GetFileName(path),
+            NotifyFilter = NotifyFilters.FileName |
+                                   NotifyFilters.LastWrite |
+                                   NotifyFilters.Size
+        };
 
         watcher.Changed += static (_, _) =>
         {
@@ -195,7 +209,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
     {
         return new List<Result>()
         {
-            new Result
+            new()
             {
                 Title = _context.API.GetTranslation("flowlauncher_plugin_browserbookmark_copyurl_title"),
                 SubTitle = _context.API.GetTranslation("flowlauncher_plugin_browserbookmark_copyurl_subtitle"),
@@ -210,7 +224,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
                     catch (Exception e)
                     {
                         var message = "Failed to set url in clipboard";
-                        Log.Exception("Main", message, e, "LoadContextMenus");
+                        _context.API.LogException(ClassName, message, e);
 
                         _context.API.ShowMsg(message);
 

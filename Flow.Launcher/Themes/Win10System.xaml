@@ -11,6 +11,10 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Themes/Base.xaml" />
     </ResourceDictionary.MergedDictionaries>
+    <system:Boolean x:Key="ThemeBlurEnabled">False</system:Boolean>
+    <system:String x:Key="SystemBG">Auto</system:String>
+    <Color x:Key="LightBG">#FFFAFAFA</Color>
+    <Color x:Key="DarkBG">#FF202020</Color>
     <Thickness x:Key="ResultMargin">0 0 0 8</Thickness>
     <Style
         x:Key="ItemGlyph"
@@ -32,7 +36,7 @@
         <Setter Property="FontSize" Value="22" />
         <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
         <Setter Property="CaretBrush" Value="{DynamicResource Color05B}" />
-        <Setter Property="Padding" Value="0 4 66 0" />
+        <Setter Property="Padding" Value="0 0 66 0" />
         <Setter Property="Height" Value="42" />
     </Style>
     <Style
@@ -41,7 +45,7 @@
         TargetType="{x:Type TextBox}">
         <Setter Property="Foreground" Value="{DynamicResource QuerySuggestionBoxForeground}" />
         <Setter Property="FontSize" Value="22" />
-        <Setter Property="Padding" Value="0 4 66 0" />
+        <Setter Property="Padding" Value="0 0 66 0" />
         <Setter Property="Height" Value="42" />
     </Style>
     <Style
@@ -109,15 +113,18 @@
     <Style x:Key="HighlightStyle">
         <Setter Property="Inline.FontWeight" Value="SemiBold" />
     </Style>
-    <Style x:Key="ItemHotkeyStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="13" />
+    <Style
+        x:Key="ItemHotkeyStyle"
+        BasedOn="{StaticResource BaseItemHotkeyStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="11" />
         <Setter Property="Foreground" Value="{DynamicResource HotkeyForeground}" />
     </Style>
     <Style
         x:Key="ItemHotkeySelectedStyle"
         BasedOn="{StaticResource BaseItemHotkeySelectedStyle}"
         TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontSize" Value="11" />
         <Setter Property="Foreground" Value="{DynamicResource HotkeySelectedForeground}" />
     </Style>
     <!--  button style in the middle of the scrollbar  -->
@@ -175,13 +182,13 @@
         x:Key="ClockBox"
         BasedOn="{StaticResource BaseClockBox}"
         TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{DynamicResource ClockDateForeground}" />
+        <Setter Property="Foreground" Value="{DynamicResource SystemControlBackgroundBaseLowBrush}" />
     </Style>
     <Style
         x:Key="DateBox"
         BasedOn="{StaticResource BaseDateBox}"
         TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{DynamicResource ClockDateForeground}" />
+        <Setter Property="Foreground" Value="{DynamicResource SystemControlBackgroundBaseLowBrush}" />
     </Style>
     <Style
         x:Key="PreviewBorderStyle"

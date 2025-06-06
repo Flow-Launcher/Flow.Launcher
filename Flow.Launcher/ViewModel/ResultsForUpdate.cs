@@ -9,7 +9,8 @@ namespace Flow.Launcher.ViewModel
         PluginMetadata Metadata,
         Query Query,
         CancellationToken Token,
-        bool ReSelectFirstResult = true)
+        bool ReSelectFirstResult = true,
+        bool ShouldClearExistingResults = false)
     {
         public string ID { get; } = Metadata.ID;
     }

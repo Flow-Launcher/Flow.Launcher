@@ -3,6 +3,7 @@ using System.Windows.Markup;
 
 namespace Flow.Launcher.Infrastructure.UI
 {
+    [Obsolete("EnumBindingSourceExtension is obsolete. Use with Flow.Launcher.Localization NuGet package instead.")]
     public class EnumBindingSourceExtension : MarkupExtension
     {
         private Type _enumType;

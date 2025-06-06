@@ -17,7 +17,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">キーワード</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">検索</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">検索サジェスチョンを有効にする</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Use Search Query Autocomplete</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Autocomplete Data from:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">web検索を選択してください</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Are you sure you want to delete {0}?</system:String>
@@ -34,7 +34,7 @@
 
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">タイトル</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable">Status</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable">状態</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_select_icon">アイコンを選択</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_icon">アイコン</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_cancel">キャンセル</system:String>
