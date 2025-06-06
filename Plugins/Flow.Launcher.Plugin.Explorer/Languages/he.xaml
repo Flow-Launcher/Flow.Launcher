@@ -160,6 +160,9 @@
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">האם ברצונך לאפשר חיפוש תוכן עבור Everything?</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">החיפוש עשוי להיות איטי מאוד ללא אינדקס (שנתמך רק ב-Everything v1.5+)</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_everything_not_found">Unable to find Everything.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_install_issue">Failed to install Everything, please install it manually</system:String>
+
     <!--  Native Context Menu  -->
     <system:String x:Key="plugin_explorer_native_context_menu_header">תפריט הקשר מקורי</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">הצג תפריט הקשר מקורי (ניסיוני)</system:String>
