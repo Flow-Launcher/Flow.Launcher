@@ -160,6 +160,9 @@
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Eveyrhing으로 내용 검색을 활성화하시겠습니까?</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">인덱스가 없으면 매우 느릴 수 있습니다.(Everything v1.5+에서만 지원)</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_everything_not_found">Unable to find Everything.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_install_issue">Failed to install Everything, please install it manually</system:String>
+
     <!--  Native Context Menu  -->
     <system:String x:Key="plugin_explorer_native_context_menu_header">Native Context Menu</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Display native context menu (experimental)</system:String>
