@@ -11,6 +11,7 @@
     Title="{DynamicResource releaseNotes}"
     Width="700"
     Background="{DynamicResource PopuBGColor}"
+    Closed="Window_Closed"
     Foreground="{DynamicResource PopupTextColor}"
     Loaded="Window_Loaded"
     ResizeMode="CanResize"

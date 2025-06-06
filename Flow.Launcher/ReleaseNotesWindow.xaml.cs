@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Http;
 using MdXaml;
 
@@ -18,6 +19,7 @@ namespace Flow.Launcher
         public ReleaseNotesWindow()
         {
             InitializeComponent();
+            ModernWpf.ThemeManager.Current.ActualApplicationThemeChanged += ThemeManager_ActualApplicationThemeChanged;
         }
 
         #region Window Events
@@ -25,6 +27,7 @@ namespace Flow.Launcher
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             RefreshMaximizeRestoreButton();
+            ThemeManager_ActualApplicationThemeChanged(null, null);
         }
 
         private void OnCloseExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -179,6 +182,28 @@ namespace Flow.Launcher
                 {
                     RefreshButton.Visibility = Visibility.Collapsed;
                     MarkdownViewer.Markdown = output;
+                }
+            });
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            ModernWpf.ThemeManager.Current.ActualApplicationThemeChanged -= ThemeManager_ActualApplicationThemeChanged;
+        }
+
+        private void ThemeManager_ActualApplicationThemeChanged(ModernWpf.ThemeManager sender, object args)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                if (ModernWpf.ThemeManager.Current.ActualApplicationTheme == ModernWpf.ApplicationTheme.Light)
+                {
+                    MarkdownViewer.Foreground = Brushes.Black;
+                    MarkdownViewer.Background = Brushes.White;
+                }
+                else
+                {
+                    MarkdownViewer.Foreground = Brushes.White;
+                    MarkdownViewer.Background = Brushes.Black;
                 }
             });
         }
