@@ -363,7 +363,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             if (container is null) return;
             
             var folderBrowserDialog = new FolderBrowserDialog();
-            
+
             if (folderBrowserDialog.ShowDialog() != DialogResult.OK)
                 return;
 
