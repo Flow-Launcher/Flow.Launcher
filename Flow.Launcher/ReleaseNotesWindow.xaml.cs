@@ -24,6 +24,25 @@ namespace Flow.Launcher
             ModernWpf.ThemeManager.Current.ActualApplicationThemeChanged += ThemeManager_ActualApplicationThemeChanged;
         }
 
+        private void ThemeManager_ActualApplicationThemeChanged(ModernWpf.ThemeManager sender, object args)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                if (ModernWpf.ThemeManager.Current.ActualApplicationTheme == ModernWpf.ApplicationTheme.Light)
+                {
+                    MarkdownViewer.MarkdownStyle = (Style)Application.Current.Resources["DocumentStyleGithubLikeLight"];
+                    MarkdownViewer.Foreground = Brushes.Black;
+                    MarkdownViewer.Background = Brushes.White;
+                }
+                else
+                {
+                    MarkdownViewer.MarkdownStyle = (Style)Application.Current.Resources["DocumentStyleGithubLikeDark"];
+                    MarkdownViewer.Foreground = Brushes.White;
+                    MarkdownViewer.Background = Brushes.Black;
+                }
+            });
+        }
+
         #region Window Events
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -162,6 +181,8 @@ namespace Flow.Launcher
 
         #endregion
 
+        #region Control Events
+
         private void MarkdownViewer_Loaded(object sender, RoutedEventArgs e)
         {
             RefreshMarkdownViewer();
@@ -196,29 +217,36 @@ namespace Flow.Launcher
             });
         }
 
-        private void ThemeManager_ActualApplicationThemeChanged(ModernWpf.ThemeManager sender, object args)
-        {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                if (ModernWpf.ThemeManager.Current.ActualApplicationTheme == ModernWpf.ApplicationTheme.Light)
-                {
-                    MarkdownViewer.MarkdownStyle = (Style)Application.Current.Resources["DocumentStyleGithubLikeLight"];
-                    MarkdownViewer.Foreground = Brushes.Black;
-                    MarkdownViewer.Background = Brushes.White;
-                }
-                else
-                {
-                    MarkdownViewer.MarkdownStyle = (Style)Application.Current.Resources["DocumentStyleGithubLikeDark"];
-                    MarkdownViewer.Foreground = Brushes.White;
-                    MarkdownViewer.Background = Brushes.Black;
-                }
-            });
-        }
-
         private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            MarkdownViewer.Height = e.NewSize.Height;
-            MarkdownViewer.Width = e.NewSize.Width;
+            MarkdownScrollViewer.Height = e.NewSize.Height;
+            MarkdownScrollViewer.Width = e.NewSize.Width;
         }
+
+        private void MarkdownViewer_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            RaiseMouseWheelEvent(sender, e);
+        }
+
+        private void MarkdownViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            RaiseMouseWheelEvent(sender, e);
+        }
+
+        private void RaiseMouseWheelEvent(object sender, MouseWheelEventArgs e)
+        {
+            e.Handled = true; // Prevent the inner control from handling the event
+
+            var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)
+            {
+                RoutedEvent = UIElement.MouseWheelEvent,
+                Source = sender
+            };
+
+            // Raise the event on the parent ScrollViewer
+            MarkdownScrollViewer.RaiseEvent(eventArg);
+        }
+
+        #endregion
     }
 }

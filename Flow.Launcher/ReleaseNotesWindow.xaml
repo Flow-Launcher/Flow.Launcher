@@ -166,22 +166,32 @@
                     <cc:HyperLink x:Name="SeeMore" Text="{DynamicResource seeMoreReleaseNotes}" />
                 </Grid>
 
-                <mdxam:MarkdownScrollViewer
-                    x:Name="MarkdownViewer"
+                <!--  Do not use scroll function of MarkdownViewer because it does not support smooth scroll  -->
+                <ScrollViewer
+                    x:Name="MarkdownScrollViewer"
                     Grid.Row="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="5"
                     Width="500"
-                    Height="500"
-                    Margin="15 0 20 0"
-                    ClickAction="SafetyDisplayWithRelativePath"
-                    Loaded="MarkdownViewer_Loaded"
-                    Plugins="{StaticResource MdXamlPlugins}"
-                    Visibility="Collapsed" />
+                    Height="500">
+                    <mdxam:MarkdownScrollViewer
+                        x:Name="MarkdownViewer"
+                        Margin="15 0 20 0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        ClickAction="SafetyDisplayWithRelativePath"
+                        HorizontalScrollBarVisibility="Disabled"
+                        Loaded="MarkdownViewer_Loaded"
+                        MouseWheel="MarkdownViewer_MouseWheel"
+                        Plugins="{StaticResource MdXamlPlugins}"
+                        PreviewMouseWheel="MarkdownViewer_PreviewMouseWheel"
+                        VerticalScrollBarVisibility="Disabled"
+                        Visibility="Collapsed" />
+                </ScrollViewer>
 
                 <!--  This Grid is for display progress ring and refresh button.  -->
                 <!--  And it is also for changing the size of the MarkdownViewer.  -->
-                <!--  Because VerticalAlignment="Stretch" can cause size issue with MarkdownViewer.  -->
+                <!--  Because VerticalAlignment="Stretch" can cause size issue with MarkdownScrollViewer.  -->
                 <Grid
                     Grid.Row="2"
                     Grid.Column="0"
