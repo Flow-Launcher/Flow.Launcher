@@ -3,6 +3,8 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">Будь ласка, спочатку зробіть вибір</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Please select a folder path.</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Please choose a different name or folder path.</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Будь ласка, оберіть посилання на теку</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">Ви впевнені, що хочете видалити {0}?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">Ви впевнені, що хочете назавжди видалити цей файл?</system:String>
@@ -25,6 +27,7 @@
     <system:String x:Key="plugin_explorer_add">Додати</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">Загальні налаштування</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Налаштувати ключові слова дії</system:String>
+    <system:String x:Key="plugin_explorer_manage_quick_access_links_header">Customise Quick Access</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Посилання швидкого доступу</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Налаштування Everything</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">Панель поперегляду</system:String>
@@ -90,6 +93,7 @@
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Безповоротно видалити поточний файл</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Назавжди видалити поточну папку</system:String>
     <system:String x:Key="plugin_explorer_path">Шлях:</system:String>
+    <system:String x:Key="plugin_explorer_name">Name:</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Видалити вибране</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Запустити від імені іншого користувача</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Запустити вибране під обліковим записом іншого користувача</system:String>
