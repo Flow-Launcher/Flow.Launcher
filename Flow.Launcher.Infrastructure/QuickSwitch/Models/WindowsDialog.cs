@@ -178,7 +178,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 
             var timeOut = !SpinWait.SpinUntil(() =>
             {
-                var style = PInvoke.GetWindowLong(_pathControl, WINDOW_LONG_PTR_INDEX.GWL_STYLE);
+                var style = PInvoke.GetWindowLongPtr(_pathControl, WINDOW_LONG_PTR_INDEX.GWL_STYLE);
                 return (style & (int)WINDOW_STYLE.WS_VISIBLE) != 0;
             }, 1000);
             if (timeOut)
