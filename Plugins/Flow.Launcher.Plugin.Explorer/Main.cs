@@ -10,10 +10,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using Flow.Launcher.Plugin.Explorer.Exceptions;
+using System.Linq;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
-    public class Main : ISettingProvider, IAsyncPlugin, IContextMenu, IPluginI18n
+    public class Main : ISettingProvider, IAsyncPlugin, IContextMenu, IPluginI18n, IAsyncQuickSwitch
     {
         internal static PluginInitContext Context { get; set; }
 
@@ -24,6 +25,8 @@ namespace Flow.Launcher.Plugin.Explorer
         private IContextMenu contextMenu;
 
         private SearchManager searchManager;
+
+        private static readonly List<QuickSwitchResult> _emptyQuickSwitchResultList = new();
 
         public Control CreateSettingPanel()
         {
@@ -106,6 +109,19 @@ namespace Flow.Launcher.Plugin.Explorer
                 {
                     link.Name = link.Path.GetPathName();
                 }
+            }
+        }
+
+        public async Task<List<QuickSwitchResult>> QueryQuickSwitchAsync(Query query, CancellationToken token)
+        {
+            try
+            {
+                var results = await searchManager.SearchAsync(query, token);
+                return results.Select(r => QuickSwitchResult.From(r, r.CopyText)).ToList();
+            }
+            catch (Exception e) when (e is SearchException or EngineNotAvailableException)
+            {
+                return _emptyQuickSwitchResultList;
             }
         }
     }

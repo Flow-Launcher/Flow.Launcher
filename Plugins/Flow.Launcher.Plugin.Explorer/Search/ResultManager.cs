@@ -266,16 +266,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static Result CreateFileResult(string filePath, Query query, int score = 0, bool windowsIndexed = false)
         {
-            bool isMedia = IsMedia(Path.GetExtension(filePath));
+            var isMedia = IsMedia(Path.GetExtension(filePath));
             var title = Path.GetFileName(filePath);
-
+            var directory = Path.GetDirectoryName(filePath);
 
             /* Preview Detail */
 
             var result = new Result
             {
                 Title = title,
-                SubTitle = Path.GetDirectoryName(filePath),
+                SubTitle = directory,
                 IcoPath = filePath,
                 Preview = new Result.PreviewInfo
                 {
@@ -299,7 +299,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     {
                         if (c.SpecialKeyState.ToModifierKeys() == (ModifierKeys.Control | ModifierKeys.Shift))
                         {
-                            OpenFile(filePath, Settings.UseLocationAsWorkingDir ? Path.GetDirectoryName(filePath) : string.Empty, true);
+                            OpenFile(filePath, Settings.UseLocationAsWorkingDir ? directory : string.Empty, true);
                         }
                         else if (c.SpecialKeyState.ToModifierKeys() == ModifierKeys.Control)
                         {
@@ -307,7 +307,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         }
                         else
                         {
-                            OpenFile(filePath, Settings.UseLocationAsWorkingDir ? Path.GetDirectoryName(filePath) : string.Empty);
+                            OpenFile(filePath, Settings.UseLocationAsWorkingDir ? directory : string.Empty);
                         }
                     }
                     catch (Exception ex)
