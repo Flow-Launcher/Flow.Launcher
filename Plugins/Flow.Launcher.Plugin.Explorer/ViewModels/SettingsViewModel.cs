@@ -360,18 +360,20 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         private void AddIndexSearchExcludePaths()
         {
             var container = Settings.IndexSearchExcludedSubdirectoryPaths;
+
+            if (container is null) return;
             
             var folderBrowserDialog = new FolderBrowserDialog();
             
             if (folderBrowserDialog.ShowDialog() != DialogResult.OK)
                 return;
-            
+
             var newAccessLink = new AccessLink
             {
                 Name = folderBrowserDialog.SelectedPath.GetPathName(),
                 Path = folderBrowserDialog.SelectedPath
             };
-            
+
             container.Add(newAccessLink);
             Save();
         }
