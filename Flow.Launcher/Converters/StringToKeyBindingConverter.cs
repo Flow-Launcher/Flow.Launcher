@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace Flow.Launcher.Converters;
 
-class StringToKeyBindingConverter : IValueConverter
+public class StringToKeyBindingConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {

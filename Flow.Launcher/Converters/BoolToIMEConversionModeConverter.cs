@@ -5,7 +5,7 @@ using System.Windows.Input;
 
 namespace Flow.Launcher.Converters;
 
-internal class BoolToIMEConversionModeConverter : IValueConverter
+public class BoolToIMEConversionModeConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
@@ -22,7 +22,7 @@ internal class BoolToIMEConversionModeConverter : IValueConverter
     }
 }
 
-internal class BoolToIMEStateConverter : IValueConverter
+public class BoolToIMEStateConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {

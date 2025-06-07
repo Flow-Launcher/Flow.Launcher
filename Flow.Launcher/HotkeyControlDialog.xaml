@@ -2,7 +2,7 @@
     x:Class="Flow.Launcher.HotkeyControlDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     Background="{DynamicResource PopuBGColor}"
     BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
     BorderThickness="0 1 0 0"
