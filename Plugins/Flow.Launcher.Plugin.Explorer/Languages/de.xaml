@@ -3,6 +3,8 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">Bitte treffen Sie zuerst eine Auswahl</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Please select a folder path.</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Please choose a different name or folder path.</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Bitte wählen Sie einen Ordner-Link aus</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">Sind Sie sicher, dass Sie {0} löschen wollen?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">Sind Sie sicher, dass Sie diese Datei dauerhaft löschen möchten?</system:String>
@@ -25,6 +27,7 @@
     <system:String x:Key="plugin_explorer_add">Hinzufügen</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">Allgemeine Einstellung</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Aktions-Schlüsselwörter individuell anpassen</system:String>
+    <system:String x:Key="plugin_explorer_manage_quick_access_links_header">Customise Quick Access</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Schnellzugriff-Links</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Everyhting-Einstellung</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">Vorschau-Panel</system:String>
@@ -90,6 +93,7 @@
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Aktuelle Datei dauerhaft löschen</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Aktuellen Ordner dauerhaft löschen</system:String>
     <system:String x:Key="plugin_explorer_path">Pfad:</system:String>
+    <system:String x:Key="plugin_explorer_name">Name:</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Ausgewähltes löschen</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Als anderer Benutzer ausführen</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Ausgewähltes unter Verwendung eines anderen Benutzerkontos ausführen</system:String>
