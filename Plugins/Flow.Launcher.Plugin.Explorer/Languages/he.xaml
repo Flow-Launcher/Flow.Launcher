@@ -3,6 +3,8 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">אנא בצע בחירה תחילה</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Please select a folder path.</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Please choose a different name or folder path.</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">אנא בחר קישור לתיקייה</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">האם אתה בטוח שברצונך למחוק את {0}?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">האם אתה בטוח שברצונך למחוק קובץ זה לצמיתות?</system:String>
@@ -25,6 +27,7 @@
     <system:String x:Key="plugin_explorer_add">הוסף</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">הגדרות כלליות</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">התאמת מילות פעולה</system:String>
+    <system:String x:Key="plugin_explorer_manage_quick_access_links_header">Customise Quick Access</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">קישורי גישה מהירה</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">הגדרות Everything</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">חלונית תצוגה מקדימה</system:String>
@@ -90,6 +93,7 @@
     <system:String x:Key="plugin_explorer_deletefile_subtitle">מחק לצמיתות את הקובץ הנוכחי</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">מחק לצמיתות את התיקייה הנוכחית</system:String>
     <system:String x:Key="plugin_explorer_path">נתיב:</system:String>
+    <system:String x:Key="plugin_explorer_name">Name:</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">מחק את הפריט שנבחר</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">הפעל כמשתמש אחר</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">הפעל את הפריט שנבחר באמצעות חשבון משתמש אחר</system:String>
