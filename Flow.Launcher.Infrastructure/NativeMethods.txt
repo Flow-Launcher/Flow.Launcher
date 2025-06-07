@@ -22,7 +22,7 @@ SystemParametersInfo
 
 SetForegroundWindow
 
-GetWindowLong
+WINDOW_LONG_PTR_INDEX
 GetForegroundWindow
 GetDesktopWindow
 GetShellWindow
@@ -42,6 +42,11 @@ MONITORINFOEXW
 
 WM_ENTERSIZEMOVE
 WM_EXITSIZEMOVE
+WM_NCLBUTTONDBLCLK
+WM_SYSCOMMAND
+
+SC_MAXIMIZE
+SC_MINIMIZE
 
 OleInitialize
 OleUninitialize

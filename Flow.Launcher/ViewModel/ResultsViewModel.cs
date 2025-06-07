@@ -17,6 +17,8 @@ namespace Flow.Launcher.ViewModel
     {
         #region Private Fields
 
+        private readonly string ClassName = nameof(ResultsViewModel);
+
         public ResultCollection Results { get; }
 
         private readonly object _collectionLock = new();
@@ -187,10 +189,8 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         public void AddResults(ICollection<ResultsForUpdate> resultsForUpdates, CancellationToken token, bool reselect = true)
         {
+            // Since NewResults may need to clear existing results, do not check token cancellation after this point
             var newResults = NewResults(resultsForUpdates);
-
-            if (token.IsCancellationRequested)
-                return;
 
             UpdateResults(newResults, reselect, token);
         }
@@ -240,16 +240,20 @@ namespace Flow.Launcher.ViewModel
         private List<ResultViewModel> NewResults(ICollection<ResultsForUpdate> resultsForUpdates)
         {
             if (!resultsForUpdates.Any())
+            {
+                App.API.LogDebug(ClassName, "No results for updates, returning existing results");
                 return Results;
+            }
 
             var newResults = resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings));
 
-            if (resultsForUpdates.Any(x => x.shouldClearExistingResults))
+            if (resultsForUpdates.Any(x => x.ShouldClearExistingResults))
             {
-                App.API.LogDebug("NewResults", $"Existing results are cleared for query");
+                App.API.LogDebug(ClassName, $"Existing results are cleared for query");
                 return newResults.OrderByDescending(rv => rv.Result.Score).ToList();
             }
 
+            App.API.LogDebug(ClassName, $"Keeping existing results for {resultsForUpdates.Count} queries");
             return Results.Where(r => r?.Result != null && resultsForUpdates.All(u => u.ID != r.Result.PluginID))
                               .Concat(newResults)
                               .OrderByDescending(rv => rv.Result.Score)
@@ -293,8 +297,6 @@ namespace Flow.Launcher.ViewModel
         {
             private long editTime = 0;
 
-            private CancellationToken _token;
-
             public event NotifyCollectionChangedEventHandler CollectionChanged;
 
             protected void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
@@ -302,12 +304,12 @@ namespace Flow.Launcher.ViewModel
                 CollectionChanged?.Invoke(this, e);
             }
 
-            public void BulkAddAll(List<ResultViewModel> resultViews)
+            private void BulkAddAll(List<ResultViewModel> resultViews, CancellationToken token = default)
             {
                 AddRange(resultViews);
 
                 // can return because the list will be cleared next time updated, which include a reset event
-                if (_token.IsCancellationRequested)
+                if (token.IsCancellationRequested)
                     return;
 
                 // manually update event
@@ -315,12 +317,12 @@ namespace Flow.Launcher.ViewModel
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             }
 
-            private void AddAll(List<ResultViewModel> Items)
+            private void AddAll(List<ResultViewModel> Items, CancellationToken token = default)
             {
                 for (int i = 0; i < Items.Count; i++)
                 {
                     var item = Items[i];
-                    if (_token.IsCancellationRequested)
+                    if (token.IsCancellationRequested)
                         return;
                     Add(item);
                     OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, i));
@@ -342,21 +344,30 @@ namespace Flow.Launcher.ViewModel
             /// <param name="newItems"></param>
             public void Update(List<ResultViewModel> newItems, CancellationToken token = default)
             {
-                _token = token;
-                if (Count == 0 && newItems.Count == 0 || _token.IsCancellationRequested)
+                // Since NewResults may need to clear existing results, so we cannot check token cancellation here
+                if (Count == 0 && newItems.Count == 0)
                     return;
 
                 if (editTime < 10 || newItems.Count < 30)
                 {
                     if (Count != 0) RemoveAll(newItems.Count);
-                    AddAll(newItems);
+
+                    // After results are removed, we need to check the token cancellation
+                    // so that we will not add new items from the cancelled queries
+                    if (token.IsCancellationRequested) return;
+
+                    AddAll(newItems, token);
                     editTime++;
-                    return;
                 }
                 else
                 {
                     Clear();
-                    BulkAddAll(newItems);
+
+                    // After results are removed, we need to check the token cancellation
+                    // so that we will not add new items from the cancelled queries
+                    if (token.IsCancellationRequested) return;
+
+                    BulkAddAll(newItems, token);
                     if (Capacity > 8000 && newItems.Count < 3000)
                     {
                         Capacity = newItems.Count;

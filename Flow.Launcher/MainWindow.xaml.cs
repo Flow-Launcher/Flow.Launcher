@@ -101,7 +101,7 @@ namespace Flow.Launcher
 
         private void ThemeManager_ActualApplicationThemeChanged(ModernWpf.ThemeManager sender, object args)
         {
-            _theme.RefreshFrameAsync();
+            _ = _theme.RefreshFrameAsync();
         }
 
         private void OnSourceInitialized(object sender, EventArgs e)
@@ -295,14 +295,14 @@ namespace Flow.Launcher
             // QueryTextBox.Text change detection (modified to only work when character count is 1 or higher)
             QueryTextBox.TextChanged += (s, e) => UpdateClockPanelVisibility();
 
-            // Detecting ContextMenu.Visibility changes
+            // Detecting ResultContextMenu.Visibility changes
             DependencyPropertyDescriptor
-                .FromProperty(VisibilityProperty, typeof(ContextMenu))
-                .AddValueChanged(ContextMenu, (s, e) => UpdateClockPanelVisibility());
+                .FromProperty(VisibilityProperty, typeof(ResultListBox))
+                .AddValueChanged(ResultContextMenu, (s, e) => UpdateClockPanelVisibility());
 
             // Detect History.Visibility changes
             DependencyPropertyDescriptor
-                .FromProperty(VisibilityProperty, typeof(StackPanel))
+                .FromProperty(VisibilityProperty, typeof(ResultListBox))
                 .AddValueChanged(History, (s, e) => UpdateClockPanelVisibility());
 
             // Initialize query state
@@ -465,7 +465,55 @@ namespace Flow.Launcher
 
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left) DragMove();
+            // When the window is maximized via Snap,
+            // dragging attempts will first switch the window from Maximized to Normal state,
+            // and adjust the drag position accordingly.
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                try
+                {
+                    if (WindowState == WindowState.Maximized)
+                    {
+                        // Calculate ratio based on maximized window dimensions
+                        double maxWidth = ActualWidth;
+                        double maxHeight = ActualHeight;
+                        var mousePos = e.GetPosition(this);
+                        double xRatio = mousePos.X / maxWidth;
+                        double yRatio = mousePos.Y / maxHeight;
+
+                        // Current monitor information
+                        var screen = Screen.FromHandle(new WindowInteropHelper(this).Handle);
+                        var workingArea = screen.WorkingArea;
+                        var screenLeftTop = Win32Helper.TransformPixelsToDIP(this, workingArea.X, workingArea.Y);
+
+                        // Switch to Normal state
+                        WindowState = WindowState.Normal;
+
+                        Application.Current?.Dispatcher.Invoke(new Action(() =>
+                        {
+                            double normalWidth = Width;
+                            double normalHeight = Height;
+
+                            // Apply ratio based on the difference between maximized and normal window sizes
+                            Left = screenLeftTop.X + (maxWidth - normalWidth) * xRatio;
+                            Top = screenLeftTop.Y + (maxHeight - normalHeight) * yRatio;
+
+                            if (Mouse.LeftButton == MouseButtonState.Pressed)
+                            {
+                                DragMove();
+                            }
+                        }), DispatcherPriority.ApplicationIdle);
+                    }
+                    else
+                    {
+                        DragMove();
+                    }
+                }
+                catch (InvalidOperationException)
+                {
+                    // Ignored - can occur if drag operation is already in progress
+                }
+            }
         }
 
         #endregion
@@ -490,56 +538,76 @@ namespace Flow.Launcher
 
         #region Window WndProc
 
-        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled) 
         {
-            if (msg == Win32Helper.WM_ENTERSIZEMOVE)
+            switch (msg)
             {
-                _initialWidth = (int)Width;
-                _initialHeight = (int)Height;
-
-                handled = true;
-            }
-            else if (msg == Win32Helper.WM_EXITSIZEMOVE)
-            {
-                if (_initialHeight != (int)Height)
-                {
-                    if (!_settings.KeepMaxResults)
+                case Win32Helper.WM_ENTERSIZEMOVE:
+                    _initialWidth = (int)Width;
+                    _initialHeight = (int)Height;
+                    handled = true;
+                    break;
+                case Win32Helper.WM_EXITSIZEMOVE:
+                    //Prevent updating the number of results when the window height is below the height of a single result item.
+                    //This situation occurs not only when the user manually resizes the window, but also when the window is released from a side snap, as the OS automatically adjusts the window height.
+                    //(Without this check, releasing from a snap can cause the window height to hit the minimum, resulting in only 2 results being shown.)
+                    if (_initialHeight != (int)Height && Height > (_settings.WindowHeightSize + _settings.ItemHeightSize))
                     {
-                        // Get shadow margin
-                        var shadowMargin = 0;
-                        var (_, useDropShadowEffect) = _theme.GetActualValue();
-                        if (useDropShadowEffect)
+                        if (!_settings.KeepMaxResults)
                         {
-                            shadowMargin = 32;
+                            // Get shadow margin
+                            var shadowMargin = 0;
+                            var (_, useDropShadowEffect) = _theme.GetActualValue();
+                            if (useDropShadowEffect)
+                            {
+                                shadowMargin = 32;
+                            }
+
+                            // Calculate max results to show
+                            var itemCount = (Height - (_settings.WindowHeightSize + 14) - shadowMargin) / _settings.ItemHeightSize;
+                            if (itemCount < 2)
+                            {
+                                _settings.MaxResultsToShow = 2;
+                            }
+                            else
+                            {
+                                _settings.MaxResultsToShow = Convert.ToInt32(Math.Truncate(itemCount));
+                            }
                         }
 
-                        // Calculate max results to show
-                        var itemCount = (Height - (_settings.WindowHeightSize + 14) - shadowMargin) / _settings.ItemHeightSize;
-                        if (itemCount < 2)
-                        {
-                            _settings.MaxResultsToShow = 2;
-                        }
-                        else
-                        {
-                            _settings.MaxResultsToShow = Convert.ToInt32(Math.Truncate(itemCount));
-                        }
+                        SizeToContent = SizeToContent.Height;
+                    }
+                    else
+                    {
+                        // Update height when exiting maximized snap state.
+                        SizeToContent = SizeToContent.Height;
                     }
 
-                    SizeToContent = SizeToContent.Height;
-                }
-
-                if (_initialWidth != (int)Width)
-                {
-                    if (!_settings.KeepMaxResults)
+                    if (_initialWidth != (int)Width)
                     {
-                        // Update width
-                        _viewModel.MainWindowWidth = Width;
+                        if (!_settings.KeepMaxResults)
+                        {
+                            // Update width
+                            _viewModel.MainWindowWidth = Width;
+                        }
+
+                        SizeToContent = SizeToContent.Height;
                     }
 
+                    handled = true;
+                    break;
+                case Win32Helper.WM_NCLBUTTONDBLCLK: // Block the double click in frame
                     SizeToContent = SizeToContent.Height;
-                }
-
-                handled = true;
+                    handled = true;
+                    break;
+                case Win32Helper.WM_SYSCOMMAND: // Block Maximize/Minimize by Win+Up and Win+Down Arrow
+                    var command = wParam.ToInt32() & 0xFFF0;
+                    if (command == Win32Helper.SC_MAXIMIZE || command == Win32Helper.SC_MINIMIZE)
+                    {
+                        SizeToContent = SizeToContent.Height;
+                        handled = true;
+                    }
+                    break;
             }
 
             return IntPtr.Zero;
@@ -1016,7 +1084,7 @@ namespace Flow.Launcher
 
         private void UpdateClockPanelVisibility()
         {
-            if (QueryTextBox == null || ContextMenu == null || History == null || ClockPanel == null)
+            if (QueryTextBox == null || ResultContextMenu == null || History == null || ClockPanel == null)
             {
                 return;
             }
@@ -1031,20 +1099,20 @@ namespace Flow.Launcher
             };
             var animationDuration = TimeSpan.FromMilliseconds(animationLength * 2 / 3);
 
-            // ✅ Conditions for showing ClockPanel (No query input & ContextMenu, History are closed)
+            // ✅ Conditions for showing ClockPanel (No query input / ResultContextMenu & History are closed)
             var shouldShowClock = QueryTextBox.Text.Length == 0 &&
-                ContextMenu.Visibility != Visibility.Visible &&
+                ResultContextMenu.Visibility != Visibility.Visible &&
                 History.Visibility != Visibility.Visible;
 
-            // ✅ 1. When ContextMenu opens, immediately set Visibility.Hidden (force hide without animation)
-            if (ContextMenu.Visibility == Visibility.Visible)
+            // ✅ 1. When ResultContextMenu opens, immediately set Visibility.Hidden (force hide without animation)
+            if (ResultContextMenu.Visibility == Visibility.Visible)
             {
                 _viewModel.ClockPanelVisibility = Visibility.Hidden;
                 _viewModel.ClockPanelOpacity = 0.0;  // Set to 0 in case Opacity animation affects it
                 return;
             }
 
-            // ✅ 2. When ContextMenu is closed, keep it Hidden if there's text in the query (remember previous state)
+            // ✅ 2. When ResultContextMenu is closed, keep it Hidden if there's text in the query (remember previous state)
             else if (QueryTextBox.Text.Length > 0)
             {
                 _viewModel.ClockPanelVisibility = Visibility.Hidden;

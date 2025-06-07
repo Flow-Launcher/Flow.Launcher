@@ -194,9 +194,9 @@ namespace Flow.Launcher.Infrastructure
             SetWindowStyle(hwnd, WINDOW_LONG_PTR_INDEX.GWL_STYLE, style);
         }
 
-        private static int GetWindowStyle(HWND hWnd, WINDOW_LONG_PTR_INDEX nIndex)
+        private static nint GetWindowStyle(HWND hWnd, WINDOW_LONG_PTR_INDEX nIndex)
         {
-            var style = PInvoke.GetWindowLong(hWnd, nIndex);
+            var style = PInvoke.GetWindowLongPtr(hWnd, nIndex);
             if (style == 0 && Marshal.GetLastPInvokeError() != 0)
             {
                 throw new Win32Exception(Marshal.GetLastPInvokeError());
@@ -204,7 +204,7 @@ namespace Flow.Launcher.Infrastructure
             return style;
         }
 
-        private static nint SetWindowStyle(HWND hWnd, WINDOW_LONG_PTR_INDEX nIndex, int dwNewLong)
+        private static nint SetWindowStyle(HWND hWnd, WINDOW_LONG_PTR_INDEX nIndex, nint dwNewLong)
         {
             PInvoke.SetLastError(WIN32_ERROR.NO_ERROR); // Clear any existing error
 
@@ -324,6 +324,11 @@ namespace Flow.Launcher.Infrastructure
 
         public const int WM_ENTERSIZEMOVE = (int)PInvoke.WM_ENTERSIZEMOVE;
         public const int WM_EXITSIZEMOVE = (int)PInvoke.WM_EXITSIZEMOVE;
+        public const int WM_NCLBUTTONDBLCLK = (int)PInvoke.WM_NCLBUTTONDBLCLK;
+        public const int WM_SYSCOMMAND = (int)PInvoke.WM_SYSCOMMAND;
+
+        public const int SC_MAXIMIZE = (int)PInvoke.SC_MAXIMIZE;
+        public const int SC_MINIMIZE = (int)PInvoke.SC_MINIMIZE;
 
         #endregion
 

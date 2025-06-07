@@ -12,6 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <StackPanel
             Grid.Row="0"
@@ -91,5 +92,12 @@
                     Content="{DynamicResource flowlauncher_plugin_browserbookmark_removeBrowserBookmark}" />
             </StackPanel>
         </StackPanel>
+        <CheckBox
+            Grid.Row="2"
+            Margin="{StaticResource SettingPanelItemTopBottomMargin}"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Content="{DynamicResource flowlauncher_plugin_browserbookmark_enable_favicons}"
+            IsChecked="{Binding Settings.EnableFavicons}" />
     </Grid>
 </UserControl>
