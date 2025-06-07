@@ -9,7 +9,7 @@ public static class PathHelper
 {
     public static string GetPathName(this string selectedPath)
     {
-        if (string.IsNullOrEmpty(selectedPath)) return "";
+        if (string.IsNullOrEmpty(selectedPath)) return string.Empty;
         var path = selectedPath.EndsWith(Constants.DirectorySeparator) ? selectedPath[0..^1] : selectedPath;
 
         if (path.EndsWith(':'))
@@ -18,5 +18,4 @@ public static class PathHelper
         return path.Split(new[] { Path.DirectorySeparatorChar }, StringSplitOptions.None)
             .Last();
     }
-    
 }

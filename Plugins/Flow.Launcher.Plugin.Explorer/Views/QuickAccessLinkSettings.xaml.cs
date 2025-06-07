@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -8,15 +7,12 @@ using System.Windows;
 using System.Windows.Forms;
 using Flow.Launcher.Plugin.Explorer.Helper;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
-using JetBrains.Annotations;
 
 namespace Flow.Launcher.Plugin.Explorer.Views;
 
 public partial class QuickAccessLinkSettings : INotifyPropertyChanged
 {
-    
     private string _selectedPath;
-
     public string SelectedPath
     {
         get => _selectedPath;
@@ -26,20 +22,20 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
             {
                 _selectedPath = value;
                 OnPropertyChanged();
-                if (string.IsNullOrEmpty(_selectedName))  SelectedName = _selectedPath.GetPathName();
+                if (string.IsNullOrEmpty(_selectedName))
+                {
+                    SelectedName = _selectedPath.GetPathName();
+                }
             }
         }
     }
 
-
     private string _selectedName;
-
     public string SelectedName
     {
         get
         {
-            if (string.IsNullOrEmpty(_selectedName)) return _selectedPath.GetPathName();
-            return _selectedName;
+            return string.IsNullOrEmpty(_selectedName) ? _selectedPath.GetPathName() : _selectedName;
         }
         set
         {
@@ -52,7 +48,7 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
     }
 
     private bool IsEdit { get; set; }
-    [CanBeNull] private AccessLink SelectedAccessLink { get; }
+    private AccessLink SelectedAccessLink { get; }
     
     public ObservableCollection<AccessLink> QuickAccessLinks { get; }
     
@@ -62,7 +58,7 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
         InitializeComponent();
     }
 
-    public QuickAccessLinkSettings(ObservableCollection<AccessLink> quickAccessLinks,AccessLink selectedAccessLink)
+    public QuickAccessLinkSettings(ObservableCollection<AccessLink> quickAccessLinks, AccessLink selectedAccessLink)
     {
         IsEdit = true;
         _selectedName = selectedAccessLink.Name;
@@ -72,14 +68,11 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
         InitializeComponent();
     }
 
-
-
     private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
     {
         DialogResult = false;
         Close();
     }
-
 
     private void OnDoneButtonClick(object sender, RoutedEventArgs e)
     {
@@ -121,7 +114,7 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
     
     private void EditAccessLink()
     {
-        if (SelectedAccessLink == null)throw new ArgumentException("Access Link object is null");
+        if (SelectedAccessLink == null) throw new ArgumentException("Access Link object is null");
 
         var index = QuickAccessLinks.IndexOf(SelectedAccessLink);
         if (index >= 0)
@@ -134,19 +127,10 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
         Close();
     }
 
-public event PropertyChangedEventHandler PropertyChanged;
+    public event PropertyChangedEventHandler PropertyChanged;
 
     protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
-
-    protected bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
-    {
-        if (EqualityComparer<T>.Default.Equals(field, value)) return false;
-        field = value;
-        OnPropertyChanged(propertyName);
-        return true;
-    }
 }
-
