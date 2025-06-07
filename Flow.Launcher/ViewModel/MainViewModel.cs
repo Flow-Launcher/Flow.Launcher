@@ -1859,7 +1859,7 @@ namespace Flow.Launcher.ViewModel
                     // Only update the position
                     Application.Current?.Dispatcher.Invoke(() =>
                     {
-                        (Application.Current?.MainWindow as MainWindow).UpdatePosition();
+                        (Application.Current?.MainWindow as MainWindow)?.UpdatePosition();
                     });
 
                     _ = ResetWindowAsync();
@@ -1950,7 +1950,7 @@ namespace Flow.Launcher.ViewModel
                     // Only update the position
                     Application.Current?.Dispatcher.Invoke(() =>
                     {
-                        (Application.Current?.MainWindow as MainWindow).UpdatePosition();
+                        (Application.Current?.MainWindow as MainWindow)?.UpdatePosition();
                     });
 
                     _ = ResetWindowAsync();
