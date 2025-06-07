@@ -244,6 +244,21 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             "yyyy-MM-dd",
             "yyyy-MM-dd ddd",
             "yyyy-MM-dd, dddd",
+            "dd/MMM/yyyy",
+            "dd/MMM/yyyy ddd",
+            "dd/MMM/yyyy, dddd",
+            "dd-MMM-yyyy",
+            "dd-MMM-yyyy ddd",
+            "dd-MMM-yyyy, dddd",
+            "dd.MMM.yyyy",
+            "dd.MMM.yyyy ddd",
+            "dd.MMM.yyyy, dddd",
+            "MMM/dd/yyyy",
+            "MMM/dd/yyyy ddd",
+            "MMM/dd/yyyy, dddd",
+            "yyyy-MMM-dd",
+            "yyyy-MMM-dd ddd",
+            "yyyy-MMM-dd, dddd",
         };
 
         #endregion

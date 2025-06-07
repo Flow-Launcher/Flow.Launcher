@@ -37,6 +37,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public bool DefaultOpenFolderInFileManager { get; set; } = false;
 
+        public bool DisplayMoreInformationInToolTip { get; set; } = false;
+
         public string SearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
 
         public bool SearchActionKeywordEnabled { get; set; } = true;

@@ -117,7 +117,7 @@
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Style="{DynamicResource PreviewItemSubTitleStyle}"
-                        Text="{Binding FileSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                        Text="{Binding FileSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Mode=OneWay}"
                         TextWrapping="Wrap"
                         Visibility="{Binding FileSizeVisibility, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" />
 
