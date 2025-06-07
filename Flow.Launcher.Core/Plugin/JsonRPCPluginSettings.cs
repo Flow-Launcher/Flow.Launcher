@@ -12,7 +12,7 @@ using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core.Plugin
 {
-    public class JsonRPCPluginSettings
+    public class JsonRPCPluginSettings : ISavable
     {
         public required JsonRpcConfigurationModel? Configuration { get; init; }
 
