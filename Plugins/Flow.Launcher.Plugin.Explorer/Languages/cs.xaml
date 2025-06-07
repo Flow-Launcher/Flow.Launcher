@@ -3,6 +3,8 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">Nejprve vyberte položku</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Please select a folder path.</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Please choose a different name or folder path.</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Vyberte odkaz na složku</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">Opravdu chcete odstranit {0}?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">Opravdu chcete trvale odstranit tento soubor?</system:String>
@@ -25,6 +27,7 @@
     <system:String x:Key="plugin_explorer_add">Přidat</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">Všeobecné nastavení</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Upravit aktivační příkaz</system:String>
+    <system:String x:Key="plugin_explorer_manage_quick_access_links_header">Customise Quick Access</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Odkazy rychlého přístupu</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Nastavení Everything</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">Preview Panel</system:String>
@@ -90,6 +93,7 @@
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Trvale odstranit aktuální soubor</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Trvale smazat aktuální složku</system:String>
     <system:String x:Key="plugin_explorer_path">Cesta:</system:String>
+    <system:String x:Key="plugin_explorer_name">Name:</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Odstranit vybraný</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Spustit jako jiný uživatel</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Spustí vybranou položku jako uživatel s jiným účtem</system:String>
