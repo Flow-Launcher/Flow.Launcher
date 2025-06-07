@@ -33,7 +33,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             _storage.Save();
         }
 
-        private string _theme = Constant.DefaultTheme;
         public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
         public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
         public string ColorScheme { get; set; } = "System";
@@ -64,6 +63,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 OnPropertyChanged();
             }
         }
+        private string _theme = Constant.DefaultTheme;
         public string Theme
         {
             get => _theme;
@@ -79,6 +79,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
         public bool UseDropShadowEffect { get; set; } = true;
         public BackdropTypes BackdropType{ get; set; } = BackdropTypes.None;
+        public string ReleaseNotesVersion { get; set; } = string.Empty;
 
         /* Appearance Settings. It should be separated from the setting later.*/
         public double WindowHeightSize { get; set; } = 42;

@@ -121,6 +121,9 @@ namespace Flow.Launcher
                 // Set First Launch to false
                 _settings.FirstLaunch = false;
 
+                // Update release notes version
+                _settings.ReleaseNotesVersion = Constant.Version;
+
                 // Set Backdrop Type to Acrylic for Windows 11 when First Launch. Default is None
                 if (Win32Helper.IsBackdropSupported()) _settings.BackdropType = BackdropTypes.Acrylic;
 
@@ -130,6 +133,15 @@ namespace Flow.Launcher
                 // Show Welcome Window
                 var welcomeWindow = new WelcomeWindow();
                 welcomeWindow.Show();
+            }
+
+            if (_settings.ReleaseNotesVersion != Constant.Version)
+            {
+                // Update release notes version
+                _settings.ReleaseNotesVersion = Constant.Version;
+
+                var releaseNotesWindow = new ReleaseNotesWindow();
+                releaseNotesWindow.Show();
             }
 
             // Initialize place holder
