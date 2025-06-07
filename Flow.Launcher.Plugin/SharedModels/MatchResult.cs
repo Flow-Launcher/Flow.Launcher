@@ -41,7 +41,7 @@ namespace Flow.Launcher.Plugin.SharedModels
         /// <summary>
         /// The final score of the match result with search precision filters applied.
         /// </summary>
-        public int Score { get; private set; }
+        public int Score { get; set; }
 
         /// <summary>
         /// The raw calculated search score without any search precision filtering applied.
