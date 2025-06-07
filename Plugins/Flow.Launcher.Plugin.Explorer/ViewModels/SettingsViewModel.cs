@@ -353,6 +353,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             {
                 Path = path, Type = selectedLink.Type, Name = path.GetPathName()
             });
+            Save();
         }
 
         [RelayCommand]
