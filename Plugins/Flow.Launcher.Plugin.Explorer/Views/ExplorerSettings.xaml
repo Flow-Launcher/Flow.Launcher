@@ -785,13 +785,11 @@
                         MinWidth="100"
                         Margin="{StaticResource SettingPanelItemLeftMargin}"
                         Command="{Binding EditQuickAccessLinkCommand}"
-                        CommandParameter="QuickAccessLink"
                         Content="{DynamicResource plugin_explorer_edit}" />
                     <Button
                         MinWidth="100"
                         Margin="{StaticResource SettingPanelItemLeftMargin}"
                         Command="{Binding AddQuickAccessLinkCommand}"
-                        CommandParameter="QuickAccessLink"
                         Content="{DynamicResource plugin_explorer_add}" />
                 </StackPanel>
             </Grid>
@@ -852,13 +850,11 @@
                         MinWidth="100"
                         Margin="{StaticResource SettingPanelItemLeftMargin}"
                         Command="{Binding EditIndexSearchExcludePathsCommand}"
-                        CommandParameter="IndexSearchExcludedPaths"
                         Content="{DynamicResource plugin_explorer_edit}" />
                     <Button
                         MinWidth="100"
                         Margin="{StaticResource SettingPanelItemLeftMargin}"
                         Command="{Binding AddIndexSearchExcludePathsCommand}"
-                        CommandParameter="IndexSearchExcludedPaths"
                         Content="{DynamicResource plugin_explorer_add}" />
                 </StackPanel>
             </Grid>

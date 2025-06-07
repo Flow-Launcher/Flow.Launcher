@@ -328,29 +328,28 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             container.Add(link);
         }
 
-
         [RelayCommand]
-        private void EditIndexSearchExcludePaths(object commandParameter)
+        private void EditIndexSearchExcludePaths()
         {
-
+            var selectedLink = SelectedIndexSearchExcludedPath;
             var collection = Settings.IndexSearchExcludedSubdirectoryPaths;
 
-            if (SelectedIndexSearchExcludedPath is null)
+            if (selectedLink is null)
             {
                 ShowUnselectedMessage();
                 return;
             }
 
-            var path = PromptUserSelectPath(SelectedIndexSearchExcludedPath.Type,
-                SelectedIndexSearchExcludedPath.Type == ResultType.Folder
-                    ? SelectedIndexSearchExcludedPath.Path
-                    : Path.GetDirectoryName(SelectedIndexSearchExcludedPath.Path));
+            var path = PromptUserSelectPath(selectedLink.Type,
+                selectedLink.Type == ResultType.Folder
+                    ? selectedLink.Path
+                    : Path.GetDirectoryName(selectedLink.Path));
 
             if (path is null)
                 return;
 
-            var selectedType = SelectedIndexSearchExcludedPath.Type;
-            collection.Remove(SelectedIndexSearchExcludedPath);
+            var selectedType = selectedLink.Type;
+            collection.Remove(selectedLink);
             collection.Add(new AccessLink
             {
                 Path = path, Type = selectedType, Name = path.GetPathName()
@@ -358,7 +357,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         }
 
         [RelayCommand]
-        private void AddIndexSearchExcludePaths(object commandParameter)
+        private void AddIndexSearchExcludePaths()
         {
             var container = Settings.IndexSearchExcludedSubdirectoryPaths;
             
@@ -378,30 +377,37 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         }
 
         [RelayCommand]
-        private void EditQuickAccessLink(object commandParameter)
+        private void EditQuickAccessLink()
         {
-            if (SelectedQuickAccessLink is null)
+            var selectedLink = SelectedQuickAccessLink;
+            var collection = Settings.QuickAccessLinks;
+
+            if (selectedLink is null)
             {
                 ShowUnselectedMessage();
                 return;
             }
-            var quickAccessLinkSettings = new QuickAccessLinkSettings(Settings.QuickAccessLinks,SelectedQuickAccessLink);
-            if (quickAccessLinkSettings.ShowDialog() == true) Save();
+            var quickAccessLinkSettings = new QuickAccessLinkSettings(collection, SelectedQuickAccessLink);
+            if (quickAccessLinkSettings.ShowDialog() == true)
+            {
+                Save();
+            }
         }
         
         [RelayCommand]
-        private void AddQuickAccessLink(object commandParameter)
+        private void AddQuickAccessLink()
         {
             var quickAccessLinkSettings = new QuickAccessLinkSettings(Settings.QuickAccessLinks);
-            if (quickAccessLinkSettings.ShowDialog() == true) Save();
+            if (quickAccessLinkSettings.ShowDialog() == true)
+            {
+                Save();
+            }
         }
-        
-        
 
         [RelayCommand]
-        private void RemoveLink(object obj)
+        private void RemoveLink(object commandParameter)
         {
-            if (obj is not string container) return;
+            if (commandParameter is not string container) return;
 
             switch (container)
             {
