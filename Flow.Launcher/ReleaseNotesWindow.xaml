@@ -10,7 +10,10 @@
     xmlns:ui="http://schemas.modernwpf.com/2019"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     Title="{DynamicResource releaseNotes}"
-    Width="700"
+    Width="940"
+    Height="600"
+    MinWidth="940"
+    MinHeight="600"
     Background="{DynamicResource PopuBGColor}"
     Closed="Window_Closed"
     Foreground="{DynamicResource PopupTextColor}"
@@ -42,8 +45,8 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="32" />
-                    <RowDefinition />
-                    <RowDefinition />
+                    <RowDefinition Height="24" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <!--  TitleBar and Control  -->
                 <Image
@@ -168,7 +171,6 @@
                     Grid.Row="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="5"
-                    Height="510"
                     Margin="15 0 20 0"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
@@ -181,8 +183,9 @@
                     Grid.Row="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="5"
-                    Height="510"
-                    Margin="15 0 20 0">
+                    Margin="15 0 20 0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch">
                     <ui:ProgressRing
                         x:Name="RefreshProgressRing"
                         Width="32"
