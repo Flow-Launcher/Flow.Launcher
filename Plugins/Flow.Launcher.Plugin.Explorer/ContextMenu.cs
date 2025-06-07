@@ -75,7 +75,9 @@ namespace Flow.Launcher.Plugin.Explorer
                         {
                             Settings.QuickAccessLinks.Add(new AccessLink
                             {
-                                Path = record.FullPath, Type = record.Type
+                                Name = record.FullPath.GetPathName(),
+                                Path = record.FullPath,
+                                Type = record.Type
                             });
 
                             Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_addfilefoldersuccess"),
@@ -199,10 +201,10 @@ namespace Flow.Launcher.Plugin.Explorer
                             {
                                 if (Context.API.ShowMsgBox(
                                         string.Format(Context.API.GetTranslation("plugin_explorer_delete_folder_link"), record.FullPath),
-                                        string.Empty,
-                                        MessageBoxButton.YesNo,
+                                        Context.API.GetTranslation("plugin_explorer_deletefilefolder"),
+                                        MessageBoxButton.OKCancel,
                                         MessageBoxImage.Warning)
-                                    == MessageBoxResult.No)
+                                    == MessageBoxResult.Cancel)
                                     return false;
 
                                 if (isFile)

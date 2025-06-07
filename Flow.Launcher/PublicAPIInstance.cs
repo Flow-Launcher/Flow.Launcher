@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -37,6 +38,8 @@ namespace Flow.Launcher
 {
     public class PublicAPIInstance : IPublicAPI, IRemovable
     {
+        private static readonly string ClassName = nameof(PublicAPIInstance);
+
         private readonly Settings _settings;
         private readonly MainViewModel _mainVM;
 
@@ -89,6 +92,8 @@ namespace Flow.Launcher
         }
 
         public void ShowMainWindow() => _mainVM.Show();
+
+        public void FocusQueryTextBox() => _mainVM.FocusQueryTextBox();
 
         public void HideMainWindow() => _mainVM.Hide();
 
@@ -246,7 +251,7 @@ namespace Flow.Launcher
             Http.GetStreamAsync(url, token);
 
         public Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath, Action<double> reportProgress = null,
-            CancellationToken token = default) =>Http.DownloadAsync(url, filePath, reportProgress, token);
+            CancellationToken token = default) => Http.DownloadAsync(url, filePath, reportProgress, token);
 
         public void AddActionKeyword(string pluginId, string newActionKeyword) =>
             PluginManager.AddActionKeyword(pluginId, newActionKeyword);
@@ -313,44 +318,78 @@ namespace Flow.Launcher
 
             ((PluginJsonStorage<T>)_pluginJsonStorages[type]).Save();
         }
-
-        public void OpenDirectory(string DirectoryPath, string FileNameOrFilePath = null)
+        
+        public void OpenDirectory(string directoryPath, string fileNameOrFilePath = null)
         {
-            using var explorer = new Process();
-            var explorerInfo = _settings.CustomExplorer;
-            var explorerPath = explorerInfo.Path.Trim().ToLowerInvariant();
-            var targetPath = FileNameOrFilePath is null
-                ? DirectoryPath
-                : Path.IsPathRooted(FileNameOrFilePath)
-                    ? FileNameOrFilePath
-                    : Path.Combine(DirectoryPath, FileNameOrFilePath);
+            try
+            {
+                var explorerInfo = _settings.CustomExplorer;
+                var explorerPath = explorerInfo.Path.Trim().ToLowerInvariant();
+                var targetPath = fileNameOrFilePath is null
+                    ? directoryPath
+                    : Path.IsPathRooted(fileNameOrFilePath)
+                        ? fileNameOrFilePath
+                        : Path.Combine(directoryPath, fileNameOrFilePath);
 
-            if (Path.GetFileNameWithoutExtension(explorerPath) == "explorer")
-            {
-                // Windows File Manager
-                // We should ignore and pass only the path to Shell to prevent zombie explorer.exe processes
-                explorer.StartInfo = new ProcessStartInfo
+                if (Path.GetFileNameWithoutExtension(explorerPath) == "explorer")
                 {
-                    FileName = targetPath,         // Not explorer, Only path.
-                    UseShellExecute = true         // Must be true to open folder
-                };
-            }
-            else
-            {
-                // Custom File Manager
-                explorer.StartInfo = new ProcessStartInfo
+                    // Windows File Manager
+                    if (fileNameOrFilePath is null)
+                    {
+                        // Only Open the directory
+                        using var explorer = new Process();
+                        explorer.StartInfo = new ProcessStartInfo
+                        {
+                            FileName = directoryPath,
+                            UseShellExecute = true
+                        };
+                        explorer.Start();
+                    }
+                    else
+                    {
+                        // Open the directory and select the file
+                        Win32Helper.OpenFolderAndSelectFile(targetPath);
+                    }
+                }
+                else
                 {
-                    FileName = explorerInfo.Path.Replace("%d", DirectoryPath),
-                    UseShellExecute = true,
-                    Arguments = FileNameOrFilePath is null
-                        ? explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath)
-                        : explorerInfo.FileArgument
-                            .Replace("%d", DirectoryPath)
-                            .Replace("%f", targetPath)
-                };
+                    // Custom File Manager
+                    using var explorer = new Process();
+                    explorer.StartInfo = new ProcessStartInfo
+                    {
+                        FileName = explorerInfo.Path.Replace("%d", directoryPath),
+                        UseShellExecute = true,
+                        Arguments = fileNameOrFilePath is null
+                            ? explorerInfo.DirectoryArgument.Replace("%d", directoryPath)
+                            : explorerInfo.FileArgument
+                                .Replace("%d", directoryPath)
+                                .Replace("%f", targetPath)
+                    };
+                    explorer.Start();
+                }
             }
-            explorer.Start();
+            catch (Win32Exception ex) when (ex.NativeErrorCode == 2)
+            {
+                LogError(ClassName, "File Manager not found");
+                ShowMsgBox(
+                    string.Format(GetTranslation("fileManagerNotFound"), ex.Message),
+                    GetTranslation("fileManagerNotFoundTitle"),
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+            }
+            catch (Exception ex)
+            {
+                LogException(ClassName, "Failed to open folder", ex);
+                ShowMsgBox(
+                    string.Format(GetTranslation("folderOpenError"), ex.Message),
+                    GetTranslation("errorTitle"),
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error
+                );
+            }
         }
+
 
         private void OpenUri(Uri uri, bool? inPrivate = null)
         {
@@ -360,13 +399,27 @@ namespace Flow.Launcher
 
                 var path = browserInfo.Path == "*" ? "" : browserInfo.Path;
 
-                if (browserInfo.OpenInTab)
+                try
                 {
-                    uri.AbsoluteUri.OpenInBrowserTab(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                    if (browserInfo.OpenInTab)
+                    {
+                        uri.AbsoluteUri.OpenInBrowserTab(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                    }
+                    else
+                    {
+                        uri.AbsoluteUri.OpenInBrowserWindow(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                    }
                 }
-                else
+                catch (Exception e)
                 {
-                    uri.AbsoluteUri.OpenInBrowserWindow(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                    var tabOrWindow = browserInfo.OpenInTab ? "tab" : "window";
+                    LogException(ClassName, $"Failed to open URL in browser {tabOrWindow}: {path}, {inPrivate ?? browserInfo.EnablePrivate}, {browserInfo.PrivateArg}", e);
+                    ShowMsgBox(
+                        GetTranslation("browserOpenError"),
+                        GetTranslation("errorTitle"),
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error
+                    );
                 }
             }
             else

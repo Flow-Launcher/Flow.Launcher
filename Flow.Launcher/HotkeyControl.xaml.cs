@@ -100,6 +100,7 @@ namespace Flow.Launcher
             PreviewHotkey,
             OpenContextMenuHotkey,
             SettingWindowHotkey,
+            OpenHistoryHotkey,
             CycleHistoryUpHotkey,
             CycleHistoryDownHotkey,
             SelectPrevPageHotkey,
@@ -131,6 +132,7 @@ namespace Flow.Launcher
                     HotkeyType.PreviewHotkey => _settings.PreviewHotkey,
                     HotkeyType.OpenContextMenuHotkey => _settings.OpenContextMenuHotkey,
                     HotkeyType.SettingWindowHotkey => _settings.SettingWindowHotkey,
+                    HotkeyType.OpenHistoryHotkey => _settings.OpenHistoryHotkey,
                     HotkeyType.CycleHistoryUpHotkey => _settings.CycleHistoryUpHotkey,
                     HotkeyType.CycleHistoryDownHotkey => _settings.CycleHistoryDownHotkey,
                     HotkeyType.SelectPrevPageHotkey => _settings.SelectPrevPageHotkey,
@@ -168,6 +170,9 @@ namespace Flow.Launcher
                     case HotkeyType.SettingWindowHotkey:
                         _settings.SettingWindowHotkey = value;
                         break;
+                    case HotkeyType.OpenHistoryHotkey:
+                        _settings.OpenHistoryHotkey = value;
+                        break;                    
                     case HotkeyType.CycleHistoryUpHotkey:
                         _settings.CycleHistoryUpHotkey = value;
                         break;

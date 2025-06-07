@@ -373,14 +373,14 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     [RelayCommand]
     private void SelectFileManager()
     {
-        var fileManagerChangeWindow = new SelectFileManagerWindow(Settings);
+        var fileManagerChangeWindow = new SelectFileManagerWindow();
         fileManagerChangeWindow.ShowDialog();
     }
 
     [RelayCommand]
     private void SelectBrowser()
     {
-        var browserWindow = new SelectBrowserWindow(Settings);
+        var browserWindow = new SelectBrowserWindow();
         browserWindow.ShowDialog();
     }
 }
