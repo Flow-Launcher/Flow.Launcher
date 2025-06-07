@@ -24,6 +24,8 @@ namespace Flow.Launcher
             ModernWpf.ThemeManager.Current.ActualApplicationThemeChanged += ThemeManager_ActualApplicationThemeChanged;
         }
 
+        #region Window Events
+
         private void ThemeManager_ActualApplicationThemeChanged(ModernWpf.ThemeManager sender, object args)
         {
             Application.Current.Dispatcher.Invoke(() =>
@@ -42,8 +44,6 @@ namespace Flow.Launcher
                 }
             });
         }
-
-        #region Window Events
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
