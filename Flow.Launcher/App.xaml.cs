@@ -24,6 +24,7 @@ using Flow.Launcher.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.Threading;
+using NotifyIcon = System.Windows.Forms.NotifyIcon;
 
 namespace Flow.Launcher
 {
@@ -32,6 +33,7 @@ namespace Flow.Launcher
         #region Public Properties
 
         public static IPublicAPI API { get; private set; }
+        public static NotifyIcon NotifyIcon { get; private set; }
         public static bool LoadingOrExiting => _mainWindow == null || _mainWindow.CanClose;
 
         #endregion
@@ -152,6 +154,20 @@ namespace Flow.Launcher
 
         #endregion
 
+        #region Notify Icon
+
+        private void InitializeNotifyIcon()
+        {
+            NotifyIcon = new NotifyIcon
+            {
+                Text = Constant.FlowLauncherFullName,
+                Icon = Constant.Version == "1.0.0" ? Launcher.Properties.Resources.dev : Launcher.Properties.Resources.app,
+                Visible = !_settings.HideNotifyIcon
+            };
+        }
+
+        #endregion
+
         #region App Events
 
 #pragma warning disable VSTHRD100 // Avoid async void methods
@@ -179,6 +195,9 @@ namespace Flow.Launcher
                 RegisterAppDomainExceptions();
                 RegisterDispatcherUnhandledException();
                 RegisterTaskSchedulerUnhandledException();
+
+                // Display notify icon before loading plugins to tell users that Flow is loading
+                InitializeNotifyIcon();
 
                 var imageLoadertask = ImageLoader.InitializeAsync();
 

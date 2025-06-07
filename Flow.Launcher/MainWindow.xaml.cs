@@ -27,7 +27,6 @@ using ModernWpf.Controls;
 using DataObject = System.Windows.DataObject;
 using Key = System.Windows.Input.Key;
 using MouseButtons = System.Windows.Forms.MouseButtons;
-using NotifyIcon = System.Windows.Forms.NotifyIcon;
 using Screen = System.Windows.Forms.Screen;
 
 namespace Flow.Launcher
@@ -47,11 +46,10 @@ namespace Flow.Launcher
         private readonly Settings _settings;
         private readonly Theme _theme;
 
-        // Window Notify Icon
-        private NotifyIcon _notifyIcon;
-
         // Window Context Menu
-        private readonly ContextMenu _contextMenu = new();
+        private static readonly ContextMenu _contextMenu = new();
+
+        // Window View Model
         private readonly MainViewModel _viewModel;
 
         // Window Event: Key Event
@@ -243,7 +241,7 @@ namespace Flow.Launcher
                         }
                         break;
                     case nameof(MainViewModel.GameModeStatus):
-                        _notifyIcon.Icon = _viewModel.GameModeStatus
+                        App.NotifyIcon.Icon = _viewModel.GameModeStatus
                             ? Properties.Resources.gamemode
                             : Properties.Resources.app;
                         break;
@@ -256,7 +254,7 @@ namespace Flow.Launcher
                 switch (e.PropertyName)
                 {
                     case nameof(Settings.HideNotifyIcon):
-                        _notifyIcon.Visible = !_settings.HideNotifyIcon;
+                        App.NotifyIcon.Visible = !_settings.HideNotifyIcon;
                         break;
                     case nameof(Settings.Language):
                         UpdateNotifyIconText();
@@ -317,7 +315,7 @@ namespace Flow.Launcher
             if (!CanClose)
             {
                 CanClose = true;
-                _notifyIcon.Visible = false;
+                App.NotifyIcon.Visible = false;
                 App.API.SaveAppAllSettings();
                 e.Cancel = true;
                 await ImageLoader.WaitSaveAsync();
@@ -663,14 +661,7 @@ namespace Flow.Launcher
 
         private void InitializeNotifyIcon()
         {
-            _notifyIcon = new NotifyIcon
-            {
-                Text = Constant.FlowLauncherFullName,
-                Icon = Constant.Version == "1.0.0" ? Properties.Resources.dev : Properties.Resources.app,
-                Visible = !_settings.HideNotifyIcon
-            };
-
-            _notifyIcon.MouseClick += (o, e) =>
+            App.NotifyIcon.MouseClick += (o, e) =>
             {
                 switch (e.Button)
                 {
@@ -1322,7 +1313,7 @@ namespace Flow.Launcher
                 if (disposing)
                 {
                     _hwndSource?.Dispose();
-                    _notifyIcon?.Dispose();
+                    App.NotifyIcon?.Dispose();
                     animationSoundWMP?.Close();
                     animationSoundWPF?.Dispose();
                     ModernWpf.ThemeManager.Current.ActualApplicationThemeChanged -= ThemeManager_ActualApplicationThemeChanged;
