@@ -92,41 +92,43 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Expander">
                         <Border
-                    Background="{TemplateBinding Background}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    BorderThickness="{TemplateBinding BorderThickness}"
-                    SnapsToDevicePixels="true">
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="true">
                             <DockPanel>
                                 <ToggleButton
-                            x:Name="HeaderSite"
-                            MinWidth="0"
-                            MinHeight="0"
-                            Margin="0"
-                            Padding="{TemplateBinding Padding}"
-                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                            Content="{TemplateBinding Header}"
-                            ContentTemplate="{TemplateBinding HeaderTemplate}"
-                            ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                            DockPanel.Dock="Top"
-                            FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}"
-                            FontFamily="{TemplateBinding FontFamily}"
-                            FontSize="{TemplateBinding FontSize}"
-                            FontStretch="{TemplateBinding FontStretch}"
-                            FontStyle="{TemplateBinding FontStyle}"
-                            FontWeight="{TemplateBinding FontWeight}"
-                            Foreground="{TemplateBinding Foreground}"
-                            IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                            Style="{StaticResource ExpanderHeaderRightArrowStyle}" />
-                                <Border x:Name="ContentPresenterBorder"   BorderThickness="0,1,0,0"
-        BorderBrush="{DynamicResource Color03B}">
+                                    x:Name="HeaderSite"
+                                    MinWidth="0"
+                                    MinHeight="0"
+                                    Margin="0"
+                                    Padding="{TemplateBinding Padding}"
+                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Content="{TemplateBinding Header}"
+                                    ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                    ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                    DockPanel.Dock="Top"
+                                    FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}"
+                                    FontFamily="{TemplateBinding FontFamily}"
+                                    FontSize="{TemplateBinding FontSize}"
+                                    FontStretch="{TemplateBinding FontStretch}"
+                                    FontStyle="{TemplateBinding FontStyle}"
+                                    FontWeight="{TemplateBinding FontWeight}"
+                                    Foreground="{TemplateBinding Foreground}"
+                                    IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Style="{StaticResource ExpanderHeaderRightArrowStyle}" />
+                                <Border
+                                    x:Name="ContentPresenterBorder"
+                                    BorderBrush="{DynamicResource Color03B}"
+                                    BorderThickness="0 1 0 0">
                                     <ContentPresenter
-                                x:Name="ExpandSite"
-                                Margin="{TemplateBinding Padding}"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                DockPanel.Dock="Bottom"
-                                Focusable="false" />
+                                        x:Name="ExpandSite"
+                                        Margin="{TemplateBinding Padding}"
+                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        DockPanel.Dock="Bottom"
+                                        Focusable="false" />
                                     <Border.LayoutTransform>
                                         <ScaleTransform ScaleY="0" />
                                     </Border.LayoutTransform>
@@ -141,13 +143,17 @@
                                     <BeginStoryboard>
                                         <Storyboard>
                                             <DoubleAnimation
-                                        Storyboard.TargetName="ContentPresenterBorder"
-                                        Storyboard.TargetProperty="(Border.LayoutTransform).(ScaleTransform.ScaleY)"
-                                        From="0.0" To="1.0" Duration="0:0:0" />
+                                                Storyboard.TargetName="ContentPresenterBorder"
+                                                Storyboard.TargetProperty="(Border.LayoutTransform).(ScaleTransform.ScaleY)"
+                                                From="0.0"
+                                                To="1.0"
+                                                Duration="0:0:0" />
                                             <DoubleAnimation
-                                        Storyboard.TargetName="ContentPresenterBorder"
-                                        Storyboard.TargetProperty="(Border.Opacity)"
-                                        From="0.0" To="1.0" Duration="0:0:0" />
+                                                Storyboard.TargetName="ContentPresenterBorder"
+                                                Storyboard.TargetProperty="(Border.Opacity)"
+                                                From="0.0"
+                                                To="1.0"
+                                                Duration="0:0:0" />
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </Trigger.EnterActions>
@@ -155,13 +161,17 @@
                                     <BeginStoryboard>
                                         <Storyboard>
                                             <DoubleAnimation
-                                        Storyboard.TargetName="ContentPresenterBorder"
-                                        Storyboard.TargetProperty="(Border.LayoutTransform).(ScaleTransform.ScaleY)"
-                                        From="1.0" To="0.0" Duration="0:0:0" />
+                                                Storyboard.TargetName="ContentPresenterBorder"
+                                                Storyboard.TargetProperty="(Border.LayoutTransform).(ScaleTransform.ScaleY)"
+                                                From="1.0"
+                                                To="0.0"
+                                                Duration="0:0:0" />
                                             <DoubleAnimation
-                                        Storyboard.TargetName="ContentPresenterBorder"
-                                        Storyboard.TargetProperty="(Border.Opacity)"
-                                        From="1.0" To="0.0" Duration="0:0:0" />
+                                                Storyboard.TargetName="ContentPresenterBorder"
+                                                Storyboard.TargetProperty="(Border.Opacity)"
+                                                From="1.0"
+                                                To="0.0"
+                                                Duration="0:0:0" />
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </Trigger.ExitActions>
@@ -734,10 +744,29 @@
                         BorderThickness="1"
                         DragEnter="lbxAccessLinks_DragEnter"
                         Drop="LbxAccessLinks_OnDrop"
-                        ItemTemplate="{StaticResource ListViewTemplateAccessLinks}"
                         ItemsSource="{Binding Settings.QuickAccessLinks}"
                         Loaded="lbxAccessLinks_Loaded"
-                        SelectedItem="{Binding SelectedQuickAccessLink}" />
+                        SelectedItem="{Binding SelectedQuickAccessLink}"
+                        SizeChanged="lbxAccessLinks_SizeChanged">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Width="600" Header="{DynamicResource plugin_explorer_name}">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name}" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="900" Header="{DynamicResource plugin_explorer_path}">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Path}" TextTrimming="CharacterEllipsis" />
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
                 </Border>
 
                 <StackPanel
@@ -755,14 +784,12 @@
                     <Button
                         MinWidth="100"
                         Margin="{StaticResource SettingPanelItemLeftMargin}"
-                        Command="{Binding EditLinkCommand}"
-                        CommandParameter="QuickAccessLink"
+                        Command="{Binding EditQuickAccessLinkCommand}"
                         Content="{DynamicResource plugin_explorer_edit}" />
                     <Button
                         MinWidth="100"
                         Margin="{StaticResource SettingPanelItemLeftMargin}"
-                        Command="{Binding AddLinkCommand}"
-                        CommandParameter="QuickAccessLink"
+                        Command="{Binding AddQuickAccessLinkCommand}"
                         Content="{DynamicResource plugin_explorer_add}" />
                 </StackPanel>
             </Grid>
@@ -822,14 +849,12 @@
                     <Button
                         MinWidth="100"
                         Margin="{StaticResource SettingPanelItemLeftMargin}"
-                        Command="{Binding EditLinkCommand}"
-                        CommandParameter="IndexSearchExcludedPaths"
+                        Command="{Binding EditIndexSearchExcludePathsCommand}"
                         Content="{DynamicResource plugin_explorer_edit}" />
                     <Button
                         MinWidth="100"
                         Margin="{StaticResource SettingPanelItemLeftMargin}"
-                        Command="{Binding AddLinkCommand}"
-                        CommandParameter="IndexSearchExcludedPaths"
+                        Command="{Binding AddIndexSearchExcludePathsCommand}"
                         Content="{DynamicResource plugin_explorer_add}" />
                 </StackPanel>
             </Grid>

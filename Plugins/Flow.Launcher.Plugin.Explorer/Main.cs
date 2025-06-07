@@ -35,6 +35,7 @@ namespace Flow.Launcher.Plugin.Explorer
             Context = context;
 
             Settings = context.API.LoadSettingJsonStorage<Settings>();
+            FillQuickAccessLinkNames();
 
             viewModel = new SettingsViewModel(context, Settings);
 
@@ -94,6 +95,18 @@ namespace Flow.Launcher.Plugin.Explorer
         public string GetTranslatedPluginDescription()
         {
             return Context.API.GetTranslation("plugin_explorer_plugin_description");
+        }
+
+        private void FillQuickAccessLinkNames()
+        {
+            // Legacy version does not have names for quick access links, so we fill them with the path name.
+            foreach (var link in Settings.QuickAccessLinks)
+            {
+                if (string.IsNullOrWhiteSpace(link.Name))
+                {
+                    link.Name = link.Path.GetPathName();
+                }
+            }
         }
     }
 }
