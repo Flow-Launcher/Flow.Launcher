@@ -105,6 +105,74 @@ namespace Flow.Launcher
 
         #endregion
 
+        #region Control Events
+
+        private void MarkdownViewer_Loaded(object sender, RoutedEventArgs e)
+        {
+            RefreshMarkdownViewer();
+        }
+
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            RefreshButton.Visibility = Visibility.Collapsed;
+            RefreshProgressRing.Visibility = Visibility.Visible;
+            RefreshMarkdownViewer();
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
+        private async void RefreshMarkdownViewer()
+        {
+            var output = await GetReleaseNotesMarkdownAsync().ConfigureAwait(false);
+
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                RefreshProgressRing.Visibility = Visibility.Collapsed;
+                if (string.IsNullOrEmpty(output))
+                {
+                    RefreshButton.Visibility = Visibility.Visible;
+                    MarkdownViewer.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    RefreshButton.Visibility = Visibility.Collapsed;
+                    MarkdownViewer.Markdown = output;
+                    MarkdownViewer.Visibility = Visibility.Visible;
+                }
+            });
+        }
+
+        private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            MarkdownScrollViewer.Height = e.NewSize.Height;
+            MarkdownScrollViewer.Width = e.NewSize.Width;
+        }
+
+        private void MarkdownViewer_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            RaiseMouseWheelEvent(sender, e);
+        }
+
+        private void MarkdownViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            RaiseMouseWheelEvent(sender, e);
+        }
+
+        private void RaiseMouseWheelEvent(object sender, MouseWheelEventArgs e)
+        {
+            e.Handled = true; // Prevent the inner control from handling the event
+
+            var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)
+            {
+                RoutedEvent = UIElement.MouseWheelEvent,
+                Source = sender
+            };
+
+            // Raise the event on the parent ScrollViewer
+            MarkdownScrollViewer.RaiseEvent(eventArg);
+        }
+
+        #endregion
+
         #region Release Notes
 
         private static async Task<string> GetReleaseNotesMarkdownAsync()
@@ -178,74 +246,6 @@ namespace Flow.Launcher
 
         [GeneratedRegex("(<img\\s+[^>]*width\\s*=\\s*[\"']?)(\\d+)([\"']?)([^>]*>)", RegexOptions.IgnoreCase, "en-GB")]
         private static partial Regex ImageUnitRegex();
-
-        #endregion
-
-        #region Control Events
-
-        private void MarkdownViewer_Loaded(object sender, RoutedEventArgs e)
-        {
-            RefreshMarkdownViewer();
-        }
-
-        private void RefreshButton_Click(object sender, RoutedEventArgs e)
-        {
-            RefreshButton.Visibility = Visibility.Collapsed;
-            RefreshProgressRing.Visibility = Visibility.Visible;
-            RefreshMarkdownViewer();
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
-        private async void RefreshMarkdownViewer()
-        {
-            var output = await GetReleaseNotesMarkdownAsync().ConfigureAwait(false);
-
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                RefreshProgressRing.Visibility = Visibility.Collapsed;
-                if (string.IsNullOrEmpty(output))
-                {
-                    RefreshButton.Visibility = Visibility.Visible;
-                    MarkdownViewer.Visibility = Visibility.Collapsed;
-                }
-                else
-                {
-                    RefreshButton.Visibility = Visibility.Collapsed;
-                    MarkdownViewer.Markdown = output;
-                    MarkdownViewer.Visibility = Visibility.Visible;
-                }
-            });
-        }
-
-        private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            MarkdownScrollViewer.Height = e.NewSize.Height;
-            MarkdownScrollViewer.Width = e.NewSize.Width;
-        }
-
-        private void MarkdownViewer_MouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            RaiseMouseWheelEvent(sender, e);
-        }
-
-        private void MarkdownViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            RaiseMouseWheelEvent(sender, e);
-        }
-
-        private void RaiseMouseWheelEvent(object sender, MouseWheelEventArgs e)
-        {
-            e.Handled = true; // Prevent the inner control from handling the event
-
-            var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta)
-            {
-                RoutedEvent = UIElement.MouseWheelEvent,
-                Source = sender
-            };
-
-            // Raise the event on the parent ScrollViewer
-            MarkdownScrollViewer.RaiseEvent(eventArg);
-        }
 
         #endregion
     }
