@@ -372,6 +372,13 @@ namespace Flow.Launcher
 
                 if (disposing)
                 {
+                    // Dispose notify icon first to prevent it from showing balloon tip after main window is closed
+                    if (NotifyIcon != null)
+                    {
+                        NotifyIcon.Visible = false;
+                        NotifyIcon.Dispose();
+                    }
+
                     // Dispose needs to be called on the main Windows thread,
                     // since some resources owned by the thread need to be disposed.
                     _mainWindow?.Dispatcher.Invoke(_mainWindow.Dispose);

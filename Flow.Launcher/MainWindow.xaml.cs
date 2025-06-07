@@ -1313,7 +1313,6 @@ namespace Flow.Launcher
                 if (disposing)
                 {
                     _hwndSource?.Dispose();
-                    App.NotifyIcon?.Dispose();
                     animationSoundWMP?.Close();
                     animationSoundWPF?.Dispose();
                     ModernWpf.ThemeManager.Current.ActualApplicationThemeChanged -= ThemeManager_ActualApplicationThemeChanged;
