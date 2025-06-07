@@ -388,6 +388,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 ShowUnselectedMessage();
                 return;
             }
+
             var quickAccessLinkSettings = new QuickAccessLinkSettings(collection, SelectedQuickAccessLink);
             if (quickAccessLinkSettings.ShowDialog() == true)
             {
