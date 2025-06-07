@@ -1,6 +1,10 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mdagif="clr-namespace:MdXaml.AnimatedGif;assembly=MdXaml.AnimatedGif"
+    xmlns:mdhtml="clr-namespace:MdXaml.Html;assembly=MdXaml.Html"
+    xmlns:mdplugins="clr-namespace:MdXaml.Plugins;assembly=MdXaml.Plugins"
+    xmlns:mdsvg="clr-namespace:MdXaml.Svg;assembly=MdXaml.Svg"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:ui="http://schemas.modernwpf.com/2019">
 
@@ -5761,6 +5765,12 @@
     </Style>
 
     <!--  Release Notes  -->
+    <mdplugins:MdXamlPlugins x:Key="MdXamlPlugins">
+        <mdhtml:HtmlPluginSetup />
+        <mdsvg:SvgPluginSetup />
+        <mdagif:AnimatedGifPluginSetup />
+    </mdplugins:MdXamlPlugins>
+
     <Style x:Key="DocumentStyleGithubLikeLight" TargetType="FlowDocument">
         <Setter Property="FontFamily" Value="Calibri" />
         <Setter Property="TextAlignment" Value="Left" />

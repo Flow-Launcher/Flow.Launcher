@@ -163,7 +163,8 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     ClickAction="SafetyDisplayWithRelativePath"
-                    Loaded="MarkdownViewer_Loaded" />
+                    Loaded="MarkdownViewer_Loaded"
+                    Plugins="{StaticResource MdXamlPlugins}" />
 
                 <!--  Put this Grid in the same position as MarkdownViewer  -->
                 <Grid
