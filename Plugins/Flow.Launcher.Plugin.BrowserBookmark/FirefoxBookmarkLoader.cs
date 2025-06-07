@@ -142,6 +142,9 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
             return;
         }
 
+        // Cache connection for pool clean
+        SqliteConnection connection1 = null;
+
         try
         {
             // Since some bookmarks may have same favicon id, we need to record them to avoid duplicates
@@ -212,8 +215,9 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
                 }
                 finally
                 {
-                    // https://github.com/dotnet/efcore/issues/26580
-                    SqliteConnection.ClearPool(connection);
+                    // Cache connection and clear pool after all operations to avoid issue:
+                    // ObjectDisposedException: Safe handle has been closed.
+                    connection1 = connection;
                     connection.Close();
                     connection.Dispose();
                 }
@@ -227,6 +231,11 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
         // Delete temporary file
         try
         {
+            // https://github.com/dotnet/efcore/issues/26580
+            if (connection1 != null)
+            {
+                SqliteConnection.ClearPool(connection1);
+            }
             File.Delete(tempDbPath);
         }
         catch (Exception ex)
