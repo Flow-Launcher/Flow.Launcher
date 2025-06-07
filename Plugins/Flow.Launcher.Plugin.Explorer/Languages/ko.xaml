@@ -3,6 +3,8 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">항목을 먼저 선택하세요</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Please select a folder path.</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Please choose a different name or folder path.</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">폴더 링크를 선택하세요</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">{0} - 삭제하시겠습니까?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">이 파일을 영구적으로 삭제하시겠습니까?</system:String>
@@ -25,6 +27,7 @@
     <system:String x:Key="plugin_explorer_add">추가</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">일반 설정</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">사용자 지정 액션 키워드</system:String>
+    <system:String x:Key="plugin_explorer_manage_quick_access_links_header">Customise Quick Access</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">빠른 접근 항목</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Everything 설정</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">미리보기 패널</system:String>
@@ -90,6 +93,7 @@
     <system:String x:Key="plugin_explorer_deletefile_subtitle">이 파일을 영구적으로 삭제</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">이 폴더를 영구적으로 삭제</system:String>
     <system:String x:Key="plugin_explorer_path">경로:</system:String>
+    <system:String x:Key="plugin_explorer_name">Name:</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">선택 항목을 삭제</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">다른 유저 권한으로 실행</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">선택한 사용자 계정으로 실행</system:String>
