@@ -113,7 +113,7 @@ namespace Flow.Launcher
                     });
 
                 releaseNotesHtmlBuilder.AppendLine(notes);
-                releaseNotesHtmlBuilder.AppendLine("&nbsp;");
+                releaseNotesHtmlBuilder.AppendLine();
             }
 
             return releaseNotesHtmlBuilder.ToString();
