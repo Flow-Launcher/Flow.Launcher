@@ -6,7 +6,7 @@ namespace Flow.Launcher.Core.Plugin
 {
     public static class QueryBuilder
     {
-        public static Query Build(string text, Dictionary<string, PluginPair> nonGlobalPlugins)
+        public static Query Build(string input, string text, Dictionary<string, PluginPair> nonGlobalPlugins)
         {
             // home query
             if (string.IsNullOrEmpty(text))
@@ -14,6 +14,7 @@ namespace Flow.Launcher.Core.Plugin
                 return new Query()
                 {
                     Search = string.Empty,
+                    Input = string.Empty,
                     RawQuery = string.Empty,
                     SearchTerms = Array.Empty<string>(),
                     ActionKeyword = string.Empty,
@@ -52,6 +53,7 @@ namespace Flow.Launcher.Core.Plugin
             return new Query()
             {
                 Search = search,
+                Input = input,
                 RawQuery = rawQuery,
                 SearchTerms = searchTerms,
                 ActionKeyword = actionKeyword,
