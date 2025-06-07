@@ -348,11 +348,10 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             if (path is null)
                 return;
 
-            var selectedType = selectedLink.Type;
             collection.Remove(selectedLink);
             collection.Add(new AccessLink
             {
-                Path = path, Type = selectedType, Name = path.GetPathName()
+                Path = path, Type = selectedLink.Type, Name = path.GetPathName()
             });
         }
 
