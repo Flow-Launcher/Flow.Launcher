@@ -746,7 +746,8 @@
                         Drop="LbxAccessLinks_OnDrop"
                         ItemsSource="{Binding Settings.QuickAccessLinks}"
                         Loaded="lbxAccessLinks_Loaded"
-                        SelectedItem="{Binding SelectedQuickAccessLink}">
+                        SelectedItem="{Binding SelectedQuickAccessLink}"
+                        SizeChanged="lbxAccessLinks_SizeChanged">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Width="600" Header="{DynamicResource plugin_explorer_name}">
