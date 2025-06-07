@@ -19,7 +19,6 @@
     Foreground="{DynamicResource PopupTextColor}"
     Loaded="Window_Loaded"
     ResizeMode="CanResize"
-    SizeToContent="Height"
     StateChanged="Window_StateChanged"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
