@@ -366,7 +366,7 @@
     <system:String x:Key="logLevel">Nível de registo</system:String>
     <system:String x:Key="LogLevelDEBUG">Depuração</system:String>
     <system:String x:Key="LogLevelINFO">Informação</system:String>
-    <system:String x:Key="settingWindowFontTitle">Setting Window Font</system:String>
+    <system:String x:Key="settingWindowFontTitle">Tipo de letra da aplicação</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Selecione o gestor de ficheiros</system:String>
@@ -400,7 +400,7 @@
     <system:String x:Key="oldActionKeywords">Palavra-chave atual</system:String>
     <system:String x:Key="newActionKeywords">Nova palavra-chave</system:String>
     <system:String x:Key="cancel">Cancelar</system:String>
-    <system:String x:Key="done">Feito</system:String>
+    <system:String x:Key="done">OK</system:String>
     <system:String x:Key="cannotFindSpecifiedPlugin">Plugin não encontrado</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">A nova palavra-chave não pode estar vazia</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Esta palavra-chave já está associada a um plugin. Por favor escolha outra.</system:String>
