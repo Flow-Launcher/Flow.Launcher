@@ -3,8 +3,8 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">Tem que efetuar uma seleção</system:String>
-    <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Please select a folder path.</system:String>
-    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Please choose a different name or folder path.</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Selecione o caminho da pasta.</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Por favor, escolha um nome ou caminho diferente.</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Selecione a ligação para a pasta</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">Tem a certeza de que deseja eliminar {0}?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">Tem a certeza de que pretende eliminar permanentemente este ficheiro?</system:String>
@@ -27,7 +27,7 @@
     <system:String x:Key="plugin_explorer_add">Adicionar</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">Definições gerais</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Personalizar palavras-chave</system:String>
-    <system:String x:Key="plugin_explorer_manage_quick_access_links_header">Customise Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_manage_quick_access_links_header">Personalizar acesso rápido</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Ligações de acesso rápido</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Definições Everything</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">Painel de pré-visualização</system:String>
@@ -93,7 +93,7 @@
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Eliminar permanentemente o ficheiro atual</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Eliminar permanentemente a pasta atual</system:String>
     <system:String x:Key="plugin_explorer_path">Caminho:</system:String>
-    <system:String x:Key="plugin_explorer_name">Name:</system:String>
+    <system:String x:Key="plugin_explorer_name">Nome:</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Eliminar seleção</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Executar com outro utilizador</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Executar ações com uma conta de utilizador diferente</system:String>
@@ -164,8 +164,8 @@
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Deseja ativar a pesquisa de conteúdo através de Everything?</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">Pode ser muito lento sem índice (que apenas existe em Everything  v1.5+)</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_everything_not_found">Unable to find Everything.exe</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_install_issue">Failed to install Everything, please install it manually</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_not_found">Não foi possível encontrar Everything.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_install_issue">Não foi possível instalar Everything. Experimente instalar manualmente.</system:String>
 
     <!--  Native Context Menu  -->
     <system:String x:Key="plugin_explorer_native_context_menu_header">Menu de contexto nativo</system:String>
