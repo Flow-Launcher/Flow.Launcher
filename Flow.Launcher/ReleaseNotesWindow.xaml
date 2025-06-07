@@ -2,6 +2,7 @@
     x:Class="Flow.Launcher.ReleaseNotesWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cc="clr-namespace:Flow.Launcher.Resources.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Flow.Launcher"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -41,6 +42,7 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="32" />
+                    <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <!--  TitleBar and Control  -->
@@ -153,9 +155,17 @@
                     </Path>
                 </Button>
 
+                <Grid
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="5"
+                    Margin="10 0 20 0">
+                    <cc:HyperLink x:Name="SeeMore" Text="{DynamicResource seeMoreReleaseNotes}" />
+                </Grid>
+
                 <mdxam:MarkdownScrollViewer
                     x:Name="MarkdownViewer"
-                    Grid.Row="1"
+                    Grid.Row="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="5"
                     Height="510"
@@ -168,7 +178,7 @@
 
                 <!--  Put this Grid in the same position as MarkdownViewer  -->
                 <Grid
-                    Grid.Row="1"
+                    Grid.Row="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="5"
                     Height="510"
