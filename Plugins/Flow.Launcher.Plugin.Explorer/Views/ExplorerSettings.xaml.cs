@@ -136,8 +136,8 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             if (workingWidth <= 0) return;
 
-            var col1 = 0.6;
-            var col2 = 0.4;
+            var col1 = 0.4;
+            var col2 = 0.6;
 
             gView.Columns[0].Width = workingWidth * col1;
             gView.Columns[1].Width = workingWidth * col2;
