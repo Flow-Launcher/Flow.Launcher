@@ -161,7 +161,7 @@
                     Grid.Row="1"
                     Grid.Column="0"
                     Grid.ColumnSpan="5"
-                    Margin="10 0 20 0">
+                    Margin="18 0 18 0">
                     <cc:HyperLink x:Name="SeeMore" Text="{DynamicResource seeMoreReleaseNotes}" />
                 </Grid>
 
@@ -173,19 +173,26 @@
                     Grid.ColumnSpan="5"
                     Width="500"
                     Height="500">
-                    <mdxam:MarkdownScrollViewer
-                        x:Name="MarkdownViewer"
-                        Margin="15 0 20 0"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        ClickAction="SafetyDisplayWithRelativePath"
-                        HorizontalScrollBarVisibility="Disabled"
-                        Loaded="MarkdownViewer_Loaded"
-                        MouseWheel="MarkdownViewer_MouseWheel"
-                        Plugins="{StaticResource MdXamlPlugins}"
-                        PreviewMouseWheel="MarkdownViewer_PreviewMouseWheel"
-                        VerticalScrollBarVisibility="Disabled"
-                        Visibility="Collapsed" />
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <!--  This row is for bottom margin  -->
+                            <RowDefinition Height="20" />
+                        </Grid.RowDefinitions>
+                        <mdxam:MarkdownScrollViewer
+                            x:Name="MarkdownViewer"
+                            Grid.Row="0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            ClickAction="SafetyDisplayWithRelativePath"
+                            HorizontalScrollBarVisibility="Disabled"
+                            Loaded="MarkdownViewer_Loaded"
+                            MouseWheel="MarkdownViewer_MouseWheel"
+                            Plugins="{StaticResource MdXamlPlugins}"
+                            PreviewMouseWheel="MarkdownViewer_PreviewMouseWheel"
+                            VerticalScrollBarVisibility="Disabled"
+                            Visibility="Collapsed" />
+                    </Grid>
                 </ScrollViewer>
 
                 <!--  This Grid is for display progress ring and refresh button.  -->
