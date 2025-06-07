@@ -432,7 +432,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
         #endregion
 
-        private string? PromptUserSelectPath(ResultType type, string? initialDirectory = null)
+        private static string? PromptUserSelectPath(ResultType type, string? initialDirectory = null)
         {
             string? path = null;
 
