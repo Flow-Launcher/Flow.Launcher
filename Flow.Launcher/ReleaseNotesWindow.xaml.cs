@@ -34,6 +34,11 @@ namespace Flow.Launcher
             Close();
         }
 
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            ModernWpf.ThemeManager.Current.ActualApplicationThemeChanged -= ThemeManager_ActualApplicationThemeChanged;
+        }
+
         #endregion
 
         #region Window Custom TitleBar
@@ -99,7 +104,9 @@ namespace Flow.Launcher
             {
                 releaseNotesHtmlBuilder.AppendLine("# " + release.Name);
 
-                // Add unit for images: Replace <img src="..." width="500"> with <img src="..." width="500px">
+                // Because MdXaml.Html package cannot correctly render images without units,
+                // We need to manually add unit for images
+                // E.g. Replace <img src="..." width="500"> with <img src="..." width="500px">
                 var notes = ImageUnitRegex().Replace(release.ReleaseNotes, m =>
                     {
                         var prefix = m.Groups[1].Value;
@@ -182,11 +189,6 @@ namespace Flow.Launcher
                     MarkdownViewer.Markdown = output;
                 }
             });
-        }
-
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            ModernWpf.ThemeManager.Current.ActualApplicationThemeChanged -= ThemeManager_ActualApplicationThemeChanged;
         }
 
         private void ThemeManager_ActualApplicationThemeChanged(ModernWpf.ThemeManager sender, object args)
