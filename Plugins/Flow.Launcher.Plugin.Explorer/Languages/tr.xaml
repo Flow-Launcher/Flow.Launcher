@@ -3,6 +3,8 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">Please make a selection first</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Please select a folder path.</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Please choose a different name or folder path.</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Lütfen bir klasör bağlantısı seçin</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">{0} bağlantısını silmek istediğinize emin misiniz?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">Bu dosyayı kalıcı olarak silmek istediğinizden emin misiniz?</system:String>
@@ -25,6 +27,7 @@
     <system:String x:Key="plugin_explorer_add">Ekle</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">Genel Ayarlar</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Anahtar Kelimeler</system:String>
+    <system:String x:Key="plugin_explorer_manage_quick_access_links_header">Customise Quick Access</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Quick Access Links</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Everything Ayarları</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">Önizleme Paneli</system:String>
@@ -90,6 +93,7 @@
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Mevcut dosyayı kalıcı olarak sil</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Mevcut klasörü kalıcı olarak sil</system:String>
     <system:String x:Key="plugin_explorer_path">Yol:</system:String>
+    <system:String x:Key="plugin_explorer_name">Name:</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Seçileni sil</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Başka bir kullanıcı olarak çalıştır</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Run the selected using a different user account</system:String>
