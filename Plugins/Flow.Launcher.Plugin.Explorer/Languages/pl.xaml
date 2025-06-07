@@ -3,6 +3,8 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">Pierw dokonaj wyboru</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Please select a folder path.</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Please choose a different name or folder path.</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Musisz wybrać któryś folder z listy</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">Czy jesteś pewien że chcesz usunąć {0}?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">Jesteś pewny, że chcesz usunąć ten plik trwale?</system:String>
@@ -25,6 +27,7 @@
     <system:String x:Key="plugin_explorer_add">Dodaj</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">Ustawienia ogólne</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Zmień słowa kluczowe akcji</system:String>
+    <system:String x:Key="plugin_explorer_manage_quick_access_links_header">Customise Quick Access</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Linki szybkiego dostępu</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Ustawienia Everything</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">Panel podglądu</system:String>
@@ -90,6 +93,7 @@
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Trwale usuń bieżący plik</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Trwale usuń bieżący folder</system:String>
     <system:String x:Key="plugin_explorer_path">Ścieżka:</system:String>
+    <system:String x:Key="plugin_explorer_name">Name:</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Usuń zaznaczone</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Uruchom jako inny użytkownik</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Uruchom wybrane używając innego konta użytkownika</system:String>
