@@ -10,7 +10,6 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Http;
-using MdXaml;
 
 namespace Flow.Launcher
 {
@@ -155,7 +154,6 @@ namespace Flow.Launcher
 
         private void MarkdownViewer_Loaded(object sender, RoutedEventArgs e)
         {
-            MarkdownViewer.MarkdownStyle = MarkdownStyle.GithubLike;
             RefreshMarkdownViewer();
         }
 
@@ -197,11 +195,13 @@ namespace Flow.Launcher
             {
                 if (ModernWpf.ThemeManager.Current.ActualApplicationTheme == ModernWpf.ApplicationTheme.Light)
                 {
+                    MarkdownViewer.MarkdownStyle = (Style)Application.Current.Resources["DocumentStyleGithubLikeLight"];
                     MarkdownViewer.Foreground = Brushes.Black;
                     MarkdownViewer.Background = Brushes.White;
                 }
                 else
                 {
+                    MarkdownViewer.MarkdownStyle = (Style)Application.Current.Resources["DocumentStyleGithubLikeDark"];
                     MarkdownViewer.Foreground = Brushes.White;
                     MarkdownViewer.Background = Brushes.Black;
                 }
