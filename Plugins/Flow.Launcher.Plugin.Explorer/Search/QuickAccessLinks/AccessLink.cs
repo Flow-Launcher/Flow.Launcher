@@ -7,7 +7,5 @@
         public ResultType Type { get; set; } = ResultType.Folder;
 
         public string Name { get; set; }
-
     }
-
 }
