@@ -54,6 +54,7 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
     
     public QuickAccessLinkSettings(ObservableCollection<AccessLink> quickAccessLinks)
     {
+        IsEdit = false;
         QuickAccessLinks = quickAccessLinks;
         InitializeComponent();
     }
@@ -114,7 +115,7 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
     
     private void EditAccessLink()
     {
-        if (SelectedAccessLink == null) throw new ArgumentException("Access Link object is null");
+        if (SelectedAccessLink == null) return;
 
         var index = QuickAccessLinks.IndexOf(SelectedAccessLink);
         if (index >= 0)
