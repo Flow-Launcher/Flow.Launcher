@@ -171,21 +171,25 @@
                     Grid.Row="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="5"
+                    Height="500"
                     Margin="15 0 20 0"
                     HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
                     ClickAction="SafetyDisplayWithRelativePath"
                     Loaded="MarkdownViewer_Loaded"
-                    Plugins="{StaticResource MdXamlPlugins}" />
+                    Plugins="{StaticResource MdXamlPlugins}"
+                    Visibility="Collapsed" />
 
-                <!--  Put this Grid in the same position as MarkdownViewer  -->
+                <!--  This Grid is for display progress ring and refresh button.  -->
+                <!--  And it is also for changing the size of the MarkdownViewer.  -->
+                <!--  Because VerticalAlignment="Stretch" can cause size issue with MarkdownViewer.  -->
                 <Grid
                     Grid.Row="2"
                     Grid.Column="0"
                     Grid.ColumnSpan="5"
                     Margin="15 0 20 0"
                     HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch">
+                    VerticalAlignment="Stretch"
+                    SizeChanged="Grid_SizeChanged">
                     <ui:ProgressRing
                         x:Name="RefreshProgressRing"
                         Width="32"

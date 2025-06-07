@@ -185,11 +185,13 @@ namespace Flow.Launcher
                 if (string.IsNullOrEmpty(output))
                 {
                     RefreshButton.Visibility = Visibility.Visible;
+                    MarkdownViewer.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
                     RefreshButton.Visibility = Visibility.Collapsed;
                     MarkdownViewer.Markdown = output;
+                    MarkdownViewer.Visibility = Visibility.Visible;
                 }
             });
         }
@@ -211,6 +213,12 @@ namespace Flow.Launcher
                     MarkdownViewer.Background = Brushes.Black;
                 }
             });
+        }
+
+        private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            MarkdownViewer.Height = e.NewSize.Height;
+            MarkdownViewer.Width = e.NewSize.Width;
         }
     }
 }
