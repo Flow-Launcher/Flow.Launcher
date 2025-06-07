@@ -314,4 +314,11 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     {
         SettingWindowFont = Win32Helper.GetSystemDefaultFont(false);
     }
+
+    [RelayCommand]
+    private void OpenReleaseNotes()
+    {
+        var releaseNotesWindow = new ReleaseNotesWindow();
+        releaseNotesWindow.Show();
+    }
 }
