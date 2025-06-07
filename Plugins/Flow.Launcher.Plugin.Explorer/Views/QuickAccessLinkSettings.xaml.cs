@@ -47,7 +47,7 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
         }
     }
 
-    private bool IsEdit { get; set; }
+    private bool IsEdit { get; }
     private AccessLink SelectedAccessLink { get; }
     
     public ObservableCollection<AccessLink> QuickAccessLinks { get; }
@@ -77,30 +77,55 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
 
     private void OnDoneButtonClick(object sender, RoutedEventArgs e)
     {
+        // Validate the input before proceeding
         if (string.IsNullOrEmpty(SelectedName) || string.IsNullOrEmpty(SelectedPath))
         {
             var warning = Main.Context.API.GetTranslation("plugin_explorer_quick_access_link_no_folder_selected");
             Main.Context.API.ShowMsgBox(warning);
             return;
         }
-        
+
+        // Check if the path already exists in the quick access links
         if (QuickAccessLinks.Any(x =>
                 x.Path.Equals(SelectedPath, StringComparison.OrdinalIgnoreCase) &&
-                                      x.Name.Equals(SelectedName, StringComparison.OrdinalIgnoreCase)))
+                x.Name.Equals(SelectedName, StringComparison.OrdinalIgnoreCase)))
         {
             var warning = Main.Context.API.GetTranslation("plugin_explorer_quick_access_link_path_already_exists");
             Main.Context.API.ShowMsgBox(warning);
             return;
         }
+
+        // If editing, update the existing link
         if (IsEdit) 
         {
-            EditAccessLink();
-            return;
+            if (SelectedAccessLink == null) return;
+
+            var index = QuickAccessLinks.IndexOf(SelectedAccessLink);
+            if (index >= 0)
+            {
+                var updatedLink = new AccessLink
+                {
+                    Name = SelectedName,
+                    Type = SelectedAccessLink.Type,
+                    Path = SelectedPath
+                };
+                QuickAccessLinks[index] = updatedLink;
+            }
+            DialogResult = true;
+            Close();
         }
-        var newAccessLink = new AccessLink { Name = SelectedName, Path = SelectedPath };
-        QuickAccessLinks.Add(newAccessLink);
-        DialogResult = true;
-        Close();
+        // Otherwise, add a new one
+        else
+        {
+            var newAccessLink = new AccessLink
+            {
+                Name = SelectedName,
+                Path = SelectedPath
+            };
+            QuickAccessLinks.Add(newAccessLink);
+            DialogResult = true;
+            Close();
+        }
     }
 
     private void SelectPath_OnClick(object commandParameter, RoutedEventArgs e)
@@ -111,21 +136,6 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
             return;
 
         SelectedPath = folderBrowserDialog.SelectedPath;
-    }
-    
-    private void EditAccessLink()
-    {
-        if (SelectedAccessLink == null) return;
-
-        var index = QuickAccessLinks.IndexOf(SelectedAccessLink);
-        if (index >= 0)
-        {
-            var updatedLink = new AccessLink { Name = SelectedName, Path = SelectedPath };
-            QuickAccessLinks[index] = updatedLink;
-        }
-        DialogResult = true;
-        IsEdit = false;
-        Close();
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
