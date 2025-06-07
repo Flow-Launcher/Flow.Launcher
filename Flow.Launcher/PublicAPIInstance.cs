@@ -31,7 +31,6 @@ using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
 using JetBrains.Annotations;
-using Squirrel;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher
@@ -88,7 +87,7 @@ namespace Flow.Launcher
             // Restart requires Squirrel's Update.exe to be present in the parent folder, 
             // it is only published from the project's release pipeline. When debugging without it,
             // the project may not restart or just terminates. This is expected.
-            UpdateManager.RestartApp(Constant.ApplicationFileName);
+            App.RestartApp();
         }
 
         public void ShowMainWindow() => _mainVM.Show();

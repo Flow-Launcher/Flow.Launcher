@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,6 +26,7 @@ using Flow.Launcher.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.Threading;
+using Squirrel;
 
 namespace Flow.Launcher
 {
@@ -236,12 +239,23 @@ namespace Flow.Launcher
             {
                 try
                 {
-                    Helper.AutoStartup.CheckIsEnabled(_settings.UseLogonTaskForStartup);
+                    Helper.AutoStartup.CheckIsEnabled(_settings.UseLogonTaskForStartup, _settings.AlwaysRunAsAdministrator);
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    // If it fails for permission, we need to ask the user to restart as administrator
+                    if (API.ShowMsgBox(
+                        API.GetTranslation("runAsAdministratorChangeAndRestart"),
+                        API.GetTranslation("runAsAdministratorChange"),
+                        MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        RestartAppAsAdministrator();
+                    }
                 }
                 catch (Exception e)
                 {
-                    // but if it fails (permissions, etc) then don't keep retrying
-                    // this also gives the user a visual indication in the Settings widget
+                    // But if it fails for other reasons then do not keep retrying,
+                    // set startup to false to give users a visual indication in the general page
                     _settings.StartFlowLauncherOnSystemStartup = false;
                     API.ShowMsg(API.GetTranslation("setAutoStartFailed"), e.Message);
                 }
@@ -315,6 +329,63 @@ namespace Flow.Launcher
         private static void RegisterTaskSchedulerUnhandledException()
         {
             TaskScheduler.UnobservedTaskException += ErrorReporting.TaskSchedulerUnobservedTaskException;
+        }
+
+        #endregion
+
+        #region Restart
+
+        /// <summary>
+        /// Restart the application without changing the user privileges.
+        /// </summary>
+        public static void RestartApp(bool forceAdmin = false)
+        {
+            if (Win32Helper.IsAdministrator() || forceAdmin)
+            {
+                RestartAppAsAdministrator();
+            }
+            else
+            {
+                // Restart requires Squirrel's Update.exe to be present in the parent folder, 
+                // it is only published from the project's release pipeline. When debugging without it,
+                // the project may not restart or just terminates. This is expected.
+                UpdateManager.RestartApp(Constant.ApplicationFileName);
+            }
+        }
+
+        // Since Squirrel does not provide a way to restart the app as administrator,
+        // we need to do it manually by starting the update.exe with the runas verb
+        private static void RestartAppAsAdministrator()
+        {
+            var startInfo = new ProcessStartInfo
+            {
+                FileName = getUpdateExe(),
+                Arguments = $"--processStartAndWait {Constant.ExecutablePath}",
+                UseShellExecute = true,
+                Verb = "runas",
+            };
+            Process.Start(startInfo);
+            Thread.Sleep(500);
+            Environment.Exit(0);
+
+            // Local function
+            static string getUpdateExe()
+            {
+                Assembly entryAssembly = Assembly.GetEntryAssembly();
+                if (entryAssembly != null && Path.GetFileName(entryAssembly.Location).Equals("update.exe", StringComparison.OrdinalIgnoreCase) && entryAssembly.Location.IndexOf("app-", StringComparison.OrdinalIgnoreCase) == -1 && entryAssembly.Location.IndexOf("SquirrelTemp", StringComparison.OrdinalIgnoreCase) == -1)
+                {
+                    return Path.GetFullPath(entryAssembly.Location);
+                }
+
+                entryAssembly = Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
+                FileInfo fileInfo = new FileInfo(Path.Combine(Path.GetDirectoryName(entryAssembly.Location), "..\\Update.exe"));
+                if (!fileInfo.Exists)
+                {
+                    throw new Exception("Update.exe not found, not a Squirrel-installed app?");
+                }
+
+                return fileInfo.FullName;
+            }
         }
 
         #endregion

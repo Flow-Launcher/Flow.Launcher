@@ -6,6 +6,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -788,6 +789,17 @@ namespace Flow.Launcher.Infrastructure
                 if (pidlFile != null) PInvoke.CoTaskMemFree(pidlFile);
                 if (pidlFolder != null) PInvoke.CoTaskMemFree(pidlFolder);
             }
+        }
+
+        #endregion
+
+        #region Administrator Mode
+
+        public static bool IsAdministrator()
+        {
+            using var identity = WindowsIdentity.GetCurrent();
+            var principal = new WindowsPrincipal(identity);
+            return principal.IsInRole(WindowsBuiltInRole.Administrator);
         }
 
         #endregion
