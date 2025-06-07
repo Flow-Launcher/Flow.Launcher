@@ -25,4 +25,6 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Браузерний рушій</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">Якщо ви не використовуєте Chrome, Firefox або Edge, або використовуєте їхні портативні версії, вам потрібно додати каталог даних закладок і вибрати правильний рушій браузера, щоб цей плагін працював.</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">Наприклад: Рушій Brave - Chromium, і за замовчуванням розташування даних закладок: &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. Для браузера Firefox директорія закладок - це папка userdata, що містить файл places.sqlite.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Load favicons (can be time consuming during startup)</system:String>
+
 </ResourceDictionary>

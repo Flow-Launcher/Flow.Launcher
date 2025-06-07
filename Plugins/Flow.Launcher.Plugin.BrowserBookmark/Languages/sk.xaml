@@ -25,4 +25,6 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Jadro prehliadača</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">Ak nepoužívate prehliadač Chrome, Firefox alebo Edge alebo používate ich prenosnú verziu, musíte pridať priečinok s údajmi o záložkách a vybrať správne jadro prehliadača, aby tento plugin fungoval.</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">Napríklad: Prehliadač Brave má jadro Chromium; predvolené umiestnenie údajov o záložkách je: &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. Pre jadro Firefoxu je priečinkom záložiek priečinok userdata, ktorý obsahuje súbor places.sqlite.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Načítať favicony (môže trvať dlhšie počas spúšťania)</system:String>
+
 </ResourceDictionary>

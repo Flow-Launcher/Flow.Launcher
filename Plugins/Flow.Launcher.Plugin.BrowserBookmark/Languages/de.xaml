@@ -26,4 +26,6 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">Wenn Sie nicht Chrome, Firefox oder Edge verwenden oder deren portable Version nutzen, müssen Sie das Lesezeichen-Datenverzeichnis hinzufügen und die richtige Browser-Engine auswählen, damit dieses Plug-in funktioniert.</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">Zum Beispiel: Die Engine von Brave ist Chromium, und deren Standardspeicherort der Lesezeichen-Daten ist:
 %LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. Bei der Firefox-Engine ist das Lesezeichenverzeichnis der Ordner userdata, der die Datei places.sqlite enthält.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Load favicons (can be time consuming during startup)</system:String>
+
 </ResourceDictionary>

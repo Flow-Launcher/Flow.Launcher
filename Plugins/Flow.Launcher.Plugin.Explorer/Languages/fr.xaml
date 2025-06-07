@@ -3,6 +3,8 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">Veuillez d'abord effectuer une sélection</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Veuillez sélectionner un chemin d'accès au dossier.</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Veuillez choisir un nom ou un chemin d'accès différent.</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Veuillez sélectionner un lien vers un dossier</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">Êtes-vous sûr de vouloir supprimer {0} ?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">Êtes-vous sûr de vouloir supprimer définitivement ce fichier ?</system:String>
@@ -25,6 +27,7 @@
     <system:String x:Key="plugin_explorer_add">Ajouter</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">Paramètres généraux</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Personnaliser les mots-clés d'action</system:String>
+    <system:String x:Key="plugin_explorer_manage_quick_access_links_header">Personnaliser l'accès rapide</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Liens d'accès rapide</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Paramètres Everything</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">Panneau d'aperçu</system:String>
@@ -90,6 +93,7 @@
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Supprimer définitivement le fichier actuel</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Supprimer définitivement le dossier actuel</system:String>
     <system:String x:Key="plugin_explorer_path">Chemin :</system:String>
+    <system:String x:Key="plugin_explorer_name">Nom :</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Supprimer la sélection</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Exécuter en tant qu'utilisateur différent</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Exécuter le programme sélectionné en utilisant un autre compte d'utilisateur</system:String>
@@ -159,6 +163,9 @@
     <system:String x:Key="flowlauncher_plugin_everything_installing_select">Impossible de trouver une installation d'Everything, souhaitez-vous sélectionner manuellement un emplacement ? {0}{0} Cliquez sur non et Everything sera automatiquement installé pour vous.</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Voulez-vous activer la recherche de contenu pour Everything ?</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">Il peut être très lent sans index (qui n'est supporté que dans Everything v1.5+).</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_everything_not_found">Impossible de trouver Everything.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_install_issue">Impossible d'installer Everything, veuillez l'installer manuellement</system:String>
 
     <!--  Native Context Menu  -->
     <system:String x:Key="plugin_explorer_native_context_menu_header">Menu contextuel natif</system:String>

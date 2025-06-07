@@ -3,6 +3,8 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">يرجى إجراء تحديد أولاً</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Please select a folder path.</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Please choose a different name or folder path.</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">يرجى تحديد رابط المجلد</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">هل أنت متأكد أنك تريد حذف {0}؟</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">هل أنت متأكد أنك تريد حذف هذا الملف نهائيًا؟</system:String>
@@ -25,6 +27,7 @@
     <system:String x:Key="plugin_explorer_add">إضافة</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">إعدادات عامة</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">تخصيص الكلمات المفتاحية للإجراءات</system:String>
+    <system:String x:Key="plugin_explorer_manage_quick_access_links_header">Customise Quick Access</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">روابط الوصول السريع</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">إعدادات Everything</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">لوحة المعاينة</system:String>
@@ -90,6 +93,7 @@
     <system:String x:Key="plugin_explorer_deletefile_subtitle">حذف الملف الحالي نهائيًا</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">حذف المجلد الحالي نهائيًا</system:String>
     <system:String x:Key="plugin_explorer_path">المسار:</system:String>
+    <system:String x:Key="plugin_explorer_name">Name:</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">حذف المحدد</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">تشغيل كمستخدم مختلف</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">تشغيل العنصر المحدد باستخدام حساب مستخدم مختلف</system:String>
@@ -159,6 +163,9 @@
     <system:String x:Key="flowlauncher_plugin_everything_installing_select">تعذر العثور على تثبيت Everything، هل ترغب في تحديد موقع يدويًا؟{0}{0}انقر لا وسيتم تثبيت Everything تلقائيًا لك</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">هل ترغب في تمكين البحث في المحتوى لـ Everything؟</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">قد يكون بطيئًا جدًا بدون فهرسة (المدعومة فقط في Everything v1.5+)</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_everything_not_found">Unable to find Everything.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_install_issue">Failed to install Everything, please install it manually</system:String>
 
     <!--  Native Context Menu  -->
     <system:String x:Key="plugin_explorer_native_context_menu_header">قائمة السياق الأصلية</system:String>
