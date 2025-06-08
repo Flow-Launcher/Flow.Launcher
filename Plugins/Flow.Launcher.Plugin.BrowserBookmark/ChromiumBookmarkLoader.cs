@@ -155,9 +155,6 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
             return;
         }
 
-        // Cache connection for pool clean
-        SqliteConnection connection1 = null;
-
         try
         {
             // Since some bookmarks may have same favicon id, we need to record them to avoid duplicates
@@ -167,7 +164,8 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
             Parallel.ForEach(bookmarks, bookmark =>
             {
                 // Use read-only connection to avoid locking issues
-                var connection = new SqliteConnection($"Data Source={tempDbPath};Mode=ReadOnly");
+                // Do not use pooling so that we do not need to clear pool: https://github.com/dotnet/efcore/issues/26580
+                var connection = new SqliteConnection($"Data Source={tempDbPath};Mode=ReadOnly;Pooling=false");
                 connection.Open();
 
                 try
@@ -221,7 +219,6 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
                 {
                     // Cache connection and clear pool after all operations to avoid issue:
                     // ObjectDisposedException: Safe handle has been closed.
-                    connection1 = connection;
                     connection.Close();
                     connection.Dispose();
                 }
@@ -235,11 +232,6 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
         // Delete temporary file
         try
         {
-            // https://github.com/dotnet/efcore/issues/26580
-            if (connection1 != null)
-            {
-                SqliteConnection.ClearPool(connection1);
-            }
             File.Delete(tempDbPath);
         }
         catch (Exception ex)
