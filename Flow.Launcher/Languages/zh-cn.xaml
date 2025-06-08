@@ -239,7 +239,7 @@
     <system:String x:Key="AnimationSpeedCustom">自定义</system:String>
     <system:String x:Key="Clock">时钟</system:String>
     <system:String x:Key="Date">日期</system:String>
-    <system:String x:Key="BackdropType">返回类型</system:String>
+    <system:String x:Key="BackdropType">背景类型</system:String>
     <system:String x:Key="BackdropInfo">预览中没有应用背景效果。</system:String>
     <system:String x:Key="BackdropTypeDisabledToolTip">自 Windows 11 Build 22000 起支持背景效果</system:String>
     <system:String x:Key="BackdropTypesNone">无</system:String>
