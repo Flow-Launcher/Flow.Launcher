@@ -296,7 +296,7 @@ namespace Flow.Launcher
         {
             foreach (var savable in _pluginJsonStorages.Values)
             {
-                savable?.Save();
+                savable.Save();
             }
         }
 
@@ -514,7 +514,7 @@ namespace Flow.Launcher
         {
             foreach (var savable in _pluginBinaryStorages.Values)
             {
-                savable?.Save();
+                savable.Save();
             }
         }
 
