@@ -264,9 +264,10 @@ public class FirefoxBookmarkLoader : FirefoxBookmarkLoaderBase
     /// </summary>
     public override List<Bookmark> GetBookmarks()
     {
-        var bookmarks1 = GetBookmarksFromPath(PlacesPath);
-        var bookmarks2 = GetBookmarksFromPath(MsixPlacesPath);
-        return bookmarks1.Concat(bookmarks2).ToList();
+        var bookmarks = new List<Bookmark>();
+        bookmarks.AddRange(GetBookmarksFromPath(PlacesPath));
+        bookmarks.AddRange(GetBookmarksFromPath(MsixPlacesPath));
+        return bookmarks;
     }
 
     /// <summary>
