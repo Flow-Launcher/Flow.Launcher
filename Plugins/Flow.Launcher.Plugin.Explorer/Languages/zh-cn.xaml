@@ -164,8 +164,8 @@
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">您想要启用 Everything 的内容搜索功能吗？</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">如果没有索引，它可能会非常慢（索引仅在 Everything v1.5+ 中支持）</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_everything_not_found">Unable to find Everything.exe</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_install_issue">Failed to install Everything, please install it manually</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_not_found">找不到 Everything.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_install_issue">安装 Everything 失败，请手动安装</system:String>
 
     <!--  Native Context Menu  -->
     <system:String x:Key="plugin_explorer_native_context_menu_header">本机上下文菜单</system:String>
