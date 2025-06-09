@@ -215,6 +215,8 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         DropdownDataGeneric<QuickSwitchWindowPositions>.UpdateLabels(QuickSwitchWindowPositions);
         DropdownDataGeneric<QuickSwitchResultBehaviours>.UpdateLabels(QuickSwitchResultBehaviours);
         DropdownDataGeneric<QuickSwitchFileResultBehaviours>.UpdateLabels(QuickSwitchFileResultBehaviours);
+        // Since we are using Binding instead of DynamicResource, we need to manually trigger the update
+        OnPropertyChanged(nameof(AlwaysPreviewToolTip));
     }
 
     public string Language
