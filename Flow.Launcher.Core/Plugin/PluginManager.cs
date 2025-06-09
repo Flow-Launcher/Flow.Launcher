@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text.Json;
 using System.Threading;
@@ -633,6 +634,42 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
+        public static async Task InstallPluginAndCheckRestartAsync(string filePath)
+        {
+            UserPlugin plugin;
+            try
+            {
+                using ZipArchive archive = ZipFile.OpenRead(filePath);
+                var pluginJsonPath = archive.Entries.FirstOrDefault(x => x.Name == "plugin.json") ??
+                    throw new FileNotFoundException("The zip file does not contain a plugin.json file.");
+                var pluginJsonEntry = archive.GetEntry(pluginJsonPath.ToString()) ??
+                    throw new FileNotFoundException("The zip file does not contain a plugin.json file.");
+                
+                using Stream stream = pluginJsonEntry.Open();
+                plugin = JsonSerializer.Deserialize<UserPlugin>(stream);
+                plugin.IcoPath = "Images\\zipfolder.png";
+                plugin.LocalInstallPath = filePath;
+            }
+            catch (Exception e)
+            {
+                API.LogException(ClassName, "Failed to validate zip file", e);
+                API.ShowMsgError(API.GetTranslation("ZipFileNotHavePluginJson"));
+                return;
+            }
+
+            if (FlowSettings.ShowUnknownSourceWarning)
+            {
+                if (!InstallSourceKnown(plugin.Website)
+                    && API.ShowMsgBox(string.Format(
+                        API.GetTranslation("InstallFromUnknownSourceSubtitle"), Environment.NewLine),
+                        API.GetTranslation("InstallFromUnknownSourceTitle"),
+                        MessageBoxButton.YesNo) == MessageBoxResult.No)
+                    return;
+            }
+
+            await InstallPluginAndCheckRestartAsync(plugin);
+        }
+
         public static async Task UninstallPluginAndCheckRestartAsync(PluginMetadata oldPlugin)
         {
             if (API.ShowMsgBox(
@@ -911,6 +948,24 @@ namespace Flow.Launcher.Core.Plugin
             {
                 await API.HttpDownloadAsync(downloadUrl, filePath, token: cts.Token).ConfigureAwait(false);
             }
+        }
+
+        private static bool InstallSourceKnown(string url)
+        {
+            var pieces = url.Split('/');
+
+            if (pieces.Length < 4)
+                return false;
+
+            var author = pieces[3];
+            var acceptedSource = "https://github.com";
+            var constructedUrlPart = string.Format("{0}/{1}/", acceptedSource, author);
+
+            return url.StartsWith(acceptedSource) &&
+                API.GetAllPlugins().Any(x =>
+                    !string.IsNullOrEmpty(x.Metadata.Website) &&
+                    x.Metadata.Website.StartsWith(constructedUrlPart)
+                );
         }
 
         #endregion
