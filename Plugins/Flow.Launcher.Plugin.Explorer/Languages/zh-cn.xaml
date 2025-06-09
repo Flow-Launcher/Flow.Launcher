@@ -4,7 +4,7 @@
     <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">请先进行选择</system:String>
     <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">请选择一个文件夹路径。</system:String>
-    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">请选择一个不同的名称或文件夹路径。</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">请选择不同的名称或文件夹路径。</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">请选择一个文件夹链接</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">您确定要删除 {0} 吗?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">您确定要永久删除此文件吗？</system:String>
@@ -44,7 +44,7 @@
     <system:String x:Key="plugin_explorer_shell_path">Shell 路径</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">索引搜索排除的路径</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">使用搜索结果的位置作为应用程序的工作目录</system:String>
-    <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Display more information like size and age in tooltips</system:String>
+    <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">在提示框中显示更多信息，例如大小和年龄</system:String>
     <system:String x:Key="plugin_explorer_default_open_in_file_manager">点击回车在默认文件管理器中打开文件夹</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">使用索引进行路径搜索</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">索引选项</system:String>
@@ -81,9 +81,9 @@
     <!--  Plugin Tooltip  -->
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter 以打开目录</system:String>
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Enter 以打开所在的文件夹</system:String>
-    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info">{0}{4}Size: {1}{4}Date created: {2}{4}Date modified: {3}</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info">{0}{4}大小：{1}{4}创建日期：{2}{4}修改日期：{3}</system:String>
     <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_unknown">未知</system:String>
-    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_volume">{0}{3}Space free: {1}{3}Total size: {2}</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_volume">{0}{3}空闲空间：{1}{3}总空间：{2}</system:String>
 
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">复制路径</system:String>
