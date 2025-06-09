@@ -287,7 +287,7 @@ namespace Flow.Launcher
         public void LogException(string className, string message, Exception e, [CallerMemberName] string methodName = "") =>
             Log.Exception(className, message, e, methodName);
 
-        private readonly ConcurrentDictionary<Type, object> _pluginJsonStorages = new();
+        private readonly ConcurrentDictionary<Type, ISavable> _pluginJsonStorages = new();
 
         public void RemovePluginSettings(string assemblyName)
         {
@@ -305,10 +305,9 @@ namespace Flow.Launcher
 
         public void SavePluginSettings()
         {
-            foreach (var value in _pluginJsonStorages.Values)
+            foreach (var savable in _pluginJsonStorages.Values)
             {
-                var savable = value as ISavable;
-                savable?.Save();
+                savable.Save();
             }
         }
 
@@ -507,7 +506,7 @@ namespace Flow.Launcher
         public bool SetCurrentTheme(ThemeData theme) =>
             Theme.ChangeTheme(theme.FileNameWithoutExtension);
 
-        private readonly ConcurrentDictionary<(string, string, Type), object> _pluginBinaryStorages = new();
+        private readonly ConcurrentDictionary<(string, string, Type), ISavable> _pluginBinaryStorages = new();
 
         public void RemovePluginCaches(string cacheDirectory)
         {
@@ -524,10 +523,9 @@ namespace Flow.Launcher
 
         public void SavePluginCaches()
         {
-            foreach (var value in _pluginBinaryStorages.Values)
+            foreach (var savable in _pluginBinaryStorages.Values)
             {
-                var savable = value as ISavable;
-                savable?.Save();
+                savable.Save();
             }
         }
 
