@@ -25,7 +25,6 @@ namespace Flow.Launcher
                     if (_notificationActions.TryGetValue(actionId, out var action))
                     {
                         action?.Invoke();
-                        _notificationActions.Remove(actionId);
                     }
                 };
             }
