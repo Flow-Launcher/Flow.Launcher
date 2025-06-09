@@ -178,10 +178,10 @@
     <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Below you can specify items you want to exclude from context menu, they can be partial (e.g. 'pen wit') or complete ('Open with').</system:String>
 
     <!--  Preview Info  -->
-    <system:String x:Key="Today">Today</system:String>
-    <system:String x:Key="DaysAgo">{0} days ago</system:String>
-    <system:String x:Key="OneMonthAgo">1 month ago</system:String>
-    <system:String x:Key="MonthsAgo">{0} months ago</system:String>
-    <system:String x:Key="OneYearAgo">1 year ago</system:String>
-    <system:String x:Key="YearsAgo">{0} years ago</system:String>
+    <system:String x:Key="Today">Bugün</system:String>
+    <system:String x:Key="DaysAgo">{0} gün önce</system:String>
+    <system:String x:Key="OneMonthAgo">1 ay önce</system:String>
+    <system:String x:Key="MonthsAgo">{0} ay önce</system:String>
+    <system:String x:Key="OneYearAgo">1 yıl önce</system:String>
+    <system:String x:Key="YearsAgo">{0} yıl önce</system:String>
 </ResourceDictionary>
