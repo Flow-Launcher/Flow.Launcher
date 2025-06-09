@@ -370,6 +370,13 @@
     <system:String x:Key="LogLevelINFO">Info</system:String>
     <system:String x:Key="settingWindowFontTitle">Setting Window Font</system:String>
 
+    <!--  Release Notes Window  -->
+    <system:String x:Key="seeMoreReleaseNotes">See more release notes on GitHub</system:String>
+    <system:String x:Key="checkNetworkConnectionTitle">Failed to fetch release notes</system:String>
+    <system:String x:Key="checkNetworkConnectionSubTitle">Please check your network connection or ensure GitHub is accessible</system:String>
+    <system:String x:Key="appUpdateTitle">Flow Launcher has been updated to {0}</system:String>
+    <system:String x:Key="appUpdateButtonContent">Click here to view the release notes</system:String>
+
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Vybrat správce souborů</system:String>
     <system:String x:Key="fileManager_learnMore">Learn more</system:String>
