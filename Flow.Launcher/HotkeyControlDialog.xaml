@@ -125,12 +125,12 @@
             BorderThickness="0 1 0 0"
             CornerRadius="0 0 8 8">
             <StackPanel
-                Margin="10"
+                Margin="10 9 10 10"
                 HorizontalAlignment="Center"
                 Orientation="Horizontal">
                 <Button
                     x:Name="OverwriteBtn"
-                    Height="30"
+                    MinHeight="36"
                     MinWidth="100"
                     Margin="0 0 4 0"
                     Click="Overwrite"
@@ -139,26 +139,26 @@
                     Visibility="Collapsed" />
                 <Button
                     x:Name="SaveBtn"
-                    Height="30"
+                    MinHeight="36"
                     MinWidth="100"
                     Margin="0 0 4 0"
                     Click="Save"
                     Content="{DynamicResource commonSave}"
                     Style="{StaticResource AccentButtonStyle}" />
                 <Button
-                    Height="30"
+                    MinHeight="36"
                     MinWidth="100"
                     Margin="4 0 4 0"
                     Click="Reset"
                     Content="{DynamicResource commonReset}" />
                 <Button
-                    Height="30"
+                    MinHeight="36"
                     MinWidth="100"
                     Margin="4 0 4 0"
                     Click="Delete"
                     Content="{DynamicResource commonDelete}" />
                 <Button
-                    Height="30"
+                    MinHeight="36"
                     MinWidth="100"
                     Margin="4 0 0 0"
                     Click="Cancel"
