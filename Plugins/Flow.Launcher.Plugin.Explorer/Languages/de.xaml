@@ -31,6 +31,7 @@
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Größe</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Erstellungsdatum</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Änderungsdatum</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_age_checkbox">File Age</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Datei-Info anzeigen</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Datums- und Zeitformat</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Sortieroption:</system:String>
@@ -80,6 +81,8 @@
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">Pfad kopieren</system:String>
     <system:String x:Key="plugin_explorer_copypath_subtitle">Pfad des aktuellen Elements in Zwischenablage kopieren</system:String>
+    <system:String x:Key="plugin_explorer_copyname">Copy name</system:String>
+    <system:String x:Key="plugin_explorer_copyname_subtitle">Copy name of current item to clipboard</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">Kopieren</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">Aktuelle Datei in Zwischenablage kopieren</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">Aktuellen Ordner in Zwischenablage kopieren</system:String>
@@ -162,4 +165,12 @@
     <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Natives Kontextmenü anzeigen (experimentell)</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Unten können Sie die Elemente angeben, die Sie in das Kontextmenü aufnehmen möchten. Diese können partiell (z. B. „Stift mit“) oder vollständig („Öffnen mit“) sein.</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Unten können Sie die Elemente angeben, die Sie aus dem Kontextmenü ausschließen möchten. Diese können partiell (z. B. „Stift mit“) oder vollständig („Öffnen mit“) sein.</system:String>
+
+    <!--  Preview Info  -->
+    <system:String x:Key="Today">Today</system:String>
+    <system:String x:Key="DaysAgo">{0} days ago</system:String>
+    <system:String x:Key="OneMonthAgo">1 month ago</system:String>
+    <system:String x:Key="MonthsAgo">{0} months ago</system:String>
+    <system:String x:Key="OneYearAgo">1 year ago</system:String>
+    <system:String x:Key="YearsAgo">{0} years ago</system:String>
 </ResourceDictionary>

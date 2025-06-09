@@ -1,54 +1,73 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Navigation;
-using Flow.Launcher.Infrastructure.UserSettings;
-using Microsoft.Win32;
-using Flow.Launcher.Infrastructure;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Helper;
+using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.Resources.Pages
 {
     public partial class WelcomePage5
     {
-        private const string StartupPath = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
-        public Settings Settings { get; set; }
-        public bool HideOnStartup { get; set; }
+        public Settings Settings { get; } = Ioc.Default.GetRequiredService<Settings>();
+        private readonly WelcomeViewModel _viewModel = Ioc.Default.GetRequiredService<WelcomeViewModel>();
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            Settings = Ioc.Default.GetRequiredService<Settings>();
             // Sometimes the navigation is not triggered by button click,
             // so we need to reset the page number
-            Ioc.Default.GetRequiredService<WelcomeViewModel>().PageNum = 5;
-            InitializeComponent();
+            _viewModel.PageNum = 5;
+
+            if (!IsInitialized)
+            {
+                InitializeComponent();
+            }
+            base.OnNavigatedTo(e);
         }
 
         private void OnAutoStartupChecked(object sender, RoutedEventArgs e)
         {
-            SetStartup();
-        }
-        private void OnAutoStartupUncheck(object sender, RoutedEventArgs e)
-        {
-            RemoveStartup();
+            ChangeAutoStartup(true);
         }
 
-        private void RemoveStartup()
+        private void OnAutoStartupUncheck(object sender, RoutedEventArgs e)
         {
-            using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
-            key?.DeleteValue(Constant.FlowLauncher, false);
-            Settings.StartFlowLauncherOnSystemStartup = false;
+            ChangeAutoStartup(false);
         }
-        private void SetStartup()
+
+        private void ChangeAutoStartup(bool value)
         {
-            using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
-            key?.SetValue(Constant.FlowLauncher, Constant.ExecutablePath);
-            Settings.StartFlowLauncherOnSystemStartup = true;
+            Settings.StartFlowLauncherOnSystemStartup = value;
+            try
+            {
+                if (value)
+                {
+                    if (Settings.UseLogonTaskForStartup)
+                    {
+                        AutoStartup.ChangeToViaLogonTask();
+                    }
+                    else
+                    {
+                        AutoStartup.ChangeToViaRegistry();
+                    }
+                }
+                else
+                {
+                    AutoStartup.DisableViaLogonTaskAndRegistry();
+                }
+            }
+            catch (Exception e)
+            {
+                App.API.ShowMsg(App.API.GetTranslation("setAutoStartFailed"), e.Message);
+            }
         }
 
         private void OnHideOnStartupChecked(object sender, RoutedEventArgs e)
         {
             Settings.HideOnStartup = true;
         }
+
         private void OnHideOnStartupUnchecked(object sender, RoutedEventArgs e)
         {
             Settings.HideOnStartup = false;
@@ -59,6 +78,5 @@ namespace Flow.Launcher.Resources.Pages
             var window = Window.GetWindow(this);
             window.Close();
         }
-
     }
 }

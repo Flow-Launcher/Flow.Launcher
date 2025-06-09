@@ -34,7 +34,7 @@
 
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">タイトル</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable">Status</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable">状態</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_select_icon">アイコンを選択</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_icon">アイコン</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_cancel">キャンセル</system:String>

@@ -39,8 +39,8 @@ namespace Flow.Launcher.Test.Plugins
         }
 
         [SupportedOSPlatform("windows7.0")]
-        [TestCase("C:\\", "SELECT TOP 100 System.FileName, System.ItemUrl, System.ItemType FROM SystemIndex WHERE directory='file:C:\\' ORDER BY System.FileName")]
-        [TestCase("C:\\SomeFolder\\", "SELECT TOP 100 System.FileName, System.ItemUrl, System.ItemType FROM SystemIndex WHERE directory='file:C:\\SomeFolder\\' ORDER BY System.FileName")]
+        [TestCase("C:\\", $"SELECT TOP 100 System.FileName, System.ItemUrl, System.ItemType FROM SystemIndex WHERE directory='file:C:\\' ORDER BY {QueryConstructor.OrderIdentifier}")]
+        [TestCase("C:\\SomeFolder\\", $"SELECT TOP 100 System.FileName, System.ItemUrl, System.ItemType FROM SystemIndex WHERE directory='file:C:\\SomeFolder\\' ORDER BY {QueryConstructor.OrderIdentifier}")]
         public void GivenWindowsIndexSearch_WhenSearchTypeIsTopLevelDirectorySearch_ThenQueryShouldUseExpectedString(string folderPath, string expectedString)
         {
             // Given
@@ -59,7 +59,7 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase("C:\\SomeFolder", "flow.launcher.sln", "SELECT TOP 100 System.FileName, System.ItemUrl, System.ItemType" +
                                                          " FROM SystemIndex WHERE directory='file:C:\\SomeFolder'" +
                                                          " AND (System.FileName LIKE 'flow.launcher.sln%' OR CONTAINS(System.FileName,'\"flow.launcher.sln*\"'))" +
-                                                         " ORDER BY System.FileName")]
+                                                         $" ORDER BY {QueryConstructor.OrderIdentifier}")]
         public void GivenWindowsIndexSearchTopLevelDirectory_WhenSearchingForSpecificItem_ThenQueryShouldUseExpectedString(
             string folderPath, string userSearchString, string expectedString)
         {
@@ -87,8 +87,8 @@ namespace Flow.Launcher.Test.Plugins
         [SupportedOSPlatform("windows7.0")]
         [TestCase("flow.launcher.sln", "SELECT TOP 100 \"System.FileName\", \"System.ItemUrl\", \"System.ItemType\" " +
                                        "FROM \"SystemIndex\" WHERE (System.FileName LIKE 'flow.launcher.sln%' " +
-                                       "OR CONTAINS(System.FileName,'\"flow.launcher.sln*\"',1033)) AND scope='file:' ORDER BY System.FileName")]
-        [TestCase("", "SELECT TOP 100 \"System.FileName\", \"System.ItemUrl\", \"System.ItemType\" FROM \"SystemIndex\" WHERE WorkId IS NOT NULL AND scope='file:' ORDER BY System.FileName")]
+                                       $"OR CONTAINS(System.FileName,'\"flow.launcher.sln*\"',1033)) AND scope='file:' ORDER BY {QueryConstructor.OrderIdentifier}")]
+        [TestCase("", $"SELECT TOP 100 \"System.FileName\", \"System.ItemUrl\", \"System.ItemType\" FROM \"SystemIndex\" WHERE WorkId IS NOT NULL AND scope='file:' ORDER BY {QueryConstructor.OrderIdentifier}")]
         public void GivenWindowsIndexSearch_WhenSearchAllFoldersAndFiles_ThenQueryShouldUseExpectedString(
             string userSearchString, string expectedString)
         {
@@ -106,7 +106,6 @@ namespace Flow.Launcher.Test.Plugins
             // Then
             ClassicAssert.AreEqual(expectedString, resultString);
         }
-
 
         [SupportedOSPlatform("windows7.0")]
         [TestCase(@"some words", @"FREETEXT('some words')")]
@@ -127,7 +126,7 @@ namespace Flow.Launcher.Test.Plugins
 
         [SupportedOSPlatform("windows7.0")]
         [TestCase("some words", "SELECT TOP 100 System.FileName, System.ItemUrl, System.ItemType " +
-                                "FROM SystemIndex WHERE FREETEXT('some words') AND scope='file:' ORDER BY System.FileName")]
+                                $"FROM SystemIndex WHERE FREETEXT('some words') AND scope='file:' ORDER BY {QueryConstructor.OrderIdentifier}")]
         public void GivenWindowsIndexSearch_WhenSearchForFileContent_ThenQueryShouldUseExpectedString(
             string userSearchString, string expectedString)
         {

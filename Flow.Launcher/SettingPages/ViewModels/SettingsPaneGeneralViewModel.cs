@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core;
 using Flow.Launcher.Core.Configuration;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
@@ -15,11 +17,12 @@ namespace Flow.Launcher.SettingPages.ViewModels;
 public partial class SettingsPaneGeneralViewModel : BaseModel
 {
     public Settings Settings { get; }
+
     private readonly Updater _updater;
-    private readonly IPortable _portable;
+    private readonly Portable _portable;
     private readonly Internationalization _translater;
 
-    public SettingsPaneGeneralViewModel(Settings settings, Updater updater, IPortable portable, Internationalization translater)
+    public SettingsPaneGeneralViewModel(Settings settings, Updater updater, Portable portable, Internationalization translater)
     {
         Settings = settings;
         _updater = updater;
@@ -46,11 +49,11 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
                 {
                     if (UseLogonTaskForStartup)
                     {
-                        AutoStartup.EnableViaLogonTask();
+                        AutoStartup.ChangeToViaLogonTask();
                     }
                     else
                     {
-                        AutoStartup.EnableViaRegistry();
+                        AutoStartup.ChangeToViaRegistry();
                     }
                 }
                 else
@@ -76,7 +79,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             {
                 try
                 {
-                    if (UseLogonTaskForStartup)
+                    if (value)
                     {
                         AutoStartup.ChangeToViaLogonTask();
                     }
@@ -151,11 +154,22 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             {
                 Settings.SearchDelayTime = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(SearchDelayTimeDisplay));
             }
         }
     }
-    public string SearchDelayTimeDisplay => $"{SearchDelayTimeValue}ms";
+
+    public int MaxHistoryResultsToShowValue
+    {
+        get => Settings.MaxHistoryResultsToShowForHomePage;
+        set
+        {
+            if (Settings.MaxHistoryResultsToShowForHomePage != value)
+            {
+                Settings.MaxHistoryResultsToShowForHomePage = value;
+                OnPropertyChanged();
+            }
+        }
+    }
 
     private void UpdateEnumDropdownLocalizations()
     {
@@ -163,6 +177,8 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         DropdownDataGeneric<SearchWindowAligns>.UpdateLabels(SearchWindowAligns);
         DropdownDataGeneric<SearchPrecisionScore>.UpdateLabels(SearchPrecisionScores);
         DropdownDataGeneric<LastQueryMode>.UpdateLabels(LastQueryModes);
+        // Since we are using Binding instead of DynamicResource, we need to manually trigger the update
+        OnPropertyChanged(nameof(AlwaysPreviewToolTip));
     }
 
     public string Language
@@ -178,6 +194,70 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             UpdateEnumDropdownLocalizations();
         }
     }
+
+    #region Korean IME
+
+    // The new Korean IME used in Windows 11 has compatibility issues with WPF. This issue is difficult to resolve within
+    // WPF itself, but it can be avoided by having the user switch to the legacy IME at the system level. Therefore,
+    // we provide guidance and a direct button for users to make this change themselves. If the relevant registry key does
+    // not exist (i.e., the Korean IME is not installed), this setting will not be shown at all.
+
+    public bool LegacyKoreanIMEEnabled
+    {
+        get => Win32Helper.IsLegacyKoreanIMEEnabled();
+        set
+        {
+            if (Win32Helper.SetLegacyKoreanIMEEnabled(value))
+            {
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(KoreanIMERegistryValueIsZero));
+            }
+            else
+            {
+                //Since this is rarely seen text, language support is not provided.
+                App.API.ShowMsg("Failed to change Korean IME setting", "Please check your system registry access or contact support.");
+            }
+        }
+    }
+
+    public bool KoreanIMERegistryKeyExists
+    {
+        get
+        {
+            var registryKeyExists = Win32Helper.IsKoreanIMEExist();
+            var koreanLanguageInstalled = InputLanguage.InstalledInputLanguages.Cast<InputLanguage>().Any(lang => lang.Culture.Name.StartsWith("ko"));
+            var isWindows11 = Win32Helper.IsWindows11();
+
+            // Return true if Windows 11 with Korean IME installed, or if the registry key exists
+            return (isWindows11 && koreanLanguageInstalled) || registryKeyExists;
+        }
+    }
+
+    public bool KoreanIMERegistryValueIsZero
+    {
+        get
+        {
+            var value = Win32Helper.GetLegacyKoreanIMERegistryValue();
+            if (value is int intValue)
+            {
+                return intValue == 0;
+            }
+            else if (value != null && int.TryParse(value.ToString(), out var parsedValue))
+            {
+                return parsedValue == 0;
+            }
+
+            return false;
+        }
+    }
+
+    [RelayCommand]
+    private void OpenImeSettings()
+    {
+        Win32Helper.OpenImeSettings();
+    }
+
+    #endregion
 
     public bool ShouldUsePinyin
     {
@@ -257,14 +337,14 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     [RelayCommand]
     private void SelectFileManager()
     {
-        var fileManagerChangeWindow = new SelectFileManagerWindow(Settings);
+        var fileManagerChangeWindow = new SelectFileManagerWindow();
         fileManagerChangeWindow.ShowDialog();
     }
 
     [RelayCommand]
     private void SelectBrowser()
     {
-        var browserWindow = new SelectBrowserWindow(Settings);
+        var browserWindow = new SelectBrowserWindow();
         browserWindow.ShowDialog();
     }
 }

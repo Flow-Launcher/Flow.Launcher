@@ -1,13 +1,15 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
+#nullable enable
+
 namespace Flow.Launcher.Plugin.Explorer.Views
 {
     public class ActionKeywordModel : INotifyPropertyChanged
     {
-        private static Settings _settings;
+        private static Settings _settings = null!;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public static void Init(Settings settings)
         {
@@ -21,6 +23,8 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         }
 
         public string Description { get; private init; }
+
+        public string LocalizedDescription => Main.Context.API.GetTranslation(Description);
 
         internal Settings.ActionKeyword KeywordProperty { get; }
 

@@ -2,12 +2,13 @@
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher
 {
     public partial class ProgressBoxEx : Window
     {
+        private static readonly string ClassName = nameof(ProgressBoxEx);
+
         private readonly Action _cancelProgress;
 
         private ProgressBoxEx(Action cancelProgress)
@@ -47,7 +48,7 @@ namespace Flow.Launcher
             }
             catch (Exception e)
             {
-                Log.Error($"|ProgressBoxEx.Show|An error occurred: {e.Message}");
+                App.API.LogError(ClassName, $"An error occurred: {e.Message}");
 
                 await reportProgressAsync(null).ConfigureAwait(false);
             }

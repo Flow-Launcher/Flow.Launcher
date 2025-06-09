@@ -12,6 +12,8 @@ namespace Flow.Launcher.Helper;
 
 public static class WallpaperPathRetrieval
 {
+    private static readonly string ClassName = nameof(WallpaperPathRetrieval);
+
     private const int MaxCacheSize = 3;
     private static readonly Dictionary<(string, DateTime), ImageBrush> WallpaperCache = new();
     private static readonly object CacheLock = new();
@@ -29,7 +31,7 @@ public static class WallpaperPathRetrieval
             var wallpaperPath = Win32Helper.GetWallpaperPath();
             if (string.IsNullOrEmpty(wallpaperPath) || !File.Exists(wallpaperPath))
             {
-                App.API.LogInfo(nameof(WallpaperPathRetrieval), $"Wallpaper path is invalid: {wallpaperPath}");
+                App.API.LogInfo(ClassName, $"Wallpaper path is invalid: {wallpaperPath}");
                 var wallpaperColor = GetWallpaperColor();
                 return new SolidColorBrush(wallpaperColor);
             }
@@ -54,7 +56,7 @@ public static class WallpaperPathRetrieval
 
             if (originalWidth == 0 || originalHeight == 0)
             {
-                App.API.LogInfo(nameof(WallpaperPathRetrieval), $"Failed to load bitmap: Width={originalWidth}, Height={originalHeight}");
+                App.API.LogInfo(ClassName, $"Failed to load bitmap: Width={originalWidth}, Height={originalHeight}");
                 return new SolidColorBrush(Colors.Transparent);
             }
 
@@ -95,7 +97,7 @@ public static class WallpaperPathRetrieval
         }
         catch (Exception ex)
         {
-            App.API.LogException(nameof(WallpaperPathRetrieval), "Error retrieving wallpaper", ex);
+            App.API.LogException(ClassName, "Error retrieving wallpaper", ex);
             return new SolidColorBrush(Colors.Transparent);
         }
     }
@@ -113,7 +115,7 @@ public static class WallpaperPathRetrieval
             }
             catch (Exception ex)
             {
-                App.API.LogException(nameof(WallpaperPathRetrieval), "Error parsing wallpaper color", ex);
+                App.API.LogException(ClassName, "Error parsing wallpaper color", ex);
             }
         }
 

@@ -5,7 +5,6 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Image;
 
 namespace Flow.Launcher
 {
@@ -60,6 +59,7 @@ namespace Flow.Launcher
             Close();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         public async void Show(string title, string subTitle, string iconPath)
         {
             tbTitle.Text = title;

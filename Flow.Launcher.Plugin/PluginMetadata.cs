@@ -51,6 +51,11 @@ namespace Flow.Launcher.Plugin
         public bool Disabled { get; set; }
 
         /// <summary>
+        /// Whether plugin is disabled in home query.
+        /// </summary>
+        public bool HomeDisabled { get; set; }
+
+        /// <summary>
         /// Plugin execute file path.
         /// </summary>
         public string ExecuteFilePath { get; private set; }

@@ -31,6 +31,7 @@
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">大小</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">创建日期</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">修改日期</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_age_checkbox">文件时间</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_file_info_label">显示文件信息</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">日期和时间格式</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">排序选项</system:String>
@@ -80,6 +81,8 @@
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">复制路径</system:String>
     <system:String x:Key="plugin_explorer_copypath_subtitle">复制当前结果的路径到剪贴板</system:String>
+    <system:String x:Key="plugin_explorer_copyname">复制名称</system:String>
+    <system:String x:Key="plugin_explorer_copyname_subtitle">复制当前文件的名称到剪贴板</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">复制</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">复制当前文件到剪贴板</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">复制当前文件夹到剪贴板</system:String>
@@ -162,4 +165,12 @@
     <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">显示本机上下文菜单（实验性）</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">您可以在下面指定想要包含在上下文菜单中的项目，它们可以是部分的（例如“pen wit”）或完整的（“打开方式”）。</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">您可以在下面指定要从上下文菜单中排除的项目，它们可以是部分的（例如“pen wit”）或完整的（“打开方式”）。</system:String>
+
+    <!--  Preview Info  -->
+    <system:String x:Key="Today">今天</system:String>
+    <system:String x:Key="DaysAgo">{0}天前</system:String>
+    <system:String x:Key="OneMonthAgo">1个月前</system:String>
+    <system:String x:Key="MonthsAgo">{0}个月前</system:String>
+    <system:String x:Key="OneYearAgo">1年前</system:String>
+    <system:String x:Key="YearsAgo">{0}年前</system:String>
 </ResourceDictionary>

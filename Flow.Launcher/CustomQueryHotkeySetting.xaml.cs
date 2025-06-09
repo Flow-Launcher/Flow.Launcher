@@ -1,16 +1,17 @@
-﻿using Flow.Launcher.Helper;
-using Flow.Launcher.Infrastructure.UserSettings;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
+using Flow.Launcher.Helper;
+using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher
 {
     public partial class CustomQueryHotkeySetting : Window
     {
         private readonly Settings _settings;
+
         private bool update;
         private CustomPluginHotkey updateCustomHotkey;
 

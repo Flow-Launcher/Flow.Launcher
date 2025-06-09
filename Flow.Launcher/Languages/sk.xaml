@@ -42,6 +42,7 @@
     <system:String x:Key="GameMode">Herný režim</system:String>
     <system:String x:Key="GameModeToolTip">Pozastaviť používanie klávesových skratiek.</system:String>
     <system:String x:Key="PositionReset">Resetovať pozíciu</system:String>
+    <system:String x:Key="PositionResetToolTip">Resetovať pozíciu vyhľadávacieho okna</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">Zadajte text na vyhľadávanie</system:String>
 
     <!--  Setting General  -->
@@ -55,7 +56,7 @@
     <system:String x:Key="setAutoStartFailed">Chybné nastavenie spustenia pri spustení</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Schovať Flow Launcher po strate fokusu</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Nezobrazovať upozornenia na novú verziu</system:String>
-    <system:String x:Key="SearchWindowPosition">Pozícia vyhľadávacieho okna</system:String>
+    <system:String x:Key="SearchWindowPosition">Poloha vyhľadávacieho okna</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Zapamätať si poslednú pozíciu</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Monitor s kurzorom myši</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Monitor s aktívnym oknom</system:String>
@@ -106,14 +107,35 @@
     <system:String x:Key="AlwaysPreviewToolTip">Pri aktivácii Flowu vždy otvoriť panel s náhľadom. Stlačením klávesu {0} prepnete náhľad.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Efekt tieňa nie je povolený, kým má aktuálny motív povolený efekt rozostrenia</system:String>
     <system:String x:Key="searchDelay">Oneskorenie vyhľadávania</system:String>
-    <system:String x:Key="searchDelayToolTip">Pri písaní sa na chvíľu oneskorí vyhľadávanie. Tým sa zníži skákanie rozhrania a načítanie výsledkov.</system:String>
+    <system:String x:Key="searchDelayToolTip">Pridá krátke oneskorenie počas písania, aby na zníženie blikanie rozhrania počas načítavania. Odporúča sa pri priemernej rýchlosti písania.</system:String>
+    <system:String x:Key="searchDelayNumberBoxToolTip">Zadajte čas (v ms) čakania, kým vstup bude považovaný za ukončený. Úprava je povolená len vtedy, ak je povolené oneskorenie vyhľadávania.</system:String>
     <system:String x:Key="searchDelayTime">Predvolené oneskorenie vyhľadávania</system:String>
-    <system:String x:Key="searchDelayTimeToolTip">Predvolené oneskorenie pluginu, po ktorom sa zobrazia výsledky vyhľadávania po zastavení písania.</system:String>
-    <system:String x:Key="SearchDelayTimeVeryLong">Veľmi dlhé</system:String>
-    <system:String x:Key="SearchDelayTimeLong">Dlhé</system:String>
-    <system:String x:Key="SearchDelayTimeNormal">Normálne</system:String>
-    <system:String x:Key="SearchDelayTimeShort">Krátke</system:String>
-    <system:String x:Key="SearchDelayTimeVeryShort">Veľmi krátke</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Čas čakania pred zobrazením výsledkov po ukončení písania. Pri vyšších hodnotách sa čaká dlhšie. (ms)</system:String>
+    <system:String x:Key="KoreanImeTitle">Informácie pre kórejského používateľa IME</system:String>
+    <system:String x:Key="KoreanImeGuide">
+        Kórejská metóda vstupu použitá vo Windows 11 môže spôsobiť určité problémy vo Flow Launcheri.
+
+        Ak sa vyskytnú problémy, možno bude potrebné povoliť &quot;Použiť predchádzajúcu verziu editora Microsoft IME&quot;.
+
+
+        Otvorte nastavenia Windows 11 a prejdite do:
+
+        Čas a jazyk &gt; Jazyk a oblasť &gt; Kórejčina&gt; Možnosti jazyka &gt; Klávesnice – Microsoft IME &gt; Možnosti klávesnice – Kompatibilita,
+
+        a povoľte &quot;Predcházdajúca verzia editora Microsoft IME&quot;.
+
+
+    </system:String>
+    <system:String x:Key="KoreanImeOpenLink">Otvoriť nastavenia systému Jazyk a oblasť</system:String>
+    <system:String x:Key="KoreanImeOpenLinkToolTip">Otvorí okno s nastaveniami kórejského editora Microsoft IME. Prejdite do Kórejčina &gt; Možnosti jazyka &gt; Klávesnice – Microsoft IME &gt; Možnosti klávesnice – Kompatibilita</system:String>
+    <system:String x:Key="KoreanImeOpenLinkButton">Otvoriť</system:String>
+    <system:String x:Key="KoreanImeRegistry">Použiť predchádzajúcu verziu editora Microsoft IME</system:String>
+    <system:String x:Key="KoreanImeRegistryTooltip">Zmeniť na predchádzajúcu verziu editora Microsoft IME môžete priamo tu</system:String>
+    <system:String x:Key="homePage">Domovská stránka</system:String>
+    <system:String x:Key="homePageToolTip">Zobraziť výsledky Domovskej stránky, keď je text dopytu prázdny.</system:String>
+    <system:String x:Key="historyResultsForHomePage">Zobraziť výsledky histórie na Domovskej stránke</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Maximálny počet histórie výsledkov zobrazenej na Domovskej stránke</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">Úprava je možná len vtedy, ak plugin podporuje funkciu Domovská stránka a Domovská stránka je povolená.</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Vyhľadať plugin</system:String>
@@ -130,8 +152,13 @@
     <system:String x:Key="currentActionKeywords">Aktuálny aktivačný príkaz</system:String>
     <system:String x:Key="newActionKeyword">Nový aktivačný príkaz</system:String>
     <system:String x:Key="actionKeywordsTooltip">Upraviť aktivačný príkaz</system:String>
-    <system:String x:Key="pluginSearchDelayTime">Oneskorenie vyhľadávania pomocou pluginu</system:String>
-    <system:String x:Key="pluginSearchDelayTimeTooltip">Zmení oneskorenie vyhľadávania pomocou pluginu</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Oneskorenie vyhľadávania pluginu</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Zmení oneskorenie vyhľadávania pluginu</system:String>
+    <system:String x:Key="FilterComboboxLabel">Rozšírené nastavenia:</system:String>
+    <system:String x:Key="DisplayModeOnOff">Povolené</system:String>
+    <system:String x:Key="DisplayModePriority">Priorita</system:String>
+    <system:String x:Key="DisplayModeSearchDelay">Oneskorenie vyhľadávania</system:String>
+    <system:String x:Key="DisplayModeHomeOnOff">Domovská stránka</system:String>
     <system:String x:Key="currentPriority">Aktuálna priorita</system:String>
     <system:String x:Key="newPriority">Nová priorita</system:String>
     <system:String x:Key="priority">Priorita</system:String>
@@ -147,7 +174,6 @@
     <system:String x:Key="failedToRemovePluginSettingsMessage">Pluginy: {0} – Nepodarilo sa odstrániť súbory s nastaveniami pluginu, odstráňte ich manuálne</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Nepodarilo sa odstrániť vyrovnávaciu pamäť pluginu</system:String>
     <system:String x:Key="failedToRemovePluginCacheMessage">Pluginy: {0} – Nepodarilo sa odstrániť vyrovnávaciu pamäť pluginu, odstráňte ju manuálne</system:String>
-    <system:String x:Key="default">Predvolené</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Repozitár pluginov</system:String>
@@ -184,6 +210,9 @@
     <system:String x:Key="resultItemFont">Písmo nadpisu výsledku</system:String>
     <system:String x:Key="resultSubItemFont">Písmo podnadpisu výsledku</system:String>
     <system:String x:Key="resetCustomize">Resetovať</system:String>
+    <system:String x:Key="resetCustomizeToolTip">Resetuje písmo a jeho veľkosť na predvolené hodnoty.</system:String>
+    <system:String x:Key="ImportThemeSize">Importovať rozmery motívu</system:String>
+    <system:String x:Key="ImportThemeSizeToolTip">Ak je k dispozícii hodnota veľkosti definovaná autorom motívu, načíta sa a použije.</system:String>
     <system:String x:Key="CustomizeToolTip">Prispôsobiť</system:String>
     <system:String x:Key="windowMode">Režim okno</system:String>
     <system:String x:Key="opacity">Nepriehľadnosť</system:String>
@@ -210,8 +239,9 @@
     <system:String x:Key="AnimationSpeedCustom">Vlastné</system:String>
     <system:String x:Key="Clock">Hodiny</system:String>
     <system:String x:Key="Date">Dátum</system:String>
-    <system:String x:Key="BackdropType">Typ pozadia</system:String>
-    <system:String x:Key="BackdropTypeDisabledToolTip">Backdrop je podporovaný od Windows 11 zostava 22000 a novších</system:String>
+    <system:String x:Key="BackdropType">Typ pozadia (backdrop)</system:String>
+    <system:String x:Key="BackdropInfo">Efekt pozadia sa v náhľade nezobrazuje.</system:String>
+    <system:String x:Key="BackdropTypeDisabledToolTip">Pozadie je podporované od Windows 11 zostava 22000 a novších</system:String>
     <system:String x:Key="BackdropTypesNone">Žiadna</system:String>
     <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
     <system:String x:Key="BackdropTypesMica">Mica</system:String>
@@ -283,6 +313,9 @@
     <system:String x:Key="useGlyphUI">Použiť ikony Segoe Fluent</system:String>
     <system:String x:Key="useGlyphUIEffect">Použiť ikony Segoe Fluent, ak sú podporované</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Stlačte kláves</system:String>
+    <system:String x:Key="showBadges">Zobraziť výsledok v odznaku</system:String>
+    <system:String x:Key="showBadgesToolTip">Ak to plugin podporuje, zobrazí sa jeho ikona v odznaku na jednoduchšie odlíšenie.</system:String>
+    <system:String x:Key="showBadgesGlobalOnly">Zobraziť výsledok v odznaku len pre globálne vyhľadávanie</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP proxy</system:String>
@@ -323,6 +356,7 @@
     <system:String x:Key="logfolder">Priečinok s logmi</system:String>
     <system:String x:Key="clearlogfolder">Vymazať logy</system:String>
     <system:String x:Key="clearlogfolderMessage">Naozaj chcete odstrániť všetky logy?</system:String>
+    <system:String x:Key="cachefolder">Priečinok vyrovnávacej pamäte</system:String>
     <system:String x:Key="clearcachefolder">Vymazať vyrovnávaciu pamäť</system:String>
     <system:String x:Key="clearcachefolderMessage">Naozaj chcete vymazať všetky vyrovnávacie pamäte?</system:String>
     <system:String x:Key="clearfolderfailMessage">Nepodarilo sa odstrániť niektoré priečinky a súbory. Pre viac informácií si pozrite súbor logu</system:String>
@@ -330,12 +364,15 @@
     <system:String x:Key="userdatapath">Cesta k používateľskému priečinku</system:String>
     <system:String x:Key="userdatapathToolTip">Nastavenia používateľa a nainštalované pluginy sa ukladajú do používateľského priečinka. Toto umiestnenie sa môže líšiť v závislosti od toho, či je v prenosnom režime alebo nie.</system:String>
     <system:String x:Key="userdatapathButton">Otvoriť priečinok</system:String>
+    <system:String x:Key="advanced">Rozšírené</system:String>
     <system:String x:Key="logLevel">Úroveň logovania</system:String>
     <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="LogLevelINFO">Info</system:String>
+    <system:String x:Key="settingWindowFontTitle">Nastavenie písma okna</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Vyberte správcu súborov</system:String>
+    <system:String x:Key="fileManager_learnMore">Viac informácií</system:String>
     <system:String x:Key="fileManager_tips">Zadajte umiestnenie súboru správcu súborov, ktorý používate, a podľa potreby pridajte argumenty. &quot;%d&quot; predstavuje cestu k priečinku, ktorý sa má otvoriť, používa sa v poli Arg pre priečinok a pri príkazoch na otvorenie konkrétnych priečinkov. &quot;%f&quot; predstavuje cestu k súboru, ktorá sa má otvoriť a používa sa v poli Arg pre súbor a pri príkazoch na otvorenie konkrétnych súborov.</system:String>
     <system:String x:Key="fileManager_tips2">Napríklad, ak správca súborov používa príkaz ako &quot;totalcmd.exe /A c:\windows&quot; na otvorenie priečinka c:\windows, cesta správcu súborov bude totalcmd.exe a Arg pre priečinok bude /A &quot;%d&quot;. Niektorí správcovia súborov, ako napríklad QTTabBar, môžu vyžadovať len zadanie cesty, v tomto prípade použite &quot;%d&quot; ako cestu správcu súborov a zvyšok súborov nechajte prázdny.</system:String>
     <system:String x:Key="fileManager_name">Správca súborov</system:String>
@@ -343,6 +380,8 @@
     <system:String x:Key="fileManager_path">Cesta k správcovi súborov</system:String>
     <system:String x:Key="fileManager_directory_arg">Arg. pre priečinok</system:String>
     <system:String x:Key="fileManager_file_arg">Arg. pre súbor</system:String>
+    <system:String x:Key="fileManagerPathNotFound">Správca súborov '{0}' sa nenachádza na '{1}'. Chcete pokračovať?</system:String>
+    <system:String x:Key="fileManagerPathError">Chyba v ceste k správcovi súborov</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Predvolený webový prehliadač</system:String>
@@ -370,13 +409,16 @@
     <system:String x:Key="newActionKeywordsSameAsOld">Tento nový aktivačný príkaz je rovnaký ako starý, vyberte iný</system:String>
     <system:String x:Key="success">Úspešné</system:String>
     <system:String x:Key="completedSuccessfully">Úspešne dokončené</system:String>
+    <system:String x:Key="failedToCopy">Nepodarilo sa skopírovať</system:String>
     <system:String x:Key="actionkeyword_tips">Zadajte aktivačné príkazy, ktoré chcete používať na spustenie pluginu a oddeľte ich medzerou. Ak nechcete zadať aktivačný príkaz, použite * a plugin bude spustený bez aktivačného príkazu.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
     <system:String x:Key="searchDelayTimeTitle">Nastavenie oneskoreného vyhľadávania</system:String>
-    <system:String x:Key="searchDelayTime_tips">Vyberte oneskorenie vyhľadávania, ktoré chcete použiť pre plugin. Ak vyberiete &quot;{0}&quot;, plugin použije predvolené oneskorenie vyhľadávania.</system:String>
-    <system:String x:Key="currentSearchDelayTime">Aktuálne oneskorenie vyhľadávania</system:String>
-    <system:String x:Key="newSearchDelayTime">Nové oneskorenie vyhľadávania</system:String>
+    <system:String x:Key="searchDelayTimeTips">Zadajte oneskorenie vyhľadávania v ms, ktoré chcete použiť pre plugin. Nechajte prázdne, ak nechcete zadať žiadne, plugin použije predvolené oneskorenie vyhľadávania.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="homeTitle">Domovská stránka</system:String>
+    <system:String x:Key="homeTips">Ak chcete zobrazovať výsledky pluginu, keď je dopyt prázdny, povoľte funkciu Domovská stránka.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Klávesová skratka vlastného vyhľadávania</system:String>
@@ -407,7 +449,7 @@ Ak pri zadávaní skratky pred ňu pridáte &quot;@&quot;, bude sa zhodovať s �
     <system:String x:Key="commonCancel">Zrušiť</system:String>
     <system:String x:Key="commonReset">Resetovať</system:String>
     <system:String x:Key="commonDelete">Odstrániť</system:String>
-    <system:String x:Key="commonOK">Aktualizovať</system:String>
+    <system:String x:Key="commonOK">OK</system:String>
     <system:String x:Key="commonYes">Áno</system:String>
     <system:String x:Key="commonNo">Nie</system:String>
     <system:String x:Key="commonBackground">Pozadie</system:String>
@@ -430,6 +472,14 @@ Ak pri zadávaní skratky pred ňu pridáte &quot;@&quot;, bude sa zhodovať s �
     <system:String x:Key="reportWindow_please_open_issue">Prosím, otvorte nové issue na</system:String>
     <system:String x:Key="reportWindow_upload_log">1. Nahrajte súbor logu: {0}</system:String>
     <system:String x:Key="reportWindow_copy_below">2. Skopírujte nižšie uvedenú správu o výnimke</system:String>
+
+    <!--  File Open Error  -->
+    <system:String x:Key="fileManagerNotFoundTitle">Chyba správcu súborov</system:String>
+    <system:String x:Key="fileManagerNotFound">
+        Zadaný správca súborov sa nenašiel. Skontrolujte nastavenie vlastného správcu súborov v Nastavenia &gt; Všeobecné.
+    </system:String>
+    <system:String x:Key="errorTitle">Chyba</system:String>
+    <system:String x:Key="folderOpenError">Počas otvárania priečinka sa vyskytla chyba. {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Čakajte, prosím...</system:String>

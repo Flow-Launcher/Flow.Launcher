@@ -256,10 +256,17 @@
                                 BorderThickness="1"
                                 Style="{StaticResource SettingSeparatorStyle}" />
                             <Button
-                                Margin="8"
+                                Margin="12 8 12 4"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding ImportCommand}"
+                                Content="{DynamicResource ImportThemeSize}"
+                                ToolTip="{DynamicResource ImportThemeSizeToolTip}" />
+                            <Button
+                                Margin="12 4 12 12"
                                 HorizontalAlignment="Stretch"
                                 Command="{Binding ResetCommand}"
-                                Content="{DynamicResource resetCustomize}" />
+                                Content="{DynamicResource resetCustomize}"
+                                ToolTip="{DynamicResource resetCustomizeToolTip}" />
                         </StackPanel>
                     </ScrollViewer>
                 </Border>
@@ -305,7 +312,7 @@
                         <StackPanel VerticalAlignment="Center" DockPanel.Dock="Left">
                             <Border
                                 Width="400"
-                                Margin="40 30 0 30"
+                                Margin="40 30 0 10"
                                 SnapsToDevicePixels="True"
                                 Style="{DynamicResource PreviewWindowBorderStyle}">
                                 <Border BorderThickness="0" Style="{DynamicResource WindowRadius}">
@@ -324,20 +331,22 @@
                                                 IsReadOnly="True"
                                                 Style="{DynamicResource QueryBoxStyle}"
                                                 Text="{DynamicResource hiThere}" />
-
                                         </Border>
                                         <StackPanel
                                             x:Name="ClockPanel"
                                             IsHitTestVisible="False"
                                             Style="{DynamicResource ClockPanel}"
                                             Visibility="Visible">
+                                            <!--  Because these two textblock follow SettingWindowFont, we need to revert their font family explictly  -->
                                             <TextBlock
                                                 x:Name="ClockBox"
+                                                FontFamily="{Binding ClockPanelFont, Mode=OneTime}"
                                                 Style="{DynamicResource ClockBox}"
                                                 Text="{Binding ClockText}"
                                                 Visibility="{Binding UseClock, Converter={StaticResource BoolToVisibilityConverter}}" />
                                             <TextBlock
                                                 x:Name="DateBox"
+                                                FontFamily="{Binding ClockPanelFont, Mode=OneTime}"
                                                 Style="{DynamicResource DateBox}"
                                                 Text="{Binding DateText}"
                                                 Visibility="{Binding UseDate, Converter={StaticResource BoolToVisibilityConverter}}" />
@@ -365,10 +374,21 @@
                                                 IsHitTestVisible="False"
                                                 Visibility="Visible" />
                                         </ContentControl>
-                                        <Border x:Name="ContextMenu" Visibility="Collapsed" />
+                                        <Border x:Name="ResultContextMenu" Visibility="Collapsed" />
                                         <Border x:Name="History" Visibility="Collapsed" />
                                     </Grid>
                                 </Border>
+                            </Border>
+                            <Border
+                                Margin="0 0 0 30"
+                                Padding="8 4 8 4"
+                                HorizontalAlignment="Center"
+                                Background="#89000000"
+                                CornerRadius="4">
+                                <TextBlock
+                                    FontSize="10"
+                                    Foreground="#62FFFFFF"
+                                    Text="{DynamicResource BackdropInfo}" />
                             </Border>
                         </StackPanel>
                     </DockPanel>
@@ -698,11 +718,10 @@
                 </Grid>
             </Border>
 
-
             <!--  Fonts and icons  -->
             <cc:Card
                 Title="{DynamicResource useGlyphUI}"
-                Margin="0 0 0 0"
+                Margin="0 18 0 0"
                 Icon="&#xf6b8;"
                 Sub="{DynamicResource useGlyphUIEffect}">
                 <ui:ToggleSwitch
@@ -710,6 +729,27 @@
                     OffContent="{DynamicResource disable}"
                     OnContent="{DynamicResource enable}" />
             </cc:Card>
+
+            <!--  Badges  -->
+            <cc:ExCard
+                Title="{DynamicResource showBadges}"
+                Margin="0 4 0 0"
+                Icon="&#xEC1B;"
+                Sub="{DynamicResource showBadgesToolTip}">
+                <cc:ExCard.SideContent>
+                    <ui:ToggleSwitch
+                        IsOn="{Binding Settings.ShowBadges}"
+                        OffContent="{DynamicResource disable}"
+                        OnContent="{DynamicResource enable}" />
+                </cc:ExCard.SideContent>
+                <cc:Card Title="{DynamicResource showBadgesGlobalOnly}" Type="InsideFit">
+                    <ui:ToggleSwitch
+                        IsOn="{Binding Settings.ShowBadgesGlobalOnly}"
+                        OffContent="{DynamicResource disable}"
+                        OnContent="{DynamicResource enable}" />
+                </cc:Card>
+            </cc:ExCard>
+
             <!--  Settings color scheme  -->
             <cc:Card
                 Title="{DynamicResource ColorScheme}"

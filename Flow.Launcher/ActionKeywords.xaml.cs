@@ -80,7 +80,7 @@ namespace Flow.Launcher
             }
 
             // Update action keywords text and close window
-            _pluginViewModel.OnActionKeywordsChanged();
+            _pluginViewModel.OnActionKeywordsTextChanged();
             Close();
         }
     }

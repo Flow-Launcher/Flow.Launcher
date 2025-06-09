@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -8,6 +6,8 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
+
+#nullable enable
 
 namespace Flow.Launcher
 {
@@ -100,6 +100,7 @@ namespace Flow.Launcher
             PreviewHotkey,
             OpenContextMenuHotkey,
             SettingWindowHotkey,
+            OpenHistoryHotkey,
             CycleHistoryUpHotkey,
             CycleHistoryDownHotkey,
             SelectPrevPageHotkey,
@@ -130,6 +131,7 @@ namespace Flow.Launcher
                     HotkeyType.PreviewHotkey => _settings.PreviewHotkey,
                     HotkeyType.OpenContextMenuHotkey => _settings.OpenContextMenuHotkey,
                     HotkeyType.SettingWindowHotkey => _settings.SettingWindowHotkey,
+                    HotkeyType.OpenHistoryHotkey => _settings.OpenHistoryHotkey,
                     HotkeyType.CycleHistoryUpHotkey => _settings.CycleHistoryUpHotkey,
                     HotkeyType.CycleHistoryDownHotkey => _settings.CycleHistoryDownHotkey,
                     HotkeyType.SelectPrevPageHotkey => _settings.SelectPrevPageHotkey,
@@ -166,6 +168,9 @@ namespace Flow.Launcher
                     case HotkeyType.SettingWindowHotkey:
                         _settings.SettingWindowHotkey = value;
                         break;
+                    case HotkeyType.OpenHistoryHotkey:
+                        _settings.OpenHistoryHotkey = value;
+                        break;                    
                     case HotkeyType.CycleHistoryUpHotkey:
                         _settings.CycleHistoryUpHotkey = value;
                         break;
@@ -242,7 +247,11 @@ namespace Flow.Launcher
                 HotKeyMapper.RemoveHotkey(Hotkey);
             }
 
-            var dialog = new HotkeyControlDialog(Hotkey, DefaultHotkey, WindowTitle);
+            var dialog = new HotkeyControlDialog(Hotkey, DefaultHotkey, WindowTitle)
+            {
+                Owner = Window.GetWindow(this)
+            };
+
             await dialog.ShowAsync();
             switch (dialog.ResultType)
             {

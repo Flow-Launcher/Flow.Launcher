@@ -5,7 +5,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -14,6 +13,8 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 {
     public abstract class AbstractPluginEnvironment
     {
+        private static readonly string ClassName = nameof(AbstractPluginEnvironment);
+
         protected readonly IPublicAPI API = Ioc.Default.GetRequiredService<IPublicAPI>();
 
         internal abstract string Language { get; }
@@ -120,7 +121,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             else
             {
                 API.ShowMsgBox(string.Format(API.GetTranslation("runtimePluginUnableToSetExecutablePath"), Language));
-                Log.Error("PluginsLoader",
+                API.LogError(ClassName,
                     $"Not able to successfully set {EnvName} path, setting's plugin executable path variable is still an empty string.",
                     $"{Language}Environment");
 

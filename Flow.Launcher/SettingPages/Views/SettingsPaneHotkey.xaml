@@ -89,7 +89,10 @@
                         Title="{DynamicResource ToggleHistoryHotkey}"
                         Icon="&#xf738;"
                         Type="Inside">
-                        <cc:HotkeyDisplay Keys="Ctrl+H" />
+                        <flowlauncher:HotkeyControl
+                            DefaultHotkey="Ctrl+H"
+                            Type="OpenHistoryHotkey"
+                            ValidateKeyGesture="False" />
                     </cc:Card>
                     <cc:Card
                         Title="{DynamicResource CopyFilePathHotkey}"
@@ -424,7 +427,7 @@
                                     <GridViewColumn Width="430" Header="{DynamicResource builtinShortcutDescription}">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate DataType="{x:Type userSettings:BuiltinShortcutModel}">
-                                                <TextBlock Text="{Binding Description, Converter={StaticResource TranslationConverter}}" />
+                                                <TextBlock Text="{Binding LocalizedDescription}" />
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>

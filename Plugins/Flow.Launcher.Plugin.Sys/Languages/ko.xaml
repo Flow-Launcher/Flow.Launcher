@@ -6,21 +6,21 @@
     <system:String x:Key="flowlauncher_plugin_sys_desc">설명</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_command">명령어</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer_cmd">Shutdown</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart_computer_cmd">Restart</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer_cmd">시스템 종료</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_computer_cmd">다시 시작</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_advanced_cmd">Restart With Advanced Boot Options</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_log_off_cmd">Log Off/Sign Out</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_lock_cmd">Lock</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_sleep_cmd">Sleep</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_log_off_cmd">로그아웃</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_lock_cmd">컴퓨터 잠금</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_sleep_cmd">절전</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_hibernate_cmd">Hibernate</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_indexoption_cmd">Index Option</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin_cmd">Empty Recycle Bin</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin_cmd">Open Recycle Bin</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_indexoption_cmd">색인 옵션</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin_cmd">휴지통 비우기</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin_cmd">휴지통 열기</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_exit_cmd">종료</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_save_all_settings_cmd">Save Settings</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_save_all_settings_cmd">설정 저장</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_cmd">Flow Launcher 재시작</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_setting_cmd">설정</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data_cmd">플러그인 데이터 새로고</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data_cmd">플러그인 데이터 새로고침</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_check_for_update_cmd">Check For Update</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_log_location_cmd">Open Log Location</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips_cmd">Flow Launcher Tips</system:String>
@@ -60,13 +60,13 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_shutdown_computer">시스템을 종료하시겠습니까?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">시스템을 재시작 하시겠습니까?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">고급 부팅 옵션으로 시스템을 다시 시작하시겠습니까?</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Are you sure you want to log off?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">정말 로그아웃 하시겠습니까?</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Command Keyword Setting</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Custom Command Keyword</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword_tip">Enter a keyword to search for command: {0}. This keyword is used to match your query.</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_command_keyword">Command Keyword</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_reset">Reset</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_reset">초기화</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_confirm">확인</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_cancel">취소</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_input_command_keyword">Please enter a non-empty command keyword</system:String>

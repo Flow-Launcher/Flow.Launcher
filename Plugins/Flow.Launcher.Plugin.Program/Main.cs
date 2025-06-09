@@ -109,7 +109,6 @@ namespace Flow.Launcher.Plugin.Program
                     }
                     catch (OperationCanceledException)
                     {
-                        Context.API.LogDebug(ClassName, "Query operation cancelled");
                         return emptyResults;
                     }
                     finally

@@ -31,6 +31,7 @@
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Taille</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Date de création</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Date de modification</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_age_checkbox">Âge du fichier</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Afficher les informations du fichier</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Format de la date et de l'heure</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Option de tri :</system:String>
@@ -80,6 +81,8 @@
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">Copier le chemin</system:String>
     <system:String x:Key="plugin_explorer_copypath_subtitle">Copier le chemin de l'élément actuel dans le presse-papiers</system:String>
+    <system:String x:Key="plugin_explorer_copyname">Copier le nom</system:String>
+    <system:String x:Key="plugin_explorer_copyname_subtitle">Copier le nom de l'élément actuel dans le presse-papiers</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">Copier</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">Copier le fichier actuel dans le presse-papiers</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">Copier le dossier actuel dans le presse-papiers</system:String>
@@ -162,4 +165,12 @@
     <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Afficher le menu contextuel natif (expérimental)</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Ci-dessous, vous pouvez spécifier les éléments que vous souhaitez inclure dans le menu contextuel. Ils peuvent être partiels ('pen wit') ou complets ('Ouvrir avec').</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Vous pouvez spécifier ci-dessous les éléments que vous souhaitez exclure du menu contextuel. Ces éléments peuvent être partiels (par exemple, &quot;pen wit&quot;) ou complets (&quot;Ouvrir avec&quot;).</system:String>
+
+    <!--  Preview Info  -->
+    <system:String x:Key="Today">Aujourd’hui</system:String>
+    <system:String x:Key="DaysAgo">Il y a {0} jours</system:String>
+    <system:String x:Key="OneMonthAgo">il y a 1 mois</system:String>
+    <system:String x:Key="MonthsAgo">Il y a {0} mois</system:String>
+    <system:String x:Key="OneYearAgo">il y a 1 an</system:String>
+    <system:String x:Key="YearsAgo">Il y a {0} ans</system:String>
 </ResourceDictionary>

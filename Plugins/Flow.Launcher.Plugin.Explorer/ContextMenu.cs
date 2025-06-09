@@ -15,6 +15,8 @@ namespace Flow.Launcher.Plugin.Explorer
 {
     internal class ContextMenu : IContextMenu
     {
+        private static readonly string ClassName = nameof(ContextMenu);
+
         private PluginInitContext Context { get; set; }
 
         private Settings Settings { get; set; }
@@ -73,7 +75,9 @@ namespace Flow.Launcher.Plugin.Explorer
                         {
                             Settings.QuickAccessLinks.Add(new AccessLink
                             {
-                                Path = record.FullPath, Type = record.Type
+                                Name = record.FullPath.GetPathName(),
+                                Path = record.FullPath,
+                                Type = record.Type
                             });
 
                             Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_addfilefoldersuccess"),
@@ -140,6 +144,29 @@ namespace Flow.Launcher.Plugin.Explorer
 
                 contextMenus.Add(new Result
                 {
+                    Title = Context.API.GetTranslation("plugin_explorer_copyname"),
+                    SubTitle = Context.API.GetTranslation("plugin_explorer_copyname_subtitle"),
+                    Action = _ =>
+                    {
+                        try
+                        {
+                            Context.API.CopyToClipboard(Path.GetFileName(record.FullPath));
+                            return true;
+                        }
+                        catch (Exception e)
+                        {
+                            var message = "Fail to set text in clipboard";
+                            LogException(message, e);
+                            Context.API.ShowMsg(message);
+                            return false;
+                        }
+                    },
+                    IcoPath = Constants.CopyImagePath,
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue8c8")
+                });
+
+                contextMenus.Add(new Result
+                {
                     Title = Context.API.GetTranslation("plugin_explorer_copyfilefolder"),
                     SubTitle = isFile ? Context.API.GetTranslation("plugin_explorer_copyfile_subtitle") : Context.API.GetTranslation("plugin_explorer_copyfolder_subtitle"),
                     Action = _ =>
@@ -174,10 +201,10 @@ namespace Flow.Launcher.Plugin.Explorer
                             {
                                 if (Context.API.ShowMsgBox(
                                         string.Format(Context.API.GetTranslation("plugin_explorer_delete_folder_link"), record.FullPath),
-                                        string.Empty,
-                                        MessageBoxButton.YesNo,
+                                        Context.API.GetTranslation("plugin_explorer_deletefilefolder"),
+                                        MessageBoxButton.OKCancel,
                                         MessageBoxImage.Warning)
-                                    == MessageBoxResult.No)
+                                    == MessageBoxResult.Cancel)
                                     return false;
 
                                 if (isFile)
@@ -469,7 +496,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
         private void LogException(string message, Exception e)
         {
-            Context.API.LogException(nameof(ContextMenu), message, e);
+            Context.API.LogException(ClassName, message, e);
         }
 
         private static bool CanRunAsDifferentUser(string path)

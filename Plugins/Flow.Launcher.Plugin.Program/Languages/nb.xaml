@@ -46,6 +46,8 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">Vennligst velg en programkilde</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">Er du sikker på at du vil slette de valgte programkildene?</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_not_user_added">Please select program sources that are not added by you</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_user_added">Please select program sources that are added by you</system:String>
     <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Det finnes allerede en annen programkilde med samme plassering.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Programkilde</system:String>
@@ -74,7 +76,7 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Kjør som en annen bruker</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Kjør som administrator</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Åpne inneholdende mappe</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">Deaktiver visningen av dette programmet</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">Hide</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Åpne målmappe</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Program</system:String>

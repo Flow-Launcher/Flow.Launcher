@@ -10,6 +10,8 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
 {
     public class DuckDuckGo : SuggestionSource
     {
+        private static readonly string ClassName = nameof(DuckDuckGo);
+
         public override async Task<List<string>> SuggestionsAsync(string query, CancellationToken token)
         {
             // When the search query is empty, DuckDuckGo returns `[]`. When it's not empty, it returns data
@@ -34,12 +36,12 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
             }
             catch (Exception e) when (e is HttpRequestException or {InnerException: TimeoutException})
             {
-                Main._context.API.LogException(nameof(DuckDuckGo), "Can't get suggestion from DuckDuckGo", e);
+                Main._context.API.LogException(ClassName, "Can't get suggestion from DuckDuckGo", e);
                 return null;
             }
             catch (JsonException e)
             {
-                Main._context.API.LogException(nameof(DuckDuckGo), "Can't parse suggestions", e);
+                Main._context.API.LogException(ClassName, "Can't parse suggestions", e);
                 return new List<string>();
             }
         }

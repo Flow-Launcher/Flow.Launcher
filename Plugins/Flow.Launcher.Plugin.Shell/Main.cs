@@ -201,94 +201,101 @@ namespace Flow.Launcher.Plugin.Shell
             switch (_settings.Shell)
             {
                 case Shell.Cmd:
-                {
-                    if (_settings.UseWindowsTerminal)
                     {
-                        info.FileName = "wt.exe";
-                        info.ArgumentList.Add("cmd");
-                    }
-                    else
-                    {
-                        info.FileName = "cmd.exe";
-                    }
+                        if (_settings.UseWindowsTerminal)
+                        {
+                            info.FileName = "wt.exe";
+                            info.ArgumentList.Add("cmd");
+                        }
+                        else
+                        {
+                            info.FileName = "cmd.exe";
+                        }
 
-                    info.ArgumentList.Add($"{(_settings.LeaveShellOpen ? "/k" : "/c")} {command} {(_settings.CloseShellAfterPress ? $"&& echo {Context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")} && pause > nul /c" : "")}");
-                    break;
-                }
+                        info.ArgumentList.Add($"{(_settings.LeaveShellOpen ? "/k" : "/c")} {command} {(_settings.CloseShellAfterPress ? $"&& echo {Context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")} && pause > nul /c" : "")}");
+                        break;
+                    }
 
                 case Shell.Powershell:
-                {
-                    if (_settings.UseWindowsTerminal)
                     {
-                        info.FileName = "wt.exe";
-                        info.ArgumentList.Add("powershell");
+                        // Using just a ; doesn't work with wt, as it's used to create a new tab for the terminal window
+                        // \\ must be escaped for it to work properly, or breaking it into multiple arguments
+                        var addedCharacter = _settings.UseWindowsTerminal ? "\\" : "";
+                        if (_settings.UseWindowsTerminal)
+                        {
+                            info.FileName = "wt.exe";
+                            info.ArgumentList.Add("powershell");
+                        }
+                        else
+                        {
+                            info.FileName = "powershell.exe";
+                        }
+                        if (_settings.LeaveShellOpen)
+                        {
+                            info.ArgumentList.Add("-NoExit");
+                            info.ArgumentList.Add(command);
+                        }
+                        else
+                        {
+                            info.ArgumentList.Add("-Command");
+                            info.ArgumentList.Add($"{command}{addedCharacter}; {(_settings.CloseShellAfterPress ? $"Write-Host '{Context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")}'{addedCharacter}; [System.Console]::ReadKey(){addedCharacter}; exit" : "")}");
+                        }
+                        break;
                     }
-                    else
-                    {
-                        info.FileName = "powershell.exe";
-                    }
-                    if (_settings.LeaveShellOpen)
-                    {
-                        info.ArgumentList.Add("-NoExit");
-                        info.ArgumentList.Add(command);
-                    }
-                    else
-                    {
-                        info.ArgumentList.Add("-Command");
-                        info.ArgumentList.Add($"{command}\\; {(_settings.CloseShellAfterPress ? $"Write-Host '{Context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")}'\\; [System.Console]::ReadKey()\\; exit" : "")}");
-                    }
-                    break;
-                }
 
                 case Shell.Pwsh:
-                {
-                    if (_settings.UseWindowsTerminal)
                     {
-                        info.FileName = "wt.exe";
-                        info.ArgumentList.Add("pwsh");
+                        // Using just a ; doesn't work with wt, as it's used to create a new tab for the terminal window
+                        // \\ must be escaped for it to work properly, or breaking it into multiple arguments
+                        var addedCharacter = _settings.UseWindowsTerminal ? "\\" : "";
+                        if (_settings.UseWindowsTerminal)
+                        {
+                            info.FileName = "wt.exe";
+                            info.ArgumentList.Add("pwsh");
+                        }
+                        else
+                        {
+                            info.FileName = "pwsh.exe";
+                        }
+                        if (_settings.LeaveShellOpen)
+                        {
+                            info.ArgumentList.Add("-NoExit");
+                        }
+                        info.ArgumentList.Add("-Command");
+                        info.ArgumentList.Add($"{command}{addedCharacter}; {(_settings.CloseShellAfterPress ? $"Write-Host '{Context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")}'{addedCharacter}; [System.Console]::ReadKey(){addedCharacter}; exit" : "")}");
+                        break;
                     }
-                    else
-                    {
-                        info.FileName = "pwsh.exe";
-                    }
-                    if (_settings.LeaveShellOpen)
-                    {
-                        info.ArgumentList.Add("-NoExit");
-                    }
-                    info.ArgumentList.Add("-Command");
-                    info.ArgumentList.Add($"{command}\\; {(_settings.CloseShellAfterPress ? $"Write-Host '{Context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")}'\\; [System.Console]::ReadKey()\\; exit" : "")}");
-                    break;
-                }
 
                 case Shell.RunCommand:
-                {
-                    var parts = command.Split(new[]
                     {
-                        ' '
-                    }, 2);
-                    if (parts.Length == 2)
-                    {
-                        var filename = parts[0];
-                        if (ExistInPath(filename))
+                        var parts = command.Split(new[]
                         {
-                            var arguments = parts[1];
-                            info.FileName = filename;
-                            info.ArgumentList.Add(arguments);
+                            ' '
+                        }, 2);
+                        if (parts.Length == 2)
+                        {
+                            var filename = parts[0];
+                            if (ExistInPath(filename))
+                            {
+                                var arguments = parts[1];
+                                info.FileName = filename;
+                                info.ArgumentList.Add(arguments);
+                            }
+                            else
+                            {
+                                info.FileName = command;
+                            }
                         }
                         else
                         {
                             info.FileName = command;
                         }
-                    }
-                    else
-                    {
-                        info.FileName = command;
+
+                        info.UseShellExecute = true;
+
+                        break;
                     }
 
-                    info.UseShellExecute = true;
-
-                    break;
-                }
                 default:
                     throw new NotImplementedException();
             }
@@ -378,11 +385,17 @@ namespace Flow.Launcher.Plugin.Shell
 
         private void OnWinRPressed()
         {
+            Context.API.ShowMainWindow();
             // show the main window and set focus to the query box
-            _ = Task.Run(() =>
+            _ = Task.Run(async () =>
             {
-                Context.API.ShowMainWindow();
                 Context.API.ChangeQuery($"{Context.CurrentPluginMetadata.ActionKeywords[0]}{Plugin.Query.TermSeparator}");
+
+                // Win+R is a system-reserved shortcut, and though the plugin intercepts the keyboard event and
+                // shows the main window, Windows continues to process the Win key and briefly reclaims focus.
+                // So we need to wait until the keyboard event processing is completed and then set focus
+                await Task.Delay(50);
+                Context.API.FocusQueryTextBox();
             });
         }
 

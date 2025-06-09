@@ -4,7 +4,7 @@
   "Name": "Browser Bookmarks",
   "Description": "Search your browser bookmarks",
   "Author": "qianlifeng, Ioannis G.",
-  "Version": "3.3.4",
+  "Version": "1.0.0",
   "Language": "csharp",
   "Website": "https://github.com/Flow-Launcher/Flow.Launcher",
   "ExecuteFileName": "Flow.Launcher.Plugin.BrowserBookmark.dll",

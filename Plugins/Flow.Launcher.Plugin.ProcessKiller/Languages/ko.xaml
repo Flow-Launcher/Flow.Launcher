@@ -8,6 +8,7 @@
     <system:String x:Key="flowlauncher_plugin_processkiller_kill_all_count">{0} 프로세스 종료</system:String>
     <system:String x:Key="flowlauncher_plugin_processkiller_kill_instances">모든 인스턴스 종료</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_processkiller_show_window_title">Show title for processes with visible windows</system:String>
     <system:String x:Key="flowlauncher_plugin_processkiller_put_visible_window_process_top">Put processes with visible windows on the top</system:String>
 
 </ResourceDictionary>

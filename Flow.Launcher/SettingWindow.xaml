@@ -13,15 +13,17 @@
     MinHeight="600"
     d:DataContext="{d:DesignInstance vm:SettingWindowViewModel}"
     Closed="OnClosed"
+    FontFamily="{DynamicResource SettingWindowFont}"
     Icon="Images\app.ico"
     Left="{Binding SettingWindowLeft, Mode=TwoWay}"
     Loaded="OnLoaded"
+    LocationChanged="Window_LocationChanged"
     MouseDown="window_MouseDown"
     ResizeMode="CanResize"
     SnapsToDevicePixels="True"
-    UseLayoutRounding="True"
     StateChanged="Window_StateChanged"
     Top="{Binding SettingWindowTop, Mode=TwoWay}"
+    UseLayoutRounding="True"
     WindowStartupLocation="Manual"
     mc:Ignorable="d">
     <WindowChrome.WindowChrome>

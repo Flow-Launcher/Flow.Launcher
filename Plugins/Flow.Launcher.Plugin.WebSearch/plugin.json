@@ -27,7 +27,7 @@
   "Name": "Web Searches",
   "Description": "Provide the web search ability",
   "Author": "qianlifeng",
-  "Version": "3.1.4",
+  "Version": "1.0.0",
   "Language": "csharp",
   "Website": "https://github.com/Flow-Launcher/Flow.Launcher",
   "ExecuteFileName": "Flow.Launcher.Plugin.WebSearch.dll",

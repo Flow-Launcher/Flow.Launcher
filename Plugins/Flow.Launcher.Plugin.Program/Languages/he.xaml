@@ -46,6 +46,8 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">אנא בחר מקור תוכנה</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">האם אתה בטוח שברצונך למחוק את מקורות התוכניות שנבחרו?</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_not_user_added">Please select program sources that are not added by you</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_user_added">Please select program sources that are added by you</system:String>
     <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">מקור תוכנה נוסף עם אותו מיקום כבר קיים.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">מקור תוכנה</system:String>
@@ -74,7 +76,7 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">הפעל כמשתמש אחר</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">הפעל כמנהל</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">פתח תיקייה מכילה</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">השבת הצגת תוכנה זו</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">הסתר</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_target_folder">פתח תיקיית יעד</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">תוכנה</system:String>

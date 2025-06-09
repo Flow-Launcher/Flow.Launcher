@@ -31,6 +31,7 @@
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Tamaño</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Fecha de creación</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Fecha de modificación</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_age_checkbox">Edad del archivo</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Mostrar información del archivo</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Formato de fecha y hora</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Ordenar por:</system:String>
@@ -80,6 +81,8 @@
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">Copiar ruta</system:String>
     <system:String x:Key="plugin_explorer_copypath_subtitle">Copia la ruta del elemento actual al portapapeles</system:String>
+    <system:String x:Key="plugin_explorer_copyname">Copiar nombre</system:String>
+    <system:String x:Key="plugin_explorer_copyname_subtitle">Copiar nombre del elemento actual al portapapeles</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">Copiar</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">Copia el archivo actual al portapapeles</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">Copia la carpeta actual al portapapeles</system:String>
@@ -162,4 +165,12 @@
     <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Mostrar menú contextual nativo (experimental)</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">En el siguiente cuadro puede especificar los elementos que desea incluir en el menú contextual, puede describirlos de forma parcial (p. ej., 'brir co') o completa ('Abrir con').</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">En el siguiente cuadro puede especificar los elementos que desea excluir en el menú contextual, puede describirlos de forma parcial (p. ej., 'brir co') o completa ('Abrir con').</system:String>
+
+    <!--  Preview Info  -->
+    <system:String x:Key="Today">Hoy</system:String>
+    <system:String x:Key="DaysAgo">Hace {0} días</system:String>
+    <system:String x:Key="OneMonthAgo">Hace 1 mes</system:String>
+    <system:String x:Key="MonthsAgo">Hace {0} meses</system:String>
+    <system:String x:Key="OneYearAgo">Hace 1 año</system:String>
+    <system:String x:Key="YearsAgo">Hace {0} años</system:String>
 </ResourceDictionary>

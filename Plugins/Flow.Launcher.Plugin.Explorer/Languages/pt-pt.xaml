@@ -6,7 +6,7 @@
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Selecione a ligação para a pasta</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">Tem a certeza de que deseja eliminar {0}?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">Tem a certeza de que pretende eliminar permanentemente este ficheiro?</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Tem a certeza de que pretende eliminar permanentemente este ficheiro ou pasta?</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Tem a certeza de que pretende eliminar permanentemente este ficheiro/pasta?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Eliminada com sucesso</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">{0} eliminado(a) com sucesso.</system:String>
     <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">A atribuição de uma palavra-chave global pode devolver demasiados resultados. Deve escolher uma palavra-chave específica.</system:String>
@@ -31,6 +31,7 @@
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Tamanho</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Data de criação</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Data de modificação</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_age_checkbox">Antiguidade</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Mostrar informações do ficheiro</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Formato de data e de hora</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Ordenação:</system:String>
@@ -80,6 +81,8 @@
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">Copiar caminho</system:String>
     <system:String x:Key="plugin_explorer_copypath_subtitle">Copiar caminho do item atual para área de transferência</system:String>
+    <system:String x:Key="plugin_explorer_copyname">Copiar nome</system:String>
+    <system:String x:Key="plugin_explorer_copyname_subtitle">Copiar nome do item para a área de transferência</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">Copiar</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">Copiar ficheiro atual para a área de transferência</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">Copiar pasta atual para a área de transferência</system:String>
@@ -162,4 +165,12 @@
     <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Mostrar menu de contexto nativo (experimental)</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Aqui pode especificar os itens a incluir no menu de contexto. Podem ser parciais (ex.: 'brir co') ou completos ('Abrir com').</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Aqui pode especificar os itens a excluir do menu de contexto. Podem ser parciais (ex.: 'brir co') ou completos ('Abrir com').</system:String>
+
+    <!--  Preview Info  -->
+    <system:String x:Key="Today">Hoje</system:String>
+    <system:String x:Key="DaysAgo">Há {0} dias</system:String>
+    <system:String x:Key="OneMonthAgo">Há 1 mês</system:String>
+    <system:String x:Key="MonthsAgo">Há {0} meses</system:String>
+    <system:String x:Key="OneYearAgo">Há 1 ano</system:String>
+    <system:String x:Key="YearsAgo">Há {0} anos</system:String>
 </ResourceDictionary>

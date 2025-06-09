@@ -204,6 +204,12 @@
                     Click="btnEditProgramSource_OnClick"
                     Content="{DynamicResource flowlauncher_plugin_program_edit}" />
                 <Button
+                    x:Name="btnDeleteProgramSource"
+                    MinWidth="100"
+                    Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
+                    Click="btnDeleteProgramSource_OnClick"
+                    Content="{DynamicResource flowlauncher_plugin_program_delete}" />
+                <Button
                     x:Name="btnAddProgramSource"
                     MinWidth="100"
                     Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"

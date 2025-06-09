@@ -145,6 +145,12 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     }
 
     [RelayCommand]
+    private void OpenCacheFolder()
+    {
+        App.API.OpenDirectory(DataLocation.CacheDirectory);
+    }
+
+    [RelayCommand]
     private void OpenLogsFolder()
     {
         App.API.OpenDirectory(GetLogDir(Constant.Version).FullName);
@@ -180,7 +186,8 @@ public partial class SettingsPaneAboutViewModel : BaseModel
             {
                 try
                 {
-                    dir.Delete(true);
+                    // Log folders are the last level of folders
+                    dir.Delete(recursive: false);
                 }
                 catch (Exception e)
                 {
@@ -208,6 +215,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     {
         var success = true;
         var cacheDirectory = GetCacheDir();
+        var pluginCacheDirectory = GetPluginCacheDir();
         var cacheFiles = GetCacheFiles();
 
         cacheFiles.ForEach(f =>
@@ -223,13 +231,15 @@ public partial class SettingsPaneAboutViewModel : BaseModel
             }
         });
 
-        cacheDirectory.EnumerateDirectories("*", SearchOption.TopDirectoryOnly)
+        // Firstly, delete plugin cache directories
+        pluginCacheDirectory.EnumerateDirectories("*", SearchOption.TopDirectoryOnly)
             .ToList()
             .ForEach(dir =>
             {
                 try
                 {
-                    dir.Delete(true);
+                    // Plugin may create directories in its cache directory
+                    dir.Delete(recursive: true);
                 }
                 catch (Exception e)
                 {
@@ -237,6 +247,18 @@ public partial class SettingsPaneAboutViewModel : BaseModel
                     success = false;
                 }
             });
+
+        // Then, delete plugin directory
+        var dir = GetPluginCacheDir();
+        try
+        {
+            dir.Delete(recursive: false);
+        }
+        catch (Exception e)
+        {
+            App.API.LogException(ClassName, $"Failed to delete cache directory: {dir.Name}", e);
+            success = false;
+        }
 
         OnPropertyChanged(nameof(CacheFolderSize));
 
@@ -246,6 +268,11 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     private static DirectoryInfo GetCacheDir()
     {
         return new DirectoryInfo(DataLocation.CacheDirectory);
+    }
+
+    private static DirectoryInfo GetPluginCacheDir()
+    {
+        return new DirectoryInfo(DataLocation.PluginCacheDirectory);
     }
 
     private static List<FileInfo> GetCacheFiles()
@@ -267,5 +294,31 @@ public partial class SettingsPaneAboutViewModel : BaseModel
         }
 
         return "0 B";
+    }
+    
+    public string SettingWindowFont
+    {
+        get => _settings.SettingWindowFont;
+        set
+        {
+            if (_settings.SettingWindowFont != value)
+            {
+                _settings.SettingWindowFont = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    [RelayCommand]
+    private void ResetSettingWindowFont()
+    {
+        SettingWindowFont = Win32Helper.GetSystemDefaultFont(false);
+    }
+
+    [RelayCommand]
+    private void OpenReleaseNotes()
+    {
+        var releaseNotesWindow = new ReleaseNotesWindow();
+        releaseNotesWindow.Show();
     }
 }

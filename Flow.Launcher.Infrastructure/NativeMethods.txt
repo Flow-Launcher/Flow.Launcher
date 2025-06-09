@@ -22,7 +22,7 @@ SystemParametersInfo
 
 SetForegroundWindow
 
-GetWindowLong
+WINDOW_LONG_PTR_INDEX
 GetForegroundWindow
 GetDesktopWindow
 GetShellWindow
@@ -42,6 +42,14 @@ MONITORINFOEXW
 
 WM_ENTERSIZEMOVE
 WM_EXITSIZEMOVE
+WM_NCLBUTTONDBLCLK
+WM_SYSCOMMAND
+
+SC_MAXIMIZE
+SC_MINIMIZE
+
+OleInitialize
+OleUninitialize
 
 GetKeyboardLayout
 GetWindowThreadProcessId
@@ -54,3 +62,7 @@ LOCALE_TRANSIENT_KEYBOARD1
 LOCALE_TRANSIENT_KEYBOARD2
 LOCALE_TRANSIENT_KEYBOARD3
 LOCALE_TRANSIENT_KEYBOARD4
+
+SHParseDisplayName
+SHOpenFolderAndSelectItems
+CoTaskMemFree

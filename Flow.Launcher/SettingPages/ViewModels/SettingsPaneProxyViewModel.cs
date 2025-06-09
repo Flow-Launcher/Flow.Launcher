@@ -1,4 +1,6 @@
 ﻿using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core;
 using Flow.Launcher.Infrastructure.UserSettings;
@@ -8,49 +10,43 @@ namespace Flow.Launcher.SettingPages.ViewModels;
 
 public partial class SettingsPaneProxyViewModel : BaseModel
 {
-    private readonly Updater _updater;
     public Settings Settings { get; }
+
+    private readonly Updater _updater;
 
     public SettingsPaneProxyViewModel(Settings settings, Updater updater)
     {
-        _updater = updater;
         Settings = settings;
+        _updater = updater;
     }
 
     [RelayCommand]
-    private void OnTestProxyClicked()
+    private async Task OnTestProxyClickedAsync()
     {
-        var message = TestProxy();
+        var message = await TestProxyAsync();
         App.API.ShowMsgBox(App.API.GetTranslation(message));
     }
 
-    private string TestProxy()
+    private async Task<string> TestProxyAsync()
     {
         if (string.IsNullOrEmpty(Settings.Proxy.Server)) return "serverCantBeEmpty";
         if (Settings.Proxy.Port <= 0) return "portCantBeEmpty";
 
-        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_updater.GitHubRepository);
+        var handler = new HttpClientHandler
+        {
+            Proxy = new WebProxy(Settings.Proxy.Server, Settings.Proxy.Port)
+        };
 
-        if (string.IsNullOrEmpty(Settings.Proxy.UserName) || string.IsNullOrEmpty(Settings.Proxy.Password))
+        if (!string.IsNullOrEmpty(Settings.Proxy.UserName) && !string.IsNullOrEmpty(Settings.Proxy.Password))
         {
-            request.Proxy = new WebProxy(Settings.Proxy.Server, Settings.Proxy.Port);
-        }
-        else
-        {
-            request.Proxy = new WebProxy(Settings.Proxy.Server, Settings.Proxy.Port)
-            {
-                Credentials = new NetworkCredential(Settings.Proxy.UserName, Settings.Proxy.Password)
-            };
+            handler.Proxy.Credentials = new NetworkCredential(Settings.Proxy.UserName, Settings.Proxy.Password);
         }
 
+        using var client = new HttpClient(handler);
         try
         {
-            var response = (HttpWebResponse)request.GetResponse();
-            return response.StatusCode switch
-            {
-                HttpStatusCode.OK => "proxyIsCorrect",
-                _ => "proxyConnectFailed"
-            };
+            var response = await client.GetAsync(_updater.GitHubRepository);
+            return response.IsSuccessStatusCode ? "proxyIsCorrect" : "proxyConnectFailed";
         }
         catch
         {

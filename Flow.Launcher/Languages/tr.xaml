@@ -42,6 +42,7 @@
     <system:String x:Key="GameMode">Oyun Modu</system:String>
     <system:String x:Key="GameModeToolTip">Kısayol tuşlarının kullanımını durdurun.</system:String>
     <system:String x:Key="PositionReset">Pencere Konumunu Sıfırla</system:String>
+    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
 
     <!--  Setting General  -->
@@ -55,7 +56,7 @@
     <system:String x:Key="setAutoStartFailed">Sistemle başlatma ayarı başarısız oldu</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Odak Pencereden Ayrıldığında Gizle</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Güncelleme bildirimlerini gösterme</system:String>
-    <system:String x:Key="SearchWindowPosition">Pencere Konumu</system:String>
+    <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Son Konumu Hatırla</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Fare İmlecinin Bulunduğu Monitör</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Aktif Pencerenin Bulunduğu Monitör</system:String>
@@ -106,14 +107,35 @@
     <system:String x:Key="AlwaysPreviewToolTip">Önizleme panelini her zaman aç. Önizlemeyi bu ayardan bağımsız {0} kısayolu ile açıp kapatabilirsiniz.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Mevcut temada bulanıklık efekti etkinken gölgelendirme efektine izin verilmez</system:String>
     <system:String x:Key="searchDelay">Search Delay</system:String>
-    <system:String x:Key="searchDelayToolTip">Delay for a while to search when typing. This reduces interface jumpiness and result load.</system:String>
+    <system:String x:Key="searchDelayToolTip">Adds a short delay while typing to reduce UI flicker and result load. Recommended if your typing speed is average.</system:String>
+    <system:String x:Key="searchDelayNumberBoxToolTip">Enter the wait time (in ms) until input is considered complete. This can only be edited if Search Delay is enabled.</system:String>
     <system:String x:Key="searchDelayTime">Default Search Delay Time</system:String>
-    <system:String x:Key="searchDelayTimeToolTip">Plugin default delay time after which search results appear when typing is stopped.</system:String>
-    <system:String x:Key="SearchDelayTimeVeryLong">Very long</system:String>
-    <system:String x:Key="SearchDelayTimeLong">Long</system:String>
-    <system:String x:Key="SearchDelayTimeNormal">Normal</system:String>
-    <system:String x:Key="SearchDelayTimeShort">Short</system:String>
-    <system:String x:Key="SearchDelayTimeVeryShort">Very short</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Wait time before showing results after typing stops. Higher values wait longer. (ms)</system:String>
+    <system:String x:Key="KoreanImeTitle">Information for Korean IME user</system:String>
+    <system:String x:Key="KoreanImeGuide">
+        The Korean input method used in Windows 11 may cause some issues in Flow Launcher.
+
+        If you experience any problems, you may need to enable &quot;Use previous version of Korean IME&quot;.
+
+
+        Open Setting in Windows 11 and go to:
+
+        Time &amp; Language &gt; Language &amp; Region &gt; Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility,
+
+        and enable &quot;Use previous version of Microsoft IME&quot;.
+
+
+    </system:String>
+    <system:String x:Key="KoreanImeOpenLink">Open Language and Region System Settings</system:String>
+    <system:String x:Key="KoreanImeOpenLinkToolTip">Opens the Korean IME setting location. Go to Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility</system:String>
+    <system:String x:Key="KoreanImeOpenLinkButton">Aç</system:String>
+    <system:String x:Key="KoreanImeRegistry">Use Previous Korean IME</system:String>
+    <system:String x:Key="KoreanImeRegistryTooltip">You can change the Previous Korean IME settings directly from here</system:String>
+    <system:String x:Key="homePage">Home Page</system:String>
+    <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
+    <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Eklenti Ara</system:String>
@@ -130,8 +152,13 @@
     <system:String x:Key="currentActionKeywords">Geçerli anahtar kelime</system:String>
     <system:String x:Key="newActionKeyword">Yeni anahtar kelime</system:String>
     <system:String x:Key="actionKeywordsTooltip">Anahtar kelimeyi değiştir</system:String>
-    <system:String x:Key="pluginSearchDelayTime">Plugin seach delay time</system:String>
-    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Seach Delay Time</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Plugin search delay time</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Search Delay Time</system:String>
+    <system:String x:Key="FilterComboboxLabel">Advanced Settings:</system:String>
+    <system:String x:Key="DisplayModeOnOff">Enabled</system:String>
+    <system:String x:Key="DisplayModePriority">Priority</system:String>
+    <system:String x:Key="DisplayModeSearchDelay">Search Delay</system:String>
+    <system:String x:Key="DisplayModeHomeOnOff">Home Page</system:String>
     <system:String x:Key="currentPriority">Mevcut öncelik</system:String>
     <system:String x:Key="newPriority">Yeni Öncelik</system:String>
     <system:String x:Key="priority">Öncelik</system:String>
@@ -147,7 +174,6 @@
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Fail to remove plugin cache</system:String>
     <system:String x:Key="failedToRemovePluginCacheMessage">Plugins: {0} - Fail to remove plugin cache files, please remove them manually</system:String>
-    <system:String x:Key="default">Default</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Eklenti Mağazası</system:String>
@@ -184,6 +210,9 @@
     <system:String x:Key="resultItemFont">Arama Sonuçları Yazı Tipi</system:String>
     <system:String x:Key="resultSubItemFont">Arama Sonuçları Yazı Tipi</system:String>
     <system:String x:Key="resetCustomize">Sıfırla</system:String>
+    <system:String x:Key="resetCustomizeToolTip">Reset to the recommended font and size settings.</system:String>
+    <system:String x:Key="ImportThemeSize">Import Theme Size</system:String>
+    <system:String x:Key="ImportThemeSizeToolTip">If a size value intended by the theme designer is available, it will be retrieved and applied.</system:String>
     <system:String x:Key="CustomizeToolTip">Kişiselleştir</system:String>
     <system:String x:Key="windowMode">Pencere Modu</system:String>
     <system:String x:Key="opacity">Saydamlık</system:String>
@@ -211,12 +240,13 @@
     <system:String x:Key="Clock">Saat</system:String>
     <system:String x:Key="Date">Tarih</system:String>
     <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropInfo">The backdrop effect is not applied in the preview.</system:String>
     <system:String x:Key="BackdropTypeDisabledToolTip">Backdrop supported starting from Windows 11 build 22000 and above</system:String>
     <system:String x:Key="BackdropTypesNone">Hiçbiri</system:String>
     <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
     <system:String x:Key="BackdropTypesMica">Mica</system:String>
     <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
-    <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">This theme supports two (light/dark) modes.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
     <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
     <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
@@ -283,6 +313,9 @@
     <system:String x:Key="useGlyphUI">Segoe Fluent Simgeleri</system:String>
     <system:String x:Key="useGlyphUIEffect">Arama sonuçlarında mümkünse Segoe Fluent simgelerini kullan.</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Tuşa basın</system:String>
+    <system:String x:Key="showBadges">Show Result Badges</system:String>
+    <system:String x:Key="showBadgesToolTip">For supported plugins, badges are displayed to help distinguish them more easily.</system:String>
+    <system:String x:Key="showBadgesGlobalOnly">Show Result Badges for Global Query Only</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">Vekil Sunucu</system:String>
@@ -323,6 +356,7 @@
     <system:String x:Key="logfolder">Günlük Klasörü</system:String>
     <system:String x:Key="clearlogfolder">Günlükleri Temizle</system:String>
     <system:String x:Key="clearlogfolderMessage">Tüm günlük kayıtlarını silmek istediğinize emin misiniz?</system:String>
+    <system:String x:Key="cachefolder">Cache Folder</system:String>
     <system:String x:Key="clearcachefolder">Clear Caches</system:String>
     <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
     <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
@@ -330,12 +364,15 @@
     <system:String x:Key="userdatapath">Kullanıcı Verisi Dizini</system:String>
     <system:String x:Key="userdatapathToolTip">Kullanıcı ayarları ve yüklü eklentiler bu klasörde saklanır. Klasörün konumu taşınabilir moda bağlı olarak değişebilir.</system:String>
     <system:String x:Key="userdatapathButton">Klasörü Aç</system:String>
+    <system:String x:Key="advanced">Advanced</system:String>
     <system:String x:Key="logLevel">Log Level</system:String>
     <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="LogLevelINFO">Info</system:String>
+    <system:String x:Key="settingWindowFontTitle">Setting Window Font</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Dosya Yöneticisi Seçenekleri</system:String>
+    <system:String x:Key="fileManager_learnMore">Learn more</system:String>
     <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments as required. The &quot;%d&quot; represents the directory path to open for, used by the Arg for Folder field and for commands opening specific directories. The &quot;%f&quot; represents the file path to open for, used by the Arg for File field and for commands opening specific files.</system:String>
     <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fileds blank.</system:String>
     <system:String x:Key="fileManager_name">Dosya Yöneticisi</system:String>
@@ -343,6 +380,8 @@
     <system:String x:Key="fileManager_path">Dosya Yöneticisi Yolu</system:String>
     <system:String x:Key="fileManager_directory_arg">Klasör Açarken</system:String>
     <system:String x:Key="fileManager_file_arg">Dosya Açarken</system:String>
+    <system:String x:Key="fileManagerPathNotFound">The file manager '{0}' could not be located at '{1}'. Would you like to continue?</system:String>
+    <system:String x:Key="fileManagerPathError">File Manager Path Error</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">İnternet Tarayıcı Seçenekleri</system:String>
@@ -370,13 +409,16 @@
     <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
     <system:String x:Key="success">Başarılı</system:String>
     <system:String x:Key="completedSuccessfully">Başarıyla tamamlandı</system:String>
+    <system:String x:Key="failedToCopy">Failed to copy</system:String>
     <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
     <system:String x:Key="searchDelayTimeTitle">Search Delay Time Setting</system:String>
-    <system:String x:Key="searchDelayTime_tips">Select the search delay time you like to use for the plugin. Select &quot;{0}&quot; if you don't want to specify any, and the plugin will use default search delay time.</system:String>
-    <system:String x:Key="currentSearchDelayTime">Current search delay time</system:String>
-    <system:String x:Key="newSearchDelayTime">New search delay time</system:String>
+    <system:String x:Key="searchDelayTimeTips">Input the search delay time in ms you like to use for the plugin. Input empty if you don't want to specify any, and the plugin will use default search delay time.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="homeTitle">Home Page</system:String>
+    <system:String x:Key="homeTips">Enable the plugin home page state if you like to show the plugin results when query is empty.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Özel Sorgu Kısayolları</system:String>
@@ -428,6 +470,14 @@
     <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
     <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
     <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
+
+    <!--  File Open Error  -->
+    <system:String x:Key="fileManagerNotFoundTitle">File Manager Error</system:String>
+    <system:String x:Key="fileManagerNotFound">
+        The specified file manager could not be found. Please check the Custom File Manager setting under Settings &gt; General.
+    </system:String>
+    <system:String x:Key="errorTitle">Error</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder. {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Lütfen bekleyin...</system:String>

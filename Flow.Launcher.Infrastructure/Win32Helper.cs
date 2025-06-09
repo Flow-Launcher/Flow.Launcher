@@ -1,9 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
+using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
+using System.Windows.Markup;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Microsoft.Win32;
@@ -11,8 +18,10 @@ using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Dwm;
 using Windows.Win32.UI.Input.KeyboardAndMouse;
+using Windows.Win32.UI.Shell.Common;
 using Windows.Win32.UI.WindowsAndMessaging;
 using Point = System.Windows.Point;
+using SystemFonts = System.Windows.SystemFonts;
 
 namespace Flow.Launcher.Infrastructure
 {
@@ -185,9 +194,9 @@ namespace Flow.Launcher.Infrastructure
             SetWindowStyle(hwnd, WINDOW_LONG_PTR_INDEX.GWL_STYLE, style);
         }
 
-        private static int GetWindowStyle(HWND hWnd, WINDOW_LONG_PTR_INDEX nIndex)
+        private static nint GetWindowStyle(HWND hWnd, WINDOW_LONG_PTR_INDEX nIndex)
         {
-            var style = PInvoke.GetWindowLong(hWnd, nIndex);
+            var style = PInvoke.GetWindowLongPtr(hWnd, nIndex);
             if (style == 0 && Marshal.GetLastPInvokeError() != 0)
             {
                 throw new Win32Exception(Marshal.GetLastPInvokeError());
@@ -195,7 +204,7 @@ namespace Flow.Launcher.Infrastructure
             return style;
         }
 
-        private static nint SetWindowStyle(HWND hWnd, WINDOW_LONG_PTR_INDEX nIndex, int dwNewLong)
+        private static nint SetWindowStyle(HWND hWnd, WINDOW_LONG_PTR_INDEX nIndex, nint dwNewLong)
         {
             PInvoke.SetLastError(WIN32_ERROR.NO_ERROR); // Clear any existing error
 
@@ -315,6 +324,11 @@ namespace Flow.Launcher.Infrastructure
 
         public const int WM_ENTERSIZEMOVE = (int)PInvoke.WM_ENTERSIZEMOVE;
         public const int WM_EXITSIZEMOVE = (int)PInvoke.WM_EXITSIZEMOVE;
+        public const int WM_NCLBUTTONDBLCLK = (int)PInvoke.WM_NCLBUTTONDBLCLK;
+        public const int WM_SYSCOMMAND = (int)PInvoke.WM_SYSCOMMAND;
+
+        public const int SC_MAXIMIZE = (int)PInvoke.SC_MAXIMIZE;
+        public const int SC_MINIMIZE = (int)PInvoke.SC_MINIMIZE;
 
         #endregion
 
@@ -328,6 +342,78 @@ namespace Flow.Launcher.Infrastructure
                 windowHelper.EnsureHandle();
             }
             return new(windowHelper.Handle);
+        }
+
+        #endregion
+
+        #region STA Thread
+
+        /*
+        Inspired by https://github.com/files-community/Files code on STA Thread handling.
+        */
+
+        public static Task StartSTATaskAsync(Action action)
+        {
+            var taskCompletionSource = new TaskCompletionSource();
+            Thread thread = new(() =>
+            {
+                PInvoke.OleInitialize();
+
+                try
+                {
+                    action();
+                    taskCompletionSource.SetResult();
+                }
+                catch (System.Exception ex)
+                {
+                    taskCompletionSource.SetException(ex);
+                }
+                finally
+                {
+                    PInvoke.OleUninitialize();
+                }
+            })
+            {
+                IsBackground = true,
+                Priority = ThreadPriority.Normal
+            };
+
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+
+            return taskCompletionSource.Task;
+        }
+
+        public static Task<T> StartSTATaskAsync<T>(Func<T> func)
+        {
+            var taskCompletionSource = new TaskCompletionSource<T>();
+
+            Thread thread = new(() =>
+            {
+                PInvoke.OleInitialize();
+
+                try
+                {
+                    taskCompletionSource.SetResult(func());
+                }
+                catch (System.Exception ex)
+                {
+                    taskCompletionSource.SetException(ex);
+                }
+                finally
+                {
+                    PInvoke.OleUninitialize();
+                }
+            })
+            {
+                IsBackground = true,
+                Priority = ThreadPriority.Normal
+            };
+
+            thread.SetApartmentState(ApartmentState.STA);
+            thread.Start();
+
+            return taskCompletionSource.Task;
         }
 
         #endregion
@@ -364,19 +450,9 @@ namespace Flow.Launcher.Infrastructure
             // No installed English layout found
             if (enHKL == HKL.Null) return;
 
-            // When application is exiting, the Application.Current will be null
-            if (Application.Current == null) return;
-
-            // Get the FL main window
-            var hwnd = GetWindowHandle(Application.Current.MainWindow, true);
+            // Get the foreground window
+            var hwnd = PInvoke.GetForegroundWindow();
             if (hwnd == HWND.Null) return;
-
-            // Check if the FL main window is the current foreground window
-            if (!IsForegroundWindow(hwnd))
-            {
-                var result = PInvoke.SetForegroundWindow(hwnd);
-                if (!result) throw new Win32Exception(Marshal.GetLastWin32Error());
-            }
 
             // Get the current foreground window thread ID
             var threadId = PInvoke.GetWindowThreadProcessId(hwnd);
@@ -514,6 +590,204 @@ namespace Flow.Launcher.Infrastructure
             // Notifications only supported on Windows 10 19041+
             return RuntimeInformation.IsOSPlatform(OSPlatform.Windows) &&
                 Environment.OSVersion.Version.Build >= 19041;
+        }
+
+        #endregion
+
+        #region Korean IME
+
+        public static bool IsWindows11()
+        {
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Windows) &&
+                Environment.OSVersion.Version.Build >= 22000;
+        }
+
+        public static bool IsKoreanIMEExist()
+        {
+            return GetLegacyKoreanIMERegistryValue() != null;
+        }
+
+        public static bool IsLegacyKoreanIMEEnabled()
+        {
+            object value = GetLegacyKoreanIMERegistryValue();
+
+            if (value is int intValue)
+            {
+                return intValue == 1;
+            }
+            else if (value != null && int.TryParse(value.ToString(), out int parsedValue))
+            {
+                return parsedValue == 1;
+            }
+
+            return false;
+        }
+
+        public static bool SetLegacyKoreanIMEEnabled(bool enable)
+        {
+            const string subKeyPath = @"Software\Microsoft\input\tsf\tsf3override\{A028AE76-01B1-46C2-99C4-ACD9858AE02F}";
+            const string valueName = "NoTsf3Override5";
+
+            try
+            {
+                using RegistryKey key = Registry.CurrentUser.CreateSubKey(subKeyPath);
+                if (key != null)
+                {
+                    int value = enable ? 1 : 0;
+                    key.SetValue(valueName, value, RegistryValueKind.DWord);
+                    return true;
+                }
+            }
+            catch (System.Exception)
+            {
+                // Ignored
+            }
+
+            return false;
+        }
+
+        public static object GetLegacyKoreanIMERegistryValue()
+        {
+            const string subKeyPath = @"Software\Microsoft\input\tsf\tsf3override\{A028AE76-01B1-46C2-99C4-ACD9858AE02F}";
+            const string valueName = "NoTsf3Override5";
+
+            try
+            {
+                using RegistryKey key = Registry.CurrentUser.OpenSubKey(subKeyPath);
+                if (key != null)
+                {
+                    return key.GetValue(valueName);
+                }
+            }
+            catch (System.Exception)
+            {
+                // Ignored
+            }
+
+            return null;
+        }
+
+        public static void OpenImeSettings()
+        {
+            try
+            {
+                Process.Start(new ProcessStartInfo("ms-settings:regionlanguage") { UseShellExecute = true });
+            }
+            catch (System.Exception)
+            {
+                // Ignored
+            }
+        }
+
+        #endregion
+
+        #region System Font
+
+        private static readonly Dictionary<string, string> _languageToNotoSans = new()
+        {
+            { "ko", "Noto Sans KR" },
+            { "ja", "Noto Sans JP" },
+            { "zh-CN", "Noto Sans SC" },
+            { "zh-SG", "Noto Sans SC" },
+            { "zh-Hans", "Noto Sans SC" },
+            { "zh-TW", "Noto Sans TC" },
+            { "zh-HK", "Noto Sans TC" },
+            { "zh-MO", "Noto Sans TC" },
+            { "zh-Hant", "Noto Sans TC" },
+            { "th", "Noto Sans Thai" },
+            { "ar", "Noto Sans Arabic" },
+            { "he", "Noto Sans Hebrew" },
+            { "hi", "Noto Sans Devanagari" },
+            { "bn", "Noto Sans Bengali" },
+            { "ta", "Noto Sans Tamil" },
+            { "el", "Noto Sans Greek" },
+            { "ru", "Noto Sans" },
+            { "en", "Noto Sans" },
+            { "fr", "Noto Sans" },
+            { "de", "Noto Sans" },
+            { "es", "Noto Sans" },
+            { "pt", "Noto Sans" }
+        };
+
+        /// <summary>
+        /// Gets the system default font.
+        /// </summary>
+        /// <param name="useNoto">
+        /// If true, it will try to find the Noto font for the current culture.
+        /// </param>
+        /// <returns>
+        /// The name of the system default font.
+        /// </returns>
+        public static string GetSystemDefaultFont(bool useNoto = true)
+        {
+            try
+            {
+                if (useNoto)
+                {
+                    var culture = CultureInfo.CurrentCulture;
+                    var language = culture.Name; // e.g., "zh-TW"
+                    var langPrefix = language.Split('-')[0]; // e.g., "zh"
+
+                    // First, try to find by full name, and if not found, fallback to prefix
+                    if (TryGetNotoFont(language, out var notoFont) || TryGetNotoFont(langPrefix, out notoFont))
+                    {
+                        // If the font is installed, return it
+                        if (Fonts.SystemFontFamilies.Any(f => f.Source.Equals(notoFont)))
+                        {
+                            return notoFont;
+                        }
+                    }
+                }
+
+                // If Noto font is not found, fallback to the system default font
+                var font = SystemFonts.MessageFontFamily;
+                if (font.FamilyNames.TryGetValue(XmlLanguage.GetLanguage("en-US"), out var englishName))
+                {
+                    return englishName;
+                }
+
+                return font.Source ?? "Segoe UI";
+            }
+            catch
+            {
+                return "Segoe UI";
+            }
+        }
+
+        private static bool TryGetNotoFont(string langKey, out string notoFont)
+        {
+            return _languageToNotoSans.TryGetValue(langKey, out notoFont);
+        }
+
+        #endregion
+
+        #region Explorer
+
+        // https://learn.microsoft.com/en-us/windows/win32/api/shlobj_core/nf-shlobj_core-shopenfolderandselectitems
+
+        public static unsafe void OpenFolderAndSelectFile(string filePath)
+        {
+            ITEMIDLIST* pidlFolder = null;
+            ITEMIDLIST* pidlFile = null;
+
+            var folderPath = Path.GetDirectoryName(filePath);
+
+            try
+            {
+                var hrFolder = PInvoke.SHParseDisplayName(folderPath, null, out pidlFolder, 0, null);
+                if (hrFolder.Failed) throw new COMException("Failed to parse folder path", hrFolder);
+
+                var hrFile = PInvoke.SHParseDisplayName(filePath, null, out pidlFile, 0, null);
+                if (hrFile.Failed) throw new COMException("Failed to parse file path", hrFile);
+
+                var hrSelect = PInvoke.SHOpenFolderAndSelectItems(pidlFolder, 1, &pidlFile, 0);
+                if (hrSelect.Failed) throw new COMException("Failed to open folder and select item", hrSelect);
+            }
+            finally
+            {
+                if (pidlFile != null) PInvoke.CoTaskMemFree(pidlFile);
+                if (pidlFolder != null) PInvoke.CoTaskMemFree(pidlFolder);
+            }
         }
 
         #endregion

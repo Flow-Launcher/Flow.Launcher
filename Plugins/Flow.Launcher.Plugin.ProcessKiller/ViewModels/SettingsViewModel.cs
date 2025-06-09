@@ -9,6 +9,12 @@
             Settings = settings;
         }
 
+        public bool ShowWindowTitle
+        {
+            get => Settings.ShowWindowTitle;
+            set => Settings.ShowWindowTitle = value;
+        }
+
         public bool PutVisibleWindowProcessesTop
         {
             get => Settings.PutVisibleWindowProcessesTop;

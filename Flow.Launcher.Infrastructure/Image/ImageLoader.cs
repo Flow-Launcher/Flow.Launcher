@@ -7,9 +7,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
-using Flow.Launcher.Plugin;
 using SharpVectors.Converters;
 using SharpVectors.Renderers.Wpf;
 
@@ -17,10 +16,6 @@ namespace Flow.Launcher.Infrastructure.Image
 {
     public static class ImageLoader
     {
-        // We should not initialize API in static constructor because it will create another API instance
-        private static IPublicAPI api = null;
-        private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
-
         private static readonly string ClassName = nameof(ImageLoader);
 
         private static readonly ImageCache ImageCache = new();
@@ -58,14 +53,14 @@ namespace Flow.Launcher.Infrastructure.Image
 
             _ = Task.Run(async () =>
             {
-                await API.StopwatchLogInfoAsync(ClassName, "Preload images cost", async () =>
+                await Stopwatch.InfoAsync(ClassName, "Preload images cost", async () =>
                 {
                     foreach (var (path, isFullImage) in usage)
                     {
                         await LoadAsync(path, isFullImage);
                     }
                 });
-                API.LogInfo(ClassName, $"Number of preload images is <{ImageCache.CacheSize()}>, Images Number: {ImageCache.CacheSize()}, Unique Items {ImageCache.UniqueImagesInCache()}");
+                Log.Info(ClassName, $"Number of preload images is <{ImageCache.CacheSize()}>, Images Number: {ImageCache.CacheSize()}, Unique Items {ImageCache.UniqueImagesInCache()}");
             });
         }
 
@@ -81,7 +76,7 @@ namespace Flow.Launcher.Infrastructure.Image
             }
             catch (System.Exception e)
             {
-                API.LogException(ClassName, "Failed to save image cache to file", e);
+                Log.Exception(ClassName, "Failed to save image cache to file", e);
             }
             finally
             {
@@ -176,8 +171,8 @@ namespace Flow.Launcher.Infrastructure.Image
                 }
                 catch (System.Exception e2)
                 {
-                    API.LogException(ClassName, $"|ImageLoader.Load|Failed to get thumbnail for {path} on first try", e);
-                    API.LogException(ClassName, $"|ImageLoader.Load|Failed to get thumbnail for {path} on second try", e2);
+                    Log.Exception(ClassName, $"Failed to get thumbnail for {path} on first try", e);
+                    Log.Exception(ClassName, $"Failed to get thumbnail for {path} on second try", e2);
 
                     ImageSource image = ImageCache[Constant.MissingImgIcon, false];
                     ImageCache[path, false] = image;
@@ -243,7 +238,7 @@ namespace Flow.Launcher.Infrastructure.Image
                         {
                             image = Image;
                             type = ImageType.Error;
-                            API.LogException(ClassName, $"Failed to load image file from path {path}: {ex.Message}", ex);
+                            Log.Exception(ClassName, $"Failed to load image file from path {path}: {ex.Message}", ex);
                         }
                     }
                     else
@@ -267,7 +262,7 @@ namespace Flow.Launcher.Infrastructure.Image
                     {
                         image = Image;
                         type = ImageType.Error;
-                        API.LogException(ClassName, $"Failed to load SVG image from path {path}: {ex.Message}", ex);
+                        Log.Exception(ClassName, $"Failed to load SVG image from path {path}: {ex.Message}", ex);
                     }
                 }
                 else

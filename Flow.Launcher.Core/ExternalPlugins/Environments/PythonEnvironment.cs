@@ -5,6 +5,7 @@ using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
+using Microsoft.VisualStudio.Threading;
 
 namespace Flow.Launcher.Core.ExternalPlugins.Environments
 {
@@ -30,13 +31,15 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
         internal PythonEnvironment(List<PluginMetadata> pluginMetadataList, PluginsSettings pluginSettings) : base(pluginMetadataList, pluginSettings) { }
 
+        private JoinableTaskFactory JTF { get; } = new JoinableTaskFactory(new JoinableTaskContext());
+
         internal override void InstallEnvironment()
         {
             FilesFolders.RemoveFolderIfExists(InstallPath, (s) => API.ShowMsgBox(s));
 
             // Python 3.11.4 is no longer Windows 7 compatible. If user is on Win 7 and
             // uses Python plugin they need to custom install and use v3.8.9
-            DroplexPackage.Drop(App.python_3_11_4_embeddable, InstallPath).Wait();
+            JTF.Run(() => DroplexPackage.Drop(App.python_3_11_4_embeddable, InstallPath));
 
             PluginsSettingsFilePath = ExecutablePath;
         }

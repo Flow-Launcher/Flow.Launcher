@@ -42,6 +42,7 @@
     <system:String x:Key="GameMode">Modo Juego</system:String>
     <system:String x:Key="GameModeToolTip">Suspende el uso de atajos de teclado.</system:String>
     <system:String x:Key="PositionReset">Restablecer posición</system:String>
+    <system:String x:Key="PositionResetToolTip">Restablece la posición de la ventana de búsqueda</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">Escribir aquí para buscar</system:String>
 
     <!--  Setting General  -->
@@ -106,14 +107,35 @@
     <system:String x:Key="AlwaysPreviewToolTip">Muestra siempre el panel de vista previa al iniciar Flow. Pulsar {0} para mostrar/ocultar la vista previa.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">El efecto de sombra no está permitido si el tema actual tiene activado el efecto de desenfoque</system:String>
     <system:String x:Key="searchDelay">Retardo de búsqueda</system:String>
-    <system:String x:Key="searchDelayToolTip">Retrasa un poco la búsqueda al escribir. Esto reduce los saltos en la interfaz y la carga de resultados.</system:String>
+    <system:String x:Key="searchDelayToolTip">Añade un breve retardo al escribir para reducir el parpadeo de la interfaz de usuario y la carga de resultados. Recomendado si la velocidad de escritura es media.</system:String>
+    <system:String x:Key="searchDelayNumberBoxToolTip">Introduzca el tiempo de espera (en ms) hasta que la entrada se considere completa. Solo se puede editar cuando el retardo de búsqueda está activado.</system:String>
     <system:String x:Key="searchDelayTime">Tiempo de retardo de búsqueda predeterminado</system:String>
-    <system:String x:Key="searchDelayTimeToolTip">Tiempo de retardo predeterminado del complemento tras el que aparecerán los resultados de la búsqueda cuando se deje de escribir.</system:String>
-    <system:String x:Key="SearchDelayTimeVeryLong">Muy largo</system:String>
-    <system:String x:Key="SearchDelayTimeLong">Largo</system:String>
-    <system:String x:Key="SearchDelayTimeNormal">Normal</system:String>
-    <system:String x:Key="SearchDelayTimeShort">Corto</system:String>
-    <system:String x:Key="SearchDelayTimeVeryShort">Muy corto</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Tiempo de espera antes de mostrar los resultados después de dejar de teclear. A mayor valor, más tiempo de espera. (ms)</system:String>
+    <system:String x:Key="KoreanImeTitle">Información para usuario de IME coreano</system:String>
+    <system:String x:Key="KoreanImeGuide">
+        El método de entrada coreano utilizado en Windows 11 puede causar algunos problemas en Flow Launcher.
+
+        Si se experimenta algún problema, es posible que se tenga que activar &quot;Usar versión anterior del IME coreano&quot;.
+
+
+        Abrir Configuración en Windows 11 e ir a:
+
+        Hora e idioma &gt; Idioma y región &gt; Coreano &gt; Opciones de idioma &gt; Teclado - Microsoft IME &gt; Compatibilidad,
+
+        y activar &quot;Usar versión anterior de Microsoft IME&quot;.
+
+
+    </system:String>
+    <system:String x:Key="KoreanImeOpenLink">Abrir idioma y región en configuración</system:String>
+    <system:String x:Key="KoreanImeOpenLinkToolTip">Abre la ubicación de configuración del IME coreano. Ir a Coreano &gt; Opciones de idioma &gt; Teclado - Microsoft IME &gt; Compatibilidad</system:String>
+    <system:String x:Key="KoreanImeOpenLinkButton">Abrir</system:String>
+    <system:String x:Key="KoreanImeRegistry">Utilizar IME Coreano anterior</system:String>
+    <system:String x:Key="KoreanImeRegistryTooltip">Se puede cambiar la configuración anterior del IME coreano directamente desde aquí</system:String>
+    <system:String x:Key="homePage">Página de inicio</system:String>
+    <system:String x:Key="homePageToolTip">Muestra los resultados de la página de inicio cuando el texto de la consulta está vacío.</system:String>
+    <system:String x:Key="historyResultsForHomePage">Mostrar historial de resultados en la página de inicio</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Número máximo de resultados del historial en la página de inicio</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">Esto solo se puede editar si el complemento soporta la función de Inicio y la Página de Inicio está activada.</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Buscar complemento</system:String>
@@ -131,7 +153,12 @@
     <system:String x:Key="newActionKeyword">Nueva palabra clave de acción</system:String>
     <system:String x:Key="actionKeywordsTooltip">Cambia la palabra clave de acción</system:String>
     <system:String x:Key="pluginSearchDelayTime">Tiempo de retardo de la búsqueda del complemento</system:String>
-    <system:String x:Key="pluginSearchDelayTimeTooltip">Cambiar tiempo de retardo de la búsqueda del complemento</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Cambia el tiempo de retardo de la búsqueda del complemento</system:String>
+    <system:String x:Key="FilterComboboxLabel">Configuración avanzada:</system:String>
+    <system:String x:Key="DisplayModeOnOff">Activado</system:String>
+    <system:String x:Key="DisplayModePriority">Prioridad</system:String>
+    <system:String x:Key="DisplayModeSearchDelay">Retardo de búsqueda</system:String>
+    <system:String x:Key="DisplayModeHomeOnOff">Página de inicio</system:String>
     <system:String x:Key="currentPriority">Prioridad actual</system:String>
     <system:String x:Key="newPriority">Nueva prioridad</system:String>
     <system:String x:Key="priority">Prioridad</system:String>
@@ -147,7 +174,6 @@
     <system:String x:Key="failedToRemovePluginSettingsMessage">Complementos: {0} - Fallo al eliminar los archivos de configuración del complemento, por favor elimínelos manualmente</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Fallo al eliminar la caché del complemento</system:String>
     <system:String x:Key="failedToRemovePluginCacheMessage">Complementos: {0} - Fallo al eliminar los archivos de caché del complemento, por favor elimínelos manualmente</system:String>
-    <system:String x:Key="default">Predeterminado</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Tienda complementos</system:String>
@@ -184,6 +210,9 @@
     <system:String x:Key="resultItemFont">Fuente del título del resultado</system:String>
     <system:String x:Key="resultSubItemFont">Fuente del subtítulo del resultado</system:String>
     <system:String x:Key="resetCustomize">Restablecer</system:String>
+    <system:String x:Key="resetCustomizeToolTip">Restablece la configuración recomendada para la fuente y el tamaño.</system:String>
+    <system:String x:Key="ImportThemeSize">Importar tamaño del tema</system:String>
+    <system:String x:Key="ImportThemeSizeToolTip">Si existe un valor de tamaño del tema previsto por el diseñador, este se recuperará y aplicará.</system:String>
     <system:String x:Key="CustomizeToolTip">Personaliza</system:String>
     <system:String x:Key="windowMode">Modo Ventana</system:String>
     <system:String x:Key="opacity">Opacidad</system:String>
@@ -211,6 +240,7 @@
     <system:String x:Key="Clock">Reloj</system:String>
     <system:String x:Key="Date">Fecha</system:String>
     <system:String x:Key="BackdropType">Tipo de telón de fondo</system:String>
+    <system:String x:Key="BackdropInfo">El efecto de telón de fondo no se aplica en la vista previa.</system:String>
     <system:String x:Key="BackdropTypeDisabledToolTip">Telón de fondo compatible a partir de Windows 11 build 22000 y superiores</system:String>
     <system:String x:Key="BackdropTypesNone">Ninguno</system:String>
     <system:String x:Key="BackdropTypesAcrylic">Acrílico</system:String>
@@ -283,6 +313,9 @@
     <system:String x:Key="useGlyphUI">Iconos Segoe Fluent</system:String>
     <system:String x:Key="useGlyphUIEffect">Utiliza iconos Segoe Fluent para los resultados de la consulta cuando sean compatibles</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Pulsar Tecla</system:String>
+    <system:String x:Key="showBadges">Mostrar distintivos en resultados</system:String>
+    <system:String x:Key="showBadgesToolTip">Para los complementos compatibles, se muestran distintivos que ayudan a distinguirlos más fácilmente.</system:String>
+    <system:String x:Key="showBadgesGlobalOnly">Mostrar distintivos en resultados solo para consulta global</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">Proxy HTTP</system:String>
@@ -323,19 +356,23 @@
     <system:String x:Key="logfolder">Carpeta de registros</system:String>
     <system:String x:Key="clearlogfolder">Eliminar registros</system:String>
     <system:String x:Key="clearlogfolderMessage">¿Está seguro de que desea eliminar todos los registros?</system:String>
-    <system:String x:Key="clearcachefolder">Clear Caches</system:String>
-    <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
-    <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
+    <system:String x:Key="cachefolder">Carpeta del caché</system:String>
+    <system:String x:Key="clearcachefolder">Limpiar cachés</system:String>
+    <system:String x:Key="clearcachefolderMessage">¿Está seguro de que desea eliminar todos los cachés?</system:String>
+    <system:String x:Key="clearfolderfailMessage">No se pudo eliminar parte de las carpetas y archivos. Por favor, consulte el archivo de registro para más información</system:String>
     <system:String x:Key="welcomewindow">Asistente</system:String>
     <system:String x:Key="userdatapath">Ubicación de datos del usuario</system:String>
     <system:String x:Key="userdatapathToolTip">La configuración del usuario y los complementos instalados se guardan en la carpeta de datos del usuario. Esta ubicación puede variar dependiendo de si está en modo portable o no.</system:String>
     <system:String x:Key="userdatapathButton">Abrir carpeta</system:String>
+    <system:String x:Key="advanced">Advanced</system:String>
     <system:String x:Key="logLevel">Nivel de registro</system:String>
     <system:String x:Key="LogLevelDEBUG">Depurar</system:String>
     <system:String x:Key="LogLevelINFO">Información</system:String>
+    <system:String x:Key="settingWindowFontTitle">Configuración de fuente de la ventana</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Seleccionar administrador de archivos</system:String>
+    <system:String x:Key="fileManager_learnMore">Más información</system:String>
     <system:String x:Key="fileManager_tips">Especifique la ubicación del archivo del administrador de archivos que está utilizando y añada los argumentos necesarios. El argumento &quot;%d&quot; representa la ruta del directorio a abrir, utilizada por el campo Argumentos de la carpeta y por comandos que abren directorios específicos. El &quot;%f&quot; representa la ruta del archivo a abrir, utilizada por el campo Argumentos del archivo y por comandos que abren archivos específicos.</system:String>
     <system:String x:Key="fileManager_tips2">Por ejemplo, si el administrador de archivos utiliza un comando como &quot;totalcmd.exe /A c:\windows&quot; para abrir el directorio c:\windows, la ruta del administrador de archivos será totalcmd.exe, y los Argumentos de la carpeta serán /A &quot;%d&quot;. Ciertos administradores de archivos como QTTabBar pueden requerir solo la ruta, en este caso utilice &quot;%d&quot; como la ruta del administrador de archivos y deje el resto de los campos en blanco.</system:String>
     <system:String x:Key="fileManager_name">Administrador de archivos</system:String>
@@ -343,6 +380,8 @@
     <system:String x:Key="fileManager_path">Ruta del administrador de archivos</system:String>
     <system:String x:Key="fileManager_directory_arg">Argumentos de la carpeta</system:String>
     <system:String x:Key="fileManager_file_arg">Argumentos del archivo</system:String>
+    <system:String x:Key="fileManagerPathNotFound">El administrador de archivos '{0}' no pudo ser localizado en '{1}'. ¿Desea continuar?</system:String>
+    <system:String x:Key="fileManagerPathError">Error de ruta del administrador de archivos</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Navegador web predeterminado</system:String>
@@ -370,13 +409,16 @@
     <system:String x:Key="newActionKeywordsSameAsOld">Esta nueva palabra clave de acción es la misma que la anterior, por favor elija una diferente</system:String>
     <system:String x:Key="success">Correcto</system:String>
     <system:String x:Key="completedSuccessfully">Finalizado correctamente</system:String>
+    <system:String x:Key="failedToCopy">No se pudo copiar</system:String>
     <system:String x:Key="actionkeyword_tips">Introduzca las palabras clave de acción que desea utilizar para iniciar el complemento y utilice espacios en blanco para separarlas. Utilice * si no desea especificar ninguna, para que el complemento se inicie sin ninguna palabra clave de acción.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
     <system:String x:Key="searchDelayTimeTitle">Ajuste del tiempo de retardo de búsqueda</system:String>
-    <system:String x:Key="searchDelayTime_tips">Seleccionar el tiempo de retardo de búsqueda que se desea utilizar para el complemento. Seleccionar &quot;{0}&quot; si no se desea especificar nada, y el complemento utilizará el tiempo de retardo de búsqueda predeterminado.</system:String>
-    <system:String x:Key="currentSearchDelayTime">Tiempo de retardo de búsqueda actual</system:String>
-    <system:String x:Key="newSearchDelayTime">Nuevo tiempo de retardo de búsqueda</system:String>
+    <system:String x:Key="searchDelayTimeTips">Introducir el tiempo de retardo de búsqueda en ms que se desea utilizar para el complemento. Introducir un espacio vacío si no desea especificar ninguno, y el complemento utilizará el tiempo de retardo de búsqueda predeterminado.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="homeTitle">Página de inicio</system:String>
+    <system:String x:Key="homeTips">Activar el estado de la página de inicio del complemento si se desea mostrar los resultados del complemento cuando la consulta está vacía.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Atajo de teclado de consulta personalizada</system:String>
@@ -430,6 +472,14 @@ Si añade un prefijo &quot;@&quot; al introducir un acceso directo, éste coinci
     <system:String x:Key="reportWindow_please_open_issue">Por favor, abra un nuevo tema en</system:String>
     <system:String x:Key="reportWindow_upload_log">1. Subir archivo de registro: {0}</system:String>
     <system:String x:Key="reportWindow_copy_below">2. Copiar el siguiente mensaje de excepción</system:String>
+
+    <!--  File Open Error  -->
+    <system:String x:Key="fileManagerNotFoundTitle">Error del administrador de archivos</system:String>
+    <system:String x:Key="fileManagerNotFound">
+        No se ha encontrado el administrador de archivos especificado. Compruebe la configuración del Administrador de archivos personalizado en Configuración &gt; General.
+    </system:String>
+    <system:String x:Key="errorTitle">Error</system:String>
+    <system:String x:Key="folderOpenError">Se ha producido un error al abrir la carpeta. {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Por favor espere...</system:String>

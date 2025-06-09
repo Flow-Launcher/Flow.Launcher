@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using Flow.Launcher.SettingPages.ViewModels;
 
@@ -8,8 +7,8 @@ namespace Flow.Launcher
     public partial class CustomShortcutSetting : Window
     {
         private readonly SettingsPaneHotkeyViewModel _hotkeyVm;
-        public string Key { get; set; } = String.Empty;
-        public string Value { get; set; } = String.Empty;
+        public string Key { get; set; } = string.Empty;
+        public string Value { get; set; } = string.Empty;
         private string originalKey { get; } = null;
         private string originalValue { get; } = null;
         private bool update { get; } = false;

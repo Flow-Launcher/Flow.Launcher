@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
@@ -19,6 +20,8 @@ namespace Flow.Launcher.Infrastructure.Storage
     /// </remarks>
     public class BinaryStorage<T> : ISavable
     {
+        private static readonly string ClassName = "BinaryStorage";
+
         protected T? Data;
 
         public const string FileSuffix = ".cache";
@@ -40,6 +43,16 @@ namespace Flow.Launcher.Infrastructure.Storage
             FilePath = Path.Combine(DirectoryPath, $"{filename}{FileSuffix}");
         }
 
+        // Let the old Program plugin get this constructor
+        [Obsolete("This constructor is obsolete. Use BinaryStorage(string filename) instead.")]
+        public BinaryStorage(string filename, string directoryPath = null!)
+        {
+            DirectoryPath = directoryPath ?? DataLocation.CacheDirectory;
+            FilesFolders.ValidateDirectory(DirectoryPath);
+
+            FilePath = Path.Combine(DirectoryPath, $"{filename}{FileSuffix}");
+        }
+
         public async ValueTask<T> TryLoadAsync(T defaultData)
         {
             if (Data != null) return Data;
@@ -48,7 +61,7 @@ namespace Flow.Launcher.Infrastructure.Storage
             {
                 if (new FileInfo(FilePath).Length == 0)
                 {
-                    Log.Error($"|BinaryStorage.TryLoad|Zero length cache file <{FilePath}>");
+                    Log.Error(ClassName, $"Zero length cache file <{FilePath}>");
                     Data = defaultData;
                     await SaveAsync();
                 }
@@ -58,7 +71,7 @@ namespace Flow.Launcher.Infrastructure.Storage
             }
             else
             {
-                Log.Info("|BinaryStorage.TryLoad|Cache file not exist, load default data");
+                Log.Info(ClassName, "Cache file not exist, load default data");
                 Data = defaultData;
                 await SaveAsync();
             }
@@ -82,8 +95,10 @@ namespace Flow.Launcher.Infrastructure.Storage
 
         public void Save()
         {
-            var serialized = MemoryPackSerializer.Serialize(Data);
+            // User may delete the directory, so we need to check it
+            FilesFolders.ValidateDirectory(DirectoryPath);
 
+            var serialized = MemoryPackSerializer.Serialize(Data);
             File.WriteAllBytes(FilePath, serialized);
         }
 
@@ -103,6 +118,9 @@ namespace Flow.Launcher.Infrastructure.Storage
         // so we need to pass it to SaveAsync
         public async ValueTask SaveAsync(T data)
         {
+            // User may delete the directory, so we need to check it
+            FilesFolders.ValidateDirectory(DirectoryPath);
+
             await using var stream = new FileStream(FilePath, FileMode.Create);
             await MemoryPackSerializer.SerializeAsync(stream, data);
         }

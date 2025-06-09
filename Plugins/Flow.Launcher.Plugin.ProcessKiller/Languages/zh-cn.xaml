@@ -8,6 +8,7 @@
     <system:String x:Key="flowlauncher_plugin_processkiller_kill_all_count">杀死 {0} 进程</system:String>
     <system:String x:Key="flowlauncher_plugin_processkiller_kill_instances">杀死所有实例</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_processkiller_put_visible_window_process_top">Put processes with visible windows on the top</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_show_window_title">显示带有可见窗口的进程标题</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_put_visible_window_process_top">在顶部放置带有可见窗口的进程</system:String>
 
 </ResourceDictionary>

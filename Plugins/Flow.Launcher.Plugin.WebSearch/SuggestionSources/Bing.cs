@@ -10,6 +10,8 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
 {
     public class Bing : SuggestionSource
     {
+        private static readonly string ClassName = nameof(Bing);
+
         public override async Task<List<string>> SuggestionsAsync(string query, CancellationToken token)
         {
             try
@@ -33,12 +35,12 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
             }
             catch (Exception e) when (e is HttpRequestException or { InnerException: TimeoutException })
             {
-                Main._context.API.LogException(nameof(Bing), "Can't get suggestion from Bing", e);
+                Main._context.API.LogException(ClassName, "Can't get suggestion from Bing", e);
                 return null;
             }
             catch (JsonException e)
             {
-                Main._context.API.LogException(nameof(Bing), "Can't parse suggestions", e);
+                Main._context.API.LogException(ClassName, "Can't parse suggestions", e);
                 return new List<string>();
             }
         }

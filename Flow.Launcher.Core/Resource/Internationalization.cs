@@ -6,7 +6,6 @@ using System.Reflection;
 using System.Windows;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using System.Globalization;
@@ -17,13 +16,19 @@ namespace Flow.Launcher.Core.Resource
 {
     public class Internationalization
     {
+        private static readonly string ClassName = nameof(Internationalization);
+
+        // We should not initialize API in static constructor because it will create another API instance
+        private static IPublicAPI api = null;
+        private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
+
         private const string Folder = "Languages";
         private const string DefaultLanguageCode = "en";
         private const string DefaultFile = "en.xaml";
         private const string Extension = ".xaml";
         private readonly Settings _settings;
-        private readonly List<string> _languageDirectories = new List<string>();
-        private readonly List<ResourceDictionary> _oldResources = new List<ResourceDictionary>();
+        private readonly List<string> _languageDirectories = new();
+        private readonly List<ResourceDictionary> _oldResources = new();
         private readonly string SystemLanguageCode;
 
         public Internationalization(Settings settings)
@@ -80,7 +85,7 @@ namespace Flow.Launcher.Core.Resource
                 }
                 else
                 {
-                    Log.Error($"|Internationalization.AddPluginLanguageDirectories|Can't find plugin path <{location}> for <{plugin.Metadata.Name}>");
+                    API.LogError(ClassName, $"Can't find plugin path <{location}> for <{plugin.Metadata.Name}>");
                 }
             }
 
@@ -144,13 +149,13 @@ namespace Flow.Launcher.Core.Resource
             _settings.Language = isSystem ? Constant.SystemLanguageCode : language.LanguageCode;
         }
 
-        private Language GetLanguageByLanguageCode(string languageCode)
+        private static Language GetLanguageByLanguageCode(string languageCode)
         {
             var lowercase = languageCode.ToLower();
             var language = AvailableLanguages.GetAvailableLanguages().FirstOrDefault(o => o.LanguageCode.ToLower() == lowercase);
             if (language == null)
             {
-                Log.Error($"|Internationalization.GetLanguageByLanguageCode|Language code can't be found <{languageCode}>");
+                API.LogError(ClassName, $"Language code can't be found <{languageCode}>");
                 return AvailableLanguages.English;
             }
             else
@@ -239,7 +244,7 @@ namespace Flow.Launcher.Core.Resource
             return list;
         }
 
-        public string GetTranslation(string key)
+        public static string GetTranslation(string key)
         {
             var translation = Application.Current.TryFindResource(key);
             if (translation is string)
@@ -248,7 +253,7 @@ namespace Flow.Launcher.Core.Resource
             }
             else
             {
-                Log.Error($"|Internationalization.GetTranslation|No Translation for key {key}");
+                API.LogError(ClassName, $"No Translation for key {key}");
                 return $"No Translation for key {key}";
             }
         }
@@ -257,8 +262,7 @@ namespace Flow.Launcher.Core.Resource
         {
             foreach (var p in PluginManager.GetPluginsForInterface<IPluginI18n>())
             {
-                var pluginI18N = p.Plugin as IPluginI18n;
-                if (pluginI18N == null) return;
+                if (p.Plugin is not IPluginI18n pluginI18N) return;
                 try
                 {
                     p.Metadata.Name = pluginI18N.GetTranslatedPluginTitle();
@@ -267,31 +271,31 @@ namespace Flow.Launcher.Core.Resource
                 }
                 catch (Exception e)
                 {
-                    Log.Exception($"|Internationalization.UpdatePluginMetadataTranslations|Failed for <{p.Metadata.Name}>", e);
+                    API.LogException(ClassName, $"Failed for <{p.Metadata.Name}>", e);
                 }
             }
         }
 
-        public string LanguageFile(string folder, string language)
+        private static string LanguageFile(string folder, string language)
         {
             if (Directory.Exists(folder))
             {
-                string path = Path.Combine(folder, language);
+                var path = Path.Combine(folder, language);
                 if (File.Exists(path))
                 {
                     return path;
                 }
                 else
                 {
-                    Log.Error($"|Internationalization.LanguageFile|Language path can't be found <{path}>");
-                    string english = Path.Combine(folder, DefaultFile);
+                    API.LogError(ClassName, $"Language path can't be found <{path}>");
+                    var english = Path.Combine(folder, DefaultFile);
                     if (File.Exists(english))
                     {
                         return english;
                     }
                     else
                     {
-                        Log.Error($"|Internationalization.LanguageFile|Default English Language path can't be found <{path}>");
+                        API.LogError(ClassName, $"Default English Language path can't be found <{path}>");
                         return string.Empty;
                     }
                 }

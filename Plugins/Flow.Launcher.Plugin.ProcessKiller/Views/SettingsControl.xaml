@@ -12,9 +12,15 @@
         <Grid.ColumnDefinitions />
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <CheckBox
             Grid.Row="0"
+            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
+            Content="{DynamicResource flowlauncher_plugin_processkiller_show_window_title}"
+            IsChecked="{Binding ShowWindowTitle}" />
+        <CheckBox
+            Grid.Row="1"
             Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             Content="{DynamicResource flowlauncher_plugin_processkiller_put_visible_window_process_top}"
             IsChecked="{Binding PutVisibleWindowProcessesTop}" />

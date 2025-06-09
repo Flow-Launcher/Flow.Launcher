@@ -8,9 +8,9 @@
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">请选择 {0} 可执行文件</system:String>
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
-        Your selected {0} executable is invalid.
+        您选择的 {0} 可执行文件无效。
         {2}{2}
-        Click yes if you would like select the {0} executable agian. Click no if you would like to download {1}
+        如果您希望重新选择 {0} 可执行文件，请点击“是”。如果需要下载 {1}，请点击“否”
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">无法设置 {0} 可执行路径，请尝试从 Flow 的设置中设置（向下滚动到底部）。</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">无法初始化插件</system:String>
@@ -18,7 +18,7 @@
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">无法注册热键“{0}”。该热键可能正在被其他程序使用。更改为不同的热键，或退出其他程序。</system:String>
-    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">未能取消注册快捷键&quot;{0}&quot;。请重试或查看日志以获取详细信息</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">启动命令 {0} 失败</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">无效的 Flow Launcher 插件文件格式</system:String>
@@ -42,7 +42,8 @@
     <system:String x:Key="GameMode">游戏模式</system:String>
     <system:String x:Key="GameModeToolTip">暂停使用热键。</system:String>
     <system:String x:Key="PositionReset">重置位置</system:String>
-    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
+    <system:String x:Key="PositionResetToolTip">重置搜索窗口位置</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">在此处输入以搜索</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">设置</system:String>
@@ -50,8 +51,8 @@
     <system:String x:Key="portableMode">便携模式</system:String>
     <system:String x:Key="portableModeToolTIp">将所有设置和用户数据存储在一个文件夹中 (可用于可移除驱动器或云服务)。</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">开机自启</system:String>
-    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
-    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
+    <system:String x:Key="useLogonTaskForStartup">使用登录任务代替启动条目来更快地启动体验</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">卸载后，您需要通过任务计划程序手动移除此任务 (Flow.Launcher Startup)</system:String>
     <system:String x:Key="setAutoStartFailed">设置开机自启时出错</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">失去焦点时自动隐藏 Flow Launcher</system:String>
     <system:String x:Key="dontPromptUpdateMsg">不显示新版本提示</system:String>
@@ -73,8 +74,8 @@
     <system:String x:Key="LastQueryPreserved">保留上次搜索关键字</system:String>
     <system:String x:Key="LastQuerySelected">选择上次搜索关键字</system:String>
     <system:String x:Key="LastQueryEmpty">清空上次搜索关键字</system:String>
-    <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
-    <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
+    <system:String x:Key="LastQueryActionKeywordPreserved">保留最后操作关键词</system:String>
+    <system:String x:Key="LastQueryActionKeywordSelected">选择最后一个操作关键词</system:String>
     <system:String x:Key="maxShowResults">最大结果显示个数</system:String>
     <system:String x:Key="maxShowResultsToolTip">您也可以通过使用 CTRL+ &quot;+&quot; 和 CTRL+ &quot;-&quot; 来快速调整它。</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">全屏模式下忽略热键</system:String>
@@ -105,15 +106,36 @@
     <system:String x:Key="AlwaysPreview">始终打开预览</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Flow 启动时总是打开预览面板。按 {0} 以切换预览。</system:String>
     <system:String x:Key="shadowEffectNotAllowed">当前主题已启用模糊效果，不允许启用阴影效果</system:String>
-    <system:String x:Key="searchDelay">Search Delay</system:String>
-    <system:String x:Key="searchDelayToolTip">Delay for a while to search when typing. This reduces interface jumpiness and result load.</system:String>
-    <system:String x:Key="searchDelayTime">Default Search Delay Time</system:String>
-    <system:String x:Key="searchDelayTimeToolTip">Plugin default delay time after which search results appear when typing is stopped.</system:String>
-    <system:String x:Key="SearchDelayTimeVeryLong">Very long</system:String>
-    <system:String x:Key="SearchDelayTimeLong">Long</system:String>
-    <system:String x:Key="SearchDelayTimeNormal">Normal</system:String>
-    <system:String x:Key="SearchDelayTimeShort">Short</system:String>
-    <system:String x:Key="SearchDelayTimeVeryShort">Very short</system:String>
+    <system:String x:Key="searchDelay">延迟搜索</system:String>
+    <system:String x:Key="searchDelayToolTip">在输入时添加一个短时间延迟以减少UI闪烁和加载结果的负载。建议您的输入速度是平均的。</system:String>
+    <system:String x:Key="searchDelayNumberBoxToolTip">输入等待时间（毫秒），直到输入被认为完成。这只能在启用搜索延迟时进行编辑。</system:String>
+    <system:String x:Key="searchDelayTime">默认搜索延迟时间</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">在输入停止后显示结果之前等待时间。更高的数值等待更长时间（毫秒）</system:String>
+    <system:String x:Key="KoreanImeTitle">韩文输入法用户信息</system:String>
+    <system:String x:Key="KoreanImeGuide">
+        Windows 11中使用的韩国输入法可能会在Flow Launcher中引起一些问题。
+
+        如果您遇到任何问题，您可能需要启用&quot;使用上一个版本的韩语IME&quot;。
+
+
+        Windows 11中的打开设置，转到：
+
+        时间和语言&gt; 语言和区域 &gt; 韩国语言选项 &gt; 键盘-微软IME &gt; 兼容性
+
+        并启用&quot;使用之前版本的 Microsoft IME&quot;。
+
+
+    </system:String>
+    <system:String x:Key="KoreanImeOpenLink">打开语言和区域系统设置</system:String>
+    <system:String x:Key="KoreanImeOpenLinkToolTip">打开韩语输入法设置位置。转到韩语&gt; 语言选项 &gt; 键盘-微软输入法 &gt; 兼容性</system:String>
+    <system:String x:Key="KoreanImeOpenLinkButton">打开</system:String>
+    <system:String x:Key="KoreanImeRegistry">使用以前的韩语输入法</system:String>
+    <system:String x:Key="KoreanImeRegistryTooltip">您可以直接从这里更改前韩语输入法设置</system:String>
+    <system:String x:Key="homePage">首页</system:String>
+    <system:String x:Key="homePageToolTip">当查询文本为空时显示主页结果。</system:String>
+    <system:String x:Key="historyResultsForHomePage">在主页中显示历史记录</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">在主页显示的最大历史结果数</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">这只能在插件支持主页功能和主页启用时进行编辑。</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">搜索插件</system:String>
@@ -130,8 +152,13 @@
     <system:String x:Key="currentActionKeywords">当前触发关键字</system:String>
     <system:String x:Key="newActionKeyword">新触发关键字</system:String>
     <system:String x:Key="actionKeywordsTooltip">更改触发关键字</system:String>
-    <system:String x:Key="pluginSearchDelayTime">Plugin seach delay time</system:String>
-    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Seach Delay Time</system:String>
+    <system:String x:Key="pluginSearchDelayTime">插件搜索延迟时间</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">更改插件搜索延迟时间</system:String>
+    <system:String x:Key="FilterComboboxLabel">高级设置：</system:String>
+    <system:String x:Key="DisplayModeOnOff">启用</system:String>
+    <system:String x:Key="DisplayModePriority">优先级</system:String>
+    <system:String x:Key="DisplayModeSearchDelay">延迟搜索</system:String>
+    <system:String x:Key="DisplayModeHomeOnOff">首页</system:String>
     <system:String x:Key="currentPriority">当前优先级</system:String>
     <system:String x:Key="newPriority">新优先级</system:String>
     <system:String x:Key="priority">优先级</system:String>
@@ -143,11 +170,10 @@
     <system:String x:Key="plugin_query_version">版本</system:String>
     <system:String x:Key="plugin_query_web">官方网站</system:String>
     <system:String x:Key="plugin_uninstall">卸载</system:String>
-    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
-    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
-    <system:String x:Key="failedToRemovePluginCacheTitle">Fail to remove plugin cache</system:String>
-    <system:String x:Key="failedToRemovePluginCacheMessage">Plugins: {0} - Fail to remove plugin cache files, please remove them manually</system:String>
-    <system:String x:Key="default">Default</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsTitle">移除插件设置失败</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">插件：{0} - 移除插件设置文件失败，请手动删除</system:String>
+    <system:String x:Key="failedToRemovePluginCacheTitle">移除插件缓存失败</system:String>
+    <system:String x:Key="failedToRemovePluginCacheMessage">插件：{0} - 移除插件设置文件失败，请手动删除</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">插件商店</system:String>
@@ -184,6 +210,9 @@
     <system:String x:Key="resultItemFont">结果标题字体</system:String>
     <system:String x:Key="resultSubItemFont">结果字幕字体</system:String>
     <system:String x:Key="resetCustomize">重置</system:String>
+    <system:String x:Key="resetCustomizeToolTip">重置为推荐字体和大小设置。</system:String>
+    <system:String x:Key="ImportThemeSize">导入主题尺寸</system:String>
+    <system:String x:Key="ImportThemeSizeToolTip">如果主题设计器想要的大小值可用，它将被检索和应用。</system:String>
     <system:String x:Key="CustomizeToolTip">自定义</system:String>
     <system:String x:Key="windowMode">窗口模式</system:String>
     <system:String x:Key="opacity">透明度</system:String>
@@ -210,20 +239,21 @@
     <system:String x:Key="AnimationSpeedCustom">自定义</system:String>
     <system:String x:Key="Clock">时钟</system:String>
     <system:String x:Key="Date">日期</system:String>
-    <system:String x:Key="BackdropType">Backdrop Type</system:String>
-    <system:String x:Key="BackdropTypeDisabledToolTip">Backdrop supported starting from Windows 11 build 22000 and above</system:String>
+    <system:String x:Key="BackdropType">返回类型</system:String>
+    <system:String x:Key="BackdropInfo">预览中没有应用背景效果。</system:String>
+    <system:String x:Key="BackdropTypeDisabledToolTip">自 Windows 11 Build 22000 起支持背景效果</system:String>
     <system:String x:Key="BackdropTypesNone">无</system:String>
-    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
-    <system:String x:Key="BackdropTypesMica">Mica</system:String>
-    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">亚克力</system:String>
+    <system:String x:Key="BackdropTypesMica">云母</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">云母平替</system:String>
     <system:String x:Key="TypeIsDarkToolTip">该主题支持两种（浅色/深色）模式。</system:String>
     <system:String x:Key="TypeHasBlurToolTip">该主题支持模糊透明背景。</system:String>
-    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
-    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
-    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
-    <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
-    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
+    <system:String x:Key="ShowPlaceholder">显示占位符</system:String>
+    <system:String x:Key="ShowPlaceholderTip">当查询为空时显示占位符</system:String>
+    <system:String x:Key="PlaceholderText">占位符文本</system:String>
+    <system:String x:Key="PlaceholderTextTip">更改占位符文本。输入空将使用：{0}</system:String>
+    <system:String x:Key="KeepMaxResults">固定窗口大小</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">窗口高度不能通过拖动来调整。</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">热键</system:String>
@@ -283,6 +313,9 @@
     <system:String x:Key="useGlyphUI">使用 Segoe Fluent 图标</system:String>
     <system:String x:Key="useGlyphUIEffect">在支持时在选项中显示 Segoe Fluent 图标</system:String>
     <system:String x:Key="flowlauncherPressHotkey">按下按键</system:String>
+    <system:String x:Key="showBadges">显示结果徽章</system:String>
+    <system:String x:Key="showBadgesToolTip">对于支持的插件，将显示徽章以帮助更容易区分它们。</system:String>
+    <system:String x:Key="showBadgesGlobalOnly">仅在全局查询下显示结果徽章</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP 代理</system:String>
@@ -323,19 +356,23 @@
     <system:String x:Key="logfolder">日志目录</system:String>
     <system:String x:Key="clearlogfolder">清除日志</system:String>
     <system:String x:Key="clearlogfolderMessage">你确定要删除所有的日志吗？</system:String>
-    <system:String x:Key="clearcachefolder">Clear Caches</system:String>
-    <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
-    <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
+    <system:String x:Key="cachefolder">缓存文件夹</system:String>
+    <system:String x:Key="clearcachefolder">清除缓存</system:String>
+    <system:String x:Key="clearcachefolderMessage">您确定要删除所有缓存吗？</system:String>
+    <system:String x:Key="clearfolderfailMessage">无法清除部分文件夹和文件。请查看日志文件以获取更多信息</system:String>
     <system:String x:Key="welcomewindow">向导</system:String>
     <system:String x:Key="userdatapath">用户数据位置</system:String>
     <system:String x:Key="userdatapathToolTip">用户设置和已安装的插件保存在用户数据文件夹中。此位置可能因是否处于便携模式而异。</system:String>
     <system:String x:Key="userdatapathButton">打开文件夹</system:String>
-    <system:String x:Key="logLevel">Log Level</system:String>
-    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
-    <system:String x:Key="LogLevelINFO">Info</system:String>
+    <system:String x:Key="advanced">高级</system:String>
+    <system:String x:Key="logLevel">日志等级</system:String>
+    <system:String x:Key="LogLevelDEBUG">调试</system:String>
+    <system:String x:Key="LogLevelINFO">信息</system:String>
+    <system:String x:Key="settingWindowFontTitle">设置窗口字体</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">默认文件管理器</system:String>
+    <system:String x:Key="fileManager_learnMore">了解更多</system:String>
     <system:String x:Key="fileManager_tips">请指定您使用的文件管理器的文件位置并根据需要添加参数。“%d”表示要打开的目录路径，由文件夹字段的参数和打开特定目录的命令使用。“%f”表示要打开的文件路径，由文件字段的参数和打开特定文件的命令使用。</system:String>
     <system:String x:Key="fileManager_tips2">例如，如果文件管理器使用诸如“totalcmd.exe /A c:\windows”之类的命令来打开 c:\windows 目录，则文件管理器路径将为 totalcmd.exe，文件夹参数将为 /A &quot;%d&quot;。某些文件管理器（如 QTTabBar）可能只需要提供路径，在本例中，使用“%d”作为文件管理器路径，其余字段留空。</system:String>
     <system:String x:Key="fileManager_name">文件管理器</system:String>
@@ -343,6 +380,8 @@
     <system:String x:Key="fileManager_path">文件管理器路径</system:String>
     <system:String x:Key="fileManager_directory_arg">文件夹路径参数</system:String>
     <system:String x:Key="fileManager_file_arg">选中文件路径参数</system:String>
+    <system:String x:Key="fileManagerPathNotFound">文件管理器 '{0}' 不能在 '{1}'中定位。您想要继续吗？</system:String>
+    <system:String x:Key="fileManagerPathError">文件管理器路径错误</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">默认浏览器</system:String>
@@ -350,7 +389,7 @@
     <system:String x:Key="defaultBrowser_name">浏览器</system:String>
     <system:String x:Key="defaultBrowser_profile_name">浏览器名称</system:String>
     <system:String x:Key="defaultBrowser_path">浏览器路径</system:String>
-    <system:String x:Key="defaultBrowser_newWindow">新窗户</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">新窗口</system:String>
     <system:String x:Key="defaultBrowser_newTab">新标签</system:String>
     <system:String x:Key="defaultBrowser_parameter">隐身模式</system:String>
 
@@ -367,16 +406,19 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">找不到指定的插件</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">新触发关键字不能为空</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">此触发关键字已经被指派给其他插件了，请换一个关键字</system:String>
-    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">此触发关键字已经被指派给其他插件了，请换一个关键字</system:String>
     <system:String x:Key="success">成功</system:String>
     <system:String x:Key="completedSuccessfully">成功完成</system:String>
-    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
+    <system:String x:Key="failedToCopy">复制失败</system:String>
+    <system:String x:Key="actionkeyword_tips">请输入您希望用来启动插件的动作关键字，并使用空格进行分隔。若不想指定任何关键字，可直接输入*，此时插件将在未输入动作关键字的情况下被触发</system:String>
 
     <!--  Search Delay Settings Dialog  -->
-    <system:String x:Key="searchDelayTimeTitle">Search Delay Time Setting</system:String>
-    <system:String x:Key="searchDelayTime_tips">Select the search delay time you like to use for the plugin. Select &quot;{0}&quot; if you don't want to specify any, and the plugin will use default search delay time.</system:String>
-    <system:String x:Key="currentSearchDelayTime">Current search delay time</system:String>
-    <system:String x:Key="newSearchDelayTime">New search delay time</system:String>
+    <system:String x:Key="searchDelayTimeTitle">搜索延迟时间设置</system:String>
+    <system:String x:Key="searchDelayTimeTips">请输入您希望插件使用的搜索延迟时间（单位：毫秒）。若不想指定，可留空，此时插件将采用默认的搜索延迟时间。</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="homeTitle">首页</system:String>
+    <system:String x:Key="homeTips">如果您想在查询为空时显示插件的结果，请启用插件主页状态。</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">自定义查询热键</system:String>
@@ -427,9 +469,17 @@
     <system:String x:Key="reportWindow_report_succeed">发送成功</system:String>
     <system:String x:Key="reportWindow_report_failed">发送失败</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher 出错啦</system:String>
-    <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
-    <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
-    <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">请打开新的问题在</system:String>
+    <system:String x:Key="reportWindow_upload_log">1. 上传日志文件：{0}</system:String>
+    <system:String x:Key="reportWindow_copy_below">2. 复制下面的异常消息</system:String>
+
+    <!--  File Open Error  -->
+    <system:String x:Key="fileManagerNotFoundTitle">文件管理器错误</system:String>
+    <system:String x:Key="fileManagerNotFound">
+        找不到指定的文件管理器。请在“设置 &gt; 通用”下检查自定义文件管理器设置。
+    </system:String>
+    <system:String x:Key="errorTitle">错误</system:String>
+    <system:String x:Key="folderOpenError">打开文件夹时发生错误。{0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">请稍等...</system:String>
