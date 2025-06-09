@@ -371,11 +371,11 @@
     <system:String x:Key="settingWindowFontTitle">Configuración de fuente de la ventana</system:String>
 
     <!--  Release Notes Window  -->
-    <system:String x:Key="seeMoreReleaseNotes">See more release notes on GitHub</system:String>
-    <system:String x:Key="checkNetworkConnectionTitle">Failed to fetch release notes</system:String>
-    <system:String x:Key="checkNetworkConnectionSubTitle">Please check your network connection or ensure GitHub is accessible</system:String>
-    <system:String x:Key="appUpdateTitle">Flow Launcher has been updated to {0}</system:String>
-    <system:String x:Key="appUpdateButtonContent">Click here to view the release notes</system:String>
+    <system:String x:Key="seeMoreReleaseNotes">Ver más notas de la versión en GitHub</system:String>
+    <system:String x:Key="checkNetworkConnectionTitle">No se pudo obtener las notas de la versión</system:String>
+    <system:String x:Key="checkNetworkConnectionSubTitle">Por favor, compruebe su conexión de red o asegúrese de que GitHub es accesible</system:String>
+    <system:String x:Key="appUpdateTitle">Flow Launcher ha sido actualizado a {0}</system:String>
+    <system:String x:Key="appUpdateButtonContent">Haga clic aquí para ver las notas de la versión</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Seleccionar administrador de archivos</system:String>
