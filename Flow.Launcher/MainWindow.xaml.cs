@@ -140,8 +140,18 @@ namespace Flow.Launcher
                 // Update release notes version
                 _settings.ReleaseNotesVersion = Constant.Version;
 
-                var releaseNotesWindow = new ReleaseNotesWindow();
-                releaseNotesWindow.Show();
+                // Display message box with button
+                App.API.ShowMsgWithButton(
+                    string.Format(App.API.GetTranslation("appUpdateTitle"), Constant.Version),
+                    App.API.GetTranslation("appUpdateButtonContent"),
+                    () =>
+                    {
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            var releaseNotesWindow = new ReleaseNotesWindow();
+                            releaseNotesWindow.Show();
+                        });
+                    });
             }
 
             // Initialize place holder
