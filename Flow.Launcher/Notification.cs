@@ -1,9 +1,9 @@
-﻿using Flow.Launcher.Infrastructure;
-using Microsoft.Toolkit.Uwp.Notifications;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections.Concurrent;
 using System.IO;
 using System.Windows;
+using Flow.Launcher.Infrastructure;
+using Microsoft.Toolkit.Uwp.Notifications;
 
 namespace Flow.Launcher
 {
@@ -13,7 +13,7 @@ namespace Flow.Launcher
 
         internal static bool legacy = !Win32Helper.IsNotificationSupported();
 
-        private static readonly Dictionary<string, Action> _notificationActions = new();
+        private static readonly ConcurrentDictionary<string, Action> _notificationActions = new();
 
         internal static void Install()
         {
@@ -120,7 +120,7 @@ namespace Flow.Launcher
                     .AddButton(buttonText, ToastActivationType.Background, guid)
                     .AddAppLogoOverride(new Uri(Icon))
                     .Show();
-                _notificationActions.Add(guid, buttonAction);
+                _notificationActions.AddOrUpdate(guid, buttonAction, (key, oldValue) => buttonAction);
             }
             catch (InvalidOperationException e)
             {
