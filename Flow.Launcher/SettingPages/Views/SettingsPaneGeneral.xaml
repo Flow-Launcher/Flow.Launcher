@@ -352,7 +352,6 @@
                     Title="{DynamicResource KoreanImeTitle}"
                     Margin="0 14 0 0"
                     Closable="False"
-                    DataContext="{Binding RelativeSource={RelativeSource AncestorType=Border}, Path=DataContext}"
                     IsIconVisible="True"
                     Length="Long"
                     Message="{DynamicResource KoreanImeGuide}"
