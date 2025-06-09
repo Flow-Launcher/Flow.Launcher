@@ -370,6 +370,13 @@
     <system:String x:Key="LogLevelINFO">信息</system:String>
     <system:String x:Key="settingWindowFontTitle">设置窗口字体</system:String>
 
+    <!--  Release Notes Window  -->
+    <system:String x:Key="seeMoreReleaseNotes">在 GitHub 上查看更多版本说明</system:String>
+    <system:String x:Key="checkNetworkConnectionTitle">无法获取版本说明</system:String>
+    <system:String x:Key="checkNetworkConnectionSubTitle">请检查您的网络连接或确认 GitHub 可访问</system:String>
+    <system:String x:Key="appUpdateTitle">Flow Launcher 已更新到 {0}</system:String>
+    <system:String x:Key="appUpdateButtonContent">单击此处查看版本说明</system:String>
+
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">默认文件管理器</system:String>
     <system:String x:Key="fileManager_learnMore">了解更多</system:String>
