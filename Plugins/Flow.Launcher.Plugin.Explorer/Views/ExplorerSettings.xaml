@@ -205,6 +205,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -228,8 +229,17 @@
                     Content="{DynamicResource plugin_explorer_default_open_in_file_manager}"
                     IsChecked="{Binding Settings.DefaultOpenFolderInFileManager}" />
 
-                <TextBlock
+                <CheckBox
                     Grid.Row="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="{StaticResource SettingPanelItemTopBottomMargin}"
+                    HorizontalAlignment="Left"
+                    Content="{DynamicResource plugin_explorer_display_more_info_in_tooltip}"
+                    IsChecked="{Binding Settings.DisplayMoreInformationInToolTip}" />
+
+                <TextBlock
+                    Grid.Row="3"
                     Grid.Column="0"
                     Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                     HorizontalAlignment="Left"
@@ -237,7 +247,7 @@
                     Foreground="{DynamicResource Color05B}"
                     Text="{DynamicResource plugin_explorer_file_editor_path}" />
                 <StackPanel
-                    Grid.Row="2"
+                    Grid.Row="3"
                     Grid.Column="1"
                     Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                     Orientation="Horizontal">
@@ -256,7 +266,7 @@
                 </StackPanel>
 
                 <TextBlock
-                    Grid.Row="3"
+                    Grid.Row="4"
                     Grid.Column="0"
                     Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                     HorizontalAlignment="Left"
@@ -264,7 +274,7 @@
                     Foreground="{DynamicResource Color05B}"
                     Text="{DynamicResource plugin_explorer_folder_editor_path}" />
                 <StackPanel
-                    Grid.Row="3"
+                    Grid.Row="4"
                     Grid.Column="1"
                     Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                     Orientation="Horizontal">
@@ -283,7 +293,7 @@
                 </StackPanel>
 
                 <TextBlock
-                    Grid.Row="4"
+                    Grid.Row="5"
                     Grid.Column="0"
                     Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                     HorizontalAlignment="Left"
@@ -291,7 +301,7 @@
                     Foreground="{DynamicResource Color05B}"
                     Text="{DynamicResource plugin_explorer_shell_path}" />
                 <StackPanel
-                    Grid.Row="4"
+                    Grid.Row="5"
                     Grid.Column="1"
                     Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                     Orientation="Horizontal">
@@ -310,14 +320,14 @@
                 </StackPanel>
 
                 <TextBlock
-                    Grid.Row="5"
+                    Grid.Row="6"
                     Grid.Column="0"
                     Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                     VerticalAlignment="Center"
                     Foreground="{DynamicResource Color05B}"
                     Text="{DynamicResource plugin_explorer_Index_Search_Engine}" />
                 <ComboBox
-                    Grid.Row="5"
+                    Grid.Row="6"
                     Grid.Column="1"
                     Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                     HorizontalAlignment="Left"
@@ -327,14 +337,14 @@
                     SelectedItem="{Binding SelectedIndexSearchEngine}" />
 
                 <TextBlock
-                    Grid.Row="6"
+                    Grid.Row="7"
                     Grid.Column="0"
                     Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                     VerticalAlignment="Center"
                     Foreground="{DynamicResource Color05B}"
                     Text="{DynamicResource plugin_explorer_Content_Search_Engine}" />
                 <ComboBox
-                    Grid.Row="6"
+                    Grid.Row="7"
                     Grid.Column="1"
                     Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                     HorizontalAlignment="Left"
@@ -344,14 +354,14 @@
                     SelectedItem="{Binding SelectedContentSearchEngine}" />
 
                 <TextBlock
-                    Grid.Row="7"
+                    Grid.Row="8"
                     Grid.Column="0"
                     Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                     VerticalAlignment="Center"
                     Foreground="{DynamicResource Color05B}"
                     Text="{DynamicResource plugin_explorer_Directory_Recursive_Search_Engine}" />
                 <ComboBox
-                    Grid.Row="7"
+                    Grid.Row="8"
                     Grid.Column="1"
                     Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                     HorizontalAlignment="Left"
@@ -361,14 +371,14 @@
                     SelectedItem="{Binding SelectedPathEnumerationEngine}" />
 
                 <TextBlock
-                    Grid.Row="8"
+                    Grid.Row="9"
                     Grid.Column="0"
                     Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                     VerticalAlignment="Center"
                     Foreground="{DynamicResource Color05B}"
                     Text="{DynamicResource plugin_explorer_Excluded_File_Types}" />
                 <TextBox
-                    Grid.Row="8"
+                    Grid.Row="9"
                     Grid.Column="1"
                     MinWidth="{StaticResource SettingPanelTextBoxMinWidth}"
                     Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
@@ -377,14 +387,14 @@
                     ToolTip="{DynamicResource plugin_explorer_Excluded_File_Types_Tooltip}" />
 
                 <TextBlock
-                    Grid.Row="9"
+                    Grid.Row="10"
                     Grid.Column="0"
                     Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                     VerticalAlignment="Center"
                     Foreground="{DynamicResource Color05B}"
                     Text="{DynamicResource plugin_explorer_Maximum_Results}" />
                 <TextBox
-                    Grid.Row="9"
+                    Grid.Row="10"
                     Grid.Column="1"
                     MinWidth="{StaticResource SettingPanelTextBoxMinWidth}"
                     Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
@@ -396,7 +406,7 @@
                     ToolTip="{DynamicResource plugin_explorer_Maximum_Results_Tooltip}" />
 
                 <Button
-                    Grid.Row="10"
+                    Grid.Row="11"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
                     Margin="{StaticResource SettingPanelItemTopBottomMargin}"
