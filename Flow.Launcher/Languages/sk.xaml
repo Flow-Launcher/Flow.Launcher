@@ -371,11 +371,11 @@
     <system:String x:Key="settingWindowFontTitle">Nastavenie písma okna</system:String>
 
     <!--  Release Notes Window  -->
-    <system:String x:Key="seeMoreReleaseNotes">See more release notes on GitHub</system:String>
-    <system:String x:Key="checkNetworkConnectionTitle">Failed to fetch release notes</system:String>
-    <system:String x:Key="checkNetworkConnectionSubTitle">Please check your network connection or ensure GitHub is accessible</system:String>
-    <system:String x:Key="appUpdateTitle">Flow Launcher has been updated to {0}</system:String>
-    <system:String x:Key="appUpdateButtonContent">Click here to view the release notes</system:String>
+    <system:String x:Key="seeMoreReleaseNotes">Ďalšie poznámky k vydaniu na Githube</system:String>
+    <system:String x:Key="checkNetworkConnectionTitle">Nepodarilo sa načítať poznámky k vydaniu</system:String>
+    <system:String x:Key="checkNetworkConnectionSubTitle">Skontrolujte sieťové pripojenie alebo sa uistite, že je Github dostupný</system:String>
+    <system:String x:Key="appUpdateTitle">Flow Launcher bol aktualizovaný na {0}</system:String>
+    <system:String x:Key="appUpdateButtonContent">Na zobrazenie poznámok k vydaniu kliknite sem</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Vyberte správcu súborov</system:String>
