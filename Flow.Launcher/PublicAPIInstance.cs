@@ -123,12 +123,23 @@ namespace Flow.Launcher
         public void ShowMsgError(string title, string subTitle = "") =>
             ShowMsg(title, subTitle, Constant.ErrorIcon, true);
 
+        public void ShowMsgErrorWithButton(string title, string buttonText, Action buttonAction, string subTitle = "") =>
+            ShowMsgWithButton(title, buttonText, buttonAction, subTitle, Constant.ErrorIcon, true);
+
         public void ShowMsg(string title, string subTitle = "", string iconPath = "") =>
             ShowMsg(title, subTitle, iconPath, true);
 
         public void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true)
         {
             Notification.Show(title, subTitle, iconPath);
+        }
+
+        public void ShowMsgWithButton(string title, string buttonText, Action buttonAction, string subTitle = "", string iconPath = "") =>
+            ShowMsgWithButton(title, buttonText, buttonAction, subTitle, iconPath, true);
+
+        public void ShowMsgWithButton(string title, string buttonText, Action buttonAction, string subTitle, string iconPath, bool useMainWindowAsOwner = true)
+        {
+            Notification.ShowWithButton(title, buttonText, buttonAction, subTitle, iconPath);
         }
 
         public void OpenSettingDialog()
