@@ -5,19 +5,33 @@ namespace Flow.Launcher.ViewModel;
 
 public partial class SettingWindowViewModel : BaseModel
 {
-    private readonly Settings _settings; 
+    private readonly Settings _settings;
 
     public SettingWindowViewModel(Settings settings)
     {
         _settings = settings;
     }
 
-    /// <summary>
-    /// Save Flow settings. Plugins settings are not included.
-    /// </summary>
-    public void Save()
+    public bool SetPageType(Type pageType)
     {
-        _settings.Save();
+        if (_pageType == pageType) return false;
+
+        _pageType = pageType;
+        return true;
+    }
+
+    private Type _pageType = null;
+    public Type PageType
+    {
+        get => _pageType;
+        set
+        {
+            if (_pageType != value)
+            {
+                _pageType = value;
+                OnPropertyChanged();
+            }
+        }
     }
 
     public double SettingWindowWidth

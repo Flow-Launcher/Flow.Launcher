@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
 {
+    #region Base
+
     public abstract class ShortcutBaseModel
     {
         public string Key { get; set; }
-
-        [JsonIgnore]
-        public Func<string> Expand { get; set; } = () => { return ""; };
 
         public override bool Equals(object obj)
         {
@@ -22,16 +24,14 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
     }
 
-    public class CustomShortcutModel : ShortcutBaseModel
+    public class BaseCustomShortcutModel : ShortcutBaseModel
     {
         public string Value { get; set; }
 
-        [JsonConstructorAttribute]
-        public CustomShortcutModel(string key, string value)
+        public BaseCustomShortcutModel(string key, string value)
         {
             Key = key;
             Value = value;
-            Expand = () => { return Value; };
         }
 
         public void Deconstruct(out string key, out string value)
@@ -40,26 +40,75 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             value = Value;
         }
 
-        public static implicit operator (string Key, string Value)(CustomShortcutModel shortcut)
+        public static implicit operator (string Key, string Value)(BaseCustomShortcutModel shortcut)
         {
             return (shortcut.Key, shortcut.Value);
         }
 
-        public static implicit operator CustomShortcutModel((string Key, string Value) shortcut)
+        public static implicit operator BaseCustomShortcutModel((string Key, string Value) shortcut)
         {
-            return new CustomShortcutModel(shortcut.Key, shortcut.Value);
+            return new BaseCustomShortcutModel(shortcut.Key, shortcut.Value);
         }
     }
 
-    public class BuiltinShortcutModel : ShortcutBaseModel
+    public class BaseBuiltinShortcutModel : ShortcutBaseModel
     {
         public string Description { get; set; }
 
-        public BuiltinShortcutModel(string key, string description, Func<string> expand)
+        public string LocalizedDescription => API.GetTranslation(Description);
+
+        // We should not initialize API in static constructor because it will create another API instance
+        private static IPublicAPI api = null;
+        private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
+
+        public BaseBuiltinShortcutModel(string key, string description)
         {
             Key = key;
             Description = description;
-            Expand = expand ?? (() => { return ""; });
         }
     }
+
+    #endregion
+
+    #region Custom Shortcut
+
+    public class CustomShortcutModel : BaseCustomShortcutModel
+    {
+        [JsonIgnore]
+        public Func<string> Expand { get; set; } = () => { return string.Empty; };
+
+        [JsonConstructor]
+        public CustomShortcutModel(string key, string value) : base(key, value)
+        {
+            Expand = () => { return Value; };
+        }
+    }
+
+    #endregion
+
+    #region Builtin Shortcut
+
+    public class BuiltinShortcutModel : BaseBuiltinShortcutModel
+    {
+        [JsonIgnore]
+        public Func<string> Expand { get; set; } = () => { return string.Empty; };
+
+        public BuiltinShortcutModel(string key, string description, Func<string> expand) : base(key, description)
+        {
+            Expand = expand ?? (() => { return string.Empty; });
+        }
+    }
+
+    public class AsyncBuiltinShortcutModel : BaseBuiltinShortcutModel
+    {
+        [JsonIgnore]
+        public Func<Task<string>> ExpandAsync { get; set; } = () => { return Task.FromResult(string.Empty); };
+
+        public AsyncBuiltinShortcutModel(string key, string description, Func<Task<string>> expandAsync) : base(key, description)
+        {
+            ExpandAsync = expandAsync ?? (() => { return Task.FromResult(string.Empty); });
+        }
+    }
+
+    #endregion
 }

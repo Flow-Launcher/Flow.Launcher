@@ -7,6 +7,11 @@
         Klikk nei hvis det allerede er installert, og du vil bli bedt om å velge mappen som inneholder {1} kjørbar fil
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Velg den kjørbare filen for {0}</system:String>
+    <system:String x:Key="runtimeExecutableInvalidChooseDownload">
+        Your selected {0} executable is invalid.
+        {2}{2}
+        Click yes if you would like select the {0} executable agian. Click no if you would like to download {1}
+    </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Kan ikke angi {0} kjørbar bane, prøv fra Flows innstillinger (bla ned til bunnen).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Mislykkes i å initialisere programtillegg</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">Programtillegg: {0} - mislykkes å lastes inn og vil bli deaktivert, vennligst kontakt utvikleren av programtillegget for hjelp</system:String>
@@ -37,7 +42,8 @@
     <system:String x:Key="GameMode">Spillmodus</system:String>
     <system:String x:Key="GameModeToolTip">Stopp bruken av hurtigtaster.</system:String>
     <system:String x:Key="PositionReset">Tilbakestilling av posisjon</system:String>
-    <system:String x:Key="PositionResetToolTip">Tilbakestill posisjonen til søkevinduet</system:String>
+    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Innstillinger</system:String>
@@ -50,7 +56,7 @@
     <system:String x:Key="setAutoStartFailed">Feil ved å sette kjør ved oppstart</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Skjul Flow Launcher når fokus forsvinner</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Ikke vis varsler om nye versjoner</system:String>
-    <system:String x:Key="SearchWindowPosition">Posisjon til søkevindu</system:String>
+    <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Husk siste posisjon</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Skjerm med musepekeren</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Skjerm med fokusert vindu</system:String>
@@ -70,8 +76,6 @@
     <system:String x:Key="LastQueryEmpty">Tøm siste spørring</system:String>
     <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
     <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
-    <system:String x:Key="KeepMaxResults">Fast vindushøyde</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">Vindushøyden kan ikke justeres ved å dra.</system:String>
     <system:String x:Key="maxShowResults">Maksimalt antall resultater vist</system:String>
     <system:String x:Key="maxShowResultsToolTip">Du kan også raskt justere dette ved å bruke CTRL+Plus og CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorer hurtigtaster i fullskjermmodus</system:String>
@@ -102,6 +106,36 @@
     <system:String x:Key="AlwaysPreview">Alltid forhåndsvisning</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Åpne alltid forhåndsvisningspanel når Flow aktiveres. Trykk på {0} for å velge forhåndsvisning.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Skyggeeffekt er ikke tillatt mens gjeldende tema har uskarphet-effekt aktivert</system:String>
+    <system:String x:Key="searchDelay">Search Delay</system:String>
+    <system:String x:Key="searchDelayToolTip">Adds a short delay while typing to reduce UI flicker and result load. Recommended if your typing speed is average.</system:String>
+    <system:String x:Key="searchDelayNumberBoxToolTip">Enter the wait time (in ms) until input is considered complete. This can only be edited if Search Delay is enabled.</system:String>
+    <system:String x:Key="searchDelayTime">Default Search Delay Time</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Wait time before showing results after typing stops. Higher values wait longer. (ms)</system:String>
+    <system:String x:Key="KoreanImeTitle">Information for Korean IME user</system:String>
+    <system:String x:Key="KoreanImeGuide">
+        The Korean input method used in Windows 11 may cause some issues in Flow Launcher.
+
+        If you experience any problems, you may need to enable &quot;Use previous version of Korean IME&quot;.
+
+
+        Open Setting in Windows 11 and go to:
+
+        Time &amp; Language &gt; Language &amp; Region &gt; Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility,
+
+        and enable &quot;Use previous version of Microsoft IME&quot;.
+
+
+    </system:String>
+    <system:String x:Key="KoreanImeOpenLink">Open Language and Region System Settings</system:String>
+    <system:String x:Key="KoreanImeOpenLinkToolTip">Opens the Korean IME setting location. Go to Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility</system:String>
+    <system:String x:Key="KoreanImeOpenLinkButton">Åpne</system:String>
+    <system:String x:Key="KoreanImeRegistry">Use Previous Korean IME</system:String>
+    <system:String x:Key="KoreanImeRegistryTooltip">You can change the Previous Korean IME settings directly from here</system:String>
+    <system:String x:Key="homePage">Home Page</system:String>
+    <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
+    <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Søk etter programtillegg</system:String>
@@ -118,6 +152,13 @@
     <system:String x:Key="currentActionKeywords">Nåværende handlingsnøkkelord</system:String>
     <system:String x:Key="newActionKeyword">Nytt handlingsnøkkelord</system:String>
     <system:String x:Key="actionKeywordsTooltip">Endre handlingsnøkkelord</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Plugin search delay time</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Search Delay Time</system:String>
+    <system:String x:Key="FilterComboboxLabel">Advanced Settings:</system:String>
+    <system:String x:Key="DisplayModeOnOff">Aktivert</system:String>
+    <system:String x:Key="DisplayModePriority">Prioritet</system:String>
+    <system:String x:Key="DisplayModeSearchDelay">Search Delay</system:String>
+    <system:String x:Key="DisplayModeHomeOnOff">Home Page</system:String>
     <system:String x:Key="currentPriority">Gjeldende prioritet</system:String>
     <system:String x:Key="newPriority">Ny prioritet</system:String>
     <system:String x:Key="priority">Prioritet</system:String>
@@ -131,6 +172,8 @@
     <system:String x:Key="plugin_uninstall">Avinstaller</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
+    <system:String x:Key="failedToRemovePluginCacheTitle">Fail to remove plugin cache</system:String>
+    <system:String x:Key="failedToRemovePluginCacheMessage">Plugins: {0} - Fail to remove plugin cache files, please remove them manually</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Programtillegg butikk</system:String>
@@ -167,6 +210,9 @@
     <system:String x:Key="resultItemFont">Skrift for resultattittel</system:String>
     <system:String x:Key="resultSubItemFont">Skrift for resultatundertittel</system:String>
     <system:String x:Key="resetCustomize">Tilbakestill</system:String>
+    <system:String x:Key="resetCustomizeToolTip">Reset to the recommended font and size settings.</system:String>
+    <system:String x:Key="ImportThemeSize">Import Theme Size</system:String>
+    <system:String x:Key="ImportThemeSizeToolTip">If a size value intended by the theme designer is available, it will be retrieved and applied.</system:String>
     <system:String x:Key="CustomizeToolTip">Tilpass</system:String>
     <system:String x:Key="windowMode">Vindumodus</system:String>
     <system:String x:Key="opacity">Ugjennomsiktighet</system:String>
@@ -193,8 +239,21 @@
     <system:String x:Key="AnimationSpeedCustom">Egendefinert</system:String>
     <system:String x:Key="Clock">Klokke</system:String>
     <system:String x:Key="Date">Dato</system:String>
-    <system:String x:Key="TypeIsDarkToolTip">Dette temaet støtter to (lys/mørk) moduser.</system:String>
+    <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropInfo">The backdrop effect is not applied in the preview.</system:String>
+    <system:String x:Key="BackdropTypeDisabledToolTip">Backdrop supported starting from Windows 11 build 22000 and above</system:String>
+    <system:String x:Key="BackdropTypesNone">Ingen</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
+    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">This theme supports two (light/dark) modes.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Dette temaet støtter uskarp gjennomsiktig bakgrunn.</system:String>
+    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
+    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
+    <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Hurtigtast</system:String>
@@ -254,6 +313,9 @@
     <system:String x:Key="useGlyphUI">Bruk Segoe Fluent ikoner</system:String>
     <system:String x:Key="useGlyphUIEffect">Bruk Segoe Fluent Icons for spørreresultater der det støttes</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Trykk tast</system:String>
+    <system:String x:Key="showBadges">Show Result Badges</system:String>
+    <system:String x:Key="showBadgesToolTip">For supported plugins, badges are displayed to help distinguish them more easily.</system:String>
+    <system:String x:Key="showBadgesGlobalOnly">Show Result Badges for Global Query Only</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP proxy</system:String>
@@ -294,16 +356,23 @@
     <system:String x:Key="logfolder">Loggmappe</system:String>
     <system:String x:Key="clearlogfolder">Tøm logger</system:String>
     <system:String x:Key="clearlogfolderMessage">Er du sikker på at du vil slette alle loggene?</system:String>
+    <system:String x:Key="cachefolder">Cache Folder</system:String>
+    <system:String x:Key="clearcachefolder">Clear Caches</system:String>
+    <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
+    <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
     <system:String x:Key="welcomewindow">Veiviser</system:String>
     <system:String x:Key="userdatapath">Plassering av brukerdata</system:String>
     <system:String x:Key="userdatapathToolTip">Brukerinnstillinger og installerte programtillegg lagres i brukerens datamappe. Denne plasseringen kan variere avhengig av om den er i portabel modus eller ikke.</system:String>
     <system:String x:Key="userdatapathButton">Åpne mappe</system:String>
+    <system:String x:Key="advanced">Advanced</system:String>
     <system:String x:Key="logLevel">Log Level</system:String>
     <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="LogLevelINFO">Info</system:String>
+    <system:String x:Key="settingWindowFontTitle">Setting Window Font</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Velg filbehandler</system:String>
+    <system:String x:Key="fileManager_learnMore">Learn more</system:String>
     <system:String x:Key="fileManager_tips">Vennligst spesifiser filplasseringen til filbehandleren du bruker, og legg til argumenter etter behov. &quot;%d&quot; representerer katalogbanen som skal åpnes for, brukt av Arg for mappe-feltet og for kommandoer som åpner spesifikke kataloger. &quot;%f&quot; representerer filbanen som skal åpnes for, brukt av Arg for fil-feltet og for kommandoer som åpner spesifikke filer.</system:String>
     <system:String x:Key="fileManager_tips2">For eksempel, hvis filbehandleren bruker en kommando som &quot;totalcmd.exe /A c:windows&quot; for å åpne c:windows-katalogen, vil filbehandlingsbanen bli totalcmd.exe, og Arg For Folder vil være /A &quot;%d&quot;. Enkelte filbehandlere som QTTabBar kan bare kreve at en bane oppgis, i dette tilfellet bruker du &quot;%d&quot; som filbehandlingsbane og lar resten av feltene stå tomme.</system:String>
     <system:String x:Key="fileManager_name">Filbehandler</system:String>
@@ -311,6 +380,8 @@
     <system:String x:Key="fileManager_path">Filbehandler sti</system:String>
     <system:String x:Key="fileManager_directory_arg">Arg for mappe</system:String>
     <system:String x:Key="fileManager_file_arg">Arg for fil</system:String>
+    <system:String x:Key="fileManagerPathNotFound">The file manager '{0}' could not be located at '{1}'. Would you like to continue?</system:String>
+    <system:String x:Key="fileManagerPathError">File Manager Path Error</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Standard nettleser</system:String>
@@ -335,9 +406,19 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Kan ikke finne spesifisert programtillegg</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Nytt handlingsnøkkelord kan ikke være tom</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Det nye nøkkelordet for handling er allerede tilordnet et annet programtillegg, velg et annet</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
     <system:String x:Key="success">Vellykket</system:String>
     <system:String x:Key="completedSuccessfully">Fullført vellykket</system:String>
-    <system:String x:Key="actionkeyword_tips">Skriv inn handlingsnøkkelord du vil bruke for å starte programtillegget. Bruk * hvis du ikke ønsker å spesifisere noen, og utvidelsen vil bli utløst uten noen handlingsord.</system:String>
+    <system:String x:Key="failedToCopy">Failed to copy</system:String>
+    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="searchDelayTimeTitle">Search Delay Time Setting</system:String>
+    <system:String x:Key="searchDelayTimeTips">Input the search delay time in ms you like to use for the plugin. Input empty if you don't want to specify any, and the plugin will use default search delay time.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="homeTitle">Home Page</system:String>
+    <system:String x:Key="homeTips">Enable the plugin home page state if you like to show the plugin results when query is empty.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Hurtigtast for egendefinert spørring</system:String>
@@ -391,6 +472,14 @@ Hvis du legger til et @-prefiks mens du legger inn en snarvei, samsvarer det med
     <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
     <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
     <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
+
+    <!--  File Open Error  -->
+    <system:String x:Key="fileManagerNotFoundTitle">File Manager Error</system:String>
+    <system:String x:Key="fileManagerNotFound">
+        The specified file manager could not be found. Please check the Custom File Manager setting under Settings &gt; General.
+    </system:String>
+    <system:String x:Key="errorTitle">Feil</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder. {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Vennligst vent...</system:String>

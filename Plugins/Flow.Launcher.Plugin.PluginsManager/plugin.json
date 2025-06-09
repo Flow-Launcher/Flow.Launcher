@@ -6,7 +6,7 @@
   "Name": "Plugins Manager",
   "Description": "Management of installing, uninstalling or updating Flow Launcher plugins",
   "Author": "Jeremy Wu",
-  "Version": "3.2.4",
+  "Version": "1.0.0",
   "Language": "csharp",
   "Website": "https://github.com/Flow-Launcher/Flow.Launcher",
   "ExecuteFileName": "Flow.Launcher.Plugin.PluginsManager.dll",

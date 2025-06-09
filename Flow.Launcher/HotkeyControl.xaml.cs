@@ -1,14 +1,13 @@
-﻿#nullable enable
-
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
+
+#nullable enable
 
 namespace Flow.Launcher
 {
@@ -65,7 +64,6 @@ namespace Flow.Launcher
             hotkeyControl.RefreshHotkeyInterface(hotkeyControl.Hotkey);
         }
 
-
         public static readonly DependencyProperty ChangeHotkeyProperty = DependencyProperty.Register(
             nameof(ChangeHotkey),
             typeof(ICommand),
@@ -78,7 +76,6 @@ namespace Flow.Launcher
             get { return (ICommand)GetValue(ChangeHotkeyProperty); }
             set { SetValue(ChangeHotkeyProperty, value); }
         }
-
 
         public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(
             nameof(Type),
@@ -103,6 +100,7 @@ namespace Flow.Launcher
             PreviewHotkey,
             OpenContextMenuHotkey,
             SettingWindowHotkey,
+            OpenHistoryHotkey,
             CycleHistoryUpHotkey,
             CycleHistoryDownHotkey,
             SelectPrevPageHotkey,
@@ -133,6 +131,7 @@ namespace Flow.Launcher
                     HotkeyType.PreviewHotkey => _settings.PreviewHotkey,
                     HotkeyType.OpenContextMenuHotkey => _settings.OpenContextMenuHotkey,
                     HotkeyType.SettingWindowHotkey => _settings.SettingWindowHotkey,
+                    HotkeyType.OpenHistoryHotkey => _settings.OpenHistoryHotkey,
                     HotkeyType.CycleHistoryUpHotkey => _settings.CycleHistoryUpHotkey,
                     HotkeyType.CycleHistoryDownHotkey => _settings.CycleHistoryDownHotkey,
                     HotkeyType.SelectPrevPageHotkey => _settings.SelectPrevPageHotkey,
@@ -169,6 +168,9 @@ namespace Flow.Launcher
                     case HotkeyType.SettingWindowHotkey:
                         _settings.SettingWindowHotkey = value;
                         break;
+                    case HotkeyType.OpenHistoryHotkey:
+                        _settings.OpenHistoryHotkey = value;
+                        break;                    
                     case HotkeyType.CycleHistoryUpHotkey:
                         _settings.CycleHistoryUpHotkey = value;
                         break;
@@ -227,26 +229,29 @@ namespace Flow.Launcher
         private static bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture) =>
             hotkey.Validate(validateKeyGesture) && HotKeyMapper.CheckAvailability(hotkey);
 
-        public string EmptyHotkey => InternationalizationManager.Instance.GetTranslation("none");
+        public string EmptyHotkey => App.API.GetTranslation("none");
 
         public ObservableCollection<string> KeysToDisplay { get; set; } = new();
 
         public HotkeyModel CurrentHotkey { get; private set; } = new(false, false, false, false, Key.None);
 
-
         public void GetNewHotkey(object sender, RoutedEventArgs e)
         {
-            OpenHotkeyDialog();
+            _ = OpenHotkeyDialogAsync();
         }
 
-        private async Task OpenHotkeyDialog()
+        private async Task OpenHotkeyDialogAsync()
         {
             if (!string.IsNullOrEmpty(Hotkey))
             {
                 HotKeyMapper.RemoveHotkey(Hotkey);
             }
 
-            var dialog = new HotkeyControlDialog(Hotkey, DefaultHotkey, WindowTitle);
+            var dialog = new HotkeyControlDialog(Hotkey, DefaultHotkey, WindowTitle)
+            {
+                Owner = Window.GetWindow(this)
+            };
+
             await dialog.ShowAsync();
             switch (dialog.ResultType)
             {
@@ -262,12 +267,11 @@ namespace Flow.Launcher
             }
         }
 
-
         private void SetHotkey(HotkeyModel keyModel, bool triggerValidate = true)
         {
             if (triggerValidate)
             {
-                bool hotkeyAvailable = false;
+                bool hotkeyAvailable;
                 // TODO: This is a temporary way to enforce changing only the open flow hotkey to Win, and will be removed by PR #3157
                 if (keyModel.ToString() == "LWin" || keyModel.ToString() == "RWin")
                 {

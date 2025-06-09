@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core;
 using Flow.Launcher.Core.Configuration;
@@ -18,10 +19,11 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.SettingPages.ViewModels;
 using Flow.Launcher.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
+using Microsoft.VisualStudio.Threading;
 
 namespace Flow.Launcher
 {
@@ -30,13 +32,16 @@ namespace Flow.Launcher
         #region Public Properties
 
         public static IPublicAPI API { get; private set; }
+        public static bool LoadingOrExiting => _mainWindow == null || _mainWindow.CanClose;
 
         #endregion
 
         #region Private Fields
 
+        private static readonly string ClassName = nameof(App);
+
         private static bool _disposed;
-        private MainWindow _mainWindow;
+        private static MainWindow _mainWindow;
         private readonly MainViewModel _mainVM;
         private readonly Settings _settings;
 
@@ -76,14 +81,31 @@ namespace Flow.Launcher
                             Launcher.Properties.Settings.Default.GithubRepo,
                             Launcher.Properties.Settings.Default.PrereleaseRepo))
                         .AddSingleton<Portable>()
-                        .AddSingleton<SettingWindowViewModel>()
                         .AddSingleton<IAlphabet, PinyinAlphabet>()
                         .AddSingleton<StringMatcher>()
                         .AddSingleton<Internationalization>()
                         .AddSingleton<IPublicAPI, PublicAPIInstance>()
-                        .AddSingleton<MainViewModel>()
                         .AddSingleton<Theme>()
+                        // Use one instance for main window view model because we only have one main window
+                        .AddSingleton<MainViewModel>()
+                        // Use one instance for welcome window view model & setting window view model because
+                        // pages in welcome window & setting window need to share the same instance and
+                        // these two view models do not need to be reset when creating new windows
                         .AddSingleton<WelcomeViewModel>()
+                        .AddSingleton<SettingWindowViewModel>()
+                        // Use transient instance for setting window page view models because
+                        // pages in setting window need to be recreated when setting window is closed
+                        .AddTransient<SettingsPaneAboutViewModel>()
+                        .AddTransient<SettingsPaneGeneralViewModel>()
+                        .AddTransient<SettingsPaneHotkeyViewModel>()
+                        .AddTransient<SettingsPanePluginsViewModel>()
+                        .AddTransient<SettingsPanePluginStoreViewModel>()
+                        .AddTransient<SettingsPaneProxyViewModel>()
+                        .AddTransient<SettingsPaneThemeViewModel>()
+                        // Use transient instance for dialog view models because
+                        // settings will change and we need to recreate them
+                        .AddTransient<SelectBrowserViewModel>()
+                        .AddTransient<SelectFileManagerViewModel>()
                     ).Build();
                 Ioc.Default.ConfigureServices(host.Services);
             }
@@ -140,7 +162,7 @@ namespace Flow.Launcher
 
         private async void OnStartup(object sender, StartupEventArgs e)
         {
-            await Stopwatch.NormalAsync("|App.OnStartup|Startup cost", async () =>
+            await API.StopwatchLogInfoAsync(ClassName, "Startup cost", async () =>
             {
                 // Because new message box api uses MessageBoxEx window,
                 // if it is created and closed before main window is created, it will cause the application to exit.
@@ -149,13 +171,20 @@ namespace Flow.Launcher
 
                 Log.SetLogLevel(_settings.LogLevel);
 
+                // Update dynamic resources base on settings
+                Current.Resources["SettingWindowFont"] = new FontFamily(_settings.SettingWindowFont);
+                Current.Resources["ContentControlThemeFontFamily"] = new FontFamily(_settings.SettingWindowFont);
+
+                Notification.Install();
+
                 Ioc.Default.GetRequiredService<Portable>().PreStartCleanUpAfterPortabilityUpdate();
 
-                Log.Info("|App.OnStartup|Begin Flow Launcher startup ----------------------------------------------------");
-                Log.Info($"|App.OnStartup|Runtime info:{ErrorReporting.RuntimeInfo()}");
+                API.LogInfo(ClassName, "Begin Flow Launcher startup ----------------------------------------------------");
+                API.LogInfo(ClassName, $"Runtime info:{ErrorReporting.RuntimeInfo()}");
 
                 RegisterAppDomainExceptions();
                 RegisterDispatcherUnhandledException();
+                RegisterTaskSchedulerUnhandledException();
 
                 var imageLoadertask = ImageLoader.InitializeAsync();
 
@@ -171,19 +200,20 @@ namespace Flow.Launcher
                 await PluginManager.InitializePluginsAsync();
 
                 // Change language after all plugins are initialized because we need to update plugin title based on their api
-                // TODO: Clean InternationalizationManager.Instance and InternationalizationManager.Instance.GetTranslation in future
                 await Ioc.Default.GetRequiredService<Internationalization>().InitializeLanguageAsync();
 
                 await imageLoadertask;
 
                 _mainWindow = new MainWindow();
 
-                Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
-
                 Current.MainWindow = _mainWindow;
                 Current.MainWindow.Title = Constant.FlowLauncher;
 
-                // main windows needs initialized before theme change because of blur settings
+                // Initialize hotkey mapper instantly after main window is created because
+                // it will steal focus from main window which causes window hide
+                HotKeyMapper.Initialize();
+
+                // Initialize theme for main window
                 Ioc.Default.GetRequiredService<Theme>().ChangeTheme();
 
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -194,28 +224,25 @@ namespace Flow.Launcher
                 AutoUpdates();
 
                 API.SaveAppAllSettings();
-                Log.Info("|App.OnStartup|End Flow Launcher startup ----------------------------------------------------");
+                API.LogInfo(ClassName, "End Flow Launcher startup ----------------------------------------------------");
             });
         }
 
 #pragma warning restore VSTHRD100 // Avoid async void methods
 
+        /// <summary>
+        /// Check startup only for Release
+        /// </summary>
+        [Conditional("RELEASE")]
         private void AutoStartup()
         {
             // we try to enable auto-startup on first launch, or reenable if it was removed
             // but the user still has the setting set
-            if (_settings.StartFlowLauncherOnSystemStartup && !Helper.AutoStartup.IsEnabled)
+            if (_settings.StartFlowLauncherOnSystemStartup)
             {
                 try
                 {
-                    if (_settings.UseLogonTaskForStartup)
-                    {
-                        Helper.AutoStartup.EnableViaLogonTask();
-                    }
-                    else
-                    {
-                        Helper.AutoStartup.EnableViaRegistry();
-                    }
+                    Helper.AutoStartup.CheckIsEnabled(_settings.UseLogonTaskForStartup);
                 }
                 catch (Exception e)
                 {
@@ -227,6 +254,7 @@ namespace Flow.Launcher
             }
         }
 
+        [Conditional("RELEASE")]
         private void AutoUpdates()
         {
             _ = Task.Run(async () =>
@@ -252,25 +280,25 @@ namespace Flow.Launcher
         {
             AppDomain.CurrentDomain.ProcessExit += (s, e) =>
             {
-                Log.Info("|App.RegisterExitEvents|Process Exit");
+                API.LogInfo(ClassName, "Process Exit");
                 Dispose();
             };
 
             Current.Exit += (s, e) =>
             {
-                Log.Info("|App.RegisterExitEvents|Application Exit");
+                API.LogInfo(ClassName, "Application Exit");
                 Dispose();
             };
 
             Current.SessionEnding += (s, e) =>
             {
-                Log.Info("|App.RegisterExitEvents|Session Ending");
+                API.LogInfo(ClassName, "Session Ending");
                 Dispose();
             };
         }
 
         /// <summary>
-        /// let exception throw as normal is better for Debug
+        /// Let exception throw as normal is better for Debug
         /// </summary>
         [Conditional("RELEASE")]
         private void RegisterDispatcherUnhandledException()
@@ -279,12 +307,20 @@ namespace Flow.Launcher
         }
 
         /// <summary>
-        /// let exception throw as normal is better for Debug
+        /// Let exception throw as normal is better for Debug
         /// </summary>
         [Conditional("RELEASE")]
         private static void RegisterAppDomainExceptions()
         {
-            AppDomain.CurrentDomain.UnhandledException += ErrorReporting.UnhandledExceptionHandle;
+            AppDomain.CurrentDomain.UnhandledException += ErrorReporting.UnhandledException;
+        }
+
+        /// <summary>
+        /// Let exception throw as normal is better for Debug
+        /// </summary>
+        private static void RegisterTaskSchedulerUnhandledException()
+        {
+            TaskScheduler.UnobservedTaskException += ErrorReporting.TaskSchedulerUnobservedTaskException;
         }
 
         #endregion
@@ -317,9 +353,9 @@ namespace Flow.Launcher
                 _disposed = true;
             }
 
-            Stopwatch.Normal("|App.Dispose|Dispose cost", () =>
+            API.StopwatchLogInfo(ClassName, "Dispose cost", () =>
             {
-                Log.Info("|App.Dispose|Begin Flow Launcher dispose ----------------------------------------------------");
+                API.LogInfo(ClassName, "Begin Flow Launcher dispose ----------------------------------------------------");
 
                 if (disposing)
                 {
@@ -329,7 +365,7 @@ namespace Flow.Launcher
                     _mainVM?.Dispose();
                 }
 
-                Log.Info("|App.Dispose|End Flow Launcher dispose ----------------------------------------------------");
+                API.LogInfo(ClassName, "End Flow Launcher dispose ----------------------------------------------------");
             });
         }
 
@@ -346,7 +382,7 @@ namespace Flow.Launcher
 
         public void OnSecondAppStarted()
         {
-            Ioc.Default.GetRequiredService<MainViewModel>().Show();
+            API.ShowMainWindow();
         }
 
         #endregion

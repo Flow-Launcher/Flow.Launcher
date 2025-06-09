@@ -90,6 +90,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="InputSimulator" Version="1.0.4" />
+    <PackageReference Include="MdXaml" Version="1.27.0" />
+    <PackageReference Include="MdXaml.AnimatedGif" Version="1.27.0" />
+    <PackageReference Include="MdXaml.Html" Version="1.27.0" />
+    <PackageReference Include="MdXaml.Plugins" Version="1.27.0" />
+    <PackageReference Include="MdXaml.Svg" Version="1.27.0" />
     <!-- Do not upgrade Microsoft.Extensions.DependencyInjection and Microsoft.Extensions.Hosting since we are .Net7.0 -->
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
@@ -98,7 +103,9 @@
     <!-- https://github.com/Flow-Launcher/Flow.Launcher/issues/1772#issuecomment-1502440801 -->
     <PackageReference Include="ModernWpfUI" Version="0.9.4" />
     <PackageReference Include="NHotkey.Wpf" Version="3.0.0" />
-    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
+    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="SemanticVersioning" Version="3.0.0" />
     <PackageReference Include="TaskScheduler" Version="2.12.1" />
     <PackageReference Include="VirtualizingWrapPanel" Version="2.1.1" />

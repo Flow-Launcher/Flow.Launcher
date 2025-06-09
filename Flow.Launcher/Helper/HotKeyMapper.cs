@@ -3,16 +3,16 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using System;
 using NHotkey;
 using NHotkey.Wpf;
-using Flow.Launcher.Core.Resource;
 using Flow.Launcher.ViewModel;
 using ChefKeys;
-using Flow.Launcher.Infrastructure.Logger;
 using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace Flow.Launcher.Helper;
 
 internal static class HotKeyMapper
 {
+    private static readonly string ClassName = nameof(HotKeyMapper);
+
     private static Settings _settings;
     private static MainViewModel _mainViewModel;
 
@@ -52,13 +52,13 @@ internal static class HotKeyMapper
         }
         catch (Exception e)
         {
-            Log.Error(
+            App.API.LogError(ClassName,
                 string.Format("|HotkeyMapper.SetWithChefKeys|Error registering hotkey: {0} \nStackTrace:{1}",
                               e.Message,
                               e.StackTrace));
-            string errorMsg = string.Format(InternationalizationManager.Instance.GetTranslation("registerHotkeyFailed"), hotkeyStr);
-            string errorMsgTitle = InternationalizationManager.Instance.GetTranslation("MessageBoxTitle");
-            MessageBoxEx.Show(errorMsg, errorMsgTitle);
+            string errorMsg = string.Format(App.API.GetTranslation("registerHotkeyFailed"), hotkeyStr);
+            string errorMsgTitle = App.API.GetTranslation("MessageBoxTitle");
+            App.API.ShowMsgBox(errorMsg, errorMsgTitle);
         }
     }
 
@@ -77,13 +77,13 @@ internal static class HotKeyMapper
         }
         catch (Exception e)
         {
-            Log.Error(
+            App.API.LogError(ClassName,
                 string.Format("|HotkeyMapper.SetHotkey|Error registering hotkey {2}: {0} \nStackTrace:{1}",
                               e.Message,
                               e.StackTrace,
                               hotkeyStr));
-            string errorMsg = string.Format(InternationalizationManager.Instance.GetTranslation("registerHotkeyFailed"), hotkeyStr);
-            string errorMsgTitle = InternationalizationManager.Instance.GetTranslation("MessageBoxTitle");
+            string errorMsg = string.Format(App.API.GetTranslation("registerHotkeyFailed"), hotkeyStr);
+            string errorMsgTitle = App.API.GetTranslation("MessageBoxTitle");
             App.API.ShowMsgBox(errorMsg, errorMsgTitle);
         }
     }
@@ -103,13 +103,13 @@ internal static class HotKeyMapper
         }
         catch (Exception e)
         {
-            Log.Error(
+            App.API.LogError(ClassName,
                 string.Format("|HotkeyMapper.RemoveHotkey|Error removing hotkey: {0} \nStackTrace:{1}",
                               e.Message,
                               e.StackTrace));
-            string errorMsg = string.Format(InternationalizationManager.Instance.GetTranslation("unregisterHotkeyFailed"), hotkeyStr);
-            string errorMsgTitle = InternationalizationManager.Instance.GetTranslation("MessageBoxTitle");
-            MessageBoxEx.Show(errorMsg, errorMsgTitle);
+            string errorMsg = string.Format(App.API.GetTranslation("unregisterHotkeyFailed"), hotkeyStr);
+            string errorMsgTitle = App.API.GetTranslation("MessageBoxTitle");
+            App.API.ShowMsgBox(errorMsg, errorMsgTitle);
         }
     }
 
@@ -137,8 +137,8 @@ internal static class HotKeyMapper
             if (_mainViewModel.ShouldIgnoreHotkeys())
                 return;
 
-            _mainViewModel.Show();
-            _mainViewModel.ChangeQueryText(hotkey.ActionKeyword, true);
+            App.API.ShowMainWindow();
+            App.API.ChangeQuery(hotkey.ActionKeyword, true);
         });
     }
 

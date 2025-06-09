@@ -3,9 +3,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure.Image;
+using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Resources.Controls;
 
@@ -13,6 +15,8 @@ namespace Flow.Launcher.ViewModel
 {
     public partial class PluginViewModel : BaseModel
     {
+        private static readonly Settings Settings = Ioc.Default.GetRequiredService<Settings>();
+
         private readonly PluginPair _pluginPair;
         public PluginPair PluginPair
         {
@@ -45,7 +49,7 @@ namespace Flow.Launcher.ViewModel
 
         private async Task LoadIconAsync()
         {
-            Image = await ImageLoader.LoadAsync(PluginPair.Metadata.IcoPath);
+            Image = await App.API.LoadImageAsync(PluginPair.Metadata.IcoPath);
             OnPropertyChanged(nameof(Image));
         }
 
@@ -71,6 +75,16 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public bool PluginHomeState
+        {
+            get => !PluginPair.Metadata.HomeDisabled;
+            set
+            {
+                PluginPair.Metadata.HomeDisabled = !value;
+                PluginSettingsObject.HomeDisabled = !value;
+            }
+        }
+
         public bool IsExpanded
         {
             get => _isExpanded;
@@ -83,13 +97,33 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public SearchDelayTime? PluginSearchDelayTime
+        public int Priority
         {
-            get => PluginPair.Metadata.SearchDelayTime;
+            get => PluginPair.Metadata.Priority;
             set
             {
-                PluginPair.Metadata.SearchDelayTime = value;
-                PluginSettingsObject.SearchDelayTime = value;
+                PluginPair.Metadata.Priority = value;
+                PluginSettingsObject.Priority = value;
+            }
+        }
+
+        public double PluginSearchDelayTime
+        {
+            get => PluginPair.Metadata.SearchDelayTime == null ?
+                double.NaN :
+                PluginPair.Metadata.SearchDelayTime.Value;
+            set
+            {
+                if (double.IsNaN(value))
+                {
+                    PluginPair.Metadata.SearchDelayTime = null;
+                    PluginSettingsObject.SearchDelayTime = null;
+                }
+                else
+                {
+                    PluginPair.Metadata.SearchDelayTime = (int)value;
+                    PluginSettingsObject.SearchDelayTime = (int)value;
+                }
             }
         }
 
@@ -100,10 +134,7 @@ namespace Flow.Launcher.ViewModel
         public Control BottomPart1 => IsExpanded ? _bottomPart1 ??= new InstalledPluginDisplayKeyword() : null;
 
         private Control _bottomPart2;
-        public Control BottomPart2 => IsExpanded ? _bottomPart2 ??= new InstalledPluginSearchDelay() : null;
-
-        private Control _bottomPart3;
-        public Control BottomPart3 => IsExpanded ? _bottomPart3 ??= new InstalledPluginDisplayBottomData() : null;
+        public Control BottomPart2 => IsExpanded ? _bottomPart2 ??= new InstalledPluginDisplayBottomData() : null;
 
         public bool HasSettingControl => PluginPair.Plugin is ISettingProvider &&
             (PluginPair.Plugin is not JsonRPCPluginBase jsonRPCPluginBase || jsonRPCPluginBase.NeedCreateSettingPanel());
@@ -127,34 +158,17 @@ namespace Flow.Launcher.ViewModel
             App.API.GetTranslation("plugin_query_time") + " " +
             PluginPair.Metadata.AvgQueryTime + "ms";
         public string ActionKeywordsText => string.Join(Query.ActionKeywordSeparator, PluginPair.Metadata.ActionKeywords);
-        public int Priority => PluginPair.Metadata.Priority;
         public string SearchDelayTimeText => PluginPair.Metadata.SearchDelayTime == null ?
             App.API.GetTranslation("default") :
             App.API.GetTranslation($"SearchDelayTime{PluginPair.Metadata.SearchDelayTime}");
         public Infrastructure.UserSettings.Plugin PluginSettingsObject{ get; init; }
+        public bool SearchDelayEnabled => Settings.SearchQueryResultsWithDelay;
+        public string DefaultSearchDelay => Settings.SearchDelayTime.ToString();
+        public bool HomeEnabled => Settings.ShowHomePage && PluginManager.IsHomePlugin(PluginPair.Metadata.ID);
 
-        public void OnActionKeywordsChanged()
+        public void OnActionKeywordsTextChanged()
         {
             OnPropertyChanged(nameof(ActionKeywordsText));
-        }
-
-        public void OnSearchDelayTimeChanged()
-        {
-            OnPropertyChanged(nameof(SearchDelayTimeText));
-        }
-
-        public void ChangePriority(int newPriority)
-        {
-            PluginPair.Metadata.Priority = newPriority;
-            PluginSettingsObject.Priority = newPriority;
-            OnPropertyChanged(nameof(Priority));
-        }
-
-        [RelayCommand]
-        private void EditPluginPriority()
-        {
-            var priorityChangeWindow = new PriorityChangeWindow(PluginPair. Metadata.ID, this);
-            priorityChangeWindow.ShowDialog();
         }
 
         [RelayCommand]
@@ -183,13 +197,6 @@ namespace Flow.Launcher.ViewModel
         {
             var changeKeywordsWindow = new ActionKeywords(this);
             changeKeywordsWindow.ShowDialog();
-        }
-
-        [RelayCommand]
-        private void SetSearchDelayTime()
-        {
-            var searchDelayTimeWindow = new SearchDelayTimeWindow(this);
-            searchDelayTimeWindow.ShowDialog();
         }
     }
 }

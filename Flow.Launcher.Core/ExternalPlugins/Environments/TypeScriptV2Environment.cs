@@ -5,6 +5,7 @@ using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
+using Microsoft.VisualStudio.Threading;
 
 namespace Flow.Launcher.Core.ExternalPlugins.Environments
 {
@@ -27,11 +28,13 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
         internal TypeScriptV2Environment(List<PluginMetadata> pluginMetadataList, PluginsSettings pluginSettings) : base(pluginMetadataList, pluginSettings) { }
 
+        private JoinableTaskFactory JTF { get; } = new JoinableTaskFactory(new JoinableTaskContext());
+
         internal override void InstallEnvironment()
         {
             FilesFolders.RemoveFolderIfExists(InstallPath, (s) => API.ShowMsgBox(s));
 
-            DroplexPackage.Drop(App.nodejs_16_18_0, InstallPath).Wait();
+            JTF.Run(() => DroplexPackage.Drop(App.nodejs_16_18_0, InstallPath));
 
             PluginsSettingsFilePath = ExecutablePath;
         }

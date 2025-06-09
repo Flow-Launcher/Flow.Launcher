@@ -1,22 +1,19 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Infrastructure.Storage
 {
-    public class PluginJsonStorage<T> : JsonStorage<T> where T : new()
+    // Expose ISaveable interface in derived class to make sure we are calling the new version of Save method
+    public class PluginJsonStorage<T> : JsonStorage<T>, ISavable where T : new()
     {
         // Use assembly name to check which plugin is using this storage
         public readonly string AssemblyName;
 
         private static readonly string ClassName = "PluginJsonStorage";
-
-        // We should not initialize API in static constructor because it will create another API instance
-        private static IPublicAPI api = null;
-        private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
 
         public PluginJsonStorage()
         {
@@ -42,7 +39,7 @@ namespace Flow.Launcher.Infrastructure.Storage
             }
             catch (System.Exception e)
             {
-                API.LogException(ClassName, $"Failed to save plugin settings to path: {FilePath}", e);
+                Log.Exception(ClassName, $"Failed to save plugin settings to path: {FilePath}", e);
             }
         }
 
@@ -54,7 +51,7 @@ namespace Flow.Launcher.Infrastructure.Storage
             }
             catch (System.Exception e)
             {
-                API.LogException(ClassName, $"Failed to save plugin settings to path: {FilePath}", e);
+                Log.Exception(ClassName, $"Failed to save plugin settings to path: {FilePath}", e);
             }
         }
     }

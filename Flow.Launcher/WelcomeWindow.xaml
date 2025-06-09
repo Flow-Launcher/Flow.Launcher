@@ -10,11 +10,11 @@
     Name="FlowWelcomeWindow"
     Title="{DynamicResource Welcome_Page1_Title}"
     Width="550"
-    Height="650"
+    Height="700"
     MinWidth="550"
-    MinHeight="650"
+    MinHeight="700"
     MaxWidth="550"
-    MaxHeight="650"
+    MaxHeight="700"
     d:DataContext="{d:DesignInstance Type=vm:WelcomeViewModel}"
     Activated="OnActivated"
     Background="{DynamicResource Color00B}"
@@ -140,21 +140,19 @@
                         Height="40"
                         Margin="8 5 0 5"
                         Click="ForwardButton_Click"
-                        Content="&#xe76c;"
                         DockPanel.Dock="Right"
-                        FontFamily="/Resources/#Segoe Fluent Icons"
-                        FontSize="18"
-                        IsEnabled="{Binding NextEnabled, Mode=OneWay}" />
+                        IsEnabled="{Binding NextEnabled, Mode=OneWay}">
+                        <ui:FontIcon FontSize="18" Glyph="&#xe76c;" />
+                    </Button>
                     <Button
                         x:Name="BackButton"
                         Width="40"
                         Height="40"
                         Click="BackwardButton_Click"
-                        Content="&#xe76b;"
                         DockPanel.Dock="Right"
-                        FontFamily="/Resources/#Segoe Fluent Icons"
-                        FontSize="18"
-                        IsEnabled="{Binding BackEnabled, Mode=OneWay}" />
+                        IsEnabled="{Binding BackEnabled, Mode=OneWay}">
+                        <ui:FontIcon FontSize="18" Glyph="&#xe76b;" />
+                    </Button>
                     <StackPanel />
                 </DockPanel>
 

@@ -13,9 +13,9 @@ using System.Windows.Media.Effects;
 using System.Windows.Shell;
 using System.Windows.Threading;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedModels;
 using Microsoft.Win32;
 
 namespace Flow.Launcher.Core.Resource
@@ -23,6 +23,8 @@ namespace Flow.Launcher.Core.Resource
     public class Theme
     {
         #region Properties & Fields
+
+        private readonly string ClassName = nameof(Theme);
 
         public bool BlurEnabled { get; private set; }
 
@@ -72,19 +74,14 @@ namespace Flow.Launcher.Core.Resource
             }
             else
             {
-                Log.Error("Current theme resource not found. Initializing with default theme.");
+                _api.LogError(ClassName, "Current theme resource not found. Initializing with default theme.");
                 _oldTheme = Constant.DefaultTheme;
-            };
+            }
         }
 
         #endregion
 
         #region Theme Resources
-
-        public string GetCurrentTheme()
-        {
-            return _settings.Theme;
-        }
 
         private void MakeSureThemeDirectoriesExist()
         {
@@ -96,7 +93,7 @@ namespace Flow.Launcher.Core.Resource
                 }
                 catch (Exception e)
                 {
-                    Log.Exception($"|Theme.MakesureThemeDirectoriesExist|Exception when create directory <{dir}>", e);
+                    _api.LogException(ClassName, $"Exception when create directory <{dir}>", e);
                 }
             }
         }
@@ -127,9 +124,9 @@ namespace Flow.Launcher.Core.Resource
             try
             {
                 // Load a ResourceDictionary for the specified theme.
-                var themeName = GetCurrentTheme();
+                var themeName = _settings.Theme;
                 var dict = GetThemeResourceDictionary(themeName);
-                
+
                 // Apply font settings to the theme resource.
                 ApplyFontSettings(dict);
                 UpdateResourceDictionary(dict);
@@ -139,7 +136,7 @@ namespace Flow.Launcher.Core.Resource
             }
             catch (Exception e)
             {
-                Log.Exception("Error occurred while updating theme fonts", e);
+                _api.LogException(ClassName, "Error occurred while updating theme fonts", e);
             }
         }
 
@@ -155,11 +152,11 @@ namespace Flow.Launcher.Core.Resource
                 var fontStyle = FontHelper.GetFontStyleFromInvariantStringOrNormal(_settings.QueryBoxFontStyle);
                 var fontWeight = FontHelper.GetFontWeightFromInvariantStringOrNormal(_settings.QueryBoxFontWeight);
                 var fontStretch = FontHelper.GetFontStretchFromInvariantStringOrNormal(_settings.QueryBoxFontStretch);
-                
+
                 SetFontProperties(queryBoxStyle, fontFamily, fontStyle, fontWeight, fontStretch, true);
                 SetFontProperties(querySuggestionBoxStyle, fontFamily, fontStyle, fontWeight, fontStretch, false);
             }
-            
+
             if (dict["ItemTitleStyle"] is Style resultItemStyle &&
                 dict["ItemTitleSelectedStyle"] is Style resultItemSelectedStyle &&
                 dict["ItemHotkeyStyle"] is Style resultHotkeyItemStyle &&
@@ -175,7 +172,7 @@ namespace Flow.Launcher.Core.Resource
                 SetFontProperties(resultHotkeyItemStyle, fontFamily, fontStyle, fontWeight, fontStretch, false);
                 SetFontProperties(resultHotkeyItemSelectedStyle, fontFamily, fontStyle, fontWeight, fontStretch, false);
             }
-            
+
             if (dict["ItemSubTitleStyle"] is Style resultSubItemStyle &&
                 dict["ItemSubTitleSelectedStyle"] is Style resultSubItemSelectedStyle)
             {
@@ -200,7 +197,7 @@ namespace Flow.Launcher.Core.Resource
                 //  First, find the setters to remove and store them in a list  
                 var settersToRemove = style.Setters
                     .OfType<Setter>()
-                    .Where(setter => 
+                    .Where(setter =>
                         setter.Property == Control.FontFamilyProperty ||
                         setter.Property == Control.FontStyleProperty ||
                         setter.Property == Control.FontWeightProperty ||
@@ -230,18 +227,18 @@ namespace Flow.Launcher.Core.Resource
             {
                 var settersToRemove = style.Setters
                     .OfType<Setter>()
-                    .Where(setter => 
+                    .Where(setter =>
                         setter.Property == TextBlock.FontFamilyProperty ||
                         setter.Property == TextBlock.FontStyleProperty ||
                         setter.Property == TextBlock.FontWeightProperty ||
                         setter.Property == TextBlock.FontStretchProperty)
                     .ToList();
-                
+
                 foreach (var setter in settersToRemove)
                 {
                     style.Setters.Remove(setter);
                 }
-                
+
                 style.Setters.Add(new Setter(TextBlock.FontFamilyProperty, fontFamily));
                 style.Setters.Add(new Setter(TextBlock.FontStyleProperty, fontStyle));
                 style.Setters.Add(new Setter(TextBlock.FontWeightProperty, fontWeight));
@@ -328,9 +325,9 @@ namespace Flow.Launcher.Core.Resource
             return dict;
         }
 
-        private ResourceDictionary GetCurrentResourceDictionary()
+        public ResourceDictionary GetCurrentResourceDictionary()
         {
-            return GetResourceDictionary(GetCurrentTheme());
+            return GetResourceDictionary(_settings.Theme);
         }
 
         private ThemeData GetThemeDataFromPath(string path)
@@ -383,9 +380,20 @@ namespace Flow.Launcher.Core.Resource
 
         #endregion
 
-        #region Load & Change
+        #region Get & Change Theme
 
-        public List<ThemeData> LoadAvailableThemes()
+        public ThemeData GetCurrentTheme()
+        {
+            var themes = GetAvailableThemes();
+            var matchingTheme = themes.FirstOrDefault(t => t.FileNameWithoutExtension == _settings.Theme);
+            if (matchingTheme == null)
+            {
+                _api.LogWarn(ClassName, $"No matching theme found for '{_settings.Theme}'. Falling back to the first available theme.");
+            }
+            return matchingTheme ?? themes.FirstOrDefault();
+        }
+
+        public List<ThemeData> GetAvailableThemes()
         {
             List<ThemeData> themes = new List<ThemeData>();
             foreach (var themeDirectory in _themeDirectories)
@@ -403,7 +411,7 @@ namespace Flow.Launcher.Core.Resource
         public bool ChangeTheme(string theme = null)
         {
             if (string.IsNullOrEmpty(theme))
-                theme = GetCurrentTheme();
+                theme = _settings.Theme;
 
             string path = GetThemePath(theme);
             try
@@ -413,7 +421,7 @@ namespace Flow.Launcher.Core.Resource
 
                 // Retrieve theme resource – always use the resource with font settings applied.
                 var resourceDict = GetResourceDictionary(theme);
-                
+
                 UpdateResourceDictionary(resourceDict);
 
                 _settings.Theme = theme;
@@ -426,14 +434,14 @@ namespace Flow.Launcher.Core.Resource
 
                 BlurEnabled = IsBlurTheme();
 
-                // Can only apply blur but here also apply drop shadow effect to avoid possible drop shadow effect issues
+                // Apply blur and drop shadow effect so that we do not need to call it again
                 _ = RefreshFrameAsync();
 
                 return true;
             }
             catch (DirectoryNotFoundException)
             {
-                Log.Error($"|Theme.ChangeTheme|Theme <{theme}> path can't be found");
+                _api.LogError(ClassName, $"Theme <{theme}> path can't be found");
                 if (theme != Constant.DefaultTheme)
                 {
                     _api.ShowMsgBox(string.Format(_api.GetTranslation("theme_load_failure_path_not_exists"), theme));
@@ -443,7 +451,7 @@ namespace Flow.Launcher.Core.Resource
             }
             catch (XamlParseException)
             {
-                Log.Error($"|Theme.ChangeTheme|Theme <{theme}> fail to parse");
+                _api.LogError(ClassName, $"Theme <{theme}> fail to parse");
                 if (theme != Constant.DefaultTheme)
                 {
                     _api.ShowMsgBox(string.Format(_api.GetTranslation("theme_load_failure_parse_error"), theme));
@@ -591,7 +599,7 @@ namespace Flow.Launcher.Core.Resource
                 {
                     AutoDropShadow(useDropShadowEffect);
                 }
-                SetBlurForWindow(GetCurrentTheme(), backdropType);
+                SetBlurForWindow(_settings.Theme, backdropType);
 
                 if (!BlurEnabled)
                 {
@@ -610,7 +618,7 @@ namespace Flow.Launcher.Core.Resource
                 // Get the actual backdrop type and drop shadow effect settings
                 var (backdropType, _) = GetActualValue();
 
-                SetBlurForWindow(GetCurrentTheme(), backdropType);
+                SetBlurForWindow(_settings.Theme, backdropType);
             }, DispatcherPriority.Render);
         }
 
@@ -663,7 +671,15 @@ namespace Flow.Launcher.Core.Resource
                     windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
                     windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Colors.Transparent)));
                 }
-
+                
+                // For themes with blur enabled, the window border is rendered by the system, so it's treated as a simple rectangle regardless of thickness.
+                //(This is to avoid issues when the window is forcibly changed to a rectangular shape during snap scenarios.)
+                var cornerRadiusSetter = windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property == Border.CornerRadiusProperty);
+                if (cornerRadiusSetter != null)
+                    cornerRadiusSetter.Value = new CornerRadius(0);
+                else
+                    windowBorderStyle.Setters.Add(new Setter(Border.CornerRadiusProperty, new CornerRadius(0)));
+                
                 // Apply the blur effect
                 Win32Helper.DWMSetBackdropForWindow(mainWindow, backdropType);
                 ColorizeWindow(theme, backdropType);
@@ -764,22 +780,18 @@ namespace Flow.Launcher.Core.Resource
         {
             if (bgColor == null) return;
 
-            // Copy the existing WindowBorderStyle
+            // Create a new Style for the preview
             var previewStyle = new Style(typeof(Border));
-            if (Application.Current.Resources.Contains("WindowBorderStyle"))
+
+            // Get the original WindowBorderStyle
+            if (Application.Current.Resources.Contains("WindowBorderStyle") &&
+                Application.Current.Resources["WindowBorderStyle"] is Style originalStyle)
             {
-                if (Application.Current.Resources["WindowBorderStyle"] is Style originalStyle)
-                {
-                    foreach (var setter in originalStyle.Setters.OfType<Setter>())
-                    {
-                        previewStyle.Setters.Add(new Setter(setter.Property, setter.Value));
-                    }
-                }
+                // Copy the original style, including the base style if it exists
+                CopyStyle(originalStyle, previewStyle);
             }
 
             // Apply background color (remove transparency in color)
-            // WPF does not allow the use of an acrylic brush within the window's internal area,
-            // so transparency effects are not applied to the preview.
             Color backgroundColor = Color.FromRgb(bgColor.Value.R, bgColor.Value.G, bgColor.Value.B);
             previewStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(backgroundColor)));
 
@@ -790,7 +802,24 @@ namespace Flow.Launcher.Core.Resource
                 previewStyle.Setters.Add(new Setter(Border.CornerRadiusProperty, new CornerRadius(5)));
                 previewStyle.Setters.Add(new Setter(Border.BorderThicknessProperty, new Thickness(1)));
             }
+
+            // Set the new style to the resource
             Application.Current.Resources["PreviewWindowBorderStyle"] = previewStyle;
+        }
+
+        private void CopyStyle(Style originalStyle, Style targetStyle)
+        {
+            // If the style is based on another style, copy the base style first
+            if (originalStyle.BasedOn != null)
+            {
+                CopyStyle(originalStyle.BasedOn, targetStyle);
+            }
+
+            // Copy the setters from the original style
+            foreach (var setter in originalStyle.Setters.OfType<Setter>())
+            {
+                targetStyle.Setters.Add(new Setter(setter.Property, setter.Value));
+            }
         }
 
         private void ColorizeWindow(string theme, BackdropTypes backdropType)
@@ -896,12 +925,6 @@ namespace Flow.Launcher.Core.Resource
 
             return resource is bool b && b;
         }
-
-        #endregion
-
-        #region Classes
-
-        public record ThemeData(string FileNameWithoutExtension, string Name, bool? IsDark = null, bool? HasBlur = null);
 
         #endregion
     }

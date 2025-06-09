@@ -46,6 +46,8 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">Hãy chọn một nguồn dữ liệu</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">Bạn có chắc chắn là muốn xóa các đặt hàng đã chọn?</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_not_user_added">Please select program sources that are not added by you</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_user_added">Please select program sources that are added by you</system:String>
     <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Đã tồn tại một nguồn chương trình khác có cùng vị trí.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Nguồn chương trình</system:String>
@@ -74,7 +76,7 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Xóa lựa chọn đã chọn</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Chạy với quyền quản trị</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Mở thư mục chứa</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">Vô hiệu hóa chương trình này hiển thị</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">Hide</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Mở thư mục đích</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Chương trình</system:String>

@@ -1,6 +1,4 @@
-﻿using Flow.Launcher.Plugin.SharedModels;
-using JetBrains.Annotations;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -8,6 +6,9 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
+using Flow.Launcher.Plugin.SharedModels;
+using JetBrains.Annotations;
 
 namespace Flow.Launcher.Plugin
 {
@@ -84,9 +85,23 @@ namespace Flow.Launcher.Plugin
         void ShowMsgError(string title, string subTitle = "");
 
         /// <summary>
+        /// Show the error message using Flow's standard error icon.
+        /// </summary>
+        /// <param name="title">Message title</param>
+        /// <param name="buttonText">Message button content</param>
+        /// <param name="buttonAction">Message button action</param>
+        /// <param name="subTitle">Optional message subtitle</param>
+        void ShowMsgErrorWithButton(string title, string buttonText, Action buttonAction, string subTitle = "");
+
+        /// <summary>
         /// Show the MainWindow when hiding
         /// </summary>
         void ShowMainWindow();
+        
+        /// <summary>
+        /// Focus the query text box in the main window
+        /// </summary>
+        void FocusQueryTextBox();
 
         /// <summary>
         /// Hide MainWindow
@@ -122,6 +137,27 @@ namespace Flow.Launcher.Plugin
         void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true);
 
         /// <summary>
+        /// Show message box with button
+        /// </summary>
+        /// <param name="title">Message title</param>
+        /// <param name="buttonText">Message button content</param>
+        /// <param name="buttonAction">Message button action</param>
+        /// <param name="subTitle">Message subtitle</param>
+        /// <param name="iconPath">Message icon path (relative path to your plugin folder)</param>
+        void ShowMsgWithButton(string title, string buttonText, Action buttonAction, string subTitle = "", string iconPath = "");
+
+        /// <summary>
+        /// Show message box with button
+        /// </summary>
+        /// <param name="title">Message title</param>
+        /// <param name="buttonText">Message button content</param>
+        /// <param name="buttonAction">Message button action</param>
+        /// <param name="subTitle">Message subtitle</param>
+        /// <param name="iconPath">Message icon path (relative path to your plugin folder)</param>
+        /// <param name="useMainWindowAsOwner">when true will use main windows as the owner</param>
+        void ShowMsgWithButton(string title, string buttonText, Action buttonAction, string subTitle, string iconPath, bool useMainWindowAsOwner = true);
+
+        /// <summary>
         /// Open setting dialog
         /// </summary>
         void OpenSettingDialog();
@@ -141,15 +177,47 @@ namespace Flow.Launcher.Plugin
         List<PluginPair> GetAllPlugins();
 
         /// <summary>
-        /// Register a callback for Global Keyboard Event
+        /// Registers a callback function for global keyboard events.
         /// </summary>
-        /// <param name="callback"></param>
+        /// <param name="callback">
+        /// The callback function to invoke when a global keyboard event occurs.
+        /// <para>
+        /// Parameters:
+        /// <list type="number">
+        ///   <item><description>int: The type of <see cref="KeyEvent"/> (key down, key up, etc.)</description></item>
+        ///   <item><description>int: The virtual key code of the pressed/released key</description></item>
+        ///   <item><description><see cref="SpecialKeyState"/>: The state of modifier keys (Ctrl, Alt, Shift, etc.)</description></item>
+        /// </list>
+        /// </para>
+        /// <para>
+        /// Returns: <c>true</c> to allow normal system processing of the key event,
+        /// or <c>false</c> to intercept and prevent default handling.
+        /// </para>
+        /// </param>
+        /// <remarks>
+        /// This callback will be invoked for all keyboard events system-wide.
+        /// Use with caution as intercepting system keys may affect normal system operation.
+        /// </remarks>
         public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback);
-        
+
         /// <summary>
         /// Remove a callback for Global Keyboard Event
         /// </summary>
-        /// <param name="callback"></param>
+        /// <param name="callback">
+        /// The callback function to invoke when a global keyboard event occurs.
+        /// <para>
+        /// Parameters:
+        /// <list type="number">
+        ///   <item><description>int: The type of <see cref="KeyEvent"/> (key down, key up, etc.)</description></item>
+        ///   <item><description>int: The virtual key code of the pressed/released key</description></item>
+        ///   <item><description><see cref="SpecialKeyState"/>: The state of modifier keys (Ctrl, Alt, Shift, etc.)</description></item>
+        /// </list>
+        /// </para>
+        /// <para>
+        /// Returns: <c>true</c> to allow normal system processing of the key event,
+        /// or <c>false</c> to intercept and prevent default handling.
+        /// </para>
+        /// </param>
         public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback);
 
         /// <summary>
@@ -190,11 +258,15 @@ namespace Flow.Launcher.Plugin
         Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath, Action<double> reportProgress = null, CancellationToken token = default);
 
         /// <summary>
-        /// Add ActionKeyword and update action keyword metadata for specific plugin
+        /// Add ActionKeyword and update action keyword metadata for specific plugin.
         /// Before adding, please check if action keyword is already assigned by <see cref="ActionKeywordAssigned"/>
         /// </summary>
         /// <param name="pluginId">ID for plugin that needs to add action keyword</param>
         /// <param name="newActionKeyword">The actionkeyword that is supposed to be added</param>
+        /// <remarks>
+        /// If new action keyword contains any whitespace, FL will still add it but it will not work for users.
+        /// So plugin should check the whitespace before calling this function.
+        /// </remarks>
         void AddActionKeyword(string pluginId, string newActionKeyword);
 
         /// <summary>
@@ -228,6 +300,11 @@ namespace Flow.Launcher.Plugin
         void LogWarn(string className, string message, [CallerMemberName] string methodName = "");
 
         /// <summary>
+        /// Log error message. Preferred error logging method for plugins.
+        /// </summary>
+        void LogError(string className, string message, [CallerMemberName] string methodName = "");
+
+        /// <summary>
         /// Log an Exception. Will throw if in debug mode so developer will be aware, 
         /// otherwise logs the eror message. This is the primary logging method used for Flow 
         /// </summary>
@@ -242,9 +319,10 @@ namespace Flow.Launcher.Plugin
         T LoadSettingJsonStorage<T>() where T : new();
 
         /// <summary>
-        /// Save JsonStorage for current plugin's setting. This is the method used to save settings to json in Flow.Launcher
+        /// Save JsonStorage for current plugin's setting. This is the method used to save settings to json in Flow.
         /// This method will save the original instance loaded with LoadJsonStorage.
-        /// This API call is for manually Save. Flow will automatically save all setting type that has called LoadSettingJsonStorage or SaveSettingJsonStorage previously.
+        /// This API call is for manually Save.
+        /// Flow will automatically save all setting type that has called <see cref="LoadSettingJsonStorage"/> or <see cref="SaveSettingJsonStorage"/> previously.
         /// </summary>
         /// <typeparam name="T">Type for Serialization</typeparam>
         /// <returns></returns>
@@ -346,6 +424,78 @@ namespace Flow.Launcher.Plugin
         public void StopLoadingBar();
 
         /// <summary>
+        /// Get all available themes
+        /// </summary>
+        /// <returns></returns>
+        public List<ThemeData> GetAvailableThemes();
+
+        /// <summary>
+        /// Get the current theme
+        /// </summary>
+        /// <returns></returns>
+        public ThemeData GetCurrentTheme();
+
+        /// <summary>
+        /// Set the current theme
+        /// </summary>
+        /// <param name="theme"></param>
+        /// <returns>
+        /// True if the theme is set successfully, false otherwise.
+        /// </returns>
+        public bool SetCurrentTheme(ThemeData theme);
+
+        /// <summary>
+        /// Save all Flow's plugins caches
+        /// </summary>
+        void SavePluginCaches();
+
+        /// <summary>
+        /// Load BinaryStorage for current plugin's cache. This is the method used to load cache from binary in Flow.
+        /// When the file is not exist, it will create a new instance for the specific type.
+        /// </summary>
+        /// <typeparam name="T">Type for deserialization</typeparam>
+        /// <param name="cacheName">Cache file name</param>
+        /// <param name="cacheDirectory">Cache directory from plugin metadata</param>
+        /// <param name="defaultData">Default data to return</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// BinaryStorage utilizes MemoryPack, which means the object must be MemoryPackSerializable <see href="https://github.com/Cysharp/MemoryPack"/>
+        /// </remarks>
+        Task<T> LoadCacheBinaryStorageAsync<T>(string cacheName, string cacheDirectory, T defaultData) where T : new();
+
+        /// <summary>
+        /// Save BinaryStorage for current plugin's cache. This is the method used to save cache to binary in Flow.
+        /// This method will save the original instance loaded with LoadCacheBinaryStorageAsync.
+        /// This API call is for manually Save.
+        /// Flow will automatically save all cache type that has called <see cref="LoadCacheBinaryStorageAsync"/> or <see cref="SaveCacheBinaryStorageAsync"/> previously.
+        /// </summary>
+        /// <typeparam name="T">Type for Serialization</typeparam>
+        /// <param name="cacheName">Cache file name</param>
+        /// <param name="cacheDirectory">Cache directory from plugin metadata</param>
+        /// <returns></returns>
+        /// <remarks>
+        /// BinaryStorage utilizes MemoryPack, which means the object must be MemoryPackSerializable <see href="https://github.com/Cysharp/MemoryPack"/>
+        /// </remarks>
+        Task SaveCacheBinaryStorageAsync<T>(string cacheName, string cacheDirectory) where T : new();
+
+        /// <summary>
+        /// Load image from path.
+        /// Support local, remote and data:image url.
+        /// Support png, jpg, jpeg, gif, bmp, tiff, ico, svg image files.
+        /// If image path is missing, it will return a missing icon.
+        /// </summary>
+        /// <param name="path">The path of the image.</param>
+        /// <param name="loadFullImage">
+        /// Load full image or not.
+        /// </param>
+        /// <param name="cacheImage">
+        /// Cache the image or not. Cached image will be stored in FL cache.
+        /// If the image is just used one time, it's better to set this to false.
+        /// </param>
+        /// <returns></returns>
+        ValueTask<ImageSource> LoadImageAsync(string path, bool loadFullImage = false, bool cacheImage = true);
+
+        /// <summary>
         /// Update the plugin manifest
         /// </summary>
         /// <param name="usePrimaryUrlOnly">
@@ -356,8 +506,11 @@ namespace Flow.Launcher.Plugin
         public Task<bool> UpdatePluginManifestAsync(bool usePrimaryUrlOnly = false, CancellationToken token = default);
 
         /// <summary>
-        /// Get the plugin manifest
+        /// Get the plugin manifest.
         /// </summary>
+        /// <remarks>
+        /// If Flow cannot get manifest data, this could be null
+        /// </remarks>
         /// <returns></returns>
         public IReadOnlyList<UserPlugin> GetPluginManifest();
 
@@ -401,5 +554,31 @@ namespace Flow.Launcher.Plugin
         /// </param>
         /// <returns></returns>
         public Task UninstallPluginAsync(PluginMetadata pluginMetadata, bool removePluginSettings = false);
+
+        /// <summary>
+        /// Log debug message of the time taken to execute a method
+        /// Message will only be logged in Debug mode
+        /// </summary>
+        /// <returns>The time taken to execute the method in milliseconds</returns>
+        public long StopwatchLogDebug(string className, string message, Action action, [CallerMemberName] string methodName = "");
+
+        /// <summary>
+        /// Log debug message of the time taken to execute a method asynchronously
+        /// Message will only be logged in Debug mode
+        /// </summary>
+        /// <returns>The time taken to execute the method in milliseconds</returns>
+        public Task<long> StopwatchLogDebugAsync(string className, string message, Func<Task> action, [CallerMemberName] string methodName = "");
+
+        /// <summary>
+        /// Log info message of the time taken to execute a method
+        /// </summary>
+        /// <returns>The time taken to execute the method in milliseconds</returns>
+        public long StopwatchLogInfo(string className, string message, Action action, [CallerMemberName] string methodName = "");
+
+        /// <summary>
+        /// Log info message of the time taken to execute a method asynchronously
+        /// </summary>
+        /// <returns>The time taken to execute the method in milliseconds</returns>
+        public Task<long> StopwatchLogInfoAsync(string className, string message, Func<Task> action, [CallerMemberName] string methodName = "");
     }
 }

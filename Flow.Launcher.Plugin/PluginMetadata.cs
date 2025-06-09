@@ -51,6 +51,11 @@ namespace Flow.Launcher.Plugin
         public bool Disabled { get; set; }
 
         /// <summary>
+        /// Whether plugin is disabled in home query.
+        /// </summary>
+        public bool HomeDisabled { get; set; }
+
+        /// <summary>
         /// Plugin execute file path.
         /// </summary>
         public string ExecuteFilePath { get; private set; }
@@ -99,10 +104,9 @@ namespace Flow.Launcher.Plugin
         public bool HideActionKeywordPanel { get; set; }
 
         /// <summary>
-        /// Plugin search delay time. Null means use default search delay time.
+        /// Plugin search delay time in ms. Null means use default search delay time.
         /// </summary>
-        [JsonConverter(typeof(JsonStringEnumConverter))]
-        public SearchDelayTime? SearchDelayTime { get; set; } = null;
+        public int? SearchDelayTime { get; set; } = null;
 
         /// <summary>
         /// Plugin icon path.

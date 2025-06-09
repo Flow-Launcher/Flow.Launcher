@@ -16,13 +16,13 @@ using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
+using Microsoft.Win32;
 using ModernWpf.Controls;
 using DataObject = System.Windows.DataObject;
 using Key = System.Windows.Input.Key;
@@ -89,6 +89,8 @@ namespace Flow.Launcher
 
             InitSoundEffects();
             DataObject.AddPastingHandler(QueryTextBox, QueryTextBox_OnPaste);
+            ModernWpf.ThemeManager.Current.ActualApplicationThemeChanged += ThemeManager_ActualApplicationThemeChanged;
+            SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
         }
 
         #endregion
@@ -96,6 +98,11 @@ namespace Flow.Launcher
         #region Window Event
 
 #pragma warning disable VSTHRD100 // Avoid async void methods
+
+        private void ThemeManager_ActualApplicationThemeChanged(ModernWpf.ThemeManager sender, object args)
+        {
+            _ = _theme.RefreshFrameAsync();
+        }
 
         private void OnSourceInitialized(object sender, EventArgs e)
         {
@@ -106,13 +113,16 @@ namespace Flow.Launcher
             Win32Helper.DisableControlBox(this);
         }
 
-        private async void OnLoaded(object sender, RoutedEventArgs _)
+        private void OnLoaded(object sender, RoutedEventArgs _)
         {
             // Check first launch
             if (_settings.FirstLaunch)
             {
                 // Set First Launch to false
                 _settings.FirstLaunch = false;
+
+                // Update release notes version
+                _settings.ReleaseNotesVersion = Constant.Version;
 
                 // Set Backdrop Type to Acrylic for Windows 11 when First Launch. Default is None
                 if (Win32Helper.IsBackdropSupported()) _settings.BackdropType = BackdropTypes.Acrylic;
@@ -123,6 +133,25 @@ namespace Flow.Launcher
                 // Show Welcome Window
                 var welcomeWindow = new WelcomeWindow();
                 welcomeWindow.Show();
+            }
+
+            if (_settings.ReleaseNotesVersion != Constant.Version)
+            {
+                // Update release notes version
+                _settings.ReleaseNotesVersion = Constant.Version;
+
+                // Display message box with button
+                App.API.ShowMsgWithButton(
+                    string.Format(App.API.GetTranslation("appUpdateTitle"), Constant.Version),
+                    App.API.GetTranslation("appUpdateButtonContent"),
+                    () =>
+                    {
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            var releaseNotesWindow = new ReleaseNotesWindow();
+                            releaseNotesWindow.Show();
+                        });
+                    });
             }
 
             // Initialize place holder
@@ -138,9 +167,17 @@ namespace Flow.Launcher
             else
             {
                 _viewModel.Show();
+                // When HideOnStartup is off and UseAnimation is on,
+                // there was a bug where the clock would not appear at all on the initial launch
+                // So we need to forcibly trigger animation here to ensure the clock is visible
+                if (_settings.UseAnimation)
+                {
+                    WindowAnimation();
+                }
             }
 
-            // Show notify icon when flowlauncher is hidden
+            // Initialize context menu & notify icon
+            InitializeContextMenu();
             InitializeNotifyIcon();
 
             // Initialize color scheme
@@ -159,9 +196,6 @@ namespace Flow.Launcher
             // Force update position
             UpdatePosition();
 
-            // Refresh frame
-            await _theme.RefreshFrameAsync();
-
             // Initialize resize mode after refreshing frame
             SetupResizeMode();
 
@@ -174,9 +208,6 @@ namespace Flow.Launcher
             // Set the initial state of the QueryTextBoxCursorMovedToEnd property
             // Without this part, when shown for the first time, switching the context menu does not move the cursor to the end.
             _viewModel.QueryTextCursorMovedToEnd = false;
-            
-            // Initialize hotkey mapper after window is loaded
-            HotKeyMapper.Initialize();
 
             // View model property changed event
             _viewModel.PropertyChanged += (o, e) =>
@@ -270,36 +301,52 @@ namespace Flow.Launcher
                     case nameof(Settings.KeepMaxResults):
                         SetupResizeMode();
                         break;
+                    case nameof(Settings.SettingWindowFont):
+                        InitializeContextMenu();
+                        break;
+                    case nameof(Settings.ShowHomePage):
+                    case nameof(Settings.ShowHistoryResultsForHomePage):
+                        if (_viewModel.QueryResultsSelected() && string.IsNullOrEmpty(_viewModel.QueryText))
+                        {
+                            _viewModel.QueryResults();
+                        }
+                        break;
                 }
             };
 
             // QueryTextBox.Text change detection (modified to only work when character count is 1 or higher)
             QueryTextBox.TextChanged += (s, e) => UpdateClockPanelVisibility();
 
-            // Detecting ContextMenu.Visibility changes
+            // Detecting ResultContextMenu.Visibility changes
             DependencyPropertyDescriptor
-                .FromProperty(VisibilityProperty, typeof(ContextMenu))
-                .AddValueChanged(ContextMenu, (s, e) => UpdateClockPanelVisibility());
+                .FromProperty(VisibilityProperty, typeof(ResultListBox))
+                .AddValueChanged(ResultContextMenu, (s, e) => UpdateClockPanelVisibility());
 
             // Detect History.Visibility changes
             DependencyPropertyDescriptor
-                .FromProperty(VisibilityProperty, typeof(StackPanel))
+                .FromProperty(VisibilityProperty, typeof(ResultListBox))
                 .AddValueChanged(History, (s, e) => UpdateClockPanelVisibility());
+
+            // Initialize query state
+            if (_settings.ShowHomePage && string.IsNullOrEmpty(_viewModel.QueryText))
+            {
+                _viewModel.QueryResults();
+            }
         }
 
         private async void OnClosing(object sender, CancelEventArgs e)
         {
             if (!CanClose)
             {
+                CanClose = true;
                 _notifyIcon.Visible = false;
                 App.API.SaveAppAllSettings();
                 e.Cancel = true;
                 await ImageLoader.WaitSaveAsync();
                 await PluginManager.DisposePluginsAsync();
                 Notification.Uninstall();
-                // After plugins are all disposed, we can close the main window
-                CanClose = true;
-                // Use this instead of Close() to avoid InvalidOperationException when calling Close() in OnClosing event
+                // After plugins are all disposed, we shutdown application to close app
+                // We use this instead of Close() to avoid InvalidOperationException when calling Close() in OnClosing event
                 Application.Current.Shutdown();
             }
         }
@@ -320,7 +367,7 @@ namespace Flow.Launcher
 
         private void OnLocationChanged(object sender, EventArgs e)
         {
-            if (_settings.SearchWindowScreen == SearchWindowScreens.RememberLastLaunchLocation)
+            if (IsLoaded)
             {
                 _settings.WindowLeft = Left;
                 _settings.WindowTop = Top;
@@ -440,7 +487,55 @@ namespace Flow.Launcher
 
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left) DragMove();
+            // When the window is maximized via Snap,
+            // dragging attempts will first switch the window from Maximized to Normal state,
+            // and adjust the drag position accordingly.
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                try
+                {
+                    if (WindowState == WindowState.Maximized)
+                    {
+                        // Calculate ratio based on maximized window dimensions
+                        double maxWidth = ActualWidth;
+                        double maxHeight = ActualHeight;
+                        var mousePos = e.GetPosition(this);
+                        double xRatio = mousePos.X / maxWidth;
+                        double yRatio = mousePos.Y / maxHeight;
+
+                        // Current monitor information
+                        var screen = Screen.FromHandle(new WindowInteropHelper(this).Handle);
+                        var workingArea = screen.WorkingArea;
+                        var screenLeftTop = Win32Helper.TransformPixelsToDIP(this, workingArea.X, workingArea.Y);
+
+                        // Switch to Normal state
+                        WindowState = WindowState.Normal;
+
+                        Application.Current?.Dispatcher.Invoke(new Action(() =>
+                        {
+                            double normalWidth = Width;
+                            double normalHeight = Height;
+
+                            // Apply ratio based on the difference between maximized and normal window sizes
+                            Left = screenLeftTop.X + (maxWidth - normalWidth) * xRatio;
+                            Top = screenLeftTop.Y + (maxHeight - normalHeight) * yRatio;
+
+                            if (Mouse.LeftButton == MouseButtonState.Pressed)
+                            {
+                                DragMove();
+                            }
+                        }), DispatcherPriority.ApplicationIdle);
+                    }
+                    else
+                    {
+                        DragMove();
+                    }
+                }
+                catch (InvalidOperationException)
+                {
+                    // Ignored - can occur if drag operation is already in progress
+                }
+            }
         }
 
         #endregion
@@ -465,56 +560,76 @@ namespace Flow.Launcher
 
         #region Window WndProc
 
-        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled) 
         {
-            if (msg == Win32Helper.WM_ENTERSIZEMOVE)
+            switch (msg)
             {
-                _initialWidth = (int)Width;
-                _initialHeight = (int)Height;
-
-                handled = true;
-            }
-            else if (msg == Win32Helper.WM_EXITSIZEMOVE)
-            {
-                if (_initialHeight != (int)Height)
-                {
-                    if (!_settings.KeepMaxResults)
+                case Win32Helper.WM_ENTERSIZEMOVE:
+                    _initialWidth = (int)Width;
+                    _initialHeight = (int)Height;
+                    handled = true;
+                    break;
+                case Win32Helper.WM_EXITSIZEMOVE:
+                    //Prevent updating the number of results when the window height is below the height of a single result item.
+                    //This situation occurs not only when the user manually resizes the window, but also when the window is released from a side snap, as the OS automatically adjusts the window height.
+                    //(Without this check, releasing from a snap can cause the window height to hit the minimum, resulting in only 2 results being shown.)
+                    if (_initialHeight != (int)Height && Height > (_settings.WindowHeightSize + _settings.ItemHeightSize))
                     {
-                        // Get shadow margin
-                        var shadowMargin = 0;
-                        var (_, useDropShadowEffect) = _theme.GetActualValue();
-                        if (useDropShadowEffect)
+                        if (!_settings.KeepMaxResults)
                         {
-                            shadowMargin = 32;
+                            // Get shadow margin
+                            var shadowMargin = 0;
+                            var (_, useDropShadowEffect) = _theme.GetActualValue();
+                            if (useDropShadowEffect)
+                            {
+                                shadowMargin = 32;
+                            }
+
+                            // Calculate max results to show
+                            var itemCount = (Height - (_settings.WindowHeightSize + 14) - shadowMargin) / _settings.ItemHeightSize;
+                            if (itemCount < 2)
+                            {
+                                _settings.MaxResultsToShow = 2;
+                            }
+                            else
+                            {
+                                _settings.MaxResultsToShow = Convert.ToInt32(Math.Truncate(itemCount));
+                            }
                         }
 
-                        // Calculate max results to show
-                        var itemCount = (Height - (_settings.WindowHeightSize + 14) - shadowMargin) / _settings.ItemHeightSize;
-                        if (itemCount < 2)
-                        {
-                            _settings.MaxResultsToShow = 2;
-                        }
-                        else
-                        {
-                            _settings.MaxResultsToShow = Convert.ToInt32(Math.Truncate(itemCount));
-                        }
+                        SizeToContent = SizeToContent.Height;
+                    }
+                    else
+                    {
+                        // Update height when exiting maximized snap state.
+                        SizeToContent = SizeToContent.Height;
                     }
 
-                    SizeToContent = SizeToContent.Height;
-                }
-
-                if (_initialWidth != (int)Width)
-                {
-                    if (!_settings.KeepMaxResults)
+                    if (_initialWidth != (int)Width)
                     {
-                        // Update width
-                        _viewModel.MainWindowWidth = Width;
+                        if (!_settings.KeepMaxResults)
+                        {
+                            // Update width
+                            _viewModel.MainWindowWidth = Width;
+                        }
+
+                        SizeToContent = SizeToContent.Height;
                     }
 
+                    handled = true;
+                    break;
+                case Win32Helper.WM_NCLBUTTONDBLCLK: // Block the double click in frame
                     SizeToContent = SizeToContent.Height;
-                }
-
-                handled = true;
+                    handled = true;
+                    break;
+                case Win32Helper.WM_SYSCOMMAND: // Block Maximize/Minimize by Win+Up and Win+Down Arrow
+                    var command = wParam.ToInt32() & 0xFFF0;
+                    if (command == Win32Helper.SC_MAXIMIZE || command == Win32Helper.SC_MINIMIZE)
+                    {
+                        SizeToContent = SizeToContent.Height;
+                        handled = true;
+                    }
+                    break;
             }
 
             return IntPtr.Zero;
@@ -524,16 +639,29 @@ namespace Flow.Launcher
 
         #region Window Sound Effects
 
+        private void SystemEvents_PowerModeChanged(object sender, PowerModeChangedEventArgs e)
+        {
+            // Fix for sound not playing after sleep / hibernate
+            // https://stackoverflow.com/questions/64805186/mediaplayer-doesnt-play-after-computer-sleeps
+            if (e.Mode == PowerModes.Resume)
+            {
+                InitSoundEffects();
+            }
+        }
+
         private void InitSoundEffects()
         {
             if (_settings.WMPInstalled)
             {
+                animationSoundWMP?.Close();
                 animationSoundWMP = new MediaPlayer();
                 animationSoundWMP.Open(new Uri(AppContext.BaseDirectory + "Resources\\open.wav"));
             }
             else
             {
+                animationSoundWPF?.Dispose();
                 animationSoundWPF = new SoundPlayer(AppContext.BaseDirectory + "Resources\\open.wav");
+                animationSoundWPF.Load();
             }
         }
 
@@ -563,6 +691,44 @@ namespace Flow.Launcher
                 Icon = Constant.Version == "1.0.0" ? Properties.Resources.dev : Properties.Resources.app,
                 Visible = !_settings.HideNotifyIcon
             };
+
+            _notifyIcon.MouseClick += (o, e) =>
+            {
+                switch (e.Button)
+                {
+                    case MouseButtons.Left:
+                        _viewModel.ToggleFlowLauncher();
+                        break;
+                    case MouseButtons.Right:
+
+                        _contextMenu.IsOpen = true;
+                        // Get context menu handle and bring it to the foreground
+                        if (PresentationSource.FromVisual(_contextMenu) is HwndSource hwndSource)
+                        {
+                            Win32Helper.SetForegroundWindow(hwndSource.Handle);
+                        }
+
+                        _contextMenu.Focus();
+                        break;
+                }
+            };
+        }
+
+        private void UpdateNotifyIconText()
+        {
+            var menu = _contextMenu;
+            ((MenuItem)menu.Items[0]).Header = App.API.GetTranslation("iconTrayOpen") +
+                                               " (" + _settings.Hotkey + ")";
+            ((MenuItem)menu.Items[1]).Header = App.API.GetTranslation("GameMode");
+            ((MenuItem)menu.Items[2]).Header = App.API.GetTranslation("PositionReset");
+            ((MenuItem)menu.Items[3]).Header = App.API.GetTranslation("iconTraySettings");
+            ((MenuItem)menu.Items[4]).Header = App.API.GetTranslation("iconTrayExit");
+        }
+
+        private void InitializeContextMenu()
+        {
+            var menu = _contextMenu;
+            menu.Items.Clear();
             var openIcon = new FontIcon { Glyph = "\ue71e" };
             var open = new MenuItem
             {
@@ -608,38 +774,6 @@ namespace Flow.Launcher
             _contextMenu.Items.Add(positionreset);
             _contextMenu.Items.Add(settings);
             _contextMenu.Items.Add(exit);
-
-            _notifyIcon.MouseClick += (o, e) =>
-            {
-                switch (e.Button)
-                {
-                    case MouseButtons.Left:
-                        _viewModel.ToggleFlowLauncher();
-                        break;
-                    case MouseButtons.Right:
-
-                        _contextMenu.IsOpen = true;
-                        // Get context menu handle and bring it to the foreground
-                        if (PresentationSource.FromVisual(_contextMenu) is HwndSource hwndSource)
-                        {
-                            Win32Helper.SetForegroundWindow(hwndSource.Handle);
-                        }
-
-                        _contextMenu.Focus();
-                        break;
-                }
-            };
-        }
-
-        private void UpdateNotifyIconText()
-        {
-            var menu = _contextMenu;
-            ((MenuItem)menu.Items[0]).Header = App.API.GetTranslation("iconTrayOpen") +
-                                               " (" + _settings.Hotkey + ")";
-            ((MenuItem)menu.Items[1]).Header = App.API.GetTranslation("GameMode");
-            ((MenuItem)menu.Items[2]).Header = App.API.GetTranslation("PositionReset");
-            ((MenuItem)menu.Items[3]).Header = App.API.GetTranslation("iconTraySettings");
-            ((MenuItem)menu.Items[4]).Header = App.API.GetTranslation("iconTrayExit");
         }
 
         #endregion
@@ -673,8 +807,26 @@ namespace Flow.Launcher
             {
                 if (_settings.SearchWindowScreen == SearchWindowScreens.RememberLastLaunchLocation)
                 {
-                    Top = _settings.WindowTop;
+                    var previousScreenWidth = _settings.PreviousScreenWidth;
+                    var previousScreenHeight = _settings.PreviousScreenHeight;
+                    GetDpi(out var previousDpiX, out var previousDpiY);
+
+                    _settings.PreviousScreenWidth = SystemParameters.VirtualScreenWidth;
+                    _settings.PreviousScreenHeight = SystemParameters.VirtualScreenHeight;
+                    GetDpi(out var currentDpiX, out var currentDpiY);
+
+                    if (previousScreenWidth != 0 && previousScreenHeight != 0 &&
+                        previousDpiX != 0 && previousDpiY != 0 &&
+                        (previousScreenWidth != SystemParameters.VirtualScreenWidth ||
+                         previousScreenHeight != SystemParameters.VirtualScreenHeight ||
+                         previousDpiX != currentDpiX || previousDpiY != currentDpiY))
+                    {
+                        AdjustPositionForResolutionChange();
+                        return;
+                    }
+
                     Left = _settings.WindowLeft;
+                    Top = _settings.WindowTop;
                 }
                 else
                 {
@@ -687,24 +839,70 @@ namespace Flow.Launcher
                             break;
                         case SearchWindowAligns.CenterTop:
                             Left = HorizonCenter(screen);
-                            Top = 10;
+                            Top = VerticalTop(screen);
                             break;
                         case SearchWindowAligns.LeftTop:
                             Left = HorizonLeft(screen);
-                            Top = 10;
+                            Top = VerticalTop(screen);
                             break;
                         case SearchWindowAligns.RightTop:
                             Left = HorizonRight(screen);
-                            Top = 10;
+                            Top = VerticalTop(screen);
                             break;
                         case SearchWindowAligns.Custom:
-                            Left = Win32Helper.TransformPixelsToDIP(this,
-                                screen.WorkingArea.X + _settings.CustomWindowLeft, 0).X;
-                            Top = Win32Helper.TransformPixelsToDIP(this, 0,
-                                screen.WorkingArea.Y + _settings.CustomWindowTop).Y;
+                            var customLeft = Win32Helper.TransformPixelsToDIP(this,
+                                screen.WorkingArea.X + _settings.CustomWindowLeft, 0);
+                            var customTop = Win32Helper.TransformPixelsToDIP(this, 0,
+                                screen.WorkingArea.Y + _settings.CustomWindowTop);
+                            Left = customLeft.X;
+                            Top = customTop.Y;
                             break;
                     }
                 }
+            }
+        }
+
+        private void AdjustPositionForResolutionChange()
+        {
+            var screenWidth = SystemParameters.VirtualScreenWidth;
+            var screenHeight = SystemParameters.VirtualScreenHeight;
+            GetDpi(out var currentDpiX, out var currentDpiY);
+
+            var previousLeft = _settings.WindowLeft;
+            var previousTop = _settings.WindowTop;
+            GetDpi(out var previousDpiX, out var previousDpiY);
+
+            var widthRatio = screenWidth / _settings.PreviousScreenWidth;
+            var heightRatio = screenHeight / _settings.PreviousScreenHeight;
+            var dpiXRatio = currentDpiX / previousDpiX;
+            var dpiYRatio = currentDpiY / previousDpiY;
+
+            var newLeft = previousLeft * widthRatio * dpiXRatio;
+            var newTop = previousTop * heightRatio * dpiYRatio;
+
+            var screenLeft = SystemParameters.VirtualScreenLeft;
+            var screenTop = SystemParameters.VirtualScreenTop;
+
+            var maxX = screenLeft + screenWidth - ActualWidth;
+            var maxY = screenTop + screenHeight - ActualHeight;
+
+            Left = Math.Max(screenLeft, Math.Min(newLeft, maxX));
+            Top = Math.Max(screenTop, Math.Min(newTop, maxY));
+        }
+
+        private void GetDpi(out double dpiX, out double dpiY)
+        {
+            var source = PresentationSource.FromVisual(this);
+            if (source != null && source.CompositionTarget != null)
+            {
+                var matrix = source.CompositionTarget.TransformToDevice;
+                dpiX = 96 * matrix.M11;
+                dpiY = 96 * matrix.M22;
+            }
+            else
+            {
+                dpiX = 96;
+                dpiY = 96;
             }
         }
 
@@ -768,6 +966,13 @@ namespace Flow.Launcher
             return left;
         }
 
+        public double VerticalTop(Screen screen)
+        {
+            var dip1 = Win32Helper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
+            var top = dip1.Y + 10;
+            return top;
+        }
+
         #endregion
 
         #region Window Animation
@@ -794,7 +999,7 @@ namespace Flow.Launcher
             {
                 Name = progressBarAnimationName, Storyboard = progressBarStoryBoard
             };
-            
+
             var stopStoryboard = new StopStoryboard()
             {
                 BeginStoryboardName = progressBarAnimationName
@@ -815,7 +1020,7 @@ namespace Flow.Launcher
             progressStyle.Triggers.Add(trigger);
 
             ProgressBar.Style = progressStyle;
-          
+
             _viewModel.ProgressBarVisibility = Visibility.Hidden;
         }
 
@@ -863,7 +1068,7 @@ namespace Flow.Launcher
                 Duration = TimeSpan.FromMilliseconds(animationLength),
                 FillBehavior = FillBehavior.HoldEnd
             };
-            
+
             var rightMargin = GetThicknessFromStyle(ClockPanel.Style, new Thickness(0, 0, DefaultRightMargin, 0)).Right;
 
             var thicknessAnimation = new ThicknessAnimation
@@ -875,10 +1080,10 @@ namespace Flow.Launcher
                 FillBehavior = FillBehavior.HoldEnd
             };
 
-            Storyboard.SetTargetProperty(ClockOpacity, new PropertyPath(OpacityProperty));
             Storyboard.SetTarget(ClockOpacity, ClockPanel);
+            Storyboard.SetTargetProperty(ClockOpacity, new PropertyPath(OpacityProperty));
 
-            Storyboard.SetTargetName(thicknessAnimation, "ClockPanel");
+            Storyboard.SetTarget(thicknessAnimation, ClockPanel);
             Storyboard.SetTargetProperty(thicknessAnimation, new PropertyPath(MarginProperty));
 
             Storyboard.SetTarget(IconMotion, SearchIcon);
@@ -891,17 +1096,17 @@ namespace Flow.Launcher
             clocksb.Children.Add(ClockOpacity);
             iconsb.Children.Add(IconMotion);
             iconsb.Children.Add(IconOpacity);
-            
+
             _settings.WindowLeft = Left;
             _isArrowKeyPressed = false;
-            
+
             clocksb.Begin(ClockPanel);
             iconsb.Begin(SearchIcon);
         }
 
         private void UpdateClockPanelVisibility()
         {
-            if (QueryTextBox == null || ContextMenu == null || History == null || ClockPanel == null)
+            if (QueryTextBox == null || ResultContextMenu == null || History == null || ClockPanel == null)
             {
                 return;
             }
@@ -916,20 +1121,20 @@ namespace Flow.Launcher
             };
             var animationDuration = TimeSpan.FromMilliseconds(animationLength * 2 / 3);
 
-            // ✅ Conditions for showing ClockPanel (No query input & ContextMenu, History are closed)
+            // ✅ Conditions for showing ClockPanel (No query input / ResultContextMenu & History are closed)
             var shouldShowClock = QueryTextBox.Text.Length == 0 &&
-                ContextMenu.Visibility != Visibility.Visible &&
+                ResultContextMenu.Visibility != Visibility.Visible &&
                 History.Visibility != Visibility.Visible;
 
-            // ✅ 1. When ContextMenu opens, immediately set Visibility.Hidden (force hide without animation)
-            if (ContextMenu.Visibility == Visibility.Visible)
+            // ✅ 1. When ResultContextMenu opens, immediately set Visibility.Hidden (force hide without animation)
+            if (ResultContextMenu.Visibility == Visibility.Visible)
             {
                 _viewModel.ClockPanelVisibility = Visibility.Hidden;
                 _viewModel.ClockPanelOpacity = 0.0;  // Set to 0 in case Opacity animation affects it
                 return;
             }
 
-            // ✅ 2. When ContextMenu is closed, keep it Hidden if there's text in the query (remember previous state)
+            // ✅ 2. When ResultContextMenu is closed, keep it Hidden if there's text in the query (remember previous state)
             else if (QueryTextBox.Text.Length > 0)
             {
                 _viewModel.ClockPanelVisibility = Visibility.Hidden;
@@ -1066,7 +1271,7 @@ namespace Flow.Launcher
         {
             e.Handled = true;
         }
-        
+
         #endregion
 
         #region Placeholder
@@ -1118,7 +1323,7 @@ namespace Flow.Launcher
         }
 
         #endregion
-        
+
         #region Search Delay
 
         private void QueryTextBox_TextChanged1(object sender, TextChangedEventArgs e)
@@ -1140,6 +1345,10 @@ namespace Flow.Launcher
                 {
                     _hwndSource?.Dispose();
                     _notifyIcon?.Dispose();
+                    animationSoundWMP?.Close();
+                    animationSoundWPF?.Dispose();
+                    ModernWpf.ThemeManager.Current.ActualApplicationThemeChanged -= ThemeManager_ActualApplicationThemeChanged;
+                    SystemEvents.PowerModeChanged -= SystemEvents_PowerModeChanged;
                 }
 
                 _disposed = true;

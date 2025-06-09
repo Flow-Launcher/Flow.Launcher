@@ -2,8 +2,9 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Command List  -->
-    <system:String x:Key="flowlauncher_plugin_sys_command">Comando</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_name">Nombre</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_desc">Descripción</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_command">Comando</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer_cmd">Apagar</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_computer_cmd">Reiniciar</system:String>
@@ -26,6 +27,8 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location_cmd">Carpeta UserData de Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode_cmd">Cambiar a Modo Juego</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_theme_selector_cmd">Establecer el tema de Flow Launcher</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_sys_edit">Editar</system:String>
 
     <!--  Command Descriptions  -->
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">Apaga el equipo</system:String>
@@ -58,6 +61,15 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">¿Está seguro de que desea reiniciar el equipo?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">¿Está seguro de que desea reiniciar el equipo con opciones de arranque avanzadas?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">¿Está seguro de que desea cerrar la sesión?</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Configuración de la palabra clave de comando</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Palabra clave de comando personalizada</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword_tip">Introducir una palabra clave para buscar el comando: {0}. Esta palabra clave se utiliza para que coincida con la búsqueda.</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_command_keyword">Palabra clave de comando</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_reset">Restablecer</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_confirm">Confirmar</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_cancel">Cancelar</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_input_command_keyword">Por favor, introducir una palabra clave de comando no vacía</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">Comandos del sistema</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Proporciona comandos relacionados con el sistema. Por ejemplo, apagar, bloquear, configurar, etc.</system:String>

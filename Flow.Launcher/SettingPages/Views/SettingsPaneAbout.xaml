@@ -12,6 +12,11 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <ui:Page.Resources>
+        <ResourceDictionary>
+            <CollectionViewSource x:Key="SortedFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}" />
+        </ResourceDictionary>
+    </ui:Page.Resources>
     <ScrollViewer
         Margin="0"
         CanContentScroll="True"
@@ -56,7 +61,7 @@
             </cc:Card>
 
             <cc:Card Title="{DynamicResource releaseNotes}" Icon="&#xe8fd;">
-                <cc:HyperLink Text="{DynamicResource releaseNotes}" Uri="{Binding ReleaseNotes}" />
+                <Button Command="{Binding OpenReleaseNotesCommand}" Content="{DynamicResource releaseNotes}" />
             </cc:Card>
 
 
@@ -104,10 +109,8 @@
                         Margin="0 0 12 0"
                         Command="{Binding AskClearLogFolderConfirmationCommand}"
                         Content="{Binding LogFolderSize, Mode=OneWay}" />
-                    <Button
-                        Content="&#xec7a;"
-                        FontFamily="/Resources/#Segoe Fluent Icons"
-                        FontSize="20">
+                    <Button>
+                        <ui:FontIcon FontSize="20" Glyph="&#xec7a;" />
                         <ui:FlyoutService.Flyout>
                             <ui:MenuFlyout>
                                 <MenuItem Command="{Binding OpenWelcomeWindowCommand}" Header="{DynamicResource welcomewindow}">
@@ -127,19 +130,51 @@
                                         <ui:FontIcon Glyph="&#xe8b7;" />
                                     </MenuItem.Icon>
                                 </MenuItem>
+
+                                <MenuItem Command="{Binding OpenCacheFolderCommand}" Header="{DynamicResource cachefolder}">
+                                    <MenuItem.Icon>
+                                        <ui:FontIcon Glyph="&#xe8b7;" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
                             </ui:MenuFlyout>
                         </ui:FlyoutService.Flyout>
                     </Button>
                 </StackPanel>
             </cc:Card>
 
-            <cc:Card Title="{DynamicResource logLevel}" Icon="&#xE749;">
-                <ComboBox
-                    DisplayMemberPath="Display"
-                    ItemsSource="{Binding LogLevels}"
-                    SelectedValue="{Binding LogLevel}"
-                    SelectedValuePath="Value" />
-            </cc:Card>
+            <cc:ExCard
+                Title="{DynamicResource advanced}"
+                Margin="0 14 0 0"
+                Icon="&#xE8B7;">
+                <StackPanel>
+                    <cc:Card
+                        Title="{DynamicResource logLevel}"
+                        Icon="&#xE749;"
+                        Type="Inside">
+                        <ComboBox
+                            DisplayMemberPath="Display"
+                            ItemsSource="{Binding LogLevels}"
+                            SelectedValue="{Binding LogLevel}"
+                            SelectedValuePath="Value" />
+                    </cc:Card>
+                    <cc:Card
+                        Title="{DynamicResource settingWindowFontTitle}"
+                        Icon="&#xf259;"
+                        Type="Inside">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Command="{Binding ResetSettingWindowFontCommand}" Content="{DynamicResource commonReset}" />
+                            <ComboBox
+                                Margin="12 8 0 8"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Top"
+                                DisplayMemberPath="Source"
+                                ItemsSource="{Binding Source={StaticResource SortedFonts}}"
+                                SelectedValue="{Binding SettingWindowFont, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                SelectedValuePath="Source" />
+                        </StackPanel>
+                    </cc:Card>
+                </StackPanel>
+            </cc:ExCard>
 
             <TextBlock
                 Margin="14 20 0 0"

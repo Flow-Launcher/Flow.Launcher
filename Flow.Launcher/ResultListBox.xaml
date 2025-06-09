@@ -32,6 +32,8 @@
     <!--  IsSynchronizedWithCurrentItem: http://stackoverflow.com/a/7833798/2833083  -->
 
     <ListBox.Resources>
+        <converter:SizeRatioConverter x:Key="SizeRatioConverter" />
+        <converter:BadgePositionConverter x:Key="BadgePositionConverter" />
         <converter:IconRadiusConverter x:Key="IconRadiusConverter" />
         <converter:DiameterToCenterPointConverter x:Key="DiameterToCenterPointConverter" />
     </ListBox.Resources>
@@ -90,60 +92,64 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-
                             <Border
                                 x:Name="Bullet"
                                 Grid.Column="0"
                                 Style="{DynamicResource BulletStyle}" />
-
                             <Border
                                 Grid.Column="1"
                                 Margin="9 0 0 0"
                                 BorderBrush="Transparent"
                                 BorderThickness="1">
-                                <Image
-                                    x:Name="ImageIcon"
-                                    Margin="0 0 0 0"
-                                    HorizontalAlignment="Center"
-                                    IsHitTestVisible="False"
-                                    RenderOptions.BitmapScalingMode="Fant"
-                                    Source="{Binding Image, TargetNullValue={x:Null}}"
-                                    Stretch="Uniform"
-                                    StretchDirection="DownOnly"
-                                    Style="{DynamicResource ImageIconStyle}"
-                                    Visibility="{Binding ShowIcon}">
-                                    <Image.Clip>
-                                        <EllipseGeometry Center="{Binding ElementName=ImageIcon, Path=ActualWidth, Converter={StaticResource DiameterToCenterPointConverter}}">
-                                            <EllipseGeometry.RadiusX>
-                                                <MultiBinding Converter="{StaticResource IconRadiusConverter}">
-                                                    <Binding ElementName="ImageIcon" Path="ActualWidth" />
-                                                    <Binding Path="Result.RoundedIcon" />
-                                                </MultiBinding>
-                                            </EllipseGeometry.RadiusX>
-                                            <EllipseGeometry.RadiusY>
-                                                <MultiBinding Converter="{StaticResource IconRadiusConverter}">
-                                                    <Binding ElementName="ImageIcon" Path="ActualWidth" />
-                                                    <Binding Path="Result.RoundedIcon" />
-                                                </MultiBinding>
-                                            </EllipseGeometry.RadiusY>
-                                        </EllipseGeometry>
-                                    </Image.Clip>
-                                </Image>
+                                <Grid>
+                                    <Image
+                                        x:Name="ImageIcon"
+                                        IsHitTestVisible="False"
+                                        RenderOptions.BitmapScalingMode="Fant"
+                                        Source="{Binding Image, TargetNullValue={x:Null}}"
+                                        Stretch="Uniform"
+                                        StretchDirection="DownOnly"
+                                        Style="{DynamicResource ImageIconStyle}"
+                                        Visibility="{Binding ShowIcon}">
+                                        <Image.Clip>
+                                            <EllipseGeometry Center="{Binding ElementName=ImageIcon, Path=ActualWidth, Converter={StaticResource DiameterToCenterPointConverter}}">
+                                                <EllipseGeometry.RadiusX>
+                                                    <MultiBinding Converter="{StaticResource IconRadiusConverter}">
+                                                        <Binding ElementName="ImageIcon" Path="ActualWidth" />
+                                                        <Binding Path="Result.RoundedIcon" />
+                                                    </MultiBinding>
+                                                </EllipseGeometry.RadiusX>
+                                                <EllipseGeometry.RadiusY>
+                                                    <MultiBinding Converter="{StaticResource IconRadiusConverter}">
+                                                        <Binding ElementName="ImageIcon" Path="ActualWidth" />
+                                                        <Binding Path="Result.RoundedIcon" />
+                                                    </MultiBinding>
+                                                </EllipseGeometry.RadiusY>
+                                            </EllipseGeometry>
+                                        </Image.Clip>
+                                    </Image>
+
+                                    <TextBlock
+                                        x:Name="GlyphIcon"
+                                        FontFamily="{Binding Glyph.FontFamily}"
+                                        Style="{DynamicResource ItemGlyph}"
+                                        Text="{Binding Glyph.Glyph}"
+                                        Visibility="{Binding ShowGlyph}" />
+
+                                    <Image
+                                        x:Name="BadgeIcon"
+                                        Width="{Binding ElementName=ImageIcon, Path=ActualWidth, Converter={StaticResource SizeRatioConverter}, ConverterParameter=0.6}"
+                                        Height="{Binding ElementName=ImageIcon, Path=ActualWidth, Converter={StaticResource SizeRatioConverter}, ConverterParameter=0.6}"
+                                        RenderOptions.BitmapScalingMode="HighQuality"
+                                        Source="{Binding BadgeImage, TargetNullValue={x:Null}}"
+                                        Visibility="{Binding ShowBadge}">
+                                        <Image.RenderTransform>
+                                            <TranslateTransform X="{Binding ElementName=ImageIcon, Path=ActualWidth, Converter={StaticResource BadgePositionConverter}, ConverterParameter=1}" Y="{Binding ElementName=ImageIcon, Path=ActualWidth, Converter={StaticResource BadgePositionConverter}, ConverterParameter=2}" />
+                                        </Image.RenderTransform>
+                                    </Image>
+                                </Grid>
                             </Border>
-                            <Border
-                                Grid.Column="1"
-                                Margin="9 0 0 0"
-                                BorderBrush="Transparent"
-                                BorderThickness="0">
-                                <TextBlock
-                                    x:Name="GlyphIcon"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    FontFamily="{Binding Glyph.FontFamily}"
-                                    Style="{DynamicResource ItemGlyph}"
-                                    Text="{Binding Glyph.Glyph}"
-                                    Visibility="{Binding ShowGlyph}" />
-                            </Border>
+
                         </Grid>
 
                         <Grid
@@ -174,8 +180,6 @@
                             <TextBlock
                                 x:Name="Title"
                                 Grid.Row="0"
-                                Margin="0 0 0 1"
-                                VerticalAlignment="Bottom"
                                 DockPanel.Dock="Left"
                                 FontSize="{Binding Settings.ResultItemFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 IsEnabled="False"
@@ -194,8 +198,6 @@
                             <TextBlock
                                 x:Name="SubTitle"
                                 Grid.Row="1"
-                                Margin="0 1 0 0"
-                                VerticalAlignment="Top"
                                 FontSize="{Binding Settings.ResultSubItemFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 IsEnabled="False"
                                 Style="{DynamicResource ItemSubTitleStyle}"

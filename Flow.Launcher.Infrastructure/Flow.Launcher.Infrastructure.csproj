@@ -66,7 +66,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="NLog" Version="4.7.10" />
-    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
+    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="SharpVectors.Wpf" Version="1.8.4.2" />
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
     <!--ToolGood.Words.Pinyin v3.0.2.6 results in high memory usage when search with pinyin is enabled-->
     <!--Bumping to it or higher needs to test and ensure this is no longer a problem-->

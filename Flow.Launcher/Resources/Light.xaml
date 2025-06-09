@@ -13,14 +13,16 @@
     <SolidColorBrush x:Key="SubTitleSelectedForeground" Color="#72767d" />
     <SolidColorBrush x:Key="SearchIconForeground" Color="#20000000" />
     <SolidColorBrush x:Key="SeparatorForeground" Color="#20000000" />
-    <SolidColorBrush x:Key="ThumbColor" Color="#868686" />
+    <SolidColorBrush x:Key="ThumbColor" Color="#1F000000" />
     <SolidColorBrush x:Key="InlineHighlight" Color="#0078d7" />
     <SolidColorBrush x:Key="HotkeyForeground" Color="#51000000" />
     <SolidColorBrush x:Key="HotkeySelectedForeground" Color="#51000000" />
     <SolidColorBrush x:Key="ClockDateForeground" Color="#44000000" />
-    <Color x:Key="ItemSelectedBackgroundColorBrush">#0C000000</Color>
+    <Color x:Key="ItemSelectedBackgroundColorBrush">#7EFFFFFF</Color>
 
-    <SolidColorBrush x:Key="Color00B" Color="#fbfbfb" />
+    <SolidColorBrush x:Key="BasicSystemAccentColor" Color="{m:DynamicColor SystemAccentColor}" />
+
+    <SolidColorBrush x:Key="Color00B" Color="#FAFAFA" />
     <SolidColorBrush x:Key="Color01B" Color="#f3f3f3" />
     <SolidColorBrush x:Key="Color02B" Color="#ffffff" />
     <SolidColorBrush x:Key="Color03B" Color="#e5e5e5" />
@@ -97,7 +99,10 @@
     <Color x:Key="NumberBoxColor24">#f5f5f5</Color>
     <Color x:Key="NumberBoxColor25">#878787</Color>
     <Color x:Key="NumberBoxColor26">#1b1b1b</Color>
+    <SolidColorBrush x:Key="NumberBoxPlaceHolder" Color="#A2A2A2" />
     <Color x:Key="HoverStoreGrid">#f6f6f6</Color>
+
+
 
     <!--  Resources for HotkeyControl  -->
     <SolidColorBrush x:Key="CustomHotkeyHover" Color="#f6f6f6" />
@@ -105,10 +110,20 @@
     <SolidColorBrush x:Key="CustomExpanderHover" Color="#f6f6f6" />
     <!--  Resource for ContentDialog  -->
     <SolidColorBrush x:Key="ContentDialogOverlayBG" Color="#4D000000" />
-    <!--  Infobar Warning  -->
+
+    <!--  DIY Infobar  -->
+    <SolidColorBrush x:Key="InfoBarBD" Color="#0F000000" />
+    <SolidColorBrush
+        x:Key="InfoBarInfoIcon"
+        Opacity="0.8"
+        Color="{m:DynamicColor SystemAccentColor}" />
+    <SolidColorBrush x:Key="InfoBarInfoBG" Color="{m:DynamicColor Color01}" />
     <SolidColorBrush x:Key="InfoBarWarningIcon" Color="#9D5D00" />
     <SolidColorBrush x:Key="InfoBarWarningBG" Color="#FFF4CE" />
-    <SolidColorBrush x:Key="InfoBarBD" Color="#0F000000" />
+    <SolidColorBrush x:Key="InfoBarSuccessIcon" Color="#3f973e" />
+    <SolidColorBrush x:Key="InfoBarSuccessBG" Color="#dff6dd" />
+    <SolidColorBrush x:Key="InfoBarErrorIcon" Color="#c42b1c" />
+    <SolidColorBrush x:Key="InfoBarErrorBG" Color="#fde7e9" />
 
     <SolidColorBrush x:Key="MouseOverWindowCloseButtonForegroundBrush" Color="#ffffff" />
 
@@ -140,8 +155,17 @@
     <m:StaticResource x:Key="CustomComboOutline" ResourceKey="Color13B" />
     <m:StaticResource x:Key="CustomComboInline" ResourceKey="Color21B" />
     <m:StaticResource x:Key="PopUpBorderBG" ResourceKey="Color07B" />
+    <SolidColorBrush x:Key="CustomPopUpBorderBG" Color="#f6f6f6" />
+    <SolidColorBrush
+        x:Key="CustomComboBorder"
+        Opacity="0.14"
+        Color="#000000" />
     <m:StaticResource x:Key="CustomComboHoverBG" ResourceKey="Color07B" />
     <m:StaticResource x:Key="CustomComboPressedBG" ResourceKey="Color07B" />
+
+    <SolidColorBrush x:Key="CustomComboItemHoverBG" Color="#E5E5E5" />
+    <SolidColorBrush x:Key="CustomComboItemSelectedHoverBG" Color="#D9D9D9" />
+
     <m:StaticResource x:Key="CustomComboPressedOutLine" ResourceKey="Color13B" />
     <m:StaticResource x:Key="CustomComboPressedText" ResourceKey="Color08B" />
     <m:StaticResource x:Key="CustomComboDisabledBG" ResourceKey="Color07B" />
@@ -152,7 +176,7 @@
 
     <Thickness x:Key="CustomComboOutlineThickness">1,1,1,0</Thickness>
     <Thickness x:Key="CustomComboInlineThickness">0,0,0,2</Thickness>
-    <Thickness x:Key="PressedCustomComboOutlineThickness">1,1,1,1</Thickness>
+    <Thickness x:Key="PressedCustomComboOutlineThickness">1,1,1,0</Thickness>
     <Thickness x:Key="DisabledCustomComboOutlineThickness">1,1,1,1</Thickness>
 
 

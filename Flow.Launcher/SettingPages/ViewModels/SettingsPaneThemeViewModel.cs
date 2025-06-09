@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Media;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.ViewModel;
 using ModernWpf;
 using ThemeManagerForColorSchemeSwitch = ModernWpf.ThemeManager;
@@ -20,33 +21,33 @@ namespace Flow.Launcher.SettingPages.ViewModels;
 
 public partial class SettingsPaneThemeViewModel : BaseModel
 {
-    private const string DefaultFont = "Segoe UI";
-    public string BackdropSubText => !Win32Helper.IsBackdropSupported() ? App.API.GetTranslation("BackdropTypeDisabledToolTip") : ""; 
     public Settings Settings { get; }
-    private readonly Theme _theme = Ioc.Default.GetRequiredService<Theme>();
+
+    private readonly Theme _theme;
+
+    private readonly string DefaultFont = Win32Helper.GetSystemDefaultFont();
+    public string BackdropSubText => !Win32Helper.IsBackdropSupported() ? App.API.GetTranslation("BackdropTypeDisabledToolTip") : ""; 
 
     public static string LinkHowToCreateTheme => @"https://www.flowlauncher.com/theme-builder/";
     public static string LinkThemeGallery => "https://github.com/Flow-Launcher/Flow.Launcher/discussions/1438";
 
-    private List<Theme.ThemeData> _themes;
-    public List<Theme.ThemeData> Themes => _themes ??= _theme.LoadAvailableThemes();
+    private List<ThemeData> _themes;
+    public List<ThemeData> Themes => _themes ??= App.API.GetAvailableThemes();
 
-    private Theme.ThemeData _selectedTheme;
-    public Theme.ThemeData SelectedTheme
+    private ThemeData _selectedTheme;
+    public ThemeData SelectedTheme
     {
-        get => _selectedTheme ??= Themes.Find(v => v.FileNameWithoutExtension == _theme.GetCurrentTheme());
+        get => _selectedTheme ??= Themes.Find(v => v == App.API.GetCurrentTheme());
         set
         {
             _selectedTheme = value;
-            _theme.ChangeTheme(value.FileNameWithoutExtension);
+            App.API.SetCurrentTheme(value);
 
             // Update UI state
             OnPropertyChanged(nameof(BackdropType));
             OnPropertyChanged(nameof(IsBackdropEnabled));
             OnPropertyChanged(nameof(IsDropShadowEnabled));
             OnPropertyChanged(nameof(DropShadowEffect));
-
-            _ = _theme.RefreshFrameAsync();
         }
     }
 
@@ -289,59 +290,14 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         set => Settings.UseDate = value;
     }
 
+    public FontFamily ClockPanelFont { get; }
+
     public Brush PreviewBackground
     {
         get => WallpaperPathRetrieval.GetWallpaperBrush();
     }
 
-    public ResultsViewModel PreviewResults
-    {
-        get
-        {
-            var results = new List<Result>
-            {
-                new()
-                {
-                    Title = App.API.GetTranslation("SampleTitleExplorer"),
-                    SubTitle = App.API.GetTranslation("SampleSubTitleExplorer"),
-                    IcoPath = Path.Combine(
-                        Constant.ProgramDirectory,
-                        @"Plugins\Flow.Launcher.Plugin.Explorer\Images\explorer.png"
-                    )
-                },
-                new()
-                {
-                    Title = App.API.GetTranslation("SampleTitleWebSearch"),
-                    SubTitle = App.API.GetTranslation("SampleSubTitleWebSearch"),
-                    IcoPath = Path.Combine(
-                        Constant.ProgramDirectory,
-                        @"Plugins\Flow.Launcher.Plugin.WebSearch\Images\web_search.png"
-                    )
-                },
-                new()
-                {
-                    Title = App.API.GetTranslation("SampleTitleProgram"),
-                    SubTitle = App.API.GetTranslation("SampleSubTitleProgram"),
-                    IcoPath = Path.Combine(
-                        Constant.ProgramDirectory,
-                        @"Plugins\Flow.Launcher.Plugin.Program\Images\program.png"
-                    )
-                },
-                new()
-                {
-                    Title = App.API.GetTranslation("SampleTitleProcessKiller"),
-                    SubTitle = App.API.GetTranslation("SampleSubTitleProcessKiller"),
-                    IcoPath = Path.Combine(
-                        Constant.ProgramDirectory,
-                        @"Plugins\Flow.Launcher.Plugin.ProcessKiller\Images\app.png"
-                    )
-                }
-            };
-            var vm = new ResultsViewModel(Settings);
-            vm.AddResults(results, "PREVIEW");
-            return vm;
-        }
-    }
+    public ResultsViewModel PreviewResults { get; }
 
     public FontFamily SelectedQueryBoxFont
     {
@@ -479,9 +435,54 @@ public partial class SettingsPaneThemeViewModel : BaseModel
 
     public string ThemeImage => Constant.QueryTextBoxIconImagePath;
 
-    public SettingsPaneThemeViewModel(Settings settings)
+    public SettingsPaneThemeViewModel(Settings settings, Theme theme)
     {
         Settings = settings;
+        _theme = theme;
+        ClockPanelFont = new FontFamily(DefaultFont);
+        var results = new List<Result>
+            {
+                new()
+                {
+                    Title = App.API.GetTranslation("SampleTitleExplorer"),
+                    SubTitle = App.API.GetTranslation("SampleSubTitleExplorer"),
+                    IcoPath = Path.Combine(
+                        Constant.ProgramDirectory,
+                        @"Plugins\Flow.Launcher.Plugin.Explorer\Images\explorer.png"
+                    )
+                },
+                new()
+                {
+                    Title = App.API.GetTranslation("SampleTitleWebSearch"),
+                    SubTitle = App.API.GetTranslation("SampleSubTitleWebSearch"),
+                    IcoPath = Path.Combine(
+                        Constant.ProgramDirectory,
+                        @"Plugins\Flow.Launcher.Plugin.WebSearch\Images\web_search.png"
+                    )
+                },
+                new()
+                {
+                    Title = App.API.GetTranslation("SampleTitleProgram"),
+                    SubTitle = App.API.GetTranslation("SampleSubTitleProgram"),
+                    IcoPath = Path.Combine(
+                        Constant.ProgramDirectory,
+                        @"Plugins\Flow.Launcher.Plugin.Program\Images\program.png"
+                    )
+                },
+                new()
+                {
+                    Title = App.API.GetTranslation("SampleTitleProcessKiller"),
+                    SubTitle = App.API.GetTranslation("SampleSubTitleProcessKiller"),
+                    IcoPath = Path.Combine(
+                        Constant.ProgramDirectory,
+                        @"Plugins\Flow.Launcher.Plugin.ProcessKiller\Images\app.png"
+                    )
+                }
+            };
+        // Set main view model to null because the results are for preview only
+        var vm = new ResultsViewModel(Settings, null);
+        vm.AddResults(results, "PREVIEW");
+        PreviewResults = vm;
     }
 
     [RelayCommand]
@@ -495,7 +496,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     {
         SelectedQueryBoxFont = new FontFamily(DefaultFont);
         SelectedQueryBoxFontFaces = new FamilyTypeface { Stretch = FontStretches.Normal, Weight = FontWeights.Normal, Style = FontStyles.Normal };
-        QueryBoxFontSize = 20;
+        QueryBoxFontSize = 16;
 
         SelectedResultFont = new FontFamily(DefaultFont);
         SelectedResultFontFaces = new FamilyTypeface { Stretch = FontStretches.Normal, Weight = FontWeights.Normal, Style = FontStyles.Normal };
@@ -507,5 +508,57 @@ public partial class SettingsPaneThemeViewModel : BaseModel
 
         WindowHeightSize = 42;
         ItemHeightSize = 58;
+    }
+    
+    [RelayCommand]
+    private void Import()
+    {
+        var resourceDictionary = _theme.GetCurrentResourceDictionary();
+        
+        if (resourceDictionary["QueryBoxStyle"] is Style queryBoxStyle)
+        {
+            var fontSizeSetter = queryBoxStyle.Setters
+                .OfType<Setter>()
+                .FirstOrDefault(setter => setter.Property == TextBox.FontSizeProperty);
+            if (fontSizeSetter?.Value is double fontSize)
+            {
+                QueryBoxFontSize = fontSize;
+            }
+            
+            var heightSetter = queryBoxStyle.Setters
+                .OfType<Setter>()
+                .FirstOrDefault(setter => setter.Property == FrameworkElement.HeightProperty);
+            if (heightSetter?.Value is double height)
+            {
+                WindowHeightSize = height;
+            }
+        }
+        
+        if (resourceDictionary["ResultItemHeight"] is double resultItemHeight)
+        {
+            ItemHeightSize = resultItemHeight;
+        }
+        
+        if (resourceDictionary["ItemTitleStyle"] is Style itemTitleStyle)
+        {
+            var fontSizeSetter = itemTitleStyle.Setters
+                .OfType<Setter>()
+                .FirstOrDefault(setter => setter.Property == TextBlock.FontSizeProperty);
+            if (fontSizeSetter?.Value is double fontSize)
+            {
+                ResultItemFontSize = fontSize;
+            }
+        }
+        
+        if (resourceDictionary["ItemSubTitleStyle"] is Style itemSubTitleStyle)
+        {
+            var fontSizeSetter = itemSubTitleStyle.Setters
+                .OfType<Setter>()
+                .FirstOrDefault(setter => setter.Property == TextBlock.FontSizeProperty);
+            if (fontSizeSetter?.Value is double fontSize)
+            {
+                ResultSubItemFontSize = fontSize;
+            }
+        }
     }
 }

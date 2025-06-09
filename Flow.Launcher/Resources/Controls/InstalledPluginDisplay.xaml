@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:cc="clr-namespace:Flow.Launcher.Resources.Controls"
+    xmlns:converters="clr-namespace:Flow.Launcher.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.modernwpf.com/2019"
@@ -11,6 +12,9 @@
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
     <Expander
         Padding="0"
         BorderThickness="0"
@@ -44,52 +48,78 @@
                             Text="{Binding PluginPair.Metadata.Description}"
                             TextWrapping="WrapWithOverflow" />
                     </StackPanel>
+
                     <StackPanel
                         Grid.Column="2"
                         HorizontalAlignment="Right"
                         Orientation="Horizontal">
-                        <TextBlock
+                        <StackPanel
+                            x:Name="PriorityControl"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal"
+                            Visibility="{Binding DataContext.IsPrioritySelected, RelativeSource={RelativeSource AncestorType=ListBox}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <TextBlock
+                                Margin="0 0 8 0"
+                                VerticalAlignment="Center"
+                                FontSize="13"
+                                Foreground="{DynamicResource Color08B}"
+                                Text="{DynamicResource priority}"
+                                ToolTip="{DynamicResource priorityToolTip}" />
+                            <ui:NumberBox
+                                Margin="0 0 8 0"
+                                Maximum="999"
+                                Minimum="-999"
+                                SpinButtonPlacementMode="Inline"
+                                ToolTip="{DynamicResource priorityToolTip}"
+                                ValueChanged="NumberBox_OnValueChanged"
+                                Value="{Binding Priority, Mode=TwoWay}" />
+                        </StackPanel>
+
+                        <StackPanel
+                            x:Name="SearchDelayControl"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal"
+                            Visibility="{Binding DataContext.IsSearchDelaySelected, RelativeSource={RelativeSource AncestorType=ListBox}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <TextBlock
+                                Margin="0 0 8 0"
+                                VerticalAlignment="Center"
+                                FontSize="13"
+                                Foreground="{DynamicResource Color08B}"
+                                Text="{DynamicResource searchDelay}"
+                                ToolTip="{DynamicResource searchDelayToolTip}" />
+                            <ui:NumberBox
+                                Width="120"
+                                Margin="0 0 8 0"
+                                IsEnabled="{Binding SearchDelayEnabled}"
+                                Maximum="1000"
+                                Minimum="0"
+                                PlaceholderText="{Binding DefaultSearchDelay}"
+                                SmallChange="10"
+                                SpinButtonPlacementMode="Compact"
+                                ToolTip="{DynamicResource searchDelayNumberBoxToolTip}"
+                                ToolTipService.InitialShowDelay="0"
+                                ToolTipService.ShowOnDisabled="True"
+                                Value="{Binding PluginSearchDelayTime, Mode=TwoWay}" />
+                        </StackPanel>
+
+                        <!--  Put OnOffControl after PriorityControl & SearchDelayControl so that it can display correctly  -->
+                        <ui:ToggleSwitch
+                            x:Name="HomeOnOffControl"
                             Margin="0 0 8 0"
-                            VerticalAlignment="Center"
-                            FontSize="12"
-                            Foreground="{DynamicResource Color08B}"
-                            Text="{DynamicResource priority}" />
-                        <Button
-                            x:Name="PriorityButton"
-                            Margin="0 0 22 0"
-                            VerticalAlignment="Center"
-                            Command="{Binding EditPluginPriorityCommand}"
-                            Content="{Binding Priority}"
-                            Cursor="Hand"
-                            ToolTip="{DynamicResource priorityToolTip}">
-                            <!--#region Priority Button Style-->
-                            <Button.Resources>
-                                <Style TargetType="Border">
-                                    <Setter Property="CornerRadius" Value="2" />
-                                </Style>
-                            </Button.Resources>
-                            <Button.Style>
-                                <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
-                                    <Setter Property="Padding" Value="12 8" />
-                                    <Setter Property="BorderThickness" Value="0" />
-                                    <Setter Property="FontWeight" Value="DemiBold" />
-                                    <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ElementName=PriorityButton, UpdateSourceTrigger=PropertyChanged, Path=Content}" Value="0">
-                                            <Setter Property="Foreground" Value="{DynamicResource Color08B}" />
-                                            <Setter Property="FontWeight" Value="Normal" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                            <!--#endregion-->
-                        </Button>
+                            IsEnabled="{Binding HomeEnabled}"
+                            IsOn="{Binding PluginHomeState}"
+                            OffContent="{DynamicResource disable}"
+                            OnContent="{DynamicResource enable}"
+                            ToolTip="{DynamicResource homeToggleBoxToolTip}"
+                            Visibility="{Binding DataContext.IsHomeOnOffSelected, RelativeSource={RelativeSource AncestorType=ListBox}, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                         <ui:ToggleSwitch
+                            x:Name="OnOffControl"
                             Margin="0 0 8 0"
                             IsOn="{Binding PluginState}"
                             OffContent="{DynamicResource disable}"
-                            OnContent="{DynamicResource enable}" />
+                            OnContent="{DynamicResource enable}"
+                            Visibility="{Binding DataContext.IsOnOffSelected, RelativeSource={RelativeSource AncestorType=ListBox}, Converter={StaticResource BooleanToVisibilityConverter}}" />
                     </StackPanel>
                 </Grid>
             </Border>
@@ -97,8 +127,6 @@
 
         <StackPanel>
             <ContentControl Content="{Binding BottomPart1}" />
-
-            <ContentControl Content="{Binding BottomPart2}" />
 
             <Border
                 Background="{DynamicResource Color00B}"
@@ -120,7 +148,7 @@
                     Content="{Binding SettingControl}" />
             </Border>
 
-            <ContentControl Content="{Binding BottomPart3}" />
+            <ContentControl Content="{Binding BottomPart2}" />
         </StackPanel>
     </Expander>
 </UserControl>

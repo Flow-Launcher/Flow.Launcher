@@ -108,6 +108,10 @@
     <Style x:Key="BasePendingLineStyle" TargetType="{x:Type Line}">
         <Setter Property="Stroke" Value="{StaticResource SystemAccentColorLight1Brush}" />
     </Style>
+    <Style
+        x:Key="PendingLineStyle"
+        BasedOn="{StaticResource BasePendingLineStyle}"
+        TargetType="{x:Type Line}" />
 
     <Style x:Key="BaseClockPanelPosition" TargetType="{x:Type Canvas}" />
 
@@ -180,9 +184,13 @@
     <Style x:Key="BaseItemTitleStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#FFFFF8" />
         <Setter Property="FontSize" Value="16" />
+        <Setter Property="Margin" Value="0 0 0 1" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
     </Style>
     <Style x:Key="BaseItemSubTitleStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#D9D9D4" />
+        <Setter Property="Margin" Value="0 1 0 0" />
+        <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="FontSize" Value="13" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding ElementName=SubTitle, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0">
@@ -215,10 +223,14 @@
     <Style x:Key="BaseItemTitleSelectedStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#FFFFF8" />
         <Setter Property="FontSize" Value="16" />
+        <Setter Property="Margin" Value="0 0 0 1" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
     </Style>
     <Style x:Key="BaseItemSubTitleSelectedStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#D9D9D4" />
         <Setter Property="FontSize" Value="13" />
+        <Setter Property="Margin" Value="0 1 0 0" />
+        <Setter Property="VerticalAlignment" Value="Top" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding ElementName=SubTitle, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0">
                 <Setter Property="Height" Value="0" />
@@ -471,7 +483,7 @@
                 <MultiDataTrigger.Conditions>
                     <!--
                     <Condition Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Collapsed" />
-                    <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Collapsed" />-->
+                    <Condition Binding="{Binding ElementName=ResultContextMenu, Path=Visibility}" Value="Collapsed" />-->
                     <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />
                     <Condition Binding="{Binding ElementName=ResultListBox, Path=Items.Count}" Value="0" />
                 </MultiDataTrigger.Conditions>

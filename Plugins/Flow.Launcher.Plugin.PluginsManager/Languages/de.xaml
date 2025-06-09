@@ -13,8 +13,8 @@
     <system:String x:Key="plugin_pluginsmanager_installing_plugin">Plugin wird installiert</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">{0} herunterladen und installieren</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Plug-in-Deinstallation</system:String>
-    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_title">Keep plugin settings</system:String>
-    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_subtitle">Do you want to keep the settings of the plugin for the next usage?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_title">Plug-in-Einstellungen beibehalten</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_subtitle">Möchten Sie die Einstellungen des Plug-ins für die nächste Nutzung beibehalten?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plug-in {0} erfolgreich installiert. Flow wird neu gestartet, bitte warten Sie ...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Die Metadaten-Datei plugin.json in der entpackten Zip-Datei kann nicht gefunden werden.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Fehler: Ein Plug-in, welches die gleiche oder eine höhere Version mit {0} hat, ist bereits vorhanden.</system:String>

@@ -7,6 +7,11 @@
 Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy poproszony o wybranie folderu zawierającego plik wykonywalny {1}
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Wybierz plik wykonywalny {0}</system:String>
+    <system:String x:Key="runtimeExecutableInvalidChooseDownload">
+        Wybrany plik wykonywalny {0} jest nieprawidłowy.
+        {2}{2}
+        Kliknij Tak, jeśli chcesz ponownie wybrać plik wykonywalny {0}. Kliknij Nie, jeśli chcesz pobrać {1}
+    </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Nie można ustawić ścieżki do pliku wykonywalnego {0}. Spróbuj ponownie w ustawieniach Flow (przewiń na sam dół).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Nie udało się zainicjować wtyczek</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">Wtyczki: {0} – nie udało się ich wczytać i zostaną wyłączone. Skontaktuj się z twórcą wtyczki, aby uzyskać pomoc</system:String>
@@ -38,6 +43,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="GameModeToolTip">Wstrzymaj używanie skrótów.</system:String>
     <system:String x:Key="PositionReset">Resetowanie pozycji</system:String>
     <system:String x:Key="PositionResetToolTip">Zresetuj pozycję okna wyszukiwania</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Wpisz tutaj, aby wyszukać</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Ustawienia</system:String>
@@ -70,8 +76,6 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="LastQueryEmpty">Puste ostatnie zapytanie</system:String>
     <system:String x:Key="LastQueryActionKeywordPreserved">Zachowaj ostatnie słowo kluczowe akcji</system:String>
     <system:String x:Key="LastQueryActionKeywordSelected">Wybierz ostatnie słowo kluczowe akcji</system:String>
-    <system:String x:Key="KeepMaxResults">Stała wysokość okna</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">Wysokość okna nie jest regulowana poprzez przeciąganie.</system:String>
     <system:String x:Key="maxShowResults">Maksymalna liczba wyników</system:String>
     <system:String x:Key="maxShowResultsToolTip">Możesz to również szybko dostosować używając CTRL+Plus i CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignoruj skróty klawiszowe w trybie pełnoekranowym</system:String>
@@ -102,6 +106,36 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="AlwaysPreview">Zawsze podgląd</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Zawsze otwieraj panel podglądu, gdy aktywowany jest Flow. Naciśnij {0}, aby przełączyć podgląd.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Efekt cienia jest niedozwolony, gdy bieżący motyw ma włączony efekt rozmycia</system:String>
+    <system:String x:Key="searchDelay">Opóźnienie wyszukiwania</system:String>
+    <system:String x:Key="searchDelayToolTip">Dodaje krótkie opóźnienie podczas pisania, aby zmniejszyć migotanie interfejsu i obciążenie wynikami. Zalecane przy przeciętnej szybkości pisania.</system:String>
+    <system:String x:Key="searchDelayNumberBoxToolTip">Wprowadź czas oczekiwania (w ms), po którym wprowadzanie zostanie uznane za zakończone. Edycja jest możliwa tylko, gdy włączone jest Opóźnienie wyszukiwania.</system:String>
+    <system:String x:Key="searchDelayTime">Domyślne opóźnienie wyszukiwania</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Opóźnienie (ms) przed pokazaniem wyników po zakończeniu pisania. Wyższe wartości oznaczają dłuższe oczekiwanie.</system:String>
+    <system:String x:Key="KoreanImeTitle">Information for Korean IME user</system:String>
+    <system:String x:Key="KoreanImeGuide">
+        The Korean input method used in Windows 11 may cause some issues in Flow Launcher.
+
+        If you experience any problems, you may need to enable &quot;Use previous version of Korean IME&quot;.
+
+
+        Open Setting in Windows 11 and go to:
+
+        Time &amp; Language &gt; Language &amp; Region &gt; Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility,
+
+        and enable &quot;Use previous version of Microsoft IME&quot;.
+
+
+    </system:String>
+    <system:String x:Key="KoreanImeOpenLink">Open Language and Region System Settings</system:String>
+    <system:String x:Key="KoreanImeOpenLinkToolTip">Opens the Korean IME setting location. Go to Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility</system:String>
+    <system:String x:Key="KoreanImeOpenLinkButton">Otwórz</system:String>
+    <system:String x:Key="KoreanImeRegistry">Use Previous Korean IME</system:String>
+    <system:String x:Key="KoreanImeRegistryTooltip">You can change the Previous Korean IME settings directly from here</system:String>
+    <system:String x:Key="homePage">Home Page</system:String>
+    <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
+    <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Szukaj wtyczek</system:String>
@@ -118,6 +152,13 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="currentActionKeywords">Bieżące słowo kluczowe akcji</system:String>
     <system:String x:Key="newActionKeyword">Nowe słowo kluczowe akcji</system:String>
     <system:String x:Key="actionKeywordsTooltip">Zmień słowa kluczowe akcji</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Opóźnienie wyszukiwania wtyczek</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Zmień opóźnienie wyszukiwania wtyczek</system:String>
+    <system:String x:Key="FilterComboboxLabel">Ustawienia zaawansowane:</system:String>
+    <system:String x:Key="DisplayModeOnOff">Aktywny</system:String>
+    <system:String x:Key="DisplayModePriority">Priorytet</system:String>
+    <system:String x:Key="DisplayModeSearchDelay">Opóźnienie wyszukiwania</system:String>
+    <system:String x:Key="DisplayModeHomeOnOff">Home Page</system:String>
     <system:String x:Key="currentPriority">Obecny Priorytet</system:String>
     <system:String x:Key="newPriority">Nowy Priorytet</system:String>
     <system:String x:Key="priority">Priorytet</system:String>
@@ -131,6 +172,8 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="plugin_uninstall">Odinstalowywanie</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Nie udało się usunąć ustawień wtyczki</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Wtyczki: {0} – nie udało się usunąć plików ustawień wtyczek, usuń je ręcznie</system:String>
+    <system:String x:Key="failedToRemovePluginCacheTitle">Nie udało się usunąć cache wtyczki</system:String>
+    <system:String x:Key="failedToRemovePluginCacheMessage">Wtyczki: {0} - Nie udało się usunąć plików cache wtyczki, usuń je ręcznie</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Sklep z wtyczkami</system:String>
@@ -167,6 +210,9 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="resultItemFont">Czcionka tytułu wyniku</system:String>
     <system:String x:Key="resultSubItemFont">Czcionka podtytułu wyniku</system:String>
     <system:String x:Key="resetCustomize">Resetuj</system:String>
+    <system:String x:Key="resetCustomizeToolTip">Przywróć zalecane ustawienia czcionki i rozmiaru.</system:String>
+    <system:String x:Key="ImportThemeSize">Rozmiar importu motywu</system:String>
+    <system:String x:Key="ImportThemeSizeToolTip">Jeśli wartość rozmiaru przewidziana przez projektanta motywu jest dostępna, zostanie pobrana i zastosowana.</system:String>
     <system:String x:Key="CustomizeToolTip">Personalizuj</system:String>
     <system:String x:Key="windowMode">Tryb w oknie</system:String>
     <system:String x:Key="opacity">Przeźroczystość</system:String>
@@ -193,8 +239,21 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="AnimationSpeedCustom">Niestandardowa</system:String>
     <system:String x:Key="Clock">Zegar</system:String>
     <system:String x:Key="Date">Data</system:String>
+    <system:String x:Key="BackdropType">Typ tła</system:String>
+    <system:String x:Key="BackdropInfo">Efekt tła nie jest stosowany w podglądzie.</system:String>
+    <system:String x:Key="BackdropTypeDisabledToolTip">Efekt tła obsługiwany od Windows 11 kompilacja 22000 i nowszych</system:String>
+    <system:String x:Key="BackdropTypesNone">Brak</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Akryl</system:String>
+    <system:String x:Key="BackdropTypesMica">Mika</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
     <system:String x:Key="TypeIsDarkToolTip">Ten motyw obsługuje dwa tryby (jasny/ciemny).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Ten motyw obsługuje rozmyte przezroczyste tło.</system:String>
+    <system:String x:Key="ShowPlaceholder">Pokaż placeholder</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Wyświetlaj placeholder, gdy zapytanie jest puste</system:String>
+    <system:String x:Key="PlaceholderText">Tekst placeholdera</system:String>
+    <system:String x:Key="PlaceholderTextTip">Zmień tekst placeholdera. Jeśli pole będzie puste, zostanie użyty: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Stały rozmiar okna</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">Nie można zmienić rozmiaru okna, przeciągając.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Skrót klawiszowy</system:String>
@@ -254,6 +313,9 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="useGlyphUI">Użyj ikon Segoe Fluent</system:String>
     <system:String x:Key="useGlyphUIEffect">Użyj ikon Segoe Fluent dla wyników wyszukiwania, gdzie jest to obsługiwane</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Naciśnij klawisz</system:String>
+    <system:String x:Key="showBadges">Pokaż odznaki wyników</system:String>
+    <system:String x:Key="showBadgesToolTip">W przypadku wspieranych wtyczek wyświetlane są odznaki, aby łatwiej je rozróżnić.</system:String>
+    <system:String x:Key="showBadgesGlobalOnly">Pokaż odznaki wyników tylko dla zapytań globalnych</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">Serwer proxy HTTP</system:String>
@@ -294,16 +356,23 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="logfolder">Folder dziennika</system:String>
     <system:String x:Key="clearlogfolder">Wyczyść logi</system:String>
     <system:String x:Key="clearlogfolderMessage">Czy na pewno chcesz usunąć wszystkie logi?</system:String>
+    <system:String x:Key="cachefolder">Cache Folder</system:String>
+    <system:String x:Key="clearcachefolder">Wyczyść pamięć podręczną</system:String>
+    <system:String x:Key="clearcachefolderMessage">Czy na pewno chcesz usunąć wszystkie pamięci podręczne?</system:String>
+    <system:String x:Key="clearfolderfailMessage">Nie udało się wyczyścić części folderów i plików. Więcej informacji w pliku dziennika</system:String>
     <system:String x:Key="welcomewindow">Kreator</system:String>
     <system:String x:Key="userdatapath">Lokalizacja danych użytkownika</system:String>
     <system:String x:Key="userdatapathToolTip">Ustawienia użytkownika i zainstalowane wtyczki są zapisywane w folderze danych użytkownika. Ta lokalizacja może się różnić w zależności od tego, czy aplikacja jest w trybie przenośnym, czy nie.</system:String>
     <system:String x:Key="userdatapathButton">Otwórz folder</system:String>
-    <system:String x:Key="logLevel">Log Level</system:String>
+    <system:String x:Key="advanced">Advanced</system:String>
+    <system:String x:Key="logLevel">Poziom logowania</system:String>
     <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="LogLevelINFO">Info</system:String>
+    <system:String x:Key="settingWindowFontTitle">Ustawienia czcionki okna</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Wybierz menedżer plików</system:String>
+    <system:String x:Key="fileManager_learnMore">Learn more</system:String>
     <system:String x:Key="fileManager_tips">Proszę określić lokalizację pliku menedżera plików, którego używasz i dodać argumenty według potrzeb. Symbol &quot;%d&quot; reprezentuje ścieżkę katalogu do otwarcia, używaną w polu Arg dla Folderu oraz dla poleceń otwierających konkretne katalogi. Symbol &quot;%f&quot; reprezentuje ścieżkę pliku do otwarcia, używaną w polu Arg dla Pliku oraz dla poleceń otwierających konkretne pliki.</system:String>
     <system:String x:Key="fileManager_tips2">Na przykład, jeśli menedżer plików używa polecenia takiego jak „totalcmd.exe /A c:\windows&quot; do otwarcia katalogu c:\windows, Ścieżka Menedżera Plików będzie totalcmd.exe, a Argument dla Folderu będzie /A &quot;%d&quot;. Niektóre menedżery plików, takie jak QTTabBar, mogą wymagać jedynie podania ścieżki; w takim przypadku użyj &quot;%d&quot; jako Ścieżki Menedżera Plików, a pozostałe pola pozostaw puste.</system:String>
     <system:String x:Key="fileManager_name">Menadżer plików</system:String>
@@ -311,6 +380,8 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="fileManager_path">Ścieżka menedżera plików</system:String>
     <system:String x:Key="fileManager_directory_arg">Arg dla folderu</system:String>
     <system:String x:Key="fileManager_file_arg">Arg dla pliku</system:String>
+    <system:String x:Key="fileManagerPathNotFound">The file manager '{0}' could not be located at '{1}'. Would you like to continue?</system:String>
+    <system:String x:Key="fileManagerPathError">File Manager Path Error</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Domyślna przeglądarka</system:String>
@@ -335,9 +406,19 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="cannotFindSpecifiedPlugin">Nie można odnaleźć podanej wtyczki</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Nowy wyzwalacz nie może być pusty</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Ten wyzwalacz został już przypisany do innej wtyczki, musisz podać inny wyzwalacz.</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">Nowe słowo kluczowe akcji jest takie samo jak poprzednie. Wybierz inne</system:String>
     <system:String x:Key="success">Sukces</system:String>
     <system:String x:Key="completedSuccessfully">Zakończono pomyślnie</system:String>
-    <system:String x:Key="actionkeyword_tips">Użyj * jeżeli nie chcesz podawać wyzwalacza</system:String>
+    <system:String x:Key="failedToCopy">Failed to copy</system:String>
+    <system:String x:Key="actionkeyword_tips">Wpisz słowa kluczowe uruchamiające wtyczkę (oddzielone spacją). Wpisz *, aby uruchamiać wtyczkę bez słów kluczowych.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="searchDelayTimeTitle">Ustawienie opóźnienia wyszukiwania</system:String>
+    <system:String x:Key="searchDelayTimeTips">Podaj czas opóźnienia wyszukiwania (w ms) dla wtyczki. Pozostaw puste, aby użyć wartości domyślnej.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="homeTitle">Home Page</system:String>
+    <system:String x:Key="homeTips">Enable the plugin home page state if you like to show the plugin results when query is empty.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Skrót klawiszowy niestandardowych zapyta</system:String>
@@ -392,6 +473,14 @@ Jeśli dodasz prefiks '@' podczas wprowadzania skrótu, będzie on pasował do d
     <system:String x:Key="reportWindow_upload_log">1. Prześlij plik dziennika: {0}</system:String>
     <system:String x:Key="reportWindow_copy_below">2. Skopiuj poniższą wiadomość wyjątku</system:String>
 
+    <!--  File Open Error  -->
+    <system:String x:Key="fileManagerNotFoundTitle">File Manager Error</system:String>
+    <system:String x:Key="fileManagerNotFound">
+        The specified file manager could not be found. Please check the Custom File Manager setting under Settings &gt; General.
+    </system:String>
+    <system:String x:Key="errorTitle">Błąd</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder. {0}</system:String>
+
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Proszę czekać...</system:String>
 
@@ -411,7 +500,7 @@ Jeśli dodasz prefiks '@' podczas wprowadzania skrótu, będzie on pasował do d
     <system:String x:Key="update_flowlauncher_update_cancel">Anuluj</system:String>
     <system:String x:Key="update_flowlauncher_fail">Aktualizacja nie powiodła się</system:String>
     <system:String x:Key="update_flowlauncher_check_connection">Sprawdź połączenie i spróbuj zaktualizować ustawienia proxy do github-cloud.s3.amazonaws.com.</system:String>
-    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Aby dokończyć proces aktualizacji Flow Launcher musi zostać zresetowany</system:String>
+    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Aby dokończyć proces aktualizacji Flow Launcher musi zostać zrestartowany</system:String>
     <system:String x:Key="update_flowlauncher_update_update_files">Następujące pliki zostaną zaktualizowane</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Aktualizuj pliki</system:String>
     <system:String x:Key="update_flowlauncher_update_update_description">Opis aktualizacji</system:String>

@@ -7,6 +7,11 @@
         אם זה כבר מותקן, לחץ על 'לא' ותתבקש לבחור את התיקיה המכילה את קובץ ההפעלה {1}
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">אנא בחר את קובץ ההפעלה {0}</system:String>
+    <system:String x:Key="runtimeExecutableInvalidChooseDownload">
+        קובץ ההפעלה {0} שבחרת אינו חוקי.
+        {2}{2}
+        לחץ על כן אם ברצונך, בחר את {0} ההפעלה הקודמת. לחץ על לא אם ברצונך להוריד את {1}
+    </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">לא ניתן להגדיר נתיב הפעלה {0}, אנא נסה שוב בהגדרות Flow (גלול עד למטה).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">נכשל בהפעלת תוספים</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">תוספים: {0} - נכשלו בטעינה ויושבתו, אנא צור קשר עם יוצרי התוספים לקבלת עזרה</system:String>
@@ -38,6 +43,7 @@
     <system:String x:Key="GameModeToolTip">השהה את השימוש במקשי קיצור.</system:String>
     <system:String x:Key="PositionReset">איפוס מיקום</system:String>
     <system:String x:Key="PositionResetToolTip">אפס את מיקום חלון החיפוש</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">הקלד כאן כדי לחפש</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">הגדרות</system:String>
@@ -50,7 +56,7 @@
     <system:String x:Key="setAutoStartFailed">שגיאה בהגדרת ההפעלה בעת הפעלת windows</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">הסתר את Flow Launcher כאשר הוא אינו החלון הפעיל</system:String>
     <system:String x:Key="dontPromptUpdateMsg">אל תציג התראות על גרסה חדשה</system:String>
-    <system:String x:Key="SearchWindowPosition">מיקום חלון החיפוש</system:String>
+    <system:String x:Key="SearchWindowPosition">מיקום חלון חיפוש</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">זכור את המיקום האחרון</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Monitor with Mouse Cursor</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Monitor with Focused Window</system:String>
@@ -61,7 +67,7 @@
     <system:String x:Key="SearchWindowAlignCenterTop">מרכז עליון</system:String>
     <system:String x:Key="SearchWindowAlignLeftTop">שמאל עליון</system:String>
     <system:String x:Key="SearchWindowAlignRightTop">ימין עליון</system:String>
-    <system:String x:Key="SearchWindowAlignCustom">Custom Position</system:String>
+    <system:String x:Key="SearchWindowAlignCustom">מיקום מותאם אישית</system:String>
     <system:String x:Key="language">שפה</system:String>
     <system:String x:Key="lastQueryMode">סגנון שאילתה אחרונה</system:String>
     <system:String x:Key="lastQueryModeToolTip">הצג/הסתר תוצאות קודמות כאשר Flow Launcher מופעל מחדש.</system:String>
@@ -70,8 +76,6 @@
     <system:String x:Key="LastQueryEmpty">נקה שאילתא אחרונה</system:String>
     <system:String x:Key="LastQueryActionKeywordPreserved">שמור מילת מפתח לפעולה האחרונה</system:String>
     <system:String x:Key="LastQueryActionKeywordSelected">בחר מילת מפתח לפעולה האחרונה</system:String>
-    <system:String x:Key="KeepMaxResults">גובה חלון קבוע</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">גובה החלון אינו ניתן להתאמה באמצעות גרירה.</system:String>
     <system:String x:Key="maxShowResults">כמות תוצאות מרבית</system:String>
     <system:String x:Key="maxShowResultsToolTip">ניתן גם להתאים במהירות באמצעות CTRL+פלוס ו-CTRL+מינוס.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">התעלם מקיצורי מקשים במצב מסך מלא</system:String>
@@ -97,17 +101,46 @@
     <system:String x:Key="SearchPrecisionNone">ללא</system:String>
     <system:String x:Key="SearchPrecisionLow">נמוך</system:String>
     <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
-    <system:String x:Key="ShouldUsePinyin">Search with Pinyin</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">Allows using Pinyin to search. Pinyin is the standard system of romanized spelling for translating Chinese.</system:String>
+    <system:String x:Key="ShouldUsePinyin">חפש באמצעות Pinyin</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">מאפשר חיפוש באמצעות Pinyin, מערכת הכתיבה הסטנדרטית לתרגום סינית.</system:String>
     <system:String x:Key="AlwaysPreview">הצג תמיד תצוגה מקדימה</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">פתח תמיד את לוח התצוגה המקדימה כאשר Flow מופעל. הקש על {0} כדי להחליף את התצוגה המקדימה.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">לא ניתן להחיל אפקט צל כאשר העיצוב הנוכחי מוגדר לאפקט טשטוש</system:String>
+    <system:String x:Key="searchDelay">השהיית חיפוש</system:String>
+    <system:String x:Key="searchDelayToolTip">מוסיף עיכוב קצר בזמן ההקלדה כדי להפחית קפיצות בממשק המשתמש ועומס בתוצאות. מומלץ אם מהירות ההקלדה שלך ממוצעת.</system:String>
+    <system:String x:Key="searchDelayNumberBoxToolTip">הזן את זמן ההמתנה (בשניות) עד שהקלט נחשב כמושלם. ניתן לערוך זאת רק אם השהיית חיפוש מופעלת.</system:String>
+    <system:String x:Key="searchDelayTime">זמן עיכוב חיפוש ברירת מחדל</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">זמן המתנה להצגת התוצאות לאחר שתפסיק להקליד. ערכים גבוהים יותר מייצגים המתנה רבה יותר. (שניות)</system:String>
+    <system:String x:Key="KoreanImeTitle">Information for Korean IME user</system:String>
+    <system:String x:Key="KoreanImeGuide">
+        שיטת הקלט הקוריאנית שמשמשת ב־Windows 11 עלולה לגרום לבעיות מסוימות ב־Flow Launcher.
+
+        אם אתה נתקל בבעיות, ייתכן שתצטרך להפעיל את האפשרות &quot;השתמש בגרסה הקודמת של IME הקוריאני&quot;.
+
+        פתח את ההגדרות ב־Windows 11 וגש אל:
+
+        זמן ושפה &gt; שפה ואזור &gt; קוריאנית &gt; אפשרויות שפה &gt; מקלדת - Microsoft IME &gt; תאימות,
+
+        והפעל את האפשרות &quot;השתמש בגרסה הקודמת של Microsoft IME&quot;.
+
+
+    </system:String>
+    <system:String x:Key="KoreanImeOpenLink">פתח את הגדרות מערכת שפה ואזור</system:String>
+    <system:String x:Key="KoreanImeOpenLinkToolTip">פותח את מיקום הגדרות ה־IME הקוריאני. עבור אל קוריאנית &gt; אפשרויות שפה &gt; מקלדת - Microsoft IME &gt; תאימות</system:String>
+    <system:String x:Key="KoreanImeOpenLinkButton">פתח</system:String>
+    <system:String x:Key="KoreanImeRegistry">השתמש ב־IME הקוריאני הקודם</system:String>
+    <system:String x:Key="KoreanImeRegistryTooltip">באפשרותך לשנות את הגדרות ה־IME הקוריאני הקודם ישירות מכאן</system:String>
+    <system:String x:Key="homePage">דף הבית</system:String>
+    <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
+    <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">ניתן לערוך זאת רק אם התוסף תומך בתכונת הבית ודף הבית מופעל.</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">חפש תוסף</system:String>
     <system:String x:Key="searchpluginToolTip">Ctrl+F לחיפוש תוסף</system:String>
     <system:String x:Key="searchplugin_Noresult_Title">לא נמצאו תוצאות</system:String>
-    <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
+    <system:String x:Key="searchplugin_Noresult_Subtitle">אנא נסה חיפוש אחר.</system:String>
     <system:String x:Key="plugin">תוסף</system:String>
     <system:String x:Key="plugins">תוספים</system:String>
     <system:String x:Key="browserMorePlugins">מצא תוספים נוספים</system:String>
@@ -118,6 +151,13 @@
     <system:String x:Key="currentActionKeywords">מילת מפתח נוכחית לפעולה</system:String>
     <system:String x:Key="newActionKeyword">מילת מפתח חדשה לפעולה</system:String>
     <system:String x:Key="actionKeywordsTooltip">שנה מילות מפתח לפעולה</system:String>
+    <system:String x:Key="pluginSearchDelayTime">זמן השהייה של חיפוש תוסף</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">שנה את זמן השהיית חיפוש של תוסף</system:String>
+    <system:String x:Key="FilterComboboxLabel">הגדרות מתקדמות:</system:String>
+    <system:String x:Key="DisplayModeOnOff">מופעל</system:String>
+    <system:String x:Key="DisplayModePriority">עדיפות</system:String>
+    <system:String x:Key="DisplayModeSearchDelay">עיכוב חיפוש</system:String>
+    <system:String x:Key="DisplayModeHomeOnOff">דף הבית</system:String>
     <system:String x:Key="currentPriority">עדיפות נוכחית</system:String>
     <system:String x:Key="newPriority">עדיפות חדשה</system:String>
     <system:String x:Key="priority">עדיפות</system:String>
@@ -131,6 +171,8 @@
     <system:String x:Key="plugin_uninstall">הסר התקנה</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">נכשל בהסרת הגדרות התוסף</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">תוספים: {0} - נכשל בהסרת קבצי הגדרות התוסף, יש להסירם ידנית</system:String>
+    <system:String x:Key="failedToRemovePluginCacheTitle">נכשל בהסרת מטמון התוסף</system:String>
+    <system:String x:Key="failedToRemovePluginCacheMessage">תוספים: {0} - נכשל בהסרת קובצי מטמון התוסף, אנא הסר אותם ידנית</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">חנות תוספים</system:String>
@@ -156,7 +198,7 @@
     <system:String x:Key="SampleTitleExplorer">סייר</system:String>
     <system:String x:Key="SampleSubTitleExplorer">חפש קבצים, תיקיות ובתוכן הקבצים</system:String>
     <system:String x:Key="SampleTitleWebSearch">חיפוש באינטרנט</system:String>
-    <system:String x:Key="SampleSubTitleWebSearch">Search the web with different search engine support</system:String>
+    <system:String x:Key="SampleSubTitleWebSearch">חפש באינטרנט עם תמיכה במנועי חיפוש שונים</system:String>
     <system:String x:Key="SampleTitleProgram">תוכנה</system:String>
     <system:String x:Key="SampleSubTitleProgram">הפעל תוכנות כמנהל או כמשתמש אחר</system:String>
     <system:String x:Key="SampleTitleProcessKiller">ProcessKiller</system:String>
@@ -167,6 +209,9 @@
     <system:String x:Key="resultItemFont">גופן הכותרת לתוצאה</system:String>
     <system:String x:Key="resultSubItemFont">גופן כותרת המשנה לתוצאה</system:String>
     <system:String x:Key="resetCustomize">אפס</system:String>
+    <system:String x:Key="resetCustomizeToolTip">אפס להגדרות הגופן והגודל המומלצות.</system:String>
+    <system:String x:Key="ImportThemeSize">ייבוא ​​גודל ערכת נושא</system:String>
+    <system:String x:Key="ImportThemeSizeToolTip">אם ערך הגודל שתוכנן על ידי מעצב ערכת הנושא זמין, הוא יאוחזר ויוחל.</system:String>
     <system:String x:Key="CustomizeToolTip">התאם אישית</system:String>
     <system:String x:Key="windowMode">מצב חלון</system:String>
     <system:String x:Key="opacity">שקיפות</system:String>
@@ -193,8 +238,21 @@
     <system:String x:Key="AnimationSpeedCustom">מותאם אישית</system:String>
     <system:String x:Key="Clock">שעון</system:String>
     <system:String x:Key="Date">תאריך</system:String>
-    <system:String x:Key="TypeIsDarkToolTip">ערכת נושא זאת תומך בשני מצבים (בהיר/כהה).</system:String>
+    <system:String x:Key="BackdropType">סוג רקע</system:String>
+    <system:String x:Key="BackdropInfo">אפקט הרקע אינו מוחל בתצוגה המקדימה.</system:String>
+    <system:String x:Key="BackdropTypeDisabledToolTip">התמיכה ב-Backdrop קיימת החל מ-Windows 11 build 22000 ומעלה</system:String>
+    <system:String x:Key="BackdropTypesNone">ללא</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">אקריליק</system:String>
+    <system:String x:Key="BackdropTypesMica">מיקה</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">ערכת נושא זאת תומכת בשני מצבים (בהיר/כהה).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">ערכת נושא זו תומכת בטשטוש רקע שקוף.</system:String>
+    <system:String x:Key="ShowPlaceholder">הצג מציין מיקום</system:String>
+    <system:String x:Key="ShowPlaceholderTip">הצג מציין מיקום כאשר השאילתה ריקה</system:String>
+    <system:String x:Key="PlaceholderText">טקסט מציין מיקום</system:String>
+    <system:String x:Key="PlaceholderTextTip">שנה את טקסט מציין המיקום. אם הקלט ריק, ייעשה שימוש ב: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">גודל חלון קבוע</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">לא ניתן להתאים את גודל החלון באמצעות גרירה.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">מקש קיצור</system:String>
@@ -254,6 +312,9 @@
     <system:String x:Key="useGlyphUI">השתמש ב-Segoe Fluent Icons</system:String>
     <system:String x:Key="useGlyphUIEffect">השתמש ב-Segoe Fluent Icons לתוצאות חיפוש כאשר נתמך</system:String>
     <system:String x:Key="flowlauncherPressHotkey">הקש על מקש</system:String>
+    <system:String x:Key="showBadges">הצג תגי תוצאות</system:String>
+    <system:String x:Key="showBadgesToolTip">עבור תוספים נתמכים, מוצגים תגים כדי לעזור להבחין ביניהם ביתר קלות.</system:String>
+    <system:String x:Key="showBadgesGlobalOnly">Show Result Badges for Global Query Only</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP Proxy</system:String>
@@ -289,21 +350,28 @@
     </system:String>
     <system:String x:Key="releaseNotes">הערות שחרור</system:String>
     <system:String x:Key="documentation">טיפים לשימוש</system:String>
-    <system:String x:Key="devtool">DevTools</system:String>
+    <system:String x:Key="devtool">כלי פיתוח</system:String>
     <system:String x:Key="settingfolder">תיקיית ההגדרות</system:String>
     <system:String x:Key="logfolder">תיקיית יומני רישום</system:String>
     <system:String x:Key="clearlogfolder">נקה יומני רישום</system:String>
     <system:String x:Key="clearlogfolderMessage">האם אתה בטוח שברצונך למחוק את כל היומנים?</system:String>
+    <system:String x:Key="cachefolder">תיקיית מטמון</system:String>
+    <system:String x:Key="clearcachefolder">נקה נתוני מטמון</system:String>
+    <system:String x:Key="clearcachefolderMessage">האם אתה בטוח שברצונך למחוק את כל הנתונים שבמטמון?</system:String>
+    <system:String x:Key="clearfolderfailMessage">נכשל ניקוי חלק מהתיקיות והקבצים. עיין בלוג לקבלת מידע נוסף</system:String>
     <system:String x:Key="welcomewindow">אשף</system:String>
     <system:String x:Key="userdatapath">מיקום נתוני משתמש</system:String>
     <system:String x:Key="userdatapathToolTip">הגדרות המשתמש והתוספים המותקנים נשמרים בתיקיית נתוני המשתמש. מיקום זה עשוי להשתנות אם התוכנה במצב נייד.</system:String>
     <system:String x:Key="userdatapathButton">פתח תיקיה</system:String>
-    <system:String x:Key="logLevel">Log Level</system:String>
-    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
-    <system:String x:Key="LogLevelINFO">Info</system:String>
+    <system:String x:Key="advanced">Advanced</system:String>
+    <system:String x:Key="logLevel">רמת יומן</system:String>
+    <system:String x:Key="LogLevelDEBUG">ניפוי שגיאות</system:String>
+    <system:String x:Key="LogLevelINFO">מידע</system:String>
+    <system:String x:Key="settingWindowFontTitle">Setting Window Font</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">בחר מנהל קבצים</system:String>
+    <system:String x:Key="fileManager_learnMore">למד עוד</system:String>
     <system:String x:Key="fileManager_tips">אנא ציין את מיקום הקובץ של מנהל הקבצים שבו אתה משתמש והוסף ארגומנטים כנדרש. &quot;%d&quot; מייצג את נתיב התיקייה שיש לפתוח, ומשמש בשדה ארגומנט לתיקייה ובפקודות לפתיחת תיקיות מסוימות. &quot;%f&quot; מייצג את נתיב הקובץ שיש לפתוח, ומשמש בשדה ארגומנט לקובץ ובפקודות לפתיחת קבצים מסוימים.</system:String>
     <system:String x:Key="fileManager_tips2">לדוגמה, אם מנהל הקבצים משתמש בפקודה כגון &quot;totalcmd.exe /A c:\windows&quot; כדי לפתוח את התיקייה c:\windows, נתיב מנהל הקבצים יהיה totalcmd.exe, והארגומנט לתיקייה יהיה /A &quot;%d&quot;. מנהלי קבצים מסוימים, כגון QTTabBar, עשויים לדרוש רק ציון נתיב, במקרה כזה השתמש ב-&quot;%d&quot; כנתיב מנהל הקבצים והשאר את שאר השדות ריקים.</system:String>
     <system:String x:Key="fileManager_name">מנהל קבצים</system:String>
@@ -311,6 +379,8 @@
     <system:String x:Key="fileManager_path">נתיב מנהל קבצים</system:String>
     <system:String x:Key="fileManager_directory_arg">ארגומנט לתיקייה</system:String>
     <system:String x:Key="fileManager_file_arg">ארגומנט לקובץ</system:String>
+    <system:String x:Key="fileManagerPathNotFound">לא ניתן היה לאתר את מנהל הקבצים '{0}' ב-'{1}'. האם ברצונך להמשיך?</system:String>
+    <system:String x:Key="fileManagerPathError">שגיאת נתיב למנהל הקבצים</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">דפדפן ברירת מחדל</system:String>
@@ -335,9 +405,19 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">לא ניתן למצוא את התוסף שצוין</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">מילת הפעולה החדשה לא יכולה להיות ריקה</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">מילת הפעולה החדשה כבר מוקצה לתוסף אחר, אנא בחר אחת שונה</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">מילת הפעולה החדשה זהה לישנה, נא לבחור מילת פעולה שונה</system:String>
     <system:String x:Key="success">הצליח</system:String>
     <system:String x:Key="completedSuccessfully">הושלם בהצלחה</system:String>
-    <system:String x:Key="actionkeyword_tips">הזן את מילת הפעולה שברצונך להשתמש בה להפעלת התוסף. השתמש ב-* אם אינך רוצה לציין מילה כלשהי, והתוסף יופעל ללא צורך במילת פעולה.</system:String>
+    <system:String x:Key="failedToCopy">ההעתקה נכשלה</system:String>
+    <system:String x:Key="actionkeyword_tips">הזן את מילות הפעולה שבהן תרצה להשתמש כדי להפעיל את התוסף, והשתמש ברווחים כדי להפריד ביניהן. השתמש ב-* אם אינך רוצה להגדיר כלל, והתוסף יופעל ללא מילות פעולה.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="searchDelayTimeTitle">הגדרת זמן עיכוב החיפוש</system:String>
+    <system:String x:Key="searchDelayTimeTips">הזן את זמן עיכוב החיפוש בשניות שבו אתה רוצה להשתמש עבור התוסף. השאר ריק אם אינך רוצה לציין, והתוסף ישתמש בזמן ברירת המחדל לעיכוב חיפוש.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="homeTitle">דף הבית</system:String>
+    <system:String x:Key="homeTips">הפעל את מצב דף הבית של התוסף אם ברצונך להציג את תוצאות התוסף כאשר השאילתה ריקה.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">מקש קיצור לשאילתה מותאמת אישית</system:String>
@@ -391,6 +471,14 @@
     <system:String x:Key="reportWindow_please_open_issue">אנא פתח דיווח חדש ב</system:String>
     <system:String x:Key="reportWindow_upload_log">1. העלה קובץ יומן: {0}</system:String>
     <system:String x:Key="reportWindow_copy_below">2. העתק את הודעת החריגה למטה</system:String>
+
+    <!--  File Open Error  -->
+    <system:String x:Key="fileManagerNotFoundTitle">שגיאת מנהל הקבצים</system:String>
+    <system:String x:Key="fileManagerNotFound">
+        לא ניתן היה למצוא את מנהל הקבצים שצוין. אנא בדוק את ההגדרה של מנהל קבצים מותאם אישית תחת הגדרות &gt; כללי.
+    </system:String>
+    <system:String x:Key="errorTitle">שגיאה</system:String>
+    <system:String x:Key="folderOpenError">אירעה שגיאה בעת פתיחת התיקייה. {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">אנא המתן...</system:String>

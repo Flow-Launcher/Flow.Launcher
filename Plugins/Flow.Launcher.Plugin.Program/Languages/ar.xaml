@@ -46,6 +46,8 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">الرجاء تحديد مصدر برنامج</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">هل أنت متأكد أنك تريد حذف مصادر البرامج المحددة؟</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_not_user_added">Please select program sources that are not added by you</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_user_added">Please select program sources that are added by you</system:String>
     <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">مصدر برنامج آخر بنفس الموقع موجود بالفعل.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">مصدر البرنامج</system:String>
@@ -74,7 +76,7 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">التشغيل كمستخدم مختلف</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">التشغيل كمسؤول</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">فتح المجلد المحتوي</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">تعطيل عرض هذا البرنامج</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">Hide</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_target_folder">فتح المجلد الهدف</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">البرنامج</system:String>

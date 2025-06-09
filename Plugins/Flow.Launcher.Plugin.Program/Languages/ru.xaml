@@ -46,6 +46,8 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">Пожалуйста, выберите источник программы</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">Вы уверены, что хотите удалить выбранные источники программ?</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_not_user_added">Please select program sources that are not added by you</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_user_added">Please select program sources that are added by you</system:String>
     <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Другой источник программы с таким же расположением уже существует.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Источник программы</system:String>
@@ -74,7 +76,7 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Запустить от имени другого пользователя</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Запустить от имени администратора</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Открыть содержащую папку</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">Отключить отображение этой программы</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">Hide</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Open target folder</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Программа</system:String>

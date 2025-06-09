@@ -2,23 +2,24 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Command List  -->
-    <system:String x:Key="flowlauncher_plugin_sys_command">コマンド</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_name">Name</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_desc">説明</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_command">コマンド</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer_cmd">Shutdown</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart_computer_cmd">Restart</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer_cmd">シャットダウン</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_computer_cmd">再起動</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_advanced_cmd">Restart With Advanced Boot Options</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_log_off_cmd">Log Off/Sign Out</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_lock_cmd">Lock</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_sleep_cmd">Sleep</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_hibernate_cmd">Hibernate</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_indexoption_cmd">Index Option</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin_cmd">Empty Recycle Bin</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin_cmd">Open Recycle Bin</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_exit_cmd">終</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_save_all_settings_cmd">Save Settings</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin_cmd">ごみ箱を空にする</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin_cmd">ごみ箱を開く</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_exit_cmd">終了</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_save_all_settings_cmd">設定を保存</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_cmd">Flow Launcherを再起動する</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_setting_cmd">設</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_setting_cmd">設定</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data_cmd">プラグインデータのリロード</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_check_for_update_cmd">Check For Update</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_log_location_cmd">Open Log Location</system:String>
@@ -26,6 +27,8 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location_cmd">Flow Launcher UserData Folder</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode_cmd">Toggle Game Mode</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_theme_selector_cmd">Set the Flow Launcher Theme</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_sys_edit">編集</system:String>
 
     <!--  Command Descriptions  -->
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">コンピュータをシャットダウンする</system:String>
@@ -38,7 +41,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_setting">このアプリの設定</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_sleep">スリープ</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin">ゴミ箱を空にする</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin">Open recycle bin</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin">ごみ箱を開く</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_indexoption">Indexing Options</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_hibernate">Hibernate computer</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_save_all_settings">Save all Flow Launcher settings</system:String>
@@ -55,9 +58,18 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">All Flow Launcher settings saved</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Reloaded all applicable plugin data</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_shutdown_computer">Are you sure you want to shut the computer down?</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">Are you sure you want to restart the computer?</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Are you sure you want to restart the computer with Advanced Boot Options?</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Are you sure you want to log off?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">本当にコンピューターを再起動しますか？</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">高度な起動オプションでコンピューターを再起動しますか？</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">本当にログオフしますか？</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Command Keyword Setting</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Custom Command Keyword</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword_tip">Enter a keyword to search for command: {0}. This keyword is used to match your query.</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_command_keyword">Command Keyword</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_reset">Reset</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_confirm">確認</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_cancel">キャンセル</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_input_command_keyword">Please enter a non-empty command keyword</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">システムコマンド</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">システム関連のコマンドを提供します。例:シャットダウン、ロック、設定など</system:String>

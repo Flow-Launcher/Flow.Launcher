@@ -12,7 +12,7 @@ using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core.Plugin
 {
-    public class JsonRPCPluginSettings
+    public class JsonRPCPluginSettings : ISavable
     {
         public required JsonRpcConfigurationModel? Configuration { get; init; }
 
@@ -113,7 +113,7 @@ namespace Flow.Launcher.Core.Plugin
                                 // If can parse the default value to bool, use it, otherwise use false
                                 : value is string stringValue && bool.TryParse(stringValue, out var boolValueFromString)
                                     && boolValueFromString;
-                            checkBox.Dispatcher.Invoke(() =>checkBox.IsChecked = isChecked);
+                            checkBox.Dispatcher.Invoke(() => checkBox.IsChecked = isChecked);
                             break;
                     }
                 }
@@ -154,8 +154,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public Control CreateSettingPanel()
         {
-            // No need to check if NeedCreateSettingPanel is true because CreateSettingPanel will only be called if it's true
-            // if (!NeedCreateSettingPanel()) return null;
+            if (!NeedCreateSettingPanel()) return null!;
 
             // Create main grid with two columns (Column 1: Auto, Column 2: *)
             var mainPanel = new Grid { Margin = SettingPanelMargin, VerticalAlignment = VerticalAlignment.Center };

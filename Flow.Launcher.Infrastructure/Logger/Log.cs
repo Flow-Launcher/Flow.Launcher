@@ -1,12 +1,12 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Runtime.ExceptionServices;
+using Flow.Launcher.Infrastructure.UserSettings;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
-using Flow.Launcher.Infrastructure.UserSettings;
 using NLog.Targets.Wrappers;
-using System.Runtime.ExceptionServices;
 
 namespace Flow.Launcher.Infrastructure.Logger
 {
@@ -94,13 +94,6 @@ namespace Flow.Launcher.Infrastructure.Logger
             logger.Fatal(message);
         }
 
-        private static bool FormatValid(string message)
-        {
-            var parts = message.Split('|');
-            var valid = parts.Length == 3 && !string.IsNullOrWhiteSpace(parts[1]) && !string.IsNullOrWhiteSpace(parts[2]);
-            return valid;
-        }
-
         public static void Exception(string className, string message, System.Exception exception, [CallerMemberName] string methodName = "")
         {
             exception = exception.Demystify();
@@ -135,57 +128,14 @@ namespace Flow.Launcher.Infrastructure.Logger
             return className;
         }
 
+#if !DEBUG
         private static void ExceptionInternal(string classAndMethod, string message, System.Exception e)
         {
             var logger = LogManager.GetLogger(classAndMethod);
 
             logger.Error(e, message);
         }
-
-        private static void LogInternal(string message, LogLevel level)
-        {
-            if (FormatValid(message))
-            {
-                var parts = message.Split('|');
-                var prefix = parts[1];
-                var unprefixed = parts[2];
-                var logger = LogManager.GetLogger(prefix);
-                logger.Log(level, unprefixed);
-            }
-            else
-            {
-                LogFaultyFormat(message);
-            }
-        }
-
-        /// Example: "|ClassName.MethodName|Message"
-        /// <param name="message">Example: "|ClassName.MethodName|Message" </param>
-        /// <param name="e">Exception</param>
-        public static void Exception(string message, System.Exception e)
-        {
-            e = e.Demystify();
-#if DEBUG
-            ExceptionDispatchInfo.Capture(e).Throw();
-#else
-            if (FormatValid(message))
-            {
-                var parts = message.Split('|');
-                var prefix = parts[1];
-                var unprefixed = parts[2];
-                ExceptionInternal(prefix, unprefixed, e);
-            }
-            else
-            {
-                LogFaultyFormat(message);
-            }
 #endif
-        }
-
-        /// Example: "|ClassName.MethodName|Message"
-        public static void Error(string message)
-        {
-            LogInternal(message, LogLevel.Error);
-        }
 
         public static void Error(string className, string message, [CallerMemberName] string methodName = "")
         {
@@ -206,32 +156,14 @@ namespace Flow.Launcher.Infrastructure.Logger
             LogInternal(LogLevel.Debug, className, message, methodName);
         }
 
-        /// Example: "|ClassName.MethodName|Message""
-        public static void Debug(string message)
-        {
-            LogInternal(message, LogLevel.Debug);
-        }
-
         public static void Info(string className, string message, [CallerMemberName] string methodName = "")
         {
             LogInternal(LogLevel.Info, className, message, methodName);
         }
 
-        /// Example: "|ClassName.MethodName|Message"
-        public static void Info(string message)
-        {
-            LogInternal(message, LogLevel.Info);
-        }
-
         public static void Warn(string className, string message, [CallerMemberName] string methodName = "")
         {
             LogInternal(LogLevel.Warn, className, message, methodName);
-        }
-
-        /// Example: "|ClassName.MethodName|Message"
-        public static void Warn(string message)
-        {
-            LogInternal(message, LogLevel.Warn);
         }
     }
 

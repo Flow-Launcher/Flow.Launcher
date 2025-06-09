@@ -6,10 +6,11 @@
     xmlns:local="clr-namespace:Flow.Launcher"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     Title="{DynamicResource fileManagerWindow}"
     Width="600"
+    d:DataContext="{d:DesignInstance vm:SelectFileManagerViewModel}"
     Background="{DynamicResource PopuBGColor}"
-    DataContext="{Binding RelativeSource={RelativeSource Self}}"
     Foreground="{DynamicResource PopupTextColor}"
     ResizeMode="NoResize"
     SizeToContent="Height"
@@ -73,9 +74,17 @@
                         <TextBlock Margin="0 14 0 0" FontSize="14">
                             <TextBlock Text="{DynamicResource fileManager_tips2}" TextWrapping="WrapWithOverflow" />
                         </TextBlock>
+                        <TextBlock Margin="0 14 0 0" VerticalAlignment="Center">
+                            <Hyperlink NavigateUri="https://www.flowlauncher.com/docs/#/filemanager" RequestNavigate="Hyperlink_RequestNavigate">
+                                <TextBlock FontSize="14" Text="{DynamicResource fileManager_learnMore}" />
+                            </Hyperlink>
+                        </TextBlock>
                     </StackPanel>
-
-                    <StackPanel Margin="14 28 0 0" Orientation="Horizontal">
+                    <Rectangle
+                        Height="1"
+                        Margin="0 20 0 20"
+                        Fill="{StaticResource SeparatorForeground}" />
+                    <StackPanel Margin="14 0 0 0" Orientation="Horizontal">
                         <TextBlock
                             Grid.Column="1"
                             HorizontalAlignment="Left"
@@ -99,11 +108,11 @@
                         </ComboBox>
                         <Button
                             Margin="10 0 0 0"
-                            Click="btnAdd_Click"
+                            Command="{Binding AddCommand}"
                             Content="{DynamicResource add}" />
                         <Button
                             Margin="10 0 0 0"
-                            Click="btnDelete_Click"
+                            Command="{Binding DeleteCommand}"
                             Content="{DynamicResource delete}"
                             IsEnabled="{Binding CustomExplorer.Editable}" />
 
@@ -111,7 +120,7 @@
                     <Rectangle
                         Height="1"
                         Margin="0 20 0 12"
-                        Fill="{StaticResource Color03B}" />
+                        Fill="{StaticResource SeparatorForeground}" />
                     <StackPanel
                         Margin="0 0 0 0"
                         HorizontalAlignment="Stretch"

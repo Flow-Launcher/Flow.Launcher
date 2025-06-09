@@ -27,7 +27,6 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public string ExcludedFileTypes { get; set; } = "";
 
-
         public bool UseLocationAsWorkingDir { get; set; } = false;
 
         public bool ShowInlinedWindowsContextMenu { get; set; } = false;
@@ -37,6 +36,8 @@ namespace Flow.Launcher.Plugin.Explorer
         public string WindowsContextMenuExcludedItems { get; set; } = string.Empty;
 
         public bool DefaultOpenFolderInFileManager { get; set; } = false;
+
+        public bool DisplayMoreInformationInToolTip { get; set; } = false;
 
         public string SearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
 
@@ -66,6 +67,9 @@ namespace Flow.Launcher.Plugin.Explorer
         public bool ShowCreatedDateInPreviewPanel { get; set; } = true;
 
         public bool ShowModifiedDateInPreviewPanel { get; set; } = true;
+        
+        public bool ShowFileAgeInPreviewPanel { get; set; } = false;
+
 
         public string PreviewPanelDateFormat { get; set; } = "yyyy-MM-dd";
 

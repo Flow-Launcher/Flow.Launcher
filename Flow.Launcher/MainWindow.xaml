@@ -65,10 +65,6 @@
             Command="{Binding ReQueryCommand}"
             Modifiers="Ctrl" />
         <KeyBinding
-            Key="H"
-            Command="{Binding LoadHistoryCommand}"
-            Modifiers="Ctrl" />
-        <KeyBinding
             Key="OemCloseBrackets"
             Command="{Binding IncreaseWidthCommand}"
             Modifiers="Control" />
@@ -191,6 +187,10 @@
             Key="{Binding SettingWindowHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
             Command="{Binding OpenSettingCommand}"
             Modifiers="{Binding SettingWindowHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding OpenHistoryHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding LoadHistoryCommand}"
+            Modifiers="{Binding OpenHistoryHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
         <KeyBinding
             Key="{Binding OpenContextMenuHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
             Command="{Binding LoadContextMenuCommand}"
@@ -359,7 +359,7 @@
                                 <MultiDataTrigger>
                                     <MultiDataTrigger.Conditions>
                                         <Condition Binding="{Binding ElementName=ResultListBox, Path=Items.Count}" Value="0" />
-                                        <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Collapsed" />
+                                        <Condition Binding="{Binding ElementName=ResultContextMenu, Path=Visibility}" Value="Collapsed" />
                                         <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />
                                     </MultiDataTrigger.Conditions>
                                     <MultiDataTrigger.Setters>
@@ -373,7 +373,7 @@
                                 <DataTrigger Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Visible">
                                     <Setter Property="Visibility" Value="Visible" />
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Visible">
+                                <DataTrigger Binding="{Binding ElementName=ResultContextMenu, Path=Visibility}" Value="Visible">
                                     <Setter Property="Visibility" Value="Visible" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding ElementName=History, Path=Visibility}" Value="Visible">
@@ -419,7 +419,7 @@
                         </ContentControl>
                         <ContentControl>
                             <flowlauncher:ResultListBox
-                                x:Name="ContextMenu"
+                                x:Name="ResultContextMenu"
                                 DataContext="{Binding ContextMenu}"
                                 LeftClickResultCommand="{Binding LeftClickResultCommand}"
                                 RightClickResultCommand="{Binding RightClickResultCommand}" />

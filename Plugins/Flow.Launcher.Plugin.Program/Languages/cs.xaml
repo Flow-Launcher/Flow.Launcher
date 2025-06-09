@@ -46,6 +46,8 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">Prosím vyberte zdroj programu</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">Jste si jisti, že chcete odstranit vybrané zdroje programů?</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_not_user_added">Please select program sources that are not added by you</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_user_added">Please select program sources that are added by you</system:String>
     <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Již existuje jiný zdroj programu se stejným umístěním.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Zdroj programu</system:String>
@@ -74,7 +76,7 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Spustit jako jiný uživatel</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Spustit jako správce</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Otevřít umístění složky</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">Zakázat zobrazování tohoto programu</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">Hide</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Open target folder</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Program </system:String>

@@ -23,12 +23,12 @@
                         <Border.Style>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="Background" Value="{DynamicResource Color12B}" />
-                                <Setter Property="Padding" Value="5,0,5,0" />
+                                <Setter Property="Padding" Value="5 0 5 0" />
                                 <Setter Property="BorderThickness" Value="1" />
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource AncestorType=local:HotkeyDisplay}}" Value="Small">
                                         <Setter Property="Background" Value="Transparent" />
-                                        <Setter Property="Padding" Value="0,0,0,0" />
+                                        <Setter Property="Padding" Value="0 0 0 0" />
                                         <Setter Property="BorderThickness" Value="0" />
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -51,14 +51,14 @@
                                 <Border.Style>
                                     <Style TargetType="{x:Type Border}">
                                         <Setter Property="Background" Value="{DynamicResource SystemControlBackgroundBaseLowBrush}" />
-                                        <Setter Property="Padding" Value="10,5,10,5" />
-                                        <Setter Property="Margin" Value="2,5,2,5" />
+                                        <Setter Property="Padding" Value="10 5 10 5" />
+                                        <Setter Property="Margin" Value="2 5 2 5" />
                                         <Setter Property="BorderThickness" Value="1" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource AncestorType=local:HotkeyDisplay}}" Value="Small">
                                                 <Setter Property="Background" Value="{DynamicResource AccentButtonBackground}" />
-                                                <Setter Property="Padding" Value="10,5,10,5" />
-                                                <Setter Property="Margin" Value="2,0,2,0" />
+                                                <Setter Property="Padding" Value="10 5 10 5" />
+                                                <Setter Property="Margin" Value="2 0 2 0" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>

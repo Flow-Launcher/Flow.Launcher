@@ -46,6 +46,8 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">Veuillez sélectionner une source de programme</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">Êtes-vous sûr de vouloir supprimer les sources de programmes sélectionnées ?</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_not_user_added">Veuillez sélectionner les sources de programmes qui n'ont pas été ajoutées par vous-même</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_user_added">Veuillez sélectionner les sources de programmes qui ont été ajoutées par vous-même</system:String>
     <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Il existe déjà une autre source de programme ayant le même emplacement.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Source du programme</system:String>
@@ -74,7 +76,7 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Exécuter en tant qu'utilisateur différent</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Exécuter en tant qu'administrateur</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Ouvrir l'emplacement du fichier</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">Masquer ce programme des résultats</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">Masquer</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Ouvrir le répertoire cible</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Programmes</system:String>

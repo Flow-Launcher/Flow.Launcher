@@ -7,6 +7,11 @@
         انقر فوق لا إذا كان مثبتاً بالفعل، وسوف يطلب منك تحديد المجلد الذي يحتوي على {1} القابل للتنفيذ
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">الرجاء اختيار الملف التنفيذي لـ {0}</system:String>
+    <system:String x:Key="runtimeExecutableInvalidChooseDownload">
+        Your selected {0} executable is invalid.
+        {2}{2}
+        Click yes if you would like select the {0} executable agian. Click no if you would like to download {1}
+    </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">تعذر تعيين مسار الملف التنفيذي لـ {0}، يرجى المحاولة من إعدادات Flow (قم بالتمرير إلى الأسفل).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">فشل في تهيئة الإضافات</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">الإضافات: {0} - فشل في التحميل وسيتم تعطيلها، يرجى الاتصال بمطور الإضافة للحصول على المساعدة</system:String>
@@ -37,7 +42,8 @@
     <system:String x:Key="GameMode">وضع اللعب</system:String>
     <system:String x:Key="GameModeToolTip">تعليق استخدام مفاتيح التشغيل السريع.</system:String>
     <system:String x:Key="PositionReset">إعادة تعيين الموقع</system:String>
-    <system:String x:Key="PositionResetToolTip">إعادة تعيين موضع نافذة البحث</system:String>
+    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">الإعدادات</system:String>
@@ -50,7 +56,7 @@
     <system:String x:Key="setAutoStartFailed">خطأ في إعداد التشغيل عند بدء التشغيل</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">إخفاء Flow Launcher عند فقدان التركيز</system:String>
     <system:String x:Key="dontPromptUpdateMsg">عدم عرض إشعارات الإصدار الجديد</system:String>
-    <system:String x:Key="SearchWindowPosition">موضع نافذة البحث</system:String>
+    <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">تذكر آخر موقع</system:String>
     <system:String x:Key="SearchWindowScreenCursor">الشاشة مع مؤشر الماوس</system:String>
     <system:String x:Key="SearchWindowScreenFocus">الشاشة مع النافذة المركزة</system:String>
@@ -70,8 +76,6 @@
     <system:String x:Key="LastQueryEmpty">تفريغ الاستعلام الأخير</system:String>
     <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
     <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
-    <system:String x:Key="KeepMaxResults">ارتفاع ثابت للنافذة</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">ارتفاع النافذة غير قابل للتعديل عن طريق السحب.</system:String>
     <system:String x:Key="maxShowResults">الحد الأقصى للنتائج المعروضة</system:String>
     <system:String x:Key="maxShowResultsToolTip">يمكنك أيضًا تعديل هذا بسرعة باستخدام CTRL+Plus وCTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">تجاهل مفاتيح التشغيل السريع في وضع ملء الشاشة</system:String>
@@ -102,6 +106,36 @@
     <system:String x:Key="AlwaysPreview">دائمًا معاينة</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">فتح لوحة المعاينة دائمًا عند تنشيط Flow. اضغط على {0} للتبديل بين المعاينة وعدمها.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">تأثير الظل غير مسموح به بينما يتم تمكين تأثير التمويه في السمة الحالية</system:String>
+    <system:String x:Key="searchDelay">Search Delay</system:String>
+    <system:String x:Key="searchDelayToolTip">Adds a short delay while typing to reduce UI flicker and result load. Recommended if your typing speed is average.</system:String>
+    <system:String x:Key="searchDelayNumberBoxToolTip">Enter the wait time (in ms) until input is considered complete. This can only be edited if Search Delay is enabled.</system:String>
+    <system:String x:Key="searchDelayTime">Default Search Delay Time</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Wait time before showing results after typing stops. Higher values wait longer. (ms)</system:String>
+    <system:String x:Key="KoreanImeTitle">Information for Korean IME user</system:String>
+    <system:String x:Key="KoreanImeGuide">
+        The Korean input method used in Windows 11 may cause some issues in Flow Launcher.
+
+        If you experience any problems, you may need to enable &quot;Use previous version of Korean IME&quot;.
+
+
+        Open Setting in Windows 11 and go to:
+
+        Time &amp; Language &gt; Language &amp; Region &gt; Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility,
+
+        and enable &quot;Use previous version of Microsoft IME&quot;.
+
+
+    </system:String>
+    <system:String x:Key="KoreanImeOpenLink">Open Language and Region System Settings</system:String>
+    <system:String x:Key="KoreanImeOpenLinkToolTip">Opens the Korean IME setting location. Go to Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility</system:String>
+    <system:String x:Key="KoreanImeOpenLinkButton">فتح</system:String>
+    <system:String x:Key="KoreanImeRegistry">Use Previous Korean IME</system:String>
+    <system:String x:Key="KoreanImeRegistryTooltip">You can change the Previous Korean IME settings directly from here</system:String>
+    <system:String x:Key="homePage">Home Page</system:String>
+    <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
+    <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">البحث عن إضافة</system:String>
@@ -118,6 +152,13 @@
     <system:String x:Key="currentActionKeywords">كلمة الفعل الحالية</system:String>
     <system:String x:Key="newActionKeyword">كلمة فعل جديدة</system:String>
     <system:String x:Key="actionKeywordsTooltip">تغيير كلمات الفعل</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Plugin search delay time</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Search Delay Time</system:String>
+    <system:String x:Key="FilterComboboxLabel">Advanced Settings:</system:String>
+    <system:String x:Key="DisplayModeOnOff">مفع</system:String>
+    <system:String x:Key="DisplayModePriority">الأولوي</system:String>
+    <system:String x:Key="DisplayModeSearchDelay">Search Delay</system:String>
+    <system:String x:Key="DisplayModeHomeOnOff">Home Page</system:String>
     <system:String x:Key="currentPriority">الأولوية الحالية</system:String>
     <system:String x:Key="newPriority">أولوية جديدة</system:String>
     <system:String x:Key="priority">الأولوية</system:String>
@@ -131,6 +172,8 @@
     <system:String x:Key="plugin_uninstall">إلغاء التثبيت</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
+    <system:String x:Key="failedToRemovePluginCacheTitle">Fail to remove plugin cache</system:String>
+    <system:String x:Key="failedToRemovePluginCacheMessage">Plugins: {0} - Fail to remove plugin cache files, please remove them manually</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">متجر الإضافات</system:String>
@@ -167,6 +210,9 @@
     <system:String x:Key="resultItemFont">خط عنوان النتيجة</system:String>
     <system:String x:Key="resultSubItemFont">خط العنوان الفرعي للنتيجة</system:String>
     <system:String x:Key="resetCustomize">إعادة التعيين</system:String>
+    <system:String x:Key="resetCustomizeToolTip">Reset to the recommended font and size settings.</system:String>
+    <system:String x:Key="ImportThemeSize">Import Theme Size</system:String>
+    <system:String x:Key="ImportThemeSizeToolTip">If a size value intended by the theme designer is available, it will be retrieved and applied.</system:String>
     <system:String x:Key="CustomizeToolTip">تخصيص</system:String>
     <system:String x:Key="windowMode">وضع النافذة</system:String>
     <system:String x:Key="opacity">الشفافية</system:String>
@@ -193,8 +239,21 @@
     <system:String x:Key="AnimationSpeedCustom">مخصص</system:String>
     <system:String x:Key="Clock">الساعة</system:String>
     <system:String x:Key="Date">التاريخ</system:String>
-    <system:String x:Key="TypeIsDarkToolTip">هذه السمة تدعم الوضعين (فاتح/داكن).</system:String>
+    <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropInfo">The backdrop effect is not applied in the preview.</system:String>
+    <system:String x:Key="BackdropTypeDisabledToolTip">Backdrop supported starting from Windows 11 build 22000 and above</system:String>
+    <system:String x:Key="BackdropTypesNone">بلا</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
+    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">This theme supports two (light/dark) modes.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">هذه السمة تدعم الخلفية الضبابية الشفافة.</system:String>
+    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
+    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
+    <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">مفتاح الاختصار</system:String>
@@ -254,6 +313,9 @@
     <system:String x:Key="useGlyphUI">استخدام أيقونات Segoe Fluent</system:String>
     <system:String x:Key="useGlyphUIEffect">استخدام أيقونات Segoe Fluent لنتائج الاستعلام حيثما كان مدعومًا</system:String>
     <system:String x:Key="flowlauncherPressHotkey">اضغط على المفتاح</system:String>
+    <system:String x:Key="showBadges">Show Result Badges</system:String>
+    <system:String x:Key="showBadgesToolTip">For supported plugins, badges are displayed to help distinguish them more easily.</system:String>
+    <system:String x:Key="showBadgesGlobalOnly">Show Result Badges for Global Query Only</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">بروكسي HTTP</system:String>
@@ -294,16 +356,23 @@
     <system:String x:Key="logfolder">مجلد السجلات</system:String>
     <system:String x:Key="clearlogfolder">مسح السجلات</system:String>
     <system:String x:Key="clearlogfolderMessage">هل أنت متأكد أنك تريد حذف جميع السجلات؟</system:String>
+    <system:String x:Key="cachefolder">Cache Folder</system:String>
+    <system:String x:Key="clearcachefolder">Clear Caches</system:String>
+    <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
+    <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
     <system:String x:Key="welcomewindow">معالج الترحيب</system:String>
     <system:String x:Key="userdatapath">موقع بيانات المستخدم</system:String>
     <system:String x:Key="userdatapathToolTip">يتم حفظ إعدادات المستخدم والإضافات المثبتة في مجلد بيانات المستخدم. قد يختلف هذا الموقع اعتمادًا على ما إذا كان في وضع النقل أم لا.</system:String>
     <system:String x:Key="userdatapathButton">فتح المجلد</system:String>
+    <system:String x:Key="advanced">Advanced</system:String>
     <system:String x:Key="logLevel">Log Level</system:String>
     <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="LogLevelINFO">Info</system:String>
+    <system:String x:Key="settingWindowFontTitle">Setting Window Font</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">اختر مدير الملفات</system:String>
+    <system:String x:Key="fileManager_learnMore">Learn more</system:String>
     <system:String x:Key="fileManager_tips">يرجى تحديد موقع ملف مدير الملفات الذي تستخدمه وإضافة الحجج حسب الحاجة. يمثل &quot;%d&quot; مسار الدليل المفتوح، ويستخدمه الحقل &quot;الحجة للمجلد&quot; للأوامر التي تفتح أدلة محددة. يمثل &quot;%f&quot; مسار الملف المفتوح، ويستخدمه الحقل &quot;الحجة للملف&quot; للأوامر التي تفتح ملفات محددة.</system:String>
     <system:String x:Key="fileManager_tips2">على سبيل المثال، إذا كان مدير الملفات يستخدم أمرًا مثل &quot;totalcmd.exe /A c:\windows&quot; لفتح دليل c:\windows، فإن مسار مدير الملفات سيكون totalcmd.exe، وحجة المجلد ستكون /A &quot;%d&quot;. قد تحتاج بعض مديري الملفات مثل QTTabBar فقط إلى توفير مسار، في هذه الحالة استخدم &quot;%d&quot; كمسار مدير الملفات واترك باقي الحقول فارغة.</system:String>
     <system:String x:Key="fileManager_name">مدير الملفات</system:String>
@@ -311,6 +380,8 @@
     <system:String x:Key="fileManager_path">مسار مدير الملفات</system:String>
     <system:String x:Key="fileManager_directory_arg">حجة للمجلد</system:String>
     <system:String x:Key="fileManager_file_arg">حجة للملف</system:String>
+    <system:String x:Key="fileManagerPathNotFound">The file manager '{0}' could not be located at '{1}'. Would you like to continue?</system:String>
+    <system:String x:Key="fileManagerPathError">File Manager Path Error</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">متصفح الويب الافتراضي</system:String>
@@ -335,9 +406,19 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">لا يمكن العثور على الإضافة المحددة</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">كلمة المفتاح الجديدة لا يمكن أن تكون فارغة</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">تم تعيين كلمة المفتاح الجديدة هذه إلى إضافة أخرى، يرجى اختيار كلمة أخرى</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
     <system:String x:Key="success">نجاح</system:String>
     <system:String x:Key="completedSuccessfully">اكتمل بنجاح</system:String>
-    <system:String x:Key="actionkeyword_tips">أدخل كلمة المفتاح التي ترغب في استخدامها لبدء الإضافة. استخدم * إذا كنت لا ترغب في تحديد أي كلمة، وسيتم تشغيل الإضافة بدون كلمات مفتاحية.</system:String>
+    <system:String x:Key="failedToCopy">Failed to copy</system:String>
+    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="searchDelayTimeTitle">Search Delay Time Setting</system:String>
+    <system:String x:Key="searchDelayTimeTips">Input the search delay time in ms you like to use for the plugin. Input empty if you don't want to specify any, and the plugin will use default search delay time.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="homeTitle">Home Page</system:String>
+    <system:String x:Key="homeTips">Enable the plugin home page state if you like to show the plugin results when query is empty.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">مفتاح اختصار الاستعلام المخصص</system:String>
@@ -391,6 +472,14 @@
     <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
     <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
     <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
+
+    <!--  File Open Error  -->
+    <system:String x:Key="fileManagerNotFoundTitle">File Manager Error</system:String>
+    <system:String x:Key="fileManagerNotFound">
+        The specified file manager could not be found. Please check the Custom File Manager setting under Settings &gt; General.
+    </system:String>
+    <system:String x:Key="errorTitle">خطأ</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder. {0}</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">يرجى الانتظار...</system:String>

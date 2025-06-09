@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
+using IRemovable = Flow.Launcher.Core.Storage.IRemovable;
 using ISavable = Flow.Launcher.Plugin.ISavable;
 
 namespace Flow.Launcher.Core.Plugin
@@ -22,7 +22,10 @@ namespace Flow.Launcher.Core.Plugin
     /// </summary>
     public static class PluginManager
     {
+        private static readonly string ClassName = nameof(PluginManager);
+
         private static IEnumerable<PluginPair> _contextMenuPlugins;
+        private static IEnumerable<PluginPair> _homePlugins;
 
         public static List<PluginPair> AllPlugins { get; private set; }
         public static readonly HashSet<PluginPair> GlobalPlugins = new();
@@ -34,7 +37,7 @@ namespace Flow.Launcher.Core.Plugin
 
         private static PluginsSettings Settings;
         private static List<PluginMetadata> _metadatas;
-        private static List<string> _modifiedPlugins = new();
+        private static readonly List<string> _modifiedPlugins = new();
 
         /// <summary>
         /// Directories that will hold Flow Launcher plugin directory
@@ -58,13 +61,21 @@ namespace Flow.Launcher.Core.Plugin
         /// </summary>
         public static void Save()
         {
-            foreach (var plugin in AllPlugins)
+            foreach (var pluginPair in AllPlugins)
             {
-                var savable = plugin.Plugin as ISavable;
-                savable?.Save();
+                var savable = pluginPair.Plugin as ISavable;
+                try
+                {
+                    savable?.Save();
+                }
+                catch (Exception e)
+                {
+                    API.LogException(ClassName, $"Failed to save plugin {pluginPair.Metadata.Name}", e);
+                }
             }
 
             API.SavePluginSettings();
+            API.SavePluginCaches();
         }
 
         public static async ValueTask DisposePluginsAsync()
@@ -77,14 +88,21 @@ namespace Flow.Launcher.Core.Plugin
 
         private static async Task DisposePluginAsync(PluginPair pluginPair)
         {
-            switch (pluginPair.Plugin)
+            try
             {
-                case IDisposable disposable:
-                    disposable.Dispose();
-                    break;
-                case IAsyncDisposable asyncDisposable:
-                    await asyncDisposable.DisposeAsync();
-                    break;
+                switch (pluginPair.Plugin)
+                {
+                    case IDisposable disposable:
+                        disposable.Dispose();
+                        break;
+                    case IAsyncDisposable asyncDisposable:
+                        await asyncDisposable.DisposeAsync();
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                API.LogException(ClassName, $"Failed to dispose plugin {pluginPair.Metadata.Name}", e);
             }
         }
 
@@ -169,11 +187,21 @@ namespace Flow.Launcher.Core.Plugin
             {
                 if (AllowedLanguage.IsDotNet(metadata.Language))
                 {
+                    if (string.IsNullOrEmpty(metadata.AssemblyName))
+                    {
+                        API.LogWarn(ClassName, $"AssemblyName is empty for plugin with metadata: {metadata.Name}");
+                        continue; // Skip if AssemblyName is not set, which can happen for erroneous plugins
+                    }
                     metadata.PluginSettingsDirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, metadata.AssemblyName);
                     metadata.PluginCacheDirectoryPath = Path.Combine(DataLocation.PluginCacheDirectory, metadata.AssemblyName);
                 }
                 else
                 {
+                    if (string.IsNullOrEmpty(metadata.Name))
+                    {
+                        API.LogWarn(ClassName, $"Name is empty for plugin with metadata: {metadata.Name}");
+                        continue; // Skip if Name is not set, which can happen for erroneous plugins
+                    }
                     metadata.PluginSettingsDirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, metadata.Name);
                     metadata.PluginCacheDirectoryPath = Path.Combine(DataLocation.PluginCacheDirectory, metadata.Name);
                 }
@@ -192,24 +220,37 @@ namespace Flow.Launcher.Core.Plugin
             {
                 try
                 {
-                    var milliseconds = await Stopwatch.DebugAsync($"|PluginManager.InitializePlugins|Init method time cost for <{pair.Metadata.Name}>",
+                    var milliseconds = await API.StopwatchLogDebugAsync(ClassName, $"Init method time cost for <{pair.Metadata.Name}>",
                         () => pair.Plugin.InitAsync(new PluginInitContext(pair.Metadata, API)));
 
                     pair.Metadata.InitTime += milliseconds;
-                    Log.Info(
-                        $"|PluginManager.InitializePlugins|Total init cost for <{pair.Metadata.Name}> is <{pair.Metadata.InitTime}ms>");
+                    API.LogInfo(ClassName,
+                        $"Total init cost for <{pair.Metadata.Name}> is <{pair.Metadata.InitTime}ms>");
                 }
                 catch (Exception e)
                 {
-                    Log.Exception(nameof(PluginManager), $"Fail to Init plugin: {pair.Metadata.Name}", e);
-                    pair.Metadata.Disabled = true;
-                    failedPlugins.Enqueue(pair);
+                    API.LogException(ClassName, $"Fail to Init plugin: {pair.Metadata.Name}", e);
+                    if (pair.Metadata.Disabled && pair.Metadata.HomeDisabled)
+                    {
+                        // If this plugin is already disabled, do not show error message again
+                        // Or else it will be shown every time
+                        API.LogDebug(ClassName, $"Skipped init for <{pair.Metadata.Name}> due to error");
+                    }
+                    else
+                    {
+                        pair.Metadata.Disabled = true;
+                        pair.Metadata.HomeDisabled = true;
+                        failedPlugins.Enqueue(pair);
+                        API.LogDebug(ClassName, $"Disable plugin <{pair.Metadata.Name}> because init failed");
+                    }
                 }
             }));
 
             await Task.WhenAll(InitTasks);
 
             _contextMenuPlugins = GetPluginsForInterface<IContextMenu>();
+            _homePlugins = GetPluginsForInterface<IAsyncHomeQuery>();
+
             foreach (var plugin in AllPlugins)
             {
                 // set distinct on each plugin's action keywords helps only firing global(*) and action keywords once where a plugin
@@ -257,6 +298,11 @@ namespace Flow.Launcher.Core.Plugin
             };
         }
 
+        public static ICollection<PluginPair> ValidPluginsForHomeQuery()
+        {
+            return _homePlugins.ToList();
+        }
+
         public static async Task<List<Result>> QueryForPluginAsync(PluginPair pair, Query query, CancellationToken token)
         {
             var results = new List<Result>();
@@ -264,7 +310,7 @@ namespace Flow.Launcher.Core.Plugin
 
             try
             {
-                var milliseconds = await Stopwatch.DebugAsync($"|PluginManager.QueryForPlugin|Cost for {metadata.Name}",
+                var milliseconds = await API.StopwatchLogDebugAsync(ClassName, $"Cost for {metadata.Name}",
                     async () => results = await pair.Plugin.QueryAsync(query, token).ConfigureAwait(false));
 
                 token.ThrowIfCancellationRequested();
@@ -288,7 +334,7 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     Title = $"{metadata.Name}: Failed to respond!",
                     SubTitle = "Select this result for more info",
-                    IcoPath = Flow.Launcher.Infrastructure.Constant.ErrorIcon,
+                    IcoPath = Constant.ErrorIcon,
                     PluginDirectory = metadata.PluginDirectory,
                     ActionKeywordAssigned = query.ActionKeyword,
                     PluginID = metadata.ID,
@@ -297,6 +343,36 @@ namespace Flow.Launcher.Core.Plugin
                     Score = -100
                 };
                 results.Add(r);
+            }
+            return results;
+        }
+
+        public static async Task<List<Result>> QueryHomeForPluginAsync(PluginPair pair, Query query, CancellationToken token)
+        {
+            var results = new List<Result>();
+            var metadata = pair.Metadata;
+
+            try
+            {
+                var milliseconds = await API.StopwatchLogDebugAsync(ClassName, $"Cost for {metadata.Name}",
+                    async () => results = await ((IAsyncHomeQuery)pair.Plugin).HomeQueryAsync(token).ConfigureAwait(false));
+
+                token.ThrowIfCancellationRequested();
+                if (results == null)
+                    return null;
+                UpdatePluginMetadata(results, metadata, query);
+
+                token.ThrowIfCancellationRequested();
+            }
+            catch (OperationCanceledException)
+            {
+                // null will be fine since the results will only be added into queue if the token hasn't been cancelled
+                return null;
+            }
+            catch (Exception e)
+            {
+                API.LogException(ClassName, $"Failed to query home for plugin: {metadata.Name}", e);
+                return null;
             }
             return results;
         }
@@ -352,8 +428,8 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 catch (Exception e)
                 {
-                    Log.Exception(
-                        $"|PluginManager.GetContextMenusForPlugin|Can't load context menus for plugin <{pluginPair.Metadata.Name}>",
+                    API.LogException(ClassName, 
+                        $"Can't load context menus for plugin <{pluginPair.Metadata.Name}>",
                         e);
                 }
             }
@@ -361,12 +437,17 @@ namespace Flow.Launcher.Core.Plugin
             return results;
         }
 
+        public static bool IsHomePlugin(string id)
+        {
+            return _homePlugins.Any(p => p.Metadata.ID == id);
+        }
+
         public static bool ActionKeywordRegistered(string actionKeyword)
         {
             // this method is only checking for action keywords (defined as not '*') registration
             // hence the actionKeyword != Query.GlobalPluginWildcardSign logic
-            return actionKeyword != Query.GlobalPluginWildcardSign
-                   && NonGlobalPlugins.ContainsKey(actionKeyword);
+            return actionKeyword != Query.GlobalPluginWildcardSign 
+                && NonGlobalPlugins.ContainsKey(actionKeyword);
         }
 
         /// <summary>
@@ -545,7 +626,7 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch (Exception e)
             {
-                Log.Exception($"|PluginManager.InstallPlugin|Failed to delete temp folder {tempFolderPluginPath}", e);
+                API.LogException(ClassName, $"Failed to delete temp folder {tempFolderPluginPath}", e);
             }
 
             if (checkModified)
@@ -575,11 +656,11 @@ namespace Flow.Launcher.Core.Plugin
 
             if (removePluginSettings)
             {
-                // For dotnet plugins, we need to remove their PluginJsonStorage instance
-                if (AllowedLanguage.IsDotNet(plugin.Language))
+                // For dotnet plugins, we need to remove their PluginJsonStorage and PluginBinaryStorage instances
+                if (AllowedLanguage.IsDotNet(plugin.Language) && API is IRemovable removable)
                 {
-                    var method = API.GetType().GetMethod("RemovePluginSettings");
-                    method?.Invoke(API, new object[] { plugin.AssemblyName });
+                    removable.RemovePluginSettings(plugin.AssemblyName);
+                    removable.RemovePluginCaches(plugin.PluginCacheDirectoryPath);
                 }
 
                 try
@@ -590,7 +671,7 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 catch (Exception e)
                 {
-                    Log.Exception($"|PluginManager.UninstallPlugin|Failed to delete plugin settings folder for {plugin.Name}", e);
+                    API.LogException(ClassName, $"Failed to delete plugin settings folder for {plugin.Name}", e);
                     API.ShowMsg(API.GetTranslation("failedToRemovePluginSettingsTitle"),
                         string.Format(API.GetTranslation("failedToRemovePluginSettingsMessage"), plugin.Name));
                 }
@@ -606,7 +687,7 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 catch (Exception e)
                 {
-                    Log.Exception($"|PluginManager.UninstallPlugin|Failed to delete plugin cache folder for {plugin.Name}", e);
+                    API.LogException(ClassName, $"Failed to delete plugin cache folder for {plugin.Name}", e);
                     API.ShowMsg(API.GetTranslation("failedToRemovePluginCacheTitle"),
                         string.Format(API.GetTranslation("failedToRemovePluginCacheMessage"), plugin.Name));
                 }
