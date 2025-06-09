@@ -85,6 +85,15 @@ namespace Flow.Launcher.Plugin
         void ShowMsgError(string title, string subTitle = "");
 
         /// <summary>
+        /// Show the error message using Flow's standard error icon.
+        /// </summary>
+        /// <param name="title">Message title</param>
+        /// <param name="buttonText">Message button content</param>
+        /// <param name="buttonAction">Message button action</param>
+        /// <param name="subTitle">Optional message subtitle</param>
+        void ShowMsgErrorWithButton(string title, string buttonText, Action buttonAction, string subTitle = "");
+
+        /// <summary>
         /// Show the MainWindow when hiding
         /// </summary>
         void ShowMainWindow();
@@ -126,6 +135,27 @@ namespace Flow.Launcher.Plugin
         /// <param name="iconPath">Message icon path (relative path to your plugin folder)</param>
         /// <param name="useMainWindowAsOwner">when true will use main windows as the owner</param>
         void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true);
+
+        /// <summary>
+        /// Show message box with button
+        /// </summary>
+        /// <param name="title">Message title</param>
+        /// <param name="buttonText">Message button content</param>
+        /// <param name="buttonAction">Message button action</param>
+        /// <param name="subTitle">Message subtitle</param>
+        /// <param name="iconPath">Message icon path (relative path to your plugin folder)</param>
+        void ShowMsgWithButton(string title, string buttonText, Action buttonAction, string subTitle = "", string iconPath = "");
+
+        /// <summary>
+        /// Show message box with button
+        /// </summary>
+        /// <param name="title">Message title</param>
+        /// <param name="buttonText">Message button content</param>
+        /// <param name="buttonAction">Message button action</param>
+        /// <param name="subTitle">Message subtitle</param>
+        /// <param name="iconPath">Message icon path (relative path to your plugin folder)</param>
+        /// <param name="useMainWindowAsOwner">when true will use main windows as the owner</param>
+        void ShowMsgWithButton(string title, string buttonText, Action buttonAction, string subTitle, string iconPath, bool useMainWindowAsOwner = true);
 
         /// <summary>
         /// Open setting dialog
