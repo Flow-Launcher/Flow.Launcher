@@ -270,7 +270,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         internal static Result CreateFileResult(string filePath, Query query, int score = 0, bool windowsIndexed = false)
         {
             var isMedia = IsMedia(Path.GetExtension(filePath));
-            var title = Path.GetFileName(filePath);
+            var title = Path.GetFileName(filePath) ?? string.Empty;
+            var directory = Path.GetDirectoryName(filePath) ?? string.Empty;
 
             /* Preview Detail */
 
