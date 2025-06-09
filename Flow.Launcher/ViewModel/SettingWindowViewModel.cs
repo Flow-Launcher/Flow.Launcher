@@ -1,3 +1,4 @@
+﻿using System;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 
