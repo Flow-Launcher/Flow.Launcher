@@ -174,6 +174,8 @@ namespace Flow.Launcher
                 Current.Resources["SettingWindowFont"] = new FontFamily(_settings.SettingWindowFont);
                 Current.Resources["ContentControlThemeFontFamily"] = new FontFamily(_settings.SettingWindowFont);
 
+                Notification.Install();
+
                 Ioc.Default.GetRequiredService<Portable>().PreStartCleanUpAfterPortabilityUpdate();
 
                 API.LogInfo(ClassName, "Begin Flow Launcher startup ----------------------------------------------------");

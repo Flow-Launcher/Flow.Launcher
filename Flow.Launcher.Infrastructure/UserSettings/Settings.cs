@@ -33,7 +33,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             _storage.Save();
         }
 
-        private string _theme = Constant.DefaultTheme;
         public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
         public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
         public string ColorScheme { get; set; } = "System";
@@ -60,16 +59,20 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             get => _language;
             set
             {
-                _language = value;
-                OnPropertyChanged();
+                if (_language != value)
+                {
+                    _language = value;
+                    OnPropertyChanged();
+                }
             }
         }
+        private string _theme = Constant.DefaultTheme;
         public string Theme
         {
             get => _theme;
             set
             {
-                if (value != _theme)
+                if (_theme != value)
                 {
                     _theme = value;
                     OnPropertyChanged();
@@ -79,6 +82,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
         public bool UseDropShadowEffect { get; set; } = true;
         public BackdropTypes BackdropType{ get; set; } = BackdropTypes.None;
+        public string ReleaseNotesVersion { get; set; } = string.Empty;
 
         /* Appearance Settings. It should be separated from the setting later.*/
         public double WindowHeightSize { get; set; } = 42;
@@ -297,9 +301,12 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             get => _querySearchPrecision;
             set
             {
-                _querySearchPrecision = value;
-                if (_stringMatcher != null)
-                    _stringMatcher.UserSettingSearchPrecision = value;
+                if (_querySearchPrecision != value)
+                {
+                    _querySearchPrecision = value;
+                    if (_stringMatcher != null)
+                        _stringMatcher.UserSettingSearchPrecision = value;
+                }
             }
         }
 
@@ -366,14 +373,31 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             get => _hideNotifyIcon;
             set
             {
-                _hideNotifyIcon = value;
-                OnPropertyChanged();
+                if (_hideNotifyIcon != value)
+                {
+                    _hideNotifyIcon = value;
+                    OnPropertyChanged();
+                }
             }
         }
         public bool LeaveCmdOpen { get; set; }
         public bool HideWhenDeactivated { get; set; } = true;
 
         public bool AlwaysRunAsAdministrator { get; set; } = false;
+
+        private bool _showAtTopmost = true;
+        public bool ShowAtTopmost
+        {
+            get => _showAtTopmost;
+            set
+            {
+                if (_showAtTopmost != value)
+                {
+                    _showAtTopmost = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public bool SearchQueryResultsWithDelay { get; set; }
         public int SearchDelayTime { get; set; } = 150;

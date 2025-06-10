@@ -42,7 +42,7 @@
     <system:String x:Key="GameMode">Chế độ trò chơi</system:String>
     <system:String x:Key="GameModeToolTip">Tạm dừng sử dụng phím nóng.</system:String>
     <system:String x:Key="PositionReset">Đặt lại vị trí</system:String>
-    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
+    <system:String x:Key="PositionResetToolTip">Cài lại vị trí cửa sổ tìm kiếm</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
 
     <!--  Setting General  -->

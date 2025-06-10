@@ -253,6 +253,8 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         DropdownDataGeneric<SearchWindowAligns>.UpdateLabels(SearchWindowAligns);
         DropdownDataGeneric<SearchPrecisionScore>.UpdateLabels(SearchPrecisionScores);
         DropdownDataGeneric<LastQueryMode>.UpdateLabels(LastQueryModes);
+        // Since we are using Binding instead of DynamicResource, we need to manually trigger the update
+        OnPropertyChanged(nameof(AlwaysPreviewToolTip));
     }
 
     public string Language
