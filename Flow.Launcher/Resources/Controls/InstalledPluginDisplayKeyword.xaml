@@ -36,7 +36,8 @@
                 Text="{DynamicResource actionKeywords}" />
             <!--  Here Margin="0 -4.5 0 -4.5" is to remove redundant top bottom margin from Margin="{StaticResource SettingPanelMargin}"  -->
             <Button
-                Width="100"
+                Width="auto"
+                MinWidth="100"
                 Margin="0 -4.5 0 -4.5"
                 HorizontalAlignment="Right"
                 Command="{Binding SetActionKeywordsCommand}"
