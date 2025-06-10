@@ -127,6 +127,8 @@
     <system:String x:Key="historyResultsForHomePage">히스토리를 홈페이지에 표시</system:String>
     <system:String x:Key="historyResultsCountForHomePage">홈페이지에 표시할 최대 히스토리 수</system:String>
     <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
+    <system:String x:Key="showAtTopmost">Show Search Window at Topmost</system:String>
+    <system:String x:Key="showAtTopmostToolTip">Show search window above other windows</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">플러그인 검색</system:String>
