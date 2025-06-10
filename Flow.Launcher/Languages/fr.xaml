@@ -136,6 +136,8 @@
     <system:String x:Key="historyResultsForHomePage">Afficher les résultats de l'historique sur la page d'accueil</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Maximum de résultats de l'historique affichés sur la page d'accueil</system:String>
     <system:String x:Key="homeToggleBoxToolTip">Ceci ne peut être édité que si le plugin prend en charge la fonction Accueil et que la page d'accueil est activée.</system:String>
+    <system:String x:Key="showAtTopmost">Show Search Window at Topmost</system:String>
+    <system:String x:Key="showAtTopmostToolTip">Show search window above other windows</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Rechercher des plugins</system:String>
