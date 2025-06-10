@@ -136,6 +136,8 @@
     <system:String x:Key="historyResultsForHomePage">Zobraziť výsledky histórie na Domovskej stránke</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Maximálny počet zobrazených výsledkov histórie na Domovskej stránke</system:String>
     <system:String x:Key="homeToggleBoxToolTip">Úprava je možná len vtedy, ak plugin podporuje funkciu Domovská stránka a Domovská stránka je povolená.</system:String>
+    <system:String x:Key="showAtTopmost">Show Search Window at Topmost</system:String>
+    <system:String x:Key="showAtTopmostToolTip">Show search window above other windows</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Vyhľadať plugin</system:String>
