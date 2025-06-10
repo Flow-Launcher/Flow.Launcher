@@ -136,6 +136,8 @@
     <system:String x:Key="historyResultsForHomePage">Mostrar historial de resultados en la página de inicio</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Número máximo de resultados del historial en la página de inicio</system:String>
     <system:String x:Key="homeToggleBoxToolTip">Esto solo se puede editar si el complemento soporta la función de Inicio y la Página de Inicio está activada.</system:String>
+    <system:String x:Key="showAtTopmost">Show Search Window at Topmost</system:String>
+    <system:String x:Key="showAtTopmostToolTip">Show search window above other windows</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Buscar complemento</system:String>
