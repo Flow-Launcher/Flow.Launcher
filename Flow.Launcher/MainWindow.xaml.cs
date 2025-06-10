@@ -84,6 +84,8 @@ namespace Flow.Launcher
             _viewModel = Ioc.Default.GetRequiredService<MainViewModel>();
             DataContext = _viewModel;
 
+            Topmost = _settings.ShowAtTopmost;
+
             InitializeComponent();
             UpdatePosition();
 
@@ -310,6 +312,9 @@ namespace Flow.Launcher
                         {
                             _viewModel.QueryResults();
                         }
+                        break;
+                    case nameof(Settings.ShowAtTopmost):
+                        Topmost = _settings.ShowAtTopmost;
                         break;
                 }
             };
