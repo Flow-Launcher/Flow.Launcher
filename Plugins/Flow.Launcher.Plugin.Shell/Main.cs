@@ -23,6 +23,13 @@ namespace Flow.Launcher.Plugin.Shell
         private bool _winRStroked;
         private readonly KeyboardSimulator _keyboardSimulator = new(new InputSimulator());
 
+        private static readonly string[] possiblePwshPaths = new[]
+        {
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), @"PowerShell\7\pwsh.exe"),
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Microsoft\WindowsApps\pwsh.exe"),
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"scoop\apps\pwsh\current\pwsh.exe") // if using Scoop
+        };
+
         private Settings _settings;
 
         public List<Result> Query(Query query)
@@ -309,7 +316,15 @@ namespace Flow.Launcher.Plugin.Shell
 
         private static Process StartProcess(ProcessStartInfo info)
         {
-            Context.API.StartProcess(info.FileName, info.WorkingDirectory, string.Join(" ", info.ArgumentList), info.Verb == "runas");
+            var absoluteFileName = info.FileName switch
+            {
+                "cmd.exe" => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "cmd.exe"),
+                "powershell.exe" => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), @"WindowsPowerShell\v1.0\powershell.exe"),
+                "pwsh.exe" => possiblePwshPaths.FirstOrDefault(File.Exists),
+                "wt.exe" => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Microsoft\WindowsApps\wt.exe"),
+                _ => info.FileName,
+            };
+            Context.API.StartProcess(absoluteFileName, info.WorkingDirectory, string.Join(" ", info.ArgumentList), info.Verb == "runas");
             return null;
         }
 
