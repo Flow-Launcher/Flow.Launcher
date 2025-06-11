@@ -581,6 +581,8 @@ namespace Flow.Launcher
         {
             try
             {
+                workingDirectory = string.IsNullOrEmpty(workingDirectory) ? Environment.CurrentDirectory : workingDirectory;
+
                 // Deelevate process if it is running as administrator
                 if (Win32Helper.IsAdministrator() && !runAsAdmin)
                 {
@@ -595,7 +597,7 @@ namespace Flow.Launcher
                 var info = new ProcessStartInfo
                 {
                     FileName = filePath,
-                    WorkingDirectory = string.IsNullOrEmpty(workingDirectory) ? Environment.CurrentDirectory : workingDirectory,
+                    WorkingDirectory = workingDirectory,
                     Arguments = arguments,
                     UseShellExecute = true,
                     Verb = runAsAdmin ? "runas" : "",
