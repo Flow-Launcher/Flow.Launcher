@@ -929,6 +929,11 @@ retry:
                 }
             }
 
+            if (pi.hProcess != HANDLE.Null) PInvoke.CloseHandle(pi.hProcess);
+            if (pi.hThread != HANDLE.Null) PInvoke.CloseHandle(pi.hThread);
+            if (hShellProcessToken != HANDLE.Null) PInvoke.CloseHandle(hShellProcessToken);
+            if (hPrimaryToken != HANDLE.Null) PInvoke.CloseHandle(hPrimaryToken);
+            if (hShellProcess != HANDLE.Null) PInvoke.CloseHandle(hShellProcess);
             return true;
 
 cleanup:
