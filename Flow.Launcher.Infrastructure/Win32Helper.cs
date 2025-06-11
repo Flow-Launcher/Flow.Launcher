@@ -808,7 +808,7 @@ namespace Flow.Launcher.Infrastructure
         /// Inspired by <see href="https://github.com/jay/RunAsDesktopUser">
         /// Document: <see href="https://learn.microsoft.com/en-us/archive/blogs/aaron_margosis/faq-how-do-i-start-a-program-as-the-desktop-user-from-an-elevated-app">
         /// </summary>
-        public static unsafe bool RunAsDesktopUser(string app, string cmdLine, string currentDir, out string errorInfo)
+        public static unsafe bool RunAsDesktopUser(string app, string currentDir, string cmdLine, out string errorInfo)
         {
             STARTUPINFOW si = new();
             PROCESS_INFORMATION pi = new();
