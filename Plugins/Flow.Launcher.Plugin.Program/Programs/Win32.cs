@@ -208,38 +208,16 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private void Launch(bool elevated = false)
         {
-            var info = new ProcessStartInfo
+            if (Main.IsAdmin && elevated)
             {
-                FileName = FullPath,
-                WorkingDirectory = ParentDirectory,
-                UseShellExecute = true,
-                Verb = elevated ? "runas" : "",
-            };
-
-            if (Main.IsAdmin)
-            {
-                if (elevated)
+                // Since we are already elevated, we need to create UAC dialog manually
+                if (UACDialog.Show(IcoPath, Name, FullPath) != MessageBoxResult.Yes)
                 {
-                    // Since we are already elevated, we need to create UAC dialog manually
-                    if (UACDialog.Show(IcoPath, Name, FullPath) != MessageBoxResult.Yes)
-                    {
-                        return;
-                    }
-                }
-                else
-                {
-                    // Use explorer.exe as workaround to start process as standard user 
-                    info = new ProcessStartInfo
-                    {
-                        FileName = "explorer.exe",
-                        Arguments = $"\"{FullPath}\"",
-                        WorkingDirectory = ParentDirectory,
-                        UseShellExecute = true,
-                    };
+                    return;
                 }
             }
 
-            _ = Task.Run(() => Main.StartProcess(Process.Start, info)).ConfigureAwait(false);
+            _ = Task.Run(() => Main.Context.API.StartProcess(FullPath, ParentDirectory, "", elevated)).ConfigureAwait(false);
         }
 
         public List<Result> ContextMenus(IPublicAPI api)
