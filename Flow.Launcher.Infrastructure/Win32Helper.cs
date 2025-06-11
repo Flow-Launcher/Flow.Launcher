@@ -827,7 +827,7 @@ namespace Flow.Launcher.Infrastructure
             if (!PInvoke.LookupPrivilegeValue(null, PInvoke.SE_INCREASE_QUOTA_NAME, out var luid))
             {
                 errorInfo = $"LookupPrivilegeValue failed: {Marshal.GetLastWin32Error()}";
-                hProcessToken.Dispose();//PInvoke.CloseHandle(hProcessToken);
+                hProcessToken.Dispose();
                 return false;
             }
 
@@ -846,7 +846,7 @@ namespace Flow.Launcher.Infrastructure
 
             PInvoke.AdjustTokenPrivileges(hProcessToken, false, &tp, 0, null, null);
             var lastError = Marshal.GetLastWin32Error();
-            hProcessToken.Dispose();//PInvoke.CloseHandle(hProcessToken);
+            hProcessToken.Dispose();
 
             if (lastError != 0)
             {
@@ -915,10 +915,10 @@ retry:
             fixed (char* currentDirPtr = currentDir)
             {
                 if (!PInvoke.CreateProcessWithToken(hPrimaryToken,
-                    0 /*CREATE_PROCESS_LOGON_FLAGS.LOGON_WITH_PROFILE*/,
+                    0,
                     appPtr,
                     cmdLinePtr,
-                    0/*PROCESS_CREATION_FLAGS.CREATE_NEW_CONSOLE*/,
+                    0,
                     null,
                     currentDirPtr,
                     &si,
