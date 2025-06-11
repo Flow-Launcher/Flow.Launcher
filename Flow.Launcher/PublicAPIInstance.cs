@@ -577,7 +577,7 @@ namespace Flow.Launcher
         public Task<long> StopwatchLogInfoAsync(string className, string message, Func<Task> action, [CallerMemberName] string methodName = "") =>
             Stopwatch.InfoAsync(className, message, action, methodName);
 
-        public void StartProcess(string filePath, string workingDirectory, string arguments = "", bool runAsAdmin = false)
+        public void StartProcess(string filePath, string workingDirectory = "", string arguments = "", bool runAsAdmin = false)
         {
             try
             {

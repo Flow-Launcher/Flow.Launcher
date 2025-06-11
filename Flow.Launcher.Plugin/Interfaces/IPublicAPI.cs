@@ -591,6 +591,6 @@ namespace Flow.Launcher.Plugin
         /// <param name="workingDirectory">Working directory. If not specified, the current directory will be used</param>
         /// <param name="arguments">Optional arguments to pass to the process. If not specified, no arguments will be passed</param>
         /// <param name="runAsAdmin">Whether to run the process as administrator</param>
-        public void StartProcess(string filePath, string workingDirectory, string arguments = "", bool runAsAdmin = false);
+        public void StartProcess(string filePath, string workingDirectory = "", string arguments = "", bool runAsAdmin = false);
     }
 }
