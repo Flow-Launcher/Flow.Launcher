@@ -587,8 +587,8 @@ namespace Flow.Launcher.Plugin
         /// <remarks>
         /// It can help to start a deelevated process when Flow is running as administrator.
         /// </remarks>
-        /// <param name="filePath">File path of the process to start. It can be an executable file or a script file</param>
-        /// <param name="workingDirectory">Working directory of the process. If not specified, the current directory will be used</param>
+        /// <param name="filePath">Absolute file path. It can be an executable file or a script file</param>
+        /// <param name="workingDirectory">Working directory. If not specified, the current directory will be used</param>
         /// <param name="arguments">Optional arguments to pass to the process. If not specified, no arguments will be passed</param>
         /// <param name="runAsAdmin">Whether to run the process as administrator</param>
         public void StartProcess(string filePath, string workingDirectory, string arguments = "", bool runAsAdmin = false);
