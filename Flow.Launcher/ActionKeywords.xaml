@@ -14,102 +14,101 @@
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
     </WindowChrome.WindowChrome>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
             <RowDefinition Height="80" />
         </Grid.RowDefinitions>
-        <Grid>
-            <StackPanel Grid.Row="0">
-                <StackPanel>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Button
-                            Grid.Column="4"
-                            Click="BtnCancel_OnClick"
-                            Style="{StaticResource TitleBarCloseButtonStyle}">
-                            <Path
-                                Width="46"
-                                Height="32"
-                                Data="M 18,11 27,20 M 18,20 27,11"
-                                Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                                StrokeThickness="1">
-                                <Path.Style>
-                                    <Style TargetType="Path">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
-                                                <Setter Property="Opacity" Value="0.5" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Path.Style>
-                            </Path>
-                        </Button>
-                    </Grid>
-                </StackPanel>
-                <StackPanel Margin="26 12 26 0">
-                    <StackPanel Grid.Row="0" Margin="0 0 0 12">
-                        <TextBlock
-                            Grid.Column="0"
-                            Margin="0 0 0 0"
-                            FontSize="20"
-                            FontWeight="SemiBold"
-                            Text="{DynamicResource actionKeywordsTitle}"
-                            TextAlignment="Left" />
-                    </StackPanel>
-                    <StackPanel>
-                        <TextBlock
-                            FontSize="14"
-                            Text="{DynamicResource actionkeyword_tips}"
-                            TextAlignment="Left"
-                            TextWrapping="WrapWithOverflow" />
-                    </StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-                    <StackPanel Margin="0 18 0 0" Orientation="Horizontal">
-                        <TextBlock
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Text="{DynamicResource currentActionKeywords}" />
-                        <TextBlock
-                            x:Name="tbOldActionKeyword"
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            Margin="14 10 10 10"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            FontWeight="SemiBold"
-                            Foreground="{DynamicResource Color05B}" />
-                    </StackPanel>
-                    <StackPanel Margin="0 0 0 10" Orientation="Horizontal">
-                        <TextBlock
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Text="{DynamicResource newActionKeyword}" />
-                        <TextBox
-                            x:Name="tbAction"
-                            Width="105"
-                            Margin="10 10 15 10"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center" />
-                    </StackPanel>
-                </StackPanel>
-            </StackPanel>
-        </Grid>
-        <Border
+        <Button
+            Grid.Row="0"
+            Grid.Column="1"
+            HorizontalAlignment="Right"
+            Click="BtnCancel_OnClick"
+            Style="{StaticResource TitleBarCloseButtonStyle}">
+            <Path
+                Width="46"
+                Height="32"
+                Data="M 18,11 27,20 M 18,20 27,11"
+                Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                StrokeThickness="1">
+                <Path.Style>
+                    <Style TargetType="Path">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                <Setter Property="Opacity" Value="0.5" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Path.Style>
+            </Path>
+        </Button>
+
+        <TextBlock
             Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="26 12 26 12"
+            FontSize="20"
+            FontWeight="SemiBold"
+            Text="{DynamicResource actionKeywordsTitle}"
+            TextAlignment="Left" />
+        <TextBlock
+            Grid.Row="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="26 0 26 18"
+            FontSize="14"
+            Text="{DynamicResource actionkeyword_tips}"
+            TextAlignment="Left"
+            TextWrapping="WrapWithOverflow" />
+
+        <TextBlock
+            Grid.Row="3"
+            Grid.Column="0"
+            Margin="26 0 10 0"
+            VerticalAlignment="Center"
+            FontSize="14"
+            Text="{DynamicResource currentActionKeywords}" />
+        <TextBox
+            x:Name="tbOldActionKeyword"
+            Grid.Row="3"
+            Grid.Column="1"
+            Margin="10 10 26 10"
+            VerticalAlignment="Center"
+            FontSize="14"
+            FontWeight="SemiBold"
+            Foreground="{DynamicResource Color05B}"
+            IsReadOnly="True"
+            Text="List of old keyword(s)" />
+
+        <TextBlock
+            Grid.Row="4"
+            Grid.Column="0"
+            Margin="26 0 10 0"
+            VerticalAlignment="Center"
+            FontSize="14"
+            Text="{DynamicResource newActionKeyword}" />
+        <TextBox
+            x:Name="tbAction"
+            Grid.Row="4"
+            Grid.Column="1"
+            Margin="10 10 26 10"
+            VerticalAlignment="Center" />
+
+        <Border
+            Grid.Row="5"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
             Background="{DynamicResource PopupButtonAreaBGColor}"
             BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
             BorderThickness="0 1 0 0">
@@ -118,14 +117,14 @@
                     x:Name="btnCancel"
                     Width="145"
                     Height="30"
-                    Margin="10 0 5 0"
+                    Margin="10 0 10 0"
                     Click="BtnCancel_OnClick"
                     Content="{DynamicResource cancel}" />
                 <Button
                     x:Name="btnDone"
                     Width="145"
                     Height="30"
-                    Margin="5 0 10 0"
+                    Margin="10 0 10 0"
                     Click="btnDone_OnClick"
                     Style="{StaticResource AccentButtonStyle}">
                     <TextBlock x:Name="lblAdd" Text="{DynamicResource done}" />
