@@ -589,6 +589,7 @@ namespace Flow.Launcher
                     {
                         LogError(ClassName, $"Failed to start process {filePath} with error: {errorInfo}");
                     }
+                    return;
                 }
 
                 var info = new ProcessStartInfo
