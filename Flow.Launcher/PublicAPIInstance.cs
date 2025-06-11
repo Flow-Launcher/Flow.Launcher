@@ -14,21 +14,21 @@ using System.Windows;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core;
+using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Storage;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.Plugin.SharedCommands;
+using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.ViewModel;
 using JetBrains.Annotations;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
@@ -576,6 +576,29 @@ namespace Flow.Launcher
 
         public Task<long> StopwatchLogInfoAsync(string className, string message, Func<Task> action, [CallerMemberName] string methodName = "") =>
             Stopwatch.InfoAsync(className, message, action, methodName);
+
+        public void StartProcess(string filePath, string workingDirectory, string arguments = "", bool runAsAdmin = false)
+        {
+            // Deelevate process if it is running as administrator
+            if (Win32Helper.IsAdministrator() && !runAsAdmin)
+            {
+                Win32Helper.RunAsDesktopUser(filePath, workingDirectory, arguments, out var errorInfo);
+                if (!string.IsNullOrEmpty(errorInfo))
+                {
+                    LogError(ClassName, $"Failed to start process {filePath} with error: {errorInfo}");
+                }
+            }
+
+            var info = new ProcessStartInfo
+            {
+                FileName = filePath,
+                WorkingDirectory = workingDirectory,
+                Arguments = arguments,
+                UseShellExecute = true,
+                Verb = runAsAdmin ? "runas" : "",
+            };
+            Process.Start(info)?.Dispose();
+        }
 
         #endregion
 
