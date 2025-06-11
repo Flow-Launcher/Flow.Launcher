@@ -116,14 +116,14 @@
                 <Button
                     x:Name="btnCancel"
                     Width="145"
-                    Height="30"
+                    Height="38"
                     Margin="10 0 10 0"
                     Click="BtnCancel_OnClick"
                     Content="{DynamicResource cancel}" />
                 <Button
                     x:Name="btnDone"
                     Width="145"
-                    Height="30"
+                    Height="38"
                     Margin="10 0 10 0"
                     Click="btnDone_OnClick"
                     Style="{StaticResource AccentButtonStyle}">
