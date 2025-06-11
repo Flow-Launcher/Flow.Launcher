@@ -23,11 +23,30 @@ namespace Flow.Launcher.Plugin.Shell
         private bool _winRStroked;
         private readonly KeyboardSimulator _keyboardSimulator = new(new InputSimulator());
 
+        private static readonly string[] possibleCmdPaths = new[]
+        {
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "cmd.exe"),
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), @"System32\cmd.exe")
+        };
+
+        private static readonly string[] possiblePowershellPaths = new[]
+        {
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), @"WindowsPowerShell\v1.0\powershell.exe"),
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), @"System32\WindowsPowerShell\v1.0\powershell.exe")
+        };
+
         private static readonly string[] possiblePwshPaths = new[]
         {
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), @"PowerShell\7\pwsh.exe"),
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Microsoft\WindowsApps\pwsh.exe"),
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"scoop\apps\pwsh\current\pwsh.exe") // if using Scoop
+        };
+
+        private static readonly string[] possibleWTPowerShellPaths = new[]
+        {
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Microsoft\WindowsApps\wt.exe"),
+            // if using Windows Terminal from Microsoft Store
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), @"WindowsApps\Microsoft.WindowsTerminal_*\wt.exe")
         };
 
         private Settings _settings;
@@ -318,12 +337,17 @@ namespace Flow.Launcher.Plugin.Shell
         {
             var absoluteFileName = info.FileName switch
             {
-                "cmd.exe" => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "cmd.exe"),
-                "powershell.exe" => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), @"WindowsPowerShell\v1.0\powershell.exe"),
+                "cmd.exe" => possibleCmdPaths.FirstOrDefault(File.Exists),
+                "powershell.exe" => possiblePowershellPaths.FirstOrDefault(File.Exists),
                 "pwsh.exe" => possiblePwshPaths.FirstOrDefault(File.Exists),
-                "wt.exe" => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Microsoft\WindowsApps\wt.exe"),
+                "wt.exe" => possibleWTPowerShellPaths.FirstOrDefault(File.Exists),
                 _ => info.FileName,
             };
+            if (string.IsNullOrEmpty(absoluteFileName))
+            {
+                Context.API.LogError(ClassName, $"The command '{info.FileName}' could not be found in the system PATH or the specified directories.");
+                return null;
+            }
             Context.API.StartProcess(absoluteFileName, info.WorkingDirectory, string.Join(" ", info.ArgumentList), info.Verb == "runas");
             return null;
         }
