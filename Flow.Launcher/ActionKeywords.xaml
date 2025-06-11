@@ -107,8 +107,9 @@
 
         <Border
             Grid.Row="5"
-            Grid.Column="0" Margin="0 10 0 0"
+            Grid.Column="0"
             Grid.ColumnSpan="2"
+            Margin="0 10 0 0"
             Background="{DynamicResource PopupButtonAreaBGColor}"
             BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
             BorderThickness="0 1 0 0">
