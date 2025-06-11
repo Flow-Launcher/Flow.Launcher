@@ -579,25 +579,32 @@ namespace Flow.Launcher
 
         public void StartProcess(string filePath, string workingDirectory, string arguments = "", bool runAsAdmin = false)
         {
-            // Deelevate process if it is running as administrator
-            if (Win32Helper.IsAdministrator() && !runAsAdmin)
+            try
             {
-                Win32Helper.RunAsDesktopUser(filePath, workingDirectory, arguments, out var errorInfo);
-                if (!string.IsNullOrEmpty(errorInfo))
+                // Deelevate process if it is running as administrator
+                if (Win32Helper.IsAdministrator() && !runAsAdmin)
                 {
-                    LogError(ClassName, $"Failed to start process {filePath} with error: {errorInfo}");
+                    Win32Helper.RunAsDesktopUser(filePath, workingDirectory, arguments, out var errorInfo);
+                    if (!string.IsNullOrEmpty(errorInfo))
+                    {
+                        LogError(ClassName, $"Failed to start process {filePath} with error: {errorInfo}");
+                    }
                 }
-            }
 
-            var info = new ProcessStartInfo
+                var info = new ProcessStartInfo
+                {
+                    FileName = filePath,
+                    WorkingDirectory = string.IsNullOrEmpty(workingDirectory) ? Environment.CurrentDirectory : workingDirectory,
+                    Arguments = arguments,
+                    UseShellExecute = true,
+                    Verb = runAsAdmin ? "runas" : "",
+                };
+                Process.Start(info)?.Dispose();
+            }
+            catch (Exception e)
             {
-                FileName = filePath,
-                WorkingDirectory = workingDirectory,
-                Arguments = arguments,
-                UseShellExecute = true,
-                Verb = runAsAdmin ? "runas" : "",
-            };
-            Process.Start(info)?.Dispose();
+                LogException(ClassName, $"Failed to start process {filePath} with arguments {arguments} under {workingDirectory}", e);
+            }
         }
 
         #endregion
