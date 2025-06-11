@@ -343,9 +343,9 @@ public class FirefoxBookmarkLoader : FirefoxBookmarkLoaderBase
             Locked=1
 
             [Profile2]
-            Name=newblahprofile
+            Name=dummyprofile
             IsRelative=0
-            Path=C:\t6h2yuq8.newblahprofile  <== Note this is a custom location path for the profile user can set, we need to cater for this in code.
+            Path=C:\t6h2yuq8.dummyprofile  <== Note this is a custom location path for the profile user can set, we need to cater for this in code.
 
             [Profile1]
             Name=default
