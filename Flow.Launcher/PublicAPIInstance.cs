@@ -586,14 +586,13 @@ namespace Flow.Launcher
                 // Deelevate process if it is running as administrator
                 if (Win32Helper.IsAdministrator() && !runAsAdmin)
                 {
-                    Win32Helper.RunAsDesktopUser(filePath, workingDirectory, arguments, out var errorInfo);
+                    var result = Win32Helper.RunAsDesktopUser(filePath, workingDirectory, arguments, out var errorInfo);
                     if (!string.IsNullOrEmpty(errorInfo))
                     {
                         LogError(ClassName, $"Failed to start process {filePath} with error: {errorInfo}");
-                        return false;
                     }
 
-                    return true;
+                    return result;
                 }
 
                 var info = new ProcessStartInfo
