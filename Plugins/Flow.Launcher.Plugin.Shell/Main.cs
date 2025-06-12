@@ -47,6 +47,8 @@ namespace Flow.Launcher.Plugin.Shell
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Microsoft\WindowsApps\wt.exe"),
         };
 
+        private static readonly bool IsAdmin = IsAdministrator();
+
         private Settings _settings;
 
         public List<Result> Query(Query query)
@@ -517,6 +519,13 @@ namespace Flow.Launcher.Plugin.Shell
         public void Dispose()
         {
             Context.API.RemoveGlobalKeyboardCallback(API_GlobalKeyboardEvent);
+        }
+
+        private static bool IsAdministrator()
+        {
+            using var identity = WindowsIdentity.GetCurrent();
+            var principal = new WindowsPrincipal(identity);
+            return principal.IsInRole(WindowsBuiltInRole.Administrator);
         }
     }
 }
