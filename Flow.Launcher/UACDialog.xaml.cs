@@ -73,6 +73,7 @@ namespace Flow.Launcher
 
         private void KeyEsc_OnPress(object sender, ExecutedRoutedEventArgs e)
         {
+            _result = MessageBoxResult.Cancel;
             DialogResult = false;
             Close();
         }
