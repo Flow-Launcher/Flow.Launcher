@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -17,11 +18,11 @@ namespace Flow.Launcher
             InitializeComponent();
         }
 
-        public static MessageBoxResult Show(string iconPath, string appName, string fullPath)
+        public static MessageBoxResult Show(string appName, string iconPath, string fullPath)
         {
             if (!Application.Current.Dispatcher.CheckAccess())
             {
-                return Application.Current.Dispatcher.Invoke(() => Show(iconPath, appName, fullPath));
+                return Application.Current.Dispatcher.Invoke(() => Show(appName, iconPath, fullPath));
             }
 
             try
@@ -31,9 +32,18 @@ namespace Flow.Launcher
                 // Set icon & app name & program location
                 _ = msgBox.SetImageAsync(iconPath);
                 msgBox.AppName.Text = appName;
-                msgBox.ProgramLocation.Text = string.Format(
-                    App.API.GetTranslation("userAccountControlProgramLocation"),
-                    fullPath);
+                if (string.IsNullOrEmpty(fullPath))
+                {
+                    msgBox.ProgramLocation.Text = string.Format(
+                        App.API.GetTranslation("userAccountControlProgramLocation"),
+                        appName);
+                }
+                else
+                {
+                    msgBox.ProgramLocation.Text = string.Format(
+                        App.API.GetTranslation("userAccountControlProgramLocation"),
+                        fullPath);
+                }
 
                 // Focus No by default
                 msgBox.btnNo.Focus();
@@ -52,6 +62,11 @@ namespace Flow.Launcher
 
         private async Task SetImageAsync(string imagePath)
         {
+            if (string.IsNullOrEmpty(imagePath) || !File.Exists(imagePath))
+            {
+                Img.Visibility = Visibility.Collapsed;
+                return;
+            }
             var imageSource = await App.API.LoadImageAsync(imagePath);
             Img.Source = imageSource;
         }
