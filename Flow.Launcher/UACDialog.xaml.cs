@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace Flow.Launcher.Plugin.Program
+namespace Flow.Launcher
 {
     public partial class UACDialog : Window
     {
@@ -26,16 +26,13 @@ namespace Flow.Launcher.Plugin.Program
 
             try
             {
-                msgBox = new UACDialog
-                {
-                    Title = Main.Context.API.GetTranslation("flowlauncher_plugin_program_user_account_control_title")
-                };
+                msgBox = new UACDialog();
                 
                 // Set icon & app name & program location
                 _ = msgBox.SetImageAsync(iconPath);
                 msgBox.AppName.Text = appName;
                 msgBox.ProgramLocation.Text = string.Format(
-                    Main.Context.API.GetTranslation("flowlauncher_plugin_program_user_account_control_program_location"),
+                    App.API.GetTranslation("userAccountControlProgramLocation"),
                     fullPath);
 
                 // Focus No by default
@@ -47,7 +44,7 @@ namespace Flow.Launcher.Plugin.Program
             }
             catch (Exception e)
             {
-                Main.Context.API.LogError(ClassName, $"An error occurred: {e.Message}");
+                App.API.LogError(ClassName, $"An error occurred: {e.Message}");
                 msgBox = null;
                 return MessageBoxResult.None;
             }
@@ -55,7 +52,7 @@ namespace Flow.Launcher.Plugin.Program
 
         private async Task SetImageAsync(string imagePath)
         {
-            var imageSource = await Main.Context.API.LoadImageAsync(imagePath);
+            var imageSource = await App.API.LoadImageAsync(imagePath);
             Img.Source = imageSource;
         }
 

@@ -610,6 +610,9 @@ namespace Flow.Launcher
             }
         }
 
+        public MessageBoxResult ShowUACDialog(string iconPath, string appName, string fullPath) =>
+            UACDialog.Show(iconPath, appName, fullPath);
+
         #endregion
 
         #region Private Methods

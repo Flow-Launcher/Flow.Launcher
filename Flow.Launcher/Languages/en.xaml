@@ -379,6 +379,11 @@
     <system:String x:Key="appUpdateTitle">Flow Launcher has been updated to {0}</system:String>
     <system:String x:Key="appUpdateButtonContent">Click here to view the release notes</system:String>
 
+    <!--  User Account Control Dialog  -->
+    <system:String x:Key="userAccountControlTitle">User Account Control</system:String>
+    <system:String x:Key="userAccountControlSubtitle">Do you want to allow this app to make changes to your device?</system:String>
+    <system:String x:Key="userAccountControlProgramLocation">Program location: {0}</system:String>
+
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Select File Manager</system:String>
     <system:String x:Key="fileManager_learnMore">Learn more</system:String>
