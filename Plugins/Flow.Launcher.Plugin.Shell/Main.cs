@@ -42,11 +42,9 @@ namespace Flow.Launcher.Plugin.Shell
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"scoop\apps\pwsh\current\pwsh.exe") // if using Scoop
         };
 
-        private static readonly string[] possibleWTPowerShellPaths = new[]
+        private static readonly List<string> possibleWindowsTerminalPaths = new()
         {
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Microsoft\WindowsApps\wt.exe"),
-            // if using Windows Terminal from Microsoft Store
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), @"WindowsApps\Microsoft.WindowsTerminal_*\wt.exe")
         };
 
         private Settings _settings;
@@ -406,6 +404,21 @@ namespace Flow.Launcher.Plugin.Shell
             Context = context;
             _settings = context.API.LoadSettingJsonStorage<Settings>();
             context.API.RegisterGlobalKeyboardCallback(API_GlobalKeyboardEvent);
+
+            // Search for all folders with Microsoft.WindowsTerminal_ prefix
+            var windowsAppsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "WindowsApps");
+            var windowsTerminalFolders = Directory.EnumerateDirectories(windowsAppsPath, "Microsoft.WindowsTerminal_*",
+                SearchOption.TopDirectoryOnly);
+
+            // Find wt.exe among them
+            foreach (var windowsTerminalFolder in windowsTerminalFolders)
+            {
+                var windowsTerminalPath = Path.Combine(windowsTerminalFolder, "wt.exe");
+                if (File.Exists(windowsTerminalPath))
+                {
+                    possibleWindowsTerminalPaths.Insert(0, windowsTerminalPath);
+                }
+            }
         }
 
         bool API_GlobalKeyboardEvent(int keyevent, int vkcode, SpecialKeyState state)
