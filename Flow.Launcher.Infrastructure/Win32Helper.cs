@@ -282,7 +282,7 @@ namespace Flow.Launcher.Infrastructure
             {
                 var hWndDesktop = PInvoke.FindWindowEx(hWnd, HWND.Null, "SHELLDLL_DefView", null);
                 hWndDesktop = PInvoke.FindWindowEx(hWndDesktop, HWND.Null, "SysListView32", "FolderView");
-                if (hWndDesktop.Value != IntPtr.Zero)
+                if (hWndDesktop != HWND.Null)
                 {
                     return false;
                 }
@@ -873,7 +873,7 @@ retry:
 
             // 4. Open that process
             hShellProcess = PInvoke.OpenProcess(PROCESS_ACCESS_RIGHTS.PROCESS_QUERY_INFORMATION, false, dwPID);
-            if (hShellProcess == IntPtr.Zero)
+            if (hShellProcess == HANDLE.Null)
             {
                 errorInfo = $"Can't open desktop shell process: {Marshal.GetLastWin32Error()}";
                 return false;
