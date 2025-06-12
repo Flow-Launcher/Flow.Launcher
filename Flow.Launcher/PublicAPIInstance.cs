@@ -577,7 +577,7 @@ namespace Flow.Launcher
         public Task<long> StopwatchLogInfoAsync(string className, string message, Func<Task> action, [CallerMemberName] string methodName = "") =>
             Stopwatch.InfoAsync(className, message, action, methodName);
 
-        public void StartProcess(string filePath, string workingDirectory = "", string arguments = "", bool runAsAdmin = false)
+        public bool StartProcess(string filePath, string workingDirectory = "", string arguments = "", bool runAsAdmin = false)
         {
             try
             {
@@ -590,8 +590,10 @@ namespace Flow.Launcher
                     if (!string.IsNullOrEmpty(errorInfo))
                     {
                         LogError(ClassName, $"Failed to start process {filePath} with error: {errorInfo}");
+                        return false;
                     }
-                    return;
+
+                    return true;
                 }
 
                 var info = new ProcessStartInfo
@@ -603,10 +605,12 @@ namespace Flow.Launcher
                     Verb = runAsAdmin ? "runas" : "",
                 };
                 Process.Start(info)?.Dispose();
+                return true;
             }
             catch (Exception e)
             {
                 LogException(ClassName, $"Failed to start process {filePath} with arguments {arguments} under {workingDirectory}", e);
+                return false;
             }
         }
 
