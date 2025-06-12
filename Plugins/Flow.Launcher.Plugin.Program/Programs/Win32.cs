@@ -211,7 +211,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             if (Main.IsAdmin && elevated)
             {
                 // Since we are already elevated, we need to create UAC dialog manually
-                if (UACDialog.Show(IcoPath, Name, FullPath) != MessageBoxResult.Yes)
+                if (UACDialog.Show(IcoPath, Name, LnkResolvedPath) != MessageBoxResult.Yes)
                 {
                     return;
                 }
