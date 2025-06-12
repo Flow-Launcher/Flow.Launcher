@@ -62,13 +62,22 @@ namespace Flow.Launcher
 
         private async Task SetImageAsync(string imagePath)
         {
-            if (string.IsNullOrEmpty(imagePath) || !File.Exists(imagePath))
+            try
             {
-                Img.Visibility = Visibility.Collapsed;
-                return;
+                if (string.IsNullOrEmpty(imagePath) || !File.Exists(imagePath))
+                {
+                    Img.Visibility = Visibility.Collapsed;
+                    return;
+                }
+                var imageSource = await App.API.LoadImageAsync(imagePath);
+                Img.Source = imageSource;
+                Img.Visibility = Visibility.Visible;
             }
-            var imageSource = await App.API.LoadImageAsync(imagePath);
-            Img.Source = imageSource;
+            catch (Exception ex)
+            {
+                App.API.LogException(ClassName, $"Failed to load UAC dialog image: {imagePath}", ex);
+                Img.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void KeyEsc_OnPress(object sender, ExecutedRoutedEventArgs e)
