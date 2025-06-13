@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -32,8 +31,6 @@ namespace Flow.Launcher.Plugin.Program
         internal static SemaphoreSlim _uwpsLock = new(1, 1);
 
         internal static PluginInitContext Context { get; private set; }
-
-        internal static bool IsAdmin = IsAdministrator();
 
         private static readonly List<Result> emptyResults = new();
 
@@ -461,13 +458,6 @@ namespace Flow.Launcher.Plugin.Program
         public void Dispose()
         {
             Win32.Dispose();
-        }
-
-        private static bool IsAdministrator()
-        {
-            using var identity = WindowsIdentity.GetCurrent();
-            var principal = new WindowsPrincipal(identity);
-            return principal.IsInRole(WindowsBuiltInRole.Administrator);
         }
     }
 }

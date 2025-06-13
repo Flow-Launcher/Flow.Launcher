@@ -8,7 +8,6 @@ using System.Security;
 using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using Flow.Launcher.Plugin.Program.Logger;
 using Flow.Launcher.Plugin.Program.Views.Models;
@@ -206,18 +205,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
             return result;
         }
 
-        private void Launch(bool elevated = false)
+        private void Launch(bool runAsAdmin = false)
         {
-            if (Main.IsAdmin && elevated)
-            {
-                // Since we are already elevated, we need to create UAC dialog manually
-                if (Main.Context.API.ShowUACDialog(Name, IcoPath, LnkResolvedPath) != MessageBoxResult.Yes)
-                {
-                    return;
-                }
-            }
-
-            _ = Task.Run(() => Main.Context.API.StartProcess(LnkResolvedPath, runAsAdmin:elevated)).ConfigureAwait(false);
+            _ = Task.Run(() => Main.Context.API.StartProcess(
+                FullPath, ParentDirectory, string.Empty, true, runAsAdmin ? "runas" : ""));
         }
 
         public List<Result> ContextMenus(IPublicAPI api)
@@ -234,7 +225,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                             FileName = FullPath, WorkingDirectory = ParentDirectory, UseShellExecute = true
                         };
 
-                        _ = Task.Run(() => Main.StartProcess(ShellCommand.RunAsDifferentUser, info)).ConfigureAwait(false);
+                        _ = Task.Run(() => Main.StartProcess(ShellCommand.RunAsDifferentUser, info));
 
                         return true;
                     },
