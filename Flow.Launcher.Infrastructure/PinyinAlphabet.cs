@@ -30,18 +30,12 @@ namespace Flow.Launcher.Infrastructure
 
         public (string translation, TranslationMapping map) Translate(string content)
         {
-            if (_settings.ShouldUsePinyin)
-            {
-                if (true)
-                {
-                    return BuildCacheFromContent(content);
-                }
-                //else
-                //{
-                //    return value;
-                //}
-            }
-            return (content, null);
+            if (!_settings.ShouldUsePinyin)
+                return (content, null);
+
+            return _pinyinCache.TryGetValue(content, out var value)
+                ? value
+                : BuildCacheFromContent(content);
         }
 
         private (string translation, TranslationMapping map) BuildCacheFromContent(string content)
