@@ -25,8 +25,6 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     private readonly Portable _portable;
     private readonly Internationalization _translater;
 
-    private static readonly bool _isAdministrator = Win32Helper.IsAdministrator();
-
     public SettingsPaneGeneralViewModel(Settings settings, Updater updater, Portable portable, Internationalization translater)
     {
         Settings = settings;
@@ -150,7 +148,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     {
         // When we change from non-admin to admin, we need to restart the app as administrator to apply the changes
         // Under non-administrator, we cannot delete or set the logon task which is run as administrator
-        if (AlwaysRunAsAdministrator && !_isAdministrator)
+        if (AlwaysRunAsAdministrator && !Win32Helper.IsAdministrator())
         {
             if (App.API.ShowMsgBox(
                 App.API.GetTranslation("runAsAdministratorChangeAndRestart"),
