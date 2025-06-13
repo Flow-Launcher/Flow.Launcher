@@ -590,9 +590,10 @@ namespace Flow.Launcher.Plugin
         /// <param name="filePath">Absolute file path. It can be an executable file or a script file</param>
         /// <param name="workingDirectory">Working directory. If not specified, the current directory will be used</param>
         /// <param name="arguments">Optional arguments to pass to the process. If not specified, no arguments will be passed</param>
-        /// <param name="runAsAdmin">Whether to run the process as administrator</param>
+        /// <param name="useShellExecute">Whether to use shell to execute the process.</param>
+        /// <param name="verb">The verb to use when starting the process, e.g. "runas" for elevated permissions. If not specified, no verb will be used.</param>
         /// <returns>Whether process is started successfully</returns>
-        public bool StartProcess(string filePath, string workingDirectory = "", string arguments = "", bool runAsAdmin = false);
+        public bool StartProcess(string filePath, string workingDirectory = "", string arguments = "", bool useShellExecute = true, string verb = "");
 
         /// <summary>
         /// Displays a User Account Control (UAC) dialog to request elevated permissions for the specified application.

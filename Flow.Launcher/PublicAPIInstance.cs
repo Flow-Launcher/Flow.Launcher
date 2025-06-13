@@ -577,16 +577,20 @@ namespace Flow.Launcher
         public Task<long> StopwatchLogInfoAsync(string className, string message, Func<Task> action, [CallerMemberName] string methodName = "") =>
             Stopwatch.InfoAsync(className, message, action, methodName);
 
-        public bool StartProcess(string filePath, string workingDirectory = "", string arguments = "", bool runAsAdmin = false)
+        public bool StartProcess(string filePath, string workingDirectory = "", string arguments = "", bool useShellExecute = true, string verb = "")
         {
             try
             {
                 workingDirectory = string.IsNullOrEmpty(workingDirectory) ? Environment.CurrentDirectory : workingDirectory;
 
-                // Deelevate process if it is running as administrator
-                if (Win32Helper.IsAdministrator() && !runAsAdmin)
+                // Use command executer to run the process as desktop user if running as admin
+                if (Win32Helper.IsAdministrator())
                 {
-                    var result = Win32Helper.RunAsDesktopUser(filePath, workingDirectory, arguments, out var errorInfo);
+                    var result = Win32Helper.RunAsDesktopUser(
+                        Constant.CommandExecutablePath,
+                        Environment.CurrentDirectory,
+                        $"-StartProcess -FileName {filePath} -WorkingDirectory {workingDirectory} -Arguments {arguments} -UseShellExecute {useShellExecute} -Verb {verb}",
+                        out var errorInfo);
                     if (!string.IsNullOrEmpty(errorInfo))
                     {
                         LogError(ClassName, $"Failed to start process {filePath} with error: {errorInfo}");
@@ -601,7 +605,7 @@ namespace Flow.Launcher
                     WorkingDirectory = workingDirectory,
                     Arguments = arguments,
                     UseShellExecute = true,
-                    Verb = runAsAdmin ? "runas" : "",
+                    Verb = verb,
                 };
                 Process.Start(info)?.Dispose();
                 return true;
