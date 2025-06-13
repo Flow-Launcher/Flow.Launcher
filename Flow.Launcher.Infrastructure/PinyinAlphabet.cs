@@ -32,14 +32,14 @@ namespace Flow.Launcher.Infrastructure
         {
             if (_settings.ShouldUsePinyin)
             {
-                if (!_pinyinCache.TryGetValue(content, out var value))
+                if (true)
                 {
                     return BuildCacheFromContent(content);
                 }
-                else
-                {
-                    return value;
-                }
+                //else
+                //{
+                //    return value;
+                //}
             }
             return (content, null);
         }
@@ -164,11 +164,10 @@ namespace Flow.Launcher.Infrastructure
             // Check for initials that are two characters long (zh, ch, sh)
             if (fullPinyin.Length >= 2)
             {
-                var firstTwo = fullPinyinSpan[..2];
-                var firstTwoString = firstTwo.ToString();
-                if (first.ContainsKey(firstTwoString))
+                var firstTwoString = fullPinyinSpan[..2].ToString();
+                if (first.TryGetValue(firstTwoString, out var firstTwoDoublePin))
                 {
-                    doublePin.Append(firstTwoString);
+                    doublePin.Append(firstTwoDoublePin);
 
                     var lastTwo = fullPinyinSpan[2..];
                     var lastTwoString = lastTwo.ToString();
@@ -178,27 +177,26 @@ namespace Flow.Launcher.Infrastructure
                     }
                     else
                     {
-                        doublePin.Append(lastTwo);
+                        doublePin.Append(lastTwo); // Todo: original pinyin, remove this line if not needed
                     }
-                }
-            }
-            // Handle single-character initials
-            else
-            {
-                doublePin.Append(fullPinyinSpan[0]);
-
-                var lastOne = fullPinyinSpan[1..];
-                var lastOneString = lastOne.ToString();
-                if (second.TryGetValue(lastOneString, out var tmp))
-                {
-                    doublePin.Append(tmp);
                 }
                 else
                 {
-                    doublePin.Append(lastOne);
+                    // Handle single-character initials
+                    doublePin.Append(fullPinyinSpan[0]);
+
+                    var lastOne = fullPinyinSpan[1..];
+                    var lastOneString = lastOne.ToString();
+                    if (second.TryGetValue(lastOneString, out var tmp))
+                    {
+                        doublePin.Append(tmp);
+                    }
+                    else
+                    {
+                        doublePin.Append(lastOne);
+                    }
                 }
             }
-
             return doublePin.ToString();
         }
 
