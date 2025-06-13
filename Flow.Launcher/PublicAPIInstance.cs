@@ -590,7 +590,7 @@ namespace Flow.Launcher
                     var result = Win32Helper.RunAsDesktopUser(
                         Constant.CommandExecutablePath,
                         Environment.CurrentDirectory,
-                        $"-StartProcess -FileName {filePath} -WorkingDirectory {workingDirectory} -Arguments {arguments} -UseShellExecute {useShellExecute} -Verb {verb}",
+                        $"-StartProcess -FileName {AddDoubleQuotes(filePath)} -WorkingDirectory {AddDoubleQuotes(workingDirectory)} -Arguments {AddDoubleQuotes(arguments)} -UseShellExecute {useShellExecute} -Verb {AddDoubleQuotes(verb)}",
                         out var errorInfo);
                     if (!string.IsNullOrEmpty(errorInfo))
                     {
@@ -619,7 +619,34 @@ namespace Flow.Launcher
         }
 
         public bool StartProcess(string filePath, string workingDirectory = "", Collection<string> argumentList = null, bool useShellExecute = true, string verb = "") =>
-            StartProcess(filePath, workingDirectory, argumentList == null ? string.Empty : string.Join(" ", argumentList), useShellExecute, verb);
+            StartProcess(filePath, workingDirectory, JoinArgumentList(argumentList), useShellExecute, verb);
+
+        private static string AddDoubleQuotes(string arg)
+        {
+            if (string.IsNullOrEmpty(arg))
+                return "\"\"";
+
+            // If already wrapped in double quotes, return as is
+            if (arg.Length >= 2 && arg[0] == '"' && arg[^1] == '"')
+                return arg;
+
+            return $"\"{arg}\"";
+        }
+
+        private static string JoinArgumentList(Collection<string> args)
+        {
+            if (args == null || args.Count == 0)
+                return string.Empty;
+
+            return string.Join(" ", args.Select(arg =>
+            {
+                if (string.IsNullOrEmpty(arg))
+                    return "\"\"";
+
+                // Add double quotes
+                return AddDoubleQuotes(arg);
+            }));
+        }
 
         #endregion
 
