@@ -109,7 +109,7 @@ function Publish-Self-Contained ($p) {
     $command_profile = Join-Path "$p" "Flow.Launcher.Command/Properties/PublishProfiles/Net7.0-SelfContained.pubxml" -Resolve
 
     # we call dotnet publish on the command project.
-    dotnet publish -c Release $command_profile /p:PublishProfile=$profile
+    dotnet publish -c Release $command_csproj /p:PublishProfile=$command_profile
 }
 
 function Publish-Portable ($outputLocation, $version) {
