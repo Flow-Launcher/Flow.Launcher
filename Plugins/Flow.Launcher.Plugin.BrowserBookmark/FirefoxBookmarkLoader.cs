@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Flow.Launcher.Plugin.BrowserBookmark.Helper;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using Microsoft.Data.Sqlite;
 
@@ -118,31 +119,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
 
     private void LoadFaviconsFromDb(string dbPath, List<Bookmark> bookmarks)
     {
-        // Use a copy to avoid lock issues with the original file
-        var tempDbPath = Path.Combine(_faviconCacheDir, $"tempfavicons_{Guid.NewGuid()}.sqlite");
-
-        try
-        {
-            File.Copy(dbPath, tempDbPath, true);
-        }
-        catch (Exception ex)
-        {
-            try
-            {
-                if (File.Exists(tempDbPath))
-                {
-                    File.Delete(tempDbPath);
-                }
-            }
-            catch (Exception ex1)
-            {
-                Main._context.API.LogException(ClassName, $"Failed to delete temporary favicon DB: {tempDbPath}", ex1);
-            }
-            Main._context.API.LogException(ClassName, $"Failed to copy favicon DB: {dbPath}", ex);
-            return;
-        }
-
-        try
+        FaviconHelper.LoadFaviconsFromDb(_faviconCacheDir, dbPath, (tempDbPath) =>
         {
             // Since some bookmarks may have same favicon id, we need to record them to avoid duplicates
             var savedPaths = new ConcurrentDictionary<string, bool>();
@@ -151,7 +128,8 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
             Parallel.ForEach(bookmarks, bookmark =>
             {
                 // Use read-only connection to avoid locking issues
-                var connection = new SqliteConnection($"Data Source={tempDbPath};Mode=ReadOnly");
+                // Do not use pooling so that we do not need to clear pool: https://github.com/dotnet/efcore/issues/26580
+                var connection = new SqliteConnection($"Data Source={tempDbPath};Mode=ReadOnly;Pooling=false");
                 connection.Open();
 
                 try
@@ -189,7 +167,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
                         return;
 
                     string faviconPath;
-                    if (IsSvgData(imageData))
+                    if (FaviconHelper.IsSvgData(imageData))
                     {
                         faviconPath = Path.Combine(_faviconCacheDir, $"firefox_{domain}.svg");
                     }
@@ -201,7 +179,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
                     // Filter out duplicate favicons
                     if (savedPaths.TryAdd(faviconPath, true))
                     {
-                        SaveBitmapData(imageData, faviconPath);
+                        FaviconHelper.SaveBitmapData(imageData, faviconPath);
                     }
 
                     bookmark.FaviconPath = faviconPath;
@@ -212,48 +190,13 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
                 }
                 finally
                 {
-                    // https://github.com/dotnet/efcore/issues/26580
-                    SqliteConnection.ClearPool(connection);
+                    // Cache connection and clear pool after all operations to avoid issue:
+                    // ObjectDisposedException: Safe handle has been closed.
                     connection.Close();
                     connection.Dispose();
                 }
             });
-        }
-        catch (Exception ex)
-        {
-            Main._context.API.LogException(ClassName, $"Failed to load Firefox favicon DB: {tempDbPath}", ex);
-        }
-
-        // Delete temporary file
-        try
-        {
-            File.Delete(tempDbPath);
-        }
-        catch (Exception ex)
-        {
-            Main._context.API.LogException(ClassName, $"Failed to delete temporary favicon DB: {tempDbPath}", ex);
-        }
-    }
-
-    private static void SaveBitmapData(byte[] imageData, string outputPath)
-    {
-        try
-        {
-            File.WriteAllBytes(outputPath, imageData);
-        }
-        catch (Exception ex)
-        {
-            Main._context.API.LogException(ClassName, $"Failed to save image: {outputPath}", ex);
-        }
-    }
-
-    private static bool IsSvgData(byte[] data)
-    {
-        if (data.Length < 5)
-            return false;
-        string start = System.Text.Encoding.ASCII.GetString(data, 0, Math.Min(100, data.Length));
-        return start.Contains("<svg") ||
-               (start.StartsWith("<?xml") && start.Contains("<svg"));
+        });
     }
 }
 
