@@ -25,4 +25,6 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Công cụ trình duyệt</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">Nếu bạn không sử dụng Chrome, Firefox hoặc Edge hoặc bạn đang sử dụng phiên bản di động của chúng, bạn cần thêm thư mục dữ liệu dấu trang và chọn đúng công cụ trình duyệt để plugin này hoạt động.</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">Ví dụ: Engine của Brave là Chrome; và vị trí dữ liệu dấu trang mặc định của nó là: &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. Đối với công cụ Firefox, thư mục dấu trang là thư mục dữ liệu người dùng chứa tệp địa điểm.sqlite.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Load favicons (can be time consuming during startup)</system:String>
+
 </ResourceDictionary>
