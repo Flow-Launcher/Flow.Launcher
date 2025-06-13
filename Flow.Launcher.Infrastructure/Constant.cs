@@ -16,6 +16,7 @@ namespace Flow.Launcher.Infrastructure
         private static readonly Assembly Assembly = Assembly.GetExecutingAssembly();
         public static readonly string ProgramDirectory = Directory.GetParent(Assembly.Location.NonNull()).ToString();
         public static readonly string ExecutablePath = Path.Combine(ProgramDirectory, FlowLauncher + ".exe");
+        public static readonly string CommandExecutablePath = Path.Combine(ProgramDirectory, "Flow.Launcher.Command.exe");
         public static readonly string ApplicationDirectory = Directory.GetParent(ProgramDirectory).ToString();
         public static readonly string RootDirectory = Directory.GetParent(ApplicationDirectory).ToString();
         
