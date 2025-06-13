@@ -25,4 +25,6 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Движок браузера</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">Если вы не используете Chrome, Firefox или Edge, или используете их портативную версию, вам необходимо добавить каталог данных закладок и выбрать правильный движок браузера, чтобы этот плагин работал.</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">Например: Движок Brave - Chromium; и его местоположение данных закладок по умолчанию: «%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData». Для движка Firefox каталог закладок находится в папке userdata и содержит файл places.sqlite.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Load favicons (can be time consuming during startup)</system:String>
+
 </ResourceDictionary>
