@@ -80,4 +80,3 @@ OpenProcess
 GetProcessId
 DuplicateTokenEx
 CreateProcessWithTokenW
-STARTUPINFO

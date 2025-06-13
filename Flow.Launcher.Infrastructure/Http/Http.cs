@@ -228,7 +228,7 @@ namespace Flow.Launcher.Infrastructure.Http
                 Log.Debug(ClassName, $"Url <{url}>");
                 return await client.GetStringAsync(url, token);
             }
-            catch (System.Exception e)
+            catch (System.Exception)
             {
                 return string.Empty;
             }
