@@ -500,7 +500,7 @@ namespace Flow.Launcher.Plugin.Shell
             context.API.RegisterGlobalKeyboardCallback(API_GlobalKeyboardEvent);
 
             // Search for all folders with Microsoft.WindowsTerminal_ prefix
-            var windowsAppsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "WindowsApps");
+            /*var windowsAppsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "WindowsApps");
             var windowsTerminalFolders = Directory.EnumerateDirectories(windowsAppsPath, "Microsoft.WindowsTerminal_*",
                 SearchOption.TopDirectoryOnly);
 
@@ -512,7 +512,7 @@ namespace Flow.Launcher.Plugin.Shell
                 {
                     possibleWindowsTerminalPaths.Insert(0, windowsTerminalPath);
                 }
-            }
+            }*/
         }
 
         bool API_GlobalKeyboardEvent(int keyevent, int vkcode, SpecialKeyState state)
