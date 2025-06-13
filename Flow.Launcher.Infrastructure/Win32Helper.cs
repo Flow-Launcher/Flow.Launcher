@@ -911,7 +911,9 @@ retry:
 
             // 7. Start the new process with that primary token
             fixed (char* appPtr = app)
-            fixed (char* cmdLinePtr = cmdLine)
+            // Because argv[0] is the module name, C programmers generally repeat the module name as the first token in the command line
+            // So we add one more dash before the command line to make command line work correctly
+            fixed (char* cmdLinePtr = $"- {cmdLine}")
             fixed (char* currentDirPtr = currentDir)
             {
                 if (!PInvoke.CreateProcessWithToken(hPrimaryToken,
