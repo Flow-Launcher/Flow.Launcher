@@ -600,7 +600,7 @@ namespace Flow.Launcher.Plugin
         /// Start a process with the given file path and arguments
         /// </summary>
         /// <remarks>
-        /// It can help to start a deelevated process and show user account control dialog when Flow is running as administrator.
+        /// It can help to start a de-elevated process and show user account control dialog when Flow is running as administrator.
         /// </remarks>
         /// <param name="filePath">Absolute file path. It can be an executable file or a script file</param>
         /// <param name="workingDirectory">Working directory. If not specified, the current directory will be used</param>
