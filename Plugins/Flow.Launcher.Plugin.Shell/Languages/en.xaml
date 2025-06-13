@@ -17,8 +17,4 @@
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">Run As Administrator</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_copy">Copy the command</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_history">Only show number of most used commands:</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_cmd">Windows Command Processor</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_powershell">Windows PowerShell</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_pwsh">Microsoft PowerShell 7</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_wt">Terminal</system:String>
 </ResourceDictionary>

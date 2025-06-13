@@ -4,9 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Security.Principal;
 using System.Threading.Tasks;
-using System.Windows;
 using Flow.Launcher.Plugin.SharedCommands;
 using WindowsInput;
 using WindowsInput.Native;
@@ -24,32 +22,6 @@ namespace Flow.Launcher.Plugin.Shell
         private const string Image = "Images/shell.png";
         private bool _winRStroked;
         private readonly KeyboardSimulator _keyboardSimulator = new(new InputSimulator());
-
-        private static readonly string[] possibleCmdPaths = new[]
-        {
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), "cmd.exe"),
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), @"System32\cmd.exe")
-        };
-
-        private static readonly string[] possiblePowershellPaths = new[]
-        {
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.System), @"WindowsPowerShell\v1.0\powershell.exe"),
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), @"System32\WindowsPowerShell\v1.0\powershell.exe")
-        };
-
-        private static readonly string[] possiblePwshPaths = new[]
-        {
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), @"PowerShell\7\pwsh.exe"),
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Microsoft\WindowsApps\pwsh.exe"),
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), @"scoop\apps\pwsh\current\pwsh.exe") // if using Scoop
-        };
-
-        private static readonly List<string> possibleWindowsTerminalPaths = new()
-        {
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Microsoft\WindowsApps\wt.exe"),
-        };
-
-        private static readonly bool IsAdmin = IsAdministrator();
 
         private Settings _settings;
 
@@ -337,111 +309,8 @@ namespace Flow.Launcher.Plugin.Shell
 
         private static Process StartProcess(ProcessStartInfo info)
         {
-            switch (info.FileName)
-            {
-                case "cmd.exe":
-                    // Check if cmd.exe exists in the system PATH or the specified directories
-                    var cmdPath = possibleCmdPaths.FirstOrDefault(File.Exists);
-                    if (string.IsNullOrEmpty(cmdPath))
-                    {
-                        Context.API.LogError(ClassName, $"Cannot find cmd.exe");
-                        // Fall back to using the Process.Start method directly
-                        // Show user account control dialog if Flow is running as administrator
-                        if (IsAdmin)
-                        {
-                            var uacDialog = Context.API.ShowUACDialog(Context.API.GetTranslation("flowlauncher_plugin_cmd_cmd"), cmdPath, cmdPath);
-                            if (uacDialog != MessageBoxResult.Yes)
-                            {
-                                return null;
-                            }
-                        }
-
-                        return Process.Start(info);
-                    }
-
-                    // If Flow is running as administrator and the command is run as administrator, we need to use UAC dialog
-                    if (IsAdmin && info.Verb == "runas")
-                    {
-                        var uacDialog = Context.API.ShowUACDialog(Context.API.GetTranslation("flowlauncher_plugin_cmd_cmd"), cmdPath, cmdPath);
-                        if (uacDialog != MessageBoxResult.Yes)
-                        {
-                            return null;
-                        }
-                    }
-
-                    Context.API.StartProcess(cmdPath, info.WorkingDirectory, string.Join(" ", info.ArgumentList), info.Verb == "runas");
-                    return null;
-
-                case "powershell.exe":
-                    var powershellPath = possiblePowershellPaths.FirstOrDefault(File.Exists);
-                    if (string.IsNullOrEmpty(powershellPath))
-                    {
-                        Context.API.LogError(ClassName, $"Cannot find powershell.exe");
-                        // Fall back to using the Process.Start method directly
-                        // Show user account control dialog if Flow is running as administrator
-                        if (IsAdmin)
-                        {
-                            var uacDialog = Context.API.ShowUACDialog(Context.API.GetTranslation("flowlauncher_plugin_cmd_powershell"), powershellPath, powershellPath);
-                            if (uacDialog != MessageBoxResult.Yes)
-                            {
-                                return null;
-                            }
-                        }
-
-                        return Process.Start(info);
-                    }
-
-                    // If Flow is running as administrator and the command is run as administrator, we need to use UAC dialog
-                    if (IsAdmin && info.Verb == "runas")
-                    {
-                        var uacDialog = Context.API.ShowUACDialog(Context.API.GetTranslation("flowlauncher_plugin_cmd_powershell"), powershellPath, powershellPath);
-                        if (uacDialog != MessageBoxResult.Yes)
-                        {
-                            return null;
-                        }
-                    }
-
-                    Context.API.StartProcess(powershellPath, info.WorkingDirectory, string.Join(" ", info.ArgumentList), info.Verb == "runas");
-                    return null;
-
-                // Due to arguments pass issues, powershell 7 fails to work with deelevate model
-                // So we use shell to execuete them which means if Flow is running as administrator,
-                // all commands must be running as administrator
-                case "pwsh.exe":
-                    // Fall back to using the Process.Start method directly
-                    // Show user account control dialog if Flow is running as administrator
-                    if (IsAdmin)
-                    {
-                        var pwshPath = possiblePwshPaths.FirstOrDefault(File.Exists);
-                        var uacDialog = Context.API.ShowUACDialog(Context.API.GetTranslation("flowlauncher_plugin_cmd_pwsh"), pwshPath, pwshPath ?? "pwsh.exe");
-                        if (uacDialog != MessageBoxResult.Yes)
-                        {
-                            return null;
-                        }
-                    }
-
-                    return Process.Start(info);
-
-                // Due to arguments pass issues, windows terminal fails to work with deelevate model
-                // So we use shell to execuete them which means if Flow is running as administrator,
-                // all commands must be running as administrator
-                case "wt.exe":
-                    // Fall back to using the Process.Start method directly
-                    // Show user account control dialog if Flow is running as administrator
-                    if (IsAdmin)
-                    {
-                        var wtPath = possibleWindowsTerminalPaths.FirstOrDefault(File.Exists);
-                        var uacDialog = Context.API.ShowUACDialog(Context.API.GetTranslation("flowlauncher_plugin_cmd_wt"), wtPath, wtPath ?? "wt.exe");
-                        if (uacDialog != MessageBoxResult.Yes)
-                        {
-                            return null;
-                        }
-                    }
-
-                    return Process.Start(info);
-            }
-
-            return Process.Start(info);
+            Context.API.StartProcess(info.FileName, info.WorkingDirectory, info.ArgumentList, info.UseShellExecute, info.Verb);
+            return null;
         }
 
         private static void Execute(Func<ProcessStartInfo, Process> startProcess, ProcessStartInfo info)
@@ -498,21 +367,6 @@ namespace Flow.Launcher.Plugin.Shell
             Context = context;
             _settings = context.API.LoadSettingJsonStorage<Settings>();
             context.API.RegisterGlobalKeyboardCallback(API_GlobalKeyboardEvent);
-
-            // Search for all folders with Microsoft.WindowsTerminal_ prefix
-            /*var windowsAppsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "WindowsApps");
-            var windowsTerminalFolders = Directory.EnumerateDirectories(windowsAppsPath, "Microsoft.WindowsTerminal_*",
-                SearchOption.TopDirectoryOnly);
-
-            // Find wt.exe among them
-            foreach (var windowsTerminalFolder in windowsTerminalFolders)
-            {
-                var windowsTerminalPath = Path.Combine(windowsTerminalFolder, "wt.exe");
-                if (File.Exists(windowsTerminalPath))
-                {
-                    possibleWindowsTerminalPaths.Insert(0, windowsTerminalPath);
-                }
-            }*/
         }
 
         bool API_GlobalKeyboardEvent(int keyevent, int vkcode, SpecialKeyState state)
@@ -611,13 +465,6 @@ namespace Flow.Launcher.Plugin.Shell
         public void Dispose()
         {
             Context.API.RemoveGlobalKeyboardCallback(API_GlobalKeyboardEvent);
-        }
-
-        private static bool IsAdministrator()
-        {
-            using var identity = WindowsIdentity.GetCurrent();
-            var principal = new WindowsPrincipal(identity);
-            return principal.IsInRole(WindowsBuiltInRole.Administrator);
         }
     }
 }
