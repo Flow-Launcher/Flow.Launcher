@@ -55,7 +55,7 @@
             </cc:Card>
 
             <cc:Card Title="{DynamicResource releaseNotes}" Icon="&#xe8fd;">
-                <cc:HyperLink Text="{DynamicResource releaseNotes}" Uri="{Binding ReleaseNotes}" />
+                <Button Command="{Binding OpenReleaseNotesCommand}" Content="{DynamicResource releaseNotes}" />
             </cc:Card>
 
 

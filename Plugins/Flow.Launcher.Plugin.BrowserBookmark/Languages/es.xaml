@@ -25,4 +25,6 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Motor del navegador</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">Si no está utilizando Chrome, Firefox o Edge, o si está utilizando su versión portable, debe añadir el directorio de datos de los marcadores y seleccionar el motor del navegador correcto para que este complemento funcione.</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">Por ejemplo: El motor de Brave es Chromium; y la ubicación por defecto de los datos de los marcadores es: &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. Para el motor de Firefox, el directorio de los marcadores es la carpeta de datos del usuario que contiene el archivo places.sqlite.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Cargar favicons (puede llevar mucho tiempo durante el arranque)</system:String>
+
 </ResourceDictionary>

@@ -125,5 +125,22 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         {
             lbxExcludedPaths.Items.SortDescriptions.Add(new SortDescription("Path", ListSortDirection.Ascending));
         }
+
+        private void lbxAccessLinks_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (sender is not ListView listView) return;
+            if (listView.View is not GridView gView) return; 
+
+            var workingWidth =
+                listView.ActualWidth - SystemParameters.VerticalScrollBarWidth; // take into account vertical scrollbar
+
+            if (workingWidth <= 0) return;
+
+            var col1 = 0.4;
+            var col2 = 0.6;
+
+            gView.Columns[0].Width = workingWidth * col1;
+            gView.Columns[1].Width = workingWidth * col2;
+        }
     }
 }

@@ -3,6 +3,8 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">Vennligst gjør et valg først</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Please select a folder path.</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Please choose a different name or folder path.</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Velg en mappekobling</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">Er du sikker på at du ønsker å slette {0}?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">Er du sikker på at du vil slette denne filen permanent?</system:String>
@@ -25,6 +27,7 @@
     <system:String x:Key="plugin_explorer_add">Legg til</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">Generell innstilling</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Tilpass handlingsnøkkelord</system:String>
+    <system:String x:Key="plugin_explorer_manage_quick_access_links_header">Customise Quick Access</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Koblinger for hurtigtilgang</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Everything-innstilling</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">Forhåndsvisningspanel</system:String>
@@ -41,6 +44,7 @@
     <system:String x:Key="plugin_explorer_shell_path">Skall-sti</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Søk i indekser ekskluderte baner</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Bruk søkeresultatets plassering som arbeidskatalogen til den kjørbare filen</system:String>
+    <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Display more information like size and age in tooltips</system:String>
     <system:String x:Key="plugin_explorer_default_open_in_file_manager">Trykk Enter for å åpne mappen i standard filbehandler</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Bruk indekssøk for banesøk</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Alternativer for indeksering</system:String>
@@ -77,6 +81,9 @@
     <!--  Plugin Tooltip  -->
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter for å åpne katalogen</system:String>
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Enter for å åpne mappen som inneholder</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info">{0}{4}Size: {1}{4}Date created: {2}{4}Date modified: {3}</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_unknown">Ukjent</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_volume">{0}{3}Space free: {1}{3}Total size: {2}</system:String>
 
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">Kopier sti</system:String>
@@ -90,6 +97,7 @@
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Slett gjeldende fil permanent</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Slett gjeldende mappe permanent</system:String>
     <system:String x:Key="plugin_explorer_path">Sti:</system:String>
+    <system:String x:Key="plugin_explorer_name">Name:</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Slett valgte</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Kjør som annen bruker</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Kjør valgte med en annen brukerkonto</system:String>
@@ -159,6 +167,9 @@
     <system:String x:Key="flowlauncher_plugin_everything_installing_select">Kunne ikke finne en Everything-installasjon, vil du manuelt velge en plassering?{0}{0}Klikk nei, og Everything vil bli automatisk installert for deg</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Vil du aktivere innholdssøk for Everything?</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">Det kan være veldig tregt uten indeks (som bare støttes i Everything v1.5+)</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_everything_not_found">Unable to find Everything.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_install_issue">Failed to install Everything, please install it manually</system:String>
 
     <!--  Native Context Menu  -->
     <system:String x:Key="plugin_explorer_native_context_menu_header">Opprinnelig hurtigmeny</system:String>

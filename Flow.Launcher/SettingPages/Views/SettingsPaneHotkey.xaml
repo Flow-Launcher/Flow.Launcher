@@ -427,7 +427,7 @@
                                     <GridViewColumn Width="430" Header="{DynamicResource builtinShortcutDescription}">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate DataType="{x:Type userSettings:BuiltinShortcutModel}">
-                                                <TextBlock Text="{Binding Description, Converter={StaticResource TranslationConverter}}" />
+                                                <TextBlock Text="{Binding LocalizedDescription}" />
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>

@@ -91,6 +91,11 @@
     </PackageReference>
     <PackageReference Include="iNKORE.UI.WPF.Modern" Version="0.10.0" />
     <PackageReference Include="InputSimulator" Version="1.0.4" />
+    <PackageReference Include="MdXaml" Version="1.27.0" />
+    <PackageReference Include="MdXaml.AnimatedGif" Version="1.27.0" />
+    <PackageReference Include="MdXaml.Html" Version="1.27.0" />
+    <PackageReference Include="MdXaml.Plugins" Version="1.27.0" />
+    <PackageReference Include="MdXaml.Svg" Version="1.27.0" />
     <!-- Do not upgrade Microsoft.Extensions.DependencyInjection and Microsoft.Extensions.Hosting since we are .Net7.0 -->
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
