@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using CommunityToolkit.Mvvm.Input;
@@ -10,7 +9,6 @@ using Flow.Launcher.Core.Configuration;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
@@ -75,7 +73,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             // even if we encounter an error while setting the startup method
             if (value && UseLogonTaskForStartup)
             {
-                _ = CheckAdminChangeAndAskForRestartAsync();
+                CheckAdminChangeAndAskForRestart();
             }
         }
     }
@@ -112,7 +110,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             // even if we encounter an error while setting the startup method
             if (StartFlowLauncherOnSystemStartup && value)
             {
-                _ = CheckAdminChangeAndAskForRestartAsync();
+                CheckAdminChangeAndAskForRestart();
             }
         }
     }
@@ -139,12 +137,12 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
 
                 // If we have enabled logon task startup, we need to check if we need to restart the app
                 // even if we encounter an error while setting the startup method
-                _ = CheckAdminChangeAndAskForRestartAsync();
+                CheckAdminChangeAndAskForRestart();
             }
         }
     }
 
-    private async Task CheckAdminChangeAndAskForRestartAsync()
+    private void CheckAdminChangeAndAskForRestart()
     {
         // When we change from non-admin to admin, we need to restart the app as administrator to apply the changes
         // Under non-administrator, we cannot delete or set the logon task which is run as administrator
@@ -155,17 +153,8 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
                 App.API.GetTranslation("runAsAdministratorChange"),
                 MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                App.API.HideMainWindow();
-
-                // We must manually save because of Environment.Exit(0)
-                // which will cause ungraceful exit
-                App.API.SaveAppAllSettings();
-
-                // Wait for all image caches to be saved before restarting
-                await ImageLoader.WaitSaveAsync();
-
                 // Restart the app as administrator
-                App.RestartApp(true);
+                App.API.RestartAppAsAdmin();
             }
         }  
     }
@@ -195,7 +184,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     }
 
     // This is only required to set at startup. When portable mode enabled/disabled a restart is always required
-    private static bool _portableMode = DataLocation.PortableDataLocationInUse();
+    private static readonly bool _portableMode = DataLocation.PortableDataLocationInUse();
 
     public bool PortableMode
     {

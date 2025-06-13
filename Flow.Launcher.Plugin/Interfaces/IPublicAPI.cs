@@ -30,9 +30,14 @@ namespace Flow.Launcher.Plugin
         void ChangeQuery(string query, bool requery = false);
 
         /// <summary>
-        /// Restart Flow Launcher
+        /// Restart Flow Launcher without changing the user privileges.
         /// </summary>
         void RestartApp();
+
+        /// <summary>
+        /// Restart Flow Launcher as administrator.
+        /// </summary>
+        void RestartAppAsAdmin();
 
         /// <summary>
         /// Run a shell command

@@ -72,8 +72,12 @@ namespace Flow.Launcher
             _mainVM.ChangeQueryText(query, requery);
         }
 
+        public void RestartApp() => RestartApp(false);
+
+        public void RestartAppAsAdmin() => RestartApp(true);
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
-        public async void RestartApp()
+        private async void RestartApp(bool runAsAdmin)
         {
             _mainVM.Hide();
 
@@ -88,7 +92,7 @@ namespace Flow.Launcher
             // Restart requires Squirrel's Update.exe to be present in the parent folder, 
             // it is only published from the project's release pipeline. When debugging without it,
             // the project may not restart or just terminates. This is expected.
-            App.RestartApp();
+            App.RestartApp(runAsAdmin);
         }
 
         public void ShowMainWindow() => _mainVM.Show();
