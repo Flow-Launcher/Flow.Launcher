@@ -26,7 +26,6 @@ using Flow.Launcher.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.Threading;
-using Squirrel;
 
 namespace Flow.Launcher
 {
@@ -258,7 +257,7 @@ namespace Flow.Launcher
                         API.GetTranslation("runAsAdministratorChange"),
                         MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     {
-                        RestartAppAsAdministrator();
+                        RestartApp(true);
                     }
                 }
                 catch (Exception e)
@@ -347,28 +346,26 @@ namespace Flow.Launcher
         /// <summary>
         /// Restart the application without changing the user privileges.
         /// </summary>
+        /// <remarks>
+        /// Since Squirrel does not provide a way to restart the app as administrator,
+        /// we need to do it manually by starting the update.exe with the runas verb
+        /// </remarks>
+        /// <param name="forceAdmin">
+        /// If true, the application will be restarted as administrator.
+        /// If false, it will be restarted with the same privileges as the current user.
+        /// </param>
+        /// <exception cref="Exception">Thrown when the Update.exe is not found in the expected location</exception>
         public static void RestartApp(bool forceAdmin = false)
         {
             // Restart requires Squirrel's Update.exe to be present in the parent folder, 
             // it is only published from the project's release pipeline. When debugging without it,
             // the project may not restart or just terminates. This is expected.
-            RestartAppAsAdministrator(Win32Helper.IsAdministrator() || forceAdmin);
-        }
-
-        /// <summary>
-        /// Since Squirrel does not provide a way to restart the app as administrator,
-        /// we need to do it manually by starting the update.exe with the runas verb
-        /// </summary>
-        /// <param name="runAsAdmin">Whether to run the application as administrator or not</param>
-        /// <exception cref="Exception">Thrown when the Update.exe is not found in the expected location</exception>
-        private static void RestartAppAsAdministrator(bool runAsAdmin)
-        {
             var startInfo = new ProcessStartInfo
             {
                 FileName = getUpdateExe(),
                 Arguments = $"--processStartAndWait \"{Constant.ExecutablePath}\"",
                 UseShellExecute = true,
-                Verb = runAsAdmin ? "runas" : ""
+                Verb = Win32Helper.IsAdministrator() || forceAdmin ? "runas" : ""
             };
             Process.Start(startInfo);
             Thread.Sleep(500);
