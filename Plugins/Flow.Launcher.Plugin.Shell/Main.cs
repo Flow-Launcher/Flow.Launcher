@@ -389,7 +389,7 @@ namespace Flow.Launcher.Plugin.Shell
             return true;
         }
 
-        private void OnWinRPressed()
+        private static void OnWinRPressed()
         {
             Context.API.ShowMainWindow();
             // show the main window and set focus to the query box

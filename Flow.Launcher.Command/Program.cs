@@ -71,18 +71,43 @@ internal static class Program
 
             try
             {
-                using var process = new Process
+                ProcessStartInfo info;
+                if (argumentList.Count == 0)
                 {
-                    StartInfo = new ProcessStartInfo
+                    info = new ProcessStartInfo
                     {
                         FileName = fileName,
                         WorkingDirectory = workingDirectory,
-                        Arguments = string.Join(" ", argumentList),
                         UseShellExecute = useShellExecute,
                         Verb = verb
+                    };
+                }
+                else if (argumentList.Count == 1)
+                {
+                    info = new ProcessStartInfo
+                    {
+                        FileName = fileName,
+                        WorkingDirectory = workingDirectory,
+                        Arguments = argumentList[0],
+                        UseShellExecute = useShellExecute,
+                        Verb = verb
+                    };
+                }
+                else
+                {
+                    info = new ProcessStartInfo
+                    {
+                        FileName = fileName,
+                        WorkingDirectory = workingDirectory,
+                        UseShellExecute = useShellExecute,
+                        Verb = verb
+                    };
+                    foreach (var arg in argumentList)
+                    {
+                        info.ArgumentList.Add(arg);
                     }
-                };
-                process.Start();
+                }
+                Process.Start(info)?.Dispose();
                 Console.WriteLine("Success.");
                 return 0;
             }
