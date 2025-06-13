@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -616,6 +617,9 @@ namespace Flow.Launcher
                 return false;
             }
         }
+
+        public bool StartProcess(string filePath, string workingDirectory = "", Collection<string> argumentList = null, bool useShellExecute = true, string verb = "") =>
+            StartProcess(filePath, workingDirectory, argumentList == null ? string.Empty : string.Join(" ", argumentList), useShellExecute, verb);
 
         #endregion
 
