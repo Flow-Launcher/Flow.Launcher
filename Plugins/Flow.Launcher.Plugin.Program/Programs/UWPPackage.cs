@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Principal;
@@ -516,14 +515,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
             var command = "shell:AppsFolder\\" + UserModelId;
             command = Environment.ExpandEnvironmentVariables(command.Trim());
 
-            var info = new ProcessStartInfo()
-            {
-                FileName = command,
-                UseShellExecute = true,
-                Verb = elevated ? "runas" : ""
-            };
-
-            _ = Task.Run(() => Main.StartProcess(Process.Start, info)).ConfigureAwait(false);
+            _ = Task.Run(() => Main.Context.API.StartProcess(
+                command, string.Empty, string.Empty, true, elevated ? "runas" : ""));
         }
 
         internal static bool IfAppCanRunElevated(XmlNode appNode)
