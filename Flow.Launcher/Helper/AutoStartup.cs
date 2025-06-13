@@ -17,8 +17,6 @@ public class AutoStartup
     private const string LogonTaskName = $"{Constant.FlowLauncher} Startup";
     private const string LogonTaskDesc = $"{Constant.FlowLauncher} Auto Startup";
 
-    private static readonly bool _isAdministrator = Win32Helper.IsAdministrator();
-
     public static void CheckIsEnabled(bool useLogonTaskForStartup, bool alwaysRunAsAdministrator)
     {
         // We need to check both because if both of them are enabled,
@@ -67,7 +65,7 @@ public class AutoStartup
                     var pathCorrect = action.Equals(Constant.ExecutablePath, StringComparison.OrdinalIgnoreCase);
                     var runLevelCorrect = CheckRunLevel(task.Definition.Principal.RunLevel, alwaysRunAsAdministrator);
 
-                    if (_isAdministrator)
+                    if (Win32Helper.IsAdministrator())
                     {
                         // If path or run level is not correct, we need to unschedule and reschedule the task
                         if (!pathCorrect || !runLevelCorrect)
@@ -213,7 +211,7 @@ public class AutoStartup
         td.Actions.Add(Constant.ExecutablePath);
 
         // Only if the app is running as administrator, we can set the run level to highest
-        if (_isAdministrator && alwaysRunAsAdministrator)
+        if (Win32Helper.IsAdministrator() && alwaysRunAsAdministrator)
         {
             td.Principal.RunLevel = TaskRunLevel.Highest;
         }
