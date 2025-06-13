@@ -77,6 +77,17 @@
                     OnContent="{DynamicResource enable}" />
             </cc:Card>
 
+            <cc:Card
+                Title="{DynamicResource showAtTopmost}"
+                Margin="0 14 0 0"
+                Icon="&#xE923;"
+                Sub="{DynamicResource showAtTopmostToolTip}">
+                <ui:ToggleSwitch
+                    IsOn="{Binding Settings.ShowAtTopmost}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
+            </cc:Card>
+
             <cc:CardGroup Margin="0 14 0 0">
                 <cc:Card Title="{DynamicResource SearchWindowPosition}" Icon="&#xe7f4;">
                     <StackPanel Orientation="Horizontal">
@@ -154,7 +165,7 @@
                 Title="{DynamicResource AlwaysPreview}"
                 Margin="0 14 0 0"
                 Icon="&#xe8a1;"
-                Sub="{DynamicResource AlwaysPreviewToolTip}">
+                Sub="{Binding AlwaysPreviewToolTip}">
                 <ui:ToggleSwitch
                     IsOn="{Binding Settings.AlwaysPreview}"
                     OffContent="{DynamicResource disable}"
@@ -374,7 +385,6 @@
                     Title="{DynamicResource KoreanImeTitle}"
                     Margin="0 14 0 0"
                     Closable="False"
-                    DataContext="{Binding RelativeSource={RelativeSource AncestorType=Border}, Path=DataContext}"
                     IsIconVisible="True"
                     Length="Long"
                     Message="{DynamicResource KoreanImeGuide}"

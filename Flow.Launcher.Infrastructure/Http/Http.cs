@@ -220,5 +220,18 @@ namespace Flow.Launcher.Infrastructure.Http
                 return new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
         }
+
+        public static async Task<string> GetStringAsync(string url, CancellationToken token = default)
+        {
+            try
+            {
+                Log.Debug(ClassName, $"Url <{url}>");
+                return await client.GetStringAsync(url, token);
+            }
+            catch (System.Exception e)
+            {
+                return string.Empty;
+            }
+        }
     }
 }
