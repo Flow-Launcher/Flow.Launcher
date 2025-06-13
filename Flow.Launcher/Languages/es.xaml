@@ -136,6 +136,8 @@
     <system:String x:Key="historyResultsForHomePage">Mostrar historial de resultados en la página de inicio</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Número máximo de resultados del historial en la página de inicio</system:String>
     <system:String x:Key="homeToggleBoxToolTip">Esto solo se puede editar si el complemento soporta la función de Inicio y la Página de Inicio está activada.</system:String>
+    <system:String x:Key="showAtTopmost">Show Search Window at Topmost</system:String>
+    <system:String x:Key="showAtTopmostToolTip">Show search window above other windows</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Buscar complemento</system:String>
@@ -364,11 +366,18 @@
     <system:String x:Key="userdatapath">Ubicación de datos del usuario</system:String>
     <system:String x:Key="userdatapathToolTip">La configuración del usuario y los complementos instalados se guardan en la carpeta de datos del usuario. Esta ubicación puede variar dependiendo de si está en modo portable o no.</system:String>
     <system:String x:Key="userdatapathButton">Abrir carpeta</system:String>
-    <system:String x:Key="advanced">Advanced</system:String>
+    <system:String x:Key="advanced">Avanzado</system:String>
     <system:String x:Key="logLevel">Nivel de registro</system:String>
     <system:String x:Key="LogLevelDEBUG">Depurar</system:String>
     <system:String x:Key="LogLevelINFO">Información</system:String>
     <system:String x:Key="settingWindowFontTitle">Configuración de fuente de la ventana</system:String>
+
+    <!--  Release Notes Window  -->
+    <system:String x:Key="seeMoreReleaseNotes">Ver más notas de la versión en GitHub</system:String>
+    <system:String x:Key="checkNetworkConnectionTitle">No se pudo obtener las notas de la versión</system:String>
+    <system:String x:Key="checkNetworkConnectionSubTitle">Por favor, compruebe su conexión de red o asegúrese de que GitHub es accesible</system:String>
+    <system:String x:Key="appUpdateTitle">Flow Launcher ha sido actualizado a {0}</system:String>
+    <system:String x:Key="appUpdateButtonContent">Haga clic aquí para ver las notas de la versión</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Seleccionar administrador de archivos</system:String>
@@ -480,6 +489,7 @@ Si añade un prefijo &quot;@&quot; al introducir un acceso directo, éste coinci
     </system:String>
     <system:String x:Key="errorTitle">Error</system:String>
     <system:String x:Key="folderOpenError">Se ha producido un error al abrir la carpeta. {0}</system:String>
+    <system:String x:Key="browserOpenError">Se ha producido un error al abrir la URL en el navegador. Por favor, compruebe la configuración de su navegador web predeterminado en la sección General de la ventana de configuración</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Por favor espere...</system:String>

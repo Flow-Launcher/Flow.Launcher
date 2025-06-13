@@ -134,8 +134,10 @@
     <system:String x:Key="homePage">Domovská stránka</system:String>
     <system:String x:Key="homePageToolTip">Zobraziť výsledky Domovskej stránky, keď je text dopytu prázdny.</system:String>
     <system:String x:Key="historyResultsForHomePage">Zobraziť výsledky histórie na Domovskej stránke</system:String>
-    <system:String x:Key="historyResultsCountForHomePage">Maximálny počet histórie výsledkov zobrazenej na Domovskej stránke</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Maximálny počet zobrazených výsledkov histórie na Domovskej stránke</system:String>
     <system:String x:Key="homeToggleBoxToolTip">Úprava je možná len vtedy, ak plugin podporuje funkciu Domovská stránka a Domovská stránka je povolená.</system:String>
+    <system:String x:Key="showAtTopmost">Zobraziť vyhľadávacie okno navrchu</system:String>
+    <system:String x:Key="showAtTopmostToolTip">Zobraziť okno vyhľadávania nad ostatnými oknami</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Vyhľadať plugin</system:String>
@@ -242,7 +244,7 @@
     <system:String x:Key="BackdropType">Typ pozadia (backdrop)</system:String>
     <system:String x:Key="BackdropInfo">Efekt pozadia sa v náhľade nezobrazuje.</system:String>
     <system:String x:Key="BackdropTypeDisabledToolTip">Pozadie je podporované od Windows 11 zostava 22000 a novších</system:String>
-    <system:String x:Key="BackdropTypesNone">Žiadna</system:String>
+    <system:String x:Key="BackdropTypesNone">Žiadny</system:String>
     <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
     <system:String x:Key="BackdropTypesMica">Mica</system:String>
     <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
@@ -370,6 +372,13 @@
     <system:String x:Key="LogLevelINFO">Info</system:String>
     <system:String x:Key="settingWindowFontTitle">Nastavenie písma okna</system:String>
 
+    <!--  Release Notes Window  -->
+    <system:String x:Key="seeMoreReleaseNotes">Ďalšie poznámky k vydaniu na Githube</system:String>
+    <system:String x:Key="checkNetworkConnectionTitle">Nepodarilo sa načítať poznámky k vydaniu</system:String>
+    <system:String x:Key="checkNetworkConnectionSubTitle">Skontrolujte sieťové pripojenie alebo sa uistite, že je Github dostupný</system:String>
+    <system:String x:Key="appUpdateTitle">Flow Launcher bol aktualizovaný na {0}</system:String>
+    <system:String x:Key="appUpdateButtonContent">Na zobrazenie poznámok k vydaniu kliknite sem</system:String>
+
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Vyberte správcu súborov</system:String>
     <system:String x:Key="fileManager_learnMore">Viac informácií</system:String>
@@ -480,6 +489,7 @@ Ak pri zadávaní skratky pred ňu pridáte &quot;@&quot;, bude sa zhodovať s �
     </system:String>
     <system:String x:Key="errorTitle">Chyba</system:String>
     <system:String x:Key="folderOpenError">Počas otvárania priečinka sa vyskytla chyba. {0}</system:String>
+    <system:String x:Key="browserOpenError">Pri otváraní adresy URL v prehliadači došlo k chybe. Skontrolujte konfiguráciu predvoleného webového prehliadača v nastaveniach Všeobecné</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Čakajte, prosím...</system:String>

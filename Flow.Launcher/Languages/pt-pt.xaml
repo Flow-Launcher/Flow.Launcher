@@ -135,6 +135,8 @@
     <system:String x:Key="historyResultsForHomePage">Mostrar histórico na página inicial</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Máximo de resultados a mostrar na Página inicial</system:String>
     <system:String x:Key="homeToggleBoxToolTip">Esta opção apenas pode ser editada se o plugin tiver suporte a Página inicial e se estiver ativo.</system:String>
+    <system:String x:Key="showAtTopmost">Janela de pesquisa por cima</system:String>
+    <system:String x:Key="showAtTopmostToolTip">Mostrar caixa de pesquisa por cima das outras janelas</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Pesquisar plugins</system:String>
@@ -366,7 +368,14 @@
     <system:String x:Key="logLevel">Nível de registo</system:String>
     <system:String x:Key="LogLevelDEBUG">Depuração</system:String>
     <system:String x:Key="LogLevelINFO">Informação</system:String>
-    <system:String x:Key="settingWindowFontTitle">Setting Window Font</system:String>
+    <system:String x:Key="settingWindowFontTitle">Tipo de letra da aplicação</system:String>
+
+    <!--  Release Notes Window  -->
+    <system:String x:Key="seeMoreReleaseNotes">Mostrar notas da versão no GitHub</system:String>
+    <system:String x:Key="checkNetworkConnectionTitle">Falha ao obter notas da versão</system:String>
+    <system:String x:Key="checkNetworkConnectionSubTitle">Verifique a sua ligação de rede e confirme se consegue aceder a GitHub</system:String>
+    <system:String x:Key="appUpdateTitle">Flow Launcher foi atualizado para {0}</system:String>
+    <system:String x:Key="appUpdateButtonContent">Clique aqui para ver as notas desta versão</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Selecione o gestor de ficheiros</system:String>
@@ -400,7 +409,7 @@
     <system:String x:Key="oldActionKeywords">Palavra-chave atual</system:String>
     <system:String x:Key="newActionKeywords">Nova palavra-chave</system:String>
     <system:String x:Key="cancel">Cancelar</system:String>
-    <system:String x:Key="done">Feito</system:String>
+    <system:String x:Key="done">OK</system:String>
     <system:String x:Key="cannotFindSpecifiedPlugin">Plugin não encontrado</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">A nova palavra-chave não pode estar vazia</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Esta palavra-chave já está associada a um plugin. Por favor escolha outra.</system:String>
@@ -478,6 +487,7 @@ Se adicionar o prefixo '@' durante a introdução do atalho, será utilizada qua
     </system:String>
     <system:String x:Key="errorTitle">Erro</system:String>
     <system:String x:Key="folderOpenError">Ocorreu um erro ao abrir a pasta: {0}</system:String>
+    <system:String x:Key="browserOpenError">Ocorreu um erro ao abrir o URL no navegador. Verifique a configuração Navegador web padrão na secção Geral das definições.</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Por favor aguarde...</system:String>
