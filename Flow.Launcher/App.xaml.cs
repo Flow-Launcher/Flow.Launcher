@@ -349,29 +349,26 @@ namespace Flow.Launcher
         /// </summary>
         public static void RestartApp(bool forceAdmin = false)
         {
-            if (Win32Helper.IsAdministrator() || forceAdmin)
-            {
-                RestartAppAsAdministrator();
-            }
-            else
-            {
-                // Restart requires Squirrel's Update.exe to be present in the parent folder, 
-                // it is only published from the project's release pipeline. When debugging without it,
-                // the project may not restart or just terminates. This is expected.
-                UpdateManager.RestartApp(Constant.ApplicationFileName);
-            }
+            // Restart requires Squirrel's Update.exe to be present in the parent folder, 
+            // it is only published from the project's release pipeline. When debugging without it,
+            // the project may not restart or just terminates. This is expected.
+            RestartAppAsAdministrator(Win32Helper.IsAdministrator() || forceAdmin);
         }
 
-        // Since Squirrel does not provide a way to restart the app as administrator,
-        // we need to do it manually by starting the update.exe with the runas verb
-        private static void RestartAppAsAdministrator()
+        /// <summary>
+        /// Since Squirrel does not provide a way to restart the app as administrator,
+        /// we need to do it manually by starting the update.exe with the runas verb
+        /// </summary>
+        /// <param name="runAsAdmin">Whether to run the application as administrator or not</param>
+        /// <exception cref="Exception">Thrown when the Update.exe is not found in the expected location</exception>
+        private static void RestartAppAsAdministrator(bool runAsAdmin)
         {
             var startInfo = new ProcessStartInfo
             {
                 FileName = getUpdateExe(),
-                Arguments = $"--processStartAndWait {Constant.ExecutablePath}",
+                Arguments = $"--processStartAndWait \"{Constant.ExecutablePath}\"",
                 UseShellExecute = true,
-                Verb = "runas",
+                Verb = runAsAdmin ? "runas" : ""
             };
             Process.Start(startInfo);
             Thread.Sleep(500);
