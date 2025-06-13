@@ -594,20 +594,5 @@ namespace Flow.Launcher.Plugin
         /// <param name="verb">The verb to use when starting the process, e.g. "runas" for elevated permissions. If not specified, no verb will be used.</param>
         /// <returns>Whether process is started successfully</returns>
         public bool StartProcess(string filePath, string workingDirectory = "", string arguments = "", bool useShellExecute = true, string verb = "");
-
-        /// <summary>
-        /// Displays a User Account Control (UAC) dialog to request elevated permissions for the specified application.
-        /// </summary>
-        /// <remarks>
-        /// If Flow is running under administrator mode, executing elevated actions will not trigger UAC dialog.
-        /// So this method is used to manually show the UAC dialog when needed.
-        /// </remarks>
-        /// <param name="appName">The name of the application requesting elevation. This will be displayed in the dialog.</param>
-        /// <param name="iconPath">The file path to the icon that will be displayed in the dialog. Must be a valid path to an image file.</param>
-        /// <param name="fullPath">The full file path of the executable requesting elevation. This is shown to the user for verification.</param>
-        /// <returns>A <see cref="MessageBoxResult"/> indicating the user's response to the dialog. Possible values include
-        /// <see cref="MessageBoxResult.Yes"/> if the user grants permission,
-        /// or <see cref="MessageBoxResult.No"/> if the user denies permission.</returns>
-        public MessageBoxResult ShowUACDialog(string appName, string iconPath = "", string fullPath = "");
     }
 }
