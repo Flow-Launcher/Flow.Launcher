@@ -605,7 +605,7 @@ namespace Flow.Launcher
                     FileName = filePath,
                     WorkingDirectory = workingDirectory,
                     Arguments = arguments,
-                    UseShellExecute = true,
+                    UseShellExecute = useShellExecute,
                     Verb = verb,
                 };
                 Process.Start(info)?.Dispose();
