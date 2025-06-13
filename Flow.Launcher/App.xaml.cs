@@ -71,6 +71,13 @@ namespace Flow.Launcher
                 return;
             }
 
+            // Check if the application is running as administrator
+            if (_settings.AlwaysRunAsAdministrator && !Win32Helper.IsAdministrator())
+            {
+                RestartApp(true);
+                return;
+            }
+
             // Configure the dependency injection container
             try
             {
