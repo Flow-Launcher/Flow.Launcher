@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -11,28 +12,32 @@ using DragEventArgs = System.Windows.DragEventArgs;
 
 namespace Flow.Launcher.Plugin.Explorer.Views
 {
-    /// <summary>
-    /// Interaction logic for ExplorerSettings.xaml
-    /// </summary>
     public partial class ExplorerSettings
     {
-        private readonly SettingsViewModel viewModel;
+        private readonly SettingsViewModel _viewModel;
+        private readonly List<Expander> _expanders;
 
         public ExplorerSettings(SettingsViewModel viewModel)
         {
+            _viewModel = viewModel;
             DataContext = viewModel;
 
             InitializeComponent();
-
-            this.viewModel = viewModel;
 
             DataContext = viewModel;
 
             ActionKeywordModel.Init(viewModel.Settings);
 
-            lbxAccessLinks.Items.SortDescriptions.Add(new SortDescription("Path", ListSortDirection.Ascending));
-
-            lbxExcludedPaths.Items.SortDescriptions.Add(new SortDescription("Path", ListSortDirection.Ascending));
+            _expanders = new List<Expander>
+            {
+                GeneralSettingsExpander,
+                ContextMenuExpander,
+                PreviewPanelExpander,
+                EverythingExpander,
+                ActionKeywordsExpander,
+                QuickAccessExpander,
+                ExcludedPathsExpander
+            };
         }
 
         private void AccessLinkDragDrop(string containerName, DragEventArgs e)
@@ -51,7 +56,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                     {
                         Path = s
                     };
-                    viewModel.AppendLink(containerName, newFolderLink);
+                    _viewModel.AppendLink(containerName, newFolderLink);
                 }
             }
         }
@@ -76,8 +81,8 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         {
             if (tbFastSortWarning is not null)
             {
-                tbFastSortWarning.Visibility = viewModel.FastSortWarningVisibility;
-                tbFastSortWarning.Text = viewModel.SortOptionWarningMessage;
+                tbFastSortWarning.Visibility = _viewModel.FastSortWarningVisibility;
+                tbFastSortWarning.Text = _viewModel.SortOptionWarningMessage;
             }
         }
         private void LbxAccessLinks_OnDrop(object sender, DragEventArgs e)
@@ -92,6 +97,50 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         private void AllowOnlyNumericInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
             e.Handled = e.Text.ToCharArray().Any(c => !char.IsDigit(c));
+        }
+
+        private void Expander_Expanded(object sender, RoutedEventArgs e)
+        {
+            if (sender is Expander expandedExpander)
+            {
+                // Ensure _expanders is not null and contains items
+                if (_expanders == null || !_expanders.Any()) return;
+
+                foreach (var expander in _expanders)
+                {
+                    if (expander != null && expander != expandedExpander && expander.IsExpanded)
+                    {
+                        expander.IsExpanded = false;
+                    }
+                }
+            }
+        }
+
+        private void lbxAccessLinks_Loaded(object sender, RoutedEventArgs e)
+        {
+            lbxAccessLinks.Items.SortDescriptions.Add(new SortDescription("Path", ListSortDirection.Ascending));
+        }
+
+        private void lbxExcludedPaths_Loaded(object sender, RoutedEventArgs e)
+        {
+            lbxExcludedPaths.Items.SortDescriptions.Add(new SortDescription("Path", ListSortDirection.Ascending));
+        }
+
+        private void lbxAccessLinks_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (sender is not ListView listView) return;
+            if (listView.View is not GridView gView) return; 
+
+            var workingWidth =
+                listView.ActualWidth - SystemParameters.VerticalScrollBarWidth; // take into account vertical scrollbar
+
+            if (workingWidth <= 0) return;
+
+            var col1 = 0.4;
+            var col2 = 0.6;
+
+            gView.Columns[0].Width = workingWidth * col1;
+            gView.Columns[1].Width = workingWidth * col2;
         }
     }
 }

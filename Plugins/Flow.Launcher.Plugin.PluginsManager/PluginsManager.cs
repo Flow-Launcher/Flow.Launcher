@@ -316,61 +316,75 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             var downloadToFilePath = Path.Combine(Path.GetTempPath(),
                                 $"{x.Name}-{x.NewVersion}.zip");
 
-                            _ = Task.Run(async delegate
+                            _ = Task.Run(async () =>
                             {
-                                using var cts = new CancellationTokenSource();
+                                try
+                                {
+                                    using var cts = new CancellationTokenSource();
 
-                                if (!x.PluginNewUserPlugin.IsFromLocalInstallPath)
-                                {
-                                    await DownloadFileAsync(
-                                        $"{Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin")} {x.PluginNewUserPlugin.Name}",
-                                        x.PluginNewUserPlugin.UrlDownload, downloadToFilePath, cts);
-                                }
-                                else
-                                {
-                                    downloadToFilePath = x.PluginNewUserPlugin.LocalInstallPath;
-                                }
-
-                                // check if user cancelled download before installing plugin
-                                if (cts.IsCancellationRequested)
-                                {
-                                    return;
-                                }
-                                else
-                                {
-                                    await Context.API.UpdatePluginAsync(x.PluginExistingMetadata, x.PluginNewUserPlugin,
-                                        downloadToFilePath);
-
-                                    if (Settings.AutoRestartAfterChanging)
+                                    if (!x.PluginNewUserPlugin.IsFromLocalInstallPath)
                                     {
-                                        Context.API.ShowMsg(
-                                            Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
-                                            string.Format(
-                                                Context.API.GetTranslation(
-                                                    "plugin_pluginsmanager_update_success_restart"),
-                                                x.Name));
-                                        Context.API.RestartApp();
+                                        await DownloadFileAsync(
+                                            $"{Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin")} {x.PluginNewUserPlugin.Name}",
+                                            x.PluginNewUserPlugin.UrlDownload, downloadToFilePath, cts);
                                     }
                                     else
                                     {
-                                        Context.API.ShowMsg(
-                                            Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
-                                            string.Format(
-                                                Context.API.GetTranslation(
-                                                    "plugin_pluginsmanager_update_success_no_restart"),
-                                                x.Name));
+                                        downloadToFilePath = x.PluginNewUserPlugin.LocalInstallPath;
+                                    }
+
+                                    // check if user cancelled download before installing plugin
+                                    if (cts.IsCancellationRequested)
+                                    {
+                                        return;
+                                    }
+                                    else
+                                    {
+                                        await Context.API.UpdatePluginAsync(x.PluginExistingMetadata, x.PluginNewUserPlugin,
+                                            downloadToFilePath);
+
+                                        if (Settings.AutoRestartAfterChanging)
+                                        {
+                                            Context.API.ShowMsg(
+                                                Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
+                                                string.Format(
+                                                    Context.API.GetTranslation(
+                                                        "plugin_pluginsmanager_update_success_restart"),
+                                                    x.Name));
+                                            Context.API.RestartApp();
+                                        }
+                                        else
+                                        {
+                                            Context.API.ShowMsg(
+                                                Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
+                                                string.Format(
+                                                    Context.API.GetTranslation(
+                                                        "plugin_pluginsmanager_update_success_no_restart"),
+                                                    x.Name));
+                                        }
                                     }
                                 }
-                            }).ContinueWith(t =>
-                            {
-                                Context.API.LogException(ClassName, $"Update failed for {x.Name}",
-                                    t.Exception.InnerException);
-                                Context.API.ShowMsg(
-                                    Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
-                                    string.Format(
-                                        Context.API.GetTranslation("plugin_pluginsmanager_install_error_subtitle"),
-                                        x.Name));
-                            }, token, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.Default);
+                                catch (HttpRequestException e)
+                                {
+                                    // show error message
+                                    Context.API.ShowMsgError(
+                                        string.Format(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"), x.Name),
+                                        Context.API.GetTranslation("plugin_pluginsmanager_download_error"));
+                                    Context.API.LogException(ClassName, "An error occurred while downloading plugin", e);
+                                    return;
+                                }
+                                catch (Exception e)
+                                {
+                                    // show error message
+                                    Context.API.LogException(ClassName, $"Update failed for {x.Name}", e);
+                                    Context.API.ShowMsgError(
+                                        Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
+                                        string.Format(
+                                            Context.API.GetTranslation("plugin_pluginsmanager_install_error_subtitle"),
+                                            x.Name));
+                                    return;
+                                }
+                            });
 
                             return true;
                         },
@@ -436,7 +450,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             catch (Exception ex)
                             {
                                 Context.API.LogException(ClassName, $"Update failed for {plugin.Name}", ex.InnerException);
-                                Context.API.ShowMsg(
+                                Context.API.ShowMsgError(
                                     Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
                                     string.Format(
                                         Context.API.GetTranslation("plugin_pluginsmanager_install_error_subtitle"),
