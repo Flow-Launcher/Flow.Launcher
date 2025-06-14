@@ -31,10 +31,25 @@ namespace Flow.Launcher.Infrastructure
                 if (e.PropertyName == nameof(Settings.UseDoublePinyin) ||
                     e.PropertyName == nameof(Settings.DoublePinyinSchema))
                 {
-                    LoadDoublePinyinTable();
-                    _pinyinCache.Clear();
+                    Reload();
                 }
             };
+        }
+
+        public void Reload()
+        {
+            LoadDoublePinyinTable();
+            _pinyinCache.Clear();
+        }
+
+        private void CreateDoublePinyinTableFromStream(Stream jsonStream)
+        {
+            Dictionary<string, Dictionary<string, string>> table = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(jsonStream);
+            if (!table.TryGetValue(_settings.DoublePinyinSchema, out var value))
+            {
+                throw new InvalidOperationException("DoublePinyinSchema is invalid or double pinyin table is broken.");
+            }
+            currentDoublePinyinTable = new ReadOnlyDictionary<string, string>(value);
         }
 
         private void LoadDoublePinyinTable()
@@ -45,12 +60,7 @@ namespace Flow.Launcher.Infrastructure
                 try
                 {
                     using var fs = File.OpenRead(tablePath);
-                    Dictionary<string, Dictionary<string, string>> table = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(fs);
-                    if (!table.TryGetValue(_settings.DoublePinyinSchema, out var value))
-                    {
-                        throw new InvalidOperationException("DoublePinyinSchema is invalid.");
-                    }
-                    currentDoublePinyinTable = new ReadOnlyDictionary<string, string>(value);
+                    CreateDoublePinyinTableFromStream(fs);
                 }
                 catch (System.Exception e)
                 {
@@ -73,7 +83,7 @@ namespace Flow.Launcher.Infrastructure
 
         public (string translation, TranslationMapping map) Translate(string content)
         {
-            if (!_settings.ShouldUsePinyin)
+            if (!_settings.ShouldUsePinyin || !WordsHelper.HasChinese(content))
                 return (content, null);
 
             return _pinyinCache.TryGetValue(content, out var value)
@@ -83,11 +93,6 @@ namespace Flow.Launcher.Infrastructure
 
         private (string translation, TranslationMapping map) BuildCacheFromContent(string content)
         {
-            if (!WordsHelper.HasChinese(content))
-            {
-                return (content, null);
-            }
-
             var resultList = WordsHelper.GetPinyinList(content);
 
             var resultBuilder = new StringBuilder();
