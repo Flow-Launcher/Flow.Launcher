@@ -99,13 +99,19 @@ namespace Flow.Launcher.Infrastructure
             {
                 if (content[i] >= 0x3400 && content[i] <= 0x9FD5)
                 {
-                    string dp = _settings.UseDoublePinyin ? ToDoublePin(resultList[i]) : resultList[i];
-                    map.AddNewIndex(i, resultBuilder.Length, dp.Length + 1);
+                    string translated = _settings.UseDoublePinyin ? ToDoublePin(resultList[i]) : resultList[i];
                     if (previousIsChinese)
                     {
+                        map.AddNewIndex(i, resultBuilder.Length, translated.Length + 1);
                         resultBuilder.Append(' ');
+                        resultBuilder.Append(translated);
                     }
-                    resultBuilder.Append(dp);
+                    else
+                    {
+                        map.AddNewIndex(i, resultBuilder.Length, translated.Length);
+                        resultBuilder.Append(translated);
+                        previousIsChinese = true;
+                    }
                 }
                 else
                 {
