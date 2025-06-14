@@ -575,7 +575,7 @@ namespace Flow.Launcher
         public Task<long> StopwatchLogInfoAsync(string className, string message, Func<Task> action, [CallerMemberName] string methodName = "") =>
             Stopwatch.InfoAsync(className, message, action, methodName);
 
-        public bool StartProcess(string filePath, string workingDirectory = "", string arguments = "", bool useShellExecute = false, string verb = "")
+        public bool StartProcess(string fileName, string workingDirectory = "", string arguments = "", bool useShellExecute = false, string verb = "")
         {
             try
             {
@@ -587,13 +587,13 @@ namespace Flow.Launcher
                     var result = Win32Helper.RunAsDesktopUser(
                         Constant.CommandExecutablePath,
                         Environment.CurrentDirectory,
-                        $"-StartProcess -FileName {AddDoubleQuotes(filePath)} -WorkingDirectory {AddDoubleQuotes(workingDirectory)} -Arguments {AddDoubleQuotes(arguments)} -UseShellExecute {useShellExecute} -Verb {AddDoubleQuotes(verb)}",
+                        $"-StartProcess -FileName {AddDoubleQuotes(fileName)} -WorkingDirectory {AddDoubleQuotes(workingDirectory)} -Arguments {AddDoubleQuotes(arguments)} -UseShellExecute {useShellExecute} -Verb {AddDoubleQuotes(verb)}",
                         false,
                         true, // Do not show the command window
                         out var errorInfo);
                     if (!string.IsNullOrEmpty(errorInfo))
                     {
-                        LogError(ClassName, $"Failed to start process {filePath} with error: {errorInfo}");
+                        LogError(ClassName, $"Failed to start process {fileName} with arguments {arguments} under {workingDirectory}: {errorInfo}");
                     }
 
                     return result;
@@ -601,7 +601,7 @@ namespace Flow.Launcher
 
                 var info = new ProcessStartInfo
                 {
-                    FileName = filePath,
+                    FileName = fileName,
                     WorkingDirectory = workingDirectory,
                     Arguments = arguments,
                     UseShellExecute = useShellExecute,
@@ -612,13 +612,13 @@ namespace Flow.Launcher
             }
             catch (Exception e)
             {
-                LogException(ClassName, $"Failed to start process {filePath} with arguments {arguments} under {workingDirectory}", e);
+                LogException(ClassName, $"Failed to start process {fileName} with arguments {arguments} under {workingDirectory}", e);
                 return false;
             }
         }
 
-        public bool StartProcess(string filePath, string workingDirectory = "", Collection<string> argumentList = null, bool useShellExecute = false, string verb = "") =>
-            StartProcess(filePath, workingDirectory, JoinArgumentList(argumentList), useShellExecute, verb);
+        public bool StartProcess(string fileName, string workingDirectory = "", Collection<string> argumentList = null, bool useShellExecute = false, string verb = "") =>
+            StartProcess(fileName, workingDirectory, JoinArgumentList(argumentList), useShellExecute, verb);
 
         private static string AddDoubleQuotes(string arg)
         {

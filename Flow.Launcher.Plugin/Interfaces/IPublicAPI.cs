@@ -593,13 +593,13 @@ namespace Flow.Launcher.Plugin
         /// <remarks>
         /// It can help to start a de-elevated process and show user account control dialog when Flow is running as administrator.
         /// </remarks>
-        /// <param name="filePath">File path</param>
+        /// <param name="fileName">File name</param>
         /// <param name="workingDirectory">Working directory. If not specified, the current directory will be used</param>
         /// <param name="arguments">Optional arguments to pass to the process. If not specified, no arguments will be passed</param>
         /// <param name="useShellExecute">Whether to use shell to execute the process</param>
         /// <param name="verb">Verb to use when starting the process, e.g. "runas" for elevated permissions. If not specified, no verb will be used.</param>
         /// <returns>Whether process is started successfully</returns>
-        public bool StartProcess(string filePath, string workingDirectory = "", string arguments = "", bool useShellExecute = false, string verb = "");
+        public bool StartProcess(string fileName, string workingDirectory = "", string arguments = "", bool useShellExecute = false, string verb = "");
 
         /// <summary>
         /// Start a process with support for handling administrative privileges
@@ -607,12 +607,12 @@ namespace Flow.Launcher.Plugin
         /// <remarks>
         /// It can help to start a de-elevated process and show user account control dialog when Flow is running as administrator.
         /// </remarks>
-        /// <param name="filePath">File path</param>
+        /// <param name="fileName">File name</param>
         /// <param name="workingDirectory">Working directory. If not specified, the current directory will be used</param>
         /// <param name="argumentList">Optional argument list to pass to the process. If not specified, no arguments will be passed</param>
         /// <param name="useShellExecute">Whether to use shell to execute the process</param>
         /// <param name="verb">Verb to use when starting the process, e.g. "runas" for elevated permissions. If not specified, no verb will be used.</param>
         /// <returns>Whether process is started successfully</returns>
-        public bool StartProcess(string filePath, string workingDirectory = "", Collection<string> argumentList = null, bool useShellExecute = false, string verb = "");
+        public bool StartProcess(string fileName, string workingDirectory = "", Collection<string> argumentList = null, bool useShellExecute = false, string verb = "");
     }
 }
