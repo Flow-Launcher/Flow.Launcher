@@ -674,6 +674,7 @@ namespace Flow.Launcher.Infrastructure
         {
             try
             {
+                // No need to de-elevate since we are opening windows settings which cannot bring security risks
                 Process.Start(new ProcessStartInfo("ms-settings:regionlanguage") { UseShellExecute = true });
             }
             catch (System.Exception)

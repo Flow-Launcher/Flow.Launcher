@@ -404,7 +404,6 @@ namespace Flow.Launcher
             }
         }
 
-
         private void OpenUri(Uri uri, bool? inPrivate = null)
         {
             if (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
@@ -438,13 +437,7 @@ namespace Flow.Launcher
             }
             else
             {
-                Process.Start(new ProcessStartInfo()
-                {
-                    FileName = uri.AbsoluteUri,
-                    UseShellExecute = true
-                })?.Dispose();
-
-                return;
+                StartProcess(uri.AbsoluteUri, arguments: null, useShellExecute: true);
             }
         }
 

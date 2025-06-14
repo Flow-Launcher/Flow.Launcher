@@ -198,6 +198,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
 
             try
             {
+                // No need to de-elevate since we are opening windows settings which cannot bring security risks
                 Process.Start(processStartInfo);
                 return true;
             }
