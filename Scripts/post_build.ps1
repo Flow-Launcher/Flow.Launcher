@@ -98,18 +98,18 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
 
 function Publish-Self-Contained ($p) {
 
+    $command_csproj  = Join-Path "$p" "Flow.Launcher.Command/Flow.Launcher.Command.csproj" -Resolve
+    $command_profile = Join-Path "$p" "Flow.Launcher.Command/Properties/PublishProfiles/Net7.0-SelfContained.pubxml" -Resolve
+
+    # we call dotnet publish on the command project.
+    dotnet publish -c Release $command_csproj /p:PublishProfile=$command_profile
+
     $csproj  = Join-Path "$p" "Flow.Launcher/Flow.Launcher.csproj" -Resolve
     $profile = Join-Path "$p" "Flow.Launcher/Properties/PublishProfiles/Net7.0-SelfContained.pubxml" -Resolve
 
     # we call dotnet publish on the main project. 
     # The other projects should have been built in Release at this point.
     dotnet publish -c Release $csproj /p:PublishProfile=$profile
-
-    $command_csproj  = Join-Path "$p" "Flow.Launcher.Command/Flow.Launcher.Command.csproj" -Resolve
-    $command_profile = Join-Path "$p" "Flow.Launcher.Command/Properties/PublishProfiles/Net7.0-SelfContained.pubxml" -Resolve
-
-    # we call dotnet publish on the command project.
-    dotnet publish -c Release $command_csproj /p:PublishProfile=$command_profile
 }
 
 function Publish-Portable ($outputLocation, $version) {
