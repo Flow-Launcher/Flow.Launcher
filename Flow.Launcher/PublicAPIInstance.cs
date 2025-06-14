@@ -595,6 +595,8 @@ namespace Flow.Launcher
                         Constant.CommandExecutablePath,
                         Environment.CurrentDirectory,
                         $"-StartProcess -FileName {AddDoubleQuotes(filePath)} -WorkingDirectory {AddDoubleQuotes(workingDirectory)} -Arguments {AddDoubleQuotes(arguments)} -UseShellExecute {useShellExecute} -Verb {AddDoubleQuotes(verb)}",
+                        false,
+                        true, // Do not show the command window
                         out var errorInfo);
                     if (!string.IsNullOrEmpty(errorInfo))
                     {

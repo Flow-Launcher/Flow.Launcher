@@ -808,7 +808,7 @@ namespace Flow.Launcher.Infrastructure
         /// Inspired by <see href="https://github.com/jay/RunAsDesktopUser">
         /// Document: <see href="https://learn.microsoft.com/en-us/archive/blogs/aaron_margosis/faq-how-do-i-start-a-program-as-the-desktop-user-from-an-elevated-app">
         /// </summary>
-        public static unsafe bool RunAsDesktopUser(string app, string currentDir, string cmdLine, out string errorInfo)
+        public static unsafe bool RunAsDesktopUser(string app, string currentDir, string cmdLine, bool loadProfile, bool createNoWindow, out string errorInfo)
         {
             STARTUPINFOW si = new();
             PROCESS_INFORMATION pi = new();
@@ -916,11 +916,14 @@ retry:
             fixed (char* cmdLinePtr = $"- {cmdLine}")
             fixed (char* currentDirPtr = currentDir)
             {
-                if (!PInvoke.CreateProcessWithToken(hPrimaryToken,
-                    0,
+                if (!PInvoke.CreateProcessWithToken(
+                    hPrimaryToken,
+                    // If you need to access content in HKEY_CURRENT_USER, please set loadProfile to true
+                    loadProfile ? CREATE_PROCESS_LOGON_FLAGS.LOGON_WITH_PROFILE : 0,
                     appPtr,
                     cmdLinePtr,
-                    0,
+                    // If you do not want to create a window for console app, please set createNoWindow to true
+                    createNoWindow ? PROCESS_CREATION_FLAGS.CREATE_NO_WINDOW : 0,
                     null,
                     currentDirPtr,
                     &si,
