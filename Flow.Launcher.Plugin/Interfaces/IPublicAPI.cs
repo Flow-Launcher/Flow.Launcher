@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -29,9 +30,14 @@ namespace Flow.Launcher.Plugin
         void ChangeQuery(string query, bool requery = false);
 
         /// <summary>
-        /// Restart Flow Launcher
+        /// Restart Flow Launcher without changing the user privileges.
         /// </summary>
         void RestartApp();
+
+        /// <summary>
+        /// Restart Flow Launcher as administrator.
+        /// </summary>
+        void RestartAppAsAdmin();
 
         /// <summary>
         /// Run a shell command
@@ -595,5 +601,33 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         /// <returns>The time taken to execute the method in milliseconds</returns>
         public Task<long> StopwatchLogInfoAsync(string className, string message, Func<Task> action, [CallerMemberName] string methodName = "");
+
+        /// <summary>
+        /// Start a process with support for handling administrative privileges
+        /// </summary>
+        /// <remarks>
+        /// It can help to start a de-elevated process and show user account control dialog when Flow is running as administrator.
+        /// </remarks>
+        /// <param name="fileName">File name</param>
+        /// <param name="workingDirectory">Working directory. If not specified, the current directory will be used</param>
+        /// <param name="arguments">Optional arguments to pass to the process. If not specified, no arguments will be passed</param>
+        /// <param name="useShellExecute">Whether to use shell to execute the process</param>
+        /// <param name="verb">Verb to use when starting the process, e.g. "runas" for elevated permissions. If not specified, no verb will be used.</param>
+        /// <returns>Whether process is started successfully</returns>
+        public bool StartProcess(string fileName, string workingDirectory = "", string arguments = "", bool useShellExecute = false, string verb = "");
+
+        /// <summary>
+        /// Start a process with support for handling administrative privileges
+        /// </summary>
+        /// <remarks>
+        /// It can help to start a de-elevated process and show user account control dialog when Flow is running as administrator.
+        /// </remarks>
+        /// <param name="fileName">File name</param>
+        /// <param name="workingDirectory">Working directory. If not specified, the current directory will be used</param>
+        /// <param name="argumentList">Optional argument list to pass to the process. If not specified, no arguments will be passed</param>
+        /// <param name="useShellExecute">Whether to use shell to execute the process</param>
+        /// <param name="verb">Verb to use when starting the process, e.g. "runas" for elevated permissions. If not specified, no verb will be used.</param>
+        /// <returns>Whether process is started successfully</returns>
+        public bool StartProcess(string fileName, string workingDirectory = "", Collection<string> argumentList = null, bool useShellExecute = false, string verb = "");
     }
 }

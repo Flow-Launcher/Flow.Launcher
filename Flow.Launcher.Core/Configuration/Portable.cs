@@ -48,7 +48,7 @@ namespace Flow.Launcher.Core.Configuration
                 API.ShowMsgBox("Flow Launcher needs to restart to finish disabling portable mode, " +
                     "after the restart your portable data profile will be deleted and roaming data profile kept");
 
-                UpdateManager.RestartApp(Constant.ApplicationFileName);
+                API.RestartApp();
             }
             catch (Exception e)
             {
@@ -72,7 +72,7 @@ namespace Flow.Launcher.Core.Configuration
                 API.ShowMsgBox("Flow Launcher needs to restart to finish enabling portable mode, " +
                     "after the restart your roaming data profile will be deleted and portable data profile kept");
 
-                UpdateManager.RestartApp(Constant.ApplicationFileName);
+                API.RestartApp();
             }
             catch (Exception e)
             {

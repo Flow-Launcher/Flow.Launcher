@@ -5,9 +5,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Flow.Launcher.Plugin.SharedCommands;
 using WindowsInput;
 using WindowsInput.Native;
-using Flow.Launcher.Plugin.SharedCommands;
 using Control = System.Windows.Controls.Control;
 using Keys = System.Windows.Forms.Keys;
 
@@ -17,7 +17,7 @@ namespace Flow.Launcher.Plugin.Shell
     {
         private static readonly string ClassName = nameof(Main);
 
-        internal PluginInitContext Context { get; private set; }
+        internal static PluginInitContext Context { get; private set; }
 
         private const string Image = "Images/shell.png";
         private bool _winRStroked;
@@ -80,7 +80,7 @@ namespace Flow.Launcher.Plugin.Shell
                                     !c.SpecialKeyState.AltPressed &&
                                     !c.SpecialKeyState.WinPressed;
 
-                                Execute(Process.Start, PrepareProcessStartInfo(m, runAsAdministrator));
+                                Execute(StartProcess, PrepareProcessStartInfo(m, runAsAdministrator));
                                 return true;
                             },
                             CopyText = m
@@ -120,7 +120,7 @@ namespace Flow.Launcher.Plugin.Shell
                                 !c.SpecialKeyState.AltPressed &&
                                 !c.SpecialKeyState.WinPressed;
 
-                            Execute(Process.Start, PrepareProcessStartInfo(m.Key, runAsAdministrator));
+                            Execute(StartProcess, PrepareProcessStartInfo(m.Key, runAsAdministrator));
                             return true;
                         },
                         CopyText = m.Key
@@ -150,7 +150,7 @@ namespace Flow.Launcher.Plugin.Shell
                         !c.SpecialKeyState.AltPressed &&
                         !c.SpecialKeyState.WinPressed;
 
-                    Execute(Process.Start, PrepareProcessStartInfo(cmd, runAsAdministrator));
+                    Execute(StartProcess, PrepareProcessStartInfo(cmd, runAsAdministrator));
                     return true;
                 },
                 CopyText = cmd
@@ -175,7 +175,7 @@ namespace Flow.Launcher.Plugin.Shell
                             !c.SpecialKeyState.AltPressed &&
                             !c.SpecialKeyState.WinPressed;
 
-                        Execute(Process.Start, PrepareProcessStartInfo(m.Key, runAsAdministrator));
+                        Execute(StartProcess, PrepareProcessStartInfo(m.Key, runAsAdministrator));
                         return true;
                     },
                     CopyText = m.Key
@@ -307,7 +307,18 @@ namespace Flow.Launcher.Plugin.Shell
             return info;
         }
 
-        private void Execute(Func<ProcessStartInfo, Process> startProcess, ProcessStartInfo info)
+        private static Process StartProcess(ProcessStartInfo info)
+        {
+            Context.API.StartProcess(
+                info.FileName,
+                workingDirectory: info.WorkingDirectory,
+                argumentList: info.ArgumentList,
+                useShellExecute: info.UseShellExecute,
+                verb: info.Verb);
+            return null;
+        }
+
+        private static void Execute(Func<ProcessStartInfo, Process> startProcess, ProcessStartInfo info)
         {
             try
             {
@@ -383,7 +394,7 @@ namespace Flow.Launcher.Plugin.Shell
             return true;
         }
 
-        private void OnWinRPressed()
+        private static void OnWinRPressed()
         {
             Context.API.ShowMainWindow();
             // show the main window and set focus to the query box
@@ -434,7 +445,7 @@ namespace Flow.Launcher.Plugin.Shell
                     Title = Context.API.GetTranslation("flowlauncher_plugin_cmd_run_as_administrator"),
                     Action = c =>
                     {
-                        Execute(Process.Start, PrepareProcessStartInfo(selectedResult.Title, true));
+                        Execute(StartProcess, PrepareProcessStartInfo(selectedResult.Title, true));
                         return true;
                     },
                     IcoPath = "Images/admin.png",
