@@ -101,6 +101,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 AutoCompleteText = GetAutoCompleteText(title, query, path, ResultType.Folder),
                 TitleHighlightData = Context.API.FuzzySearch(query.Search, title).MatchData,
                 CopyText = path,
+                Preview = new Result.PreviewInfo
+                {
+                    FilePath = path,
+                },
                 PreviewPanel = new Lazy<UserControl>(() => new PreviewPanel(Settings, path, ResultType.Folder)),
                 Action = c =>
                 {
