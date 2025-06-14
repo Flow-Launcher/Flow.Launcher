@@ -2,10 +2,13 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Text;
+using System.Text.Json;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.UserSettings;
 using ToolGood.Words.Pinyin;
+using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher.Infrastructure
 {
@@ -16,9 +19,49 @@ namespace Flow.Launcher.Infrastructure
 
         private readonly Settings _settings;
 
+        private ReadOnlyDictionary<string, string> currentDoublePinyinTable;
+
         public PinyinAlphabet()
         {
             _settings = Ioc.Default.GetRequiredService<Settings>();
+            LoadDoublePinyinTable();
+
+            _settings.PropertyChanged += (sender, e) =>
+            {
+                if (e.PropertyName == nameof(Settings.UseDoublePinyin) ||
+                    e.PropertyName == nameof(Settings.DoublePinyinSchema))
+                {
+                    LoadDoublePinyinTable();
+                    _pinyinCache.Clear();
+                }
+            };
+        }
+
+        private void LoadDoublePinyinTable()
+        {
+            if (_settings.UseDoublePinyin)
+            {
+                var tablePath = Path.Join(AppContext.BaseDirectory, "Resources", "double_pinyin.json");
+                try
+                {
+                    using var fs = File.OpenRead(tablePath);
+                    Dictionary<string, Dictionary<string, string>> table = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(fs);
+                    if (!table.TryGetValue(_settings.DoublePinyinSchema, out var value))
+                    {
+                        throw new InvalidOperationException("DoublePinyinSchema is invalid.");
+                    }
+                    currentDoublePinyinTable = new ReadOnlyDictionary<string, string>(value);
+                }
+                catch (System.Exception e)
+                {
+                    Log.Exception(nameof(PinyinAlphabet), "Failed to load double pinyin table from file: " + tablePath, e);
+                    currentDoublePinyinTable = new ReadOnlyDictionary<string, string>(new Dictionary<string, string>());
+                }
+            }
+            else
+            {
+                currentDoublePinyinTable = new ReadOnlyDictionary<string, string>(new Dictionary<string, string>());
+            }
         }
 
         public bool ShouldTranslate(string stringToTranslate)
@@ -50,7 +93,7 @@ namespace Flow.Launcher.Infrastructure
             var resultBuilder = new StringBuilder();
             var map = new TranslationMapping();
 
-            var pre = false;
+            var previousIsChinese = false;
 
             for (var i = 0; i < resultList.Length; i++)
             {
@@ -58,18 +101,19 @@ namespace Flow.Launcher.Infrastructure
                 {
                     string dp = _settings.UseDoublePinyin ? ToDoublePin(resultList[i]) : resultList[i];
                     map.AddNewIndex(i, resultBuilder.Length, dp.Length + 1);
-                    resultBuilder.Append(' ');
+                    if (previousIsChinese)
+                    {
+                        resultBuilder.Append(' ');
+                    }
                     resultBuilder.Append(dp);
-                    pre = true;
                 }
                 else
                 {
-                    if (pre)
+                    if (previousIsChinese)
                     {
-                        pre = false;
+                        previousIsChinese = false;
                         resultBuilder.Append(' ');
                     }
-
                     resultBuilder.Append(resultList[i]);
                 }
             }
@@ -83,115 +127,13 @@ namespace Flow.Launcher.Infrastructure
 
         #region Double Pinyin
 
-        private static readonly ReadOnlyDictionary<string, string> special = new(new Dictionary<string, string>(){
-            {"A", "aa"},
-            {"Ai", "ai"},
-            {"An", "an"},
-            {"Ang", "ah"},
-            {"Ao", "ao"},
-            {"E", "ee"},
-            {"Ei", "ei"},
-            {"En", "en"},
-            {"Er", "er"},
-            {"O", "oo"},
-            {"Ou", "ou"}
-        });
-
-        private static readonly ReadOnlyDictionary<string, string> first = new(new Dictionary<string, string>(){
-            {"Ch", "i"},
-            {"Sh", "u"},
-            {"Zh", "v"}
-        });
-
-        private static readonly ReadOnlyDictionary<string, string> second = new(new Dictionary<string, string>()
+        private string ToDoublePin(string fullPinyin)
         {
-            {"ua", "x"},
-            {"ei", "w"},
-            {"e", "e"},
-            {"ou", "z"},
-            {"iu", "q"},
-            {"ve", "t"},
-            {"ue", "t"},
-            {"u", "u"},
-            {"i", "i"},
-            {"o", "o"},
-            {"uo", "o"},
-            {"ie", "p"},
-            {"a", "a"},
-            {"ong", "s"},
-            {"iong", "s"},
-            {"ai", "d"},
-            {"ing", "k"},
-            {"uai", "k"},
-            {"ang", "h"},
-            {"uan", "r"},
-            {"an", "j"},
-            {"en", "f"},
-            {"ia", "x"},
-            {"iang", "l"},
-            {"uang", "l"},
-            {"eng", "g"},
-            {"in", "b"},
-            {"ao", "c"},
-            {"v", "v"},
-            {"ui", "v"},
-            {"un", "y"},
-            {"iao", "n"},
-            {"ian", "m"}
-        });
-
-        private static string ToDoublePin(string fullPinyin)
-        {
-            // Assuming s is valid
-            var fullPinyinSpan = fullPinyin.AsSpan();
-            var doublePin = new StringBuilder();
-
-            // Handle special cases (a, o, e)
-            if (fullPinyin.Length <= 3 && (fullPinyinSpan[0] == 'a' || fullPinyinSpan[0] == 'e' || fullPinyinSpan[0] == 'o'))
+            if (currentDoublePinyinTable.TryGetValue(fullPinyin, out var doublePinyinValue))
             {
-                if (special.TryGetValue(fullPinyin, out var value))
-                {
-                    return value;
-                }
+                return doublePinyinValue;
             }
-
-            // Check for initials that are two characters long (zh, ch, sh)
-            if (fullPinyin.Length >= 2)
-            {
-                var firstTwoString = fullPinyinSpan[..2].ToString();
-                if (first.TryGetValue(firstTwoString, out var firstTwoDoublePin))
-                {
-                    doublePin.Append(firstTwoDoublePin);
-
-                    var lastTwo = fullPinyinSpan[2..];
-                    var lastTwoString = lastTwo.ToString();
-                    if (second.TryGetValue(lastTwoString, out var tmp))
-                    {
-                        doublePin.Append(tmp);
-                    }
-                    else
-                    {
-                        doublePin.Append(lastTwo); // Todo: original pinyin, remove this line if not needed
-                    }
-                }
-                else
-                {
-                    // Handle single-character initials
-                    doublePin.Append(fullPinyinSpan[0]);
-
-                    var lastOne = fullPinyinSpan[1..];
-                    var lastOneString = lastOne.ToString();
-                    if (second.TryGetValue(lastOneString, out var tmp))
-                    {
-                        doublePin.Append(tmp);
-                    }
-                    else
-                    {
-                        doublePin.Append(lastOne);
-                    }
-                }
-            }
-            return doublePin.ToString();
+            return fullPinyin;
         }
 
         #endregion
