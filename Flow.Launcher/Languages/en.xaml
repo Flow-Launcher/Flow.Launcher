@@ -131,8 +131,8 @@
     <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
     <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
-    <system:String x:Key="showAtTopmost">Show Search Window at Topmost</system:String>
-    <system:String x:Key="showAtTopmostToolTip">Show search window above other windows</system:String>
+    <system:String x:Key="showAtTopmost">Keep on top</system:String>
+    <system:String x:Key="showAtTopmostToolTip">Keeps the search window on top even after it loses focus.</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Search Plugin</system:String>
