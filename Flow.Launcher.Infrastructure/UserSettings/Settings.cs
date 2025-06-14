@@ -383,7 +383,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool LeaveCmdOpen { get; set; }
         public bool HideWhenDeactivated { get; set; } = true;
 
-        private bool _showAtTopmost = true;
+        private bool _showAtTopmost = false;
         public bool ShowAtTopmost
         {
             get => _showAtTopmost;
