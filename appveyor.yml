@@ -1,5 +1,8 @@
 version: '1.20.1.{build}'
 
+# Do not build on tags because we create a release on merge to master. Otherwise will upload artifacts twice changing the hash, as well as triggering duplicate GitHub release action & NuGet deployments.
+skip_tags: true
+
 init:
 - ps: |
       $version = new-object System.Version $env:APPVEYOR_BUILD_VERSION
@@ -13,7 +16,6 @@ init:
 
 cache:
   - '%USERPROFILE%\.nuget\packages -> **.sln, **.csproj'  # preserve nuget folder (packages) unless the solution or projects change
-
 
 assembly_info:
   patch: true
