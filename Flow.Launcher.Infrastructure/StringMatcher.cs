@@ -68,7 +68,7 @@ namespace Flow.Launcher.Infrastructure
 
             query = query.Trim();
             TranslationMapping translationMapping = null;
-            if (_alphabet is not null && !_alphabet.CanBeTranslated(query))
+            if (_alphabet is not null && _alphabet.ShouldTranslate(query))
             {
                 // We assume that if a query can be translated (containing characters of a language, like Chinese)
                 // it actually means user doesn't want it to be translated to English letters.
@@ -228,7 +228,7 @@ namespace Flow.Launcher.Infrastructure
             return new MatchResult(false, UserSettingSearchPrecision);
         }
 
-        private bool IsAcronym(string stringToCompare, int compareStringIndex)
+        private static bool IsAcronym(string stringToCompare, int compareStringIndex)
         {
             if (IsAcronymChar(stringToCompare, compareStringIndex) || IsAcronymNumber(stringToCompare, compareStringIndex))
                 return true;
@@ -237,7 +237,7 @@ namespace Flow.Launcher.Infrastructure
         }
 
         // When counting acronyms, treat a set of numbers as one acronym ie. Visual 2019 as 2 acronyms instead of 5
-        private bool IsAcronymCount(string stringToCompare, int compareStringIndex)
+        private static bool IsAcronymCount(string stringToCompare, int compareStringIndex)
         {
             if (IsAcronymChar(stringToCompare, compareStringIndex))
                 return true;
