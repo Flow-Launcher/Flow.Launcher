@@ -516,7 +516,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
             command = Environment.ExpandEnvironmentVariables(command.Trim());
 
             _ = Task.Run(() => Main.Context.API.StartProcess(
-                command, string.Empty, string.Empty, true, elevated ? "runas" : ""));
+                command,
+                arguments: string.Empty,
+                useShellExecute: true,
+                verb: elevated ? "runas" : ""));
         }
 
         internal static bool IfAppCanRunElevated(XmlNode appNode)

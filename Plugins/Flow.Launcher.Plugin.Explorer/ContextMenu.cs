@@ -390,7 +390,7 @@ namespace Flow.Launcher.Plugin.Explorer
                 {
                     try
                     {
-                        Main.Context.API.StartProcess(shellPath, workingDirectory: record.FullPath);
+                        Main.Context.API.StartProcess(shellPath, workingDirectory: record.FullPath, arguments: string.Empty);
                         return true;
                     }
                     catch (Exception e)

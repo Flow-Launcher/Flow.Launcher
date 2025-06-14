@@ -208,7 +208,11 @@ namespace Flow.Launcher.Plugin.Program.Programs
         private void Launch(bool runAsAdmin = false)
         {
             _ = Task.Run(() => Main.Context.API.StartProcess(
-                FullPath, ParentDirectory, string.Empty, true, runAsAdmin ? "runas" : ""));
+                FullPath,
+                workingDirectory: ParentDirectory,
+                arguments: string.Empty,
+                useShellExecute: true,
+                verb: runAsAdmin ? "runas" : ""));
         }
 
         public List<Result> ContextMenus(IPublicAPI api)

@@ -588,7 +588,7 @@ namespace Flow.Launcher.Plugin
         public Task<long> StopwatchLogInfoAsync(string className, string message, Func<Task> action, [CallerMemberName] string methodName = "");
 
         /// <summary>
-        /// Start a process with the given file path and arguments
+        /// Start a process with support for handling administrative privileges
         /// </summary>
         /// <remarks>
         /// It can help to start a de-elevated process and show user account control dialog when Flow is running as administrator.
@@ -602,7 +602,7 @@ namespace Flow.Launcher.Plugin
         public bool StartProcess(string filePath, string workingDirectory = "", string arguments = "", bool useShellExecute = false, string verb = "");
 
         /// <summary>
-        /// Start a process with the given file path and arguments
+        /// Start a process with support for handling administrative privileges
         /// </summary>
         /// <remarks>
         /// It can help to start a de-elevated process and show user account control dialog when Flow is running as administrator.

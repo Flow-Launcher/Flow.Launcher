@@ -309,7 +309,12 @@ namespace Flow.Launcher.Plugin.Shell
 
         private static Process StartProcess(ProcessStartInfo info)
         {
-            Context.API.StartProcess(info.FileName, info.WorkingDirectory, info.ArgumentList, info.UseShellExecute, info.Verb);
+            Context.API.StartProcess(
+                info.FileName,
+                workingDirectory: info.WorkingDirectory,
+                argumentList: info.ArgumentList,
+                useShellExecute: info.UseShellExecute,
+                verb: info.Verb);
             return null;
         }
 

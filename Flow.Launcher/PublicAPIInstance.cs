@@ -437,7 +437,7 @@ namespace Flow.Launcher
             }
             else
             {
-                StartProcess(uri.AbsoluteUri, arguments: null, useShellExecute: true);
+                StartProcess(uri.AbsoluteUri, arguments: string.Empty, useShellExecute: true);
             }
         }
 
