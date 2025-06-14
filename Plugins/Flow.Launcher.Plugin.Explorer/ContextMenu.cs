@@ -360,11 +360,7 @@ namespace Flow.Launcher.Plugin.Explorer
                 {
                     try
                     {
-                        Process.Start(new ProcessStartInfo()
-                        {
-                            FileName = editorPath,
-                            ArgumentList = { record.FullPath }
-                        });
+                        Main.Context.API.StartProcess(editorPath, arguments: record.FullPath);
                         return true;
                     }
                     catch (Exception e)
@@ -394,10 +390,7 @@ namespace Flow.Launcher.Plugin.Explorer
                 {
                     try
                     {
-                        Process.Start(new ProcessStartInfo()
-                        {
-                            FileName = shellPath, WorkingDirectory = record.FullPath
-                        });
+                        Main.Context.API.StartProcess(shellPath, workingDirectory: record.FullPath);
                         return true;
                     }
                     catch (Exception e)
@@ -462,6 +455,7 @@ namespace Flow.Launcher.Plugin.Explorer
                             Arguments = "srchadmin.dll"
                         };
 
+                        // No need to de-elevate since we are opening windows settings which cannot bring security risks
                         Process.Start(psi);
                         return true;
                     }
@@ -486,6 +480,7 @@ namespace Flow.Launcher.Plugin.Explorer
                 SubTitle = Context.API.GetTranslation("plugin_explorer_openwith_subtitle"),
                 Action = _ =>
                 {
+                    // No need to de-elevate since we are opening windows settings which cannot bring security risks
                     Process.Start("rundll32.exe", $"{Path.Combine(Environment.SystemDirectory, "shell32.dll")},OpenAs_RunDLL {record.FullPath}");
                     return true;
                 },

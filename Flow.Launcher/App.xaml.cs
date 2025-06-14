@@ -367,7 +367,8 @@ namespace Flow.Launcher
                 UseShellExecute = true,
                 Verb = Win32Helper.IsAdministrator() || forceAdmin ? "runas" : ""
             };
-            Process.Start(startInfo); // No need to de-elevate since we are restarting
+            // No need to de-elevate since we are restarting Flow Launcher which cannot bring security risks
+            Process.Start(startInfo);
             Thread.Sleep(500);
             Environment.Exit(0);
 
