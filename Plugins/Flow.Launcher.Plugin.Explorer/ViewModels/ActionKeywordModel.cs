@@ -24,6 +24,8 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
         public string Description { get; private init; }
 
+        public string LocalizedDescription => Main.Context.API.GetTranslation(Description);
+
         internal Settings.ActionKeyword KeywordProperty { get; }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = "")

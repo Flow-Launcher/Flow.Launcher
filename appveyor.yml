@@ -1,4 +1,4 @@
-version: '1.20.0.{build}'
+version: '1.20.1.{build}'
 
 init:
 - ps: |
@@ -60,9 +60,9 @@ deploy:
   - provider: NuGet
     artifact: Plugin nupkg
     api_key:
-      secure: sCSd5JWgdzJWDa9kpqECut5ACPKZqcoxKU8ERKC00k7VIjig3/+nFV5zzTcGb0w3
+      secure: en+/GPSgfUVARoX0+lOeAAlbzvcCZAyBeVQaNq1AeXuRjjHgMwhBnt0PHVJXOepS
     on:
-      APPVEYOR_REPO_TAG: true
+      branch: master
 
   - provider: GitHub
     repository: Flow-Launcher/Prereleases
@@ -84,12 +84,3 @@ deploy:
     force_update: true
     on:
       branch: master
-
-  - provider: GitHub
-    release: v$(flowVersion)
-    auth_token:
-      secure: ij4UeXUYQBDJxn2YRAAhUOjklOGVKDB87Hn5J8tKIzj13yatoI7sLM666QDQFEgv
-    artifact: Squirrel Installer, Portable Version, Squirrel nupkg, Squirrel RELEASES
-    force_update: true
-    on:
-      APPVEYOR_REPO_TAG: true

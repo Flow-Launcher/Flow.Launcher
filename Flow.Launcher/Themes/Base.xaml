@@ -108,6 +108,10 @@
     <Style x:Key="BasePendingLineStyle" TargetType="{x:Type Line}">
         <Setter Property="Stroke" Value="{StaticResource SystemAccentColorLight1Brush}" />
     </Style>
+    <Style
+        x:Key="PendingLineStyle"
+        BasedOn="{StaticResource BasePendingLineStyle}"
+        TargetType="{x:Type Line}" />
 
     <Style x:Key="BaseClockPanelPosition" TargetType="{x:Type Canvas}" />
 

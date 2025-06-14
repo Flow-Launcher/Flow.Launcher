@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -349,7 +349,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 _ = Task.Run(() => EverythingApi.IncrementRunCounterAsync(fileOrFolder));
         }
 
-        private static readonly string[] MediaExtensions = { ".jpg", ".png", ".avi", ".mkv", ".bmp", ".gif", ".wmv", ".mp3", ".flac", ".mp4" };
+        private static readonly string[] MediaExtensions = 
+        { 
+            ".jpg", ".png", ".avi", ".mkv", ".bmp", ".gif", ".wmv", ".mp3", ".flac", ".mp4",
+            ".m4a", ".m4v", ".heic", ".mov", ".flv", ".webm"
+        };
     }
 
     public enum ResultType
