@@ -385,7 +385,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public bool AlwaysRunAsAdministrator { get; set; } = false;
 
-        private bool _showAtTopmost = true;
+        private bool _showAtTopmost = false;
         public bool ShowAtTopmost
         {
             get => _showAtTopmost;
