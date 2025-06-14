@@ -599,7 +599,7 @@ namespace Flow.Launcher.Plugin
         /// <param name="useShellExecute">Whether to use shell to execute the process</param>
         /// <param name="verb">Verb to use when starting the process, e.g. "runas" for elevated permissions. If not specified, no verb will be used.</param>
         /// <returns>Whether process is started successfully</returns>
-        public bool StartProcess(string filePath, string workingDirectory = "", string arguments = "", bool useShellExecute = true, string verb = "");
+        public bool StartProcess(string filePath, string workingDirectory = "", string arguments = "", bool useShellExecute = false, string verb = "");
 
         /// <summary>
         /// Start a process with the given file path and arguments
@@ -613,6 +613,6 @@ namespace Flow.Launcher.Plugin
         /// <param name="useShellExecute">Whether to use shell to execute the process</param>
         /// <param name="verb">Verb to use when starting the process, e.g. "runas" for elevated permissions. If not specified, no verb will be used.</param>
         /// <returns>Whether process is started successfully</returns>
-        public bool StartProcess(string filePath, string workingDirectory = "", Collection<string> argumentList = null, bool useShellExecute = true, string verb = "");
+        public bool StartProcess(string filePath, string workingDirectory = "", Collection<string> argumentList = null, bool useShellExecute = false, string verb = "");
     }
 }

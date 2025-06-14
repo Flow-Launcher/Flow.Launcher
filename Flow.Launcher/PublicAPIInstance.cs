@@ -582,7 +582,7 @@ namespace Flow.Launcher
         public Task<long> StopwatchLogInfoAsync(string className, string message, Func<Task> action, [CallerMemberName] string methodName = "") =>
             Stopwatch.InfoAsync(className, message, action, methodName);
 
-        public bool StartProcess(string filePath, string workingDirectory = "", string arguments = "", bool useShellExecute = true, string verb = "")
+        public bool StartProcess(string filePath, string workingDirectory = "", string arguments = "", bool useShellExecute = false, string verb = "")
         {
             try
             {
@@ -624,7 +624,7 @@ namespace Flow.Launcher
             }
         }
 
-        public bool StartProcess(string filePath, string workingDirectory = "", Collection<string> argumentList = null, bool useShellExecute = true, string verb = "") =>
+        public bool StartProcess(string filePath, string workingDirectory = "", Collection<string> argumentList = null, bool useShellExecute = false, string verb = "") =>
             StartProcess(filePath, workingDirectory, JoinArgumentList(argumentList), useShellExecute, verb);
 
         private static string AddDoubleQuotes(string arg)
