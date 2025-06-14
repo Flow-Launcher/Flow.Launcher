@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Http;
+using iNKORE.UI.WPF.Modern;
 
 namespace Flow.Launcher
 {
@@ -21,16 +22,16 @@ namespace Flow.Launcher
         {
             InitializeComponent();
             SeeMore.Uri = ReleaseNotes;
-            ModernWpf.ThemeManager.Current.ActualApplicationThemeChanged += ThemeManager_ActualApplicationThemeChanged;
+            ThemeManager.Current.ActualApplicationThemeChanged += ThemeManager_ActualApplicationThemeChanged;
         }
 
         #region Window Events
 
-        private void ThemeManager_ActualApplicationThemeChanged(ModernWpf.ThemeManager sender, object args)
+        private void ThemeManager_ActualApplicationThemeChanged(ThemeManager sender, object args)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                if (ModernWpf.ThemeManager.Current.ActualApplicationTheme == ModernWpf.ApplicationTheme.Light)
+                if (ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Light)
                 {
                     MarkdownViewer.MarkdownStyle = (Style)Application.Current.Resources["DocumentStyleGithubLikeLight"];
                     MarkdownViewer.Foreground = Brushes.Black;
@@ -58,7 +59,7 @@ namespace Flow.Launcher
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            ModernWpf.ThemeManager.Current.ActualApplicationThemeChanged -= ThemeManager_ActualApplicationThemeChanged;
+            ThemeManager.Current.ActualApplicationThemeChanged -= ThemeManager_ActualApplicationThemeChanged;
         }
 
         #endregion
