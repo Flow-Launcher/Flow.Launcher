@@ -44,7 +44,7 @@
     <system:String x:Key="plugin_explorer_shell_path">Ruta del Shell</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Rutas excluídas del índice de búsqueda</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Usar la ubicación de los resultados de búsqueda como directorio de trabajo del ejecutable</system:String>
-    <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Mostrar más información, como tamaño y antigüedad, en los consejos (tooltips)</system:String>
+    <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Mostrar más información, como el tamaño y la antigüedad, en los mensajes emergentes</system:String>
     <system:String x:Key="plugin_explorer_default_open_in_file_manager">Pulsar Entrar para abrir la carpeta en el administrador de archivos predeterminado</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Usar búsqueda indexada para buscar rutas</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Opciones de indexación</system:String>
