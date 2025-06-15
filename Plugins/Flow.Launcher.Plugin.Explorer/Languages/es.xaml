@@ -34,7 +34,7 @@
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Tamaño</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Fecha de creación</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Fecha de modificación</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_display_file_age_checkbox">Edad del archivo</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_age_checkbox">Antigüedad del archivo</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Mostrar información del archivo</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Formato de fecha y hora</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Ordenar por:</system:String>
