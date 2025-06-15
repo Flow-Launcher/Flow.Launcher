@@ -44,11 +44,12 @@
                         OnContent="{DynamicResource enable}" />
                 </cc:ExCard.SideContent>
 
-                <cc:CardGroup>
+                <StackPanel>
                     <cc:Card
                         Title="{DynamicResource useLogonTaskForStartup}"
                         Icon="&#xE823;"
-                        Sub="{DynamicResource useLogonTaskForStartupTooltip}">
+                        Sub="{DynamicResource useLogonTaskForStartupTooltip}"
+                        Type="Inside">
                         <ui:ToggleSwitch
                             IsOn="{Binding UseLogonTaskForStartup}"
                             OffContent="{DynamicResource disable}"
@@ -57,13 +58,14 @@
                     <cc:Card
                         Title="{DynamicResource alwaysRunAsAdministrator}"
                         Icon="&#xE7EF;"
-                        Sub="{DynamicResource alwaysRunAsAdministratorToolTip}">
+                        Sub="{DynamicResource alwaysRunAsAdministratorToolTip}"
+                        Type="Inside">
                         <ui:ToggleSwitch
                             IsOn="{Binding AlwaysRunAsAdministrator}"
                             OffContent="{DynamicResource disable}"
                             OnContent="{DynamicResource enable}" />
                     </cc:Card>
-                </cc:CardGroup>
+                </StackPanel>
             </cc:ExCard>
             <cc:Card
                 Title="{DynamicResource hideOnStartup}"
