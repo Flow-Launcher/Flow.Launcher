@@ -1,9 +1,9 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="http://schemas.modernwpf.com/2019"
-    xmlns:m="http://schemas.modernwpf.com/2019"
-    xmlns:primitives="http://schemas.modernwpf.com/2019"
+    xmlns:common="clr-namespace:iNKORE.UI.WPF.Modern.Common;assembly=iNKORE.UI.WPF.Modern"
+    xmlns:chelper="clr-namespace:iNKORE.UI.WPF.Modern.Controls.Helpers;assembly=iNKORE.UI.WPF.Modern"
+    xmlns:m="clr-namespace:iNKORE.UI.WPF.Modern.Markup;assembly=iNKORE.UI.WPF.Modern"
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <SolidColorBrush x:Key="SystemThemeBorder" Color="#aaaaaa" />
@@ -1265,8 +1265,8 @@
     <m:StaticResource x:Key="RatingControlPointerOverSelectedForeground" ResourceKey="SystemControlForegroundAccentBrush" />
     <m:StaticResource x:Key="RatingControlDisabledSelectedForeground" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
     <m:StaticResource x:Key="RatingControlCaptionForeground" ResourceKey="SystemControlForegroundBaseMediumBrush" />
-    <local:RatingItemFontInfo x:Key="RatingControlDefaultFontInfo" Glyph="&#xE735;" />
-    <local:RatingItemPathInfo x:Key="RatingControlDefaultPathInfo" Data="M 13.828125 12.246094 L 16.25 20 L 10 15.195313 L 3.75 20 L 6.171875 12.246094 L 0 7.5 L 7.65625 7.5 L 10 0 L 12.34375 7.5 L 20 7.5 Z" />
+    <common:RatingItemFontInfo x:Key="RatingControlDefaultFontInfo" Glyph="&#xE735;" />
+    <common:RatingItemPathInfo x:Key="RatingControlDefaultPathInfo" Data="M 13.828125 12.246094 L 16.25 20 L 10 15.195313 L 3.75 20 L 6.171875 12.246094 L 0 7.5 L 7.65625 7.5 L 10 0 L 12.34375 7.5 L 20 7.5 Z" />
 
     <!--  Resources for RepeatButton  -->
     <Thickness x:Key="RepeatButtonBorderThemeThickness">1</Thickness>
@@ -1648,17 +1648,17 @@
     <sys:Boolean x:Key="IsApplicationFocusVisualKindReveal">False</sys:Boolean>
 
     <Style x:Key="HighVisibilityFocusVisual">
-        <Setter Property="primitives:FocusVisualHelper.FocusVisualPrimaryBrush" Value="{StaticResource SystemControlFocusVisualPrimaryBrush}" />
-        <Setter Property="primitives:FocusVisualHelper.FocusVisualSecondaryBrush" Value="{StaticResource SystemControlFocusVisualSecondaryBrush}" />
-        <Setter Property="primitives:FocusVisualHelper.IsSystemFocusVisual" Value="True" />
+        <Setter Property="chelper:FocusVisualHelper.FocusVisualPrimaryBrush" Value="{StaticResource SystemControlFocusVisualPrimaryBrush}" />
+        <Setter Property="chelper:FocusVisualHelper.FocusVisualSecondaryBrush" Value="{StaticResource SystemControlFocusVisualSecondaryBrush}" />
+        <Setter Property="chelper:FocusVisualHelper.IsSystemFocusVisual" Value="True" />
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
                     <Border
-                        BorderBrush="{TemplateBinding primitives:FocusVisualHelper.FocusVisualPrimaryBrush}"
-                        BorderThickness="{TemplateBinding primitives:FocusVisualHelper.FocusVisualPrimaryThickness}"
+                        BorderBrush="{TemplateBinding chelper:FocusVisualHelper.FocusVisualPrimaryBrush}"
+                        BorderThickness="{TemplateBinding chelper:FocusVisualHelper.FocusVisualPrimaryThickness}"
                         SnapsToDevicePixels="True">
-                        <Border BorderBrush="{TemplateBinding primitives:FocusVisualHelper.FocusVisualSecondaryBrush}" BorderThickness="{TemplateBinding primitives:FocusVisualHelper.FocusVisualSecondaryThickness}" />
+                        <Border BorderBrush="{TemplateBinding chelper:FocusVisualHelper.FocusVisualSecondaryBrush}" BorderThickness="{TemplateBinding chelper:FocusVisualHelper.FocusVisualSecondaryThickness}" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
