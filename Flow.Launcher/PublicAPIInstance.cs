@@ -123,12 +123,23 @@ namespace Flow.Launcher
         public void ShowMsgError(string title, string subTitle = "") =>
             ShowMsg(title, subTitle, Constant.ErrorIcon, true);
 
+        public void ShowMsgErrorWithButton(string title, string buttonText, Action buttonAction, string subTitle = "") =>
+            ShowMsgWithButton(title, buttonText, buttonAction, subTitle, Constant.ErrorIcon, true);
+
         public void ShowMsg(string title, string subTitle = "", string iconPath = "") =>
             ShowMsg(title, subTitle, iconPath, true);
 
         public void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true)
         {
             Notification.Show(title, subTitle, iconPath);
+        }
+
+        public void ShowMsgWithButton(string title, string buttonText, Action buttonAction, string subTitle = "", string iconPath = "") =>
+            ShowMsgWithButton(title, buttonText, buttonAction, subTitle, iconPath, true);
+
+        public void ShowMsgWithButton(string title, string buttonText, Action buttonAction, string subTitle, string iconPath, bool useMainWindowAsOwner = true)
+        {
+            Notification.ShowWithButton(title, buttonText, buttonAction, subTitle, iconPath);
         }
 
         public void OpenSettingDialog()
@@ -251,7 +262,7 @@ namespace Flow.Launcher
             Http.GetStreamAsync(url, token);
 
         public Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath, Action<double> reportProgress = null,
-            CancellationToken token = default) =>Http.DownloadAsync(url, filePath, reportProgress, token);
+            CancellationToken token = default) => Http.DownloadAsync(url, filePath, reportProgress, token);
 
         public void AddActionKeyword(string pluginId, string newActionKeyword) =>
             PluginManager.AddActionKeyword(pluginId, newActionKeyword);
@@ -276,7 +287,7 @@ namespace Flow.Launcher
         public void LogException(string className, string message, Exception e, [CallerMemberName] string methodName = "") =>
             Log.Exception(className, message, e, methodName);
 
-        private readonly ConcurrentDictionary<Type, object> _pluginJsonStorages = new();
+        private readonly ConcurrentDictionary<Type, ISavable> _pluginJsonStorages = new();
 
         public void RemovePluginSettings(string assemblyName)
         {
@@ -294,10 +305,9 @@ namespace Flow.Launcher
 
         public void SavePluginSettings()
         {
-            foreach (var value in _pluginJsonStorages.Values)
+            foreach (var savable in _pluginJsonStorages.Values)
             {
-                var savable = value as ISavable;
-                savable?.Save();
+                savable.Save();
             }
         }
 
@@ -390,22 +400,35 @@ namespace Flow.Launcher
             }
         }
 
-
-        private void OpenUri(Uri uri, bool? inPrivate = null)
+        private void OpenUri(Uri uri, bool? inPrivate = null, bool forceBrowser = false)
         {
-            if (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
+            if (forceBrowser || uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
             {
                 var browserInfo = _settings.CustomBrowser;
 
                 var path = browserInfo.Path == "*" ? "" : browserInfo.Path;
 
-                if (browserInfo.OpenInTab)
+                try
                 {
-                    uri.AbsoluteUri.OpenInBrowserTab(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                    if (browserInfo.OpenInTab)
+                    {
+                        uri.AbsoluteUri.OpenInBrowserTab(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                    }
+                    else
+                    {
+                        uri.AbsoluteUri.OpenInBrowserWindow(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                    }
                 }
-                else
+                catch (Exception e)
                 {
-                    uri.AbsoluteUri.OpenInBrowserWindow(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                    var tabOrWindow = browserInfo.OpenInTab ? "tab" : "window";
+                    LogException(ClassName, $"Failed to open URL in browser {tabOrWindow}: {path}, {inPrivate ?? browserInfo.EnablePrivate}, {browserInfo.PrivateArg}", e);
+                    ShowMsgBox(
+                        GetTranslation("browserOpenError"),
+                        GetTranslation("errorTitle"),
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error
+                    );
                 }
             }
             else
@@ -418,6 +441,16 @@ namespace Flow.Launcher
 
                 return;
             }
+        }
+
+        public void OpenWebUrl(string url, bool? inPrivate = null)
+        {
+            OpenUri(new Uri(url), inPrivate, true);
+        }
+
+        public void OpenWebUrl(Uri url, bool? inPrivate = null)
+        {
+            OpenUri(url, inPrivate, true);
         }
 
         public void OpenUrl(string url, bool? inPrivate = null)
@@ -482,7 +515,7 @@ namespace Flow.Launcher
         public bool SetCurrentTheme(ThemeData theme) =>
             Theme.ChangeTheme(theme.FileNameWithoutExtension);
 
-        private readonly ConcurrentDictionary<(string, string, Type), object> _pluginBinaryStorages = new();
+        private readonly ConcurrentDictionary<(string, string, Type), ISavable> _pluginBinaryStorages = new();
 
         public void RemovePluginCaches(string cacheDirectory)
         {
@@ -499,10 +532,9 @@ namespace Flow.Launcher
 
         public void SavePluginCaches()
         {
-            foreach (var value in _pluginBinaryStorages.Values)
+            foreach (var savable in _pluginBinaryStorages.Values)
             {
-                var savable = value as ISavable;
-                savable?.Save();
+                savable.Save();
             }
         }
 

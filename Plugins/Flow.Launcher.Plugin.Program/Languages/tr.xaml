@@ -2,33 +2,33 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Program setting  -->
-    <system:String x:Key="flowlauncher_plugin_program_reset">Reset Default</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_reset">Varsayılana Sıfırla</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete">Sil</system:String>
     <system:String x:Key="flowlauncher_plugin_program_edit">Düzenle</system:String>
     <system:String x:Key="flowlauncher_plugin_program_add">Ekle</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_name">Name</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_name">Ad</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable">Etkin</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enabled">Enabled</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable">Disable</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_status">Status</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_status">Durum</system:String>
     <system:String x:Key="flowlauncher_plugin_program_true">Enabled</system:String>
     <system:String x:Key="flowlauncher_plugin_program_false">Disabled</system:String>
     <system:String x:Key="flowlauncher_plugin_program_location">Konum</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_all_programs">All Programs</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_all_programs">Tüm Programlar</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes">File Type</system:String>
     <system:String x:Key="flowlauncher_plugin_program_reindex">Yeniden İndeksle</system:String>
     <system:String x:Key="flowlauncher_plugin_program_indexing">İndeksleniyor</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_source">Index Sources</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_option">Options</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_uwp">UWP Apps</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_option">Seçenekler</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_uwp">UWP Uygulamaları</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_uwp_tooltip">When enabled, Flow will load UWP Applications</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_start">Start Menu</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_start">Başlat Menüsü</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_start_tooltip">When enabled, Flow will load programs from the start menu</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_registry">Registry</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_registry_tooltip">When enabled, Flow will load programs from the registry</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_PATH">PATH</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_PATH">YOL</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">When enabled, Flow will load programs from the PATH environment variable</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">Hide app path</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">Uygulama yolunu gizle</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">For executable files such as UWP or lnk, hide the file path from being visible</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers">Hide uninstallers</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">Hides programs with common uninstaller names, such as unins000.exe</system:String>
@@ -60,7 +60,7 @@
     <system:String x:Key="flowlauncher_plugin_protocols_cannot_empty">Protocols can't be empty</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_suffixes_executable_types">İndekslenecek Uzantılar</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_types">URL Protocols</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_types">URL Protokolleri</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_steam">Steam Games</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_epic">Epic Games</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_http">Http/Https</system:String>
@@ -75,8 +75,8 @@
 
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Run As Different User</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Yönetici Olarak Çalıştır</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Open containing folder</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">Hide</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">İçeren klasörü aç</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">Gizle</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Open target folder</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Program</system:String>

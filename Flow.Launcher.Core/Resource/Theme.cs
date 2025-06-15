@@ -704,6 +704,15 @@ namespace Flow.Launcher.Core.Resource
 
                     ApplyCustomAccentColor(color, alpha);
                 }
+                
+                // For themes with blur enabled, the window border is rendered by the system, so it's treated as a simple rectangle regardless of thickness.
+                //(This is to avoid issues when the window is forcibly changed to a rectangular shape during snap scenarios.)
+                var cornerRadiusSetter = windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property == Border.CornerRadiusProperty);
+                if (cornerRadiusSetter != null)
+                    cornerRadiusSetter.Value = new CornerRadius(0);
+                else
+                    windowBorderStyle.Setters.Add(new Setter(Border.CornerRadiusProperty, new CornerRadius(0)));
+
                 // Apply the blur effect
                 Win32Helper.DWMSetBackdropForWindow(mainWindow, backdropType);
                 ColorizeWindow(theme, backdropType);
