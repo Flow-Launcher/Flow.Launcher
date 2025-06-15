@@ -368,7 +368,7 @@
     <system:String x:Key="userdatapathButton">Abrir carpeta</system:String>
     <system:String x:Key="advanced">Avanzado</system:String>
     <system:String x:Key="logLevel">Nivel de registro</system:String>
-    <system:String x:Key="LogLevelDEBUG">Depurar</system:String>
+    <system:String x:Key="LogLevelDEBUG">Depuración</system:String>
     <system:String x:Key="LogLevelINFO">Información</system:String>
     <system:String x:Key="settingWindowFontTitle">Configuración de fuente de la ventana</system:String>
 
@@ -419,7 +419,7 @@
     <system:String x:Key="success">Correcto</system:String>
     <system:String x:Key="completedSuccessfully">Finalizado correctamente</system:String>
     <system:String x:Key="failedToCopy">No se pudo copiar</system:String>
-    <system:String x:Key="actionkeyword_tips">Introduzca las palabras clave de acción que desea utilizar para iniciar el complemento y utilice espacios en blanco para separarlas. Utilice * si no desea especificar ninguna, para que el complemento se inicie sin ninguna palabra clave de acción.</system:String>
+    <system:String x:Key="actionkeyword_tips">Introducir las palabras claves de acción que se desean utilizar para iniciar el complemento, utilizando espacios en blanco para separarlas. Utilizar * si no se desea especificar ninguna, para que el complemento se inicie sin ninguna palabra clave de acción.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
     <system:String x:Key="searchDelayTimeTitle">Ajuste del tiempo de retardo de búsqueda</system:String>
