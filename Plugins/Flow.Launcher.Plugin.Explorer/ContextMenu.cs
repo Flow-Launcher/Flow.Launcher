@@ -347,8 +347,6 @@ namespace Flow.Launcher.Plugin.Explorer
             };
         }
 
-
-
         private Result CreateOpenWithEditorResult(SearchResult record, string editorPath)
         {
             var name = $"{Context.API.GetTranslation("plugin_explorer_openwitheditor")} {Path.GetFileNameWithoutExtension(editorPath)}";
@@ -360,7 +358,7 @@ namespace Flow.Launcher.Plugin.Explorer
                 {
                     try
                     {
-                        Main.Context.API.StartProcess(editorPath, arguments: record.FullPath);
+                        Context.API.StartProcess(editorPath, arguments: record.FullPath);
                         return true;
                     }
                     catch (Exception e)
@@ -390,7 +388,7 @@ namespace Flow.Launcher.Plugin.Explorer
                 {
                     try
                     {
-                        Main.Context.API.StartProcess(shellPath, workingDirectory: record.FullPath, arguments: string.Empty);
+                        Context.API.StartProcess(shellPath, workingDirectory: record.FullPath, arguments: string.Empty);
                         return true;
                     }
                     catch (Exception e)
