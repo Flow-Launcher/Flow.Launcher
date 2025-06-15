@@ -400,10 +400,9 @@ namespace Flow.Launcher
             }
         }
 
-
-        private void OpenUri(Uri uri, bool? inPrivate = null)
+        private void OpenUri(Uri uri, bool? inPrivate = null, bool forceBrowser = false)
         {
-            if (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
+            if (forceBrowser || uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
             {
                 var browserInfo = _settings.CustomBrowser;
 
@@ -442,6 +441,16 @@ namespace Flow.Launcher
 
                 return;
             }
+        }
+
+        public void OpenWebUrl(string url, bool? inPrivate = null)
+        {
+            OpenUri(new Uri(url), inPrivate, true);
+        }
+
+        public void OpenWebUrl(Uri url, bool? inPrivate = null)
+        {
+            OpenUri(url, inPrivate, true);
         }
 
         public void OpenUrl(string url, bool? inPrivate = null)
