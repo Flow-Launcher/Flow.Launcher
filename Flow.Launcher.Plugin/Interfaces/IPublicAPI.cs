@@ -613,8 +613,9 @@ namespace Flow.Launcher.Plugin
         /// <param name="arguments">Optional arguments to pass to the process. If not specified, no arguments will be passed</param>
         /// <param name="useShellExecute">Whether to use shell to execute the process</param>
         /// <param name="verb">Verb to use when starting the process, e.g. "runas" for elevated permissions. If not specified, no verb will be used.</param>
+        /// <param name="createNoWindow">Whether to create console window</param>
         /// <returns>Whether process is started successfully</returns>
-        public bool StartProcess(string fileName, string workingDirectory = "", string arguments = "", bool useShellExecute = false, string verb = "");
+        public bool StartProcess(string fileName, string workingDirectory = "", string arguments = "", bool useShellExecute = false, string verb = "", bool createNoWindow = false);
 
         /// <summary>
         /// Start a process with support for handling administrative privileges
@@ -627,7 +628,8 @@ namespace Flow.Launcher.Plugin
         /// <param name="argumentList">Optional argument list to pass to the process. If not specified, no arguments will be passed</param>
         /// <param name="useShellExecute">Whether to use shell to execute the process</param>
         /// <param name="verb">Verb to use when starting the process, e.g. "runas" for elevated permissions. If not specified, no verb will be used.</param>
+        /// <param name="createNoWindow">Whether to create console window</param>
         /// <returns>Whether process is started successfully</returns>
-        public bool StartProcess(string fileName, string workingDirectory = "", Collection<string> argumentList = null, bool useShellExecute = false, string verb = "");
+        public bool StartProcess(string fileName, string workingDirectory = "", Collection<string> argumentList = null, bool useShellExecute = false, string verb = "", bool createNoWindow = false);
     }
 }

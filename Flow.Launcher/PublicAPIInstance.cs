@@ -585,7 +585,7 @@ namespace Flow.Launcher
         public Task<long> StopwatchLogInfoAsync(string className, string message, Func<Task> action, [CallerMemberName] string methodName = "") =>
             Stopwatch.InfoAsync(className, message, action, methodName);
 
-        public bool StartProcess(string fileName, string workingDirectory = "", string arguments = "", bool useShellExecute = false, string verb = "")
+        public bool StartProcess(string fileName, string workingDirectory = "", string arguments = "", bool useShellExecute = false, string verb = "", bool createNoWindow = false)
         {
             try
             {
@@ -597,7 +597,13 @@ namespace Flow.Launcher
                     var result = Win32Helper.RunAsDesktopUser(
                         Constant.CommandExecutablePath,
                         Environment.CurrentDirectory,
-                        $"-StartProcess -FileName {AddDoubleQuotes(fileName)} -WorkingDirectory {AddDoubleQuotes(workingDirectory)} -Arguments {AddDoubleQuotes(arguments)} -UseShellExecute {useShellExecute} -Verb {AddDoubleQuotes(verb)}",
+                        $"-StartProcess " +
+                        $"-FileName {AddDoubleQuotes(fileName)} " +
+                        $"-WorkingDirectory {AddDoubleQuotes(workingDirectory)} " +
+                        $"-Arguments {AddDoubleQuotes(arguments)} " +
+                        $"-UseShellExecute {useShellExecute} " +
+                        $"-Verb {AddDoubleQuotes(verb)} " +
+                        $"-CreateNoWindow {createNoWindow}",
                         false,
                         true, // Do not show the command window
                         out var errorInfo);
@@ -616,6 +622,7 @@ namespace Flow.Launcher
                     Arguments = arguments,
                     UseShellExecute = useShellExecute,
                     Verb = verb,
+                    CreateNoWindow = createNoWindow
                 };
                 Process.Start(info)?.Dispose();
                 return true;
@@ -627,8 +634,8 @@ namespace Flow.Launcher
             }
         }
 
-        public bool StartProcess(string fileName, string workingDirectory = "", Collection<string> argumentList = null, bool useShellExecute = false, string verb = "") =>
-            StartProcess(fileName, workingDirectory, JoinArgumentList(argumentList), useShellExecute, verb);
+        public bool StartProcess(string fileName, string workingDirectory = "", Collection<string> argumentList = null, bool useShellExecute = false, string verb = "", bool createNoWindow = false) =>
+            StartProcess(fileName, workingDirectory, JoinArgumentList(argumentList), useShellExecute, verb, createNoWindow);
 
         private static string AddDoubleQuotes(string arg)
         {
