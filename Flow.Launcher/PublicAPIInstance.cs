@@ -158,8 +158,7 @@ namespace Flow.Launcher
         {
             var args = filename == "cmd.exe" ? $"/C {cmd}" : $"{cmd}";
 
-            var startInfo = ShellCommand.SetProcessStartInfo(filename, arguments: args, createNoWindow: true);
-            ShellCommand.Execute(startInfo);
+            StartProcess(filename, arguments: args, createNoWindow: true);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]

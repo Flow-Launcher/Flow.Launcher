@@ -42,6 +42,9 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Run a shell command
         /// </summary>
+        /// <remarks>
+        /// It can help to start a de-elevated process and show user account control dialog when Flow is running as administrator.
+        /// </remarks>
         /// <param name="cmd">The command or program to run</param>
         /// <param name="filename">the shell type to run, e.g. powershell.exe</param>
         /// <exception cref="FileNotFoundException">Thrown when unable to find the file specified in the command </exception>
