@@ -194,10 +194,12 @@ namespace Flow.Launcher.Plugin.Shell
             var workingDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             var runAsAdministratorArg = !runAsAdministrator && !_settings.RunAsAdministrator ? "" : "runas";
 
-            ProcessStartInfo info = new()
+            var info = new ProcessStartInfo()
             {
-                Verb = runAsAdministratorArg, WorkingDirectory = workingDirectory,
+                Verb = runAsAdministratorArg,
+                WorkingDirectory = workingDirectory,
             };
+            var notifyStr = Context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close");
             switch (_settings.Shell)
             {
                 case Shell.Cmd:
@@ -212,7 +214,11 @@ namespace Flow.Launcher.Plugin.Shell
                             info.FileName = "cmd.exe";
                         }
 
-                        info.ArgumentList.Add($"{(_settings.LeaveShellOpen ? "/k" : "/c")} {command} {(_settings.CloseShellAfterPress ? $"&& echo {Context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")} && pause > nul /c" : "")}");
+                        info.ArgumentList.Add(
+                            $"{(_settings.LeaveShellOpen ? "/k" : "/c")} {command}" +
+                            $"{(_settings.CloseShellAfterPress ?
+                                $" && echo {notifyStr} && pause > nul /c" :
+                                "")}");
                         break;
                     }
 
@@ -238,7 +244,11 @@ namespace Flow.Launcher.Plugin.Shell
                         else
                         {
                             info.ArgumentList.Add("-Command");
-                            info.ArgumentList.Add($"{command}{addedCharacter}; {(_settings.CloseShellAfterPress ? $"Write-Host '{Context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")}'{addedCharacter}; [System.Console]::ReadKey(){addedCharacter}; exit" : "")}");
+                            info.ArgumentList.Add(
+                                $"{command}{addedCharacter};" +
+                                $"{(_settings.CloseShellAfterPress ?
+                                    $" Write-Host '{notifyStr}'{addedCharacter}; [System.Console]::ReadKey(){addedCharacter}; exit" :
+                                    "")}");
                         }
                         break;
                     }
@@ -262,7 +272,11 @@ namespace Flow.Launcher.Plugin.Shell
                             info.ArgumentList.Add("-NoExit");
                         }
                         info.ArgumentList.Add("-Command");
-                        info.ArgumentList.Add($"{command}{addedCharacter}; {(_settings.CloseShellAfterPress ? $"Write-Host '{Context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")}'{addedCharacter}; [System.Console]::ReadKey(){addedCharacter}; exit" : "")}");
+                        info.ArgumentList.Add(
+                            $"{command}{addedCharacter};" +
+                            $"{(_settings.CloseShellAfterPress ?
+                                $" Write-Host '{notifyStr}'{addedCharacter}; [System.Console]::ReadKey(){addedCharacter}; exit" :
+                                "")}");
                         break;
                     }
 
