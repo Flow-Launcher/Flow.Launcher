@@ -284,13 +284,16 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        public static ICollection<PluginPair> ValidPluginsForQuery(Query query)
+        public static ICollection<PluginPair> ValidPluginsForQuery(Query query, bool quickSwitch)
         {
             if (query is null)
                 return Array.Empty<PluginPair>();
 
             if (!NonGlobalPlugins.TryGetValue(query.ActionKeyword, out var plugin))
-                return GlobalPlugins;
+                return quickSwitch ? GlobalPlugins.Where(p => p.Plugin is IAsyncQuickSwitch).ToList() : GlobalPlugins;
+
+            if (quickSwitch && plugin.Plugin is not IAsyncQuickSwitch)
+                return Array.Empty<PluginPair>();
 
             return new List<PluginPair>
             {
@@ -372,6 +375,36 @@ namespace Flow.Launcher.Core.Plugin
             catch (Exception e)
             {
                 API.LogException(ClassName, $"Failed to query home for plugin: {metadata.Name}", e);
+                return null;
+            }
+            return results;
+        }
+  
+        public static async Task<List<QuickSwitchResult>> QueryQuickSwitchForPluginAsync(PluginPair pair, Query query, CancellationToken token)
+        {
+            var results = new List<QuickSwitchResult>();
+            var metadata = pair.Metadata;
+
+            try
+            {
+                var milliseconds = await API.StopwatchLogDebugAsync(ClassName, $"Cost for {metadata.Name}",
+                    async () => results = await ((IAsyncQuickSwitch)pair.Plugin).QueryQuickSwitchAsync(query, token).ConfigureAwait(false));
+
+                token.ThrowIfCancellationRequested();
+                if (results == null)
+                    return null;
+                UpdatePluginMetadata(results, metadata, query);
+
+                token.ThrowIfCancellationRequested();
+            }
+            catch (OperationCanceledException)
+            {
+                // null will be fine since the results will only be added into queue if the token hasn't been cancelled
+                return null;
+            }
+            catch (Exception e)
+            {
+                API.LogException(ClassName, $"Failed to query quick switch for plugin: {metadata.Name}", e);
                 return null;
             }
             return results;
