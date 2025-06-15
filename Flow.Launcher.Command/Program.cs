@@ -10,7 +10,7 @@ internal static class Program
         if (args.Length == 0) return -1;
 
         // Start process with arguments
-        // Usage: Flow.Launcher.Command -StartProcess -FileName <file> -WorkingDirectory <directory> -Arguments <args> -UseShellExecute <true|false> -Verb <verb>
+        // Usage: Flow.Launcher.Command -StartProcess -FileName <file> -WorkingDirectory <directory> -Arguments <args> -UseShellExecute <true|false> -Verb <verb> -CreateNoWindow <true|false>
         if (args[0] == @"-StartProcess")
         {
             var fileName = string.Empty;
@@ -18,6 +18,7 @@ internal static class Program
             var argumentList = new List<string>();
             var useShellExecute = true;
             var verb = string.Empty;
+            var createNoWindow = false;
             var isArguments = false;
 
             for (int i = 1; i < args.Length; i++)
@@ -54,6 +55,11 @@ internal static class Program
                         isArguments = false;
                         break;
 
+                    case "-CreateNoWindow":
+                        if (i + 1 < args.Length && bool.TryParse(args[++i], out bool createNoWin))
+                        createNoWindow = createNoWin;
+                        break;
+
                     default:
                         if (isArguments)
                             argumentList.Add(args[i]);
@@ -79,7 +85,8 @@ internal static class Program
                         FileName = fileName,
                         WorkingDirectory = workingDirectory,
                         UseShellExecute = useShellExecute,
-                        Verb = verb
+                        Verb = verb,
+                        CreateNoWindow = createNoWindow
                     };
                 }
                 else if (argumentList.Count == 1)
@@ -90,7 +97,8 @@ internal static class Program
                         WorkingDirectory = workingDirectory,
                         Arguments = argumentList[0],
                         UseShellExecute = useShellExecute,
-                        Verb = verb
+                        Verb = verb,
+                        CreateNoWindow = createNoWindow
                     };
                 }
                 else
@@ -100,7 +108,8 @@ internal static class Program
                         FileName = fileName,
                         WorkingDirectory = workingDirectory,
                         UseShellExecute = useShellExecute,
-                        Verb = verb
+                        Verb = verb,
+                        CreateNoWindow = createNoWindow
                     };
                     foreach (var arg in argumentList)
                     {
