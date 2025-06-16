@@ -200,6 +200,7 @@ namespace Flow.Launcher.Plugin.Shell
                 WorkingDirectory = workingDirectory,
             };
             var notifyStr = Context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close");
+            var addedCharacter = _settings.UseWindowsTerminal ? "\\" : "";
             switch (_settings.Shell)
             {
                 case Shell.Cmd:
@@ -213,9 +214,16 @@ namespace Flow.Launcher.Plugin.Shell
                         {
                             info.FileName = "cmd.exe";
                         }
-
+                        if (_settings.LeaveShellOpen)
+                        {
+                            info.ArgumentList.Add("/k");
+                        }
+                        else
+                        {
+                            info.ArgumentList.Add("/c");
+                        }
                         info.ArgumentList.Add(
-                            $"{(_settings.LeaveShellOpen ? "/k" : "/c")} {command}" +
+                            $"{command}" +
                             $"{(_settings.CloseShellAfterPress ?
                                 $" && echo {notifyStr} && pause > nul /c" :
                                 "")}");
@@ -226,7 +234,6 @@ namespace Flow.Launcher.Plugin.Shell
                     {
                         // Using just a ; doesn't work with wt, as it's used to create a new tab for the terminal window
                         // \\ must be escaped for it to work properly, or breaking it into multiple arguments
-                        var addedCharacter = _settings.UseWindowsTerminal ? "\\" : "";
                         if (_settings.UseWindowsTerminal)
                         {
                             info.FileName = "wt.exe";
@@ -257,7 +264,6 @@ namespace Flow.Launcher.Plugin.Shell
                     {
                         // Using just a ; doesn't work with wt, as it's used to create a new tab for the terminal window
                         // \\ must be escaped for it to work properly, or breaking it into multiple arguments
-                        var addedCharacter = _settings.UseWindowsTerminal ? "\\" : "";
                         if (_settings.UseWindowsTerminal)
                         {
                             info.FileName = "wt.exe";
