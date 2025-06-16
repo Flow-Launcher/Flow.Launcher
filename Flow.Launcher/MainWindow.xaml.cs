@@ -82,6 +82,8 @@ namespace Flow.Launcher
             _viewModel = Ioc.Default.GetRequiredService<MainViewModel>();
             DataContext = _viewModel;
 
+            Topmost = _settings.ShowAtTopmost;
+
             InitializeComponent();
             UpdatePosition();
 
@@ -119,6 +121,9 @@ namespace Flow.Launcher
                 // Set First Launch to false
                 _settings.FirstLaunch = false;
 
+                // Update release notes version
+                _settings.ReleaseNotesVersion = Constant.Version;
+
                 // Set Backdrop Type to Acrylic for Windows 11 when First Launch. Default is None
                 if (Win32Helper.IsBackdropSupported()) _settings.BackdropType = BackdropTypes.Acrylic;
 
@@ -128,6 +133,24 @@ namespace Flow.Launcher
                 // Show Welcome Window
                 var welcomeWindow = new WelcomeWindow();
                 welcomeWindow.Show();
+            }
+
+            if (Constant.Version != "1.0.0" && _settings.ReleaseNotesVersion != Constant.Version) // Skip release notes notification for developer builds (version 1.0.0)
+            {
+                // Update release notes version
+                _settings.ReleaseNotesVersion = Constant.Version;
+                // Show release note popup with button
+                App.API.ShowMsgWithButton(
+                    string.Format(App.API.GetTranslation("appUpdateTitle"), Constant.Version),
+                    App.API.GetTranslation("appUpdateButtonContent"),
+                    () =>
+                    {
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            var releaseNotesWindow = new ReleaseNotesWindow();
+                            releaseNotesWindow.Show();
+                        });
+                    });
             }
 
             // Initialize place holder
@@ -286,6 +309,9 @@ namespace Flow.Launcher
                         {
                             _viewModel.QueryResults();
                         }
+                        break;
+                    case nameof(Settings.ShowAtTopmost):
+                        Topmost = _settings.ShowAtTopmost;
                         break;
                 }
             };

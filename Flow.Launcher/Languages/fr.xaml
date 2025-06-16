@@ -136,6 +136,8 @@
     <system:String x:Key="historyResultsForHomePage">Afficher les résultats de l'historique sur la page d'accueil</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Maximum de résultats de l'historique affichés sur la page d'accueil</system:String>
     <system:String x:Key="homeToggleBoxToolTip">Ceci ne peut être édité que si le plugin prend en charge la fonction Accueil et que la page d'accueil est activée.</system:String>
+    <system:String x:Key="showAtTopmost">Afficher la fenêtre de recherche en premier plan</system:String>
+    <system:String x:Key="showAtTopmostToolTip">Afficher la fenêtre de recherche au-dessus des autres fenêtres</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Rechercher des plugins</system:String>
@@ -369,6 +371,13 @@
     <system:String x:Key="LogLevelINFO">Info</system:String>
     <system:String x:Key="settingWindowFontTitle">Réglage de la police de la fenêtre</system:String>
 
+    <!--  Release Notes Window  -->
+    <system:String x:Key="seeMoreReleaseNotes">Voir plus de notes de version sur GitHub</system:String>
+    <system:String x:Key="checkNetworkConnectionTitle">Impossible de récupérer les notes de version</system:String>
+    <system:String x:Key="checkNetworkConnectionSubTitle">Veuillez vérifier votre connexion réseau ou vous assurer que GitHub est accessible</system:String>
+    <system:String x:Key="appUpdateTitle">Flow Launcher a été mis à jour à {0}</system:String>
+    <system:String x:Key="appUpdateButtonContent">Cliquez ici pour voir les notes de version</system:String>
+
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Sélectionner le gestionnaire de fichiers</system:String>
     <system:String x:Key="fileManager_learnMore">En savoir plus</system:String>
@@ -388,7 +397,7 @@
     <system:String x:Key="defaultBrowser_name">Navigateur</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Nom du navigateur</system:String>
     <system:String x:Key="defaultBrowser_path">Chemin du navigateur</system:String>
-    <system:String x:Key="defaultBrowser_newWindow">Nouvel onglet</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">Nouvelle fenêtre</system:String>
     <system:String x:Key="defaultBrowser_newTab">Nouvel onglet</system:String>
     <system:String x:Key="defaultBrowser_parameter">Mode privé</system:String>
 
@@ -479,6 +488,7 @@ Si vous ajoutez un préfixe &quot;@&quot; lors de la saisie d'un raccourci, celu
     </system:String>
     <system:String x:Key="errorTitle">Erreur</system:String>
     <system:String x:Key="folderOpenError">Une erreur s'est produite lors de l'ouverture du dossier. {0}</system:String>
+    <system:String x:Key="browserOpenError">Une erreur s'est produite lors de l'ouverture de l'URL dans le navigateur. Veuillez vérifier la configuration de votre navigateur Web par défaut dans la section &quot;Général&quot; de la fenêtre des paramètres</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Veuillez patienter...</system:String>
