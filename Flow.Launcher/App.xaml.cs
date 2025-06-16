@@ -158,7 +158,7 @@ namespace Flow.Launcher
 
         #region Notify Icon
 
-        private void InitializeNotifyIcon()
+        private static void InitializeNotifyIcon()
         {
             NotifyIcon = new NotifyIcon
             {
