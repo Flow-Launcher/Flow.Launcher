@@ -59,13 +59,6 @@ namespace Flow.Launcher
             // Initialize settings
             _settings.WMPInstalled = WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled();
 
-            // Check if the application is running as administrator
-            if (_settings.AlwaysRunAsAdministrator && !Win32Helper.IsAdministrator())
-            {
-                RestartApp(true);
-                return;
-            }
-
             // Configure the dependency injection container
             try
             {
@@ -140,6 +133,13 @@ namespace Flow.Launcher
             catch (Exception e)
             {
                 ShowErrorMsgBoxAndFailFast("Cannot load setting storage, please check local data directory", e);
+                return;
+            }
+
+            // Check if the application is running as administrator
+            if (_settings.AlwaysRunAsAdministrator && !Win32Helper.IsAdministrator())
+            {
+                RestartApp(true);
                 return;
             }
 
