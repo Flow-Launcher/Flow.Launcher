@@ -126,18 +126,18 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
 
 
     </system:String>
-    <system:String x:Key="KoreanImeOpenLink">Open Language and Region System Settings</system:String>
-    <system:String x:Key="KoreanImeOpenLinkToolTip">Opens the Korean IME setting location. Go to Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility</system:String>
+    <system:String x:Key="KoreanImeOpenLink">Otwórz ustawienia systemowe języka i regionu</system:String>
+    <system:String x:Key="KoreanImeOpenLinkToolTip">Otwiera lokalizację ustawień koreańskiego edytora IME. Przejdź do: Język koreański &gt; Opcje języka &gt; Klawiatura – Microsoft IME &gt; Zgodność.</system:String>
     <system:String x:Key="KoreanImeOpenLinkButton">Otwórz</system:String>
-    <system:String x:Key="KoreanImeRegistry">Use Previous Korean IME</system:String>
-    <system:String x:Key="KoreanImeRegistryTooltip">You can change the Previous Korean IME settings directly from here</system:String>
-    <system:String x:Key="homePage">Home Page</system:String>
-    <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
-    <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
-    <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
-    <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
-    <system:String x:Key="showAtTopmost">Show Search Window at Foremost</system:String>
-    <system:String x:Key="showAtTopmostToolTip">Overrides other programs' 'Always on Top' setting and displays Flow in the foremost position.</system:String>
+    <system:String x:Key="KoreanImeRegistry">Użyj poprzedniego koreańskiego IME</system:String>
+    <system:String x:Key="KoreanImeRegistryTooltip">Możesz bezpośrednio zmienić ustawienia poprzedniego koreańskiego IME tutaj</system:String>
+    <system:String x:Key="homePage">Strona główna</system:String>
+    <system:String x:Key="homePageToolTip">Wyświetl wyniki strony głównej, gdy pole wyszukiwania jest puste.</system:String>
+    <system:String x:Key="historyResultsForHomePage">Pokaż wyniki historii na stronie głównej</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Maksymalna liczba wyników historii wyświetlanych na stronie głównej</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">Można edytować tylko wtedy, gdy wtyczka obsługuje funkcję Strona główna i jest ona włączona.</system:String>
+    <system:String x:Key="showAtTopmost">Wyświetl okno wyszukiwania na wierzchu</system:String>
+    <system:String x:Key="showAtTopmostToolTip">Wyświetl okno wyszukiwania ponad innymi oknami</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Szukaj wtyczek</system:String>
@@ -160,7 +160,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="DisplayModeOnOff">Aktywny</system:String>
     <system:String x:Key="DisplayModePriority">Priorytet</system:String>
     <system:String x:Key="DisplayModeSearchDelay">Opóźnienie wyszukiwania</system:String>
-    <system:String x:Key="DisplayModeHomeOnOff">Home Page</system:String>
+    <system:String x:Key="DisplayModeHomeOnOff">Strona główna</system:String>
     <system:String x:Key="currentPriority">Obecny Priorytet</system:String>
     <system:String x:Key="newPriority">Nowy Priorytet</system:String>
     <system:String x:Key="priority">Priorytet</system:String>
@@ -358,7 +358,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="logfolder">Folder dziennika</system:String>
     <system:String x:Key="clearlogfolder">Wyczyść logi</system:String>
     <system:String x:Key="clearlogfolderMessage">Czy na pewno chcesz usunąć wszystkie logi?</system:String>
-    <system:String x:Key="cachefolder">Cache Folder</system:String>
+    <system:String x:Key="cachefolder">Folder pamięci podręcznej</system:String>
     <system:String x:Key="clearcachefolder">Wyczyść pamięć podręczną</system:String>
     <system:String x:Key="clearcachefolderMessage">Czy na pewno chcesz usunąć wszystkie pamięci podręczne?</system:String>
     <system:String x:Key="clearfolderfailMessage">Nie udało się wyczyścić części folderów i plików. Więcej informacji w pliku dziennika</system:String>
@@ -366,31 +366,31 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="userdatapath">Lokalizacja danych użytkownika</system:String>
     <system:String x:Key="userdatapathToolTip">Ustawienia użytkownika i zainstalowane wtyczki są zapisywane w folderze danych użytkownika. Ta lokalizacja może się różnić w zależności od tego, czy aplikacja jest w trybie przenośnym, czy nie.</system:String>
     <system:String x:Key="userdatapathButton">Otwórz folder</system:String>
-    <system:String x:Key="advanced">Advanced</system:String>
+    <system:String x:Key="advanced">Zaawansowane</system:String>
     <system:String x:Key="logLevel">Poziom logowania</system:String>
     <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="LogLevelINFO">Info</system:String>
     <system:String x:Key="settingWindowFontTitle">Ustawienia czcionki okna</system:String>
 
     <!--  Release Notes Window  -->
-    <system:String x:Key="seeMoreReleaseNotes">See more release notes on GitHub</system:String>
-    <system:String x:Key="checkNetworkConnectionTitle">Failed to fetch release notes</system:String>
-    <system:String x:Key="checkNetworkConnectionSubTitle">Please check your network connection or ensure GitHub is accessible</system:String>
-    <system:String x:Key="appUpdateTitle">Flow Launcher has been updated to {0}</system:String>
-    <system:String x:Key="appUpdateButtonContent">Click here to view the release notes</system:String>
+    <system:String x:Key="seeMoreReleaseNotes">Zobacz więcej informacji o wydaniach na GitHub</system:String>
+    <system:String x:Key="checkNetworkConnectionTitle">Nie udało się pobrać informacji o wydaniach</system:String>
+    <system:String x:Key="checkNetworkConnectionSubTitle">Sprawdź swoje połączenie z siecią lub upewnij się, że GitHub jest dostępny</system:String>
+    <system:String x:Key="appUpdateTitle">Flow Launcher został zaktualizowany do wersji {0}</system:String>
+    <system:String x:Key="appUpdateButtonContent">Kliknij tutaj, aby zobaczyć informacje o wydaniu</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Wybierz menedżer plików</system:String>
-    <system:String x:Key="fileManager_learnMore">Learn more</system:String>
+    <system:String x:Key="fileManager_learnMore">Więcej informacji</system:String>
     <system:String x:Key="fileManager_tips">Proszę określić lokalizację pliku menedżera plików, którego używasz i dodać argumenty według potrzeb. Symbol &quot;%d&quot; reprezentuje ścieżkę katalogu do otwarcia, używaną w polu Arg dla Folderu oraz dla poleceń otwierających konkretne katalogi. Symbol &quot;%f&quot; reprezentuje ścieżkę pliku do otwarcia, używaną w polu Arg dla Pliku oraz dla poleceń otwierających konkretne pliki.</system:String>
     <system:String x:Key="fileManager_tips2">Na przykład, jeśli menedżer plików używa polecenia takiego jak „totalcmd.exe /A c:\windows&quot; do otwarcia katalogu c:\windows, Ścieżka Menedżera Plików będzie totalcmd.exe, a Argument dla Folderu będzie /A &quot;%d&quot;. Niektóre menedżery plików, takie jak QTTabBar, mogą wymagać jedynie podania ścieżki; w takim przypadku użyj &quot;%d&quot; jako Ścieżki Menedżera Plików, a pozostałe pola pozostaw puste.</system:String>
-    <system:String x:Key="fileManager_name">Menadżer plików</system:String>
+    <system:String x:Key="fileManager_name">Menedżer plików</system:String>
     <system:String x:Key="fileManager_profile_name">Nazwa profilu</system:String>
     <system:String x:Key="fileManager_path">Ścieżka menedżera plików</system:String>
     <system:String x:Key="fileManager_directory_arg">Arg dla folderu</system:String>
     <system:String x:Key="fileManager_file_arg">Arg dla pliku</system:String>
-    <system:String x:Key="fileManagerPathNotFound">The file manager '{0}' could not be located at '{1}'. Would you like to continue?</system:String>
-    <system:String x:Key="fileManagerPathError">File Manager Path Error</system:String>
+    <system:String x:Key="fileManagerPathNotFound">Menedżer plików „{0}” nie został znaleziony w lokalizacji „{1}”. Czy chcesz kontynuować?</system:String>
+    <system:String x:Key="fileManagerPathError">Błąd ścieżki do menedżera plików</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Domyślna przeglądarka</system:String>
@@ -418,7 +418,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="newActionKeywordsSameAsOld">Nowe słowo kluczowe akcji jest takie samo jak poprzednie. Wybierz inne</system:String>
     <system:String x:Key="success">Sukces</system:String>
     <system:String x:Key="completedSuccessfully">Zakończono pomyślnie</system:String>
-    <system:String x:Key="failedToCopy">Failed to copy</system:String>
+    <system:String x:Key="failedToCopy">Nie udało się skopiować</system:String>
     <system:String x:Key="actionkeyword_tips">Wpisz słowa kluczowe uruchamiające wtyczkę (oddzielone spacją). Wpisz *, aby uruchamiać wtyczkę bez słów kluczowych.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
@@ -426,8 +426,8 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="searchDelayTimeTips">Podaj czas opóźnienia wyszukiwania (w ms) dla wtyczki. Pozostaw puste, aby użyć wartości domyślnej.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
-    <system:String x:Key="homeTitle">Home Page</system:String>
-    <system:String x:Key="homeTips">Enable the plugin home page state if you like to show the plugin results when query is empty.</system:String>
+    <system:String x:Key="homeTitle">Strona główna</system:String>
+    <system:String x:Key="homeTips">Włącz stan strony głównej wtyczki, jeśli chcesz wyświetlać wyniki wtyczki, gdy pole wyszukiwania jest puste.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Skrót klawiszowy niestandardowych zapyta</system:String>
@@ -483,13 +483,13 @@ Jeśli dodasz prefiks '@' podczas wprowadzania skrótu, będzie on pasował do d
     <system:String x:Key="reportWindow_copy_below">2. Skopiuj poniższą wiadomość wyjątku</system:String>
 
     <!--  File Open Error  -->
-    <system:String x:Key="fileManagerNotFoundTitle">File Manager Error</system:String>
+    <system:String x:Key="fileManagerNotFoundTitle">Błąd menedżera plików</system:String>
     <system:String x:Key="fileManagerNotFound">
-        The specified file manager could not be found. Please check the Custom File Manager setting under Settings &gt; General.
+        Nie można znaleźć określonego menedżera plików. Sprawdź ustawienie Niestandardowy menedżer plików w Ustawienia &gt; Ogólne.
     </system:String>
     <system:String x:Key="errorTitle">Błąd</system:String>
-    <system:String x:Key="folderOpenError">An error occurred while opening the folder. {0}</system:String>
-    <system:String x:Key="browserOpenError">An error occurred while opening the URL in the browser. Please check your Default Web Browser configuration in the General section of the settings window</system:String>
+    <system:String x:Key="folderOpenError">Wystąpił błąd podczas otwierania folderu. {0}</system:String>
+    <system:String x:Key="browserOpenError">Wystąpił błąd podczas otwierania adresu URL w przeglądarce. Sprawdź konfigurację domyślnej przeglądarki internetowej w sekcji Ogólne okna ustawień</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Proszę czekać...</system:String>
