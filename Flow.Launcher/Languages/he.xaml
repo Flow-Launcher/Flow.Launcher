@@ -136,7 +136,7 @@
     <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
     <system:String x:Key="homeToggleBoxToolTip">ניתן לערוך זאת רק אם התוסף תומך בתכונת הבית ודף הבית מופעל.</system:String>
     <system:String x:Key="showAtTopmost">Show Search Window at Foremost</system:String>
-    <system:String x:Key="showAtTopmostToolTip">Overrides other programs' 'Always on Top' setting and displays Flow in the foremost position.</system:String>
+    <system:String x:Key="showAtTopmostToolTip">עוקף את הגדרת תמיד עליון של תוכנות אחרות, ומציג את Flow במיקום הגבוה ביותר.</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">חפש תוסף</system:String>
