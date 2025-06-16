@@ -25,7 +25,13 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public void Initialize()
         {
+            // Initialize dependency injection instances after Ioc.Default is created
             _stringMatcher = Ioc.Default.GetRequiredService<StringMatcher>();
+
+            // Initialize application resources after application is created
+            var settingWindowFont = new FontFamily(SettingWindowFont);
+            Application.Current.Resources["SettingWindowFont"] = settingWindowFont;
+            Application.Current.Resources["ContentControlThemeFontFamily"] = settingWindowFont;
         }
 
         public void Save()
@@ -115,8 +121,11 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 {
                     _settingWindowFont = value;
                     OnPropertyChanged();
-                    Application.Current.Resources["SettingWindowFont"] = new FontFamily(value);
-                    Application.Current.Resources["ContentControlThemeFontFamily"] = new FontFamily(value);
+                    if (Application.Current != null)
+                    {
+                        Application.Current.Resources["SettingWindowFont"] = new FontFamily(value);
+                        Application.Current.Resources["ContentControlThemeFontFamily"] = new FontFamily(value);
+                    }
                 }
             }
         }
