@@ -56,15 +56,15 @@ namespace Flow.Launcher
 
         public App()
         {
-            // Initialize settings
-            _settings.WMPInstalled = WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled();
-
             // Check if the application is running as administrator
             if (_settings.AlwaysRunAsAdministrator && !Win32Helper.IsAdministrator())
             {
                 RestartApp(true);
                 return;
             }
+
+            // Initialize settings
+            _settings.WMPInstalled = WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled();
 
             // Configure the dependency injection container
             try
