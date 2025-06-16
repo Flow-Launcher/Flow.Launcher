@@ -9,6 +9,7 @@ using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -1754,6 +1755,11 @@ namespace Flow.Launcher.ViewModel
                 {
                     // 📌 Remove DWM Cloak (Make the window visible normally)
                     Win32Helper.DWMSetCloakForWindow(mainWindow, false);
+                    // 👇 약간 delay를 주고 refresh 호출
+                    Dispatcher.CurrentDispatcher.InvokeAsync(() =>
+                    {
+                        Win32Helper.RefreshWindow(new WindowInteropHelper(mainWindow).Handle);
+                    }, DispatcherPriority.Background);
 
                     // Set clock and search icon opacity
                     var opacity = Settings.UseAnimation ? 0.0 : 1.0;

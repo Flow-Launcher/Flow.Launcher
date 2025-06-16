@@ -14,8 +14,8 @@
     </ResourceDictionary.MergedDictionaries>
     <system:Boolean x:Key="ThemeBlurEnabled">True</system:Boolean>
     <system:String x:Key="SystemBG">Auto</system:String>
-    <Color x:Key="LightBG">#1AFAFAFA</Color>
-    <Color x:Key="DarkBG">#1A202020</Color>
+    <Color x:Key="LightBG">#CEFAFAFA</Color>
+    <Color x:Key="DarkBG">#D6202020</Color>
     <Style
         x:Key="BulletStyle"
         BasedOn="{StaticResource BaseBulletStyle}"

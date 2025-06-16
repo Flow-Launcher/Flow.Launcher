@@ -62,6 +62,25 @@ namespace Flow.Launcher.Infrastructure
             WCA_ACCENT_POLICY = 19
         }
 
+        [DllImport("dwmapi.dll")]
+        public static extern void DwmFlush();
+
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter,
+            int X, int Y, int cx, int cy, uint uFlags);
+
+        const uint SWP_NOSIZE = 0x0001;
+        const uint SWP_NOMOVE = 0x0002;
+        const uint SWP_NOZORDER = 0x0004;
+        const uint SWP_FRAMECHANGED = 0x0020;
+
+        public static void RefreshWindow(IntPtr hwnd)
+        {
+            SetWindowPos(hwnd, IntPtr.Zero, 0, 0, 0, 0,
+                SWP_NOMOVE | SWP_NOSIZE | SWP_NOZORDER | SWP_FRAMECHANGED);
+            DwmFlush();
+        }
+        
         [DllImport("user32.dll")]
         private static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
 
