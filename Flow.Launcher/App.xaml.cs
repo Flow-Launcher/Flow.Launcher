@@ -43,9 +43,9 @@ namespace Flow.Launcher
         private static readonly string ClassName = nameof(App);
 
         private static bool _disposed;
+        private static Settings _settings;
         private static MainWindow _mainWindow;
         private readonly MainViewModel _mainVM;
-        private readonly Settings _settings;
 
         // To prevent two disposals running at the same time.
         private static readonly object _disposingLock = new();
@@ -57,18 +57,7 @@ namespace Flow.Launcher
         public App()
         {
             // Initialize settings
-            try
-            {
-                var storage = new FlowLauncherJsonStorage<Settings>();
-                _settings = storage.Load();
-                _settings.SetStorage(storage);
-                _settings.WMPInstalled = WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled();
-            }
-            catch (Exception e)
-            {
-                ShowErrorMsgBoxAndFailFast("Cannot load setting storage, please check local data directory", e);
-                return;
-            }
+            _settings.WMPInstalled = WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled();
 
             // Check if the application is running as administrator
             if (_settings.AlwaysRunAsAdministrator && !Win32Helper.IsAdministrator())
@@ -132,16 +121,6 @@ namespace Flow.Launcher
                 ShowErrorMsgBoxAndFailFast("Cannot initialize api and settings, please open new issue in Flow.Launcher", e);
                 return;
             }
-
-            // Local function
-            static void ShowErrorMsgBoxAndFailFast(string message, Exception e)
-            {
-                // Firstly show users the message
-                MessageBox.Show(e.ToString(), message, MessageBoxButton.OK, MessageBoxImage.Error);
-
-                // Flow cannot construct its App instance, so ensure Flow crashes w/ the exception info.
-                Environment.FailFast(message, e);
-            }
         }
 
         #endregion
@@ -151,12 +130,48 @@ namespace Flow.Launcher
         [STAThread]
         public static void Main()
         {
+            // Initialize settings so that we can get language code
+            try
+            {
+                var storage = new FlowLauncherJsonStorage<Settings>();
+                _settings = storage.Load();
+                _settings.SetStorage(storage);
+            }
+            catch (Exception e)
+            {
+                ShowErrorMsgBoxAndFailFast("Cannot load setting storage, please check local data directory", e);
+                return;
+            }
+
+            // Initialize system language before changing culture info
+            Internationalization.InitSystemLanguageCode();
+
+            // Change culture info before application creation to localize WinForm windows
+            if (_settings.Language != Constant.SystemLanguageCode)
+            {
+                Internationalization.ChangeCultureInfo(_settings.Language);
+            }
+
+            // Start the application as a single instance
             if (SingleInstance<App>.InitializeAsFirstInstance())
             {
                 using var application = new App();
                 application.InitializeComponent();
                 application.Run();
             }
+        }
+
+        #endregion
+
+        #region Fail Fast
+
+        private static void ShowErrorMsgBoxAndFailFast(string message, Exception e)
+        {
+            // Firstly show users the message
+            MessageBox.Show(e.ToString(), message, MessageBoxButton.OK, MessageBoxImage.Error);
+
+            // Flow cannot construct its App instance, so ensure Flow crashes w/ the exception info.
+            Environment.FailFast(message, e);
         }
 
         #endregion
