@@ -75,7 +75,9 @@ namespace Flow.Launcher.Plugin.Explorer
                         {
                             Settings.QuickAccessLinks.Add(new AccessLink
                             {
-                                Path = record.FullPath, Type = record.Type
+                                Name = record.FullPath.GetPathName(),
+                                Path = record.FullPath,
+                                Type = record.Type
                             });
 
                             Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_addfilefoldersuccess"),

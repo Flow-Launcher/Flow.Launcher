@@ -85,6 +85,15 @@ namespace Flow.Launcher.Plugin
         void ShowMsgError(string title, string subTitle = "");
 
         /// <summary>
+        /// Show the error message using Flow's standard error icon.
+        /// </summary>
+        /// <param name="title">Message title</param>
+        /// <param name="buttonText">Message button content</param>
+        /// <param name="buttonAction">Message button action</param>
+        /// <param name="subTitle">Optional message subtitle</param>
+        void ShowMsgErrorWithButton(string title, string buttonText, Action buttonAction, string subTitle = "");
+
+        /// <summary>
         /// Show the MainWindow when hiding
         /// </summary>
         void ShowMainWindow();
@@ -126,6 +135,27 @@ namespace Flow.Launcher.Plugin
         /// <param name="iconPath">Message icon path (relative path to your plugin folder)</param>
         /// <param name="useMainWindowAsOwner">when true will use main windows as the owner</param>
         void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true);
+
+        /// <summary>
+        /// Show message box with button
+        /// </summary>
+        /// <param name="title">Message title</param>
+        /// <param name="buttonText">Message button content</param>
+        /// <param name="buttonAction">Message button action</param>
+        /// <param name="subTitle">Message subtitle</param>
+        /// <param name="iconPath">Message icon path (relative path to your plugin folder)</param>
+        void ShowMsgWithButton(string title, string buttonText, Action buttonAction, string subTitle = "", string iconPath = "");
+
+        /// <summary>
+        /// Show message box with button
+        /// </summary>
+        /// <param name="title">Message title</param>
+        /// <param name="buttonText">Message button content</param>
+        /// <param name="buttonAction">Message button action</param>
+        /// <param name="subTitle">Message subtitle</param>
+        /// <param name="iconPath">Message icon path (relative path to your plugin folder)</param>
+        /// <param name="useMainWindowAsOwner">when true will use main windows as the owner</param>
+        void ShowMsgWithButton(string title, string buttonText, Action buttonAction, string subTitle, string iconPath, bool useMainWindowAsOwner = true);
 
         /// <summary>
         /// Open setting dialog
@@ -306,13 +336,28 @@ namespace Flow.Launcher.Plugin
         public void OpenDirectory(string DirectoryPath, string FileNameOrFilePath = null);
 
         /// <summary>
-        /// Opens the URL with the given Uri object. 
+        /// Opens the URL using the browser with the given Uri object, even if the URL is a local file.
+        /// The browser and mode used is based on what's configured in Flow's default browser settings.
+        /// </summary>
+        public void OpenWebUrl(Uri url, bool? inPrivate = null);
+
+        /// <summary>
+        /// Opens the URL using the browser with the given string, even if the URL is a local file.
+        /// The browser and mode used is based on what's configured in Flow's default browser settings.
+        /// Non-C# plugins should use this method.
+        /// </summary>
+        public void OpenWebUrl(string url, bool? inPrivate = null);
+
+        /// <summary>
+        /// Opens the URL with the given Uri object in browser if scheme is Http or Https.
+        /// If the URL is a local file, it will instead be opened with the default application for that file type.
         /// The browser and mode used is based on what's configured in Flow's default browser settings.
         /// </summary>
         public void OpenUrl(Uri url, bool? inPrivate = null);
 
         /// <summary>
-        /// Opens the URL with the given string. 
+        /// Opens the URL with the given string in browser if scheme is Http or Https.
+        /// If the URL is a local file, it will instead be opened with the default application for that file type.
         /// The browser and mode used is based on what's configured in Flow's default browser settings.
         /// Non-C# plugins should use this method.
         /// </summary>

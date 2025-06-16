@@ -1,6 +1,10 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mdagif="clr-namespace:MdXaml.AnimatedGif;assembly=MdXaml.AnimatedGif"
+    xmlns:mdhtml="clr-namespace:MdXaml.Html;assembly=MdXaml.Html"
+    xmlns:mdplugins="clr-namespace:MdXaml.Plugins;assembly=MdXaml.Plugins"
+    xmlns:mdsvg="clr-namespace:MdXaml.Svg;assembly=MdXaml.Svg"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:ui="http://schemas.modernwpf.com/2019">
 
@@ -2407,6 +2411,84 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!--  Explorer Plugin Expander  -->
+    <Style x:Key="ExpanderHeaderRightArrowStyle" TargetType="ToggleButton">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border
+                        x:Name="RootBorder"
+                        Padding="16 15 16 15"
+                        Background="Transparent">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <ContentPresenter
+                                Grid.Column="0"
+                                Margin="8 0 0 0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                RecognizesAccessKey="True"
+                                SnapsToDevicePixels="True" />
+
+                            <Grid
+                                x:Name="ChevronGrid"
+                                Grid.Column="1"
+                                Width="20"
+                                Height="20"
+                                Margin="8 0 4 0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Background="Transparent"
+                                RenderTransformOrigin="0.5,0.5">
+                                <Grid.RenderTransform>
+                                    <RotateTransform Angle="0" />
+                                </Grid.RenderTransform>
+                                <Ellipse
+                                    x:Name="circle"
+                                    Width="19"
+                                    Height="19"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Stroke="Transparent" />
+                                <Path
+                                    x:Name="arrow"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="M 1,1.5 L 4.5,5 L 8,1.5"
+                                    SnapsToDevicePixels="False"
+                                    Stroke="#666"
+                                    StrokeThickness="1" />
+                            </Grid>
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource CustomExpanderHover}" />
+                            <Setter TargetName="circle" Property="Stroke" Value="Transparent" />
+                            <Setter TargetName="arrow" Property="Stroke" Value="{DynamicResource Color05B}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="circle" Property="Stroke" Value="Transparent" />
+                            <Setter TargetName="circle" Property="StrokeThickness" Value="1.5" />
+                            <Setter TargetName="arrow" Property="Stroke" Value="{DynamicResource Color17B}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="ExpanderStyle1" TargetType="{x:Type Expander}">
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
         <Setter Property="Background" Value="Transparent" />
@@ -5680,5 +5762,341 @@
         <Setter Property="FontSize" Value="12" />
         <Setter Property="Margin" Value="0 2 0 0" />
         <Setter Property="Foreground" Value="{DynamicResource Color04B}" />
+    </Style>
+
+    <!--  Release Notes  -->
+    <mdplugins:MdXamlPlugins x:Key="MdXamlPlugins">
+        <mdhtml:HtmlPluginSetup />
+        <mdsvg:SvgPluginSetup />
+        <mdagif:AnimatedGifPluginSetup />
+    </mdplugins:MdXamlPlugins>
+
+    <Style x:Key="DocumentStyleGithubLikeLight" TargetType="FlowDocument">
+        <Setter Property="FontFamily" Value="Calibri" />
+        <Setter Property="TextAlignment" Value="Left" />
+        <Setter Property="PagePadding" Value="0" />
+        <Setter Property="FontSize" Value="14" />
+
+        <Style.Resources>
+            <Style TargetType="Section">
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="Blockquote">
+                        <Setter Property="Padding" Value="10 5" />
+                        <Setter Property="BorderBrush" Value="#DEDEDE" />
+                        <Setter Property="BorderThickness" Value="5 0 0 0" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit" TargetType="avalonEdit:TextEditor">
+                <Setter Property="Background" Value="#EEEEEE" />
+                <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
+                <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+                <Setter Property="Margin" Value="2 0 2 0" />
+                <Setter Property="Padding" Value="3" />
+            </Style>
+
+            <Style TargetType="Paragraph">
+                <Setter Property="Margin" Value="0 7 0 0" />
+
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="Heading1">
+                        <Setter Property="Margin" Value="0 0 15 0" />
+
+                        <Setter Property="Foreground" Value="#ff000000" />
+                        <Setter Property="FontSize" Value="28" />
+                        <Setter Property="FontWeight" Value="UltraBold" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="Heading2">
+                        <Setter Property="Margin" Value="0 0 15 0" />
+
+                        <Setter Property="Foreground" Value="#ff000000" />
+                        <Setter Property="FontSize" Value="21" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="Heading3">
+                        <Setter Property="Margin" Value="0 0 10 0" />
+
+                        <Setter Property="Foreground" Value="#ff000000" />
+                        <Setter Property="FontSize" Value="17.5" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="Heading4">
+                        <Setter Property="Margin" Value="0 0 5 0" />
+
+                        <Setter Property="Foreground" Value="#ff000000" />
+                        <Setter Property="FontSize" Value="14" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="CodeBlock">
+                        <Setter Property="FontFamily" Value="Courier New" />
+                        <Setter Property="FontSize" Value="11.9" />
+                        <Setter Property="Background" Value="#12181F25" />
+                        <Setter Property="Padding" Value="20 10" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="Note">
+                        <Setter Property="Margin" Value="5 0 5 0" />
+                        <Setter Property="Padding" Value="10 5" />
+                        <Setter Property="BorderBrush" Value="#DEDEDE" />
+                        <Setter Property="BorderThickness" Value="3 3 3 3" />
+                        <Setter Property="Background" Value="#FAFAFA" />
+                    </Trigger>
+
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="Run">
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="CodeSpan">
+                        <Setter Property="FontFamily" Value="Courier New" />
+                        <Setter Property="FontSize" Value="11.9" />
+                        <Setter Property="Background" Value="#12181F25" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style TargetType="Span">
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="CodeSpan">
+                        <Setter Property="FontFamily" Value="Courier New" />
+                        <Setter Property="FontSize" Value="11.9" />
+                        <Setter Property="Background" Value="#12181F25" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="Hyperlink">
+                <Setter Property="TextDecorations" Value="None" />
+            </Style>
+
+            <Style TargetType="Image">
+                <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor" />
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="imageright">
+                        <Setter Property="Margin" Value="20 0 0 0" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <!--
+                The Table's style don't seem to support border-collapse.
+                By making the ruled line width 0.5 and applying it to cell and table,
+                it looks like the ruled lines are not doubled.
+            -->
+            <Style TargetType="Table">
+                <Setter Property="CellSpacing" Value="0" />
+                <Setter Property="BorderThickness" Value="0.5" />
+                <Setter Property="BorderBrush" Value="#DFE2E5" />
+                <Style.Resources>
+                    <Style TargetType="TableCell">
+                        <Setter Property="BorderThickness" Value="0.5" />
+                        <Setter Property="BorderBrush" Value="#DFE2E5" />
+                        <Setter Property="Padding" Value="13 6" />
+                    </Style>
+                </Style.Resources>
+            </Style>
+
+            <Style TargetType="TableRowGroup">
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="TableHeader">
+                        <Setter Property="FontWeight" Value="DemiBold" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                        <Setter Property="Background" Value="#FFFFFF" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="TableRow">
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="EvenTableRow">
+                        <Setter Property="Background" Value="#F6F8FA" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="BlockUIContainer">
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="RuleSingle">
+                        <Setter Property="Margin" Value="0 3" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="RuleDouble">
+                        <Setter Property="Margin" Value="0 3" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="RuleBold">
+                        <Setter Property="Margin" Value="0 3" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="RuleBoldWithSingle">
+                        <Setter Property="Margin" Value="0 3" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="DocumentStyleGithubLikeDark" TargetType="FlowDocument">
+        <Setter Property="FontFamily" Value="Calibri" />
+        <Setter Property="TextAlignment" Value="Left" />
+        <Setter Property="PagePadding" Value="0" />
+        <Setter Property="FontSize" Value="14" />
+
+        <Style.Resources>
+            <Style TargetType="Section">
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="Blockquote">
+                        <Setter Property="Padding" Value="10 5" />
+                        <Setter Property="BorderBrush" Value="#212121" />
+                        <Setter Property="BorderThickness" Value="5 0 0 0" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit" TargetType="avalonEdit:TextEditor">
+                <Setter Property="Background" Value="#111111" />
+                <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
+                <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+                <Setter Property="Margin" Value="2 0 2 0" />
+                <Setter Property="Padding" Value="3" />
+            </Style>
+
+            <Style TargetType="Paragraph">
+                <Setter Property="Margin" Value="0 7 0 0" />
+
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="Heading1">
+                        <Setter Property="Margin" Value="0 0 15 0" />
+                        <Setter Property="Foreground" Value="#FFFFFFFF" />
+                        <Setter Property="FontSize" Value="28" />
+                        <Setter Property="FontWeight" Value="UltraBold" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="Heading2">
+                        <Setter Property="Margin" Value="0 0 15 0" />
+                        <Setter Property="Foreground" Value="#FFFFFFFF" />
+                        <Setter Property="FontSize" Value="21" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="Heading3">
+                        <Setter Property="Margin" Value="0 0 10 0" />
+                        <Setter Property="Foreground" Value="#FFFFFFFF" />
+                        <Setter Property="FontSize" Value="17.5" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="Heading4">
+                        <Setter Property="Margin" Value="0 0 5 0" />
+                        <Setter Property="Foreground" Value="#FFFFFFFF" />
+                        <Setter Property="FontSize" Value="14" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="CodeBlock">
+                        <Setter Property="FontFamily" Value="Courier New" />
+                        <Setter Property="FontSize" Value="11.9" />
+                        <Setter Property="Background" Value="#E0E7DFDA" />
+                        <Setter Property="Padding" Value="20 10" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="Note">
+                        <Setter Property="Margin" Value="5 0 5 0" />
+                        <Setter Property="Padding" Value="10 5" />
+                        <Setter Property="BorderBrush" Value="#212121" />
+                        <Setter Property="BorderThickness" Value="3 3 3 3" />
+                        <Setter Property="Background" Value="#050505" />
+                    </Trigger>
+
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="Run">
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="CodeSpan">
+                        <Setter Property="FontFamily" Value="Courier New" />
+                        <Setter Property="FontSize" Value="11.9" />
+                        <Setter Property="Background" Value="#E0E7DFDA" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="Span">
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="CodeSpan">
+                        <Setter Property="FontFamily" Value="Courier New" />
+                        <Setter Property="FontSize" Value="11.9" />
+                        <Setter Property="Background" Value="#E0E7DFDA" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="Hyperlink">
+                <Setter Property="TextDecorations" Value="None" />
+            </Style>
+
+            <Style TargetType="Image">
+                <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor" />
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="imageright">
+                        <Setter Property="Margin" Value="20 0 0 0" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="Table">
+                <Setter Property="CellSpacing" Value="0" />
+                <Setter Property="BorderThickness" Value="0.5" />
+                <Setter Property="BorderBrush" Value="#202020" />
+                <Style.Resources>
+                    <Style TargetType="TableCell">
+                        <Setter Property="BorderThickness" Value="0.5" />
+                        <Setter Property="BorderBrush" Value="#202020" />
+                        <Setter Property="Padding" Value="13 6" />
+                    </Style>
+                </Style.Resources>
+            </Style>
+
+            <Style TargetType="TableRowGroup">
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="TableHeader">
+                        <Setter Property="FontWeight" Value="Bold" />
+                        <Setter Property="Background" Value="#000000" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="TableRow">
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="EvenTableRow">
+                        <Setter Property="Background" Value="#090708" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="BlockUIContainer">
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="RuleSingle">
+                        <Setter Property="Margin" Value="0 3" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="RuleDouble">
+                        <Setter Property="Margin" Value="0 3" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="RuleBold">
+                        <Setter Property="Margin" Value="0 3" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="RuleBoldWithSingle">
+                        <Setter Property="Margin" Value="0 3" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Style.Resources>
     </Style>
 </ResourceDictionary>

@@ -135,6 +135,8 @@
     <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
     <system:String x:Key="homeToggleBoxToolTip">ניתן לערוך זאת רק אם התוסף תומך בתכונת הבית ודף הבית מופעל.</system:String>
+    <system:String x:Key="showAtTopmost">Show Search Window at Topmost</system:String>
+    <system:String x:Key="showAtTopmostToolTip">Show search window above other windows</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">חפש תוסף</system:String>
@@ -369,6 +371,13 @@
     <system:String x:Key="LogLevelINFO">מידע</system:String>
     <system:String x:Key="settingWindowFontTitle">Setting Window Font</system:String>
 
+    <!--  Release Notes Window  -->
+    <system:String x:Key="seeMoreReleaseNotes">See more release notes on GitHub</system:String>
+    <system:String x:Key="checkNetworkConnectionTitle">Failed to fetch release notes</system:String>
+    <system:String x:Key="checkNetworkConnectionSubTitle">Please check your network connection or ensure GitHub is accessible</system:String>
+    <system:String x:Key="appUpdateTitle">Flow Launcher has been updated to {0}</system:String>
+    <system:String x:Key="appUpdateButtonContent">Click here to view the release notes</system:String>
+
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">בחר מנהל קבצים</system:String>
     <system:String x:Key="fileManager_learnMore">למד עוד</system:String>
@@ -479,6 +488,7 @@
     </system:String>
     <system:String x:Key="errorTitle">שגיאה</system:String>
     <system:String x:Key="folderOpenError">אירעה שגיאה בעת פתיחת התיקייה. {0}</system:String>
+    <system:String x:Key="browserOpenError">אירעה שגיאה בעת פתיחת כתובת ה-URL בדפדפן. אנא בדוק את תצורת דפדפן האינטרנט המוגדר כברירת מחדל שלך במקטע הכללי של חלון ההגדרות</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">אנא המתן...</system:String>
