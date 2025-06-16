@@ -375,6 +375,10 @@ Yes please, let us know in the [Q&A](https://github.com/Flow-Launcher/Flow.Launc
 
 ## Development
 
+### Localization
+
+Our project localization is based on [Crowdin](https://crowdin.com). If you would like to change them, please go to https://crowdin.com/project/flow-launcher.
+
 ### New changes
 
 All changes to flow are captured via pull requests. Some new changes will have been merged but still pending release, this means whilst a change may not exist in the current release, it may very well have been accepted and merged into the dev branch and available as a pre-release download. It is therefore a good idea that before you start to make changes, search through the open and closed pull requests to make sure the change you intend to make is not already done.

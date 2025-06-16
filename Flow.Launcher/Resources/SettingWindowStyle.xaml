@@ -6,7 +6,6 @@
     <converters:BorderClipConverter x:Key="BorderClipConverter" />
     <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     <converters:TextConverter x:Key="TextConverter" />
-    <core:TranslationConverter x:Key="TranslationConverter" />
 
     <!--  Icon for Theme Type Label  -->
     <Geometry x:Key="circle_half_stroke_solid">F1 M512,512z M0,0z M448,256C448,150,362,64,256,64L256,448C362,448,448,362,448,256z M0,256A256,256,0,1,1,512,256A256,256,0,1,1,0,256z</Geometry>

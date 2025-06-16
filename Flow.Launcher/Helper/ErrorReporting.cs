@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Threading;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Exception;
+using Flow.Launcher.Infrastructure.Logger;
 using NLog;
 
 namespace Flow.Launcher.Helper;
 
 public static class ErrorReporting
 {
-    private static void Report(Exception e, [CallerMemberName] string methodName = "UnHandledException")
+    private static void Report(Exception e, bool silent = false, [CallerMemberName] string methodName = "UnHandledException")
     {
         var logger = LogManager.GetLogger(methodName);
         logger.Fatal(ExceptionFormatter.FormatExcpetion(e));
+        if (silent) return;
         var reportWindow = new ReportWindow(e);
         reportWindow.Show();
     }
@@ -35,8 +36,9 @@ public static class ErrorReporting
 
     public static void TaskSchedulerUnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
     {
-        // handle unobserved task exceptions on UI thread
-        Application.Current.Dispatcher.Invoke(() => Report(e.Exception));
+        // log exception but do not handle unobserved task exceptions on UI thread
+        //Application.Current.Dispatcher.Invoke(() => Report(e.Exception, true));
+        Log.Exception(nameof(ErrorReporting), "Unobserved task exception occurred.", e.Exception);
         // prevent application exit, so the user can copy the prompted error info
         e.SetObserved();
     }
