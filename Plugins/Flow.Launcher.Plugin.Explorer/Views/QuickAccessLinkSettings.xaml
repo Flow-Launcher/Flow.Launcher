@@ -1,22 +1,23 @@
-﻿<Window x:Class="Flow.Launcher.Plugin.Explorer.Views.QuickAccessLinkSettings"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:Flow.Launcher.Plugin.Explorer.Views"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        Title="{DynamicResource plugin_explorer_manage_quick_access_links_header}"
-        Width="Auto"
-        Height="255"
-        Background="{DynamicResource PopuBGColor}"
-        DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        Foreground="{DynamicResource PopupTextColor}"
-        ResizeMode="NoResize"
-        SizeToContent="Width"
-        WindowStartupLocation="CenterScreen"
-        mc:Ignorable="d">
-        <WindowChrome.WindowChrome>
-            <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
-        </WindowChrome.WindowChrome>
+﻿<Window
+    x:Class="Flow.Launcher.Plugin.Explorer.Views.QuickAccessLinkSettings"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Flow.Launcher.Plugin.Explorer.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="{DynamicResource plugin_explorer_manage_quick_access_links_header}"
+    Width="Auto"
+    Height="300"
+    Background="{DynamicResource PopuBGColor}"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    Foreground="{DynamicResource PopupTextColor}"
+    ResizeMode="NoResize"
+    SizeToContent="Width"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
+    </WindowChrome.WindowChrome>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -58,55 +59,91 @@
             <StackPanel Margin="26 0 26 0">
                 <StackPanel Margin="0 0 0 12">
                     <TextBlock
-                        Margin="0 0 0 0"
                         FontSize="20"
                         FontWeight="SemiBold"
                         Text="{DynamicResource plugin_explorer_manage_quick_access_links_header}"
                         TextAlignment="Left" />
                 </StackPanel>
-                <StackPanel Margin="0 10 0 0" Orientation="Horizontal">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" MinWidth="100" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!--  Name  -->
                     <TextBlock
-                        MinWidth="150"
-                        Margin="0 10 15 10"
-                        HorizontalAlignment="Left"
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Margin="0 10 0 0"
                         VerticalAlignment="Center"
                         FontSize="14"
                         Text="{DynamicResource plugin_explorer_name}" />
                     <TextBox
-                        Margin="10 0 0 0"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="10 10 0 0"
                         VerticalAlignment="Center"
                         FontSize="12"
-                        Width="250"
                         Text="{Binding SelectedName, Mode=TwoWay}" />
-                </StackPanel>
-                
-                <StackPanel Margin="0 10 0 0" Orientation="Horizontal">
+
+                    <!--  Type  -->
                     <TextBlock
-                        MinWidth="150"
-                        Margin="0 10 15 10"
-                        HorizontalAlignment="Left"
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="0 10 0 0"
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Text="{DynamicResource plugin_explorer_type}" />
+                    <StackPanel
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Orientation="Horizontal">
+                        <RadioButton
+                            Margin="10 10 0 0"
+                            Content="{DynamicResource plugin_explorer_file}"
+                            GroupName="PathType"
+                            IsChecked="{Binding IsFileSelected}" />
+                        <RadioButton
+                            Margin="10 10 0 0"
+                            Content="{DynamicResource plugin_explorer_folder}"
+                            GroupName="PathType"
+                            IsChecked="{Binding IsFolderSelected}" />
+                    </StackPanel>
+                    <!--  Path  -->
+                    <TextBlock
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Margin="0 10 0 0"
                         VerticalAlignment="Center"
                         FontSize="14"
                         Text="{DynamicResource plugin_explorer_path}" />
-
-
                     <TextBox
-                        Margin="10 0 0 0"
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Width="250"
+                        Margin="10 10 0 0"
                         VerticalAlignment="Center"
                         FontSize="12"
-                        Width="250"
-                        Text="{Binding SelectedPath, Mode=TwoWay}"
-                        IsReadOnly="True" />
+                        IsReadOnly="True"
+                        Text="{Binding SelectedPath, Mode=TwoWay}" />
                     <Button
-                        Width="80"
+                        Grid.Row="2"
+                        Grid.Column="2"
                         Height="Auto"
-                        Margin="10 0 0 0"
+                        MinWidth="80"
+                        Margin="10 10 0 0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        Content="{DynamicResource select}"
-                        Click="SelectPath_OnClick" />
-                </StackPanel>
-
+                        Click="SelectPath_OnClick"
+                        Content="{DynamicResource select}" />
+                </Grid>
             </StackPanel>
         </StackPanel>
         <Border
@@ -118,15 +155,15 @@
                 <Button
                     x:Name="btnCancel"
                     Width="145"
-                    Height="30"
-                    Margin="0 0 5 0"
+                    Height="34"
+                    Margin="0 0 5 1"
                     Click="BtnCancel_OnClick"
                     Content="{DynamicResource cancel}" />
                 <Button
                     Name="DownButton"
                     Width="145"
-                    Height="30"
-                    Margin="5 0 0 0"
+                    Height="34"
+                    Margin="5 0 0 1"
                     Click="OnDoneButtonClick"
                     Style="{StaticResource AccentButtonStyle}">
                     <TextBlock x:Name="lblAdd" Text="{DynamicResource done}" />
