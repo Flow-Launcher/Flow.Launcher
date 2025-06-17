@@ -108,24 +108,35 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
         // If editing, update the existing link
         if (IsEdit)
         {
-            if (SelectedAccessLink == null) return;
-
-            var index = QuickAccessLinks.IndexOf(SelectedAccessLink);
-            if (index >= 0)
+            if (SelectedAccessLink != null)
             {
-                var updatedLink = new AccessLink
+                var index = QuickAccessLinks.IndexOf(SelectedAccessLink);
+                if (index >= 0)
                 {
-                    Name = SelectedName,
-                    Type = _accessLinkType,
-                    Path = SelectedPath
-                };
-                QuickAccessLinks[index] = updatedLink;
+                    var updatedLink = new AccessLink
+                    {
+                        Name = SelectedName,
+                        Type = _accessLinkType,
+                        Path = SelectedPath
+                    };
+                    QuickAccessLinks[index] = updatedLink;
+                }
+                DialogResult = true;
+                Close();
             }
-            DialogResult = true;
-            Close();
+            // Add a new one if the selected access link is null (should not happen in edit mode, but just in case)
+            else
+            {
+                AddNewAccessLink();
+            }
         }
         // Otherwise, add a new one
         else
+        {
+            AddNewAccessLink();
+        }
+
+        void AddNewAccessLink()
         {
             var newAccessLink = new AccessLink
             {
