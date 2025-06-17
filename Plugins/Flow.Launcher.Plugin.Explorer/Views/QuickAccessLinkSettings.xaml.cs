@@ -119,19 +119,16 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
             // Add a new one if the selected access link is null (should not happen in edit mode, but just in case)
             else
             {
-                var newAccessLink = new AccessLink
-                {
-                    Name = SelectedName,
-                    Type = AccessLinkType,
-                    Path = SelectedPath
-                };
-                QuickAccessLinks.Add(newAccessLink);
-                DialogResult = true;
-                Close();
+                AddNewAccessLink();
             }
         }
         // Otherwise, add a new one
         else
+        {
+            AddNewAccessLink();
+        }
+
+        void AddNewAccessLink()
         {
             var newAccessLink = new AccessLink
             {
