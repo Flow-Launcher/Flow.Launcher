@@ -172,7 +172,8 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
                 CheckPathExists = true
             };
 
-            if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+            if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK ||
+                string.IsNullOrEmpty(dialog.FileName))
                 return;
 
             SelectedPath = dialog.FileName;
@@ -184,7 +185,8 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
                 ShowNewFolderButton = true
             };
 
-            if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+            if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK ||
+                string.IsNullOrEmpty(dialog.SelectedPath))
                 return;
 
             SelectedPath = dialog.SelectedPath;
@@ -195,11 +197,6 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
 
     private static ResultType GetResultType(string path)
     {
-        if (string.IsNullOrEmpty(path))
-        {
-            return ResultType.Folder;
-        }
-
         // Check if the path is a file or folder
         if (System.IO.File.Exists(path))
         {
@@ -218,6 +215,7 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
         }
         else
         {
+            // This should not happen, but just in case, we assume it's a folder
             return ResultType.Folder;
         }
     }
