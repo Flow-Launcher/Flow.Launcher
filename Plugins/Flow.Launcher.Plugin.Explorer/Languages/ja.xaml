@@ -96,8 +96,11 @@
     <system:String x:Key="plugin_explorer_deletefilefolder">削除</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">現在のファイルを完全に削除</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">現在のフォルダーを完全に削除</system:String>
-    <system:String x:Key="plugin_explorer_path">Path:</system:String>
-    <system:String x:Key="plugin_explorer_name">Name:</system:String>
+    <system:String x:Key="plugin_explorer_name">Name</system:String>
+    <system:String x:Key="plugin_explorer_type">Type</system:String>
+    <system:String x:Key="plugin_explorer_path">Path</system:String>
+    <system:String x:Key="plugin_explorer_file">ファイル</system:String>
+    <system:String x:Key="plugin_explorer_folder">フォルダー</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Delete the selected</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Run as different user</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Run the selected using a different user account</system:String>
