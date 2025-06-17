@@ -136,7 +136,7 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
         // Open file or folder selection dialog based on the selected radio button
         if (IsFileSelected)
         {
-            var openFileDialog = new Microsoft.Win32.OpenFileDialog
+            var openFileDialog = new OpenFileDialog
             {
                 Multiselect = false,
                 CheckFileExists = true,
