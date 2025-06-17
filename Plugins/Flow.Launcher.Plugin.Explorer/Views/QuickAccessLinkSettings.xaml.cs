@@ -71,7 +71,9 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
         IsEdit = true;
         _selectedName = selectedAccessLink.Name;
         _selectedPath = selectedAccessLink.Path;
-        _accessLinkType = GetResultType(_selectedPath);
+        _accessLinkType = GetResultType(_selectedPath); // Initialize link type
+        IsFileSelected = selectedAccessLink.Type == ResultType.File; // Initialize default selection
+        IsFolderSelected = !IsFileSelected;
         SelectedAccessLink = selectedAccessLink;
         QuickAccessLinks = quickAccessLinks;
         InitializeComponent();
