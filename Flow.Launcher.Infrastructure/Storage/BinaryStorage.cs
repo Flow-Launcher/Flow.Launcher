@@ -66,8 +66,17 @@ namespace Flow.Launcher.Infrastructure.Storage
                     await SaveAsync();
                 }
 
-                await using var stream = new FileStream(FilePath, FileMode.Open);
-                Data = await DeserializeAsync(stream, defaultData);
+                try
+                {
+                    await using var stream = new FileStream(FilePath, FileMode.Open);
+                    Data = await DeserializeAsync(stream, defaultData);
+                }
+                catch (System.Exception e)
+                {
+                    Log.Exception(ClassName, $"Failed to load stream and deserialize for <{FilePath}>", e);
+                    Data = defaultData;
+                    return defaultData;
+                }
             }
             else
             {
@@ -81,16 +90,8 @@ namespace Flow.Launcher.Infrastructure.Storage
 
         private static async ValueTask<T> DeserializeAsync(Stream stream, T defaultData)
         {
-            try
-            {
-                var t = await MemoryPackSerializer.DeserializeAsync<T>(stream);
-                return t ?? defaultData;
-            }
-            catch (System.Exception)
-            {
-                // Log.Exception($"|BinaryStorage.Deserialize|Deserialize error for file <{FilePath}>", e);
-                return defaultData;
-            }
+            var t = await MemoryPackSerializer.DeserializeAsync<T>(stream);
+            return t ?? defaultData;
         }
 
         public void Save()
