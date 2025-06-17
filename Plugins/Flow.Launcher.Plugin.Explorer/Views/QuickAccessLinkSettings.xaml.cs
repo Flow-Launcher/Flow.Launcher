@@ -6,12 +6,15 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Forms;
 using Flow.Launcher.Plugin.Explorer.Helper;
+using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 
 namespace Flow.Launcher.Plugin.Explorer.Views;
 
 public partial class QuickAccessLinkSettings : INotifyPropertyChanged
 {
+    private ResultType _accessLinkType = ResultType.Folder;
+
     private string _selectedPath;
     public string SelectedPath
     {
@@ -25,6 +28,7 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
                 if (string.IsNullOrEmpty(_selectedName))
                 {
                     SelectedName = _selectedPath.GetPathName();
+                    _accessLinkType = GetResultType(_selectedPath);
                 }
             }
         }
@@ -67,6 +71,7 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
         IsEdit = true;
         _selectedName = selectedAccessLink.Name;
         _selectedPath = selectedAccessLink.Path;
+        _accessLinkType = GetResultType(_selectedPath);
         SelectedAccessLink = selectedAccessLink;
         QuickAccessLinks = quickAccessLinks;
         InitializeComponent();
@@ -109,7 +114,7 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
                 var updatedLink = new AccessLink
                 {
                     Name = SelectedName,
-                    Type = SelectedAccessLink.Type,
+                    Type = _accessLinkType,
                     Path = SelectedPath
                 };
                 QuickAccessLinks[index] = updatedLink;
@@ -123,6 +128,7 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
             var newAccessLink = new AccessLink
             {
                 Name = SelectedName,
+                Type = _accessLinkType,
                 Path = SelectedPath
             };
             QuickAccessLinks.Add(newAccessLink);
@@ -143,19 +149,49 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
                 CheckPathExists = true
             };
 
-            if (openFileDialog.ShowDialog() == true)
-            {
-                SelectedPath = openFileDialog.FileName;
-            }
+            if (openFileDialog.ShowDialog() != System.Windows.Forms.DialogResult.OK ||
+                string.IsNullOrEmpty(openFileDialog.FileName))
+                return;
+
+            SelectedPath = openFileDialog.FileName;
         }
         else // Folder selection
         {
-            var folderBrowserDialog = new FolderBrowserDialog();
-
-            if (folderBrowserDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            var folderBrowserDialog = new FolderBrowserDialog
             {
-                SelectedPath = folderBrowserDialog.SelectedPath;
+                ShowNewFolderButton = true
+            };
+
+            if (folderBrowserDialog.ShowDialog() != System.Windows.Forms.DialogResult.OK ||
+                string.IsNullOrEmpty(folderBrowserDialog.SelectedPath))
+                return;
+
+            SelectedPath = folderBrowserDialog.SelectedPath;
+        }
+    }
+
+    private static ResultType GetResultType(string path)
+    {
+        // Check if the path is a file or folder
+        if (System.IO.File.Exists(path))
+        {
+            return ResultType.File;
+        }
+        else if (System.IO.Directory.Exists(path))
+        {
+            if (string.Equals(System.IO.Path.GetPathRoot(path), path, StringComparison.OrdinalIgnoreCase))
+            {
+                return ResultType.Volume;
             }
+            else
+            {
+                return ResultType.Folder;
+            }
+        }
+        else
+        {
+            // This should not happen, but just in case, we assume it's a folder
+            return ResultType.Folder;
         }
     }
 
