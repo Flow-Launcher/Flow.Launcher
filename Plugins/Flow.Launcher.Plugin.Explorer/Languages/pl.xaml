@@ -2,7 +2,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Dialogues  -->
-    <system:String x:Key="plugin_explorer_make_selection_warning">Pierw dokonaj wyboru</system:String>
+    <system:String x:Key="plugin_explorer_make_selection_warning">Najpierw dokonaj wyboru</system:String>
     <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Wybierz ścieżkę folderu.</system:String>
     <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Wybierz inną nazwę lub ścieżkę folderu.</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Musisz wybrać któryś folder z listy</system:String>
