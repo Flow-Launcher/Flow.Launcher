@@ -49,9 +49,9 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
 
     private bool IsEdit { get; }
     private AccessLink SelectedAccessLink { get; }
-    
+
     public ObservableCollection<AccessLink> QuickAccessLinks { get; }
-    
+
     public QuickAccessLinkSettings(ObservableCollection<AccessLink> quickAccessLinks)
     {
         IsEdit = false;
@@ -96,7 +96,7 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
         }
 
         // If editing, update the existing link
-        if (IsEdit) 
+        if (IsEdit)
         {
             if (SelectedAccessLink == null) return;
 
@@ -130,12 +130,30 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
 
     private void SelectPath_OnClick(object commandParameter, RoutedEventArgs e)
     {
-        var folderBrowserDialog = new FolderBrowserDialog();
+        // Open file or folder selection dialog based on the selected radio button
+        if (IsFileSelected)
+        {
+            var openFileDialog = new Microsoft.Win32.OpenFileDialog
+            {
+                Multiselect = false,
+                CheckFileExists = true,
+                CheckPathExists = true
+            };
 
-        if (folderBrowserDialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
-            return;
+            if (openFileDialog.ShowDialog() == true)
+            {
+                SelectedPath = openFileDialog.FileName;
+            }
+        }
+        else // Folder selection
+        {
+            var folderBrowserDialog = new FolderBrowserDialog();
 
-        SelectedPath = folderBrowserDialog.SelectedPath;
+            if (folderBrowserDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                SelectedPath = folderBrowserDialog.SelectedPath;
+            }
+        }
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
@@ -143,5 +161,15 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
     protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
+    public bool IsFileSelected { get; set; }
+    public bool IsFolderSelected { get; set; }
+    
+    public QuickAccessLinkSettings()
+    {
+        IsFolderSelected = true; // Default to folder selection
+        InitializeComponent();
+        DataContext = this;
     }
 }
