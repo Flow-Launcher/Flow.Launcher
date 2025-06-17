@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Forms;
 using Flow.Launcher.Plugin.Explorer.Helper;
+using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 
 namespace Flow.Launcher.Plugin.Explorer.Views;
@@ -49,7 +50,8 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
 
     private bool IsEdit { get; }
     private AccessLink SelectedAccessLink { get; }
-    
+    private ResultType AccessLinkType { get; set; } = ResultType.Folder;
+
     public ObservableCollection<AccessLink> QuickAccessLinks { get; }
     
     public QuickAccessLinkSettings(ObservableCollection<AccessLink> quickAccessLinks)
@@ -98,21 +100,35 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
         // If editing, update the existing link
         if (IsEdit) 
         {
-            if (SelectedAccessLink == null) return;
-
-            var index = QuickAccessLinks.IndexOf(SelectedAccessLink);
-            if (index >= 0)
+            if (SelectedAccessLink != null)
             {
-                var updatedLink = new AccessLink
+                var index = QuickAccessLinks.IndexOf(SelectedAccessLink);
+                if (index >= 0)
+                {
+                    var updatedLink = new AccessLink
+                    {
+                        Name = SelectedName,
+                        Type = AccessLinkType,
+                        Path = SelectedPath
+                    };
+                    QuickAccessLinks[index] = updatedLink;
+                }
+                DialogResult = true;
+                Close();
+            }
+            // Add a new one if the selected access link is null (should not happen in edit mode, but just in case)
+            else
+            {
+                var newAccessLink = new AccessLink
                 {
                     Name = SelectedName,
-                    Type = SelectedAccessLink.Type,
+                    Type = AccessLinkType,
                     Path = SelectedPath
                 };
-                QuickAccessLinks[index] = updatedLink;
+                QuickAccessLinks.Add(newAccessLink);
+                DialogResult = true;
+                Close();
             }
-            DialogResult = true;
-            Close();
         }
         // Otherwise, add a new one
         else
@@ -120,6 +136,7 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
             var newAccessLink = new AccessLink
             {
                 Name = SelectedName,
+                Type = AccessLinkType,
                 Path = SelectedPath
             };
             QuickAccessLinks.Add(newAccessLink);
@@ -130,12 +147,81 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
 
     private void SelectPath_OnClick(object commandParameter, RoutedEventArgs e)
     {
-        var folderBrowserDialog = new FolderBrowserDialog();
+        // If we are editing an existing access link, we should keep the file/folder type consistent.
+        ResultType type;
+        if (SelectedAccessLink != null)
+        {
+            type = SelectedAccessLink.Type;
+        }
+        // Else we should allow the user to select any file or folder.
+        else
+        {
+            var result = Main.Context.API.ShowMsgBox(
+                string.Format(
+                    Main.Context.API.GetTranslation("plugin_explorer_quickAccessLinkFileOrFolderSubtitle"),
+                    Environment.NewLine),
+                Main.Context.API.GetTranslation("plugin_explorer_quickAccessLinkFileOrFolderTitle"),
+                MessageBoxButton.YesNo, MessageBoxImage.Question);
+            type = result == MessageBoxResult.Yes ? ResultType.File : ResultType.Folder;
+        }
 
-        if (folderBrowserDialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
-            return;
+        if (type == ResultType.File)
+        {
+            var dialog = new OpenFileDialog
+            {
+                Multiselect = false,
+                CheckFileExists = true,
+                CheckPathExists = true
+            };
 
-        SelectedPath = folderBrowserDialog.SelectedPath;
+            if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+                return;
+
+            SelectedPath = dialog.FileName;
+        }
+        else
+        {
+            var dialog = new FolderBrowserDialog
+            {
+                ShowNewFolderButton = true
+            };
+
+            if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+                return;
+
+            SelectedPath = dialog.SelectedPath;
+        }
+
+        AccessLinkType = GetResultType(SelectedPath);
+    }
+
+    private static ResultType GetResultType(string path)
+    {
+        if (string.IsNullOrEmpty(path))
+        {
+            return ResultType.Folder;
+        }
+
+        // Check if the path is a file or folder
+        if (System.IO.File.Exists(path))
+        {
+            return ResultType.File;
+        }
+        else if (System.IO.Directory.Exists(path))
+        {
+            if (string.Equals(System.IO.Path.GetPathRoot(path), path, StringComparison.OrdinalIgnoreCase))
+            {
+                return ResultType.Volume;
+            }
+            else
+            {
+                return ResultType.Folder;
+            }
+        }
+        else
+        {
+            return ResultType.Folder;
+        }
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
