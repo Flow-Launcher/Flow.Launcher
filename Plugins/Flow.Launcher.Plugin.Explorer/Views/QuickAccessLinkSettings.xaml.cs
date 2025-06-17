@@ -67,6 +67,7 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
         _selectedName = selectedAccessLink.Name;
         _selectedPath = selectedAccessLink.Path;
         SelectedAccessLink = selectedAccessLink;
+        AccessLinkType = selectedAccessLink.Type;
         QuickAccessLinks = quickAccessLinks;
         InitializeComponent();
     }
