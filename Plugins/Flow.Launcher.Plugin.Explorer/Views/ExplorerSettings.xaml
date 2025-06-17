@@ -8,7 +8,6 @@
     xmlns:qa="clr-namespace:Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     xmlns:viewModels="clr-namespace:Flow.Launcher.Plugin.Explorer.ViewModels"
-    xmlns:views="clr-namespace:Flow.Launcher.Plugin.Explorer.Views"
     d:DataContext="{d:DesignInstance viewModels:SettingsViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -18,7 +17,7 @@
         <DataTemplate x:Key="ListViewTemplateAccessLinks" DataType="qa:AccessLink">
             <TextBlock Margin="0 5 0 5" Text="{Binding Path, Mode=OneTime}" />
         </DataTemplate>
-        <DataTemplate x:Key="ListViewActionKeywords" DataType="{x:Type views:ActionKeywordModel}">
+        <DataTemplate x:Key="ListViewActionKeywords" DataType="{x:Type viewModels:ActionKeywordModel}">
             <Grid>
                 <TextBlock
                     Margin="0 5 0 0"

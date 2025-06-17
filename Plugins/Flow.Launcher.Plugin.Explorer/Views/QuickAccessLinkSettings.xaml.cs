@@ -2,16 +2,17 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Forms;
 using Flow.Launcher.Plugin.Explorer.Helper;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Flow.Launcher.Plugin.Explorer.Views;
 
-public partial class QuickAccessLinkSettings : INotifyPropertyChanged
+[INotifyPropertyChanged]
+public partial class QuickAccessLinkSettings
 {
     private string _selectedPath;
     public string SelectedPath
@@ -206,12 +207,5 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
             // This should not happen, but just in case, we assume it's a folder
             return ResultType.Folder;
         }
-    }
-
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
