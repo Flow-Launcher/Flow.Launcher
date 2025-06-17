@@ -47,6 +47,9 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
         }
     }
 
+    public bool IsFileSelected { get; set; } = true; // Default to File
+    public bool IsFolderSelected { get; set; }
+
     private bool IsEdit { get; }
     private AccessLink SelectedAccessLink { get; }
 
@@ -161,13 +164,5 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
     protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-    }
-
-    public bool IsFileSelected { get; set; } = true; // Default to File
-    public bool IsFolderSelected { get; set; }  
-    
-    public QuickAccessLinkSettings()
-    {
-        InitializeComponent();
     }
 }
