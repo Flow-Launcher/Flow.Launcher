@@ -163,13 +163,11 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    public bool IsFileSelected { get; set; }
-    public bool IsFolderSelected { get; set; }
+    public bool IsFileSelected { get; set; } = true; // Default to File
+    public bool IsFolderSelected { get; set; }  
     
     public QuickAccessLinkSettings()
     {
-        IsFolderSelected = true; // Default to folder selection
         InitializeComponent();
-        DataContext = this;
     }
 }
