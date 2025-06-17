@@ -96,8 +96,11 @@
     <system:String x:Key="plugin_explorer_deletefilefolder">Usu</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Trwale usuń bieżący plik</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Trwale usuń bieżący folder</system:String>
-    <system:String x:Key="plugin_explorer_path">Ścieżka:</system:String>
-    <system:String x:Key="plugin_explorer_name">Nazwa:</system:String>
+    <system:String x:Key="plugin_explorer_name">Nazwa</system:String>
+    <system:String x:Key="plugin_explorer_type">Type</system:String>
+    <system:String x:Key="plugin_explorer_path">Ścieżka</system:String>
+    <system:String x:Key="plugin_explorer_file">Plik</system:String>
+    <system:String x:Key="plugin_explorer_folder">Folder</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Usuń zaznaczone</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Uruchom jako inny użytkownik</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Uruchom wybrane używając innego konta użytkownika</system:String>
