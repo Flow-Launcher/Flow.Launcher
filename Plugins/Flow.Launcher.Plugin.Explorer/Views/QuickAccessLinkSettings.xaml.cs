@@ -13,8 +13,6 @@ namespace Flow.Launcher.Plugin.Explorer.Views;
 
 public partial class QuickAccessLinkSettings : INotifyPropertyChanged
 {
-    private ResultType _accessLinkType = ResultType.Folder;
-
     private string _selectedPath;
     public string SelectedPath
     {
@@ -51,13 +49,15 @@ public partial class QuickAccessLinkSettings : INotifyPropertyChanged
         }
     }
 
-    public bool IsFileSelected { get; set; } = true; // Default to File
-    public bool IsFolderSelected { get; set; }
+    public bool IsFileSelected { get; set; }
+    public bool IsFolderSelected { get; set; } = true; // Default to Folder
 
     private bool IsEdit { get; }
     private AccessLink SelectedAccessLink { get; }
 
     public ObservableCollection<AccessLink> QuickAccessLinks { get; }
+
+    private ResultType _accessLinkType = ResultType.Folder; // Default to Folder
 
     public QuickAccessLinkSettings(ObservableCollection<AccessLink> quickAccessLinks)
     {
