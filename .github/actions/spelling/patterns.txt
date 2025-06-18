@@ -125,3 +125,8 @@
 \bjjw24\b
 \bappref-ms\b
 \bTobiasSekan\b
+\bJsonRPC\b
+\bTiếng Việt\b
+\bSlovenský\b
+\bPortuguês (Brasil)\b
+\bčeština\b
