@@ -34,7 +34,6 @@ mscorlib
 pythonw
 dotnet
 winget
-jjw24
 wolframalpha
 gmail
 duckduckgo
@@ -49,7 +48,6 @@ srchadmin
 EWX
 dlgtext
 CMD
-appref-ms
 appref
 TSource
 runas
@@ -57,7 +55,6 @@ dpi
 popup
 ptr
 pluginindicator
-TobiasSekan
 img
 resx
 bak
@@ -68,9 +65,6 @@ dlg
 ddd
 dddd
 clearlogfolder
-ACCENT_ENABLE_TRANSPARENTGRADIENT
-ACCENT_ENABLE_BLURBEHIND
-WCA_ACCENT_POLICY
 HGlobal
 dopusrt
 firefox
