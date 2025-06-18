@@ -97,7 +97,7 @@
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Elimina permanentemente el archivo actual</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Elimina permanentemente la carpeta actual</system:String>
     <system:String x:Key="plugin_explorer_name">Nombre</system:String>
-    <system:String x:Key="plugin_explorer_type">Type</system:String>
+    <system:String x:Key="plugin_explorer_type">Tipo</system:String>
     <system:String x:Key="plugin_explorer_path">Ruta</system:String>
     <system:String x:Key="plugin_explorer_file">Archivo</system:String>
     <system:String x:Key="plugin_explorer_folder">Carpeta</system:String>
