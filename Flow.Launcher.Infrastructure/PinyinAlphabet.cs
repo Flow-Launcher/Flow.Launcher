@@ -76,9 +76,7 @@ namespace Flow.Launcher.Infrastructure
 
         public bool ShouldTranslate(string stringToTranslate)
         {
-            return _settings.UseDoublePinyin ?
-                (!WordsHelper.HasChinese(stringToTranslate) && stringToTranslate.Length % 2 == 0) :
-                !WordsHelper.HasChinese(stringToTranslate);
+            return WordsHelper.HasChinese(stringToTranslate);
         }
 
         public (string translation, TranslationMapping map) Translate(string content)
