@@ -106,7 +106,7 @@ namespace Flow.Launcher.Infrastructure
                     if (previousIsChinese)
                     {
                         resultBuilder.Append(' ');
-                        map.AddNewIndex(i, resultBuilder.Length, translated.Length + 1);
+                        map.AddNewIndex(i, resultBuilder.Length, translated.Length);
                         resultBuilder.Append(translated);
                     }
                     else
