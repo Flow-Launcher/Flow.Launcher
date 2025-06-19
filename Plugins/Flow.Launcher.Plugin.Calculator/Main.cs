@@ -7,8 +7,7 @@ using System.Windows.Controls;
 using Mages.Core;
 using Flow.Launcher.Plugin.Calculator.ViewModels;
 using Flow.Launcher.Plugin.Calculator.Views;
-using System.IO;
-using System.Net.Quic;
+
 
 namespace Flow.Launcher.Plugin.Calculator
 {
@@ -23,7 +22,6 @@ namespace Flow.Launcher.Plugin.Calculator
                         @"factorial|sign|isprime|isinfty|" +
                         @"==|~=|&&|\|\||(?:\<|\>)=?|" +
                         @"[ei]|[0-9]|[\+\%\-\*\/\^\., ""]|[\(\)\|\!\[\]]" +
-                    
                         @")+$", RegexOptions.Compiled);
         private static readonly Regex RegBrackets = new Regex(@"[\(\)\[\]]", RegexOptions.Compiled);
         private static Engine MagesEngine;
@@ -47,9 +45,7 @@ namespace Flow.Launcher.Plugin.Calculator
                 {
                     { "e", Math.E }, // e is not contained in the default mages engine
                 }
-            }
-            );
-            ;
+            });
             Func<double, double> rad2deg = (rad) => rad * (180.0 / Math.PI);
             MagesEngine.SetFunction("rad2deg", rad2deg);
             MagesEngine.SetFunction("deg2rad", (double x) => x * (Math.PI / 180.0));
@@ -76,7 +72,7 @@ namespace Flow.Launcher.Plugin.Calculator
                         expression = query.Search;
                         break;
                 }
-                // Replace all spaces in the expression
+
                 var result = MagesEngine.Interpret(expression);
 
                 if (result?.ToString() == "NaN")
