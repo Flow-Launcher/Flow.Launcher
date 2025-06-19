@@ -1,4 +1,6 @@
 # See https://github.com/check-spelling/check-spelling/wiki/Configuration-Examples:-patterns
+# This file should contain strings that contain a mix of letters and numbers, or specific symbols
+
 
 # Questionably acceptable forms of `in to`
 # Personally, I prefer `log into`, but people object

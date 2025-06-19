@@ -1,3 +1,5 @@
+# This file should contain names of products, companies, or individuals that aren't in a standard dictionary (e.g., GitHub, Keptn, VSCode).
+
 crowdin
 DWM
 workflows
