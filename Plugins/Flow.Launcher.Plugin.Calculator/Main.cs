@@ -7,6 +7,8 @@ using System.Windows.Controls;
 using Mages.Core;
 using Flow.Launcher.Plugin.Calculator.ViewModels;
 using Flow.Launcher.Plugin.Calculator.Views;
+using System.IO;
+using System.Net.Quic;
 
 namespace Flow.Launcher.Plugin.Calculator
 {
@@ -15,12 +17,13 @@ namespace Flow.Launcher.Plugin.Calculator
         private static readonly Regex RegValidExpressChar = new Regex(
                         @"^(" +
                         @"ceil|floor|exp|pi|e|max|min|det|abs|log|ln|sqrt|" +
-                        @"sin|cos|tan|arcsin|arccos|arctan|" +
+                        @"sin|cos|tan|arcsin|arccos|arctan|rad2deg|deg2rad|" +
                         @"eigval|eigvec|eig|sum|polar|plot|round|sort|real|zeta|" +
                         @"bin2dec|hex2dec|oct2dec|" +
                         @"factorial|sign|isprime|isinfty|" +
                         @"==|~=|&&|\|\||(?:\<|\>)=?|" +
                         @"[ei]|[0-9]|[\+\%\-\*\/\^\., ""]|[\(\)\|\!\[\]]" +
+                    
                         @")+$", RegexOptions.Compiled);
         private static readonly Regex RegBrackets = new Regex(@"[\(\)\[\]]", RegexOptions.Compiled);
         private static Engine MagesEngine;
@@ -44,7 +47,12 @@ namespace Flow.Launcher.Plugin.Calculator
                 {
                     { "e", Math.E }, // e is not contained in the default mages engine
                 }
-            });
+            }
+            );
+            ;
+            Func<double, double> rad2deg = (rad) => rad * (180.0 / Math.PI);
+            MagesEngine.SetFunction("rad2deg", rad2deg);
+            MagesEngine.SetFunction("deg2rad", (double x) => x * (Math.PI / 180.0));
         }
 
         public List<Result> Query(Query query)
@@ -68,7 +76,7 @@ namespace Flow.Launcher.Plugin.Calculator
                         expression = query.Search;
                         break;
                 }
-
+                // Replace all spaces in the expression
                 var result = MagesEngine.Interpret(expression);
 
                 if (result?.ToString() == "NaN")
