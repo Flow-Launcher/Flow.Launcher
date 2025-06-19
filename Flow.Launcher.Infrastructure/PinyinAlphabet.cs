@@ -107,8 +107,8 @@ namespace Flow.Launcher.Infrastructure
                     string translated = _settings.UseDoublePinyin ? ToDoublePin(resultList[i]) : resultList[i];
                     if (previousIsChinese)
                     {
-                        map.AddNewIndex(i, resultBuilder.Length, translated.Length + 1);
                         resultBuilder.Append(' ');
+                        map.AddNewIndex(i, resultBuilder.Length, translated.Length + 1);
                         resultBuilder.Append(translated);
                     }
                     else
