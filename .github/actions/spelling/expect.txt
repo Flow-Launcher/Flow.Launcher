@@ -95,7 +95,5 @@ errormetadatafile
 noresult
 pluginsmanager
 alreadyexists
-JsonRPC
-JsonRPCV2
 Softpedia
 img

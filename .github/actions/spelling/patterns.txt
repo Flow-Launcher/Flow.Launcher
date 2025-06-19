@@ -126,8 +126,8 @@
 \bappref-ms\b
 \bTobiasSekan\b
 \bJsonRPC\b
+\bJsonRPCV2\b
 \bTiếng Việt\b
 \bPortuguês (Brasil)\b
 \bčeština\b
 \bPortuguês\b
-\bJsonRPC\b
