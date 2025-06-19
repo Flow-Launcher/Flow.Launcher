@@ -46,8 +46,7 @@ namespace Flow.Launcher.Plugin.Calculator
                     { "e", Math.E }, // e is not contained in the default mages engine
                 }
             });
-            Func<double, double> rad2deg = (rad) => rad * (180.0 / Math.PI);
-            MagesEngine.SetFunction("rad2deg", rad2deg);
+            MagesEngine.SetFunction("rad2deg", (double rad) => rad * (180.0 / Math.PI));
             MagesEngine.SetFunction("deg2rad", (double x) => x * (Math.PI / 180.0));
         }
 
