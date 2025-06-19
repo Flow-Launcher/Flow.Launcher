@@ -85,15 +85,10 @@ keyevent
 KListener
 requery
 vkcode
-čeština
 Polski
 Srpski
-Português
-Português (Brasil)
 Italiano
-Slovenský
 quicklook
-Tiếng Việt
 Droplex
 Preinstalled
 errormetadatafile

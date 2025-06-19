@@ -127,6 +127,7 @@
 \bTobiasSekan\b
 \bJsonRPC\b
 \bTiếng Việt\b
-\bSlovenský\b
 \bPortuguês (Brasil)\b
 \bčeština\b
+\bPortuguês\b
+\bJsonRPC\b
