@@ -299,6 +299,34 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /// </summary>
         public bool ShouldUsePinyin { get; set; } = false;
 
+        private bool _useDoublePinyin = true; // TODO: change default to false BEFORE RELEASE
+        public bool UseDoublePinyin
+        {
+            get => _useDoublePinyin;
+            set
+            {
+                if (_useDoublePinyin != value)
+                {
+                    _useDoublePinyin = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _doublePinyinSchema = "XiaoHe";
+        public string DoublePinyinSchema
+        {
+            get => _doublePinyinSchema;
+            set
+            {
+                if (_doublePinyinSchema != value)
+                {
+                    _doublePinyinSchema = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public bool AlwaysPreview { get; set; } = false;
 
         public bool AlwaysStartEn { get; set; } = false;
