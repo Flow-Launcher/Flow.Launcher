@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Plugin.SharedModels;
 using System;
 using System.Collections.Generic;
@@ -60,7 +60,13 @@ namespace Flow.Launcher.Infrastructure
         /// 5. Once the previous character is verified, move on to the next character in the query substring.
         /// 6. Move onto the next substring's characters until all substrings are checked.
         /// 7. Consider success and move onto scoring if every char or substring without whitespaces matched
+        /// <summary>
+        /// Performs fuzzy and acronym-based matching between a query and a target string, returning match details and a relevance score.
         /// </summary>
+        /// <param name="query">The search query to match against the target string.</param>
+        /// <param name="stringToCompare">The string to be compared with the query.</param>
+        /// <param name="opt">Options that control matching behavior, such as case sensitivity.</param>
+        /// <returns>A <see cref="MatchResult"/> indicating whether a match was found, the indices of matched characters, and the computed match score.</returns>
         public MatchResult FuzzyMatch(string query, string stringToCompare, MatchOption opt)
         {
             if (string.IsNullOrEmpty(stringToCompare) || string.IsNullOrEmpty(query))
@@ -228,6 +234,12 @@ namespace Flow.Launcher.Infrastructure
             return new MatchResult(false, UserSettingSearchPrecision);
         }
 
+        /// <summary>
+        /// Determines whether the character at the specified index in the string is considered part of an acronym, either by being an acronym character or a digit.
+        /// </summary>
+        /// <param name="stringToCompare">The string to evaluate.</param>
+        /// <param name="compareStringIndex">The index of the character to check.</param>
+        /// <returns>True if the character is an acronym character or a digit; otherwise, false.</returns>
         private static bool IsAcronym(string stringToCompare, int compareStringIndex)
         {
             if (IsAcronymChar(stringToCompare, compareStringIndex) || IsAcronymNumber(stringToCompare, compareStringIndex))
@@ -236,7 +248,12 @@ namespace Flow.Launcher.Infrastructure
             return false;
         }
 
-        // When counting acronyms, treat a set of numbers as one acronym ie. Visual 2019 as 2 acronyms instead of 5
+        /// <summary>
+        /// Determines whether the character at the specified index should be counted as a distinct acronym character, treating consecutive numbers as a single acronym.
+        /// </summary>
+        /// <param name="stringToCompare">The string being analyzed for acronym characters.</param>
+        /// <param name="compareStringIndex">The index of the character to evaluate.</param>
+        /// <returns>True if the character is an acronym character or the start of a numeric sequence; otherwise, false.</returns>
         private static bool IsAcronymCount(string stringToCompare, int compareStringIndex)
         {
             if (IsAcronymChar(stringToCompare, compareStringIndex))

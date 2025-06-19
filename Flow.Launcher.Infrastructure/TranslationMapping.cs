@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,6 +13,13 @@ namespace Flow.Launcher.Infrastructure
 
         private int translatedLength = 0;
 
+        /// <summary>
+        /// Adds a mapping between an original index and a translated index range.
+        /// </summary>
+        /// <param name="originalIndex">The index in the original sequence.</param>
+        /// <param name="translatedIndex">The starting index of the corresponding range in the translated sequence.</param>
+        /// <param name="length">The length of the translated index range.</param>
+        /// <exception cref="InvalidOperationException">Thrown if the mapping has already been finalized.</exception>
         public void AddNewIndex(int originalIndex, int translatedIndex, int length)
         {
             if (constructed)
@@ -24,6 +31,11 @@ namespace Flow.Launcher.Infrastructure
             translatedLength += length - 1;
         }
 
+        /// <summary>
+        /// Maps a translated index back to its corresponding original index based on stored translation ranges.
+        /// </summary>
+        /// <param name="translatedIndex">The index in the translated sequence to map.</param>
+        /// <returns>The corresponding index in the original sequence. If the translated index falls outside known ranges, returns an adjusted index based on accumulated translation lengths.</returns>
         public int MapToOriginalIndex(int translatedIndex)
         {
             if (translatedIndex > translatedIndexes.Last())
@@ -86,6 +98,10 @@ namespace Flow.Launcher.Infrastructure
             }
         }
 
+        /// <summary>
+        /// Finalizes the mapping, preventing any further modifications.
+        /// </summary>
+        /// <exception cref="InvalidOperationException">Thrown if the mapping has already been finalized.</exception>
         public void endConstruct()
         {
             if (constructed)
