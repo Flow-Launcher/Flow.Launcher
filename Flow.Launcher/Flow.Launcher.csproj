@@ -142,4 +142,13 @@
       <Analyzer Include="@(FilteredAnalyzer)" />
     </ItemGroup>
   </Target>
+
+  <Target Name="BuildCommandProject" AfterTargets="Build">
+    <MSBuild
+      Projects="..\Flow.Launcher.Command\Flow.Launcher.Command.csproj"
+      Targets="Build"
+      BuildInParallel="false"
+      Properties="Platform=$(Platform);Configuration=$(Configuration)" />
+  </Target>
+
 </Project>
