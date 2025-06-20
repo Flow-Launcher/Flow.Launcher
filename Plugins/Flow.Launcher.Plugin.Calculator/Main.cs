@@ -8,7 +8,6 @@ using Mages.Core;
 using Flow.Launcher.Plugin.Calculator.ViewModels;
 using Flow.Launcher.Plugin.Calculator.Views;
 
-
 namespace Flow.Launcher.Plugin.Calculator
 {
     public class Main : IPlugin, IPluginI18n, ISettingProvider
@@ -16,7 +15,7 @@ namespace Flow.Launcher.Plugin.Calculator
         private static readonly Regex RegValidExpressChar = new Regex(
                         @"^(" +
                         @"ceil|floor|exp|pi|e|max|min|det|abs|log|ln|sqrt|" +
-                        @"sin|cos|tan|arcsin|arccos|arctan|rad2deg|deg2rad|" +
+                        @"sin|cos|tan|arcsin|arccos|arctan|" +
                         @"eigval|eigvec|eig|sum|polar|plot|round|sort|real|zeta|" +
                         @"bin2dec|hex2dec|oct2dec|" +
                         @"factorial|sign|isprime|isinfty|" +
@@ -46,8 +45,6 @@ namespace Flow.Launcher.Plugin.Calculator
                     { "e", Math.E }, // e is not contained in the default mages engine
                 }
             });
-            MagesEngine.SetFunction("rad2deg", (double rad) => rad * (180.0 / Math.PI));
-            MagesEngine.SetFunction("deg2rad", (double x) => x * (Math.PI / 180.0));
         }
 
         public List<Result> Query(Query query)
@@ -172,9 +169,9 @@ namespace Flow.Launcher.Plugin.Calculator
 
         private bool IsBracketComplete(string query)
         {
-            var matches = RegBrackets.Matches(query);
+            var matchs = RegBrackets.Matches(query);
             var leftBracketCount = 0;
-            foreach (Match match in matches)
+            foreach (Match match in matchs)
             {
                 if (match.Value == "(" || match.Value == "[")
                 {
