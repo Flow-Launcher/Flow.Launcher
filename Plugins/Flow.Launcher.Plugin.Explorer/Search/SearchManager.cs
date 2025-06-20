@@ -47,6 +47,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         internal async Task<List<Result>> SearchAsync(Query query, CancellationToken token)
         {
             var results = new HashSet<Result>(PathEqualityComparator.Instance);
+            if (ActionKeywordMatch(query, Settings.ActionKeyword.RenameActionKeyword))
+            {
+                return new List<Result>()
+                {
+                    new Result(){
+                        Title = "Done",
+                        AutoCompleteText = "test"
+                    }
+                };
+            }
 
             // This allows the user to type the below action keywords and see/search the list of quick folder links
             if (ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword)
@@ -151,6 +161,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                                                                    keyword == Settings.IndexSearchActionKeyword,
                 Settings.ActionKeyword.QuickAccessActionKeyword => Settings.QuickAccessKeywordEnabled &&
                                                                    keyword == Settings.QuickAccessActionKeyword,
+                Settings.ActionKeyword.RenameActionKeyword => Settings.RenameActionKeywordEnabled && keyword == Settings.RenameActionKeyword,
                 _ => throw new ArgumentOutOfRangeException(nameof(allowedActionKeyword), allowedActionKeyword, "actionKeyword out of range")
             };
         }

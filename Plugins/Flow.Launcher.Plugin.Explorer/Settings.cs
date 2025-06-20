@@ -1,13 +1,14 @@
-﻿using Flow.Launcher.Plugin.Everything.Everything;
-using Flow.Launcher.Plugin.Explorer.Search;
-using Flow.Launcher.Plugin.Explorer.Search.Everything;
-using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
-using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text.Json.Serialization;
+using Flow.Launcher.Plugin.Everything.Everything;
+using Flow.Launcher.Plugin.Explorer.Search;
+using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.Search.IProvider;
+using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
+using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
+using Flow.Launcher.Plugin.Explorer.ViewModels;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
@@ -17,7 +18,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public ObservableCollection<AccessLink> QuickAccessLinks { get; set; } = new();
 
-        public ObservableCollection<AccessLink> IndexSearchExcludedSubdirectoryPaths { get; set; } = new ObservableCollection<AccessLink>();
+        public ObservableCollection<AccessLink> IndexSearchExcludedSubdirectoryPaths { get; set; } =
+            new ObservableCollection<AccessLink>();
 
         public string EditorPath { get; set; } = "";
 
@@ -43,7 +45,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public bool SearchActionKeywordEnabled { get; set; } = true;
 
-        public string FileContentSearchActionKeyword { get; set; } = Constants.DefaultContentSearchActionKeyword;
+        public string FileContentSearchActionKeyword { get; set; } =
+            Constants.DefaultContentSearchActionKeyword;
 
         public bool FileContentSearchKeywordEnabled { get; set; } = true;
 
@@ -58,7 +61,8 @@ namespace Flow.Launcher.Plugin.Explorer
         public string QuickAccessActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
 
         public bool QuickAccessKeywordEnabled { get; set; }
-
+        public string RenameActionKeyword { get; set; } = "re:";
+        public bool RenameActionKeywordEnabled { get; set; } = true;
 
         public bool WarnWindowsSearchServiceOff { get; set; } = true;
 
@@ -67,9 +71,8 @@ namespace Flow.Launcher.Plugin.Explorer
         public bool ShowCreatedDateInPreviewPanel { get; set; } = true;
 
         public bool ShowModifiedDateInPreviewPanel { get; set; } = true;
-        
-        public bool ShowFileAgeInPreviewPanel { get; set; } = false;
 
+        public bool ShowFileAgeInPreviewPanel { get; set; } = false;
 
         public string PreviewPanelDateFormat { get; set; } = "yyyy-MM-dd";
 
@@ -80,44 +83,55 @@ namespace Flow.Launcher.Plugin.Explorer
 
         #region SearchEngine
 
-        private EverythingSearchManager EverythingManagerInstance => _everythingManagerInstance ??= new EverythingSearchManager(this);
-        private WindowsIndexSearchManager WindowsIndexSearchManager => _windowsIndexSearchManager ??= new WindowsIndexSearchManager(this);
+        private EverythingSearchManager EverythingManagerInstance =>
+            _everythingManagerInstance ??= new EverythingSearchManager(this);
+        private WindowsIndexSearchManager WindowsIndexSearchManager =>
+            _windowsIndexSearchManager ??= new WindowsIndexSearchManager(this);
 
-
-        public IndexSearchEngineOption IndexSearchEngine { get; set; } = IndexSearchEngineOption.WindowsIndex;
-        [JsonIgnore]
-        public IIndexProvider IndexProvider => IndexSearchEngine switch
-        {
-            IndexSearchEngineOption.Everything => EverythingManagerInstance,
-            IndexSearchEngineOption.WindowsIndex => WindowsIndexSearchManager,
-            _ => throw new ArgumentOutOfRangeException(nameof(IndexSearchEngine))
-        };
-
-        public PathEnumerationEngineOption PathEnumerationEngine { get; set; } = PathEnumerationEngineOption.WindowsIndex;
+        public IndexSearchEngineOption IndexSearchEngine { get; set; } =
+            IndexSearchEngineOption.WindowsIndex;
 
         [JsonIgnore]
-        public IPathIndexProvider PathEnumerator => PathEnumerationEngine switch
-        {
-            PathEnumerationEngineOption.Everything => EverythingManagerInstance,
-            PathEnumerationEngineOption.WindowsIndex => WindowsIndexSearchManager,
-            _ => throw new ArgumentOutOfRangeException(nameof(PathEnumerationEngine))
-        };
+        public IIndexProvider IndexProvider =>
+            IndexSearchEngine switch
+            {
+                IndexSearchEngineOption.Everything => EverythingManagerInstance,
+                IndexSearchEngineOption.WindowsIndex => WindowsIndexSearchManager,
+                _ => throw new ArgumentOutOfRangeException(nameof(IndexSearchEngine))
+            };
 
-        public ContentIndexSearchEngineOption ContentSearchEngine { get; set; } = ContentIndexSearchEngineOption.WindowsIndex;
+        public PathEnumerationEngineOption PathEnumerationEngine { get; set; } =
+            PathEnumerationEngineOption.WindowsIndex;
+
         [JsonIgnore]
-        public IContentIndexProvider ContentIndexProvider => ContentSearchEngine switch
-        {
-            ContentIndexSearchEngineOption.Everything => EverythingManagerInstance,
-            ContentIndexSearchEngineOption.WindowsIndex => WindowsIndexSearchManager,
-            _ => throw new ArgumentOutOfRangeException(nameof(ContentSearchEngine))
-        };
+        public IPathIndexProvider PathEnumerator =>
+            PathEnumerationEngine switch
+            {
+                PathEnumerationEngineOption.Everything => EverythingManagerInstance,
+                PathEnumerationEngineOption.WindowsIndex => WindowsIndexSearchManager,
+                _ => throw new ArgumentOutOfRangeException(nameof(PathEnumerationEngine))
+            };
+
+        public ContentIndexSearchEngineOption ContentSearchEngine { get; set; } =
+            ContentIndexSearchEngineOption.WindowsIndex;
+
+        [JsonIgnore]
+        public IContentIndexProvider ContentIndexProvider =>
+            ContentSearchEngine switch
+            {
+                ContentIndexSearchEngineOption.Everything => EverythingManagerInstance,
+                ContentIndexSearchEngineOption.WindowsIndex => WindowsIndexSearchManager,
+                _ => throw new ArgumentOutOfRangeException(nameof(ContentSearchEngine))
+            };
 
         public enum PathEnumerationEngineOption
         {
             [Description("plugin_explorer_engine_windows_index")]
             WindowsIndex,
+
             [Description("plugin_explorer_engine_everything")]
             Everything,
+
             [Description("plugin_explorer_path_enumeration_engine_none")]
             DirectEnumeration
         }
@@ -126,6 +140,7 @@ namespace Flow.Launcher.Plugin.Explorer
         {
             [Description("plugin_explorer_engine_windows_index")]
             WindowsIndex,
+
             [Description("plugin_explorer_engine_everything")]
             Everything,
         }
@@ -134,6 +149,7 @@ namespace Flow.Launcher.Plugin.Explorer
         {
             [Description("plugin_explorer_engine_windows_index")]
             WindowsIndex,
+
             [Description("plugin_explorer_engine_everything")]
             Everything,
         }
@@ -152,9 +168,10 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public bool EnableEverythingContentSearch { get; set; } = false;
 
-        public bool EverythingEnabled => IndexSearchEngine == IndexSearchEngineOption.Everything ||
-                                         PathEnumerationEngine == PathEnumerationEngineOption.Everything ||
-                                         ContentSearchEngine == ContentIndexSearchEngineOption.Everything;
+        public bool EverythingEnabled =>
+            IndexSearchEngine == IndexSearchEngineOption.Everything
+            || PathEnumerationEngine == PathEnumerationEngineOption.Everything
+            || ContentSearchEngine == ContentIndexSearchEngineOption.Everything;
 
         public bool EverythingSearchFullPath { get; set; } = false;
         public bool EverythingEnableRunCount { get; set; } = true;
@@ -167,47 +184,78 @@ namespace Flow.Launcher.Plugin.Explorer
             PathSearchActionKeyword,
             FileContentSearchActionKeyword,
             IndexSearchActionKeyword,
-            QuickAccessActionKeyword
+            QuickAccessActionKeyword,
+            RenameActionKeyword
         }
 
-        internal string GetActionKeyword(ActionKeyword actionKeyword) => actionKeyword switch
-        {
-            ActionKeyword.SearchActionKeyword => SearchActionKeyword,
-            ActionKeyword.PathSearchActionKeyword => PathSearchActionKeyword,
-            ActionKeyword.FileContentSearchActionKeyword => FileContentSearchActionKeyword,
-            ActionKeyword.IndexSearchActionKeyword => IndexSearchActionKeyword,
-            ActionKeyword.QuickAccessActionKeyword => QuickAccessActionKeyword,
-            _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "ActionKeyWord property not found")
-        };
+        internal string GetActionKeyword(ActionKeyword actionKeyword) =>
+            actionKeyword switch
+            {
+                ActionKeyword.SearchActionKeyword => SearchActionKeyword,
+                ActionKeyword.PathSearchActionKeyword => PathSearchActionKeyword,
+                ActionKeyword.FileContentSearchActionKeyword => FileContentSearchActionKeyword,
+                ActionKeyword.IndexSearchActionKeyword => IndexSearchActionKeyword,
+                ActionKeyword.QuickAccessActionKeyword => QuickAccessActionKeyword,
+                ActionKeyword.RenameActionKeyword => RenameActionKeyword,
+                _
+                    => throw new ArgumentOutOfRangeException(
+                        nameof(actionKeyword),
+                        actionKeyword,
+                        "ActionKeyWord property not found"
+                    )
+            };
 
-        internal void SetActionKeyword(ActionKeyword actionKeyword, string keyword) => _ = actionKeyword switch
-        {
-            ActionKeyword.SearchActionKeyword => SearchActionKeyword = keyword,
-            ActionKeyword.PathSearchActionKeyword => PathSearchActionKeyword = keyword,
-            ActionKeyword.FileContentSearchActionKeyword => FileContentSearchActionKeyword = keyword,
-            ActionKeyword.IndexSearchActionKeyword => IndexSearchActionKeyword = keyword,
-            ActionKeyword.QuickAccessActionKeyword => QuickAccessActionKeyword = keyword,
-            _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "ActionKeyWord property not found")
-        };
+        internal void SetActionKeyword(ActionKeyword actionKeyword, string keyword) =>
+            _ = actionKeyword switch
+            {
+                ActionKeyword.SearchActionKeyword => SearchActionKeyword = keyword,
+                ActionKeyword.PathSearchActionKeyword => PathSearchActionKeyword = keyword,
+                ActionKeyword.FileContentSearchActionKeyword
+                    => FileContentSearchActionKeyword = keyword,
+                ActionKeyword.IndexSearchActionKeyword => IndexSearchActionKeyword = keyword,
+                ActionKeyword.QuickAccessActionKeyword => QuickAccessActionKeyword = keyword,
+                ActionKeyword.RenameActionKeyword => RenameActionKeyword = keyword,
+                _
+                    => throw new ArgumentOutOfRangeException(
+                        nameof(actionKeyword),
+                        actionKeyword,
+                        "ActionKeyWord property not found"
+                    )
+            };
 
-        internal bool GetActionKeywordEnabled(ActionKeyword actionKeyword) => actionKeyword switch
-        {
-            ActionKeyword.SearchActionKeyword => SearchActionKeywordEnabled,
-            ActionKeyword.PathSearchActionKeyword => PathSearchKeywordEnabled,
-            ActionKeyword.IndexSearchActionKeyword => IndexSearchKeywordEnabled,
-            ActionKeyword.FileContentSearchActionKeyword => FileContentSearchKeywordEnabled,
-            ActionKeyword.QuickAccessActionKeyword => QuickAccessKeywordEnabled,
-            _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "ActionKeyword enabled status not defined")
-        };
+        internal bool GetActionKeywordEnabled(ActionKeyword actionKeyword) =>
+            actionKeyword switch
+            {
+                ActionKeyword.SearchActionKeyword => SearchActionKeywordEnabled,
+                ActionKeyword.PathSearchActionKeyword => PathSearchKeywordEnabled,
+                ActionKeyword.IndexSearchActionKeyword => IndexSearchKeywordEnabled,
+                ActionKeyword.FileContentSearchActionKeyword => FileContentSearchKeywordEnabled,
+                ActionKeyword.QuickAccessActionKeyword => QuickAccessKeywordEnabled,
+                ActionKeyword.RenameActionKeyword => RenameActionKeywordEnabled,
+                _
+                    => throw new ArgumentOutOfRangeException(
+                        nameof(actionKeyword),
+                        actionKeyword,
+                        "ActionKeyword enabled status not defined"
+                    )
+            };
 
-        internal void SetActionKeywordEnabled(ActionKeyword actionKeyword, bool enable) => _ = actionKeyword switch
-        {
-            ActionKeyword.SearchActionKeyword => SearchActionKeywordEnabled = enable,
-            ActionKeyword.PathSearchActionKeyword => PathSearchKeywordEnabled = enable,
-            ActionKeyword.IndexSearchActionKeyword => IndexSearchKeywordEnabled = enable,
-            ActionKeyword.FileContentSearchActionKeyword => FileContentSearchKeywordEnabled = enable,
-            ActionKeyword.QuickAccessActionKeyword => QuickAccessKeywordEnabled = enable,
-            _ => throw new ArgumentOutOfRangeException(nameof(actionKeyword), actionKeyword, "ActionKeyword enabled status not defined")
-        };
+        internal void SetActionKeywordEnabled(ActionKeyword actionKeyword, bool enable) =>
+            _ = actionKeyword switch
+            {
+                ActionKeyword.SearchActionKeyword => SearchActionKeywordEnabled = enable,
+                ActionKeyword.PathSearchActionKeyword => PathSearchKeywordEnabled = enable,
+                ActionKeyword.IndexSearchActionKeyword => IndexSearchKeywordEnabled = enable,
+                ActionKeyword.FileContentSearchActionKeyword
+                    => FileContentSearchKeywordEnabled = enable,
+                ActionKeyword.QuickAccessActionKeyword => QuickAccessKeywordEnabled = enable,
+                ActionKeyword.RenameActionKeyword => RenameActionKeywordEnabled = enable,
+                _
+                    => throw new ArgumentOutOfRangeException(
+                        nameof(actionKeyword),
+                        actionKeyword,
+                        "ActionKeyword enabled status not defined"
+                    )
+            };
     }
 }
