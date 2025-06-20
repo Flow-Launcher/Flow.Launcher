@@ -1,9 +1,0 @@
-<Window 
-    x:Class="namespace Flow.Launcher.Plugin.Explorer.Views.RenameFile"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Rename A file" Height="350" Width="525">
-    <Grid>
-        <Button Content="Open Window" Click="ButtonClicked" Height="25" HorizontalAlignment="Left" Margin="379,264,0,0" Name="button1" VerticalAlignment="Top" Width="100" />
-    </Grid>
-</Window>
