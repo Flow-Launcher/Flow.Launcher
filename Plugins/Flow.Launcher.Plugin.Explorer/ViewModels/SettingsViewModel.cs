@@ -279,9 +279,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 new(Settings.ActionKeyword.IndexSearchActionKeyword,
                     "plugin_explorer_actionkeywordview_indexsearch"),
                 new(Settings.ActionKeyword.QuickAccessActionKeyword,
-                    "plugin_explorer_actionkeywordview_quickaccess"),
-                new (Settings.ActionKeyword.RenameActionKeyword,
-                "plugin_explorer_actionkeywordview_rename")
+                    "plugin_explorer_actionkeywordview_quickaccess")
             };
         }
 
