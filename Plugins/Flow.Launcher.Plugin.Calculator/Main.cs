@@ -172,9 +172,9 @@ namespace Flow.Launcher.Plugin.Calculator
 
         private bool IsBracketComplete(string query)
         {
-            var matchs = RegBrackets.Matches(query);
+            var matches = RegBrackets.Matches(query);
             var leftBracketCount = 0;
-            foreach (Match match in matchs)
+            foreach (Match match in matches)
             {
                 if (match.Value == "(" || match.Value == "[")
                 {
