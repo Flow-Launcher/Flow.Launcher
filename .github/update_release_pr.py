@@ -1,11 +1,12 @@
 from os import getenv
+from typing import Optional
 
 import requests
 
 
 def get_github_prs(token: str, owner: str, repo: str, label: str = "", state: str = "all") -> list[dict]:
     """
-    Fetches pull requests from a GitHub repository that match a given milestone and label.
+    Fetches pull requests from a GitHub repository that match a given label and state.
 
     Args:
         token (str): GitHub token.
@@ -23,39 +24,10 @@ def get_github_prs(token: str, owner: str, repo: str, label: str = "", state: st
         "Accept": "application/vnd.github.v3+json",
     }
 
-    milestone_id = None
-    milestone_url = f"https://api.github.com/repos/{owner}/{repo}/milestones"
-    params = {"state": "open"}
-
-    try:
-        response = requests.get(milestone_url, headers=headers, params=params)
-        response.raise_for_status()
-        milestones = response.json()
-
-        if len(milestones) > 2:
-            print("More than two milestones found, unable to determine the milestone required.")
-            exit(1)
-
-        # milestones.pop()
-        for ms in milestones:
-            if ms["title"] != "Future":
-                milestone_id = ms["number"]
-                print(f"Gathering PRs with milestone {ms['title']}...")
-                break
-
-        if not milestone_id:
-            print(f"No suitable milestone found in repository '{owner}/{repo}'.")
-            exit(1)
-
-    except requests.exceptions.RequestException as e:
-        print(f"Error fetching milestones: {e}")
-        exit(1)
-
-    # This endpoint allows filtering by milestone and label. A PR in GH's perspective is a type of issue.
+    # This endpoint allows filtering by label(and milestone). A PR in GH's perspective is a type of issue.
     prs_url = f"https://api.github.com/repos/{owner}/{repo}/issues"
     params = {
         "state": state,
-        "milestone": milestone_id,
         "labels": label,
         "per_page": 100,
     }
@@ -83,7 +55,7 @@ def get_github_prs(token: str, owner: str, repo: str, label: str = "", state: st
     return all_prs
 
 
-def get_prs(pull_request_items: list[dict], label: str = "", state: str = "all") -> list[dict]:
+def get_prs(pull_request_items: list[dict], label: str = "", state: str = "all", milestone_number: Optional[int] = None) -> list[dict]:
     """
     Returns a list of pull requests after applying the label and state filters.
 
@@ -91,6 +63,7 @@ def get_prs(pull_request_items: list[dict], label: str = "", state: str = "all")
         pull_request_items (list[dict]): List of PR items.
         label (str): The label name. Filter is not applied when empty string.
         state (str): State of PR, e.g. open, closed, all
+        milestone_number (Optional[int]): The milestone number to filter by. If None, no milestone filtering is applied.
 
     Returns:
         list: A list of dictionaries, where each dictionary represents a pull request.
@@ -99,11 +72,20 @@ def get_prs(pull_request_items: list[dict], label: str = "", state: str = "all")
     pr_list = []
     count = 0
     for pr in pull_request_items:
-        if state in [pr["state"], "all"] and (not label or [item for item in pr["labels"] if item["name"] == label]):
-            pr_list.append(pr)
-            count += 1
+        if state not in [pr["state"], "all"]:
+            continue
 
-    print(f"Found {count} PRs with {label if label else 'no filter on'} label and state as {state}")
+        if label and not [item for item in pr["labels"] if item["name"] == label]:
+            continue
+
+        if milestone_number:
+            if not pr.get("milestone") or pr["milestone"]["number"] != milestone_number:
+                continue
+
+        pr_list.append(pr)
+        count += 1
+
+    print(f"Found {count} PRs with {label if label else 'no filter on'} label, state as {state}, and milestone {pr.get("milestone",{}).get("number","None")}")
 
     return pr_list
 
@@ -204,15 +186,16 @@ if __name__ == "__main__":
 
     print(f"Fetching {state} PRs for {repository_owner}/{repository_name} ...")
 
-    pull_requests = get_github_prs(github_token, repository_owner, repository_name)
+    # First, get all PRs to find the release PR and determine the milestone
+    all_pull_requests = get_github_prs(github_token, repository_owner, repository_name)
 
-    if not pull_requests:
-        print("No matching pull requests found")
+    if not all_pull_requests:
+        print("No pull requests found")
         exit(1)
 
-    print(f"\nFound total of {len(pull_requests)} pull requests")
+    print(f"\nFound total of {len(all_pull_requests)} pull requests")
 
-    release_pr = get_prs(pull_requests, "release", "open")
+    release_pr = get_prs(all_pull_requests, "release", "open")
 
     if len(release_pr) != 1:
         print(f"Unable to find the exact release PR. Returned result: {release_pr}")
@@ -220,8 +203,16 @@ if __name__ == "__main__":
 
     print(f"Found release PR: {release_pr[0]['title']}")
 
-    enhancement_prs = get_prs(pull_requests, "enhancement", "closed")
-    bug_fix_prs = get_prs(pull_requests, "bug", "closed")
+    release_milestone_number = release_pr[0].get("milestone",{}).get("number",None)
+
+    if not release_milestone_number:
+        print("Release PR does not have a milestone assigned.")
+        exit(1)
+
+    print(f"Using milestone number: {release_milestone_number}")
+
+    enhancement_prs = get_prs(all_pull_requests, "enhancement", "closed", release_milestone_number)
+    bug_fix_prs = get_prs(all_pull_requests, "bug", "closed", release_milestone_number)
 
     description_content = "# Release notes\n"
     description_content += f"## Features\n{get_pr_descriptions(enhancement_prs)}" if enhancement_prs else ""
