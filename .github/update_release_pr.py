@@ -55,7 +55,9 @@ def get_github_prs(token: str, owner: str, repo: str, label: str = "", state: st
     return all_prs
 
 
-def get_prs(pull_request_items: list[dict], label: str = "", state: str = "all", milestone_number: Optional[int] = None) -> list[dict]:
+def get_prs(
+    pull_request_items: list[dict], label: str = "", state: str = "all", milestone_number: Optional[int] = None
+) -> list[dict]:
     """
     Returns a list of pull requests after applying the label and state filters.
 
@@ -85,9 +87,12 @@ def get_prs(pull_request_items: list[dict], label: str = "", state: str = "all",
         pr_list.append(pr)
         count += 1
 
-    print(f"Found {count} PRs with {label if label else 'no filter on'} label, state as {state}, and milestone {pr.get("milestone",{}).get("number","None")}")
+    print(
+        f"Found {count} PRs with {label if label else 'no filter on'} label, state as {state}, and milestone {pr.get("milestone",{}).get("number","None")}"
+    )
 
     return pr_list
+
 
 def get_prs_assignees(pull_request_items: list[dict]) -> list[str]:
     """
@@ -103,11 +108,12 @@ def get_prs_assignees(pull_request_items: list[dict]) -> list[str]:
     """
     assignee_list = []
     for pr in pull_request_items:
-        [assignee_list.append(assignee["login"]) for assignee in pr["assignees"] if assignee["login"] != "jjw24" ]
+        [assignee_list.append(assignee["login"]) for assignee in pr["assignees"] if assignee["login"] != "jjw24"]
 
     print(f"Found {len(assignee_list)} assignees")
 
     return assignee_list
+
 
 def get_pr_descriptions(pull_request_items: list[dict]) -> str:
     """
@@ -203,7 +209,7 @@ if __name__ == "__main__":
 
     print(f"Found release PR: {release_pr[0]['title']}")
 
-    release_milestone_number = release_pr[0].get("milestone",{}).get("number",None)
+    release_milestone_number = release_pr[0].get("milestone", {}).get("number", None)
 
     if not release_milestone_number:
         print("Release PR does not have a milestone assigned.")
