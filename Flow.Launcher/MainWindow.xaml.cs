@@ -814,7 +814,7 @@ namespace Flow.Launcher
 
         public void UpdatePosition()
         {
-            // Intialize call twice to work around multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
+            // Initialize call twice to work around multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
             if (_viewModel.IsQuickSwitchWindowUnderDialog())
             {
                 InitializeQuickSwitchPosition();
