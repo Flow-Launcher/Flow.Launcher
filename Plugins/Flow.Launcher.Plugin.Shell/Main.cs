@@ -194,10 +194,13 @@ namespace Flow.Launcher.Plugin.Shell
             var workingDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             var runAsAdministratorArg = !runAsAdministrator && !_settings.RunAsAdministrator ? "" : "runas";
 
-            ProcessStartInfo info = new()
+            var info = new ProcessStartInfo()
             {
-                Verb = runAsAdministratorArg, WorkingDirectory = workingDirectory,
+                Verb = runAsAdministratorArg,
+                WorkingDirectory = workingDirectory,
             };
+            var notifyStr = Context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close");
+            var addedCharacter = _settings.UseWindowsTerminal ? "\\" : "";
             switch (_settings.Shell)
             {
                 case Shell.Cmd:
@@ -211,8 +214,19 @@ namespace Flow.Launcher.Plugin.Shell
                         {
                             info.FileName = "cmd.exe";
                         }
-
-                        info.ArgumentList.Add($"{(_settings.LeaveShellOpen ? "/k" : "/c")} {command} {(_settings.CloseShellAfterPress ? $"&& echo {Context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")} && pause > nul /c" : "")}");
+                        if (_settings.LeaveShellOpen)
+                        {
+                            info.ArgumentList.Add("/k");
+                        }
+                        else
+                        {
+                            info.ArgumentList.Add("/c");
+                        }
+                        info.ArgumentList.Add(
+                            $"{command}" +
+                            $"{(_settings.CloseShellAfterPress ?
+                                $" && echo {notifyStr} && pause > nul /c" :
+                                "")}");
                         break;
                     }
 
@@ -220,7 +234,6 @@ namespace Flow.Launcher.Plugin.Shell
                     {
                         // Using just a ; doesn't work with wt, as it's used to create a new tab for the terminal window
                         // \\ must be escaped for it to work properly, or breaking it into multiple arguments
-                        var addedCharacter = _settings.UseWindowsTerminal ? "\\" : "";
                         if (_settings.UseWindowsTerminal)
                         {
                             info.FileName = "wt.exe";
@@ -238,7 +251,11 @@ namespace Flow.Launcher.Plugin.Shell
                         else
                         {
                             info.ArgumentList.Add("-Command");
-                            info.ArgumentList.Add($"{command}{addedCharacter}; {(_settings.CloseShellAfterPress ? $"Write-Host '{Context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")}'{addedCharacter}; [System.Console]::ReadKey(){addedCharacter}; exit" : "")}");
+                            info.ArgumentList.Add(
+                                $"{command}{addedCharacter};" +
+                                $"{(_settings.CloseShellAfterPress ?
+                                    $" Write-Host '{notifyStr}'{addedCharacter}; [System.Console]::ReadKey(){addedCharacter}; exit" :
+                                    "")}");
                         }
                         break;
                     }
@@ -247,7 +264,6 @@ namespace Flow.Launcher.Plugin.Shell
                     {
                         // Using just a ; doesn't work with wt, as it's used to create a new tab for the terminal window
                         // \\ must be escaped for it to work properly, or breaking it into multiple arguments
-                        var addedCharacter = _settings.UseWindowsTerminal ? "\\" : "";
                         if (_settings.UseWindowsTerminal)
                         {
                             info.FileName = "wt.exe";
@@ -262,7 +278,11 @@ namespace Flow.Launcher.Plugin.Shell
                             info.ArgumentList.Add("-NoExit");
                         }
                         info.ArgumentList.Add("-Command");
-                        info.ArgumentList.Add($"{command}{addedCharacter}; {(_settings.CloseShellAfterPress ? $"Write-Host '{Context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")}'{addedCharacter}; [System.Console]::ReadKey(){addedCharacter}; exit" : "")}");
+                        info.ArgumentList.Add(
+                            $"{command}{addedCharacter};" +
+                            $"{(_settings.CloseShellAfterPress ?
+                                $" Write-Host '{notifyStr}'{addedCharacter}; [System.Console]::ReadKey(){addedCharacter}; exit" :
+                                "")}");
                         break;
                     }
 

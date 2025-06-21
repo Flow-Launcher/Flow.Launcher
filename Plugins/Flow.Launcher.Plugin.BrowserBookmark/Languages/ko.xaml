@@ -25,4 +25,6 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">브라우저 엔진</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">크롬, 파이어폭스 또는 엣지를 사용하지 않거나 이들의 포터블 버전을 사용하고 있다면, 이 플러그인을 작동시키기 위해 북마크 데이터 디렉토리를 추가하고 올바른 브라우저 엔진을 선택해야 합니다.</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">예를 들어: Brave의 엔진은 Chromium이며, 기본 북마크 데이터 위치는 &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;입니다. Firefox 엔진의 경우, 북마크 위치는 places.sqlite 파일이 포함된 userdata 폴더입니다.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Load favicons (can be time consuming during startup)</system:String>
+
 </ResourceDictionary>

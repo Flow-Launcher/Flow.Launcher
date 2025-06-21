@@ -1,12 +1,13 @@
 ﻿using System.Windows;
-using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using System.Windows.Input;
-using System.ComponentModel;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Flow.Launcher.Plugin.BrowserBookmark.Models;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Views;
 
-public partial class SettingsControl : INotifyPropertyChanged
+[INotifyPropertyChanged]
+public partial class SettingsControl
 {
     public Settings Settings { get; }
     public CustomBrowser SelectedCustomBrowser { get; set; }
@@ -53,11 +54,9 @@ public partial class SettingsControl : INotifyPropertyChanged
         set
         {
             Settings.OpenInNewBrowserWindow = value;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(OpenInNewBrowserWindow)));
+            OnPropertyChanged();
         }
     }
-
-    public event PropertyChangedEventHandler PropertyChanged;
 
     private void NewCustomBrowser(object sender, RoutedEventArgs e)
     {

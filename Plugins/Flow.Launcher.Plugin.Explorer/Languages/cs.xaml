@@ -3,6 +3,8 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">Nejprve vyberte položku</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Please select a folder path.</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Please choose a different name or folder path.</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Vyberte odkaz na složku</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">Opravdu chcete odstranit {0}?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">Opravdu chcete trvale odstranit tento soubor?</system:String>
@@ -25,6 +27,7 @@
     <system:String x:Key="plugin_explorer_add">Přidat</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">Všeobecné nastavení</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Upravit aktivační příkaz</system:String>
+    <system:String x:Key="plugin_explorer_manage_quick_access_links_header">Customise Quick Access</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Odkazy rychlého přístupu</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Nastavení Everything</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">Preview Panel</system:String>
@@ -41,6 +44,7 @@
     <system:String x:Key="plugin_explorer_shell_path">Cesta k příkazovému řádku</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Vyloučená místa indexování</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Použít umístění výsledků vyhledávání jako pracovní adresář spustitelného souboru</system:String>
+    <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Display more information like size and age in tooltips</system:String>
     <system:String x:Key="plugin_explorer_default_open_in_file_manager">Klepnutím na Enter otevřete složku ve výchozím správci souborů</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">K vyhledání cesty použijte indexové vyhledávání</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Možnosti indexování</system:String>
@@ -77,6 +81,9 @@
     <!--  Plugin Tooltip  -->
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter pro otevření adresáře</system:String>
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Enter pro otevření umístění složky</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info">{0}{4}Size: {1}{4}Date created: {2}{4}Date modified: {3}</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_unknown">Neznámý</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_volume">{0}{3}Space free: {1}{3}Total size: {2}</system:String>
 
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">Kopírovat cestu</system:String>
@@ -90,6 +97,7 @@
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Trvale odstranit aktuální soubor</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Trvale smazat aktuální složku</system:String>
     <system:String x:Key="plugin_explorer_path">Cesta:</system:String>
+    <system:String x:Key="plugin_explorer_name">Name:</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Odstranit vybraný</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Spustit jako jiný uživatel</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Spustí vybranou položku jako uživatel s jiným účtem</system:String>
@@ -159,6 +167,9 @@
     <system:String x:Key="flowlauncher_plugin_everything_installing_select">Nepodařilo se najít instalaci Everything, chcete ručně vybrat její umístění?{0}{0}Kliknutím na ne se Everything nainstaluje automaticky</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Chcete povolit vyhledávání obsahu prostřednictvím služby Everything?</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">Bez indexu (který je podporován pouze ve verzi Everything v1.5+) může být velmi pomalý</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_everything_not_found">Unable to find Everything.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_install_issue">Failed to install Everything, please install it manually</system:String>
 
     <!--  Native Context Menu  -->
     <system:String x:Key="plugin_explorer_native_context_menu_header">Native Context Menu</system:String>

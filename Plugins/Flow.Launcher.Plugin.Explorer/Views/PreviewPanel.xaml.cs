@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,12 +10,14 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Flow.Launcher.Plugin.Explorer.Search;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Flow.Launcher.Plugin.Explorer.Views;
 
 #nullable enable
 
-public partial class PreviewPanel : UserControl, INotifyPropertyChanged
+[INotifyPropertyChanged]
+public partial class PreviewPanel : UserControl
 {
     private static readonly string ClassName = nameof(PreviewPanel);
 
@@ -326,12 +327,5 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
 
         return yearsDiff == 1 ? Main.Context.API.GetTranslation("OneYearAgo") :
             string.Format(Main.Context.API.GetTranslation("YearsAgo"), yearsDiff);
-    }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

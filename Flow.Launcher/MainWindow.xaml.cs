@@ -85,6 +85,8 @@ namespace Flow.Launcher
             _viewModel = Ioc.Default.GetRequiredService<MainViewModel>();
             DataContext = _viewModel;
 
+            Topmost = _settings.ShowAtTopmost;
+
             InitializeComponent();
             UpdatePosition();
 
@@ -136,12 +138,11 @@ namespace Flow.Launcher
                 welcomeWindow.Show();
             }
 
-            if (_settings.ReleaseNotesVersion != Constant.Version)
+            if (Constant.Version != "1.0.0" && _settings.ReleaseNotesVersion != Constant.Version) // Skip release notes notification for developer builds (version 1.0.0)
             {
                 // Update release notes version
                 _settings.ReleaseNotesVersion = Constant.Version;
-
-                // Display message box with button
+                // Show release note popup with button
                 App.API.ShowMsgWithButton(
                     string.Format(App.API.GetTranslation("appUpdateTitle"), Constant.Version),
                     App.API.GetTranslation("appUpdateButtonContent"),
@@ -316,6 +317,9 @@ namespace Flow.Launcher
                         {
                             _viewModel.QueryResults();
                         }
+                        break;
+                    case nameof(Settings.ShowAtTopmost):
+                        Topmost = _settings.ShowAtTopmost;
                         break;
                 }
             };

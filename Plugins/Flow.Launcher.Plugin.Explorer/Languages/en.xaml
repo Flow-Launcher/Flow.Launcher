@@ -98,8 +98,11 @@
     <system:String x:Key="plugin_explorer_deletefilefolder">Delete</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Permanently delete current file</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Permanently delete current folder</system:String>
-    <system:String x:Key="plugin_explorer_path">Path:</system:String>
-    <system:String x:Key="plugin_explorer_name">Name:</system:String>
+    <system:String x:Key="plugin_explorer_name">Name</system:String>
+    <system:String x:Key="plugin_explorer_type">Type</system:String>
+    <system:String x:Key="plugin_explorer_path">Path</system:String>
+    <system:String x:Key="plugin_explorer_file">File</system:String>
+    <system:String x:Key="plugin_explorer_folder">Folder</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Delete the selected</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Run as different user</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Run the selected using a different user account</system:String>
