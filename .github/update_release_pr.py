@@ -88,7 +88,7 @@ def get_prs(
         count += 1
 
     print(
-        f"Found {count} PRs with {label if label else 'no filter on'} label, state as {state}, and milestone {pr.get("milestone",{}).get("number","None")}"
+        f"Found {count} PRs with {label if label else 'no filter on'} label, state as {state}, and milestone {pr.get('milestone', {}).get('number', 'None')}"
     )
 
     return pr_list
