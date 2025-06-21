@@ -96,8 +96,11 @@
     <system:String x:Key="plugin_explorer_deletefilefolder">حذف</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">حذف الملف الحالي نهائيًا</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">حذف المجلد الحالي نهائيًا</system:String>
-    <system:String x:Key="plugin_explorer_path">المسار:</system:String>
-    <system:String x:Key="plugin_explorer_name">Name:</system:String>
+    <system:String x:Key="plugin_explorer_name">اسم البرنامج</system:String>
+    <system:String x:Key="plugin_explorer_type">Type</system:String>
+    <system:String x:Key="plugin_explorer_path">المسار</system:String>
+    <system:String x:Key="plugin_explorer_file">ملف</system:String>
+    <system:String x:Key="plugin_explorer_folder">مجلد</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">حذف المحدد</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">تشغيل كمستخدم مختلف</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">تشغيل العنصر المحدد باستخدام حساب مستخدم مختلف</system:String>

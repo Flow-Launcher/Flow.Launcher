@@ -96,8 +96,11 @@
     <system:String x:Key="plugin_explorer_deletefilefolder">Odstrániť</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Natrvalo odstrániť aktuálny súbor</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Natrvalo odstrániť aktuálny priečinok</system:String>
-    <system:String x:Key="plugin_explorer_path">Cesta:</system:String>
-    <system:String x:Key="plugin_explorer_name">Názov:</system:String>
+    <system:String x:Key="plugin_explorer_name">Názov</system:String>
+    <system:String x:Key="plugin_explorer_type">Typ</system:String>
+    <system:String x:Key="plugin_explorer_path">Cesta</system:String>
+    <system:String x:Key="plugin_explorer_file">Súbor</system:String>
+    <system:String x:Key="plugin_explorer_folder">Priečinok</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Odstrániť vybraný</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Spustiť ako iný používateľ</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Spustí vybranú položku ako používateľ s iným kontom</system:String>

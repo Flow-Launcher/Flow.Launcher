@@ -96,8 +96,11 @@
     <system:String x:Key="plugin_explorer_deletefilefolder">삭제</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">이 파일을 영구적으로 삭제</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">이 폴더를 영구적으로 삭제</system:String>
-    <system:String x:Key="plugin_explorer_path">경로:</system:String>
-    <system:String x:Key="plugin_explorer_name">Name:</system:String>
+    <system:String x:Key="plugin_explorer_name">Name</system:String>
+    <system:String x:Key="plugin_explorer_type">Type</system:String>
+    <system:String x:Key="plugin_explorer_path">Path</system:String>
+    <system:String x:Key="plugin_explorer_file">파일</system:String>
+    <system:String x:Key="plugin_explorer_folder">폴더</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">선택 항목을 삭제</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">다른 유저 권한으로 실행</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">선택한 사용자 계정으로 실행</system:String>

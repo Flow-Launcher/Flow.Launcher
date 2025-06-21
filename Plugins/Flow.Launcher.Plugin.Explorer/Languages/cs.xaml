@@ -96,8 +96,11 @@
     <system:String x:Key="plugin_explorer_deletefilefolder">Smazat</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Trvale odstranit aktuální soubor</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Trvale smazat aktuální složku</system:String>
-    <system:String x:Key="plugin_explorer_path">Cesta:</system:String>
-    <system:String x:Key="plugin_explorer_name">Name:</system:String>
+    <system:String x:Key="plugin_explorer_name">Jméno</system:String>
+    <system:String x:Key="plugin_explorer_type">Type</system:String>
+    <system:String x:Key="plugin_explorer_path">Cesta</system:String>
+    <system:String x:Key="plugin_explorer_file">Soubor</system:String>
+    <system:String x:Key="plugin_explorer_folder">Složka</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Odstranit vybraný</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Spustit jako jiný uživatel</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Spustí vybranou položku jako uživatel s jiným účtem</system:String>
