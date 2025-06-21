@@ -96,7 +96,7 @@
     <system:String x:Key="plugin_explorer_deletefilefolder">削除</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">現在のファイルを完全に削除</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">現在のフォルダーを完全に削除</system:String>
-    <system:String x:Key="plugin_explorer_name">Name</system:String>
+    <system:String x:Key="plugin_explorer_name">名前</system:String>
     <system:String x:Key="plugin_explorer_type">Type</system:String>
     <system:String x:Key="plugin_explorer_path">Path</system:String>
     <system:String x:Key="plugin_explorer_file">ファイル</system:String>
@@ -141,7 +141,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">Warning: Everything service is not running</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_query_error">Error while querying Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by">Sort By</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_name">Name</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_name">名前</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_path">Path</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_size">サイズ</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension">Extension</system:String>
