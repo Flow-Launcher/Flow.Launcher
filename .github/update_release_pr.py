@@ -107,14 +107,12 @@ def get_prs(pull_request_items: list[dict], label: str = "", state: str = "all")
 
     return pr_list
 
-def get_prs_assignees(pull_request_items: list[dict], label: str = "", state: str = "all") -> list[str]:
+def get_prs_assignees(pull_request_items: list[dict]) -> list[str]:
     """
-    Returns a list of pull request assignees after applying the label and state filters, excludes jjw24.
+    Returns a list of pull request assignees, excludes jjw24.
 
     Args:
-        pull_request_items (list[dict]): List of PR items.
-        label (str): The label name. Filter is not applied when empty string.
-        state (str): State of PR, e.g. open, closed, all
+        pull_request_items (list[dict]): List of PR items to get the assignees from.
 
     Returns:
         list: A list of strs, where each string is an assignee name. List is not distinct, so can contain
@@ -123,10 +121,9 @@ def get_prs_assignees(pull_request_items: list[dict], label: str = "", state: st
     """
     assignee_list = []
     for pr in pull_request_items:
-        if state in [pr["state"], "all"] and (not label or [item for item in pr["labels"] if item["name"] == label]):
-            [assignee_list.append(assignee["login"]) for assignee in pr["assignees"] if assignee["login"] != "jjw24" ]
+        [assignee_list.append(assignee["login"]) for assignee in pr["assignees"] if assignee["login"] != "jjw24" ]
 
-    print(f"Found {len(assignee_list)} assignees with {label if label else 'no filter on'} label and state as {state}")
+    print(f"Found {len(assignee_list)} assignees")
 
     return assignee_list
 
@@ -230,7 +227,7 @@ if __name__ == "__main__":
     description_content += f"## Features\n{get_pr_descriptions(enhancement_prs)}" if enhancement_prs else ""
     description_content += f"## Bug fixes\n{get_pr_descriptions(bug_fix_prs)}" if bug_fix_prs else ""
 
-    assignees = list(set(get_prs_assignees(pull_requests, "enhancement", "closed") + get_prs_assignees(pull_requests, "bug", "closed")))
+    assignees = list(set(get_prs_assignees(enhancement_prs) + get_prs_assignees(bug_fix_prs)))
     assignees.sort(key=str.lower)
 
     description_content += f"### Authors:\n{', '.join(assignees)}"
