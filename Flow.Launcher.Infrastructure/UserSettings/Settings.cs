@@ -296,7 +296,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public bool AutoQuickSwitch { get; set; } = false;
 
-        public bool ShowQuickSwitchWindow { get; set; } = true;
+        public bool ShowQuickSwitchWindow { get; set; } = false;
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public QuickSwitchWindowPositions QuickSwitchWindowPosition { get; set; } = QuickSwitchWindowPositions.UnderDialog;
