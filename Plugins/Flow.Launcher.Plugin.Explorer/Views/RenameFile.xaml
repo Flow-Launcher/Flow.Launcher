@@ -84,7 +84,6 @@
                         Width="135"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        DataObject.Pasting="RenameTb_Pasting"
                         PreviewKeyDown="RenameTb_OnKeyDown"
                         Text="{Binding NewFileName}"/>
                 </StackPanel>
