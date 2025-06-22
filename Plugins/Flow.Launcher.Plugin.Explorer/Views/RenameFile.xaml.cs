@@ -1,27 +1,31 @@
+using System;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Flow.Launcher.Plugin.Explorer.Helper;
 
 
 namespace Flow.Launcher.Plugin.Explorer.Views
 {
+    
     [INotifyPropertyChanged]
-    public partial class RenameFile : Window
+    public partial class RenameFile : Window 
     {
         
 
         public string NewFileName
         {
-            get => newFileName;
+            get => _newFileName;
             set
             {
-                _ = SetProperty(ref newFileName, value);
+                _ = SetProperty(ref _newFileName, value);
             }
         }
 
 
-        private string newFileName = "gayTest";
+        private string _newFileName;
         private string renamingText = "fes";
         public string RenamingText
         {
@@ -32,9 +36,11 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             }
         }
         private readonly IPublicAPI _api;
+        private readonly string _oldFilePath;
 
+        private readonly FileSystemInfo _info;
 
-        public RenameFile(IPublicAPI api)
+        public RenameFile(IPublicAPI api, FileSystemInfo info)
         {
             _api = api;
 
@@ -42,42 +48,48 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             InitializeComponent();
 
             RenameTb.Focus();
-            Deactivated += (s, e) =>
-            {
-                DialogResult = false;
-                Close();
-
-            };
+            
             ShowInTaskbar = false;
-            RenameTb.Select(RenameTb.Text.Length, 0);
+
+            RenameTb.SelectAll();
+            _info = info;
+            _oldFilePath = _info.FullName;
+            _newFileName = _info.Name;
+            
         }
 
         private void OnDoneButtonClick(object sender, RoutedEventArgs e)
         {
-            
+            // if it's just whitespace and nothing else
+            if (_newFileName.Trim() == "")
+            {
+                _api.ShowMsgError(string.Format(_api.GetTranslation("plugin_explorer_field_may_not_be_empty"), "New file name"));
+                Show();
+                return;
+            }
+            if ()
+            try
+            {
+                _info.Rename(_newFileName);
+            }
+            catch (Exception exception)
+            {
+                switch (exception)
+                {
+                    case FileNotFoundException:
 
-      
-
-            // if (ActionKeyword == Query.GlobalPluginWildcardSign)
-            //     switch (CurrentActionKeyword.KeywordProperty, KeywordEnabled)
-            //     {
-            //         case (Settings.ActionKeyword.FileContentSearchActionKeyword, true):
-            //             _api.ShowMsgBox(_api.GetTranslation("plugin_explorer_globalActionKeywordInvalid"));
-            //             return;
-            //         case (Settings.ActionKeyword.QuickAccessActionKeyword, true):
-            //             _api.ShowMsgBox(_api.GetTranslation("plugin_explorer_quickaccess_globalActionKeywordInvalid"));
-            //             return;
-            //     }
-
-            // if (!KeywordEnabled || !_api.ActionKeywordAssigned(ActionKeyword))
-            // {
-            //     DialogResult = true;
-            //     Close();
-            //     return;
-            // }
-
-            // The keyword is not valid, so show message
-            _api.ShowMsgBox("new action keyword");
+                        _api.ShowMsgError(string.Format(_api.GetTranslation("plugin_explorer_file_not_found"), _oldFilePath));
+                        break;
+                    case NotANewNameException notANewNameException:
+                        _api.ShowMsgError(string.Format(_api.GetTranslation("plugin_explorer_not_a_new_name"), _newFileName));
+                        _api.ShowMainWindow();
+                        break;
+                    default:
+                        _api.ShowMsgError(exception.ToString());
+                        break;
+                }
+            }
+            Close();
         }
 
         private void BtnCancel(object sender, RoutedEventArgs e)
@@ -85,7 +97,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             Close();
         }
         
-        private void TxtCurrentActionKeyword_OnKeyDown(object sender, KeyEventArgs e)
+        private void RenameTb_OnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
@@ -100,7 +112,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         }
         
         
-        private void TextBox_Pasting(object sender, DataObjectPastingEventArgs e)
+        private void RenameTb_Pasting(object sender, DataObjectPastingEventArgs e)
         {
             if (e.DataObject.GetDataPresent(DataFormats.Text))
             {

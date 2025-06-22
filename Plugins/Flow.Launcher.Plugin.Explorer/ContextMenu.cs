@@ -11,6 +11,7 @@ using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Flow.Launcher.Plugin.Explorer.Helper;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
 using Flow.Launcher.Plugin.Explorer.Views;
+using System.Windows.Controls;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
@@ -192,18 +193,33 @@ namespace Flow.Launcher.Plugin.Explorer
                 contextMenus.Add(new Result
                 {
                     Title = "Rename",
-                    SubTitle = "Opens a dialogue to this",
+                    SubTitle = "Opens a dialogue to rename this",
                     Action = _ =>
                     {
-                        
-                        RenameFile window = new(Context.API);
-                        Context.API.FocusQueryTextBox();
-                        if (!(window.ShowDialog() ?? false))
+                        Type T;
+                        RenameFile window;
+
+
+                        switch (record.Type)
                         {
-                            Context.API.FocusQueryTextBox();
-                            return false;
+                            case ResultType.Folder:
+                                window = new RenameFile(Context.API, new DirectoryInfo(record.FullPath));
+                                break;
+                            case ResultType.File:
+                                window = new RenameFile(Context.API, new FileInfo(record.FullPath));
+                                break;
+                            default:
+                                Context.API.ShowMsgError("Cannot rename this.");
+                                return false;
+
                         }
-                        Context.API.FocusQueryTextBox();
+
+
+
+
+
+                        window.ShowDialog();
+                        
                         return false;
                     }
                 });

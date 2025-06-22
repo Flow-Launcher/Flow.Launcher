@@ -195,4 +195,6 @@
     <system:String x:Key="plugin_explorer_new_file_name">New File name:</system:String>
     <system:String x:Key="plugin_explorer_rename_file_done">Rename</system:String>
     <system:String x:Key="plugin_explorer_rename_a_file">Rename</system:String>
+    <system:String x:Key="plugin_explorer_not_a_new_name">The given name: {0} was not new.</system:String>
+    <system:String x:Key="plugin_explorer_field_may_not_be_empty">{0} may not be empty.</system:String>
 </ResourceDictionary>
