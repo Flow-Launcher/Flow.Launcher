@@ -192,14 +192,11 @@ namespace Flow.Launcher.Plugin.Explorer
                 });
                 contextMenus.Add(new Result
                 {
-                    Title = "Rename",
-                    SubTitle = "Opens a dialogue to rename this",
+                    Title = Context.API.GetTranslation("plugin_explorer_rename_a_file"),
+                    SubTitle = Context.API.GetTranslation("plugin_explorer_rename_subtitle"),
                     Action = _ =>
                     {
-                        Type T;
                         RenameFile window;
-
-
                         switch (record.Type)
                         {
                             case ResultType.Folder:
@@ -209,19 +206,18 @@ namespace Flow.Launcher.Plugin.Explorer
                                 window = new RenameFile(Context.API, new FileInfo(record.FullPath));
                                 break;
                             default:
-                                Context.API.ShowMsgError("Cannot rename this.");
+                                Context.API.ShowMsgError(Context.API.GetTranslation("plugin_explorer_cannot_rename"));
                                 return false;
-
                         }
-
-
-
-
-
                         window.ShowDialog();
-                        
+
                         return false;
-                    }
+
+                    },
+                    // placeholder until real image is found
+                    IcoPath = Constants.ShowContextMenuImagePath,
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue70f")
+
                 });
 
 

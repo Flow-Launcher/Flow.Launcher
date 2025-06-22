@@ -115,11 +115,6 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 btnDone.Focus();
                 OnDoneButtonClick(sender, e);
                 e.Handled = true;
-            }
-            if (e.Key == Key.Space)
-            {
-                e.Handled = true;
-            }
         }
         
         

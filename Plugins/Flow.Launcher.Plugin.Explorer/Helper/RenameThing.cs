@@ -30,7 +30,7 @@ namespace Flow.Launcher.Plugin.Explorer.Helper
             }
             else if (info is DirectoryInfo)
             {
-                var invalidChars = Path.GetInvalidPathChars().ToList();
+                List<char> invalidChars = Path.GetInvalidPathChars().ToList();
                 invalidChars.Add('/');
                 invalidChars.Add('\\');
                 if (newName.IndexOfAny(invalidChars.ToArray()) >= 0)
