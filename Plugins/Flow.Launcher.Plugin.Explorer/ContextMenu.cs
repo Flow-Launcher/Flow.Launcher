@@ -10,6 +10,7 @@ using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Flow.Launcher.Plugin.Explorer.Helper;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
+using Flow.Launcher.Plugin.Explorer.Views;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
@@ -187,6 +188,24 @@ namespace Flow.Launcher.Plugin.Explorer
                     },
                     IcoPath = icoPath,
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uf12b")
+                });
+                contextMenus.Add(new Result
+                {
+                    Title = "Rename",
+                    SubTitle = "Opens a dialogue to this",
+                    Action = _ =>
+                    {
+                        
+                        RenameFile window = new(Context.API);
+                        Context.API.FocusQueryTextBox();
+                        if (!(window.ShowDialog() ?? false))
+                        {
+                            Context.API.FocusQueryTextBox();
+                            return false;
+                        }
+                        Context.API.FocusQueryTextBox();
+                        return false;
+                    }
                 });
 
 
