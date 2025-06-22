@@ -231,7 +231,8 @@
                     <cc:Card
                         Title="{DynamicResource autoQuickSwitch}"
                         Sub="{DynamicResource autoQuickSwitchToolTip}"
-                        Type="InsideFit">
+                        Type="InsideFit"
+                        Visibility="Collapsed">
                         <ui:ToggleSwitch
                             IsOn="{Binding Settings.AutoQuickSwitch}"
                             OffContent="{DynamicResource disable}"
