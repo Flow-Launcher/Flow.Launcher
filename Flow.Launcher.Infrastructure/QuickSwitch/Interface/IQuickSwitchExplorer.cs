@@ -13,6 +13,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Interface
     /// </remarks>
     internal interface IQuickSwitchExplorer : IDisposable
     {
+        string Name { get; }
+
         bool CheckExplorerWindow(HWND foreground);
 
         void RemoveExplorerWindow();

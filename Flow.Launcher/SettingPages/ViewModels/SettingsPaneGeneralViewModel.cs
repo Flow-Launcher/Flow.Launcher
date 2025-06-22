@@ -180,6 +180,11 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public List<QuickSwitchFileResultBehaviourData> QuickSwitchFileResultBehaviours { get; } =
         DropdownDataGeneric<QuickSwitchFileResultBehaviours>.GetValues<QuickSwitchFileResultBehaviourData>("QuickSwitchFileResultBehaviour");
 
+    public string QuickSwitchSupportedExplorerDialogMessage =>
+        string.Format(App.API.GetTranslation("QuickSwitchSupportedExplorerDialogMessage"),
+            string.Join(", ", QuickSwitch.SupportedExplorerNames),
+            string.Join(", ", QuickSwitch.SupportedDialogNames));
+
     public int SearchDelayTimeValue
     {
         get => Settings.SearchDelayTime;
@@ -217,6 +222,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         DropdownDataGeneric<QuickSwitchFileResultBehaviours>.UpdateLabels(QuickSwitchFileResultBehaviours);
         // Since we are using Binding instead of DynamicResource, we need to manually trigger the update
         OnPropertyChanged(nameof(AlwaysPreviewToolTip));
+        OnPropertyChanged(nameof(QuickSwitchSupportedExplorerDialogMessage));
     }
 
     public string Language

@@ -13,6 +13,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Interface
     /// </remarks>
     internal interface IQuickSwitchDialog : IDisposable
     {
+        string Name { get; }
+
         IQuickSwitchDialogWindow DialogWindow { get; }
 
         bool CheckDialogWindow(HWND hwnd);

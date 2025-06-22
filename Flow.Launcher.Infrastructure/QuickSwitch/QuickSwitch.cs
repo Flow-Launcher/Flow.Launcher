@@ -81,6 +81,14 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         #endregion
 
+        #region Supported Explorers & Dialogs Name
+
+        public static string[] SupportedExplorerNames => _quickSwitchExplorers.ConvertAll(explorer => explorer.Name).ToArray();
+
+        public static string[] SupportedDialogNames => _quickSwitchDialogs.ConvertAll(dialog => dialog.Name).ToArray();
+
+        #endregion
+
         #region Initialize & Setup
 
         public static void InitializeQuickSwitch()

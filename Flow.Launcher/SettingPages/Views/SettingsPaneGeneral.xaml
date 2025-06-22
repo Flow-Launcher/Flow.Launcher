@@ -288,6 +288,15 @@
                 </cc:CardGroup>
             </cc:ExCard>
 
+            <cc:InfoBar
+                Title="{DynamicResource QuickSwitchSupportedExplorerDialogTitle}"
+                Margin="0 14 0 0"
+                Closable="False"
+                IsIconVisible="True"
+                Length="Long"
+                Message="{Binding QuickSwitchSupportedExplorerDialogMessage, Mode=OneWay}"
+                Type="Info" />
+
             <cc:ExCard
                 Title="{DynamicResource searchDelay}"
                 Margin="0 14 0 0"

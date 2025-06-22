@@ -18,6 +18,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
         private static IWebBrowser2 _lastExplorerView = null;
         private static readonly object _lastExplorerViewLock = new();
 
+        public string Name => "Windows";
+
         public bool CheckExplorerWindow(HWND foreground)
         {
             var isExplorer = false;
