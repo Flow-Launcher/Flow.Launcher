@@ -143,7 +143,7 @@
     </ItemGroup>
   </Target>
 
-  <Target Name="BuildCommandProject" AfterTargets="Build">
+  <Target Name="BuildCommandProject" BeforeTargets="Build">
     <MSBuild
       Projects="..\Flow.Launcher.Command\Flow.Launcher.Command.csproj"
       Targets="Build"
