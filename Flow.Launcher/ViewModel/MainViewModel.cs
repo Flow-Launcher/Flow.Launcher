@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -22,6 +23,7 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 using Microsoft.VisualStudio.Threading;
+using Svg;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -59,6 +61,8 @@ namespace Flow.Launcher.ViewModel
         };
 
         #endregion
+
+
 
         #region Constructor
 
@@ -139,6 +143,9 @@ namespace Flow.Launcher.ViewModel
                         break;
                     case nameof(Settings.OpenHistoryHotkey):
                         OnPropertyChanged(nameof(OpenHistoryHotkey));
+                        break;
+                    case nameof(Settings.RenameFileHotkey):
+                        OnPropertyChanged(nameof(Settings.RenameFileHotkey));
                         break;
                 }
             };
@@ -596,6 +603,7 @@ namespace Flow.Launcher.ViewModel
         #endregion
 
         #region ViewModel Properties
+        
 
         public Settings Settings { get; }
         public string ClockText { get; private set; }
@@ -913,8 +921,52 @@ namespace Flow.Launcher.ViewModel
         public string OpenHistoryHotkey => VerifyOrSetDefaultHotkey(Settings.OpenHistoryHotkey, "Ctrl+H");
         public string CycleHistoryUpHotkey => VerifyOrSetDefaultHotkey(Settings.CycleHistoryUpHotkey, "Alt+Up");
         public string CycleHistoryDownHotkey => VerifyOrSetDefaultHotkey(Settings.CycleHistoryDownHotkey, "Alt+Down");
+        public string RenameFileHotkey => VerifyOrSetDefaultHotkey(Settings.RenameFileHotkey, "F2");
+        
 
         public bool StartWithEnglishMode => Settings.AlwaysStartEn;
+
+        #region renamingFiles
+        private int timesTriedToRenameFileWithExplorerDisabled = 0;
+
+        [RelayCommand]
+        private void RenameFile()
+        {
+            const string explorerPluginID = "572be03c74c642baae319fc283e561a8";
+            // check if explorer plugin is enabled
+            var explorerPluginMatches = App.API.GetAllPlugins().Where(plugin => plugin.Metadata.ID == "572be03c74c642baae319fc283e561a8");
+
+            if (!explorerPluginMatches.Any())
+            {
+                timesTriedToRenameFileWithExplorerDisabled++;
+                return;
+            }
+            else if (!explorerPluginMatches.Any() && timesTriedToRenameFileWithExplorerDisabled > 3)
+            {
+                App.API.ShowMsg("Are you trying to rename a file?", "The explorer plugin needs to be enabled for the hotkey to rename files to work.");
+                timesTriedToRenameFileWithExplorerDisabled = 0;
+            }
+            else
+            {
+                dynamic explorerPlugin = explorerPluginMatches.First();
+                string path = SelectedResults.SelectedItem.Result.SubTitle;
+                if (File.Exists(path) || Directory.Exists(path))
+                {
+                    explorerPlugin.Plugin.RenameDialog(new FileInfo(path), App.API ); // this feels kinda hacky
+                    return;
+                }
+                else if (new DirectoryInfo(path).Parent == null) // check if isn't a root directory like C:\
+                {
+                    App.API.ShowMsgError("Cannot rename this.");
+                    return;
+                }
+                
+                
+                
+                
+            }
+        }
+        #endregion
 
         #endregion
 
@@ -1011,6 +1063,7 @@ namespace Flow.Launcher.ViewModel
                 _ = ShowPreviewAsync();
             }
         }
+        
 
         private async Task OpenExternalPreviewAsync(string path, bool sendFailToast = true)
         {

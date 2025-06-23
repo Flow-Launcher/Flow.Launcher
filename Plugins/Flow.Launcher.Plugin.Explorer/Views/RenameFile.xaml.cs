@@ -11,11 +11,11 @@ using Microsoft.VisualBasic.Logging;
 
 namespace Flow.Launcher.Plugin.Explorer.Views
 {
-    
+
     [INotifyPropertyChanged]
-    public partial class RenameFile : Window 
+    public partial class RenameFile : Window
     {
-        
+
 
         public string NewFileName
         {
@@ -28,7 +28,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
 
         private string _newFileName;
-        
+
         private readonly IPublicAPI _api;
         private readonly string _oldFilePath;
 
@@ -47,27 +47,28 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             RenameTb.SelectAll();
 
+
             _info = info;
             _oldFilePath = _info.FullName;
             NewFileName = _info.Name;
-            
-            
+
+
         }
 
         private void OnDoneButtonClick(object sender, RoutedEventArgs e)
         {
 
             // if it's just whitespace and nothing else
-            _api.LogInfo(nameof(RenameFile),$"THIS IS NEW FILE NAME: {NewFileName}");
+            _api.LogInfo(nameof(RenameFile), $"THIS IS NEW FILE NAME: {NewFileName}");
             if (NewFileName.Trim() == "" || NewFileName == "")
             {
                 _api.ShowMsgError(string.Format(_api.GetTranslation("plugin_explorer_field_may_not_be_empty"), "New file name"));
                 return;
             }
-            
+
             try
             {
-                _info.Rename(NewFileName);
+                _info.Rename(NewFileName, _api);
             }
             catch (Exception exception)
             {
@@ -100,14 +101,14 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 }
             }
             Close();
-            
+
         }
 
         private void BtnCancel(object sender, RoutedEventArgs e)
         {
             Close();
         }
-        
+
         private void RenameTb_OnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -115,9 +116,10 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 btnDone.Focus();
                 OnDoneButtonClick(sender, e);
                 e.Handled = true;
+            }
+
+
+
         }
-        
-        
-        
     }
 }

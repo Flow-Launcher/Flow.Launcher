@@ -10,6 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using Flow.Launcher.Plugin.Explorer.Exceptions;
+using System.Xml;
+using System.CodeDom;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
@@ -42,11 +44,12 @@ namespace Flow.Launcher.Plugin.Explorer
             contextMenu = new ContextMenu(Context, Settings, viewModel);
             searchManager = new SearchManager(Settings, Context);
             ResultManager.Init(Context, Settings);
-            
+
             SortOptionTranslationHelper.API = context.API;
 
             EverythingApiDllImport.Load(Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "EverythingSDK",
                 Environment.Is64BitProcess ? "x64" : "x86"));
+
             return Task.CompletedTask;
         }
 
@@ -55,8 +58,10 @@ namespace Flow.Launcher.Plugin.Explorer
             return contextMenu.LoadContextMenus(selectedResult);
         }
 
+
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
+
             try
             {
                 return await searchManager.SearchAsync(query, token);
@@ -96,7 +101,10 @@ namespace Flow.Launcher.Plugin.Explorer
         {
             return Context.API.GetTranslation("plugin_explorer_plugin_description");
         }
-
+        public void RenameDialog(FileSystemInfo info, IPublicAPI api)
+        {
+            new RenameFile(api, info).Show();
+        }
         private void FillQuickAccessLinkNames()
         {
             // Legacy version does not have names for quick access links, so we fill them with the path name.
@@ -108,5 +116,6 @@ namespace Flow.Launcher.Plugin.Explorer
                 }
             }
         }
+        
     }
 }

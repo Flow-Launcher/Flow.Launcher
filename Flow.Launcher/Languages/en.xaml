@@ -555,4 +555,7 @@
     <system:String x:Key="FileSize">File Size</system:String>
     <system:String x:Key="Created">Created</system:String>
     <system:String x:Key="LastModified">Last Modified</system:String>
+
+
+    <system:String x:Key="RenameFileHotkey">dcdc</system:String>
 </ResourceDictionary>

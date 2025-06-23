@@ -9,11 +9,11 @@ namespace Flow.Launcher.Plugin.Explorer.Helper
 {
     public static class RenameThing
     {
-        public static void Rename(this FileSystemInfo info, string newName)
+        public static void Rename(this FileSystemInfo info, string newName, IPublicAPI api)
         {
             if (info is FileInfo)
             {
-                if (newName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+                if (!api.IsValidFileName(newName))
                 {
                     throw new InvalidNameException();
                 }
@@ -30,10 +30,10 @@ namespace Flow.Launcher.Plugin.Explorer.Helper
             }
             else if (info is DirectoryInfo)
             {
-                List<char> invalidChars = Path.GetInvalidPathChars().ToList();
-                invalidChars.Add('/');
-                invalidChars.Add('\\');
-                if (newName.IndexOfAny(invalidChars.ToArray()) >= 0)
+
+
+
+                if (!api.IsValidDirectoryName(newName))
                 {
                     throw new InvalidNameException();
                 }
@@ -47,11 +47,12 @@ namespace Flow.Launcher.Plugin.Explorer.Helper
                 }
                 Directory.Move(info.FullName, Path.Join(parent.FullName, newName));
 
-            }
-            else
+            }else
             {
                 throw new ArgumentException($"{nameof(info)} must be either, {nameof(FileInfo)} or {nameof(DirectoryInfo)}");
             }
+        }
+            
         }
     }
 
@@ -85,5 +86,5 @@ namespace Flow.Launcher.Plugin.Explorer.Helper
     }
     
     
-}
+
 

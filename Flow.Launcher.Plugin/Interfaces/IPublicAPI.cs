@@ -226,8 +226,25 @@ namespace Flow.Launcher.Plugin
         /// <param name="query">Query string</param>
         /// <param name="stringToCompare">The string that will be compared against the query</param>
         /// <returns>Match results</returns>
+        
         MatchResult FuzzySearch(string query, string stringToCompare);
 
+        /// <summary>
+        /// Returns if the given name is valid file name even if it doesn't exist
+        /// </summary>
+        /// <param name="name">the name to check</param>
+        public bool IsValidFileName(string name);
+        /// <summary>
+        /// Returns if the given name is valid directory name even if it doesn't exist
+        /// </summary>
+        /// <param name="name">the name to check</param>
+        public bool IsValidDirectoryName(string name);
+        /// <summary>
+        /// Open A dialog to rename the given file or folder
+        /// </summary>
+        /// <param name="info">The directory or file info for the thing to rename. You must check if it actually exists or this will throw an exception</param>
+
+        
         /// <summary>
         /// Http download the spefic url and return as string
         /// </summary>

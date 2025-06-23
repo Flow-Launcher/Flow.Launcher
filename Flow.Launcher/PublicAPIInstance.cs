@@ -33,6 +33,7 @@ using Flow.Launcher.ViewModel;
 using JetBrains.Annotations;
 using Squirrel;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
+using Windows.Foundation.Metadata;
 
 namespace Flow.Launcher
 {
@@ -222,7 +223,26 @@ namespace Flow.Launcher
                 }  
             }
         }
-
+        public bool IsValidFileName(string name)
+        {
+            if (name.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0 || name.Trim() == "")
+            {
+                return false;
+            }
+            return true;
+        }
+        public bool IsValidDirectoryName(string name)
+        {
+            List<char> invalidChars = Path.GetInvalidPathChars().ToList();
+            invalidChars.Add('/');
+            invalidChars.Add('\\');
+            if (name.IndexOfAny(invalidChars.ToArray()) >= 0 || name.Trim() == "")
+            {
+                return false;
+            }
+            return true;
+        }
+       
         private static async Task<Exception> RetryActionOnSTAThreadAsync(Action action, int retryCount = 6, int retryDelay = 150)
         {
             for (var i = 0; i < retryCount; i++)
