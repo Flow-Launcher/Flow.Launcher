@@ -43,29 +43,16 @@
                         OffContent="{DynamicResource disable}"
                         OnContent="{DynamicResource enable}" />
                 </cc:ExCard.SideContent>
-
-                <StackPanel>
-                    <cc:Card
-                        Title="{DynamicResource useLogonTaskForStartup}"
-                        Icon="&#xE823;"
-                        Sub="{DynamicResource useLogonTaskForStartupTooltip}"
-                        Type="Inside">
-                        <ui:ToggleSwitch
-                            IsOn="{Binding UseLogonTaskForStartup}"
-                            OffContent="{DynamicResource disable}"
-                            OnContent="{DynamicResource enable}" />
-                    </cc:Card>
-                    <cc:Card
-                        Title="{DynamicResource alwaysRunAsAdministrator}"
-                        Icon="&#xE7EF;"
-                        Sub="{DynamicResource alwaysRunAsAdministratorToolTip}"
-                        Type="Inside">
-                        <ui:ToggleSwitch
-                            IsOn="{Binding AlwaysRunAsAdministrator}"
-                            OffContent="{DynamicResource disable}"
-                            OnContent="{DynamicResource enable}" />
-                    </cc:Card>
-                </StackPanel>
+                <cc:Card
+                    Title="{DynamicResource useLogonTaskForStartup}"
+                    Icon="&#xE823;"
+                    Sub="{DynamicResource useLogonTaskForStartupTooltip}"
+                    Type="Inside">
+                    <ui:ToggleSwitch
+                        IsOn="{Binding UseLogonTaskForStartup}"
+                        OffContent="{DynamicResource disable}"
+                        OnContent="{DynamicResource enable}" />
+                </cc:Card>
             </cc:ExCard>
             <cc:Card
                 Title="{DynamicResource hideOnStartup}"
@@ -73,6 +60,15 @@
                 Sub="{DynamicResource hideOnStartupToolTip}">
                 <ui:ToggleSwitch
                     IsOn="{Binding Settings.HideOnStartup}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
+            </cc:Card>
+            <cc:Card
+                Title="{DynamicResource alwaysRunAsAdministrator}"
+                Icon="&#xE7EF;"
+                Sub="{DynamicResource alwaysRunAsAdministratorToolTip}">
+                <ui:ToggleSwitch
+                    IsOn="{Binding AlwaysRunAsAdministrator}"
                     OffContent="{DynamicResource disable}"
                     OnContent="{DynamicResource enable}" />
             </cc:Card>
