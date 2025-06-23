@@ -237,15 +237,17 @@ namespace Flow.Launcher.Plugin.Program
                 // then the parent directory is: D:\\Data\\Cache
                 // So we can use the parent of the parent directory to get the cache directory path
                 var directoryInfo = new DirectoryInfo(pluginCacheDirectory);
-                var cacheDirectory = directoryInfo.Parent.Parent.FullName;
-
-                // Move old cache files to the new cache directory
-                var oldWin32CacheFile = Path.Combine(cacheDirectory, $"{Win32CacheName}.cache");
-                var newWin32CacheFile = Path.Combine(pluginCacheDirectory, $"{Win32CacheName}.cache");
-                MoveFile(oldWin32CacheFile, newWin32CacheFile);
-                var oldUWPCacheFile = Path.Combine(cacheDirectory, $"{UwpCacheName}.cache");
-                var newUWPCacheFile = Path.Combine(pluginCacheDirectory, $"{UwpCacheName}.cache");
-                MoveFile(oldUWPCacheFile, newUWPCacheFile);
+                var cacheDirectory = directoryInfo.Parent?.Parent?.FullName;
+                // Move old cache files to the new cache directory if cache directory exists
+                if (!string.IsNullOrEmpty(cacheDirectory))
+                {
+                    var oldWin32CacheFile = Path.Combine(cacheDirectory, $"{Win32CacheName}.cache");
+                    var newWin32CacheFile = Path.Combine(pluginCacheDirectory, $"{Win32CacheName}.cache");
+                    MoveFile(oldWin32CacheFile, newWin32CacheFile);
+                    var oldUWPCacheFile = Path.Combine(cacheDirectory, $"{UwpCacheName}.cache");
+                    var newUWPCacheFile = Path.Combine(pluginCacheDirectory, $"{UwpCacheName}.cache");
+                    MoveFile(oldUWPCacheFile, newUWPCacheFile);
+                }
 
                 await _win32sLock.WaitAsync();
                 _win32s = await context.API.LoadCacheBinaryStorageAsync(Win32CacheName, pluginCacheDirectory, new List<Win32>());
