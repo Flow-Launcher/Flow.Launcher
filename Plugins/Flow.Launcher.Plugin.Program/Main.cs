@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.Program.Programs;
 using Flow.Launcher.Plugin.Program.Views;
 using Flow.Launcher.Plugin.Program.Views.Models;
@@ -234,11 +233,17 @@ namespace Flow.Launcher.Plugin.Program
                     }
                 }
 
+                // If plugin cache directory is this: D:\\Data\\Cache\\Plugins\\Flow.Launcher.Plugin.Program
+                // then the parent directory is: D:\\Data\\Cache
+                // So we can use the parent of the parent directory to get the cache directory path
+                var directoryInfo = new DirectoryInfo(pluginCacheDirectory);
+                var cacheDirectory = directoryInfo.Parent.Parent.FullName;
+
                 // Move old cache files to the new cache directory
-                var oldWin32CacheFile = Path.Combine(DataLocation.CacheDirectory, $"{Win32CacheName}.cache");
+                var oldWin32CacheFile = Path.Combine(cacheDirectory, $"{Win32CacheName}.cache");
                 var newWin32CacheFile = Path.Combine(pluginCacheDirectory, $"{Win32CacheName}.cache");
                 MoveFile(oldWin32CacheFile, newWin32CacheFile);
-                var oldUWPCacheFile = Path.Combine(DataLocation.CacheDirectory, $"{UwpCacheName}.cache");
+                var oldUWPCacheFile = Path.Combine(cacheDirectory, $"{UwpCacheName}.cache");
                 var newUWPCacheFile = Path.Combine(pluginCacheDirectory, $"{UwpCacheName}.cache");
                 MoveFile(oldUWPCacheFile, newUWPCacheFile);
 
