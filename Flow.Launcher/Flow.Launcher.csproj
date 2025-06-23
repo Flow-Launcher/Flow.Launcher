@@ -143,6 +143,8 @@
     </ItemGroup>
   </Target>
 
+  <!-- It can cause CI issue so we comment it since CI will build the whole solution and command project will be built as well -->
+  <!--
   <Target Name="BuildCommandProject" BeforeTargets="Build">
     <MSBuild
       Projects="..\Flow.Launcher.Command\Flow.Launcher.Command.csproj"
@@ -150,5 +152,6 @@
       BuildInParallel="false"
       Properties="Platform=$(Platform);Configuration=$(Configuration)" />
   </Target>
+  -->
 
 </Project>
