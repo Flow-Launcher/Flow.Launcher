@@ -1938,7 +1938,7 @@
     <value>Automatische Fensteranordnung ausschalten</value>
   </data>
   <data name="TroubleshootingHistory" xml:space="preserve">
-    <value>Troubleshooting History</value>
+    <value>Fehlerbehebungshistorie</value>
   </data>
   <data name="DiagnoseYourComputersMemoryProblems" xml:space="preserve">
     <value>Speicherprobleme Ihres Computers diagnostizieren</value>
@@ -2257,7 +2257,7 @@
     <value>Lupe ein- oder ausschalten</value>
   </data>
   <data name="SeeTheNameOfThisComputer" xml:space="preserve">
-    <value>See the name of this computer</value>
+    <value>Den Namen dieses Computers ansehen</value>
   </data>
   <data name="ViewNetworkConnections" xml:space="preserve">
     <value>Netzwerkverbindungen ansehen</value>
@@ -2488,7 +2488,7 @@
     <value>Change what the power buttons do</value>
   </data>
   <data name="CreateStandardUserAccount" xml:space="preserve">
-    <value>Create standard user account</value>
+    <value>Standard-Benutzerkonto erstellen</value>
   </data>
   <data name="TakeSpeechTutorials" xml:space="preserve">
     <value>Take speech tutorials</value>
