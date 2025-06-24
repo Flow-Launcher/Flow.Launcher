@@ -932,27 +932,40 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void RenameFile()
         {
+
             const string explorerPluginID = "572be03c74c642baae319fc283e561a8";
             // check if explorer plugin is enabled
-            var explorerPluginMatches = App.API.GetAllPlugins().Where(plugin => plugin.Metadata.ID == "572be03c74c642baae319fc283e561a8");
+            IEnumerable<PluginPair> explorerPluginMatches = App.API.GetAllPlugins().Where(
+                plugin => plugin.Metadata.ID == explorerPluginID);
 
-            if (!explorerPluginMatches.Any())
+            if (!explorerPluginMatches.Any() || explorerPluginMatches == null)
             {
+
                 timesTriedToRenameFileWithExplorerDisabled++;
                 return;
             }
-            else if (!explorerPluginMatches.Any() && timesTriedToRenameFileWithExplorerDisabled > 3)
+            else if ((!explorerPluginMatches.Any() || explorerPluginMatches == null) && timesTriedToRenameFileWithExplorerDisabled > 3)
             {
                 App.API.ShowMsg("Are you trying to rename a file?", "The explorer plugin needs to be enabled for the hotkey to rename files to work.");
                 timesTriedToRenameFileWithExplorerDisabled = 0;
+                return;
             }
             else
             {
-                dynamic explorerPlugin = explorerPluginMatches.First();
-                string path = SelectedResults.SelectedItem.Result.SubTitle;
-                if (File.Exists(path) || Directory.Exists(path))
+                // at runtime the type of the will be <see cref="../../Plugins/Flow.Launcher.Plugin.Explorer/Main.cs" />
+                dynamic explorerPlugin = explorerPluginMatches.First(); // assuming there's only one match
+                string path = SelectedResults?.SelectedItem?.Result.SubTitle ?? "";
+                string name = SelectedResults?.SelectedItem?.Result.Title ?? "";
+                if (path.Trim() == "" || name.Trim() == "") return;
+                if (File.Exists(Path.Join(path, name)))
                 {
-                    explorerPlugin.Plugin.RenameDialog(new FileInfo(path), App.API ); // this feels kinda hacky
+                    explorerPlugin.Plugin.RenameDialog(new FileInfo(Path.Join(path, name)), App.API);
+                    return;
+                }
+                if (Directory.Exists(path))
+                {
+                    File.AppendAllText("YEE.idi", "YYEEE");
+                    explorerPlugin.Plugin.RenameDialog(new DirectoryInfo(path), App.API); // this feels kinda hacky
                     return;
                 }
                 else if (new DirectoryInfo(path).Parent == null) // check if isn't a root directory like C:\
@@ -960,10 +973,10 @@ namespace Flow.Launcher.ViewModel
                     App.API.ShowMsgError("Cannot rename this.");
                     return;
                 }
-                
-                
-                
-                
+
+
+
+
             }
         }
         #endregion

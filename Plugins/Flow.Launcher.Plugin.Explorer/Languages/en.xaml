@@ -201,4 +201,5 @@
     <system:String x:Key="plugin_explorer_file_not_found">The specified file: {0} was not found</system:String>
     <system:String x:Key="plugin_explorer_rename_subtitle">Open a dialog to rename this.</system:String>
     <system:String x:Key="plugin_explorer_cannot_rename">This cannot be renamed.</system:String>
+    <system:String x:Key="plugin_explorer_successful_rename">Successfully renamed it to: {0}</system:String>
 </ResourceDictionary>

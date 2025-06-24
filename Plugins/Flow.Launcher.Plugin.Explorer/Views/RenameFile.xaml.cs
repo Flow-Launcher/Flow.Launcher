@@ -57,49 +57,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
         private void OnDoneButtonClick(object sender, RoutedEventArgs e)
         {
-
-            // if it's just whitespace and nothing else
-            _api.LogInfo(nameof(RenameFile), $"THIS IS NEW FILE NAME: {NewFileName}");
-            if (NewFileName.Trim() == "" || NewFileName == "")
-            {
-                _api.ShowMsgError(string.Format(_api.GetTranslation("plugin_explorer_field_may_not_be_empty"), "New file name"));
-                return;
-            }
-
-            try
-            {
-                _info.Rename(NewFileName, _api);
-            }
-            catch (Exception exception)
-            {
-                switch (exception)
-                {
-                    case FileNotFoundException:
-
-                        _api.ShowMsgError(string.Format(_api.GetTranslation("plugin_explorer_file_not_found"), _oldFilePath));
-                        break;
-                    case NotANewNameException:
-                        _api.ShowMsgError(string.Format(_api.GetTranslation("plugin_explorer_not_a_new_name"), NewFileName));
-                        _api.ShowMainWindow();
-                        break;
-                    case InvalidNameException:
-                        _api.ShowMsgError(string.Format(_api.GetTranslation("plugin_explorer_invalid_name"), NewFileName));
-                        break;
-                    case IOException iOException:
-                        if (iOException.Message.Contains("incorrect"))
-                        {
-                            _api.ShowMsgError(string.Format(_api.GetTranslation("plugin_explorer_invalid_name"), NewFileName));
-                            break;
-                        }
-                        else
-                        {
-                            goto default;
-                        }
-                    default:
-                        _api.ShowMsgError(exception.ToString());
-                        break;
-                }
-            }
+            RenameThing.Rename(NewFileName, _info, _api);
             Close();
 
         }

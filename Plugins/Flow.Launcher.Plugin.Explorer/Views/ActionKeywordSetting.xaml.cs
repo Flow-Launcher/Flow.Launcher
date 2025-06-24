@@ -98,6 +98,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             }
         }
         
+        
         private void TextBox_Pasting(object sender, DataObjectPastingEventArgs e)
         {
             if (e.DataObject.GetDataPresent(DataFormats.Text))

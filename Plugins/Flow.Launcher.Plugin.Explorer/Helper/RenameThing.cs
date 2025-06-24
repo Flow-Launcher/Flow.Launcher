@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 
 namespace Flow.Launcher.Plugin.Explorer.Helper
 {
     public static class RenameThing
     {
-        public static void Rename(this FileSystemInfo info, string newName, IPublicAPI api)
+        private static void _rename(this FileSystemInfo info, string newName, IPublicAPI api)
         {
             if (info is FileInfo)
             {
@@ -47,12 +48,65 @@ namespace Flow.Launcher.Plugin.Explorer.Helper
                 }
                 Directory.Move(info.FullName, Path.Join(parent.FullName, newName));
 
-            }else
+            }
+            else
             {
                 throw new ArgumentException($"{nameof(info)} must be either, {nameof(FileInfo)} or {nameof(DirectoryInfo)}");
             }
-        }
             
+        }
+        /// <summary>
+        /// Renames a file system elemnt (directory or file)
+        /// </summary>
+        /// <param name="NewFileName">The requested new name</param>
+        /// <param name="oldInfo"> The <see cref="FileInfo"/> or <see cref="DirectoryInfo"/> representing the old file</param>
+        /// <param name="api">An instance of <see cref="IPublicAPI"/>so this can create msgboxes</param>
+
+        public static void Rename(string NewFileName, FileSystemInfo oldInfo, IPublicAPI api)
+        {
+            // if it's just whitespace and nothing else
+            if (NewFileName.Trim() == "" || NewFileName == "")
+            {
+                api.ShowMsgError(string.Format(api.GetTranslation("plugin_explorer_field_may_not_be_empty"), "New file name"));
+                return;
+            }
+
+            try
+            {
+                oldInfo._rename(NewFileName, api);
+            }
+            catch (Exception exception)
+            {
+                switch (exception)
+                {
+                    case FileNotFoundException:
+
+                        api.ShowMsgError(string.Format(api.GetTranslation("plugin_explorer_file_not_found"), oldInfo.FullName));
+                        return;
+                    case NotANewNameException:
+                        api.ShowMsgError(string.Format(api.GetTranslation("plugin_explorer_not_a_new_name"), NewFileName));
+                        api.ShowMainWindow();
+                        return;
+                    case InvalidNameException:
+                        api.ShowMsgError(string.Format(api.GetTranslation("plugin_explorer_invalid_name"), NewFileName));
+                        return;
+                    case IOException iOException:
+                        if (iOException.Message.Contains("incorrect"))
+                        {
+                            api.ShowMsgError(string.Format(api.GetTranslation("plugin_explorer_invalid_name"), NewFileName));
+                            return;
+                        }
+                        else
+                        {
+                            goto default;
+                        }
+                    default:
+                        api.ShowMsgError(exception.ToString());
+                        return;
+                }
+            }
+            api.ShowMsg(string.Format(api.GetTranslation("plugin_explorer_successful_rename"), NewFileName));
+        }
         }
     }
 

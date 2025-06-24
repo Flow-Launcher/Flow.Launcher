@@ -60,6 +60,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         public static Result CreateResult(Query query, SearchResult result)
         {
+            
             return result.Type switch
             {
                 ResultType.Folder or ResultType.Volume =>

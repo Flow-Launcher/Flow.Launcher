@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin.Everything.Everything;
 using Flow.Launcher.Plugin.Explorer.Search;
@@ -9,6 +10,8 @@ using Flow.Launcher.Plugin.Explorer.Search.IProvider;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
+using Flow.Launcher.Plugin.Explorer.Views;
+
 
 namespace Flow.Launcher.Plugin.Explorer
 {
@@ -185,7 +188,7 @@ namespace Flow.Launcher.Plugin.Explorer
             FileContentSearchActionKeyword,
             IndexSearchActionKeyword,
             QuickAccessActionKeyword,
-            RenameActionKeyword
+            
         }
 
         internal string GetActionKeyword(ActionKeyword actionKeyword) =>
@@ -196,7 +199,7 @@ namespace Flow.Launcher.Plugin.Explorer
                 ActionKeyword.FileContentSearchActionKeyword => FileContentSearchActionKeyword,
                 ActionKeyword.IndexSearchActionKeyword => IndexSearchActionKeyword,
                 ActionKeyword.QuickAccessActionKeyword => QuickAccessActionKeyword,
-                ActionKeyword.RenameActionKeyword => RenameActionKeyword,
+                
                 _
                     => throw new ArgumentOutOfRangeException(
                         nameof(actionKeyword),
@@ -214,7 +217,7 @@ namespace Flow.Launcher.Plugin.Explorer
                     => FileContentSearchActionKeyword = keyword,
                 ActionKeyword.IndexSearchActionKeyword => IndexSearchActionKeyword = keyword,
                 ActionKeyword.QuickAccessActionKeyword => QuickAccessActionKeyword = keyword,
-                ActionKeyword.RenameActionKeyword => RenameActionKeyword = keyword,
+
                 _
                     => throw new ArgumentOutOfRangeException(
                         nameof(actionKeyword),
@@ -231,7 +234,7 @@ namespace Flow.Launcher.Plugin.Explorer
                 ActionKeyword.IndexSearchActionKeyword => IndexSearchKeywordEnabled,
                 ActionKeyword.FileContentSearchActionKeyword => FileContentSearchKeywordEnabled,
                 ActionKeyword.QuickAccessActionKeyword => QuickAccessKeywordEnabled,
-                ActionKeyword.RenameActionKeyword => RenameActionKeywordEnabled,
+                
                 _
                     => throw new ArgumentOutOfRangeException(
                         nameof(actionKeyword),
@@ -249,7 +252,7 @@ namespace Flow.Launcher.Plugin.Explorer
                 ActionKeyword.FileContentSearchActionKeyword
                     => FileContentSearchKeywordEnabled = enable,
                 ActionKeyword.QuickAccessActionKeyword => QuickAccessKeywordEnabled = enable,
-                ActionKeyword.RenameActionKeyword => RenameActionKeywordEnabled = enable,
+                
                 _
                     => throw new ArgumentOutOfRangeException(
                         nameof(actionKeyword),
