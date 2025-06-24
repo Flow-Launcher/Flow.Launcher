@@ -935,16 +935,16 @@ namespace Flow.Launcher.ViewModel
             // at runtime this is an instance the Flow.Launcher.Plugin.Explorer.Main
             dynamic explorerPlugin = GetExplorerPlugin();
 
-            if (explorerPlugin == null && timesTriedToRenameFileWithExplorerDisabled > 3)
-            {
-                App.API.ShowMsg(App.API.GetTranslation("AreTryingToRenameFile"), App.API.GetTranslation("ExplorerNeedsEnabledForRenameFile"));
-                timesTriedToRenameFileWithExplorerDisabled = 0;
-                return;
-            }
-            else if (explorerPlugin == null)
+            if (!(explorerPlugin != null))
             {
                 timesTriedToRenameFileWithExplorerDisabled++;
+                if (timesTriedToRenameFileWithExplorerDisabled > 3)
+                {
+                    App.API.ShowMsg(App.API.GetTranslation("AreTryingToRenameFile"), App.API.GetTranslation("ExplorerNeedsEnabledForRenameFile"));
+                    timesTriedToRenameFileWithExplorerDisabled = 0;
+                }
                 return;
+
             }
             else
             {
@@ -962,7 +962,7 @@ namespace Flow.Launcher.ViewModel
         {
             const string explorerPluginID = "572be03c74c642baae319fc283e561a8";
             IEnumerable<PluginPair> explorerPluginMatches = App.API.GetAllPlugins().Where(
-                plugin => plugin.Metadata.ID == explorerPluginID);
+                plugin => plugin.Metadata.ID == explorerPluginID && plugin.Metadata.Disabled != true) ;
             if (explorerPluginMatches.Any())
             {
                 // assuming it's the first plugin as no 2 plugins can be loaded with the same ID
