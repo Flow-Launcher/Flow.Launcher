@@ -933,7 +933,7 @@ namespace Flow.Launcher.ViewModel
         private void RenameFile()
         {
             // at runtime this is an instance the Flow.Launcher.Plugin.Explorer.Main
-            dynamic explorerPlugin = GetExplorerPlugin();
+            var explorerPlugin = GetExplorerPlugin();
 
             if (!(explorerPlugin != null))
             {
