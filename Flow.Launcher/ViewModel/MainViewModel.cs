@@ -23,7 +23,7 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 using Microsoft.VisualStudio.Threading;
-using Svg;
+
 
 namespace Flow.Launcher.ViewModel
 {
@@ -932,45 +932,61 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void RenameFile()
         {
+            // at runtime this is an instance the Flow.Launcher.Plugin.Explorer.Main
+            dynamic explorerPlugin = GetExplorerPlugin();
 
-            const string explorerPluginID = "572be03c74c642baae319fc283e561a8";
-            // check if explorer plugin is enabled
-            IEnumerable<PluginPair> explorerPluginMatches = App.API.GetAllPlugins().Where(
-                plugin => plugin.Metadata.ID == explorerPluginID);
-
-            if (!explorerPluginMatches.Any() || explorerPluginMatches == null)
-            {
-
-                timesTriedToRenameFileWithExplorerDisabled++;
-                return;
-            }
-            else if ((!explorerPluginMatches.Any() || explorerPluginMatches == null) && timesTriedToRenameFileWithExplorerDisabled > 3)
+            if (explorerPlugin == null && timesTriedToRenameFileWithExplorerDisabled > 3)
             {
                 App.API.ShowMsg(App.API.GetTranslation("AreTryingToRenameFile"), App.API.GetTranslation("ExplorerNeedsEnabledForRenameFile"));
                 timesTriedToRenameFileWithExplorerDisabled = 0;
                 return;
             }
+            else if (explorerPlugin == null)
+            {
+                timesTriedToRenameFileWithExplorerDisabled++;
+                return;
+            }
             else
             {
-                // at runtime the type of the will be <see cref="../../Plugins/Flow.Launcher.Plugin.Explorer/Main.cs" />
-                dynamic explorerPlugin = explorerPluginMatches.First(); // assuming there's only one match
                 string path = SelectedResults?.SelectedItem?.Result.SubTitle ?? "";
                 string name = SelectedResults?.SelectedItem?.Result.Title ?? "";
-                if (path.Trim() == "" || name.Trim() == "") return;
-                if (File.Exists(Path.Join(path, name)))
-                {
-                    explorerPlugin.Plugin.RenameDialog(new FileInfo(Path.Join(path, name)), App.API);
-                    return;
-                }
-                if (Directory.Exists(path))
-                {
-                    explorerPlugin.Plugin.RenameDialog(new DirectoryInfo(path), App.API); // this feels kinda hacky
-                    return;
-                }
-
-
-
-
+                if (string.IsNullOrWhiteSpace(path) || string.IsNullOrWhiteSpace(name)) return;
+                ShowRenamingDialog(explorerPlugin, path, name);
+            }
+        }
+        /// <summary>
+        /// Get an instance of the explorer plugin if it's loaded
+        /// </summary>
+        /// <returns>Returns an instance of  Flow.Launcher.Plugin.Explorer.Main, if it's not loaded this returns null.</returns>
+        private IAsyncPlugin GetExplorerPlugin()
+        {
+            const string explorerPluginID = "572be03c74c642baae319fc283e561a8";
+            IEnumerable<PluginPair> explorerPluginMatches = App.API.GetAllPlugins().Where(
+                plugin => plugin.Metadata.ID == explorerPluginID);
+            if (explorerPluginMatches.Any())
+            {
+                // assuming it's the first plugin as no 2 plugins can be loaded with the same ID
+                return explorerPluginMatches.First().Plugin;
+            }
+            return null;
+        }
+        /// <summary>
+        /// Shows the dialog to rename a file system element.
+        /// </summary>
+        /// <param name="explorerPlugin">An instance of the Flow.Launcher.Plugin.Explorer.Main, which is invisible in the current namespace</param>
+        /// <param name="path">The path of the element</param>
+        /// <param name="name">The new name</param>
+        private void ShowRenamingDialog(dynamic explorerPlugin, string path, string name)
+        {
+            if (File.Exists(Path.Join(path, name)))
+            {
+                explorerPlugin.RenameDialog(new FileInfo(Path.Join(path, name)), App.API);
+                return;
+            }
+            if (Directory.Exists(path))
+            {
+                explorerPlugin.RenameDialog(new DirectoryInfo(path), App.API);
+                return;
             }
         }
         #endregion

@@ -1,10 +1,5 @@
 using System;
-using System.CodeDom;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using JetBrains.Annotations;
 
 namespace Flow.Launcher.Plugin.Explorer.Helper
 {
@@ -18,7 +13,7 @@ namespace Flow.Launcher.Plugin.Explorer.Helper
                 {
                     throw new InvalidNameException();
                 }
-                FileInfo file = new FileInfo(info.FullName);
+                FileInfo file = (FileInfo)info;
                 DirectoryInfo directory;
 
                 directory = file.Directory ?? new DirectoryInfo(Path.GetPathRoot(file.FullName));
@@ -31,14 +26,11 @@ namespace Flow.Launcher.Plugin.Explorer.Helper
             }
             else if (info is DirectoryInfo)
             {
-
-
-
                 if (!api.IsValidDirectoryName(newName))
                 {
                     throw new InvalidNameException();
                 }
-                DirectoryInfo directory = new DirectoryInfo(info.FullName);
+                DirectoryInfo directory = (DirectoryInfo)info;
                 DirectoryInfo parent;
                 parent = directory.Parent ?? new DirectoryInfo(Path.GetPathRoot(directory.FullName));
 
