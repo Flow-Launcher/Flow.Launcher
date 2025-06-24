@@ -145,7 +145,7 @@ namespace Flow.Launcher.ViewModel
                         OnPropertyChanged(nameof(OpenHistoryHotkey));
                         break;
                     case nameof(Settings.RenameFileHotkey):
-                        OnPropertyChanged(nameof(Settings.RenameFileHotkey));
+                        OnPropertyChanged(nameof(RenameFileHotkey));
                         break;
                 }
             };
