@@ -87,18 +87,18 @@ namespace Flow.Launcher.Plugin.Explorer.Helper
                     case ElementAlreadyExistsException:
                         api.ShowMsgError(string.Format(api.GetTranslation("plugin_explorer_element_already_exists"), NewFileName));
                         break;
-                    case IOException iOException:
-                        if (iOException.Message.Contains("incorrect"))
+                    default:
+                        string msg = exception.Message;
+                        if (!string.IsNullOrEmpty(msg))
                         {
-                            api.ShowMsgError(string.Format(api.GetTranslation("plugin_explorer_invalid_name"), NewFileName));
+                            api.ShowMsgError(string.Format(api.GetTranslation("plugin_explorer_exception"), exception.Message));
                             return;
                         }
                         else
                         {
-                            goto default;
+                            api.ShowMsgError(api.GetTranslation("plugin_explorer_no_reason_given_exception"));
                         }
-                    default:
-                        api.ShowMsgError(exception.ToString());
+                        
                         return;
                 }
             }

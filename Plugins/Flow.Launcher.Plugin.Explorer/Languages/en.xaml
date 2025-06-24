@@ -203,4 +203,6 @@
     <system:String x:Key="plugin_explorer_successful_rename">Successfully renamed it to: {0}</system:String>
     <system:String x:Key="plugin_explorer_element_already_exists">There is already a file with the name: {0} in this location</system:String>
     <system:String x:Key="plugin_explorer_failed_to_open_rename_dialog">Failed to open rename dialog.</system:String>
+    <system:String x:Key="plugin_explorer_exception">An error occured: {0}.</system:String>
+    <system:String x:Key="plugin_explorer_no_reason_given_exception">An error occured and no reason was given.</system:String>
 </ResourceDictionary>
