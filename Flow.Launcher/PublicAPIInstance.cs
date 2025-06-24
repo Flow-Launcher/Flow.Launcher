@@ -33,7 +33,6 @@ using Flow.Launcher.ViewModel;
 using JetBrains.Annotations;
 using Squirrel;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
-using Windows.Foundation.Metadata;
 
 namespace Flow.Launcher
 {
@@ -225,7 +224,8 @@ namespace Flow.Launcher
         }
         public bool IsValidFileName(string name)
         {
-            if (name.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0 || name.Trim() == "")
+            if (IsReservedName(name)) return false;
+            if (name.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0 || string.IsNullOrWhiteSpace(name))
             {
                 return false;
             }
@@ -236,13 +236,25 @@ namespace Flow.Launcher
             List<char> invalidChars = Path.GetInvalidPathChars().ToList();
             invalidChars.Add('/');
             invalidChars.Add('\\');
-            if (name.IndexOfAny(invalidChars.ToArray()) >= 0 || name.Trim() == "")
+            if (name.IndexOfAny(invalidChars.ToArray()) >= 0 || string.IsNullOrWhiteSpace(name))
             {
                 return false;
             }
+            if (IsReservedName(name)) return false;
             return true;
         }
-       
+
+
+        private bool IsReservedName(string name)
+        {
+            string[] reservedNames = new[] { "CON", "PRN", "AUX", "NUL", "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9", "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9" };
+            string nameWithoutExtension = Path.GetFileNameWithoutExtension(name).ToUpperInvariant();
+            if (reservedNames.Contains(nameWithoutExtension))
+            {
+                return true;
+            }
+            return false;
+        }
         private static async Task<Exception> RetryActionOnSTAThreadAsync(Action action, int retryCount = 6, int retryDelay = 150)
         {
             for (var i = 0; i < retryCount; i++)
