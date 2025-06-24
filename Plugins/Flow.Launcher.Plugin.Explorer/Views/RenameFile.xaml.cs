@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -7,7 +6,6 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Flow.Launcher.Plugin.Explorer.Helper;
-using Microsoft.VisualBasic.Logging;
 
 
 namespace Flow.Launcher.Plugin.Explorer.Views

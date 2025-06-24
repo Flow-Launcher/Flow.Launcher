@@ -10,8 +10,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using Flow.Launcher.Plugin.Explorer.Exceptions;
-using System.Xml;
-using System.CodeDom;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
