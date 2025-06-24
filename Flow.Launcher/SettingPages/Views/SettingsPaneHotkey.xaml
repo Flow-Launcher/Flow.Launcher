@@ -209,7 +209,7 @@
                             Icon="&#xe70f;"
                             Type="Inside">
                             <flowlauncher:HotkeyControl
-                                DefaultHotkey=""
+                                DefaultHotkey="F2"
                                 Type="RenameFileHotkey"
                                 ValidateKeyGesture="True"/>
                         </cc:Card>
