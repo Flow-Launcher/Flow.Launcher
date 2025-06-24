@@ -101,7 +101,18 @@ namespace Flow.Launcher.Plugin.Explorer
         }
         public void RenameDialog(FileSystemInfo info, IPublicAPI api)
         {
-            new RenameFile(api, info).Show();
+            if (info == null) throw new ArgumentNullException(nameof(info));
+            if (api == null) throw new ArgumentNullException(nameof(api));
+
+            try
+            {
+                new RenameFile(api, info).ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                api.ShowMsgError(api.GetTranslation("errorTitle"), api.GetTranslation("plugin_explorer_failed_to_open_rename_dialog"));
+                api.LogException(nameof(Main), $"Failed to open rename dialog: {ex.Message}", ex, nameof(RenameDialog));
+            }
         }
         private void FillQuickAccessLinkNames()
         {
