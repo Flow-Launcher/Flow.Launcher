@@ -206,7 +206,7 @@
                     </cc:Card>
                      <cc:Card
                             Title="{DynamicResource RenameFileHotkey}"
-                            Icon="&#xf0ae;"
+                            Icon="&#xe70f;"
                             Type="Inside">
                             <flowlauncher:HotkeyControl
                                 DefaultHotkey=""
