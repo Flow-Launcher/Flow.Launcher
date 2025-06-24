@@ -135,12 +135,10 @@ public partial class HotkeyControlDialog : ContentDialog
         }
 
         if (tbMsg == null)
-
             return;
 
         if (_hotkeySettings.RegisteredHotkeys.FirstOrDefault(v => v.Hotkey == hotkey) is { } registeredHotkeyData)
         {
-
             var description = string.Format(
                 App.API.GetTranslation(registeredHotkeyData.DescriptionResourceKey),
                 registeredHotkeyData.DescriptionFormatVariables
@@ -148,7 +146,6 @@ public partial class HotkeyControlDialog : ContentDialog
             Alert.Visibility = Visibility.Visible;
             if (registeredHotkeyData.RemoveHotkey is not null)
             {
-
                 tbMsg.Text = string.Format(
                     App.API.GetTranslation("hotkeyUnavailableEditable"),
                     description
@@ -161,7 +158,6 @@ public partial class HotkeyControlDialog : ContentDialog
             }
             else
             {
-
                 tbMsg.Text = string.Format(
                     App.API.GetTranslation("hotkeyUnavailableUneditable"),
                     description
@@ -179,7 +175,6 @@ public partial class HotkeyControlDialog : ContentDialog
 
         if (!CheckHotkeyAvailability(hotkey.Value, true))
         {
-
             tbMsg.Text = App.API.GetTranslation("hotkeyUnavailable");
             Alert.Visibility = Visibility.Visible;
             SaveBtn.IsEnabled = false;
@@ -187,12 +182,10 @@ public partial class HotkeyControlDialog : ContentDialog
         }
         else
         {
-
             Alert.Visibility = Visibility.Collapsed;
             SaveBtn.IsEnabled = true;
             SaveBtn.Visibility = Visibility.Visible;
         }
-        
     }
 
     private static bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture)
