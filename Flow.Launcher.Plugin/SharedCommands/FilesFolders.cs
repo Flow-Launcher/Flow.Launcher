@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -363,6 +364,39 @@ namespace Flow.Launcher.Plugin.SharedCommands
                     }
                 }
             }
+        }
+        /// <summary>
+        /// Return true is the given name is a valid file name
+        /// </summary>
+        public static bool IsValidFileName(string name)
+        {
+            if (IsReservedName(name)) return false;
+            if (name.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0 || string.IsNullOrWhiteSpace(name))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static bool IsValidDirectoryName(string name)
+        {
+            if (IsReservedName(name)) return false;
+            char[] invalidChars = Path.GetInvalidPathChars().Append('/').ToArray().Append('\\').ToArray();
+            if (name.IndexOfAny(invalidChars) >= 0)
+            {
+                return false;
+            }
+            return true;
+        }
+        private static bool IsReservedName(string name)
+        {
+            string[] reservedNames = new[] { "CON", "PRN", "AUX", "NUL", "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9", "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9" };
+            string nameWithoutExtension = Path.GetFileNameWithoutExtension(name).ToUpperInvariant();
+            if (reservedNames.Contains(nameWithoutExtension))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

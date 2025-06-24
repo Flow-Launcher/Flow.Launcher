@@ -197,8 +197,10 @@
     <system:String x:Key="plugin_explorer_not_a_new_name">The given name: {0} was not new.</system:String>
     <system:String x:Key="plugin_explorer_field_may_not_be_empty">{0} may not be empty.</system:String>
     <system:String x:Key="plugin_explorer_invalid_name">{0} is an invalid name.</system:String>
-    <system:String x:Key="plugin_explorer_file_not_found">The specified file: {0} was not found</system:String>
+    <system:String x:Key="plugin_explorer_file_not_found">The specified item: {0} was not found</system:String>
     <system:String x:Key="plugin_explorer_rename_subtitle">Open a dialog to rename this.</system:String>
     <system:String x:Key="plugin_explorer_cannot_rename">This cannot be renamed.</system:String>
     <system:String x:Key="plugin_explorer_successful_rename">Successfully renamed it to: {0}</system:String>
+    <system:String x:Key="plugin_explorer_element_already_exists">There is already a file with the name: {0} in this location</system:String>
+    <system:String x:Key="plugin_explorer_failed_to_open_rename_dialog">Failed to open rename dialog.</system:String>
 </ResourceDictionary>

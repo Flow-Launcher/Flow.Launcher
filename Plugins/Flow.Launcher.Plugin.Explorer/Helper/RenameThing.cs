@@ -9,7 +9,7 @@ namespace Flow.Launcher.Plugin.Explorer.Helper
         {
             if (info is FileInfo)
             {
-                if (!api.IsValidFileName(newName))
+                if (!SharedCommands.FilesFolders.IsValidFileName(newName))
                 {
                     throw new InvalidNameException();
                 }
@@ -17,28 +17,32 @@ namespace Flow.Launcher.Plugin.Explorer.Helper
                 DirectoryInfo directory;
 
                 directory = file.Directory ?? new DirectoryInfo(Path.GetPathRoot(file.FullName));
-                if (info.FullName == Path.Join(directory.FullName, newName))
+                string newPath = Path.Join(directory.FullName, newName);
+                if (info.FullName == newPath)
                 {
                     throw new NotANewNameException("New name was the same as the old name");
                 }
-                File.Move(info.FullName, Path.Join(directory.FullName, newName));
+                if (File.Exists(newPath)) throw new ElementAlreadyExistsException();
+                File.Move(info.FullName, newPath);
                 return;
             }
             else if (info is DirectoryInfo)
             {
-                if (!api.IsValidDirectoryName(newName))
+                if (!SharedCommands.FilesFolders.IsValidDirectoryName(newName))
                 {
                     throw new InvalidNameException();
                 }
                 DirectoryInfo directory = (DirectoryInfo)info;
                 DirectoryInfo parent;
                 parent = directory.Parent ?? new DirectoryInfo(Path.GetPathRoot(directory.FullName));
-
-                if (info.FullName == Path.Join(parent.FullName, newName))
+                string newPath = Path.Join(parent.FullName, newName);
+                if (info.FullName == newPath)
                 {
                     throw new NotANewNameException("New name was the same as the old name");
                 }
-                Directory.Move(info.FullName, Path.Join(parent.FullName, newName));
+                if (Directory.Exists(newPath)) throw new ElementAlreadyExistsException();
+                
+                Directory.Move(info.FullName, newPath);
 
             }
             else
@@ -48,7 +52,7 @@ namespace Flow.Launcher.Plugin.Explorer.Helper
             
         }
         /// <summary>
-        /// Renames a file system elemnt (directory or file)
+        /// Renames a file system element (directory or file)
         /// </summary>
         /// <param name="NewFileName">The requested new name</param>
         /// <param name="oldInfo"> The <see cref="FileInfo"/> or <see cref="DirectoryInfo"/> representing the old file</param>
@@ -72,16 +76,17 @@ namespace Flow.Launcher.Plugin.Explorer.Helper
                 switch (exception)
                 {
                     case FileNotFoundException:
-
                         api.ShowMsgError(string.Format(api.GetTranslation("plugin_explorer_file_not_found"), oldInfo.FullName));
                         return;
                     case NotANewNameException:
                         api.ShowMsgError(string.Format(api.GetTranslation("plugin_explorer_not_a_new_name"), NewFileName));
-                        api.ShowMainWindow();
                         return;
                     case InvalidNameException:
                         api.ShowMsgError(string.Format(api.GetTranslation("plugin_explorer_invalid_name"), NewFileName));
                         return;
+                    case ElementAlreadyExistsException:
+                        api.ShowMsgError(string.Format(api.GetTranslation("plugin_explorer_element_already_exists"), NewFileName));
+                        break;
                     case IOException iOException:
                         if (iOException.Message.Contains("incorrect"))
                         {
@@ -111,24 +116,23 @@ namespace Flow.Launcher.Plugin.Explorer.Helper
             System.Runtime.Serialization.SerializationInfo info,
             System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
-    internal class FileAlreadyExistsException : IOException
-    {
-        public FileAlreadyExistsException() { }
-        public FileAlreadyExistsException(string message) : base(message) { }
-        public FileAlreadyExistsException(string message, Exception inner) : base(message, inner) { }
-        protected FileAlreadyExistsException(
+        internal class ElementAlreadyExistsException : IOException {
+        public ElementAlreadyExistsException() { }
+        public ElementAlreadyExistsException(string message) : base(message) { }
+        public ElementAlreadyExistsException(string message, Exception inner) : base(message, inner) { }
+        protected ElementAlreadyExistsException(
             System.Runtime.Serialization.SerializationInfo info,
             System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
 
     internal class InvalidNameException : Exception
     {
-        public InvalidNameException() { }
-        public InvalidNameException(string message) : base(message) { }
-        public InvalidNameException(string message, Exception inner) : base(message, inner) { }
-        protected InvalidNameException(
-            System.Runtime.Serialization.SerializationInfo info,
-            System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+    public InvalidNameException() { }
+    public InvalidNameException(string message) : base(message) { }
+    public InvalidNameException(string message, Exception inner) : base(message, inner) { }
+    protected InvalidNameException(
+        System.Runtime.Serialization.SerializationInfo info,
+        System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
     
     
