@@ -74,18 +74,20 @@
                             Orientation="Horizontal">
                     <TextBlock
                         MinWidth="150"
-                        Margin="0 10 15 10"
+                        Margin="0 10 5 10"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         FontSize="14"
                         Text="{DynamicResource plugin_explorer_new_file_name}"/>
                     <TextBox
                         Name="RenameTb"
-                        Width="135"
+                        Width="Auto"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         PreviewKeyDown="RenameTb_OnKeyDown"
-                        Text="{Binding NewFileName}"/>
+                        Text="{Binding NewFileName}"
+                        GotFocus="SelectAll_OnTextBoxGotFocus"
+                        />
                 </StackPanel>
             </StackPanel>
         </StackPanel>
@@ -100,14 +102,14 @@
                     x:Name="btnCancel"
                     Width="145"
                     Height="30"
-                    Margin="0 0 5 0"
+                    Margin="5 0 5 0"
                     Click="BtnCancel"
                     Content="{DynamicResource cancel}"/>
                 <Button
                     Name="btnDone"
                     Width="145"
                     Height="30"
-                    Margin="5 0 0 0"
+                    Margin="5 0 5 0"
                     Click="OnDoneButtonClick"
                     Style="{StaticResource AccentButtonStyle}">
                     <TextBlock x:Name="lblAdd"
