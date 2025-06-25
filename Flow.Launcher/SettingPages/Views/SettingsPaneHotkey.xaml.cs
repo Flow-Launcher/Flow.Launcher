@@ -68,9 +68,9 @@ public partial class SettingsPaneHotkey
                     // TODO: Check if this can use
                     var hotkeyControl = new HotkeyControl
                     {
+                        Type = HotkeyControl.HotkeyType.CustomQueryHotkey,
                         DefaultHotkey = hotkey.DefaultHotkey,
                         Hotkey = hotkeySetting,
-                        Type = HotkeyControl.HotkeyType.CustomQueryHotkey,
                         ValidateKeyGesture = true
                     };
                     card.Content = hotkeyControl;
