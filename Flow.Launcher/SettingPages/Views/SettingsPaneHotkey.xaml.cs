@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -50,6 +51,8 @@ public partial class SettingsPaneHotkey
             {
                 Orientation = Orientation.Vertical
             };
+
+            var sortedHotkeyInfo = hotkeyInfo.OrderBy(h => h.Id).ToList();
             foreach (var hotkey in hotkeyInfo)
             {
                 var card = new Card()
