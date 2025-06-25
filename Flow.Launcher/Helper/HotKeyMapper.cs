@@ -1,11 +1,13 @@
-﻿using Flow.Launcher.Infrastructure.Hotkey;
-using Flow.Launcher.Infrastructure.UserSettings;
-using System;
-using NHotkey;
-using NHotkey.Wpf;
-using Flow.Launcher.ViewModel;
+﻿using System;
 using ChefKeys;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
+using Flow.Launcher.ViewModel;
+using NHotkey;
+using NHotkey.Wpf;
 
 namespace Flow.Launcher.Helper;
 
@@ -23,6 +25,7 @@ internal static class HotKeyMapper
 
         SetHotkey(_settings.Hotkey, OnToggleHotkey);
         LoadCustomPluginHotkey();
+        LoadGlobalPluginHotkey();
     }
 
     internal static void OnToggleHotkey(object sender, HotkeyEventArgs args)
@@ -139,6 +142,36 @@ internal static class HotKeyMapper
 
             App.API.ShowMainWindow();
             App.API.ChangeQuery(hotkey.ActionKeyword, true);
+        });
+    }
+
+    internal static void LoadGlobalPluginHotkey()
+    {
+        var pluginHotkeyInfos = PluginManager.GetPluginHotkeyInfo();
+        foreach (var info in pluginHotkeyInfos)
+        {
+            var pluginPair = info.Key;
+            var hotkeyInfo = info.Value;
+            var metadata = pluginPair.Metadata;
+            foreach (var hotkey in hotkeyInfo)
+            {
+                if (hotkey.HotkeyType == HotkeyType.Global && hotkey is GlobalPluginHotkey globalHotkey)
+                {
+                    var hotkeySetting = metadata.PluginHotkeys.Find(h => h.Id == hotkey.Id)?.Hotkey ?? hotkey.DefaultHotkey;
+                    SetGlobalPluginHotkey(globalHotkey, metadata, hotkeySetting);
+                }
+            }
+        }
+    }
+
+    internal static void SetGlobalPluginHotkey(GlobalPluginHotkey globalHotkey, PluginMetadata metadata, string hotkeySetting)
+    {
+        SetHotkey(hotkeySetting, (s, e) =>
+        {
+            if (_mainViewModel.ShouldIgnoreHotkeys() || metadata.Disabled)
+                return;
+            
+            globalHotkey.Action?.Invoke();
         });
     }
 
