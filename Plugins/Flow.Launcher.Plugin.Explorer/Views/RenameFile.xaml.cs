@@ -1,4 +1,4 @@
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,15 +7,11 @@ using System.Windows.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Flow.Launcher.Plugin.Explorer.Helper;
 
-
 namespace Flow.Launcher.Plugin.Explorer.Views
 {
-
     [INotifyPropertyChanged]
     public partial class RenameFile : Window
     {
-
-
         public string NewFileName
         {
             get => _newFileName;
@@ -24,7 +20,6 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 _ = SetProperty(ref _newFileName, value);
             }
         }
-
 
         private string _newFileName;
 
@@ -42,25 +37,16 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             InitializeComponent();
 
-            
-
             ShowInTaskbar = false;
-
-            
-
             RenameTb.Focus();
-            
-
-
         }
+
         /// <summary>
         /// https://stackoverflow.com/a/59560352/24045055
         /// </summary>
-
         private async void SelectAll_OnTextBoxGotFocus(object sender, RoutedEventArgs e)
         {
-            
-            var textBox = sender as TextBox;
+            if (sender is not TextBox textBox) return;
             if (_info is DirectoryInfo)
             {
                 await Application.Current.Dispatcher.InvokeAsync(textBox.SelectAll, DispatcherPriority.Background);
@@ -70,15 +56,13 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             {
                 string properName = Path.GetFileNameWithoutExtension(info.Name);
                 Application.Current.Dispatcher.Invoke(textBox.Select, DispatcherPriority.Background, textBox.Text.IndexOf(properName), properName.Length );
-
             }
-            
         }
+
         private void OnDoneButtonClick(object sender, RoutedEventArgs e)
         {
             RenameThing.Rename(NewFileName, _info, _api);
             Close();
-
         }
 
         private void BtnCancel(object sender, RoutedEventArgs e)
@@ -94,9 +78,6 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 OnDoneButtonClick(sender, e);
                 e.Handled = true;
             }
-
-
-
         }
     }
 }
