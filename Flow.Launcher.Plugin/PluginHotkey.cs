@@ -53,6 +53,11 @@ public class BasePluginHotkey
     /// Indicates whether the hotkey is editable by the user in the settings page.
     /// </summary>
     public bool Editable { get; set; } = false;
+
+    /// <summary>
+    /// Whether to show the hotkey in the settings page.
+    /// </summary>
+    public bool Visible { get; set; } = true;
 }
 
 /// <summary>

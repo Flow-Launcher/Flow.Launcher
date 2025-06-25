@@ -124,6 +124,7 @@ namespace Flow.Launcher.Plugin.Explorer
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue838"),
                     DefaultHotkey = "Ctrl+Enter",
                     Editable = false,
+                    Visible = true,
                     Action = (r) =>
                     {
                         if (r.ContextData is SearchResult record)
@@ -160,6 +161,7 @@ namespace Flow.Launcher.Plugin.Explorer
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue700"),
                     DefaultHotkey = "Alt+Enter",
                     Editable = false,
+                    Visible = true,
                     Action = (r) =>
                     {
                         if (r.ContextData is SearchResult record && record.Type is not ResultType.Volume)
@@ -185,6 +187,7 @@ namespace Flow.Launcher.Plugin.Explorer
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uE7EF"),
                     DefaultHotkey = "Ctrl+Shift+Enter",
                     Editable = false,
+                    Visible = true,
                     Action = (r) =>
                     {
                         if (r.ContextData is SearchResult record)
@@ -223,6 +226,7 @@ namespace Flow.Launcher.Plugin.Explorer
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue8ac"),
                     DefaultHotkey = "F2",
                     Editable = true,
+                    Visible = true,
                     Action = (r) =>
                     {
                         if (r.ContextData is SearchResult record)
