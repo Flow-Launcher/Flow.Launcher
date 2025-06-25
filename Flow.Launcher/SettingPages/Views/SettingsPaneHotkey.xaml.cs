@@ -1,5 +1,9 @@
-﻿using System.Windows.Navigation;
+﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Navigation;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Resources.Controls;
 using Flow.Launcher.SettingPages.ViewModels;
 using Flow.Launcher.ViewModel;
 
@@ -27,5 +31,60 @@ public partial class SettingsPaneHotkey
             InitializeComponent();
         }
         base.OnNavigatedTo(e);
+    }
+
+    private void PluginHotkeySettings_Loaded(object sender, RoutedEventArgs e)
+    {
+        var pluginHotkeyInfos = PluginManager.GetPluginHotkeyInfo();
+        foreach (var info in pluginHotkeyInfos)
+        {
+            var pluginPair = info.Key;
+            var hotkeyInfo = info.Value;
+            var metadata = pluginPair.Metadata;
+            var excard = new ExCard()
+            {
+                Title = metadata.Name
+                // TODO: Support displaying plugin icon here
+            };
+            var hotkeyStackPanel = new StackPanel
+            {
+                Orientation = Orientation.Vertical
+            };
+            foreach (var hotkey in hotkeyInfo)
+            {
+                var card = new Card()
+                {
+                    Title = hotkey.Name,
+                    Sub = hotkey.Description,
+                    Icon = hotkey.Glyph.Glyph,
+                    Type = Card.CardType.Inside
+                };
+                var hotkeySetting = metadata.PluginHotkeys.Find(h => h.Id == hotkey.Id)?.Hotkey ?? hotkey.DefaultHotkey;
+                if (hotkey.Editable)
+                {
+                    // TODO: Check if this can use
+                    var hotkeyControl = new HotkeyControl
+                    {
+                        DefaultHotkey = hotkey.DefaultHotkey,
+                        Hotkey = hotkeySetting,
+                        Type = HotkeyControl.HotkeyType.CustomQueryHotkey,
+                        ValidateKeyGesture = true
+                    };
+                    card.Content = hotkeyControl;
+                    // TODO: Update metadata & plugin setting hotkey
+                }
+                else
+                {
+                    var hotkeyDisplay = new HotkeyDisplay
+                    {
+                        Keys = hotkeySetting
+                    };
+                    card.Content = hotkeyDisplay;
+                }
+                hotkeyStackPanel.Children.Add(card);
+            }
+            excard.Content = hotkeyStackPanel;
+            PluginHotkeySettings.Children.Add(excard);
+        }
     }
 }

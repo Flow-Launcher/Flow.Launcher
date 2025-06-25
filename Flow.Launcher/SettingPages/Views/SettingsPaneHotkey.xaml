@@ -204,18 +204,17 @@
                             <cc:HotkeyDisplay Margin="4 0 0 0" Keys="Ctrl+Minus" />
                         </StackPanel>
                     </cc:Card>
-                     <cc:Card
-                            Title="{DynamicResource RenameFileHotkey}"
-                            Icon="&#xe70f;"
-                            Type="Inside">
-                            <flowlauncher:HotkeyControl
-                                DefaultHotkey="F2"
-                                Type="RenameFileHotkey"
-                                ValidateKeyGesture="True"/>
-                        </cc:Card>
+                    <cc:Card
+                        Title="{DynamicResource RenameFileHotkey}"
+                        Icon="&#xe70f;"
+                        Type="Inside">
+                        <flowlauncher:HotkeyControl
+                            DefaultHotkey="F2"
+                            Type="RenameFileHotkey"
+                            ValidateKeyGesture="True" />
+                    </cc:Card>
                 </StackPanel>
             </cc:ExCard>
-
 
             <cc:ExCard
                 Title="{DynamicResource autoCompleteHotkey}"
@@ -280,6 +279,12 @@
                         ValidateKeyGesture="False" />
                 </cc:Card>
             </cc:ExCard>
+
+            <StackPanel
+                x:Name="PluginHotkeySettings"
+                Margin="0 20 0 0"
+                Loaded="PluginHotkeySettings_Loaded"
+                Orientation="Vertical" />
 
             <cc:ExCard
                 Title="{DynamicResource customQueryHotkey}"
