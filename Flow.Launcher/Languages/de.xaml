@@ -41,7 +41,7 @@
     <system:String x:Key="textTitle">Text</system:String>
     <system:String x:Key="GameMode">Spielmodus</system:String>
     <system:String x:Key="GameModeToolTip">Aussetzen der Verwendung von Hotkeys.</system:String>
-    <system:String x:Key="PositionReset">Position zurücksetzen</system:String>
+    <system:String x:Key="PositionReset">Zurücksetzen der Position</system:String>
     <system:String x:Key="PositionResetToolTip">Position des Suchfensters zurücksetzen</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">Zum Suchen hier tippen</system:String>
 
@@ -56,7 +56,7 @@
     <system:String x:Key="setAutoStartFailed">Fehler bei Einstellungsstart beim Start</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Flow Launcher ausblenden, wenn Fokus verloren geht</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Versionsbenachrichtigungen nicht zeigen</system:String>
-    <system:String x:Key="SearchWindowPosition">Position des Suchfensters</system:String>
+    <system:String x:Key="SearchWindowPosition">Ort des Suchfensters</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Letzte Position merken</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Monitor mit Mauscursor</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Monitor mit fokussiertem Fenster</system:String>
@@ -136,8 +136,8 @@
     <system:String x:Key="historyResultsForHomePage">Historie-Ergebnisse auf Homepage zeigen</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Maximal gezeigte Historie-Ergebnisse auf Homepage</system:String>
     <system:String x:Key="homeToggleBoxToolTip">Dies kann nur bearbeitet werden, wenn das Plug-in das Home-Feature unterstützt und die Homepage aktiviert ist.</system:String>
-    <system:String x:Key="showAtTopmost">Show Search Window at Foremost</system:String>
-    <system:String x:Key="showAtTopmostToolTip">Overrides other programs' 'Always on Top' setting and displays Flow in the foremost position.</system:String>
+    <system:String x:Key="showAtTopmost">Suchfenster an vorderster zeigen</system:String>
+    <system:String x:Key="showAtTopmostToolTip">Setzt die Einstellung 'Immer im Vordergrund' anderer Programme außer Kraft und zeigt Flow in der vordersten Position an.</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Plug-in suchen</system:String>
