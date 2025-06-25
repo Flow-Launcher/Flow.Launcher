@@ -26,6 +26,7 @@ namespace Flow.Launcher.Core.Plugin
 
         private static IEnumerable<PluginPair> _contextMenuPlugins;
         private static IEnumerable<PluginPair> _homePlugins;
+        private static IEnumerable<PluginPair> _hotkeyPlugins;
 
         public static List<PluginPair> AllPlugins { get; private set; }
         public static readonly HashSet<PluginPair> GlobalPlugins = new();
@@ -250,6 +251,8 @@ namespace Flow.Launcher.Core.Plugin
 
             _contextMenuPlugins = GetPluginsForInterface<IContextMenu>();
             _homePlugins = GetPluginsForInterface<IAsyncHomeQuery>();
+            _hotkeyPlugins = GetPluginsForInterface<IPluginHotkey>();
+            Settings.UpdatePluginHotkeyInfo(GetPluginHotkeyInfo());
 
             foreach (var plugin in AllPlugins)
             {
@@ -440,6 +443,18 @@ namespace Flow.Launcher.Core.Plugin
         public static bool IsHomePlugin(string id)
         {
             return _homePlugins.Any(p => p.Metadata.ID == id);
+        }
+
+        public static Dictionary<PluginPair, List<BasePluginHotkey>> GetPluginHotkeyInfo()
+        {
+            var hotkeyPluginInfos = new Dictionary<PluginPair, List<BasePluginHotkey>>();
+            foreach (var plugin in _hotkeyPlugins)
+            {
+                var hotkeys = ((IPluginHotkey)plugin.Plugin).GetPuginHotkeys();
+                hotkeyPluginInfos.Add(plugin, hotkeys);
+            }
+
+            return hotkeyPluginInfos;
         }
 
         public static bool ActionKeywordRegistered(string actionKeyword)

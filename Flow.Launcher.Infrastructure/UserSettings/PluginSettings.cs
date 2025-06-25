@@ -89,6 +89,110 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
+        /// <summary>
+        /// Update plugin hotkey information in metadata and plugin setting.
+        /// </summary>
+        /// <param name="hotkeyPluginInfo"></param>
+        public void UpdatePluginHotkeyInfo(Dictionary<PluginPair, List<BasePluginHotkey>> hotkeyPluginInfo)
+        {
+            foreach (var info in hotkeyPluginInfo)
+            {
+                var pluginPair = info.Key;
+                var hotkeyInfo = info.Value;
+                var metadata = pluginPair.Metadata;
+                if (Plugins.TryGetValue(pluginPair.Metadata.ID, out var plugin))
+                {
+                    if (plugin.pluginHotkeys == null || plugin.pluginHotkeys.Count == 0)
+                    {
+                        // If plugin hotkeys does not exist, create a new one and initialize with default values
+                        plugin.pluginHotkeys = new List<PluginHotkey>();
+                        foreach (var hotkey in hotkeyInfo)
+                        {
+                            plugin.pluginHotkeys.Add(new PluginHotkey
+                            {
+                                Id = hotkey.Id,
+                                DefaultHotkey = hotkey.DefaultHotkey, // hotkey info provides default values
+                                Hotkey = hotkey.DefaultHotkey // use default value
+                            });
+                            metadata.PluginHotkeys.Add(new PluginHotkey
+                            {
+                                Id = hotkey.Id,
+                                DefaultHotkey = hotkey.DefaultHotkey, // hotkey info provides default values
+                                Hotkey = hotkey.DefaultHotkey // use default value
+                            });
+                        }
+                    }
+                    else
+                    {
+                        // If plugin hotkeys exist, update the existing hotkeys with the new values
+                        foreach (var hotkey in hotkeyInfo)
+                        {
+                            var existingHotkey = plugin.pluginHotkeys.Find(h => h.Id == hotkey.Id);
+                            if (existingHotkey != null)
+                            {
+                                // Update existing hotkey
+                                existingHotkey.DefaultHotkey = hotkey.DefaultHotkey; // hotkey info provides default values
+                                metadata.PluginHotkeys.Add(new PluginHotkey
+                                {
+                                    Id = hotkey.Id,
+                                    DefaultHotkey = hotkey.DefaultHotkey, // hotkey info provides default values
+                                    Hotkey = existingHotkey.Hotkey // use settings value
+                                });
+                            }
+                            else
+                            {
+                                // Add new hotkey if it does not exist
+                                plugin.pluginHotkeys.Add(new PluginHotkey
+                                {
+                                    Id = hotkey.Id,
+                                    DefaultHotkey = hotkey.DefaultHotkey, // hotkey info provides default values
+                                    Hotkey = hotkey.DefaultHotkey // use default value
+                                });
+                                metadata.PluginHotkeys.Add(new PluginHotkey
+                                {
+                                    Id = hotkey.Id,
+                                    DefaultHotkey = hotkey.DefaultHotkey, // hotkey info provides default values
+                                    Hotkey = hotkey.DefaultHotkey // use default value
+                                });
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    // If settings does not exist, create a new one
+                    Plugins[metadata.ID] = new Plugin
+                    {
+                        ID = metadata.ID,
+                        Name = metadata.Name,
+                        Version = metadata.Version,
+                        DefaultActionKeywords = metadata.ActionKeywords, // metadata provides default values
+                        ActionKeywords = metadata.ActionKeywords, // use default value
+                        Disabled = metadata.Disabled,
+                        HomeDisabled = metadata.HomeDisabled,
+                        Priority = metadata.Priority,
+                        DefaultSearchDelayTime = metadata.SearchDelayTime, // metadata provides default values
+                        SearchDelayTime = metadata.SearchDelayTime, // use default value
+                    };
+                    foreach (var hotkey in hotkeyInfo)
+                    {
+                        Plugins[metadata.ID].pluginHotkeys.Add(new PluginHotkey
+                        {
+                            Id = hotkey.Id,
+                            DefaultHotkey = hotkey.DefaultHotkey, // hotkey info provides default values
+                            Hotkey = hotkey.DefaultHotkey // use default value
+                        });
+                        metadata.PluginHotkeys.Add(new PluginHotkey
+                        {
+                            Id = hotkey.Id,
+                            DefaultHotkey = hotkey.DefaultHotkey, // hotkey info provides default values
+                            Hotkey = hotkey.DefaultHotkey // use default value
+                        });
+                    }
+                }
+            }
+        }
+
         public Plugin GetPluginSettings(string id)
         {
             if (Plugins.TryGetValue(id, out var plugin))
@@ -125,6 +229,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public int? DefaultSearchDelayTime { get; set; }
 
         public int? SearchDelayTime { get; set; }
+
+        public List<PluginHotkey> pluginHotkeys { get; set; } = new List<PluginHotkey>();
 
         /// <summary>
         /// Used only to save the state of the plugin in settings
