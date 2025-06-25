@@ -89,7 +89,7 @@
     <system:String x:Key="plugin_explorer_copypath">Pfad kopieren</system:String>
     <system:String x:Key="plugin_explorer_copypath_subtitle">Pfad des aktuellen Elements in Zwischenablage kopieren</system:String>
     <system:String x:Key="plugin_explorer_copyname">Name kopieren</system:String>
-    <system:String x:Key="plugin_explorer_copyname_subtitle">Copy name of current item to clipboard</system:String>
+    <system:String x:Key="plugin_explorer_copyname_subtitle">Name des aktuellen Elements in Zwischenablage kopieren</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">Kopieren</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">Aktuelle Datei in Zwischenablage kopieren</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">Aktuellen Ordner in Zwischenablage kopieren</system:String>
@@ -167,11 +167,11 @@
     <system:String x:Key="flowlauncher_plugin_everything_installationsuccess_subtitle">Everything-Dienst erfolgreich installiert</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installationfailed_subtitle">Der Everything-Dienst konnte nicht automatisch installiert werden. Bitte installieren Sie ihn manuell über https://www.voidtools.com</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_run_service">Klicken Sie hier, um es zu starten</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installing_select">Es kann keine Everything-Installation gefuinden werden, möchten Sie einen Ort manuell auswählen?{0}{0}Klicken Sie auf Nein und Everything wird automatisch für Sie installiert</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installing_select">Es kann keine Everything-Installation gefunden werden, möchten Sie einen Ort manuell auswählen?{0}{0}Klicken Sie auf Nein und Everything wird automatisch für Sie installiert</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Möchten Sie die Inhaltssuche für Everything aktivieren?</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">Es kann sehr langsam sein ohne Index (was nur in Everything v1.5+ unterstützt wird)</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_everything_not_found">Unable to find Everything.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_not_found">Everything.exe kann nicht gefunden werden</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_install_issue">Everything konnte nicht installiert werden, bitte installieren Sie es manuell</system:String>
 
     <!--  Native Context Menu  -->
