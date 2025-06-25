@@ -5,7 +5,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Plugin.Explorer.Helper;
 
 namespace Flow.Launcher.Plugin.Explorer.Views
@@ -89,7 +88,5 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 e.Handled = true;
             }
         }
-
-        
     }
 }
