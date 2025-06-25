@@ -56,7 +56,7 @@ internal static class HotKeyMapper
         catch (Exception e)
         {
             App.API.LogError(ClassName,
-                string.Format("|HotkeyMapper.SetWithChefKeys|Error registering hotkey: {0} \nStackTrace:{1}",
+                string.Format("Error registering hotkey: {0} \nStackTrace:{1}",
                               e.Message,
                               e.StackTrace));
             string errorMsg = string.Format(App.API.GetTranslation("registerHotkeyFailed"), hotkeyStr);
@@ -81,7 +81,7 @@ internal static class HotKeyMapper
         catch (Exception e)
         {
             App.API.LogError(ClassName,
-                string.Format("|HotkeyMapper.SetHotkey|Error registering hotkey {2}: {0} \nStackTrace:{1}",
+                string.Format("Error registering hotkey {2}: {0} \nStackTrace:{1}",
                               e.Message,
                               e.StackTrace,
                               hotkeyStr));
@@ -107,7 +107,7 @@ internal static class HotKeyMapper
         catch (Exception e)
         {
             App.API.LogError(ClassName,
-                string.Format("|HotkeyMapper.RemoveHotkey|Error removing hotkey: {0} \nStackTrace:{1}",
+                string.Format("Error removing hotkey: {0} \nStackTrace:{1}",
                               e.Message,
                               e.StackTrace));
             string errorMsg = string.Format(App.API.GetTranslation("unregisterHotkeyFailed"), hotkeyStr);
