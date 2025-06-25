@@ -191,10 +191,11 @@ internal static class HotKeyMapper
         }
     }
 
-    private static void SetWindowHotkey(KeyGesture keyGesture, List<(PluginMetadata Metadata, SearchWindowPluginHotkey PluginHotkey)> hotkeyModels)
+    internal static void SetWindowHotkey(KeyGesture keyGesture, List<(PluginMetadata Metadata, SearchWindowPluginHotkey PluginHotkey)> hotkeyModels)
     {
         try
         {
+            if (hotkeyModels.Count == 0) return;
             if (Application.Current?.MainWindow is MainWindow window)
             {
                 var command = BuildCommand(hotkeyModels);
