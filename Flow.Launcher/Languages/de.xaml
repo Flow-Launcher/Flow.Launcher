@@ -65,8 +65,8 @@
     <system:String x:Key="SearchWindowAlign">Position des Suchfensters auf Monitor</system:String>
     <system:String x:Key="SearchWindowAlignCenter">Zentriert</system:String>
     <system:String x:Key="SearchWindowAlignCenterTop">Oben zentriert</system:String>
-    <system:String x:Key="SearchWindowAlignLeftTop">Links oben</system:String>
-    <system:String x:Key="SearchWindowAlignRightTop">Rechts oben</system:String>
+    <system:String x:Key="SearchWindowAlignLeftTop">Oben links</system:String>
+    <system:String x:Key="SearchWindowAlignRightTop">Oben rechts</system:String>
     <system:String x:Key="SearchWindowAlignCustom">Benutzerdefinierte Position</system:String>
     <system:String x:Key="language">Sprache</system:String>
     <system:String x:Key="lastQueryMode">Letzter Abfragestil</system:String>
@@ -214,7 +214,7 @@
     <system:String x:Key="resetCustomize">Zurücksetzen</system:String>
     <system:String x:Key="resetCustomizeToolTip">Auf die empfohlenen Schriftart- und Größeneinstellungen zurücksetzen.</system:String>
     <system:String x:Key="ImportThemeSize">Theme-Größe importieren</system:String>
-    <system:String x:Key="ImportThemeSizeToolTip">If a size value intended by the theme designer is available, it will be retrieved and applied.</system:String>
+    <system:String x:Key="ImportThemeSizeToolTip">Wenn ein vom Theme-Designer vorgesehener Größenwert verfügbar ist, wird dieser abgerufen und angewendet.</system:String>
     <system:String x:Key="CustomizeToolTip">Individuell anpassen</system:String>
     <system:String x:Key="windowMode">Fenstermodus</system:String>
     <system:String x:Key="opacity">Opazität</system:String>
@@ -242,8 +242,8 @@
     <system:String x:Key="Clock">Uhr</system:String>
     <system:String x:Key="Date">Datum</system:String>
     <system:String x:Key="BackdropType">Backdrop-Typ</system:String>
-    <system:String x:Key="BackdropInfo">Der Kulissen-Effekt wird in der Vorschau nicht angewendet.</system:String>
-    <system:String x:Key="BackdropTypeDisabledToolTip">Backdrop supported starting from Windows 11 build 22000 and above</system:String>
+    <system:String x:Key="BackdropInfo">Der Backdrop-Effekt wird in der Vorschau nicht angewendet.</system:String>
+    <system:String x:Key="BackdropTypeDisabledToolTip">Backdrop wird ab Windows 11 Build 22000 und darüber unterstützt</system:String>
     <system:String x:Key="BackdropTypesNone">Keine</system:String>
     <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
     <system:String x:Key="BackdropTypesMica">Mica</system:String>
@@ -316,7 +316,7 @@
     <system:String x:Key="useGlyphUIEffect">Segoe Fluent-Icons für Abfrageergebnisse verwenden, wo unterstützt</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Taste drücken</system:String>
     <system:String x:Key="showBadges">Ergebnis-Badges zeigen</system:String>
-    <system:String x:Key="showBadgesToolTip">For supported plugins, badges are displayed to help distinguish them more easily.</system:String>
+    <system:String x:Key="showBadgesToolTip">Für unterstützte Plug-ins werden Badges zur besseren Unterscheidung angezeigt.</system:String>
     <system:String x:Key="showBadgesGlobalOnly">Ergebnis-Badges nur für globale Abfrage zeigen</system:String>
 
     <!--  Setting Proxy  -->
@@ -375,7 +375,7 @@
     <!--  Release Notes Window  -->
     <system:String x:Key="seeMoreReleaseNotes">Weitere Versionshinweise finden Sie auf GitHub</system:String>
     <system:String x:Key="checkNetworkConnectionTitle">Versionshinweise konnten nicht abgerufen werden</system:String>
-    <system:String x:Key="checkNetworkConnectionSubTitle">Please check your network connection or ensure GitHub is accessible</system:String>
+    <system:String x:Key="checkNetworkConnectionSubTitle">Bitte überprüfen Sie Ihre Netzwerkverbindung oder stellen Sie sicher, dass GitHub erreichbar ist</system:String>
     <system:String x:Key="appUpdateTitle">Flow Launcher ist aktualisiert worden auf {0}</system:String>
     <system:String x:Key="appUpdateButtonContent">Klicken Sie hier, um die Versionshinweise anzusehen</system:String>
 
@@ -489,7 +489,7 @@ Wenn Sie bei der Eingabe eines Shortcuts ein '@'-Präfix hinzufügen, stimmt die
     </system:String>
     <system:String x:Key="errorTitle">Fehler</system:String>
     <system:String x:Key="folderOpenError">Beim Öffnen des Ordners ist ein Fehler aufgetreten. {0}</system:String>
-    <system:String x:Key="browserOpenError">An error occurred while opening the URL in the browser. Please check your Default Web Browser configuration in the General section of the settings window</system:String>
+    <system:String x:Key="browserOpenError">Beim Öffnen der URL im Browser ist ein Fehler aufgetreten. Bitte überprüfen Sie die Konfiguration Ihres Default-Webbrowsers im Abschnitt „Allgemein“ des Einstellungsfensters</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Bitte warten Sie ...</system:String>
