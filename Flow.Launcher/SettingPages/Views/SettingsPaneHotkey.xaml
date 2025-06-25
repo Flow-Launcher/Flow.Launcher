@@ -204,15 +204,6 @@
                             <cc:HotkeyDisplay Margin="4 0 0 0" Keys="Ctrl+Minus" />
                         </StackPanel>
                     </cc:Card>
-                    <cc:Card
-                        Title="{DynamicResource RenameFileHotkey}"
-                        Icon="&#xe70f;"
-                        Type="Inside">
-                        <flowlauncher:HotkeyControl
-                            DefaultHotkey="F2"
-                            Type="RenameFileHotkey"
-                            ValidateKeyGesture="True" />
-                    </cc:Card>
                 </StackPanel>
             </cc:ExCard>
 

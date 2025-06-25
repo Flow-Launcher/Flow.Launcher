@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -23,7 +22,6 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 using Microsoft.VisualStudio.Threading;
-
 
 namespace Flow.Launcher.ViewModel
 {
@@ -61,8 +59,6 @@ namespace Flow.Launcher.ViewModel
         };
 
         #endregion
-
-
 
         #region Constructor
 
@@ -143,9 +139,6 @@ namespace Flow.Launcher.ViewModel
                         break;
                     case nameof(Settings.OpenHistoryHotkey):
                         OnPropertyChanged(nameof(OpenHistoryHotkey));
-                        break;
-                    case nameof(Settings.RenameFileHotkey):
-                        OnPropertyChanged(nameof(RenameFileHotkey));
                         break;
                 }
             };
@@ -603,7 +596,6 @@ namespace Flow.Launcher.ViewModel
         #endregion
 
         #region ViewModel Properties
-        
 
         public Settings Settings { get; }
         public string ClockText { get; private set; }
@@ -921,75 +913,8 @@ namespace Flow.Launcher.ViewModel
         public string OpenHistoryHotkey => VerifyOrSetDefaultHotkey(Settings.OpenHistoryHotkey, "Ctrl+H");
         public string CycleHistoryUpHotkey => VerifyOrSetDefaultHotkey(Settings.CycleHistoryUpHotkey, "Alt+Up");
         public string CycleHistoryDownHotkey => VerifyOrSetDefaultHotkey(Settings.CycleHistoryDownHotkey, "Alt+Down");
-        public string RenameFileHotkey => VerifyOrSetDefaultHotkey(Settings.RenameFileHotkey, "F2");
-        
 
         public bool StartWithEnglishMode => Settings.AlwaysStartEn;
-
-        #region renamingFiles
-        private int timesTriedToRenameFileWithExplorerDisabled = 0;
-
-        [RelayCommand]
-        private void RenameFile()
-        {
-            // at runtime this is an instance the Flow.Launcher.Plugin.Explorer.Main
-            var explorerPlugin = GetExplorerPlugin();
-
-            if (!(explorerPlugin != null))
-            {
-                timesTriedToRenameFileWithExplorerDisabled++;
-                if (timesTriedToRenameFileWithExplorerDisabled > 3)
-                {
-                    App.API.ShowMsg(App.API.GetTranslation("AreTryingToRenameFile"), App.API.GetTranslation("ExplorerNeedsEnabledForRenameFile"));
-                    timesTriedToRenameFileWithExplorerDisabled = 0;
-                }
-                return;
-
-            }
-            else
-            {
-                string path = SelectedResults?.SelectedItem?.Result.SubTitle ?? "";
-                string name = SelectedResults?.SelectedItem?.Result.Title ?? "";
-                if (string.IsNullOrWhiteSpace(path) || string.IsNullOrWhiteSpace(name)) return;
-                ShowRenamingDialog(explorerPlugin, path, name);
-            }
-        }
-        /// <summary>
-        /// Get an instance of the explorer plugin if it's loaded
-        /// </summary>
-        /// <returns>Returns an instance of  Flow.Launcher.Plugin.Explorer.Main, if it's not loaded this returns null.</returns>
-        private IAsyncPlugin GetExplorerPlugin()
-        {
-            const string explorerPluginID = "572be03c74c642baae319fc283e561a8";
-            IEnumerable<PluginPair> explorerPluginMatches = App.API.GetAllPlugins().Where(
-                plugin => plugin.Metadata.ID == explorerPluginID && plugin.Metadata.Disabled != true) ;
-            if (explorerPluginMatches.Any())
-            {
-                // assuming it's the first plugin as no 2 plugins can be loaded with the same ID
-                return explorerPluginMatches.First().Plugin;
-            }
-            return null;
-        }
-        /// <summary>
-        /// Shows the dialog to rename a file system element.
-        /// </summary>
-        /// <param name="explorerPlugin">An instance of the Flow.Launcher.Plugin.Explorer.Main, which is invisible in the current namespace</param>
-        /// <param name="path">The path of the element</param>
-        /// <param name="name">The new name</param>
-        private void ShowRenamingDialog(dynamic explorerPlugin, string path, string name)
-        {
-            if (File.Exists(Path.Join(path, name)))
-            {
-                explorerPlugin.RenameDialog(new FileInfo(Path.Join(path, name)), App.API);
-                return;
-            }
-            if (Directory.Exists(path))
-            {
-                explorerPlugin.RenameDialog(new DirectoryInfo(path), App.API);
-                return;
-            }
-        }
-        #endregion
 
         #endregion
 
@@ -1086,7 +1011,6 @@ namespace Flow.Launcher.ViewModel
                 _ = ShowPreviewAsync();
             }
         }
-        
 
         private async Task OpenExternalPreviewAsync(string path, bool sendFailToast = true)
         {

@@ -58,7 +58,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string OpenHistoryHotkey { get; set; } = $"Ctrl+H";
         public string CycleHistoryUpHotkey { get; set; } = $"{KeyConstant.Alt} + Up";
         public string CycleHistoryDownHotkey { get; set; } = $"{KeyConstant.Alt} + Down";
-        public string RenameFileHotkey { get; set; } = $"F2";
 
         private string _language = Constant.SystemLanguageCode;
         public string Language
@@ -473,14 +472,13 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                     list.Add(new(CycleHistoryUpHotkey, "CycleHistoryUpHotkey", () => CycleHistoryUpHotkey = ""));
                 if (!string.IsNullOrEmpty(CycleHistoryDownHotkey))
                     list.Add(new(CycleHistoryDownHotkey, "CycleHistoryDownHotkey", () => CycleHistoryDownHotkey = ""));
-                if (!string.IsNullOrEmpty(RenameFileHotkey))
-                    list.Add(new RegisteredHotkeyData(RenameFileHotkey, "RenameFileHotkey", () => RenameFileHotkey = ""));
+
                 // Custom Query Hotkeys
-                    foreach (var customPluginHotkey in CustomPluginHotkeys)
-                    {
-                        if (!string.IsNullOrEmpty(customPluginHotkey.Hotkey))
-                            list.Add(new(customPluginHotkey.Hotkey, "customQueryHotkey", () => customPluginHotkey.Hotkey = ""));
-                    }
+                foreach (var customPluginHotkey in CustomPluginHotkeys)
+                {
+                    if (!string.IsNullOrEmpty(customPluginHotkey.Hotkey))
+                        list.Add(new(customPluginHotkey.Hotkey, "customQueryHotkey", () => customPluginHotkey.Hotkey = ""));
+                }
 
                 return list;
             }

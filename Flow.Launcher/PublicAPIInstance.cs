@@ -222,7 +222,7 @@ namespace Flow.Launcher
                 }  
             }
         }
-        
+
         private static async Task<Exception> RetryActionOnSTAThreadAsync(Action action, int retryCount = 6, int retryDelay = 150)
         {
             for (var i = 0; i < retryCount; i++)

@@ -111,9 +111,7 @@ namespace Flow.Launcher
             SelectPrevItemHotkey,
             SelectPrevItemHotkey2,
             SelectNextItemHotkey,
-            SelectNextItemHotkey2,
-            RenameFileHotkey
-            
+            SelectNextItemHotkey2
         }
 
         // We can initialize settings in static field because it has been constructed in App constuctor
@@ -145,8 +143,6 @@ namespace Flow.Launcher
                     HotkeyType.SelectPrevItemHotkey2 => _settings.SelectPrevItemHotkey2,
                     HotkeyType.SelectNextItemHotkey => _settings.SelectNextItemHotkey,
                     HotkeyType.SelectNextItemHotkey2 => _settings.SelectNextItemHotkey2,
-                    HotkeyType.RenameFileHotkey => _settings.RenameFileHotkey,
-                    
                     _ => throw new System.NotImplementedException("Hotkey type not set")
                 };
             }
@@ -206,9 +202,6 @@ namespace Flow.Launcher
                     case HotkeyType.SelectNextItemHotkey2:
                         _settings.SelectNextItemHotkey2 = value;
                         break;
-                    case HotkeyType.RenameFileHotkey:
-                        _settings.RenameFileHotkey = value;
-                        break;
                     default:
                         throw new System.NotImplementedException("Hotkey type not set");
                 }
@@ -239,7 +232,7 @@ namespace Flow.Launcher
 
         public string EmptyHotkey => App.API.GetTranslation("none");
 
-        public ObservableCollection<string> KeysToDisplay { get; set; } = new ObservableCollection<string>();
+        public ObservableCollection<string> KeysToDisplay { get; set; } = new();
 
         public HotkeyModel CurrentHotkey { get; private set; } = new(false, false, false, false, Key.None);
 
@@ -316,7 +309,6 @@ namespace Flow.Launcher
 
         private void SetKeysToDisplay(HotkeyModel? hotkey)
         {
-
             KeysToDisplay.Clear();
 
             if (hotkey == null || hotkey == default(HotkeyModel))
@@ -330,8 +322,6 @@ namespace Flow.Launcher
                 
                 KeysToDisplay.Add(key);
             }
-
-            
         }
 
         public void SetHotkey(string? keyStr, bool triggerValidate = true)

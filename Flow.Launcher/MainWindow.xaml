@@ -211,10 +211,6 @@
             Key="{Binding CycleHistoryDownHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
             Command="{Binding ForwardHistoryCommand}"
             Modifiers="{Binding CycleHistoryDownHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
-        <KeyBinding
-            Key="{Binding RenameFileHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
-            Command="{Binding RenameFileCommand}"
-            Modifiers="{Binding RenameFileHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
     </Window.InputBindings>
 
     <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">

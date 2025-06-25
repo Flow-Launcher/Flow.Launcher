@@ -557,9 +557,4 @@
     <system:String x:Key="FileSize">File Size</system:String>
     <system:String x:Key="Created">Created</system:String>
     <system:String x:Key="LastModified">Last Modified</system:String>
-
-
-    <system:String x:Key="RenameFileHotkey">Rename a file/directory</system:String>
-    <system:String x:Key="AreTryingToRenameFile">Are you trying to rename a file?</system:String>
-    <system:String x:Key="ExplorerNeedsEnabledForRenameFile">The explorer plugin needs to be enabled for the hotkey to rename files to work.</system:String>
 </ResourceDictionary>
