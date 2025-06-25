@@ -215,8 +215,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
                     },
                     // placeholder until real image is found
-                    IcoPath = Constants.ShowContextMenuImagePath,
-                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue70f")
+                    IcoPath = Constants.RenameImagePath,
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue8ac")
 
                 });
 

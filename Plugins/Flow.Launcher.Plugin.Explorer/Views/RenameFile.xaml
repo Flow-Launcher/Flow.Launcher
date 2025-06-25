@@ -6,8 +6,8 @@
     xmlns:local="clr-namespace:Flow.Launcher.Plugin.Explorer.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="{DynamicResource plugin_explorer_manageactionkeywords_header}"
-    Width="Auto"
-    Height="160"
+    Height="180"
+    MaxWidth="600"
     Background="{DynamicResource PopuBGColor}"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
     Foreground="{DynamicResource PopupTextColor}"
@@ -16,24 +16,23 @@
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="32"
-                      ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}"/>
+        <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
     </WindowChrome.WindowChrome>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="40"/>
+            <RowDefinition />
+            <RowDefinition Height="60" />
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0">
             <StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Button
                         Grid.Column="4"
@@ -48,10 +47,8 @@
                             <Path.Style>
                                 <Style TargetType="Path">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
-                                                     Value="False">
-                                            <Setter Property="Opacity"
-                                                    Value="0.5"/>
+                                        <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                            <Setter Property="Opacity" Value="0.5" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -67,27 +64,25 @@
                         FontSize="20"
                         FontWeight="SemiBold"
                         Text="{DynamicResource plugin_explorer_rename_a_file}"
-                        TextAlignment="Center"/>
+                        TextAlignment="Left" />
                 </StackPanel>
 
-                <StackPanel Margin="0 10 0 0"
-                            Orientation="Horizontal">
+                <StackPanel Margin="0 10 0 0" Orientation="Horizontal">
                     <TextBlock
                         MinWidth="150"
                         Margin="0 10 5 10"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         FontSize="14"
-                        Text="{DynamicResource plugin_explorer_new_file_name}"/>
+                        Text="{DynamicResource plugin_explorer_new_file_name}" />
                     <TextBox
                         Name="RenameTb"
-                        Width="Auto"
+                        Width="300"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        PreviewKeyDown="RenameTb_OnKeyDown"
-                        Text="{Binding NewFileName}"
                         GotFocus="SelectAll_OnTextBoxGotFocus"
-                        />
+                        PreviewKeyDown="RenameTb_OnKeyDown"
+                        Text="{Binding NewFileName}" />
                 </StackPanel>
             </StackPanel>
         </StackPanel>
@@ -96,24 +91,22 @@
             Background="{DynamicResource PopupButtonAreaBGColor}"
             BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
             BorderThickness="0 1 0 0">
-            <StackPanel HorizontalAlignment="Center"
-                        Orientation="Horizontal">
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <Button
                     x:Name="btnCancel"
                     Width="145"
-                    Height="30"
+                    Height="34"
                     Margin="5 0 5 0"
                     Click="BtnCancel"
-                    Content="{DynamicResource cancel}"/>
+                    Content="{DynamicResource cancel}" />
                 <Button
                     Name="btnDone"
                     Width="145"
-                    Height="30"
+                    Height="34"
                     Margin="5 0 5 0"
                     Click="OnDoneButtonClick"
                     Style="{StaticResource AccentButtonStyle}">
-                    <TextBlock x:Name="lblAdd"
-                               Text="{DynamicResource plugin_explorer_rename_file_done}"/>
+                    <TextBlock x:Name="lblAdd" Text="{DynamicResource plugin_explorer_rename_file_done}" />
                 </Button>
             </StackPanel>
         </Border>
