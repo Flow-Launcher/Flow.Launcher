@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Infrastructure;
@@ -39,6 +40,7 @@ namespace Flow.Launcher.Core.Plugin
         private static PluginsSettings Settings;
         private static List<PluginMetadata> _metadatas;
         private static readonly List<string> _modifiedPlugins = new();
+        private static readonly Dictionary<KeyGesture, List<(PluginMetadata, SearchWindowPluginHotkey)>> _windowPluginHotkeys = new();
 
         /// <summary>
         /// Directories that will hold Flow Launcher plugin directory
@@ -252,7 +254,9 @@ namespace Flow.Launcher.Core.Plugin
             _contextMenuPlugins = GetPluginsForInterface<IContextMenu>();
             _homePlugins = GetPluginsForInterface<IAsyncHomeQuery>();
             _hotkeyPlugins = GetPluginsForInterface<IPluginHotkey>();
-            Settings.UpdatePluginHotkeyInfo(GetPluginHotkeyInfo());
+            var pluginHotkeyInfo = GetPluginHotkeyInfo();
+            Settings.UpdatePluginHotkeyInfo(pluginHotkeyInfo);
+            InitializeWindowPluginHotkeys(pluginHotkeyInfo);
 
             foreach (var plugin in AllPlugins)
             {
@@ -455,6 +459,39 @@ namespace Flow.Launcher.Core.Plugin
             }
 
             return hotkeyPluginInfos;
+        }
+
+        public static Dictionary<KeyGesture, List<(PluginMetadata Metadata, SearchWindowPluginHotkey SearchWindowPluginHotkey)>> GetWindowPluginHotkeys()
+        {
+            return _windowPluginHotkeys;
+        }
+
+        private static void InitializeWindowPluginHotkeys(Dictionary<PluginPair, List<BasePluginHotkey>> pluginHotkeyInfo)
+        {
+            foreach (var info in pluginHotkeyInfo)
+            {
+                var pluginPair = info.Key;
+                var hotkeyInfo = info.Value;
+                var metadata = pluginPair.Metadata;
+                foreach (var hotkey in hotkeyInfo)
+                {
+                    if (hotkey.HotkeyType == HotkeyType.SearchWindow && hotkey is SearchWindowPluginHotkey searchWindowHotkey)
+                    {
+                        var hotkeySetting = metadata.PluginHotkeys.Find(h => h.Id == hotkey.Id)?.Hotkey ?? hotkey.DefaultHotkey;
+                        var converter = new KeyGestureConverter();
+                        var keyGesture = (KeyGesture)converter.ConvertFromString(hotkeySetting);
+                        if (keyGesture != null)
+                        {
+                            if (!_windowPluginHotkeys.TryGetValue(keyGesture, out var list))
+                            {
+                                list = new List<(PluginMetadata, SearchWindowPluginHotkey)>();
+                                _windowPluginHotkeys[keyGesture] = list;
+                            }
+                            list.Add((pluginPair.Metadata, searchWindowHotkey));
+                        }
+                    }
+                }
+            }
         }
 
         public static bool ActionKeywordRegistered(string actionKeyword)

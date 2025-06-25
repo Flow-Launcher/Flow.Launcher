@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+using System.Windows.Input;
 using ChefKeys;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
@@ -26,6 +31,7 @@ internal static class HotKeyMapper
         SetHotkey(_settings.Hotkey, OnToggleHotkey);
         LoadCustomPluginHotkey();
         LoadGlobalPluginHotkey();
+        LoadWindowPluginHotkey();
     }
 
     internal static void OnToggleHotkey(object sender, HotkeyEventArgs args)
@@ -173,6 +179,97 @@ internal static class HotKeyMapper
             
             globalHotkey.Action?.Invoke();
         });
+    }
+
+    internal static void LoadWindowPluginHotkey()
+    {
+        var windowPluginHotkeys = PluginManager.GetWindowPluginHotkeys();
+        foreach (var hotkey in windowPluginHotkeys)
+        {
+            var keyGesture = hotkey.Key;
+            SetWindowHotkey(keyGesture, hotkey.Value);
+        }
+    }
+
+    private static void SetWindowHotkey(KeyGesture keyGesture, List<(PluginMetadata Metadata, SearchWindowPluginHotkey PluginHotkey)> hotkeyModels)
+    {
+        try
+        {
+            if (Application.Current?.MainWindow is MainWindow window)
+            {
+                var command = BuildCommand(hotkeyModels);
+
+                // Remove any existing key binding with the same gesture to avoid duplication
+                var existingBinding = window.InputBindings
+                    .OfType<KeyBinding>()
+                    .FirstOrDefault(kb => kb.Gesture == keyGesture);
+
+                if (existingBinding != null)
+                {
+                    throw new InvalidOperationException($"Key binding with gesture {keyGesture} already exists");
+                }
+
+                // Create and add the new key binding
+                var keyBinding = new KeyBinding(command, keyGesture);
+                window.InputBindings.Add(keyBinding);
+            }
+        }
+        catch (Exception e)
+        {
+            App.API.LogError(ClassName,
+                string.Format("Error registering window hotkey {2}: {0} \nStackTrace:{1}",
+                              e.Message,
+                              e.StackTrace,
+                              keyGesture.DisplayString));
+            string errorMsg = string.Format(App.API.GetTranslation("registerWindowHotkeyFailed"), keyGesture.DisplayString);
+            string errorMsgTitle = App.API.GetTranslation("MessageBoxTitle");
+            App.API.ShowMsgBox(errorMsg, errorMsgTitle);
+        }
+    }
+
+    private static ICommand BuildCommand(List<(PluginMetadata Metadata, SearchWindowPluginHotkey PluginHotkey)> hotkeyModels)
+    {
+        return new RelayCommand(() =>
+        {
+            foreach (var hotkeyModel in hotkeyModels)
+            {
+                var metadata = hotkeyModel.Metadata;
+                if (metadata.Disabled)
+                    continue;
+
+                var pluginHotkey = hotkeyModel.PluginHotkey;
+                if (pluginHotkey.Action?.Invoke(_mainViewModel.Results.SelectedItem?.Result) ?? false)
+                    App.API.HideMainWindow();
+            }
+        });
+    }
+
+    internal static void RemoveWindowHotkey(KeyGesture keyGesture)
+    {
+        try
+        {
+            if (Application.Current?.MainWindow is MainWindow window)
+            {
+                // Find and remove the key binding with the specified gesture
+                var existingBinding = window.InputBindings
+                    .OfType<KeyBinding>()
+                    .FirstOrDefault(kb => kb.Gesture == keyGesture);
+                if (existingBinding != null)
+                {
+                    window.InputBindings.Remove(existingBinding);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            App.API.LogError(ClassName,
+                string.Format("Error removing window hotkey: {0} \nStackTrace:{1}",
+                              e.Message,
+                              e.StackTrace));
+            string errorMsg = string.Format(App.API.GetTranslation("unregisterWindowHotkeyFailed"), keyGesture.DisplayString);
+            string errorMsgTitle = App.API.GetTranslation("MessageBoxTitle");
+            App.API.ShowMsgBox(errorMsg, errorMsgTitle);
+        }
     }
 
     internal static bool CheckAvailability(HotkeyModel currentHotkey)
