@@ -48,7 +48,8 @@ public partial class SettingsPaneHotkey
             var metadata = pluginPair.Metadata;
             var excard = new ExCard()
             {
-                Title = metadata.Name
+                Title = metadata.Name,
+                Margin = new Thickness(0, 4, 0, 0),
                 // TODO: Support displaying plugin icon here
             };
             var hotkeyStackPanel = new StackPanel
