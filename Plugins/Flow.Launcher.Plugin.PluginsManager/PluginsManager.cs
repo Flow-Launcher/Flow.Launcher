@@ -527,12 +527,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 IcoPath = icoPath,
                 Action = e =>
                 {
-                    if (e.SpecialKeyState.CtrlPressed)
-                    {
-                        SearchWeb.OpenInBrowserTab(plugin.UrlDownload);
-                        return ShouldHideWindow;
-                    }
-
                     if (Settings.WarnFromUnknownSource)
                     {
                         if (!InstallSourceKnown(plugin.UrlDownload)
@@ -633,12 +627,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             IcoPath = x.IcoPath,
                             Action = e =>
                             {
-                                if (e.SpecialKeyState.CtrlPressed)
-                                {
-                                    SearchWeb.OpenInBrowserTab(x.Website);
-                                    return ShouldHideWindow;
-                                }
-
                                 Context.API.HideMainWindow();
                                 _ = InstallOrUpdateAsync(x); // No need to wait
                                 return ShouldHideWindow;

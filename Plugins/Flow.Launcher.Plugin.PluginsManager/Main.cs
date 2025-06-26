@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Controls;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Controls;
 using Flow.Launcher.Plugin.PluginsManager.ViewModels;
 using Flow.Launcher.Plugin.PluginsManager.Views;
 
 namespace Flow.Launcher.Plugin.PluginsManager
 {
-    public class Main : ISettingProvider, IAsyncPlugin, IContextMenu, IPluginI18n
+    public class Main : ISettingProvider, IAsyncPlugin, IContextMenu, IPluginI18n, IPluginHotkey
     {
         internal static PluginInitContext Context { get; set; }
 
@@ -68,6 +68,37 @@ namespace Flow.Launcher.Plugin.PluginsManager
         public string GetTranslatedPluginDescription()
         {
             return Context.API.GetTranslation("plugin_pluginsmanager_plugin_description");
+        }
+
+        public List<BasePluginHotkey> GetPuginHotkeys()
+        {
+            return new List<BasePluginHotkey>
+            {
+                new SearchWindowPluginHotkey
+                {
+                    Id = 0,
+                    Name = Context.API.GetTranslation("plugin_pluginsmanager_plugin_contextmenu_openwebsite_title"),
+                    Description = Context.API.GetTranslation("plugin_pluginsmanager_plugin_contextmenu_openwebsite_subtitle"),
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uEB41"),
+                    DefaultHotkey = "Ctrl+Enter",
+                    Editable = false,
+                    Visible = true,
+                    Action = (r) =>
+                    {
+                        if (r.ContextData is UserPlugin plugin)
+                        {
+                            if (!string.IsNullOrWhiteSpace(plugin.Website))
+                            {
+                                Context.API.OpenUrl(plugin.Website);
+
+                                return true;
+                            }
+                        }
+
+                        return false;
+                    }
+                }
+            };
         }
     }
 }
