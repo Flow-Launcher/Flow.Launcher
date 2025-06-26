@@ -46,6 +46,11 @@ public partial class SettingsPaneHotkey
             var pluginPair = info.Key;
             var hotkeyInfo = info.Value;
             var metadata = pluginPair.Metadata;
+
+            // Skip this plugin if all hotkeys are invisible
+            var allHotkeyInvisible = hotkeyInfo.All(h => !h.Visible);
+            if (allHotkeyInvisible) continue;
+
             var excard = new ExCard()
             {
                 Title = metadata.Name,
