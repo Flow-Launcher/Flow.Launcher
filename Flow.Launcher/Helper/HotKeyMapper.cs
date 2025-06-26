@@ -273,6 +273,7 @@ internal static class HotKeyMapper
                     if (pluginHotkey.Action == null)
                         continue;
 
+                    // TODO: Remove return to skip other commands & Organize main window hotkeys
                     // Invoke action & return to skip other commands
                     if (pluginHotkey.Action.Invoke(selectedResult))
                         App.API.HideMainWindow();
