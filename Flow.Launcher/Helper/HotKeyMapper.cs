@@ -23,6 +23,8 @@ internal static class HotKeyMapper
     private static Settings _settings;
     private static MainViewModel _mainViewModel;
 
+    private static readonly Dictionary<HotkeyModel, ICommand> _windowHotkeyEvents = new();
+
     internal static void Initialize()
     {
         _mainViewModel = Ioc.Default.GetRequiredService<MainViewModel>();
@@ -204,9 +206,7 @@ internal static class HotKeyMapper
             if (hotkeyModels.Count == 0) return;
             if (Application.Current?.MainWindow is MainWindow window)
             {
-                var command = BuildCommand(hotkeyModels);
-
-                // Remove any existing key binding with the same gesture to avoid duplication
+                // Cache the command for the hotkey if it already exists
                 var keyGesture = hotkey.ToKeyGesture();
                 var existingBinding = window.InputBindings
                     .OfType<KeyBinding>()
@@ -214,13 +214,22 @@ internal static class HotKeyMapper
                         kb.Gesture is KeyGesture keyGesture1 &&
                         keyGesture.Key == keyGesture1.Key &&
                         keyGesture.Modifiers == keyGesture1.Modifiers);
-
                 if (existingBinding != null)
                 {
-                    throw new InvalidOperationException($"Key binding with gesture {hotkey} already exists");
+                    // If the hotkey exists, remove the old command
+                    if (_windowHotkeyEvents.ContainsKey(hotkey))
+                    {
+                        window.InputBindings.Remove(existingBinding);
+                    }
+                    // If the hotkey does not exist, save the old command
+                    else
+                    {
+                        _windowHotkeyEvents[hotkey] = existingBinding.Command;
+                    }   
                 }
 
                 // Create and add the new key binding
+                var command = BuildCommand(hotkey, hotkeyModels);
                 var keyBinding = new KeyBinding(command, keyGesture);
                 window.InputBindings.Add(keyBinding);
             }
@@ -238,10 +247,15 @@ internal static class HotKeyMapper
         }
     }
 
-    private static ICommand BuildCommand(List<(PluginMetadata Metadata, SearchWindowPluginHotkey PluginHotkey)> hotkeyModels)
+    private static ICommand BuildCommand(HotkeyModel hotkey, List<(PluginMetadata Metadata, SearchWindowPluginHotkey PluginHotkey)> hotkeyModels)
     {
         return new RelayCommand(() =>
         {
+            if (_windowHotkeyEvents.TryGetValue(hotkey, out var existingCommand))
+            {
+                existingCommand.Execute(null);
+            }
+
             foreach (var hotkeyModel in hotkeyModels)
             {
                 var metadata = hotkeyModel.Metadata;
@@ -272,6 +286,13 @@ internal static class HotKeyMapper
                 if (existingBinding != null)
                 {
                     window.InputBindings.Remove(existingBinding);
+                }
+
+                // Restore the command if it exists
+                if (_windowHotkeyEvents.TryGetValue(hotkey, out var command))
+                {
+                    var keyBinding = new KeyBinding(command, keyGesture);
+                    window.InputBindings.Add(keyBinding);
                 }
             }
         }
