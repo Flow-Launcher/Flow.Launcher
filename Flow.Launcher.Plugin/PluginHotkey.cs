@@ -91,7 +91,7 @@ public class SearchWindowPluginHotkey : BasePluginHotkey
     }
 
     /// <summary>
-    /// An action that will be executed when the hotkey is triggered.
+    /// An action that will be executed when the hotkey is triggered and a result is selected.
     /// </summary>
     public Func<Result, bool> Action { get; set; } = null;
 }

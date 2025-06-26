@@ -256,15 +256,28 @@ internal static class HotKeyMapper
                 existingCommand.Execute(null);
             }
 
-            foreach (var hotkeyModel in hotkeyModels)
+            var selectedResult = _mainViewModel.Results.SelectedItem?.Result;
+            // Check result nullability
+            if (selectedResult != null)
             {
-                var metadata = hotkeyModel.Metadata;
-                if (metadata.Disabled)
-                    continue;
+                var pluginId = selectedResult.PluginID;
+                foreach (var hotkeyModel in hotkeyModels)
+                {
+                    var metadata = hotkeyModel.Metadata;
+                    var pluginHotkey = hotkeyModel.PluginHotkey;
 
-                var pluginHotkey = hotkeyModel.PluginHotkey;
-                if (pluginHotkey.Action?.Invoke(_mainViewModel.Results.SelectedItem?.Result) ?? false)
-                    App.API.HideMainWindow();
+                    // Check plugin ID match
+                    if (metadata.ID != pluginId)
+                        continue;
+
+                    // Check plugin enabled state
+                    if (metadata.Disabled)
+                        continue;
+
+                    // Invoke action
+                    if (pluginHotkey.Action?.Invoke(selectedResult) ?? false)
+                        App.API.HideMainWindow();
+                }
             }
         });
     }
