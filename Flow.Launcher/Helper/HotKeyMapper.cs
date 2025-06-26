@@ -276,6 +276,8 @@ internal static class HotKeyMapper
                     // Invoke action & return to skip other commands
                     if (pluginHotkey.Action.Invoke(selectedResult))
                         App.API.HideMainWindow();
+
+                    return;
                 }
             }
 
