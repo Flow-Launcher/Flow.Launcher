@@ -251,11 +251,6 @@ internal static class HotKeyMapper
     {
         return new RelayCommand(() =>
         {
-            if (_windowHotkeyEvents.TryGetValue(hotkey, out var existingCommand))
-            {
-                existingCommand.Execute(null);
-            }
-
             var selectedResult = _mainViewModel.Results.SelectedItem?.Result;
             // Check result nullability
             if (selectedResult != null)
@@ -274,10 +269,19 @@ internal static class HotKeyMapper
                     if (metadata.Disabled)
                         continue;
 
-                    // Invoke action
-                    if (pluginHotkey.Action?.Invoke(selectedResult) ?? false)
+                    // Check action nullability
+                    if (pluginHotkey.Action == null)
+                        continue;
+
+                    // Invoke action & return to skip other commands
+                    if (pluginHotkey.Action.Invoke(selectedResult))
                         App.API.HideMainWindow();
                 }
+            }
+
+            if (_windowHotkeyEvents.TryGetValue(hotkey, out var existingCommand))
+            {
+                existingCommand.Execute(null);
             }
         });
     }
