@@ -474,7 +474,7 @@ namespace Flow.Launcher.Plugin.Program
                     Visible = true,
                     Action = (r) =>
                     {
-                        if (r.ContextData is UWPPackage uwp)
+                        if (r.ContextData is UWPApp uwp)
                         {
                             Context.API.OpenDirectory(uwp.Location);
                             return true;
@@ -499,7 +499,7 @@ namespace Flow.Launcher.Plugin.Program
                     Visible = true,
                     Action = (r) =>
                     {
-                        if (r.ContextData is UWPPackage uwp)
+                        if (r.ContextData is UWPApp uwp)
                         {
                             return true;
                         }
