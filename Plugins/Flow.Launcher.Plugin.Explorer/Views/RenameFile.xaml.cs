@@ -39,6 +39,14 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             ShowInTaskbar = false;
             RenameTb.Focus();
+            var window = Window.GetWindow(this);
+            window.KeyDown += (s, e) =>
+            {
+                if (e.Key == Key.Escape)
+                {
+                    Close();
+                }
+            };
         }
 
         /// <summary>
@@ -55,9 +63,10 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             else if (_info is FileInfo info)
             {
                 string properName = Path.GetFileNameWithoutExtension(info.Name);
-                Application.Current.Dispatcher.Invoke(textBox.Select, DispatcherPriority.Background, textBox.Text.IndexOf(properName), properName.Length );
+                Application.Current.Dispatcher.Invoke(textBox.Select, DispatcherPriority.Background, textBox.Text.IndexOf(properName), properName.Length);
             }
         }
+
 
         private void OnDoneButtonClick(object sender, RoutedEventArgs e)
         {
