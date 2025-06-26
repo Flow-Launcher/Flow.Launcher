@@ -3,7 +3,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Helper;
+using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Plugin;
 using Flow.Launcher.Resources.Controls;
 using Flow.Launcher.SettingPages.ViewModels;
 using Flow.Launcher.ViewModel;
@@ -65,16 +69,15 @@ public partial class SettingsPaneHotkey
                 var hotkeySetting = metadata.PluginHotkeys.Find(h => h.Id == hotkey.Id)?.Hotkey ?? hotkey.DefaultHotkey;
                 if (hotkey.Editable)
                 {
-                    // TODO: Check if this can use
                     var hotkeyControl = new HotkeyControl
                     {
                         Type = HotkeyControl.HotkeyType.CustomQueryHotkey,
                         DefaultHotkey = hotkey.DefaultHotkey,
-                        Hotkey = hotkeySetting,
                         ValidateKeyGesture = true
                     };
+                    hotkeyControl.SetHotkey(hotkeySetting, true);
+                    hotkeyControl.ChangeHotkey = new RelayCommand<HotkeyModel>((m) => ChangePluginHotkey(metadata, hotkey, m));
                     card.Content = hotkeyControl;
-                    // TODO: Update metadata & plugin setting hotkey
                 }
                 else
                 {
@@ -88,6 +91,25 @@ public partial class SettingsPaneHotkey
             }
             excard.Content = hotkeyStackPanel;
             PluginHotkeySettings.Children.Add(excard);
+        }
+    }
+
+    private static void ChangePluginHotkey(PluginMetadata metadata, BasePluginHotkey pluginHotkey, HotkeyModel newHotkey)
+    {
+        if (pluginHotkey is GlobalPluginHotkey globalPluginHotkey)
+        {
+            var oldHotkey = PluginManager.ChangePluginHotkey(metadata, globalPluginHotkey, newHotkey);
+            HotKeyMapper.RemoveHotkey(oldHotkey);
+            HotKeyMapper.SetGlobalPluginHotkey(globalPluginHotkey, metadata, newHotkey);
+        }
+        else if (pluginHotkey is SearchWindowPluginHotkey windowPluginHotkey)
+        {
+            var (oldHotkeyModel, newHotkeyModel) = PluginManager.ChangePluginHotkey(metadata, windowPluginHotkey, newHotkey);
+            var windowPluginHotkeys = PluginManager.GetWindowPluginHotkeys();
+            HotKeyMapper.RemoveWindowHotkey(oldHotkeyModel);
+            HotKeyMapper.RemoveWindowHotkey(newHotkeyModel);
+            HotKeyMapper.SetWindowHotkey(oldHotkeyModel, windowPluginHotkeys[oldHotkeyModel]);
+            HotKeyMapper.SetWindowHotkey(newHotkeyModel, windowPluginHotkeys[newHotkeyModel]);
         }
     }
 }

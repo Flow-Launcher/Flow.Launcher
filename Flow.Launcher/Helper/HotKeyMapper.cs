@@ -163,20 +163,27 @@ internal static class HotKeyMapper
             {
                 if (hotkey.HotkeyType == HotkeyType.Global && hotkey is GlobalPluginHotkey globalHotkey)
                 {
-                    var hotkeySetting = metadata.PluginHotkeys.Find(h => h.Id == hotkey.Id)?.Hotkey ?? hotkey.DefaultHotkey;
-                    SetGlobalPluginHotkey(globalHotkey, metadata, hotkeySetting);
+                    var hotkeyStr = metadata.PluginHotkeys.Find(h => h.Id == hotkey.Id)?.Hotkey ?? hotkey.DefaultHotkey;
+                    SetGlobalPluginHotkey(globalHotkey, metadata, hotkeyStr);
                 }
             }
         }
     }
 
-    internal static void SetGlobalPluginHotkey(GlobalPluginHotkey globalHotkey, PluginMetadata metadata, string hotkeySetting)
+    internal static void SetGlobalPluginHotkey(GlobalPluginHotkey globalHotkey, PluginMetadata metadata, string hotkeyStr)
     {
-        SetHotkey(hotkeySetting, (s, e) =>
+        var hotkey = new HotkeyModel(hotkeyStr);
+        SetGlobalPluginHotkey(globalHotkey, metadata, hotkey);
+    }
+
+    internal static void SetGlobalPluginHotkey(GlobalPluginHotkey globalHotkey, PluginMetadata metadata, HotkeyModel hotkey)
+    {
+        var hotkeyStr = hotkey.ToString();
+        SetHotkey(hotkeyStr, (s, e) =>
         {
             if (_mainViewModel.ShouldIgnoreHotkeys() || metadata.Disabled)
                 return;
-            
+
             globalHotkey.Action?.Invoke();
         });
     }
@@ -186,12 +193,11 @@ internal static class HotKeyMapper
         var windowPluginHotkeys = PluginManager.GetWindowPluginHotkeys();
         foreach (var hotkey in windowPluginHotkeys)
         {
-            var keyGesture = hotkey.Key;
-            SetWindowHotkey(keyGesture, hotkey.Value);
+            SetWindowHotkey(hotkey.Key, hotkey.Value);
         }
     }
 
-    internal static void SetWindowHotkey(KeyGesture keyGesture, List<(PluginMetadata Metadata, SearchWindowPluginHotkey PluginHotkey)> hotkeyModels)
+    internal static void SetWindowHotkey(HotkeyModel hotkey, List<(PluginMetadata Metadata, SearchWindowPluginHotkey PluginHotkey)> hotkeyModels)
     {
         try
         {
@@ -201,13 +207,17 @@ internal static class HotKeyMapper
                 var command = BuildCommand(hotkeyModels);
 
                 // Remove any existing key binding with the same gesture to avoid duplication
+                var keyGesture = hotkey.ToKeyGesture();
                 var existingBinding = window.InputBindings
                     .OfType<KeyBinding>()
-                    .FirstOrDefault(kb => kb.Gesture == keyGesture);
+                    .FirstOrDefault(kb => 
+                        kb.Gesture is KeyGesture keyGesture1 &&
+                        keyGesture.Key == keyGesture1.Key &&
+                        keyGesture.Modifiers == keyGesture1.Modifiers);
 
                 if (existingBinding != null)
                 {
-                    throw new InvalidOperationException($"Key binding with gesture {keyGesture} already exists");
+                    throw new InvalidOperationException($"Key binding with gesture {hotkey} already exists");
                 }
 
                 // Create and add the new key binding
@@ -221,8 +231,8 @@ internal static class HotKeyMapper
                 string.Format("Error registering window hotkey {2}: {0} \nStackTrace:{1}",
                               e.Message,
                               e.StackTrace,
-                              keyGesture.DisplayString));
-            string errorMsg = string.Format(App.API.GetTranslation("registerWindowHotkeyFailed"), keyGesture.DisplayString);
+                              hotkey));
+            string errorMsg = string.Format(App.API.GetTranslation("registerWindowHotkeyFailed"), hotkey);
             string errorMsgTitle = App.API.GetTranslation("MessageBoxTitle");
             App.API.ShowMsgBox(errorMsg, errorMsgTitle);
         }
@@ -245,16 +255,20 @@ internal static class HotKeyMapper
         });
     }
 
-    internal static void RemoveWindowHotkey(KeyGesture keyGesture)
+    internal static void RemoveWindowHotkey(HotkeyModel hotkey)
     {
         try
         {
             if (Application.Current?.MainWindow is MainWindow window)
             {
                 // Find and remove the key binding with the specified gesture
+                var keyGesture = hotkey.ToKeyGesture();
                 var existingBinding = window.InputBindings
                     .OfType<KeyBinding>()
-                    .FirstOrDefault(kb => kb.Gesture == keyGesture);
+                    .FirstOrDefault(kb =>
+                        kb.Gesture is KeyGesture keyGesture1 &&
+                        keyGesture.Key == keyGesture1.Key &&
+                        keyGesture.Modifiers == keyGesture1.Modifiers);
                 if (existingBinding != null)
                 {
                     window.InputBindings.Remove(existingBinding);
@@ -267,7 +281,7 @@ internal static class HotKeyMapper
                 string.Format("Error removing window hotkey: {0} \nStackTrace:{1}",
                               e.Message,
                               e.StackTrace));
-            string errorMsg = string.Format(App.API.GetTranslation("unregisterWindowHotkeyFailed"), keyGesture.DisplayString);
+            string errorMsg = string.Format(App.API.GetTranslation("unregisterWindowHotkeyFailed"), hotkey);
             string errorMsgTitle = App.API.GetTranslation("MessageBoxTitle");
             App.API.ShowMsgBox(errorMsg, errorMsgTitle);
         }
