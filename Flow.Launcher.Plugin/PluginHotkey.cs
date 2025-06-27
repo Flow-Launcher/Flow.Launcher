@@ -14,7 +14,7 @@ public class BasePluginHotkey
     /// Initializes a new instance of the <see cref="BasePluginHotkey"/> class with the specified hotkey type.
     /// </summary>
     /// <param name="type"></param>
-    public BasePluginHotkey(HotkeyType type)
+    protected BasePluginHotkey(HotkeyType type)
     {
         HotkeyType = type;
     }
