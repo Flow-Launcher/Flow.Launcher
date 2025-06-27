@@ -8,6 +8,7 @@ using Flow.Launcher.Plugin.Explorer.Helper;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using CommunityToolkit.Mvvm.ComponentModel;
+using System.IO;
 
 namespace Flow.Launcher.Plugin.Explorer.Views;
 
@@ -168,8 +169,8 @@ public partial class QuickAccessLinkSettings
                 string.IsNullOrEmpty(path))
                 return;
 
-            // Remove the last \\ or / in path if it exists because it can cause path type checking issues
-            path = path.TrimEnd('\\', '/');
+            // Remove ending directory separator because it can cause path type checking issues
+            path = Path.TrimEndingDirectorySeparator(path);
             SelectedPath = path;
         }
         else // Folder selection
@@ -184,8 +185,8 @@ public partial class QuickAccessLinkSettings
                 string.IsNullOrEmpty(path))
                 return;
 
-            // Remove the last \\ or / in path if it exists because it can cause path type checking issues
-            path = path.TrimEnd('\\', '/');
+            // Remove ending directory separator because it can cause path type checking issues
+            path = Path.TrimEndingDirectorySeparator(path);
             SelectedPath = path;
         }
     }
