@@ -51,7 +51,10 @@
             </cc:Card>
 
             <cc:CardGroup Margin="0 12 0 0">
-                <cc:Card Title="{DynamicResource openResultModifiers}" Sub="{DynamicResource openResultModifiersToolTip}">
+                <cc:Card
+                    Title="{DynamicResource openResultModifiers}"
+                    Sub="{DynamicResource openResultModifiersToolTip}"
+                    Type="First">
                     <ComboBox
                         Width="120"
                         FontSize="14"
@@ -59,7 +62,10 @@
                         SelectedValue="{Binding Settings.OpenResultModifiers}" />
                 </cc:Card>
 
-                <cc:Card Title="{DynamicResource showOpenResultHotkey}" Sub="{DynamicResource showOpenResultHotkeyToolTip}">
+                <cc:Card
+                    Title="{DynamicResource showOpenResultHotkey}"
+                    Sub="{DynamicResource showOpenResultHotkeyToolTip}"
+                    Type="Last">
                     <ui:ToggleSwitch
                         IsOn="{Binding Settings.ShowOpenResultHotkey}"
                         OffContent="{DynamicResource disable}"
@@ -203,6 +209,15 @@
                             <cc:HotkeyDisplay Keys="Ctrl+Plus" />
                             <cc:HotkeyDisplay Margin="4 0 0 0" Keys="Ctrl+Minus" />
                         </StackPanel>
+                    </cc:Card>
+                    <cc:Card
+                        Title="{DynamicResource RenameFileHotkey}"
+                        Icon="&#xe70f;"
+                        Type="Inside">
+                        <flowlauncher:HotkeyControl
+                            DefaultHotkey="F2"
+                            Type="RenameFileHotkey"
+                            ValidateKeyGesture="True" />
                     </cc:Card>
                 </StackPanel>
             </cc:ExCard>
