@@ -189,31 +189,46 @@ namespace Flow.Launcher
             var releases = JsonSerializer.Deserialize<List<GitHubReleaseInfo>>(releaseNotesJSON);
 
             // Get the latest releases
-            var latestReleases = releases.OrderByDescending(release => release.PublishedDate).Take(3);
+            var latestReleases = releases.OrderByDescending(release => release.PublishedDate).Take(3).ToList();             // .ToList()를 추가하여 인덱스로 접근 가능하게 함
 
             // Build the release notes in Markdown format
             var releaseNotesHtmlBuilder = new StringBuilder(string.Empty);
-            foreach (var release in latestReleases)
+
+            for (int i = 0; i < latestReleases.Count; i++)
             {
+                var release = latestReleases[i];
                 releaseNotesHtmlBuilder.AppendLine("# " + release.Name);
 
                 // Because MdXaml.Html package cannot correctly render images without units,
                 // We need to manually add unit for images
                 // E.g. Replace <img src="..." width="500"> with <img src="..." width="500px">
                 var notes = ImageUnitRegex().Replace(release.ReleaseNotes, m =>
-                    {
-                        var prefix = m.Groups[1].Value;
-                        var widthValue = m.Groups[2].Value;
-                        var quote = m.Groups[3].Value;
-                        var suffix = m.Groups[4].Value;
-                        // Only replace if width is number like 500 without units like 500px
-                        if (IsNumber(widthValue))
-                            return $"{prefix}{widthValue}px{quote}{suffix}";
-                        return m.Value;
-                    });
+                {
+                    var prefix = m.Groups[1].Value;
+                    var widthValue = m.Groups[2].Value;
+                    var quote = m.Groups[3].Value;
+                    var suffix = m.Groups[4].Value;
+                    // Only replace if width is number like 500 without units like 500px
+                    if (IsNumber(widthValue))
+                        return $"{prefix}{widthValue}px{quote}{suffix}";
+                    return m.Value;
+                });
 
                 releaseNotesHtmlBuilder.AppendLine(notes);
                 releaseNotesHtmlBuilder.AppendLine();
+
+                // If not last release note
+                if (i < latestReleases.Count - 1)
+                {
+                    releaseNotesHtmlBuilder.Append("<br />"); 
+                    releaseNotesHtmlBuilder.Append("\n\n"); 
+
+                    releaseNotesHtmlBuilder.AppendLine("---");
+
+                    releaseNotesHtmlBuilder.Append("\n\n"); 
+                    releaseNotesHtmlBuilder.Append("<br />"); 
+                    releaseNotesHtmlBuilder.Append("\n\n"); 
+                }
             }
 
             return releaseNotesHtmlBuilder.ToString();
