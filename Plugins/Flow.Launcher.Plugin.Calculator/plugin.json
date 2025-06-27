@@ -2,7 +2,7 @@
   "ID": "CEA0FDFC6D3B4085823D60DC76F28855",
   "ActionKeyword": "*",
   "Name": "Calculator",
-  "Description": "Provide mathematical calculations.(Try 5*3-2 in Flow Launcher)",
+  "Description": "Perform mathematical calculations (including hexadecimal values)",
   "Author": "cxfksword",
   "Version": "1.0.0",
   "Language": "csharp",
