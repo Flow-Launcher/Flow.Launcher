@@ -2,7 +2,7 @@
   "ID": "CEA0FDFC6D3B4085823D60DC76F28855",
   "ActionKeyword": "*",
   "Name": "Calculator",
-  "Description": "Do mathematical calculations (including hexadecimal values)",
+  "Description": "Perform mathematical calculations (including hexadecimal values)",
   "Author": "cxfksword",
   "Version": "1.0.0",
   "Language": "csharp",
