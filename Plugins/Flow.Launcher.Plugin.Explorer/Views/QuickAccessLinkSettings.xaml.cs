@@ -164,14 +164,12 @@ public partial class QuickAccessLinkSettings
                 CheckPathExists = true
             };
 
-            var path = openFileDialog.FileName;
             if (openFileDialog.ShowDialog() != System.Windows.Forms.DialogResult.OK ||
-                string.IsNullOrEmpty(path))
+                string.IsNullOrEmpty(openFileDialog.FileName))
                 return;
 
             // Remove ending directory separator because it can cause path type checking issues
-            path = Path.TrimEndingDirectorySeparator(path);
-            SelectedPath = path;
+            SelectedPath = Path.TrimEndingDirectorySeparator(openFileDialog.FileName);
         }
         else // Folder selection
         {
@@ -180,14 +178,12 @@ public partial class QuickAccessLinkSettings
                 ShowNewFolderButton = true
             };
 
-            var path = folderBrowserDialog.SelectedPath;
             if (folderBrowserDialog.ShowDialog() != System.Windows.Forms.DialogResult.OK ||
-                string.IsNullOrEmpty(path))
+                string.IsNullOrEmpty(folderBrowserDialog.SelectedPath))
                 return;
 
             // Remove ending directory separator because it can cause path type checking issues
-            path = Path.TrimEndingDirectorySeparator(path);
-            SelectedPath = path;
+            SelectedPath = Path.TrimEndingDirectorySeparator(folderBrowserDialog.SelectedPath);
         }
     }
 
