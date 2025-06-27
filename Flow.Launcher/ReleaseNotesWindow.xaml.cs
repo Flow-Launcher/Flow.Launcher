@@ -189,7 +189,7 @@ namespace Flow.Launcher
             var releases = JsonSerializer.Deserialize<List<GitHubReleaseInfo>>(releaseNotesJSON);
 
             // Get the latest releases
-            var latestReleases = releases.OrderByDescending(release => release.PublishedDate).Take(3).ToList();             // .ToList()를 추가하여 인덱스로 접근 가능하게 함
+            var latestReleases = releases.OrderByDescending(release => release.PublishedDate).Take(3).ToList();
 
             // Build the release notes in Markdown format
             var releaseNotesHtmlBuilder = new StringBuilder(string.Empty);
@@ -217,7 +217,7 @@ namespace Flow.Launcher
                 releaseNotesHtmlBuilder.AppendLine(notes);
                 releaseNotesHtmlBuilder.AppendLine();
 
-                // If not last release note
+                // Add separator if it is not last release note
                 if (i < latestReleases.Count - 1)
                 {
                     releaseNotesHtmlBuilder.Append("<br />"); 
