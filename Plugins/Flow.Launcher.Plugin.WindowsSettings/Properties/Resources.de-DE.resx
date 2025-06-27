@@ -2143,7 +2143,7 @@
     <value>Windows-Features ein- oder ausschalten</value>
   </data>
   <data name="ShowWhichOperatingSystemYourComputerIsRunning" xml:space="preserve">
-    <value>Betriebssystem, welches auf deinem Computer läuft, anzeigen</value>
+    <value>Anzeigen, welches Betriebssystem auf Ihrem Computer ausgeführt wird</value>
   </data>
   <data name="ViewLocalServices" xml:space="preserve">
     <value>Lokale Dienste ansehen</value>
@@ -2197,10 +2197,10 @@
     <value>Einstellungen für Microsoft IME (Japanisch)</value>
   </data>
   <data name="InviteSomeoneToConnectToYourPCAndHelpYouOrOfferToHelpSomeoneElse" xml:space="preserve">
-    <value>Lade jemanden ein, sich mit deinem PC zu verbinden und dir zu helfen oder anderen zu helfen</value>
+    <value>Laden Sie jemanden ein, eine Verbindung zu Ihrem PC herzustellen und Ihnen zu helfen, oder bieten Sie an, jemand anderem zu helfen</value>
   </data>
   <data name="RunProgramsMadeForPreviousVersionsOfWindows" xml:space="preserve">
-    <value>Programme für frühere Versionen von Windows ausführen</value>
+    <value>Programme ausführen, die für frühere Versionen von Windows entwickelt wurden</value>
   </data>
   <data name="ChooseTheOrderOfHowYourScreenRotates" xml:space="preserve">
     <value>Choose the order of how your screen rotates</value>
