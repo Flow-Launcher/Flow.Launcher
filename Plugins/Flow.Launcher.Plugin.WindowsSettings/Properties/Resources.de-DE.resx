@@ -1752,7 +1752,7 @@
     <value>Einen Dateityp immer in einem spezifischen Programm öffnen lassen</value>
   </data>
   <data name="ChangeTheNarratorSVoice" xml:space="preserve">
-    <value>Stimme ändern</value>
+    <value>Ändern der Stimme des Erzählers</value>
   </data>
   <data name="FindAndFixKeyboardProblems" xml:space="preserve">
     <value>Tastaturprobleme finden und beheben</value>
@@ -1761,7 +1761,7 @@
     <value>Screenreader verwenden</value>
   </data>
   <data name="ShowWhichWorkgroupThisComputerIsOn" xml:space="preserve">
-    <value>Arbeitsgruppe auf diesem Computer Anzeigen</value>
+    <value>Anzeigen, zu welcher Arbeitsgruppe dieser Computer gehört</value>
   </data>
   <data name="ChangeMouseWheelSettings" xml:space="preserve">
     <value>Mausrad-Einstellungen ändern</value>
@@ -1773,7 +1773,7 @@
     <value>Probleme finden und beheben</value>
   </data>
   <data name="ChangeSettingsForContentReceivedUsingTapAndSend" xml:space="preserve">
-    <value>Einstellung für empfangene Inhalte von Tippen und Senden</value>
+    <value>Ändern der Einstellungen für Inhalte, die über Tippen und Senden empfangen werden</value>
   </data>
   <data name="ChangeDefaultSettingsForMediaOrDevices" xml:space="preserve">
     <value>Change default settings for media or devices</value>
@@ -1971,7 +1971,7 @@
     <value>Benutzer auswählen, die den Remote-Desktop verwenden können</value>
   </data>
   <data name="ShowWhichProgramsAreInstalledOnYourComputer" xml:space="preserve">
-    <value>Show which programs are installed on your computer</value>
+    <value>Anzeigen, welche Programme auf Ihrem Computer installiert sind</value>
   </data>
   <data name="AllowRemoteAccessToYourComputer" xml:space="preserve">
     <value>Remote-Zugriff auf Ihren Computer erlauben</value>
@@ -2176,7 +2176,7 @@
     <value>Change advanced colour management settings for displays, scanners and printers</value>
   </data>
   <data name="LetWindowsSuggestEaseOfAccessSettings" xml:space="preserve">
-    <value>Lasse Windows Vereinfachte Zugriffseinstellungen vorschlagen</value>
+    <value>Windows die Einstellungen für erleichterte Bedienung vorschlagen lassen</value>
   </data>
   <data name="ClearDiskSpaceByDeletingUnnecessaryFiles" xml:space="preserve">
     <value>Clear disk space by deleting unnecessary files</value>
@@ -2191,7 +2191,7 @@
     <value>Record steps to reproduce a problem</value>
   </data>
   <data name="AdjustTheAppearanceAndPerformanceOfWindows" xml:space="preserve">
-    <value>Aussehen und Leistung von Windows anpassen</value>
+    <value>Anpassen des Erscheinungsbildes und der Leistung von Windows</value>
   </data>
   <data name="SettingsForMicrosoftIMEJapanese" xml:space="preserve">
     <value>Einstellungen für Microsoft IME (Japanisch)</value>
@@ -2302,13 +2302,13 @@
     <value>How to change the size of virtual memory</value>
   </data>
   <data name="HearTextReadAloudWithNarrator" xml:space="preserve">
-    <value>Hear text read aloud with Narrator</value>
+    <value>Text mit Erzähler vorlesen lassen</value>
   </data>
   <data name="SetUpUSBGameControllers" xml:space="preserve">
     <value>Set up USB game controllers</value>
   </data>
   <data name="ShowWhichDomainYourComputerIsOn" xml:space="preserve">
-    <value>Show which domain your computer is on</value>
+    <value>Anzeigen, in welcher Domäne sich Ihr Computer befindet</value>
   </data>
   <data name="ViewAllProblemReports" xml:space="preserve">
     <value>Alle Problemberichte ansehen</value>
