@@ -32,35 +32,35 @@
                 TextAlignment="left" />
 
             <cc:CardGroup>
-                <cc:Card Title="{DynamicResource enableProxy}">
+                <cc:Card Title="{DynamicResource enableProxy}" Type="First">
                     <ui:ToggleSwitch
                         IsOn="{Binding Settings.Proxy.Enabled}"
                         OffContent="{DynamicResource disable}"
                         OnContent="{DynamicResource enable}" />
                 </cc:Card>
 
-                <cc:Card Title="{DynamicResource server}">
+                <cc:Card Title="{DynamicResource server}" Type="Middle">
                     <TextBox
                         Width="300"
                         IsEnabled="{Binding Settings.Proxy.Enabled}"
                         Text="{Binding Settings.Proxy.Server}" />
                 </cc:Card>
 
-                <cc:Card Title="{DynamicResource port}">
+                <cc:Card Title="{DynamicResource port}" Type="Middle">
                     <TextBox
                         Width="100"
                         IsEnabled="{Binding Settings.Proxy.Enabled}"
                         Text="{Binding Settings.Proxy.Port, TargetNullValue={x:Static sys:String.Empty}}" />
                 </cc:Card>
 
-                <cc:Card Title="{DynamicResource userName}">
+                <cc:Card Title="{DynamicResource userName}" Type="Middle">
                     <TextBox
                         Width="200"
                         IsEnabled="{Binding Settings.Proxy.Enabled}"
                         Text="{Binding Settings.Proxy.UserName}" />
                 </cc:Card>
 
-                <cc:Card Title="{DynamicResource password}">
+                <cc:Card Title="{DynamicResource password}" Type="Middle">
                     <TextBox
                         Width="200"
                         IsEnabled="{Binding Settings.Proxy.Enabled}"
