@@ -38,21 +38,21 @@
                                 <Setter Property="Background" Value="Transparent" />
                             </DataTrigger>
 
-                            <DataTrigger Binding="{Binding (local:CardGroup.Position), RelativeSource={RelativeSource AncestorType=local:Card}}" Value="First">
+                            <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource AncestorType=local:Card}}" Value="First">
                                 <Setter Property="Margin" Value="0" />
                                 <Setter Property="CornerRadius" Value="0" />
                                 <Setter Property="Background" Value="Transparent" />
                                 <Setter Property="BorderThickness" Value="0" />
                             </DataTrigger>
 
-                            <DataTrigger Binding="{Binding (local:CardGroup.Position), RelativeSource={RelativeSource AncestorType=local:Card}}" Value="Middle">
+                            <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource AncestorType=local:Card}}" Value="Middle">
                                 <Setter Property="Margin" Value="0" />
                                 <Setter Property="CornerRadius" Value="0" />
                                 <Setter Property="Background" Value="Transparent" />
                                 <Setter Property="BorderThickness" Value="0 1 0 0" />
                             </DataTrigger>
 
-                            <DataTrigger Binding="{Binding (local:CardGroup.Position), RelativeSource={RelativeSource AncestorType=local:Card}}" Value="Last">
+                            <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource AncestorType=local:Card}}" Value="Last">
                                 <Setter Property="Margin" Value="0" />
                                 <Setter Property="CornerRadius" Value="0" />
                                 <Setter Property="Background" Value="Transparent" />

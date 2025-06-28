@@ -489,7 +489,8 @@
                     Title="{DynamicResource BackdropType}"
                     Margin="0 0 0 0"
                     Icon="&#xeb42;"
-                    Sub="{Binding BackdropSubText}">
+                    Sub="{Binding BackdropSubText}"
+                    Type="First">
                     <ComboBox
                         MinWidth="160"
                         VerticalAlignment="Center"
@@ -505,7 +506,8 @@
                 <cc:Card
                     Title="{DynamicResource queryWindowShadowEffect}"
                     Margin="0 0 0 0"
-                    Icon="&#xeb91;">
+                    Icon="&#xeb91;"
+                    Type="Last">
                     <ui:ToggleSwitch
                         IsEnabled="{Binding IsDropShadowEnabled}"
                         IsOn="{Binding DropShadowEffect}"
@@ -546,7 +548,10 @@
 
             <!--  Time and date  -->
             <cc:CardGroup Margin="0 14 0 0">
-                <cc:Card Title="{DynamicResource Clock}" Icon="&#xec92;">
+                <cc:Card
+                    Title="{DynamicResource Clock}"
+                    Icon="&#xec92;"
+                    Type="First">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock
                             VerticalAlignment="Center"
@@ -567,7 +572,10 @@
                     </StackPanel>
                 </cc:Card>
 
-                <cc:Card Title="{DynamicResource Date}" Icon="&#xe787;">
+                <cc:Card
+                    Title="{DynamicResource Date}"
+                    Icon="&#xe787;"
+                    Type="Last">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock
                             VerticalAlignment="Center"
