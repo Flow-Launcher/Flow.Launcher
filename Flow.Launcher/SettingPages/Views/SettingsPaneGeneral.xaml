@@ -237,7 +237,7 @@
                         OnContent="{DynamicResource enable}" />
                 </cc:ExCard.SideContent>
 
-                <cc:CardGroup>
+                <StackPanel>
                     <cc:Card
                         Title="{DynamicResource autoQuickSwitch}"
                         Sub="{DynamicResource autoQuickSwitchToolTip}"
@@ -296,7 +296,7 @@
                             SelectedValue="{Binding Settings.QuickSwitchFileResultBehaviour}"
                             SelectedValuePath="Value" />
                     </cc:Card>
-                </cc:CardGroup>
+                </StackPanel>
             </cc:ExCard>
 
             <cc:InfoBar
