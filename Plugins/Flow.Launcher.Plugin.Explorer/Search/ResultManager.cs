@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using System.Windows.Input;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.Views;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -133,7 +133,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Score = score,
                 TitleToolTip = Main.Context.API.GetTranslation("plugin_explorer_plugin_ToolTipOpenDirectory"),
                 SubTitleToolTip = Settings.DisplayMoreInformationInToolTip ? GetFolderMoreInfoTooltip(path) : path,
-                ContextData = new SearchResult { Type = ResultType.Folder, FullPath = path, WindowsIndexed = windowsIndexed }
+                ContextData = new SearchResult { Type = ResultType.Folder, FullPath = path, WindowsIndexed = windowsIndexed },
+                HotkeyIds = new List<int>
+                {
+                    0, 1, 2, 3
+                },
             };
         }
 
@@ -238,7 +242,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     OpenFolder(folderPath);
                     return true;
                 },
-                ContextData = new SearchResult { Type = ResultType.Folder, FullPath = folderPath, WindowsIndexed = windowsIndexed }
+                ContextData = new SearchResult { Type = ResultType.Folder, FullPath = folderPath, WindowsIndexed = windowsIndexed },
+                HotkeyIds = new List<int>
+                {
+                    1
+                },
             };
         }
 
@@ -280,7 +288,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 },
                 TitleToolTip = Main.Context.API.GetTranslation("plugin_explorer_plugin_ToolTipOpenContainingFolder"),
                 SubTitleToolTip = Settings.DisplayMoreInformationInToolTip ? GetFileMoreInfoTooltip(filePath) : filePath,
-                ContextData = new SearchResult { Type = ResultType.File, FullPath = filePath, WindowsIndexed = windowsIndexed }
+                ContextData = new SearchResult { Type = ResultType.File, FullPath = filePath, WindowsIndexed = windowsIndexed },
+                HotkeyIds = new List<int>
+                {
+                    0, 1, 2, 3
+                },
             };
             return result;
         }

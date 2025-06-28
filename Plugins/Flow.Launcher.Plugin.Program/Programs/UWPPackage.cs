@@ -457,7 +457,11 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     }
 
                     return true;
-                }
+                },
+                HotkeyIds = new List<int>
+                {
+                    0
+                },
             };
 
 

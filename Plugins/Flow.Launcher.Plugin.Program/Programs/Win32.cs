@@ -199,7 +199,11 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     _ = Task.Run(() => Main.StartProcess(Process.Start, info));
 
                     return true;
-                }
+                },
+                HotkeyIds = new List<int>
+                {
+                    0
+                },
             };
 
             return result;

@@ -388,12 +388,15 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
                             return true;
                         },
-                        ContextData =
-                            new UserPlugin
-                            {
-                                Website = x.PluginNewUserPlugin.Website,
-                                UrlSourceCode = x.PluginNewUserPlugin.UrlSourceCode
-                            }
+                        ContextData = new UserPlugin
+                        {
+                            Website = x.PluginNewUserPlugin.Website,
+                            UrlSourceCode = x.PluginNewUserPlugin.UrlSourceCode
+                        },
+                        HotkeyIds = new List<int>
+                        {
+                            0
+                        },
                     });
 
             // Update all result
@@ -631,7 +634,11 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                 _ = InstallOrUpdateAsync(x); // No need to wait
                                 return ShouldHideWindow;
                             },
-                            ContextData = x
+                            ContextData = x,
+                            HotkeyIds = new List<int>
+                            {
+                                0
+                            },
                         });
 
             return Search(results, search);
@@ -724,7 +731,15 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             }
 
                             return false;
-                        }
+                        },
+                        ContextData = new UserPlugin
+                        {
+                            Website = x.Metadata.Website
+                        },
+                        HotkeyIds = new List<int>
+                        {
+                            0
+                        },
                     });
 
             return Search(results, search);
