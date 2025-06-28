@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.QuickSwitch;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -26,6 +27,9 @@ namespace Flow.Launcher.Core.Plugin
 
         private static IEnumerable<PluginPair> _contextMenuPlugins;
         private static IEnumerable<PluginPair> _homePlugins;
+
+        private static readonly List<QuickSwitchExplorerPair> _quickSwitchExplorerPlugins = new();
+        private static readonly List<QuickSwitchDialogPair> _quickSwitchDialogPlugins = new();
 
         public static List<PluginPair> AllPlugins { get; private set; }
         public static readonly HashSet<PluginPair> GlobalPlugins = new();
@@ -251,6 +255,23 @@ namespace Flow.Launcher.Core.Plugin
             _contextMenuPlugins = GetPluginsForInterface<IContextMenu>();
             _homePlugins = GetPluginsForInterface<IAsyncHomeQuery>();
 
+            foreach (var pair in GetPluginsForInterface<IQuickSwitchExplorer>())
+            {
+                _quickSwitchExplorerPlugins.Add(new QuickSwitchExplorerPair
+                {
+                    Plugin = (IQuickSwitchExplorer)pair.Plugin,
+                    Metadata = pair.Metadata
+                });
+            }
+            foreach (var pair in GetPluginsForInterface<IQuickSwitchDialog>())
+            {
+                _quickSwitchDialogPlugins.Add(new QuickSwitchDialogPair
+                {
+                    Plugin = (IQuickSwitchDialog)pair.Plugin,
+                    Metadata = pair.Metadata
+                });
+            }
+
             foreach (var plugin in AllPlugins)
             {
                 // set distinct on each plugin's action keywords helps only firing global(*) and action keywords once where a plugin
@@ -473,6 +494,16 @@ namespace Flow.Launcher.Core.Plugin
         public static bool IsHomePlugin(string id)
         {
             return _homePlugins.Any(p => p.Metadata.ID == id);
+        }
+
+        public static IList<QuickSwitchExplorerPair> GetQuickSwitchExplorers()
+        {
+            return _quickSwitchExplorerPlugins;
+        }
+
+        public static IList<QuickSwitchDialogPair> GetQuickSwitchDialogs()
+        {
+            return _quickSwitchDialogPlugins;
         }
 
         public static bool ActionKeywordRegistered(string actionKeyword)

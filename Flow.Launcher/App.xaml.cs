@@ -228,7 +228,7 @@ namespace Flow.Launcher
                 // Initialize theme for main window
                 Ioc.Default.GetRequiredService<Theme>().ChangeTheme();
 
-                QuickSwitch.InitializeQuickSwitch();
+                QuickSwitch.InitializeQuickSwitch(PluginManager.GetQuickSwitchExplorers(), PluginManager.GetQuickSwitchDialogs());
                 QuickSwitch.SetupQuickSwitch(_settings.EnableQuickSwitch);
 
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);

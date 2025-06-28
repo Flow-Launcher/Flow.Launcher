@@ -30,6 +30,26 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         public static QuickSwitchWindowPositions QuickSwitchWindowPosition { get; private set; }
 
+        public static QuickSwitchExplorerPair WindowsQuickSwitchExplorer { get; } = new()
+        {
+            Metadata = new()
+            {
+                ID = "298b197c08a24e90ab66ac060ee2b6b8", // ID is for calculating the hash id of the quick switch pairs
+                Disabled = false // Disabled is for enabling the Windows QuickSwitch explorers & dialogs
+            },
+            Plugin = new WindowsExplorer()
+        };
+
+        public static QuickSwitchDialogPair WindowsQuickSwitchDialog { get; } = new()
+        {
+            Metadata = new()
+            {
+                ID = "a4a113dc51094077ab4abb391e866c7b", // ID is for calculating the hash id of the quick switch pairs
+                Disabled = false // Disabled is for enabling the Windows QuickSwitch explorers & dialogs
+            },
+            Plugin = new WindowsDialog()
+        };
+
         #endregion
 
         #region Private Fields
@@ -40,18 +60,12 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         private static HWND _mainWindowHandle = HWND.Null;
 
-        private static readonly Dictionary<IQuickSwitchExplorer, IQuickSwitchExplorerWindow> _quickSwitchExplorers = new()
-        {
-            { new WindowsExplorer(), null }
-        };
+        private static readonly Dictionary<QuickSwitchExplorerPair, IQuickSwitchExplorerWindow> _quickSwitchExplorers = new();
 
-        private static IQuickSwitchExplorer _lastExplorer = null;
+        private static QuickSwitchExplorerPair _lastExplorer = null;
         private static readonly object _lastExplorerLock = new();
 
-        private static readonly Dictionary<IQuickSwitchDialog, IQuickSwitchDialogWindow> _quickSwitchDialogs = new()
-        {
-            { new WindowsDialog(), null }
-        };
+        private static readonly Dictionary<QuickSwitchDialogPair, IQuickSwitchDialogWindow> _quickSwitchDialogs = new();
 
         private static IQuickSwitchDialogWindow _dialogWindow = null;
         private static readonly object _dialogWindowLock = new();
@@ -83,9 +97,22 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         #region Initialize & Setup
 
-        public static void InitializeQuickSwitch()
+        public static void InitializeQuickSwitch(IList<QuickSwitchExplorerPair> quickSwitchExplorers,
+            IList<QuickSwitchDialogPair> quickSwitchDialogs)
         {
             if (_initialized) return;
+
+            // Initialize quick switch explorers & dialogs
+            _quickSwitchExplorers.Add(WindowsQuickSwitchExplorer, null);
+            foreach (var explorer in quickSwitchExplorers)
+            {
+                _quickSwitchExplorers.Add(explorer, null);
+            }
+            _quickSwitchDialogs.Add(WindowsQuickSwitchDialog, null);
+            foreach (var dialog in quickSwitchDialogs)
+            {
+                _quickSwitchDialogs.Add(dialog, null);
+            }
 
             // Initialize main window handle
             _mainWindowHandle = Win32Helper.GetMainWindowHandle();
@@ -242,7 +269,9 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 {
                     foreach (var explorer in _quickSwitchExplorers.Keys)
                     {
-                        var explorerWindow = explorer.CheckExplorerWindow(hWnd);
+                        if (explorer.Metadata.Disabled) continue;
+
+                        var explorerWindow = explorer.Plugin.CheckExplorerWindow(hWnd);
                         if (explorerWindow != null)
                         {
                             _quickSwitchExplorers[explorer] = explorerWindow;
@@ -407,6 +436,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 var dialogWindowChanged = false;
                 foreach (var dialog in _quickSwitchDialogs.Keys)
                 {
+                    if (dialog.Metadata.Disabled) continue;
+
                     IQuickSwitchDialogWindow dialogWindow;
                     var existingDialogWindow = _quickSwitchDialogs[dialog];
                     if (existingDialogWindow != null && existingDialogWindow.Handle == hwnd)
@@ -416,7 +447,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     }
                     else
                     {
-                        dialogWindow = dialog.CheckDialogWindow(hwnd);
+                        dialogWindow = dialog.Plugin.CheckDialogWindow(hwnd);
                     }
 
                     // If the dialog window is found, set it
@@ -496,7 +527,9 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                         {
                             foreach (var explorer in _quickSwitchExplorers.Keys)
                             {
-                                var explorerWindow = explorer.CheckExplorerWindow(hwnd);
+                                if (explorer.Metadata.Disabled) continue;
+
+                                var explorerWindow = explorer.Plugin.CheckExplorerWindow(hwnd);
                                 if (explorerWindow != null)
                                 {
                                     Log.Debug(ClassName, $"Explorer window: {hwnd}");
@@ -693,6 +726,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             // Finally search for the dialog window again
             foreach (var dialog in _quickSwitchDialogs.Keys)
             {
+                if (dialog.Metadata.Disabled) continue;
+
                 IQuickSwitchDialogWindow dialogWindow;
                 var existingDialogWindow = _quickSwitchDialogs[dialog];
                 if (existingDialogWindow != null && existingDialogWindow.Handle == hwnd)
@@ -702,7 +737,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 }
                 else
                 {
-                    dialogWindow = dialog.CheckDialogWindow(hwnd);
+                    dialogWindow = dialog.Plugin.CheckDialogWindow(hwnd);
                 }
 
                 return dialogWindow;
@@ -835,7 +870,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             foreach (var explorer in _quickSwitchExplorers.Keys)
             {
                 _quickSwitchExplorers[explorer]?.Dispose();
-                explorer.Dispose();
             }
             _quickSwitchExplorers.Clear();
             lock (_lastExplorerLock)
@@ -847,7 +881,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             foreach (var dialog in _quickSwitchDialogs.Keys)
             {
                 _quickSwitchDialogs[dialog]?.Dispose();
-                dialog.Dispose();
             }
             _quickSwitchDialogs.Clear();
             lock (_dialogWindowLock)
