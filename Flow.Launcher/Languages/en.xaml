@@ -313,6 +313,28 @@
     <system:String x:Key="showBadges">Show Result Badges</system:String>
     <system:String x:Key="showBadgesToolTip">For supported plugins, badges are displayed to help distinguish them more easily.</system:String>
     <system:String x:Key="showBadgesGlobalOnly">Show Result Badges for Global Query Only</system:String>
+    <system:String x:Key="showBadgesGlobalOnlyToolTip">Show badges for global query results only</system:String>
+    <system:String x:Key="quickSwitchHotkey">Quick Switch</system:String>
+    <system:String x:Key="quickSwitchHotkeyToolTip">Enter shortcut to quickly navigate the path of a file dialog to the path of the current file manager.</system:String>
+    <system:String x:Key="quickSwitch">Quick Switch</system:String>
+    <system:String x:Key="quickSwitchToolTip">Quickly navigate to the path of the current file manager when a file dialog is opened.</system:String>
+    <system:String x:Key="autoQuickSwitch">Quick Switch Automatically</system:String>
+    <system:String x:Key="autoQuickSwitchToolTip">Automatically navigate to the path of the current file manager when a file dialog is opened. (Experimental)</system:String>
+    <system:String x:Key="showQuickSwitchWindow">Show Quick Switch Window</system:String>
+    <system:String x:Key="showQuickSwitchWindowToolTip">Show quick switch search window when file dialogs are opened to navigate its path (Only work for file open dialog).</system:String>
+    <system:String x:Key="quickSwitchWindowPosition">Quick Switch Window Position</system:String>
+    <system:String x:Key="quickSwitchWindowPositionToolTip">Select position for quick switch window</system:String>
+    <system:String x:Key="QuickSwitchWindowPositionUnderDialog">Fixed under dialogs. Displayed after dialogs are created and until it is closed</system:String>
+    <system:String x:Key="QuickSwitchWindowPositionFollowDefault">Floating as search window. Displayed when activated like search window</system:String>
+    <system:String x:Key="quickSwitchResultBehaviour">Quick Switch Result Navigation Behaviour</system:String>
+    <system:String x:Key="quickSwitchResultBehaviourToolTip">Behaviour to navigate file dialogs to paths of the results</system:String>
+    <system:String x:Key="QuickSwitchResultBehaviourLeftClick">Left click or Enter key</system:String>
+    <system:String x:Key="QuickSwitchResultBehaviourRightClick">Right click</system:String>
+    <system:String x:Key="quickSwitchFileResultBehaviour">Quick Switch File Navigation Behaviour</system:String>
+    <system:String x:Key="quickSwitchFileResultBehaviourToolTip">Behaviour to navigate file dialogs when paths of the results are files</system:String>
+    <system:String x:Key="QuickSwitchFileResultBehaviourFullPath">Fill full path in file name box</system:String>
+    <system:String x:Key="QuickSwitchFileResultBehaviourFullPathOpen">Fill full path in file name box and open</system:String>
+    <system:String x:Key="QuickSwitchFileResultBehaviourDirectory">Fill directory in path box</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP Proxy</system:String>

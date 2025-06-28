@@ -16,6 +16,7 @@ using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.QuickSwitch;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -51,6 +52,7 @@ namespace Flow.Launcher.ViewModel
         private Task _resultsViewUpdateTask;
 
         private readonly IReadOnlyList<Result> _emptyResult = new List<Result>();
+        private readonly IReadOnlyList<QuickSwitchResult> _emptyQuickSwitchResult = new List<QuickSwitchResult>();
 
         private readonly PluginMetadata _historyMetadata = new()
         {
@@ -202,7 +204,8 @@ namespace Flow.Launcher.ViewModel
             var resultUpdateChannel = Channel.CreateUnbounded<ResultsForUpdate>();
             _resultsUpdateChannelWriter = resultUpdateChannel.Writer;
             _resultsViewUpdateTask =
-                Task.Run(UpdateActionAsync).ContinueWith(continueAction, CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.Default);
+                Task.Run(UpdateActionAsync).ContinueWith(continueAction,
+                    CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.Default);
 
             async Task UpdateActionAsync()
             {
@@ -272,8 +275,16 @@ namespace Flow.Launcher.ViewModel
 
                     var token = e.Token == default ? _updateToken : e.Token;
 
-                    // make a clone to avoid possible issue that plugin will also change the list and items when updating view model
-                    var resultsCopy = DeepCloneResults(e.Results, token);
+                    IReadOnlyList<Result> resultsCopy;
+                    if (e.Results == null)
+                    {
+                        resultsCopy = _emptyResult;
+                    }
+                    else
+                    {
+                        // make a clone to avoid possible issue that plugin will also change the list and items when updating view model
+                        resultsCopy = DeepCloneResults(e.Results, false, token);
+                    }
 
                     foreach (var result in resultsCopy)
                     {
@@ -381,12 +392,30 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void LoadContextMenu()
         {
+            // For quick switch and right click mode, we need to navigate to the path 
+            if (_isQuickSwitch && Settings.QuickSwitchResultBehaviour == QuickSwitchResultBehaviours.RightClick)
+            {
+                if (SelectedResults.SelectedItem != null && DialogWindowHandle != nint.Zero)
+                {
+                    var result = SelectedResults.SelectedItem.Result;
+                    if (result is QuickSwitchResult quickSwitchResult)
+                    {
+                        Win32Helper.SetForegroundWindow(DialogWindowHandle);
+                        _ = Task.Run(() => QuickSwitch.JumpToPathAsync(DialogWindowHandle, quickSwitchResult.QuickSwitchPath));
+                    }
+                }
+                return;
+            }
+
+            // For query mode, we load context menu
             if (QueryResultsSelected())
             {
                 // When switch to ContextMenu from QueryResults, but no item being chosen, should do nothing
                 // i.e. Shift+Enter/Ctrl+O right after Alt + Space should do nothing
                 if (SelectedResults.SelectedItem != null)
+                {
                     SelectedResults = ContextMenu;
+                }
             }
             else
             {
@@ -456,12 +485,34 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
-            var hideWindow = await result.ExecuteAsync(new ActionContext
+            // For quick switch and left click mode, we need to navigate to the path
+            if (_isQuickSwitch && Settings.QuickSwitchResultBehaviour == QuickSwitchResultBehaviours.LeftClick)
             {
-                // not null means pressing modifier key + number, should ignore the modifier key
-                SpecialKeyState = index is not null ? SpecialKeyState.Default : GlobalHotkey.CheckModifiers()
-            })
-            .ConfigureAwait(false);
+                Hide();
+
+                if (SelectedResults.SelectedItem != null && DialogWindowHandle != nint.Zero)
+                {
+                    if (result is QuickSwitchResult quickSwitchResult)
+                    {
+                        Win32Helper.SetForegroundWindow(DialogWindowHandle);
+                        _ = Task.Run(() => QuickSwitch.JumpToPathAsync(DialogWindowHandle, quickSwitchResult.QuickSwitchPath));
+                    }
+                }
+            }
+            // For query mode, we execute the result
+            else
+            {
+                var hideWindow = await result.ExecuteAsync(new ActionContext
+                {
+                    // not null means pressing modifier key + number, should ignore the modifier key
+                    SpecialKeyState = index is not null ? SpecialKeyState.Default : GlobalHotkey.CheckModifiers()
+                }).ConfigureAwait(false);
+
+                if (hideWindow)
+                {
+                    Hide();
+                }
+            }
 
             if (QueryResultsSelected())
             {
@@ -469,26 +520,33 @@ namespace Flow.Launcher.ViewModel
                 _history.Add(result.OriginQuery.RawQuery);
                 lastHistoryIndex = 1;
             }
-
-            if (hideWindow)
-            {
-                Hide();
-            }
         }
 
-        private static IReadOnlyList<Result> DeepCloneResults(IReadOnlyList<Result> results, CancellationToken token = default)
+        private static IReadOnlyList<Result> DeepCloneResults(IReadOnlyList<Result> results, bool isQuickSwitch, CancellationToken token = default)
         {
             var resultsCopy = new List<Result>();
-            foreach (var result in results.ToList())
-            {
-                if (token.IsCancellationRequested)
-                {
-                    break;
-                }
 
-                var resultCopy = result.Clone();
-                resultsCopy.Add(resultCopy);
+            if (isQuickSwitch)
+            {
+                foreach (var result in results.ToList())
+                {
+                    if (token.IsCancellationRequested) break;
+
+                    var resultCopy = ((QuickSwitchResult)result).Clone();
+                    resultsCopy.Add(resultCopy);
+                }
             }
+            else
+            {
+                foreach (var result in results.ToList())
+                {
+                    if (token.IsCancellationRequested) break;
+
+                    var resultCopy = result.Clone();
+                    resultsCopy.Add(resultCopy);
+                }
+            }
+            
             return resultsCopy;
         }
 
@@ -1265,25 +1323,21 @@ namespace Flow.Launcher.ViewModel
 
             if (query == null) // shortcut expanded
             {
-                App.API.LogDebug(ClassName, $"Clear query results");
-
-                // Hide and clear results again because running query may show and add some results
-                Results.Visibility = Visibility.Collapsed;
-                Results.Clear();
-
-                // Reset plugin icon
-                PluginIconPath = null;
-                PluginIconSource = null;
-                SearchIconVisibility = Visibility.Visible;
-
-                // Hide progress bar again because running query may set this to visible
-                ProgressBarVisibility = Visibility.Hidden;
+                ClearResults();
                 return;
             }
 
             App.API.LogDebug(ClassName, $"Start query with ActionKeyword <{query.ActionKeyword}> and RawQuery <{query.RawQuery}>");
 
             var currentIsHomeQuery = query.IsHomeQuery;
+            var currentIsQuickSwitch = _isQuickSwitch;
+
+            // Do not show home page for quick switch window
+            if (currentIsHomeQuery && currentIsQuickSwitch)
+            {
+                ClearResults();
+                return;
+            }
 
             _updateSource?.Dispose();
 
@@ -1317,7 +1371,7 @@ namespace Flow.Launcher.ViewModel
             }
             else
             {
-                plugins = PluginManager.ValidPluginsForQuery(query);
+                plugins = PluginManager.ValidPluginsForQuery(query, currentIsQuickSwitch);
 
                 if (plugins.Count == 1)
                 {
@@ -1411,6 +1465,23 @@ namespace Flow.Launcher.ViewModel
             }
 
             // Local function
+            void ClearResults()
+            {
+                App.API.LogDebug(ClassName, $"Clear query results");
+
+                // Hide and clear results again because running query may show and add some results
+                Results.Visibility = Visibility.Collapsed;
+                Results.Clear();
+
+                // Reset plugin icon
+                PluginIconPath = null;
+                PluginIconSource = null;
+                SearchIconVisibility = Visibility.Visible;
+
+                // Hide progress bar again because running query may set this to visible
+                ProgressBarVisibility = Visibility.Hidden;
+            }
+
             async Task QueryTaskAsync(PluginPair plugin, CancellationToken token)
             {
                 App.API.LogDebug(ClassName, $"Wait for querying plugin <{plugin.Metadata.Name}>");
@@ -1428,21 +1499,23 @@ namespace Flow.Launcher.ViewModel
                 // Task.Yield will force it to run in ThreadPool
                 await Task.Yield();
 
-                var results = currentIsHomeQuery ?
-                    await PluginManager.QueryHomeForPluginAsync(plugin, query, token) :
-                    await PluginManager.QueryForPluginAsync(plugin, query, token);
+                IReadOnlyList<Result> results = currentIsQuickSwitch ?
+                    await PluginManager.QueryQuickSwitchForPluginAsync(plugin, query, token) :
+                        currentIsHomeQuery ?
+                            await PluginManager.QueryHomeForPluginAsync(plugin, query, token) :
+                            await PluginManager.QueryForPluginAsync(plugin, query, token);
 
                 if (token.IsCancellationRequested) return;
 
                 IReadOnlyList<Result> resultsCopy;
                 if (results == null)
                 {
-                    resultsCopy = _emptyResult;
+                    resultsCopy = currentIsQuickSwitch ? _emptyQuickSwitchResult : _emptyResult;
                 }
                 else
                 {
                     // make a copy of results to avoid possible issue that FL changes some properties of the records, like score, etc.
-                    resultsCopy = DeepCloneResults(results, token);
+                    resultsCopy = DeepCloneResults(results, currentIsQuickSwitch, token);
                 }
 
                 foreach (var result in resultsCopy)
@@ -1737,6 +1810,197 @@ namespace Flow.Launcher.ViewModel
 
         #endregion
 
+        #region Quick Switch
+
+        public nint DialogWindowHandle { get; private set; } = nint.Zero;
+
+        private bool _isQuickSwitch = false;
+
+        private bool _previousMainWindowVisibilityStatus;
+
+        private CancellationTokenSource _quickSwitchSource;
+
+        public void InitializeVisibilityStatus(bool visibilityStatus)
+        {
+            _previousMainWindowVisibilityStatus = visibilityStatus;
+        }
+
+        public bool IsQuickSwitchWindowUnderDialog()
+        {
+            return _isQuickSwitch && QuickSwitch.QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog;
+        }
+
+        public async Task SetupQuickSwitchAsync(nint handle)
+        {
+            if (handle == nint.Zero) return;
+
+            // Only set flag & reset window once for one file dialog
+            var dialogWindowHandleChanged = false;
+            if (DialogWindowHandle != handle)
+            {
+                DialogWindowHandle = handle;
+                _previousMainWindowVisibilityStatus = MainWindowVisibilityStatus;
+                _isQuickSwitch = true;
+
+                dialogWindowHandleChanged = true;
+
+                // If don't give a time, Positioning will be weird
+                await Task.Delay(300);
+            }
+
+            // If handle is cleared, which means the dialog is closed, do nothing
+            if (DialogWindowHandle == nint.Zero) return;
+
+            // Initialize quick switch window
+            if (MainWindowVisibilityStatus)
+            {
+                if (dialogWindowHandleChanged)
+                {
+                    // Only update the position
+                    Application.Current?.Dispatcher.Invoke(() =>
+                    {
+                        (Application.Current?.MainWindow as MainWindow)?.UpdatePosition();
+                    });
+
+                    _ = ResetWindowAsync();
+                }
+            }
+            else
+            {
+                if (QuickSwitch.QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog)
+                {
+                    Show();
+
+                    if (dialogWindowHandleChanged)
+                    {
+                        _ = ResetWindowAsync();
+                    }
+                }
+                else
+                {
+                    if (dialogWindowHandleChanged)
+                    {
+                        _ = ResetWindowAsync();
+                    }
+                }
+            }
+
+            if (QuickSwitch.QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog)
+            {
+                // Cancel the previous quick switch task
+                _quickSwitchSource?.Cancel();
+
+                // Create a new cancellation token source
+                _quickSwitchSource = new CancellationTokenSource();
+
+                _ = Task.Run(() =>
+                    {
+                        try
+                        {
+                            // Check task cancellation
+                            if (_quickSwitchSource.Token.IsCancellationRequested) return;
+
+                            // Check dialog handle
+                            if (DialogWindowHandle == nint.Zero) return;
+
+                            // Wait 150ms to check if quick switch window gets the focus
+                            var timeOut = !SpinWait.SpinUntil(() => !Win32Helper.IsForegroundWindow(DialogWindowHandle), 150);
+                            if (timeOut) return;
+
+                            // Bring focus back to the the dialog
+                            Win32Helper.SetForegroundWindow(DialogWindowHandle);
+                        }
+                        catch (Exception e)
+                        {
+                            App.API.LogException(ClassName, "Failed to focus on dialog window", e);
+                        }
+                    });
+            }
+        }
+
+#pragma warning disable VSTHRD100 // Avoid async void methods
+
+        public async void ResetQuickSwitch()
+        {
+            if (DialogWindowHandle == nint.Zero) return;
+
+            DialogWindowHandle = nint.Zero;
+            _isQuickSwitch = false;
+
+            if (_previousMainWindowVisibilityStatus != MainWindowVisibilityStatus)
+            {
+                // Show or hide to change visibility
+                if (_previousMainWindowVisibilityStatus)
+                {
+                    Show();
+
+                    _ = ResetWindowAsync();
+                }
+                else
+                {
+                    await ResetWindowAsync();
+
+                    Hide(false);
+                }
+            }
+            else
+            {
+                if (_previousMainWindowVisibilityStatus)
+                {
+                    // Only update the position
+                    Application.Current?.Dispatcher.Invoke(() =>
+                    {
+                        (Application.Current?.MainWindow as MainWindow)?.UpdatePosition();
+                    });
+
+                    _ = ResetWindowAsync();
+                }
+                else
+                {
+                    _ = ResetWindowAsync();
+                }
+            }
+        }
+
+#pragma warning restore VSTHRD100 // Avoid async void methods
+
+        public void HideQuickSwitch()
+        {
+            if (DialogWindowHandle != nint.Zero)
+            {
+                if (QuickSwitch.QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog)
+                {
+                    // Warning: Main window is already in foreground
+                    // This is because if you click popup menus in other applications to hide quick switch window,
+                    // they can steal focus before showing main window
+                    if (MainWindowVisibilityStatus)
+                    {
+                        Hide();
+                    }
+                }
+            }
+        }
+
+        // Reset index & preview & selected results & query text
+        private async Task ResetWindowAsync()
+        {
+            lastHistoryIndex = 1;
+
+            if (ExternalPreviewVisible)
+            {
+                await CloseExternalPreviewAsync();
+            }
+
+            if (!QueryResultsSelected())
+            {
+                SelectedResults = Results;
+            }
+
+            await ChangeQueryTextAsync(string.Empty, true);
+        }
+
+        #endregion
+
         #region Public Methods
 
 #pragma warning disable VSTHRD100 // Avoid async void methods
@@ -1756,7 +2020,7 @@ namespace Flow.Launcher.ViewModel
                     Win32Helper.DWMSetCloakForWindow(mainWindow, false);
 
                     // Set clock and search icon opacity
-                    var opacity = Settings.UseAnimation ? 0.0 : 1.0;
+                    var opacity = (Settings.UseAnimation && !_isQuickSwitch) ? 0.0 : 1.0;
                     ClockPanelOpacity = opacity;
                     SearchIconOpacity = opacity;
 
@@ -1785,37 +2049,40 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public async void Hide()
+        public async void Hide(bool reset = true)
         {
-            lastHistoryIndex = 1;
-
-            if (ExternalPreviewVisible)
+            if (reset)
             {
-                await CloseExternalPreviewAsync();
-            }
+                lastHistoryIndex = 1;
 
-            BackToQueryResults();
+                if (ExternalPreviewVisible)
+                {
+                    await CloseExternalPreviewAsync();
+                }
 
-            switch (Settings.LastQueryMode)
-            {
-                case LastQueryMode.Empty:
-                    await ChangeQueryTextAsync(string.Empty);
-                    break;
-                case LastQueryMode.Preserved:
-                case LastQueryMode.Selected:
-                    LastQuerySelected = Settings.LastQueryMode == LastQueryMode.Preserved;
-                    break;
-                case LastQueryMode.ActionKeywordPreserved:
-                case LastQueryMode.ActionKeywordSelected:
-                    var newQuery = _lastQuery?.ActionKeyword;
+                BackToQueryResults();
 
-                    if (!string.IsNullOrEmpty(newQuery))
-                        newQuery += " ";
-                    await ChangeQueryTextAsync(newQuery);
+                switch (Settings.LastQueryMode)
+                {
+                    case LastQueryMode.Empty:
+                        await ChangeQueryTextAsync(string.Empty);
+                        break;
+                    case LastQueryMode.Preserved:
+                    case LastQueryMode.Selected:
+                        LastQuerySelected = Settings.LastQueryMode == LastQueryMode.Preserved;
+                        break;
+                    case LastQueryMode.ActionKeywordPreserved:
+                    case LastQueryMode.ActionKeywordSelected:
+                        var newQuery = _lastQuery.ActionKeyword;
 
-                    if (Settings.LastQueryMode == LastQueryMode.ActionKeywordSelected)
-                        LastQuerySelected = false;
-                    break;
+                        if (!string.IsNullOrEmpty(newQuery))
+                            newQuery += " ";
+                        await ChangeQueryTextAsync(newQuery);
+
+                        if (Settings.LastQueryMode == LastQueryMode.ActionKeywordSelected)
+                            LastQuerySelected = false;
+                        break;
+                }
             }
 
             // When application is exiting, the Application.Current will be null
@@ -1825,7 +2092,7 @@ namespace Flow.Launcher.ViewModel
                 if (Application.Current?.MainWindow is MainWindow mainWindow)
                 {
                     // Set clock and search icon opacity
-                    var opacity = Settings.UseAnimation ? 0.0 : 1.0;
+                    var opacity = (Settings.UseAnimation && !_isQuickSwitch) ? 0.0 : 1.0;
                     ClockPanelOpacity = opacity;
                     SearchIconOpacity = opacity;
 
@@ -1970,6 +2237,7 @@ namespace Flow.Launcher.ViewModel
                 if (disposing)
                 {
                     _updateSource?.Dispose();
+                    _quickSwitchSource?.Dispose();
                     _resultsUpdateChannelWriter?.Complete();
                     if (_resultsViewUpdateTask?.IsCompleted == true)
                     {
