@@ -1510,7 +1510,7 @@ namespace Flow.Launcher.ViewModel
                 IReadOnlyList<Result> resultsCopy;
                 if (results == null)
                 {
-                    resultsCopy = _emptyResult;
+                    resultsCopy = currentIsQuickSwitch ? _emptyQuickSwitchResult : _emptyResult;
                 }
                 else
                 {
