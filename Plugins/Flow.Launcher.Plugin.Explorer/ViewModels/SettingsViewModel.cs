@@ -9,6 +9,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using CommunityToolkit.Mvvm.Input;
+using Flow.Launcher.Plugin.Explorer.Helper;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.Search.Everything.Exceptions;
@@ -243,6 +244,21 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             "yyyy-MM-dd",
             "yyyy-MM-dd ddd",
             "yyyy-MM-dd, dddd",
+            "dd/MMM/yyyy",
+            "dd/MMM/yyyy ddd",
+            "dd/MMM/yyyy, dddd",
+            "dd-MMM-yyyy",
+            "dd-MMM-yyyy ddd",
+            "dd-MMM-yyyy, dddd",
+            "dd.MMM.yyyy",
+            "dd.MMM.yyyy ddd",
+            "dd.MMM.yyyy, dddd",
+            "MMM/dd/yyyy",
+            "MMM/dd/yyyy ddd",
+            "MMM/dd/yyyy, dddd",
+            "yyyy-MMM-dd",
+            "yyyy-MMM-dd ddd",
+            "yyyy-MMM-dd, dddd",
         };
 
         #endregion
@@ -328,14 +344,10 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         }
 
         [RelayCommand]
-        private void EditLink(object commandParameter)
+        private void EditIndexSearchExcludePaths()
         {
-            var (selectedLink, collection) = commandParameter switch
-            {
-                "QuickAccessLink" => (SelectedQuickAccessLink, Settings.QuickAccessLinks),
-                "IndexSearchExcludedPaths" => (SelectedIndexSearchExcludedPath, Settings.IndexSearchExcludedSubdirectoryPaths),
-                _ => throw new ArgumentOutOfRangeException(nameof(commandParameter))
-            };
+            var selectedLink = SelectedIndexSearchExcludedPath;
+            var collection = Settings.IndexSearchExcludedSubdirectoryPaths;
 
             if (selectedLink is null)
             {
@@ -354,28 +366,18 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             collection.Remove(selectedLink);
             collection.Add(new AccessLink
             {
-                Path = path, Type = selectedLink.Type,
+                Path = path, Type = selectedLink.Type, Name = path.GetPathName()
             });
-        }
-
-        private void ShowUnselectedMessage()
-        {
-            var warning = Context.API.GetTranslation("plugin_explorer_make_selection_warning");
-            Context.API.ShowMsgBox(warning);
+            Save();
         }
 
         [RelayCommand]
-        private void AddLink(object commandParameter)
+        private void AddIndexSearchExcludePaths()
         {
-            var container = commandParameter switch
-            {
-                "QuickAccessLink" => Settings.QuickAccessLinks,
-                "IndexSearchExcludedPaths" => Settings.IndexSearchExcludedSubdirectoryPaths,
-                _ => throw new ArgumentOutOfRangeException(nameof(commandParameter))
-            };
+            var container = Settings.IndexSearchExcludedSubdirectoryPaths;
 
-            ArgumentNullException.ThrowIfNull(container);
-
+            if (container is null) return;
+            
             var folderBrowserDialog = new FolderBrowserDialog();
 
             if (folderBrowserDialog.ShowDialog() != DialogResult.OK)
@@ -383,16 +385,47 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
             var newAccessLink = new AccessLink
             {
+                Name = folderBrowserDialog.SelectedPath.GetPathName(),
                 Path = folderBrowserDialog.SelectedPath
             };
 
             container.Add(newAccessLink);
+            Save();
         }
 
         [RelayCommand]
-        private void RemoveLink(object obj)
+        private void EditQuickAccessLink()
         {
-            if (obj is not string container) return;
+            var selectedLink = SelectedQuickAccessLink;
+            var collection = Settings.QuickAccessLinks;
+
+            if (selectedLink is null)
+            {
+                ShowUnselectedMessage();
+                return;
+            }
+
+            var quickAccessLinkSettings = new QuickAccessLinkSettings(collection, SelectedQuickAccessLink);
+            if (quickAccessLinkSettings.ShowDialog() == true)
+            {
+                Save();
+            }
+        }
+        
+        [RelayCommand]
+        private void AddQuickAccessLink()
+        {
+            var quickAccessLinkSettings = new QuickAccessLinkSettings(Settings.QuickAccessLinks);
+            if (quickAccessLinkSettings.ShowDialog() == true)
+            {
+                Save();
+            }
+        }
+
+        [RelayCommand]
+        private void RemoveLink(object commandParameter)
+        {
+            if (commandParameter is not string container) return;
 
             switch (container)
             {
@@ -407,10 +440,16 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             }
             Save();
         }
+        
+        private void ShowUnselectedMessage()
+        {
+            var warning = Context.API.GetTranslation("plugin_explorer_make_selection_warning");
+            Context.API.ShowMsgBox(warning);
+        }
 
         #endregion
 
-        private string? PromptUserSelectPath(ResultType type, string? initialDirectory = null)
+        private static string? PromptUserSelectPath(ResultType type, string? initialDirectory = null)
         {
             string? path = null;
 

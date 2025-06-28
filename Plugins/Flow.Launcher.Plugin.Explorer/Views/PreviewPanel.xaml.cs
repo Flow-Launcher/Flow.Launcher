@@ -2,22 +2,27 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
-using System.Runtime.CompilerServices;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Flow.Launcher.Plugin.Explorer.Search;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Flow.Launcher.Plugin.Explorer.Views;
 
 #nullable enable
 
-public partial class PreviewPanel : UserControl, INotifyPropertyChanged
+[INotifyPropertyChanged]
+public partial class PreviewPanel : UserControl
 {
+    private static readonly string ClassName = nameof(PreviewPanel);
+
     private string FilePath { get; }
-    public string FileSize { get; } = "";
+    public string FileSize { get; private set; } = Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
     public string CreatedAt { get; } = "";
     public string LastModifiedAt { get; } = "";
     private ImageSource _previewImage = new BitmapImage();
@@ -50,7 +55,7 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
         ? Visibility.Visible
         : Visibility.Collapsed;
 
-    public PreviewPanel(Settings settings, string filePath)
+    public PreviewPanel(Settings settings, string filePath, ResultType type)
     {
         InitializeComponent();
 
@@ -60,33 +65,32 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
 
         if (Settings.ShowFileSizeInPreviewPanel)
         {
-            var fileSize = new FileInfo(filePath).Length;
-            FileSize = ResultManager.ToReadableSize(fileSize, 2);
+            if (type == ResultType.File)
+            {
+                FileSize = GetFileSize(filePath);
+            }
+            else
+            {
+                _ = Task.Run(() =>
+                {
+                    FileSize = GetFolderSize(filePath);
+                    OnPropertyChanged(nameof(FileSize));
+                }).ConfigureAwait(false);
+            }
         }
 
         if (Settings.ShowCreatedDateInPreviewPanel)
         {
-            DateTime createdDate = File.GetCreationTime(filePath);
-            string formattedDate = createdDate.ToString(
-                $"{Settings.PreviewPanelDateFormat} {Settings.PreviewPanelTimeFormat}",
-                CultureInfo.CurrentCulture
-            );
-
-            string result = formattedDate;
-            if (Settings.ShowFileAgeInPreviewPanel) result = $"{GetFileAge(createdDate)} - {formattedDate}";
-            CreatedAt = result;
+            CreatedAt = type == ResultType.File ?
+                GetFileCreatedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel) :
+                GetFolderCreatedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
         }
 
         if (Settings.ShowModifiedDateInPreviewPanel)
         {
-            DateTime lastModifiedDate = File.GetLastWriteTime(filePath);
-            string formattedDate = lastModifiedDate.ToString(
-                $"{Settings.PreviewPanelDateFormat} {Settings.PreviewPanelTimeFormat}",
-                CultureInfo.CurrentCulture
-            );
-            string result = formattedDate;
-            if (Settings.ShowFileAgeInPreviewPanel) result = $"{GetFileAge(lastModifiedDate)} - {formattedDate}";
-            LastModifiedAt = result;
+            LastModifiedAt = type == ResultType.File ? 
+                GetFileLastModifiedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel) :
+                GetFolderLastModifiedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
         }
 
         _ = LoadImageAsync();
@@ -96,7 +100,211 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
     {
         PreviewImage = await Main.Context.API.LoadImageAsync(FilePath, true).ConfigureAwait(false);
     }
-    
+
+    public static string GetFileSize(string filePath)
+    {
+        try
+        {
+            var fileInfo = new FileInfo(filePath);
+            return ResultManager.ToReadableSize(fileInfo.Length, 2);
+        }
+        catch (FileNotFoundException)
+        {
+            Main.Context.API.LogError(ClassName, $"File not found: {filePath}");
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
+        catch (UnauthorizedAccessException)
+        {
+            Main.Context.API.LogError(ClassName, $"Access denied to file: {filePath}");
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
+        catch (Exception e)
+        {
+            Main.Context.API.LogException(ClassName, $"Failed to get file size for {filePath}", e);
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
+    }
+
+    public static string GetFileCreatedAt(string filePath, string previewPanelDateFormat, string previewPanelTimeFormat, bool showFileAgeInPreviewPanel)
+    {
+        try
+        {
+            var createdDate = File.GetCreationTime(filePath);
+            var formattedDate = createdDate.ToString(
+                $"{previewPanelDateFormat} {previewPanelTimeFormat}",
+                CultureInfo.CurrentCulture
+            );
+
+            var result = formattedDate;
+            if (showFileAgeInPreviewPanel) result = $"{GetFileAge(createdDate)} - {formattedDate}";
+            return result;
+        }
+        catch (FileNotFoundException)
+        {
+            Main.Context.API.LogError(ClassName, $"File not found: {filePath}");
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
+        catch (UnauthorizedAccessException)
+        {
+            Main.Context.API.LogError(ClassName, $"Access denied to file: {filePath}");
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
+        catch (Exception e)
+        {
+            Main.Context.API.LogException(ClassName, $"Failed to get file created date for {filePath}", e);
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
+    }
+
+    public static string GetFileLastModifiedAt(string filePath, string previewPanelDateFormat, string previewPanelTimeFormat, bool showFileAgeInPreviewPanel)
+    {
+        try
+        {
+            var lastModifiedDate = File.GetLastWriteTime(filePath);
+            var formattedDate = lastModifiedDate.ToString(
+                $"{previewPanelDateFormat} {previewPanelTimeFormat}",
+                CultureInfo.CurrentCulture
+            );
+
+            var result = formattedDate;
+            if (showFileAgeInPreviewPanel) result = $"{GetFileAge(lastModifiedDate)} - {formattedDate}";
+            return result;
+        }
+        catch (FileNotFoundException)
+        {
+            Main.Context.API.LogError(ClassName, $"File not found: {filePath}");
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
+        catch (UnauthorizedAccessException)
+        {
+            Main.Context.API.LogError(ClassName, $"Access denied to file: {filePath}");
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
+        catch (Exception e)
+        {
+            Main.Context.API.LogException(ClassName, $"Failed to get file modified date for {filePath}", e);
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
+    }
+
+    public static string GetFolderSize(string folderPath)
+    {
+        using var timeoutCts = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+
+        try
+        {
+            // Use parallel enumeration for better performance
+            var directoryInfo = new DirectoryInfo(folderPath);
+            long size = directoryInfo.EnumerateFiles("*", SearchOption.AllDirectories)
+                .AsParallel()
+                .WithCancellation(timeoutCts.Token)
+                .Sum(file => file.Length);
+
+            return ResultManager.ToReadableSize(size, 2);
+        }
+        catch (FileNotFoundException)
+        {
+            Main.Context.API.LogError(ClassName, $"Folder not found: {folderPath}");
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
+        catch (UnauthorizedAccessException)
+        {
+            Main.Context.API.LogError(ClassName, $"Access denied to folder: {folderPath}");
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
+        catch (OperationCanceledException)
+        {
+            Main.Context.API.LogError(ClassName, $"Operation timed out while calculating folder size for {folderPath}");
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
+        // For parallel operations, AggregateException may be thrown if any of the tasks fail
+        catch (AggregateException ae)
+        {
+            switch (ae.InnerException)
+            {
+                case FileNotFoundException:
+                    Main.Context.API.LogError(ClassName, $"Folder not found: {folderPath}");
+                    return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+                case UnauthorizedAccessException:
+                    Main.Context.API.LogError(ClassName, $"Access denied to folder: {folderPath}");
+                    return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+                case OperationCanceledException:
+                    Main.Context.API.LogError(ClassName, $"Operation timed out while calculating folder size for {folderPath}");
+                    return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+                default:
+                    Main.Context.API.LogException(ClassName, $"Failed to get folder size for {folderPath}", ae);
+                    return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+            }
+        }
+        catch (Exception e)
+        {
+            Main.Context.API.LogException(ClassName, $"Failed to get folder size for {folderPath}", e);
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
+    }
+
+    public static string GetFolderCreatedAt(string folderPath, string previewPanelDateFormat, string previewPanelTimeFormat, bool showFileAgeInPreviewPanel)
+    {
+        try
+        {
+            var createdDate = Directory.GetCreationTime(folderPath);
+            var formattedDate = createdDate.ToString(
+                $"{previewPanelDateFormat} {previewPanelTimeFormat}",
+                CultureInfo.CurrentCulture
+            );
+
+            var result = formattedDate;
+            if (showFileAgeInPreviewPanel) result = $"{GetFileAge(createdDate)} - {formattedDate}";
+            return result;
+        }
+        catch (FileNotFoundException)
+        {
+            Main.Context.API.LogError(ClassName, $"Folder not found: {folderPath}");
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
+        catch (UnauthorizedAccessException)
+        {
+            Main.Context.API.LogError(ClassName, $"Access denied to folder: {folderPath}");
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
+        catch (Exception e)
+        {
+            Main.Context.API.LogException(ClassName, $"Failed to get folder created date for {folderPath}", e);
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
+    }
+
+    public static string GetFolderLastModifiedAt(string folderPath, string previewPanelDateFormat, string previewPanelTimeFormat, bool showFileAgeInPreviewPanel)
+    {
+        try
+        {
+            var lastModifiedDate = Directory.GetLastWriteTime(folderPath);
+            var formattedDate = lastModifiedDate.ToString(
+                $"{previewPanelDateFormat} {previewPanelTimeFormat}",
+                CultureInfo.CurrentCulture
+            );
+
+            var result = formattedDate;
+            if (showFileAgeInPreviewPanel) result = $"{GetFileAge(lastModifiedDate)} - {formattedDate}";
+            return result;
+        }
+        catch (FileNotFoundException)
+        {
+            Main.Context.API.LogError(ClassName, $"Folder not found: {folderPath}");
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
+        catch (UnauthorizedAccessException)
+        {
+            Main.Context.API.LogError(ClassName, $"Access denied to folder: {folderPath}");
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
+        catch (Exception e)
+        {
+            Main.Context.API.LogException(ClassName, $"Failed to get folder modified date for {folderPath}", e);
+            return Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+        }
+    }
+
     private static string GetFileAge(DateTime fileDateTime)
     {
         var now = DateTime.Now;
@@ -119,12 +327,5 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
 
         return yearsDiff == 1 ? Main.Context.API.GetTranslation("OneYearAgo") :
             string.Format(Main.Context.API.GetTranslation("YearsAgo"), yearsDiff);
-    }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

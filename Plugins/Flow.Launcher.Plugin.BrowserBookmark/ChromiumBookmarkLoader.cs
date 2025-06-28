@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using System;
+using System.Threading.Tasks;
+using Flow.Launcher.Plugin.BrowserBookmark.Helper;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using Microsoft.Data.Sqlite;
 
@@ -43,16 +46,23 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
             catch (Exception ex)
             {
                 Main._context.API.LogException(ClassName, $"Failed to register bookmark file monitoring: {bookmarkPath}", ex);
+                continue;
             }
 
             var source = name + (Path.GetFileName(profile) == "Default" ? "" : $" ({Path.GetFileName(profile)})");
             var profileBookmarks = LoadBookmarksFromFile(bookmarkPath, source);
 
             // Load favicons after loading bookmarks
-            var faviconDbPath = Path.Combine(profile, "Favicons");
-            if (File.Exists(faviconDbPath))
+            if (Main._settings.EnableFavicons)
             {
-                LoadFaviconsFromDb(faviconDbPath, profileBookmarks);
+                var faviconDbPath = Path.Combine(profile, "Favicons");
+                if (File.Exists(faviconDbPath))
+                {
+                    Main._context.API.StopwatchLogInfo(ClassName, $"Load {profileBookmarks.Count} favicons cost", () =>
+                    {
+                        LoadFaviconsFromDb(faviconDbPath, profileBookmarks);
+                    });
+                }
             }
 
             bookmarks.AddRange(profileBookmarks);
@@ -122,72 +132,59 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
 
     private void LoadFaviconsFromDb(string dbPath, List<Bookmark> bookmarks)
     {
-        // Use a copy to avoid lock issues with the original file
-        var tempDbPath = Path.Combine(_faviconCacheDir, $"tempfavicons_{Guid.NewGuid()}.db");
-
-        try
+        FaviconHelper.LoadFaviconsFromDb(_faviconCacheDir, dbPath, (tempDbPath) =>
         {
-            File.Copy(dbPath, tempDbPath, true);
-        }
-        catch (Exception ex)
-        {
-            try
-            {
-                if (File.Exists(tempDbPath))
-                {
-                    File.Delete(tempDbPath);
-                }
-            }
-            catch (Exception ex1)
-            {
-                Main._context.API.LogException(ClassName, $"Failed to delete temporary favicon DB: {tempDbPath}", ex1);
-            }
-            Main._context.API.LogException(ClassName, $"Failed to copy favicon DB: {dbPath}", ex);
-            return;
-        }
+            // Since some bookmarks may have same favicon id, we need to record them to avoid duplicates
+            var savedPaths = new ConcurrentDictionary<string, bool>();
 
-        try
-        {
-            using var connection = new SqliteConnection($"Data Source={tempDbPath}");
-            connection.Open();
-
-            foreach (var bookmark in bookmarks)
+            // Get favicons based on bookmarks concurrently
+            Parallel.ForEach(bookmarks, bookmark =>
             {
+                // Use read-only connection to avoid locking issues
+                // Do not use pooling so that we do not need to clear pool: https://github.com/dotnet/efcore/issues/26580
+                var connection = new SqliteConnection($"Data Source={tempDbPath};Mode=ReadOnly;Pooling=false");
+                connection.Open();
+
                 try
                 {
                     var url = bookmark.Url;
-                    if (string.IsNullOrEmpty(url)) continue;
+                    if (string.IsNullOrEmpty(url)) return;
 
                     // Extract domain from URL
                     if (!Uri.TryCreate(url, UriKind.Absolute, out Uri uri))
-                        continue;
+                        return;
 
                     var domain = uri.Host;
 
                     using var cmd = connection.CreateCommand();
                     cmd.CommandText = @"
-                            SELECT f.id, b.image_data
-                            FROM favicons f
-                            JOIN favicon_bitmaps b ON f.id = b.icon_id
-                            JOIN icon_mapping m ON f.id = m.icon_id
-                            WHERE m.page_url LIKE @url
-                            ORDER BY b.width DESC
-                            LIMIT 1";
+                        SELECT f.id, b.image_data
+                        FROM favicons f
+                        JOIN favicon_bitmaps b ON f.id = b.icon_id
+                        JOIN icon_mapping m ON f.id = m.icon_id
+                        WHERE m.page_url LIKE @url
+                        ORDER BY b.width DESC
+                        LIMIT 1";
 
                     cmd.Parameters.AddWithValue("@url", $"%{domain}%");
 
                     using var reader = cmd.ExecuteReader();
                     if (!reader.Read() || reader.IsDBNull(1))
-                        continue;
+                        return;
 
                     var iconId = reader.GetInt64(0).ToString();
                     var imageData = (byte[])reader["image_data"];
 
                     if (imageData is not { Length: > 0 })
-                        continue;
+                        return;
 
                     var faviconPath = Path.Combine(_faviconCacheDir, $"chromium_{domain}_{iconId}.png");
-                    SaveBitmapData(imageData, faviconPath);
+
+                    // Filter out duplicate favicons
+                    if (savedPaths.TryAdd(faviconPath, true))
+                    {
+                        FaviconHelper.SaveBitmapData(imageData, faviconPath);
+                    }
 
                     bookmark.FaviconPath = faviconPath;
                 }
@@ -195,37 +192,14 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
                 {
                     Main._context.API.LogException(ClassName, $"Failed to extract bookmark favicon: {bookmark.Url}", ex);
                 }
-            }
-
-            // https://github.com/dotnet/efcore/issues/26580
-            SqliteConnection.ClearPool(connection);
-            connection.Close();
-        }
-        catch (Exception ex)
-        {
-            Main._context.API.LogException(ClassName, $"Failed to connect to SQLite: {tempDbPath}", ex);
-        }
-
-        // Delete temporary file
-        try
-        {
-            File.Delete(tempDbPath);
-        }
-        catch (Exception ex)
-        {
-            Main._context.API.LogException(ClassName, $"Failed to delete temporary favicon DB: {tempDbPath}", ex);
-        }
-    }
-
-    private static void SaveBitmapData(byte[] imageData, string outputPath)
-    {
-        try
-        {
-            File.WriteAllBytes(outputPath, imageData);
-        }
-        catch (Exception ex)
-        {
-            Main._context.API.LogException(ClassName, $"Failed to save image: {outputPath}", ex);
-        }
+                finally
+                {
+                    // Cache connection and clear pool after all operations to avoid issue:
+                    // ObjectDisposedException: Safe handle has been closed.
+                    connection.Close();
+                    connection.Dispose();
+                }
+            });
+        });
     }
 }

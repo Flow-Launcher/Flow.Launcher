@@ -84,6 +84,8 @@ namespace Flow.Launcher
             _viewModel = Ioc.Default.GetRequiredService<MainViewModel>();
             DataContext = _viewModel;
 
+            Topmost = _settings.ShowAtTopmost;
+
             InitializeComponent();
             UpdatePosition();
 
@@ -121,6 +123,9 @@ namespace Flow.Launcher
                 // Set First Launch to false
                 _settings.FirstLaunch = false;
 
+                // Update release notes version
+                _settings.ReleaseNotesVersion = Constant.Version;
+
                 // Set Backdrop Type to Acrylic for Windows 11 when First Launch. Default is None
                 if (Win32Helper.IsBackdropSupported()) _settings.BackdropType = BackdropTypes.Acrylic;
 
@@ -130,6 +135,24 @@ namespace Flow.Launcher
                 // Show Welcome Window
                 var welcomeWindow = new WelcomeWindow();
                 welcomeWindow.Show();
+            }
+
+            if (Constant.Version != "1.0.0" && _settings.ReleaseNotesVersion != Constant.Version) // Skip release notes notification for developer builds (version 1.0.0)
+            {
+                // Update release notes version
+                _settings.ReleaseNotesVersion = Constant.Version;
+                // Show release note popup with button
+                App.API.ShowMsgWithButton(
+                    string.Format(App.API.GetTranslation("appUpdateTitle"), Constant.Version),
+                    App.API.GetTranslation("appUpdateButtonContent"),
+                    () =>
+                    {
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            var releaseNotesWindow = new ReleaseNotesWindow();
+                            releaseNotesWindow.Show();
+                        });
+                    });
             }
 
             // Initialize place holder
@@ -288,6 +311,9 @@ namespace Flow.Launcher
                         {
                             _viewModel.QueryResults();
                         }
+                        break;
+                    case nameof(Settings.ShowAtTopmost):
+                        Topmost = _settings.ShowAtTopmost;
                         break;
                 }
             };
@@ -465,7 +491,55 @@ namespace Flow.Launcher
 
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left) DragMove();
+            // When the window is maximized via Snap,
+            // dragging attempts will first switch the window from Maximized to Normal state,
+            // and adjust the drag position accordingly.
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                try
+                {
+                    if (WindowState == WindowState.Maximized)
+                    {
+                        // Calculate ratio based on maximized window dimensions
+                        double maxWidth = ActualWidth;
+                        double maxHeight = ActualHeight;
+                        var mousePos = e.GetPosition(this);
+                        double xRatio = mousePos.X / maxWidth;
+                        double yRatio = mousePos.Y / maxHeight;
+
+                        // Current monitor information
+                        var screen = Screen.FromHandle(new WindowInteropHelper(this).Handle);
+                        var workingArea = screen.WorkingArea;
+                        var screenLeftTop = Win32Helper.TransformPixelsToDIP(this, workingArea.X, workingArea.Y);
+
+                        // Switch to Normal state
+                        WindowState = WindowState.Normal;
+
+                        Application.Current?.Dispatcher.Invoke(new Action(() =>
+                        {
+                            double normalWidth = Width;
+                            double normalHeight = Height;
+
+                            // Apply ratio based on the difference between maximized and normal window sizes
+                            Left = screenLeftTop.X + (maxWidth - normalWidth) * xRatio;
+                            Top = screenLeftTop.Y + (maxHeight - normalHeight) * yRatio;
+
+                            if (Mouse.LeftButton == MouseButtonState.Pressed)
+                            {
+                                DragMove();
+                            }
+                        }), DispatcherPriority.ApplicationIdle);
+                    }
+                    else
+                    {
+                        DragMove();
+                    }
+                }
+                catch (InvalidOperationException)
+                {
+                    // Ignored - can occur if drag operation is already in progress
+                }
+            }
         }
 
         #endregion
@@ -490,56 +564,76 @@ namespace Flow.Launcher
 
         #region Window WndProc
 
-        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled) 
         {
-            if (msg == Win32Helper.WM_ENTERSIZEMOVE)
+            switch (msg)
             {
-                _initialWidth = (int)Width;
-                _initialHeight = (int)Height;
-
-                handled = true;
-            }
-            else if (msg == Win32Helper.WM_EXITSIZEMOVE)
-            {
-                if (_initialHeight != (int)Height)
-                {
-                    if (!_settings.KeepMaxResults)
+                case Win32Helper.WM_ENTERSIZEMOVE:
+                    _initialWidth = (int)Width;
+                    _initialHeight = (int)Height;
+                    handled = true;
+                    break;
+                case Win32Helper.WM_EXITSIZEMOVE:
+                    //Prevent updating the number of results when the window height is below the height of a single result item.
+                    //This situation occurs not only when the user manually resizes the window, but also when the window is released from a side snap, as the OS automatically adjusts the window height.
+                    //(Without this check, releasing from a snap can cause the window height to hit the minimum, resulting in only 2 results being shown.)
+                    if (_initialHeight != (int)Height && Height > (_settings.WindowHeightSize + _settings.ItemHeightSize))
                     {
-                        // Get shadow margin
-                        var shadowMargin = 0;
-                        var (_, useDropShadowEffect) = _theme.GetActualValue();
-                        if (useDropShadowEffect)
+                        if (!_settings.KeepMaxResults)
                         {
-                            shadowMargin = 32;
+                            // Get shadow margin
+                            var shadowMargin = 0;
+                            var (_, useDropShadowEffect) = _theme.GetActualValue();
+                            if (useDropShadowEffect)
+                            {
+                                shadowMargin = 32;
+                            }
+
+                            // Calculate max results to show
+                            var itemCount = (Height - (_settings.WindowHeightSize + 14) - shadowMargin) / _settings.ItemHeightSize;
+                            if (itemCount < 2)
+                            {
+                                _settings.MaxResultsToShow = 2;
+                            }
+                            else
+                            {
+                                _settings.MaxResultsToShow = Convert.ToInt32(Math.Truncate(itemCount));
+                            }
                         }
 
-                        // Calculate max results to show
-                        var itemCount = (Height - (_settings.WindowHeightSize + 14) - shadowMargin) / _settings.ItemHeightSize;
-                        if (itemCount < 2)
-                        {
-                            _settings.MaxResultsToShow = 2;
-                        }
-                        else
-                        {
-                            _settings.MaxResultsToShow = Convert.ToInt32(Math.Truncate(itemCount));
-                        }
+                        SizeToContent = SizeToContent.Height;
+                    }
+                    else
+                    {
+                        // Update height when exiting maximized snap state.
+                        SizeToContent = SizeToContent.Height;
                     }
 
-                    SizeToContent = SizeToContent.Height;
-                }
-
-                if (_initialWidth != (int)Width)
-                {
-                    if (!_settings.KeepMaxResults)
+                    if (_initialWidth != (int)Width)
                     {
-                        // Update width
-                        _viewModel.MainWindowWidth = Width;
+                        if (!_settings.KeepMaxResults)
+                        {
+                            // Update width
+                            _viewModel.MainWindowWidth = Width;
+                        }
+
+                        SizeToContent = SizeToContent.Height;
                     }
 
+                    handled = true;
+                    break;
+                case Win32Helper.WM_NCLBUTTONDBLCLK: // Block the double click in frame
                     SizeToContent = SizeToContent.Height;
-                }
-
-                handled = true;
+                    handled = true;
+                    break;
+                case Win32Helper.WM_SYSCOMMAND: // Block Maximize/Minimize by Win+Up and Win+Down Arrow
+                    var command = wParam.ToInt32() & 0xFFF0;
+                    if (command == Win32Helper.SC_MAXIMIZE || command == Win32Helper.SC_MINIMIZE)
+                    {
+                        SizeToContent = SizeToContent.Height;
+                        handled = true;
+                    }
+                    break;
             }
 
             return IntPtr.Zero;
