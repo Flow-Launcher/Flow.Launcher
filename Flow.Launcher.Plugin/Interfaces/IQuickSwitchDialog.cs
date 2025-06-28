@@ -1,5 +1,7 @@
 ﻿using System;
 
+#nullable enable
+
 namespace Flow.Launcher.Plugins
 {
     /// <summary>

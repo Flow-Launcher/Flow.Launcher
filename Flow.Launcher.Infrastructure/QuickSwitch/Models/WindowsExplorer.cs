@@ -12,13 +12,12 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
     /// </summary>
     public class WindowsExplorer : IQuickSwitchExplorer
     {
-        public IQuickSwitchExplorerWindow ExplorerWindow { get; private set; }
+        private static IWebBrowser2 _lastExplorerView = null;
 
-        private static readonly string ClassName = nameof(WindowsExplorer);
-
-        public bool CheckExplorerWindow(IntPtr foreground)
+        public IQuickSwitchExplorerWindow CheckExplorerWindow(IntPtr foreground)
         {
-            var isExplorer = false;
+            IQuickSwitchExplorerWindow explorerWindow = null;
+
             // Is it from Explorer?
             var processName = Win32Helper.GetProcessNameFromHwnd(new(foreground));
             if (processName.ToLower() == "explorer.exe")
@@ -31,8 +30,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 
                         if (explorer.HWND != foreground) return true;
 
-                        ExplorerWindow = new WindowsExplorerWindow(foreground, explorer);
-                        isExplorer = true;
+                        _lastExplorerView = explorer;
+                        explorerWindow = new WindowsExplorerWindow(foreground, explorer);
                         return false;
                     }
                     catch (COMException)
@@ -43,7 +42,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
                     return true;
                 });
             }
-            return isExplorer;
+            return explorerWindow;
         }
 
         private static unsafe void EnumerateShellWindows(Func<object, bool> action)
@@ -74,42 +73,15 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
             }
         }
 
-        public void RemoveExplorerWindow()
-        {
-            ExplorerWindow = null;
-        }
-
-        public void Dispose()
-        {
-            ExplorerWindow?.Dispose();
-        }
-    }
-
-    public class WindowsExplorerWindow : IQuickSwitchExplorerWindow
-    {
-        public IntPtr Handle { get; }
-
-        private static readonly object _lastExplorerViewLock = new();
-        private static IWebBrowser2 _lastExplorerView = null;
-
-        internal WindowsExplorerWindow(IntPtr handle, IWebBrowser2 explorerView)
-        {
-            Handle = handle;
-            _lastExplorerView = explorerView;
-        }
-
         public void Dispose()
         {
             // Release ComObjects
             try
             {
-                lock (_lastExplorerViewLock)
+                if (_lastExplorerView != null)
                 {
-                    if (_lastExplorerView != null)
-                    {
-                        Marshal.ReleaseComObject(_lastExplorerView);
-                        _lastExplorerView = null;
-                    }
+                    Marshal.ReleaseComObject(_lastExplorerView);
+                    _lastExplorerView = null;
                 }
             }
             catch (COMException)
@@ -117,23 +89,33 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
                 _lastExplorerView = null;
             }
         }
+    }
+
+    public class WindowsExplorerWindow : IQuickSwitchExplorerWindow
+    {
+        public IntPtr Handle { get; }
+
+        private static IWebBrowser2 _explorerView = null;
+
+        internal WindowsExplorerWindow(IntPtr handle, IWebBrowser2 explorerView)
+        {
+            Handle = handle;
+            _explorerView = explorerView;
+        }
 
         public string GetExplorerPath()
         {
-            if (_lastExplorerView == null) return null;
+            if (_explorerView == null) return null;
 
             object document = null;
             try
             {
-                lock (_lastExplorerViewLock)
+                if (_explorerView != null)
                 {
-                    if (_lastExplorerView != null)
-                    {
-                        // Use dynamic here because using IWebBrower2.Document can cause exception here:
-                        // System.Runtime.InteropServices.InvalidOleVariantTypeException: 'Specified OLE variant is invalid.'
-                        dynamic explorerView = _lastExplorerView;
-                        document = explorerView.Document;
-                    }
+                    // Use dynamic here because using IWebBrower2.Document can cause exception here:
+                    // System.Runtime.InteropServices.InvalidOleVariantTypeException: 'Specified OLE variant is invalid.'
+                    dynamic explorerView = _explorerView;
+                    document = explorerView.Document;
                 }
             }
             catch (COMException)
@@ -173,6 +155,11 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
             }
 
             return path;
+        }
+
+        public void Dispose()
+        {
+
         }
     }
 }

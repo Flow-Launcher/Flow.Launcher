@@ -40,9 +40,9 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         private static HWND _mainWindowHandle = HWND.Null;
 
-        private static readonly List<IQuickSwitchExplorer> _quickSwitchExplorers = new()
+        private static readonly Dictionary<IQuickSwitchExplorer, IQuickSwitchExplorerWindow> _quickSwitchExplorers = new()
         {
-            new WindowsExplorer()
+            { new WindowsExplorer(), null }
         };
 
         private static IQuickSwitchExplorer _lastExplorer = null;
@@ -172,10 +172,11 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
             else
             {
-                // Remove last explorer
-                foreach (var explorer in _quickSwitchExplorers)
+                // Remove explorer windows
+                foreach (var explorer in _quickSwitchExplorers.Keys)
                 {
-                    explorer.RemoveExplorerWindow();
+                    _quickSwitchExplorers[explorer]?.Dispose();
+                    _quickSwitchExplorers[explorer] = null;
                 }
 
                 // Remove dialog window handle
@@ -235,10 +236,13 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 // Enum windows from the top to the bottom
                 PInvoke.EnumWindows((hWnd, _) =>
                 {
-                    foreach (var explorer in _quickSwitchExplorers)
+                    foreach (var explorer in _quickSwitchExplorers.Keys)
                     {
-                        if (explorer.CheckExplorerWindow(hWnd))
+                        var explorerWindow = explorer.CheckExplorerWindow(hWnd);
+                        if (explorerWindow != null)
                         {
+                            _quickSwitchExplorers[explorer]?.Dispose();
+                            _quickSwitchExplorers[explorer] = explorerWindow;
                             _lastExplorer = explorer;
                             found = true;
                             return false;
@@ -259,7 +263,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         public static string GetActiveExplorerPath()
         {
-            return RefreshLastExplorer() ? _lastExplorer.ExplorerWindow?.GetExplorerPath() : string.Empty;
+            return RefreshLastExplorer() ? _quickSwitchExplorers[_lastExplorer].GetExplorerPath() : string.Empty;
         }
 
         #endregion
@@ -474,11 +478,14 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     {
                         lock (_lastExplorerLock)
                         {
-                            foreach (var explorer in _quickSwitchExplorers)
+                            foreach (var explorer in _quickSwitchExplorers.Keys)
                             {
-                                if (explorer.CheckExplorerWindow(hwnd))
+                                var explorerWindow = explorer.CheckExplorerWindow(hwnd);
+                                if (explorerWindow != null)
                                 {
                                     Log.Debug(ClassName, $"Explorer window: {hwnd}");
+                                    _quickSwitchExplorers[explorer]?.Dispose();
+                                    _quickSwitchExplorers[explorer] = explorerWindow;
                                     _lastExplorer = explorer;
                                     break;
                                 }
@@ -610,7 +617,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             string path;
             lock (_lastExplorerLock)
             {
-                path = _lastExplorer?.ExplorerWindow?.GetExplorerPath();
+                path = _quickSwitchExplorers[_lastExplorer]?.GetExplorerPath();
             }
             if (string.IsNullOrEmpty(path)) return false;
 
@@ -801,8 +808,9 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
 
             // Dispose explorers
-            foreach (var explorer in _quickSwitchExplorers)
+            foreach (var explorer in _quickSwitchExplorers.Keys)
             {
+                _quickSwitchExplorers[explorer]?.Dispose();
                 explorer.Dispose();
             }
             _quickSwitchExplorers.Clear();

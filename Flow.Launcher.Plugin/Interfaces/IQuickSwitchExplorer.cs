@@ -1,5 +1,7 @@
 ﻿using System;
 
+#nullable enable
+
 namespace Flow.Launcher.Plugins
 {
     /// <summary>
@@ -7,8 +9,6 @@ namespace Flow.Launcher.Plugins
     /// </summary>
     public interface IQuickSwitchExplorer : IDisposable
     {
-        IQuickSwitchExplorerWindow ExplorerWindow { get; }
-
         /// <summary>
         /// Check if the foreground window is a Windows Explorer instance.
         /// </summary>
@@ -16,14 +16,9 @@ namespace Flow.Launcher.Plugins
         /// The handle of the foreground window to check.
         /// </param>
         /// <returns>
-        /// True if the foreground window is a Windows Explorer instance, otherwise false.
+        /// The explorer window if the foreground window is a Windows Explorer instance. Null if it is not.
         /// </returns>
-        bool CheckExplorerWindow(IntPtr foreground);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        void RemoveExplorerWindow();
+        IQuickSwitchExplorerWindow? CheckExplorerWindow(IntPtr foreground);
     }
 
     public interface IQuickSwitchExplorerWindow : IDisposable
