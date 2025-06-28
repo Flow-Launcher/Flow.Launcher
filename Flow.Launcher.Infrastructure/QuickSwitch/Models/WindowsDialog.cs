@@ -19,8 +19,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 
         private const string WindowsDialogClassName = "#32770";
 
-        public string Name => "Windows";
-
         public bool CheckDialogWindow(IntPtr hwnd)
         {
             // Has it been checked?

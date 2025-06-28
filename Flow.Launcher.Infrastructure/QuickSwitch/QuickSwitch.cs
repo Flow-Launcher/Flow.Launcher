@@ -259,7 +259,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         public static string GetActiveExplorerPath()
         {
-            return RefreshLastExplorer() ? _lastExplorer.GetExplorerPath() : string.Empty;
+            return RefreshLastExplorer() ? _lastExplorer.ExplorerWindow?.GetExplorerPath() : string.Empty;
         }
 
         #endregion
@@ -610,7 +610,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             string path;
             lock (_lastExplorerLock)
             {
-                path = _lastExplorer?.GetExplorerPath();
+                path = _lastExplorer?.ExplorerWindow?.GetExplorerPath();
             }
             if (string.IsNullOrEmpty(path)) return false;
 

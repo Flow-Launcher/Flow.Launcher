@@ -7,6 +7,8 @@ namespace Flow.Launcher.Plugins
     /// </summary>
     public interface IQuickSwitchExplorer : IDisposable
     {
+        IQuickSwitchExplorerWindow ExplorerWindow { get; }
+
         /// <summary>
         /// Check if the foreground window is a Windows Explorer instance.
         /// </summary>
@@ -22,11 +24,12 @@ namespace Flow.Launcher.Plugins
         /// 
         /// </summary>
         void RemoveExplorerWindow();
+    }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
+    public interface IQuickSwitchExplorerWindow : IDisposable
+    {
+        IntPtr Handle { get; }
+
         string GetExplorerPath();
     }
 }

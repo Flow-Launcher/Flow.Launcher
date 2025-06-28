@@ -12,10 +12,9 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
     /// </summary>
     public class WindowsExplorer : IQuickSwitchExplorer
     {
-        private static readonly string ClassName = nameof(WindowsExplorer);
+        public IQuickSwitchExplorerWindow ExplorerWindow { get; private set; }
 
-        private static IWebBrowser2 _lastExplorerView = null;
-        private static readonly object _lastExplorerViewLock = new();
+        private static readonly string ClassName = nameof(WindowsExplorer);
 
         public bool CheckExplorerWindow(IntPtr foreground)
         {
@@ -32,10 +31,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 
                         if (explorer.HWND != foreground) return true;
 
-                        lock (_lastExplorerViewLock)
-                        {
-                            _lastExplorerView = explorer;
-                        }
+                        ExplorerWindow = new WindowsExplorerWindow(foreground, explorer);
                         isExplorer = true;
                         return false;
                     }
@@ -75,6 +71,50 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
                 {
                     return;
                 }
+            }
+        }
+
+        public void RemoveExplorerWindow()
+        {
+            ExplorerWindow = null;
+        }
+
+        public void Dispose()
+        {
+            ExplorerWindow?.Dispose();
+        }
+    }
+
+    public class WindowsExplorerWindow : IQuickSwitchExplorerWindow
+    {
+        public IntPtr Handle { get; }
+
+        private static readonly object _lastExplorerViewLock = new();
+        private static IWebBrowser2 _lastExplorerView = null;
+
+        internal WindowsExplorerWindow(IntPtr handle, IWebBrowser2 explorerView)
+        {
+            Handle = handle;
+            _lastExplorerView = explorerView;
+        }
+
+        public void Dispose()
+        {
+            // Release ComObjects
+            try
+            {
+                lock (_lastExplorerViewLock)
+                {
+                    if (_lastExplorerView != null)
+                    {
+                        Marshal.ReleaseComObject(_lastExplorerView);
+                        _lastExplorerView = null;
+                    }
+                }
+            }
+            catch (COMException)
+            {
+                _lastExplorerView = null;
             }
         }
 
@@ -133,34 +173,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
             }
 
             return path;
-        }
-
-        public void RemoveExplorerWindow()
-        {
-            lock (_lastExplorerViewLock)
-            {
-                _lastExplorerView = null;
-            }
-        }
-
-        public void Dispose()
-        {
-            // Release ComObjects
-            try
-            {
-                lock (_lastExplorerViewLock)
-                {
-                    if (_lastExplorerView != null)
-                    {
-                        Marshal.ReleaseComObject(_lastExplorerView);
-                        _lastExplorerView = null;
-                    }
-                }
-            }
-            catch (COMException)
-            {
-                _lastExplorerView = null;
-            }
         }
     }
 }
