@@ -10,11 +10,15 @@ namespace Flow.Launcher.Plugins
     public interface IQuickSwitchDialog : IDisposable
     {
         /// <summary>
-        /// 
+        /// Check if the foreground window is a file dialog instance.
         /// </summary>
-        IQuickSwitchDialogWindow DialogWindow { get; }
-
-        bool CheckDialogWindow(IntPtr hwnd);
+        /// <param name="hwnd">
+        /// The handle of the foreground window to check.
+        /// </param>
+        /// <returns>
+        /// The window if the foreground window is a file dialog instance. Null if it is not.
+        /// </returns>
+        IQuickSwitchDialogWindow? CheckDialogWindow(IntPtr hwnd);
     }
 
     public interface IQuickSwitchDialogWindow : IDisposable

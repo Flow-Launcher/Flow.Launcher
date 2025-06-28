@@ -48,9 +48,9 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         private static IQuickSwitchExplorer _lastExplorer = null;
         private static readonly object _lastExplorerLock = new();
 
-        private static readonly List<IQuickSwitchDialog> _quickSwitchDialogs = new()
+        private static readonly Dictionary<IQuickSwitchDialog, IQuickSwitchDialogWindow> _quickSwitchDialogs = new()
         {
-            new WindowsDialog()
+            { new WindowsDialog(), null }
         };
 
         private static IQuickSwitchDialogWindow _dialogWindow = null;
@@ -177,6 +177,12 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 {
                     _quickSwitchExplorers[explorer]?.Dispose();
                     _quickSwitchExplorers[explorer] = null;
+                }
+
+                // Remove dialog windows
+                foreach (var dialog in _quickSwitchDialogs.Keys)
+                {
+                    _quickSwitchDialogs[dialog] = null;
                 }
 
                 // Remove dialog window handle
@@ -402,14 +408,27 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 // Check if it is a file dialog window
                 var isDialogWindow = false;
                 var dialogWindowChanged = false;
-                foreach (var dialog in _quickSwitchDialogs)
+                foreach (var dialog in _quickSwitchDialogs.Keys)
                 {
-                    if (dialog.CheckDialogWindow(hwnd))
+                    IQuickSwitchDialogWindow dialogWindow;
+                    var existingDialogWindow = _quickSwitchDialogs[dialog];
+                    if (existingDialogWindow != null && existingDialogWindow.Handle == hwnd)
+                    {
+                        // If the dialog window is already in the list, no need to check again
+                        dialogWindow = existingDialogWindow;
+                    }
+                    else
+                    {
+                        dialogWindow = dialog.CheckDialogWindow(hwnd);
+                    }
+
+                    // If the dialog window is found, set it
+                    if (dialogWindow != null)
                     {
                         lock (_dialogWindowLock)
                         {
                             dialogWindowChanged = _dialogWindow == null || _dialogWindow.Handle != hwnd;
-                            _dialogWindow = dialog.DialogWindow;
+                            _dialogWindow = dialogWindow;
                         }
 
                         isDialogWindow = true;
@@ -667,21 +686,30 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
 
             // Then check all dialog windows
-            foreach (var dialog in _quickSwitchDialogs)
+            foreach (var dialogWindow in _quickSwitchDialogs.Values)
             {
-                if (dialog.DialogWindow.Handle == hwnd)
+                if (dialogWindow.Handle == hwnd)
                 {
-                    return dialog.DialogWindow;
+                    return dialogWindow;
                 }
             }
 
-            // Finally search for the dialog window
-            foreach (var dialog in _quickSwitchDialogs)
+            // Finally search for the dialog window again
+            foreach (var dialog in _quickSwitchDialogs.Keys)
             {
-                if (dialog.CheckDialogWindow(hwnd))
+                IQuickSwitchDialogWindow dialogWindow;
+                var existingDialogWindow = _quickSwitchDialogs[dialog];
+                if (existingDialogWindow != null && existingDialogWindow.Handle == hwnd)
                 {
-                    return dialog.DialogWindow;
+                    // If the dialog window is already in the list, no need to check again
+                    dialogWindow = existingDialogWindow;
                 }
+                else
+                {
+                    dialogWindow = dialog.CheckDialogWindow(hwnd);
+                }
+
+                return dialogWindow;
             }
 
             return null;
@@ -820,8 +848,9 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
 
             // Dispose dialogs
-            foreach (var dialog in _quickSwitchDialogs)
+            foreach (var dialog in _quickSwitchDialogs.Keys)
             {
+                _quickSwitchDialogs[dialog]?.Dispose();
                 dialog.Dispose();
             }
             _quickSwitchDialogs.Clear();

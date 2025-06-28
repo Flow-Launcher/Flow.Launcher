@@ -15,18 +15,10 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
     /// </summary>
     public class WindowsDialog : IQuickSwitchDialog
     {
-        public IQuickSwitchDialogWindow DialogWindow { get; private set; }
-
         private const string WindowsDialogClassName = "#32770";
 
-        public bool CheckDialogWindow(IntPtr hwnd)
+        public IQuickSwitchDialogWindow CheckDialogWindow(IntPtr hwnd)
         {
-            // Has it been checked?
-            if (DialogWindow != null && DialogWindow.Handle == hwnd)
-            {
-                return true;
-            }
-
             // Is it a Win32 dialog box?
             if (GetClassName(new(hwnd)) == WindowsDialogClassName)
             {
@@ -34,18 +26,16 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
                 var dialogType = GetFileDialogType(new(hwnd));
                 if (dialogType != DialogType.Others)
                 {
-                    DialogWindow = new WindowsDialogWindow(hwnd, dialogType);
-
-                    return true;
+                    return new WindowsDialogWindow(hwnd, dialogType);
                 }
             }
-            return false;
+
+            return null;
         }
 
         public void Dispose()
         {
-            DialogWindow?.Dispose();
-            DialogWindow = null;
+
         }
 
         #region Help Methods
@@ -101,7 +91,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 
         public void Dispose()
         {
-            Handle = HWND.Null;
+
         }
     }
 
@@ -219,7 +209,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 
         public void Dispose()
         {
-            Handle = HWND.Null;
+            
         }
 
         #endregion
