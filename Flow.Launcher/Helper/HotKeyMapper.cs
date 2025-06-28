@@ -251,7 +251,7 @@ internal static class HotKeyMapper
     {
         return new RelayCommand(() =>
         {
-            var selectedResult = _mainViewModel.Results.SelectedItem?.Result;
+            var selectedResult = _mainViewModel.GetSelectedResults().SelectedItem?.Result;
             // Check result nullability
             if (selectedResult != null)
             {
