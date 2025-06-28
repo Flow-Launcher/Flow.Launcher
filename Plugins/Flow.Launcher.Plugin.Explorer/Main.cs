@@ -17,7 +17,7 @@ namespace Flow.Launcher.Plugin.Explorer
     {
         internal static PluginInitContext Context { get; set; }
 
-        internal Settings Settings;
+        internal static Settings Settings { get; set; }
 
         private SettingsViewModel viewModel;
 
