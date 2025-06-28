@@ -12,8 +12,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
     /// </summary>
     public class WindowsExplorer : IQuickSwitchExplorer
     {
-        private static IWebBrowser2 _lastExplorerView = null;
-
         public IQuickSwitchExplorerWindow CheckExplorerWindow(IntPtr hwnd)
         {
             IQuickSwitchExplorerWindow explorerWindow = null;
@@ -30,7 +28,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 
                         if (explorer.HWND != hwnd) return true;
 
-                        _lastExplorerView = explorer;
                         explorerWindow = new WindowsExplorerWindow(hwnd, explorer);
                         return false;
                     }
@@ -75,19 +72,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 
         public void Dispose()
         {
-            // Release ComObjects
-            try
-            {
-                if (_lastExplorerView != null)
-                {
-                    Marshal.ReleaseComObject(_lastExplorerView);
-                    _lastExplorerView = null;
-                }
-            }
-            catch (COMException)
-            {
-                _lastExplorerView = null;
-            }
+            
         }
     }
 
@@ -159,7 +144,19 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 
         public void Dispose()
         {
-
+            // Release ComObjects
+            try
+            {
+                if (_explorerView != null)
+                {
+                    Marshal.ReleaseComObject(_explorerView);
+                    _explorerView = null;
+                }
+            }
+            catch (COMException)
+            {
+                _explorerView = null;
+            }
         }
     }
 }
