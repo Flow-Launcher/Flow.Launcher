@@ -180,10 +180,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public List<QuickSwitchFileResultBehaviourData> QuickSwitchFileResultBehaviours { get; } =
         DropdownDataGeneric<QuickSwitchFileResultBehaviours>.GetValues<QuickSwitchFileResultBehaviourData>("QuickSwitchFileResultBehaviour");
 
-    public string QuickSwitchSupportedExplorerDialogMessage =>
-        string.Format(App.API.GetTranslation("QuickSwitchSupportedExplorerDialogMessage"),
-            string.Join(", ", QuickSwitch.SupportedExplorerNames),
-            string.Join(", ", QuickSwitch.SupportedDialogNames));
+    public string QuickSwitchSupportedExplorerDialogMessage => string.Empty;
 
     public int SearchDelayTimeValue
     {

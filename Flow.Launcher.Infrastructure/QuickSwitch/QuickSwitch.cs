@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Infrastructure.QuickSwitch.Interface;
 using Flow.Launcher.Infrastructure.QuickSwitch.Models;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugins;
 using NHotkey;
 using Windows.Win32;
 using Windows.Win32.Foundation;
@@ -78,14 +78,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         private static bool _initialized = false;
         private static bool _enabled = false;
-
-        #endregion
-
-        #region Supported Explorers & Dialogs Name
-
-        public static string[] SupportedExplorerNames => _quickSwitchExplorers.ConvertAll(explorer => explorer.Name).ToArray();
-
-        public static string[] SupportedDialogNames => _quickSwitchDialogs.ConvertAll(dialog => dialog.Name).ToArray();
 
         #endregion
 
@@ -308,7 +300,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                         {
                             if (_dialogWindow != null)
                             {
-                                dialogWindowHandle = _dialogWindow.Handle;
+                                dialogWindowHandle = new(_dialogWindow.Handle);
                             }
                         }
 
@@ -731,7 +723,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 {
                     lock (_autoSwitchedDialogsLock)
                     {
-                        _autoSwitchedDialogs.Add(dialogHandle);
+                        _autoSwitchedDialogs.Add(new(dialogHandle));
                     }
                 }
 

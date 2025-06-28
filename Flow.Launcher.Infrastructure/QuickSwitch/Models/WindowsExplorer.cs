@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using Flow.Launcher.Infrastructure.QuickSwitch.Interface;
+using Flow.Launcher.Plugins;
 using Windows.Win32;
-using Windows.Win32.Foundation;
 using Windows.Win32.System.Com;
 using Windows.Win32.UI.Shell;
 
@@ -11,20 +10,18 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
     /// <summary>
     /// Class for handling Windows Explorer instances in QuickSwitch.
     /// </summary>
-    internal class WindowsExplorer : IQuickSwitchExplorer
+    public class WindowsExplorer : IQuickSwitchExplorer
     {
         private static readonly string ClassName = nameof(WindowsExplorer);
 
         private static IWebBrowser2 _lastExplorerView = null;
         private static readonly object _lastExplorerViewLock = new();
 
-        public string Name => "Windows";
-
-        public bool CheckExplorerWindow(HWND foreground)
+        public bool CheckExplorerWindow(IntPtr foreground)
         {
             var isExplorer = false;
             // Is it from Explorer?
-            var processName = Win32Helper.GetProcessNameFromHwnd(foreground);
+            var processName = Win32Helper.GetProcessNameFromHwnd(new(foreground));
             if (processName.ToLower() == "explorer.exe")
             {
                 EnumerateShellWindows((shellWindow) =>
@@ -33,7 +30,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
                     {
                         if (shellWindow is not IWebBrowser2 explorer) return true;
 
-                        if (explorer.HWND != foreground.Value) return true;
+                        if (explorer.HWND != foreground) return true;
 
                         lock (_lastExplorerViewLock)
                         {

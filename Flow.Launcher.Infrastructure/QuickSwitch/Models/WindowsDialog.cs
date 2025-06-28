@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Infrastructure.QuickSwitch.Interface;
+using Flow.Launcher.Plugins;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.UI.WindowsAndMessaging;
@@ -21,7 +21,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 
         public string Name => "Windows";
 
-        public bool CheckDialogWindow(HWND hwnd)
+        public bool CheckDialogWindow(IntPtr hwnd)
         {
             // Has it been checked?
             if (DialogWindow != null && DialogWindow.Handle == hwnd)
@@ -30,10 +30,10 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
             }
 
             // Is it a Win32 dialog box?
-            if (GetClassName(hwnd) == WindowsDialogClassName)
+            if (GetClassName(new(hwnd)) == WindowsDialogClassName)
             {
                 // Is it a windows file dialog?
-                var dialogType = GetFileDialogType(hwnd);
+                var dialogType = GetFileDialogType(new(hwnd));
                 if (dialogType != DialogType.Others)
                 {
                     DialogWindow = new WindowsDialogWindow(hwnd, dialogType);
@@ -82,7 +82,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 
     internal class WindowsDialogWindow : IQuickSwitchDialogWindow
     {
-        public HWND Handle { get; private set; } = HWND.Null;
+        public IntPtr Handle { get; private set; } = IntPtr.Zero;
 
         // After jumping folder, file editor handle of Save / SaveAs file dialogs cannot be found anymore
         // So we need to cache the current tab and use the original handle
@@ -90,7 +90,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 
         private readonly DialogType _dialogType;
 
-        public WindowsDialogWindow(HWND handle, DialogType dialogType)
+        public WindowsDialogWindow(IntPtr handle, DialogType dialogType)
         {
             Handle = handle;
             _dialogType = dialogType;
@@ -111,7 +111,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
     {
         #region Public Properties
 
-        public HWND Handle { get; private set; } = HWND.Null;
+        public IntPtr Handle { get; private set; } = IntPtr.Zero;
 
         #endregion
 
@@ -133,7 +133,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 
         #region Constructor
 
-        public WindowsDialogTab(HWND handle, DialogType dialogType)
+        public WindowsDialogTab(IntPtr handle, DialogType dialogType)
         {
             Handle = handle;
             _dialogType = dialogType;
@@ -234,7 +234,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
         {
             // Get the handle of the path editor
             // Must use PInvoke.FindWindowEx because PInvoke.GetDlgItem(Handle, 0x0000) will get another control
-            _pathControl = PInvoke.FindWindowEx(Handle, HWND.Null, "WorkerW", null); // 0x0000
+            _pathControl = PInvoke.FindWindowEx(new(Handle), HWND.Null, "WorkerW", null); // 0x0000
             _pathControl = PInvoke.FindWindowEx(_pathControl, HWND.Null, "ReBarWindow32", null); // 0xA005
             _pathControl = PInvoke.FindWindowEx(_pathControl, HWND.Null, "Address Band Root", null); // 0xA205
             _pathControl = PInvoke.FindWindowEx(_pathControl, HWND.Null, "msctls_progress32", null); // 0x0000
@@ -264,14 +264,14 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
             if (_dialogType == DialogType.Open)
             {
                 // Get the handle of the file name editor of Open file dialog
-                _fileEditor = PInvoke.GetDlgItem(Handle, 0x047C); // ComboBoxEx32
+                _fileEditor = PInvoke.GetDlgItem(new(Handle), 0x047C); // ComboBoxEx32
                 _fileEditor = PInvoke.GetDlgItem(_fileEditor, 0x047C); // ComboBox
                 _fileEditor = PInvoke.GetDlgItem(_fileEditor, 0x047C); // Edit
             }
             else
             {
                 // Get the handle of the file name editor of Save / SaveAs file dialog
-                _fileEditor = PInvoke.GetDlgItem(Handle, 0x0000); // DUIViewWndClassName
+                _fileEditor = PInvoke.GetDlgItem(new(Handle), 0x0000); // DUIViewWndClassName
                 _fileEditor = PInvoke.GetDlgItem(_fileEditor, 0x0000); // DirectUIHWND
                 _fileEditor = PInvoke.GetDlgItem(_fileEditor, 0x0000); // FloatNotifySink
                 _fileEditor = PInvoke.GetDlgItem(_fileEditor, 0x0000); // ComboBox
@@ -290,7 +290,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
         private bool GetOpenButton()
         {
             // Get the handle of the open button
-            _openButton = PInvoke.GetDlgItem(Handle, 0x0001); // Open/Save/SaveAs Button
+            _openButton = PInvoke.GetDlgItem(new(Handle), 0x0001); // Open/Save/SaveAs Button
             if (_openButton == HWND.Null)
             {
                 Log.Error(ClassName, "Failed to find open button handle");
