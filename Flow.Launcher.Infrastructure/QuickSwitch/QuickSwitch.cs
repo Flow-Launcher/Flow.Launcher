@@ -740,6 +740,13 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     dialogWindow = dialog.Plugin.CheckDialogWindow(hwnd);
                 }
 
+                // Update dialog window if found
+                if (dialogWindow != null)
+                {
+                    _quickSwitchDialogs[dialog] = dialogWindow;
+                    return dialogWindow;
+                }
+
                 return dialogWindow;
             }
 
