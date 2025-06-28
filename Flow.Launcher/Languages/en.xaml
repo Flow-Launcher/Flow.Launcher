@@ -335,8 +335,6 @@
     <system:String x:Key="QuickSwitchFileResultBehaviourFullPath">Fill full path in file name box</system:String>
     <system:String x:Key="QuickSwitchFileResultBehaviourFullPathOpen">Fill full path in file name box and open</system:String>
     <system:String x:Key="QuickSwitchFileResultBehaviourDirectory">Fill directory in path box</system:String>
-    <system:String x:Key="QuickSwitchSupportedExplorerDialogTitle">Information for Quick Switch user</system:String>
-    <system:String x:Key="QuickSwitchSupportedExplorerDialogMessage">Currently Flow supports those file explorers ({0}) and those file dialogs ({1})</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP Proxy</system:String>
