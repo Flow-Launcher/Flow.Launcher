@@ -6,7 +6,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks
 {
     internal static class QuickAccess
     {
-        private const int quickAccessResultScore = 100;
+        private const int QuickAccessResultScore = 100;
 
         internal static List<Result> AccessLinkListMatched(Query query, IEnumerable<AccessLink> accessLinks)
         {
@@ -19,8 +19,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks
                 .ThenBy(x => x.Name)
                 .Select(l => l.Type switch
                     {
-                        ResultType.Folder => ResultManager.CreateFolderResult(l.Name, l.Path, l.Path, query, quickAccessResultScore),
-                        ResultType.File => ResultManager.CreateFileResult(l.Path, query, quickAccessResultScore),
+                        ResultType.Volume => ResultManager.CreateDriveSpaceDisplayResult(l.Path, query.ActionKeyword, QuickAccessResultScore),
+                        ResultType.Folder => ResultManager.CreateFolderResult(l.Name, l.Path, l.Path, query, QuickAccessResultScore),
+                        ResultType.File => ResultManager.CreateFileResult(l.Path, query, QuickAccessResultScore),
                         _ => throw new ArgumentOutOfRangeException()
                     })
                 .ToList();
@@ -32,8 +33,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks
                 .ThenBy(x => x.Name)
                 .Select(l => l.Type switch
                 {
-                    ResultType.Folder => ResultManager.CreateFolderResult(l.Name, l.Path, l.Path, query),
-                    ResultType.File => ResultManager.CreateFileResult(l.Path, query, quickAccessResultScore),
+                    ResultType.Volume => ResultManager.CreateDriveSpaceDisplayResult(l.Path, query.ActionKeyword, QuickAccessResultScore),
+                    ResultType.Folder => ResultManager.CreateFolderResult(l.Name, l.Path, l.Path, query, QuickAccessResultScore),
+                    ResultType.File => ResultManager.CreateFileResult(l.Path, query, QuickAccessResultScore),
                     _ => throw new ArgumentOutOfRangeException()
                 }).ToList();
     }
