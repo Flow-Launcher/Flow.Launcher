@@ -45,7 +45,7 @@ namespace Flow.Launcher.Resources.Pages
                 {
                     if (Settings.UseLogonTaskForStartup)
                     {
-                        AutoStartup.ChangeToViaLogonTask();
+                        AutoStartup.ChangeToViaLogonTask(Settings.AlwaysRunAsAdministrator);
                     }
                     else
                     {
