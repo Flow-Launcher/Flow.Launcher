@@ -269,6 +269,10 @@ internal static class HotKeyMapper
                     if (metadata.Disabled)
                         continue;
 
+                    // Check hotkey supported state
+                    if (!selectedResult.HotkeyIds.Contains(pluginHotkey.Id))
+                        continue;
+
                     // Check action nullability
                     if (pluginHotkey.Action == null)
                         continue;
