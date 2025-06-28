@@ -2,12 +2,12 @@
 
 #nullable enable
 
-namespace Flow.Launcher.Plugins
+namespace Flow.Launcher.Plugin
 {
     /// <summary>
     /// Interface for handling file explorer instances in QuickSwitch.
     /// </summary>
-    public interface IQuickSwitchExplorer : IDisposable
+    public interface IQuickSwitchExplorer : IFeatures, IDisposable
     {
         /// <summary>
         /// Check if the foreground window is a Windows Explorer instance.

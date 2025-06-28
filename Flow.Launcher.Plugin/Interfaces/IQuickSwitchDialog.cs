@@ -2,12 +2,12 @@
 
 #nullable enable
 
-namespace Flow.Launcher.Plugins
+namespace Flow.Launcher.Plugin
 {
     /// <summary>
     /// Interface for handling file dialog instances in QuickSwitch.
     /// </summary>
-    public interface IQuickSwitchDialog : IDisposable
+    public interface IQuickSwitchDialog : IFeatures, IDisposable
     {
         /// <summary>
         /// Check if the foreground window is a file dialog instance.

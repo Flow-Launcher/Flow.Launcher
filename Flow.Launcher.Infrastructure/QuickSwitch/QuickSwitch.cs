@@ -8,7 +8,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.QuickSwitch.Models;
 using Flow.Launcher.Infrastructure.UserSettings;
-using Flow.Launcher.Plugins;
+using Flow.Launcher.Plugin;
 using NHotkey;
 using Windows.Win32;
 using Windows.Win32.Foundation;

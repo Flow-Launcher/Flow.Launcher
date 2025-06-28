@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using Flow.Launcher.Plugins;
+using Flow.Launcher.Plugin;
 using Windows.Win32;
 using Windows.Win32.System.Com;
 using Windows.Win32.UI.Shell;

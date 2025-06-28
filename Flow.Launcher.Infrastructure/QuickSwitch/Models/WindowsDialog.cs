@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Plugins;
+using Flow.Launcher.Plugin;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.UI.WindowsAndMessaging;
