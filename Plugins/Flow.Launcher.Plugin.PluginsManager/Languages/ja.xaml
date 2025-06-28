@@ -46,7 +46,7 @@
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_name">Plugins Manager</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_description">Management of installing, uninstalling or updating Flow Launcher plugins</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_description">Flow Launcher のプラグインのインストール、アンインストールや更新の管理</system:String>
     <system:String x:Key="plugin_pluginsmanager_unknown_author">Unknown Author</system:String>
 
     <!--  Context menu items  -->
@@ -60,6 +60,6 @@
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_subtitle">Visit the PluginsManifest repository to see community-made plugin submissions</system:String>
 
     <!--  Settings menu items  -->
-    <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Install from unknown source warning</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Automatically restart Flow Launcher after installing/uninstalling/updating plugins</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">不明な提供元からインストールするとき警告する</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">プラグインのインストール/アンインストール/更新後、Flow Launcher を自動的に再起動する</system:String>
 </ResourceDictionary>

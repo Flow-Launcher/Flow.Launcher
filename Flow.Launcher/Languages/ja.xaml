@@ -93,7 +93,7 @@
     <system:String x:Key="autoUpdates">自動更新</system:String>
     <system:String x:Key="select">選択</system:String>
     <system:String x:Key="hideOnStartup">起動時にFlow Launcherを隠す</system:String>
-    <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
+    <system:String x:Key="hideOnStartupToolTip">起動後、Flow Launcher の検索ウィンドウは非表示になり、トレイに格納されます。</system:String>
     <system:String x:Key="hideNotifyIcon">トレイアイコンを隠す</system:String>
     <system:String x:Key="hideNotifyIconToolTip">トレイアイコンが非表示になっているときは、検索ウィンドウを右クリックすることで設定メニューを開くことができます。</system:String>
     <system:String x:Key="querySearchPrecision">クエリ検索精度</system:String>
@@ -136,8 +136,8 @@
     <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
     <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
-    <system:String x:Key="showAtTopmost">Show Search Window at Topmost</system:String>
-    <system:String x:Key="showAtTopmostToolTip">Show search window above other windows</system:String>
+    <system:String x:Key="showAtTopmost">Show Search Window at Foremost</system:String>
+    <system:String x:Key="showAtTopmostToolTip">Overrides other programs' 'Always on Top' setting and displays Flow in the foremost position.</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Search Plugin</system:String>
@@ -180,7 +180,7 @@
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">プラグインストア</system:String>
     <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
-    <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
+    <system:String x:Key="pluginStore_RecentlyUpdated">最近の更新</system:String>
     <system:String x:Key="pluginStore_None">プラグイン</system:String>
     <system:String x:Key="pluginStore_Installed">Installed</system:String>
     <system:String x:Key="refresh">更新</system:String>
@@ -262,8 +262,8 @@
     <system:String x:Key="hotkeys">ホットキー</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcherを開く</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Flow Launcher の表示/非表示を切り替えるショートカットを入力してください。</system:String>
-    <system:String x:Key="previewHotkey">Toggle Preview</system:String>
-    <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide preview in search window.</system:String>
+    <system:String x:Key="previewHotkey">プレビューの切り替え</system:String>
+    <system:String x:Key="previewHotkeyToolTip">検索ウィンドウでプレビューの表示/非表示を切り替えるショートカットを入力してください。</system:String>
     <system:String x:Key="hotkeyPresets">Hotkey Presets</system:String>
     <system:String x:Key="hotkeyPresetsToolTip">List of currently registered hotkeys</system:String>
     <system:String x:Key="openResultModifiers">結果修飾子を開く</system:String>
@@ -272,8 +272,8 @@
     <system:String x:Key="showOpenResultHotkeyToolTip">Show result selection hotkey with results.</system:String>
     <system:String x:Key="autoCompleteHotkey">自動補完</system:String>
     <system:String x:Key="autoCompleteHotkeyToolTip">選択された項目に対して自動補完を実行します。</system:String>
-    <system:String x:Key="SelectNextItemHotkey">Select Next Item</system:String>
-    <system:String x:Key="SelectPrevItemHotkey">Select Previous Item</system:String>
+    <system:String x:Key="SelectNextItemHotkey">次の項目を選択</system:String>
+    <system:String x:Key="SelectPrevItemHotkey">前の項目を選択</system:String>
     <system:String x:Key="SelectNextPageHotkey">Next Page</system:String>
     <system:String x:Key="SelectPrevPageHotkey">Previous Page</system:String>
     <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
@@ -291,13 +291,13 @@
     <system:String x:Key="QuickWidthHotkey">Quick Adjust Window Width</system:String>
     <system:String x:Key="QuickHeightHotkey">Quick Adjust Window Height</system:String>
     <system:String x:Key="ReloadPluginHotkeyToolTip">Use when require plugins to reload and update their existing data.</system:String>
-    <system:String x:Key="AdditionalHotkeyToolTip">You can add one more hotkey for this function.</system:String>
+    <system:String x:Key="AdditionalHotkeyToolTip">この機能のホットキーはもう一つ追加できます。</system:String>
     <system:String x:Key="customQueryHotkey">カスタムクエリ ホットキー</system:String>
     <system:String x:Key="customQueryShortcut">Custom Query Shortcut</system:String>
-    <system:String x:Key="builtinShortcuts">Built-in Shortcut</system:String>
+    <system:String x:Key="builtinShortcuts">組み込みショートカット</system:String>
     <system:String x:Key="customQuery">Query</system:String>
-    <system:String x:Key="customShortcut">Shortcut</system:String>
-    <system:String x:Key="customShortcutExpansion">Expansion</system:String>
+    <system:String x:Key="customShortcut">ショートカット</system:String>
+    <system:String x:Key="customShortcutExpansion">展開</system:String>
     <system:String x:Key="builtinShortcutDescription">説明</system:String>
     <system:String x:Key="delete">削除</system:String>
     <system:String x:Key="edit">編集</system:String>
@@ -305,9 +305,9 @@
     <system:String x:Key="none">None</system:String>
     <system:String x:Key="pleaseSelectAnItem">項目選択してください</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">{0} プラグインのホットキーを本当に削除しますか？</system:String>
-    <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
+    <system:String x:Key="deleteCustomShortcutWarning">本当にこのショートカットを削除しますか？： {0} を {1} に展開</system:String>
     <system:String x:Key="shortcut_clipboard_description">Get text from clipboard.</system:String>
-    <system:String x:Key="shortcut_active_explorer_path">Get path from active explorer.</system:String>
+    <system:String x:Key="shortcut_active_explorer_path">アクティブなエクスプローラーからパスを取得します。</system:String>
     <system:String x:Key="queryWindowShadowEffect">Query window shadow effect</system:String>
     <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU. Not recommended if your computer performance is limited.</system:String>
     <system:String x:Key="windowWidthSize">Window Width Size</system:String>
@@ -363,8 +363,8 @@
     <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
     <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
     <system:String x:Key="welcomewindow">Wizard</system:String>
-    <system:String x:Key="userdatapath">User Data Location</system:String>
-    <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
+    <system:String x:Key="userdatapath">ユーザーデータの場所</system:String>
+    <system:String x:Key="userdatapathToolTip">ユーザー設定とインストールされているプラグインは、ユーザーデータフォルダに保存されます。この場所は、ポータブルモードかどうかによって異なる場合があります。</system:String>
     <system:String x:Key="userdatapathButton">Open Folder</system:String>
     <system:String x:Key="advanced">Advanced</system:String>
     <system:String x:Key="logLevel">Log Level</system:String>
@@ -443,14 +443,14 @@
     <system:String x:Key="hotkeyRegGuide">Press the keys you want to use for this function.</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
-    <system:String x:Key="customeQueryShortcutTitle">Custom Query Shortcut</system:String>
-    <system:String x:Key="customeQueryShortcutTips">Enter a shortcut that automatically expands to the specified query.</system:String>
-    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">A shortcut is expanded when it exactly matches the query. 
+    <system:String x:Key="customeQueryShortcutTitle">カスタムクエリショートカット</system:String>
+    <system:String x:Key="customeQueryShortcutTips">指定したクエリに自動的に展開するショートカットを入力してください。</system:String>
+    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">クエリに正確に一致すると、ショートカットが展開されます。
 
-If you add an '@' prefix while inputting a shortcut, it matches any position in the query. Builtin shortcuts match any position in a query.
+ショートカットの入力で「@」プレフィクスをつけた場合、クエリのどこにあってもマッチするようになります。組み込みのショートカットはクエリのどこにあってもマッチします。
     </system:String>
-    <system:String x:Key="duplicateShortcut">Shortcut already exists, please enter a new Shortcut or edit the existing one.</system:String>
-    <system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
+    <system:String x:Key="duplicateShortcut">ショートカットが既に存在します。新しいショートカットを入力するか、既存のショートカットを編集してください。</system:String>
+    <system:String x:Key="emptyShortcut">ショートカット、展開の少なくとも一方が空です。</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">保存</system:String>

@@ -135,8 +135,8 @@
     <system:String x:Key="historyResultsForHomePage">Mostrar histórico na página inicial</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Máximo de resultados a mostrar na Página inicial</system:String>
     <system:String x:Key="homeToggleBoxToolTip">Esta opção apenas pode ser editada se o plugin tiver suporte a Página inicial e se estiver ativo.</system:String>
-    <system:String x:Key="showAtTopmost">Janela de pesquisa por cima</system:String>
-    <system:String x:Key="showAtTopmostToolTip">Mostrar caixa de pesquisa por cima das outras janelas</system:String>
+    <system:String x:Key="showAtTopmost">Janela de pesquisa à frente</system:String>
+    <system:String x:Key="showAtTopmostToolTip">Sobrepõe a definição 'Sempre na frente' das outras aplicações e mostra Flow Launcher à frente de qualquer janela.</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Pesquisar plugins</system:String>

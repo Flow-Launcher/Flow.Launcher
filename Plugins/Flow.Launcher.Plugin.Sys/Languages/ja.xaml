@@ -2,7 +2,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Command List  -->
-    <system:String x:Key="flowlauncher_plugin_sys_name">Name</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_name">名前</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_desc">説明</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_command">コマンド</system:String>
 

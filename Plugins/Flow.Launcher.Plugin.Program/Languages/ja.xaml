@@ -6,14 +6,14 @@
     <system:String x:Key="flowlauncher_plugin_program_delete">削除</system:String>
     <system:String x:Key="flowlauncher_plugin_program_edit">編集</system:String>
     <system:String x:Key="flowlauncher_plugin_program_add">追加</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_name">Name</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_name">名前</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable">有効</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enabled">Enabled</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable">無効</system:String>
     <system:String x:Key="flowlauncher_plugin_program_status">Status</system:String>
     <system:String x:Key="flowlauncher_plugin_program_true">Enabled</system:String>
     <system:String x:Key="flowlauncher_plugin_program_false">Disabled</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_location">Location</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_location">場所</system:String>
     <system:String x:Key="flowlauncher_plugin_program_all_programs">All Programs</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes">File Type</system:String>
     <system:String x:Key="flowlauncher_plugin_program_reindex">Reindex</system:String>

@@ -348,7 +348,7 @@
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="BackupAndRestore" xml:space="preserve">
-    <value>Sichern und wiederherstellen</value>
+    <value>Sichern und Wiederherstellen</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="BatterySaver" xml:space="preserve">
@@ -1324,7 +1324,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="RemoteDesktop" xml:space="preserve">
-    <value>Remotedesktop</value>
+    <value>Remote-Desktop</value>
     <comment>Area System</comment>
   </data>
   <data name="ScannersAndCameras" xml:space="preserve">
@@ -1752,7 +1752,7 @@
     <value>Einen Dateityp immer in einem spezifischen Programm öffnen lassen</value>
   </data>
   <data name="ChangeTheNarratorSVoice" xml:space="preserve">
-    <value>Stimme ändern</value>
+    <value>Ändern der Stimme des Erzählers</value>
   </data>
   <data name="FindAndFixKeyboardProblems" xml:space="preserve">
     <value>Tastaturprobleme finden und beheben</value>
@@ -1761,7 +1761,7 @@
     <value>Screenreader verwenden</value>
   </data>
   <data name="ShowWhichWorkgroupThisComputerIsOn" xml:space="preserve">
-    <value>Arbeitsgruppe auf diesem Computer Anzeigen</value>
+    <value>Anzeigen, zu welcher Arbeitsgruppe dieser Computer gehört</value>
   </data>
   <data name="ChangeMouseWheelSettings" xml:space="preserve">
     <value>Mausrad-Einstellungen ändern</value>
@@ -1773,7 +1773,7 @@
     <value>Probleme finden und beheben</value>
   </data>
   <data name="ChangeSettingsForContentReceivedUsingTapAndSend" xml:space="preserve">
-    <value>Einstellung für empfangene Inhalte von Tippen und Senden</value>
+    <value>Ändern der Einstellungen für Inhalte, die über Tippen und Senden empfangen werden</value>
   </data>
   <data name="ChangeDefaultSettingsForMediaOrDevices" xml:space="preserve">
     <value>Change default settings for media or devices</value>
@@ -1812,7 +1812,7 @@
     <value>Ein Bluetooth-Gerät hinzufügen</value>
   </data>
   <data name="CustomiseTheMouseButtons" xml:space="preserve">
-    <value>Customise the mouse buttons</value>
+    <value>Individuelles Anpassen der Maustasten</value>
   </data>
   <data name="SetTabletButtonsToPerformCertainTasks" xml:space="preserve">
     <value>Set tablet buttons to perform certain tasks</value>
@@ -1869,16 +1869,16 @@
     <value>Scanner und Kameras ansehen</value>
   </data>
   <data name="MicrosoftIMERegisterWordJapanese" xml:space="preserve">
-    <value>Microsoft IME Register Word (Japanese)</value>
+    <value>Microsoft IME Register Word (Japanisch)</value>
   </data>
   <data name="RestoreYourFilesWithFileHistory" xml:space="preserve">
-    <value>Restore your files with File History</value>
+    <value>Ihre Dateien mit File History wiederherstellen</value>
   </data>
   <data name="TurnOnScreenKeyboardOnOrOff" xml:space="preserve">
     <value>Turn On-Screen keyboard on or off</value>
   </data>
   <data name="BlockOrAllowThirdPartyCookies" xml:space="preserve">
-    <value>Block or allow third-party cookies</value>
+    <value>Cookies von Drittanbietern blockieren oder zulassen</value>
   </data>
   <data name="FindAndFixAudioRecordingProblems" xml:space="preserve">
     <value>Audioaufzeichnungsprobleme finden und beheben</value>
@@ -1902,7 +1902,7 @@
     <value>Preview, delete, show or hide fonts</value>
   </data>
   <data name="MicrosoftQuickSettings" xml:space="preserve">
-    <value>Microsoft Quick Settings</value>
+    <value>Microsoft-Schnelleinstellungen</value>
   </data>
   <data name="ViewReliabilityHistory" xml:space="preserve">
     <value>View reliability history</value>
@@ -1917,7 +1917,7 @@
     <value>Sicherheitsrichtlinien zurücksetzen</value>
   </data>
   <data name="BlockOrAllowPopUps" xml:space="preserve">
-    <value>Pop-ups blockieren oder erlauben</value>
+    <value>Pop-ups blockieren oder zulassen</value>
   </data>
   <data name="TurnAutocompleteInInternetExplorerOnOrOff" xml:space="preserve">
     <value>Autovervollständigung im Internet Explorer ein- oder ausschalten</value>
@@ -1938,7 +1938,7 @@
     <value>Automatische Fensteranordnung ausschalten</value>
   </data>
   <data name="TroubleshootingHistory" xml:space="preserve">
-    <value>Troubleshooting History</value>
+    <value>Fehlerbehebungshistorie</value>
   </data>
   <data name="DiagnoseYourComputersMemoryProblems" xml:space="preserve">
     <value>Speicherprobleme Ihres Computers diagnostizieren</value>
@@ -1968,13 +1968,13 @@
     <value>Specify single- or double-click to open</value>
   </data>
   <data name="SelectUsersWhoCanUseRemoteDesktop" xml:space="preserve">
-    <value>Select users who can use remote desktop</value>
+    <value>Benutzer auswählen, die den Remote-Desktop verwenden können</value>
   </data>
   <data name="ShowWhichProgramsAreInstalledOnYourComputer" xml:space="preserve">
-    <value>Show which programs are installed on your computer</value>
+    <value>Anzeigen, welche Programme auf Ihrem Computer installiert sind</value>
   </data>
   <data name="AllowRemoteAccessToYourComputer" xml:space="preserve">
-    <value>Allow remote access to your computer</value>
+    <value>Remote-Zugriff auf Ihren Computer erlauben</value>
   </data>
   <data name="ViewAdvancedSystemSettings" xml:space="preserve">
     <value>Erweiterte Systemeinstellungen ansehen</value>
@@ -2082,7 +2082,7 @@
     <value>Ihren Wiederherstellungsschlüssel sichern</value>
   </data>
   <data name="SaveBackupCopiesOfYourFilesWithFileHistory" xml:space="preserve">
-    <value>Save backup copies of your files with File History</value>
+    <value>Backup-Kopien Ihrer Dateien mit File History speichern</value>
   </data>
   <data name="ViewCurrentAccessibilitySettings" xml:space="preserve">
     <value>View current accessibility settings</value>
@@ -2143,7 +2143,7 @@
     <value>Windows-Features ein- oder ausschalten</value>
   </data>
   <data name="ShowWhichOperatingSystemYourComputerIsRunning" xml:space="preserve">
-    <value>Betriebssystem, welches auf deinem Computer läuft, anzeigen</value>
+    <value>Anzeigen, welches Betriebssystem auf Ihrem Computer ausgeführt wird</value>
   </data>
   <data name="ViewLocalServices" xml:space="preserve">
     <value>Lokale Dienste ansehen</value>
@@ -2176,7 +2176,7 @@
     <value>Change advanced colour management settings for displays, scanners and printers</value>
   </data>
   <data name="LetWindowsSuggestEaseOfAccessSettings" xml:space="preserve">
-    <value>Lasse Windows Vereinfachte Zugriffseinstellungen vorschlagen</value>
+    <value>Windows die Einstellungen für erleichterte Bedienung vorschlagen lassen</value>
   </data>
   <data name="ClearDiskSpaceByDeletingUnnecessaryFiles" xml:space="preserve">
     <value>Clear disk space by deleting unnecessary files</value>
@@ -2191,16 +2191,16 @@
     <value>Record steps to reproduce a problem</value>
   </data>
   <data name="AdjustTheAppearanceAndPerformanceOfWindows" xml:space="preserve">
-    <value>Aussehen und Leistung von Windows anpassen</value>
+    <value>Anpassen des Erscheinungsbildes und der Leistung von Windows</value>
   </data>
   <data name="SettingsForMicrosoftIMEJapanese" xml:space="preserve">
     <value>Einstellungen für Microsoft IME (Japanisch)</value>
   </data>
   <data name="InviteSomeoneToConnectToYourPCAndHelpYouOrOfferToHelpSomeoneElse" xml:space="preserve">
-    <value>Lade jemanden ein, sich mit deinem PC zu verbinden und dir zu helfen oder anderen zu helfen</value>
+    <value>Laden Sie jemanden ein, eine Verbindung zu Ihrem PC herzustellen und Ihnen zu helfen, oder bieten Sie an, jemand anderem zu helfen</value>
   </data>
   <data name="RunProgramsMadeForPreviousVersionsOfWindows" xml:space="preserve">
-    <value>Programme für frühere Versionen von Windows ausführen</value>
+    <value>Programme ausführen, die für frühere Versionen von Windows entwickelt wurden</value>
   </data>
   <data name="ChooseTheOrderOfHowYourScreenRotates" xml:space="preserve">
     <value>Choose the order of how your screen rotates</value>
@@ -2239,7 +2239,7 @@
     <value>Wählen Sie, wie Sie Links öffnen</value>
   </data>
   <data name="AllowRemoteAssistanceInvitationsToBeSentFromThisComputer" xml:space="preserve">
-    <value>Allow Remote Assistance invitations to be sent from this computer</value>
+    <value>Erlauben, dass Einladungen zur Remote-Unterstützung von diesem Computer aus gesendet werden</value>
   </data>
   <data name="TaskManager" xml:space="preserve">
     <value>Task-Manager</value>
@@ -2257,7 +2257,7 @@
     <value>Lupe ein- oder ausschalten</value>
   </data>
   <data name="SeeTheNameOfThisComputer" xml:space="preserve">
-    <value>See the name of this computer</value>
+    <value>Den Namen dieses Computers ansehen</value>
   </data>
   <data name="ViewNetworkConnections" xml:space="preserve">
     <value>Netzwerkverbindungen ansehen</value>
@@ -2302,13 +2302,13 @@
     <value>How to change the size of virtual memory</value>
   </data>
   <data name="HearTextReadAloudWithNarrator" xml:space="preserve">
-    <value>Hear text read aloud with Narrator</value>
+    <value>Text mit Erzähler vorlesen lassen</value>
   </data>
   <data name="SetUpUSBGameControllers" xml:space="preserve">
     <value>Set up USB game controllers</value>
   </data>
   <data name="ShowWhichDomainYourComputerIsOn" xml:space="preserve">
-    <value>Show which domain your computer is on</value>
+    <value>Anzeigen, in welcher Domäne sich Ihr Computer befindet</value>
   </data>
   <data name="ViewAllProblemReports" xml:space="preserve">
     <value>Alle Problemberichte ansehen</value>
@@ -2401,7 +2401,7 @@
     <value>Create and format hard disk partitions</value>
   </data>
   <data name="ChangeDateTimeOrNumberFormats" xml:space="preserve">
-    <value>Change date, time or number formats</value>
+    <value>Datums-, Zeit- oder Zahlenformate ändern</value>
   </data>
   <data name="ChangePCWakeUpSettings" xml:space="preserve">
     <value>Change PC wake-up settings</value>
@@ -2452,13 +2452,13 @@
     <value>Change the way measurements are displayed</value>
   </data>
   <data name="PressKeyCombinationsOneAtATime" xml:space="preserve">
-    <value>Press key combinations one at a time</value>
+    <value>Tastenkombinationen nacheinander drücken</value>
   </data>
   <data name="RestoreDataFilesOrComputerFromBackupWindows7" xml:space="preserve">
-    <value>Restore data, files or computer from backup (Windows 7)</value>
+    <value>Daten, Dateien oder Computer aus Backup wiederherstellen (Windows 7)</value>
   </data>
   <data name="SetYourDefaultPrograms" xml:space="preserve">
-    <value>Set your default programs</value>
+    <value>Ihre per Default vorgegebenen Programme festlegen</value>
   </data>
   <data name="SetUpABroadbandConnection" xml:space="preserve">
     <value>Eine Breitbandverbindung einrichten</value>
@@ -2473,10 +2473,10 @@
     <value>Geplante Tasks</value>
   </data>
   <data name="IgnoreRepeatedKeystrokesUsingFilterkeys" xml:space="preserve">
-    <value>Ignore repeated keystrokes using FilterKeys</value>
+    <value>Wiederholte Tastenanschläge unter Verwendung von FilterKeys ignorieren</value>
   </data>
   <data name="FindAndFixBluescreenProblems" xml:space="preserve">
-    <value>Find and fix bluescreen problems</value>
+    <value>Probleme mit Bluescreens finden und beheben</value>
   </data>
   <data name="HearAToneWhenKeysArePressed" xml:space="preserve">
     <value>Einen Ton hören, wenn Tasten gedrückt werden</value>
@@ -2485,16 +2485,16 @@
     <value>Browsing-Historie löschen</value>
   </data>
   <data name="ChangeWhatThePowerButtonsDo" xml:space="preserve">
-    <value>Change what the power buttons do</value>
+    <value>Ändern, was die Power-Tasten bewirken</value>
   </data>
   <data name="CreateStandardUserAccount" xml:space="preserve">
-    <value>Create standard user account</value>
+    <value>Standard-Benutzerkonto erstellen</value>
   </data>
   <data name="TakeSpeechTutorials" xml:space="preserve">
     <value>Take speech tutorials</value>
   </data>
   <data name="ViewSystemResourceUsageInTaskManager" xml:space="preserve">
-    <value>View system resource usage in Task Manager</value>
+    <value>Systemressourcennutzung im Task-Manager ansehen</value>
   </data>
   <data name="CreateAnAccount" xml:space="preserve">
     <value>Einen Account erstellen</value>

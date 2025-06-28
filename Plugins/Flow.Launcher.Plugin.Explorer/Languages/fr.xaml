@@ -96,8 +96,11 @@
     <system:String x:Key="plugin_explorer_deletefilefolder">Supprimer</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Supprimer définitivement le fichier actuel</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Supprimer définitivement le dossier actuel</system:String>
-    <system:String x:Key="plugin_explorer_path">Chemin :</system:String>
-    <system:String x:Key="plugin_explorer_name">Nom :</system:String>
+    <system:String x:Key="plugin_explorer_name">Nom</system:String>
+    <system:String x:Key="plugin_explorer_type">Type</system:String>
+    <system:String x:Key="plugin_explorer_path">Chemin</system:String>
+    <system:String x:Key="plugin_explorer_file">Fichier</system:String>
+    <system:String x:Key="plugin_explorer_folder">Dossier</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Supprimer la sélection</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Exécuter en tant qu'utilisateur différent</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Exécuter le programme sélectionné en utilisant un autre compte d'utilisateur</system:String>
