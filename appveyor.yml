@@ -69,7 +69,17 @@ deploy:
   - provider: GitHub
     repository: Flow-Launcher/Prereleases
     release: v$(prereleaseTag)
-    description: 'This is the early access build of our upcoming release. All changes contained here are reviewed, tested and stable to use.\n\nSee our [release](https://github.com/Flow-Launcher/Flow.Launcher/pulls?q=is%3Aopen+is%3Apr+label%3Arelease) Pull Request for details.\n\nFor latest production release visit [here](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest)\n\nPlease report any bugs or issues over at the [main repository](https://github.com/Flow-Launcher/Flow.Launcher/issues)'
+    description: |
+      This is the early access build of our upcoming release.
+      All changes contained here are reviewed, tested and stable to use.
+      
+      This build includes new changes from commit:
+      $(APPVEYOR_REPO_COMMIT_MESSAGE)
+      
+      See all changes in this early access by going to the [milstones](https://github.com/Flow-Launcher/Flow.Launcher/milestones?sort=title&direction=asc) section and choosing the upcoming milestone.
+      For latest production release visit [here](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest)
+      
+      Please report any bugs or issues over at the [main repository](https://github.com/Flow-Launcher/Flow.Launcher/issues)'
     auth_token:
       secure: ij4UeXUYQBDJxn2YRAAhUOjklOGVKDB87Hn5J8tKIzj13yatoI7sLM666QDQFEgv
     artifact: Squirrel Installer, Portable Version, Squirrel nupkg, Squirrel RELEASES
