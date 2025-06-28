@@ -746,8 +746,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     _quickSwitchDialogs[dialog] = dialogWindow;
                     return dialogWindow;
                 }
-
-                return dialogWindow;
             }
 
             return null;
