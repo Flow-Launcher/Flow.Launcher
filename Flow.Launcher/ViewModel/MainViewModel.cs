@@ -31,9 +31,10 @@ namespace Flow.Launcher.ViewModel
 
         private static readonly string ClassName = nameof(MainViewModel);
 
-        private bool _isQueryRunning;
         private Query _lastQuery;
         private bool _previousIsHomeQuery;
+        private Query _progressQuery; // Used for QueryResultAsync
+        private Query _updateQuery; // Used for ResultsUpdated
         private string _queryTextBeforeLeaveResults;
         private string _ignoredQueryText; // Used to ignore query text change when switching between context menu and query results
 
@@ -265,7 +266,7 @@ namespace Flow.Launcher.ViewModel
                 var plugin = (IResultUpdated)pair.Plugin;
                 plugin.ResultsUpdated += (s, e) =>
                 {
-                    if (e.Query.RawQuery != QueryText || e.Token.IsCancellationRequested)
+                    if (_updateQuery == null || e.Query.RawQuery != _updateQuery.RawQuery || e.Token.IsCancellationRequested)
                     {
                         return;
                     }
@@ -285,7 +286,10 @@ namespace Flow.Launcher.ViewModel
 
                     PluginManager.UpdatePluginMetadata(resultsCopy, pair.Metadata, e.Query);
 
-                    if (token.IsCancellationRequested) return;
+                    if (_updateQuery == null || e.Query.RawQuery != _updateQuery.RawQuery || token.IsCancellationRequested)
+                    {
+                        return;
+                    }
 
                     App.API.LogDebug(ClassName, $"Update results for plugin <{pair.Metadata.Name}>");
 
@@ -397,7 +401,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void Backspace(object index)
         {
-            var query = QueryBuilder.Build(QueryText.Trim(), PluginManager.NonGlobalPlugins);
+            var query = QueryBuilder.Build(QueryText, QueryText.Trim(), PluginManager.NonGlobalPlugins);
 
             // GetPreviousExistingDirectory does not require trailing '\', otherwise will return empty string
             var path = FilesFolders.GetPreviousExistingDirectory((_) => true, query.Search.TrimEnd('\\'));
@@ -1258,12 +1262,163 @@ namespace Flow.Launcher.ViewModel
         private async Task QueryResultsAsync(bool searchDelay, bool isReQuery = false, bool reSelect = true)
         {
             _updateSource?.Cancel();
+            _progressQuery = null;
 
             App.API.LogDebug(ClassName, $"Start query with text: <{QueryText}>");
 
             var query = await ConstructQueryAsync(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
 
             if (query == null) // shortcut expanded
+            {
+                ClearResults();
+                return;
+            }
+
+            var currentIsHomeQuery = query.IsHomeQuery;
+
+            try
+            {
+                // Check if the input text matches the query text
+                if (query.Input != QueryText) return;
+
+                App.API.LogDebug(ClassName, $"Start query with ActionKeyword <{query.ActionKeyword}> and RawQuery <{query.RawQuery}>");
+
+                _updateSource?.Dispose();
+
+                var currentUpdateSource = new CancellationTokenSource();
+                _updateSource = currentUpdateSource;
+                var currentCancellationToken = _updateSource.Token;
+                _updateToken = currentCancellationToken;
+
+                ProgressBarVisibility = Visibility.Hidden;
+
+                _progressQuery = query;
+                _updateQuery = query;
+
+                // Switch to ThreadPool thread
+                await TaskScheduler.Default;
+
+                if (currentCancellationToken.IsCancellationRequested) return;
+
+                // Update the query's IsReQuery property to true if this is a re-query
+                query.IsReQuery = isReQuery;
+
+                ICollection<PluginPair> plugins = Array.Empty<PluginPair>();
+                if (currentIsHomeQuery)
+                {
+                    if (Settings.ShowHomePage)
+                    {
+                        plugins = PluginManager.ValidPluginsForHomeQuery();
+                    }
+
+                    PluginIconPath = null;
+                    PluginIconSource = null;
+                    SearchIconVisibility = Visibility.Visible;
+                }
+                else
+                {
+                    plugins = PluginManager.ValidPluginsForQuery(query);
+
+                    if (plugins.Count == 1)
+                    {
+                        PluginIconPath = plugins.Single().Metadata.IcoPath;
+                        PluginIconSource = await App.API.LoadImageAsync(PluginIconPath);
+                        SearchIconVisibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        PluginIconPath = null;
+                        PluginIconSource = null;
+                        SearchIconVisibility = Visibility.Visible;
+                    }
+                }
+
+                App.API.LogDebug(ClassName, $"Valid <{plugins.Count}> plugins: {string.Join(" ", plugins.Select(x => $"<{x.Metadata.Name}>"))}");
+
+                // Do not wait for performance improvement
+                /*if (string.IsNullOrEmpty(query.ActionKeyword))
+                {
+                    // Wait 15 millisecond for query change in global query
+                    // if query changes, return so that it won't be calculated
+                    await Task.Delay(15, currentCancellationToken);
+                    if (currentCancellationToken.IsCancellationRequested) return;
+                }*/
+
+                _ = Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
+                    {
+                        // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
+                        if (_progressQuery != null && _progressQuery == query)
+                        {
+                            ProgressBarVisibility = Visibility.Visible;
+                        }
+                    },
+                    currentCancellationToken,
+                    TaskContinuationOptions.NotOnCanceled,
+                    TaskScheduler.Default);
+
+                // plugins are ICollection, meaning LINQ will get the Count and preallocate Array
+
+                Task[] tasks;
+                if (currentIsHomeQuery)
+                {
+                    if (ShouldClearExistingResultsForNonQuery(plugins))
+                    {
+                        // No update tasks and just return
+                        ClearResults();
+                        return;
+                    }
+
+                    tasks = plugins.Select(plugin => plugin.Metadata.HomeDisabled switch
+                    {
+                        false => QueryTaskAsync(plugin, currentCancellationToken),
+                        true => Task.CompletedTask
+                    }).ToArray();
+
+                    // Query history results for home page firstly so it will be put on top of the results
+                    if (Settings.ShowHistoryResultsForHomePage)
+                    {
+                        QueryHistoryTask(currentCancellationToken);
+                    }
+                }
+                else
+                {
+                    tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
+                    {
+                        false => QueryTaskAsync(plugin, currentCancellationToken),
+                        true => Task.CompletedTask
+                    }).ToArray();
+                }
+
+                try
+                {
+                    // Check the code, WhenAll will translate all type of IEnumerable or Collection to Array, so make an array at first
+                    await Task.WhenAll(tasks);
+                }
+                catch (OperationCanceledException)
+                {
+                    // nothing to do here
+                }
+
+                if (currentCancellationToken.IsCancellationRequested) return;
+
+                // this should happen once after all queries are done so progress bar should continue
+                // until the end of all querying
+                _progressQuery = null;
+
+                if (!currentCancellationToken.IsCancellationRequested)
+                {
+                    // update to hidden if this is still the current query
+                    ProgressBarVisibility = Visibility.Hidden;
+                }
+            }
+            finally
+            {
+                // this make sures running query is null even if the query is canceled
+                _progressQuery = null;
+            }
+
+            // Local function
+            void ClearResults()
             {
                 App.API.LogDebug(ClassName, $"Clear query results");
 
@@ -1278,139 +1433,8 @@ namespace Flow.Launcher.ViewModel
 
                 // Hide progress bar again because running query may set this to visible
                 ProgressBarVisibility = Visibility.Hidden;
-                return;
             }
 
-            App.API.LogDebug(ClassName, $"Start query with ActionKeyword <{query.ActionKeyword}> and RawQuery <{query.RawQuery}>");
-
-            var currentIsHomeQuery = query.IsHomeQuery;
-
-            _updateSource?.Dispose();
-
-            var currentUpdateSource = new CancellationTokenSource();
-            _updateSource = currentUpdateSource;
-            var currentCancellationToken = _updateSource.Token;
-            _updateToken = currentCancellationToken;
-
-            ProgressBarVisibility = Visibility.Hidden;
-            _isQueryRunning = true;
-
-            // Switch to ThreadPool thread
-            await TaskScheduler.Default;
-
-            if (currentCancellationToken.IsCancellationRequested) return;
-
-            // Update the query's IsReQuery property to true if this is a re-query
-            query.IsReQuery = isReQuery;
-
-            ICollection<PluginPair> plugins = Array.Empty<PluginPair>();
-            if (currentIsHomeQuery)
-            {
-                if (Settings.ShowHomePage)
-                {
-                    plugins = PluginManager.ValidPluginsForHomeQuery();
-                }
-
-                PluginIconPath = null;
-                PluginIconSource = null;
-                SearchIconVisibility = Visibility.Visible;
-            }
-            else
-            {
-                plugins = PluginManager.ValidPluginsForQuery(query);
-
-                if (plugins.Count == 1)
-                {
-                    PluginIconPath = plugins.Single().Metadata.IcoPath;
-                    PluginIconSource = await App.API.LoadImageAsync(PluginIconPath);
-                    SearchIconVisibility = Visibility.Hidden;
-                }
-                else
-                {
-                    PluginIconPath = null;
-                    PluginIconSource = null;
-                    SearchIconVisibility = Visibility.Visible;
-                }
-            }
-
-            App.API.LogDebug(ClassName, $"Valid <{plugins.Count}> plugins: {string.Join(" ", plugins.Select(x => $"<{x.Metadata.Name}>"))}");
-
-            // Do not wait for performance improvement
-            /*if (string.IsNullOrEmpty(query.ActionKeyword))
-            {
-                // Wait 15 millisecond for query change in global query
-                // if query changes, return so that it won't be calculated
-                await Task.Delay(15, currentCancellationToken);
-                if (currentCancellationToken.IsCancellationRequested) return;
-            }*/
-
-            _ = Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
-                {
-                    // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
-                    if (_isQueryRunning)
-                    {
-                        ProgressBarVisibility = Visibility.Visible;
-                    }
-                },
-                currentCancellationToken,
-                TaskContinuationOptions.NotOnCanceled,
-                TaskScheduler.Default);
-
-            // plugins are ICollection, meaning LINQ will get the Count and preallocate Array
-
-            Task[] tasks;
-            if (currentIsHomeQuery)
-            {
-                if (ShouldClearExistingResultsForNonQuery(plugins))
-                {
-                    Results.Clear();
-                    App.API.LogDebug(ClassName, $"Existing results are cleared for non-query");
-                }
-
-                tasks = plugins.Select(plugin => plugin.Metadata.HomeDisabled switch
-                {
-                    false => QueryTaskAsync(plugin, currentCancellationToken),
-                    true => Task.CompletedTask
-                }).ToArray();
-
-                // Query history results for home page firstly so it will be put on top of the results
-                if (Settings.ShowHistoryResultsForHomePage)
-                {
-                    QueryHistoryTask(currentCancellationToken);
-                }
-            }
-            else
-            {
-                tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
-                {
-                    false => QueryTaskAsync(plugin, currentCancellationToken),
-                    true => Task.CompletedTask
-                }).ToArray();
-            }
-
-            try
-            {
-                // Check the code, WhenAll will translate all type of IEnumerable or Collection to Array, so make an array at first
-                await Task.WhenAll(tasks);
-            }
-            catch (OperationCanceledException)
-            {
-                // nothing to do here
-            }
-
-            if (currentCancellationToken.IsCancellationRequested) return;
-
-            // this should happen once after all queries are done so progress bar should continue
-            // until the end of all querying
-            _isQueryRunning = false;
-
-            if (!currentCancellationToken.IsCancellationRequested)
-            {
-                // update to hidden if this is still the current query
-                ProgressBarVisibility = Visibility.Hidden;
-            }
-
-            // Local function
             async Task QueryTaskAsync(PluginPair plugin, CancellationToken token)
             {
                 App.API.LogDebug(ClassName, $"Wait for querying plugin <{plugin.Metadata.Name}>");
@@ -1488,7 +1512,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (string.IsNullOrWhiteSpace(queryText))
             {
-                return QueryBuilder.Build(string.Empty, PluginManager.NonGlobalPlugins);
+                return QueryBuilder.Build(string.Empty, string.Empty, PluginManager.NonGlobalPlugins);
             }
 
             var queryBuilder = new StringBuilder(queryText);
@@ -1508,7 +1532,7 @@ namespace Flow.Launcher.ViewModel
             // Applying builtin shortcuts
             await BuildQueryAsync(builtInShortcuts, queryBuilder, queryBuilderTmp);
 
-            return QueryBuilder.Build(queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
+            return QueryBuilder.Build(QueryText, queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
         }
 
         private async Task BuildQueryAsync(IEnumerable<BaseBuiltinShortcutModel> builtInShortcuts,
