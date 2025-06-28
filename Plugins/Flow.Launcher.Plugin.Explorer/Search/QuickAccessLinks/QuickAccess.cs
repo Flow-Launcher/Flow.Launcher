@@ -34,7 +34,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks
                 .Select(l => l.Type switch
                 {
                     ResultType.Volume => ResultManager.CreateDriveSpaceDisplayResult(l.Path, query.ActionKeyword, QuickAccessResultScore),
-                    ResultType.Folder => ResultManager.CreateFolderResult(l.Name, l.Path, l.Path, query),
+                    ResultType.Folder => ResultManager.CreateFolderResult(l.Name, l.Path, l.Path, query, QuickAccessResultScore),
                     ResultType.File => ResultManager.CreateFileResult(l.Path, query, QuickAccessResultScore),
                     _ => throw new ArgumentOutOfRangeException()
                 }).ToList();
