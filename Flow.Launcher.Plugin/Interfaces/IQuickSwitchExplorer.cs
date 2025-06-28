@@ -16,7 +16,7 @@ namespace Flow.Launcher.Plugins
         /// The handle of the foreground window to check.
         /// </param>
         /// <returns>
-        /// The explorer window if the foreground window is a Windows Explorer instance. Null if it is not.
+        /// The window if the foreground window is a file explorer instance. Null if it is not.
         /// </returns>
         IQuickSwitchExplorerWindow? CheckExplorerWindow(IntPtr hwnd);
     }
