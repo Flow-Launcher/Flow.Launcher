@@ -175,7 +175,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 // Remove explorer windows
                 foreach (var explorer in _quickSwitchExplorers.Keys)
                 {
-                    _quickSwitchExplorers[explorer]?.Dispose();
                     _quickSwitchExplorers[explorer] = null;
                 }
 
@@ -191,7 +190,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 {
                     if (_dialogWindow != null)
                     {
-                        _dialogWindow.Dispose();
                         _dialogWindow = null;
                         dialogWindowExists = true;
                     }
@@ -247,7 +245,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                         var explorerWindow = explorer.CheckExplorerWindow(hWnd);
                         if (explorerWindow != null)
                         {
-                            _quickSwitchExplorers[explorer]?.Dispose();
                             _quickSwitchExplorers[explorer] = explorerWindow;
                             _lastExplorer = explorer;
                             found = true;
@@ -503,7 +500,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                                 if (explorerWindow != null)
                                 {
                                     Log.Debug(ClassName, $"Explorer window: {hwnd}");
-                                    _quickSwitchExplorers[explorer]?.Dispose();
                                     _quickSwitchExplorers[explorer] = explorerWindow;
                                     _lastExplorer = explorer;
                                     break;
