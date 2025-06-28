@@ -137,7 +137,17 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             };
         }
 
+        internal static Result CreateDriveSpaceDisplayResult(string path, string actionKeyword, int score)
+        {
+            return CreateDriveSpaceDisplayResult(path, actionKeyword, score, SearchManager.UseIndexSearch(path));
+        }
+
         internal static Result CreateDriveSpaceDisplayResult(string path, string actionKeyword, bool windowsIndexed = false)
+        {
+            return CreateDriveSpaceDisplayResult(path, actionKeyword, 500, windowsIndexed);
+        }
+
+        private static Result CreateDriveSpaceDisplayResult(string path, string actionKeyword, int score, bool windowsIndexed = false)
         {
             var progressBarColor = "#26a0da";
             var title = string.Empty; // hide title when use progress bar,
@@ -163,7 +173,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 SubTitle = subtitle,
                 AutoCompleteText = GetPathWithActionKeyword(path, ResultType.Folder, actionKeyword),
                 IcoPath = path,
-                Score = 500,
+                Score = score,
                 ProgressBar = progressValue,
                 ProgressBarColor = progressBarColor,
                 Preview = new Result.PreviewInfo
