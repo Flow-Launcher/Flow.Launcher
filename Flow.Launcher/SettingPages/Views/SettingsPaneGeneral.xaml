@@ -100,7 +100,10 @@
             </cc:Card>
 
             <cc:CardGroup Margin="0 4 0 0">
-                <cc:Card Title="{DynamicResource SearchWindowPosition}" Icon="&#xe7f4;">
+                <cc:Card
+                    Title="{DynamicResource SearchWindowPosition}"
+                    Icon="&#xe7f4;"
+                    Type="First">
                     <StackPanel Orientation="Horizontal">
                         <ComboBox
                             MinWidth="220"
@@ -125,6 +128,7 @@
                 <cc:Card
                     Title="{DynamicResource SearchWindowAlign}"
                     Icon="&#xe7f4;"
+                    Type="Last"
                     Visibility="{ext:CollapsedWhen {Binding Settings.SearchWindowScreen},
                                                    IsEqualTo={x:Static userSettings:SearchWindowScreens.RememberLastLaunchLocation}}">
                     <StackPanel Orientation="Horizontal">
@@ -205,7 +209,10 @@
             </cc:Card>
 
             <cc:CardGroup Margin="0 14 0 0">
-                <cc:Card Title="{DynamicResource querySearchPrecision}" Sub="{DynamicResource querySearchPrecisionToolTip}">
+                <cc:Card
+                    Title="{DynamicResource querySearchPrecision}"
+                    Sub="{DynamicResource querySearchPrecisionToolTip}"
+                    Type="First">
                     <ComboBox
                         MaxWidth="200"
                         DisplayMemberPath="Display"
@@ -214,7 +221,10 @@
                         SelectedValuePath="Value" />
                 </cc:Card>
 
-                <cc:Card Title="{DynamicResource lastQueryMode}" Sub="{DynamicResource lastQueryModeToolTip}">
+                <cc:Card
+                    Title="{DynamicResource lastQueryMode}"
+                    Sub="{DynamicResource lastQueryModeToolTip}"
+                    Type="Last">
                     <ComboBox
                         MinWidth="210"
                         DisplayMemberPath="Display"
@@ -384,7 +394,8 @@
                 <cc:Card
                     Title="{DynamicResource KoreanImeRegistry}"
                     Icon="&#xe88b;"
-                    Sub="{DynamicResource KoreanImeRegistryTooltip}">
+                    Sub="{DynamicResource KoreanImeRegistryTooltip}"
+                    Type="First">
                     <ui:ToggleSwitch
                         IsOn="{Binding LegacyKoreanIMEEnabled}"
                         OffContent="{DynamicResource disable}"
@@ -393,7 +404,8 @@
                 <cc:Card
                     Title="{DynamicResource KoreanImeOpenLink}"
                     Icon="&#xF210;"
-                    Sub="{DynamicResource KoreanImeOpenLinkToolTip}">
+                    Sub="{DynamicResource KoreanImeOpenLinkToolTip}"
+                    Type="Last">
                     <Button Command="{Binding OpenImeSettingsCommand}" Content="{DynamicResource KoreanImeOpenLinkButton}" />
                 </cc:Card>
             </cc:CardGroup>
