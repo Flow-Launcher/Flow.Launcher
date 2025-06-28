@@ -12,13 +12,13 @@ namespace Flow.Launcher.Plugins
         /// <summary>
         /// Check if the foreground window is a Windows Explorer instance.
         /// </summary>
-        /// <param name="foreground">
+        /// <param name="hwnd">
         /// The handle of the foreground window to check.
         /// </param>
         /// <returns>
         /// The explorer window if the foreground window is a Windows Explorer instance. Null if it is not.
         /// </returns>
-        IQuickSwitchExplorerWindow? CheckExplorerWindow(IntPtr foreground);
+        IQuickSwitchExplorerWindow? CheckExplorerWindow(IntPtr hwnd);
     }
 
     public interface IQuickSwitchExplorerWindow : IDisposable

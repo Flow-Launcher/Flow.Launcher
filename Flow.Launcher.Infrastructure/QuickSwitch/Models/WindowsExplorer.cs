@@ -14,12 +14,12 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
     {
         private static IWebBrowser2 _lastExplorerView = null;
 
-        public IQuickSwitchExplorerWindow CheckExplorerWindow(IntPtr foreground)
+        public IQuickSwitchExplorerWindow CheckExplorerWindow(IntPtr hwnd)
         {
             IQuickSwitchExplorerWindow explorerWindow = null;
 
             // Is it from Explorer?
-            var processName = Win32Helper.GetProcessNameFromHwnd(new(foreground));
+            var processName = Win32Helper.GetProcessNameFromHwnd(new(hwnd));
             if (processName.ToLower() == "explorer.exe")
             {
                 EnumerateShellWindows((shellWindow) =>
@@ -28,10 +28,10 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
                     {
                         if (shellWindow is not IWebBrowser2 explorer) return true;
 
-                        if (explorer.HWND != foreground) return true;
+                        if (explorer.HWND != hwnd) return true;
 
                         _lastExplorerView = explorer;
-                        explorerWindow = new WindowsExplorerWindow(foreground, explorer);
+                        explorerWindow = new WindowsExplorerWindow(hwnd, explorer);
                         return false;
                     }
                     catch (COMException)
