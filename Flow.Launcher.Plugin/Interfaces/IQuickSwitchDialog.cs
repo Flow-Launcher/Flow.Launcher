@@ -21,25 +21,76 @@ namespace Flow.Launcher.Plugins
         IQuickSwitchDialogWindow? CheckDialogWindow(IntPtr hwnd);
     }
 
+    /// <summary>
+    /// Interface for handling a specific file dialog window in QuickSwitch.
+    /// </summary>
     public interface IQuickSwitchDialogWindow : IDisposable
     {
+        /// <summary>
+        /// The handle of the dialog window.
+        /// </summary>
         IntPtr Handle { get; }
 
+        /// <summary>
+        /// Get the current tab of the dialog window.
+        /// </summary>
+        /// <returns></returns>
         IQuickSwitchDialogWindowTab GetCurrentTab();
     }
 
+    /// <summary>
+    /// Interface for handling a specific tab in a file dialog window in QuickSwitch.
+    /// </summary>
     public interface IQuickSwitchDialogWindowTab : IDisposable
     {
+        /// <summary>
+        /// The handle of the dialog tab.
+        /// </summary>
         IntPtr Handle { get; }
 
+        /// <summary>
+        /// Get the current folder path of the dialog tab.
+        /// </summary>
+        /// <returns></returns>
         string GetCurrentFolder();
 
+        /// <summary>
+        /// Get the current file of the dialog tab.
+        /// </summary>
+        /// <returns></returns>
         string GetCurrentFile();
 
+        /// <summary>
+        /// Jump to a folder in the dialog tab.
+        /// </summary>
+        /// <param name="path">
+        /// The path to the folder to jump to.
+        /// </param>
+        /// <param name="auto">
+        /// Whether folder jump is under automatical mode.
+        /// </param>
+        /// <returns>
+        /// True if the jump was successful, false otherwise.
+        /// </returns>
         bool JumpFolder(string path, bool auto);
 
+        /// <summary>
+        /// Jump to a file in the dialog tab.
+        /// </summary>
+        /// <param name="path">
+        /// The path to the file to jump to.
+        /// </param>
+        /// <returns>
+        /// True if the jump was successful, false otherwise.
+        /// </returns>
         bool JumpFile(string path);
 
+        /// <summary>
+        /// Open the file in the dialog tab.
+        /// </summary>
+        /// <returns>
+        /// True if the file was opened successfully, false otherwise.
+        /// </returns>
         bool Open();
     }
 }

@@ -21,10 +21,20 @@ namespace Flow.Launcher.Plugins
         IQuickSwitchExplorerWindow? CheckExplorerWindow(IntPtr hwnd);
     }
 
+    /// <summary>
+    /// Interface for handling a specific file explorer window in QuickSwitch.
+    /// </summary>
     public interface IQuickSwitchExplorerWindow : IDisposable
     {
+        /// <summary>
+        /// The handle of the explorer window.
+        /// </summary>
         IntPtr Handle { get; }
 
-        string GetExplorerPath();
+        /// <summary>
+        /// Get the current folder path of the explorer window.
+        /// </summary>
+        /// <returns></returns>
+        string? GetExplorerPath();
     }
 }
