@@ -13,7 +13,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
     /// <summary>
     /// Class for handling Windows File Dialog instances in QuickSwitch.
     /// </summary>
-    internal class WindowsDialog : IQuickSwitchDialog
+    public class WindowsDialog : IQuickSwitchDialog
     {
         public IQuickSwitchDialogWindow DialogWindow { get; private set; }
 
@@ -78,7 +78,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
         #endregion
     }
 
-    internal class WindowsDialogWindow : IQuickSwitchDialogWindow
+    public class WindowsDialogWindow : IQuickSwitchDialogWindow
     {
         public IntPtr Handle { get; private set; } = IntPtr.Zero;
 
@@ -88,7 +88,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 
         private readonly DialogType _dialogType;
 
-        public WindowsDialogWindow(IntPtr handle, DialogType dialogType)
+        internal WindowsDialogWindow(IntPtr handle, DialogType dialogType)
         {
             Handle = handle;
             _dialogType = dialogType;
@@ -105,7 +105,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
         }
     }
 
-    internal class WindowsDialogTab : IQuickSwitchDialogWindowTab
+    public class WindowsDialogTab : IQuickSwitchDialogWindowTab
     {
         #region Public Properties
 
@@ -131,7 +131,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
 
         #region Constructor
 
-        public WindowsDialogTab(IntPtr handle, DialogType dialogType)
+        internal WindowsDialogTab(IntPtr handle, DialogType dialogType)
         {
             Handle = handle;
             _dialogType = dialogType;
