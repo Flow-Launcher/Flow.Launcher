@@ -49,7 +49,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
         }
         catch (Exception ex)
         {
-            Main._context.API.LogException(ClassName, $"Failed to register Firefox bookmark file monitoring: {placesPath}", ex);
+            Main.Context.API.LogException(ClassName, $"Failed to register Firefox bookmark file monitoring: {placesPath}", ex);
             return bookmarks;
         }
 
@@ -84,7 +84,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
                 var faviconDbPath = Path.Combine(Path.GetDirectoryName(placesPath), "favicons.sqlite");
                 if (File.Exists(faviconDbPath))
                 {
-                    Main._context.API.StopwatchLogInfo(ClassName, $"Load {bookmarks.Count} favicons cost", () =>
+                    Main.Context.API.StopwatchLogInfo(ClassName, $"Load {bookmarks.Count} favicons cost", () =>
                     {
                         LoadFaviconsFromDb(faviconDbPath, bookmarks);
                     });
@@ -98,7 +98,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
         }
         catch (Exception ex)
         {
-            Main._context.API.LogException(ClassName, $"Failed to load Firefox bookmarks: {placesPath}", ex);
+            Main.Context.API.LogException(ClassName, $"Failed to load Firefox bookmarks: {placesPath}", ex);
         }
 
         // Delete temporary file
@@ -111,7 +111,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
         }
         catch (Exception ex)
         {
-            Main._context.API.LogException(ClassName, $"Failed to delete temporary favicon DB: {tempDbPath}", ex);
+            Main.Context.API.LogException(ClassName, $"Failed to delete temporary favicon DB: {tempDbPath}", ex);
         }
 
         return bookmarks;
@@ -186,7 +186,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
                 }
                 catch (Exception ex)
                 {
-                    Main._context.API.LogException(ClassName, $"Failed to extract Firefox favicon: {bookmark.Url}", ex);
+                    Main.Context.API.LogException(ClassName, $"Failed to extract Firefox favicon: {bookmark.Url}", ex);
                 }
                 finally
                 {
