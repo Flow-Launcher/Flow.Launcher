@@ -229,7 +229,8 @@
                 <cc:Card
                     Title="{DynamicResource autoRestartAfterChanging}"
                     Icon="&#xF83E;"
-                    Sub="{DynamicResource autoRestartAfterChangingToolTip}">
+                    Sub="{DynamicResource autoRestartAfterChangingToolTip}"
+                    Type="First">
                     <ui:ToggleSwitch
                         IsOn="{Binding Settings.AutoRestartAfterChanging}"
                         OffContent="{DynamicResource disable}"
@@ -239,7 +240,8 @@
                 <cc:Card
                     Title="{DynamicResource showUnknownSourceWarning}"
                     Icon="&#xE7BA;"
-                    Sub="{DynamicResource showUnknownSourceWarningToolTip}">
+                    Sub="{DynamicResource showUnknownSourceWarningToolTip}"
+                    Type="Last">
                     <ui:ToggleSwitch
                         IsOn="{Binding Settings.ShowUnknownSourceWarning}"
                         OffContent="{DynamicResource disable}"
