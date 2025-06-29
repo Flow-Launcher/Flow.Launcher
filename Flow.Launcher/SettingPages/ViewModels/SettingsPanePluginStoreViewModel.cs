@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CommunityToolkit.Mvvm.Input;
-using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Helper;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
 
@@ -107,7 +107,7 @@ public partial class SettingsPanePluginStoreViewModel : BaseModel
             $"{App.API.GetTranslation("ZipFiles")} (*.zip)|*.zip");
 
         if (!string.IsNullOrEmpty(file))
-            await PluginManager.InstallPluginAndCheckRestartAsync(file);
+            await PluginInstallationHelper.InstallPluginAndCheckRestartAsync(file);
     }
 
     private static string GetFileFromDialog(string title, string filter = "")

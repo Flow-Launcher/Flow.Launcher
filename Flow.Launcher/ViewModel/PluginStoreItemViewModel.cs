@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Helper;
 using Flow.Launcher.Plugin;
 using Version = SemanticVersioning.Version;
 
@@ -65,13 +66,13 @@ namespace Flow.Launcher.ViewModel
             switch (action)
             {
                 case "install":
-                    await PluginManager.InstallPluginAndCheckRestartAsync(_newPlugin);
+                    await PluginInstallationHelper.InstallPluginAndCheckRestartAsync(_newPlugin);
                     break;
                 case "uninstall":
-                    await PluginManager.UninstallPluginAndCheckRestartAsync(_oldPluginPair.Metadata);
+                    await PluginInstallationHelper.UninstallPluginAndCheckRestartAsync(_oldPluginPair.Metadata);
                     break;
                 case "update":
-                    await PluginManager.UpdatePluginAndCheckRestartAsync(_newPlugin, _oldPluginPair.Metadata);
+                    await PluginInstallationHelper.UpdatePluginAndCheckRestartAsync(_newPlugin, _oldPluginPair.Metadata);
                     break;
                 default:
                     break;

@@ -5,6 +5,7 @@ using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -172,7 +173,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private async Task OpenDeletePluginWindowAsync()
         {
-            await PluginManager.UninstallPluginAndCheckRestartAsync(PluginPair.Metadata);
+            await PluginInstallationHelper.UninstallPluginAndCheckRestartAsync(PluginPair.Metadata);
         }
 
         [RelayCommand]
