@@ -242,6 +242,18 @@ namespace Flow.Launcher.Plugin.PluginsManager
             if (FilesFolders.IsZipFilePath(search, checkFileExists: true))
             {
                 pluginFromLocalPath = Utilities.GetPluginInfoFromZip(search);
+
+                if (pluginFromLocalPath == null) return new List<Result>
+                {
+                    new()
+                    {
+                        Title = Context.API.GetTranslation("plugin_pluginsmanager_invalid_zip_title"),
+                        SubTitle = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_invalid_zip_subtitle"),
+                            search),
+                        IcoPath = icoPath
+                    }
+                };
+
                 pluginFromLocalPath.LocalInstallPath = search;
                 updateFromLocalPath = true;
             }
@@ -558,6 +570,20 @@ namespace Flow.Launcher.Plugin.PluginsManager
         internal List<Result> InstallFromLocalPath(string localPath)
         {
             var plugin = Utilities.GetPluginInfoFromZip(localPath);
+
+            if (plugin == null)
+            {
+                return new List<Result>
+                {
+                    new()
+                    {
+                        Title = Context.API.GetTranslation("plugin_pluginsmanager_invalid_zip_title"),
+                        SubTitle = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_invalid_zip_subtitle"),
+                            localPath),
+                        IcoPath = icoPath
+                    }
+                };
+            }
 
             plugin.LocalInstallPath = localPath;
 
