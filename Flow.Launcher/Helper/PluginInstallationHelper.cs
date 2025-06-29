@@ -98,9 +98,7 @@ public static class PluginInstallationHelper
         try
         {
             using ZipArchive archive = ZipFile.OpenRead(filePath);
-            var pluginJsonPath = archive.Entries.FirstOrDefault(x => x.Name == "plugin.json") ??
-                throw new FileNotFoundException("The zip file does not contain a plugin.json file.");
-            var pluginJsonEntry = archive.GetEntry(pluginJsonPath.ToString()) ??
+            var pluginJsonEntry = archive.Entries.FirstOrDefault(x => x.Name == "plugin.json") ??
                 throw new FileNotFoundException("The zip file does not contain a plugin.json file.");
 
             using Stream stream = pluginJsonEntry.Open();
