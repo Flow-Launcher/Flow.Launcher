@@ -57,19 +57,17 @@ public static class PluginInstallationHelper
             {
                 return;
             }
-            else
+
+            if (!File.Exists(filePath))
             {
-                if (!File.Exists(filePath))
-                {
-                    throw new FileNotFoundException($"Plugin {newPlugin.ID} zip file not found at {filePath}", filePath);
-                }
+                throw new FileNotFoundException($"Plugin {newPlugin.ID} zip file not found at {filePath}", filePath);
+            }
 
-                App.API.InstallPlugin(newPlugin, filePath);
+            App.API.InstallPlugin(newPlugin, filePath);
 
-                if (!newPlugin.IsFromLocalInstallPath)
-                {
-                    File.Delete(filePath);
-                }
+            if (!newPlugin.IsFromLocalInstallPath)
+            {
+                File.Delete(filePath);
             }
         }
         catch (Exception e)
@@ -201,10 +199,8 @@ public static class PluginInstallationHelper
             {
                 return;
             }
-            else
-            {
-                await App.API.UpdatePluginAsync(oldPlugin, newPlugin, filePath);
-            }
+
+            await App.API.UpdatePluginAsync(oldPlugin, newPlugin, filePath);
         }
         catch (Exception e)
         {
