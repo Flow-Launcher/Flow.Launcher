@@ -66,13 +66,13 @@ namespace Flow.Launcher.ViewModel
             switch (action)
             {
                 case "install":
-                    await PluginInstallationHelper.InstallPluginAndCheckRestartAsync(_newPlugin);
+                    await PluginInstaller.InstallPluginAndCheckRestartAsync(_newPlugin);
                     break;
                 case "uninstall":
-                    await PluginInstallationHelper.UninstallPluginAndCheckRestartAsync(_oldPluginPair.Metadata);
+                    await PluginInstaller.UninstallPluginAndCheckRestartAsync(_oldPluginPair.Metadata);
                     break;
                 case "update":
-                    await PluginInstallationHelper.UpdatePluginAndCheckRestartAsync(_newPlugin, _oldPluginPair.Metadata);
+                    await PluginInstaller.UpdatePluginAndCheckRestartAsync(_newPlugin, _oldPluginPair.Metadata);
                     break;
                 default:
                     break;

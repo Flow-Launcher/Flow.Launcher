@@ -10,24 +10,28 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 
-namespace Flow.Launcher.Helper;
+namespace Flow.Launcher.Core.Plugin;
 
 /// <summary>
 /// Helper class for installing, updating, and uninstalling plugins.
 /// </summary>
-public static class PluginInstallationHelper
+public static class PluginInstaller
 {
-    private static readonly string ClassName = nameof(PluginInstallationHelper);
+    private static readonly string ClassName = nameof(PluginInstaller);
 
     private static readonly Settings Settings = Ioc.Default.GetRequiredService<Settings>();
 
+    // We should not initialize API in static constructor because it will create another API instance
+    private static IPublicAPI api = null;
+    private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
+
     public static async Task InstallPluginAndCheckRestartAsync(UserPlugin newPlugin)
     {
-        if (App.API.ShowMsgBox(
+        if (API.ShowMsgBox(
             string.Format(
-                App.API.GetTranslation("InstallPromptSubtitle"),
+                API.GetTranslation("InstallPromptSubtitle"),
                 newPlugin.Name, newPlugin.Author, Environment.NewLine),
-            App.API.GetTranslation("InstallPromptTitle"),
+            API.GetTranslation("InstallPromptTitle"),
             button: MessageBoxButton.YesNo) != MessageBoxResult.Yes) return;
 
         try
@@ -44,7 +48,7 @@ public static class PluginInstallationHelper
             if (!newPlugin.IsFromLocalInstallPath)
             {
                 await DownloadFileAsync(
-                    $"{App.API.GetTranslation("DownloadingPlugin")} {newPlugin.Name}",
+                    $"{API.GetTranslation("DownloadingPlugin")} {newPlugin.Name}",
                     newPlugin.UrlDownload, filePath, cts);
             }
             else
@@ -63,7 +67,7 @@ public static class PluginInstallationHelper
                 throw new FileNotFoundException($"Plugin {newPlugin.ID} zip file not found at {filePath}", filePath);
             }
 
-            App.API.InstallPlugin(newPlugin, filePath);
+            API.InstallPlugin(newPlugin, filePath);
 
             if (!newPlugin.IsFromLocalInstallPath)
             {
@@ -72,21 +76,21 @@ public static class PluginInstallationHelper
         }
         catch (Exception e)
         {
-            App.API.LogException(ClassName, "Failed to install plugin", e);
-            App.API.ShowMsgError(App.API.GetTranslation("ErrorInstallingPlugin"));
+            API.LogException(ClassName, "Failed to install plugin", e);
+            API.ShowMsgError(API.GetTranslation("ErrorInstallingPlugin"));
             return; // don’t restart on failure
         }
 
         if (Settings.AutoRestartAfterChanging)
         {
-            App.API.RestartApp();
+            API.RestartApp();
         }
         else
         {
-            App.API.ShowMsg(
-                App.API.GetTranslation("installbtn"),
+            API.ShowMsg(
+                API.GetTranslation("installbtn"),
                 string.Format(
-                    App.API.GetTranslation(
+                    API.GetTranslation(
                         "InstallSuccessNoRestart"),
                     newPlugin.Name));
         }
@@ -108,17 +112,17 @@ public static class PluginInstallationHelper
         }
         catch (Exception e)
         {
-            App.API.LogException(ClassName, "Failed to validate zip file", e);
-            App.API.ShowMsgError(App.API.GetTranslation("ZipFileNotHavePluginJson"));
+            API.LogException(ClassName, "Failed to validate zip file", e);
+            API.ShowMsgError(API.GetTranslation("ZipFileNotHavePluginJson"));
             return;
         }
 
         if (Settings.ShowUnknownSourceWarning)
         {
             if (!InstallSourceKnown(plugin.Website)
-                && App.API.ShowMsgBox(string.Format(
-                    App.API.GetTranslation("InstallFromUnknownSourceSubtitle"), Environment.NewLine),
-                    App.API.GetTranslation("InstallFromUnknownSourceTitle"),
+                && API.ShowMsgBox(string.Format(
+                    API.GetTranslation("InstallFromUnknownSourceSubtitle"), Environment.NewLine),
+                    API.GetTranslation("InstallFromUnknownSourceTitle"),
                     MessageBoxButton.YesNo) == MessageBoxResult.No)
                 return;
         }
@@ -128,39 +132,39 @@ public static class PluginInstallationHelper
 
     public static async Task UninstallPluginAndCheckRestartAsync(PluginMetadata oldPlugin)
     {
-        if (App.API.ShowMsgBox(
+        if (API.ShowMsgBox(
             string.Format(
-                App.API.GetTranslation("UninstallPromptSubtitle"),
+                API.GetTranslation("UninstallPromptSubtitle"),
                 oldPlugin.Name, oldPlugin.Author, Environment.NewLine),
-            App.API.GetTranslation("UninstallPromptTitle"),
+            API.GetTranslation("UninstallPromptTitle"),
             button: MessageBoxButton.YesNo) != MessageBoxResult.Yes) return;
 
-        var removePluginSettings = App.API.ShowMsgBox(
-            App.API.GetTranslation("KeepPluginSettingsSubtitle"),
-            App.API.GetTranslation("KeepPluginSettingsTitle"),
+        var removePluginSettings = API.ShowMsgBox(
+            API.GetTranslation("KeepPluginSettingsSubtitle"),
+            API.GetTranslation("KeepPluginSettingsTitle"),
             button: MessageBoxButton.YesNo) == MessageBoxResult.No;
 
         try
         {
-            await App.API.UninstallPluginAsync(oldPlugin, removePluginSettings);
+            await API.UninstallPluginAsync(oldPlugin, removePluginSettings);
         }
         catch (Exception e)
         {
-            App.API.LogException(ClassName, "Failed to uninstall plugin", e);
-            App.API.ShowMsgError(App.API.GetTranslation("ErrorUninstallingPlugin"));
+            API.LogException(ClassName, "Failed to uninstall plugin", e);
+            API.ShowMsgError(API.GetTranslation("ErrorUninstallingPlugin"));
             return; // don’t restart on failure
         }
 
         if (Settings.AutoRestartAfterChanging)
         {
-            App.API.RestartApp();
+            API.RestartApp();
         }
         else
         {
-            App.API.ShowMsg(
-                App.API.GetTranslation("uninstallbtn"),
+            API.ShowMsg(
+                API.GetTranslation("uninstallbtn"),
                 string.Format(
-                    App.API.GetTranslation(
+                    API.GetTranslation(
                         "UninstallSuccessNoRestart"),
                     oldPlugin.Name));
         }
@@ -168,11 +172,11 @@ public static class PluginInstallationHelper
 
     public static async Task UpdatePluginAndCheckRestartAsync(UserPlugin newPlugin, PluginMetadata oldPlugin)
     {
-        if (App.API.ShowMsgBox(
+        if (API.ShowMsgBox(
             string.Format(
-                App.API.GetTranslation("UpdatePromptSubtitle"),
+                API.GetTranslation("UpdatePromptSubtitle"),
                 oldPlugin.Name, oldPlugin.Author, Environment.NewLine),
-            App.API.GetTranslation("UpdatePromptTitle"),
+            API.GetTranslation("UpdatePromptTitle"),
             button: MessageBoxButton.YesNo) != MessageBoxResult.Yes) return;
 
         try
@@ -184,7 +188,7 @@ public static class PluginInstallationHelper
             if (!newPlugin.IsFromLocalInstallPath)
             {
                 await DownloadFileAsync(
-                    $"{App.API.GetTranslation("DownloadingPlugin")} {newPlugin.Name}",
+                    $"{API.GetTranslation("DownloadingPlugin")} {newPlugin.Name}",
                     newPlugin.UrlDownload, filePath, cts);
             }
             else
@@ -198,25 +202,25 @@ public static class PluginInstallationHelper
                 return;
             }
 
-            await App.API.UpdatePluginAsync(oldPlugin, newPlugin, filePath);
+            await API.UpdatePluginAsync(oldPlugin, newPlugin, filePath);
         }
         catch (Exception e)
         {
-            App.API.LogException(ClassName, "Failed to update plugin", e);
-            App.API.ShowMsgError(App.API.GetTranslation("ErrorUpdatingPlugin"));
+            API.LogException(ClassName, "Failed to update plugin", e);
+            API.ShowMsgError(API.GetTranslation("ErrorUpdatingPlugin"));
             return; // don’t restart on failure
         }
 
         if (Settings.AutoRestartAfterChanging)
         {
-            App.API.RestartApp();
+            API.RestartApp();
         }
         else
         {
-            App.API.ShowMsg(
-                App.API.GetTranslation("updatebtn"),
+            API.ShowMsg(
+                API.GetTranslation("updatebtn"),
                 string.Format(
-                    App.API.GetTranslation(
+                    API.GetTranslation(
                         "UpdateSuccessNoRestart"),
                     newPlugin.Name));
         }
@@ -230,7 +234,7 @@ public static class PluginInstallationHelper
         if (showProgress)
         {
             var exceptionHappened = false;
-            await App.API.ShowProgressBoxAsync(prgBoxTitle,
+            await API.ShowProgressBoxAsync(prgBoxTitle,
                 async (reportProgress) =>
                 {
                     if (reportProgress == null)
@@ -242,18 +246,18 @@ public static class PluginInstallationHelper
                     }
                     else
                     {
-                        await App.API.HttpDownloadAsync(downloadUrl, filePath, reportProgress, cts.Token).ConfigureAwait(false);
+                        await API.HttpDownloadAsync(downloadUrl, filePath, reportProgress, cts.Token).ConfigureAwait(false);
                     }
                 }, cts.Cancel);
 
             // if exception happened while downloading and user does not cancel downloading,
             // we need to redownload the plugin
             if (exceptionHappened && (!cts.IsCancellationRequested))
-                await App.API.HttpDownloadAsync(downloadUrl, filePath, token: cts.Token).ConfigureAwait(false);
+                await API.HttpDownloadAsync(downloadUrl, filePath, token: cts.Token).ConfigureAwait(false);
         }
         else
         {
-            await App.API.HttpDownloadAsync(downloadUrl, filePath, token: cts.Token).ConfigureAwait(false);
+            await API.HttpDownloadAsync(downloadUrl, filePath, token: cts.Token).ConfigureAwait(false);
         }
     }
 
@@ -275,7 +279,7 @@ public static class PluginInstallationHelper
         if (!Uri.TryCreate(url, UriKind.Absolute, out var uri) || uri.Host != acceptedHost)
             return false;
 
-        return App.API.GetAllPlugins().Any(x =>
+        return API.GetAllPlugins().Any(x =>
             !string.IsNullOrEmpty(x.Metadata.Website) &&
             x.Metadata.Website.StartsWith(constructedUrlPart)
         );
