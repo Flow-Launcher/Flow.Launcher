@@ -259,6 +259,9 @@ public static class PluginInstallationHelper
 
     private static bool InstallSourceKnown(string url)
     {
+        if (string.IsNullOrEmpty(url))
+            return false;
+
         var pieces = url.Split('/');
 
         if (pieces.Length < 4)
