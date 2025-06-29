@@ -626,14 +626,17 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 return false;
 
             var author = pieces[3];
+            var acceptedHost = "github.com";
             var acceptedSource = "https://github.com";
             var constructedUrlPart = string.Format("{0}/{1}/", acceptedSource, author);
 
-            return url.StartsWith(acceptedSource) &&
-                Context.API.GetAllPlugins().Any(x => 
-                    !string.IsNullOrEmpty(x.Metadata.Website) &&
-                    x.Metadata.Website.StartsWith(constructedUrlPart)
-                );
+            if (!Uri.TryCreate(url, UriKind.Absolute, out var uri) || uri.Host != acceptedHost)
+                return false;
+
+            return Context.API.GetAllPlugins().Any(x =>
+                !string.IsNullOrEmpty(x.Metadata.Website) &&
+                x.Metadata.Website.StartsWith(constructedUrlPart)
+            );
         }
 
         internal async ValueTask<List<Result>> RequestInstallOrUpdateAsync(string search, CancellationToken token,
