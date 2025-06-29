@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Plugin;
@@ -112,7 +111,7 @@ public partial class SettingsPanePluginStoreViewModel : BaseModel
 
     private static string GetFileFromDialog(string title, string filter = "")
     {
-        var dlg = new OpenFileDialog
+        var dlg = new Microsoft.Win32.OpenFileDialog
         {
             InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "\\Downloads",
             Multiselect = false,
@@ -121,12 +120,11 @@ public partial class SettingsPanePluginStoreViewModel : BaseModel
             Title = title,
             Filter = filter
         };
+        var result = dlg.ShowDialog();
+        if (result == true)
+            return dlg.FileName;
 
-        return dlg.ShowDialog() switch
-        {
-            DialogResult.OK => dlg.FileName,
-            _ => string.Empty
-        };
+        return string.Empty;
     }
 
     public bool SatisfiesFilter(PluginStoreItemViewModel plugin)
