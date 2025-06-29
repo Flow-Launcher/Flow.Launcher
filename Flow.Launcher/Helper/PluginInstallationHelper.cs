@@ -235,7 +235,7 @@ public static class PluginInstallationHelper
                 {
                     if (reportProgress == null)
                     {
-                        // when reportProgress is null, it means there is expcetion with the progress box
+                        // when reportProgress is null, it means there is exception with the progress box
                         // so we record it with exceptionHappened and return so that progress box will close instantly
                         exceptionHappened = true;
                         return;
