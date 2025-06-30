@@ -78,7 +78,7 @@ public static class PluginInstaller
         {
             API.LogException(ClassName, "Failed to install plugin", e);
             API.ShowMsgError(API.GetTranslation("ErrorInstallingPlugin"));
-            return; // don’t restart on failure
+            return; // do not restart on failure
         }
 
         if (Settings.AutoRestartAfterChanging)
@@ -152,7 +152,7 @@ public static class PluginInstaller
         {
             API.LogException(ClassName, "Failed to uninstall plugin", e);
             API.ShowMsgError(API.GetTranslation("ErrorUninstallingPlugin"));
-            return; // don’t restart on failure
+            return; // don not restart on failure
         }
 
         if (Settings.AutoRestartAfterChanging)
@@ -208,7 +208,7 @@ public static class PluginInstaller
         {
             API.LogException(ClassName, "Failed to update plugin", e);
             API.ShowMsgError(API.GetTranslation("ErrorUpdatingPlugin"));
-            return; // don’t restart on failure
+            return; // do not restart on failure
         }
 
         if (Settings.AutoRestartAfterChanging)
