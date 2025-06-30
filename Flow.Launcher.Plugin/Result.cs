@@ -314,6 +314,7 @@ namespace Flow.Launcher.Plugin
                 AddSelectedCount = AddSelectedCount,
                 RecordKey = RecordKey,
                 ShowBadge = ShowBadge,
+                HotkeyIds = HotkeyIds,
             };
         }
 
