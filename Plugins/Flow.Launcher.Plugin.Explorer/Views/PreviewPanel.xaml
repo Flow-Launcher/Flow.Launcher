@@ -44,7 +44,7 @@
                     TextWrapping="Wrap" />
             </Grid>
         </Grid>
-        <StackPanel Grid.Row="2">
+        <StackPanel Grid.Row="1">
             <StackPanel.Style>
                 <Style TargetType="StackPanel">
                     <Style.Triggers>
