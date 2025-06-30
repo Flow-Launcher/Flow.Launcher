@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
-using Flow.Launcher.Helper;
 using Flow.Launcher.Plugin;
 using Version = SemanticVersioning.Version;
 
