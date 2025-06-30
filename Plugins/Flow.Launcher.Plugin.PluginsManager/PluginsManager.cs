@@ -209,7 +209,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     {
                         if (reportProgress == null)
                         {
-                            // when reportProgress is null, it means there is expcetion with the progress box
+                            // when reportProgress is null, it means there is exception with the progress box
                             // so we record it with exceptionHappened and return so that progress box will close instantly
                             exceptionHappened = true;
                             return;
@@ -242,6 +242,18 @@ namespace Flow.Launcher.Plugin.PluginsManager
             if (FilesFolders.IsZipFilePath(search, checkFileExists: true))
             {
                 pluginFromLocalPath = Utilities.GetPluginInfoFromZip(search);
+
+                if (pluginFromLocalPath == null) return new List<Result>
+                {
+                    new()
+                    {
+                        Title = Context.API.GetTranslation("plugin_pluginsmanager_invalid_zip_title"),
+                        SubTitle = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_invalid_zip_subtitle"),
+                            search),
+                        IcoPath = icoPath
+                    }
+                };
+
                 pluginFromLocalPath.LocalInstallPath = search;
                 updateFromLocalPath = true;
             }
@@ -559,6 +571,20 @@ namespace Flow.Launcher.Plugin.PluginsManager
         {
             var plugin = Utilities.GetPluginInfoFromZip(localPath);
 
+            if (plugin == null)
+            {
+                return new List<Result>
+                {
+                    new()
+                    {
+                        Title = Context.API.GetTranslation("plugin_pluginsmanager_invalid_zip_title"),
+                        SubTitle = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_invalid_zip_subtitle"),
+                            localPath),
+                        IcoPath = icoPath
+                    }
+                };
+            }
+
             plugin.LocalInstallPath = localPath;
 
             return new List<Result>
@@ -600,14 +626,17 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 return false;
 
             var author = pieces[3];
+            var acceptedHost = "github.com";
             var acceptedSource = "https://github.com";
             var constructedUrlPart = string.Format("{0}/{1}/", acceptedSource, author);
 
-            return url.StartsWith(acceptedSource) &&
-                Context.API.GetAllPlugins().Any(x => 
-                    !string.IsNullOrEmpty(x.Metadata.Website) &&
-                    x.Metadata.Website.StartsWith(constructedUrlPart)
-                );
+            if (!Uri.TryCreate(url, UriKind.Absolute, out var uri) || uri.Host != acceptedHost)
+                return false;
+
+            return Context.API.GetAllPlugins().Any(x =>
+                !string.IsNullOrEmpty(x.Metadata.Website) &&
+                x.Metadata.Website.StartsWith(constructedUrlPart)
+            );
         }
 
         internal async ValueTask<List<Result>> RequestInstallOrUpdateAsync(string search, CancellationToken token,
