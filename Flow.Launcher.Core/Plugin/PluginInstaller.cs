@@ -27,6 +27,13 @@ public static class PluginInstaller
 
     public static async Task InstallPluginAndCheckRestartAsync(UserPlugin newPlugin)
     {
+        if (API.PluginModified(newPlugin.ID))
+        {
+            API.ShowMsg(string.Format(API.GetTranslation("failedToInstallPluginTitle"), newPlugin.Name),
+                    API.GetTranslation("pluginModifiedAlreadyMessage"));
+            return;
+        }
+
         if (API.ShowMsgBox(
             string.Format(
                 API.GetTranslation("InstallPromptSubtitle"),
@@ -117,6 +124,13 @@ public static class PluginInstaller
             return;
         }
 
+        if (API.PluginModified(plugin.ID))
+        {
+            API.ShowMsg(string.Format(API.GetTranslation("failedToInstallPluginTitle"), plugin.Name),
+                    API.GetTranslation("pluginModifiedAlreadyMessage"));
+            return;
+        }
+
         if (Settings.ShowUnknownSourceWarning)
         {
             if (!InstallSourceKnown(plugin.Website)
@@ -132,6 +146,13 @@ public static class PluginInstaller
 
     public static async Task UninstallPluginAndCheckRestartAsync(PluginMetadata oldPlugin)
     {
+        if (API.PluginModified(oldPlugin.ID))
+        {
+            API.ShowMsg(string.Format(API.GetTranslation("failedToUninstallPluginTitle"), oldPlugin.Name),
+                    API.GetTranslation("pluginModifiedAlreadyMessage"));
+            return;
+        }
+
         if (API.ShowMsgBox(
             string.Format(
                 API.GetTranslation("UninstallPromptSubtitle"),
