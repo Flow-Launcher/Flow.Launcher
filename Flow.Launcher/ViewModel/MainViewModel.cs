@@ -1711,6 +1711,11 @@ namespace Flow.Launcher.ViewModel
             return selected;
         }
 
+        internal ResultsViewModel GetSelectedResults()
+        {
+            return SelectedResults;
+        }
+
         #endregion
 
         #region Hotkey

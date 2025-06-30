@@ -226,8 +226,11 @@ namespace Flow.Launcher.Plugin
         /// <param name="query">Query string</param>
         /// <param name="stringToCompare">The string that will be compared against the query</param>
         /// <returns>Match results</returns>
+        
         MatchResult FuzzySearch(string query, string stringToCompare);
 
+
+        
         /// <summary>
         /// Http download the spefic url and return as string
         /// </summary>

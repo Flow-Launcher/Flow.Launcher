@@ -6,9 +6,11 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -26,6 +28,7 @@ namespace Flow.Launcher.Core.Plugin
 
         private static IEnumerable<PluginPair> _contextMenuPlugins;
         private static IEnumerable<PluginPair> _homePlugins;
+        private static IEnumerable<PluginPair> _hotkeyPlugins;
 
         public static List<PluginPair> AllPlugins { get; private set; }
         public static readonly HashSet<PluginPair> GlobalPlugins = new();
@@ -38,6 +41,7 @@ namespace Flow.Launcher.Core.Plugin
         private static PluginsSettings Settings;
         private static List<PluginMetadata> _metadatas;
         private static readonly List<string> _modifiedPlugins = new();
+        private static readonly Dictionary<HotkeyModel, List<(PluginMetadata, SearchWindowPluginHotkey)>> _windowPluginHotkeys = new();
 
         /// <summary>
         /// Directories that will hold Flow Launcher plugin directory
@@ -250,6 +254,10 @@ namespace Flow.Launcher.Core.Plugin
 
             _contextMenuPlugins = GetPluginsForInterface<IContextMenu>();
             _homePlugins = GetPluginsForInterface<IAsyncHomeQuery>();
+            _hotkeyPlugins = GetPluginsForInterface<IPluginHotkey>();
+            var pluginHotkeyInfo = GetPluginHotkeyInfo();
+            Settings.UpdatePluginHotkeyInfo(pluginHotkeyInfo);
+            InitializeWindowPluginHotkeys(pluginHotkeyInfo);
 
             foreach (var plugin in AllPlugins)
             {
@@ -440,6 +448,95 @@ namespace Flow.Launcher.Core.Plugin
         public static bool IsHomePlugin(string id)
         {
             return _homePlugins.Any(p => p.Metadata.ID == id);
+        }
+
+        public static Dictionary<PluginPair, List<BasePluginHotkey>> GetPluginHotkeyInfo()
+        {
+            var hotkeyPluginInfos = new Dictionary<PluginPair, List<BasePluginHotkey>>();
+            foreach (var plugin in _hotkeyPlugins)
+            {
+                var hotkeys = ((IPluginHotkey)plugin.Plugin).GetPuginHotkeys();
+                hotkeyPluginInfos.Add(plugin, hotkeys);
+            }
+
+            return hotkeyPluginInfos;
+        }
+
+        public static Dictionary<HotkeyModel, List<(PluginMetadata Metadata, SearchWindowPluginHotkey SearchWindowPluginHotkey)>> GetWindowPluginHotkeys()
+        {
+            return _windowPluginHotkeys;
+        }
+
+        private static void InitializeWindowPluginHotkeys(Dictionary<PluginPair, List<BasePluginHotkey>> pluginHotkeyInfo)
+        {
+            foreach (var info in pluginHotkeyInfo)
+            {
+                var pluginPair = info.Key;
+                var hotkeyInfo = info.Value;
+                var metadata = pluginPair.Metadata;
+                foreach (var hotkey in hotkeyInfo)
+                {
+                    if (hotkey.HotkeyType == HotkeyType.SearchWindow && hotkey is SearchWindowPluginHotkey searchWindowHotkey)
+                    {
+                        var hotkeySetting = metadata.PluginHotkeys.Find(h => h.Id == hotkey.Id)?.Hotkey ?? hotkey.DefaultHotkey;
+                        var hotkeyModel = new HotkeyModel(hotkeySetting);
+                        if (!_windowPluginHotkeys.TryGetValue(hotkeyModel, out var list))
+                        {
+                            list = new List<(PluginMetadata, SearchWindowPluginHotkey)>();
+                            _windowPluginHotkeys[hotkeyModel] = list;
+                        }
+                        list.Add((pluginPair.Metadata, searchWindowHotkey));
+                    }
+                }
+            }
+        }
+
+        public static string ChangePluginHotkey(PluginMetadata plugin, GlobalPluginHotkey pluginHotkey, HotkeyModel newHotkey)
+        {
+            var oldHotkeyItem = plugin.PluginHotkeys.First(h => h.Id == pluginHotkey.Id);
+            var settingHotkeyItem = Settings.GetPluginSettings(plugin.ID).pluginHotkeys.First(h => h.Id == pluginHotkey.Id);
+            var oldHotkey = settingHotkeyItem.Hotkey;
+            var newHotkeyStr = newHotkey.ToString();
+
+            // Update hotkey in plugin metadata & setting
+            oldHotkeyItem.Hotkey = newHotkeyStr;
+            settingHotkeyItem.Hotkey = newHotkeyStr;
+
+            return oldHotkey;
+        }
+
+        public static (HotkeyModel Old, HotkeyModel New) ChangePluginHotkey(PluginMetadata plugin, SearchWindowPluginHotkey pluginHotkey, HotkeyModel newHotkey)
+        {
+            var oldHotkeyItem = plugin.PluginHotkeys.First(h => h.Id == pluginHotkey.Id);
+            var settingHotkeyItem = Settings.GetPluginSettings(plugin.ID).pluginHotkeys.First(h => h.Id == pluginHotkey.Id);
+            var oldHotkey = settingHotkeyItem.Hotkey;
+            var converter = new KeyGestureConverter();
+            var oldHotkeyModel = new HotkeyModel(oldHotkey);
+            var newHotkeyStr = newHotkey.ToString();
+
+            // Update hotkey in plugin metadata & setting
+            oldHotkeyItem.Hotkey = newHotkeyStr;
+            settingHotkeyItem.Hotkey = newHotkeyStr;
+
+            // Update window plugin hotkey dictionary
+            var oldHotkeyModels = _windowPluginHotkeys[oldHotkeyModel];
+            _windowPluginHotkeys[oldHotkeyModel] = oldHotkeyModels.Where(x => x.Item1.ID != plugin.ID || x.Item2.Id != pluginHotkey.Id).ToList();
+
+            if (_windowPluginHotkeys.TryGetValue(newHotkey, out var newHotkeyModels))
+            {
+                var newList = newHotkeyModels.ToList();
+                newList.Add((plugin, pluginHotkey));
+                _windowPluginHotkeys[newHotkey] = newList;
+            }
+            else
+            {
+                _windowPluginHotkeys[newHotkey] = new List<(PluginMetadata, SearchWindowPluginHotkey)>()
+                {
+                    (plugin, pluginHotkey)
+                };
+            }
+
+            return (oldHotkeyModel, newHotkey);
         }
 
         public static bool ActionKeywordRegistered(string actionKeyword)

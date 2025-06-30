@@ -185,14 +185,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 TitleToolTip = $"{title}\n{ExecutablePath}",
                 Action = c =>
                 {
-                    // Ctrl + Enter to open containing folder
-                    bool openFolder = c.SpecialKeyState.ToModifierKeys() == ModifierKeys.Control;
-                    if (openFolder)
-                    {
-                        Main.Context.API.OpenDirectory(ParentDirectory, FullPath);
-                        return true;
-                    }
-
                     // Ctrl + Shift + Enter to run as admin
                     bool runAsAdmin = c.SpecialKeyState.ToModifierKeys() == (ModifierKeys.Control | ModifierKeys.Shift);
 
@@ -207,7 +199,11 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     _ = Task.Run(() => Main.StartProcess(Process.Start, info));
 
                     return true;
-                }
+                },
+                HotkeyIds = new List<int>
+                {
+                    0
+                },
             };
 
             return result;

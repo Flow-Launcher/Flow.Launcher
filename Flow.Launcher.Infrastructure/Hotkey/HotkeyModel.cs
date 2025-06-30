@@ -117,12 +117,22 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             }
         }
 
-        public override string ToString()
+        public bool Equals(HotkeyModel other)
+        {
+            return CharKey == other.CharKey && ModifierKeys == other.ModifierKeys;
+        }
+
+        public KeyGesture ToKeyGesture()
+        {
+            return new KeyGesture(CharKey, ModifierKeys);
+        }
+
+        public override readonly string ToString()
         {
             return string.Join(" + ", EnumerateDisplayKeys());
         }
 
-        public IEnumerable<string> EnumerateDisplayKeys()
+        public readonly IEnumerable<string> EnumerateDisplayKeys()
         {
             if (Ctrl && CharKey is not (Key.LeftCtrl or Key.RightCtrl))
             {

@@ -318,6 +318,7 @@ namespace Flow.Launcher
 
             foreach (var key in hotkey.Value.EnumerateDisplayKeys()!)
             {
+                
                 KeysToDisplay.Add(key);
             }
         }
