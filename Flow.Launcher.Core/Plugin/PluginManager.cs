@@ -542,7 +542,8 @@ namespace Flow.Launcher.Core.Plugin
 
         public static async Task UpdatePluginAsync(PluginMetadata existingVersion, UserPlugin newVersion, string zipFilePath)
         {
-            InstallPlugin(newVersion, zipFilePath, checkModified:false);
+            var success = InstallPlugin(newVersion, zipFilePath, checkModified:false);
+            if (!success) return;
             await UninstallPluginAsync(existingVersion, removePluginFromSettings:false, removePluginSettings:false, checkModified: false);
             _modifiedPlugins.Add(existingVersion.ID);
         }
@@ -561,12 +562,13 @@ namespace Flow.Launcher.Core.Plugin
 
         #region Internal functions
 
-        internal static void InstallPlugin(UserPlugin plugin, string zipFilePath, bool checkModified)
+        internal static bool InstallPlugin(UserPlugin plugin, string zipFilePath, bool checkModified)
         {
             if (checkModified && PluginModified(plugin.ID))
             {
-                // Distinguish exception from installing same or less version
-                throw new ArgumentException($"Plugin {plugin.Name} {plugin.ID} has been modified.", nameof(plugin));
+                API.ShowMsg(string.Format(API.GetTranslation("failedToInstallPluginTitle"), plugin.Name),
+                    API.GetTranslation("pluginModifiedAlreadyMessage"));
+                return false;
             }
 
             // Unzip plugin files to temp folder
@@ -584,12 +586,16 @@ namespace Flow.Launcher.Core.Plugin
 
             if (string.IsNullOrEmpty(metadataJsonFilePath) || string.IsNullOrEmpty(pluginFolderPath))
             {
-                throw new FileNotFoundException($"Unable to find plugin.json from the extracted zip file, or this path {pluginFolderPath} does not exist");
+                API.ShowMsg(string.Format(API.GetTranslation("failedToInstallPluginTitle"), plugin.Name),
+                    string.Format(API.GetTranslation("fileNotFoundMessage"), pluginFolderPath));
+                return false;
             }
 
             if (SameOrLesserPluginVersionExists(metadataJsonFilePath))
             {
-                throw new InvalidOperationException($"A plugin with the same ID and version already exists, or the version is greater than this downloaded plugin {plugin.Name}");
+                API.ShowMsg(string.Format(API.GetTranslation("failedToInstallPluginTitle"), plugin.Name),
+                    API.GetTranslation("pluginExistAlreadyMessage"));
+                return false;
             }
 
             var folderName = string.IsNullOrEmpty(plugin.Version) ? $"{plugin.Name}-{Guid.NewGuid()}" : $"{plugin.Name}-{plugin.Version}";
@@ -633,13 +639,17 @@ namespace Flow.Launcher.Core.Plugin
             {
                 _modifiedPlugins.Add(plugin.ID);
             }
+
+            return true;
         }
 
         internal static async Task UninstallPluginAsync(PluginMetadata plugin, bool removePluginFromSettings, bool removePluginSettings, bool checkModified)
         {
             if (checkModified && PluginModified(plugin.ID))
             {
-                throw new ArgumentException($"Plugin {plugin.Name} has been modified");
+                API.ShowMsg(string.Format(API.GetTranslation("failedToUninstallPluginTitle"), plugin.Name),
+                    API.GetTranslation("pluginModifiedAlreadyMessage"));
+                return;
             }
 
             if (removePluginSettings || removePluginFromSettings)
