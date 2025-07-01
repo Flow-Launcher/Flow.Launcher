@@ -793,7 +793,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             {
                 Context.API.LogException(ClassName, e.Message, e);
                 Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_uninstall_error_title"),
-                    Context.API.GetTranslation("plugin_pluginsmanager_plugin_modified_error"));
+                    string.Format(Context.API.GetTranslation("plugin_pluginsmanager_plugin_modified_error"), plugin.Name));
             }
         }
     }
