@@ -547,8 +547,10 @@ namespace Flow.Launcher.Plugin
         /// <param name="zipFilePath">
         /// Path to the zip file containing the plugin. It will be unzipped to the temporary directory, removed and installed.
         /// </param>
-        /// <returns></returns>
-        public Task UpdatePluginAsync(PluginMetadata pluginMetadata, UserPlugin plugin, string zipFilePath);
+        /// <returns>
+        /// True if the plugin is updated successfully, false otherwise.
+        /// </returns>
+        public Task<bool> UpdatePluginAsync(PluginMetadata pluginMetadata, UserPlugin plugin, string zipFilePath);
 
         /// <summary>
         /// Install a plugin. By default will remove the zip file if installation is from url,
@@ -558,7 +560,10 @@ namespace Flow.Launcher.Plugin
         /// <param name="zipFilePath">
         /// Path to the zip file containing the plugin. It will be unzipped to the temporary directory, removed and installed.
         /// </param>
-        public void InstallPlugin(UserPlugin plugin, string zipFilePath);
+        /// <returns>
+        /// True if the plugin is installed successfully, false otherwise.
+        /// </returns>
+        public bool InstallPlugin(UserPlugin plugin, string zipFilePath);
 
         /// <summary>
         /// Uninstall a plugin
@@ -567,8 +572,10 @@ namespace Flow.Launcher.Plugin
         /// <param name="removePluginSettings">
         /// Plugin has their own settings. If this is set to true, the plugin settings will be removed.
         /// </param>
-        /// <returns></returns>
-        public Task UninstallPluginAsync(PluginMetadata pluginMetadata, bool removePluginSettings = false);
+        /// <returns>
+        /// True if the plugin is updated successfully, false otherwise.
+        /// </returns>
+        public Task<bool> UninstallPluginAsync(PluginMetadata pluginMetadata, bool removePluginSettings = false);
 
         /// <summary>
         /// Log debug message of the time taken to execute a method

@@ -540,22 +540,24 @@ namespace Flow.Launcher.Core.Plugin
             return _modifiedPlugins.Contains(id);
         }
 
-        public static async Task UpdatePluginAsync(PluginMetadata existingVersion, UserPlugin newVersion, string zipFilePath)
+        public static async Task<bool> UpdatePluginAsync(PluginMetadata existingVersion, UserPlugin newVersion, string zipFilePath)
         {
             var installSuccess = InstallPlugin(newVersion, zipFilePath, checkModified:false);
-            if (!installSuccess) return;
-            await UninstallPluginAsync(existingVersion, removePluginFromSettings:false, removePluginSettings:false, checkModified: false);
+            if (!installSuccess) return false;
+            var uninstallSuccess = await UninstallPluginAsync(existingVersion, removePluginFromSettings:false, removePluginSettings:false, checkModified: false);
+            if (!uninstallSuccess) return false;
             _modifiedPlugins.Add(existingVersion.ID);
+            return true;
         }
 
-        public static void InstallPlugin(UserPlugin plugin, string zipFilePath)
+        public static bool InstallPlugin(UserPlugin plugin, string zipFilePath)
         {
-            InstallPlugin(plugin, zipFilePath, checkModified: true);
+            return InstallPlugin(plugin, zipFilePath, checkModified: true);
         }
 
-        public static async Task UninstallPluginAsync(PluginMetadata plugin, bool removePluginFromSettings = true, bool removePluginSettings = false)
+        public static async Task<bool> UninstallPluginAsync(PluginMetadata plugin, bool removePluginFromSettings = true, bool removePluginSettings = false)
         {
-            await UninstallPluginAsync(plugin, removePluginFromSettings, removePluginSettings, true);
+            return await UninstallPluginAsync(plugin, removePluginFromSettings, removePluginSettings, true);
         }
 
         #endregion

@@ -74,7 +74,10 @@ public static class PluginInstaller
                 throw new FileNotFoundException($"Plugin {newPlugin.ID} zip file not found at {filePath}", filePath);
             }
 
-            API.InstallPlugin(newPlugin, filePath);
+            if (!API.InstallPlugin(newPlugin, filePath))
+            {
+                return;
+            }
 
             if (!newPlugin.IsFromLocalInstallPath)
             {
@@ -167,7 +170,10 @@ public static class PluginInstaller
 
         try
         {
-            await API.UninstallPluginAsync(oldPlugin, removePluginSettings);
+            if (!await API.UninstallPluginAsync(oldPlugin, removePluginSettings))
+            {
+                return;
+            }
         }
         catch (Exception e)
         {
@@ -223,7 +229,10 @@ public static class PluginInstaller
                 return;
             }
 
-            await API.UpdatePluginAsync(oldPlugin, newPlugin, filePath);
+            if (!await API.UpdatePluginAsync(oldPlugin, newPlugin, filePath))
+            {
+                return;
+            }
         }
         catch (Exception e)
         {

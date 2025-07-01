@@ -352,8 +352,11 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                     }
                                     else
                                     {
-                                        await Context.API.UpdatePluginAsync(x.PluginExistingMetadata, x.PluginNewUserPlugin,
-                                            downloadToFilePath);
+                                        if (!await Context.API.UpdatePluginAsync(x.PluginExistingMetadata, x.PluginNewUserPlugin,
+                                            downloadToFilePath))
+                                        {
+                                            return;
+                                        }
 
                                         if (Settings.AutoRestartAfterChanging)
                                         {
@@ -456,8 +459,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                 if (cts.IsCancellationRequested)
                                     return;
                                 else
-                                    await Context.API.UpdatePluginAsync(plugin.PluginExistingMetadata, plugin.PluginNewUserPlugin,
-                                        downloadToFilePath);
+                                    if (!await Context.API.UpdatePluginAsync(plugin.PluginExistingMetadata, plugin.PluginNewUserPlugin,
+                                        downloadToFilePath))
+                                       return;
                             }
                             catch (Exception ex)
                             {
@@ -686,7 +690,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             try
             {
-                Context.API.InstallPlugin(plugin, downloadedFilePath);
+                if (!Context.API.InstallPlugin(plugin, downloadedFilePath))
+                    return;
 
                 if (!plugin.IsFromLocalInstallPath)
                     File.Delete(downloadedFilePath);
@@ -779,7 +784,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     Context.API.GetTranslation("plugin_pluginsmanager_keep_plugin_settings_subtitle"),
                     Context.API.GetTranslation("plugin_pluginsmanager_keep_plugin_settings_title"),
                     button: MessageBoxButton.YesNo) == MessageBoxResult.No;
-                await Context.API.UninstallPluginAsync(plugin, removePluginSettings);
+                if (!await Context.API.UninstallPluginAsync(plugin, removePluginSettings))
+                {
+                    return;
+                }
             }
             catch (ArgumentException e)
             {
