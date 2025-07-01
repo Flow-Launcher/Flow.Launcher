@@ -542,8 +542,8 @@ namespace Flow.Launcher.Core.Plugin
 
         public static async Task UpdatePluginAsync(PluginMetadata existingVersion, UserPlugin newVersion, string zipFilePath)
         {
-            var success = InstallPlugin(newVersion, zipFilePath, checkModified:false);
-            if (!success) return;
+            var installSuccess = InstallPlugin(newVersion, zipFilePath, checkModified:false);
+            if (!installSuccess) return;
             await UninstallPluginAsync(existingVersion, removePluginFromSettings:false, removePluginSettings:false, checkModified: false);
             _modifiedPlugins.Add(existingVersion.ID);
         }
@@ -643,13 +643,13 @@ namespace Flow.Launcher.Core.Plugin
             return true;
         }
 
-        internal static async Task UninstallPluginAsync(PluginMetadata plugin, bool removePluginFromSettings, bool removePluginSettings, bool checkModified)
+        internal static async Task<bool> UninstallPluginAsync(PluginMetadata plugin, bool removePluginFromSettings, bool removePluginSettings, bool checkModified)
         {
             if (checkModified && PluginModified(plugin.ID))
             {
                 API.ShowMsgError(string.Format(API.GetTranslation("failedToUninstallPluginTitle"), plugin.Name),
                     API.GetTranslation("pluginModifiedAlreadyMessage"));
-                return;
+                return false;
             }
 
             if (removePluginSettings || removePluginFromSettings)
@@ -713,7 +713,7 @@ namespace Flow.Launcher.Core.Plugin
                 _modifiedPlugins.Add(plugin.ID);
             }
 
-            return;
+            return true;
         }
 
         #endregion
