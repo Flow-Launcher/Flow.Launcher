@@ -311,9 +311,17 @@ namespace Flow.Launcher.Core.Plugin
                 return Array.Empty<PluginPair>();
 
             if (!NonGlobalPlugins.TryGetValue(query.ActionKeyword, out var plugin))
-                return quickSwitch ? GlobalPlugins.Where(p => p.Plugin is IAsyncQuickSwitch).ToList() : GlobalPlugins;
+            {
+                if (quickSwitch)
+                    return GlobalPlugins.Where(p => p.Plugin is IAsyncQuickSwitch && !PluginModified(p.Metadata.ID)).ToList();
+                else
+                    return GlobalPlugins.Where(p => !PluginModified(p.Metadata.ID)).ToList();
+            }
 
             if (quickSwitch && plugin.Plugin is not IAsyncQuickSwitch)
+                return Array.Empty<PluginPair>();
+
+            if (API.PluginModified(plugin.Metadata.ID))
                 return Array.Empty<PluginPair>();
 
             return new List<PluginPair>
@@ -324,7 +332,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static ICollection<PluginPair> ValidPluginsForHomeQuery()
         {
-            return _homePlugins.ToList();
+            return _homePlugins.Where(p => !PluginModified(p.Metadata.ID)).ToList();
         }
 
         public static async Task<List<Result>> QueryForPluginAsync(PluginPair pair, Query query, CancellationToken token)
@@ -616,9 +624,9 @@ namespace Flow.Launcher.Core.Plugin
             InstallPlugin(plugin, zipFilePath, checkModified: true);
         }
 
-        public static async Task UninstallPluginAsync(PluginMetadata plugin, bool removePluginFromSettings = true, bool removePluginSettings = false)
+        public static async Task UninstallPluginAsync(PluginMetadata plugin, bool removePluginSettings = false)
         {
-            await UninstallPluginAsync(plugin, removePluginFromSettings, removePluginSettings, true);
+            await UninstallPluginAsync(plugin, removePluginFromSettings: true, removePluginSettings: removePluginSettings, checkModified: true);
         }
 
         #endregion
