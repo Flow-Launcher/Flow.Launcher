@@ -16,6 +16,9 @@ using NHotkey.Wpf;
 
 namespace Flow.Launcher.Helper;
 
+/// <summary>
+/// Set Flow Launcher global hotkeys & window hotkeys
+/// </summary>
 internal static class HotKeyMapper
 {
     private static readonly string ClassName = nameof(HotKeyMapper);
@@ -130,6 +133,9 @@ internal static class HotKeyMapper
         ChefKeysManager.Stop();
     }
 
+    /// <summary>
+    /// Custom Query Hotkeys (Global)
+    /// </summary>
     internal static void LoadCustomPluginHotkey()
     {
         if (_settings.CustomPluginHotkeys == null)
@@ -153,6 +159,9 @@ internal static class HotKeyMapper
         });
     }
 
+    /// <summary>
+    /// Global Plugin Hotkeys (Global)
+    /// </summary>
     internal static void LoadGlobalPluginHotkey()
     {
         var pluginHotkeyInfos = PluginManager.GetPluginHotkeyInfo();
@@ -190,6 +199,9 @@ internal static class HotKeyMapper
         });
     }
 
+    /// <summary>
+    /// Plugin Window Hotkeys (Window)
+    /// </summary>
     internal static void LoadWindowPluginHotkey()
     {
         var windowPluginHotkeys = PluginManager.GetWindowPluginHotkeys();
