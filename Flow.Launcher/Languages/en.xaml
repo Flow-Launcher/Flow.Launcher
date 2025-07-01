@@ -175,7 +175,7 @@
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Fail to remove plugin cache</system:String>
     <system:String x:Key="failedToRemovePluginCacheMessage">Plugins: {0} - Fail to remove plugin cache files, please remove them manually</system:String>
-    <system:String x:Key="pluginModifiedAlreadyTitle">Plugin {0} is installed or uninstalled already</system:String>
+    <system:String x:Key="pluginModifiedAlreadyTitle">Plugin {0} is modified already</system:String>
     <system:String x:Key="pluginModifiedAlreadyMessage">Please restart Flow before making any further changes</system:String>
     <system:String x:Key="failedToInstallPluginTitle">Fail to install {0}</system:String>
     <system:String x:Key="failedToUninstallPluginTitle">Fail to uninstall {0}</system:String>

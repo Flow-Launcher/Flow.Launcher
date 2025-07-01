@@ -45,7 +45,7 @@
     <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">Plugin {0} successfully updated. Please restart Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">{0} plugins successfully updated. Please restart Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">Plugin {0} has already been modified. Please restart Flow before making any further changes.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_title">Plugin {0} has already been modified</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_title">Plugin {0} is modified already</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_message">Please restart Flow before making any further changes</system:String>
 
     <system:String x:Key="plugin_pluginsmanager_invalid_zip_title">Invalid zip installer file</system:String>
