@@ -359,9 +359,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public int ActivateTimes { get; set; }
 
-        public ObservableCollection<CustomPluginHotkey> CustomPluginHotkeys { get; set; } = new ObservableCollection<CustomPluginHotkey>();
+        public ObservableCollection<CustomPluginHotkey> CustomPluginHotkeys { get; set; } = new();
 
-        public ObservableCollection<CustomShortcutModel> CustomShortcuts { get; set; } = new ObservableCollection<CustomShortcutModel>();
+        public ObservableCollection<CustomShortcutModel> CustomShortcuts { get; set; } = new();
 
         [JsonIgnore]
         public ObservableCollection<BaseBuiltinShortcutModel> BuiltinShortcuts { get; set; } = new()
@@ -432,7 +432,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool WMPInstalled { get; set; } = true;
 
         // This needs to be loaded last by staying at the bottom
-        public PluginsSettings PluginSettings { get; set; } = new PluginsSettings();
+        public PluginsSettings PluginSettings { get; set; } = new();
 
         [JsonIgnore]
         public List<RegisteredHotkeyData> RegisteredHotkeys
