@@ -568,7 +568,7 @@ namespace Flow.Launcher.Core.Plugin
         {
             if (checkModified && PluginModified(plugin.ID))
             {
-                API.ShowMsgError(string.Format(API.GetTranslation("failedToInstallPluginTitle"), plugin.Name),
+                API.ShowMsgError(string.Format(API.GetTranslation("pluginModifiedAlreadyTitle"), plugin.Name),
                     API.GetTranslation("pluginModifiedAlreadyMessage"));
                 return false;
             }
@@ -649,7 +649,7 @@ namespace Flow.Launcher.Core.Plugin
         {
             if (checkModified && PluginModified(plugin.ID))
             {
-                API.ShowMsgError(string.Format(API.GetTranslation("failedToUninstallPluginTitle"), plugin.Name),
+                API.ShowMsgError(string.Format(API.GetTranslation("pluginModifiedAlreadyTitle"), plugin.Name),
                     API.GetTranslation("pluginModifiedAlreadyMessage"));
                 return false;
             }

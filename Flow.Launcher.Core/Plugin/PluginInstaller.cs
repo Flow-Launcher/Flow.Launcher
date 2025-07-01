@@ -29,7 +29,7 @@ public static class PluginInstaller
     {
         if (API.PluginModified(newPlugin.ID))
         {
-            API.ShowMsgError(string.Format(API.GetTranslation("failedToInstallPluginTitle"), newPlugin.Name),
+            API.ShowMsgError(string.Format(API.GetTranslation("pluginModifiedAlreadyTitle"), newPlugin.Name),
                     API.GetTranslation("pluginModifiedAlreadyMessage"));
             return;
         }
@@ -129,7 +129,7 @@ public static class PluginInstaller
 
         if (API.PluginModified(plugin.ID))
         {
-            API.ShowMsgError(string.Format(API.GetTranslation("failedToInstallPluginTitle"), plugin.Name),
+            API.ShowMsgError(string.Format(API.GetTranslation("pluginModifiedAlreadyTitle"), plugin.Name),
                     API.GetTranslation("pluginModifiedAlreadyMessage"));
             return;
         }
@@ -151,7 +151,7 @@ public static class PluginInstaller
     {
         if (API.PluginModified(oldPlugin.ID))
         {
-            API.ShowMsgError(string.Format(API.GetTranslation("failedToUninstallPluginTitle"), oldPlugin.Name),
+            API.ShowMsgError(string.Format(API.GetTranslation("pluginModifiedAlreadyTitle"), oldPlugin.Name),
                     API.GetTranslation("pluginModifiedAlreadyMessage"));
             return;
         }

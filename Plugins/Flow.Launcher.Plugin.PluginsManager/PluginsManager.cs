@@ -116,9 +116,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             if (Context.API.PluginModified(plugin.ID))
             {
-                Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
-                    string.Format(Context.API.GetTranslation("plugin_pluginsmanager_plugin_modified_error"),
-                        plugin.Name));
+                Context.API.ShowMsgError(
+                    string.Format(Context.API.GetTranslation("plugin_pluginsmanager_plugin_modified_error_title"), plugin.Name),
+                    Context.API.GetTranslation("plugin_pluginsmanager_plugin_modified_error_message"));
                 return;
             }
 
@@ -314,9 +314,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
                         {
                             if (Context.API.PluginModified(x.ID))
                             {
-                                Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
-                                    string.Format(Context.API.GetTranslation("plugin_pluginsmanager_plugin_modified_error"),
-                                        x.Name));
+                                Context.API.ShowMsgError(
+                                    string.Format(Context.API.GetTranslation("plugin_pluginsmanager_plugin_modified_error_title"), x.Name),
+                                    Context.API.GetTranslation("plugin_pluginsmanager_plugin_modified_error_message"));
                                 return false;
                             }
 
@@ -765,6 +765,14 @@ namespace Flow.Launcher.Plugin.PluginsManager
                         IcoPath = x.Metadata.IcoPath,
                         AsyncAction = async e =>
                         {
+                            if (Context.API.PluginModified(x.Metadata.ID))
+                            {
+                                Context.API.ShowMsgError(
+                                    string.Format(Context.API.GetTranslation("plugin_pluginsmanager_plugin_modified_error_title"), x.Metadata.Name),
+                                    Context.API.GetTranslation("plugin_pluginsmanager_plugin_modified_error_message"));
+                                return false;
+                            }
+
                             string message;
                             if (Settings.AutoRestartAfterChanging)
                             {
