@@ -555,9 +555,9 @@ namespace Flow.Launcher.Core.Plugin
             return InstallPlugin(plugin, zipFilePath, checkModified: true);
         }
 
-        public static async Task<bool> UninstallPluginAsync(PluginMetadata plugin, bool removePluginFromSettings = true, bool removePluginSettings = false)
+        public static async Task<bool> UninstallPluginAsync(PluginMetadata plugin, bool removePluginSettings = false)
         {
-            return await UninstallPluginAsync(plugin, removePluginFromSettings, removePluginSettings, true);
+            return await UninstallPluginAsync(plugin, removePluginFromSettings: true, removePluginSettings: removePluginSettings, checkModified: true);
         }
 
         #endregion
