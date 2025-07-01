@@ -566,7 +566,7 @@ namespace Flow.Launcher.Core.Plugin
         {
             if (checkModified && PluginModified(plugin.ID))
             {
-                API.ShowMsg(string.Format(API.GetTranslation("failedToInstallPluginTitle"), plugin.Name),
+                API.ShowMsgError(string.Format(API.GetTranslation("failedToInstallPluginTitle"), plugin.Name),
                     API.GetTranslation("pluginModifiedAlreadyMessage"));
                 return false;
             }
@@ -586,14 +586,14 @@ namespace Flow.Launcher.Core.Plugin
 
             if (string.IsNullOrEmpty(metadataJsonFilePath) || string.IsNullOrEmpty(pluginFolderPath))
             {
-                API.ShowMsg(string.Format(API.GetTranslation("failedToInstallPluginTitle"), plugin.Name),
+                API.ShowMsgError(string.Format(API.GetTranslation("failedToInstallPluginTitle"), plugin.Name),
                     string.Format(API.GetTranslation("fileNotFoundMessage"), pluginFolderPath));
                 return false;
             }
 
             if (SameOrLesserPluginVersionExists(metadataJsonFilePath))
             {
-                API.ShowMsg(string.Format(API.GetTranslation("failedToInstallPluginTitle"), plugin.Name),
+                API.ShowMsgError(string.Format(API.GetTranslation("failedToInstallPluginTitle"), plugin.Name),
                     API.GetTranslation("pluginExistAlreadyMessage"));
                 return false;
             }
@@ -647,7 +647,7 @@ namespace Flow.Launcher.Core.Plugin
         {
             if (checkModified && PluginModified(plugin.ID))
             {
-                API.ShowMsg(string.Format(API.GetTranslation("failedToUninstallPluginTitle"), plugin.Name),
+                API.ShowMsgError(string.Format(API.GetTranslation("failedToUninstallPluginTitle"), plugin.Name),
                     API.GetTranslation("pluginModifiedAlreadyMessage"));
                 return;
             }
@@ -712,6 +712,8 @@ namespace Flow.Launcher.Core.Plugin
             {
                 _modifiedPlugins.Add(plugin.ID);
             }
+
+            return;
         }
 
         #endregion
