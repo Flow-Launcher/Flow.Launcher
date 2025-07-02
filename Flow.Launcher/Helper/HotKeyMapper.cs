@@ -374,8 +374,7 @@ internal static class HotKeyMapper
     private static void RemoveHotkey(RegisteredHotkeyData hotkeyData)
     {
         if (hotkeyData is null || // Hotkey data is invalid
-            hotkeyData.Hotkey.IsEmpty || // Hotkey is none
-            hotkeyData.Command is null) // No need to set - it is a system command
+            hotkeyData.Hotkey.IsEmpty) // Hotkey is none
         {
             return;
         }
