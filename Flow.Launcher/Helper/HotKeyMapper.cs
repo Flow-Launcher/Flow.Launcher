@@ -217,33 +217,6 @@ internal static class HotKeyMapper
         }
     }
 
-    private static void ChangeRegisteredHotkey(RegisteredHotkeyType registeredType, string newHotkeyStr)
-    {
-        var newHotkey = new HotkeyModel(newHotkeyStr);
-        ChangeRegisteredHotkey(registeredType, newHotkey);
-    }
-
-    private static void ChangeRegisteredHotkey(RegisteredHotkeyType registeredType, HotkeyModel newHotkey)
-    {
-        // Find the old registered hotkey data item
-        var registeredHotkeyData = _settings.RegisteredHotkeys.FirstOrDefault(h => h.RegisteredType == registeredType);
-
-        // If it is not found, return
-        if (registeredHotkeyData == null)
-        {
-            return;
-        }
-
-        // Remove the old hotkey
-        RemoveHotkey(registeredHotkeyData);
-
-        // Update the hotkey string
-        registeredHotkeyData.Hotkey = newHotkey;
-
-        // Set the new hotkey
-        SetHotkey(registeredHotkeyData);
-    }
-
     #endregion
 
     // TODO: Deprecated
@@ -505,6 +478,37 @@ internal static class HotKeyMapper
             var errorMsgTitle = App.API.GetTranslation("MessageBoxTitle");
             App.API.ShowMsgBox(errorMsg, errorMsgTitle);
         }
+    }
+
+    #endregion
+
+    #region Hotkey Changing
+
+    private static void ChangeRegisteredHotkey(RegisteredHotkeyType registeredType, string newHotkeyStr)
+    {
+        var newHotkey = new HotkeyModel(newHotkeyStr);
+        ChangeRegisteredHotkey(registeredType, newHotkey);
+    }
+
+    private static void ChangeRegisteredHotkey(RegisteredHotkeyType registeredType, HotkeyModel newHotkey)
+    {
+        // Find the old registered hotkey data item
+        var registeredHotkeyData = _settings.RegisteredHotkeys.FirstOrDefault(h => h.RegisteredType == registeredType);
+
+        // If it is not found, return
+        if (registeredHotkeyData == null)
+        {
+            return;
+        }
+
+        // Remove the old hotkey
+        RemoveHotkey(registeredHotkeyData);
+
+        // Update the hotkey string
+        registeredHotkeyData.Hotkey = newHotkey;
+
+        // Set the new hotkey
+        SetHotkey(registeredHotkeyData);
     }
 
     #endregion
