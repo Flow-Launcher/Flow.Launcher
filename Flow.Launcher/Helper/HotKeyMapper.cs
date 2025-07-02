@@ -27,9 +27,6 @@ internal static class HotKeyMapper
     private static Settings _settings;
     private static MainViewModel _mainViewModel;
 
-    // Registered hotkeys for ActionContext
-    private static List<RegisteredHotkeyData> _actionContextRegisteredHotkeys;
-
     #region Initialization
 
     internal static void Initialize()
@@ -37,6 +34,7 @@ internal static class HotKeyMapper
         _mainViewModel = Ioc.Default.GetRequiredService<MainViewModel>();
         _settings = Ioc.Default.GetService<Settings>();
 
+        InitializeActionContextHotkeys();
         InitializeRegisteredHotkeys();
 
         _settings.PropertyChanged += Settings_PropertyChanged;
@@ -46,14 +44,6 @@ internal static class HotKeyMapper
 
     private static void InitializeRegisteredHotkeys()
     {
-        // Fixed hotkeys for ActionContext
-        _actionContextRegisteredHotkeys = new List<RegisteredHotkeyData>
-        {
-            new(RegisteredHotkeyType.CtrlShiftEnter, HotkeyType.SearchWindow, "Ctrl+Shift+Enter", "HotkeyCtrlShiftEnterDesc", _mainViewModel.OpenResultCommand),
-            new(RegisteredHotkeyType.CtrlEnter, HotkeyType.SearchWindow, "Ctrl+Enter", "OpenContainFolderHotkey", _mainViewModel.OpenResultCommand),
-            new(RegisteredHotkeyType.AltEnter, HotkeyType.SearchWindow, "Alt+Enter", "HotkeyOpenResult", _mainViewModel.OpenResultCommand),
-        };
-
         // Fixed hotkeys & Editable hotkeys
         var list = new List<RegisteredHotkeyData>
         {
@@ -348,7 +338,7 @@ internal static class HotKeyMapper
                     PluginManager.ChangePluginHotkey(metadata, pluginHotkey, HotkeyModel.Empty);
                 }
             } : null;
-        return new(RegisteredHotkeyType.PluginWindowHotkey, HotkeyType.SearchWindow, hotkey, "pluginHotkey", WindowPluginHotkeyCommand, new WindowPluginHotkeyPair(windowHotkeys), removeHotkeysAction);
+        return new(RegisteredHotkeyType.PluginWindowHotkey, HotkeyType.SearchWindow, hotkey, "pluginHotkey", WindowPluginHotkeyCommand, new WindowPluginHotkeyPair(hotkey, windowHotkeys), removeHotkeysAction);
     }
 
     private static RegisteredHotkeyData SearchRegisteredHotkeyData(PluginMetadata metadata, GlobalPluginHotkey globalPluginHotkey)
@@ -475,7 +465,11 @@ internal static class HotKeyMapper
                         keyGesture.Modifiers == keyGesture1.Modifiers);
                 if (existingBinding != null)
                 {
-                    throw new InvalidOperationException($"Windows key {hotkey} already exists");
+                    // If the hotkey is not a hotkey for ActionContext events, throw an exception to avoid duplicates
+                    if (!IsActionContextEvent(window, existingBinding, hotkey))
+                    {
+                        throw new InvalidOperationException($"Windows key {hotkey} already exists");
+                    }
                 }
 
                 // Add the new hotkey binding
@@ -558,6 +552,9 @@ internal static class HotKeyMapper
                 {
                     window.InputBindings.Remove(existingBinding);
                 }
+
+                // Restore the key binding for ActionContext events
+                RestoreActionContextEvent(hotkey, keyGesture);
             }
         }
         catch (Exception e)
@@ -672,7 +669,13 @@ internal static class HotKeyMapper
                 // TODO: Remove return to skip other commands
                 if (pluginHotkey.Action.Invoke(selectedResult))
                     App.API.HideMainWindow();
+
+                // Return after invoking the first matching hotkey action so that we will not invoke action context event
+                return;
             }
+
+            // When no plugin hotkey action is invoked, invoke the action context event
+            InvokeActionContextEvent(pair.Hotkey);
         }
     }
 
@@ -701,6 +704,78 @@ internal static class HotKeyMapper
 
     #endregion
 
+    #region Action Context Hotkey (Obsolete)
+
+    [Obsolete("ActionContext support is deprecated and will be removed in a future release. Please use IPluginHotkey instead.")]
+    private static List<RegisteredHotkeyData> _actionContextRegisteredHotkeys;
+
+    [Obsolete("ActionContext support is deprecated and will be removed in a future release. Please use IPluginHotkey instead.")]
+    private static readonly Dictionary<HotkeyModel, (ICommand Command, object Parameter)> _actionContextHotkeyEvents = new();
+
+    [Obsolete("ActionContext support is deprecated and will be removed in a future release. Please use IPluginHotkey instead.")]
+    private static void InitializeActionContextHotkeys()
+    {
+        // Fixed hotkeys for ActionContext
+        _actionContextRegisteredHotkeys = new List<RegisteredHotkeyData>
+        {
+            new(RegisteredHotkeyType.CtrlShiftEnter, HotkeyType.SearchWindow, "Ctrl+Shift+Enter", "HotkeyCtrlShiftEnterDesc", _mainViewModel.OpenResultCommand),
+            new(RegisteredHotkeyType.CtrlEnter, HotkeyType.SearchWindow, "Ctrl+Enter", "OpenContainFolderHotkey", _mainViewModel.OpenResultCommand),
+            new(RegisteredHotkeyType.AltEnter, HotkeyType.SearchWindow, "Alt+Enter", "HotkeyOpenResult", _mainViewModel.OpenResultCommand),
+        };
+
+        // Register ActionContext hotkeys and they will be cached and restored in _actionContextHotkeyEvents
+        foreach (var hotkey in _actionContextRegisteredHotkeys)
+        {
+            _actionContextHotkeyEvents[hotkey.Hotkey] = (hotkey.Command, hotkey.CommandParameter);
+            SetWindowHotkey(hotkey);
+        }
+    }
+
+    [Obsolete("ActionContext support is deprecated and will be removed in a future release. Please use IPluginHotkey instead.")]
+    private static bool IsActionContextEvent(MainWindow window, KeyBinding existingBinding, HotkeyModel hotkey)
+    {
+        // Check if this hotkey is a hotkey for ActionContext events
+        if (!_actionContextHotkeyEvents.ContainsKey(hotkey) &&
+            _actionContextHotkeyEvents[hotkey].Command == existingBinding.Command ||
+            _actionContextHotkeyEvents[hotkey].Parameter == existingBinding.CommandParameter)
+        {
+            // If the hotkey is not for ActionContext events, return false
+            return true;
+        }
+
+        return false;
+    }
+
+    [Obsolete("ActionContext support is deprecated and will be removed in a future release. Please use IPluginHotkey instead.")]
+    private static void RestoreActionContextEvent(HotkeyModel hotkey, KeyGesture keyGesture)
+    {
+        // Restore the ActionContext event by adding the key binding back
+        if (_actionContextHotkeyEvents.TryGetValue(hotkey, out var actionContextItem))
+        {
+            if (Application.Current?.MainWindow is MainWindow window)
+            {
+                var keyBinding = new KeyBinding
+                {
+                    Gesture = keyGesture,
+                    Command = actionContextItem.Command,
+                    CommandParameter = actionContextItem.Parameter
+                };
+                window.InputBindings.Add(keyBinding);
+            }
+        }
+    }
+
+    [Obsolete("ActionContext support is deprecated and will be removed in a future release. Please use IPluginHotkey instead.")]
+    private static void InvokeActionContextEvent(HotkeyModel hotkey)
+    {
+        if (_actionContextHotkeyEvents.TryGetValue(hotkey, out var actionContextItem))
+        {
+            actionContextItem.Command.Execute(actionContextItem.Parameter);
+        }
+    }
+
+    #endregion
+
     #region Private Classes
 
     private class GlobalPluginHotkeyPair
@@ -718,10 +793,14 @@ internal static class HotKeyMapper
 
     private class WindowPluginHotkeyPair
     {
+        [Obsolete("ActionContext support is deprecated and will be removed in a future release. Please use IPluginHotkey instead.")]
+        public HotkeyModel Hotkey { get; }
+
         public List<(PluginMetadata Metadata, SearchWindowPluginHotkey PluginHotkey)> HotkeyModels { get; }
 
-        public WindowPluginHotkeyPair(List<(PluginMetadata Metadata, SearchWindowPluginHotkey PluginHotkey)> hotkeys)
+        public WindowPluginHotkeyPair(HotkeyModel hotkey, List<(PluginMetadata Metadata, SearchWindowPluginHotkey PluginHotkey)> hotkeys)
         {
+            Hotkey = hotkey;
             HotkeyModels = hotkeys;
         }
     }
