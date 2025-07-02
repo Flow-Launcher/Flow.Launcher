@@ -30,8 +30,6 @@ namespace Flow.Launcher
         {
             if (!update)
             {
-                _settings.CustomPluginHotkeys ??= new ObservableCollection<CustomPluginHotkey>();
-
                 var pluginHotkey = new CustomPluginHotkey
                 {
                     Hotkey = HotkeyControl.CurrentHotkey.ToString(), ActionKeyword = tbAction.Text

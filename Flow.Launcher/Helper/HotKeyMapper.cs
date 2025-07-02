@@ -105,14 +105,11 @@ internal static class HotKeyMapper
             new(RegisteredHotkeyType.CycleHistoryUp, HotkeyType.SearchWindow, _settings.CycleHistoryUpHotkey, "CycleHistoryUpHotkey", _mainViewModel.ReverseHistoryCommand, null, () => _settings.CycleHistoryUpHotkey = ""),
             new(RegisteredHotkeyType.CycleHistoryDown, HotkeyType.SearchWindow, _settings.CycleHistoryDownHotkey, "CycleHistoryDownHotkey", _mainViewModel.ForwardHistoryCommand, null, () => _settings.CycleHistoryDownHotkey = "")
         };
-        
+
         // Custom query global hotkeys
-        if (_settings.CustomPluginHotkeys != null)
+        foreach (var customPluginHotkey in _settings.CustomPluginHotkeys)
         {
-            foreach (var customPluginHotkey in _settings.CustomPluginHotkeys)
-            {
-                list.Add(new(RegisteredHotkeyType.CustomQuery, HotkeyType.Global, customPluginHotkey.Hotkey, "customQueryHotkey", CustomQueryHotkeyCommand, customPluginHotkey, () => customPluginHotkey.Hotkey = ""));
-            }
+            list.Add(new(RegisteredHotkeyType.CustomQuery, HotkeyType.Global, customPluginHotkey.Hotkey, "customQueryHotkey", CustomQueryHotkeyCommand, customPluginHotkey, () => customPluginHotkey.Hotkey = ""));
         }
 
         // Plugin hotkeys
