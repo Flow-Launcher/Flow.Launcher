@@ -674,7 +674,7 @@ internal static class HotKeyMapper
                 }
 
                 // Create and add the new key binding
-                var command = BuildCommand(hotkey, hotkeyModels);
+                var command = BuildCommand(hotkeyModels);
                 var keyBinding = new KeyBinding(command, keyGesture);
                 window.InputBindings.Add(keyBinding);
             }
@@ -693,7 +693,7 @@ internal static class HotKeyMapper
     }
 
     // TODO: Deprecated
-    private static ICommand BuildCommand(HotkeyModel hotkey, List<(PluginMetadata Metadata, SearchWindowPluginHotkey PluginHotkey)> hotkeyModels)
+    private static ICommand BuildCommand(List<(PluginMetadata Metadata, SearchWindowPluginHotkey PluginHotkey)> hotkeyModels)
     {
         return new RelayCommand(() =>
         {
