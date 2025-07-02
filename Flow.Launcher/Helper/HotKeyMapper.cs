@@ -345,9 +345,11 @@ internal static class HotKeyMapper
         }
 
         var hotkeyStr = hotkey.ToString();
+        var hotkeyCommand = hotkeyData.Command;
+        var hotkeyCommandParameter = hotkeyData.CommandParameter;
         try
         {
-            ChefKeysManager.RegisterHotkey(hotkeyStr, hotkeyStr, OnToggleHotkeyWithChefKeys);
+            ChefKeysManager.RegisterHotkey(hotkeyStr, hotkeyStr, () => hotkeyCommand.Execute(hotkeyCommandParameter));
             ChefKeysManager.Start();
         }
         catch (Exception e)
