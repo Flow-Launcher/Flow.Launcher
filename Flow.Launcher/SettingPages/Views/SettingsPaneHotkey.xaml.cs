@@ -5,7 +5,6 @@ using System.Windows.Navigation;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
-using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Resources.Controls;
@@ -81,12 +80,13 @@ public partial class SettingsPaneHotkey
                     var hotkeyControl = new HotkeyControl
                     {
                         Type = hotkey.HotkeyType == HotkeyType.Global ?
-                            HotkeyControl.HotkeyType.GlobalPluginHotkey : HotkeyControl.HotkeyType.WindowPluginHotkey,
+                            HotkeyControl.HotkeyType.GlobalPluginHotkey :
+                            HotkeyControl.HotkeyType.WindowPluginHotkey,
                         DefaultHotkey = hotkey.DefaultHotkey,
                         ValidateKeyGesture = true
                     };
                     hotkeyControl.SetHotkey(hotkeySetting, true);
-                    hotkeyControl.ChangeHotkey = new RelayCommand<HotkeyModel>((m) => ChangePluginHotkey(metadata, hotkey, m));
+                    hotkeyControl.ChangeHotkey = new RelayCommand<HotkeyModel>((h) => ChangePluginHotkey(metadata, hotkey, h));
                     card.Content = hotkeyControl;
                 }
                 else
@@ -108,18 +108,11 @@ public partial class SettingsPaneHotkey
     {
         if (pluginHotkey is GlobalPluginHotkey globalPluginHotkey)
         {
-            var oldHotkey = PluginManager.ChangePluginHotkey(metadata, globalPluginHotkey, newHotkey);
-            HotKeyMapper.RemoveHotkey(oldHotkey);
-            HotKeyMapper.SetGlobalPluginHotkey(globalPluginHotkey, metadata, newHotkey);
+            PluginManager.ChangePluginHotkey(metadata, globalPluginHotkey, newHotkey);
         }
         else if (pluginHotkey is SearchWindowPluginHotkey windowPluginHotkey)
         {
-            var (oldHotkeyModel, newHotkeyModel) = PluginManager.ChangePluginHotkey(metadata, windowPluginHotkey, newHotkey);
-            var windowPluginHotkeys = PluginManager.GetWindowPluginHotkeys();
-            HotKeyMapper.RemoveWindowHotkey(oldHotkeyModel);
-            HotKeyMapper.RemoveWindowHotkey(newHotkeyModel);
-            HotKeyMapper.SetWindowHotkey(oldHotkeyModel, windowPluginHotkeys[oldHotkeyModel]);
-            HotKeyMapper.SetWindowHotkey(newHotkeyModel, windowPluginHotkeys[newHotkeyModel]);
+            PluginManager.ChangePluginHotkey(metadata, windowPluginHotkey, newHotkey);
         }
     }
 }
