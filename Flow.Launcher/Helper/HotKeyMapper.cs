@@ -29,7 +29,7 @@ internal static class HotKeyMapper
     // Registered hotkeys for ActionContext
     private static List<RegisteredHotkeyData> _actionContextRegisteredHotkeys;
 
-    #region Initializatin
+    #region Initialization
 
     internal static void Initialize()
     {
