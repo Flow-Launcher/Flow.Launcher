@@ -669,7 +669,7 @@ internal static class HotKeyMapper
                     pluginHotkey.Action == null) // Check action nullability
                     continue;
 
-                // TODO: Remove return to skip other commands & Organize main window hotkeys
+                // TODO: Remove return to skip other commands
                 if (pluginHotkey.Action.Invoke(selectedResult))
                     App.API.HideMainWindow();
             }

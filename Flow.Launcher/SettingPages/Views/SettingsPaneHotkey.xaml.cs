@@ -54,7 +54,6 @@ public partial class SettingsPaneHotkey
             {
                 Title = metadata.Name,
                 Margin = new Thickness(0, 4, 0, 0),
-                // TODO: Support displaying plugin icon here
             };
             var hotkeyStackPanel = new StackPanel
             {
