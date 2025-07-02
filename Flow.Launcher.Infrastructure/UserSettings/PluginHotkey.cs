@@ -1,4 +1,5 @@
-﻿using Flow.Launcher.Plugin;
+﻿using System;
+using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
 {
@@ -19,5 +20,20 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
 
         public string ActionKeyword { get; set; }
+
+        public override bool Equals(object other)
+        {
+            if (other is CustomPluginHotkey otherHotkey)
+            {
+                return Hotkey == otherHotkey.Hotkey && ActionKeyword == otherHotkey.ActionKeyword;
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Hotkey, ActionKeyword);
+        }
     }
 }
