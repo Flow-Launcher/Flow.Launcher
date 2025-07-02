@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -37,6 +38,8 @@ internal static class HotKeyMapper
         _settings = Ioc.Default.GetService<Settings>();
 
         InitializeRegisteredHotkeys();
+
+        _settings.PropertyChanged += Settings_PropertyChanged;
     }
 
     private static void InitializeRegisteredHotkeys()
@@ -157,6 +160,88 @@ internal static class HotKeyMapper
         }
 
         App.API.LogDebug(ClassName, $"Initialize {_settings.RegisteredHotkeys.Count} hotkeys:\n[\n\t{string.Join(",\n\t", _settings.RegisteredHotkeys)}\n]");
+    }
+
+    private static void Settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+            // Flow Launcher global hotkeys
+            case nameof(_settings.Hotkey):
+                ChangeRegisteredHotkey(RegisteredHotkeyType.Toggle, _settings.Hotkey);
+                break;
+
+            // Flow Launcher window hotkeys
+            case nameof(_settings.PreviewHotkey):
+                ChangeRegisteredHotkey(RegisteredHotkeyType.Preview, _settings.PreviewHotkey);
+                break;
+            case nameof(_settings.AutoCompleteHotkey):
+                ChangeRegisteredHotkey(RegisteredHotkeyType.AutoComplete, _settings.AutoCompleteHotkey);
+                break;
+            case nameof(_settings.AutoCompleteHotkey2):
+                ChangeRegisteredHotkey(RegisteredHotkeyType.AutoComplete2, _settings.AutoCompleteHotkey2);
+                break;
+            case nameof(_settings.SelectNextItemHotkey):
+                ChangeRegisteredHotkey(RegisteredHotkeyType.SelectNextItem, _settings.SelectNextItemHotkey);
+                break;
+            case nameof(_settings.SelectNextItemHotkey2):
+                ChangeRegisteredHotkey(RegisteredHotkeyType.SelectNextItem2, _settings.SelectNextItemHotkey2);
+                break;
+            case nameof(_settings.SelectPrevItemHotkey):
+                ChangeRegisteredHotkey(RegisteredHotkeyType.SelectPrevItem, _settings.SelectPrevItemHotkey);
+                break;
+            case nameof(_settings.SelectPrevItemHotkey2):
+                ChangeRegisteredHotkey(RegisteredHotkeyType.SelectPrevItem2, _settings.SelectPrevItemHotkey2);
+                break;
+            case nameof(_settings.SettingWindowHotkey):
+                ChangeRegisteredHotkey(RegisteredHotkeyType.SettingWindow, _settings.SettingWindowHotkey);
+                break;
+            case nameof(_settings.OpenHistoryHotkey):
+                ChangeRegisteredHotkey(RegisteredHotkeyType.OpenHistory, _settings.OpenHistoryHotkey);
+                break;
+            case nameof(_settings.OpenContextMenuHotkey):
+                ChangeRegisteredHotkey(RegisteredHotkeyType.OpenContextMenu, _settings.OpenContextMenuHotkey);
+                break;
+            case nameof(_settings.SelectNextPageHotkey):
+                ChangeRegisteredHotkey(RegisteredHotkeyType.SelectNextPage, _settings.SelectNextPageHotkey);
+                break;
+            case nameof(_settings.SelectPrevPageHotkey):
+                ChangeRegisteredHotkey(RegisteredHotkeyType.SelectPrevPage, _settings.SelectPrevPageHotkey);
+                break;
+            case nameof(_settings.CycleHistoryUpHotkey):
+                ChangeRegisteredHotkey(RegisteredHotkeyType.CycleHistoryUp, _settings.CycleHistoryUpHotkey);
+                break;
+            case nameof(_settings.CycleHistoryDownHotkey):
+                ChangeRegisteredHotkey(RegisteredHotkeyType.CycleHistoryDown, _settings.CycleHistoryDownHotkey);
+                break;
+        }
+    }
+
+    private static void ChangeRegisteredHotkey(RegisteredHotkeyType registeredType, string newHotkeyStr)
+    {
+        var newHotkey = new HotkeyModel(newHotkeyStr);
+        ChangeRegisteredHotkey(registeredType, newHotkey);
+    }
+
+    private static void ChangeRegisteredHotkey(RegisteredHotkeyType registeredType, HotkeyModel newHotkey)
+    {
+        // Find the old registered hotkey data item
+        var registeredHotkeyData = _settings.RegisteredHotkeys.FirstOrDefault(h => h.RegisteredType == registeredType);
+
+        // If it is not found, return
+        if (registeredHotkeyData == null)
+        {
+            return;
+        }
+
+        // Remove the old hotkey
+        RemoveHotkey(registeredHotkeyData);
+
+        // Update the hotkey string
+        registeredHotkeyData.Hotkey = newHotkey;
+
+        // Set the new hotkey
+        SetHotkey(registeredHotkeyData);
     }
 
     #endregion
