@@ -247,20 +247,6 @@ internal static class HotKeyMapper
     #endregion
 
     // TODO: Deprecated
-    internal static void OnToggleHotkey(object sender, HotkeyEventArgs args)
-    {
-        if (!_mainViewModel.ShouldIgnoreHotkeys())
-            _mainViewModel.ToggleFlowLauncher();
-    }
-
-    // TODO: Deprecated
-    private static void OnToggleHotkeyWithChefKeys()
-    {
-        if (!_mainViewModel.ShouldIgnoreHotkeys())
-            _mainViewModel.ToggleFlowLauncher();
-    }
-
-    // TODO: Deprecated
     private static void SetHotkey(string hotkeyStr, EventHandler<HotkeyEventArgs> action)
     {
         var hotkey = new HotkeyModel(hotkeyStr);
@@ -268,27 +254,7 @@ internal static class HotKeyMapper
     }
 
     // TODO: Deprecated
-    private static void SetWithChefKeys(string hotkeyStr)
-    {
-        try
-        {
-            ChefKeysManager.RegisterHotkey(hotkeyStr, hotkeyStr, OnToggleHotkeyWithChefKeys);
-            ChefKeysManager.Start();
-        }
-        catch (Exception e)
-        {
-            App.API.LogError(ClassName,
-                string.Format("Error registering hotkey: {0} \nStackTrace:{1}",
-                              e.Message,
-                              e.StackTrace));
-            string errorMsg = string.Format(App.API.GetTranslation("registerHotkeyFailed"), hotkeyStr);
-            string errorMsgTitle = App.API.GetTranslation("MessageBoxTitle");
-            App.API.ShowMsgBox(errorMsg, errorMsgTitle);
-        }
-    }
-
-    // TODO: Deprecated
-    internal static void SetHotkey(HotkeyModel hotkey, EventHandler<HotkeyEventArgs> action)
+    private static void SetHotkey(HotkeyModel hotkey, EventHandler<HotkeyEventArgs> action)
     {
         if (hotkey.IsEmpty)
         {
@@ -298,12 +264,6 @@ internal static class HotKeyMapper
         string hotkeyStr = hotkey.ToString();
         try
         {
-            if (hotkeyStr == "LWin" || hotkeyStr == "RWin")
-            {
-                SetWithChefKeys(hotkeyStr);
-                return;
-            }
-
             HotkeyManager.Current.AddOrReplace(hotkeyStr, hotkey.CharKey, hotkey.ModifierKeys, action);
         }
         catch (Exception e)
@@ -324,12 +284,6 @@ internal static class HotKeyMapper
     {
         try
         {
-            if (hotkeyStr == "LWin" || hotkeyStr == "RWin")
-            {
-                RemoveWithChefKeys(hotkeyStr);
-                return;
-            }
-
             if (!string.IsNullOrEmpty(hotkeyStr))
                 HotkeyManager.Current.Remove(hotkeyStr);
         }
@@ -343,13 +297,6 @@ internal static class HotKeyMapper
             string errorMsgTitle = App.API.GetTranslation("MessageBoxTitle");
             App.API.ShowMsgBox(errorMsg, errorMsgTitle);
         }
-    }
-
-    // TODO: Deprecated
-    private static void RemoveWithChefKeys(string hotkeyStr)
-    {
-        ChefKeysManager.UnregisterHotkey(hotkeyStr);
-        ChefKeysManager.Stop();
     }
 
     #region Hotkey Setting

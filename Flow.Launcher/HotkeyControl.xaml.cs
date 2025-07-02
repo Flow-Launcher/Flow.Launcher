@@ -242,11 +242,6 @@ namespace Flow.Launcher
 
         private async Task OpenHotkeyDialogAsync()
         {
-            if (!string.IsNullOrEmpty(Hotkey))
-            {
-                HotKeyMapper.RemoveHotkey(Hotkey);
-            }
-
             var dialog = new HotkeyControlDialog(Hotkey, DefaultHotkey, WindowTitle)
             {
                 Owner = Window.GetWindow(this)
@@ -300,8 +295,6 @@ namespace Flow.Launcher
 
         public void Delete()
         {
-            if (!string.IsNullOrEmpty(Hotkey))
-                HotKeyMapper.RemoveHotkey(Hotkey);
             Hotkey = "";
             SetKeysToDisplay(new HotkeyModel(false, false, false, false, Key.None));
         }
@@ -318,7 +311,6 @@ namespace Flow.Launcher
 
             foreach (var key in hotkey.Value.EnumerateDisplayKeys()!)
             {
-                
                 KeysToDisplay.Add(key);
             }
         }
