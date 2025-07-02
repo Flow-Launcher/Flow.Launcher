@@ -525,6 +525,10 @@ namespace Flow.Launcher.Core.Plugin
             // Update window plugin hotkey dictionary
             var oldHotkeyModels = _windowPluginHotkeys[oldHotkey];
             _windowPluginHotkeys[oldHotkey] = oldHotkeyModels.Where(x => x.Item1.ID != plugin.ID || x.Item2.Id != pluginHotkey.Id).ToList();
+            if (_windowPluginHotkeys[oldHotkey].Count == 0)
+            {
+                _windowPluginHotkeys.Remove(oldHotkey);
+            }
 
             if (_windowPluginHotkeys.TryGetValue(newHotkey, out var newHotkeyModels))
             {
