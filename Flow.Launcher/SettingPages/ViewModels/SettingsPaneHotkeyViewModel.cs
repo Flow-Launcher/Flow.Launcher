@@ -107,10 +107,18 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
             return;
         }
 
-        var window = new CustomShortcutSetting(item.Key, item.Value, this);
+        var settingItem = Settings.CustomShortcuts.FirstOrDefault(o =>
+            o.Key == item.Key && o.Value == item.Value);
+        if (settingItem == null)
+        {
+            App.API.ShowMsgBox(App.API.GetTranslation("invalidShortcut"));
+            return;
+        }
+
+        var window = new CustomShortcutSetting(settingItem.Key, settingItem.Value, this);
         if (window.ShowDialog() is not true) return;
 
-        var index = Settings.CustomShortcuts.IndexOf(item);
+        var index = Settings.CustomShortcuts.IndexOf(settingItem);
         Settings.CustomShortcuts[index] = new CustomShortcutModel(window.Key, window.Value);
     }
 

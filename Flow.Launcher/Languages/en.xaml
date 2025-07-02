@@ -446,6 +446,7 @@
     </system:String>
     <system:String x:Key="duplicateShortcut">Shortcut already exists, please enter a new Shortcut or edit the existing one.</system:String>
     <system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
+    <system:String x:Key="invalidShortcut">Shortcut is invalid</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Save</system:String>
