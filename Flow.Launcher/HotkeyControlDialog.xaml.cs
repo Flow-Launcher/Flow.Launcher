@@ -137,6 +137,7 @@ public partial class HotkeyControlDialog : ContentDialog
         if (tbMsg == null)
             return;
 
+        // TODO: If we need to check !v.Hotkey.IsEmpty && for v.Hotkey?
         if (_hotkeySettings.RegisteredHotkeys.FirstOrDefault(v => v.Hotkey == hotkey) is { } registeredHotkeyData)
         {
             var description = string.Format(
