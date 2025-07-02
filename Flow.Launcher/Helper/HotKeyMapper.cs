@@ -535,7 +535,11 @@ internal static class HotKeyMapper
 
     private static void GlobalPluginHotkey(GlobalPluginHotkeyPair pair)
     {
-        if (_mainViewModel.ShouldIgnoreHotkeys() || pair.Metadata.Disabled)
+        if (pair.Metadata.Disabled || // Check plugin enabled state
+            App.API.PluginModified(pair.Metadata.ID)) // Check plugin modified state
+            return;
+
+        if (_mainViewModel.ShouldIgnoreHotkeys())
             return;
 
         pair.GlobalPluginHotkey.Action?.Invoke();
@@ -557,6 +561,7 @@ internal static class HotKeyMapper
 
                 if (metadata.ID != pluginId || // Check plugin ID match
                     metadata.Disabled || // Check plugin enabled state
+                    App.API.PluginModified(metadata.ID) || // Check plugin modified state
                     !selectedResult.HotkeyIds.Contains(pluginHotkey.Id) || // Check hotkey supported state
                     pluginHotkey.Action == null) // Check action nullability
                     continue;
