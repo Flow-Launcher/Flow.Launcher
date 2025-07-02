@@ -11,7 +11,7 @@ namespace Flow.Launcher.Infrastructure.Hotkey;
 /// <see cref="UserSettings"/> and <see cref="IHotkeySettings"/> to display errors if user tries to register a hotkey
 /// that has already been registered, and optionally provides a way to unregister the hotkey.
 /// </summary>
-public class RegisteredHotkeyData : BaseModel
+public record RegisteredHotkeyData
 {
     /// <summary>
     /// Type of this hotkey in the context of the application.
@@ -26,19 +26,7 @@ public class RegisteredHotkeyData : BaseModel
     /// <summary>
     /// <see cref="HotkeyModel"/> representation of this hotkey.
     /// </summary>
-    private HotkeyModel _hotkey;
-    public HotkeyModel Hotkey
-    {
-        get => _hotkey;
-        set
-        {
-            if (!_hotkey.Equals(value))
-            {
-                _hotkey = value;
-                OnPropertyChanged();
-            }
-        }
-    }
+    public HotkeyModel Hotkey { get; }
 
     /// <summary>
     /// String key in the localization dictionary that represents this hotkey. For example, <c>ReloadPluginHotkey</c>,
