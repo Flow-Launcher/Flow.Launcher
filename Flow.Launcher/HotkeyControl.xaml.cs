@@ -110,7 +110,10 @@ namespace Flow.Launcher
             SelectPrevItemHotkey,
             SelectPrevItemHotkey2,
             SelectNextItemHotkey,
-            SelectNextItemHotkey2
+            SelectNextItemHotkey2,
+            // Plugin hotkeys
+            GlobalPluginHotkey,
+            WindowPluginHotkey,
         }
 
         // We can initialize settings in static field because it has been constructed in App constuctor
@@ -142,6 +145,9 @@ namespace Flow.Launcher
                     HotkeyType.SelectPrevItemHotkey2 => _settings.SelectPrevItemHotkey2,
                     HotkeyType.SelectNextItemHotkey => _settings.SelectNextItemHotkey,
                     HotkeyType.SelectNextItemHotkey2 => _settings.SelectNextItemHotkey2,
+                    // Plugin hotkeys
+                    HotkeyType.GlobalPluginHotkey => hotkey,
+                    HotkeyType.WindowPluginHotkey => hotkey,
                     _ => throw new System.NotImplementedException("Hotkey type not set")
                 };
             }
@@ -200,6 +206,17 @@ namespace Flow.Launcher
                         break;
                     case HotkeyType.SelectNextItemHotkey2:
                         _settings.SelectNextItemHotkey2 = value;
+                        break;
+                    // Plugin hotkeys
+                    case HotkeyType.GlobalPluginHotkey:
+                        // We should not save it to settings here because it is a custom plugin hotkey
+                        // and it will be saved in the plugin settings
+                        hotkey = value;
+                        break;
+                    case HotkeyType.WindowPluginHotkey:
+                        // We should not save it to settings here because it is a custom plugin hotkey
+                        // and it will be saved in the plugin settings
+                        hotkey = value;
                         break;
                     default:
                         throw new System.NotImplementedException("Hotkey type not set");

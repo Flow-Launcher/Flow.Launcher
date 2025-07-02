@@ -80,7 +80,8 @@ public partial class SettingsPaneHotkey
                 {
                     var hotkeyControl = new HotkeyControl
                     {
-                        Type = HotkeyControl.HotkeyType.CustomQueryHotkey,
+                        Type = hotkey.HotkeyType == HotkeyType.Global ?
+                            HotkeyControl.HotkeyType.GlobalPluginHotkey : HotkeyControl.HotkeyType.WindowPluginHotkey,
                         DefaultHotkey = hotkey.DefaultHotkey,
                         ValidateKeyGesture = true
                     };
