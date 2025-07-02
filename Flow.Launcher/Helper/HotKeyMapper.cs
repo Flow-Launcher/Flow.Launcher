@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -40,6 +41,7 @@ internal static class HotKeyMapper
         InitializeRegisteredHotkeys();
 
         _settings.PropertyChanged += Settings_PropertyChanged;
+        _settings.CustomPluginHotkeys.CollectionChanged += CustomPluginHotkeys_CollectionChanged;
     }
 
     private static void InitializeRegisteredHotkeys()
@@ -109,7 +111,7 @@ internal static class HotKeyMapper
         // Custom query global hotkeys
         foreach (var customPluginHotkey in _settings.CustomPluginHotkeys)
         {
-            list.Add(new(RegisteredHotkeyType.CustomQuery, HotkeyType.Global, customPluginHotkey.Hotkey, "customQueryHotkey", CustomQueryHotkeyCommand, customPluginHotkey, () => customPluginHotkey.Hotkey = ""));
+            list.Add(GetRegisteredHotkeyData(customPluginHotkey));
         }
 
         // Plugin hotkeys
@@ -158,6 +160,8 @@ internal static class HotKeyMapper
 
         App.API.LogDebug(ClassName, $"Initialize {_settings.RegisteredHotkeys.Count} hotkeys:\n[\n\t{string.Join(",\n\t", _settings.RegisteredHotkeys)}\n]");
     }
+
+    #region Hotkey Change Events
 
     private static void Settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
@@ -212,6 +216,83 @@ internal static class HotKeyMapper
                 ChangeRegisteredHotkey(RegisteredHotkeyType.CycleHistoryDown, _settings.CycleHistoryDownHotkey);
                 break;
         }
+    }
+
+    private static void CustomPluginHotkeys_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    {
+        switch (e.Action)
+        {
+            case NotifyCollectionChangedAction.Add:
+                foreach (var item in e.NewItems)
+                {
+                    if (item is CustomPluginHotkey customPluginHotkey)
+                    {
+                        var hotkeyData = GetRegisteredHotkeyData(customPluginHotkey);
+                        _settings.RegisteredHotkeys.Add(hotkeyData);
+                        SetHotkey(hotkeyData);
+                    }
+                }
+                break;
+            case NotifyCollectionChangedAction.Remove:
+                foreach (var item in e.OldItems)
+                {
+                    if (item is CustomPluginHotkey customPluginHotkey)
+                    {
+                        var hotkeyData = SearchRegisteredHotkeyData(customPluginHotkey);
+                        _settings.RegisteredHotkeys.Remove(hotkeyData);
+                        RemoveHotkey(hotkeyData);
+                    }
+                }
+                break;
+            case NotifyCollectionChangedAction.Replace:
+                foreach (var item in e.OldItems)
+                {
+                    if (item is CustomPluginHotkey customPluginHotkey)
+                    {
+                        var hotkeyData = SearchRegisteredHotkeyData(customPluginHotkey);
+                        _settings.RegisteredHotkeys.Remove(hotkeyData);
+                        RemoveHotkey(hotkeyData);
+                    }
+                }
+                foreach (var item in e.NewItems)
+                {
+                    if (item is CustomPluginHotkey customPluginHotkey)
+                    {
+                        var hotkeyData = GetRegisteredHotkeyData(customPluginHotkey);
+                        _settings.RegisteredHotkeys.Add(hotkeyData);
+                        SetHotkey(hotkeyData);
+                    }
+                }
+                break;
+        }
+    }
+
+    #endregion
+
+    #endregion
+
+    #region Custom Query Hotkey
+
+    private static RegisteredHotkeyData GetRegisteredHotkeyData(CustomPluginHotkey customPluginHotkey)
+    {
+        return new(RegisteredHotkeyType.CustomQuery, HotkeyType.Global, customPluginHotkey.Hotkey, "customQueryHotkey", CustomQueryHotkeyCommand, customPluginHotkey, () => ClearHotkeyForCustomQueryHotkey(customPluginHotkey));
+    }
+
+    private static RegisteredHotkeyData SearchRegisteredHotkeyData(CustomPluginHotkey customPluginHotkey)
+    {
+        return _settings.RegisteredHotkeys.FirstOrDefault(h => h.RegisteredType == RegisteredHotkeyType.CustomQuery &&
+            customPluginHotkey.Equals(h.CommandParameter));
+    }
+
+    private static void ClearHotkeyForCustomQueryHotkey(CustomPluginHotkey customPluginHotkey)
+    {
+        // Clear hotkey for custom query hotkey
+        customPluginHotkey.Hotkey = string.Empty;
+
+        // Remove hotkey events
+        var hotkeyData = SearchRegisteredHotkeyData(customPluginHotkey);
+        _settings.RegisteredHotkeys.Remove(hotkeyData);
+        RemoveHotkey(hotkeyData);
     }
 
     #endregion
@@ -574,19 +655,6 @@ internal static class HotKeyMapper
     }
 
     #endregion
-
-    // TODO: Deprecated
-    internal static void SetCustomQueryHotkey(CustomPluginHotkey hotkey)
-    {
-        SetHotkey(hotkey.Hotkey, (s, e) =>
-        {
-            if (_mainViewModel.ShouldIgnoreHotkeys())
-                return;
-
-            App.API.ShowMainWindow();
-            App.API.ChangeQuery(hotkey.ActionKeyword, true);
-        });
-    }
 
     // TODO: Deprecated
     internal static void SetGlobalPluginHotkey(GlobalPluginHotkey globalHotkey, PluginMetadata metadata, string hotkeyStr)
