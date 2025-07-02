@@ -13,7 +13,6 @@ using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
-using NHotkey;
 using NHotkey.Wpf;
 
 namespace Flow.Launcher.Helper;
@@ -42,6 +41,7 @@ internal static class HotKeyMapper
 
         _settings.PropertyChanged += Settings_PropertyChanged;
         _settings.CustomPluginHotkeys.CollectionChanged += CustomPluginHotkeys_CollectionChanged;
+        PluginManager.PluginHotkeyChanged += PluginManager_PluginHotkeyChanged;
     }
 
     private static void InitializeRegisteredHotkeys()
@@ -127,12 +127,7 @@ internal static class HotKeyMapper
                 if (hotkey.HotkeyType == HotkeyType.Global && hotkey is GlobalPluginHotkey globalHotkey)
                 {
                     var hotkeyStr = metadata.PluginHotkeys.Find(h => h.Id == hotkey.Id)?.Hotkey ?? hotkey.DefaultHotkey;
-                    // TODO: Support removeAction
-                    Action removeHotkeyAction = hotkey.Editable ?
-                        /*() => metadata.PluginHotkeys.RemoveAll(h => h.Id == hotkey.Id) :*/ null:
-                        null;
-                    // TODO: Handle pluginGlobalHotkey & get translation from PluginManager
-                    list.Add(new(RegisteredHotkeyType.PluginGlobalHotkey, HotkeyType.Global, hotkeyStr, "pluginGlobalHotkey", GlobalPluginHotkeyCommand, new GlobalPluginHotkeyPair(metadata, globalHotkey), () => { }));
+                    list.Add(GetRegisteredHotkeyData(new(hotkeyStr), metadata, globalHotkey));
                 }
             }
         }
@@ -143,12 +138,7 @@ internal static class HotKeyMapper
         {
             var hotkeyModel = hotkey.Key;
             var windowHotkeys = hotkey.Value;
-            // TODO: Support removeAction
-            Action removeHotkeysAction = windowHotkeys.All(h => h.SearchWindowPluginHotkey.Editable) ?
-                /*() => hotkeyModel.Metadata.PluginWindowHotkeys.RemoveAll(h => h.SearchWindowPluginHotkey.Editable) :*/ null :
-                null;
-            // TODO: Handle pluginWindowHotkey & get translation from PluginManager
-            list.Add(new(RegisteredHotkeyType.PluginWindowHotkey, HotkeyType.SearchWindow, hotkeyModel, "pluginWindowHotkey", WindowPluginHotkeyCommand, new WindowPluginHotkeyPair(windowHotkeys)));
+            list.Add(GetRegisteredHotkeyData(hotkeyModel, windowHotkeys));
         }
 
         // Add registered hotkeys & Set them
@@ -160,6 +150,8 @@ internal static class HotKeyMapper
 
         App.API.LogDebug(ClassName, $"Initialize {_settings.RegisteredHotkeys.Count} hotkeys:\n[\n\t{string.Join(",\n\t", _settings.RegisteredHotkeys)}\n]");
     }
+
+    #endregion
 
     #region Hotkey Change Events
 
@@ -267,7 +259,46 @@ internal static class HotKeyMapper
         }
     }
 
-    #endregion
+    private static void PluginManager_PluginHotkeyChanged(PluginManager.PluginHotkeyChangedEvent e)
+    {
+        var oldHotkey = e.OldHotkey;
+        var newHotkey = e.NewHotkey;
+        var metadata = e.Metadata;
+        var pluginHotkey = e.PluginHotkey;
+
+        if (pluginHotkey is GlobalPluginHotkey globalPluginHotkey)
+        {
+            var hotkeyData = SearchRegisteredHotkeyData(metadata, globalPluginHotkey);
+            RemoveHotkey(hotkeyData);
+            hotkeyData.Hotkey = newHotkey;
+            SetHotkey(hotkeyData);
+        }
+        else if (pluginHotkey is SearchWindowPluginHotkey)
+        {
+            // Search hotkey & Remove registered hotkey data & Unregister hotkeys
+            var oldHotkeyData = SearchRegisteredHotkeyData(RegisteredHotkeyType.PluginWindowHotkey, oldHotkey);
+            _settings.RegisteredHotkeys.Remove(oldHotkeyData);
+            RemoveHotkey(oldHotkeyData);
+            var newHotkeyData = SearchRegisteredHotkeyData(RegisteredHotkeyType.PluginWindowHotkey, newHotkey);
+            _settings.RegisteredHotkeys.Remove(newHotkeyData);
+            RemoveHotkey(newHotkeyData);
+
+            // Get hotkey data & Add new registered hotkeys & Register hotkeys
+            var windowPluginHotkeys = PluginManager.GetWindowPluginHotkeys();
+            if (windowPluginHotkeys.TryGetValue(oldHotkey, out var oldHotkeyModels))
+            {
+                oldHotkeyData = GetRegisteredHotkeyData(oldHotkey, oldHotkeyModels);
+                _settings.RegisteredHotkeys.Add(oldHotkeyData);
+                SetHotkey(oldHotkeyData);
+            }
+            if (windowPluginHotkeys.TryGetValue(newHotkey, out var newHotkeyModels))
+            {
+                newHotkeyData = GetRegisteredHotkeyData(newHotkey, newHotkeyModels);
+                _settings.RegisteredHotkeys.Add(newHotkeyData);
+                SetHotkey(newHotkeyData);
+            }
+        }
+    }
 
     #endregion
 
@@ -280,7 +311,8 @@ internal static class HotKeyMapper
 
     private static RegisteredHotkeyData SearchRegisteredHotkeyData(CustomPluginHotkey customPluginHotkey)
     {
-        return _settings.RegisteredHotkeys.FirstOrDefault(h => h.RegisteredType == RegisteredHotkeyType.CustomQuery &&
+        return _settings.RegisteredHotkeys.FirstOrDefault(h =>
+            h.RegisteredType == RegisteredHotkeyType.CustomQuery &&
             customPluginHotkey.Equals(h.CommandParameter));
     }
 
@@ -297,58 +329,38 @@ internal static class HotKeyMapper
 
     #endregion
 
-    // TODO: Deprecated
-    private static void SetHotkey(string hotkeyStr, EventHandler<HotkeyEventArgs> action)
+    #region Plugin Hotkey
+
+    private static RegisteredHotkeyData GetRegisteredHotkeyData(HotkeyModel hotkey, PluginMetadata metadata, GlobalPluginHotkey pluginHotkey)
     {
-        var hotkey = new HotkeyModel(hotkeyStr);
-        SetHotkey(hotkey, action);
+        Action removeHotkeyAction = pluginHotkey.Editable ?
+            () => PluginManager.ChangePluginHotkey(metadata, pluginHotkey, HotkeyModel.Empty) : null;
+        return new(RegisteredHotkeyType.PluginGlobalHotkey, HotkeyType.Global, hotkey, "pluginHotkey", GlobalPluginHotkeyCommand, new GlobalPluginHotkeyPair(metadata, pluginHotkey), removeHotkeyAction);
     }
 
-    // TODO: Deprecated
-    private static void SetHotkey(HotkeyModel hotkey, EventHandler<HotkeyEventArgs> action)
+    private static RegisteredHotkeyData GetRegisteredHotkeyData(HotkeyModel hotkey, List<(PluginMetadata Metadata, SearchWindowPluginHotkey PluginHotkey)> windowHotkeys)
     {
-        if (hotkey.IsEmpty)
-        {
-            return;
-        }
-
-        string hotkeyStr = hotkey.ToString();
-        try
-        {
-            HotkeyManager.Current.AddOrReplace(hotkeyStr, hotkey.CharKey, hotkey.ModifierKeys, action);
-        }
-        catch (Exception e)
-        {
-            App.API.LogError(ClassName,
-                string.Format("Error registering hotkey {2}: {0} \nStackTrace:{1}",
-                              e.Message,
-                              e.StackTrace,
-                              hotkeyStr));
-            string errorMsg = string.Format(App.API.GetTranslation("registerHotkeyFailed"), hotkeyStr);
-            string errorMsgTitle = App.API.GetTranslation("MessageBoxTitle");
-            App.API.ShowMsgBox(errorMsg, errorMsgTitle);
-        }
+        Action removeHotkeysAction = windowHotkeys.All(h => h.PluginHotkey.Editable) ?
+            () =>
+            {
+                foreach (var (metadata, pluginHotkey) in windowHotkeys)
+                {
+                    PluginManager.ChangePluginHotkey(metadata, pluginHotkey, HotkeyModel.Empty);
+                }
+            } : null;
+        return new(RegisteredHotkeyType.PluginWindowHotkey, HotkeyType.SearchWindow, hotkey, "pluginHotkey", WindowPluginHotkeyCommand, new WindowPluginHotkeyPair(windowHotkeys), removeHotkeysAction);
     }
 
-    // TODO: Deprecated
-    internal static void RemoveHotkey(string hotkeyStr)
+    private static RegisteredHotkeyData SearchRegisteredHotkeyData(PluginMetadata metadata, GlobalPluginHotkey globalPluginHotkey)
     {
-        try
-        {
-            if (!string.IsNullOrEmpty(hotkeyStr))
-                HotkeyManager.Current.Remove(hotkeyStr);
-        }
-        catch (Exception e)
-        {
-            App.API.LogError(ClassName,
-                string.Format("Error removing hotkey: {0} \nStackTrace:{1}",
-                              e.Message,
-                              e.StackTrace));
-            string errorMsg = string.Format(App.API.GetTranslation("unregisterHotkeyFailed"), hotkeyStr);
-            string errorMsgTitle = App.API.GetTranslation("MessageBoxTitle");
-            App.API.ShowMsgBox(errorMsg, errorMsgTitle);
-        }
+        return _settings.RegisteredHotkeys.FirstOrDefault(h =>
+            h.RegisteredType == RegisteredHotkeyType.PluginGlobalHotkey &&
+            h.CommandParameter is GlobalPluginHotkeyPair pair &&
+            pair.Metadata.ID == metadata.ID &&
+            pair.GlobalPluginHotkey.Id == globalPluginHotkey.Id);
     }
+
+    #endregion
 
     #region Hotkey Setting
 
@@ -590,6 +602,17 @@ internal static class HotKeyMapper
 
     #endregion
 
+    #region Hotkey Searching
+
+    private static RegisteredHotkeyData SearchRegisteredHotkeyData(RegisteredHotkeyType registeredHotkeyType, HotkeyModel hotkeyModel)
+    {
+        return _settings.RegisteredHotkeys.FirstOrDefault(h =>
+            h.RegisteredType == registeredHotkeyType &&
+            h.Hotkey.Equals(hotkeyModel));
+    }
+
+    #endregion
+
     #region Commands
 
     private static RelayCommand<CustomPluginHotkey> _customQueryHotkeyCommand;
@@ -654,141 +677,6 @@ internal static class HotKeyMapper
     }
 
     #endregion
-
-    // TODO: Deprecated
-    internal static void SetGlobalPluginHotkey(GlobalPluginHotkey globalHotkey, PluginMetadata metadata, string hotkeyStr)
-    {
-        var hotkey = new HotkeyModel(hotkeyStr);
-        SetGlobalPluginHotkey(globalHotkey, metadata, hotkey);
-    }
-
-    // TODO: Deprecated
-    internal static void SetGlobalPluginHotkey(GlobalPluginHotkey globalHotkey, PluginMetadata metadata, HotkeyModel hotkey)
-    {
-        var hotkeyStr = hotkey.ToString();
-        SetHotkey(hotkeyStr, (s, e) =>
-        {
-            if (_mainViewModel.ShouldIgnoreHotkeys() || metadata.Disabled)
-                return;
-
-            globalHotkey.Action?.Invoke();
-        });
-    }
-
-    // TODO: Deprecated
-    internal static void SetWindowHotkey(HotkeyModel hotkey, List<(PluginMetadata Metadata, SearchWindowPluginHotkey PluginHotkey)> hotkeyModels)
-    {
-        try
-        {
-            if (hotkeyModels.Count == 0) return;
-            if (Application.Current?.MainWindow is MainWindow window)
-            {
-                // Cache the command for the hotkey if it already exists
-                var keyGesture = hotkey.ToKeyGesture();
-                var existingBinding = window.InputBindings
-                    .OfType<KeyBinding>()
-                    .FirstOrDefault(kb => 
-                        kb.Gesture is KeyGesture keyGesture1 &&
-                        keyGesture.Key == keyGesture1.Key &&
-                        keyGesture.Modifiers == keyGesture1.Modifiers);
-                if (existingBinding != null)
-                {
-                    throw new InvalidOperationException($"Key binding {hotkey} already exists");  
-                }
-
-                // Create and add the new key binding
-                var command = BuildCommand(hotkeyModels);
-                var keyBinding = new KeyBinding(command, keyGesture);
-                window.InputBindings.Add(keyBinding);
-            }
-        }
-        catch (Exception e)
-        {
-            App.API.LogError(ClassName,
-                string.Format("Error registering window hotkey {2}: {0} \nStackTrace:{1}",
-                              e.Message,
-                              e.StackTrace,
-                              hotkey));
-            string errorMsg = string.Format(App.API.GetTranslation("registerWindowHotkeyFailed"), hotkey);
-            string errorMsgTitle = App.API.GetTranslation("MessageBoxTitle");
-            App.API.ShowMsgBox(errorMsg, errorMsgTitle);
-        }
-    }
-
-    // TODO: Deprecated
-    private static ICommand BuildCommand(List<(PluginMetadata Metadata, SearchWindowPluginHotkey PluginHotkey)> hotkeyModels)
-    {
-        return new RelayCommand(() =>
-        {
-            var selectedResult = _mainViewModel.GetSelectedResults().SelectedItem?.Result;
-            // Check result nullability
-            if (selectedResult != null)
-            {
-                var pluginId = selectedResult.PluginID;
-                foreach (var hotkeyModel in hotkeyModels)
-                {
-                    var metadata = hotkeyModel.Metadata;
-                    var pluginHotkey = hotkeyModel.PluginHotkey;
-
-                    // Check plugin ID match
-                    if (metadata.ID != pluginId)
-                        continue;
-
-                    // Check plugin enabled state
-                    if (metadata.Disabled)
-                        continue;
-
-                    // Check hotkey supported state
-                    if (!selectedResult.HotkeyIds.Contains(pluginHotkey.Id))
-                        continue;
-
-                    // Check action nullability
-                    if (pluginHotkey.Action == null)
-                        continue;
-
-                    // TODO: Remove return to skip other commands & Organize main window hotkeys
-                    // Invoke action & return to skip other commands
-                    if (pluginHotkey.Action.Invoke(selectedResult))
-                        App.API.HideMainWindow();
-
-                    return;
-                }
-            }
-        });
-    }
-
-    // TODO: Deprecated
-    internal static void RemoveWindowHotkey(HotkeyModel hotkey)
-    {
-        try
-        {
-            if (Application.Current?.MainWindow is MainWindow window)
-            {
-                // Find and remove the key binding with the specified gesture
-                var keyGesture = hotkey.ToKeyGesture();
-                var existingBinding = window.InputBindings
-                    .OfType<KeyBinding>()
-                    .FirstOrDefault(kb =>
-                        kb.Gesture is KeyGesture keyGesture1 &&
-                        keyGesture.Key == keyGesture1.Key &&
-                        keyGesture.Modifiers == keyGesture1.Modifiers);
-                if (existingBinding != null)
-                {
-                    window.InputBindings.Remove(existingBinding);
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            App.API.LogError(ClassName,
-                string.Format("Error removing window hotkey: {0} \nStackTrace:{1}",
-                              e.Message,
-                              e.StackTrace));
-            string errorMsg = string.Format(App.API.GetTranslation("unregisterWindowHotkeyFailed"), hotkey);
-            string errorMsgTitle = App.API.GetTranslation("MessageBoxTitle");
-            App.API.ShowMsgBox(errorMsg, errorMsgTitle);
-        }
-    }
 
     #region Check Hotkey
 
