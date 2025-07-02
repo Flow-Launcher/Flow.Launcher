@@ -155,6 +155,8 @@ internal static class HotKeyMapper
             _settings.RegisteredHotkeys.Add(hotkey);
             SetHotkey(hotkey);
         }
+
+        App.API.LogDebug(ClassName, $"Initialize {_settings.RegisteredHotkeys.Count} hotkeys:\n[\n\t{string.Join(",\n\t", _settings.RegisteredHotkeys)}\n]");
     }
 
     #endregion
