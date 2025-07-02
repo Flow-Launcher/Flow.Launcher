@@ -497,6 +497,13 @@ namespace Flow.Launcher.ViewModel
         #region BasicCommands
 
         [RelayCommand]
+        private void CheckAndToggleFlowLauncher()
+        {
+            if (!ShouldIgnoreHotkeys())
+                ToggleFlowLauncher();
+        }
+
+        [RelayCommand]
         private void OpenSetting()
         {
             App.API.OpenSettingDialog();
