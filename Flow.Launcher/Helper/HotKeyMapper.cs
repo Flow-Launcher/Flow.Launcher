@@ -171,7 +171,7 @@ internal static class HotKeyMapper
     }
 
     // TODO: Deprecated
-    internal static void OnToggleHotkeyWithChefKeys()
+    private static void OnToggleHotkeyWithChefKeys()
     {
         if (!_mainViewModel.ShouldIgnoreHotkeys())
             _mainViewModel.ToggleFlowLauncher();
