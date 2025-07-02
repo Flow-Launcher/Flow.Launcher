@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Windows;
 using CommunityToolkit.Mvvm.Input;
-using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -48,7 +47,6 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
         if (result is MessageBoxResult.Yes)
         {
             Settings.CustomPluginHotkeys.Remove(item);
-            HotKeyMapper.RemoveHotkey(item.Hotkey);
         }
     }
 
