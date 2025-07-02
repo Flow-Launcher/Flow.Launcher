@@ -37,11 +37,6 @@ internal static class HotKeyMapper
         _settings = Ioc.Default.GetService<Settings>();
 
         InitializeRegisteredHotkeys();
-
-        foreach (var hotkey in _settings.RegisteredHotkeys)
-        {
-            SetHotkey(hotkey);
-        }
     }
 
     private static void InitializeRegisteredHotkeys()
@@ -154,10 +149,11 @@ internal static class HotKeyMapper
             list.Add(new(RegisteredHotkeyType.PluginWindowHotkey, HotkeyType.SearchWindow, hotkeyModel, "pluginWindowHotkey", WindowPluginHotkeyCommand, new WindowPluginHotkeyPair(windowHotkeys)));
         }
 
-        // Add registered hotkeys
+        // Add registered hotkeys & Set them
         foreach (var hotkey in list)
         {
             _settings.RegisteredHotkeys.Add(hotkey);
+            SetHotkey(hotkey);
         }
     }
 
