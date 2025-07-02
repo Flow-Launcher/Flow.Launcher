@@ -535,14 +535,17 @@ internal static class HotKeyMapper
 
     private static void GlobalPluginHotkey(GlobalPluginHotkeyPair pair)
     {
-        if (pair.Metadata.Disabled || // Check plugin enabled state
-            App.API.PluginModified(pair.Metadata.ID)) // Check plugin modified state
+        var metadata = pair.Metadata;
+        var pluginHotkey = pair.GlobalPluginHotkey;
+
+        if (metadata.Disabled || // Check plugin enabled state
+            App.API.PluginModified(metadata.ID)) // Check plugin modified state
             return;
 
         if (_mainViewModel.ShouldIgnoreHotkeys())
             return;
 
-        pair.GlobalPluginHotkey.Action?.Invoke();
+        pluginHotkey.Action?.Invoke();
     }
 
     private static void WindowPluginHotkey(WindowPluginHotkeyPair pair)
