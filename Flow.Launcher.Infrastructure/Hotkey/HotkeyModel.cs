@@ -49,6 +49,8 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             }
         }
 
+        public readonly bool IsEmpty => CharKey == Key.None && !Alt && !Shift && !Win && !Ctrl;
+
         public HotkeyModel(string hotkeyString)
         {
             Parse(hotkeyString);
