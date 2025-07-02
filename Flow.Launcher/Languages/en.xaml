@@ -438,6 +438,7 @@
     <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for "{0}" and can't be used. Please choose another hotkey.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">This hotkey is already in use by "{0}". If you press "Overwrite", it will be removed from "{0}".</system:String>
     <system:String x:Key="hotkeyRegGuide">Press the keys you want to use for this function.</system:String>
+    <system:String x:Key="emptyPluginHotkey">Hotkey and action keyword are empty</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Custom Query Shortcut</system:String>

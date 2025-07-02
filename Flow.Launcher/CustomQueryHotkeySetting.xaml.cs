@@ -1,71 +1,52 @@
-﻿using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows;
 using System.Windows.Controls;
-using Flow.Launcher.Helper;
+using System.Windows.Input;
 using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher
 {
     public partial class CustomQueryHotkeySetting : Window
     {
-        private readonly Settings _settings;
+        public string Hotkey { get; set; } = string.Empty;
+        public string ActionKeyword { get; set; } = string.Empty;
 
-        private bool update;
-        private CustomPluginHotkey updateCustomHotkey;
+        private readonly bool update;
+        private readonly CustomPluginHotkey originalCustomHotkey;
 
-        public CustomQueryHotkeySetting(Settings settings)
+        public CustomQueryHotkeySetting()
         {
-            _settings = settings;
             InitializeComponent();
+            lblAdd.Visibility = Visibility.Visible;
+        }
+
+        public CustomQueryHotkeySetting(CustomPluginHotkey hotkey)
+        {
+            originalCustomHotkey = hotkey;
+            update = true;
+            ActionKeyword = originalCustomHotkey.ActionKeyword;
+            InitializeComponent();
+            lblUpdate.Visibility = Visibility.Visible;
+            HotkeyControl.SetHotkey(originalCustomHotkey.Hotkey, false);
         }
 
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
         {
+            DialogResult = false;
             Close();
         }
 
         private void btnAdd_OnClick(object sender, RoutedEventArgs e)
         {
-            if (!update)
-            {
-                var pluginHotkey = new CustomPluginHotkey
-                {
-                    Hotkey = HotkeyControl.CurrentHotkey.ToString(), ActionKeyword = tbAction.Text
-                };
-                _settings.CustomPluginHotkeys.Add(pluginHotkey);
+            Hotkey = HotkeyControl.CurrentHotkey.ToString();
 
-                HotKeyMapper.SetCustomQueryHotkey(pluginHotkey);
-            }
-            else
+            if (string.IsNullOrEmpty(Hotkey) && string.IsNullOrEmpty(ActionKeyword))
             {
-                var oldHotkey = updateCustomHotkey.Hotkey;
-                updateCustomHotkey.ActionKeyword = tbAction.Text;
-                updateCustomHotkey.Hotkey = HotkeyControl.CurrentHotkey.ToString();
-                //remove origin hotkey
-                HotKeyMapper.RemoveHotkey(oldHotkey);
-                HotKeyMapper.SetCustomQueryHotkey(updateCustomHotkey);
-            }
-
-            Close();
-        }
-
-        public void UpdateItem(CustomPluginHotkey item)
-        {
-            updateCustomHotkey = _settings.CustomPluginHotkeys.FirstOrDefault(o =>
-                o.ActionKeyword == item.ActionKeyword && o.Hotkey == item.Hotkey);
-            if (updateCustomHotkey == null)
-            {
-                App.API.ShowMsgBox(App.API.GetTranslation("invalidPluginHotkey"));
-                Close();
+                App.API.ShowMsgBox(App.API.GetTranslation("emptyPluginHotkey"));
                 return;
             }
 
-            tbAction.Text = updateCustomHotkey.ActionKeyword;
-            HotkeyControl.SetHotkey(updateCustomHotkey.Hotkey, false);
-            update = true;
-            lblAdd.Text = App.API.GetTranslation("update");
+            DialogResult = !update || originalCustomHotkey.Hotkey != Hotkey || originalCustomHotkey.ActionKeyword != ActionKeyword;
+            Close();
         }
 
         private void BtnTestActionKeyword_OnClick(object sender, RoutedEventArgs e)
@@ -77,6 +58,7 @@ namespace Flow.Launcher
 
         private void cmdEsc_OnPress(object sender, ExecutedRoutedEventArgs e)
         {
+            DialogResult = false;
             Close();
         }
 

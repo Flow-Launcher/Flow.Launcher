@@ -119,7 +119,8 @@
                         Grid.Column="1"
                         Margin="10"
                         HorizontalAlignment="Stretch"
-                        VerticalAlignment="Center" />
+                        VerticalAlignment="Center"
+                        Text="{Binding ActionKeyword}" />
                     <Button
                         x:Name="btnTestActionKeyword"
                         Grid.Row="1"
@@ -150,7 +151,20 @@
                     Margin="5 0 10 0"
                     Click="btnAdd_OnClick"
                     Style="{StaticResource AccentButtonStyle}">
-                    <TextBlock x:Name="lblAdd" Text="{DynamicResource done}" />
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <TextBlock
+                            x:Name="lblAdd"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Text="{DynamicResource done}"
+                            Visibility="Collapsed" />
+                        <TextBlock
+                            x:Name="lblUpdate"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Text="{DynamicResource update}"
+                            Visibility="Collapsed" />
+                    </Grid>
                 </Button>
             </StackPanel>
         </Border>
