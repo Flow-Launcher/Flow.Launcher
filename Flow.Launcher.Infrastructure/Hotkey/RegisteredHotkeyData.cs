@@ -26,7 +26,7 @@ public record RegisteredHotkeyData
     /// <summary>
     /// <see cref="HotkeyModel"/> representation of this hotkey.
     /// </summary>
-    public HotkeyModel Hotkey { get; }
+    public HotkeyModel Hotkey { get; set; }
 
     /// <summary>
     /// String key in the localization dictionary that represents this hotkey. For example, <c>ReloadPluginHotkey</c>,
