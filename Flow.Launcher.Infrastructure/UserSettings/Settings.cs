@@ -39,25 +39,220 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             _storage.Save();
         }
 
-        public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
         public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
         public string ColorScheme { get; set; } = "System";
         public bool ShowOpenResultHotkey { get; set; } = true;
         public double WindowSize { get; set; } = 580;
-        public string PreviewHotkey { get; set; } = $"F1";
-        public string AutoCompleteHotkey { get; set; } = $"{KeyConstant.Ctrl} + Tab";
-        public string AutoCompleteHotkey2 { get; set; } = $"";
-        public string SelectNextItemHotkey { get; set; } = $"Tab";
-        public string SelectNextItemHotkey2 { get; set; } = $"";
-        public string SelectPrevItemHotkey { get; set; } = $"Shift + Tab";
-        public string SelectPrevItemHotkey2 { get; set; } = $"";
-        public string SelectNextPageHotkey { get; set; } = $"PageUp";
-        public string SelectPrevPageHotkey { get; set; } = $"PageDown";
-        public string OpenContextMenuHotkey { get; set; } = $"Ctrl+O";
-        public string SettingWindowHotkey { get; set; } = $"Ctrl+I";
-        public string OpenHistoryHotkey { get; set; } = $"Ctrl+H";
-        public string CycleHistoryUpHotkey { get; set; } = $"{KeyConstant.Alt} + Up";
-        public string CycleHistoryDownHotkey { get; set; } = $"{KeyConstant.Alt} + Down";
+
+        private string _hotkey = $"{KeyConstant.Alt} + {KeyConstant.Space}";
+        public string Hotkey
+        {
+            get => _hotkey;
+            set
+            {
+                if (_hotkey != value)
+                {
+                    _hotkey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _previewHotkey = "F1";
+        public string PreviewHotkey
+        {
+            get => _previewHotkey;
+            set
+            {
+                if (_previewHotkey != value)
+                {
+                    _previewHotkey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _autoCompleteHotkey = $"{KeyConstant.Ctrl} + Tab";
+        public string AutoCompleteHotkey
+        {
+            get => _autoCompleteHotkey;
+            set
+            {
+                if (_autoCompleteHotkey != value)
+                {
+                    _autoCompleteHotkey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _autoCompleteHotkey2 = "";
+        public string AutoCompleteHotkey2
+        {
+            get => _autoCompleteHotkey2;
+            set
+            {
+                if (_autoCompleteHotkey2 != value)
+                {
+                    _autoCompleteHotkey2 = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _selectNextItemHotkey = "Tab";
+        public string SelectNextItemHotkey
+        {
+            get => _selectNextItemHotkey;
+            set
+            {
+                if (_selectNextItemHotkey != value)
+                {
+                    _selectNextItemHotkey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _selectNextItemHotkey2 = "";
+        public string SelectNextItemHotkey2
+        {
+            get => _selectNextItemHotkey2;
+            set
+            {
+                if (_selectNextItemHotkey2 != value)
+                {
+                    _selectNextItemHotkey2 = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _selectPrevItemHotkey = "Shift + Tab";
+        public string SelectPrevItemHotkey
+        {
+            get => _selectPrevItemHotkey;
+            set
+            {
+                if (_selectPrevItemHotkey != value)
+                {
+                    _selectPrevItemHotkey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _selectPrevItemHotkey2 = "";
+        public string SelectPrevItemHotkey2
+        {
+            get => _selectPrevItemHotkey2;
+            set
+            {
+                if (_selectPrevItemHotkey2 != value)
+                {
+                    _selectPrevItemHotkey2 = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _selectNextPageHotkey = "PageUp";
+        public string SelectNextPageHotkey
+        {
+            get => _selectNextPageHotkey;
+            set
+            {
+                if (_selectNextPageHotkey != value)
+                {
+                    _selectNextPageHotkey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _selectPrevPageHotkey = "PageDown";
+        public string SelectPrevPageHotkey
+        {
+            get => _selectPrevPageHotkey;
+            set
+            {
+                if (_selectPrevPageHotkey != value)
+                {
+                    _selectPrevPageHotkey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _openContextMenuHotkey = "Ctrl+O";
+        public string OpenContextMenuHotkey
+        {
+            get => _openContextMenuHotkey;
+            set
+            {
+                if (_openContextMenuHotkey != value)
+                {
+                    _openContextMenuHotkey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _settingWindowHotkey = "Ctrl+I";
+        public string SettingWindowHotkey
+        {
+            get => _settingWindowHotkey;
+            set
+            {
+                if (_settingWindowHotkey != value)
+                {
+                    _settingWindowHotkey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _openHistoryHotkey = "Ctrl+H";
+        public string OpenHistoryHotkey
+        {
+            get => _openHistoryHotkey;
+            set
+            {
+                if (_openHistoryHotkey != value)
+                {
+                    _openHistoryHotkey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _cycleHistoryUpHotkey = $"{KeyConstant.Alt} + Up";
+        public string CycleHistoryUpHotkey
+        {
+            get => _cycleHistoryUpHotkey;
+            set
+            {
+                if (_cycleHistoryUpHotkey != value)
+                {
+                    _cycleHistoryUpHotkey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _cycleHistoryDownHotkey = $"{KeyConstant.Alt} + Down";
+        public string CycleHistoryDownHotkey
+        {
+            get => _cycleHistoryDownHotkey;
+            set
+            {
+                if (_cycleHistoryDownHotkey != value)
+                {
+                    _cycleHistoryDownHotkey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private string _language = Constant.SystemLanguageCode;
         public string Language
