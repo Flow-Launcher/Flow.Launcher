@@ -232,6 +232,12 @@ public record RegisteredHotkeyData
         CommandParameter = parameter;
         RemoveHotkey = removeHotkey;
     }
+
+    /// <inheritdoc />
+    public override string ToString()
+    {
+        return Hotkey.IsEmpty ? $"{RegisteredType} - {Hotkey}" : $"{RegisteredType} - None";
+    }
 }
 
 public enum RegisteredHotkeyType
