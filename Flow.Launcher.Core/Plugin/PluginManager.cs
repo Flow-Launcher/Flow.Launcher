@@ -28,6 +28,8 @@ namespace Flow.Launcher.Core.Plugin
 
         private static IEnumerable<PluginPair> _contextMenuPlugins;
         private static IEnumerable<PluginPair> _homePlugins;
+        private static IEnumerable<PluginPair> _resultUpdatePlugin;
+        private static IEnumerable<PluginPair> _translationPlugins;
         private static IEnumerable<PluginPair> _hotkeyPlugins;
 
         public static List<PluginPair> AllPlugins { get; private set; }
@@ -257,6 +259,8 @@ namespace Flow.Launcher.Core.Plugin
 
             _contextMenuPlugins = GetPluginsForInterface<IContextMenu>();
             _homePlugins = GetPluginsForInterface<IAsyncHomeQuery>();
+            _resultUpdatePlugin = GetPluginsForInterface<IResultUpdated>();
+            _translationPlugins = GetPluginsForInterface<IPluginI18n>();
             _hotkeyPlugins = GetPluginsForInterface<IPluginHotkey>();
             var pluginHotkeyInfo = GetPluginHotkeyInfo();
             Settings.UpdatePluginHotkeyInfo(pluginHotkeyInfo);
@@ -420,7 +424,7 @@ namespace Flow.Launcher.Core.Plugin
             return AllPlugins.FirstOrDefault(o => o.Metadata.ID == id);
         }
 
-        public static IEnumerable<PluginPair> GetPluginsForInterface<T>() where T : IFeatures
+        private static IEnumerable<PluginPair> GetPluginsForInterface<T>() where T : IFeatures
         {
             // Handle scenario where this is called before all plugins are instantiated, e.g. language change on startup
             return AllPlugins?.Where(p => p.Plugin is T) ?? Array.Empty<PluginPair>();
@@ -458,6 +462,17 @@ namespace Flow.Launcher.Core.Plugin
         public static bool IsHomePlugin(string id)
         {
             return _homePlugins.Any(p => p.Metadata.ID == id);
+        }
+
+        public static IList<PluginPair> GetResultUpdatePlugin()
+        {
+            return _resultUpdatePlugin.Where(p => !PluginModified(p.Metadata.ID)).ToList();
+        }
+
+        public static IList<PluginPair> GetTranslationPlugins()
+        {
+            // Here we still return the modified plugins to update the possible string resources
+            return _translationPlugins.ToList();
         }
 
         public static Dictionary<PluginPair, List<BasePluginHotkey>> GetPluginHotkeyInfo()
