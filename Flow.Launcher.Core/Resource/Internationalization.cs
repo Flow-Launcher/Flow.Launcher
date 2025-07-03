@@ -278,6 +278,7 @@ namespace Flow.Launcher.Core.Resource
 
         private void UpdatePluginMetadataTranslations()
         {
+            // Update plugin metadata name & description
             foreach (var p in PluginManager.GetTranslationPlugins())
             {
                 if (p.Plugin is not IPluginI18n pluginI18N) return;
@@ -292,6 +293,9 @@ namespace Flow.Launcher.Core.Resource
                     API.LogException(ClassName, $"Failed for <{p.Metadata.Name}>", e);
                 }
             }
+
+            // Update plugin hotkey name & description
+            PluginManager.UpdatePluginHotkeyInfoTranslations();
         }
 
         private static string LanguageFile(string folder, string language)
