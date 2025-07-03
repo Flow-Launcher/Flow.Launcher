@@ -33,7 +33,7 @@ namespace Flow.Launcher.Core.Plugin
         private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
 
         private static PluginsSettings Settings;
-        private static readonly List<string> ModifiedPlugins = new();
+        private static readonly ConcurrentBag<string> ModifiedPlugins = new();
 
         private static IEnumerable<PluginPair> _contextMenuPlugins;
         private static IEnumerable<PluginPair> _homePlugins;
