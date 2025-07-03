@@ -69,7 +69,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_reset">Zresetuj</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_confirm">Potwierdź</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_cancel">Anuluj</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_input_command_keyword">Please enter a non-empty command keyword</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_input_command_keyword">Proszę wprowadzić niepuste słowo kluczowe polecenia</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">Komendy systemowe</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Wykonywanie komend systemowych, np. wyłącz, zablokuj komputer, otwórz ustawienia itp.</system:String>
