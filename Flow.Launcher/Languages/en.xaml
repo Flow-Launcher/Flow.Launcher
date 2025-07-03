@@ -133,8 +133,8 @@
     <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
     <system:String x:Key="showAtTopmost">Show Search Window at Foremost</system:String>
     <system:String x:Key="showAtTopmostToolTip">Overrides other programs' 'Always on Top' setting and displays Flow in the foremost position.</system:String>
-    <system:String x:Key="autoRestartAfterChanging">Automatically restart after changing plugins</system:String>
-    <system:String x:Key="autoRestartAfterChangingToolTip">Automatically restart Flow Launcher after installing/uninstalling/updating plugins</system:String>
+    <system:String x:Key="autoRestartAfterChanging">Restart after modifying plugin via Plugin Store</system:String>
+    <system:String x:Key="autoRestartAfterChangingToolTip">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugin Store</system:String>
     <system:String x:Key="showUnknownSourceWarning">Show unknown source warning</system:String>
     <system:String x:Key="showUnknownSourceWarningToolTip">Show warning when installing plugins from unknown sources</system:String>
 
@@ -175,7 +175,7 @@
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Fail to remove plugin cache</system:String>
     <system:String x:Key="failedToRemovePluginCacheMessage">Plugins: {0} - Fail to remove plugin cache files, please remove them manually</system:String>
-    <system:String x:Key="pluginModifiedAlreadyTitle">Plugin {0} is modified already</system:String>
+    <system:String x:Key="pluginModifiedAlreadyTitle">{0} modified already</system:String>
     <system:String x:Key="pluginModifiedAlreadyMessage">Please restart Flow before making any further changes</system:String>
     <system:String x:Key="failedToInstallPluginTitle">Fail to install {0}</system:String>
     <system:String x:Key="failedToUninstallPluginTitle">Fail to uninstall {0}</system:String>
