@@ -837,7 +837,7 @@
     <value>ライト モード</value>
   </data>
   <data name="Location" xml:space="preserve">
-    <value>Location</value>
+    <value>場所</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="LockScreen" xml:space="preserve">
