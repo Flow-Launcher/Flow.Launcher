@@ -188,6 +188,12 @@ namespace Flow.Launcher.Core.Plugin
             AllPlugins = PluginsLoader.Plugins(_metadatas, Settings);
             // Since dotnet plugins need to get assembly name first, we should update plugin directory after loading plugins
             UpdatePluginDirectory(_metadatas);
+            // Initialize plugin enumerable after all plugins are initialized
+            _contextMenuPlugins = GetPluginsForInterface<IContextMenu>();
+            _homePlugins = GetPluginsForInterface<IAsyncHomeQuery>();
+            _resultUpdatePlugin = GetPluginsForInterface<IResultUpdated>();
+            _translationPlugins = GetPluginsForInterface<IPluginI18n>();
+            _hotkeyPlugins = GetPluginsForInterface<IPluginHotkey>();
         }
 
         private static void UpdatePluginDirectory(List<PluginMetadata> metadatas)
@@ -257,11 +263,6 @@ namespace Flow.Launcher.Core.Plugin
 
             await Task.WhenAll(InitTasks);
 
-            _contextMenuPlugins = GetPluginsForInterface<IContextMenu>();
-            _homePlugins = GetPluginsForInterface<IAsyncHomeQuery>();
-            _resultUpdatePlugin = GetPluginsForInterface<IResultUpdated>();
-            _translationPlugins = GetPluginsForInterface<IPluginI18n>();
-            _hotkeyPlugins = GetPluginsForInterface<IPluginHotkey>();
             var pluginHotkeyInfo = GetPluginHotkeyInfo();
             Settings.UpdatePluginHotkeyInfo(pluginHotkeyInfo);
             InitializeWindowPluginHotkeys(pluginHotkeyInfo);
