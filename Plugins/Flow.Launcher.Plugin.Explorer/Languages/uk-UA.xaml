@@ -96,8 +96,11 @@
     <system:String x:Key="plugin_explorer_deletefilefolder">Видалити</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Безповоротно видалити поточний файл</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Назавжди видалити поточну папку</system:String>
-    <system:String x:Key="plugin_explorer_path">Шлях:</system:String>
-    <system:String x:Key="plugin_explorer_name">Name:</system:String>
+    <system:String x:Key="plugin_explorer_name">Назва</system:String>
+    <system:String x:Key="plugin_explorer_type">Type</system:String>
+    <system:String x:Key="plugin_explorer_path">Шлях</system:String>
+    <system:String x:Key="plugin_explorer_file">Файл</system:String>
+    <system:String x:Key="plugin_explorer_folder">Тека</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Видалити вибране</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Запустити від імені іншого користувача</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Запустити вибране під обліковим записом іншого користувача</system:String>

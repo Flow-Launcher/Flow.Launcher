@@ -136,8 +136,8 @@
     <system:String x:Key="historyResultsForHomePage">Mostrar historial de resultados en la página de inicio</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Número máximo de resultados del historial en la página de inicio</system:String>
     <system:String x:Key="homeToggleBoxToolTip">Esto solo se puede editar si el complemento soporta la función de Inicio y la Página de Inicio está activada.</system:String>
-    <system:String x:Key="showAtTopmost">Show Search Window at Topmost</system:String>
-    <system:String x:Key="showAtTopmostToolTip">Show search window above other windows</system:String>
+    <system:String x:Key="showAtTopmost">Mostrar ventana de búsqueda en primer plano</system:String>
+    <system:String x:Key="showAtTopmostToolTip">Anula el ajuste «Siempre arriba» de otros programas y muestra Flow en primer plano.</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Buscar complemento</system:String>
@@ -368,7 +368,7 @@
     <system:String x:Key="userdatapathButton">Abrir carpeta</system:String>
     <system:String x:Key="advanced">Avanzado</system:String>
     <system:String x:Key="logLevel">Nivel de registro</system:String>
-    <system:String x:Key="LogLevelDEBUG">Depurar</system:String>
+    <system:String x:Key="LogLevelDEBUG">Depuración</system:String>
     <system:String x:Key="LogLevelINFO">Información</system:String>
     <system:String x:Key="settingWindowFontTitle">Configuración de fuente de la ventana</system:String>
 
@@ -404,7 +404,7 @@
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Cambiar la prioridad</system:String>
-    <system:String x:Key="priority_tips">Cuanto mayor sea el número, más arriba se situará el resultado. Inténtelo con 5. Si desea que los resultados se situén más abajo que los de cualquier otro complemento, utilice un número negativo</system:String>
+    <system:String x:Key="priority_tips">Cuanto mayor sea el número, más arriba se situará el resultado. Probar con 5. Si se desea que los resultados se sitúen más abajo que los de cualquier otro complemento, utilizar un número negativo</system:String>
     <system:String x:Key="invalidPriority">¡Por favor, proporcione un número entero válido para la prioridad!</system:String>
 
     <!--  Action Keyword Setting Dialog  -->
@@ -419,7 +419,7 @@
     <system:String x:Key="success">Correcto</system:String>
     <system:String x:Key="completedSuccessfully">Finalizado correctamente</system:String>
     <system:String x:Key="failedToCopy">No se pudo copiar</system:String>
-    <system:String x:Key="actionkeyword_tips">Introduzca las palabras clave de acción que desea utilizar para iniciar el complemento y utilice espacios en blanco para separarlas. Utilice * si no desea especificar ninguna, para que el complemento se inicie sin ninguna palabra clave de acción.</system:String>
+    <system:String x:Key="actionkeyword_tips">Introducir las palabras claves de acción que se desean utilizar para iniciar el complemento, utilizando espacios en blanco para separarlas. Utilizar * si no se desea especificar ninguna, para que el complemento se inicie sin ninguna palabra clave de acción.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
     <system:String x:Key="searchDelayTimeTitle">Ajuste del tiempo de retardo de búsqueda</system:String>
@@ -427,7 +427,7 @@
 
     <!--  Search Delay Settings Dialog  -->
     <system:String x:Key="homeTitle">Página de inicio</system:String>
-    <system:String x:Key="homeTips">Activar el estado de la página de inicio del complemento si se desea mostrar los resultados del complemento cuando la consulta está vacía.</system:String>
+    <system:String x:Key="homeTips">Activar el estado página de inicio del complemento si se desea mostrar los resultados del complemento cuando la consulta esté vacía.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Atajo de teclado de consulta personalizada</system:String>

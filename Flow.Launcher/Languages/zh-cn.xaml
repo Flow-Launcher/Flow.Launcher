@@ -136,8 +136,8 @@
     <system:String x:Key="historyResultsForHomePage">在主页中显示历史记录</system:String>
     <system:String x:Key="historyResultsCountForHomePage">在主页显示的最大历史结果数</system:String>
     <system:String x:Key="homeToggleBoxToolTip">这只能在插件支持主页功能和主页启用时进行编辑。</system:String>
-    <system:String x:Key="showAtTopmost">Show Search Window at Topmost</system:String>
-    <system:String x:Key="showAtTopmostToolTip">Show search window above other windows</system:String>
+    <system:String x:Key="showAtTopmost">将搜索窗口置于顶层</system:String>
+    <system:String x:Key="showAtTopmostToolTip">覆盖其他“总是在顶部”的程序窗口并在最顶层的位置显示 Flow Launcher 搜索窗口。</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">搜索插件</system:String>
