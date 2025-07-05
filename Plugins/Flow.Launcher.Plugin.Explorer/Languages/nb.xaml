@@ -96,8 +96,11 @@
     <system:String x:Key="plugin_explorer_deletefilefolder">Slett</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Slett gjeldende fil permanent</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Slett gjeldende mappe permanent</system:String>
-    <system:String x:Key="plugin_explorer_path">Sti:</system:String>
-    <system:String x:Key="plugin_explorer_name">Name:</system:String>
+    <system:String x:Key="plugin_explorer_name">Navn</system:String>
+    <system:String x:Key="plugin_explorer_type">Type</system:String>
+    <system:String x:Key="plugin_explorer_path">Sti</system:String>
+    <system:String x:Key="plugin_explorer_file">Fil</system:String>
+    <system:String x:Key="plugin_explorer_folder">Mappe</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Slett valgte</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Kjør som annen bruker</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Kjør valgte med en annen brukerkonto</system:String>

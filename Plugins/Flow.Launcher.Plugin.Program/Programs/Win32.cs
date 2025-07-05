@@ -136,7 +136,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             List<string> candidates = new List<string>();
 
-            if (!matchResult.IsSearchPrecisionScoreMet())
+            if (!matchResult.IsSearchPrecisionScoreMet() && !string.IsNullOrEmpty(query))
             {
                 if (ExecutableName != null) // only lnk program will need this one
                 {

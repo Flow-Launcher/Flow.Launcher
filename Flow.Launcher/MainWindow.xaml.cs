@@ -20,6 +20,7 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
 using iNKORE.UI.WPF.Modern;
@@ -92,8 +93,8 @@ namespace Flow.Launcher
 
             InitSoundEffects();
             DataObject.AddPastingHandler(QueryTextBox, QueryTextBox_OnPaste);
-            ThemeManager.Current.ActualApplicationThemeChanged += ThemeManager_ActualApplicationThemeChanged;
             SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
+            _viewModel.ActualApplicationThemeChanged += ViewModel_ActualApplicationThemeChanged;
         }
 
         #endregion
@@ -102,7 +103,7 @@ namespace Flow.Launcher
 
 #pragma warning disable VSTHRD100 // Avoid async void methods
 
-        private void ThemeManager_ActualApplicationThemeChanged(ThemeManager sender, object args)
+        private void ViewModel_ActualApplicationThemeChanged(object sender, ActualApplicationThemeChangedEventArgs args)
         {
             _ = _theme.RefreshFrameAsync();
         }
@@ -1352,7 +1353,7 @@ namespace Flow.Launcher
                     _notifyIcon?.Dispose();
                     animationSoundWMP?.Close();
                     animationSoundWPF?.Dispose();
-                    ThemeManager.Current.ActualApplicationThemeChanged -= ThemeManager_ActualApplicationThemeChanged;
+                    _viewModel.ActualApplicationThemeChanged -= ViewModel_ActualApplicationThemeChanged;
                     SystemEvents.PowerModeChanged -= SystemEvents_PowerModeChanged;
                 }
 
