@@ -273,7 +273,7 @@ namespace Flow.Launcher.ViewModel
 
         public void RegisterResultsUpdatedEvent()
         {
-            foreach (var pair in PluginManager.GetPluginsForInterface<IResultUpdated>())
+            foreach (var pair in PluginManager.GetResultUpdatePlugin())
             {
                 var plugin = (IResultUpdated)pair.Plugin;
                 plugin.ResultsUpdated += (s, e) =>
@@ -508,6 +508,13 @@ namespace Flow.Launcher.ViewModel
         #endregion
 
         #region BasicCommands
+
+        [RelayCommand]
+        private void CheckAndToggleFlowLauncher()
+        {
+            if (!ShouldIgnoreHotkeys())
+                ToggleFlowLauncher();
+        }
 
         [RelayCommand]
         private void OpenSetting()
@@ -1723,6 +1730,11 @@ namespace Flow.Launcher.ViewModel
         {
             var selected = SelectedResults == results;
             return selected;
+        }
+
+        internal ResultsViewModel GetSelectedResults()
+        {
+            return SelectedResults;
         }
 
         #endregion

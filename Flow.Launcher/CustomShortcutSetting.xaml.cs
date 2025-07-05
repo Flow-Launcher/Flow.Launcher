@@ -43,12 +43,14 @@ namespace Flow.Launcher
                 App.API.ShowMsgBox(App.API.GetTranslation("emptyShortcut"));
                 return;
             }
+
             // Check if key is modified or adding a new one
             if (((update && originalKey != Key) || !update) && _hotkeyVm.DoesShortcutExist(Key))
             {
                 App.API.ShowMsgBox(App.API.GetTranslation("duplicateShortcut"));
                 return;
             }
+
             DialogResult = !update || originalKey != Key || originalValue != Value;
             Close();
         }

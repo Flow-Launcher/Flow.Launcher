@@ -32,7 +32,6 @@
                 Icon="&#xeda7;"
                 Sub="{DynamicResource flowlauncherHotkeyToolTip}">
                 <flowlauncher:HotkeyControl
-                    ChangeHotkey="{Binding SetTogglingHotkeyCommand}"
                     DefaultHotkey="Alt+Space"
                     Type="Hotkey"
                     ValidateKeyGesture="True"
@@ -213,7 +212,6 @@
                 </StackPanel>
             </cc:ExCard>
 
-
             <cc:ExCard
                 Title="{DynamicResource autoCompleteHotkey}"
                 Margin="0 14 0 0"
@@ -277,6 +275,12 @@
                         ValidateKeyGesture="False" />
                 </cc:Card>
             </cc:ExCard>
+
+            <StackPanel
+                x:Name="PluginHotkeySettings"
+                Margin="0 10 0 0"
+                Loaded="PluginHotkeySettings_Loaded"
+                Orientation="Vertical" />
 
             <cc:ExCard
                 Title="{DynamicResource customQueryHotkey}"

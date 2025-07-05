@@ -442,14 +442,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 ContextData = this,
                 Action = e =>
                 {
-                    // Ctrl + Enter to open containing folder
-                    bool openFolder = e.SpecialKeyState.ToModifierKeys() == ModifierKeys.Control;
-                    if (openFolder)
-                    {
-                        Main.Context.API.OpenDirectory(Location);
-                        return true;
-                    }
-
                     // Ctrl + Shift + Enter to run elevated
                     bool elevated = e.SpecialKeyState.ToModifierKeys() == (ModifierKeys.Control | ModifierKeys.Shift);
 
@@ -465,7 +457,11 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     }
 
                     return true;
-                }
+                },
+                HotkeyIds = new List<int>
+                {
+                    0
+                },
             };
 
             return result;

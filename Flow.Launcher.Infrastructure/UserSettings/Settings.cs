@@ -39,25 +39,220 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             _storage.Save();
         }
 
-        public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
         public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
         public string ColorScheme { get; set; } = "System";
         public bool ShowOpenResultHotkey { get; set; } = true;
         public double WindowSize { get; set; } = 580;
-        public string PreviewHotkey { get; set; } = $"F1";
-        public string AutoCompleteHotkey { get; set; } = $"{KeyConstant.Ctrl} + Tab";
-        public string AutoCompleteHotkey2 { get; set; } = $"";
-        public string SelectNextItemHotkey { get; set; } = $"Tab";
-        public string SelectNextItemHotkey2 { get; set; } = $"";
-        public string SelectPrevItemHotkey { get; set; } = $"Shift + Tab";
-        public string SelectPrevItemHotkey2 { get; set; } = $"";
-        public string SelectNextPageHotkey { get; set; } = $"PageUp";
-        public string SelectPrevPageHotkey { get; set; } = $"PageDown";
-        public string OpenContextMenuHotkey { get; set; } = $"Ctrl+O";
-        public string SettingWindowHotkey { get; set; } = $"Ctrl+I";
-        public string OpenHistoryHotkey { get; set; } = $"Ctrl+H";
-        public string CycleHistoryUpHotkey { get; set; } = $"{KeyConstant.Alt} + Up";
-        public string CycleHistoryDownHotkey { get; set; } = $"{KeyConstant.Alt} + Down";
+
+        private string _hotkey = $"{KeyConstant.Alt} + {KeyConstant.Space}";
+        public string Hotkey
+        {
+            get => _hotkey;
+            set
+            {
+                if (_hotkey != value)
+                {
+                    _hotkey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _previewHotkey = "F1";
+        public string PreviewHotkey
+        {
+            get => _previewHotkey;
+            set
+            {
+                if (_previewHotkey != value)
+                {
+                    _previewHotkey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _autoCompleteHotkey = $"{KeyConstant.Ctrl} + Tab";
+        public string AutoCompleteHotkey
+        {
+            get => _autoCompleteHotkey;
+            set
+            {
+                if (_autoCompleteHotkey != value)
+                {
+                    _autoCompleteHotkey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _autoCompleteHotkey2 = "";
+        public string AutoCompleteHotkey2
+        {
+            get => _autoCompleteHotkey2;
+            set
+            {
+                if (_autoCompleteHotkey2 != value)
+                {
+                    _autoCompleteHotkey2 = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _selectNextItemHotkey = "Tab";
+        public string SelectNextItemHotkey
+        {
+            get => _selectNextItemHotkey;
+            set
+            {
+                if (_selectNextItemHotkey != value)
+                {
+                    _selectNextItemHotkey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _selectNextItemHotkey2 = "";
+        public string SelectNextItemHotkey2
+        {
+            get => _selectNextItemHotkey2;
+            set
+            {
+                if (_selectNextItemHotkey2 != value)
+                {
+                    _selectNextItemHotkey2 = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _selectPrevItemHotkey = "Shift + Tab";
+        public string SelectPrevItemHotkey
+        {
+            get => _selectPrevItemHotkey;
+            set
+            {
+                if (_selectPrevItemHotkey != value)
+                {
+                    _selectPrevItemHotkey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _selectPrevItemHotkey2 = "";
+        public string SelectPrevItemHotkey2
+        {
+            get => _selectPrevItemHotkey2;
+            set
+            {
+                if (_selectPrevItemHotkey2 != value)
+                {
+                    _selectPrevItemHotkey2 = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _selectNextPageHotkey = "PageUp";
+        public string SelectNextPageHotkey
+        {
+            get => _selectNextPageHotkey;
+            set
+            {
+                if (_selectNextPageHotkey != value)
+                {
+                    _selectNextPageHotkey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _selectPrevPageHotkey = "PageDown";
+        public string SelectPrevPageHotkey
+        {
+            get => _selectPrevPageHotkey;
+            set
+            {
+                if (_selectPrevPageHotkey != value)
+                {
+                    _selectPrevPageHotkey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _openContextMenuHotkey = "Ctrl+O";
+        public string OpenContextMenuHotkey
+        {
+            get => _openContextMenuHotkey;
+            set
+            {
+                if (_openContextMenuHotkey != value)
+                {
+                    _openContextMenuHotkey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _settingWindowHotkey = "Ctrl+I";
+        public string SettingWindowHotkey
+        {
+            get => _settingWindowHotkey;
+            set
+            {
+                if (_settingWindowHotkey != value)
+                {
+                    _settingWindowHotkey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _openHistoryHotkey = "Ctrl+H";
+        public string OpenHistoryHotkey
+        {
+            get => _openHistoryHotkey;
+            set
+            {
+                if (_openHistoryHotkey != value)
+                {
+                    _openHistoryHotkey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _cycleHistoryUpHotkey = $"{KeyConstant.Alt} + Up";
+        public string CycleHistoryUpHotkey
+        {
+            get => _cycleHistoryUpHotkey;
+            set
+            {
+                if (_cycleHistoryUpHotkey != value)
+                {
+                    _cycleHistoryUpHotkey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _cycleHistoryDownHotkey = $"{KeyConstant.Alt} + Down";
+        public string CycleHistoryDownHotkey
+        {
+            get => _cycleHistoryDownHotkey;
+            set
+            {
+                if (_cycleHistoryDownHotkey != value)
+                {
+                    _cycleHistoryDownHotkey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private string _language = Constant.SystemLanguageCode;
         public string Language
@@ -359,9 +554,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public int ActivateTimes { get; set; }
 
-        public ObservableCollection<CustomPluginHotkey> CustomPluginHotkeys { get; set; } = new ObservableCollection<CustomPluginHotkey>();
+        public ObservableCollection<CustomPluginHotkey> CustomPluginHotkeys { get; set; } = new();
 
-        public ObservableCollection<CustomShortcutModel> CustomShortcuts { get; set; } = new ObservableCollection<CustomShortcutModel>();
+        public ObservableCollection<CustomShortcutModel> CustomShortcuts { get; set; } = new();
 
         [JsonIgnore]
         public ObservableCollection<BaseBuiltinShortcutModel> BuiltinShortcuts { get; set; } = new()
@@ -432,95 +627,10 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool WMPInstalled { get; set; } = true;
 
         // This needs to be loaded last by staying at the bottom
-        public PluginsSettings PluginSettings { get; set; } = new PluginsSettings();
+        public PluginsSettings PluginSettings { get; set; } = new();
 
         [JsonIgnore]
-        public List<RegisteredHotkeyData> RegisteredHotkeys
-        {
-            get
-            {
-                var list = FixedHotkeys();
-
-                // Customizeable hotkeys
-                if (!string.IsNullOrEmpty(Hotkey))
-                    list.Add(new(Hotkey, "flowlauncherHotkey", () => Hotkey = ""));
-                if (!string.IsNullOrEmpty(PreviewHotkey))
-                    list.Add(new(PreviewHotkey, "previewHotkey", () => PreviewHotkey = ""));
-                if (!string.IsNullOrEmpty(AutoCompleteHotkey))
-                    list.Add(new(AutoCompleteHotkey, "autoCompleteHotkey", () => AutoCompleteHotkey = ""));
-                if (!string.IsNullOrEmpty(AutoCompleteHotkey2))
-                    list.Add(new(AutoCompleteHotkey2, "autoCompleteHotkey", () => AutoCompleteHotkey2 = ""));
-                if (!string.IsNullOrEmpty(SelectNextItemHotkey))
-                    list.Add(new(SelectNextItemHotkey, "SelectNextItemHotkey", () => SelectNextItemHotkey = ""));
-                if (!string.IsNullOrEmpty(SelectNextItemHotkey2))
-                    list.Add(new(SelectNextItemHotkey2, "SelectNextItemHotkey", () => SelectNextItemHotkey2 = ""));
-                if (!string.IsNullOrEmpty(SelectPrevItemHotkey))
-                    list.Add(new(SelectPrevItemHotkey, "SelectPrevItemHotkey", () => SelectPrevItemHotkey = ""));
-                if (!string.IsNullOrEmpty(SelectPrevItemHotkey2))
-                    list.Add(new(SelectPrevItemHotkey2, "SelectPrevItemHotkey", () => SelectPrevItemHotkey2 = ""));
-                if (!string.IsNullOrEmpty(SettingWindowHotkey))
-                    list.Add(new(SettingWindowHotkey, "SettingWindowHotkey", () => SettingWindowHotkey = ""));
-                if (!string.IsNullOrEmpty(OpenHistoryHotkey))
-                    list.Add(new(OpenHistoryHotkey, "OpenHistoryHotkey", () => OpenHistoryHotkey = ""));                
-                if (!string.IsNullOrEmpty(OpenContextMenuHotkey))
-                    list.Add(new(OpenContextMenuHotkey, "OpenContextMenuHotkey", () => OpenContextMenuHotkey = ""));
-                if (!string.IsNullOrEmpty(SelectNextPageHotkey))
-                    list.Add(new(SelectNextPageHotkey, "SelectNextPageHotkey", () => SelectNextPageHotkey = ""));
-                if (!string.IsNullOrEmpty(SelectPrevPageHotkey))
-                    list.Add(new(SelectPrevPageHotkey, "SelectPrevPageHotkey", () => SelectPrevPageHotkey = ""));
-                if (!string.IsNullOrEmpty(CycleHistoryUpHotkey))
-                    list.Add(new(CycleHistoryUpHotkey, "CycleHistoryUpHotkey", () => CycleHistoryUpHotkey = ""));
-                if (!string.IsNullOrEmpty(CycleHistoryDownHotkey))
-                    list.Add(new(CycleHistoryDownHotkey, "CycleHistoryDownHotkey", () => CycleHistoryDownHotkey = ""));
-
-                // Custom Query Hotkeys
-                foreach (var customPluginHotkey in CustomPluginHotkeys)
-                {
-                    if (!string.IsNullOrEmpty(customPluginHotkey.Hotkey))
-                        list.Add(new(customPluginHotkey.Hotkey, "customQueryHotkey", () => customPluginHotkey.Hotkey = ""));
-                }
-
-                return list;
-            }
-        }
-
-        private List<RegisteredHotkeyData> FixedHotkeys()
-        {
-            return new List<RegisteredHotkeyData>
-            {
-                new("Up", "HotkeyLeftRightDesc"),
-                new("Down", "HotkeyLeftRightDesc"),
-                new("Left", "HotkeyUpDownDesc"),
-                new("Right", "HotkeyUpDownDesc"),
-                new("Escape", "HotkeyESCDesc"),
-                new("F5", "ReloadPluginHotkey"),
-                new("Alt+Home", "HotkeySelectFirstResult"),
-                new("Alt+End", "HotkeySelectLastResult"),
-                new("Ctrl+R", "HotkeyRequery"),
-                new("Ctrl+OemCloseBrackets", "QuickWidthHotkey"),
-                new("Ctrl+OemOpenBrackets", "QuickWidthHotkey"),
-                new("Ctrl+OemPlus", "QuickHeightHotkey"),
-                new("Ctrl+OemMinus", "QuickHeightHotkey"),
-                new("Ctrl+Shift+Enter", "HotkeyCtrlShiftEnterDesc"),
-                new("Shift+Enter", "OpenContextMenuHotkey"),
-                new("Enter", "HotkeyRunDesc"),
-                new("Ctrl+Enter", "OpenContainFolderHotkey"),
-                new("Alt+Enter", "HotkeyOpenResult"),
-                new("Ctrl+F12", "ToggleGameModeHotkey"),
-                new("Ctrl+Shift+C", "CopyFilePathHotkey"),
-
-                new($"{OpenResultModifiers}+D1", "HotkeyOpenResultN", 1),
-                new($"{OpenResultModifiers}+D2", "HotkeyOpenResultN", 2),
-                new($"{OpenResultModifiers}+D3", "HotkeyOpenResultN", 3),
-                new($"{OpenResultModifiers}+D4", "HotkeyOpenResultN", 4),
-                new($"{OpenResultModifiers}+D5", "HotkeyOpenResultN", 5),
-                new($"{OpenResultModifiers}+D6", "HotkeyOpenResultN", 6),
-                new($"{OpenResultModifiers}+D7", "HotkeyOpenResultN", 7),
-                new($"{OpenResultModifiers}+D8", "HotkeyOpenResultN", 8),
-                new($"{OpenResultModifiers}+D9", "HotkeyOpenResultN", 9),
-                new($"{OpenResultModifiers}+D0", "HotkeyOpenResultN", 10)
-            };
-        }
+        public ObservableCollection<RegisteredHotkeyData> RegisteredHotkeys { get; } = new();
     }
 
     public enum LastQueryMode
