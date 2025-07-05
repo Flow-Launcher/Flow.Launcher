@@ -1,4 +1,7 @@
-﻿namespace Flow.Launcher.Plugin.BrowserBookmark.Models;
+﻿using System.Collections.Generic;
+using Flow.Launcher.Localization.Attributes;
+
+namespace Flow.Launcher.Plugin.BrowserBookmark.Models;
 
 public class CustomBrowser : BaseModel
 {
@@ -11,8 +14,11 @@ public class CustomBrowser : BaseModel
         get => _name;
         set
         {
-            _name = value;
-            OnPropertyChanged();
+            if (_name != value)
+            {
+                _name = value;
+                OnPropertyChanged();
+            }
         }
     }
 
@@ -21,24 +27,36 @@ public class CustomBrowser : BaseModel
         get => _dataDirectoryPath;
         set
         {
-            _dataDirectoryPath = value;
-            OnPropertyChanged();
+            if (_dataDirectoryPath != value)
+            {
+                _dataDirectoryPath = value;
+                OnPropertyChanged();
+            }
         }
     }
+
+    public List<BrowserTypeLocalized> AllBrowserTypes { get; } = BrowserTypeLocalized.GetValues();
 
     public BrowserType BrowserType
     {
         get => _browserType;
         set
         {
-            _browserType = value;
-            OnPropertyChanged();
+            if (_browserType != value)
+            {
+                _browserType = value;
+                OnPropertyChanged();
+            }
         }
     }
 }
 
+[EnumLocalize]
 public enum BrowserType
 {
+    [EnumLocalizeValue("Chromium")]
     Chromium,
+
+    [EnumLocalizeValue("Firefox")]
     Firefox,
 }
