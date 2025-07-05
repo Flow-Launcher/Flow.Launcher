@@ -423,7 +423,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 }
             }
 
-            if (!matchResult.IsSearchPrecisionScoreMet())
+            if (!matchResult.IsSearchPrecisionScoreMet() && !string.IsNullOrEmpty(query))
                 return null;
 
             var result = new Result
@@ -468,7 +468,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     return true;
                 }
             };
-
 
             return result;
         }

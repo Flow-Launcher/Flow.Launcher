@@ -96,8 +96,11 @@
     <system:String x:Key="plugin_explorer_deletefilefolder">Sil</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Mevcut dosyayı kalıcı olarak sil</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Mevcut klasörü kalıcı olarak sil</system:String>
-    <system:String x:Key="plugin_explorer_path">Yol:</system:String>
-    <system:String x:Key="plugin_explorer_name">Name:</system:String>
+    <system:String x:Key="plugin_explorer_name">Name</system:String>
+    <system:String x:Key="plugin_explorer_type">Type</system:String>
+    <system:String x:Key="plugin_explorer_path">Path</system:String>
+    <system:String x:Key="plugin_explorer_file">Dosya</system:String>
+    <system:String x:Key="plugin_explorer_folder">Klasör</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Seçileni sil</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Başka bir kullanıcı olarak çalıştır</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Run the selected using a different user account</system:String>

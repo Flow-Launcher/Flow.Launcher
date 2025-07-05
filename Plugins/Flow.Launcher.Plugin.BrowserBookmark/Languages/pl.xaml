@@ -19,12 +19,12 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Ścieżka katalogu danych</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Dodaj</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_editBrowserBookmark">Edytuj</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Usu</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Usuń</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browseBrowserBookmark">Przeglądaj</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Inne</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Silnik przeglądarki</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">Jeśli nie używasz Chrome, Firefox lub Edge, lub używasz ich wersji przenośnej, musisz dodać katalog danych zakładek i wybrać poprawny silnik przeglądarki, aby wtyczka działała.</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">Na przykład: silnikiem przeglądarki Brave jest Chromium, a domyślna lokalizacja danych zakładek to: &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. W przypadku silnika Firefoksa, katalog zakładek to folder danych użytkownika zawierający plik places.sqlite.</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Load favicons (can be time consuming during startup)</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Wczytaj ikony ulubionych (może być czasochłonne podczas uruchamiania)</system:String>
 
 </ResourceDictionary>

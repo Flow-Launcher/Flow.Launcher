@@ -96,8 +96,11 @@
     <system:String x:Key="plugin_explorer_deletefilefolder">מחק</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">מחק לצמיתות את הקובץ הנוכחי</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">מחק לצמיתות את התיקייה הנוכחית</system:String>
-    <system:String x:Key="plugin_explorer_path">נתיב:</system:String>
-    <system:String x:Key="plugin_explorer_name">שם:</system:String>
+    <system:String x:Key="plugin_explorer_name">שם</system:String>
+    <system:String x:Key="plugin_explorer_type">Type</system:String>
+    <system:String x:Key="plugin_explorer_path">נתיב</system:String>
+    <system:String x:Key="plugin_explorer_file">קובץ</system:String>
+    <system:String x:Key="plugin_explorer_folder">תיקייה</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">מחק את הפריט שנבחר</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">הפעל כמשתמש אחר</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">הפעל את הפריט שנבחר באמצעות חשבון משתמש אחר</system:String>

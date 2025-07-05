@@ -32,6 +32,8 @@ using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.ViewModel;
 using JetBrains.Annotations;
+using ModernWpf;
+using Squirrel;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher
@@ -583,6 +585,17 @@ namespace Flow.Launcher
 
         public Task<long> StopwatchLogInfoAsync(string className, string message, Func<Task> action, [CallerMemberName] string methodName = "") =>
             Stopwatch.InfoAsync(className, message, action, methodName);
+
+        public bool IsApplicationDarkTheme()
+        {
+            return ThemeManager.Current.ActualApplicationTheme == ApplicationTheme.Dark;
+        }
+
+        public event ActualApplicationThemeChangedEventHandler ActualApplicationThemeChanged
+        {
+            add => _mainVM.ActualApplicationThemeChanged += value;
+            remove => _mainVM.ActualApplicationThemeChanged -= value;
+        }
 
         public bool StartProcess(string fileName, string workingDirectory = "", string arguments = "", bool useShellExecute = false, string verb = "", bool createNoWindow = false)
         {

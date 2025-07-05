@@ -605,6 +605,16 @@ namespace Flow.Launcher.Plugin
         /// <returns>The time taken to execute the method in milliseconds</returns>
         public Task<long> StopwatchLogInfoAsync(string className, string message, Func<Task> action, [CallerMemberName] string methodName = "");
 
+        /// Representing whether the application is using a dark theme
+        /// </summary>
+        /// <returns></returns>
+        bool IsApplicationDarkTheme();
+
+        /// <summary>
+        /// Invoked when the actual theme of the application has changed. Currently, the plugin will continue to be subscribed even if it is turned off. 
+        /// </summary>
+        event ActualApplicationThemeChangedEventHandler ActualApplicationThemeChanged;
+
         /// <summary>
         /// Start a process with support for handling administrative privileges
         /// </summary>
