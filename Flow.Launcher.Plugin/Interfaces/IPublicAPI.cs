@@ -605,6 +605,7 @@ namespace Flow.Launcher.Plugin
         /// <returns>The time taken to execute the method in milliseconds</returns>
         public Task<long> StopwatchLogInfoAsync(string className, string message, Func<Task> action, [CallerMemberName] string methodName = "");
 
+        /// <summary>
         /// Representing whether the application is using a dark theme
         /// </summary>
         /// <returns></returns>

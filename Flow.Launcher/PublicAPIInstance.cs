@@ -33,7 +33,6 @@ using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.ViewModel;
 using JetBrains.Annotations;
 using ModernWpf;
-using Squirrel;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher
