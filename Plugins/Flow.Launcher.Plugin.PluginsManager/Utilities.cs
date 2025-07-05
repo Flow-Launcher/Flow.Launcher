@@ -65,9 +65,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             using (ZipArchive archive = System.IO.Compression.ZipFile.OpenRead(filePath))
             {
-                var pluginJsonPath = archive.Entries.FirstOrDefault(x => x.Name == "plugin.json").ToString();
-                ZipArchiveEntry pluginJsonEntry = archive.GetEntry(pluginJsonPath);
-
+                var pluginJsonEntry = archive.Entries.FirstOrDefault(x => x.Name == "plugin.json");
                 if (pluginJsonEntry != null)
                 {
                     using Stream stream = pluginJsonEntry.Open();

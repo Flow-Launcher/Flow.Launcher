@@ -92,6 +92,13 @@
                         </ui:MenuFlyout>
                     </ui:FlyoutService.Flyout>
                 </Button>
+                <Button
+                    Height="34"
+                    Margin="0 0 10 0"
+                    Command="{Binding InstallPluginCommand}"
+                    ToolTip="{DynamicResource installLocalPluginTooltip}">
+                    <ui:FontIcon FontSize="14" Glyph="&#xE8DA;" />
+                </Button>
                 <TextBox
                     Name="PluginStoreFilterTextbox"
                     Width="150"
