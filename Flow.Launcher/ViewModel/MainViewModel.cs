@@ -23,6 +23,7 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 using Microsoft.VisualStudio.Threading;
+using ModernWpf;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -197,6 +198,18 @@ namespace Flow.Launcher.ViewModel
 
             RegisterViewUpdate();
             _ = RegisterClockAndDateUpdateAsync();
+
+            ThemeManager.Current.ActualApplicationThemeChanged += ThemeManager_ActualApplicationThemeChanged;
+        }
+
+        private void ThemeManager_ActualApplicationThemeChanged(ThemeManager sender, object args)
+        {
+            ActualApplicationThemeChanged?.Invoke(
+                Application.Current,
+                new ActualApplicationThemeChangedEventArgs()
+                {
+                    IsDark = sender.ActualApplicationTheme == ApplicationTheme.Dark
+                });
         }
 
         private void RegisterViewUpdate()
@@ -879,6 +892,7 @@ namespace Flow.Launcher.ViewModel
         public bool MainWindowVisibilityStatus { get; set; } = true;
 
         public event VisibilityChangedEventHandler VisibilityChanged;
+        public event ActualApplicationThemeChangedEventHandler ActualApplicationThemeChanged;
 
         public Visibility ClockPanelVisibility { get; set; }
         public Visibility SearchIconVisibility { get; set; }
@@ -2243,6 +2257,7 @@ namespace Flow.Launcher.ViewModel
                     {
                         _resultsViewUpdateTask.Dispose();
                     }
+                    ThemeManager.Current.ActualApplicationThemeChanged -= ThemeManager_ActualApplicationThemeChanged;
                     _disposed = true;
                 }
             }
