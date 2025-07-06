@@ -188,6 +188,9 @@ namespace Flow.Launcher
 
                 Notification.Install();
 
+                // Enable Win32 dark mode if the system is in dark mode before creating all windows
+                Win32Helper.EnableWin32DarkMode(_settings.ColorScheme);
+
                 Ioc.Default.GetRequiredService<Portable>().PreStartCleanUpAfterPortabilityUpdate();
 
                 API.LogInfo(ClassName, "Begin Flow Launcher startup ----------------------------------------------------");
