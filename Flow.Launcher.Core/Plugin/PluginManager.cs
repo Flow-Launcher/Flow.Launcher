@@ -497,7 +497,7 @@ namespace Flow.Launcher.Core.Plugin
         {
             foreach (var plugin in GetHotkeyPlugins())
             {
-                var newHotkeys = ((IPluginHotkey)plugin.Plugin).GetPuginHotkeys();
+                var newHotkeys = ((IPluginHotkey)plugin.Plugin).GetPluginHotkeys();
                 if (_pluginHotkeyInfo.TryGetValue(plugin, out var oldHotkeys))
                 {
                     foreach (var newHotkey in newHotkeys)
@@ -524,7 +524,7 @@ namespace Flow.Launcher.Core.Plugin
         {
             foreach (var plugin in GetHotkeyPlugins())
             {
-                var hotkeys = ((IPluginHotkey)plugin.Plugin).GetPuginHotkeys();
+                var hotkeys = ((IPluginHotkey)plugin.Plugin).GetPluginHotkeys();
                 _pluginHotkeyInfo.Add(plugin, hotkeys);
             }
         }

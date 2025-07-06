@@ -70,7 +70,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             return Context.API.GetTranslation("plugin_pluginsmanager_plugin_description");
         }
 
-        public List<BasePluginHotkey> GetPuginHotkeys()
+        public List<BasePluginHotkey> GetPluginHotkeys()
         {
             return new List<BasePluginHotkey>
             {

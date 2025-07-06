@@ -112,7 +112,7 @@ namespace Flow.Launcher.Plugin.Explorer
             }
         }
 
-        public List<BasePluginHotkey> GetPuginHotkeys()
+        public List<BasePluginHotkey> GetPluginHotkeys()
         {
             return new List<BasePluginHotkey>
             {

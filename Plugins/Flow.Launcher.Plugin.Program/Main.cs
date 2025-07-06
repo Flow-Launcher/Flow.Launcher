@@ -460,7 +460,7 @@ namespace Flow.Launcher.Plugin.Program
             Win32.Dispose();
         }
 
-        public List<BasePluginHotkey> GetPuginHotkeys()
+        public List<BasePluginHotkey> GetPluginHotkeys()
         {
             return new List<BasePluginHotkey>
             {

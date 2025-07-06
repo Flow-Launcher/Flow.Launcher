@@ -11,6 +11,6 @@ namespace Flow.Launcher.Plugin
         /// Get the list of plugin hotkeys which will be registered in the settings page.
         /// </summary>
         /// <returns></returns>
-        List<BasePluginHotkey> GetPuginHotkeys();
+        List<BasePluginHotkey> GetPluginHotkeys();
     }
 }
