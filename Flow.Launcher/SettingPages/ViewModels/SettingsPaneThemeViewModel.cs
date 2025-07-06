@@ -136,6 +136,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             };
             Settings.ColorScheme = value;
             _ = _theme.RefreshFrameAsync();
+            Win32Helper.EnableWin32DarkMode(value);
         }
     }
 
