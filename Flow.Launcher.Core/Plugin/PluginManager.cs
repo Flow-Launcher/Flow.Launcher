@@ -700,6 +700,12 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 Settings.RemovePluginSettings(plugin.ID);
                 AllPlugins.RemoveAll(p => p.Metadata.ID == plugin.ID);
+                GlobalPlugins.RemoveWhere(p => p.Metadata.ID == plugin.ID);
+                var keysToRemove = NonGlobalPlugins.Where(p => p.Value.Metadata.ID == plugin.ID).Select(p => p.Key).ToList();
+                foreach (var key in keysToRemove)
+                {
+                    NonGlobalPlugins.Remove(key);
+                }
             }
 
             // Marked for deletion. Will be deleted on next start up
