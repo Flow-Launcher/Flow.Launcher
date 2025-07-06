@@ -26,7 +26,7 @@ public record RegisteredHotkeyData
     /// <summary>
     /// <see cref="HotkeyModel"/> representation of this hotkey.
     /// </summary>
-    public HotkeyModel Hotkey { get; set; }
+    public HotkeyModel Hotkey { get; private set; }
 
     /// <summary>
     /// String key in the localization dictionary that represents this hotkey. For example, <c>ReloadPluginHotkey</c>,
@@ -231,6 +231,15 @@ public record RegisteredHotkeyData
         Command = command;
         CommandParameter = parameter;
         RemoveHotkey = removeHotkey;
+    }
+
+    /// <summary>
+    /// Sets the hotkey for this registered hotkey data.
+    /// </summary>
+    /// <param name="hotkey"></param>
+    public void SetHotkey(HotkeyModel hotkey)
+    {
+        Hotkey = hotkey;
     }
 
     /// <inheritdoc />

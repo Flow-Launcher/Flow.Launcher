@@ -260,7 +260,7 @@ internal static class HotKeyMapper
         {
             var hotkeyData = SearchRegisteredHotkeyData(metadata, globalPluginHotkey);
             RemoveHotkey(hotkeyData);
-            hotkeyData.Hotkey = newHotkey;
+            hotkeyData.SetHotkey(newHotkey);
             SetHotkey(hotkeyData);
         }
         else if (pluginHotkey is SearchWindowPluginHotkey)
@@ -591,7 +591,7 @@ internal static class HotKeyMapper
         RemoveHotkey(registeredHotkeyData);
 
         // Update the hotkey string
-        registeredHotkeyData.Hotkey = newHotkey;
+        registeredHotkeyData.SetHotkey(newHotkey);
 
         // Set the new hotkey
         SetHotkey(registeredHotkeyData);
