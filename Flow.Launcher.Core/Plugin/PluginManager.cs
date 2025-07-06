@@ -576,7 +576,7 @@ namespace Flow.Launcher.Core.Plugin
             var uninstallSuccess = await UninstallPluginAsync(existingVersion, removePluginFromSettings: false, removePluginSettings: false, checkModified: false);
             if (!uninstallSuccess) return false;
 
-            _modifiedPlugins.Add(existingVersion.ID);
+            ModifiedPlugins.Add(existingVersion.ID);
             return true;
         }
 
