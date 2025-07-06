@@ -260,7 +260,7 @@ namespace Flow.Launcher.ViewModel
 
         public void RegisterResultsUpdatedEvent()
         {
-            foreach (var pair in PluginManager.GetPluginsForInterface<IResultUpdated>())
+            foreach (var pair in PluginManager.GetResultUpdatePlugin())
             {
                 var plugin = (IResultUpdated)pair.Plugin;
                 plugin.ResultsUpdated += (s, e) =>
