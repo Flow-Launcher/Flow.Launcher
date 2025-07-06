@@ -69,15 +69,33 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
             return;
         }
 
-        var window = new CustomQueryHotkeySetting(Settings);
-        window.UpdateItem(item);
-        window.ShowDialog();
+        var settingItem = Settings.CustomPluginHotkeys.FirstOrDefault(o =>
+            o.ActionKeyword == item.ActionKeyword && o.Hotkey == item.Hotkey);
+        if (settingItem == null)
+        {
+            App.API.ShowMsgBox(App.API.GetTranslation("invalidPluginHotkey"));
+            return;
+        }
+
+        var window = new CustomQueryHotkeySetting(settingItem);
+        if (window.ShowDialog() is not true) return;
+
+        var index = Settings.CustomPluginHotkeys.IndexOf(settingItem);
+        Settings.CustomPluginHotkeys[index] = new CustomPluginHotkey(window.Hotkey, window.ActionKeyword);
+        HotKeyMapper.RemoveHotkey(settingItem.Hotkey); // remove origin hotkey
+        HotKeyMapper.SetCustomQueryHotkey(Settings.CustomPluginHotkeys[index]); // set new hotkey
     }
 
     [RelayCommand]
     private void CustomHotkeyAdd()
     {
-        new CustomQueryHotkeySetting(Settings).ShowDialog();
+        var window = new CustomQueryHotkeySetting();
+        if (window.ShowDialog() is true)
+        {
+            var customHotkey = new CustomPluginHotkey(window.Hotkey, window.ActionKeyword);
+            Settings.CustomPluginHotkeys.Add(customHotkey);
+            HotKeyMapper.SetCustomQueryHotkey(customHotkey); // set new hotkey
+        }
     }
 
     [RelayCommand]
@@ -114,10 +132,18 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
             return;
         }
 
-        var window = new CustomShortcutSetting(item.Key, item.Value, this);
+        var settingItem = Settings.CustomShortcuts.FirstOrDefault(o =>
+            o.Key == item.Key && o.Value == item.Value);
+        if (settingItem == null)
+        {
+            App.API.ShowMsgBox(App.API.GetTranslation("invalidShortcut"));
+            return;
+        }
+
+        var window = new CustomShortcutSetting(settingItem.Key, settingItem.Value, this);
         if (window.ShowDialog() is not true) return;
 
-        var index = Settings.CustomShortcuts.IndexOf(item);
+        var index = Settings.CustomShortcuts.IndexOf(settingItem);
         Settings.CustomShortcuts[index] = new CustomShortcutModel(window.Key, window.Value);
     }
 
