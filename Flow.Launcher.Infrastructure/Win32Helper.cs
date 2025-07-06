@@ -801,16 +801,22 @@ namespace Flow.Launcher.Infrastructure
         [DllImport("uxtheme.dll", EntryPoint = "#135", SetLastError = true)]
         private static extern int SetPreferredAppMode(int appMode);
 
-        public static void EnableWin32DarkMode()
+        public static void EnableWin32DarkMode(string colorScheme)
         {
             try
             {
-                // From Windows 10 1809
-                // AppMode: 0=Default, 1=AllowDark, 2=ForceDark, 3=ForceLight, 4=Max
+                // Undocumented API from Windows 10 1809
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) &&
                     Environment.OSVersion.Version.Build >= 17763)
                 {
-                    _ = SetPreferredAppMode(1);
+                    var flag = colorScheme switch
+                    {
+                        Constant.Light => 3, // ForceLight
+                        Constant.Dark => 2, // ForceDark
+                        Constant.System => 1, // AllowDark
+                        _ => 0 // Default
+                    };
+                    _ = SetPreferredAppMode(flag);
                 }
 
             }
