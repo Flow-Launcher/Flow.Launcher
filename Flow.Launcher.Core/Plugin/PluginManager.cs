@@ -563,8 +563,8 @@ namespace Flow.Launcher.Core.Plugin
 
         public static async Task UpdatePluginAsync(PluginMetadata existingVersion, UserPlugin newVersion, string zipFilePath)
         {
-            InstallPlugin(newVersion, zipFilePath, checkModified:false);
-            await UninstallPluginAsync(existingVersion, removePluginFromSettings:false, removePluginSettings:false, checkModified: false);
+            InstallPlugin(newVersion, zipFilePath, checkModified: false);
+            await UninstallPluginAsync(existingVersion, removePluginFromSettings: false, removePluginSettings: false, checkModified: false);
             ModifiedPlugins.Add(existingVersion.ID);
         }
 
