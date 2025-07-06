@@ -391,11 +391,13 @@ namespace Flow.Launcher.Plugin.SharedCommands
             }
             return true;
         }
+
+        private static readonly string[] ReservedNames = new[] { "CON", "PRN", "AUX", "NUL", "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9", "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9" };
+
         private static bool IsReservedName(string name)
         {
-            string[] reservedNames = new[] { "CON", "PRN", "AUX", "NUL", "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9", "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9" };
-            string nameWithoutExtension = Path.GetFileNameWithoutExtension(name).ToUpperInvariant();
-            if (reservedNames.Contains(nameWithoutExtension))
+            var nameWithoutExtension = Path.GetFileNameWithoutExtension(name).ToUpperInvariant();
+            if (ReservedNames.Contains(nameWithoutExtension))
             {
                 return true;
             }
