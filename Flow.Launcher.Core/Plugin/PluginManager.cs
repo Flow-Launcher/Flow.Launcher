@@ -556,10 +556,10 @@ namespace Flow.Launcher.Core.Plugin
                 return false;
             }
 
-            var installSuccess = InstallPlugin(newVersion, zipFilePath, checkModified:false);
+            var installSuccess = InstallPlugin(newVersion, zipFilePath, checkModified: false);
             if (!installSuccess) return false;
 
-            var uninstallSuccess = await UninstallPluginAsync(existingVersion, removePluginFromSettings:false, removePluginSettings:false, checkModified: false);
+            var uninstallSuccess = await UninstallPluginAsync(existingVersion, removePluginFromSettings: false, removePluginSettings: false, checkModified: false);
             if (!uninstallSuccess) return false;
 
             _modifiedPlugins.Add(existingVersion.ID);
