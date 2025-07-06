@@ -24,9 +24,6 @@ namespace Flow.Launcher.Core.Plugin
     {
         private static readonly string ClassName = nameof(PluginManager);
 
-        private static IEnumerable<PluginPair> _contextMenuPlugins;
-        private static IEnumerable<PluginPair> _homePlugins;
-
         public static List<PluginPair> AllPlugins { get; private set; }
         public static readonly HashSet<PluginPair> GlobalPlugins = new();
         public static readonly Dictionary<string, PluginPair> NonGlobalPlugins = new();
@@ -36,8 +33,12 @@ namespace Flow.Launcher.Core.Plugin
         private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
 
         private static PluginsSettings Settings;
-        private static List<PluginMetadata> _metadatas;
-        private static readonly List<string> _modifiedPlugins = new();
+        private static readonly ConcurrentBag<string> ModifiedPlugins = new();
+
+        private static IEnumerable<PluginPair> _contextMenuPlugins;
+        private static IEnumerable<PluginPair> _homePlugins;
+        private static IEnumerable<PluginPair> _resultUpdatePlugin;
+        private static IEnumerable<PluginPair> _translationPlugins;
 
         /// <summary>
         /// Directories that will hold Flow Launcher plugin directory
@@ -173,12 +174,18 @@ namespace Flow.Launcher.Core.Plugin
         /// <param name="settings"></param>
         public static void LoadPlugins(PluginsSettings settings)
         {
-            _metadatas = PluginConfig.Parse(Directories);
+            var metadatas = PluginConfig.Parse(Directories);
             Settings = settings;
-            Settings.UpdatePluginSettings(_metadatas);
-            AllPlugins = PluginsLoader.Plugins(_metadatas, Settings);
+            Settings.UpdatePluginSettings(metadatas);
+            AllPlugins = PluginsLoader.Plugins(metadatas, Settings);
             // Since dotnet plugins need to get assembly name first, we should update plugin directory after loading plugins
-            UpdatePluginDirectory(_metadatas);
+            UpdatePluginDirectory(metadatas);
+
+            // Initialize plugin enumerable after all plugins are initialized
+            _contextMenuPlugins = GetPluginsForInterface<IContextMenu>();
+            _homePlugins = GetPluginsForInterface<IAsyncHomeQuery>();
+            _resultUpdatePlugin = GetPluginsForInterface<IResultUpdated>();
+            _translationPlugins = GetPluginsForInterface<IPluginI18n>();
         }
 
         private static void UpdatePluginDirectory(List<PluginMetadata> metadatas)
@@ -247,9 +254,6 @@ namespace Flow.Launcher.Core.Plugin
             }));
 
             await Task.WhenAll(InitTasks);
-
-            _contextMenuPlugins = GetPluginsForInterface<IContextMenu>();
-            _homePlugins = GetPluginsForInterface<IAsyncHomeQuery>();
 
             foreach (var plugin in AllPlugins)
             {
@@ -409,16 +413,26 @@ namespace Flow.Launcher.Core.Plugin
             return AllPlugins.FirstOrDefault(o => o.Metadata.ID == id);
         }
 
-        public static IEnumerable<PluginPair> GetPluginsForInterface<T>() where T : IFeatures
+        private static IEnumerable<PluginPair> GetPluginsForInterface<T>() where T : IFeatures
         {
             // Handle scenario where this is called before all plugins are instantiated, e.g. language change on startup
             return AllPlugins?.Where(p => p.Plugin is T) ?? Array.Empty<PluginPair>();
         }
 
+        public static IList<PluginPair> GetResultUpdatePlugin()
+        {
+            return _resultUpdatePlugin.Where(p => !PluginModified(p.Metadata.ID)).ToList();
+        }
+
+        public static IList<PluginPair> GetTranslationPlugins()
+        {
+            return _translationPlugins.Where(p => !PluginModified(p.Metadata.ID)).ToList();
+        }
+
         public static List<Result> GetContextMenusForPlugin(Result result)
         {
             var results = new List<Result>();
-            var pluginPair = _contextMenuPlugins.FirstOrDefault(o => o.Metadata.ID == result.PluginID);
+            var pluginPair = _contextMenuPlugins.Where(p => !PluginModified(p.Metadata.ID)).FirstOrDefault(o => o.Metadata.ID == result.PluginID);
             if (pluginPair != null)
             {
                 var plugin = (IContextMenu)pluginPair.Plugin;
@@ -446,7 +460,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static bool IsHomePlugin(string id)
         {
-            return _homePlugins.Any(p => p.Metadata.ID == id);
+            return _homePlugins.Where(p => !PluginModified(p.Metadata.ID)).Any(p => p.Metadata.ID == id);
         }
 
         public static bool ActionKeywordRegistered(string actionKeyword)
@@ -544,7 +558,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static bool PluginModified(string id)
         {
-            return _modifiedPlugins.Contains(id);
+            return ModifiedPlugins.Contains(id);
         }
 
         public static async Task<bool> UpdatePluginAsync(PluginMetadata existingVersion, UserPlugin newVersion, string zipFilePath)
@@ -655,7 +669,7 @@ namespace Flow.Launcher.Core.Plugin
 
             if (checkModified)
             {
-                _modifiedPlugins.Add(plugin.ID);
+                ModifiedPlugins.Add(plugin.ID);
             }
 
             return true;
@@ -721,6 +735,12 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 Settings.RemovePluginSettings(plugin.ID);
                 AllPlugins.RemoveAll(p => p.Metadata.ID == plugin.ID);
+                GlobalPlugins.RemoveWhere(p => p.Metadata.ID == plugin.ID);
+                var keysToRemove = NonGlobalPlugins.Where(p => p.Value.Metadata.ID == plugin.ID).Select(p => p.Key).ToList();
+                foreach (var key in keysToRemove)
+                {
+                    NonGlobalPlugins.Remove(key);
+                }
             }
 
             // Marked for deletion. Will be deleted on next start up
@@ -728,7 +748,7 @@ namespace Flow.Launcher.Core.Plugin
 
             if (checkModified)
             {
-                _modifiedPlugins.Add(plugin.ID);
+                ModifiedPlugins.Add(plugin.ID);
             }
 
             return true;
