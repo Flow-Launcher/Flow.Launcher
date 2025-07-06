@@ -442,6 +442,11 @@ namespace Flow.Launcher.Core.Plugin
             return _translationPlugins.Where(p => !PluginModified(p.Metadata.ID)).ToList();
         }
 
+        public static IList<PluginPair> GetHotkeyPlugins()
+        {
+            return _hotkeyPlugins.Where(p => !PluginModified(p.Metadata.ID)).ToList();
+        }
+
         public static List<Result> GetContextMenusForPlugin(Result result)
         {
             var results = new List<Result>();
@@ -488,7 +493,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static void UpdatePluginHotkeyInfoTranslations()
         {
-            foreach (var plugin in _hotkeyPlugins)
+            foreach (var plugin in GetHotkeyPlugins())
             {
                 var newHotkeys = ((IPluginHotkey)plugin.Plugin).GetPuginHotkeys();
                 if (_pluginHotkeyInfo.TryGetValue(plugin, out var oldHotkeys))
@@ -515,7 +520,7 @@ namespace Flow.Launcher.Core.Plugin
 
         private static void InitializePluginHotkeyInfo()
         {
-            foreach (var plugin in _hotkeyPlugins)
+            foreach (var plugin in GetHotkeyPlugins())
             {
                 var hotkeys = ((IPluginHotkey)plugin.Plugin).GetPuginHotkeys();
                 _pluginHotkeyInfo.Add(plugin, hotkeys);
