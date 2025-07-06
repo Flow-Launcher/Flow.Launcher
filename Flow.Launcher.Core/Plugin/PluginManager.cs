@@ -476,17 +476,6 @@ namespace Flow.Launcher.Core.Plugin
             return _homePlugins.Where(p => !PluginModified(p.Metadata.ID)).Any(p => p.Metadata.ID == id);
         }
 
-        public static IList<PluginPair> GetResultUpdatePlugin()
-        {
-            return _resultUpdatePlugin.Where(p => !PluginModified(p.Metadata.ID)).ToList();
-        }
-
-        public static IList<PluginPair> GetTranslationPlugins()
-        {
-            // Here we still return the modified plugins to update the possible string resources
-            return _translationPlugins.ToList();
-        }
-
         public static Dictionary<PluginPair, List<BasePluginHotkey>> GetPluginHotkeyInfo()
         {
             return _pluginHotkeyInfo;
