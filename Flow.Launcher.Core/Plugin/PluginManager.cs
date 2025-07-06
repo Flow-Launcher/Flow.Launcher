@@ -481,14 +481,16 @@ namespace Flow.Launcher.Core.Plugin
             return _homePlugins.Where(p => !PluginModified(p.Metadata.ID)).Any(p => p.Metadata.ID == id);
         }
 
-        public static Dictionary<PluginPair, List<BasePluginHotkey>> GetPluginHotkeyInfo()
+        public static IDictionary<PluginPair, List<BasePluginHotkey>> GetPluginHotkeyInfo()
         {
-            return _pluginHotkeyInfo;
+            return _pluginHotkeyInfo.Where(p => !PluginModified(p.Key.Metadata.ID))
+                                    .ToDictionary(p => p.Key, p => p.Value);
         }
 
-        public static Dictionary<HotkeyModel, List<(PluginMetadata Metadata, SearchWindowPluginHotkey SearchWindowPluginHotkey)>> GetWindowPluginHotkeys()
+        public static IDictionary<HotkeyModel, List<(PluginMetadata Metadata, SearchWindowPluginHotkey SearchWindowPluginHotkey)>> GetWindowPluginHotkeys()
         {
-            return _windowPluginHotkeys;
+            // Here we do not need to check PluginModified since we will check it in hotkey events
+            return _windowPluginHotkeys.ToDictionary(p => p.Key, p => p.Value);
         }
 
         public static void UpdatePluginHotkeyInfoTranslations()

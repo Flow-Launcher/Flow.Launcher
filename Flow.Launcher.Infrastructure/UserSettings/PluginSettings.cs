@@ -93,7 +93,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /// Update plugin hotkey information in metadata and plugin setting.
         /// </summary>
         /// <param name="hotkeyPluginInfo"></param>
-        public void UpdatePluginHotkeyInfo(Dictionary<PluginPair, List<BasePluginHotkey>> hotkeyPluginInfo)
+        public void UpdatePluginHotkeyInfo(IDictionary<PluginPair, List<BasePluginHotkey>> hotkeyPluginInfo)
         {
             foreach (var info in hotkeyPluginInfo)
             {
