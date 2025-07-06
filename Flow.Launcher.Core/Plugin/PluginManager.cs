@@ -701,7 +701,8 @@ namespace Flow.Launcher.Core.Plugin
                 Settings.RemovePluginSettings(plugin.ID);
                 AllPlugins.RemoveAll(p => p.Metadata.ID == plugin.ID);
                 GlobalPlugins.RemoveWhere(p => p.Metadata.ID == plugin.ID);
-                foreach (var key in NonGlobalPlugins.Where(p => p.Value.Metadata.ID == plugin.ID).Select(p => p.Key))
+                var keysToRemove = NonGlobalPlugins.Where(p => p.Value.Metadata.ID == plugin.ID).Select(p => p.Key).ToList();
+                foreach (var key in keysToRemove)
                 {
                     NonGlobalPlugins.Remove(key);
                 }
