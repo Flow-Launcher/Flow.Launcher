@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -365,6 +364,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 }
             }
         }
+
         /// <summary>
         /// Return true is the given name is a valid file name
         /// </summary>
@@ -377,13 +377,14 @@ namespace Flow.Launcher.Plugin.SharedCommands
             }
             return true;
         }
+
         /// <summary>
         /// Returns true is the given name is a valid name for a directory, not a path
         /// </summary>
         public static bool IsValidDirectoryName(string name)
         {
             if (IsReservedName(name)) return false;
-            char[] invalidChars = Path.GetInvalidPathChars().Append('/').ToArray().Append('\\').ToArray();
+            var invalidChars = Path.GetInvalidPathChars().Append('/').ToArray().Append('\\').ToArray();
             if (name.IndexOfAny(invalidChars) >= 0)
             {
                 return false;
