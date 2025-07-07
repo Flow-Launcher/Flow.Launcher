@@ -101,3 +101,5 @@ Softpedia
 img
 Reloadable
 metadatas
+WMP
+VSTHRD

@@ -23,8 +23,8 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         /// <param name="query">query text</param>
         /// <param name="requery">
-        /// Force requery. By default, Flow Launcher will not fire query if your query is same with existing one. 
-        /// Set this to <see langword="true"/> to force Flow Launcher requerying
+        /// Force requery. By default, Flow Launcher will not fire query if your query is same with existing one.
+        /// Set this to <see langword="true"/> to force Flow Launcher re-querying
         /// </param>
         void ChangeQuery(string query, bool requery = false);
 
@@ -49,7 +49,7 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         /// <param name="text">Text to save on clipboard</param>
         /// <param name="directCopy">When true it will directly copy the file/folder from the path specified in text</param>
-        /// <param name="showDefaultNotification">Whether to show the default notification from this method after copy is done. 
+        /// <param name="showDefaultNotification">Whether to show the default notification from this method after copy is done.
         ///                                         It will show file/folder/text is copied successfully.
         ///                                         Turn this off to show your own notification after copy is done.</param>>
         public void CopyToClipboard(string text, bool directCopy = false, bool showDefaultNotification = true);
@@ -65,7 +65,7 @@ namespace Flow.Launcher.Plugin
         void SavePluginSettings();
 
         /// <summary>
-        /// Reloads any Plugins that have the 
+        /// Reloads any Plugins that have the
         /// IReloadable implemented. It refeshes
         /// Plugin's in memory data with new content
         /// added by user.
@@ -97,7 +97,7 @@ namespace Flow.Launcher.Plugin
         /// Show the MainWindow when hiding
         /// </summary>
         void ShowMainWindow();
-        
+
         /// <summary>
         /// Focus the query text box in the main window
         /// </summary>
@@ -115,7 +115,7 @@ namespace Flow.Launcher.Plugin
         bool IsMainWindowVisible();
 
         /// <summary>
-        /// Invoked when the visibility of the main window has changed. Currently, the plugin will continue to be subscribed even if it is turned off. 
+        /// Invoked when the visibility of the main window has changed. Currently, the plugin will continue to be subscribed even if it is turned off.
         /// </summary>
         event VisibilityChangedEventHandler VisibilityChanged;
 
@@ -171,7 +171,7 @@ namespace Flow.Launcher.Plugin
         string GetTranslation(string key);
 
         /// <summary>
-        /// Get all loaded plugins 
+        /// Get all loaded plugins
         /// </summary>
         /// <returns></returns>
         List<PluginPair> GetAllPlugins();
@@ -229,7 +229,7 @@ namespace Flow.Launcher.Plugin
         MatchResult FuzzySearch(string query, string stringToCompare);
 
         /// <summary>
-        /// Http download the spefic url and return as string
+        /// Http download the specific url and return as string
         /// </summary>
         /// <param name="url">URL to call Http Get</param>
         /// <param name="token">Cancellation Token</param>
@@ -237,7 +237,7 @@ namespace Flow.Launcher.Plugin
         Task<string> HttpGetStringAsync(string url, CancellationToken token = default);
 
         /// <summary>
-        /// Http download the spefic url and return as stream
+        /// Http download the specific url and return as stream
         /// </summary>
         /// <param name="url">URL to call Http Get</param>
         /// <param name="token">Cancellation Token</param>
@@ -305,8 +305,8 @@ namespace Flow.Launcher.Plugin
         void LogError(string className, string message, [CallerMemberName] string methodName = "");
 
         /// <summary>
-        /// Log an Exception. Will throw if in debug mode so developer will be aware, 
-        /// otherwise logs the eror message. This is the primary logging method used for Flow 
+        /// Log an Exception. Will throw if in debug mode so developer will be aware,
+        /// otherwise logs the eror message. This is the primary logging method used for Flow
         /// </summary>
         void LogException(string className, string message, Exception e, [CallerMemberName] string methodName = "");
 
@@ -393,7 +393,7 @@ namespace Flow.Launcher.Plugin
 
         /// <summary>
         /// Reloads the query.
-        /// When current results are from context menu or history, it will go back to query results before requerying.
+        /// When current results are from context menu or history, it will go back to query results before re-querying.
         /// </summary>
         /// <param name="reselect">Choose the first result after reload if true; keep the last selected result if false. Default is true.</param>
         public void ReQuery(bool reselect = true);
@@ -610,7 +610,7 @@ namespace Flow.Launcher.Plugin
         bool IsApplicationDarkTheme();
 
         /// <summary>
-        /// Invoked when the actual theme of the application has changed. Currently, the plugin will continue to be subscribed even if it is turned off. 
+        /// Invoked when the actual theme of the application has changed. Currently, the plugin will continue to be subscribed even if it is turned off.
         /// </summary>
         event ActualApplicationThemeChangedEventHandler ActualApplicationThemeChanged;
     }
