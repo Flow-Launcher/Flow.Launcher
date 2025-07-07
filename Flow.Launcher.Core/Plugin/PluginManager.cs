@@ -550,8 +550,9 @@ namespace Flow.Launcher.Core.Plugin
         private static bool SameOrLesserPluginVersionExists(string metadataPath)
         {
             var newMetadata = JsonSerializer.Deserialize<PluginMetadata>(File.ReadAllText(metadataPath));
+
             if (!Version.TryParse(newMetadata.Version, out var newVersion))
-                throw new InvalidOperationException($"A plugin with the same ID and version already exists, or the version is greater than this downloaded plugin {plugin.Name}");
+                return true; // If version is not valid, we assume it is lesser than any existing version
 
             return AllPlugins.Any(x => x.Metadata.ID == newMetadata.ID
                                        && Version.TryParse(x.Metadata.Version, out var version)
