@@ -273,7 +273,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 {
                     foreach (var explorer in _quickSwitchExplorers.Keys)
                     {
-                        if (explorer.Metadata.Disabled) continue;
+                        if (API.PluginModified(explorer.Metadata.ID) || // Plugin is modified
+                            explorer.Metadata.Disabled) continue; // Plugin is disabled
 
                         var explorerWindow = explorer.Plugin.CheckExplorerWindow(hWnd);
                         if (explorerWindow != null)
@@ -532,7 +533,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                         {
                             foreach (var explorer in _quickSwitchExplorers.Keys)
                             {
-                                if (explorer.Metadata.Disabled) continue;
+                                if (API.PluginModified(explorer.Metadata.ID) || // Plugin is modified
+                                    explorer.Metadata.Disabled) continue; // Plugin is disabled
 
                                 var explorerWindow = explorer.Plugin.CheckExplorerWindow(hwnd);
                                 if (explorerWindow != null)
