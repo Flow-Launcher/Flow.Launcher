@@ -521,12 +521,12 @@ namespace Flow.Launcher.Core.Plugin
 
         public static IList<QuickSwitchExplorerPair> GetQuickSwitchExplorers()
         {
-            return _quickSwitchExplorerPlugins;
+            return _quickSwitchExplorerPlugins.Where(p => !PluginModified(p.Metadata.ID)).ToList();
         }
 
         public static IList<QuickSwitchDialogPair> GetQuickSwitchDialogs()
         {
-            return _quickSwitchDialogPlugins;
+            return _quickSwitchDialogPlugins.Where(p => !PluginModified(p.Metadata.ID)).ToList();
         }
 
         public static bool ActionKeywordRegistered(string actionKeyword)
