@@ -19,32 +19,32 @@ namespace Flow.Launcher
 
         public static async Task ShowAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action cancelProgress = null)
         {
-            ProgressBoxEx prgBox = null;
+            ProgressBoxEx progressBox = null;
             try
             {
                 if (!Application.Current.Dispatcher.CheckAccess())
                 {
                     await Application.Current.Dispatcher.InvokeAsync(() =>
                     {
-                        prgBox = new ProgressBoxEx(cancelProgress)
+                        progressBox = new ProgressBoxEx(cancelProgress)
                         {
                             Title = caption
                         };
-                        prgBox.TitleTextBlock.Text = caption;
-                        prgBox.Show();
+                        progressBox.TitleTextBlock.Text = caption;
+                        progressBox.Show();
                     });
                 }
                 else
                 {
-                    prgBox = new ProgressBoxEx(cancelProgress)
+                    progressBox = new ProgressBoxEx(cancelProgress)
                     {
                         Title = caption
                     };
-                    prgBox.TitleTextBlock.Text = caption;
-                    prgBox.Show();
+                    progressBox.TitleTextBlock.Text = caption;
+                    progressBox.Show();
                 }
 
-                await reportProgressAsync(prgBox.ReportProgress).ConfigureAwait(false);
+                await reportProgressAsync(progressBox.ReportProgress).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -58,12 +58,12 @@ namespace Flow.Launcher
                 {
                     await Application.Current.Dispatcher.InvokeAsync(() =>
                     {
-                        prgBox?.Close();
+                        progressBox?.Close();
                     });
                 }
                 else
                 {
-                    prgBox?.Close();
+                    progressBox?.Close();
                 }
             }
         }
