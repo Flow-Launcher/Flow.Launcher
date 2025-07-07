@@ -138,6 +138,10 @@
     <system:String x:Key="homeToggleBoxToolTip">这只能在插件支持主页功能和主页启用时进行编辑。</system:String>
     <system:String x:Key="showAtTopmost">将搜索窗口置于顶层</system:String>
     <system:String x:Key="showAtTopmostToolTip">覆盖其他“总是在顶部”的程序窗口并在最顶层的位置显示 Flow Launcher 搜索窗口。</system:String>
+    <system:String x:Key="autoRestartAfterChanging">Restart after modifying plugin via Plugin Store</system:String>
+    <system:String x:Key="autoRestartAfterChangingToolTip">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugin Store</system:String>
+    <system:String x:Key="showUnknownSourceWarning">Show unknown source warning</system:String>
+    <system:String x:Key="showUnknownSourceWarningToolTip">Show warning when installing plugins from unknown sources</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">搜索插件</system:String>
@@ -176,6 +180,12 @@
     <system:String x:Key="failedToRemovePluginSettingsMessage">插件：{0} - 移除插件设置文件失败，请手动删除</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">移除插件缓存失败</system:String>
     <system:String x:Key="failedToRemovePluginCacheMessage">插件：{0} - 移除插件设置文件失败，请手动删除</system:String>
+    <system:String x:Key="pluginModifiedAlreadyTitle">{0} modified already</system:String>
+    <system:String x:Key="pluginModifiedAlreadyMessage">Please restart Flow before making any further changes</system:String>
+    <system:String x:Key="failedToInstallPluginTitle">Fail to install {0}</system:String>
+    <system:String x:Key="failedToUninstallPluginTitle">Fail to uninstall {0}</system:String>
+    <system:String x:Key="fileNotFoundMessage">Unable to find plugin.json from the extracted zip file, or this path {0} does not exist</system:String>
+    <system:String x:Key="pluginExistAlreadyMessage">A plugin with the same ID and version already exists, or the version is greater than this downloaded plugin</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">插件商店</system:String>
@@ -191,6 +201,28 @@
     <system:String x:Key="LabelNew">新版本</system:String>
     <system:String x:Key="LabelNewToolTip">此插件在过去7天内有更新</system:String>
     <system:String x:Key="LabelUpdateToolTip">有可用的更新</system:String>
+    <system:String x:Key="ErrorInstallingPlugin">安装插件时出错</system:String>
+    <system:String x:Key="ErrorUninstallingPlugin">卸载插件时出错</system:String>
+    <system:String x:Key="ErrorUpdatingPlugin">Error updating plugin</system:String>
+    <system:String x:Key="KeepPluginSettingsTitle">保留插件设置</system:String>
+    <system:String x:Key="KeepPluginSettingsSubtitle">你想要保留插件设置以便下一次的使用吗？</system:String>
+    <system:String x:Key="InstallSuccessNoRestart">成功安装插件{0}。请重新启动 Flow Launcher。</system:String>
+    <system:String x:Key="UninstallSuccessNoRestart">成功卸载插件{0}。请重新启动 Flow Launcher。</system:String>
+    <system:String x:Key="UpdateSuccessNoRestart">成功更新插件{0}。请重新启动 Flow Launcher。</system:String>
+    <system:String x:Key="InstallPromptTitle">Plugin install</system:String>
+    <system:String x:Key="InstallPromptSubtitle">{0} 作者： {1} {2}{2}您想要安装这个插件吗？</system:String>
+    <system:String x:Key="UninstallPromptTitle">Plugin uninstall</system:String>
+    <system:String x:Key="UninstallPromptSubtitle">{0} 作者： {1} {2}{2}您想要卸载这个插件吗？</system:String>
+    <system:String x:Key="UpdatePromptTitle">Plugin update</system:String>
+    <system:String x:Key="UpdatePromptSubtitle">{0} 作者： {1} {2}{2}您想要更新这个插件吗？</system:String>
+    <system:String x:Key="DownloadingPlugin">下载插件</system:String>
+    <system:String x:Key="AutoRestartAfterChange">Automatically restart after installing/uninstalling/updating plugins in plugin store</system:String>
+    <system:String x:Key="ZipFileNotHavePluginJson">Zip file does not have a valid plugin.json configuration</system:String>
+    <system:String x:Key="InstallFromUnknownSourceTitle">从未知源安装</system:String>
+    <system:String x:Key="InstallFromUnknownSourceSubtitle">This plugin is from an unknown source and it may contain potential risks!{0}{0}Please ensure you understand where this plugin is from and that it is safe.{0}{0}Would you like to continue still?{0}{0}(You can switch off this warning in general section of setting window)</system:String>
+    <system:String x:Key="ZipFiles">Zip files</system:String>
+    <system:String x:Key="SelectZipFile">Please select zip file</system:String>
+    <system:String x:Key="installLocalPluginTooltip">Install plugin from local path</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">主题</system:String>
