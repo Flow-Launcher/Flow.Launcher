@@ -13,7 +13,7 @@ using Flow.Launcher.Plugin;
 namespace Flow.Launcher.Core.Plugin;
 
 /// <summary>
-/// Helper class for installing, updating, and uninstalling plugins.
+/// Class for installing, updating, and uninstalling plugins.
 /// </summary>
 public static class PluginInstaller
 {
@@ -25,6 +25,11 @@ public static class PluginInstaller
     private static IPublicAPI api = null;
     private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
 
+    /// <summary>
+    /// Installs a plugin and restarts the application if required by settings. Prompts user for confirmation and handles download if needed.
+    /// </summary>
+    /// <param name="newPlugin">The plugin to install.</param>
+    /// <returns>A Task representing the asynchronous install operation.</returns>
     public static async Task InstallPluginAndCheckRestartAsync(UserPlugin newPlugin)
     {
         if (API.PluginModified(newPlugin.ID))
@@ -106,6 +111,11 @@ public static class PluginInstaller
         }
     }
 
+    /// <summary>
+    /// Installs a plugin from a local zip file and restarts the application if required by settings. Validates the zip and prompts user for confirmation.
+    /// </summary>
+    /// <param name="filePath">The path to the plugin zip file.</param>
+    /// <returns>A Task representing the asynchronous install operation.</returns>
     public static async Task InstallPluginAndCheckRestartAsync(string filePath)
     {
         UserPlugin plugin;
@@ -147,6 +157,11 @@ public static class PluginInstaller
         await InstallPluginAndCheckRestartAsync(plugin);
     }
 
+    /// <summary>
+    /// Uninstalls a plugin and restarts the application if required by settings. Prompts user for confirmation and whether to keep plugin settings.
+    /// </summary>
+    /// <param name="oldPlugin">The plugin metadata to uninstall.</param>
+    /// <returns>A Task representing the asynchronous uninstall operation.</returns>
     public static async Task UninstallPluginAndCheckRestartAsync(PluginMetadata oldPlugin)
     {
         if (API.PluginModified(oldPlugin.ID))
@@ -197,6 +212,12 @@ public static class PluginInstaller
         }
     }
 
+    /// <summary>
+    /// Updates a plugin to a new version and restarts the application if required by settings. Prompts user for confirmation and handles download if needed.
+    /// </summary>
+    /// <param name="newPlugin">The new plugin version to install.</param>
+    /// <param name="oldPlugin">The existing plugin metadata to update.</param>
+    /// <returns>A Task representing the asynchronous update operation.</returns>
     public static async Task UpdatePluginAndCheckRestartAsync(UserPlugin newPlugin, PluginMetadata oldPlugin)
     {
         if (API.ShowMsgBox(
@@ -256,7 +277,17 @@ public static class PluginInstaller
         }
     }
 
-    private static async Task DownloadFileAsync(string prgBoxTitle, string downloadUrl, string filePath, CancellationTokenSource cts, bool deleteFile = true, bool showProgress = true)
+    /// <summary>
+    /// Downloads a file from a URL to a local path, optionally showing a progress box and handling cancellation.
+    /// </summary>
+    /// <param name="progressBoxTitle">The title for the progress box.</param>
+    /// <param name="downloadUrl">The URL to download from.</param>
+    /// <param name="filePath">The local file path to save to.</param>
+    /// <param name="cts">Cancellation token source for cancelling the download.</param>
+    /// <param name="deleteFile">Whether to delete the file if it already exists.</param>
+    /// <param name="showProgress">Whether to show a progress box during download.</param>
+    /// <returns>A Task representing the asynchronous download operation.</returns>
+    private static async Task DownloadFileAsync(string progressBoxTitle, string downloadUrl, string filePath, CancellationTokenSource cts, bool deleteFile = true, bool showProgress = true)
     {
         if (deleteFile && File.Exists(filePath))
             File.Delete(filePath);
@@ -264,7 +295,7 @@ public static class PluginInstaller
         if (showProgress)
         {
             var exceptionHappened = false;
-            await API.ShowProgressBoxAsync(prgBoxTitle,
+            await API.ShowProgressBoxAsync(progressBoxTitle,
                 async (reportProgress) =>
                 {
                     if (reportProgress == null)
@@ -291,6 +322,11 @@ public static class PluginInstaller
         }
     }
 
+    /// <summary>
+    /// Determines if the plugin install source is a known/approved source (e.g., GitHub and matches an existing plugin author).
+    /// </summary>
+    /// <param name="url">The URL to check.</param>
+    /// <returns>True if the source is known, otherwise false.</returns>
     private static bool InstallSourceKnown(string url)
     {
         if (string.IsNullOrEmpty(url))

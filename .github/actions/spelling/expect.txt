@@ -99,3 +99,5 @@ pluginsmanager
 alreadyexists
 Softpedia
 img
+Reloadable
+metadatas

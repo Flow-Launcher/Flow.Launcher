@@ -18,7 +18,7 @@ using ISavable = Flow.Launcher.Plugin.ISavable;
 namespace Flow.Launcher.Core.Plugin
 {
     /// <summary>
-    /// The entry for managing Flow Launcher plugins
+    /// Class for co-ordinating and managing all plugin lifecycle.
     /// </summary>
     public static class PluginManager
     {

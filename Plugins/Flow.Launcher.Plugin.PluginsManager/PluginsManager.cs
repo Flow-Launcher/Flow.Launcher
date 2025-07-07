@@ -205,7 +205,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             }
         }
 
-        private async Task DownloadFileAsync(string prgBoxTitle, string downloadUrl, string filePath, CancellationTokenSource cts, bool deleteFile = true, bool showProgress = true)
+        private async Task DownloadFileAsync(string progressBoxTitle, string downloadUrl, string filePath, CancellationTokenSource cts, bool deleteFile = true, bool showProgress = true)
         {
             if (deleteFile && File.Exists(filePath))
                 File.Delete(filePath);
@@ -213,7 +213,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             if (showProgress)
             {
                 var exceptionHappened = false;
-                await Context.API.ShowProgressBoxAsync(prgBoxTitle,
+                await Context.API.ShowProgressBoxAsync(progressBoxTitle,
                     async (reportProgress) =>
                     {
                         if (reportProgress == null)
