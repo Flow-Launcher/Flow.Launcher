@@ -47,7 +47,7 @@
                     Title="{DynamicResource useLogonTaskForStartup}"
                     Icon="&#xE823;"
                     Sub="{DynamicResource useLogonTaskForStartupTooltip}"
-                    Type="Inside">
+                    Type="InsideFit">
                     <ui:ToggleSwitch
                         IsOn="{Binding UseLogonTaskForStartup}"
                         OffContent="{DynamicResource disable}"
@@ -86,7 +86,6 @@
                     OffContent="{DynamicResource disable}"
                     OnContent="{DynamicResource enable}" />
             </cc:Card>
-
 
             <cc:Card
                 Title="{DynamicResource showAtTopmost}"
