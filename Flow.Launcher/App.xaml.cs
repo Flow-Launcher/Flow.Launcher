@@ -211,6 +211,9 @@ namespace Flow.Launcher
 
                 Http.Proxy = _settings.Proxy;
 
+                // Initialize plugin manifest before initializing plugins so that they can use the manifest instantly
+                await API.UpdatePluginManifestAsync();
+
                 await PluginManager.InitializePluginsAsync();
 
                 // Change language after all plugins are initialized because we need to update plugin title based on their api

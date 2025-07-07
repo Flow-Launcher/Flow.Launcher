@@ -20,7 +20,7 @@ using ISavable = Flow.Launcher.Plugin.ISavable;
 namespace Flow.Launcher.Core.Plugin
 {
     /// <summary>
-    /// The entry for managing Flow Launcher plugins
+    /// Class for co-ordinating and managing all plugin lifecycle.
     /// </summary>
     public static class PluginManager
     {
@@ -693,8 +693,13 @@ namespace Flow.Launcher.Core.Plugin
         private static bool SameOrLesserPluginVersionExists(string metadataPath)
         {
             var newMetadata = JsonSerializer.Deserialize<PluginMetadata>(File.ReadAllText(metadataPath));
+
+            if (!Version.TryParse(newMetadata.Version, out var newVersion))
+                return true; // If version is not valid, we assume it is lesser than any existing version
+
             return AllPlugins.Any(x => x.Metadata.ID == newMetadata.ID
-                          && newMetadata.Version.CompareTo(x.Metadata.Version) <= 0);
+                                       && Version.TryParse(x.Metadata.Version, out var version)
+                                       && newVersion <= version);
         }
 
         #region Public functions
@@ -704,33 +709,46 @@ namespace Flow.Launcher.Core.Plugin
             return ModifiedPlugins.Contains(id);
         }
 
-        public static async Task UpdatePluginAsync(PluginMetadata existingVersion, UserPlugin newVersion, string zipFilePath)
+        public static async Task<bool> UpdatePluginAsync(PluginMetadata existingVersion, UserPlugin newVersion, string zipFilePath)
         {
-            InstallPlugin(newVersion, zipFilePath, checkModified: false);
-            await UninstallPluginAsync(existingVersion, removePluginFromSettings: false, removePluginSettings: false, checkModified: false);
+            if (PluginModified(existingVersion.ID))
+            {
+                API.ShowMsgError(string.Format(API.GetTranslation("pluginModifiedAlreadyTitle"), existingVersion.Name),
+                    API.GetTranslation("pluginModifiedAlreadyMessage"));
+                return false;
+            }
+
+            var installSuccess = InstallPlugin(newVersion, zipFilePath, checkModified: false);
+            if (!installSuccess) return false;
+
+            var uninstallSuccess = await UninstallPluginAsync(existingVersion, removePluginFromSettings: false, removePluginSettings: false, checkModified: false);
+            if (!uninstallSuccess) return false;
+
             ModifiedPlugins.Add(existingVersion.ID);
+            return true;
         }
 
-        public static void InstallPlugin(UserPlugin plugin, string zipFilePath)
+        public static bool InstallPlugin(UserPlugin plugin, string zipFilePath)
         {
-            InstallPlugin(plugin, zipFilePath, checkModified: true);
+            return InstallPlugin(plugin, zipFilePath, checkModified: true);
         }
 
-        public static async Task UninstallPluginAsync(PluginMetadata plugin, bool removePluginSettings = false)
+        public static async Task<bool> UninstallPluginAsync(PluginMetadata plugin, bool removePluginSettings = false)
         {
-            await UninstallPluginAsync(plugin, removePluginFromSettings: true, removePluginSettings: removePluginSettings, checkModified: true);
+            return await UninstallPluginAsync(plugin, removePluginFromSettings: true, removePluginSettings: removePluginSettings, checkModified: true);
         }
 
         #endregion
 
         #region Internal functions
 
-        internal static void InstallPlugin(UserPlugin plugin, string zipFilePath, bool checkModified)
+        internal static bool InstallPlugin(UserPlugin plugin, string zipFilePath, bool checkModified)
         {
             if (checkModified && PluginModified(plugin.ID))
             {
-                // Distinguish exception from installing same or less version
-                throw new ArgumentException($"Plugin {plugin.Name} {plugin.ID} has been modified.", nameof(plugin));
+                API.ShowMsgError(string.Format(API.GetTranslation("pluginModifiedAlreadyTitle"), plugin.Name),
+                    API.GetTranslation("pluginModifiedAlreadyMessage"));
+                return false;
             }
 
             // Unzip plugin files to temp folder
@@ -748,12 +766,16 @@ namespace Flow.Launcher.Core.Plugin
 
             if (string.IsNullOrEmpty(metadataJsonFilePath) || string.IsNullOrEmpty(pluginFolderPath))
             {
-                throw new FileNotFoundException($"Unable to find plugin.json from the extracted zip file, or this path {pluginFolderPath} does not exist");
+                API.ShowMsgError(string.Format(API.GetTranslation("failedToInstallPluginTitle"), plugin.Name),
+                    string.Format(API.GetTranslation("fileNotFoundMessage"), pluginFolderPath));
+                return false;
             }
 
             if (SameOrLesserPluginVersionExists(metadataJsonFilePath))
             {
-                throw new InvalidOperationException($"A plugin with the same ID and version already exists, or the version is greater than this downloaded plugin {plugin.Name}");
+                API.ShowMsgError(string.Format(API.GetTranslation("failedToInstallPluginTitle"), plugin.Name),
+                    API.GetTranslation("pluginExistAlreadyMessage"));
+                return false;
             }
 
             var folderName = string.IsNullOrEmpty(plugin.Version) ? $"{plugin.Name}-{Guid.NewGuid()}" : $"{plugin.Name}-{plugin.Version}";
@@ -797,13 +819,17 @@ namespace Flow.Launcher.Core.Plugin
             {
                 ModifiedPlugins.Add(plugin.ID);
             }
+
+            return true;
         }
 
-        internal static async Task UninstallPluginAsync(PluginMetadata plugin, bool removePluginFromSettings, bool removePluginSettings, bool checkModified)
+        internal static async Task<bool> UninstallPluginAsync(PluginMetadata plugin, bool removePluginFromSettings, bool removePluginSettings, bool checkModified)
         {
             if (checkModified && PluginModified(plugin.ID))
             {
-                throw new ArgumentException($"Plugin {plugin.Name} has been modified");
+                API.ShowMsgError(string.Format(API.GetTranslation("pluginModifiedAlreadyTitle"), plugin.Name),
+                    API.GetTranslation("pluginModifiedAlreadyMessage"));
+                return false;
             }
 
             if (removePluginSettings || removePluginFromSettings)
@@ -872,6 +898,8 @@ namespace Flow.Launcher.Core.Plugin
             {
                 ModifiedPlugins.Add(plugin.ID);
             }
+
+            return true;
         }
 
         #endregion
