@@ -58,6 +58,10 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         private static readonly Settings _settings = Ioc.Default.GetRequiredService<Settings>();
 
+        // We should not initialize API in static constructor because it will create another API instance
+        private static IPublicAPI api = null;
+        private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
+
         private static HWND _mainWindowHandle = HWND.Null;
 
         private static readonly Dictionary<QuickSwitchExplorerPair, IQuickSwitchExplorerWindow> _quickSwitchExplorers = new();
@@ -436,7 +440,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 var dialogWindowChanged = false;
                 foreach (var dialog in _quickSwitchDialogs.Keys)
                 {
-                    if (dialog.Metadata.Disabled) continue;
+                    if (API.PluginModified(dialog.Metadata.ID) || // Plugin is modified
+                        dialog.Metadata.Disabled) continue; // Plugin is disabled
 
                     IQuickSwitchDialogWindow dialogWindow;
                     var existingDialogWindow = _quickSwitchDialogs[dialog];
@@ -715,8 +720,12 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
 
             // Then check all dialog windows
-            foreach (var dialogWindow in _quickSwitchDialogs.Values)
+            foreach (var dialog in _quickSwitchDialogs.Keys)
             {
+                if (API.PluginModified(dialog.Metadata.ID) || // Plugin is modified
+                    dialog.Metadata.Disabled) continue; // Plugin is disabled
+
+                var dialogWindow = _quickSwitchDialogs[dialog];
                 if (dialogWindow.Handle == hwnd)
                 {
                     return dialogWindow;
@@ -726,7 +735,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             // Finally search for the dialog window again
             foreach (var dialog in _quickSwitchDialogs.Keys)
             {
-                if (dialog.Metadata.Disabled) continue;
+                if (API.PluginModified(dialog.Metadata.ID) || // Plugin is modified
+                    dialog.Metadata.Disabled) continue; // Plugin is disabled
 
                 IQuickSwitchDialogWindow dialogWindow;
                 var existingDialogWindow = _quickSwitchDialogs[dialog];
