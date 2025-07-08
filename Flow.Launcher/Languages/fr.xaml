@@ -138,10 +138,10 @@
     <system:String x:Key="homeToggleBoxToolTip">Ceci ne peut être édité que si le plugin prend en charge la fonction Accueil et que la page d'accueil est activée.</system:String>
     <system:String x:Key="showAtTopmost">Afficher la fenêtre de recherche en premier plan</system:String>
     <system:String x:Key="showAtTopmostToolTip">Outrepasse le paramètre 'toujours en premier plan' des autres programmes et affiche Flow Launcher en première position.</system:String>
-    <system:String x:Key="autoRestartAfterChanging">Restart after modifying plugin via Plugin Store</system:String>
-    <system:String x:Key="autoRestartAfterChangingToolTip">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugin Store</system:String>
-    <system:String x:Key="showUnknownSourceWarning">Show unknown source warning</system:String>
-    <system:String x:Key="showUnknownSourceWarningToolTip">Show warning when installing plugins from unknown sources</system:String>
+    <system:String x:Key="autoRestartAfterChanging">Redémarrer après modification du plugin via le magasin des plugins</system:String>
+    <system:String x:Key="autoRestartAfterChangingToolTip">Redémarrez automatiquement Flow Launcher après l'installation / désinstallation / mise à jour du plugin via le magasin des plugins</system:String>
+    <system:String x:Key="showUnknownSourceWarning">Afficher l'avertissement de source inconnue</system:String>
+    <system:String x:Key="showUnknownSourceWarningToolTip">Afficher un avertissement lors de l'installation de plugins à partir de sources inconnues</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Rechercher des plugins</system:String>
@@ -180,12 +180,12 @@
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins : {0} - Échec de la suppression des fichiers de configuration des plugins, veuillez les supprimer manuellement</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Échec de la suppression du cache du plugin</system:String>
     <system:String x:Key="failedToRemovePluginCacheMessage">Plugins : {0} - Échec de la suppression des fichiers cache des plugins, veuillez les supprimer manuellement</system:String>
-    <system:String x:Key="pluginModifiedAlreadyTitle">{0} modified already</system:String>
-    <system:String x:Key="pluginModifiedAlreadyMessage">Please restart Flow before making any further changes</system:String>
-    <system:String x:Key="failedToInstallPluginTitle">Fail to install {0}</system:String>
-    <system:String x:Key="failedToUninstallPluginTitle">Fail to uninstall {0}</system:String>
-    <system:String x:Key="fileNotFoundMessage">Unable to find plugin.json from the extracted zip file, or this path {0} does not exist</system:String>
-    <system:String x:Key="pluginExistAlreadyMessage">A plugin with the same ID and version already exists, or the version is greater than this downloaded plugin</system:String>
+    <system:String x:Key="pluginModifiedAlreadyTitle">{0} est déjà modifié</system:String>
+    <system:String x:Key="pluginModifiedAlreadyMessage">Veuillez redémarrer Flow avant d'apporter d'autres modifications</system:String>
+    <system:String x:Key="failedToInstallPluginTitle">Échec de l'installation de {0}</system:String>
+    <system:String x:Key="failedToUninstallPluginTitle">Échec de la désinstallation de {0}</system:String>
+    <system:String x:Key="fileNotFoundMessage">Impossible de trouver le fichier plugin.json dans le fichier zip extrait, ou ce chemin {0} n'existe pas</system:String>
+    <system:String x:Key="pluginExistAlreadyMessage">Un plugin avec le même ID et la même version existe déjà, ou la version est supérieure à ce plugin téléchargé</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Magasin des Plugins</system:String>
@@ -203,26 +203,26 @@
     <system:String x:Key="LabelUpdateToolTip">Une nouvelle mise à jour est disponible</system:String>
     <system:String x:Key="ErrorInstallingPlugin">Erreur lors de l'installation du plugin</system:String>
     <system:String x:Key="ErrorUninstallingPlugin">Erreur lors de la désinstallation du plugin</system:String>
-    <system:String x:Key="ErrorUpdatingPlugin">Error updating plugin</system:String>
+    <system:String x:Key="ErrorUpdatingPlugin">Erreur de mise à jour du plugin</system:String>
     <system:String x:Key="KeepPluginSettingsTitle">Garder les paramètres du plugin</system:String>
     <system:String x:Key="KeepPluginSettingsSubtitle">Souhaitez-vous conserver les paramètres du plugin pour la prochaine utilisation ?</system:String>
     <system:String x:Key="InstallSuccessNoRestart">Plugin {0} installé avec succès. Veuillez redémarrer Flow.</system:String>
     <system:String x:Key="UninstallSuccessNoRestart">Plugin {0} désinstallé avec succès. Veuillez redémarrer Flow.</system:String>
     <system:String x:Key="UpdateSuccessNoRestart">Plugin {0} mis à jour avec succès. Veuillez redémarrer Flow.</system:String>
-    <system:String x:Key="InstallPromptTitle">Plugin install</system:String>
+    <system:String x:Key="InstallPromptTitle">Installation du plugin</system:String>
     <system:String x:Key="InstallPromptSubtitle">{0} par {1} {2}{2}Voulez-vous installer ce plugin ?</system:String>
-    <system:String x:Key="UninstallPromptTitle">Plugin uninstall</system:String>
+    <system:String x:Key="UninstallPromptTitle">Désinstallation du plugin</system:String>
     <system:String x:Key="UninstallPromptSubtitle">{0} par {1} {2}{2}Voulez-vous désinstaller ce plugin ?</system:String>
-    <system:String x:Key="UpdatePromptTitle">Plugin update</system:String>
+    <system:String x:Key="UpdatePromptTitle">Mise à jour du plugin</system:String>
     <system:String x:Key="UpdatePromptSubtitle">{0} par {1} {2}{2}Voulez-vous mettre à jour ce plugin ?</system:String>
     <system:String x:Key="DownloadingPlugin">Téléchargement du plugin</system:String>
-    <system:String x:Key="AutoRestartAfterChange">Automatically restart after installing/uninstalling/updating plugins in plugin store</system:String>
-    <system:String x:Key="ZipFileNotHavePluginJson">Zip file does not have a valid plugin.json configuration</system:String>
+    <system:String x:Key="AutoRestartAfterChange">Redémarrer automatiquement après l'installation / désinstallation / mise à jour des plugins dans le magasin des plugins</system:String>
+    <system:String x:Key="ZipFileNotHavePluginJson">Le fichier zip n'a pas de configuration plugin.json valide</system:String>
     <system:String x:Key="InstallFromUnknownSourceTitle">Installation depuis une source inconnue</system:String>
-    <system:String x:Key="InstallFromUnknownSourceSubtitle">This plugin is from an unknown source and it may contain potential risks!{0}{0}Please ensure you understand where this plugin is from and that it is safe.{0}{0}Would you like to continue still?{0}{0}(You can switch off this warning in general section of setting window)</system:String>
-    <system:String x:Key="ZipFiles">Zip files</system:String>
-    <system:String x:Key="SelectZipFile">Please select zip file</system:String>
-    <system:String x:Key="installLocalPluginTooltip">Install plugin from local path</system:String>
+    <system:String x:Key="InstallFromUnknownSourceSubtitle">Ce plugin provient d'une source inconnue et il peut contenir des risques !{0}{0}Veuillez vous assurer de comprendre d'où vient ce plugin et qu'il est sûr. {0} {0} Souhaitez-vous continuer ? {0} {0} (vous pouvez désactiver cet avertissement dans la section général des paramètres)</system:String>
+    <system:String x:Key="ZipFiles">Fichiers zip</system:String>
+    <system:String x:Key="SelectZipFile">Veuillez sélectionner un fichier zip</system:String>
+    <system:String x:Key="installLocalPluginTooltip">Installer le plugin depuis le chemin local</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Thèmes</system:String>
