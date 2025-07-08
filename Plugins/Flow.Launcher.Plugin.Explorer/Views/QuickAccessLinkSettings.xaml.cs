@@ -27,6 +27,9 @@ public partial class QuickAccessLinkSettings
                 if (string.IsNullOrEmpty(_selectedName))
                 {
                     SelectedName = _selectedPath.GetPathName();
+                }
+                if (!string.IsNullOrEmpty(_selectedPath))
+                {
                     _accessLinkType = GetResultType(_selectedPath);
                 }
             }
