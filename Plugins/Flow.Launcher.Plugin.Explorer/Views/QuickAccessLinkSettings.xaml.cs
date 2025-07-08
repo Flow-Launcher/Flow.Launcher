@@ -15,6 +15,8 @@ namespace Flow.Launcher.Plugin.Explorer.Views;
 [INotifyPropertyChanged]
 public partial class QuickAccessLinkSettings
 {
+    private static readonly string ClassName = nameof(QuickAccessLinkSettings);
+
     private string _selectedPath;
     public string SelectedPath
     {
@@ -209,6 +211,7 @@ public partial class QuickAccessLinkSettings
         else
         {
             // This should not happen, but just in case, we assume it's a folder
+            Main.Context.API.LogError(ClassName, $"The path '{path}' does not exist or is invalid. Defaulting to Folder type.");
             return ResultType.Folder;
         }
     }
