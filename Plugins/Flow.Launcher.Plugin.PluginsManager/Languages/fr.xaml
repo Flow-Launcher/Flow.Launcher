@@ -43,15 +43,15 @@
     <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">Plugin {0} mis à jour avec succès. Veuillez redémarrer Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">{0} plugins mis à jour avec succès. Veuillez redémarrer Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">Le plugin {0} a déjà été modifié. Veuillez redémarrer Flow avant de faire d'autres modifications.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_title">{0} modified already</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_message">Please restart Flow before making any further changes</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_title">{0} est déjà modifié</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_message">Veuillez redémarrer Flow avant d'apporter d'autres modifications</system:String>
 
-    <system:String x:Key="plugin_pluginsmanager_invalid_zip_title">Invalid zip installer file</system:String>
-    <system:String x:Key="plugin_pluginsmanager_invalid_zip_subtitle">Please check if there is a plugin.json in {0}</system:String>
+    <system:String x:Key="plugin_pluginsmanager_invalid_zip_title">Fichier d'installation zip invalide</system:String>
+    <system:String x:Key="plugin_pluginsmanager_invalid_zip_subtitle">Veuillez vérifier s'il y a un plugin.json dans {0}</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_name">Gestionnaire de plugins</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_description">Install, uninstall or update Flow Launcher plugins via the search window</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_description">Installer, désinstaller ou mettre à jour les plugins Flow Launcher via la fenêtre de recherche</system:String>
     <system:String x:Key="plugin_pluginsmanager_unknown_author">Auteur inconnu</system:String>
 
     <!--  Context menu items  -->
@@ -66,5 +66,5 @@
 
     <!--  Settings menu items  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Avertissement d'installation à partir d'une source inconnue</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugins Manager</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Redémarrer Flow Launcher automatiquement après l'installation/désinstallation/mise à jour du plugin via le gestionnaire de plugins</system:String>
 </ResourceDictionary>
