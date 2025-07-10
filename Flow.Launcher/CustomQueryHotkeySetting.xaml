@@ -153,13 +153,13 @@
                     Style="{StaticResource AccentButtonStyle}">
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <TextBlock
-                            x:Name="lblAdd"
+                            x:Name="tbAdd"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Text="{DynamicResource done}"
                             Visibility="Collapsed" />
                         <TextBlock
-                            x:Name="lblUpdate"
+                            x:Name="tbUpdate"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Text="{DynamicResource update}"
