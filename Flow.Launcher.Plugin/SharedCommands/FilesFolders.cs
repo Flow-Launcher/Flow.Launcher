@@ -384,7 +384,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
         public static bool IsValidDirectoryName(string name)
         {
             if (IsReservedName(name)) return false;
-            var invalidChars = Path.GetInvalidPathChars().Append('/').ToArray().Append('\\').ToArray();
+            var invalidChars = Path.GetInvalidPathChars().Concat(new[] { '/', '\\' }).ToArray();
             if (name.IndexOfAny(invalidChars) >= 0)
             {
                 return false;
