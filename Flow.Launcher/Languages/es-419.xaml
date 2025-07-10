@@ -10,7 +10,7 @@
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
         Your selected {0} executable is invalid.
         {2}{2}
-        Click yes if you would like select the {0} executable agian. Click no if you would like to download {1}
+        Click yes if you would like select the {0} executable again. Click no if you would like to download {1}
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Unable to set {0} executable path, please try from Flow's settings (scroll down to the bottom).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Fail to Init Plugins</system:String>
@@ -415,7 +415,7 @@
     <system:String x:Key="fileManagerWindow">Seleccionar Gestor de Archivos</system:String>
     <system:String x:Key="fileManager_learnMore">Learn more</system:String>
     <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments as required. The &quot;%d&quot; represents the directory path to open for, used by the Arg for Folder field and for commands opening specific directories. The &quot;%f&quot; represents the file path to open for, used by the Arg for File field and for commands opening specific files.</system:String>
-    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fileds blank.</system:String>
+    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fields blank.</system:String>
     <system:String x:Key="fileManager_name">Gestor de Archivos</system:String>
     <system:String x:Key="fileManager_profile_name">Nombre de Perfil</system:String>
     <system:String x:Key="fileManager_path">Ruta del Gestor de Archivos</system:String>
@@ -466,13 +466,14 @@
     <system:String x:Key="customeQueryHotkeyTips">Presione la tecla de acceso personalizada para insertar automáticamente la consulta especificada.</system:String>
     <system:String x:Key="preview">Vista previa</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Tecla no disponible, por favor seleccione una nueva tecla de acceso directo</system:String>
-    <system:String x:Key="invalidPluginHotkey">Tecla de acceso directo al plugin inválida</system:String>
+    <system:String x:Key="invalidPluginHotkey">Hotkey is invalid</system:String>
     <system:String x:Key="update">Actualizar</system:String>
     <system:String x:Key="hotkeyRegTitle">Binding Hotkey</system:String>
     <system:String x:Key="hotkeyUnavailable">Current hotkey is unavailable.</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for &quot;{0}&quot; and can't be used. Please choose another hotkey.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">This hotkey is already in use by &quot;{0}&quot;. If you press &quot;Overwrite&quot;, it will be removed from &quot;{0}&quot;.</system:String>
     <system:String x:Key="hotkeyRegGuide">Press the keys you want to use for this function.</system:String>
+    <system:String x:Key="emptyPluginHotkey">Hotkey and action keyword are empty</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Custom Query Shortcut</system:String>
@@ -483,6 +484,7 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     </system:String>
     <system:String x:Key="duplicateShortcut">Shortcut already exists, please enter a new Shortcut or edit the existing one.</system:String>
     <system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
+    <system:String x:Key="invalidShortcut">Shortcut is invalid</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Guardar</system:String>
