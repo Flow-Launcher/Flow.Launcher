@@ -82,9 +82,9 @@ public partial class SettingsPaneHotkey
                             HotkeyControl.HotkeyType.GlobalPluginHotkey :
                             HotkeyControl.HotkeyType.WindowPluginHotkey,
                         DefaultHotkey = hotkey.DefaultHotkey,
-                        ValidateKeyGesture = true
+                        ValidateKeyGesture = false,
+                        Hotkey = hotkeySetting
                     };
-                    hotkeyControl.SetHotkey(hotkeySetting, true);
                     hotkeyControl.ChangeHotkey = new RelayCommand<HotkeyModel>((h) => ChangePluginHotkey(metadata, hotkey, h));
                     card.Content = hotkeyControl;
                 }
