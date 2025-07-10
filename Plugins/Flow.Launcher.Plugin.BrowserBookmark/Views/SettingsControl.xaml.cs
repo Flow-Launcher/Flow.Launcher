@@ -1,13 +1,13 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
-using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Views;
 
 [INotifyPropertyChanged]
-public partial class SettingsControl
+public partial class SettingsControl : UserControl
 {
     public Settings Settings { get; }
     public CustomBrowser SelectedCustomBrowser { get; set; }
@@ -24,7 +24,7 @@ public partial class SettingsControl
         set
         {
             Settings.LoadChromeBookmark = value;
-            _ = Task.Run(() => Main.ReloadAllBookmarks());
+            _ = Main.ReloadAllBookmarks();
         }
     }
 
@@ -34,7 +34,7 @@ public partial class SettingsControl
         set
         {
             Settings.LoadFirefoxBookmark = value;
-            _ = Task.Run(() => Main.ReloadAllBookmarks());
+            _ = Main.ReloadAllBookmarks();
         }
     }
 
@@ -44,7 +44,18 @@ public partial class SettingsControl
         set
         {
             Settings.LoadEdgeBookmark = value;
-            _ = Task.Run(() => Main.ReloadAllBookmarks());
+            _ = Main.ReloadAllBookmarks();
+        }
+    }
+
+    public bool EnableFavicons
+    {
+        get => Settings.EnableFavicons;
+        set
+        {
+            Settings.EnableFavicons = value;
+            _ = Main.ReloadAllBookmarks();
+            OnPropertyChanged();
         }
     }
 
@@ -62,15 +73,10 @@ public partial class SettingsControl
     {
         var newBrowser = new CustomBrowser();
         var window = new CustomBrowserSettingWindow(newBrowser);
-        window.ShowDialog();
-        if (newBrowser is not
-            {
-                Name: null,
-                DataDirectoryPath: null
-            })
+        if (window.ShowDialog() == true)
         {
             Settings.CustomChromiumBrowsers.Add(newBrowser);
-            _ = Task.Run(() => Main.ReloadAllBookmarks());
+            _ = Main.ReloadAllBookmarks();
         }
     }
 
@@ -79,7 +85,7 @@ public partial class SettingsControl
         if (CustomBrowsers.SelectedItem is CustomBrowser selectedCustomBrowser)
         {
             Settings.CustomChromiumBrowsers.Remove(selectedCustomBrowser);
-            _ = Task.Run(() => Main.ReloadAllBookmarks());
+            _ = Main.ReloadAllBookmarks();
         }
     }
 
@@ -111,7 +117,7 @@ public partial class SettingsControl
         var result = window.ShowDialog() ?? false;
         if (result)
         {
-            _ = Task.Run(() => Main.ReloadAllBookmarks());
+            _ = Main.ReloadAllBookmarks();
         }
     }
 }

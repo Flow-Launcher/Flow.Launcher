@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Flow.Launcher.Plugin.BrowserBookmark.Helper;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using Microsoft.Data.Sqlite;
@@ -78,10 +76,18 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
         if (!File.Exists(path))
             return bookmarks;
 
-        using var jsonDocument = JsonDocument.Parse(File.ReadAllText(path));
-        if (!jsonDocument.RootElement.TryGetProperty("roots", out var rootElement))
-            return bookmarks;
-        EnumerateRoot(rootElement, bookmarks, source);
+        try
+        {
+            using var jsonDocument = JsonDocument.Parse(File.ReadAllText(path));
+            if (!jsonDocument.RootElement.TryGetProperty("roots", out var rootElement))
+                return bookmarks;
+            EnumerateRoot(rootElement, bookmarks, source);
+        }
+        catch (JsonException e)
+        {
+            Main._context.API.LogException(ClassName, $"Failed to parse bookmarks file: {path}", e);
+        }
+
         return bookmarks;
     }
 
@@ -115,91 +121,41 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
                     case "workspace": // Edge Workspace
                         EnumerateFolderBookmark(subElement, bookmarks, source);
                         break;
-                    default:
-                        bookmarks.Add(new Bookmark(
-                            subElement.GetProperty("name").GetString(),
-                            subElement.GetProperty("url").GetString(),
-                            source));
+                    case "url":
+                        if (subElement.TryGetProperty("name", out var name) &&
+                            subElement.TryGetProperty("url", out var url))
+                        {
+                            bookmarks.Add(new Bookmark(name.GetString(), url.GetString(), source));
+                        }
                         break;
                 }
             }
             else
             {
-                Main._context.API.LogError(ClassName, $"type property not found for {subElement.GetString()}");
+                Main._context.API.LogError(ClassName, $"type property not found for {subElement.ToString()}");
             }
         }
     }
 
     private void LoadFaviconsFromDb(string dbPath, List<Bookmark> bookmarks)
     {
-        FaviconHelper.LoadFaviconsFromDb(_faviconCacheDir, dbPath, (tempDbPath) =>
-        {
-            // Since some bookmarks may have same favicon id, we need to record them to avoid duplicates
-            var savedPaths = new ConcurrentDictionary<string, bool>();
+        const string sql = @"
+        SELECT f.id, b.image_data
+        FROM favicons f
+        JOIN favicon_bitmaps b ON f.id = b.icon_id
+        JOIN icon_mapping m ON f.id = m.icon_id
+        WHERE m.page_url GLOB @pattern
+        ORDER BY b.width DESC
+        LIMIT 1";
 
-            // Get favicons based on bookmarks concurrently
-            Parallel.ForEach(bookmarks, bookmark =>
-            {
-                // Use read-only connection to avoid locking issues
-                // Do not use pooling so that we do not need to clear pool: https://github.com/dotnet/efcore/issues/26580
-                var connection = new SqliteConnection($"Data Source={tempDbPath};Mode=ReadOnly;Pooling=false");
-                connection.Open();
-
-                try
-                {
-                    var url = bookmark.Url;
-                    if (string.IsNullOrEmpty(url)) return;
-
-                    // Extract domain from URL
-                    if (!Uri.TryCreate(url, UriKind.Absolute, out Uri uri))
-                        return;
-
-                    var domain = uri.Host;
-
-                    using var cmd = connection.CreateCommand();
-                    cmd.CommandText = @"
-                        SELECT f.id, b.image_data
-                        FROM favicons f
-                        JOIN favicon_bitmaps b ON f.id = b.icon_id
-                        JOIN icon_mapping m ON f.id = m.icon_id
-                        WHERE m.page_url LIKE @url
-                        ORDER BY b.width DESC
-                        LIMIT 1";
-
-                    cmd.Parameters.AddWithValue("@url", $"%{domain}%");
-
-                    using var reader = cmd.ExecuteReader();
-                    if (!reader.Read() || reader.IsDBNull(1))
-                        return;
-
-                    var iconId = reader.GetInt64(0).ToString();
-                    var imageData = (byte[])reader["image_data"];
-
-                    if (imageData is not { Length: > 0 })
-                        return;
-
-                    var faviconPath = Path.Combine(_faviconCacheDir, $"chromium_{domain}_{iconId}.png");
-
-                    // Filter out duplicate favicons
-                    if (savedPaths.TryAdd(faviconPath, true))
-                    {
-                        FaviconHelper.SaveBitmapData(imageData, faviconPath);
-                    }
-
-                    bookmark.FaviconPath = faviconPath;
-                }
-                catch (Exception ex)
-                {
-                    Main._context.API.LogException(ClassName, $"Failed to extract bookmark favicon: {bookmark.Url}", ex);
-                }
-                finally
-                {
-                    // Cache connection and clear pool after all operations to avoid issue:
-                    // ObjectDisposedException: Safe handle has been closed.
-                    connection.Close();
-                    connection.Dispose();
-                }
-            });
-        });
+        FaviconHelper.ProcessFavicons(
+            dbPath,
+            _faviconCacheDir,
+            bookmarks,
+            sql,
+            "http*",
+            reader => (reader.GetInt64(0).ToString(), (byte[])reader["image_data"]),
+            (uri, id, data) => Path.Combine(_faviconCacheDir, $"chromium_{uri.Host}_{id}.png")
+        );
     }
 }

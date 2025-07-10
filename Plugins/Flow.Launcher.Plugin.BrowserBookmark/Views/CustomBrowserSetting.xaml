@@ -101,13 +101,6 @@
                                 FontSize="14"
                                 Text="{DynamicResource flowlauncher_plugin_browserbookmark_guideMessage02}"
                                 TextWrapping="WrapWithOverflow" />
-                            <TextBlock
-                                Margin="0 4 0 0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                FontSize="14"
-                                Text="{DynamicResource flowlauncher_plugin_browserbookmark_guideMessage03}"
-                                TextWrapping="WrapWithOverflow" />
                         </StackPanel>
                         <TextBlock
                             Grid.Row="1"

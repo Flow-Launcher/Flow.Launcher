@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Flow.Launcher.Plugin.BrowserBookmark.Helper;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using Microsoft.Data.Sqlite;
@@ -65,18 +63,18 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
 
             // Open connection to the database file and execute the query
             dbConnection.Open();
-            var reader = new SqliteCommand(QueryAllBookmarks, dbConnection).ExecuteReader();
+            using var command = new SqliteCommand(QueryAllBookmarks, dbConnection);
+            using var reader = command.ExecuteReader();
 
-            // Get results in List<Bookmark> format
-            bookmarks = reader
-                .Select(
-                    x => new Bookmark(
-                        x["title"] is DBNull ? string.Empty : x["title"].ToString(),
-                        x["url"].ToString(),
-                        "Firefox"
-                    )
-                )
-                .ToList();
+            while (reader.Read())
+            {
+                bookmarks.Add(new Bookmark(
+                    reader["title"] is DBNull ? string.Empty : reader["title"].ToString(),
+                    reader["url"].ToString(),
+                    "Firefox"
+                ));
+            }
+
 
             // Load favicons after loading bookmarks
             if (Main._settings.EnableFavicons)
@@ -119,84 +117,26 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
 
     private void LoadFaviconsFromDb(string dbPath, List<Bookmark> bookmarks)
     {
-        FaviconHelper.LoadFaviconsFromDb(_faviconCacheDir, dbPath, (tempDbPath) =>
-        {
-            // Since some bookmarks may have same favicon id, we need to record them to avoid duplicates
-            var savedPaths = new ConcurrentDictionary<string, bool>();
+        const string sql = @"
+        SELECT i.id, i.data
+        FROM moz_icons i
+        JOIN moz_icons_to_pages ip ON i.id = ip.icon_id
+        JOIN moz_pages_w_icons p ON ip.page_id = p.id
+        WHERE p.page_url GLOB @pattern
+        AND i.data IS NOT NULL
+        ORDER BY i.width DESC
+        LIMIT 1";
 
-            // Get favicons based on bookmarks concurrently
-            Parallel.ForEach(bookmarks, bookmark =>
-            {
-                // Use read-only connection to avoid locking issues
-                // Do not use pooling so that we do not need to clear pool: https://github.com/dotnet/efcore/issues/26580
-                var connection = new SqliteConnection($"Data Source={tempDbPath};Mode=ReadOnly;Pooling=false");
-                connection.Open();
-
-                try
-                {
-                    if (string.IsNullOrEmpty(bookmark.Url))
-                        return;
-
-                    // Extract domain from URL
-                    if (!Uri.TryCreate(bookmark.Url, UriKind.Absolute, out Uri uri))
-                        return;
-
-                    var domain = uri.Host;
-
-                    // Query for latest Firefox version favicon structure
-                    using var cmd = connection.CreateCommand();
-                    cmd.CommandText = @"
-                        SELECT i.data
-                        FROM moz_icons i
-                        JOIN moz_icons_to_pages ip ON i.id = ip.icon_id
-                        JOIN moz_pages_w_icons p ON ip.page_id = p.id
-                        WHERE p.page_url LIKE @url
-                        AND i.data IS NOT NULL
-                        ORDER BY i.width DESC  -- Select largest icon available
-                        LIMIT 1";
-
-                    cmd.Parameters.AddWithValue("@url", $"%{domain}%");
-
-                    using var reader = cmd.ExecuteReader();
-                    if (!reader.Read() || reader.IsDBNull(0))
-                        return;
-
-                    var imageData = (byte[])reader["data"];
-
-                    if (imageData is not { Length: > 0 })
-                        return;
-
-                    string faviconPath;
-                    if (FaviconHelper.IsSvgData(imageData))
-                    {
-                        faviconPath = Path.Combine(_faviconCacheDir, $"firefox_{domain}.svg");
-                    }
-                    else
-                    {
-                        faviconPath = Path.Combine(_faviconCacheDir, $"firefox_{domain}.png");
-                    }
-
-                    // Filter out duplicate favicons
-                    if (savedPaths.TryAdd(faviconPath, true))
-                    {
-                        FaviconHelper.SaveBitmapData(imageData, faviconPath);
-                    }
-
-                    bookmark.FaviconPath = faviconPath;
-                }
-                catch (Exception ex)
-                {
-                    Main._context.API.LogException(ClassName, $"Failed to extract Firefox favicon: {bookmark.Url}", ex);
-                }
-                finally
-                {
-                    // Cache connection and clear pool after all operations to avoid issue:
-                    // ObjectDisposedException: Safe handle has been closed.
-                    connection.Close();
-                    connection.Dispose();
-                }
-            });
-        });
+        FaviconHelper.ProcessFavicons(
+            dbPath,
+            _faviconCacheDir,
+            bookmarks,
+            sql,
+            "http*",
+            reader => (reader.GetInt64(0).ToString(), (byte[])reader["data"]),
+            // Always generate a .png path. The helper will handle the conversion.
+            (uri, id, data) => Path.Combine(_faviconCacheDir, $"firefox_{uri.Host}_{id}.png")
+        );
     }
 }
 
@@ -263,76 +203,73 @@ public class FirefoxBookmarkLoader : FirefoxBookmarkLoaderBase
         if (!File.Exists(profileIni))
             return string.Empty;
 
-        // get firefox default profile directory from profiles.ini
-        using var sReader = new StreamReader(profileIni);
-        var ini = sReader.ReadToEnd();
-
-        var lines = ini.Split("\r\n").ToList();
-
-        var defaultProfileFolderNameRaw = lines.FirstOrDefault(x => x.Contains("Default=") && x != "Default=1") ?? string.Empty;
-
-        if (string.IsNullOrEmpty(defaultProfileFolderNameRaw))
-            return string.Empty;
-
-        var defaultProfileFolderName = defaultProfileFolderNameRaw.Split('=').Last();
-
-        var indexOfDefaultProfileAttributePath = lines.IndexOf("Path=" + defaultProfileFolderName);
-
-        /*
-            Current profiles.ini structure example as of Firefox version 69.0.1
-
-            [Install736426B0AF4A39CB]
-            Default=Profiles/7789f565.default-release   <== this is the default profile this plugin will get the bookmarks from. When opened Firefox will load the default profile
-            Locked=1
-
-            [Profile2]
-            Name=dummyprofile
-            IsRelative=0
-            Path=C:\t6h2yuq8.dummyprofile  <== Note this is a custom location path for the profile user can set, we need to cater for this in code.
-
-            [Profile1]
-            Name=default
-            IsRelative=1
-            Path=Profiles/cydum7q4.default
-            Default=1
-
-            [Profile0]
-            Name=default-release
-            IsRelative=1
-            Path=Profiles/7789f565.default-release
-
-            [General]
-            StartWithLastProfile=1
-            Version=2
-        */
-        // Seen in the example above, the IsRelative attribute is always above the Path attribute
-
-        var relativePath = Path.Combine(defaultProfileFolderName, "places.sqlite");
-        var absolutePath = Path.Combine(profileFolderPath, relativePath);
-
-        // If the index is out of range, it means that the default profile is in a custom location or the file is malformed
-        // If the profile is in a custom location, we need to check 
-        if (indexOfDefaultProfileAttributePath - 1 < 0 ||
-            indexOfDefaultProfileAttributePath - 1 >= lines.Count)
+        try
         {
-            return Directory.Exists(absolutePath) ? absolutePath : relativePath;
+            // Parse the ini file into a dictionary of sections
+            var profiles = new Dictionary<string, Dictionary<string, string>>(StringComparer.OrdinalIgnoreCase);
+            Dictionary<string, string> currentSection = null;
+            foreach (var line in File.ReadLines(profileIni))
+            {
+                var trimmedLine = line.Trim();
+                if (trimmedLine.StartsWith('[') && trimmedLine.EndsWith(']'))
+                {
+                    var sectionName = trimmedLine.Substring(1, trimmedLine.Length - 2);
+                    currentSection = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+                    profiles[sectionName] = currentSection;
+                }
+                else if (currentSection != null && trimmedLine.Contains('='))
+                {
+                    var parts = trimmedLine.Split('=', 2);
+                    currentSection[parts[0]] = parts[1];
+                }
+            }
+
+            Dictionary<string, string> profileSection = null;
+
+            // Strategy 1: Find the profile with Default=1
+            profileSection = profiles.Values.FirstOrDefault(section => section.TryGetValue("Default", out var value) && value == "1");
+
+            // Strategy 2: If no profile has Default=1, use the Default key from the [Install] or [General] section
+            if (profileSection == null)
+            {
+                string defaultPathRaw = null;
+                var installSection = profiles.FirstOrDefault(p => p.Key.StartsWith("Install"));
+                // Fallback to General section if Install section not found
+                (installSection.Value ?? profiles.GetValueOrDefault("General"))?.TryGetValue("Default", out defaultPathRaw);
+
+                if (!string.IsNullOrEmpty(defaultPathRaw))
+                {
+                    // The value of 'Default' is the path, find the corresponding profile section
+                    profileSection = profiles.Values.FirstOrDefault(v => v.TryGetValue("Path", out var path) && path == defaultPathRaw);
+                }
+            }
+
+            if (profileSection == null)
+                return string.Empty;
+
+            // We have the profile section, now resolve the path
+            if (!profileSection.TryGetValue("Path", out var pathValue) || string.IsNullOrEmpty(pathValue))
+                return string.Empty;
+
+            profileSection.TryGetValue("IsRelative", out var isRelativeRaw);
+
+            // If IsRelative is "1" or not present (defaults to relative), combine with profileFolderPath.
+            // The path in the ini file often uses forward slashes, so normalize them.
+            var profilePath = isRelativeRaw != "0"
+                ? Path.Combine(profileFolderPath, pathValue.Replace('/', Path.DirectorySeparatorChar))
+                : pathValue;
+
+            // Path.GetFullPath will resolve any relative parts and give us a clean absolute path.
+            var fullProfilePath = Path.GetFullPath(profilePath);
+
+            var placesPath = Path.Combine(fullProfilePath, "places.sqlite");
+
+            return File.Exists(placesPath) ? placesPath : string.Empty;
         }
-
-        var relativeAttribute = lines[indexOfDefaultProfileAttributePath - 1];
-
-        // See above, the profile is located in a custom location, path is not relative, so IsRelative=0
-        return (relativeAttribute == "0" || relativeAttribute == "IsRelative=0")
-            ? relativePath : absolutePath;
-    }
-}
-
-public static class Extensions
-{
-    public static IEnumerable<T> Select<T>(this SqliteDataReader reader, Func<SqliteDataReader, T> projection)
-    {
-        while (reader.Read())
+        catch (Exception ex)
         {
-            yield return projection(reader);
+            Main._context.API.LogException(nameof(FirefoxBookmarkLoader), $"Failed to parse {profileIni}", ex);
+            return string.Empty;
         }
     }
 }

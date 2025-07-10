@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Channels;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using Flow.Launcher.Plugin.BrowserBookmark.Commands;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
@@ -17,6 +16,8 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
 {
     private static readonly string ClassName = nameof(Main);
 
+    private static Main _instance;
+
     internal static string _faviconCacheDir;
 
     internal static PluginInitContext _context;
@@ -25,119 +26,114 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
 
     private static List<Bookmark> _cachedBookmarks = new();
 
-    private static bool _initialized = false;
-    
+    private volatile bool _isInitialized = false;
+
+    private static readonly SemaphoreSlim _initializationSemaphore = new(1, 1);
+
+    private const string DefaultIconPath = @"Images\bookmark.png";
+
+    private static CancellationTokenSource _debounceTokenSource;
+
     public void Init(PluginInitContext context)
     {
+        _instance = this;
         _context = context;
-
         _settings = context.API.LoadSettingJsonStorage<Settings>();
 
         _faviconCacheDir = Path.Combine(
             context.CurrentPluginMetadata.PluginCacheDirectoryPath,
             "FaviconCache");
 
-        LoadBookmarksIfEnabled();
+        // Start loading bookmarks asynchronously without blocking Init.
+        _ = LoadBookmarksInBackgroundAsync();
     }
 
-    private static void LoadBookmarksIfEnabled()
+    private async Task LoadBookmarksInBackgroundAsync()
     {
-        if (_context.CurrentPluginMetadata.Disabled)
+        // Prevent concurrent loading operations.
+        await _initializationSemaphore.WaitAsync();
+        try
         {
-            // Don't load or monitor files if disabled
-            return;
+            if (_isInitialized) return;
+
+            if (!_context.CurrentPluginMetadata.Disabled)
+            {
+                // Validate the cache directory before loading all bookmarks because Flow needs this directory to storage favicons
+                FilesFolders.ValidateDirectory(_faviconCacheDir);
+                _cachedBookmarks = await Task.Run(() => BookmarkLoader.LoadAllBookmarks(_settings));
+
+                // Pre-validate all icon paths once to avoid doing it on every query.
+                foreach (var bookmark in _cachedBookmarks)
+                {
+                    if (string.IsNullOrEmpty(bookmark.FaviconPath) || !File.Exists(bookmark.FaviconPath))
+                    {
+                        bookmark.FaviconPath = DefaultIconPath;
+                    }
+                }
+            }
+
+            _isInitialized = true;
         }
-
-        // Validate the cache directory before loading all bookmarks because Flow needs this directory to storage favicons
-        FilesFolders.ValidateDirectory(_faviconCacheDir);
-
-        _cachedBookmarks = BookmarkLoader.LoadAllBookmarks(_settings);
-        _ = MonitorRefreshQueueAsync();
-        _initialized = true;
+        finally
+        {
+            _initializationSemaphore.Release();
+        }
     }
 
     public List<Result> Query(Query query)
     {
-        // For when the plugin being previously disabled and is now re-enabled
-        if (!_initialized)
+        // Immediately return if the initial load is not complete, providing feedback to the user.
+        if (!_isInitialized)
         {
-            LoadBookmarksIfEnabled();
+            var initializingTitle = _context.API.GetTranslation("flowlauncher_plugin_browserbookmark_plugin_name");
+            var initializingSubTitle = "Plugin is initializing, please try again in a few seconds";
+            try
+            {
+                initializingSubTitle = _context.API.GetTranslation("flowlauncher_plugin_browserbookmark_plugin_initializing");
+            }
+            catch (KeyNotFoundException)
+            {
+                // Ignoring since not all language files will have this key.
+            }
+
+            return new List<Result>
+            {
+                new()
+                {
+                    Title = initializingTitle,
+                    SubTitle = initializingSubTitle,
+                    IcoPath = DefaultIconPath
+                }
+            };
         }
 
         string param = query.Search.TrimStart();
+        bool topResults = string.IsNullOrEmpty(param);
 
-        // Should top results be returned? (true if no search parameters have been passed)
-        var topResults = string.IsNullOrEmpty(param);
-
-        if (!topResults)
-        {
-            // Since we mixed chrome and firefox bookmarks, we should order them again
-            return _cachedBookmarks
-                .Select(
-                    c => new Result
-                    {
-                        Title = c.Name,
-                        SubTitle = c.Url,
-                        IcoPath = !string.IsNullOrEmpty(c.FaviconPath) && File.Exists(c.FaviconPath)
-                            ? c.FaviconPath
-                            : @"Images\bookmark.png",
-                        Score = BookmarkLoader.MatchProgram(c, param).Score,
-                        Action = _ =>
-                        {
-                            _context.API.OpenUrl(c.Url);
-
-                            return true;
-                        },
-                        ContextData = new BookmarkAttributes { Url = c.Url }
-                    }
-                )
-                .Where(r => r.Score > 0)
-                .ToList();
-        }
-        else
-        {
-            return _cachedBookmarks
-                .Select(
-                    c => new Result
-                    {
-                        Title = c.Name,
-                        SubTitle = c.Url,
-                        IcoPath = !string.IsNullOrEmpty(c.FaviconPath) && File.Exists(c.FaviconPath)
-                            ? c.FaviconPath
-                            : @"Images\bookmark.png",
-                        Score = 5,
-                        Action = _ =>
-                        {
-                            _context.API.OpenUrl(c.Url);
-                            return true;
-                        },
-                        ContextData = new BookmarkAttributes { Url = c.Url }
-                    }
-                )
-                .ToList();
-        }
-    }
-
-    private static readonly Channel<byte> _refreshQueue = Channel.CreateBounded<byte>(1);
-
-    private static readonly SemaphoreSlim _fileMonitorSemaphore = new(1, 1);
-
-    private static async Task MonitorRefreshQueueAsync()
-    {
-        if (_fileMonitorSemaphore.CurrentCount < 1)
-        {
-            return;
-        }
-        await _fileMonitorSemaphore.WaitAsync();
-        var reader = _refreshQueue.Reader;
-        while (await reader.WaitToReadAsync())
-        {
-            if (reader.TryRead(out _))
+        var results = _cachedBookmarks
+            .Select(c =>
             {
-                ReloadAllBookmarks(false);
-            }
-        }
-        _fileMonitorSemaphore.Release();
+                var score = topResults ? 5 : BookmarkLoader.MatchProgram(c, param).Score;
+                if (!topResults && score <= 0)
+                    return null;
+
+                return new Result
+                {
+                    Title = c.Name,
+                    SubTitle = c.Url,
+                    IcoPath = c.FaviconPath, // Use the pre-validated path directly.
+                    Score = score,
+                    Action = _ =>
+                    {
+                        _context.API.OpenUrl(c.Url);
+                        return true;
+                    },
+                    ContextData = new BookmarkAttributes { Url = c.Url }
+                };
+            })
+            .Where(r => r != null);
+
+        return (topResults ? results : results.OrderByDescending(r => r.Score)).ToList();
     }
 
     private static readonly List<FileSystemWatcher> Watchers = new();
@@ -149,7 +145,8 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
         {
             return;
         }
-        if (Watchers.Any(x => x.Path.Equals(directory, StringComparison.OrdinalIgnoreCase)))
+
+        if (Watchers.Any(x => x.Path.Equals(directory, StringComparison.OrdinalIgnoreCase) && x.Filter == Path.GetFileName(path)))
         {
             return;
         }
@@ -157,37 +154,63 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
         var watcher = new FileSystemWatcher(directory!)
         {
             Filter = Path.GetFileName(path),
-            NotifyFilter = NotifyFilters.FileName |
-                                   NotifyFilters.LastWrite |
-                                   NotifyFilters.Size
+            NotifyFilter = NotifyFilters.FileName | NotifyFilters.LastWrite | NotifyFilters.Size,
+            EnableRaisingEvents = true
         };
 
-        watcher.Changed += static (_, _) =>
-        {
-            _refreshQueue.Writer.TryWrite(default);
-        };
-
-        watcher.Renamed += static (_, _) =>
-        {
-            _refreshQueue.Writer.TryWrite(default);
-        };
-
-        watcher.EnableRaisingEvents = true;
+        watcher.Changed += OnBookmarkFileChanged;
+        watcher.Renamed += OnBookmarkFileChanged;
+        watcher.Deleted += OnBookmarkFileChanged;
+        watcher.Created += OnBookmarkFileChanged;
 
         Watchers.Add(watcher);
     }
 
-    public void ReloadData()
+    private static void OnBookmarkFileChanged(object sender, FileSystemEventArgs e)
     {
-        ReloadAllBookmarks();
+        var oldCts = Interlocked.Exchange(ref _debounceTokenSource, new CancellationTokenSource());
+        oldCts?.Cancel();
+        oldCts?.Dispose();
+
+        var newCts = _debounceTokenSource;
+
+        Task.Run(async () =>
+        {
+            try
+            {
+                await Task.Delay(TimeSpan.FromSeconds(3), newCts.Token);
+                _context.API.LogInfo(ClassName, "Bookmark file change detected. Reloading bookmarks after delay.");
+                await ReloadAllBookmarks(false);
+            }
+            catch (TaskCanceledException)
+            {
+                // Debouncing in action
+            }
+        }, newCts.Token);
     }
 
-    public static void ReloadAllBookmarks(bool disposeFileWatchers = true)
+    public void ReloadData()
     {
-        _cachedBookmarks.Clear();
-        if (disposeFileWatchers)
-            DisposeFileWatchers();
-        LoadBookmarksIfEnabled();
+        _ = ReloadAllBookmarks();
+    }
+
+    public static async Task ReloadAllBookmarks(bool disposeFileWatchers = true)
+    {
+        try
+        {
+            if (_instance == null) return;
+
+            _instance._isInitialized = false;
+            _cachedBookmarks.Clear();
+            if (disposeFileWatchers)
+                DisposeFileWatchers();
+
+            await _instance.LoadBookmarksInBackgroundAsync();
+        }
+        catch (Exception e)
+        {
+            _context?.API.LogException(ClassName, "An error occurred while reloading bookmarks", e);
+        }
     }
 
     public string GetTranslatedPluginTitle()
@@ -218,16 +241,13 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
                     try
                     {
                         _context.API.CopyToClipboard(((BookmarkAttributes)selectedResult.ContextData).Url);
-
                         return true;
                     }
                     catch (Exception e)
                     {
                         var message = "Failed to set url in clipboard";
                         _context.API.LogException(ClassName, message, e);
-
                         _context.API.ShowMsg(message);
-
                         return false;
                     }
                 },
@@ -245,6 +265,9 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
     public void Dispose()
     {
         DisposeFileWatchers();
+        var cts = Interlocked.Exchange(ref _debounceTokenSource, null);
+        cts?.Cancel();
+        cts?.Dispose();
     }
 
     private static void DisposeFileWatchers()

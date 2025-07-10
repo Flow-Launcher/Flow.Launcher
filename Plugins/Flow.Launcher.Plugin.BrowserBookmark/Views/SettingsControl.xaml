@@ -98,6 +98,6 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
             Content="{DynamicResource flowlauncher_plugin_browserbookmark_enable_favicons}"
-            IsChecked="{Binding Settings.EnableFavicons}" />
+            IsChecked="{Binding EnableFavicons}" />
     </Grid>
 </UserControl>
