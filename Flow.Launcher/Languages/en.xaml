@@ -21,8 +21,6 @@
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Failed to register hotkey "{0}". The hotkey may be in use by another program. Change to a different hotkey, or exit another program.</system:String>
     <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey "{0}". Please try again or see log for details</system:String>
-    <system:String x:Key="registerWindowHotkeyFailed">Failed to register window hotkey "{0}". The hotkey may be in use by another program. Change to a different hotkey, or exit another program.</system:String>
-    <system:String x:Key="unregisterWindowHotkeyFailed">Failed to unregister window hotkey "{0}". Please try again or see log for details</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Could not start {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Invalid Flow Launcher plugin file format</system:String>

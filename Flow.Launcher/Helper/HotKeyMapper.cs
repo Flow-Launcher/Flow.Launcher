@@ -485,7 +485,7 @@ internal static class HotKeyMapper
         catch (Exception e)
         {
             App.API.LogError(ClassName, $"Error registering window hotkey {hotkey}: {e.Message} \nStackTrace:{e.StackTrace}");
-            var errorMsg = string.Format(App.API.GetTranslation("registerWindowHotkeyFailed"), hotkey);
+            var errorMsg = string.Format(App.API.GetTranslation("registerHotkeyFailed"), hotkey);
             var errorMsgTitle = App.API.GetTranslation("MessageBoxTitle");
             App.API.ShowMsgBox(errorMsg, errorMsgTitle);
         }
@@ -560,7 +560,7 @@ internal static class HotKeyMapper
         catch (Exception e)
         {
             App.API.LogError(ClassName, $"Error removing window hotkey: {e.Message} \nStackTrace:{e.StackTrace}");
-            var errorMsg = string.Format(App.API.GetTranslation("unregisterWindowHotkeyFailed"), hotkey);
+            var errorMsg = string.Format(App.API.GetTranslation("unregisterHotkeyFailed"), hotkey);
             var errorMsgTitle = App.API.GetTranslation("MessageBoxTitle");
             App.API.ShowMsgBox(errorMsg, errorMsgTitle);
         }
