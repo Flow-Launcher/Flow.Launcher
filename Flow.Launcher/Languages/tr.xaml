@@ -10,7 +10,7 @@
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
         Your selected {0} executable is invalid.
         {2}{2}
-        Click yes if you would like select the {0} executable agian. Click no if you would like to download {1}
+        Click yes if you would like select the {0} executable again. Click no if you would like to download {1}
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Unable to set {0} executable path, please try from Flow's settings (scroll down to the bottom).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Fail to Init Plugins</system:String>
@@ -415,7 +415,7 @@
     <system:String x:Key="fileManagerWindow">Dosya Yöneticisi Seçenekleri</system:String>
     <system:String x:Key="fileManager_learnMore">Daha fazla bilgi</system:String>
     <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments as required. The &quot;%d&quot; represents the directory path to open for, used by the Arg for Folder field and for commands opening specific directories. The &quot;%f&quot; represents the file path to open for, used by the Arg for File field and for commands opening specific files.</system:String>
-    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fileds blank.</system:String>
+    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fields blank.</system:String>
     <system:String x:Key="fileManager_name">Dosya Yöneticisi</system:String>
     <system:String x:Key="fileManager_profile_name">Profil Adı</system:String>
     <system:String x:Key="fileManager_path">Dosya Yöneticisi Yolu</system:String>
@@ -466,13 +466,14 @@
     <system:String x:Key="customeQueryHotkeyTips">Flow Launcher'ı açıp otomatik olarak girdiğiniz sorguyu aratması için bir kısayol atayın.</system:String>
     <system:String x:Key="preview">Önizleme</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Kısayol tuşu kullanılamıyor, lütfen başka bir kombinasyon girin.</system:String>
-    <system:String x:Key="invalidPluginHotkey">Geçersiz eklenti kısayol tuşu</system:String>
+    <system:String x:Key="invalidPluginHotkey">Hotkey is invalid</system:String>
     <system:String x:Key="update">Güncelle</system:String>
     <system:String x:Key="hotkeyRegTitle">Kısayol Atanıyor</system:String>
     <system:String x:Key="hotkeyUnavailable">Kullanılamıyor</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">Bu kısayol &quot;{0}&quot; için ayrılmıştır, lütfen başka bir kısayol deneyin.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">Bu kısayol zaten &quot;{0}&quot; için kullanılıyor. Eğer &quot;Üstüne Yaz&quot;'ı seçerseniz, &quot;{0}&quot; sorgusu bu kısayol ile kullanılamayacak.</system:String>
     <system:String x:Key="hotkeyRegGuide">Bu işleve atamak istediğiniz kısayol tuşlarına basın.</system:String>
+    <system:String x:Key="emptyPluginHotkey">Hotkey and action keyword are empty</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Özel Kısaltmalar</system:String>
@@ -481,6 +482,7 @@
     </system:String>
     <system:String x:Key="duplicateShortcut">Anahtar kelime zaten mevcut. Yeni bir kısaltma girin veya mevcut kısaltmayı düzenleyin.</system:String>
     <system:String x:Key="emptyShortcut">Kısaltma ve/veya sorgu eksik.</system:String>
+    <system:String x:Key="invalidShortcut">Shortcut is invalid</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Kaydet</system:String>
