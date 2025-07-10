@@ -8,9 +8,9 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Wybierz plik wykonywalny {0}</system:String>
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
-        Wybrany plik wykonywalny {0} jest nieprawidłowy.
+        Your selected {0} executable is invalid.
         {2}{2}
-        Kliknij Tak, jeśli chcesz ponownie wybrać plik wykonywalny {0}. Kliknij Nie, jeśli chcesz pobrać {1}
+        Click yes if you would like select the {0} executable again. Click no if you would like to download {1}
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Nie można ustawić ścieżki do pliku wykonywalnego {0}. Spróbuj ponownie w ustawieniach Flow (przewiń na sam dół).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Nie udało się zainicjować wtyczek</system:String>
@@ -414,7 +414,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="fileManagerWindow">Wybierz menedżer plików</system:String>
     <system:String x:Key="fileManager_learnMore">Więcej informacji</system:String>
     <system:String x:Key="fileManager_tips">Proszę określić lokalizację pliku menedżera plików, którego używasz i dodać argumenty według potrzeb. Symbol &quot;%d&quot; reprezentuje ścieżkę katalogu do otwarcia, używaną w polu Arg dla Folderu oraz dla poleceń otwierających konkretne katalogi. Symbol &quot;%f&quot; reprezentuje ścieżkę pliku do otwarcia, używaną w polu Arg dla Pliku oraz dla poleceń otwierających konkretne pliki.</system:String>
-    <system:String x:Key="fileManager_tips2">Na przykład, jeśli menedżer plików używa polecenia takiego jak „totalcmd.exe /A c:\windows&quot; do otwarcia katalogu c:\windows, Ścieżka Menedżera Plików będzie totalcmd.exe, a Argument dla Folderu będzie /A &quot;%d&quot;. Niektóre menedżery plików, takie jak QTTabBar, mogą wymagać jedynie podania ścieżki; w takim przypadku użyj &quot;%d&quot; jako Ścieżki Menedżera Plików, a pozostałe pola pozostaw puste.</system:String>
+    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fields blank.</system:String>
     <system:String x:Key="fileManager_name">Menedżer plików</system:String>
     <system:String x:Key="fileManager_profile_name">Nazwa profilu</system:String>
     <system:String x:Key="fileManager_path">Ścieżka menedżera plików</system:String>
@@ -465,13 +465,14 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="customeQueryHotkeyTips">Naciśnij niestandardowy klawisz skrótu, aby otworzyć Flow Launcher i automatycznie wprowadzić określone zapytanie.</system:String>
     <system:String x:Key="preview">Podgląd</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Skrót klawiszowy jest niedostępny, musisz podać inny skrót klawiszowy</system:String>
-    <system:String x:Key="invalidPluginHotkey">Niepoprawny skrót klawiszowy</system:String>
+    <system:String x:Key="invalidPluginHotkey">Hotkey is invalid</system:String>
     <system:String x:Key="update">Aktualizuj</system:String>
     <system:String x:Key="hotkeyRegTitle">Przypisywanie skrótów</system:String>
     <system:String x:Key="hotkeyUnavailable">Bieżący skrót klawiszowy jest niedostępny.</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">Ten skrót klawiszowy jest zarezerwowany dla &quot;{0}&quot; i nie może być użyty. Proszę wybrać inny skrót.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">Ten skrót klawiszowy jest już używany przez &quot;{0}&quot;. Jeśli naciśniesz &quot;Nadpisz&quot;, zostanie on usunięty z &quot;{0}&quot;.</system:String>
     <system:String x:Key="hotkeyRegGuide">Naciśnij klawisze, których chcesz użyć dla tej funkcji.</system:String>
+    <system:String x:Key="emptyPluginHotkey">Hotkey and action keyword are empty</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Niestandardowy skrót zapytania</system:String>
@@ -482,6 +483,7 @@ Jeśli dodasz prefiks '@' podczas wprowadzania skrótu, będzie on pasował do d
     </system:String>
     <system:String x:Key="duplicateShortcut">Skrót już istnieje, wprowadź nowy skrót lub edytuj istniejący.</system:String>
     <system:String x:Key="emptyShortcut">Skrót i/lub jego rozwinięcie jest puste.</system:String>
+    <system:String x:Key="invalidShortcut">Shortcut is invalid</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Zapisz</system:String>
