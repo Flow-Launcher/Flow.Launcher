@@ -10,7 +10,7 @@
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
         Your selected {0} executable is invalid.
         {2}{2}
-        Click yes if you would like select the {0} executable agian. Click no if you would like to download {1}
+        Click yes if you would like select the {0} executable again. Click no if you would like to download {1}
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Unable to set {0} executable path, please try from Flow's settings (scroll down to the bottom).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Fail to Init Plugins</system:String>
@@ -406,7 +406,7 @@
     <system:String x:Key="fileManagerWindow">파일관리자 선택</system:String>
     <system:String x:Key="fileManager_learnMore">더 알아보기</system:String>
     <system:String x:Key="fileManager_tips">사용 중인 파일 관리자의 파일 위치를 지정하고, 필요한 경우 인수를 추가하세요. &quot;%d&quot;는 열고자 하는 디렉터리 경로를 나타내며, 폴더용 인수 필드 및 특정 디렉터리를 여는 명령어에서 사용됩니다. &quot;%f&quot;는 열고자 하는 파일 경로를 나타내며, 파일용 인수 필드 및 특정 파일을 여는 명령어에서 사용됩니다.</system:String>
-    <system:String x:Key="fileManager_tips2">예를 들어, 파일 관리자가 totalcmd.exe /A c:\windows와 같은 명령어로 c:\windows 디렉터리를 연다면, 파일 관리자 경로는 totalcmd.exe가 되고, 폴더용 인수는 /A &quot;%d&quot;가 됩니다. QTTabBar와 같은 일부 파일 관리자는 경로만 전달하면 되는 경우가 있으므로, 이 경우에는 파일 관리자 경로에 &quot;%d&quot;를 입력하고 나머지 필드는 비워두세요.</system:String>
+    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fields blank.</system:String>
     <system:String x:Key="fileManager_name">파일관리자</system:String>
     <system:String x:Key="fileManager_profile_name">프로필 이름</system:String>
     <system:String x:Key="fileManager_path">파일관리자 경로</system:String>
@@ -457,13 +457,14 @@
     <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Launcher and input the specified query automatically.</system:String>
     <system:String x:Key="preview">미리보기</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">단축키를 사용할 수 없습니다. 다른 단축키를 입력하세요.</system:String>
-    <system:String x:Key="invalidPluginHotkey">플러그인 단축키가 유효하지 않습니다.</system:String>
+    <system:String x:Key="invalidPluginHotkey">Hotkey is invalid</system:String>
     <system:String x:Key="update">업데이트</system:String>
     <system:String x:Key="hotkeyRegTitle">Binding Hotkey</system:String>
     <system:String x:Key="hotkeyUnavailable">Current hotkey is unavailable.</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for &quot;{0}&quot; and can't be used. Please choose another hotkey.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">This hotkey is already in use by &quot;{0}&quot;. If you press &quot;Overwrite&quot;, it will be removed from &quot;{0}&quot;.</system:String>
     <system:String x:Key="hotkeyRegGuide">이 기능에 사용할 키를 눌러주세요.</system:String>
+    <system:String x:Key="emptyPluginHotkey">Hotkey and action keyword are empty</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">사용자 지정 쿼리 단축어</system:String>
@@ -474,6 +475,7 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     </system:String>
     <system:String x:Key="duplicateShortcut">Shortcut already exists, please enter a new Shortcut or edit the existing one.</system:String>
     <system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
+    <system:String x:Key="invalidShortcut">Shortcut is invalid</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">저장</system:String>
