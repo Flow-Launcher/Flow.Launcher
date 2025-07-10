@@ -8,9 +8,9 @@
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Por favor, seleccione el ejecutable {0}</system:String>
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
-        El ejecutable {0} seleccionado no es válido.
+        Your selected {0} executable is invalid.
         {2}{2}
-        Pulsar Sí, si desea seleccionar de nuevo el ejecutable {0}. Pulsar No, si desea descargar {1}
+        Click yes if you would like select the {0} executable again. Click no if you would like to download {1}
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">No se puede establecer la ruta del ejecutable {0}, por favor inténtelo desde la configuración de Flow (desplácese hacia abajo).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Fallo al iniciar los complementos</system:String>
@@ -415,7 +415,7 @@
     <system:String x:Key="fileManagerWindow">Seleccionar administrador de archivos</system:String>
     <system:String x:Key="fileManager_learnMore">Más información</system:String>
     <system:String x:Key="fileManager_tips">Especifique la ubicación del archivo del administrador de archivos que está utilizando y añada los argumentos necesarios. El argumento &quot;%d&quot; representa la ruta del directorio a abrir, utilizada por el campo Argumentos de la carpeta y por comandos que abren directorios específicos. El &quot;%f&quot; representa la ruta del archivo a abrir, utilizada por el campo Argumentos del archivo y por comandos que abren archivos específicos.</system:String>
-    <system:String x:Key="fileManager_tips2">Por ejemplo, si el administrador de archivos utiliza un comando como &quot;totalcmd.exe /A c:\windows&quot; para abrir el directorio c:\windows, la ruta del administrador de archivos será totalcmd.exe, y los Argumentos de la carpeta serán /A &quot;%d&quot;. Ciertos administradores de archivos como QTTabBar pueden requerir solo la ruta, en este caso utilice &quot;%d&quot; como la ruta del administrador de archivos y deje el resto de los campos en blanco.</system:String>
+    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fields blank.</system:String>
     <system:String x:Key="fileManager_name">Administrador de archivos</system:String>
     <system:String x:Key="fileManager_profile_name">Nombre del perfil</system:String>
     <system:String x:Key="fileManager_path">Ruta del administrador de archivos</system:String>
@@ -466,13 +466,14 @@
     <system:String x:Key="customeQueryHotkeyTips">Pulse el atajo de teclado personalizado para abrir Flow Launcher y realizar automáticamente la consulta especificada.</system:String>
     <system:String x:Key="preview">Vista previa</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">El atajo de teclado no está disponible, por favor seleccione uno nuevo</system:String>
-    <system:String x:Key="invalidPluginHotkey">Atajo de teclado de complemento no válido</system:String>
+    <system:String x:Key="invalidPluginHotkey">Hotkey is invalid</system:String>
     <system:String x:Key="update">Actualizar</system:String>
     <system:String x:Key="hotkeyRegTitle">Atajo de teclado vinculado</system:String>
     <system:String x:Key="hotkeyUnavailable">El atajo de teclado actual no está disponible.</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">Este atajo de teclado está reservado para &quot;{0}&quot; y no se puede utilizar. Por favor, elija otro atajo de teclado.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">Este atajo de teclado ya está siendo utilizado por &quot;{0}&quot;. Si pulsa «Sobrescribir», se eliminará de &quot;{0}&quot;.</system:String>
     <system:String x:Key="hotkeyRegGuide">Pulsar las teclas que se deseen utilizar para esta función.</system:String>
+    <system:String x:Key="emptyPluginHotkey">Hotkey and action keyword are empty</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Acceso directo de consulta personalizada</system:String>
@@ -483,6 +484,7 @@ Si añade un prefijo &quot;@&quot; al introducir un acceso directo, éste coinci
     </system:String>
     <system:String x:Key="duplicateShortcut">El acceso directo ya existe, por favor introduzca uno nuevo o edite el existente.</system:String>
     <system:String x:Key="emptyShortcut">El acceso directo y/o su expansión están vacíos.</system:String>
+    <system:String x:Key="invalidShortcut">Shortcut is invalid</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Guardar</system:String>
