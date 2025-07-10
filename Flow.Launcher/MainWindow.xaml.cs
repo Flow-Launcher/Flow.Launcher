@@ -260,6 +260,10 @@ namespace Flow.Launcher
                         break;
                     case nameof(Settings.Language):
                         UpdateNotifyIconText();
+                        if (_settings.ShowHomePage && _viewModel.QueryResultsSelected() && string.IsNullOrEmpty(_viewModel.QueryText))
+                        {
+                            _viewModel.QueryResults();
+                        }
                         break;
                     case nameof(Settings.Hotkey):
                         UpdateNotifyIconText();
