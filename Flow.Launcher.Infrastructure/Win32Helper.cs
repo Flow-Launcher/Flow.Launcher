@@ -791,5 +791,41 @@ namespace Flow.Launcher.Infrastructure
         }
 
         #endregion
+
+        #region Win32 Dark Mode
+
+        /*
+         * Inspired by https://github.com/ysc3839/win32-darkmode
+         */
+
+        [DllImport("uxtheme.dll", EntryPoint = "#135", SetLastError = true)]
+        private static extern int SetPreferredAppMode(int appMode);
+
+        public static void EnableWin32DarkMode(string colorScheme)
+        {
+            try
+            {
+                // Undocumented API from Windows 10 1809
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) &&
+                    Environment.OSVersion.Version.Build >= 17763)
+                {
+                    var flag = colorScheme switch
+                    {
+                        Constant.Light => 3, // ForceLight
+                        Constant.Dark => 2, // ForceDark
+                        Constant.System => 1, // AllowDark
+                        _ => 0 // Default
+                    };
+                    _ = SetPreferredAppMode(flag);
+                }
+
+            }
+            catch
+            {
+                // Ignore errors on unsupported OS
+            }
+        }
+
+        #endregion
     }
 }
