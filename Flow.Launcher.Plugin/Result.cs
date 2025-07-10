@@ -259,7 +259,7 @@ namespace Flow.Launcher.Plugin
 
         /// <summary>
         /// List of hotkey IDs that are supported for this result.
-        /// Those hotkeys should be registed by IPluginHotkey interface.
+        /// Those hotkeys should be registered by IPluginHotkey interface.
         /// </summary>
         public IList<int> HotkeyIds { get; set; } = new List<int>();
 
