@@ -8,9 +8,9 @@
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">请选择 {0} 可执行文件</system:String>
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
-        Your selected {0} executable is invalid.
+        您选择的 {0} 可执行文件无效。
         {2}{2}
-        Click yes if you would like select the {0} executable again. Click no if you would like to download {1}
+        如果您希望重新选择 {0} 可执行文件，请点击“是”。如果需要下载 {1}，请点击“否”
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">无法设置 {0} 可执行路径，请尝试从 Flow 的设置中设置（向下滚动到底部）。</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">无法初始化插件</system:String>
@@ -415,7 +415,7 @@
     <system:String x:Key="fileManagerWindow">默认文件管理器</system:String>
     <system:String x:Key="fileManager_learnMore">了解更多</system:String>
     <system:String x:Key="fileManager_tips">请指定您使用的文件管理器的文件位置并根据需要添加参数。“%d”表示要打开的目录路径，由文件夹字段的参数和打开特定目录的命令使用。“%f”表示要打开的文件路径，由文件字段的参数和打开特定文件的命令使用。</system:String>
-    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fields blank.</system:String>
+    <system:String x:Key="fileManager_tips2">例如，如果文件管理器使用诸如“totalcmd.exe /A c:\windows”之类的命令来打开 c:\windows 目录，则文件管理器路径将为 totalcmd.exe，文件夹参数将为 /A &quot;%d&quot;。某些文件管理器（如 QTTabBar）可能只需要提供路径，在本例中，使用“%d”作为文件管理器路径，其余字段留空。</system:String>
     <system:String x:Key="fileManager_name">文件管理器</system:String>
     <system:String x:Key="fileManager_profile_name">档案名称</system:String>
     <system:String x:Key="fileManager_path">文件管理器路径</system:String>
@@ -466,14 +466,14 @@
     <system:String x:Key="customeQueryHotkeyTips">输入一个自定义的快捷键来打开 Flow Launcher 并自动输入指定的查询。</system:String>
     <system:String x:Key="preview">预览</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">热键不可用，请选择一个新的热键</system:String>
-    <system:String x:Key="invalidPluginHotkey">Hotkey is invalid</system:String>
+    <system:String x:Key="invalidPluginHotkey">热键无效</system:String>
     <system:String x:Key="update">更新</system:String>
     <system:String x:Key="hotkeyRegTitle">绑定热键</system:String>
     <system:String x:Key="hotkeyUnavailable">当前热键不可用。</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">此热键为“{0}”保留，无法使用。请选择其他热键。</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">此热键已被“{0}”使用。如果按“覆盖”，则会将其从“{0}”中删除。</system:String>
     <system:String x:Key="hotkeyRegGuide">按下您想要用于此功能的键。</system:String>
-    <system:String x:Key="emptyPluginHotkey">Hotkey and action keyword are empty</system:String>
+    <system:String x:Key="emptyPluginHotkey">热键和操作关键字为空</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">自定义查询捷径</system:String>
@@ -484,7 +484,7 @@
     </system:String>
     <system:String x:Key="duplicateShortcut">捷径已存在，请输入一个新的或者编辑已有的。</system:String>
     <system:String x:Key="emptyShortcut">捷径及其展开均不能为空。</system:String>
-    <system:String x:Key="invalidShortcut">Shortcut is invalid</system:String>
+    <system:String x:Key="invalidShortcut">快捷键无效</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">保存</system:String>
