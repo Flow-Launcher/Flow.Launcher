@@ -10,7 +10,7 @@
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
         Your selected {0} executable is invalid.
         {2}{2}
-        Click yes if you would like select the {0} executable agian. Click no if you would like to download {1}
+        Click yes if you would like select the {0} executable again. Click no if you would like to download {1}
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Не вдається встановити шлях до виконуваника {0}, будласка спробуйте в налаштуваннях Flow (прокрутіть вниз до кінця).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Невдача ініціалізації плагінів</system:String>
@@ -415,7 +415,7 @@
     <system:String x:Key="fileManagerWindow">Виберіть файловий менеджер</system:String>
     <system:String x:Key="fileManager_learnMore">Learn more</system:String>
     <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments as required. The &quot;%d&quot; represents the directory path to open for, used by the Arg for Folder field and for commands opening specific directories. The &quot;%f&quot; represents the file path to open for, used by the Arg for File field and for commands opening specific files.</system:String>
-    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fileds blank.</system:String>
+    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fields blank.</system:String>
     <system:String x:Key="fileManager_name">Файловий менеджер</system:String>
     <system:String x:Key="fileManager_profile_name">Ім'я профілю</system:String>
     <system:String x:Key="fileManager_path">Шлях до файлового менеджера</system:String>
@@ -466,13 +466,14 @@
     <system:String x:Key="customeQueryHotkeyTips">Натисніть спеціальну гарячу клавішу, щоб відкрити Flow Launcher і автоматично ввести вказаний запит.</system:String>
     <system:String x:Key="preview">Переглянути</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Гаряча клавіша недоступна. Будь ласка, вкажіть нову</system:String>
-    <system:String x:Key="invalidPluginHotkey">Недійсна гаряча клавіша плагіна</system:String>
+    <system:String x:Key="invalidPluginHotkey">Hotkey is invalid</system:String>
     <system:String x:Key="update">Оновити</system:String>
     <system:String x:Key="hotkeyRegTitle">Прив'язка галавіші</system:String>
     <system:String x:Key="hotkeyUnavailable">Поточна галавіша недоступна.</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">Ця галавіша зарезервована для «{0}» і не може бути використана. Будласка, виберіть іншу галавішу.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">Ця галавіша вже використовується «{0}». Якщо ви натиснете «Перезаписати», її буде вилучено з «{0}».</system:String>
     <system:String x:Key="hotkeyRegGuide">Натисніть клавіші, які ви хочете використовувати для цієї функції.</system:String>
+    <system:String x:Key="emptyPluginHotkey">Hotkey and action keyword are empty</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Власне скорочення запиту</system:String>
@@ -483,6 +484,7 @@
     </system:String>
     <system:String x:Key="duplicateShortcut">Скорочення вже існує, будь ласка, введіть нове або відредагуйте існуюче.</system:String>
     <system:String x:Key="emptyShortcut">Скорочення та/або його розширення є порожнім.</system:String>
+    <system:String x:Key="invalidShortcut">Shortcut is invalid</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Зберегти</system:String>
