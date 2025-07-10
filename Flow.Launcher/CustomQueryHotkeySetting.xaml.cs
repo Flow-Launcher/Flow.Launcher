@@ -16,7 +16,7 @@ namespace Flow.Launcher
         public CustomQueryHotkeySetting()
         {
             InitializeComponent();
-            lblAdd.Visibility = Visibility.Visible;
+            tbAdd.Visibility = Visibility.Visible;
         }
 
         public CustomQueryHotkeySetting(CustomPluginHotkey hotkey)
@@ -25,7 +25,7 @@ namespace Flow.Launcher
             update = true;
             ActionKeyword = originalCustomHotkey.ActionKeyword;
             InitializeComponent();
-            lblUpdate.Visibility = Visibility.Visible;
+            tbUpdate.Visibility = Visibility.Visible;
             HotkeyControl.SetHotkey(originalCustomHotkey.Hotkey, false);
         }
 
