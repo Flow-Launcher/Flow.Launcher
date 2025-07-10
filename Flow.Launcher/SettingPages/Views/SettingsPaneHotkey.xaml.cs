@@ -61,7 +61,7 @@ public partial class SettingsPaneHotkey
             };
 
             var sortedHotkeyInfo = hotkeyInfo.OrderBy(h => h.Id).ToList();
-            foreach (var hotkey in hotkeyInfo)
+            foreach (var hotkey in sortedHotkeyInfo)
             {
                 // Skip invisible hotkeys
                 if (!hotkey.Visible) continue;
