@@ -10,7 +10,7 @@
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
         Your selected {0} executable is invalid.
         {2}{2}
-        Click yes if you would like select the {0} executable agian. Click no if you would like to download {1}
+        Click yes if you would like select the {0} executable again. Click no if you would like to download {1}
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Kan ikke angi {0} kjørbar bane, prøv fra Flows innstillinger (bla ned til bunnen).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Mislykkes i å initialisere programtillegg</system:String>
@@ -415,7 +415,7 @@
     <system:String x:Key="fileManagerWindow">Velg filbehandler</system:String>
     <system:String x:Key="fileManager_learnMore">Learn more</system:String>
     <system:String x:Key="fileManager_tips">Vennligst spesifiser filplasseringen til filbehandleren du bruker, og legg til argumenter etter behov. &quot;%d&quot; representerer katalogbanen som skal åpnes for, brukt av Arg for mappe-feltet og for kommandoer som åpner spesifikke kataloger. &quot;%f&quot; representerer filbanen som skal åpnes for, brukt av Arg for fil-feltet og for kommandoer som åpner spesifikke filer.</system:String>
-    <system:String x:Key="fileManager_tips2">For eksempel, hvis filbehandleren bruker en kommando som &quot;totalcmd.exe /A c:windows&quot; for å åpne c:windows-katalogen, vil filbehandlingsbanen bli totalcmd.exe, og Arg For Folder vil være /A &quot;%d&quot;. Enkelte filbehandlere som QTTabBar kan bare kreve at en bane oppgis, i dette tilfellet bruker du &quot;%d&quot; som filbehandlingsbane og lar resten av feltene stå tomme.</system:String>
+    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fields blank.</system:String>
     <system:String x:Key="fileManager_name">Filbehandler</system:String>
     <system:String x:Key="fileManager_profile_name">Profilnavn</system:String>
     <system:String x:Key="fileManager_path">Filbehandler sti</system:String>
@@ -466,13 +466,14 @@
     <system:String x:Key="customeQueryHotkeyTips">Trykk på en egendefinert hurtigtast for å åpne Flow Launcher og skrive inn den angitte spørringen automatisk.</system:String>
     <system:String x:Key="preview">Forhåndsvis</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Hurtigtast er utilgjengelig, vennligst velg en ny hurtigtast</system:String>
-    <system:String x:Key="invalidPluginHotkey">Ugyldig hurtigtast for programtillegg</system:String>
+    <system:String x:Key="invalidPluginHotkey">Hotkey is invalid</system:String>
     <system:String x:Key="update">Oppdater</system:String>
     <system:String x:Key="hotkeyRegTitle">Binding av hurtigtast</system:String>
     <system:String x:Key="hotkeyUnavailable">Nåværende hurtigtast er utilgjengelig.</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">Denne hurtigtasten er reservert for &quot;{0}&quot; og kan ikke brukes. Velg en annen hurtigtast.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">Denne hurtigtasten er allerede i bruk av &quot;{0}&quot;. Hvis du trykker &quot;Overskriv&quot; vil den bli fjernet fra &quot;{0}&quot;.</system:String>
     <system:String x:Key="hotkeyRegGuide">Trykk på tastene du vil bruke for denne funksjonen.</system:String>
+    <system:String x:Key="emptyPluginHotkey">Hotkey and action keyword are empty</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Snarvei for egendefinert spørring</system:String>
@@ -483,6 +484,7 @@ Hvis du legger til et @-prefiks mens du legger inn en snarvei, samsvarer det med
     </system:String>
     <system:String x:Key="duplicateShortcut">Snarveien eksisterer allerede, skriv inn en ny snarvei eller rediger den eksisterende.</system:String>
     <system:String x:Key="emptyShortcut">Snarvei og/eller utvidelsen er tom.</system:String>
+    <system:String x:Key="invalidShortcut">Shortcut is invalid</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Lagre</system:String>
