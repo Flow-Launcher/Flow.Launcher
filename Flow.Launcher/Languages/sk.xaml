@@ -8,9 +8,9 @@
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Vyberte spustiteľný súbor {0}</system:String>
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
-        Your selected {0} executable is invalid.
+        Vybrali ste nesprávny spustiteľný súbor {0}.
         {2}{2}
-        Click yes if you would like select the {0} executable again. Click no if you would like to download {1}
+        Ak chcete znovu vybrať spustiteľný súbor {0}, kliknite na Áno. Kliknutím na Nie sa stiahne {1}.
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Nie je možné nastaviť cestu ku spustiteľnému súboru {0}, skúste to v nastaveniach Flowu (prejdite nadol).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Nepodarilo sa inicializovať pluginy</system:String>
@@ -415,7 +415,7 @@
     <system:String x:Key="fileManagerWindow">Vyberte správcu súborov</system:String>
     <system:String x:Key="fileManager_learnMore">Viac informácií</system:String>
     <system:String x:Key="fileManager_tips">Zadajte umiestnenie súboru správcu súborov, ktorý používate, a podľa potreby pridajte argumenty. &quot;%d&quot; predstavuje cestu k priečinku, ktorý sa má otvoriť, používa sa v poli Arg pre priečinok a pri príkazoch na otvorenie konkrétnych priečinkov. &quot;%f&quot; predstavuje cestu k súboru, ktorá sa má otvoriť a používa sa v poli Arg pre súbor a pri príkazoch na otvorenie konkrétnych súborov.</system:String>
-    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fields blank.</system:String>
+    <system:String x:Key="fileManager_tips2">Napríklad, ak správca súborov používa príkaz ako &quot;totalcmd.exe /A c:\windows&quot; na otvorenie priečinka c:\windows, cesta správcu súborov bude totalcmd.exe a Arg pre priečinok bude /A &quot;%d&quot;. Niektorí správcovia súborov, ako napríklad QTTabBar, môžu vyžadovať len zadanie cesty, v tomto prípade použite &quot;%d&quot; ako cestu správcu súborov a zvyšok súborov nechajte prázdny.</system:String>
     <system:String x:Key="fileManager_name">Správca súborov</system:String>
     <system:String x:Key="fileManager_profile_name">Názov profilu</system:String>
     <system:String x:Key="fileManager_path">Cesta k správcovi súborov</system:String>
@@ -466,14 +466,14 @@
     <system:String x:Key="customeQueryHotkeyTips">Stlačením vlastnej klávesovej skratky otvoríte Flow Launcher a automaticky vložíte zadaný dotaz.</system:String>
     <system:String x:Key="preview">Náhľad</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Klávesová skratka je nedostupná, prosím, zadajte novú skratku</system:String>
-    <system:String x:Key="invalidPluginHotkey">Hotkey is invalid</system:String>
+    <system:String x:Key="invalidPluginHotkey">Klávesová skratka je neplatná</system:String>
     <system:String x:Key="update">Aktualizovať</system:String>
     <system:String x:Key="hotkeyRegTitle">Priradenie klávesovej skratky</system:String>
     <system:String x:Key="hotkeyUnavailable">Aktuálna klávesová skratka nie je k dispozícii.</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">Táto skratka je rezervovaná pre &quot;{0}&quot; a nemôže byť použitá. Prosím, vyberte inú skratku.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">Táto skratka sa používa pre &quot;{0}&quot;. Ak stlačíte &quot;Prepísať&quot;, odstráni sa pre &quot;{0}&quot;.</system:String>
     <system:String x:Key="hotkeyRegGuide">Stlačte kláves, ktorý chcete nastaviť pre túto funkciu.</system:String>
-    <system:String x:Key="emptyPluginHotkey">Hotkey and action keyword are empty</system:String>
+    <system:String x:Key="emptyPluginHotkey">Klávesová skratka a aktivačný príkaz sú prázdne</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Klávesová skratka vlastného dopytu</system:String>
@@ -484,7 +484,7 @@ Ak pri zadávaní skratky pred ňu pridáte &quot;@&quot;, bude sa zhodovať s �
     </system:String>
     <system:String x:Key="duplicateShortcut">Skratka už existuje, zadajte novú skratku alebo upravte existujúcu.</system:String>
     <system:String x:Key="emptyShortcut">Skratka a/alebo jej celé znenie je prázdne.</system:String>
-    <system:String x:Key="invalidShortcut">Shortcut is invalid</system:String>
+    <system:String x:Key="invalidShortcut">Skratka je neplatná</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Uložiť</system:String>
