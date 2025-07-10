@@ -245,7 +245,7 @@ public record RegisteredHotkeyData
     /// <inheritdoc />
     public override string ToString()
     {
-        return Hotkey.IsEmpty ? $"{RegisteredType} - {Hotkey}" : $"{RegisteredType} - None";
+        return Hotkey.IsEmpty ? $"{RegisteredType} - None" : $"{RegisteredType} - {Hotkey}";
     }
 }
 
