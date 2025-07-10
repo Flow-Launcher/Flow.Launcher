@@ -87,7 +87,7 @@ public static class RenameThing
                     return;
                 case ElementAlreadyExistsException:
                     api.ShowMsgError(string.Format(api.GetTranslation("plugin_explorer_element_already_exists"), NewFileName));
-                    break;
+                    return;
                 default:
                     string msg = exception.Message;
                     if (!string.IsNullOrEmpty(msg))
