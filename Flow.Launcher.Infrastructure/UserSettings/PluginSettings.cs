@@ -132,6 +132,10 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                             {
                                 // Update existing hotkey
                                 existingHotkey.DefaultHotkey = hotkey.DefaultHotkey; // hotkey info provides default values
+                                if (!hotkey.Editable) // If this hotkey is not editable anymore, we need to restore the hotkey
+                                {
+                                    existingHotkey.Hotkey = hotkey.DefaultHotkey;
+                                }
                                 metadata.PluginHotkeys.Add(new PluginHotkey
                                 {
                                     Id = hotkey.Id,
