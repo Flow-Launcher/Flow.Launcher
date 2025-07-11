@@ -8,9 +8,9 @@
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Veuillez sélectionner l'exécutable {0}</system:String>
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
-        Your selected {0} executable is invalid.
+        L'exécutable {0} que vous avez sélectionné n'est pas valide.
         {2}{2}
-        Click yes if you would like select the {0} executable again. Click no if you would like to download {1}
+        Cliquez sur oui si vous souhaitez sélectionner à nouveau l'exécutable {0}. Cliquez sur non si vous souhaitez télécharger {1}
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Impossible de définir {0} comme chemin d'accès vers l'exécutable. Veuillez essayer à partir des paramètres de Flow (défiler vers le bas).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Échec de l'initialisation des plugins</system:String>
@@ -414,7 +414,7 @@
     <system:String x:Key="fileManagerWindow">Sélectionner le gestionnaire de fichiers</system:String>
     <system:String x:Key="fileManager_learnMore">En savoir plus</system:String>
     <system:String x:Key="fileManager_tips">Veuillez spécifier l'emplacement du fichier de l'explorateur de fichiers que vous utilisez et ajouter des arguments si nécessaire. Le &quot;%d&quot; représente le chemin du répertoire à ouvrir, utilisé par le champ Arg for Folder et pour les commandes ouvrant des répertoires spécifiques. Le &quot;%f&quot; représente le chemin du fichier à ouvrir, utilisé par le champ Arg for File et pour les commandes ouvrant des fichiers spécifiques.</system:String>
-    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fields blank.</system:String>
+    <system:String x:Key="fileManager_tips2">Par exemple, si le gestionnaire de fichiers utilise une commande telle que &quot;totalcmd.exe /A c:\windows&quot; pour ouvrir le répertoire c:\windows, le chemin du gestionnaire de fichiers sera totalcmd.exe, et le chemin du dossier sera /A &quot;%d&quot;. Certains gestionnaires de fichiers, comme QTTabBar, peuvent se contenter d'un simple chemin d'accès. Dans ce cas, utilisez &quot;%d&quot; comme chemin d'accès au gestionnaire de fichiers et laissez le reste des champs vides.</system:String>
     <system:String x:Key="fileManager_name">Gestionnaire de fichiers</system:String>
     <system:String x:Key="fileManager_profile_name">Nom du profil</system:String>
     <system:String x:Key="fileManager_path">Chemin du gestionnaire de fichiers</system:String>
@@ -465,14 +465,14 @@
     <system:String x:Key="customeQueryHotkeyTips">Appuyez sur le raccourci personnalisé pour insérer automatiquement la requête spécifiée.</system:String>
     <system:String x:Key="preview">Prévisualiser</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Raccourci indisponible. Veuillez en choisir un autre.</system:String>
-    <system:String x:Key="invalidPluginHotkey">Hotkey is invalid</system:String>
+    <system:String x:Key="invalidPluginHotkey">La touche de raccourci n'est pas valide</system:String>
     <system:String x:Key="update">Actualiser</system:String>
     <system:String x:Key="hotkeyRegTitle">Raccourci de liaison</system:String>
     <system:String x:Key="hotkeyUnavailable">Le raccourci clavier actuel n'est pas disponible.</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">Ce raccourci est réservé à &quot;{0}&quot; et ne peut pas être utilisé. Veuillez choisir un autre raccourci clavier.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">Ce raccourci est déjà utilisé par &quot;{0}&quot;. Si vous appuyez sur &quot;Écraser&quot;, il sera supprimé de &quot;{0}&quot;.</system:String>
     <system:String x:Key="hotkeyRegGuide">Appuyez sur les touches que vous voulez utiliser pour cette fonction.</system:String>
-    <system:String x:Key="emptyPluginHotkey">Hotkey and action keyword are empty</system:String>
+    <system:String x:Key="emptyPluginHotkey">Les touches de raccourci et les mots-clés d'action sont vides</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Raccourci de requête personnalisée</system:String>
@@ -483,7 +483,7 @@ Si vous ajoutez un préfixe &quot;@&quot; lors de la saisie d'un raccourci, celu
     </system:String>
     <system:String x:Key="duplicateShortcut">Le raccourci existe déjà, veuillez entrer un nouveau raccourci ou modifier le raccourci existant.</system:String>
     <system:String x:Key="emptyShortcut">Raccourci et/ou son expansion est vide.</system:String>
-    <system:String x:Key="invalidShortcut">Shortcut is invalid</system:String>
+    <system:String x:Key="invalidShortcut">Le raccourci n'est pas valide</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Sauvegarder</system:String>
