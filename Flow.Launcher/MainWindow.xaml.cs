@@ -43,6 +43,9 @@ namespace Flow.Launcher
 
         #region Private Fields
 
+        // Class Name
+        private static readonly string ClassName = nameof(MainWindow);
+
         // Dependency Injection
         private readonly Settings _settings;
         private readonly Theme _theme;
@@ -1229,14 +1232,21 @@ namespace Flow.Launcher
 
         private void QueryTextBox_OnPaste(object sender, DataObjectPastingEventArgs e)
         {
-            var isText = e.SourceDataObject.GetDataPresent(DataFormats.UnicodeText, true);
-            if (isText)
+            try
             {
-                var text = e.SourceDataObject.GetData(DataFormats.UnicodeText) as string;
-                text = text.Replace(Environment.NewLine, " ");
-                DataObject data = new DataObject();
-                data.SetData(DataFormats.UnicodeText, text);
-                e.DataObject = data;
+                var isText = e.SourceDataObject.GetDataPresent(DataFormats.UnicodeText, true);
+                if (isText)
+                {
+                    var text = e.SourceDataObject.GetData(DataFormats.UnicodeText) as string;
+                    text = text.Replace(Environment.NewLine, " ");
+                    DataObject data = new DataObject();
+                    data.SetData(DataFormats.UnicodeText, text);
+                    e.DataObject = data;
+                }
+            }
+            catch (Exception ex)
+            {
+                App.API.LogException(ClassName, "Failed to paste text", ex);
             }
         }
 
