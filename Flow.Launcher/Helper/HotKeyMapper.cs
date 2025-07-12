@@ -483,9 +483,9 @@ internal static class HotKeyMapper
                 if (existingBinding != null)
                 {
                     // If the hotkey is not a hotkey for ActionContext events, throw an exception to avoid duplicates
-                    if (!IsActionContextEvent(window, existingBinding, hotkey))
+                    if (!IsActionContextEvent(existingBinding, hotkey))
                     {
-                        throw new InvalidOperationException($"Windows key {hotkey} already exists");
+                        throw new InvalidOperationException($"Key {hotkey} already exists in window");
                     }
                 }
 
@@ -749,7 +749,7 @@ internal static class HotKeyMapper
     }
 
     [Obsolete("ActionContext support is deprecated and will be removed in a future release. Please use IPluginHotkey instead.")]
-    private static bool IsActionContextEvent(MainWindow window, KeyBinding existingBinding, HotkeyModel hotkey)
+    private static bool IsActionContextEvent(KeyBinding existingBinding, HotkeyModel hotkey)
     {
         // Check if this hotkey is a hotkey for ActionContext events
         if (!_actionContextHotkeyEvents.ContainsKey(hotkey) &&
