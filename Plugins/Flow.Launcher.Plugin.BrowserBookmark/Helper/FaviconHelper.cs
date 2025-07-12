@@ -95,7 +95,6 @@ public static class FaviconHelper
                     Main._context.API.LogException(ClassName, $"Failed to extract favicon for: {bookmark.Url}", ex);
                 }
             }
-            SqliteConnection.ClearPool(connection);
         });
     }
 
