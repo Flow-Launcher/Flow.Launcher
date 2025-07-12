@@ -88,16 +88,9 @@ public class Main : ISettingProvider, IAsyncPlugin, IReloadable, IPluginI18n, IC
     {
         if (!_isInitialized)
         {
-            // If the list is not initialized, we need to wait for the list to be refreshed before querying
-            await _initializationSemaphore.WaitAsync(token);
-            try
-            {
-                return QueryResults(query);
-            }
-            finally
-            {
-                _initializationSemaphore.Release();
-            }
+            // If the list is not initialized, we need to wait for the list to be initialized before querying
+            await LoadBookmarksInBackgroundAsync();
+            return QueryResults(query);
         }
         else
         {
