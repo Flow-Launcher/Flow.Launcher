@@ -752,9 +752,9 @@ internal static class HotKeyMapper
     private static bool IsActionContextEvent(KeyBinding existingBinding, HotkeyModel hotkey)
     {
         // Check if this hotkey is a hotkey for ActionContext events
-        if (!_actionContextHotkeyEvents.ContainsKey(hotkey) &&
-            _actionContextHotkeyEvents[hotkey].Command == existingBinding.Command &&
-            _actionContextHotkeyEvents[hotkey].Parameter == existingBinding.CommandParameter)
+        if (_actionContextHotkeyEvents.TryGetValue(hotkey, out var value) &&
+            value.Command == existingBinding.Command &&
+            value.Parameter == existingBinding.CommandParameter)
         {
             // If the hotkey is not for ActionContext events, return false
             return true;
