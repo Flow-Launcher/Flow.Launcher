@@ -12,7 +12,7 @@ using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark;
 
-public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContextMenu, IDisposable
+public class Main : ISettingProvider, IAsyncPlugin, IReloadable, IPluginI18n, IContextMenu, IDisposable
 {
     private static readonly string ClassName = nameof(Main);
 
@@ -34,7 +34,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
 
     private static CancellationTokenSource _debounceTokenSource;
 
-    public void Init(PluginInitContext context)
+    public async Task InitAsync(PluginInitContext context)
     {
         _instance = this;
         _context = context;
@@ -46,6 +46,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
 
         // Start loading bookmarks asynchronously without blocking Init
         _ = LoadBookmarksInBackgroundAsync();
+        await Task.CompletedTask;
     }
 
     private async Task LoadBookmarksInBackgroundAsync()
@@ -83,33 +84,29 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
         }
     }
 
-    public List<Result> Query(Query query)
+    public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
     {
-        // Immediately return if the initial load is not complete, providing feedback to the user.
         if (!_isInitialized)
         {
-            var initializingTitle = _context.API.GetTranslation("flowlauncher_plugin_browserbookmark_plugin_name");
-            var initializingSubTitle = "Plugin is initializing, please try again in a few seconds";
+            // If the list is not initialized, we need to wait for the list to be refreshed before querying
+            await _initializationSemaphore.WaitAsync(token);
             try
             {
-                initializingSubTitle = _context.API.GetTranslation("flowlauncher_plugin_browserbookmark_plugin_initializing");
+                return QueryResults(query);
             }
-            catch (KeyNotFoundException)
+            finally
             {
-                // Ignoring since not all language files will have this key.
+                _initializationSemaphore.Release();
             }
-
-            return new List<Result>
-            {
-                new()
-                {
-                    Title = initializingTitle,
-                    SubTitle = initializingSubTitle,
-                    IcoPath = DefaultIconPath
-                }
-            };
         }
+        else
+        {
+            return QueryResults(query);
+        }
+    }
 
+    private static List<Result> QueryResults(Query query)
+    {
         string param = query.Search.TrimStart();
         bool topResults = string.IsNullOrEmpty(param);
 
