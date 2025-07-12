@@ -39,7 +39,20 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             _storage.Save();
         }
 
-        public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
+        private string _openResultModifiers = KeyConstant.Alt;
+        public string OpenResultModifiers
+        {
+            get => _openResultModifiers;
+            set
+            {
+                if (_openResultModifiers != value)
+                {
+                    _openResultModifiers = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public string ColorScheme { get; set; } = "System";
         public bool ShowOpenResultHotkey { get; set; } = true;
         public double WindowSize { get; set; } = 580;
