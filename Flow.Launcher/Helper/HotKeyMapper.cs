@@ -67,6 +67,8 @@ internal static class HotKeyMapper
             new(RegisteredHotkeyType.Enter, HotkeyType.SearchWindow, "Enter", "HotkeyRunDesc", _mainViewModel.OpenResultCommand),
             new(RegisteredHotkeyType.ToggleGameMode, HotkeyType.SearchWindow, "Ctrl+F12", "ToggleGameModeHotkey", _mainViewModel.ToggleGameModeCommand),
             new(RegisteredHotkeyType.CopyFilePath, HotkeyType.SearchWindow, "Ctrl+Shift+C", "CopyFilePathHotkey", _mainViewModel.CopyAlternativeCommand),
+            
+            // Result Modifier Hotkeys
             new(RegisteredHotkeyType.OpenResultN1, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D1", "HotkeyOpenResultN", 1, _mainViewModel.OpenResultCommand, 0),
             new(RegisteredHotkeyType.OpenResultN2, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D2", "HotkeyOpenResultN", 2, _mainViewModel.OpenResultCommand, 1),
             new(RegisteredHotkeyType.OpenResultN3, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D3", "HotkeyOpenResultN", 3, _mainViewModel.OpenResultCommand, 2),
@@ -196,6 +198,21 @@ internal static class HotKeyMapper
                 break;
             case nameof(_settings.CycleHistoryDownHotkey):
                 ChangeRegisteredHotkey(RegisteredHotkeyType.CycleHistoryDown, _settings.CycleHistoryDownHotkey);
+                break;
+
+            // Result Modifier Hotkeys
+            case nameof(_settings.OpenResultModifiers):
+                // Change all result modifier hotkeys
+                ChangeRegisteredHotkey(RegisteredHotkeyType.OpenResultN1, $"{_settings.OpenResultModifiers}+D1");
+                ChangeRegisteredHotkey(RegisteredHotkeyType.OpenResultN2, $"{_settings.OpenResultModifiers}+D2");
+                ChangeRegisteredHotkey(RegisteredHotkeyType.OpenResultN3, $"{_settings.OpenResultModifiers}+D3");
+                ChangeRegisteredHotkey(RegisteredHotkeyType.OpenResultN4, $"{_settings.OpenResultModifiers}+D4");
+                ChangeRegisteredHotkey(RegisteredHotkeyType.OpenResultN5, $"{_settings.OpenResultModifiers}+D5");
+                ChangeRegisteredHotkey(RegisteredHotkeyType.OpenResultN6, $"{_settings.OpenResultModifiers}+D6");
+                ChangeRegisteredHotkey(RegisteredHotkeyType.OpenResultN7, $"{_settings.OpenResultModifiers}+D7");
+                ChangeRegisteredHotkey(RegisteredHotkeyType.OpenResultN8, $"{_settings.OpenResultModifiers}+D8");
+                ChangeRegisteredHotkey(RegisteredHotkeyType.OpenResultN9, $"{_settings.OpenResultModifiers}+D9");
+                ChangeRegisteredHotkey(RegisteredHotkeyType.OpenResultN10, $"{_settings.OpenResultModifiers}+D0");
                 break;
         }
     }
