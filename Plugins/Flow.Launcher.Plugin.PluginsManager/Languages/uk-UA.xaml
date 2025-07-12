@@ -13,8 +13,8 @@
     <system:String x:Key="plugin_pluginsmanager_installing_plugin">Встановлення плагіна</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Завантажити та встановити {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Видалення плагіна</system:String>
-    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_title">Keep plugin settings</system:String>
-    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_subtitle">Do you want to keep the settings of the plugin for the next usage?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_title">Зберегти налаштування плагіну</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_subtitle">Хочете зберегти налаштування плагіну для наступного використання?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin successfully installed. Restarting Flow, please wait...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Не вдалося знайти файл метаданих plugin.json у розпакованому zip-архіві.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Помилка: Плагін, який має ідентичну або новішу версію з {0}, вже існує.</system:String>
@@ -43,15 +43,15 @@
     <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">Плагін {0} успішно оновлено. Будь ласка, перезапустіть Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">{0} плагіни успішно оновлено. Будь ласка, перезапустіть Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">Плагін {0} вже було змінено. Будь ласка, перезапустіть Flow, перш ніж вносити будь-які подальші зміни.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_title">{0} modified already</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_message">Please restart Flow before making any further changes</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_title">{0} вже змінено</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_message">Перезапустіть Flow перед тим, як вносити будь-які подальші зміни.</system:String>
 
-    <system:String x:Key="plugin_pluginsmanager_invalid_zip_title">Invalid zip installer file</system:String>
-    <system:String x:Key="plugin_pluginsmanager_invalid_zip_subtitle">Please check if there is a plugin.json in {0}</system:String>
+    <system:String x:Key="plugin_pluginsmanager_invalid_zip_title">Неправильний встановлюваний zip-файл</system:String>
+    <system:String x:Key="plugin_pluginsmanager_invalid_zip_subtitle">Перевірте, чи є файл plugin.json у {0}.</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_name">Менеджер плагінів</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_description">Install, uninstall or update Flow Launcher plugins via the search window</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_description">Встановити, видалити або оновити плагіни Flow Launcher через вікно пошуку.</system:String>
     <system:String x:Key="plugin_pluginsmanager_unknown_author">Невідомий автор</system:String>
 
     <!--  Context menu items  -->
@@ -66,5 +66,5 @@
 
     <!--  Settings menu items  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Попередження про встановлення з невідомого джерела</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugins Manager</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Автоматично перезапускати Flow Launcher після встановлення / видалення / оновлення плагіну за допомогою Менеджера плагінів</system:String>
 </ResourceDictionary>
