@@ -19,7 +19,8 @@ public static class FaviconHelper
         try
         {
             File.Copy(dbPath, tempDbPath, true);
-            using (var connection = new SqliteConnection($"Data Source={tempDbPath};Mode=ReadWrite"))
+            // Do not use pooling so that we do not need to clear pool: https://github.com/dotnet/efcore/issues/26580
+            using (var connection = new SqliteConnection($"Data Source={tempDbPath};Mode=ReadWrite;Pooling=false"))
             {
                 connection.Open();
                 var command = connection.CreateCommand();
