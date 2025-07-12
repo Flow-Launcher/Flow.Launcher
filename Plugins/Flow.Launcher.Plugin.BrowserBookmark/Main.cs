@@ -44,31 +44,34 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
             context.CurrentPluginMetadata.PluginCacheDirectoryPath,
             "FaviconCache");
 
-        // Start loading bookmarks asynchronously without blocking Init.
+        // Start loading bookmarks asynchronously without blocking Init
         _ = LoadBookmarksInBackgroundAsync();
     }
 
     private async Task LoadBookmarksInBackgroundAsync()
     {
+        if (_context.CurrentPluginMetadata.Disabled)
+        {
+            // Don't load or monitor files if disabled
+            return;
+        }
+
         // Prevent concurrent loading operations.
         await _initializationSemaphore.WaitAsync();
         try
         {
             if (_isInitialized) return;
 
-            if (!_context.CurrentPluginMetadata.Disabled)
-            {
-                // Validate the cache directory before loading all bookmarks because Flow needs this directory to storage favicons
-                FilesFolders.ValidateDirectory(_faviconCacheDir);
-                _cachedBookmarks = await Task.Run(() => BookmarkLoader.LoadAllBookmarks(_settings));
+            // Validate the cache directory before loading all bookmarks because Flow needs this directory to storage favicons
+            FilesFolders.ValidateDirectory(_faviconCacheDir);
+            _cachedBookmarks = await Task.Run(() => BookmarkLoader.LoadAllBookmarks(_settings));
 
-                // Pre-validate all icon paths once to avoid doing it on every query.
-                foreach (var bookmark in _cachedBookmarks)
+            // Pre-validate all icon paths once to avoid doing it on every query
+            foreach (var bookmark in _cachedBookmarks)
+            {
+                if (string.IsNullOrEmpty(bookmark.FaviconPath) || !File.Exists(bookmark.FaviconPath))
                 {
-                    if (string.IsNullOrEmpty(bookmark.FaviconPath) || !File.Exists(bookmark.FaviconPath))
-                    {
-                        bookmark.FaviconPath = DefaultIconPath;
-                    }
+                    bookmark.FaviconPath = DefaultIconPath;
                 }
             }
 
