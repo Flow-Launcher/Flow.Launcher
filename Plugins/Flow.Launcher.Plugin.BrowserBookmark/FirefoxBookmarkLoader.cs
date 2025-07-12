@@ -61,6 +61,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
             using var command = new SqliteCommand(QueryAllBookmarks, dbConnection);
             using var reader = command.ExecuteReader();
 
+            // Put results in list
             while (reader.Read())
             {
                 bookmarks.Add(new Bookmark(
@@ -69,7 +70,6 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
                     "Firefox"
                 ));
             }
-
 
             // Load favicons after loading bookmarks
             if (Main._settings.EnableFavicons)
@@ -238,6 +238,33 @@ public class FirefoxBookmarkLoader : FirefoxBookmarkLoaderBase
         }
     }
 
+    /*
+        Current profiles.ini structure example as of Firefox version 69.0.1
+
+        [Install736426B0AF4A39CB]
+        Default=Profiles/7789f565.default-release   <== this is the default profile this plugin will get the bookmarks from. When opened Firefox will load the default profile
+        Locked=1
+
+        [Profile2]
+        Name=dummyprofile
+        IsRelative=0
+        Path=C:\t6h2yuq8.dummyprofile  <== Note this is a custom location path for the profile user can set, we need to cater for this in code.
+
+        [Profile1]
+        Name=default
+        IsRelative=1
+        Path=Profiles/cydum7q4.default
+        Default=1
+
+        [Profile0]
+        Name=default-release
+        IsRelative=1
+        Path=Profiles/7789f565.default-release
+
+        [General]
+        StartWithLastProfile=1
+        Version=2
+    */
     private static string GetProfileIniPath(string profileFolderPath)
     {
         var profileIni = Path.Combine(profileFolderPath, @"profiles.ini");

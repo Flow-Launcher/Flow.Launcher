@@ -6,7 +6,6 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Flow.Launcher.Plugin.BrowserBookmark.Helper;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
-using Microsoft.Data.Sqlite;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark;
 
@@ -121,7 +120,7 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
             }
             else
             {
-                Main._context.API.LogError(ClassName, $"type property not found for {subElement.ToString()}");
+                Main._context.API.LogError(ClassName, $"type property not found for {subElement.GetString() ?? string.Empty}");
             }
         }
     }
