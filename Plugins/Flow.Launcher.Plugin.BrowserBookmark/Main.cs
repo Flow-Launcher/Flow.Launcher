@@ -26,7 +26,7 @@ public class Main : ISettingProvider, IAsyncPlugin, IReloadable, IPluginI18n, IC
 
     private static Main _instance;
 
-    private volatile bool _isInitialized = false;
+    private volatile bool _initialized = false;
 
     private static readonly SemaphoreSlim _initializationSemaphore = new(1, 1);
 
@@ -61,7 +61,7 @@ public class Main : ISettingProvider, IAsyncPlugin, IReloadable, IPluginI18n, IC
         await _initializationSemaphore.WaitAsync();
         try
         {
-            if (_isInitialized) return;
+            if (_initialized) return;
 
             // Validate the cache directory before loading all bookmarks because Flow needs this directory to storage favicons
             FilesFolders.ValidateDirectory(_faviconCacheDir);
@@ -76,7 +76,7 @@ public class Main : ISettingProvider, IAsyncPlugin, IReloadable, IPluginI18n, IC
                 }
             }
 
-            _isInitialized = true;
+            _initialized = true;
         }
         finally
         {
@@ -86,8 +86,9 @@ public class Main : ISettingProvider, IAsyncPlugin, IReloadable, IPluginI18n, IC
 
     public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
     {
-        // If the list is not initialized, we need to wait for the list to be initialized before querying
-        if (!_isInitialized)
+        // For when the plugin being previously disabled and is now re-enabled
+        // Or when the plugin is still initializing
+        if (!_initialized)
         {
             await LoadBookmarksInBackgroundAsync();
         }
@@ -185,7 +186,7 @@ public class Main : ISettingProvider, IAsyncPlugin, IReloadable, IPluginI18n, IC
         {
             if (_instance == null) return;
 
-            _instance._isInitialized = false;
+            _instance._initialized = false;
             _cachedBookmarks.Clear();
             if (disposeFileWatchers)
                 DisposeFileWatchers();
