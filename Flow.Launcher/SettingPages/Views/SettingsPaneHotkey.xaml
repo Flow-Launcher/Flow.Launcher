@@ -79,31 +79,34 @@
                 Sub="{DynamicResource hotkeyPresetsToolTip}">
                 <StackPanel>
                     <cc:Card
-                        Title="{DynamicResource OpenContainFolderHotkey}"
-                        Icon="&#xe8b7;"
+                        Title="{DynamicResource HotkeyUpDownDesc}"
+                        Icon="&#xede3;"
                         Type="Inside">
-                        <cc:HotkeyDisplay Keys="Ctrl+Enter" />
+                        <cc:HotkeyDisplay Keys="←+→" />
                     </cc:Card>
                     <cc:Card
-                        Title="{DynamicResource RunAsAdminHotkey}"
-                        Icon="&#xe7ef;"
+                        Title="{DynamicResource HotkeyLeftRightDesc}"
+                        Icon="&#xEC8F;"
                         Type="Inside">
-                        <cc:HotkeyDisplay Keys="Ctrl+Shift+Enter" />
+                        <cc:HotkeyDisplay Keys="↑+↓" />
                     </cc:Card>
                     <cc:Card
-                        Title="{DynamicResource ToggleHistoryHotkey}"
-                        Icon="&#xf738;"
+                        Title="{DynamicResource HotkeyESCDesc}"
+                        Icon="&#xE72B;"
                         Type="Inside">
-                        <flowlauncher:HotkeyControl
-                            DefaultHotkey="Ctrl+H"
-                            Type="OpenHistoryHotkey"
-                            ValidateKeyGesture="False" />
+                        <cc:HotkeyDisplay Keys="ESC" />
                     </cc:Card>
                     <cc:Card
-                        Title="{DynamicResource CopyFilePathHotkey}"
-                        Icon="&#xe8c8;"
+                        Title="{DynamicResource HotkeyRunDesc}"
+                        Icon="&#xE8A7;"
                         Type="Inside">
-                        <cc:HotkeyDisplay Keys="Ctrl+Shift+C" />
+                        <cc:HotkeyDisplay Keys="ENTER" />
+                    </cc:Card>
+                    <cc:Card
+                        Title="{DynamicResource OpenContextMenuHotkey}"
+                        Icon="&#xede3;"
+                        Type="Inside">
+                        <cc:HotkeyDisplay Keys="Shift+Enter" />
                     </cc:Card>
                     <cc:Card
                         Title="{DynamicResource OpenContextMenuHotkey}"
@@ -115,16 +118,13 @@
                             ValidateKeyGesture="False" />
                     </cc:Card>
                     <cc:Card
-                        Title="{DynamicResource OpenContextMenuHotkey}"
-                        Icon="&#xede3;"
+                        Title="{DynamicResource ToggleHistoryHotkey}"
+                        Icon="&#xf738;"
                         Type="Inside">
-                        <cc:HotkeyDisplay Keys="Shift+Enter" />
-                    </cc:Card>
-                    <cc:Card
-                        Title="{DynamicResource OpenNativeContextMenuHotkey}"
-                        Icon="&#xede3;"
-                        Type="Inside">
-                        <cc:HotkeyDisplay Keys="Alt+Enter" />
+                        <flowlauncher:HotkeyControl
+                            DefaultHotkey="Ctrl+H"
+                            Type="OpenHistoryHotkey"
+                            ValidateKeyGesture="False" />
                     </cc:Card>
                     <cc:Card
                         Title="{DynamicResource SettingWindowHotkey}"
@@ -136,16 +136,23 @@
                             ValidateKeyGesture="False" />
                     </cc:Card>
                     <cc:Card
-                        Title="{DynamicResource ToggleGameModeHotkey}"
-                        Icon="&#xe7fc;"
+                        Title="{DynamicResource ReloadPluginHotkey}"
+                        Icon="&#xe72c;"
+                        Sub="{DynamicResource ReloadPluginHotkeyToolTip}"
                         Type="Inside">
-                        <cc:HotkeyDisplay Keys="Ctrl+F12" />
+                        <cc:HotkeyDisplay Keys="F5" />
                     </cc:Card>
                     <cc:Card
-                        Title="{DynamicResource RequeryHotkey}"
-                        Icon="&#xe72c;"
+                        Title="{DynamicResource HotkeySelectFirstResult}"
+                        Icon="&#xE898;"
                         Type="Inside">
-                        <cc:HotkeyDisplay Keys="Ctrl+R" />
+                        <cc:HotkeyDisplay Keys="Alt+Home" />
+                    </cc:Card>
+                    <cc:Card
+                        Title="{DynamicResource HotkeySelectLastResult}"
+                        Icon="&#xE896;"
+                        Type="Inside">
+                        <cc:HotkeyDisplay Keys="Alt+End" />
                     </cc:Card>
                     <cc:Card
                         Title="{DynamicResource CycleHistoryUpHotkey}"
@@ -166,13 +173,6 @@
                             ValidateKeyGesture="False" />
                     </cc:Card>
                     <cc:Card
-                        Title="{DynamicResource ReloadPluginHotkey}"
-                        Icon="&#xe72c;"
-                        Sub="{DynamicResource ReloadPluginHotkeyToolTip}"
-                        Type="Inside">
-                        <cc:HotkeyDisplay Keys="F5" />
-                    </cc:Card>
-                    <cc:Card
                         Title="{DynamicResource SelectPrevPageHotkey}"
                         Icon="&#xf0ad;"
                         Type="Inside">
@@ -190,7 +190,24 @@
                             Type="SelectNextPageHotkey"
                             ValidateKeyGesture="False" />
                     </cc:Card>
-
+                    <cc:Card
+                        Title="{DynamicResource RequeryHotkey}"
+                        Icon="&#xe72c;"
+                        Type="Inside">
+                        <cc:HotkeyDisplay Keys="Ctrl+R" />
+                    </cc:Card>
+                    <cc:Card
+                        Title="{DynamicResource ToggleGameModeHotkey}"
+                        Icon="&#xe7fc;"
+                        Type="Inside">
+                        <cc:HotkeyDisplay Keys="Ctrl+F12" />
+                    </cc:Card>
+                    <cc:Card
+                        Title="{DynamicResource CopyFilePathHotkey}"
+                        Icon="&#xe8c8;"
+                        Type="Inside">
+                        <cc:HotkeyDisplay Keys="Ctrl+Shift+C" />
+                    </cc:Card>
                     <cc:Card
                         Title="{DynamicResource QuickWidthHotkey}"
                         Icon="&#xe7ea;"
@@ -205,8 +222,8 @@
                         Icon="&#xe7eb;"
                         Type="Inside">
                         <StackPanel Orientation="Horizontal">
-                            <cc:HotkeyDisplay Keys="Ctrl+Plus" />
-                            <cc:HotkeyDisplay Margin="4 0 0 0" Keys="Ctrl+Minus" />
+                            <cc:HotkeyDisplay Keys="Ctrl+Minus" />
+                            <cc:HotkeyDisplay Margin="4 0 0 0" Keys="Ctrl+Plus" />
                         </StackPanel>
                     </cc:Card>
                 </StackPanel>
