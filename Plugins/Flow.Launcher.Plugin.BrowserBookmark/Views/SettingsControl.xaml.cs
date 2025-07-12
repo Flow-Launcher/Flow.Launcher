@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
@@ -7,7 +6,7 @@ using Flow.Launcher.Plugin.BrowserBookmark.Models;
 namespace Flow.Launcher.Plugin.BrowserBookmark.Views;
 
 [INotifyPropertyChanged]
-public partial class SettingsControl : UserControl
+public partial class SettingsControl
 {
     public Settings Settings { get; }
     public CustomBrowser SelectedCustomBrowser { get; set; }
@@ -73,7 +72,8 @@ public partial class SettingsControl : UserControl
     {
         var newBrowser = new CustomBrowser();
         var window = new CustomBrowserSettingWindow(newBrowser);
-        if (window.ShowDialog() == true)
+        var result = window.ShowDialog() ?? false;
+        if (result)
         {
             Settings.CustomChromiumBrowsers.Add(newBrowser);
             _ = Main.ReloadAllBookmarksAsync();

@@ -93,8 +93,10 @@ public class Main : ISettingProvider, IAsyncPlugin, IReloadable, IPluginI18n, IC
             await LoadBookmarksInBackgroundAsync();
         }
 
-        string param = query.Search.TrimStart();
-        bool topResults = string.IsNullOrEmpty(param);
+        var param = query.Search.TrimStart();
+
+        // Should top results be returned? (true if no search parameters have been passed)
+        var topResults = string.IsNullOrEmpty(param);
 
         var results = _cachedBookmarks
             .Select(c =>
@@ -107,7 +109,7 @@ public class Main : ISettingProvider, IAsyncPlugin, IReloadable, IPluginI18n, IC
                 {
                     Title = c.Name,
                     SubTitle = c.Url,
-                    IcoPath = c.FaviconPath, // Use the pre-validated path directly.
+                    IcoPath = c.FaviconPath, // Use the pre-validated path directly
                     Score = score,
                     Action = _ =>
                     {
