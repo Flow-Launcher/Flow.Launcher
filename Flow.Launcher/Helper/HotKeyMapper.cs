@@ -69,16 +69,16 @@ internal static class HotKeyMapper
             new(RegisteredHotkeyType.CopyFilePath, HotkeyType.SearchWindow, "Ctrl+Shift+C", "CopyFilePathHotkey", _mainViewModel.CopyAlternativeCommand),
             
             // Result Modifier Hotkeys
-            new(RegisteredHotkeyType.OpenResultN1, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D1", "HotkeyOpenResultN", 1, _mainViewModel.OpenResultCommand, 0),
-            new(RegisteredHotkeyType.OpenResultN2, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D2", "HotkeyOpenResultN", 2, _mainViewModel.OpenResultCommand, 1),
-            new(RegisteredHotkeyType.OpenResultN3, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D3", "HotkeyOpenResultN", 3, _mainViewModel.OpenResultCommand, 2),
-            new(RegisteredHotkeyType.OpenResultN4, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D4", "HotkeyOpenResultN", 4, _mainViewModel.OpenResultCommand, 3),
-            new(RegisteredHotkeyType.OpenResultN5, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D5", "HotkeyOpenResultN", 5, _mainViewModel.OpenResultCommand, 4),
-            new(RegisteredHotkeyType.OpenResultN6, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D6", "HotkeyOpenResultN", 6, _mainViewModel.OpenResultCommand, 5),
-            new(RegisteredHotkeyType.OpenResultN7, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D7", "HotkeyOpenResultN", 7, _mainViewModel.OpenResultCommand, 6),
-            new(RegisteredHotkeyType.OpenResultN8, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D8", "HotkeyOpenResultN", 8, _mainViewModel.OpenResultCommand, 7),
-            new(RegisteredHotkeyType.OpenResultN9, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D9", "HotkeyOpenResultN", 9, _mainViewModel.OpenResultCommand, 8),
-            new(RegisteredHotkeyType.OpenResultN10, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D0", "HotkeyOpenResultN", 10, _mainViewModel.OpenResultCommand, 9),
+            new(RegisteredHotkeyType.OpenResultN1, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D1", "HotkeyOpenResultN", 1, _mainViewModel.OpenResultCommand, "0"),
+            new(RegisteredHotkeyType.OpenResultN2, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D2", "HotkeyOpenResultN", 2, _mainViewModel.OpenResultCommand, "1"),
+            new(RegisteredHotkeyType.OpenResultN3, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D3", "HotkeyOpenResultN", 3, _mainViewModel.OpenResultCommand, "2"),
+            new(RegisteredHotkeyType.OpenResultN4, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D4", "HotkeyOpenResultN", 4, _mainViewModel.OpenResultCommand, "3"),
+            new(RegisteredHotkeyType.OpenResultN5, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D5", "HotkeyOpenResultN", 5, _mainViewModel.OpenResultCommand, "4"),
+            new(RegisteredHotkeyType.OpenResultN6, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D6", "HotkeyOpenResultN", 6, _mainViewModel.OpenResultCommand, "5"),
+            new(RegisteredHotkeyType.OpenResultN7, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D7", "HotkeyOpenResultN", 7, _mainViewModel.OpenResultCommand, "6"),
+            new(RegisteredHotkeyType.OpenResultN8, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D8", "HotkeyOpenResultN", 8, _mainViewModel.OpenResultCommand, "7"),
+            new(RegisteredHotkeyType.OpenResultN9, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D9", "HotkeyOpenResultN", 9, _mainViewModel.OpenResultCommand, "8"),
+            new(RegisteredHotkeyType.OpenResultN10, HotkeyType.SearchWindow, $"{_settings.OpenResultModifiers}+D0", "HotkeyOpenResultN", 10, _mainViewModel.OpenResultCommand, "9"),
             
             // Flow Launcher global hotkeys
             new(RegisteredHotkeyType.Toggle, HotkeyType.Global, _settings.Hotkey, "flowlauncherHotkey", _mainViewModel.CheckAndToggleFlowLauncherCommand, null, () => _settings.Hotkey = ""),
