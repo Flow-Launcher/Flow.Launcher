@@ -16,8 +16,6 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
 {
     private static readonly string ClassName = nameof(Main);
 
-    private static Main _instance;
-
     internal static string _faviconCacheDir;
 
     internal static PluginInitContext _context;
@@ -25,6 +23,8 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
     internal static Settings _settings;
 
     private static List<Bookmark> _cachedBookmarks = new();
+
+    private static Main _instance;
 
     private volatile bool _isInitialized = false;
 
@@ -174,13 +174,13 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
 
         var newCts = _debounceTokenSource;
 
-        Task.Run(async () =>
+        _ = Task.Run(async () =>
         {
             try
             {
                 await Task.Delay(TimeSpan.FromSeconds(3), newCts.Token);
                 _context.API.LogInfo(ClassName, "Bookmark file change detected. Reloading bookmarks after delay.");
-                await ReloadAllBookmarks(false);
+                await ReloadAllBookmarksAsync(false);
             }
             catch (TaskCanceledException)
             {
@@ -191,10 +191,10 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
 
     public void ReloadData()
     {
-        _ = ReloadAllBookmarks();
+        _ = ReloadAllBookmarksAsync();
     }
 
-    public static async Task ReloadAllBookmarks(bool disposeFileWatchers = true)
+    public static async Task ReloadAllBookmarksAsync(bool disposeFileWatchers = true)
     {
         try
         {
