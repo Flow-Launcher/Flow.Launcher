@@ -57,6 +57,8 @@ public static class FaviconHelper
 
         ExecuteWithTempDb(faviconCacheDir, dbPath, tempDbPath =>
         {
+            // Use read-only connection to avoid locking issues
+            // Do not use pooling so that we do not need to clear pool: https://github.com/dotnet/efcore/issues/26580
             var savedPaths = new Dictionary<string, bool>();
             using var connection = new SqliteConnection($"Data Source={tempDbPath};Mode=ReadOnly;Pooling=false");
             connection.Open();
