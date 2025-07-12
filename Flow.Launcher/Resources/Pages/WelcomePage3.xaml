@@ -83,7 +83,7 @@
                             <cc:HotkeyDisplay Keys="ENTER" Type="Small" />
                         </cc:Card>
                         <cc:Card
-                            Title="{DynamicResource HotkeyShiftEnterDesc}"
+                            Title="{DynamicResource OpenContextMenuHotkey}"
                             BorderThickness="0 0 0 0"
                             Type="Inside">
                             <StackPanel Orientation="Horizontal">
