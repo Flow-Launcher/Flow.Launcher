@@ -8,9 +8,9 @@
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Будласка оберіть виконуваник {0}</system:String>
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
-        Your selected {0} executable is invalid.
+        Ви вибрали невірний виконуваний файл {0}.
         {2}{2}
-        Click yes if you would like select the {0} executable again. Click no if you would like to download {1}
+        Щоб знову вибрати виконуваний файл {0}, натисніть «Так». Натисніть «Ні», щоб завантажити {1}
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Не вдається встановити шлях до виконуваника {0}, будласка спробуйте в налаштуваннях Flow (прокрутіть вниз до кінця).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Невдача ініціалізації плагінів</system:String>
@@ -18,7 +18,7 @@
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Не вдалося зареєструвати гарячу клавішу &quot;{0}&quot;. Можливо, гаряча клавіша використовується іншою програмою. Змініть її на іншу гарячу клавішу або вийдіть з програми, де вона використовується.</system:String>
-    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Не вдалося скасувати реєстрацію гарячої клавіші «{0}». Спробуйте ще раз або перегляньте журнал для отримання подробиць</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Не вдалося запустити {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Невірний формат файлу плагіна Flow Launcher</system:String>
@@ -42,7 +42,7 @@
     <system:String x:Key="GameMode">Режим гри</system:String>
     <system:String x:Key="GameModeToolTip">Призупинити використання гарячих клавіш.</system:String>
     <system:String x:Key="PositionReset">Скидання позиції</system:String>
-    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
+    <system:String x:Key="PositionResetToolTip">Скинути положення вікна пошуку</system:String>
     <system:String x:Key="queryTextBoxPlaceholder">Напишіть тут, аби знайти</system:String>
 
     <!--  Setting General  -->
@@ -51,7 +51,7 @@
     <system:String x:Key="portableMode">Портативний режим</system:String>
     <system:String x:Key="portableModeToolTIp">Зберігати всі налаштування і дані користувача в одній теці (буде корисно при видаленні дисків або хмарних сервісах).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Запускати Flow Launcher при запуску системи</system:String>
-    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Для швидшого запуску використовуйте завдання при вході в систему, а не після запуску</system:String>
     <system:String x:Key="useLogonTaskForStartupTooltip">Після видалення, вам необхідно вручну видалити це завдання (Flow.Launcher Startup) через планувальник завдань</system:String>
     <system:String x:Key="setAutoStartFailed">Помилка запуску налаштування під час запуску</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Сховати Flow Launcher, якщо втрачено фокус</system:String>
@@ -75,7 +75,7 @@
     <system:String x:Key="LastQuerySelected">Вибрати останній запит</system:String>
     <system:String x:Key="LastQueryEmpty">Очистити останній запит</system:String>
     <system:String x:Key="LastQueryActionKeywordPreserved">Зберігати останнє ключове слово дії</system:String>
-    <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
+    <system:String x:Key="LastQueryActionKeywordSelected">Вибрати ключове слово останньої дії</system:String>
     <system:String x:Key="maxShowResults">Максимальна кількість результатів</system:String>
     <system:String x:Key="maxShowResultsToolTip">Ви також можете швидко налаштувати цей параметр за допомогою клавіш CTRL+Плюс чи CTRL+Мінус.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ігнорувати гарячі клавіші в повноекранному режимі</system:String>
@@ -106,38 +106,38 @@
     <system:String x:Key="AlwaysPreview">Завжди переглядати</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Завжди відкривати панель попереднього перегляду при активації Flow. Натисніть {0}, щоб переключити попередній перегляд.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Ефект тіні не дозволено, коли поточна тема має ефект розмиття</system:String>
-    <system:String x:Key="searchDelay">Search Delay</system:String>
-    <system:String x:Key="searchDelayToolTip">Adds a short delay while typing to reduce UI flicker and result load. Recommended if your typing speed is average.</system:String>
-    <system:String x:Key="searchDelayNumberBoxToolTip">Enter the wait time (in ms) until input is considered complete. This can only be edited if Search Delay is enabled.</system:String>
-    <system:String x:Key="searchDelayTime">Default Search Delay Time</system:String>
-    <system:String x:Key="searchDelayTimeToolTip">Wait time before showing results after typing stops. Higher values wait longer. (ms)</system:String>
-    <system:String x:Key="KoreanImeTitle">Information for Korean IME user</system:String>
+    <system:String x:Key="searchDelay">Затримка пошуку</system:String>
+    <system:String x:Key="searchDelayToolTip">Додає невелику затримку під час набору тексту, щоб зменшити мерехтіння інтерфейсу та навантаження на результати. Рекомендується, якщо у вас середня швидкість друкування.</system:String>
+    <system:String x:Key="searchDelayNumberBoxToolTip">Введіть час очікування (в мілісекундах) до завершення введення. Цей параметр можна редагувати лише в разі ввімкнення функції «Затримка пошуку».</system:String>
+    <system:String x:Key="searchDelayTime">Типовий час затримки пошуку</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Час очікування перед відображенням результатів після завершення введення тексту. Чим вище значення, тим довше очікування. (мс)</system:String>
+    <system:String x:Key="KoreanImeTitle">Інформація для користувачів корейської IME</system:String>
     <system:String x:Key="KoreanImeGuide">
-        The Korean input method used in Windows 11 may cause some issues in Flow Launcher.
+        Корейський метод введення, який використовується у Windows 11, може спричинити деякі проблеми в Flow Launcher.
 
-        If you experience any problems, you may need to enable &quot;Use previous version of Korean IME&quot;.
+        Якщо у вас виникли проблеми, можливо, вам доведеться ввімкнути параметр «Використовувати попередню версію корейського IME».
 
 
-        Open Setting in Windows 11 and go to:
+        Відкрийте налаштування у Windows 11 і перейдіть до:
 
-        Time &amp; Language &gt; Language &amp; Region &gt; Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility,
+        Час і мова &gt; Мова і регіон &gt; Корейська &gt; Параметри мови &gt; Клавіатура - Microsoft IME &gt; Сумісність,
 
-        and enable &quot;Use previous version of Microsoft IME&quot;.
+        та увімкніть параметр «Використовувати попередню версію Microsoft IME».
 
 
     </system:String>
-    <system:String x:Key="KoreanImeOpenLink">Open Language and Region System Settings</system:String>
-    <system:String x:Key="KoreanImeOpenLinkToolTip">Opens the Korean IME setting location. Go to Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility</system:String>
+    <system:String x:Key="KoreanImeOpenLink">Відкрити налаштування системи мови та регіону</system:String>
+    <system:String x:Key="KoreanImeOpenLinkToolTip">Відкриває вікно налаштувань корейського IME. Перейдіть до Корейської &gt; Параметри мови &gt; Клавіатура - Microsoft IME &gt; Сумісність</system:String>
     <system:String x:Key="KoreanImeOpenLinkButton">Відкрити</system:String>
-    <system:String x:Key="KoreanImeRegistry">Use Previous Korean IME</system:String>
-    <system:String x:Key="KoreanImeRegistryTooltip">You can change the Previous Korean IME settings directly from here</system:String>
+    <system:String x:Key="KoreanImeRegistry">Використовувати попередній корейський IME</system:String>
+    <system:String x:Key="KoreanImeRegistryTooltip">Ви можете змінити попередні налаштування корейського IME безпосередньо звідси.</system:String>
     <system:String x:Key="homePage">Головна сторінка</system:String>
-    <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
-    <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
-    <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
-    <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
-    <system:String x:Key="showAtTopmost">Show Search Window at Foremost</system:String>
-    <system:String x:Key="showAtTopmostToolTip">Overrides other programs' 'Always on Top' setting and displays Flow in the foremost position.</system:String>
+    <system:String x:Key="homePageToolTip">Показувати результати на головній сторінці, коли текст запиту порожній.</system:String>
+    <system:String x:Key="historyResultsForHomePage">Показати результати історії на головній</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Максимальна кількість результатів історії, що показуються на головній</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">Це можна редагувати тільки в тому випадку, якщо плагін підтримує функцію «Головна сторінка» і вона ввімкнена.</system:String>
+    <system:String x:Key="showAtTopmost">Показувати вікно пошуку на передньому плані</system:String>
+    <system:String x:Key="showAtTopmostToolTip">Перекриває налаштування «Завжди зверху» інших програм і виводить Flow на передній план.</system:String>
     <system:String x:Key="autoRestartAfterChanging">Restart after modifying plugin via Plugin Store</system:String>
     <system:String x:Key="autoRestartAfterChangingToolTip">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugin Store</system:String>
     <system:String x:Key="showUnknownSourceWarning">Show unknown source warning</system:String>
