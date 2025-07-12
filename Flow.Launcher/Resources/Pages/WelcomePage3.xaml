@@ -91,19 +91,75 @@
                             </StackPanel>
                         </cc:Card>
                         <cc:Card
-                            Title="{DynamicResource HotkeyCtrlEnterDesc}"
+                            Title="{DynamicResource ReloadPluginHotkey}"
                             BorderThickness="0 0 0 0"
                             Type="Inside">
                             <StackPanel Orientation="Horizontal">
-                                <cc:HotkeyDisplay Keys="CTRL+ENTER" Type="Small" />
+                                <cc:HotkeyDisplay Keys="F5" Type="Small" />
                             </StackPanel>
                         </cc:Card>
                         <cc:Card
-                            Title="{DynamicResource HotkeyCtrlShiftEnterDesc}"
+                            Title="{DynamicResource HotkeySelectFirstResult}"
                             BorderThickness="0 0 0 0"
                             Type="Inside">
                             <StackPanel Orientation="Horizontal">
-                                <cc:HotkeyDisplay Keys="CTRL+SHIFT+ENTER" Type="Small" />
+                                <cc:HotkeyDisplay Keys="Alt+Home" Type="Small" />
+                            </StackPanel>
+                        </cc:Card>
+                        <cc:Card
+                            Title="{DynamicResource HotkeySelectLastResult}"
+                            BorderThickness="0 0 0 0"
+                            Type="Inside">
+                            <StackPanel Orientation="Horizontal">
+                                <cc:HotkeyDisplay Keys="Alt+End" Type="Small" />
+                            </StackPanel>
+                        </cc:Card>
+                        <cc:Card
+                            Title="{DynamicResource HotkeyRequery}"
+                            BorderThickness="0 0 0 0"
+                            Type="Inside">
+                            <StackPanel Orientation="Horizontal">
+                                <cc:HotkeyDisplay Keys="Ctrl+R" Type="Small" />
+                            </StackPanel>
+                        </cc:Card>
+                        <cc:Card
+                            Title="{DynamicResource ToggleGameModeHotkey}"
+                            BorderThickness="0 0 0 0"
+                            Type="Inside">
+                            <StackPanel Orientation="Horizontal">
+                                <cc:HotkeyDisplay Keys="Ctrl+F12" Type="Small" />
+                            </StackPanel>
+                        </cc:Card>
+                        <cc:Card
+                            Title="{DynamicResource CopyFilePathHotkey}"
+                            BorderThickness="0 0 0 0"
+                            Type="Inside">
+                            <StackPanel Orientation="Horizontal">
+                                <cc:HotkeyDisplay Keys="Ctrl+Shift+C" Type="Small" />
+                            </StackPanel>
+                        </cc:Card>
+                        <cc:Card
+                            Title="{DynamicResource QuickWidthHotkey}"
+                            BorderThickness="0 0 0 0"
+                            Type="Inside">
+                            <StackPanel Orientation="Horizontal">
+                                <cc:HotkeyDisplay Keys="Ctrl+[" Type="Small" />
+                                <cc:HotkeyDisplay
+                                    Margin="4 0 0 0"
+                                    Keys="Ctrl+]"
+                                    Type="Small" />
+                            </StackPanel>
+                        </cc:Card>
+                        <cc:Card
+                            Title="{DynamicResource QuickHeightHotkey}"
+                            BorderThickness="0 0 0 0"
+                            Type="Inside">
+                            <StackPanel Orientation="Horizontal">
+                                <cc:HotkeyDisplay Keys="Ctrl+Minus" Type="Small" />
+                                <cc:HotkeyDisplay
+                                    Margin="4 0 0 0"
+                                    Keys="Ctrl+Plus"
+                                    Type="Small" />
                             </StackPanel>
                         </cc:Card>
                     </StackPanel>
