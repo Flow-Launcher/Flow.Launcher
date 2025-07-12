@@ -86,20 +86,12 @@ public class Main : ISettingProvider, IAsyncPlugin, IReloadable, IPluginI18n, IC
 
     public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
     {
+        // If the list is not initialized, we need to wait for the list to be initialized before querying
         if (!_isInitialized)
         {
-            // If the list is not initialized, we need to wait for the list to be initialized before querying
             await LoadBookmarksInBackgroundAsync();
-            return QueryResults(query);
         }
-        else
-        {
-            return QueryResults(query);
-        }
-    }
 
-    private static List<Result> QueryResults(Query query)
-    {
         string param = query.Search.TrimStart();
         bool topResults = string.IsNullOrEmpty(param);
 
