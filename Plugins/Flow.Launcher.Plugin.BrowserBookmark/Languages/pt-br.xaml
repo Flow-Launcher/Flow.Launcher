@@ -5,6 +5,8 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Favoritos do Navegador</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Pesquisar favoritos do seu navegador</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_initializing">Inicializando, por favor aguarde...</system:String>
+
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Dados de Favoritos</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Abrir favoritos em:</system:String>

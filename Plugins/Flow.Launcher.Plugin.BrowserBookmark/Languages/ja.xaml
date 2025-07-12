@@ -5,6 +5,8 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">ブラウザブックマーク</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">ブラウザのブックマークを検索します</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_initializing">初期化中です。しばらくお待ちください...</system:String>
+
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Bookmark Data</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Open bookmarks in:</system:String>

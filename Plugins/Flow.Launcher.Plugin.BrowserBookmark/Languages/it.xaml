@@ -5,6 +5,8 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Segnalibri del Browser</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Cerca nei segnalibri del tuo browser</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_initializing">Inizializzazione, attendere prego...</system:String>
+
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Dati del segnalibro</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Apri preferiti in:</system:String>

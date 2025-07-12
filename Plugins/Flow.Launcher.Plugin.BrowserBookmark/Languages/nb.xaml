@@ -5,6 +5,8 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Nettleserbokmerker</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Søk i nettleserbokmerker</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_initializing">Initialiserer, vennligst vent...</system:String>
+
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Bokmerkedata</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Åpne bokmerker i:</system:String>

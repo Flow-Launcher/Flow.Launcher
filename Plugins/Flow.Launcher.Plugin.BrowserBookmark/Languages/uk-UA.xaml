@@ -5,6 +5,8 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Закладки браузера</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Пошук у закладках браузера</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_initializing">Ініціалізація, будь ласка, зачекайте...</system:String>
+
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Дані закладок</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Відкрити закладки в:</system:String>

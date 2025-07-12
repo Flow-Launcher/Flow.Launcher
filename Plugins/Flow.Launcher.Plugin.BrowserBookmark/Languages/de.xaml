@@ -5,6 +5,8 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Browser-Lesezeichen</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Ihre Browser-Lesezeichen durchsuchen</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_initializing">Initialisierung, bitte warten...</system:String>
+
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Lesezeichen-Daten</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Lesezeichen öffnen in:</system:String>

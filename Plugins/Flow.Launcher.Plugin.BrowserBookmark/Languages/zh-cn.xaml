@@ -5,6 +5,8 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">浏览器书签</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">搜索您的浏览器书签</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_initializing">正在初始化，请稍候...</system:String>
+
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">书签数据</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">在以下位置打开书签：</system:String>

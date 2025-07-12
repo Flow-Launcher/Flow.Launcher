@@ -5,6 +5,8 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">瀏覽器書籤</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">搜尋你的瀏覽器書籤</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_initializing">初始化中，請稍候...</system:String>
+
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">書籤資料</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">載入書籤至:</system:String>

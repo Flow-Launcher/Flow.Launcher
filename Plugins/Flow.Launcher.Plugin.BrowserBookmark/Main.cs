@@ -28,7 +28,15 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
 
     private volatile bool _isInitialized = false;
 
+    // A flag to prevent queuing multiple reloads.
+    private static volatile bool _isReloading = false;
+
+    // Last time a periodic check triggered a Firefox reload.
+    private static DateTime _firefoxLastReload;
+
     private static readonly SemaphoreSlim _initializationSemaphore = new(1, 1);
+
+    private static readonly object _periodicReloadLock = new();
 
     private const string DefaultIconPath = @"Images\bookmark.png";
 
@@ -39,6 +47,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
         _instance = this;
         _context = context;
         _settings = context.API.LoadSettingJsonStorage<Settings>();
+        _firefoxLastReload = DateTime.UtcNow;
 
         _faviconCacheDir = Path.Combine(
             context.CurrentPluginMetadata.PluginCacheDirectoryPath,
@@ -54,25 +63,54 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
         await _initializationSemaphore.WaitAsync();
         try
         {
-            if (_isInitialized) return;
+            // Set initializing state inside the lock. This ensures Query() will show
+            // the "initializing" message during the entire reload process.
+            _isInitialized = false;
 
-            if (!_context.CurrentPluginMetadata.Disabled)
+            // Clear data stores inside the lock to ensure a clean slate for the reload.
+            _cachedBookmarks.Clear();
+            try
             {
-                // Validate the cache directory before loading all bookmarks because Flow needs this directory to storage favicons
-                FilesFolders.ValidateDirectory(_faviconCacheDir);
-                _cachedBookmarks = await Task.Run(() => BookmarkLoader.LoadAllBookmarks(_settings));
-
-                // Pre-validate all icon paths once to avoid doing it on every query.
-                foreach (var bookmark in _cachedBookmarks)
+                if (Directory.Exists(_faviconCacheDir))
                 {
-                    if (string.IsNullOrEmpty(bookmark.FaviconPath) || !File.Exists(bookmark.FaviconPath))
+                    Directory.Delete(_faviconCacheDir, true);
+                }
+            }
+            catch (Exception e)
+            {
+                _context.API.LogException(ClassName, $"Failed to clear favicon cache folder: {_faviconCacheDir}", e);
+            }
+
+            // The loading operation itself is wrapped in a try/catch to ensure
+            // that even if it fails, the plugin returns to a stable, initialized state.
+            try
+            {
+                if (!_context.CurrentPluginMetadata.Disabled)
+                {
+                    // Validate the cache directory before loading all bookmarks because Flow needs this directory to storage favicons
+                    FilesFolders.ValidateDirectory(_faviconCacheDir);
+                    _cachedBookmarks = await Task.Run(() => BookmarkLoader.LoadAllBookmarks(_settings));
+
+                    // Pre-validate all icon paths once to avoid doing it on every query.
+                    foreach (var bookmark in _cachedBookmarks)
                     {
-                        bookmark.FaviconPath = DefaultIconPath;
+                        if (string.IsNullOrEmpty(bookmark.FaviconPath) || !File.Exists(bookmark.FaviconPath))
+                        {
+                            bookmark.FaviconPath = DefaultIconPath;
+                        }
                     }
                 }
             }
-
-            _isInitialized = true;
+            catch (Exception e)
+            {
+                _context.API.LogException(ClassName, "An error occurred while trying to load bookmarks.", e);
+            }
+            finally
+            {
+                // CRITICAL: Always mark the plugin as initialized, even on failure.
+                // This prevents the plugin from getting stuck in the "initializing" state.
+                _isInitialized = true;
+            }
         }
         finally
         {
@@ -82,19 +120,41 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
 
     public List<Result> Query(Query query)
     {
+        // Smart check for Firefox: periodically trigger a background reload on query.
+        // This avoids watching the "hot" places.sqlite file but keeps data reasonably fresh.
+        if (!_isReloading && DateTime.UtcNow - _firefoxLastReload > TimeSpan.FromMinutes(2))
+        {
+            lock (_periodicReloadLock)
+            {
+                if (!_isReloading && DateTime.UtcNow - _firefoxLastReload > TimeSpan.FromMinutes(2))
+                {
+                    _isReloading = true;
+                    _context.API.LogInfo(ClassName, "Periodic check triggered a background reload of bookmarks.");
+                    _ = Task.Run(async () =>
+                    {
+                        try
+                        {
+                            await ReloadAllBookmarksAsync(false);
+                            _firefoxLastReload = DateTime.UtcNow;
+                        }
+                        catch (Exception e)
+                        {
+                            _context.API.LogException(ClassName, "Periodic reload failed", e);
+                        }
+                        finally
+                        {
+                            _isReloading = false;
+                        }
+                    });
+                }
+            }
+        }
+
         // Immediately return if the initial load is not complete, providing feedback to the user.
         if (!_isInitialized)
         {
             var initializingTitle = _context.API.GetTranslation("flowlauncher_plugin_browserbookmark_plugin_name");
-            var initializingSubTitle = "Plugin is initializing, please try again in a few seconds";
-            try
-            {
-                initializingSubTitle = _context.API.GetTranslation("flowlauncher_plugin_browserbookmark_plugin_initializing");
-            }
-            catch (KeyNotFoundException)
-            {
-                // Ignoring since not all language files will have this key.
-            }
+            var initializingSubTitle = _context.API.GetTranslation("flowlauncher_plugin_browserbookmark_plugin_initializing");
 
             return new List<Result>
             {
@@ -138,22 +198,22 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
 
     private static readonly List<FileSystemWatcher> Watchers = new();
 
-    internal static void RegisterBookmarkFile(string path)
+    // The watcher now monitors the directory but intelligently filters events.
+    internal static void RegisterBrowserDataDirectory(string path)
     {
-        var directory = Path.GetDirectoryName(path);
-        if (!Directory.Exists(directory) || !File.Exists(path))
+        if (!Directory.Exists(path))
         {
             return;
         }
 
-        if (Watchers.Any(x => x.Path.Equals(directory, StringComparison.OrdinalIgnoreCase) && x.Filter == Path.GetFileName(path)))
+        if (Watchers.Any(x => x.Path.Equals(path, StringComparison.OrdinalIgnoreCase)))
         {
             return;
         }
 
-        var watcher = new FileSystemWatcher(directory!)
+        var watcher = new FileSystemWatcher(path)
         {
-            Filter = Path.GetFileName(path),
+            // Watch the directory, not a specific file, to catch WAL journal updates.
             NotifyFilter = NotifyFilters.FileName | NotifyFilters.LastWrite | NotifyFilters.Size,
             EnableRaisingEvents = true
         };
@@ -168,40 +228,51 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
 
     private static void OnBookmarkFileChanged(object sender, FileSystemEventArgs e)
     {
+        // Event filter: only react to changes in key database files or their journals.
+        var file = e.Name.AsSpan();
+        if (!(file.StartsWith("Bookmarks") || file.StartsWith("Favicons")))
+        {
+            return; // Ignore irrelevant file changes.
+        }
+
         var oldCts = Interlocked.Exchange(ref _debounceTokenSource, new CancellationTokenSource());
         oldCts?.Cancel();
         oldCts?.Dispose();
 
         var newCts = _debounceTokenSource;
 
-        Task.Run(async () =>
+        _ = Task.Run(async () =>
         {
             try
             {
                 await Task.Delay(TimeSpan.FromSeconds(3), newCts.Token);
-                _context.API.LogInfo(ClassName, "Bookmark file change detected. Reloading bookmarks after delay.");
-                await ReloadAllBookmarks(false);
+                _context.API.LogInfo(ClassName, $"Bookmark file change detected ({e.Name}). Reloading bookmarks after delay.");
+                await ReloadAllBookmarksAsync(false);
             }
             catch (TaskCanceledException)
             {
                 // Debouncing in action
+            }
+            catch (Exception ex)
+            {
+                _context.API.LogException(ClassName, $"Debounced reload failed for {e.Name}", ex);
             }
         }, newCts.Token);
     }
 
     public void ReloadData()
     {
-        _ = ReloadAllBookmarks();
+        _ = ReloadAllBookmarksAsync();
     }
 
-    public static async Task ReloadAllBookmarks(bool disposeFileWatchers = true)
+    public static async Task ReloadAllBookmarksAsync(bool disposeFileWatchers = true)
     {
         try
         {
             if (_instance == null) return;
 
-            _instance._isInitialized = false;
-            _cachedBookmarks.Clear();
+            // Simply dispose watchers if needed and then call the main loading method.
+            // All state management is now handled inside LoadBookmarksInBackgroundAsync.
             if (disposeFileWatchers)
                 DisposeFileWatchers();
 

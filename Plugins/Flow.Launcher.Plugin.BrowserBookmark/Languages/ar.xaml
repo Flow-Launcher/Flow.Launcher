@@ -5,6 +5,8 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">إشارات المتصفح</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">ابحث في إشارات المتصفح</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_initializing">جاري التهيئة، يرجى الانتظار...</system:String>
+
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">بيانات الإشارات المرجعية</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">فتح الإشارات المرجعية في:</system:String>

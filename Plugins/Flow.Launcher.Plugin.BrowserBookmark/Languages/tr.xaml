@@ -5,6 +5,8 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Yer İmleri</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Tarayıcınızdaki yer işaretlerini arayın</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_initializing">Başlatılıyor, lütfen bekleyin...</system:String>
+
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Yer İmleri Verisi</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Yer imlerini şurada aç:</system:String>

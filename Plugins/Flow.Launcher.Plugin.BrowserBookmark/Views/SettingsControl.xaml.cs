@@ -24,7 +24,7 @@ public partial class SettingsControl : UserControl
         set
         {
             Settings.LoadChromeBookmark = value;
-            _ = Main.ReloadAllBookmarks();
+            _ = Main.ReloadAllBookmarksAsync();
         }
     }
 
@@ -34,7 +34,7 @@ public partial class SettingsControl : UserControl
         set
         {
             Settings.LoadFirefoxBookmark = value;
-            _ = Main.ReloadAllBookmarks();
+            _ = Main.ReloadAllBookmarksAsync();
         }
     }
 
@@ -44,7 +44,7 @@ public partial class SettingsControl : UserControl
         set
         {
             Settings.LoadEdgeBookmark = value;
-            _ = Main.ReloadAllBookmarks();
+            _ = Main.ReloadAllBookmarksAsync();
         }
     }
 
@@ -54,7 +54,7 @@ public partial class SettingsControl : UserControl
         set
         {
             Settings.EnableFavicons = value;
-            _ = Main.ReloadAllBookmarks();
+            _ = Main.ReloadAllBookmarksAsync();
             OnPropertyChanged();
         }
     }
@@ -76,7 +76,7 @@ public partial class SettingsControl : UserControl
         if (window.ShowDialog() == true)
         {
             Settings.CustomChromiumBrowsers.Add(newBrowser);
-            _ = Main.ReloadAllBookmarks();
+            _ = Main.ReloadAllBookmarksAsync();
         }
     }
 
@@ -85,7 +85,7 @@ public partial class SettingsControl : UserControl
         if (CustomBrowsers.SelectedItem is CustomBrowser selectedCustomBrowser)
         {
             Settings.CustomChromiumBrowsers.Remove(selectedCustomBrowser);
-            _ = Main.ReloadAllBookmarks();
+            _ = Main.ReloadAllBookmarksAsync();
         }
     }
 
@@ -117,7 +117,7 @@ public partial class SettingsControl : UserControl
         var result = window.ShowDialog() ?? false;
         if (result)
         {
-            _ = Main.ReloadAllBookmarks();
+            _ = Main.ReloadAllBookmarksAsync();
         }
     }
 }

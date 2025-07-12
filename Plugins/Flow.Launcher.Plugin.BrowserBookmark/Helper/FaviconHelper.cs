@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using Flow.Launcher.Plugin.BrowserBookmark.Models;
+using System.Text;
 using Microsoft.Data.Sqlite;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.Processing;
+using SkiaSharp;
+using Svg.Skia;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Helper;
 
@@ -13,7 +14,7 @@ public static class FaviconHelper
 {
     private static readonly string ClassName = nameof(FaviconHelper);
 
-    private static void ExecuteWithTempDb(string faviconCacheDir, string dbPath, Action<string> action)
+    public static void ExecuteWithTempDb(string faviconCacheDir, string dbPath, Action<string> action)
     {
         var tempDbPath = Path.Combine(faviconCacheDir, $"tempfavicons_{Guid.NewGuid()}.db");
         try
@@ -43,69 +44,74 @@ public static class FaviconHelper
         }
     }
 
-    public static void ProcessFavicons(
-        string dbPath,
-        string faviconCacheDir,
-        List<Bookmark> bookmarks,
-        string sqlQuery,
-        string patternPrefix,
-        Func<SqliteDataReader, (string Id, byte[] Data)> imageDataExtractor,
-        Func<Uri, string, byte[], string> pathBuilder)
+    private static bool IsSvg(byte[] imageData)
     {
-        if (!File.Exists(dbPath)) return;
-
-        ExecuteWithTempDb(faviconCacheDir, dbPath, tempDbPath =>
-        {
-            var savedPaths = new Dictionary<string, bool>();
-            using var connection = new SqliteConnection($"Data Source={tempDbPath};Mode=ReadOnly;Pooling=false");
-            connection.Open();
-
-            using var cmd = connection.CreateCommand();
-            cmd.CommandText = sqlQuery;
-            var patternParam = cmd.CreateParameter();
-            patternParam.ParameterName = "@pattern";
-            cmd.Parameters.Add(patternParam);
-
-            foreach (var bookmark in bookmarks)
-            {
-                try
-                {
-                    if (string.IsNullOrEmpty(bookmark.Url) || !Uri.TryCreate(bookmark.Url, UriKind.Absolute, out var uri))
-                        continue;
-
-                    patternParam.Value = $"{patternPrefix}{uri.Host}/*";
-
-                    using var reader = cmd.ExecuteReader();
-                    if (!reader.Read())
-                        continue;
-
-                    var (id, imageData) = imageDataExtractor(reader);
-                    if (imageData is not { Length: > 0 })
-                        continue;
-
-                    var faviconPath = pathBuilder(uri, id, imageData);
-                    if (savedPaths.TryAdd(faviconPath, true))
-                    {
-                        SaveBitmapData(imageData, faviconPath);
-                    }
-                    bookmark.FaviconPath = faviconPath;
-                }
-                catch (Exception ex)
-                {
-                    Main._context.API.LogException(ClassName, $"Failed to extract favicon for: {bookmark.Url}", ex);
-                }
-            }
-            SqliteConnection.ClearPool(connection);
-        });
+        var text = Encoding.UTF8.GetString(imageData, 0, Math.Min(imageData.Length, 100)).Trim();
+        return text.StartsWith("<svg", StringComparison.OrdinalIgnoreCase) ||
+               (text.StartsWith("<?xml") && text.Contains("<svg"));
     }
 
-    public static void SaveBitmapData(byte[] imageData, string outputPath)
+    private static bool ConvertSvgToPng(byte[] svgData, string outputPath)
     {
         try
         {
+            using var stream = new MemoryStream(svgData);
+            using var svg = new SKSvg();
+
+            svg.Load(stream);
+
+            if (svg.Picture == null)
+            {
+                Main._context.API.LogWarn(ClassName, $"Failed to load SVG picture from stream for {Path.GetFileName(outputPath)}.");
+                return false;
+            }
+
+            var info = new SKImageInfo(64, 64);
+            using var surface = SKSurface.Create(info);
+            var canvas = surface.Canvas;
+            canvas.Clear(SKColors.Transparent);
+
+            var pictureRect = svg.Picture.CullRect;
+
+            canvas.Save();
+            if (pictureRect.Width > 0 && pictureRect.Height > 0)
+            {
+                // Manually calculate the scaling factors to fill the destination canvas.
+                float scaleX = info.Width / pictureRect.Width;
+                float scaleY = info.Height / pictureRect.Height;
+
+                // Apply the scaling transformation directly to the canvas.
+                canvas.Scale(scaleX, scaleY);
+            }
+
+            // Draw the picture onto the now-transformed canvas.
+            canvas.DrawPicture(svg.Picture);
+            canvas.Restore();
+
+            using var image = surface.Snapshot();
+            using var data = image.Encode(SKEncodedImageFormat.Png, 100);
+            using var fileStream = File.OpenWrite(outputPath);
+            data.SaveTo(fileStream);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Main._context.API.LogException(ClassName, $"Failed to convert SVG to PNG for {Path.GetFileName(outputPath)}.", ex);
+            return false;
+        }
+    }
+
+    public static bool SaveBitmapData(byte[] imageData, string outputPath)
+    {
+        if (IsSvg(imageData))
+        {
+            return ConvertSvgToPng(imageData, outputPath);
+        }
+
+        try
+        {
             // Attempt to load the image data. This will handle all formats ImageSharp
-            // supports, including SVG (if the necessary decoders are present) and common
-            // raster formats. It will throw an exception for malformed images.
+            // supports, including common raster formats.
             using var image = Image.Load(imageData);
 
             // Resize the image to a maximum of 64x64.
@@ -118,12 +124,14 @@ public static class FaviconHelper
 
             // Always save as PNG for maximum compatibility with the UI renderer.
             image.SaveAsPng(outputPath, new PngEncoder { CompressionLevel = PngCompressionLevel.DefaultCompression });
+            return true;
         }
         catch (Exception ex)
         {
-            // This will now catch errors from loading malformed SVGs or other image types,
+            // This will now catch errors from loading malformed images,
             // preventing them from being saved and crashing the UI.
             Main._context.API.LogException(ClassName, $"Failed to load/resize/save image to {outputPath}. It may be a malformed image.", ex);
+            return false;
         }
     }
 }

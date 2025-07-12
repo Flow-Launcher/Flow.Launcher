@@ -5,6 +5,8 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Zakładki przeglądarki</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Przeszukaj zakładki przeglądarki</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_initializing">Inicjalizacja, proszę czekać...</system:String>
+
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Dane zakładek</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Otwórz zakładki w:</system:String>

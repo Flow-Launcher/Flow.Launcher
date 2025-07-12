@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Flow.Launcher.Plugin.BrowserBookmark.Helper;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using Microsoft.Data.Sqlite;
@@ -40,16 +42,9 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
         if (string.IsNullOrEmpty(placesPath) || !File.Exists(placesPath))
             return bookmarks;
 
-        // Try to register file monitoring
-        try
-        {
-            Main.RegisterBookmarkFile(placesPath);
-        }
-        catch (Exception ex)
-        {
-            Main._context.API.LogException(ClassName, $"Failed to register Firefox bookmark file monitoring: {placesPath}", ex);
-            return bookmarks;
-        }
+        // DO NOT watch Firefox files, as places.sqlite is updated on every navigation,
+        // which would cause constant, performance-killing reloads.
+        // A periodic check on query is used instead.
 
         var tempDbPath = Path.Combine(_faviconCacheDir, $"tempplaces_{Guid.NewGuid()}.sqlite");
 
@@ -117,26 +112,72 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
 
     private void LoadFaviconsFromDb(string dbPath, List<Bookmark> bookmarks)
     {
-        const string sql = @"
-        SELECT i.id, i.data
-        FROM moz_icons i
-        JOIN moz_icons_to_pages ip ON i.id = ip.icon_id
-        JOIN moz_pages_w_icons p ON ip.page_id = p.id
-        WHERE p.page_url GLOB @pattern
-        AND i.data IS NOT NULL
-        ORDER BY i.width DESC
-        LIMIT 1";
+        if (!File.Exists(dbPath)) return;
 
-        FaviconHelper.ProcessFavicons(
-            dbPath,
-            _faviconCacheDir,
-            bookmarks,
-            sql,
-            "http*",
-            reader => (reader.GetInt64(0).ToString(), (byte[])reader["data"]),
-            // Always generate a .png path. The helper will handle the conversion.
-            (uri, id, data) => Path.Combine(_faviconCacheDir, $"firefox_{uri.Host}_{id}.png")
-        );
+        FaviconHelper.ExecuteWithTempDb(_faviconCacheDir, dbPath, tempDbPath =>
+        {
+            var savedPaths = new ConcurrentDictionary<string, bool>();
+
+            // Get favicons based on bookmarks concurrently
+            Parallel.ForEach(bookmarks, bookmark =>
+            {
+                if (string.IsNullOrEmpty(bookmark.Url) || !Uri.TryCreate(bookmark.Url, UriKind.Absolute, out var uri))
+                    return;
+
+                using var connection = new SqliteConnection($"Data Source={tempDbPath};Mode=ReadOnly;Pooling=false");
+                connection.Open();
+
+                try
+                {
+                    // Query for latest Firefox version favicon structure
+                    using var cmd = connection.CreateCommand();
+                    cmd.CommandText = @"
+                        SELECT i.id, i.data
+                        FROM moz_icons i
+                        JOIN moz_icons_to_pages ip ON i.id = ip.icon_id
+                        JOIN moz_pages_w_icons p ON ip.page_id = p.id
+                        WHERE p.page_url GLOB @pattern
+                        AND i.data IS NOT NULL
+                        ORDER BY i.width DESC
+                        LIMIT 1";
+
+                    cmd.Parameters.AddWithValue("@pattern", $"http*{uri.Host}/*");
+
+                    using var reader = cmd.ExecuteReader();
+                    if (!reader.Read())
+                        return;
+
+                    var id = reader.GetInt64(0).ToString();
+                    var imageData = (byte[])reader["data"];
+
+                    if (imageData is not { Length: > 0 })
+                        return;
+
+                    var faviconPath = Path.Combine(_faviconCacheDir, $"firefox_{uri.Host}_{id}.png");
+
+                    if (savedPaths.TryAdd(faviconPath, true))
+                    {
+                        if (FaviconHelper.SaveBitmapData(imageData, faviconPath))
+                            bookmark.FaviconPath = faviconPath;
+                    }
+                    else
+                    {
+                        bookmark.FaviconPath = faviconPath;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Main._context.API.LogException(ClassName, $"Failed to extract favicon for: {bookmark.Url}", ex);
+                }
+                finally
+                {
+                    // Cache connection and clear pool after all operations to avoid issue:
+                    // ObjectDisposedException: Safe handle has been closed.
+                    SqliteConnection.ClearPool(connection);
+                    connection.Close();
+                }
+            });
+        });
     }
 }
 
@@ -205,7 +246,7 @@ public class FirefoxBookmarkLoader : FirefoxBookmarkLoaderBase
 
         try
         {
-            // Parse the ini file into a dictionary of sections
+            // Parse the ini file into a dictionary of sections for easier and more reliable access.
             var profiles = new Dictionary<string, Dictionary<string, string>>(StringComparer.OrdinalIgnoreCase);
             Dictionary<string, string> currentSection = null;
             foreach (var line in File.ReadLines(profileIni))
@@ -226,40 +267,43 @@ public class FirefoxBookmarkLoader : FirefoxBookmarkLoaderBase
 
             Dictionary<string, string> profileSection = null;
 
-            // Strategy 1: Find the profile with Default=1
-            profileSection = profiles.Values.FirstOrDefault(section => section.TryGetValue("Default", out var value) && value == "1");
+            // STRATEGY 1 (Primary): Find the default profile using the 'Default' key in the [Install] or [General] sections.
+            // This is the most reliable method for modern Firefox versions.
+            string defaultPathRaw = null;
+            var installSection = profiles.FirstOrDefault(p => p.Key.StartsWith("Install"));
+            // Fallback to the [General] section if the [Install] section is not found.
+            (installSection.Value ?? profiles.GetValueOrDefault("General"))?.TryGetValue("Default", out defaultPathRaw);
 
-            // Strategy 2: If no profile has Default=1, use the Default key from the [Install] or [General] section
-            if (profileSection == null)
+            if (!string.IsNullOrEmpty(defaultPathRaw))
             {
-                string defaultPathRaw = null;
-                var installSection = profiles.FirstOrDefault(p => p.Key.StartsWith("Install"));
-                // Fallback to General section if Install section not found
-                (installSection.Value ?? profiles.GetValueOrDefault("General"))?.TryGetValue("Default", out defaultPathRaw);
-
-                if (!string.IsNullOrEmpty(defaultPathRaw))
-                {
-                    // The value of 'Default' is the path, find the corresponding profile section
-                    profileSection = profiles.Values.FirstOrDefault(v => v.TryGetValue("Path", out var path) && path == defaultPathRaw);
-                }
+                // The value of 'Default' is the path itself. We now find the profile section that has this path.
+                profileSection = profiles.Values.FirstOrDefault(v => v.TryGetValue("Path", out var path) && path == defaultPathRaw);
             }
 
+            // STRATEGY 2 (Fallback): If the primary strategy fails, look for a profile with the 'Default=1' flag.
+            // This is for older versions or non-standard configurations.
+            if (profileSection == null)
+            {
+                profileSection = profiles.Values.FirstOrDefault(section => section.TryGetValue("Default", out var value) && value == "1");
+            }
+
+            // If no profile section was found by either strategy, we cannot proceed.
             if (profileSection == null)
                 return string.Empty;
 
-            // We have the profile section, now resolve the path
+            // We have the correct profile section, now resolve its path.
             if (!profileSection.TryGetValue("Path", out var pathValue) || string.IsNullOrEmpty(pathValue))
                 return string.Empty;
 
+            // Check if the path is relative or absolute. It defaults to relative if 'IsRelative' is not "0".
             profileSection.TryGetValue("IsRelative", out var isRelativeRaw);
 
-            // If IsRelative is "1" or not present (defaults to relative), combine with profileFolderPath.
             // The path in the ini file often uses forward slashes, so normalize them.
             var profilePath = isRelativeRaw != "0"
                 ? Path.Combine(profileFolderPath, pathValue.Replace('/', Path.DirectorySeparatorChar))
-                : pathValue;
+                : pathValue; // If IsRelative is "0", the path is absolute and used as-is.
 
-            // Path.GetFullPath will resolve any relative parts and give us a clean absolute path.
+            // Path.GetFullPath will resolve any relative parts (like "..") and give us a clean, absolute path.
             var fullProfilePath = Path.GetFullPath(profilePath);
 
             var placesPath = Path.Combine(fullProfilePath, "places.sqlite");

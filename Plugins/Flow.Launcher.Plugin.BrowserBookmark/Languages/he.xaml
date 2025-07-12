@@ -5,6 +5,8 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">סימניות דפדפן</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">חפש בסימניות הדפדפן שלך</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_initializing">מאתחל, אנא המתן...</system:String>
+
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">נתוני סימניות</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">פתח סימניות ב:</system:String>
