@@ -6,7 +6,7 @@
     <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">Натисніть будь-яку клавішу, щоб закрити це вікно...</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">Не закривати командний рядок після виконання команди</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">Завжди запускати від імені адміністратора</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_use_windows_terminal">Use Windows Terminal</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_use_windows_terminal">Використовувати Термінал Windows</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">Запустити від імені іншого користувача</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">Shell</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Дозволяє виконувати системні команди з Flow Launcher</system:String>
