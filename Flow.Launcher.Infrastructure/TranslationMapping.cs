@@ -8,7 +8,7 @@ namespace Flow.Launcher.Infrastructure
     {
         private bool constructed;
 
-        // Asssuming one original item maps to multi translated items  
+        // Assuming one original item maps to multi translated items  
         // list[i] is the last translated index + 1 of original index i  
         private readonly List<int> originalToTranslated = new List<int>();
 
