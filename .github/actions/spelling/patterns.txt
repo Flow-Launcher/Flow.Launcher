@@ -133,4 +133,3 @@
 \bPortuguês (Brasil)\b
 \bčeština\b
 \bPortuguês\b
-\bIoc\b

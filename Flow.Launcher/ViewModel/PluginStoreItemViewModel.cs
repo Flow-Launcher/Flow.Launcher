@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Threading.Tasks;
+using System.Linq;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Plugin;
@@ -9,28 +9,27 @@ namespace Flow.Launcher.ViewModel
 {
     public partial class PluginStoreItemViewModel : BaseModel
     {
-        private readonly UserPlugin _newPlugin;
-        private readonly PluginPair _oldPluginPair;
-
+        private PluginPair PluginManagerData => PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7");
         public PluginStoreItemViewModel(UserPlugin plugin)
         {
-            _newPlugin = plugin;
-            _oldPluginPair = PluginManager.GetPluginForId(plugin.ID);
+            _plugin = plugin;
         }
 
-        public string ID => _newPlugin.ID;
-        public string Name => _newPlugin.Name;
-        public string Description => _newPlugin.Description;
-        public string Author => _newPlugin.Author;
-        public string Version => _newPlugin.Version;
-        public string Language => _newPlugin.Language;
-        public string Website => _newPlugin.Website;
-        public string UrlDownload => _newPlugin.UrlDownload;
-        public string UrlSourceCode => _newPlugin.UrlSourceCode;
-        public string IcoPath => _newPlugin.IcoPath;
+        private UserPlugin _plugin;
 
-        public bool LabelInstalled => _oldPluginPair != null;
-        public bool LabelUpdate => LabelInstalled && new Version(_newPlugin.Version) > new Version(_oldPluginPair.Metadata.Version);
+        public string ID => _plugin.ID;
+        public string Name => _plugin.Name;
+        public string Description => _plugin.Description;
+        public string Author => _plugin.Author;
+        public string Version => _plugin.Version;
+        public string Language => _plugin.Language;
+        public string Website => _plugin.Website;
+        public string UrlDownload => _plugin.UrlDownload;
+        public string UrlSourceCode => _plugin.UrlSourceCode;
+        public string IcoPath => _plugin.IcoPath;
+
+        public bool LabelInstalled => PluginManager.GetPluginForId(_plugin.ID) != null;
+        public bool LabelUpdate => LabelInstalled && new Version(_plugin.Version) > new Version(PluginManager.GetPluginForId(_plugin.ID).Metadata.Version);
 
         internal const string None = "None";
         internal const string RecentlyUpdated = "RecentlyUpdated";
@@ -42,15 +41,15 @@ namespace Flow.Launcher.ViewModel
             get
             {
                 string category = None;
-                if (DateTime.Now - _newPlugin.LatestReleaseDate < TimeSpan.FromDays(7))
+                if (DateTime.Now - _plugin.LatestReleaseDate < TimeSpan.FromDays(7))
                 {
                     category = RecentlyUpdated;
                 }
-                if (DateTime.Now - _newPlugin.DateAdded < TimeSpan.FromDays(7))
+                if (DateTime.Now - _plugin.DateAdded < TimeSpan.FromDays(7))
                 {
                     category = NewRelease;
                 }
-                if (_oldPluginPair != null)
+                if (PluginManager.GetPluginForId(_plugin.ID) != null)
                 {
                     category = Installed;
                 }
@@ -60,22 +59,11 @@ namespace Flow.Launcher.ViewModel
         }
 
         [RelayCommand]
-        private async Task ShowCommandQueryAsync(string action)
+        private void ShowCommandQuery(string action)
         {
-            switch (action)
-            {
-                case "install":
-                    await PluginInstaller.InstallPluginAndCheckRestartAsync(_newPlugin);
-                    break;
-                case "uninstall":
-                    await PluginInstaller.UninstallPluginAndCheckRestartAsync(_oldPluginPair.Metadata);
-                    break;
-                case "update":
-                    await PluginInstaller.UpdatePluginAndCheckRestartAsync(_newPlugin, _oldPluginPair.Metadata);
-                    break;
-                default:
-                    break;
-            }
+            var actionKeyword = PluginManagerData.Metadata.ActionKeywords.Any() ? PluginManagerData.Metadata.ActionKeywords[0] + " " : String.Empty;
+            App.API.ChangeQuery($"{actionKeyword}{action} {_plugin.Name}");
+            App.API.ShowMainWindow();
         }
     }
 }

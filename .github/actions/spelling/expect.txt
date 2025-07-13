@@ -99,7 +99,3 @@ pluginsmanager
 alreadyexists
 Softpedia
 img
-Reloadable
-metadatas
-WMP
-VSTHRD

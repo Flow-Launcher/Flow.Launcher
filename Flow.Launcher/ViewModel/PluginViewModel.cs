@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -27,6 +28,21 @@ namespace Flow.Launcher.ViewModel
                 {
                     if (args.PropertyName == nameof(PluginPair.Metadata.AvgQueryTime))
                         OnPropertyChanged(nameof(QueryTime));
+                };
+            }
+        }
+
+        private static string PluginManagerActionKeyword
+        {
+            get
+            {
+                var keyword = PluginManager
+                    .GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7")
+                    .Metadata.ActionKeywords.FirstOrDefault();
+                return keyword switch
+                {
+                    null or "*" => string.Empty,
+                    _ => keyword
                 };
             }
         }
@@ -170,9 +186,10 @@ namespace Flow.Launcher.ViewModel
         }
 
         [RelayCommand]
-        private async Task OpenDeletePluginWindowAsync()
+        private void OpenDeletePluginWindow()
         {
-            await PluginInstaller.UninstallPluginAndCheckRestartAsync(PluginPair.Metadata);
+            App.API.ChangeQuery($"{PluginManagerActionKeyword} uninstall {PluginPair.Metadata.Name}".Trim(), true);
+            App.API.ShowMainWindow();
         }
 
         [RelayCommand]

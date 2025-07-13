@@ -555,13 +555,13 @@ namespace Flow.Launcher
 
         public bool PluginModified(string id) => PluginManager.PluginModified(id);
 
-        public Task<bool> UpdatePluginAsync(PluginMetadata pluginMetadata, UserPlugin plugin, string zipFilePath) =>
+        public Task UpdatePluginAsync(PluginMetadata pluginMetadata, UserPlugin plugin, string zipFilePath) =>
             PluginManager.UpdatePluginAsync(pluginMetadata, plugin, zipFilePath);
 
-        public bool InstallPlugin(UserPlugin plugin, string zipFilePath) =>
+        public void InstallPlugin(UserPlugin plugin, string zipFilePath) =>
             PluginManager.InstallPlugin(plugin, zipFilePath);
 
-        public Task<bool> UninstallPluginAsync(PluginMetadata pluginMetadata, bool removePluginSettings = false) =>
+        public Task UninstallPluginAsync(PluginMetadata pluginMetadata, bool removePluginSettings = false) =>
             PluginManager.UninstallPluginAsync(pluginMetadata, removePluginSettings);
 
         public long StopwatchLogDebug(string className, string message, Action action, [CallerMemberName] string methodName = "") =>
