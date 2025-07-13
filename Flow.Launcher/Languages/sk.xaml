@@ -103,9 +103,9 @@
     <system:String x:Key="SearchPrecisionRegular">Normálna</system:String>
     <system:String x:Key="ShouldUsePinyin">Vyhľadávanie pomocou pchin-jin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Umožňuje vyhľadávanie pomocou pchin-jin. Pchin-jin je systém zápisu čínskeho jazyka pomocou písmen latinky.</system:String>
-    <system:String x:Key="ShouldUseDoublePinyin">Use Double Pinyin</system:String>
-    <system:String x:Key="ShouldUseDoublePinyinToolTip">Allows using Double Pinyin to search. Double Pinyin is a variation of Pinyin that uses two characters.</system:String>
-    <system:String x:Key="DoublePinyinSchema">Double Pinyin Schema</system:String>
+    <system:String x:Key="ShouldUseDoublePinyin">Použiť Double Pinyin</system:String>
+    <system:String x:Key="ShouldUseDoublePinyinToolTip">Umožňuje vyhľadávanie pomocou Double Pinyin. Double Pinyin je variácia Pinyin, ktorá používa dva znaky.</system:String>
+    <system:String x:Key="DoublePinyinSchema">Schéma Double Pinyin</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao He</system:String>
     <system:String x:Key="DoublePinyinSchemasZiRanMa">Zi Ran Ma</system:String>
     <system:String x:Key="DoublePinyinSchemasWeiRuan">Wei Ruan</system:String>
