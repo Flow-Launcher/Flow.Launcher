@@ -48,7 +48,7 @@ namespace Flow.Launcher.Infrastructure
             string schemaKey = _settings.DoublePinyinSchema.ToString(); // Convert enum to string  
             if (!table.TryGetValue(schemaKey, out var value))
             {
-                throw new InvalidOperationException("DoublePinyinSchema is invalid or double pinyin table is broken.");
+                throw new ArgumentException("DoublePinyinSchema is invalid or double pinyin table is broken.");
             }
             currentDoublePinyinTable = new ReadOnlyDictionary<string, string>(value);
         }
