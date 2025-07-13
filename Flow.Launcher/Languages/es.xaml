@@ -8,9 +8,9 @@
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Por favor, seleccione el ejecutable {0}</system:String>
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
-        Your selected {0} executable is invalid.
+        El ejecutable seleccionado {0} no es válido.
         {2}{2}
-        Click yes if you would like select the {0} executable again. Click no if you would like to download {1}
+        Pulsar Sí, si desea seleccionar de nuevo el ejecutable {0}. Pulsar No, si desea descargar {1}
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">No se puede establecer la ruta del ejecutable {0}, por favor inténtelo desde la configuración de Flow (desplácese hacia abajo).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Fallo al iniciar los complementos</system:String>
@@ -138,10 +138,10 @@
     <system:String x:Key="homeToggleBoxToolTip">Esto solo se puede editar si el complemento soporta la función de Inicio y la Página de Inicio está activada.</system:String>
     <system:String x:Key="showAtTopmost">Mostrar ventana de búsqueda en primer plano</system:String>
     <system:String x:Key="showAtTopmostToolTip">Anula el ajuste «Siempre arriba» de otros programas y muestra Flow en primer plano.</system:String>
-    <system:String x:Key="autoRestartAfterChanging">Restart after modifying plugin via Plugin Store</system:String>
-    <system:String x:Key="autoRestartAfterChangingToolTip">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugin Store</system:String>
-    <system:String x:Key="showUnknownSourceWarning">Show unknown source warning</system:String>
-    <system:String x:Key="showUnknownSourceWarningToolTip">Show warning when installing plugins from unknown sources</system:String>
+    <system:String x:Key="autoRestartAfterChanging">Reiniciar después de modificar el complemento a través de la Tienda de complementos</system:String>
+    <system:String x:Key="autoRestartAfterChangingToolTip">Reiniciar Flow Launcher automáticamente después de instalar/desinstalar/actualizar el complemento a través de la Tienda de complementos</system:String>
+    <system:String x:Key="showUnknownSourceWarning">Mostrar advertencia de fuente desconocida</system:String>
+    <system:String x:Key="showUnknownSourceWarningToolTip">Mostrar advertencia al instalar complementos desde fuentes desconocidas</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Buscar complemento</system:String>
@@ -180,12 +180,12 @@
     <system:String x:Key="failedToRemovePluginSettingsMessage">Complementos: {0} - Fallo al eliminar los archivos de configuración del complemento, por favor elimínelos manualmente</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Fallo al eliminar la caché del complemento</system:String>
     <system:String x:Key="failedToRemovePluginCacheMessage">Complementos: {0} - Fallo al eliminar los archivos de caché del complemento, por favor elimínelos manualmente</system:String>
-    <system:String x:Key="pluginModifiedAlreadyTitle">{0} modified already</system:String>
-    <system:String x:Key="pluginModifiedAlreadyMessage">Please restart Flow before making any further changes</system:String>
-    <system:String x:Key="failedToInstallPluginTitle">Fail to install {0}</system:String>
-    <system:String x:Key="failedToUninstallPluginTitle">Fail to uninstall {0}</system:String>
-    <system:String x:Key="fileNotFoundMessage">Unable to find plugin.json from the extracted zip file, or this path {0} does not exist</system:String>
-    <system:String x:Key="pluginExistAlreadyMessage">A plugin with the same ID and version already exists, or the version is greater than this downloaded plugin</system:String>
+    <system:String x:Key="pluginModifiedAlreadyTitle">{0} ya está modificado</system:String>
+    <system:String x:Key="pluginModifiedAlreadyMessage">Reiniciar Flow antes de realizar más cambios</system:String>
+    <system:String x:Key="failedToInstallPluginTitle">No se pudo instalar {0}</system:String>
+    <system:String x:Key="failedToUninstallPluginTitle">No se pudo desinstalar {0}</system:String>
+    <system:String x:Key="fileNotFoundMessage">No se puede encontrar plugin.json en el archivo zip extraído, o esta ruta {0} no existe</system:String>
+    <system:String x:Key="pluginExistAlreadyMessage">Ya existe un complemento con el mismo ID y versión, o la versión es superior a la de este complemento descargado</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Tienda complementos</system:String>
@@ -203,26 +203,26 @@
     <system:String x:Key="LabelUpdateToolTip">Nueva actualización disponible</system:String>
     <system:String x:Key="ErrorInstallingPlugin">Error al instalar el complemento</system:String>
     <system:String x:Key="ErrorUninstallingPlugin">Error al desinstalar el complemento</system:String>
-    <system:String x:Key="ErrorUpdatingPlugin">Error updating plugin</system:String>
+    <system:String x:Key="ErrorUpdatingPlugin">Error al actualizar el complemento</system:String>
     <system:String x:Key="KeepPluginSettingsTitle">Mantener la configuración del complemento</system:String>
     <system:String x:Key="KeepPluginSettingsSubtitle">¿Desea mantener la configuración del complemento para el próximo uso?</system:String>
     <system:String x:Key="InstallSuccessNoRestart">Complemento {0} instalado correctamente. Por favor, reinicie Flow.</system:String>
     <system:String x:Key="UninstallSuccessNoRestart">Complemento {0} desinstalado correctamente. Por favor, reinicie Flow.</system:String>
     <system:String x:Key="UpdateSuccessNoRestart">Complemento {0} actualizado correctamente. Por favor, reinicie Flow.</system:String>
-    <system:String x:Key="InstallPromptTitle">Plugin install</system:String>
+    <system:String x:Key="InstallPromptTitle">Instalar complemento</system:String>
     <system:String x:Key="InstallPromptSubtitle">{0} por {1} {2}{2}¿Desea instalar este complemento?</system:String>
-    <system:String x:Key="UninstallPromptTitle">Plugin uninstall</system:String>
+    <system:String x:Key="UninstallPromptTitle">Desinstalar complemento</system:String>
     <system:String x:Key="UninstallPromptSubtitle">{0} por {1} {2}{2}¿Desea desinstalar este complemento?</system:String>
-    <system:String x:Key="UpdatePromptTitle">Plugin update</system:String>
+    <system:String x:Key="UpdatePromptTitle">Actualizar complemento</system:String>
     <system:String x:Key="UpdatePromptSubtitle">{0} por {1} {2}{2}¿Desea actualizar este complemento?</system:String>
     <system:String x:Key="DownloadingPlugin">Descargando complemento</system:String>
-    <system:String x:Key="AutoRestartAfterChange">Automatically restart after installing/uninstalling/updating plugins in plugin store</system:String>
-    <system:String x:Key="ZipFileNotHavePluginJson">Zip file does not have a valid plugin.json configuration</system:String>
+    <system:String x:Key="AutoRestartAfterChange">Reiniciar automáticamente después de instalar/desinstalar/actualizar complementos en la Tienda de complementos</system:String>
+    <system:String x:Key="ZipFileNotHavePluginJson">El archivo Zip no tiene una configuración de plugin.json válida</system:String>
     <system:String x:Key="InstallFromUnknownSourceTitle">Instalando desde una fuente desconocida</system:String>
-    <system:String x:Key="InstallFromUnknownSourceSubtitle">This plugin is from an unknown source and it may contain potential risks!{0}{0}Please ensure you understand where this plugin is from and that it is safe.{0}{0}Would you like to continue still?{0}{0}(You can switch off this warning in general section of setting window)</system:String>
-    <system:String x:Key="ZipFiles">Zip files</system:String>
-    <system:String x:Key="SelectZipFile">Please select zip file</system:String>
-    <system:String x:Key="installLocalPluginTooltip">Install plugin from local path</system:String>
+    <system:String x:Key="InstallFromUnknownSourceSubtitle">¡Este complemento es de una fuente desconocida y puede contener riesgos potenciales!{0}{0}Asegúrese de entender de dónde proviene este complemento y que es seguro.{0}{0}¿Desea continuar aún?{0}{0}(Puede desactivar esta advertencia en la sección general de la ventana de configuración)</system:String>
+    <system:String x:Key="ZipFiles">Archivos Zip</system:String>
+    <system:String x:Key="SelectZipFile">Por favor, seleccione archivo zip</system:String>
+    <system:String x:Key="installLocalPluginTooltip">Instalar complemento desde la ruta local</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Tema</system:String>
@@ -415,7 +415,7 @@
     <system:String x:Key="fileManagerWindow">Seleccionar administrador de archivos</system:String>
     <system:String x:Key="fileManager_learnMore">Más información</system:String>
     <system:String x:Key="fileManager_tips">Especifique la ubicación del archivo del administrador de archivos que está utilizando y añada los argumentos necesarios. El argumento &quot;%d&quot; representa la ruta del directorio a abrir, utilizada por el campo Argumentos de la carpeta y por comandos que abren directorios específicos. El &quot;%f&quot; representa la ruta del archivo a abrir, utilizada por el campo Argumentos del archivo y por comandos que abren archivos específicos.</system:String>
-    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fields blank.</system:String>
+    <system:String x:Key="fileManager_tips2">Por ejemplo, si el administrador de archivos utiliza un comando como &quot;totalcmd.exe /A c:\windows&quot; para abrir el directorio c:\windows, la ruta del administrador de archivos será totalcmd.exe, y los Argumentos de la carpeta serán /A &quot;%d&quot;. Ciertos administradores de archivos como QTTabBar pueden requerir solo la ruta, en este caso utilice &quot;%d&quot; como la ruta del administrador de archivos y deje el resto de los campos en blanco.</system:String>
     <system:String x:Key="fileManager_name">Administrador de archivos</system:String>
     <system:String x:Key="fileManager_profile_name">Nombre del perfil</system:String>
     <system:String x:Key="fileManager_path">Ruta del administrador de archivos</system:String>
@@ -466,14 +466,14 @@
     <system:String x:Key="customeQueryHotkeyTips">Pulse el atajo de teclado personalizado para abrir Flow Launcher y realizar automáticamente la consulta especificada.</system:String>
     <system:String x:Key="preview">Vista previa</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">El atajo de teclado no está disponible, por favor seleccione uno nuevo</system:String>
-    <system:String x:Key="invalidPluginHotkey">Hotkey is invalid</system:String>
+    <system:String x:Key="invalidPluginHotkey">La tecla de acceso rápido no es válida</system:String>
     <system:String x:Key="update">Actualizar</system:String>
     <system:String x:Key="hotkeyRegTitle">Atajo de teclado vinculado</system:String>
     <system:String x:Key="hotkeyUnavailable">El atajo de teclado actual no está disponible.</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">Este atajo de teclado está reservado para &quot;{0}&quot; y no se puede utilizar. Por favor, elija otro atajo de teclado.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">Este atajo de teclado ya está siendo utilizado por &quot;{0}&quot;. Si pulsa «Sobrescribir», se eliminará de &quot;{0}&quot;.</system:String>
     <system:String x:Key="hotkeyRegGuide">Pulsar las teclas que se deseen utilizar para esta función.</system:String>
-    <system:String x:Key="emptyPluginHotkey">Hotkey and action keyword are empty</system:String>
+    <system:String x:Key="emptyPluginHotkey">La tecla de acceso rápido y la palabra clave de acción están vacías</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Acceso directo de consulta personalizada</system:String>
@@ -484,7 +484,7 @@ Si añade un prefijo &quot;@&quot; al introducir un acceso directo, éste coinci
     </system:String>
     <system:String x:Key="duplicateShortcut">El acceso directo ya existe, por favor introduzca uno nuevo o edite el existente.</system:String>
     <system:String x:Key="emptyShortcut">El acceso directo y/o su expansión están vacíos.</system:String>
-    <system:String x:Key="invalidShortcut">Shortcut is invalid</system:String>
+    <system:String x:Key="invalidShortcut">El acceso directo no es válido</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Guardar</system:String>
