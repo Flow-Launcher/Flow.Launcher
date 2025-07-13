@@ -115,7 +115,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
         public bool UseDropShadowEffect { get; set; } = true;
-        public BackdropTypes BackdropType{ get; set; } = BackdropTypes.None;
+        public BackdropTypes BackdropType { get; set; } = BackdropTypes.None;
         public string ReleaseNotesVersion { get; set; } = string.Empty;
 
         /* Appearance Settings. It should be separated from the setting later.*/
@@ -228,7 +228,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 }
             }
         }
-        
+
         public int MaxHistoryResultsToShowForHomePage { get; set; } = 5;
 
         public bool AutoRestartAfterChanging { get; set; } = false;
@@ -329,6 +329,36 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /// when false Alphabet static service will always return empty results
         /// </summary>
         public bool ShouldUsePinyin { get; set; } = false;
+
+        private bool _useDoublePinyin = false;
+        public bool UseDoublePinyin
+        {
+            get => _useDoublePinyin;
+            set
+            {
+                if (_useDoublePinyin != value)
+                {
+                    _useDoublePinyin = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private DoublePinyinSchemas _doublePinyinSchema = DoublePinyinSchemas.XiaoHe;
+
+        [JsonInclude, JsonConverter(typeof(JsonStringEnumConverter))]
+        public DoublePinyinSchemas DoublePinyinSchema
+        {
+            get => _doublePinyinSchema;
+            set
+            {
+                if (_doublePinyinSchema != value)
+                {
+                    _doublePinyinSchema = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public bool AlwaysPreview { get; set; } = false;
 
@@ -492,7 +522,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 if (!string.IsNullOrEmpty(SettingWindowHotkey))
                     list.Add(new(SettingWindowHotkey, "SettingWindowHotkey", () => SettingWindowHotkey = ""));
                 if (!string.IsNullOrEmpty(OpenHistoryHotkey))
-                    list.Add(new(OpenHistoryHotkey, "OpenHistoryHotkey", () => OpenHistoryHotkey = ""));                
+                    list.Add(new(OpenHistoryHotkey, "OpenHistoryHotkey", () => OpenHistoryHotkey = ""));
                 if (!string.IsNullOrEmpty(OpenContextMenuHotkey))
                     list.Add(new(OpenContextMenuHotkey, "OpenContextMenuHotkey", () => OpenContextMenuHotkey = ""));
                 if (!string.IsNullOrEmpty(SelectNextPageHotkey))
@@ -598,9 +628,22 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
     public enum BackdropTypes
     {
-        None,    
+        None,
         Acrylic,
         Mica,
         MicaAlt
+    }
+
+    public enum DoublePinyinSchemas
+    {
+        XiaoHe,
+        ZiRanMa,
+        WeiRuan,
+        ZhiNengABC,
+        ZiGuangPinYin,
+        PinYinJiaJia,
+        XingKongJianDao,
+        DaNiu,
+        XiaoLang
     }
 }
