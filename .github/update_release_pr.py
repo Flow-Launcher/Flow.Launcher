@@ -56,7 +56,7 @@ def get_github_prs(token: str, owner: str, repo: str, label: str = "", state: st
 
 
 def get_prs(
-    pull_request_items: list[dict], label: str = "", state: str = "all", milestone_number: Optional[int] = None
+    pull_request_items: list[dict], label: str = "", state: str = "all", milestone_title: Optional[str] = None
 ) -> list[dict]:
     """
     Returns a list of pull requests after applying the label and state filters.
@@ -65,7 +65,8 @@ def get_prs(
         pull_request_items (list[dict]): List of PR items.
         label (str): The label name. Filter is not applied when empty string.
         state (str): State of PR, e.g. open, closed, all
-        milestone_number (Optional[int]): The milestone number to filter by. If None, no milestone filtering is applied.
+        milestone_title (Optional[str]): The milestone title to filter by. This is the milestone number you created
+                                         in GitHub, e.g. '1.20.0'. If None, no milestone filtering is applied.
 
     Returns:
         list: A list of dictionaries, where each dictionary represents a pull request.
@@ -80,15 +81,15 @@ def get_prs(
         if label and not [item for item in pr["labels"] if item["name"] == label]:
             continue
 
-        if milestone_number:
-            if not pr.get("milestone") or pr["milestone"]["number"] != milestone_number:
+        if milestone_title:
+            if pr["milestone"] is None or pr["milestone"]["title"] != milestone_title:
                 continue
 
         pr_list.append(pr)
         count += 1
 
     print(
-        f"Found {count} PRs with {label if label else 'no filter on'} label, state as {state}, and milestone {pr.get('milestone', {}).get('number', 'None')}"
+        f"Found {count} PRs with {label if label else 'no filter on'} label, state as {state}, and milestone {pr["milestone"] if pr["milestone"] is not None else "None"}"
     )
 
     return pr_list
@@ -209,16 +210,19 @@ if __name__ == "__main__":
 
     print(f"Found release PR: {release_pr[0]['title']}")
 
-    release_milestone_number = release_pr[0].get("milestone", {}).get("number", None)
+    release_milestone_title = release_pr[0].get("milestone", {}).get("title", None)
 
-    if not release_milestone_number:
+    if not release_milestone_title:
         print("Release PR does not have a milestone assigned.")
         exit(1)
 
-    print(f"Using milestone number: {release_milestone_number}")
+    print(f"Using milestone number: {release_milestone_title}")
 
-    enhancement_prs = get_prs(all_pull_requests, "enhancement", "closed", release_milestone_number)
-    bug_fix_prs = get_prs(all_pull_requests, "bug", "closed", release_milestone_number)
+    enhancement_prs = get_prs(all_pull_requests, "enhancement", "closed", release_milestone_title)
+    bug_fix_prs = get_prs(all_pull_requests, "bug", "closed", release_milestone_title)
+
+    if len(enhancement_prs) == 0 and len(bug_fix_prs) == 0:
+        print(f"No PRs with {release_milestone_title} milestone were found")
 
     description_content = "# Release notes\n"
     description_content += f"## Features\n{get_pr_descriptions(enhancement_prs)}" if enhancement_prs else ""
