@@ -103,6 +103,19 @@
     <system:String x:Key="SearchPrecisionRegular">Regelmäßig</system:String>
     <system:String x:Key="ShouldUsePinyin">Suche mit Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Ermöglicht die Verwendung von Pinyin für die Suche. Pinyin ist das Standardsystem der romanisierten Schreibweise für die Übersetzung von chinesischen Texten.</system:String>
+    <system:String x:Key="ShouldUseDoublePinyin">Use Double Pinyin</system:String>
+    <system:String x:Key="ShouldUseDoublePinyinToolTip">Allows using Double Pinyin to search. Double Pinyin is a variation of Pinyin that uses two characters.</system:String>
+    <system:String x:Key="DoublePinyinSchema">Double Pinyin Schema</system:String>
+    <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao He</system:String>
+    <system:String x:Key="DoublePinyinSchemasZiRanMa">Zi Ran Ma</system:String>
+    <system:String x:Key="DoublePinyinSchemasWeiRuan">Wei Ruan</system:String>
+    <system:String x:Key="DoublePinyinSchemasZhiNengABC">Zhi Neng ABC</system:String>
+    <system:String x:Key="DoublePinyinSchemasZiGuangPinYin">Zi Guang Pin Yin</system:String>
+    <system:String x:Key="DoublePinyinSchemasPinYinJiaJia">Pin Yin Jia Jia</system:String>
+    <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
+    <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
+    <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
+    
     <system:String x:Key="AlwaysPreview">Immer Vorschau</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Vorschau-Panel immer öffnen, wenn Flow aktiviert ist. Drücken Sie {0}, um Vorschau umzuschalten.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Schatteneffekt ist nicht erlaubt, während das aktuelle Theme den Unschärfe-Effekt aktiviert hat</system:String>
