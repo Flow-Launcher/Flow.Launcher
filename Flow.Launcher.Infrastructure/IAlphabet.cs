@@ -13,7 +13,7 @@
         public (string translation, TranslationMapping map) Translate(string stringToTranslate);
 
         /// <summary>
-        /// Determine if a string can be translated to English letter with this Alphabet.
+        /// Determine if a string should be translated to English letter with this Alphabet.
         /// </summary>
         /// <param name="stringToTranslate">String to translate.</param>
         /// <returns></returns>
