@@ -64,9 +64,6 @@ namespace Flow.Launcher.ViewModel
 
         public Settings Settings { get; }
 
-        public Visibility ShowOpenResultHotkey =>
-            Settings.ShowOpenResultHotkey ? Visibility.Visible : Visibility.Collapsed;
-
         public Visibility ShowDefaultPreview => Result.PreviewPanel == null ? Visibility.Visible : Visibility.Collapsed;
 
         public Visibility ShowCustomizedPreview => Result.PreviewPanel == null ? Visibility.Collapsed : Visibility.Visible;
