@@ -77,7 +77,7 @@ namespace Flow.Launcher.Infrastructure
         public bool ShouldTranslate(string stringToTranslate)
         {
             // If a string has Chinese characters, we don't need to translate it to pinyin.
-            return !WordsHelper.HasChinese(stringToTranslate);
+            return _settings.ShouldUsePinyin && !WordsHelper.HasChinese(stringToTranslate);
         }
 
         public (string translation, TranslationMapping map) Translate(string content)
