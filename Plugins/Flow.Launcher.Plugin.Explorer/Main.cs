@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Plugin.Explorer.Helper;
+using Flow.Launcher.Plugin.Explorer.Helper;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
@@ -94,6 +94,18 @@ namespace Flow.Launcher.Plugin.Explorer
         public string GetTranslatedPluginDescription()
         {
             return Context.API.GetTranslation("plugin_explorer_plugin_description");
+        }
+
+        private static void FillQuickAccessLinkNames()
+        {
+            // Legacy version does not have names for quick access links, so we fill them with the path name.
+            foreach (var link in Settings.QuickAccessLinks)
+            {
+                if (string.IsNullOrWhiteSpace(link.Name))
+                {
+                    link.Name = link.Path.GetPathName();
+                }
+            }
         }
     }
 }
