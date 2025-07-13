@@ -20,6 +20,7 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
 using Microsoft.Win32;
@@ -42,6 +43,9 @@ namespace Flow.Launcher
         #endregion
 
         #region Private Fields
+
+        // Class Name
+        private static readonly string ClassName = nameof(MainWindow);
 
         // Dependency Injection
         private readonly Settings _settings;
@@ -91,8 +95,8 @@ namespace Flow.Launcher
 
             InitSoundEffects();
             DataObject.AddPastingHandler(QueryTextBox, QueryTextBox_OnPaste);
-            ModernWpf.ThemeManager.Current.ActualApplicationThemeChanged += ThemeManager_ActualApplicationThemeChanged;
             SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
+            _viewModel.ActualApplicationThemeChanged += ViewModel_ActualApplicationThemeChanged;
         }
 
         #endregion
@@ -101,7 +105,7 @@ namespace Flow.Launcher
 
 #pragma warning disable VSTHRD100 // Avoid async void methods
 
-        private void ThemeManager_ActualApplicationThemeChanged(ModernWpf.ThemeManager sender, object args)
+        private void ViewModel_ActualApplicationThemeChanged(object sender, ActualApplicationThemeChangedEventArgs args)
         {
             _ = _theme.RefreshFrameAsync();
         }
@@ -283,6 +287,10 @@ namespace Flow.Launcher
                         break;
                     case nameof(Settings.Language):
                         UpdateNotifyIconText();
+                        if (_settings.ShowHomePage && _viewModel.QueryResultsSelected() && string.IsNullOrEmpty(_viewModel.QueryText))
+                        {
+                            _viewModel.QueryResults();
+                        }
                         break;
                     case nameof(Settings.Hotkey):
                         UpdateNotifyIconText();
@@ -1251,14 +1259,21 @@ namespace Flow.Launcher
 
         private void QueryTextBox_OnPaste(object sender, DataObjectPastingEventArgs e)
         {
-            var isText = e.SourceDataObject.GetDataPresent(DataFormats.UnicodeText, true);
-            if (isText)
+            try
             {
-                var text = e.SourceDataObject.GetData(DataFormats.UnicodeText) as string;
-                text = text.Replace(Environment.NewLine, " ");
-                DataObject data = new DataObject();
-                data.SetData(DataFormats.UnicodeText, text);
-                e.DataObject = data;
+                var isText = e.SourceDataObject.GetDataPresent(DataFormats.UnicodeText, true);
+                if (isText)
+                {
+                    var text = e.SourceDataObject.GetData(DataFormats.UnicodeText) as string;
+                    text = text.Replace(Environment.NewLine, " ");
+                    DataObject data = new DataObject();
+                    data.SetData(DataFormats.UnicodeText, text);
+                    e.DataObject = data;
+                }
+            }
+            catch (Exception ex)
+            {
+                App.API.LogException(ClassName, "Failed to paste text", ex);
             }
         }
 
@@ -1351,7 +1366,7 @@ namespace Flow.Launcher
                     _notifyIcon?.Dispose();
                     animationSoundWMP?.Close();
                     animationSoundWPF?.Dispose();
-                    ModernWpf.ThemeManager.Current.ActualApplicationThemeChanged -= ThemeManager_ActualApplicationThemeChanged;
+                    _viewModel.ActualApplicationThemeChanged -= ViewModel_ActualApplicationThemeChanged;
                     SystemEvents.PowerModeChanged -= SystemEvents_PowerModeChanged;
                 }
 

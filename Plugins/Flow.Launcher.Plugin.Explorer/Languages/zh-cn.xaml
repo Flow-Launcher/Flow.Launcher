@@ -96,8 +96,11 @@
     <system:String x:Key="plugin_explorer_deletefilefolder">删除</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">永久删除当前文件</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">永久删除当前文件夹</system:String>
-    <system:String x:Key="plugin_explorer_path">路径:</system:String>
-    <system:String x:Key="plugin_explorer_name">名称：</system:String>
+    <system:String x:Key="plugin_explorer_name">名称</system:String>
+    <system:String x:Key="plugin_explorer_type">类型</system:String>
+    <system:String x:Key="plugin_explorer_path">路径</system:String>
+    <system:String x:Key="plugin_explorer_file">文件</system:String>
+    <system:String x:Key="plugin_explorer_folder">目录</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">删除所选内容</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">以其他用户身份运行</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">使用其他用户帐户运行所选内容</system:String>

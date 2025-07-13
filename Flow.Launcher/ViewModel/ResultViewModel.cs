@@ -64,9 +64,6 @@ namespace Flow.Launcher.ViewModel
 
         public Settings Settings { get; }
 
-        public Visibility ShowOpenResultHotkey =>
-            Settings.ShowOpenResultHotkey ? Visibility.Visible : Visibility.Collapsed;
-
         public Visibility ShowDefaultPreview => Result.PreviewPanel == null ? Visibility.Visible : Visibility.Collapsed;
 
         public Visibility ShowCustomizedPreview => Result.PreviewPanel == null ? Visibility.Collapsed : Visibility.Visible;
@@ -151,8 +148,6 @@ namespace Flow.Launcher.ViewModel
         private bool BadgeIconAvailable => !string.IsNullOrEmpty(Result.BadgeIcoPath) || Result.BadgeIcon is not null;
 
         private bool PreviewImageAvailable => !string.IsNullOrEmpty(Result.Preview.PreviewImagePath) || Result.Preview.PreviewDelegate != null;
-
-        public string OpenResultModifiers => Settings.OpenResultModifiers;
 
         public string ShowTitleToolTip => string.IsNullOrEmpty(Result.TitleToolTip)
             ? Result.Title
