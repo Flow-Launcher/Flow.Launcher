@@ -323,6 +323,12 @@ namespace Flow.Launcher
                     case nameof(Settings.ShowAtTopmost):
                         Topmost = _settings.ShowAtTopmost;
                         break;
+                    case nameof(Settings.OpenResultModifiers):
+                        if (_viewModel.QueryResultsSelected() && string.IsNullOrEmpty(_viewModel.QueryText))
+                        {
+                            _viewModel.QueryResults();
+                        }
+                        break;
                 }
             };
 
