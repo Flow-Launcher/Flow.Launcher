@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Flow.Launcher.Infrastructure
 {
@@ -8,9 +7,10 @@ namespace Flow.Launcher.Infrastructure
     {
         private bool _isConstructed;
 
-        // Assuming one original item maps to multi translated items  
-        // list[i] is the last translated index + 1 of original index i  
+        // Assuming one original item maps to multi translated items
+        // list[i] is the last translated index + 1 of original index i
         private readonly List<int> _originalToTranslated = new();
+
 
         public void AddNewIndex(int translatedIndex, int length)
         {
