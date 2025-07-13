@@ -103,6 +103,19 @@
     <system:String x:Key="SearchPrecisionRegular">常规</system:String>
     <system:String x:Key="ShouldUsePinyin">使用拼音搜索</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">允许使用拼音进行搜索。</system:String>
+    <system:String x:Key="ShouldUseDoublePinyin">Use Double Pinyin</system:String>
+    <system:String x:Key="ShouldUseDoublePinyinToolTip">Allows using Double Pinyin to search. Double Pinyin is a variation of Pinyin that uses two characters.</system:String>
+    <system:String x:Key="DoublePinyinSchema">Double Pinyin Schema</system:String>
+    <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao He</system:String>
+    <system:String x:Key="DoublePinyinSchemasZiRanMa">Zi Ran Ma</system:String>
+    <system:String x:Key="DoublePinyinSchemasWeiRuan">Wei Ruan</system:String>
+    <system:String x:Key="DoublePinyinSchemasZhiNengABC">Zhi Neng ABC</system:String>
+    <system:String x:Key="DoublePinyinSchemasZiGuangPinYin">Zi Guang Pin Yin</system:String>
+    <system:String x:Key="DoublePinyinSchemasPinYinJiaJia">Pin Yin Jia Jia</system:String>
+    <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
+    <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
+    <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
+    
     <system:String x:Key="AlwaysPreview">始终打开预览</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Flow 启动时总是打开预览面板。按 {0} 以切换预览。</system:String>
     <system:String x:Key="shadowEffectNotAllowed">当前主题已启用模糊效果，不允许启用阴影效果</system:String>
