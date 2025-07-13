@@ -25,7 +25,13 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public void Initialize()
         {
+            // Initialize dependency injection instances after Ioc.Default is created
             _stringMatcher = Ioc.Default.GetRequiredService<StringMatcher>();
+
+            // Initialize application resources after application is created
+            var settingWindowFont = new FontFamily(SettingWindowFont);
+            Application.Current.Resources["SettingWindowFont"] = settingWindowFont;
+            Application.Current.Resources["ContentControlThemeFontFamily"] = settingWindowFont;
         }
 
         public void Save()
@@ -35,9 +41,37 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         private string _theme = Constant.DefaultTheme;
         public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
-        public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
+
+        private string _openResultModifiers = KeyConstant.Alt;
+        public string OpenResultModifiers
+        {
+            get => _openResultModifiers;
+            set
+            {
+                if (_openResultModifiers != value)
+                {
+                    _openResultModifiers = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public string ColorScheme { get; set; } = "System";
-        public bool ShowOpenResultHotkey { get; set; } = true;
+
+        private bool _showOpenResultHotkey = true;
+        public bool ShowOpenResultHotkey
+        {
+            get => _showOpenResultHotkey;
+            set
+            {
+                if (_showOpenResultHotkey != value)
+                {
+                    _showOpenResultHotkey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public double WindowSize { get; set; } = 580;
         public string PreviewHotkey { get; set; } = $"F1";
         public string AutoCompleteHotkey { get; set; } = $"{KeyConstant.Ctrl} + Tab";
@@ -115,8 +149,11 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 {
                     _settingWindowFont = value;
                     OnPropertyChanged();
-                    Application.Current.Resources["SettingWindowFont"] = new FontFamily(value);
-                    Application.Current.Resources["ContentControlThemeFontFamily"] = new FontFamily(value);
+                    if (Application.Current != null)
+                    {
+                        Application.Current.Resources["SettingWindowFont"] = new FontFamily(value);
+                        Application.Current.Resources["ContentControlThemeFontFamily"] = new FontFamily(value);
+                    }
                 }
             }
         }
@@ -189,6 +226,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
         
         public int MaxHistoryResultsToShowForHomePage { get; set; } = 5;
+
+        public bool AutoRestartAfterChanging { get; set; } = false;
+        public bool ShowUnknownSourceWarning { get; set; } = true;
 
         public int CustomExplorerIndex { get; set; } = 0;
 

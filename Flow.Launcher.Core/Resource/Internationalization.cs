@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using System.Globalization;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace Flow.Launcher.Core.Resource
 {
@@ -29,13 +30,12 @@ namespace Flow.Launcher.Core.Resource
         private readonly Settings _settings;
         private readonly List<string> _languageDirectories = new();
         private readonly List<ResourceDictionary> _oldResources = new();
-        private readonly string SystemLanguageCode;
+        private static string SystemLanguageCode;
 
         public Internationalization(Settings settings)
         {
             _settings = settings;
             AddFlowLauncherLanguageDirectory();
-            SystemLanguageCode = GetSystemLanguageCodeAtStartup();
         }
 
         private void AddFlowLauncherLanguageDirectory()
@@ -44,7 +44,7 @@ namespace Flow.Launcher.Core.Resource
             _languageDirectories.Add(directory);
         }
 
-        private static string GetSystemLanguageCodeAtStartup()
+        public static void InitSystemLanguageCode()
         {
             var availableLanguages = AvailableLanguages.GetAvailableLanguages();
 
@@ -65,16 +65,16 @@ namespace Flow.Launcher.Core.Resource
                     string.Equals(languageCode, threeLetterCode, StringComparison.OrdinalIgnoreCase) ||
                     string.Equals(languageCode, fullName, StringComparison.OrdinalIgnoreCase))
                 {
-                    return languageCode;
+                    SystemLanguageCode = languageCode;
                 }
             }
 
-            return DefaultLanguageCode;
+            SystemLanguageCode = DefaultLanguageCode;
         }
 
         private void AddPluginLanguageDirectories()
         {
-            foreach (var plugin in PluginManager.GetPluginsForInterface<IPluginI18n>())
+            foreach (var plugin in PluginManager.GetTranslationPlugins())
             {
                 var location = Assembly.GetAssembly(plugin.Plugin.GetType()).Location;
                 var dir = Path.GetDirectoryName(location);
@@ -173,13 +173,31 @@ namespace Flow.Launcher.Core.Resource
                 LoadLanguage(language);
             }
 
-            // Culture of main thread
-            // Use CreateSpecificCulture to preserve possible user-override settings in Windows, if Flow's language culture is the same as Windows's
-            CultureInfo.CurrentCulture = CultureInfo.CreateSpecificCulture(language.LanguageCode);
-            CultureInfo.CurrentUICulture = CultureInfo.CurrentCulture;
+            // Change culture info
+            ChangeCultureInfo(language.LanguageCode);
 
             // Raise event for plugins after culture is set
             await Task.Run(UpdatePluginMetadataTranslations);
+        }
+
+        public static void ChangeCultureInfo(string languageCode)
+        {
+            // Culture of main thread
+            // Use CreateSpecificCulture to preserve possible user-override settings in Windows, if Flow's language culture is the same as Windows's
+            CultureInfo currentCulture;
+            try
+            {
+                currentCulture = CultureInfo.CreateSpecificCulture(languageCode);
+            }
+            catch (CultureNotFoundException)
+            {
+                currentCulture = CultureInfo.CreateSpecificCulture(SystemLanguageCode);
+            }
+            CultureInfo.CurrentCulture = currentCulture;
+            CultureInfo.CurrentUICulture = currentCulture;
+            var thread = Thread.CurrentThread;
+            thread.CurrentCulture = currentCulture;
+            thread.CurrentUICulture = currentCulture;
         }
 
         public bool PromptShouldUsePinyin(string languageCodeToSet)
@@ -260,7 +278,8 @@ namespace Flow.Launcher.Core.Resource
 
         private void UpdatePluginMetadataTranslations()
         {
-            foreach (var p in PluginManager.GetPluginsForInterface<IPluginI18n>())
+            // Update plugin metadata name & description
+            foreach (var p in PluginManager.GetTranslationPlugins())
             {
                 if (p.Plugin is not IPluginI18n pluginI18N) return;
                 try

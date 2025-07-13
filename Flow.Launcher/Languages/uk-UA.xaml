@@ -8,9 +8,9 @@
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Будласка оберіть виконуваник {0}</system:String>
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
-        Your selected {0} executable is invalid.
+        Ви вибрали невірний виконуваний файл {0}.
         {2}{2}
-        Click yes if you would like select the {0} executable agian. Click no if you would like to download {1}
+        Щоб знову вибрати виконуваний файл {0}, натисніть «Так». Натисніть «Ні», щоб завантажити {1}
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Не вдається встановити шлях до виконуваника {0}, будласка спробуйте в налаштуваннях Flow (прокрутіть вниз до кінця).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Невдача ініціалізації плагінів</system:String>
@@ -18,7 +18,7 @@
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Не вдалося зареєструвати гарячу клавішу &quot;{0}&quot;. Можливо, гаряча клавіша використовується іншою програмою. Змініть її на іншу гарячу клавішу або вийдіть з програми, де вона використовується.</system:String>
-    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Не вдалося скасувати реєстрацію гарячої клавіші «{0}». Спробуйте ще раз або перегляньте журнал для отримання подробиць</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Не вдалося запустити {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Невірний формат файлу плагіна Flow Launcher</system:String>
@@ -42,8 +42,8 @@
     <system:String x:Key="GameMode">Режим гри</system:String>
     <system:String x:Key="GameModeToolTip">Призупинити використання гарячих клавіш.</system:String>
     <system:String x:Key="PositionReset">Скидання позиції</system:String>
-    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
-    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
+    <system:String x:Key="PositionResetToolTip">Скинути положення вікна пошуку</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Напишіть тут, аби знайти</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Налаштування</system:String>
@@ -51,12 +51,12 @@
     <system:String x:Key="portableMode">Портативний режим</system:String>
     <system:String x:Key="portableModeToolTIp">Зберігати всі налаштування і дані користувача в одній теці (буде корисно при видаленні дисків або хмарних сервісах).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Запускати Flow Launcher при запуску системи</system:String>
-    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
-    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Для швидшого запуску використовуйте завдання при вході в систему, а не після запуску</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">Після видалення, вам необхідно вручну видалити це завдання (Flow.Launcher Startup) через планувальник завдань</system:String>
     <system:String x:Key="setAutoStartFailed">Помилка запуску налаштування під час запуску</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Сховати Flow Launcher, якщо втрачено фокус</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Не повідомляти про доступні нові версії</system:String>
-    <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
+    <system:String x:Key="SearchWindowPosition">Розташування вікна пошуку</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Пам'ятати останню позицію</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Монітор з курсором миші</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Монітор зі сфокусованим вікном</system:String>
@@ -74,8 +74,8 @@
     <system:String x:Key="LastQueryPreserved">Зберегти останній запит</system:String>
     <system:String x:Key="LastQuerySelected">Вибрати останній запит</system:String>
     <system:String x:Key="LastQueryEmpty">Очистити останній запит</system:String>
-    <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
-    <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
+    <system:String x:Key="LastQueryActionKeywordPreserved">Зберігати останнє ключове слово дії</system:String>
+    <system:String x:Key="LastQueryActionKeywordSelected">Вибрати ключове слово останньої дії</system:String>
     <system:String x:Key="maxShowResults">Максимальна кількість результатів</system:String>
     <system:String x:Key="maxShowResultsToolTip">Ви також можете швидко налаштувати цей параметр за допомогою клавіш CTRL+Плюс чи CTRL+Мінус.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ігнорувати гарячі клавіші в повноекранному режимі</system:String>
@@ -106,38 +106,42 @@
     <system:String x:Key="AlwaysPreview">Завжди переглядати</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Завжди відкривати панель попереднього перегляду при активації Flow. Натисніть {0}, щоб переключити попередній перегляд.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Ефект тіні не дозволено, коли поточна тема має ефект розмиття</system:String>
-    <system:String x:Key="searchDelay">Search Delay</system:String>
-    <system:String x:Key="searchDelayToolTip">Adds a short delay while typing to reduce UI flicker and result load. Recommended if your typing speed is average.</system:String>
-    <system:String x:Key="searchDelayNumberBoxToolTip">Enter the wait time (in ms) until input is considered complete. This can only be edited if Search Delay is enabled.</system:String>
-    <system:String x:Key="searchDelayTime">Default Search Delay Time</system:String>
-    <system:String x:Key="searchDelayTimeToolTip">Wait time before showing results after typing stops. Higher values wait longer. (ms)</system:String>
-    <system:String x:Key="KoreanImeTitle">Information for Korean IME user</system:String>
+    <system:String x:Key="searchDelay">Затримка пошуку</system:String>
+    <system:String x:Key="searchDelayToolTip">Додає невелику затримку під час набору тексту, щоб зменшити мерехтіння інтерфейсу та навантаження на результати. Рекомендується, якщо у вас середня швидкість друкування.</system:String>
+    <system:String x:Key="searchDelayNumberBoxToolTip">Введіть час очікування (в мілісекундах) до завершення введення. Цей параметр можна редагувати лише в разі ввімкнення функції «Затримка пошуку».</system:String>
+    <system:String x:Key="searchDelayTime">Типовий час затримки пошуку</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Час очікування перед відображенням результатів після завершення введення тексту. Чим вище значення, тим довше очікування. (мс)</system:String>
+    <system:String x:Key="KoreanImeTitle">Інформація для користувачів корейської IME</system:String>
     <system:String x:Key="KoreanImeGuide">
-        The Korean input method used in Windows 11 may cause some issues in Flow Launcher.
+        Корейський метод введення, який використовується у Windows 11, може спричинити деякі проблеми в Flow Launcher.
 
-        If you experience any problems, you may need to enable &quot;Use previous version of Korean IME&quot;.
+        Якщо у вас виникли проблеми, можливо, вам доведеться ввімкнути параметр «Використовувати попередню версію корейського IME».
 
 
-        Open Setting in Windows 11 and go to:
+        Відкрийте налаштування у Windows 11 і перейдіть до:
 
-        Time &amp; Language &gt; Language &amp; Region &gt; Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility,
+        Час і мова &gt; Мова і регіон &gt; Корейська &gt; Параметри мови &gt; Клавіатура - Microsoft IME &gt; Сумісність,
 
-        and enable &quot;Use previous version of Microsoft IME&quot;.
+        та увімкніть параметр «Використовувати попередню версію Microsoft IME».
 
 
     </system:String>
-    <system:String x:Key="KoreanImeOpenLink">Open Language and Region System Settings</system:String>
-    <system:String x:Key="KoreanImeOpenLinkToolTip">Opens the Korean IME setting location. Go to Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility</system:String>
+    <system:String x:Key="KoreanImeOpenLink">Відкрити налаштування системи мови та регіону</system:String>
+    <system:String x:Key="KoreanImeOpenLinkToolTip">Відкриває вікно налаштувань корейського IME. Перейдіть до Корейської &gt; Параметри мови &gt; Клавіатура - Microsoft IME &gt; Сумісність</system:String>
     <system:String x:Key="KoreanImeOpenLinkButton">Відкрити</system:String>
-    <system:String x:Key="KoreanImeRegistry">Use Previous Korean IME</system:String>
-    <system:String x:Key="KoreanImeRegistryTooltip">You can change the Previous Korean IME settings directly from here</system:String>
-    <system:String x:Key="homePage">Home Page</system:String>
-    <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
-    <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
-    <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
-    <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
-    <system:String x:Key="showAtTopmost">Show Search Window at Topmost</system:String>
-    <system:String x:Key="showAtTopmostToolTip">Show search window above other windows</system:String>
+    <system:String x:Key="KoreanImeRegistry">Використовувати попередній корейський IME</system:String>
+    <system:String x:Key="KoreanImeRegistryTooltip">Ви можете змінити попередні налаштування корейського IME безпосередньо звідси.</system:String>
+    <system:String x:Key="homePage">Головна сторінка</system:String>
+    <system:String x:Key="homePageToolTip">Показувати результати на головній сторінці, коли текст запиту порожній.</system:String>
+    <system:String x:Key="historyResultsForHomePage">Показати результати історії на головній</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Максимальна кількість результатів історії, що показуються на головній</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">Це можна редагувати тільки в тому випадку, якщо плагін підтримує функцію «Головна сторінка» і вона ввімкнена.</system:String>
+    <system:String x:Key="showAtTopmost">Показувати вікно пошуку на передньому плані</system:String>
+    <system:String x:Key="showAtTopmostToolTip">Перекриває налаштування «Завжди зверху» інших програм і виводить Flow на передній план.</system:String>
+    <system:String x:Key="autoRestartAfterChanging">Перезапустіть після модифікації плагіну через Магазин плагінів</system:String>
+    <system:String x:Key="autoRestartAfterChangingToolTip">Автоматично перезапускати Flow Launcher після встановлення / видалення / оновлення плагіну через Магазин плагінів</system:String>
+    <system:String x:Key="showUnknownSourceWarning">Показувати попередження про невідоме джерело</system:String>
+    <system:String x:Key="showUnknownSourceWarningToolTip">Показувати попередження під час встановлення плагінів із невідомих джерел</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Плагін для пошуку</system:String>
@@ -154,13 +158,13 @@
     <system:String x:Key="currentActionKeywords">Поточна гаряча клавіша</system:String>
     <system:String x:Key="newActionKeyword">Нова гаряча клавіша</system:String>
     <system:String x:Key="actionKeywordsTooltip">Змінити гарячі клавіши</system:String>
-    <system:String x:Key="pluginSearchDelayTime">Plugin search delay time</system:String>
-    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Search Delay Time</system:String>
-    <system:String x:Key="FilterComboboxLabel">Advanced Settings:</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Час затримки пошуку плагіну</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Змінити час затримки пошуку плагінів</system:String>
+    <system:String x:Key="FilterComboboxLabel">Додаткові налаштування:</system:String>
     <system:String x:Key="DisplayModeOnOff">Увімкнено</system:String>
     <system:String x:Key="DisplayModePriority">Пріоритет</system:String>
-    <system:String x:Key="DisplayModeSearchDelay">Search Delay</system:String>
-    <system:String x:Key="DisplayModeHomeOnOff">Home Page</system:String>
+    <system:String x:Key="DisplayModeSearchDelay">Затримка пошуку</system:String>
+    <system:String x:Key="DisplayModeHomeOnOff">Головна сторінка</system:String>
     <system:String x:Key="currentPriority">Поточний пріоритет</system:String>
     <system:String x:Key="newPriority">Новий пріоритет</system:String>
     <system:String x:Key="priority">Пріоритет</system:String>
@@ -172,10 +176,16 @@
     <system:String x:Key="plugin_query_version">Версія</system:String>
     <system:String x:Key="plugin_query_web">Сайт</system:String>
     <system:String x:Key="plugin_uninstall">Видалити</system:String>
-    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
-    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
-    <system:String x:Key="failedToRemovePluginCacheTitle">Fail to remove plugin cache</system:String>
-    <system:String x:Key="failedToRemovePluginCacheMessage">Plugins: {0} - Fail to remove plugin cache files, please remove them manually</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Не вдалося видалити налаштування плагіну</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Плагіни: {0} — Не вдалося видалити файли налаштувань плагінів, видаліть їх вручну.</system:String>
+    <system:String x:Key="failedToRemovePluginCacheTitle">Не вдалося видалити кеш плагіну</system:String>
+    <system:String x:Key="failedToRemovePluginCacheMessage">Плагіни: {0} — Не вдалося видалити файли кешу плагінів, видаліть їх вручну</system:String>
+    <system:String x:Key="pluginModifiedAlreadyTitle">{0} вже змінено</system:String>
+    <system:String x:Key="pluginModifiedAlreadyMessage">Перезапустіть Flow перед тим, як вносити будь-які подальші зміни.</system:String>
+    <system:String x:Key="failedToInstallPluginTitle">Не вдалося встановити {0}</system:String>
+    <system:String x:Key="failedToUninstallPluginTitle">Не вдалося видалити {0}</system:String>
+    <system:String x:Key="fileNotFoundMessage">Не вдалося знайти файл plugin.json у розпакованому zip-файлі або цей шлях {0} не існує.</system:String>
+    <system:String x:Key="pluginExistAlreadyMessage">Вже існує плагін з таким самим ідентифікатором та версією, або версія цього плагіну вища за версію завантаженого.</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Магазин плагінів</system:String>
@@ -191,6 +201,28 @@
     <system:String x:Key="LabelNew">Нова версія</system:String>
     <system:String x:Key="LabelNewToolTip">Цей плагін було оновлено протягом останніх 7 днів</system:String>
     <system:String x:Key="LabelUpdateToolTip">Доступне нове оновлення</system:String>
+    <system:String x:Key="ErrorInstallingPlugin">Помилка під час встановлення плагіна</system:String>
+    <system:String x:Key="ErrorUninstallingPlugin">Помилка видалення плагіну</system:String>
+    <system:String x:Key="ErrorUpdatingPlugin">Помилка під час оновлення плагіну</system:String>
+    <system:String x:Key="KeepPluginSettingsTitle">Зберегти налаштування плагіну</system:String>
+    <system:String x:Key="KeepPluginSettingsSubtitle">Ви хочете зберегти налаштування плагіну для наступного використання?</system:String>
+    <system:String x:Key="InstallSuccessNoRestart">Плагін {0} успішно встановлено. Будь ласка, перезапустіть Flow.</system:String>
+    <system:String x:Key="UninstallSuccessNoRestart">Плагін {0} успішно видалено. Будь ласка, перезапустіть Flow.</system:String>
+    <system:String x:Key="UpdateSuccessNoRestart">Плагін {0} успішно оновлено. Будь ласка, перезапустіть Flow.</system:String>
+    <system:String x:Key="InstallPromptTitle">Встановлення плагіна</system:String>
+    <system:String x:Key="InstallPromptSubtitle">{0} від {1} {2}{2}Бажаєте встановити цей плагін?</system:String>
+    <system:String x:Key="UninstallPromptTitle">Видалення плагіну</system:String>
+    <system:String x:Key="UninstallPromptSubtitle">{0} від {1} {2}{2}Бажаєте видалити цей плагін?</system:String>
+    <system:String x:Key="UpdatePromptTitle">Оновлення плагіну</system:String>
+    <system:String x:Key="UpdatePromptSubtitle">{0} від {1} {2}{2}Бажаєте оновити цей плагін?</system:String>
+    <system:String x:Key="DownloadingPlugin">Завантаження плагіну</system:String>
+    <system:String x:Key="AutoRestartAfterChange">Автоматично перезапускати після встановлення / видалення / оновлення плагінів у магазині плагінів</system:String>
+    <system:String x:Key="ZipFileNotHavePluginJson">Zip-файл не має дійсної конфігурації plugin.json.</system:String>
+    <system:String x:Key="InstallFromUnknownSourceTitle">Встановлення з невідомого джерела</system:String>
+    <system:String x:Key="InstallFromUnknownSourceSubtitle">Цей плагін походить із невідомого джерела та може містити потенційні ризики!{0}{0}Переконайтеся, що ви знаєте, звідки походить він походить, і що він є безпечним.{0}{0}Ви все одно хочете продовжити?{0}{0}(Ви можете вимкнути це попередження в загальному розділі вікна налаштувань)</system:String>
+    <system:String x:Key="ZipFiles">Zip-файли</system:String>
+    <system:String x:Key="SelectZipFile">Виберіть zip-файл</system:String>
+    <system:String x:Key="installLocalPluginTooltip">Встановити плагін із локального шляху</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Тема</system:String>
@@ -212,9 +244,9 @@
     <system:String x:Key="resultItemFont">Шрифт заголовка результату</system:String>
     <system:String x:Key="resultSubItemFont">Шрифт підзаголовка результату</system:String>
     <system:String x:Key="resetCustomize">Скинути</system:String>
-    <system:String x:Key="resetCustomizeToolTip">Reset to the recommended font and size settings.</system:String>
-    <system:String x:Key="ImportThemeSize">Import Theme Size</system:String>
-    <system:String x:Key="ImportThemeSizeToolTip">If a size value intended by the theme designer is available, it will be retrieved and applied.</system:String>
+    <system:String x:Key="resetCustomizeToolTip">Скинути до рекомендованих налаштувань шрифту та розміру.</system:String>
+    <system:String x:Key="ImportThemeSize">Імпортувати розмір теми</system:String>
+    <system:String x:Key="ImportThemeSizeToolTip">Якщо значення розміру, передбачене дизайнером теми, доступне, воно буде отримане та застосоване.</system:String>
     <system:String x:Key="CustomizeToolTip">Підлаштувати</system:String>
     <system:String x:Key="windowMode">Віконний режим</system:String>
     <system:String x:Key="opacity">Прозорість</system:String>
@@ -241,21 +273,21 @@
     <system:String x:Key="AnimationSpeedCustom">Користувацька</system:String>
     <system:String x:Key="Clock">Годинник</system:String>
     <system:String x:Key="Date">Дата</system:String>
-    <system:String x:Key="BackdropType">Backdrop Type</system:String>
-    <system:String x:Key="BackdropInfo">The backdrop effect is not applied in the preview.</system:String>
-    <system:String x:Key="BackdropTypeDisabledToolTip">Backdrop supported starting from Windows 11 build 22000 and above</system:String>
+    <system:String x:Key="BackdropType">Тип тла</system:String>
+    <system:String x:Key="BackdropInfo">Ефект тла не застосовується у передпоказі.</system:String>
+    <system:String x:Key="BackdropTypeDisabledToolTip">Тло підтримується починаючи з Windows 11 версії 22000 і вище</system:String>
     <system:String x:Key="BackdropTypesNone">Нема</system:String>
-    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
-    <system:String x:Key="BackdropTypesMica">Mica</system:String>
-    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
-    <system:String x:Key="TypeIsDarkToolTip">This theme supports two (light/dark) modes.</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Акрил</system:String>
+    <system:String x:Key="BackdropTypesMica">Слюда</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Слюда (альтернатива)</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">Ця тема підтримує два (світлу/темну) режими.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Ця тема підтримує розмитий прозорий фон.</system:String>
-    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
-    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
-    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
-    <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
-    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
+    <system:String x:Key="ShowPlaceholder">Показати заповнювач</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Показувати заповнювач, коли запит порожній</system:String>
+    <system:String x:Key="PlaceholderText">Текст заповнювача</system:String>
+    <system:String x:Key="PlaceholderTextTip">Змінення тексту заповнювача. Ввід буде використовувати: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Фіксований розмір вікна</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">Розмір вікна не можна регулювати шляхом перетягування.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Гаряча клавіша</system:String>
@@ -315,9 +347,9 @@
     <system:String x:Key="useGlyphUI">Використання іконок Segoe Fluent</system:String>
     <system:String x:Key="useGlyphUIEffect">Використання іконок Segoe Fluent Icons для результатів запитів, де це підтримується</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Натисніть клавішу</system:String>
-    <system:String x:Key="showBadges">Show Result Badges</system:String>
-    <system:String x:Key="showBadgesToolTip">For supported plugins, badges are displayed to help distinguish them more easily.</system:String>
-    <system:String x:Key="showBadgesGlobalOnly">Show Result Badges for Global Query Only</system:String>
+    <system:String x:Key="showBadges">Показувати значки результатів</system:String>
+    <system:String x:Key="showBadgesToolTip">Для підтримуваних плагінів показуються значки для легшого розрізнення.</system:String>
+    <system:String x:Key="showBadgesGlobalOnly">Показувати значки результатів тільки для глобального запиту</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP-проксі</system:String>
@@ -358,39 +390,39 @@
     <system:String x:Key="logfolder">Тека журналу</system:String>
     <system:String x:Key="clearlogfolder">Очистити журнали</system:String>
     <system:String x:Key="clearlogfolderMessage">Ви впевнені, що хочете видалити всі журнали?</system:String>
-    <system:String x:Key="cachefolder">Cache Folder</system:String>
-    <system:String x:Key="clearcachefolder">Clear Caches</system:String>
-    <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
-    <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
+    <system:String x:Key="cachefolder">Кеш теки</system:String>
+    <system:String x:Key="clearcachefolder">Очистити кеш</system:String>
+    <system:String x:Key="clearcachefolderMessage">Дійсно хочете видалити весь кеш?</system:String>
+    <system:String x:Key="clearfolderfailMessage">Не вдалося очистити частину тек і файлів. Перегляньте файл журналу для отримання додаткової інформації</system:String>
     <system:String x:Key="welcomewindow">Чаклун</system:String>
     <system:String x:Key="userdatapath">Розташування даних користувача</system:String>
     <system:String x:Key="userdatapathToolTip">Налаштування користувача та встановлені плагіни зберігаються у теці даних користувача. Це місце може змінюватися залежно від того, чи перебуває програма в портативному режимі, чи ні.</system:String>
     <system:String x:Key="userdatapathButton">Відкрити теку</system:String>
-    <system:String x:Key="advanced">Advanced</system:String>
-    <system:String x:Key="logLevel">Log Level</system:String>
-    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
-    <system:String x:Key="LogLevelINFO">Info</system:String>
-    <system:String x:Key="settingWindowFontTitle">Setting Window Font</system:String>
+    <system:String x:Key="advanced">Розширені</system:String>
+    <system:String x:Key="logLevel">Рівень журналювання</system:String>
+    <system:String x:Key="LogLevelDEBUG">Налагодження</system:String>
+    <system:String x:Key="LogLevelINFO">Інформація</system:String>
+    <system:String x:Key="settingWindowFontTitle">Встановлення шрифту вікна</system:String>
 
     <!--  Release Notes Window  -->
-    <system:String x:Key="seeMoreReleaseNotes">See more release notes on GitHub</system:String>
-    <system:String x:Key="checkNetworkConnectionTitle">Failed to fetch release notes</system:String>
-    <system:String x:Key="checkNetworkConnectionSubTitle">Please check your network connection or ensure GitHub is accessible</system:String>
-    <system:String x:Key="appUpdateTitle">Flow Launcher has been updated to {0}</system:String>
-    <system:String x:Key="appUpdateButtonContent">Click here to view the release notes</system:String>
+    <system:String x:Key="seeMoreReleaseNotes">Дізнатися більше про версію на GitHub</system:String>
+    <system:String x:Key="checkNetworkConnectionTitle">Не вдалося отримати примітки до випуску</system:String>
+    <system:String x:Key="checkNetworkConnectionSubTitle">Перевірте своє мережеве з'єднання або переконайтеся, що GitHub є доступним</system:String>
+    <system:String x:Key="appUpdateTitle">Flow Launcher було оновлено до {0}</system:String>
+    <system:String x:Key="appUpdateButtonContent">Натисніть тут, щоби переглянути примітки до випуску</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Виберіть файловий менеджер</system:String>
-    <system:String x:Key="fileManager_learnMore">Learn more</system:String>
-    <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments as required. The &quot;%d&quot; represents the directory path to open for, used by the Arg for Folder field and for commands opening specific directories. The &quot;%f&quot; represents the file path to open for, used by the Arg for File field and for commands opening specific files.</system:String>
-    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fileds blank.</system:String>
+    <system:String x:Key="fileManager_learnMore">Докладніше</system:String>
+    <system:String x:Key="fileManager_tips">Вкажіть розташування файлу у файловому менеджері, який ви використовуєте, та додайте необхідні аргументи. «%d» позначає шлях до каталогу, який потрібно відкрити, і використовується в полі «Аргумент для теки» та для команд, що відкривають певні каталоги. «%f» позначає шлях до файлу, який потрібно відкрити, і використовується в полі «Аргумент для файлу» та для команд, що відкривають певні файли.</system:String>
+    <system:String x:Key="fileManager_tips2">Наприклад, якщо файловий менеджер використовує таку команду, як «totalcmd.exe /A c:\windows» для відкриття каталогу c:\windows, шлях файлового менеджера буде totalcmd.exe, а аргумент для теки — /A «%d». Деякі файлові менеджери, такі як QTTabBar, можуть вимагати лише вказати шлях, у цьому випадку використовуйте «%d» як шлях файлового менеджера і залиште решту полів порожніми.</system:String>
     <system:String x:Key="fileManager_name">Файловий менеджер</system:String>
     <system:String x:Key="fileManager_profile_name">Ім'я профілю</system:String>
     <system:String x:Key="fileManager_path">Шлях до файлового менеджера</system:String>
     <system:String x:Key="fileManager_directory_arg">Аргумент для папки</system:String>
     <system:String x:Key="fileManager_file_arg">Аргумент для файлу</system:String>
-    <system:String x:Key="fileManagerPathNotFound">The file manager '{0}' could not be located at '{1}'. Would you like to continue?</system:String>
-    <system:String x:Key="fileManagerPathError">File Manager Path Error</system:String>
+    <system:String x:Key="fileManagerPathNotFound">Не вдалося знайти файловий менеджер «{0}» за адресою «{1}». Чи бажаєте продовжити?</system:String>
+    <system:String x:Key="fileManagerPathError">Помилка шляху до файлового менеджера</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Веб-браузер за замовчуванням</system:String>
@@ -415,32 +447,33 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Не вдалося знайти вказаний плагін</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Нова гаряча клавіша не може бути порожньою</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Нова гаряча клавіша вже використовується іншим плагіном. Будь ласка, вкажіть нову</system:String>
-    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">Це нове ключове слово дії є таким самим, як і старе, виберіть інше.</system:String>
     <system:String x:Key="success">Успішно</system:String>
     <system:String x:Key="completedSuccessfully">Успішно завершено</system:String>
-    <system:String x:Key="failedToCopy">Failed to copy</system:String>
-    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
+    <system:String x:Key="failedToCopy">Не вдалося скопіювати</system:String>
+    <system:String x:Key="actionkeyword_tips">Введіть ключові слова дій, які ви хочете використовувати для запуску плагіну, й розділіть їх пробілами. Якщо ви не хочете вказувати жодних ключових слів, використовуйте *, і плагін буде запускатися без них.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
-    <system:String x:Key="searchDelayTimeTitle">Search Delay Time Setting</system:String>
-    <system:String x:Key="searchDelayTimeTips">Input the search delay time in ms you like to use for the plugin. Input empty if you don't want to specify any, and the plugin will use default search delay time.</system:String>
+    <system:String x:Key="searchDelayTimeTitle">Налаштування часу затримки пошуку</system:String>
+    <system:String x:Key="searchDelayTimeTips">Введіть час затримки пошуку в мілісекундах, який ви хочете використовувати для плагіну. Якщо ви не хочете вказувати час затримки, залиште поле порожнім, і плагін буде використовувати типовий час затримки пошуку.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
-    <system:String x:Key="homeTitle">Home Page</system:String>
-    <system:String x:Key="homeTips">Enable the plugin home page state if you like to show the plugin results when query is empty.</system:String>
+    <system:String x:Key="homeTitle">Головна сторінка</system:String>
+    <system:String x:Key="homeTips">Увімкніть стан головної сторінки плагіну, якщо ви хочете показувати його результати, коли запит порожній.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Задані гарячі клавіші для запитів</system:String>
     <system:String x:Key="customeQueryHotkeyTips">Натисніть спеціальну гарячу клавішу, щоб відкрити Flow Launcher і автоматично ввести вказаний запит.</system:String>
     <system:String x:Key="preview">Переглянути</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Гаряча клавіша недоступна. Будь ласка, вкажіть нову</system:String>
-    <system:String x:Key="invalidPluginHotkey">Недійсна гаряча клавіша плагіна</system:String>
+    <system:String x:Key="invalidPluginHotkey">Гаряча клавіша недійсна</system:String>
     <system:String x:Key="update">Оновити</system:String>
     <system:String x:Key="hotkeyRegTitle">Прив'язка галавіші</system:String>
     <system:String x:Key="hotkeyUnavailable">Поточна галавіша недоступна.</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">Ця галавіша зарезервована для «{0}» і не може бути використана. Будласка, виберіть іншу галавішу.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">Ця галавіша вже використовується «{0}». Якщо ви натиснете «Перезаписати», її буде вилучено з «{0}».</system:String>
     <system:String x:Key="hotkeyRegGuide">Натисніть клавіші, які ви хочете використовувати для цієї функції.</system:String>
+    <system:String x:Key="emptyPluginHotkey">Гаряча клавіша та ключове слово дії порожні</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Власне скорочення запиту</system:String>
@@ -451,6 +484,7 @@
     </system:String>
     <system:String x:Key="duplicateShortcut">Скорочення вже існує, будь ласка, введіть нове або відредагуйте існуюче.</system:String>
     <system:String x:Key="emptyShortcut">Скорочення та/або його розширення є порожнім.</system:String>
+    <system:String x:Key="invalidShortcut">Комбінація клавіш недійсна.</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Зберегти</system:String>
@@ -478,18 +512,18 @@
     <system:String x:Key="reportWindow_report_succeed">Звіт успішно відправлено</system:String>
     <system:String x:Key="reportWindow_report_failed">Не вдалося відправити звіт</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Стався збій в додатку Flow Launcher</system:String>
-    <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
-    <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
-    <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">Створіть нову проблему в</system:String>
+    <system:String x:Key="reportWindow_upload_log">1. Завантажте файл журналу: {0}</system:String>
+    <system:String x:Key="reportWindow_copy_below">2. Скопіюйте нижче повідомлення про виняток</system:String>
 
     <!--  File Open Error  -->
-    <system:String x:Key="fileManagerNotFoundTitle">File Manager Error</system:String>
+    <system:String x:Key="fileManagerNotFoundTitle">Помилка файлового менеджера</system:String>
     <system:String x:Key="fileManagerNotFound">
-        The specified file manager could not be found. Please check the Custom File Manager setting under Settings &gt; General.
+        Вказаний файловий менеджер не знайдено. Перевірте налаштування вашого файлового менеджера в розділі Налаштування &gt; Загальні.
     </system:String>
     <system:String x:Key="errorTitle">Помилка</system:String>
-    <system:String x:Key="folderOpenError">An error occurred while opening the folder. {0}</system:String>
-    <system:String x:Key="browserOpenError">An error occurred while opening the URL in the browser. Please check your Default Web Browser configuration in the General section of the settings window</system:String>
+    <system:String x:Key="folderOpenError">Під час відкриття теки сталася помилка. {0}</system:String>
+    <system:String x:Key="browserOpenError">Під час відкриття URL-адреси в браузері сталася помилка. Перевірте налаштування типового веббраузера у розділі «Загальні» вікна налаштувань.</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Будь ласка, зачекайте...</system:String>

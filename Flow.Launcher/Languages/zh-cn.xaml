@@ -136,8 +136,12 @@
     <system:String x:Key="historyResultsForHomePage">在主页中显示历史记录</system:String>
     <system:String x:Key="historyResultsCountForHomePage">在主页显示的最大历史结果数</system:String>
     <system:String x:Key="homeToggleBoxToolTip">这只能在插件支持主页功能和主页启用时进行编辑。</system:String>
-    <system:String x:Key="showAtTopmost">Show Search Window at Topmost</system:String>
-    <system:String x:Key="showAtTopmostToolTip">Show search window above other windows</system:String>
+    <system:String x:Key="showAtTopmost">将搜索窗口置于顶层</system:String>
+    <system:String x:Key="showAtTopmostToolTip">覆盖其他“总是在顶部”的程序窗口并在最顶层的位置显示 Flow Launcher 搜索窗口。</system:String>
+    <system:String x:Key="autoRestartAfterChanging">通过插件商店修改插件后重启</system:String>
+    <system:String x:Key="autoRestartAfterChangingToolTip">通过插件商店安装/卸载/更新插件后自动重启 Flow Launcher</system:String>
+    <system:String x:Key="showUnknownSourceWarning">显示未知来源警告</system:String>
+    <system:String x:Key="showUnknownSourceWarningToolTip">安装来自未知来源的插件时显示警告</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">搜索插件</system:String>
@@ -176,6 +180,12 @@
     <system:String x:Key="failedToRemovePluginSettingsMessage">插件：{0} - 移除插件设置文件失败，请手动删除</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">移除插件缓存失败</system:String>
     <system:String x:Key="failedToRemovePluginCacheMessage">插件：{0} - 移除插件设置文件失败，请手动删除</system:String>
+    <system:String x:Key="pluginModifiedAlreadyTitle">{0} 已修改</system:String>
+    <system:String x:Key="pluginModifiedAlreadyMessage">请在进行任何进一步更改之前重新启动 Flow</system:String>
+    <system:String x:Key="failedToInstallPluginTitle">安装 {0} 失败</system:String>
+    <system:String x:Key="failedToUninstallPluginTitle">卸载 {0} 失败</system:String>
+    <system:String x:Key="fileNotFoundMessage">无法从提取的zip文件中找到plugin.json，或者此路径 {0} 不存在</system:String>
+    <system:String x:Key="pluginExistAlreadyMessage">已存在相同ID和版本的插件，或者存在版本大于此下载的插件</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">插件商店</system:String>
@@ -191,6 +201,28 @@
     <system:String x:Key="LabelNew">新版本</system:String>
     <system:String x:Key="LabelNewToolTip">此插件在过去7天内有更新</system:String>
     <system:String x:Key="LabelUpdateToolTip">有可用的更新</system:String>
+    <system:String x:Key="ErrorInstallingPlugin">安装插件时出错</system:String>
+    <system:String x:Key="ErrorUninstallingPlugin">卸载插件时出错</system:String>
+    <system:String x:Key="ErrorUpdatingPlugin">更新插件时出错</system:String>
+    <system:String x:Key="KeepPluginSettingsTitle">保留插件设置</system:String>
+    <system:String x:Key="KeepPluginSettingsSubtitle">你想要保留插件设置以便下一次的使用吗？</system:String>
+    <system:String x:Key="InstallSuccessNoRestart">成功安装插件{0}。请重新启动 Flow Launcher。</system:String>
+    <system:String x:Key="UninstallSuccessNoRestart">成功卸载插件{0}。请重新启动 Flow Launcher。</system:String>
+    <system:String x:Key="UpdateSuccessNoRestart">成功更新插件{0}。请重新启动 Flow Launcher。</system:String>
+    <system:String x:Key="InstallPromptTitle">插件安装</system:String>
+    <system:String x:Key="InstallPromptSubtitle">{0} 作者： {1} {2}{2}您想要安装这个插件吗？</system:String>
+    <system:String x:Key="UninstallPromptTitle">插件卸载</system:String>
+    <system:String x:Key="UninstallPromptSubtitle">{0} 作者： {1} {2}{2}您想要卸载这个插件吗？</system:String>
+    <system:String x:Key="UpdatePromptTitle">插件更新</system:String>
+    <system:String x:Key="UpdatePromptSubtitle">{0} 作者： {1} {2}{2}您想要更新这个插件吗？</system:String>
+    <system:String x:Key="DownloadingPlugin">下载插件</system:String>
+    <system:String x:Key="AutoRestartAfterChange">插件商店安装/卸载/更新插件后自动重启</system:String>
+    <system:String x:Key="ZipFileNotHavePluginJson">Zip 文件没有有效的 plugin.json 配置</system:String>
+    <system:String x:Key="InstallFromUnknownSourceTitle">从未知源安装</system:String>
+    <system:String x:Key="InstallFromUnknownSourceSubtitle">您正在从未知源安装此插件，它可能包含潜在风险！{0}{0}请确保您了解来源以及安全性。{0}{0}您想要继续吗？{0}{0}(您可以通过设置关闭此警告)</system:String>
+    <system:String x:Key="ZipFiles">Zip 文件</system:String>
+    <system:String x:Key="SelectZipFile">请选择 zip 文件</system:String>
+    <system:String x:Key="installLocalPluginTooltip">从本地路径安装插件</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">主题</system:String>
@@ -434,13 +466,14 @@
     <system:String x:Key="customeQueryHotkeyTips">输入一个自定义的快捷键来打开 Flow Launcher 并自动输入指定的查询。</system:String>
     <system:String x:Key="preview">预览</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">热键不可用，请选择一个新的热键</system:String>
-    <system:String x:Key="invalidPluginHotkey">插件热键不合法</system:String>
+    <system:String x:Key="invalidPluginHotkey">热键无效</system:String>
     <system:String x:Key="update">更新</system:String>
     <system:String x:Key="hotkeyRegTitle">绑定热键</system:String>
     <system:String x:Key="hotkeyUnavailable">当前热键不可用。</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">此热键为“{0}”保留，无法使用。请选择其他热键。</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">此热键已被“{0}”使用。如果按“覆盖”，则会将其从“{0}”中删除。</system:String>
     <system:String x:Key="hotkeyRegGuide">按下您想要用于此功能的键。</system:String>
+    <system:String x:Key="emptyPluginHotkey">热键和操作关键字为空</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">自定义查询捷径</system:String>
@@ -451,6 +484,7 @@
     </system:String>
     <system:String x:Key="duplicateShortcut">捷径已存在，请输入一个新的或者编辑已有的。</system:String>
     <system:String x:Key="emptyShortcut">捷径及其展开均不能为空。</system:String>
+    <system:String x:Key="invalidShortcut">快捷键无效</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">保存</system:String>

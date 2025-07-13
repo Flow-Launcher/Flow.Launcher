@@ -26,7 +26,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips_cmd">Поради щодо Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location_cmd">Тека UserData Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode_cmd">Перемкнути режим гри</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_theme_selector_cmd">Set the Flow Launcher Theme</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector_cmd">Встановити тему Flow Launcher</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_edit">Редагувати</system:String>
 
@@ -51,7 +51,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">Перегляньте документацію Flow Launcher для отримання додаткової допомоги та підказок щодо використання порад</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Відкрити каталог, де зберігаються налаштування Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode">Перемкнути режим гри</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_theme_selector">Quickly change the Flow Launcher theme</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector">Швидко змінити тему Flow Launcher</system:String>
 
     <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">Успішно</system:String>
@@ -62,14 +62,14 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Ви впевнені, що хочете перезавантажити комп'ютер за допомогою додаткових параметрів завантаження?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Ви впевнені, що хочете вийти з системи?</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Command Keyword Setting</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Custom Command Keyword</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword_tip">Enter a keyword to search for command: {0}. This keyword is used to match your query.</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_command_keyword">Command Keyword</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Налаштування ключового слова команди</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Власне ключове слово команди</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword_tip">Введіть ключове слово для пошуку команди: {0}. Це ключове слово використовується для відповідності вашому запиту.</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_command_keyword">Ключове слово команди</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_reset">Скинути</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_confirm">Підтвердити</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_cancel">Скасувати</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_input_command_keyword">Please enter a non-empty command keyword</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_input_command_keyword">Введіть непорожнє ключове слово команди</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">Системні команди</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Надає команди, пов'язані з системою, наприклад, вимкнення, блокування, налаштування тощо.</system:String>

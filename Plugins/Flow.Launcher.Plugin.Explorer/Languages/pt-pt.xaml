@@ -96,8 +96,11 @@
     <system:String x:Key="plugin_explorer_deletefilefolder">Eliminar</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Eliminar permanentemente o ficheiro atual</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Eliminar permanentemente a pasta atual</system:String>
-    <system:String x:Key="plugin_explorer_path">Caminho:</system:String>
-    <system:String x:Key="plugin_explorer_name">Nome:</system:String>
+    <system:String x:Key="plugin_explorer_name">Nome</system:String>
+    <system:String x:Key="plugin_explorer_type">Tipo</system:String>
+    <system:String x:Key="plugin_explorer_path">Caminho</system:String>
+    <system:String x:Key="plugin_explorer_file">Ficheiro</system:String>
+    <system:String x:Key="plugin_explorer_folder">Pasta</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Eliminar seleção</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Executar com outro utilizador</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Executar ações com uma conta de utilizador diferente</system:String>

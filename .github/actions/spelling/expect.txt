@@ -1,3 +1,5 @@
+# This file should contain names of products, companies, or individuals that aren't in a standard dictionary (e.g., GitHub, Keptn, VSCode).
+
 crowdin
 DWM
 workflows
@@ -34,7 +36,6 @@ mscorlib
 pythonw
 dotnet
 winget
-jjw24
 wolframalpha
 gmail
 duckduckgo
@@ -49,7 +50,6 @@ srchadmin
 EWX
 dlgtext
 CMD
-appref-ms
 appref
 TSource
 runas
@@ -57,7 +57,6 @@ dpi
 popup
 ptr
 pluginindicator
-TobiasSekan
 img
 resx
 bak
@@ -68,9 +67,6 @@ dlg
 ddd
 dddd
 clearlogfolder
-ACCENT_ENABLE_TRANSPARENTGRADIENT
-ACCENT_ENABLE_BLURBEHIND
-WCA_ACCENT_POLICY
 HGlobal
 dopusrt
 firefox
@@ -91,22 +87,19 @@ keyevent
 KListener
 requery
 vkcode
-čeština
 Polski
 Srpski
-Português
-Português (Brasil)
 Italiano
-Slovenský
 quicklook
-Tiếng Việt
 Droplex
 Preinstalled
 errormetadatafile
 noresult
 pluginsmanager
 alreadyexists
-JsonRPC
-JsonRPCV2
 Softpedia
 img
+Reloadable
+metadatas
+WMP
+VSTHRD

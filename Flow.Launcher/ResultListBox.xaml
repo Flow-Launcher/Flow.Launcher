@@ -36,6 +36,7 @@
         <converter:BadgePositionConverter x:Key="BadgePositionConverter" />
         <converter:IconRadiusConverter x:Key="IconRadiusConverter" />
         <converter:DiameterToCenterPointConverter x:Key="DiameterToCenterPointConverter" />
+        <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </ListBox.Resources>
     <ListBox.ItemTemplate>
         <DataTemplate>
@@ -66,7 +67,7 @@
                             Grid.Column="2"
                             Margin="0 0 10 0"
                             VerticalAlignment="Center"
-                            Visibility="{Binding ShowOpenResultHotkey}">
+                            Visibility="{Binding Settings.ShowOpenResultHotkey, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                             <Border x:Name="HotkeyBG" Style="{DynamicResource ItemHotkeyBGStyle}">
                                 <Border.Visibility>
                                     <Binding Converter="{StaticResource ResourceKey=OpenResultHotkeyVisibilityConverter}" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}" />
@@ -79,7 +80,7 @@
                                     Style="{DynamicResource ItemHotkeyStyle}">
                                     <TextBlock.Text>
                                         <MultiBinding StringFormat="{}{0}+{1}">
-                                            <Binding Path="OpenResultModifiers" />
+                                            <Binding Mode="OneWay" Path="Settings.OpenResultModifiers" />
                                             <Binding Converter="{StaticResource ResourceKey=OrdinalConverter}" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}" />
                                         </MultiBinding>
                                     </TextBlock.Text>
