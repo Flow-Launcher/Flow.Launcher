@@ -103,6 +103,19 @@
     <system:String x:Key="SearchPrecisionRegular">Звичайно</system:String>
     <system:String x:Key="ShouldUsePinyin">Використовувати піньїнь</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Дозволяє використовувати пінїнь для пошуку. Піньїнь - це стандартна система написання для перекладу китайської.</system:String>
+    <system:String x:Key="ShouldUseDoublePinyin">Use Double Pinyin</system:String>
+    <system:String x:Key="ShouldUseDoublePinyinToolTip">Allows using Double Pinyin to search. Double Pinyin is a variation of Pinyin that uses two characters.</system:String>
+    <system:String x:Key="DoublePinyinSchema">Double Pinyin Schema</system:String>
+    <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao He</system:String>
+    <system:String x:Key="DoublePinyinSchemasZiRanMa">Zi Ran Ma</system:String>
+    <system:String x:Key="DoublePinyinSchemasWeiRuan">Wei Ruan</system:String>
+    <system:String x:Key="DoublePinyinSchemasZhiNengABC">Zhi Neng ABC</system:String>
+    <system:String x:Key="DoublePinyinSchemasZiGuangPinYin">Zi Guang Pin Yin</system:String>
+    <system:String x:Key="DoublePinyinSchemasPinYinJiaJia">Pin Yin Jia Jia</system:String>
+    <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
+    <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
+    <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
+    
     <system:String x:Key="AlwaysPreview">Завжди переглядати</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Завжди відкривати панель попереднього перегляду при активації Flow. Натисніть {0}, щоб переключити попередній перегляд.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Ефект тіні не дозволено, коли поточна тема має ефект розмиття</system:String>
