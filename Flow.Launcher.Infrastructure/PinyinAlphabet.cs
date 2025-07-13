@@ -107,12 +107,12 @@ namespace Flow.Launcher.Infrastructure
                     if (previousIsChinese)
                     {
                         resultBuilder.Append(' ');
-                        map.AddNewIndex(i, resultBuilder.Length, translated.Length);
+                        map.AddNewIndex(resultBuilder.Length, translated.Length);
                         resultBuilder.Append(translated);
                     }
                     else
                     {
-                        map.AddNewIndex(i, resultBuilder.Length, translated.Length);
+                        map.AddNewIndex(resultBuilder.Length, translated.Length);
                         resultBuilder.Append(translated);
                         previousIsChinese = true;
                     }
@@ -124,6 +124,7 @@ namespace Flow.Launcher.Infrastructure
                         previousIsChinese = false;
                         resultBuilder.Append(' ');
                     }
+                    map.AddNewIndex(resultBuilder.Length, resultList[i].Length);
                     resultBuilder.Append(resultList[i]);
                 }
             }
