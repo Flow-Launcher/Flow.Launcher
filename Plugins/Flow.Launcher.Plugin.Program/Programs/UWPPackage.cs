@@ -290,12 +290,13 @@ namespace Flow.Launcher.Plugin.Program.Programs
         }
 
         private static readonly Channel<byte> PackageChangeChannel = Channel.CreateBounded<byte>(1);
+        private static PackageCatalog? catalog;
 
         public static async Task WatchPackageChangeAsync()
         {
             if (Environment.OSVersion.Version.Major >= 10)
             {
-                var catalog = PackageCatalog.OpenForCurrentUser();
+                catalog ??= PackageCatalog.OpenForCurrentUser();
                 catalog.PackageInstalling += (_, args) =>
                 {
                     if (args.IsComplete)
