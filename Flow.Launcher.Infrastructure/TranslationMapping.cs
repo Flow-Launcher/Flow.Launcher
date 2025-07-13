@@ -23,8 +23,7 @@ namespace Flow.Launcher.Infrastructure
         public int MapToOriginalIndex(int translatedIndex)
         {
             int loc = originalToTranslated.BinarySearch(translatedIndex);
-
-            return loc > 0 ? loc : ~loc;
+            return loc >= 0 ? loc : ~loc;
         }
 
         public void endConstruct()
