@@ -103,6 +103,19 @@
     <system:String x:Key="SearchPrecisionRegular">Bình thường</system:String>
     <system:String x:Key="ShouldUsePinyin">Hoạt động bính âm</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Cho phép bạn sử dụng Bính âm để tìm kiếm. Bính âm là hệ thống ký hiệu La Mã tiêu chuẩn để dịch văn bản tiếng Trung.</system:String>
+    <system:String x:Key="ShouldUseDoublePinyin">Use Double Pinyin</system:String>
+    <system:String x:Key="ShouldUseDoublePinyinToolTip">Allows using Double Pinyin to search. Double Pinyin is a variation of Pinyin that uses two characters.</system:String>
+    <system:String x:Key="DoublePinyinSchema">Double Pinyin Schema</system:String>
+    <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao He</system:String>
+    <system:String x:Key="DoublePinyinSchemasZiRanMa">Zi Ran Ma</system:String>
+    <system:String x:Key="DoublePinyinSchemasWeiRuan">Wei Ruan</system:String>
+    <system:String x:Key="DoublePinyinSchemasZhiNengABC">Zhi Neng ABC</system:String>
+    <system:String x:Key="DoublePinyinSchemasZiGuangPinYin">Zi Guang Pin Yin</system:String>
+    <system:String x:Key="DoublePinyinSchemasPinYinJiaJia">Pin Yin Jia Jia</system:String>
+    <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
+    <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
+    <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
+    
     <system:String x:Key="AlwaysPreview">Luôn xem trước</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Luôn mở bảng xem trước khi Flow kích hoạt. Nhấn {0} để chuyển đổi chế độ xem trước.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Hiệu ứng đổ bóng không được phép nếu chủ đề hiện tại bật hiệu ứng làm mờ</system:String>
