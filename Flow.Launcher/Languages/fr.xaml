@@ -390,7 +390,7 @@
     <system:String x:Key="about_activate_times">Vous avez utilisé Flow Launcher {0} fois</system:String>
     <system:String x:Key="checkUpdates">Vérifier les mises à jour</system:String>
     <system:String x:Key="BecomeASponsor">Devenir un Sponsor</system:String>
-    <system:String x:Key="newVersionTips">Nouvelle version {0} disponible, veuillez redémarrer Flow Launcher</system:String>
+    <system:String x:Key="newVersionTips">Nouvelle version {0} disponible, souhaitez-vous redémarrer Flow Launcher pour l'installer ?</system:String>
     <system:String x:Key="checkUpdatesFailed">Échec de la vérification de la mise à jour, vérifiez votre connexion et vos paramètres de configuration proxy pour pouvoir acceder à api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
         Échec du téléchargement de la mise à jour, vérifiez votre connexion et vos paramètres de configuration proxy pour pouvoir acceder à github-cloud.s3.amazonaws.com, ou téléchargez manuelement la mise à jour sur https://github.com/Flow-Launcher/Flow.Launcher/releases.
@@ -549,8 +549,8 @@ Si vous ajoutez un préfixe &quot;@&quot; lors de la saisie d'un raccourci, celu
         Flow Launcher n'a pas pu déplacer les données de votre profil utilisateur vers la nouvelle version de mise à jour.
         Veuillez déplacer manuellement le dossier de données de votre profil de {0} vers {1}
     </system:String>
-    <system:String x:Key="update_flowlauncher_new_update">Nouvelle mise à jour</system:String>
-    <system:String x:Key="update_flowlauncher_update_new_version_available">Version v{0} de Flow Launcher disponible</system:String>
+    <system:String x:Key="update_flowlauncher_new_update">Mise à jour disponible</system:String>
+    <system:String x:Key="update_flowlauncher_update_new_version_available">La nouvelle version {0} de Flow Launcher est maintenant disponible</system:String>
     <system:String x:Key="update_flowlauncher_update_error">Une erreur s'est produite lors de l'installation de la mise à jour</system:String>
     <system:String x:Key="update_flowlauncher_update">Mettre à jour</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">Annuler</system:String>
