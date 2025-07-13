@@ -45,7 +45,8 @@ namespace Flow.Launcher.Infrastructure
         private void CreateDoublePinyinTableFromStream(Stream jsonStream)
         {
             Dictionary<string, Dictionary<string, string>> table = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(jsonStream);
-            if (!table.TryGetValue(_settings.DoublePinyinSchema, out var value))
+            string schemaKey = _settings.DoublePinyinSchema.ToString(); // Convert enum to string  
+            if (!table.TryGetValue(schemaKey, out var value))
             {
                 throw new InvalidOperationException("DoublePinyinSchema is invalid or double pinyin table is broken.");
             }
@@ -104,18 +105,13 @@ namespace Flow.Launcher.Infrastructure
                 if (content[i] >= 0x3400 && content[i] <= 0x9FD5)
                 {
                     string translated = _settings.UseDoublePinyin ? ToDoublePin(resultList[i]) : resultList[i];
-                    if (previousIsChinese)
+                    if (i > 0)
                     {
                         resultBuilder.Append(' ');
-                        map.AddNewIndex(resultBuilder.Length, translated.Length);
-                        resultBuilder.Append(translated);
                     }
-                    else
-                    {
-                        map.AddNewIndex(resultBuilder.Length, translated.Length);
-                        resultBuilder.Append(translated);
-                        previousIsChinese = true;
-                    }
+                    map.AddNewIndex(resultBuilder.Length, translated.Length);
+                    resultBuilder.Append(translated);
+                    previousIsChinese = true;
                 }
                 else
                 {
