@@ -330,7 +330,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /// </summary>
         public bool ShouldUsePinyin { get; set; } = false;
 
-        private bool _useDoublePinyin = true; // TODO: change default to false BEFORE RELEASE
+        private bool _useDoublePinyin = false;
         public bool UseDoublePinyin
         {
             get => _useDoublePinyin;
