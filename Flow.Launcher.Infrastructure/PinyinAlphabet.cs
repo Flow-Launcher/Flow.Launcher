@@ -14,7 +14,7 @@ namespace Flow.Launcher.Infrastructure
 {
     public class PinyinAlphabet : IAlphabet
     {
-        private readonly ConcurrentDictionary<string, (string translation, TranslationMapping map)> _pinyinCache =
+        private ConcurrentDictionary<string, (string translation, TranslationMapping map)> _pinyinCache =
             new();
 
         private readonly Settings _settings;
