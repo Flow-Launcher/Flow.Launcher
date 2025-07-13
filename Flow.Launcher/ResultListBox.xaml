@@ -80,7 +80,7 @@
                                     Style="{DynamicResource ItemHotkeyStyle}">
                                     <TextBlock.Text>
                                         <MultiBinding StringFormat="{}{0}+{1}">
-                                            <Binding Path="OpenResultModifiers" />
+                                            <Binding Mode="OneWay" Path="Settings.OpenResultModifiers" />
                                             <Binding Converter="{StaticResource ResourceKey=OrdinalConverter}" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}" />
                                         </MultiBinding>
                                     </TextBlock.Text>

@@ -149,8 +149,6 @@ namespace Flow.Launcher.ViewModel
 
         private bool PreviewImageAvailable => !string.IsNullOrEmpty(Result.Preview.PreviewImagePath) || Result.Preview.PreviewDelegate != null;
 
-        public string OpenResultModifiers => Settings.OpenResultModifiers;
-
         public string ShowTitleToolTip => string.IsNullOrEmpty(Result.TitleToolTip)
             ? Result.Title
             : Result.TitleToolTip;
