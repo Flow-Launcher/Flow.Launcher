@@ -1,4 +1,6 @@
-﻿using Flow.Launcher.Infrastructure;
+﻿using System.Collections.Generic;
+using System.Reflection;
+using Flow.Launcher.Infrastructure;
 using NUnit.Framework;
 using NUnit.Framework.Legacy;
 
@@ -34,22 +36,21 @@ namespace Flow.Launcher.Test
             mapping.AddNewIndex(2, 2);
             mapping.AddNewIndex(5, 3);
 
-
             var result = mapping.MapToOriginalIndex(translatedIndex);
             ClassicAssert.AreEqual(expectedOriginalIndex, result);
         }
 
-        private int GetOriginalToTranslatedCount(TranslationMapping mapping)
+        private static int GetOriginalToTranslatedCount(TranslationMapping mapping)
         {
-            var field = typeof(TranslationMapping).GetField("originalToTranslated", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            var list = (System.Collections.Generic.List<int>)field.GetValue(mapping);
+            var field = typeof(TranslationMapping).GetField("_originalToTranslated", BindingFlags.NonPublic | BindingFlags.Instance);
+            var list = (List<int>)field.GetValue(mapping);
             return list.Count;
         }
 
-        private int GetOriginalToTranslatedAt(TranslationMapping mapping, int index)
+        private static int GetOriginalToTranslatedAt(TranslationMapping mapping, int index)
         {
-            var field = typeof(TranslationMapping).GetField("originalToTranslated", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            var list = (System.Collections.Generic.List<int>)field.GetValue(mapping);
+            var field = typeof(TranslationMapping).GetField("_originalToTranslated", BindingFlags.NonPublic | BindingFlags.Instance);
+            var list = (List<int>)field.GetValue(mapping);
             return list[index];
         }
     }

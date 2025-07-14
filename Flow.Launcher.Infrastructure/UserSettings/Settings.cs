@@ -328,7 +328,19 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /// <summary>
         /// when false Alphabet static service will always return empty results
         /// </summary>
-        public bool ShouldUsePinyin { get; set; } = false;
+        private bool _useAlphabet = true;
+        public bool ShouldUsePinyin
+        {
+            get => _useAlphabet;
+            set
+            {
+                if (_useAlphabet != value)
+                {
+                    _useAlphabet = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private bool _useDoublePinyin = false;
         public bool UseDoublePinyin
