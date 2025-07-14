@@ -103,9 +103,9 @@
     <system:String x:Key="SearchPrecisionRegular">常规</system:String>
     <system:String x:Key="ShouldUsePinyin">使用拼音搜索</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">允许使用拼音进行搜索。</system:String>
-    <system:String x:Key="ShouldUseDoublePinyin">Use Double Pinyin</system:String>
-    <system:String x:Key="ShouldUseDoublePinyinToolTip">Allows using Double Pinyin to search. Double Pinyin is a variation of Pinyin that uses two characters.</system:String>
-    <system:String x:Key="DoublePinyinSchema">Double Pinyin Schema</system:String>
+    <system:String x:Key="ShouldUseDoublePinyin">使用双拼音</system:String>
+    <system:String x:Key="ShouldUseDoublePinyinToolTip">允许双拼音进行搜索。双拼音是一个使用两个字符的拼音。</system:String>
+    <system:String x:Key="DoublePinyinSchema">双拼音模式</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao He</system:String>
     <system:String x:Key="DoublePinyinSchemasZiRanMa">Zi Ran Ma</system:String>
     <system:String x:Key="DoublePinyinSchemasWeiRuan">Wei Ruan</system:String>
