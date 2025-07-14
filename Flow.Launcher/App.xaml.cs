@@ -251,7 +251,7 @@ namespace Flow.Launcher
         /// Check startup only for Release
         /// </summary>
         [Conditional("RELEASE")]
-        private void AutoStartup()
+        private static void AutoStartup()
         {
             // we try to enable auto-startup on first launch, or reenable if it was removed
             // but the user still has the setting set
@@ -272,7 +272,7 @@ namespace Flow.Launcher
         }
 
         [Conditional("RELEASE")]
-        private void AutoUpdates()
+        private static void AutoUpdates()
         {
             _ = Task.Run(async () =>
             {
