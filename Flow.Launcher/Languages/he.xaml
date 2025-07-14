@@ -8,9 +8,9 @@
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">אנא בחר את קובץ ההפעלה {0}</system:String>
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
-        קובץ ההפעלה {0} שבחרת אינו חוקי.
+        Your selected {0} executable is invalid.
         {2}{2}
-        לחץ על כן אם ברצונך, בחר את {0} ההפעלה הקודמת. לחץ על לא אם ברצונך להוריד את {1}
+        Click yes if you would like select the {0} executable again. Click no if you would like to download {1}
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">לא ניתן להגדיר נתיב הפעלה {0}, אנא נסה שוב בהגדרות Flow (גלול עד למטה).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">נכשל בהפעלת תוספים</system:String>
@@ -135,8 +135,12 @@
     <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
     <system:String x:Key="homeToggleBoxToolTip">ניתן לערוך זאת רק אם התוסף תומך בתכונת הבית ודף הבית מופעל.</system:String>
-    <system:String x:Key="showAtTopmost">Show Search Window at Topmost</system:String>
-    <system:String x:Key="showAtTopmostToolTip">Show search window above other windows</system:String>
+    <system:String x:Key="showAtTopmost">Show Search Window at Foremost</system:String>
+    <system:String x:Key="showAtTopmostToolTip">עוקף את הגדרת תמיד עליון של תוכנות אחרות, ומציג את Flow במיקום הגבוה ביותר.</system:String>
+    <system:String x:Key="autoRestartAfterChanging">Restart after modifying plugin via Plugin Store</system:String>
+    <system:String x:Key="autoRestartAfterChangingToolTip">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugin Store</system:String>
+    <system:String x:Key="showUnknownSourceWarning">Show unknown source warning</system:String>
+    <system:String x:Key="showUnknownSourceWarningToolTip">Show warning when installing plugins from unknown sources</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">חפש תוסף</system:String>
@@ -175,6 +179,12 @@
     <system:String x:Key="failedToRemovePluginSettingsMessage">תוספים: {0} - נכשל בהסרת קבצי הגדרות התוסף, יש להסירם ידנית</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">נכשל בהסרת מטמון התוסף</system:String>
     <system:String x:Key="failedToRemovePluginCacheMessage">תוספים: {0} - נכשל בהסרת קובצי מטמון התוסף, אנא הסר אותם ידנית</system:String>
+    <system:String x:Key="pluginModifiedAlreadyTitle">{0} modified already</system:String>
+    <system:String x:Key="pluginModifiedAlreadyMessage">Please restart Flow before making any further changes</system:String>
+    <system:String x:Key="failedToInstallPluginTitle">Fail to install {0}</system:String>
+    <system:String x:Key="failedToUninstallPluginTitle">Fail to uninstall {0}</system:String>
+    <system:String x:Key="fileNotFoundMessage">Unable to find plugin.json from the extracted zip file, or this path {0} does not exist</system:String>
+    <system:String x:Key="pluginExistAlreadyMessage">A plugin with the same ID and version already exists, or the version is greater than this downloaded plugin</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">חנות תוספים</system:String>
@@ -190,6 +200,28 @@
     <system:String x:Key="LabelNew">גרסה חדשה</system:String>
     <system:String x:Key="LabelNewToolTip">תוסף זה עודכן במהלך 7 הימים האחרונים</system:String>
     <system:String x:Key="LabelUpdateToolTip">עדכון חדש זמין</system:String>
+    <system:String x:Key="ErrorInstallingPlugin">שגיאה בהתקנת תוסף</system:String>
+    <system:String x:Key="ErrorUninstallingPlugin">שגיאה בהסרת תוסף</system:String>
+    <system:String x:Key="ErrorUpdatingPlugin">Error updating plugin</system:String>
+    <system:String x:Key="KeepPluginSettingsTitle">שמור הגדרות תוסף</system:String>
+    <system:String x:Key="KeepPluginSettingsSubtitle">האם ברצונך לשמור את הגדרות התוסף לשימוש הבא?</system:String>
+    <system:String x:Key="InstallSuccessNoRestart">התוסף {0} הותקן בהצלחה. נא הפעל מחדש את Flow.</system:String>
+    <system:String x:Key="UninstallSuccessNoRestart">התוסף {0} הוסר בהצלחה. נא הפעל מחדש את Flow.</system:String>
+    <system:String x:Key="UpdateSuccessNoRestart">התוסף {0} עודכן בהצלחה. נא הפעל מחדש את Flow.</system:String>
+    <system:String x:Key="InstallPromptTitle">Plugin install</system:String>
+    <system:String x:Key="InstallPromptSubtitle">{0} מאת {1} {2}{2}האם ברצונך להתקין תוסף זה?</system:String>
+    <system:String x:Key="UninstallPromptTitle">Plugin uninstall</system:String>
+    <system:String x:Key="UninstallPromptSubtitle">{0} מאת {1} {2}{2}האם ברצונך להסיר תוסף זה?</system:String>
+    <system:String x:Key="UpdatePromptTitle">Plugin update</system:String>
+    <system:String x:Key="UpdatePromptSubtitle">{0} מאת {1} {2}{2}האם ברצונך לעדכן תוסף זה?</system:String>
+    <system:String x:Key="DownloadingPlugin">מוריד תוסף</system:String>
+    <system:String x:Key="AutoRestartAfterChange">Automatically restart after installing/uninstalling/updating plugins in plugin store</system:String>
+    <system:String x:Key="ZipFileNotHavePluginJson">Zip file does not have a valid plugin.json configuration</system:String>
+    <system:String x:Key="InstallFromUnknownSourceTitle">מתקין ממקור לא מוכ</system:String>
+    <system:String x:Key="InstallFromUnknownSourceSubtitle">This plugin is from an unknown source and it may contain potential risks!{0}{0}Please ensure you understand where this plugin is from and that it is safe.{0}{0}Would you like to continue still?{0}{0}(You can switch off this warning in general section of setting window)</system:String>
+    <system:String x:Key="ZipFiles">Zip files</system:String>
+    <system:String x:Key="SelectZipFile">Please select zip file</system:String>
+    <system:String x:Key="installLocalPluginTooltip">Install plugin from local path</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">ערכת נושא</system:String>
@@ -382,7 +414,7 @@
     <system:String x:Key="fileManagerWindow">בחר מנהל קבצים</system:String>
     <system:String x:Key="fileManager_learnMore">למד עוד</system:String>
     <system:String x:Key="fileManager_tips">אנא ציין את מיקום הקובץ של מנהל הקבצים שבו אתה משתמש והוסף ארגומנטים כנדרש. &quot;%d&quot; מייצג את נתיב התיקייה שיש לפתוח, ומשמש בשדה ארגומנט לתיקייה ובפקודות לפתיחת תיקיות מסוימות. &quot;%f&quot; מייצג את נתיב הקובץ שיש לפתוח, ומשמש בשדה ארגומנט לקובץ ובפקודות לפתיחת קבצים מסוימים.</system:String>
-    <system:String x:Key="fileManager_tips2">לדוגמה, אם מנהל הקבצים משתמש בפקודה כגון &quot;totalcmd.exe /A c:\windows&quot; כדי לפתוח את התיקייה c:\windows, נתיב מנהל הקבצים יהיה totalcmd.exe, והארגומנט לתיקייה יהיה /A &quot;%d&quot;. מנהלי קבצים מסוימים, כגון QTTabBar, עשויים לדרוש רק ציון נתיב, במקרה כזה השתמש ב-&quot;%d&quot; כנתיב מנהל הקבצים והשאר את שאר השדות ריקים.</system:String>
+    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fields blank.</system:String>
     <system:String x:Key="fileManager_name">מנהל קבצים</system:String>
     <system:String x:Key="fileManager_profile_name">שם פרופיל</system:String>
     <system:String x:Key="fileManager_path">נתיב מנהל קבצים</system:String>
@@ -433,13 +465,14 @@
     <system:String x:Key="customeQueryHotkeyTips">הקש על מקש קיצור מותאם אישית כדי לפתוח את Flow Launcher ולהזין את השאילתה שצוינה באופן אוטומטי.</system:String>
     <system:String x:Key="preview">תצוגה מקדימה</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">מקש הקיצור אינו זמין, אנא בחר מקש קיצור חדש</system:String>
-    <system:String x:Key="invalidPluginHotkey">מקש קיצור לא חוקי לתוסף</system:String>
+    <system:String x:Key="invalidPluginHotkey">Hotkey is invalid</system:String>
     <system:String x:Key="update">עדכון</system:String>
     <system:String x:Key="hotkeyRegTitle">שיוך מקש קיצור</system:String>
     <system:String x:Key="hotkeyUnavailable">מקש הקיצור הנוכחי אינו זמין.</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">מקש קיצור זה שמור עבור &quot;{0}&quot; ואינו ניתן לשימוש. אנא בחר מקש קיצור אחר.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">מקש קיצור זה כבר נמצא בשימוש על ידי &quot;{0}&quot;. אם תלחץ על &quot;החלף&quot;, הוא יוסר מ-&quot;{0}&quot;.</system:String>
     <system:String x:Key="hotkeyRegGuide">הקש על המקשים שברצונך להשתמש בהם עבור פעולה זו.</system:String>
+    <system:String x:Key="emptyPluginHotkey">Hotkey and action keyword are empty</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">קיצור דרך לשאילתה מותאמת אישית</system:String>
@@ -450,6 +483,7 @@
     </system:String>
     <system:String x:Key="duplicateShortcut">קיצור דרך כבר קיים, אנא הזן קיצור דרך חדש או ערוך את הקיים.</system:String>
     <system:String x:Key="emptyShortcut">קיצור הדרך ו/או ההרחבה שלו ריקים.</system:String>
+    <system:String x:Key="invalidShortcut">Shortcut is invalid</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">שמור</system:String>

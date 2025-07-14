@@ -8,9 +8,9 @@
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Por favor, selecione o executável {0}</system:String>
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
-        O executável {0} é inválido.
+        Your selected {0} executable is invalid.
         {2}{2}
-        Clique Sim se quiser escolher o novo executável {0}. Clique Não se quiser descarregar {1}.
+        Click yes if you would like select the {0} executable again. Click no if you would like to download {1}
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Não foi possível definir o caminho do executável {0}. Experimente definir o caminho nas definições (desloque até ao fundo).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Falha ao iniciar os plugins</system:String>
@@ -135,8 +135,12 @@
     <system:String x:Key="historyResultsForHomePage">Mostrar histórico na página inicial</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Máximo de resultados a mostrar na Página inicial</system:String>
     <system:String x:Key="homeToggleBoxToolTip">Esta opção apenas pode ser editada se o plugin tiver suporte a Página inicial e se estiver ativo.</system:String>
-    <system:String x:Key="showAtTopmost">Janela de pesquisa por cima</system:String>
-    <system:String x:Key="showAtTopmostToolTip">Mostrar caixa de pesquisa por cima das outras janelas</system:String>
+    <system:String x:Key="showAtTopmost">Janela de pesquisa à frente</system:String>
+    <system:String x:Key="showAtTopmostToolTip">Sobrepõe a definição 'Sempre na frente' das outras aplicações e mostra Flow Launcher à frente de qualquer janela.</system:String>
+    <system:String x:Key="autoRestartAfterChanging">Reiniciar após modificar o plugin via Loja de plugins</system:String>
+    <system:String x:Key="autoRestartAfterChangingToolTip">Reiniciar Flow Launcher após instalar/desinstalar/atualizar um plugin via Loja de plugins</system:String>
+    <system:String x:Key="showUnknownSourceWarning">Mostrar aviso de origem desconhecida</system:String>
+    <system:String x:Key="showUnknownSourceWarningToolTip">Mostrar aviso ao instalar plugins de origens desconhecidas</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Pesquisar plugins</system:String>
@@ -175,6 +179,12 @@
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugin: {0} - Falha ao remover o ficheiro de definições do plugin. Experimente remover manualmente.</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Falha ao limpar a cache do plugin</system:String>
     <system:String x:Key="failedToRemovePluginCacheMessage">Plugin: {0} - Falha ao remover os ficheiros em cache do plugin. Experimente remover manualmente.</system:String>
+    <system:String x:Key="pluginModifiedAlreadyTitle">{0} já modificado</system:String>
+    <system:String x:Key="pluginModifiedAlreadyMessage">Reinicie Flow Launcher antes de fazer mais alterações</system:String>
+    <system:String x:Key="failedToInstallPluginTitle">Falha ao instalar {0}</system:String>
+    <system:String x:Key="failedToUninstallPluginTitle">Falha ao desinstalar {0}</system:String>
+    <system:String x:Key="fileNotFoundMessage">Não foi possível encontrar plugin.json no ficheiro zip ou, então, o caminho {0} não existe.</system:String>
+    <system:String x:Key="pluginExistAlreadyMessage">Já existe um plugin com a mesma ID e versão ou, então, a versão instalada é superior à do plugin descarregado.</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Loja de plugins</system:String>
@@ -190,6 +200,28 @@
     <system:String x:Key="LabelNew">Nova versão</system:String>
     <system:String x:Key="LabelNewToolTip">Este plugin foi atualizado nos últimos 7 dias</system:String>
     <system:String x:Key="LabelUpdateToolTip">Atualização disponível</system:String>
+    <system:String x:Key="ErrorInstallingPlugin">Erro ao instalar o plugin</system:String>
+    <system:String x:Key="ErrorUninstallingPlugin">Erro ao desinstalar o plugin</system:String>
+    <system:String x:Key="ErrorUpdatingPlugin">Erro ao atualizar o plugin</system:String>
+    <system:String x:Key="KeepPluginSettingsTitle">Manter definições</system:String>
+    <system:String x:Key="KeepPluginSettingsSubtitle">Deseja manter as definições do plugin para o caso de o voltar a instalar?</system:String>
+    <system:String x:Key="InstallSuccessNoRestart">Plugin {0} instalado com sucesso. Por favor, reinicie o Flow Launcher.</system:String>
+    <system:String x:Key="UninstallSuccessNoRestart">Plugin {0} desinstalado com sucesso. Por favor, reinicie o Flow Launcher.</system:String>
+    <system:String x:Key="UpdateSuccessNoRestart">Plugin {0} atualizado com sucesso. Por favor, reinicie o Flow Launcher.</system:String>
+    <system:String x:Key="InstallPromptTitle">Instalador de plugins</system:String>
+    <system:String x:Key="InstallPromptSubtitle">{0} de {1} {2}{2}Gostaria de instalar este plugin?</system:String>
+    <system:String x:Key="UninstallPromptTitle">Desinstalador de plugins</system:String>
+    <system:String x:Key="UninstallPromptSubtitle">{0} de {1} {2}{2}Gostaria de desinstalar este plugin?</system:String>
+    <system:String x:Key="UpdatePromptTitle">Atualização de plugins</system:String>
+    <system:String x:Key="UpdatePromptSubtitle">{0} de {1} {2}{2}Gostaria de atualizar este plugin?</system:String>
+    <system:String x:Key="DownloadingPlugin">Descarregar plugin</system:String>
+    <system:String x:Key="AutoRestartAfterChange">Reiniciar automaticamente após instalar/desinstalar/atualizar plugins via Loja de plugins</system:String>
+    <system:String x:Key="ZipFileNotHavePluginJson">O ficheiro zip não possui uma configuração &quot;plugin.json&quot; válida</system:String>
+    <system:String x:Key="InstallFromUnknownSourceTitle">Instalar a partir de fontes desconhecidas</system:String>
+    <system:String x:Key="InstallFromUnknownSourceSubtitle">Este plugin provém de uma origem desconhecida e pode apresentar riscos!{0}{0}Certifique-se de que a origem é fiável e que o plugin é seguro.{0}{0}Deseja, ainda assim, continuar?{0}{0}Pode desativar este aviso na secção Geral das definições.</system:String>
+    <system:String x:Key="ZipFiles">Ficheiros Zip</system:String>
+    <system:String x:Key="SelectZipFile">Selecione o ficheiro Zip</system:String>
+    <system:String x:Key="installLocalPluginTooltip">Instalar plugin de um caminho local</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Tema</system:String>
@@ -381,7 +413,7 @@
     <system:String x:Key="fileManagerWindow">Selecione o gestor de ficheiros</system:String>
     <system:String x:Key="fileManager_learnMore">Saber mais</system:String>
     <system:String x:Key="fileManager_tips">Por favor, especifique a localização do executável do seu gestor de ficheiros e adicione os argumentos necessários. &quot;%d&quot; representa o caminho do diretório a abrir, usado pelo argumento do campo Pasta e para comandos que abrem diretórios específicos. &quot;%f&quot; representa o caminho do ficheiro a abrir, usado pelo argumento do campo Ficheiro e para comandos que abrem ficheiros específicos.</system:String>
-    <system:String x:Key="fileManager_tips2">Por exemplo, se o gestor de ficheiros utilizar o comando &quot;totalcmd.exe /A c:\windows&quot; para abrir o diretório c:\windows , o caminho para o gestor de ficheiros será totalcmd. exe e os argumentos para a Pasta serão /A &quot;%d&quot;. Alguns gestores de ficheiros, como QTTabBar podem apenas exigir que especifique o caminho. Para estes, deve utilizar &quot;%d&quot; como caminho para o gestor de ficheiros e deixar o resto dos campos em branco.</system:String>
+    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fields blank.</system:String>
     <system:String x:Key="fileManager_name">Gestor de ficheiros</system:String>
     <system:String x:Key="fileManager_profile_name">Nome do perfil</system:String>
     <system:String x:Key="fileManager_path">Caminho do gestor de ficheiros</system:String>
@@ -432,13 +464,14 @@
     <system:String x:Key="customeQueryHotkeyTips">Prima uma tecla de atalho personalizada para abrir Flow Launcher e escrever automaticamente a pesquisa.</system:String>
     <system:String x:Key="preview">Antevisão</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Tecla de atalho indisponível, por favor escolha outra</system:String>
-    <system:String x:Key="invalidPluginHotkey">Tecla de atalho inválida</system:String>
+    <system:String x:Key="invalidPluginHotkey">Hotkey is invalid</system:String>
     <system:String x:Key="update">Atualizar</system:String>
     <system:String x:Key="hotkeyRegTitle">Associar tecla de atalho</system:String>
     <system:String x:Key="hotkeyUnavailable">A tecla de atalho atual não está disponível.</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">Esta tecla de atalho está reservada para &quot;{0}&quot; e não pode ser usada. Por favor, escolha outra.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">Esta tecla de atalho está a ser utilizada por &quot;{0}&quot;. Se escolher &quot;Substituir&quot;, será removida de &quot;{0}&quot;.</system:String>
     <system:String x:Key="hotkeyRegGuide">Prima as teclas que pretende utilizar para esta função.</system:String>
+    <system:String x:Key="emptyPluginHotkey">Hotkey and action keyword are empty</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Atalho de consulta personalizada</system:String>
@@ -449,6 +482,7 @@ Se adicionar o prefixo '@' durante a introdução do atalho, será utilizada qua
     </system:String>
     <system:String x:Key="duplicateShortcut">Este atallho já existe. Por favor escolha outro ou edite o existente.</system:String>
     <system:String x:Key="emptyShortcut">O atalho e/ou a expansão não estão preenchidos.</system:String>
+    <system:String x:Key="invalidShortcut">Shortcut is invalid</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Guardar</system:String>

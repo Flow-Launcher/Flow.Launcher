@@ -17,7 +17,7 @@ namespace Flow.Launcher.Plugin.Explorer
     {
         internal static PluginInitContext Context { get; set; }
 
-        internal Settings Settings;
+        internal static Settings Settings { get; set; }
 
         private SettingsViewModel viewModel;
 
@@ -97,7 +97,7 @@ namespace Flow.Launcher.Plugin.Explorer
             return Context.API.GetTranslation("plugin_explorer_plugin_description");
         }
 
-        private void FillQuickAccessLinkNames()
+        private static void FillQuickAccessLinkNames()
         {
             // Legacy version does not have names for quick access links, so we fill them with the path name.
             foreach (var link in Settings.QuickAccessLinks)

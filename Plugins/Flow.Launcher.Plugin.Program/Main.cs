@@ -103,7 +103,7 @@ namespace Flow.Launcher.Plugin.Program
                             .Where(p => HideDuplicatedWindowsAppFilter(p, uwpsDirectories))
                             .Where(p => p.Enabled)
                             .Select(p => p.Result(query.Search, Context.API))
-                            .Where(r => r?.Score > 0)
+                            .Where(r => string.IsNullOrEmpty(query.Search) || r?.Score > 0)
                             .ToList();
                     }
                     catch (OperationCanceledException)
