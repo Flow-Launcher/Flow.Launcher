@@ -514,7 +514,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             {
                 var list = FixedHotkeys();
 
-                // Customizeable hotkeys
+                // Customizable hotkeys
                 if (!string.IsNullOrEmpty(Hotkey))
                     list.Add(new(Hotkey, "flowlauncherHotkey", () => Hotkey = ""));
                 if (!string.IsNullOrEmpty(PreviewHotkey))
