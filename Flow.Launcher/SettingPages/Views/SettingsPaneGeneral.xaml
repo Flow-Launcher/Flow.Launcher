@@ -241,9 +241,20 @@
                     Title="{DynamicResource showUnknownSourceWarning}"
                     Icon="&#xE7BA;"
                     Sub="{DynamicResource showUnknownSourceWarningToolTip}"
-                    Type="Last">
+                    Type="Middle">
                     <ui:ToggleSwitch
                         IsOn="{Binding Settings.ShowUnknownSourceWarning}"
+                        OffContent="{DynamicResource disable}"
+                        OnContent="{DynamicResource enable}" />
+                </cc:Card>
+
+                <cc:Card
+                    Title="{DynamicResource autoUpdatePlugins}"
+                    Icon="&#xecc5;"
+                    Sub="{DynamicResource autoUpdatePluginsToolTip}"
+                    Type="Last">
+                    <ui:ToggleSwitch
+                        IsOn="{Binding Settings.AutoUpdatePlugins}"
                         OffContent="{DynamicResource disable}"
                         OnContent="{DynamicResource enable}" />
                 </cc:Card>
@@ -372,7 +383,7 @@
             </cc:Card>
 
             <cc:CardGroup Margin="0 4 0 0">
-                <cc:Card                
+                <cc:Card
                     Title="{DynamicResource ShouldUsePinyin}"
                     Icon="&#xe98a;"
                     Sub="{DynamicResource ShouldUsePinyinToolTip}"
@@ -384,12 +395,12 @@
                         ToolTip="{DynamicResource ShouldUsePinyinToolTip}" />
                 </cc:Card>
                 <cc:Card
-                    Visibility="{ext:VisibleWhen {Binding ShouldUsePinyin},
-                                    IsEqualToBool=True}"
                     Title="{DynamicResource ShouldUseDoublePinyin}"
                     Icon="&#xf085;"
                     Sub="{DynamicResource ShouldUseDoublePinyinToolTip}"
-                    Type="Middle">
+                    Type="Middle"
+                    Visibility="{ext:VisibleWhen {Binding ShouldUsePinyin},
+                                                 IsEqualToBool=True}">
                     <ui:ToggleSwitch
                         IsOn="{Binding UseDoublePinyin}"
                         OffContent="{DynamicResource disable}"
@@ -397,11 +408,11 @@
                         ToolTip="{DynamicResource ShouldUseDoublePinyinToolTip}" />
                 </cc:Card>
                 <cc:Card
-                    Visibility="{ext:VisibleWhen {Binding UseDoublePinyin},
-                                                        IsEqualToBool=True}"
                     Title="{DynamicResource DoublePinyinSchema}"
                     Sub="{DynamicResource DoublePinyinSchemaToolTip}"
-                    Type="Last">
+                    Type="Last"
+                    Visibility="{ext:VisibleWhen {Binding UseDoublePinyin},
+                                                 IsEqualToBool=True}">
                     <ComboBox
                         DisplayMemberPath="Display"
                         ItemsSource="{Binding DoublePinyinSchemas}"
