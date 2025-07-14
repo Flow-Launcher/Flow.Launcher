@@ -25,10 +25,17 @@ namespace Flow.Launcher.Infrastructure
 
             _settings.PropertyChanged += (sender, e) =>
             {
-                if (e.PropertyName == nameof(Settings.UseDoublePinyin) ||
-                    e.PropertyName == nameof(Settings.DoublePinyinSchema))
+                switch (e.PropertyName)
                 {
-                    Reload();
+                    case nameof(Settings.ShouldUsePinyin):
+                        Reload();
+                        break;
+                    case nameof(Settings.UseDoublePinyin):
+                        Reload();
+                        break;
+                    case nameof(Settings.DoublePinyinSchema):
+                        Reload();
+                        break;
                 }
             };
         }
