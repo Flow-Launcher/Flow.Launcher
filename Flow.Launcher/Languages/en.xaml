@@ -235,8 +235,8 @@
     <system:String x:Key="installLocalPluginTooltip">Install plugin from local path</system:String>
     <system:String x:Key="updateNoResultTitle">No update available</system:String>
     <system:String x:Key="updateNoResultSubtitle">All plugins are up to date</system:String>
-    <system:String x:Key="updateAllPluginsTitle">Update all plugins</system:String>
-    <system:String x:Key="updateAllPluginsSubtitle">Would you like to update these plugins?{0}{0}{1}</system:String>
+    <system:String x:Key="updateAllPluginsTitle">Plugin updates available</system:String>
+    <system:String x:Key="updateAllPluginsButtonContent">Update all plugins</system:String>
     <system:String x:Key="checkPluginUpdatesTooltip">Check plugin updates</system:String>
 
     <!--  Setting Theme  -->

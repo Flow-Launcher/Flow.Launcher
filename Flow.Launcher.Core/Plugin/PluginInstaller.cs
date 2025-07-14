@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -327,17 +328,20 @@ public static class PluginInstaller
             return;
         }
 
-        if (API.ShowMsgBox(
-            string.Format(API.GetTranslation("updateAllPluginsSubtitle"),
-            Environment.NewLine, string.Join(", ", resultsForUpdate.Select(x => x.PluginExistingMetadata.Name))),
+        // Show message box with button to update all plugins
+        API.ShowMsgWithButton(
             API.GetTranslation("updateAllPluginsTitle"),
-            MessageBoxButton.YesNo) == MessageBoxResult.No)
-        {
-            return;
-        }
+            API.GetTranslation("updateAllPluginsButtonContent"),
+            () =>
+            {
+                UpdateAllPlugins(resultsForUpdate);
+            },
+            string.Join(", ", resultsForUpdate.Select(x => x.PluginExistingMetadata.Name)));
+    }
 
-        // Update all plugins
-        await Task.WhenAll(resultsForUpdate.Select(async plugin =>
+    private static void UpdateAllPlugins(IEnumerable<dynamic> resultsForUpdate)
+    {
+        _ = Task.WhenAll(resultsForUpdate.Select(async plugin =>
         {
             var downloadToFilePath = Path.Combine(Path.GetTempPath(), $"{plugin.Name}-{plugin.NewVersion}.zip");
 
