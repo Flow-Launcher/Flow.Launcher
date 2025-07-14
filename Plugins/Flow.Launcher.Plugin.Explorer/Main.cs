@@ -97,7 +97,7 @@ namespace Flow.Launcher.Plugin.Explorer
             return Context.API.GetTranslation("plugin_explorer_plugin_description");
         }
 
-        private void FillQuickAccessLinkNames()
+        private static void FillQuickAccessLinkNames()
         {
             // Legacy version does not have names for quick access links, so we fill them with the path name.
             foreach (var link in Settings.QuickAccessLinks)

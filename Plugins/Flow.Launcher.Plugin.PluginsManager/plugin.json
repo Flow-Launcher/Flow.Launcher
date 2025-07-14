@@ -4,7 +4,7 @@
     "pm"
   ],
   "Name": "Plugins Manager",
-  "Description": "Management of installing, uninstalling or updating Flow Launcher plugins",
+  "Description": "Install, uninstall or update Flow Launcher plugins via the search window",
   "Author": "Jeremy Wu",
   "Version": "1.0.0",
   "Language": "csharp",

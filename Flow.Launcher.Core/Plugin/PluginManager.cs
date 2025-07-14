@@ -18,14 +18,11 @@ using ISavable = Flow.Launcher.Plugin.ISavable;
 namespace Flow.Launcher.Core.Plugin
 {
     /// <summary>
-    /// The entry for managing Flow Launcher plugins
+    /// Class for co-ordinating and managing all plugin lifecycle.
     /// </summary>
     public static class PluginManager
     {
         private static readonly string ClassName = nameof(PluginManager);
-
-        private static IEnumerable<PluginPair> _contextMenuPlugins;
-        private static IEnumerable<PluginPair> _homePlugins;
 
         public static List<PluginPair> AllPlugins { get; private set; }
         public static readonly HashSet<PluginPair> GlobalPlugins = new();
@@ -36,8 +33,12 @@ namespace Flow.Launcher.Core.Plugin
         private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
 
         private static PluginsSettings Settings;
-        private static List<PluginMetadata> _metadatas;
-        private static readonly List<string> _modifiedPlugins = new();
+        private static readonly ConcurrentBag<string> ModifiedPlugins = new();
+
+        private static IEnumerable<PluginPair> _contextMenuPlugins;
+        private static IEnumerable<PluginPair> _homePlugins;
+        private static IEnumerable<PluginPair> _resultUpdatePlugin;
+        private static IEnumerable<PluginPair> _translationPlugins;
 
         /// <summary>
         /// Directories that will hold Flow Launcher plugin directory
@@ -173,12 +174,18 @@ namespace Flow.Launcher.Core.Plugin
         /// <param name="settings"></param>
         public static void LoadPlugins(PluginsSettings settings)
         {
-            _metadatas = PluginConfig.Parse(Directories);
+            var metadatas = PluginConfig.Parse(Directories);
             Settings = settings;
-            Settings.UpdatePluginSettings(_metadatas);
-            AllPlugins = PluginsLoader.Plugins(_metadatas, Settings);
+            Settings.UpdatePluginSettings(metadatas);
+            AllPlugins = PluginsLoader.Plugins(metadatas, Settings);
             // Since dotnet plugins need to get assembly name first, we should update plugin directory after loading plugins
-            UpdatePluginDirectory(_metadatas);
+            UpdatePluginDirectory(metadatas);
+
+            // Initialize plugin enumerable after all plugins are initialized
+            _contextMenuPlugins = GetPluginsForInterface<IContextMenu>();
+            _homePlugins = GetPluginsForInterface<IAsyncHomeQuery>();
+            _resultUpdatePlugin = GetPluginsForInterface<IResultUpdated>();
+            _translationPlugins = GetPluginsForInterface<IPluginI18n>();
         }
 
         private static void UpdatePluginDirectory(List<PluginMetadata> metadatas)
@@ -247,9 +254,6 @@ namespace Flow.Launcher.Core.Plugin
             }));
 
             await Task.WhenAll(InitTasks);
-
-            _contextMenuPlugins = GetPluginsForInterface<IContextMenu>();
-            _homePlugins = GetPluginsForInterface<IAsyncHomeQuery>();
 
             foreach (var plugin in AllPlugins)
             {
@@ -409,16 +413,26 @@ namespace Flow.Launcher.Core.Plugin
             return AllPlugins.FirstOrDefault(o => o.Metadata.ID == id);
         }
 
-        public static IEnumerable<PluginPair> GetPluginsForInterface<T>() where T : IFeatures
+        private static IEnumerable<PluginPair> GetPluginsForInterface<T>() where T : IFeatures
         {
             // Handle scenario where this is called before all plugins are instantiated, e.g. language change on startup
             return AllPlugins?.Where(p => p.Plugin is T) ?? Array.Empty<PluginPair>();
         }
 
+        public static IList<PluginPair> GetResultUpdatePlugin()
+        {
+            return _resultUpdatePlugin.Where(p => !PluginModified(p.Metadata.ID)).ToList();
+        }
+
+        public static IList<PluginPair> GetTranslationPlugins()
+        {
+            return _translationPlugins.Where(p => !PluginModified(p.Metadata.ID)).ToList();
+        }
+
         public static List<Result> GetContextMenusForPlugin(Result result)
         {
             var results = new List<Result>();
-            var pluginPair = _contextMenuPlugins.FirstOrDefault(o => o.Metadata.ID == result.PluginID);
+            var pluginPair = _contextMenuPlugins.Where(p => !PluginModified(p.Metadata.ID)).FirstOrDefault(o => o.Metadata.ID == result.PluginID);
             if (pluginPair != null)
             {
                 var plugin = (IContextMenu)pluginPair.Plugin;
@@ -446,7 +460,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static bool IsHomePlugin(string id)
         {
-            return _homePlugins.Any(p => p.Metadata.ID == id);
+            return _homePlugins.Where(p => !PluginModified(p.Metadata.ID)).Any(p => p.Metadata.ID == id);
         }
 
         public static bool ActionKeywordRegistered(string actionKeyword)
@@ -536,44 +550,62 @@ namespace Flow.Launcher.Core.Plugin
         private static bool SameOrLesserPluginVersionExists(string metadataPath)
         {
             var newMetadata = JsonSerializer.Deserialize<PluginMetadata>(File.ReadAllText(metadataPath));
+
+            if (!Version.TryParse(newMetadata.Version, out var newVersion))
+                return true; // If version is not valid, we assume it is lesser than any existing version
+
             return AllPlugins.Any(x => x.Metadata.ID == newMetadata.ID
-                          && newMetadata.Version.CompareTo(x.Metadata.Version) <= 0);
+                                       && Version.TryParse(x.Metadata.Version, out var version)
+                                       && newVersion <= version);
         }
 
         #region Public functions
 
         public static bool PluginModified(string id)
         {
-            return _modifiedPlugins.Contains(id);
+            return ModifiedPlugins.Contains(id);
         }
 
-        public static async Task UpdatePluginAsync(PluginMetadata existingVersion, UserPlugin newVersion, string zipFilePath)
+        public static async Task<bool> UpdatePluginAsync(PluginMetadata existingVersion, UserPlugin newVersion, string zipFilePath)
         {
-            InstallPlugin(newVersion, zipFilePath, checkModified:false);
-            await UninstallPluginAsync(existingVersion, removePluginFromSettings:false, removePluginSettings:false, checkModified: false);
-            _modifiedPlugins.Add(existingVersion.ID);
+            if (PluginModified(existingVersion.ID))
+            {
+                API.ShowMsgError(string.Format(API.GetTranslation("pluginModifiedAlreadyTitle"), existingVersion.Name),
+                    API.GetTranslation("pluginModifiedAlreadyMessage"));
+                return false;
+            }
+
+            var installSuccess = InstallPlugin(newVersion, zipFilePath, checkModified: false);
+            if (!installSuccess) return false;
+
+            var uninstallSuccess = await UninstallPluginAsync(existingVersion, removePluginFromSettings: false, removePluginSettings: false, checkModified: false);
+            if (!uninstallSuccess) return false;
+
+            ModifiedPlugins.Add(existingVersion.ID);
+            return true;
         }
 
-        public static void InstallPlugin(UserPlugin plugin, string zipFilePath)
+        public static bool InstallPlugin(UserPlugin plugin, string zipFilePath)
         {
-            InstallPlugin(plugin, zipFilePath, checkModified: true);
+            return InstallPlugin(plugin, zipFilePath, checkModified: true);
         }
 
-        public static async Task UninstallPluginAsync(PluginMetadata plugin, bool removePluginSettings = false)
+        public static async Task<bool> UninstallPluginAsync(PluginMetadata plugin, bool removePluginSettings = false)
         {
-            await UninstallPluginAsync(plugin, removePluginFromSettings: true, removePluginSettings: removePluginSettings, checkModified: true);
+            return await UninstallPluginAsync(plugin, removePluginFromSettings: true, removePluginSettings: removePluginSettings, checkModified: true);
         }
 
         #endregion
 
         #region Internal functions
 
-        internal static void InstallPlugin(UserPlugin plugin, string zipFilePath, bool checkModified)
+        internal static bool InstallPlugin(UserPlugin plugin, string zipFilePath, bool checkModified)
         {
             if (checkModified && PluginModified(plugin.ID))
             {
-                // Distinguish exception from installing same or less version
-                throw new ArgumentException($"Plugin {plugin.Name} {plugin.ID} has been modified.", nameof(plugin));
+                API.ShowMsgError(string.Format(API.GetTranslation("pluginModifiedAlreadyTitle"), plugin.Name),
+                    API.GetTranslation("pluginModifiedAlreadyMessage"));
+                return false;
             }
 
             // Unzip plugin files to temp folder
@@ -591,12 +623,16 @@ namespace Flow.Launcher.Core.Plugin
 
             if (string.IsNullOrEmpty(metadataJsonFilePath) || string.IsNullOrEmpty(pluginFolderPath))
             {
-                throw new FileNotFoundException($"Unable to find plugin.json from the extracted zip file, or this path {pluginFolderPath} does not exist");
+                API.ShowMsgError(string.Format(API.GetTranslation("failedToInstallPluginTitle"), plugin.Name),
+                    string.Format(API.GetTranslation("fileNotFoundMessage"), pluginFolderPath));
+                return false;
             }
 
             if (SameOrLesserPluginVersionExists(metadataJsonFilePath))
             {
-                throw new InvalidOperationException($"A plugin with the same ID and version already exists, or the version is greater than this downloaded plugin {plugin.Name}");
+                API.ShowMsgError(string.Format(API.GetTranslation("failedToInstallPluginTitle"), plugin.Name),
+                    API.GetTranslation("pluginExistAlreadyMessage"));
+                return false;
             }
 
             var folderName = string.IsNullOrEmpty(plugin.Version) ? $"{plugin.Name}-{Guid.NewGuid()}" : $"{plugin.Name}-{plugin.Version}";
@@ -638,15 +674,19 @@ namespace Flow.Launcher.Core.Plugin
 
             if (checkModified)
             {
-                _modifiedPlugins.Add(plugin.ID);
+                ModifiedPlugins.Add(plugin.ID);
             }
+
+            return true;
         }
 
-        internal static async Task UninstallPluginAsync(PluginMetadata plugin, bool removePluginFromSettings, bool removePluginSettings, bool checkModified)
+        internal static async Task<bool> UninstallPluginAsync(PluginMetadata plugin, bool removePluginFromSettings, bool removePluginSettings, bool checkModified)
         {
             if (checkModified && PluginModified(plugin.ID))
             {
-                throw new ArgumentException($"Plugin {plugin.Name} has been modified");
+                API.ShowMsgError(string.Format(API.GetTranslation("pluginModifiedAlreadyTitle"), plugin.Name),
+                    API.GetTranslation("pluginModifiedAlreadyMessage"));
+                return false;
             }
 
             if (removePluginSettings || removePluginFromSettings)
@@ -700,6 +740,12 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 Settings.RemovePluginSettings(plugin.ID);
                 AllPlugins.RemoveAll(p => p.Metadata.ID == plugin.ID);
+                GlobalPlugins.RemoveWhere(p => p.Metadata.ID == plugin.ID);
+                var keysToRemove = NonGlobalPlugins.Where(p => p.Value.Metadata.ID == plugin.ID).Select(p => p.Key).ToList();
+                foreach (var key in keysToRemove)
+                {
+                    NonGlobalPlugins.Remove(key);
+                }
             }
 
             // Marked for deletion. Will be deleted on next start up
@@ -707,8 +753,10 @@ namespace Flow.Launcher.Core.Plugin
 
             if (checkModified)
             {
-                _modifiedPlugins.Add(plugin.ID);
+                ModifiedPlugins.Add(plugin.ID);
             }
+
+            return true;
         }
 
         #endregion

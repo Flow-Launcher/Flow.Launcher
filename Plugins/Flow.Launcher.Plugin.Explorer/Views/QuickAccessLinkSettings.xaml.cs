@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
@@ -14,6 +15,8 @@ namespace Flow.Launcher.Plugin.Explorer.Views;
 [INotifyPropertyChanged]
 public partial class QuickAccessLinkSettings
 {
+    private static readonly string ClassName = nameof(QuickAccessLinkSettings);
+
     private string _selectedPath;
     public string SelectedPath
     {
@@ -27,6 +30,9 @@ public partial class QuickAccessLinkSettings
                 if (string.IsNullOrEmpty(_selectedName))
                 {
                     SelectedName = _selectedPath.GetPathName();
+                }
+                if (!string.IsNullOrEmpty(_selectedPath))
+                {
                     _accessLinkType = GetResultType(_selectedPath);
                 }
             }
@@ -187,13 +193,13 @@ public partial class QuickAccessLinkSettings
     private static ResultType GetResultType(string path)
     {
         // Check if the path is a file or folder
-        if (System.IO.File.Exists(path))
+        if (File.Exists(path))
         {
             return ResultType.File;
         }
-        else if (System.IO.Directory.Exists(path))
+        else if (Directory.Exists(path))
         {
-            if (string.Equals(System.IO.Path.GetPathRoot(path), path, StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(Path.GetPathRoot(path), path, StringComparison.OrdinalIgnoreCase))
             {
                 return ResultType.Volume;
             }
@@ -205,6 +211,7 @@ public partial class QuickAccessLinkSettings
         else
         {
             // This should not happen, but just in case, we assume it's a folder
+            Main.Context.API.LogError(ClassName, $"The path '{path}' does not exist or is invalid. Defaulting to Folder type.");
             return ResultType.Folder;
         }
     }
