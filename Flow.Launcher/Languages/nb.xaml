@@ -10,7 +10,7 @@
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
         Your selected {0} executable is invalid.
         {2}{2}
-        Click yes if you would like select the {0} executable agian. Click no if you would like to download {1}
+        Click yes if you would like select the {0} executable again. Click no if you would like to download {1}
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Kan ikke angi {0} kjørbar bane, prøv fra Flows innstillinger (bla ned til bunnen).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Mislykkes i å initialisere programtillegg</system:String>
@@ -138,6 +138,10 @@
     <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
     <system:String x:Key="showAtTopmost">Show Search Window at Foremost</system:String>
     <system:String x:Key="showAtTopmostToolTip">Overrides other programs' 'Always on Top' setting and displays Flow in the foremost position.</system:String>
+    <system:String x:Key="autoRestartAfterChanging">Restart after modifying plugin via Plugin Store</system:String>
+    <system:String x:Key="autoRestartAfterChangingToolTip">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugin Store</system:String>
+    <system:String x:Key="showUnknownSourceWarning">Show unknown source warning</system:String>
+    <system:String x:Key="showUnknownSourceWarningToolTip">Show warning when installing plugins from unknown sources</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Søk etter programtillegg</system:String>
@@ -176,6 +180,12 @@
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Fail to remove plugin cache</system:String>
     <system:String x:Key="failedToRemovePluginCacheMessage">Plugins: {0} - Fail to remove plugin cache files, please remove them manually</system:String>
+    <system:String x:Key="pluginModifiedAlreadyTitle">{0} modified already</system:String>
+    <system:String x:Key="pluginModifiedAlreadyMessage">Please restart Flow before making any further changes</system:String>
+    <system:String x:Key="failedToInstallPluginTitle">Fail to install {0}</system:String>
+    <system:String x:Key="failedToUninstallPluginTitle">Fail to uninstall {0}</system:String>
+    <system:String x:Key="fileNotFoundMessage">Unable to find plugin.json from the extracted zip file, or this path {0} does not exist</system:String>
+    <system:String x:Key="pluginExistAlreadyMessage">A plugin with the same ID and version already exists, or the version is greater than this downloaded plugin</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Programtillegg butikk</system:String>
@@ -191,6 +201,28 @@
     <system:String x:Key="LabelNew">Ny versjon</system:String>
     <system:String x:Key="LabelNewToolTip">Dette programtillegget er oppdatert i løpet av de siste 7 dagene</system:String>
     <system:String x:Key="LabelUpdateToolTip">Ny oppdatering er tilgjengelig</system:String>
+    <system:String x:Key="ErrorInstallingPlugin">Feil ved installering av programtillegg</system:String>
+    <system:String x:Key="ErrorUninstallingPlugin">Feil ved avinstallering av programtillegg</system:String>
+    <system:String x:Key="ErrorUpdatingPlugin">Error updating plugin</system:String>
+    <system:String x:Key="KeepPluginSettingsTitle">Keep plugin settings</system:String>
+    <system:String x:Key="KeepPluginSettingsSubtitle">Do you want to keep the settings of the plugin for the next usage?</system:String>
+    <system:String x:Key="InstallSuccessNoRestart">Programtillegg {0} installert. Vennligst start Flow på nytt.</system:String>
+    <system:String x:Key="UninstallSuccessNoRestart">Programtillegg {0} avinstallert. Vennligst start Flow på nytt.</system:String>
+    <system:String x:Key="UpdateSuccessNoRestart">Programtillegg {0} oppdatert. Vennligst restart Flow.</system:String>
+    <system:String x:Key="InstallPromptTitle">Plugin install</system:String>
+    <system:String x:Key="InstallPromptSubtitle">{0} av {1} {2}{2}Vil du installere dette programtillegget?</system:String>
+    <system:String x:Key="UninstallPromptTitle">Plugin uninstall</system:String>
+    <system:String x:Key="UninstallPromptSubtitle">{0} av {1} {2}{2}Vil du avinstallere dette programtillegget?</system:String>
+    <system:String x:Key="UpdatePromptTitle">Plugin update</system:String>
+    <system:String x:Key="UpdatePromptSubtitle">{0} av {1} {2}{2}Vil du oppdatere dette programtillegget?</system:String>
+    <system:String x:Key="DownloadingPlugin">Laster ned programtillegg</system:String>
+    <system:String x:Key="AutoRestartAfterChange">Automatically restart after installing/uninstalling/updating plugins in plugin store</system:String>
+    <system:String x:Key="ZipFileNotHavePluginJson">Zip file does not have a valid plugin.json configuration</system:String>
+    <system:String x:Key="InstallFromUnknownSourceTitle">Installerer fra en ukjent kilde</system:String>
+    <system:String x:Key="InstallFromUnknownSourceSubtitle">This plugin is from an unknown source and it may contain potential risks!{0}{0}Please ensure you understand where this plugin is from and that it is safe.{0}{0}Would you like to continue still?{0}{0}(You can switch off this warning in general section of setting window)</system:String>
+    <system:String x:Key="ZipFiles">Zip files</system:String>
+    <system:String x:Key="SelectZipFile">Please select zip file</system:String>
+    <system:String x:Key="installLocalPluginTooltip">Install plugin from local path</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Drakt</system:String>
@@ -383,7 +415,7 @@
     <system:String x:Key="fileManagerWindow">Velg filbehandler</system:String>
     <system:String x:Key="fileManager_learnMore">Learn more</system:String>
     <system:String x:Key="fileManager_tips">Vennligst spesifiser filplasseringen til filbehandleren du bruker, og legg til argumenter etter behov. &quot;%d&quot; representerer katalogbanen som skal åpnes for, brukt av Arg for mappe-feltet og for kommandoer som åpner spesifikke kataloger. &quot;%f&quot; representerer filbanen som skal åpnes for, brukt av Arg for fil-feltet og for kommandoer som åpner spesifikke filer.</system:String>
-    <system:String x:Key="fileManager_tips2">For eksempel, hvis filbehandleren bruker en kommando som &quot;totalcmd.exe /A c:windows&quot; for å åpne c:windows-katalogen, vil filbehandlingsbanen bli totalcmd.exe, og Arg For Folder vil være /A &quot;%d&quot;. Enkelte filbehandlere som QTTabBar kan bare kreve at en bane oppgis, i dette tilfellet bruker du &quot;%d&quot; som filbehandlingsbane og lar resten av feltene stå tomme.</system:String>
+    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fields blank.</system:String>
     <system:String x:Key="fileManager_name">Filbehandler</system:String>
     <system:String x:Key="fileManager_profile_name">Profilnavn</system:String>
     <system:String x:Key="fileManager_path">Filbehandler sti</system:String>
@@ -434,13 +466,14 @@
     <system:String x:Key="customeQueryHotkeyTips">Trykk på en egendefinert hurtigtast for å åpne Flow Launcher og skrive inn den angitte spørringen automatisk.</system:String>
     <system:String x:Key="preview">Forhåndsvis</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Hurtigtast er utilgjengelig, vennligst velg en ny hurtigtast</system:String>
-    <system:String x:Key="invalidPluginHotkey">Ugyldig hurtigtast for programtillegg</system:String>
+    <system:String x:Key="invalidPluginHotkey">Hotkey is invalid</system:String>
     <system:String x:Key="update">Oppdater</system:String>
     <system:String x:Key="hotkeyRegTitle">Binding av hurtigtast</system:String>
     <system:String x:Key="hotkeyUnavailable">Nåværende hurtigtast er utilgjengelig.</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">Denne hurtigtasten er reservert for &quot;{0}&quot; og kan ikke brukes. Velg en annen hurtigtast.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">Denne hurtigtasten er allerede i bruk av &quot;{0}&quot;. Hvis du trykker &quot;Overskriv&quot; vil den bli fjernet fra &quot;{0}&quot;.</system:String>
     <system:String x:Key="hotkeyRegGuide">Trykk på tastene du vil bruke for denne funksjonen.</system:String>
+    <system:String x:Key="emptyPluginHotkey">Hotkey and action keyword are empty</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Snarvei for egendefinert spørring</system:String>
@@ -451,6 +484,7 @@ Hvis du legger til et @-prefiks mens du legger inn en snarvei, samsvarer det med
     </system:String>
     <system:String x:Key="duplicateShortcut">Snarveien eksisterer allerede, skriv inn en ny snarvei eller rediger den eksisterende.</system:String>
     <system:String x:Key="emptyShortcut">Snarvei og/eller utvidelsen er tom.</system:String>
+    <system:String x:Key="invalidShortcut">Shortcut is invalid</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Lagre</system:String>

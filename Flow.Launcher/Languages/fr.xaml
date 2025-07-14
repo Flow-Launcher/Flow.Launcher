@@ -8,9 +8,9 @@
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Veuillez sélectionner l'exécutable {0}</system:String>
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
-        L'exécutable {0} que vous avez sélectionné est invalide.
+        L'exécutable {0} que vous avez sélectionné n'est pas valide.
         {2}{2}
-        Cliquez sur oui si vous souhaitez sélectionner l'exécutable {0} à nouveau. Cliquez sur non si vous souhaitez télécharger {1}.
+        Cliquez sur oui si vous souhaitez sélectionner à nouveau l'exécutable {0}. Cliquez sur non si vous souhaitez télécharger {1}
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Impossible de définir {0} comme chemin d'accès vers l'exécutable. Veuillez essayer à partir des paramètres de Flow (défiler vers le bas).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Échec de l'initialisation des plugins</system:String>
@@ -138,6 +138,10 @@
     <system:String x:Key="homeToggleBoxToolTip">Ceci ne peut être édité que si le plugin prend en charge la fonction Accueil et que la page d'accueil est activée.</system:String>
     <system:String x:Key="showAtTopmost">Afficher la fenêtre de recherche en premier plan</system:String>
     <system:String x:Key="showAtTopmostToolTip">Outrepasse le paramètre 'toujours en premier plan' des autres programmes et affiche Flow Launcher en première position.</system:String>
+    <system:String x:Key="autoRestartAfterChanging">Redémarrer après modification du plugin via le magasin des plugins</system:String>
+    <system:String x:Key="autoRestartAfterChangingToolTip">Redémarrez automatiquement Flow Launcher après l'installation / désinstallation / mise à jour du plugin via le magasin des plugins</system:String>
+    <system:String x:Key="showUnknownSourceWarning">Afficher l'avertissement de source inconnue</system:String>
+    <system:String x:Key="showUnknownSourceWarningToolTip">Afficher un avertissement lors de l'installation de plugins à partir de sources inconnues</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Rechercher des plugins</system:String>
@@ -176,6 +180,12 @@
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins : {0} - Échec de la suppression des fichiers de configuration des plugins, veuillez les supprimer manuellement</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Échec de la suppression du cache du plugin</system:String>
     <system:String x:Key="failedToRemovePluginCacheMessage">Plugins : {0} - Échec de la suppression des fichiers cache des plugins, veuillez les supprimer manuellement</system:String>
+    <system:String x:Key="pluginModifiedAlreadyTitle">{0} est déjà modifié</system:String>
+    <system:String x:Key="pluginModifiedAlreadyMessage">Veuillez redémarrer Flow avant d'apporter d'autres modifications</system:String>
+    <system:String x:Key="failedToInstallPluginTitle">Échec de l'installation de {0}</system:String>
+    <system:String x:Key="failedToUninstallPluginTitle">Échec de la désinstallation de {0}</system:String>
+    <system:String x:Key="fileNotFoundMessage">Impossible de trouver le fichier plugin.json dans le fichier zip extrait, ou ce chemin {0} n'existe pas</system:String>
+    <system:String x:Key="pluginExistAlreadyMessage">Un plugin avec le même ID et la même version existe déjà, ou la version est supérieure à ce plugin téléchargé</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Magasin des Plugins</system:String>
@@ -191,6 +201,28 @@
     <system:String x:Key="LabelNew">Nouvelle version</system:String>
     <system:String x:Key="LabelNewToolTip">Cette extension a été mis à jour au cours des 7 derniers jours</system:String>
     <system:String x:Key="LabelUpdateToolTip">Une nouvelle mise à jour est disponible</system:String>
+    <system:String x:Key="ErrorInstallingPlugin">Erreur lors de l'installation du plugin</system:String>
+    <system:String x:Key="ErrorUninstallingPlugin">Erreur lors de la désinstallation du plugin</system:String>
+    <system:String x:Key="ErrorUpdatingPlugin">Erreur de mise à jour du plugin</system:String>
+    <system:String x:Key="KeepPluginSettingsTitle">Garder les paramètres du plugin</system:String>
+    <system:String x:Key="KeepPluginSettingsSubtitle">Souhaitez-vous conserver les paramètres du plugin pour la prochaine utilisation ?</system:String>
+    <system:String x:Key="InstallSuccessNoRestart">Plugin {0} installé avec succès. Veuillez redémarrer Flow.</system:String>
+    <system:String x:Key="UninstallSuccessNoRestart">Plugin {0} désinstallé avec succès. Veuillez redémarrer Flow.</system:String>
+    <system:String x:Key="UpdateSuccessNoRestart">Plugin {0} mis à jour avec succès. Veuillez redémarrer Flow.</system:String>
+    <system:String x:Key="InstallPromptTitle">Installation du plugin</system:String>
+    <system:String x:Key="InstallPromptSubtitle">{0} par {1} {2}{2}Voulez-vous installer ce plugin ?</system:String>
+    <system:String x:Key="UninstallPromptTitle">Désinstallation du plugin</system:String>
+    <system:String x:Key="UninstallPromptSubtitle">{0} par {1} {2}{2}Voulez-vous désinstaller ce plugin ?</system:String>
+    <system:String x:Key="UpdatePromptTitle">Mise à jour du plugin</system:String>
+    <system:String x:Key="UpdatePromptSubtitle">{0} par {1} {2}{2}Voulez-vous mettre à jour ce plugin ?</system:String>
+    <system:String x:Key="DownloadingPlugin">Téléchargement du plugin</system:String>
+    <system:String x:Key="AutoRestartAfterChange">Redémarrer automatiquement après l'installation / désinstallation / mise à jour des plugins dans le magasin des plugins</system:String>
+    <system:String x:Key="ZipFileNotHavePluginJson">Le fichier zip n'a pas de configuration plugin.json valide</system:String>
+    <system:String x:Key="InstallFromUnknownSourceTitle">Installation depuis une source inconnue</system:String>
+    <system:String x:Key="InstallFromUnknownSourceSubtitle">Ce plugin provient d'une source inconnue et il peut contenir des risques !{0}{0}Veuillez vous assurer de comprendre d'où vient ce plugin et qu'il est sûr. {0} {0} Souhaitez-vous continuer ? {0} {0} (vous pouvez désactiver cet avertissement dans la section général des paramètres)</system:String>
+    <system:String x:Key="ZipFiles">Fichiers zip</system:String>
+    <system:String x:Key="SelectZipFile">Veuillez sélectionner un fichier zip</system:String>
+    <system:String x:Key="installLocalPluginTooltip">Installer le plugin depuis le chemin local</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Thèmes</system:String>
@@ -382,7 +414,7 @@
     <system:String x:Key="fileManagerWindow">Sélectionner le gestionnaire de fichiers</system:String>
     <system:String x:Key="fileManager_learnMore">En savoir plus</system:String>
     <system:String x:Key="fileManager_tips">Veuillez spécifier l'emplacement du fichier de l'explorateur de fichiers que vous utilisez et ajouter des arguments si nécessaire. Le &quot;%d&quot; représente le chemin du répertoire à ouvrir, utilisé par le champ Arg for Folder et pour les commandes ouvrant des répertoires spécifiques. Le &quot;%f&quot; représente le chemin du fichier à ouvrir, utilisé par le champ Arg for File et pour les commandes ouvrant des fichiers spécifiques.</system:String>
-    <system:String x:Key="fileManager_tips2">Par exemple, si l'explorateur de fichiers utilise une commande telle que &quot;totalcmd.exe /A c:\windows&quot; pour ouvrir le répertoire c:\windows, le chemin de l'explorateur de fichiers sera totalcmd.exe et l'argument Arg For Folder sera /A &quot;%d&quot;&quot;. Certains explorateurs de fichiers comme QTTabBar peuvent simplement nécessiter qu'un chemin soit fourni, dans ce cas, utilisez &quot;%d&quot; comme chemin de l'explorateur de fichiers et laissez le reste des fichiers vides.</system:String>
+    <system:String x:Key="fileManager_tips2">Par exemple, si le gestionnaire de fichiers utilise une commande telle que &quot;totalcmd.exe /A c:\windows&quot; pour ouvrir le répertoire c:\windows, le chemin du gestionnaire de fichiers sera totalcmd.exe, et le chemin du dossier sera /A &quot;%d&quot;. Certains gestionnaires de fichiers, comme QTTabBar, peuvent se contenter d'un simple chemin d'accès. Dans ce cas, utilisez &quot;%d&quot; comme chemin d'accès au gestionnaire de fichiers et laissez le reste des champs vides.</system:String>
     <system:String x:Key="fileManager_name">Gestionnaire de fichiers</system:String>
     <system:String x:Key="fileManager_profile_name">Nom du profil</system:String>
     <system:String x:Key="fileManager_path">Chemin du gestionnaire de fichiers</system:String>
@@ -433,13 +465,14 @@
     <system:String x:Key="customeQueryHotkeyTips">Appuyez sur le raccourci personnalisé pour insérer automatiquement la requête spécifiée.</system:String>
     <system:String x:Key="preview">Prévisualiser</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Raccourci indisponible. Veuillez en choisir un autre.</system:String>
-    <system:String x:Key="invalidPluginHotkey">Raccourci invalide</system:String>
+    <system:String x:Key="invalidPluginHotkey">La touche de raccourci n'est pas valide</system:String>
     <system:String x:Key="update">Actualiser</system:String>
     <system:String x:Key="hotkeyRegTitle">Raccourci de liaison</system:String>
     <system:String x:Key="hotkeyUnavailable">Le raccourci clavier actuel n'est pas disponible.</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">Ce raccourci est réservé à &quot;{0}&quot; et ne peut pas être utilisé. Veuillez choisir un autre raccourci clavier.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">Ce raccourci est déjà utilisé par &quot;{0}&quot;. Si vous appuyez sur &quot;Écraser&quot;, il sera supprimé de &quot;{0}&quot;.</system:String>
     <system:String x:Key="hotkeyRegGuide">Appuyez sur les touches que vous voulez utiliser pour cette fonction.</system:String>
+    <system:String x:Key="emptyPluginHotkey">Les touches de raccourci et les mots-clés d'action sont vides</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Raccourci de requête personnalisée</system:String>
@@ -450,6 +483,7 @@ Si vous ajoutez un préfixe &quot;@&quot; lors de la saisie d'un raccourci, celu
     </system:String>
     <system:String x:Key="duplicateShortcut">Le raccourci existe déjà, veuillez entrer un nouveau raccourci ou modifier le raccourci existant.</system:String>
     <system:String x:Key="emptyShortcut">Raccourci et/ou son expansion est vide.</system:String>
+    <system:String x:Key="invalidShortcut">Le raccourci n'est pas valide</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Sauvegarder</system:String>
