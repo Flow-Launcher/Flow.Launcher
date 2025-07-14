@@ -41,11 +41,8 @@ namespace Flow.Launcher.Infrastructure
 
         private void CreateDoublePinyinTableFromStream(Stream jsonStream)
         {
-            var table = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(jsonStream);
-            if (table == null)
-            {
+            var table = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(jsonStream) ?? 
                 throw new InvalidOperationException("Failed to deserialize double pinyin table: result is null");
-            }
 
             var schemaKey = _settings.DoublePinyinSchema.ToString();
             if (!table.TryGetValue(schemaKey, out var schemaDict))
