@@ -182,7 +182,8 @@
             <cc:Card
                 Title="{DynamicResource autoUpdates}"
                 Margin="0 14 0 0"
-                Icon="&#xecc5;">
+                Icon="&#xecc5;"
+                Sub="{DynamicResource autoUpdatesTooltip}">
                 <ui:ToggleSwitch
                     IsOn="{Binding AutoUpdates}"
                     OffContent="{DynamicResource disable}"

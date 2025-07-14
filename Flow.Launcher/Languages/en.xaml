@@ -93,6 +93,7 @@
     <system:String x:Key="typingStartEn">Always Start Typing in English Mode</system:String>
     <system:String x:Key="typingStartEnTooltip">Temporarily change your input method to English mode when activating Flow.</system:String>
     <system:String x:Key="autoUpdates">Auto Update</system:String>
+    <system:String x:Key="autoUpdatesTooltip">Automatically check app updates and notify if there are any updates available</system:String>
     <system:String x:Key="select">Select</system:String>
     <system:String x:Key="hideOnStartup">Hide Flow Launcher on startup</system:String>
     <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
