@@ -151,7 +151,7 @@
     <system:String x:Key="showUnknownSourceWarning">Show unknown source warning</system:String>
     <system:String x:Key="showUnknownSourceWarningToolTip">Show warning when installing plugins from unknown sources</system:String>
     <system:String x:Key="autoUpdatePlugins">Auto update plugins</system:String>
-    <system:String x:Key="autoUpdatePluginsToolTip">Automatically check plugin updates every 1 hour and notify if there are any updates available</system:String>
+    <system:String x:Key="autoUpdatePluginsToolTip">Automatically check plugin updates and notify if there are any updates available</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Search Plugin</system:String>
