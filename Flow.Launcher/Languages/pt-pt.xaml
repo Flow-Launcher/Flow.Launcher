@@ -8,9 +8,9 @@
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Por favor, selecione o executável {0}</system:String>
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
-        Your selected {0} executable is invalid.
+        O executável {0} é inválido.
         {2}{2}
-        Click yes if you would like select the {0} executable again. Click no if you would like to download {1}
+        Clique Sim se quiser escolher o novo executável {0}. Clique Não se quiser descarregar {1}.
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Não foi possível definir o caminho do executável {0}. Experimente definir o caminho nas definições (desloque até ao fundo).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Falha ao iniciar os plugins</system:String>
@@ -103,9 +103,9 @@
     <system:String x:Key="SearchPrecisionRegular">Normal</system:String>
     <system:String x:Key="ShouldUsePinyin">Pesquisar com Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Permite a utilização de Pinyin para pesquisar. Pinyin é um sistema normalizado de ortografia romanizada para tradução de mandarim.</system:String>
-    <system:String x:Key="ShouldUseDoublePinyin">Use Double Pinyin</system:String>
-    <system:String x:Key="ShouldUseDoublePinyinToolTip">Allows using Double Pinyin to search. Double Pinyin is a variation of Pinyin that uses two characters.</system:String>
-    <system:String x:Key="DoublePinyinSchema">Double Pinyin Schema</system:String>
+    <system:String x:Key="ShouldUseDoublePinyin">Utilizar Pinyin duplo</system:String>
+    <system:String x:Key="ShouldUseDoublePinyinToolTip">Permite pesquisar utilizando Pinyin duplo. Pinyin duplo é uma variante de Pinyin mas que utiliza dois caracteres.</system:String>
+    <system:String x:Key="DoublePinyinSchema">Esquema Pinyin duplo</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao He</system:String>
     <system:String x:Key="DoublePinyinSchemasZiRanMa">Zi Ran Ma</system:String>
     <system:String x:Key="DoublePinyinSchemasWeiRuan">Wei Ruan</system:String>
@@ -426,7 +426,7 @@
     <system:String x:Key="fileManagerWindow">Selecione o gestor de ficheiros</system:String>
     <system:String x:Key="fileManager_learnMore">Saber mais</system:String>
     <system:String x:Key="fileManager_tips">Por favor, especifique a localização do executável do seu gestor de ficheiros e adicione os argumentos necessários. &quot;%d&quot; representa o caminho do diretório a abrir, usado pelo argumento do campo Pasta e para comandos que abrem diretórios específicos. &quot;%f&quot; representa o caminho do ficheiro a abrir, usado pelo argumento do campo Ficheiro e para comandos que abrem ficheiros específicos.</system:String>
-    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fields blank.</system:String>
+    <system:String x:Key="fileManager_tips2">Por exemplo, se o gestor de ficheiros utilizar o comando &quot;totalcmd.exe /A c:\windows&quot; para abrir o diretório c:\windows , o caminho para o gestor de ficheiros será totalcmd. exe e os argumentos para a Pasta serão /A &quot;%d&quot;. Alguns gestores de ficheiros, como QTTabBar podem apenas exigir que especifique o caminho. Para estes, deve utilizar &quot;%d&quot; como caminho para o gestor de ficheiros e deixar o resto dos campos em branco.</system:String>
     <system:String x:Key="fileManager_name">Gestor de ficheiros</system:String>
     <system:String x:Key="fileManager_profile_name">Nome do perfil</system:String>
     <system:String x:Key="fileManager_path">Caminho do gestor de ficheiros</system:String>
@@ -477,14 +477,14 @@
     <system:String x:Key="customeQueryHotkeyTips">Prima uma tecla de atalho personalizada para abrir Flow Launcher e escrever automaticamente a pesquisa.</system:String>
     <system:String x:Key="preview">Antevisão</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Tecla de atalho indisponível, por favor escolha outra</system:String>
-    <system:String x:Key="invalidPluginHotkey">Hotkey is invalid</system:String>
+    <system:String x:Key="invalidPluginHotkey">Tecla de atalho inválida</system:String>
     <system:String x:Key="update">Atualizar</system:String>
     <system:String x:Key="hotkeyRegTitle">Associar tecla de atalho</system:String>
     <system:String x:Key="hotkeyUnavailable">A tecla de atalho atual não está disponível.</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">Esta tecla de atalho está reservada para &quot;{0}&quot; e não pode ser usada. Por favor, escolha outra.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">Esta tecla de atalho está a ser utilizada por &quot;{0}&quot;. Se escolher &quot;Substituir&quot;, será removida de &quot;{0}&quot;.</system:String>
     <system:String x:Key="hotkeyRegGuide">Prima as teclas que pretende utilizar para esta função.</system:String>
-    <system:String x:Key="emptyPluginHotkey">Hotkey and action keyword are empty</system:String>
+    <system:String x:Key="emptyPluginHotkey">Tecla de atalho e palavra-chave vazias</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Atalho de consulta personalizada</system:String>
@@ -495,7 +495,7 @@ Se adicionar o prefixo '@' durante a introdução do atalho, será utilizada qua
     </system:String>
     <system:String x:Key="duplicateShortcut">Este atallho já existe. Por favor escolha outro ou edite o existente.</system:String>
     <system:String x:Key="emptyShortcut">O atalho e/ou a expansão não estão preenchidos.</system:String>
-    <system:String x:Key="invalidShortcut">Shortcut is invalid</system:String>
+    <system:String x:Key="invalidShortcut">Atalho inválido</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Guardar</system:String>
