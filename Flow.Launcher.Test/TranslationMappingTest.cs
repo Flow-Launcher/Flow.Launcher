@@ -42,14 +42,14 @@ namespace Flow.Launcher.Test
 
         private static int GetOriginalToTranslatedCount(TranslationMapping mapping)
         {
-            var field = typeof(TranslationMapping).GetField("originalToTranslated", BindingFlags.NonPublic | BindingFlags.Instance);
+            var field = typeof(TranslationMapping).GetField("_originalToTranslated", BindingFlags.NonPublic | BindingFlags.Instance);
             var list = (List<int>)field.GetValue(mapping);
             return list.Count;
         }
 
         private static int GetOriginalToTranslatedAt(TranslationMapping mapping, int index)
         {
-            var field = typeof(TranslationMapping).GetField("originalToTranslated", BindingFlags.NonPublic | BindingFlags.Instance);
+            var field = typeof(TranslationMapping).GetField("_originalToTranslated", BindingFlags.NonPublic | BindingFlags.Instance);
             var list = (List<int>)field.GetValue(mapping);
             return list[index];
         }
