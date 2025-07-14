@@ -162,7 +162,8 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
 
                     if (imageData is not { Length: > 0 })
                         return;
-                    
+
+                    // Check if the image data is compressed (GZip)
                     if (imageData.Length > 2 && imageData[0] == 0x1f && imageData[1] == 0x8b)
                     {
                         using var inputStream = new MemoryStream(imageData);
@@ -171,9 +172,9 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
                         gZipStream.CopyTo(outputStream);
                         imageData = outputStream.ToArray();
                     }
-                    
+
+                    // Convert the image data to WebP format
                     var webpData = FaviconHelper.TryConvertToWebp(imageData);
-                    
                     if (webpData != null)
                     {
                         var faviconPath = Path.Combine(_faviconCacheDir, $"firefox_{domain}_{iconId}.webp");
