@@ -445,16 +445,44 @@
                     OnContent="{DynamicResource enable}" />
             </cc:Card>
 
-            <cc:Card
-                Title="{DynamicResource ShouldUsePinyin}"
-                Icon="&#xe98a;"
-                Sub="{DynamicResource ShouldUsePinyinToolTip}">
-                <ui:ToggleSwitch
-                    IsOn="{Binding Settings.ShouldUsePinyin}"
-                    OffContent="{DynamicResource disable}"
-                    OnContent="{DynamicResource enable}"
-                    ToolTip="{DynamicResource ShouldUsePinyinToolTip}" />
-            </cc:Card>
+            <cc:CardGroup Margin="0 4 0 0">
+                <cc:Card                
+                    Title="{DynamicResource ShouldUsePinyin}"
+                    Icon="&#xe98a;"
+                    Sub="{DynamicResource ShouldUsePinyinToolTip}"
+                    Type="First">
+                    <ui:ToggleSwitch
+                        IsOn="{Binding ShouldUsePinyin}"
+                        OffContent="{DynamicResource disable}"
+                        OnContent="{DynamicResource enable}"
+                        ToolTip="{DynamicResource ShouldUsePinyinToolTip}" />
+                </cc:Card>
+                <cc:Card
+                    Visibility="{ext:VisibleWhen {Binding ShouldUsePinyin},
+                                    IsEqualToBool=True}"
+                    Title="{DynamicResource ShouldUseDoublePinyin}"
+                    Icon="&#xf085;"
+                    Sub="{DynamicResource ShouldUseDoublePinyinToolTip}"
+                    Type="Middle">
+                    <ui:ToggleSwitch
+                        IsOn="{Binding UseDoublePinyin}"
+                        OffContent="{DynamicResource disable}"
+                        OnContent="{DynamicResource enable}"
+                        ToolTip="{DynamicResource ShouldUseDoublePinyinToolTip}" />
+                </cc:Card>
+                <cc:Card
+                    Visibility="{ext:VisibleWhen {Binding UseDoublePinyin},
+                                                        IsEqualToBool=True}"
+                    Title="{DynamicResource DoublePinyinSchema}"
+                    Sub="{DynamicResource DoublePinyinSchemaToolTip}"
+                    Type="Last">
+                    <ComboBox
+                        DisplayMemberPath="Display"
+                        ItemsSource="{Binding DoublePinyinSchemas}"
+                        SelectedValue="{Binding Settings.DoublePinyinSchema}"
+                        SelectedValuePath="Value" />
+                </cc:Card>
+            </cc:CardGroup>
 
             <cc:Card
                 Title="{DynamicResource language}"

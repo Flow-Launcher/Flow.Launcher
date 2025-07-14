@@ -36,6 +36,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public class SearchWindowAlignData : DropdownDataGeneric<SearchWindowAligns> { }
     public class SearchPrecisionData : DropdownDataGeneric<SearchPrecisionScore> { }
     public class LastQueryModeData : DropdownDataGeneric<LastQueryMode> { }
+    public class DoublePinyinSchemaData : DropdownDataGeneric<DoublePinyinSchemas> { }
 
     public bool StartFlowLauncherOnSystemStartup
     {
@@ -212,6 +213,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         DropdownDataGeneric<SearchWindowAligns>.UpdateLabels(SearchWindowAligns);
         DropdownDataGeneric<SearchPrecisionScore>.UpdateLabels(SearchPrecisionScores);
         DropdownDataGeneric<LastQueryMode>.UpdateLabels(LastQueryModes);
+        DropdownDataGeneric<DoublePinyinSchemas>.UpdateLabels(DoublePinyinSchemas);
         DropdownDataGeneric<QuickSwitchWindowPositions>.UpdateLabels(QuickSwitchWindowPositions);
         DropdownDataGeneric<QuickSwitchResultBehaviours>.UpdateLabels(QuickSwitchResultBehaviours);
         DropdownDataGeneric<QuickSwitchFileResultBehaviours>.UpdateLabels(QuickSwitchFileResultBehaviours);
@@ -300,8 +302,24 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public bool ShouldUsePinyin
     {
         get => Settings.ShouldUsePinyin;
-        set => Settings.ShouldUsePinyin = value;
+        set
+        {
+            if (value == false && UseDoublePinyin == true)
+            {
+                UseDoublePinyin = false;
+            }
+            Settings.ShouldUsePinyin = value;
+        }
     }
+
+    public bool UseDoublePinyin
+    {
+        set => Settings.UseDoublePinyin = value;
+        get => Settings.UseDoublePinyin;
+    }
+
+    public List<DoublePinyinSchemaData> DoublePinyinSchemas { get; } =
+        DropdownDataGeneric<DoublePinyinSchemas>.GetValues<DoublePinyinSchemaData>("DoublePinyinSchemas");
 
     public List<Language> Languages => _translater.LoadAvailableLanguages();
 
