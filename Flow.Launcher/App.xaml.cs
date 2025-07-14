@@ -298,11 +298,11 @@ namespace Flow.Launcher
                 {
                     // check plugin updates every 5 hour
                     var timer = new PeriodicTimer(TimeSpan.FromHours(5));
-                    await PluginInstaller.UpdatePluginAsync();
+                    await PluginInstaller.CheckForPluginUpdatesAsync();
 
                     while (await timer.WaitForNextTickAsync())
                         // check updates on startup
-                        await PluginInstaller.UpdatePluginAsync();
+                        await PluginInstaller.CheckForPluginUpdatesAsync();
                 }
             });
         }

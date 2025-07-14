@@ -112,7 +112,7 @@ public partial class SettingsPanePluginStoreViewModel : BaseModel
     [RelayCommand]
     private async Task CheckPluginUpdatesAsync()
     {
-        await PluginInstaller.UpdatePluginAsync(silentUpdate: false);
+        await PluginInstaller.CheckForPluginUpdatesAsync(silentUpdate: false);
     }
 
     private static string GetFileFromDialog(string title, string filter = "")

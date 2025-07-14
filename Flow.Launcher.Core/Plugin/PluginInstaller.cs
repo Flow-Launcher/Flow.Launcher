@@ -284,7 +284,7 @@ public static class PluginInstaller
     /// <param name="usePrimaryUrlOnly">If true, only use the primary URL for updates.</param>
     /// <param name="token">Cancellation token to cancel the update operation.</param>
     /// <returns></returns>
-    public static async Task UpdatePluginAsync(bool silentUpdate = true, bool usePrimaryUrlOnly = false, CancellationToken token = default)
+    public static async Task CheckForPluginUpdatesAsync(bool silentUpdate = true, bool usePrimaryUrlOnly = false, CancellationToken token = default)
     {
         // Update the plugin manifest
         await API.UpdatePluginManifestAsync(usePrimaryUrlOnly, token);
