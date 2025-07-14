@@ -14,11 +14,8 @@ namespace Flow.Launcher.Infrastructure
 {
     public class PinyinAlphabet : IAlphabet
     {
-        private ConcurrentDictionary<string, (string translation, TranslationMapping map)> _pinyinCache =
-            new();
-
+        private readonly ConcurrentDictionary<string, (string translation, TranslationMapping map)> _pinyinCache = new();
         private readonly Settings _settings;
-
         private ReadOnlyDictionary<string, string> currentDoublePinyinTable;
 
         public PinyinAlphabet()
@@ -44,105 +41,142 @@ namespace Flow.Launcher.Infrastructure
 
         private void CreateDoublePinyinTableFromStream(Stream jsonStream)
         {
-            Dictionary<string, Dictionary<string, string>> table = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(jsonStream);
-            string schemaKey = _settings.DoublePinyinSchema.ToString(); // Convert enum to string  
-            if (!table.TryGetValue(schemaKey, out var value))
+            var table = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(jsonStream) ?? 
+                throw new InvalidOperationException("Failed to deserialize double pinyin table: result is null");
+
+            var schemaKey = _settings.DoublePinyinSchema.ToString();
+            if (!table.TryGetValue(schemaKey, out var schemaDict))
             {
-                throw new ArgumentException("DoublePinyinSchema is invalid or double pinyin table is broken.");
+                throw new ArgumentException($"DoublePinyinSchema '{schemaKey}' is invalid or double pinyin table is broken.");
             }
-            currentDoublePinyinTable = new ReadOnlyDictionary<string, string>(value);
+
+            currentDoublePinyinTable = new ReadOnlyDictionary<string, string>(schemaDict);
         }
 
         private void LoadDoublePinyinTable()
         {
-            if (_settings.UseDoublePinyin)
+            if (!_settings.UseDoublePinyin)
             {
-                var tablePath = Path.Join(AppContext.BaseDirectory, "Resources", "double_pinyin.json");
-                try
-                {
-                    using var fs = File.OpenRead(tablePath);
-                    CreateDoublePinyinTableFromStream(fs);
-                }
-                catch (System.Exception e)
-                {
-                    Log.Exception(nameof(PinyinAlphabet), "Failed to load double pinyin table from file: " + tablePath, e);
-                    currentDoublePinyinTable = new ReadOnlyDictionary<string, string>(new Dictionary<string, string>());
-                }
+                currentDoublePinyinTable = new ReadOnlyDictionary<string, string>(new Dictionary<string, string>());
+                return;
             }
-            else
+
+            var tablePath = Path.Combine(AppContext.BaseDirectory, "Resources", "double_pinyin.json");
+            try
             {
+                using var fs = File.OpenRead(tablePath);
+                CreateDoublePinyinTableFromStream(fs);
+            }
+            catch (FileNotFoundException e)
+            {
+                Log.Exception(nameof(PinyinAlphabet), $"Double pinyin table file not found: {tablePath}", e);
+                currentDoublePinyinTable = new ReadOnlyDictionary<string, string>(new Dictionary<string, string>());
+            }
+            catch (DirectoryNotFoundException e)
+            {
+                Log.Exception(nameof(PinyinAlphabet), $"Directory not found for double pinyin table: {tablePath}", e);
+                currentDoublePinyinTable = new ReadOnlyDictionary<string, string>(new Dictionary<string, string>());
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                Log.Exception(nameof(PinyinAlphabet), $"Access denied to double pinyin table: {tablePath}", e);
+                currentDoublePinyinTable = new ReadOnlyDictionary<string, string>(new Dictionary<string, string>());
+            }
+            catch (System.Exception e)
+            {
+                Log.Exception(nameof(PinyinAlphabet), $"Failed to load double pinyin table from file: {tablePath}", e);
                 currentDoublePinyinTable = new ReadOnlyDictionary<string, string>(new Dictionary<string, string>());
             }
         }
 
         public bool ShouldTranslate(string stringToTranslate)
         {
-            // If a string has Chinese characters, we don't need to translate it to pinyin.
-            return _settings.ShouldUsePinyin && !WordsHelper.HasChinese(stringToTranslate);
+            // If the query (stringToTranslate) does NOT contain Chinese characters, 
+            // we should translate the target string to pinyin for matching
+            return _settings.ShouldUsePinyin && !ContainsChinese(stringToTranslate);
         }
 
         public (string translation, TranslationMapping map) Translate(string content)
         {
-            if (!_settings.ShouldUsePinyin || !WordsHelper.HasChinese(content))
+            if (!_settings.ShouldUsePinyin || !ContainsChinese(content))
                 return (content, null);
 
-            return _pinyinCache.TryGetValue(content, out var value)
-                ? value
-                : BuildCacheFromContent(content);
+            return _pinyinCache.TryGetValue(content, out var cached) ? cached : BuildCacheFromContent(content);
         }
 
         private (string translation, TranslationMapping map) BuildCacheFromContent(string content)
         {
             var resultList = WordsHelper.GetPinyinList(content);
-
-            var resultBuilder = new StringBuilder();
+            var resultBuilder = new StringBuilder(_settings.UseDoublePinyin ? 3 : 4); // Pre-allocate with estimated capacity
             var map = new TranslationMapping();
 
             var previousIsChinese = false;
 
             for (var i = 0; i < resultList.Length; i++)
             {
-                if (content[i] >= 0x3400 && content[i] <= 0x9FD5)
+                if (IsChineseCharacter(content[i]))
                 {
-                    string translated = _settings.UseDoublePinyin ? ToDoublePin(resultList[i]) : resultList[i];
+                    var translated = _settings.UseDoublePinyin ? ToDoublePinyin(resultList[i]) : resultList[i];
+                    
                     if (i > 0)
                     {
                         resultBuilder.Append(' ');
                     }
+                    
                     map.AddNewIndex(resultBuilder.Length, translated.Length);
                     resultBuilder.Append(translated);
                     previousIsChinese = true;
                 }
                 else
                 {
+                    // Add space after Chinese characters before non-Chinese characters
                     if (previousIsChinese)
                     {
                         previousIsChinese = false;
                         resultBuilder.Append(' ');
                     }
+                    
                     map.AddNewIndex(resultBuilder.Length, resultList[i].Length);
                     resultBuilder.Append(resultList[i]);
                 }
             }
 
-            map.endConstruct();
+            map.EndConstruct();
 
-            var key = resultBuilder.ToString();
-
-            return _pinyinCache[content] = (key, map);
+            var translation = resultBuilder.ToString();
+            var result = (translation, map);
+            
+            return _pinyinCache[content] = result;
         }
 
-        #region Double Pinyin
-
-        private string ToDoublePin(string fullPinyin)
+        /// <summary>
+        /// Optimized Chinese character detection using the comprehensive CJK Unicode ranges
+        /// </summary>
+        private static bool ContainsChinese(ReadOnlySpan<char> text)
         {
-            if (currentDoublePinyinTable.TryGetValue(fullPinyin, out var doublePinyinValue))
+            foreach (var c in text)
             {
-                return doublePinyinValue;
+                if (IsChineseCharacter(c))
+                    return true;
             }
-            return fullPinyin;
+            return false;
         }
 
-        #endregion
+        /// <summary>
+        /// Check if a character is a Chinese character using comprehensive Unicode ranges
+        /// Covers CJK Unified Ideographs, Extension A
+        /// </summary>
+        private static bool IsChineseCharacter(char c)
+        {
+            return (c >= 0x4E00 && c <= 0x9FFF) ||     // CJK Unified Ideographs
+                   (c >= 0x3400 && c <= 0x4DBF);       // CJK Extension A
+        }
+
+        private string ToDoublePinyin(string fullPinyin)
+        {
+            return currentDoublePinyinTable.TryGetValue(fullPinyin, out var doublePinyinValue) 
+                ? doublePinyinValue 
+                : fullPinyin;
+        }
     }
 }
