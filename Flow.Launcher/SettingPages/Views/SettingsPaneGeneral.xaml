@@ -386,6 +386,8 @@
             <cc:ExCard
                 Title="{DynamicResource ShouldUseDoublePinyin}"
                 Icon="&#xf085;"
+                Visibility="{ext:VisibleWhen {Binding ShouldUsePinyin},
+                                    IsEqualToBool=True}"
                 Sub="{DynamicResource ShouldUseDoublePinyinToolTip}">
                 <cc:ExCard.SideContent>
                     <ui:ToggleSwitch
