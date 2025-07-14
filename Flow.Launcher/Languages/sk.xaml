@@ -138,6 +138,10 @@
     <system:String x:Key="homeToggleBoxToolTip">Úprava je možná len vtedy, ak plugin podporuje funkciu Domovská stránka a Domovská stránka je povolená.</system:String>
     <system:String x:Key="showAtTopmost">Zobraziť vyhľadávacie okno v popredí</system:String>
     <system:String x:Key="showAtTopmostToolTip">Prepíše nastavenie &quot;Vždy na vrchu&quot; ostatných programov a zobrazí navrchu Flow.</system:String>
+    <system:String x:Key="autoRestartAfterChanging">Reštartovať po úprave pluginu cez Repozitár pluginov</system:String>
+    <system:String x:Key="autoRestartAfterChangingToolTip">Automaticky reštartovať Flow Launcher po inštalácii/odinštalácii/aktualizáciu pluginu cez Repozitár pluginov</system:String>
+    <system:String x:Key="showUnknownSourceWarning">Zobraziť upozornenie na neznámy zdroj</system:String>
+    <system:String x:Key="showUnknownSourceWarningToolTip">Zobraziť upozornenie pri inštalácii z neznámych zdrojov</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Vyhľadať plugin</system:String>
@@ -176,6 +180,12 @@
     <system:String x:Key="failedToRemovePluginSettingsMessage">Pluginy: {0} – Nepodarilo sa odstrániť súbory s nastaveniami pluginu, odstráňte ich manuálne</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Nepodarilo sa odstrániť vyrovnávaciu pamäť pluginu</system:String>
     <system:String x:Key="failedToRemovePluginCacheMessage">Pluginy: {0} – Nepodarilo sa odstrániť vyrovnávaciu pamäť pluginu, odstráňte ju manuálne</system:String>
+    <system:String x:Key="pluginModifiedAlreadyTitle">Plugin {0} už bol upravený</system:String>
+    <system:String x:Key="pluginModifiedAlreadyMessage">Pred vykonaním ďalších zmien reštartujte Flow Launcher</system:String>
+    <system:String x:Key="failedToInstallPluginTitle">Nepodarilo sa nainštalovať {0}</system:String>
+    <system:String x:Key="failedToUninstallPluginTitle">Nepodarilo sa odinštalovať {0}</system:String>
+    <system:String x:Key="fileNotFoundMessage">Súbor plugin.json sa nenašiel v rozbalenom zip súbore, alebo táto cesta {0} neexistuje</system:String>
+    <system:String x:Key="pluginExistAlreadyMessage">Plugin s rovnakým ID už existuje, alebo ide o vyššiu verziu ako stiahnutý plugin</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Repozitár pluginov</system:String>
@@ -191,6 +201,28 @@
     <system:String x:Key="LabelNew">Nová verzia</system:String>
     <system:String x:Key="LabelNewToolTip">Tento plugin bol aktualizovaný za posledných 7 dní</system:String>
     <system:String x:Key="LabelUpdateToolTip">K dispozícii je nová aktualizácia</system:String>
+    <system:String x:Key="ErrorInstallingPlugin">Chyba inštalácie pluginu</system:String>
+    <system:String x:Key="ErrorUninstallingPlugin">Chyba odinštalácie pluginu</system:String>
+    <system:String x:Key="ErrorUpdatingPlugin">Chyba aktualizácie pluginu</system:String>
+    <system:String x:Key="KeepPluginSettingsTitle">Ponechať nastavenia pluginu</system:String>
+    <system:String x:Key="KeepPluginSettingsSubtitle">Chcete zachovať nastavenia pluginu na ďalšie použitie?</system:String>
+    <system:String x:Key="InstallSuccessNoRestart">Plugin {0} bol úspešne nainštalovaný. Prosím, reštartuje Flow.</system:String>
+    <system:String x:Key="UninstallSuccessNoRestart">Plugin {0} bol úspešne odinštalovaný. Prosím, reštartuje Flow.</system:String>
+    <system:String x:Key="UpdateSuccessNoRestart">Plugin {0} bol úspešne aktualizovaný. Prosím, reštartuje Flow.</system:String>
+    <system:String x:Key="InstallPromptTitle">Inštalácia pluginu</system:String>
+    <system:String x:Key="InstallPromptSubtitle">{0} od {1} {2}{2}Chcete nainštalovať tento plugin?</system:String>
+    <system:String x:Key="UninstallPromptTitle">Odinštalácia pluginu</system:String>
+    <system:String x:Key="UninstallPromptSubtitle">{0} od {1} {2}{2}Chcete odinštalovať tento plugin?</system:String>
+    <system:String x:Key="UpdatePromptTitle">Aktualizácia pluginu</system:String>
+    <system:String x:Key="UpdatePromptSubtitle">{0} od {1} {2}{2}Chcete aktualizovať tento plugin?</system:String>
+    <system:String x:Key="DownloadingPlugin">Sťahovanie pluginu</system:String>
+    <system:String x:Key="AutoRestartAfterChange">Automaticky reštartovať po inštalácii/odinštalácii/aktualizáciu pluginov cez Repozitár pluginov</system:String>
+    <system:String x:Key="ZipFileNotHavePluginJson">V zipe sa nenachádza platná konfigurácia plugin.json</system:String>
+    <system:String x:Key="InstallFromUnknownSourceTitle">Inštalácia z neznámeho zdroja</system:String>
+    <system:String x:Key="InstallFromUnknownSourceSubtitle">Tento plugin pochádza z neznámeho zdroja a môže predstavovať potenciálne riziká!{0}{0}Uistite sa, že viete, odkiaľ tento plugin pochádza, a že je bezpečný.{0}{0}Stále chcete pokračovať?{0}{0}(Toto upozornenie môžete vypnúť sekcii Všeobecné v nastaveniach)</system:String>
+    <system:String x:Key="ZipFiles">Zip súbory</system:String>
+    <system:String x:Key="SelectZipFile">Vyberte zip súbor</system:String>
+    <system:String x:Key="installLocalPluginTooltip">Inštalovať plugin z miestneho úložiska</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Motív</system:String>
@@ -434,13 +466,14 @@
     <system:String x:Key="customeQueryHotkeyTips">Stlačením vlastnej klávesovej skratky otvoríte Flow Launcher a automaticky vložíte zadaný dotaz.</system:String>
     <system:String x:Key="preview">Náhľad</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Klávesová skratka je nedostupná, prosím, zadajte novú skratku</system:String>
-    <system:String x:Key="invalidPluginHotkey">Neplatná klávesová skratka pluginu</system:String>
+    <system:String x:Key="invalidPluginHotkey">Klávesová skratka je neplatná</system:String>
     <system:String x:Key="update">Aktualizovať</system:String>
     <system:String x:Key="hotkeyRegTitle">Priradenie klávesovej skratky</system:String>
     <system:String x:Key="hotkeyUnavailable">Aktuálna klávesová skratka nie je k dispozícii.</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">Táto skratka je rezervovaná pre &quot;{0}&quot; a nemôže byť použitá. Prosím, vyberte inú skratku.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">Táto skratka sa používa pre &quot;{0}&quot;. Ak stlačíte &quot;Prepísať&quot;, odstráni sa pre &quot;{0}&quot;.</system:String>
     <system:String x:Key="hotkeyRegGuide">Stlačte kláves, ktorý chcete nastaviť pre túto funkciu.</system:String>
+    <system:String x:Key="emptyPluginHotkey">Klávesová skratka a aktivačný príkaz sú prázdne</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Klávesová skratka vlastného dopytu</system:String>
@@ -451,6 +484,7 @@ Ak pri zadávaní skratky pred ňu pridáte &quot;@&quot;, bude sa zhodovať s �
     </system:String>
     <system:String x:Key="duplicateShortcut">Skratka už existuje, zadajte novú skratku alebo upravte existujúcu.</system:String>
     <system:String x:Key="emptyShortcut">Skratka a/alebo jej celé znenie je prázdne.</system:String>
+    <system:String x:Key="invalidShortcut">Skratka je neplatná</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Uložiť</system:String>

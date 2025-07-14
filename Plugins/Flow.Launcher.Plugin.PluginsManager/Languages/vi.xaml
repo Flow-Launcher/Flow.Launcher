@@ -43,10 +43,15 @@
     <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">Plugin {0} successfully updated. Please restart Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">{0} plugins successfully updated. Please restart Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">Plugin {0} has already been modified. Please restart Flow before making any further changes.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_title">{0} modified already</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_message">Please restart Flow before making any further changes</system:String>
+
+    <system:String x:Key="plugin_pluginsmanager_invalid_zip_title">Invalid zip installer file</system:String>
+    <system:String x:Key="plugin_pluginsmanager_invalid_zip_subtitle">Please check if there is a plugin.json in {0}</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_name">Trình quản lý plugin</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_description">Quản lý cài đặt, gỡ cài đặt hoặc cập nhật plugin Flow Launcher</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_description">Install, uninstall or update Flow Launcher plugins via the search window</system:String>
     <system:String x:Key="plugin_pluginsmanager_unknown_author">Không rõ tác giả</system:String>
 
     <!--  Context menu items  -->
@@ -61,5 +66,5 @@
 
     <!--  Settings menu items  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Cảnh báo cài đặt từ nguồn không xác định</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Automatically restart Flow Launcher after installing/uninstalling/updating plugins</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugins Manager</system:String>
 </ResourceDictionary>
