@@ -11,12 +11,10 @@ namespace Flow.Launcher.Infrastructure
         // list[i] is the last translated index + 1 of original index i
         private readonly List<int> _originalToTranslated = new();
 
-
         public void AddNewIndex(int translatedIndex, int length)
         {
             if (_isConstructed)
                 throw new InvalidOperationException("Mapping shouldn't be changed after construction");
-
             _originalToTranslated.Add(translatedIndex + length);
         }
 
