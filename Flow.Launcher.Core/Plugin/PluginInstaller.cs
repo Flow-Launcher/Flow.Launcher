@@ -300,14 +300,14 @@ public static class PluginInstaller
                   0 // if current version precedes version of the plugin from update source (e.g. PluginsManifest)
                   && !API.PluginModified(existingPlugin.Metadata.ID)
             select
-                new
+                new PluginUpdateInfo()
                 {
-                    existingPlugin.Metadata.ID,
-                    pluginUpdateSource.Name,
-                    pluginUpdateSource.Author,
+                    ID = existingPlugin.Metadata.ID,
+                    Name = existingPlugin.Metadata.Name,
+                    Author = existingPlugin.Metadata.Author,
                     CurrentVersion = existingPlugin.Metadata.Version,
                     NewVersion = pluginUpdateSource.Version,
-                    existingPlugin.Metadata.IcoPath,
+                    IcoPath = existingPlugin.Metadata.IcoPath,
                     PluginExistingMetadata = existingPlugin.Metadata,
                     PluginNewUserPlugin = pluginUpdateSource
                 }).ToList();
@@ -339,7 +339,7 @@ public static class PluginInstaller
             string.Join(", ", resultsForUpdate.Select(x => x.PluginExistingMetadata.Name)));
     }
 
-    private static void UpdateAllPlugins(IEnumerable<dynamic> resultsForUpdate)
+    private static void UpdateAllPlugins(IEnumerable<PluginUpdateInfo> resultsForUpdate)
     {
         _ = Task.WhenAll(resultsForUpdate.Select(async plugin =>
         {
@@ -444,5 +444,17 @@ public static class PluginInstaller
             !string.IsNullOrEmpty(x.Metadata.Website) &&
             x.Metadata.Website.StartsWith(constructedUrlPart)
         );
+    }
+
+    private record PluginUpdateInfo
+    {
+        public string ID { get; init; }
+        public string Name { get; init; }
+        public string Author { get; init; }
+        public string CurrentVersion { get; init; }
+        public string NewVersion { get; init; }
+        public string IcoPath { get; init; }
+        public PluginMetadata PluginExistingMetadata { get; init; }
+        public UserPlugin PluginNewUserPlugin { get; init; }
     }
 }
