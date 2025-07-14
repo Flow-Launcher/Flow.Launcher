@@ -27,14 +27,18 @@ namespace Flow.Launcher.Infrastructure
             {
                 switch (e.PropertyName)
                 {
-                    case nameof(Settings.ShouldUsePinyin):
-                        Reload();
+                    case nameof (Settings.ShouldUsePinyin):
+                        if (_settings.ShouldUsePinyin)
+                        {
+                            Reload();
+                        }
                         break;
                     case nameof(Settings.UseDoublePinyin):
-                        Reload();
-                        break;
                     case nameof(Settings.DoublePinyinSchema):
-                        Reload();
+                        if (_settings.UseDoublePinyin)
+                        {
+                            Reload();
+                        }
                         break;
                 }
             };
