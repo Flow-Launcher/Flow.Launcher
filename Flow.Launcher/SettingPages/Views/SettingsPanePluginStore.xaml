@@ -99,6 +99,13 @@
                     ToolTip="{DynamicResource installLocalPluginTooltip}">
                     <ui:FontIcon FontSize="14" Glyph="&#xE8DA;" />
                 </Button>
+                <Button
+                    Height="34"
+                    Margin="0 0 10 0"
+                    Command="{Binding CheckPluginUpdatesCommand}"
+                    ToolTip="{DynamicResource checkPluginUpdatesTooltip}">
+                    <ui:FontIcon FontSize="14" Glyph="&#xecc5;" />
+                </Button>
                 <TextBox
                     Name="PluginStoreFilterTextbox"
                     Width="150"

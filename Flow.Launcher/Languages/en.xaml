@@ -237,6 +237,7 @@
     <system:String x:Key="updateNoResultSubtitle">All plugins are up to date</system:String>
     <system:String x:Key="updateAllPluginsTitle">Update all plugins</system:String>
     <system:String x:Key="updateAllPluginsSubtitle">Would you like to update these plugins?{0}{0}{1}</system:String>
+    <system:String x:Key="checkPluginUpdatesTooltip">Check plugin updates</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Theme</system:String>
