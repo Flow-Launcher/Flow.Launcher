@@ -239,6 +239,7 @@ namespace Flow.Launcher
 
                 AutoStartup();
                 AutoUpdates();
+                AutoPluginUpdates();
 
                 API.SaveAppAllSettings();
                 API.LogInfo(ClassName, "End Flow Launcher startup ----------------------------------------------------");
@@ -285,6 +286,23 @@ namespace Flow.Launcher
                     while (await timer.WaitForNextTickAsync())
                         // check updates on startup
                         await Ioc.Default.GetRequiredService<Updater>().UpdateAppAsync();
+                }
+            });
+        }
+
+        private static void AutoPluginUpdates()
+        {
+            _ = Task.Run(async () =>
+            {
+                if (_settings.AutoUpdatePlugins)
+                {
+                    // check plugin updates every 5 hour
+                    var timer = new PeriodicTimer(TimeSpan.FromHours(5));
+                    await PluginInstaller.UpdatePluginAsync();
+
+                    while (await timer.WaitForNextTickAsync())
+                        // check updates on startup
+                        await PluginInstaller.UpdatePluginAsync();
                 }
             });
         }

@@ -278,6 +278,97 @@ public static class PluginInstaller
     }
 
     /// <summary>
+    /// Updates the plugin to the latest version available from its source.
+    /// </summary>
+    /// <param name="silentUpdate">If true, do not show any messages when there is no udpate available.</param>
+    /// <param name="usePrimaryUrlOnly">If true, only use the primary URL for updates.</param>
+    /// <param name="token">Cancellation token to cancel the update operation.</param>
+    /// <returns></returns>
+    public static async Task UpdatePluginAsync(bool silentUpdate = true, bool usePrimaryUrlOnly = false, CancellationToken token = default)
+    {
+        // Update the plugin manifest
+        await API.UpdatePluginManifestAsync(usePrimaryUrlOnly, token);
+
+        // Get all plugins that can be updated
+        var resultsForUpdate = (
+            from existingPlugin in API.GetAllPlugins()
+            join pluginUpdateSource in API.GetPluginManifest()
+                on existingPlugin.Metadata.ID equals pluginUpdateSource.ID
+            where string.Compare(existingPlugin.Metadata.Version, pluginUpdateSource.Version,
+                      StringComparison.InvariantCulture) <
+                  0 // if current version precedes version of the plugin from update source (e.g. PluginsManifest)
+                  && !API.PluginModified(existingPlugin.Metadata.ID)
+            select
+                new
+                {
+                    existingPlugin.Metadata.ID,
+                    pluginUpdateSource.Name,
+                    pluginUpdateSource.Author,
+                    CurrentVersion = existingPlugin.Metadata.Version,
+                    NewVersion = pluginUpdateSource.Version,
+                    existingPlugin.Metadata.IcoPath,
+                    PluginExistingMetadata = existingPlugin.Metadata,
+                    PluginNewUserPlugin = pluginUpdateSource
+                }).ToList();
+
+        // No updates
+        if (!resultsForUpdate.Any())
+        {
+            if (!silentUpdate)
+            {
+                API.ShowMsg(API.GetTranslation("updateNoResultTitle"), API.GetTranslation("updateNoResultSubtitle"));
+            }
+            return;
+        }
+
+        // If all plugins are modified, just return
+        if (resultsForUpdate.All(x => API.PluginModified(x.ID)))
+        {
+            return;
+        }
+
+        if (API.ShowMsgBox(
+            string.Format(API.GetTranslation("updateAllPluginsSubtitle"),
+            Environment.NewLine, string.Join(", ", resultsForUpdate.Select(x => x.PluginExistingMetadata.Name))),
+            API.GetTranslation("updateAllPluginsTitle"),
+            MessageBoxButton.YesNo) == MessageBoxResult.No)
+        {
+            return;
+        }
+
+        // Update all plugins
+        await Task.WhenAll(resultsForUpdate.Select(async plugin =>
+        {
+            var downloadToFilePath = Path.Combine(Path.GetTempPath(), $"{plugin.Name}-{plugin.NewVersion}.zip");
+
+            try
+            {
+                using var cts = new CancellationTokenSource();
+
+                await DownloadFileAsync(
+                    $"{API.GetTranslation("DownloadingPlugin")} {plugin.PluginNewUserPlugin.Name}",
+                    plugin.PluginNewUserPlugin.UrlDownload, downloadToFilePath, cts);
+
+                // check if user cancelled download before installing plugin
+                if (cts.IsCancellationRequested)
+                {
+                    return;
+                }
+
+                if (!await API.UpdatePluginAsync(plugin.PluginExistingMetadata, plugin.PluginNewUserPlugin, downloadToFilePath))
+                {
+                    return;
+                }
+            }
+            catch (Exception e)
+            {
+                API.LogException(ClassName, "Failed to update plugin", e);
+                API.ShowMsgError(API.GetTranslation("ErrorUpdatingPlugin"));
+            }
+        }));
+    }
+
+    /// <summary>
     /// Downloads a file from a URL to a local path, optionally showing a progress box and handling cancellation.
     /// </summary>
     /// <param name="progressBoxTitle">The title for the progress box.</param>
