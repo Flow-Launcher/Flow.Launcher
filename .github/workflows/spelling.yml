@@ -72,7 +72,7 @@ jobs:
     steps:
     - name: check-spelling
       id: spelling
-      uses: check-spelling/check-spelling@prerelease
+      uses: check-spelling/check-spelling@0.0.25
       with:
         suppress_push_for_open_pull_request: 1
         checkout: true
