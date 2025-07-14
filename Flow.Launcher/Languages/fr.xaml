@@ -103,9 +103,9 @@
     <system:String x:Key="SearchPrecisionRegular">Normal</system:String>
     <system:String x:Key="ShouldUsePinyin">Devrait utiliser Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Permet d'utiliser Pinyin pour la recherche. Pinyin est le système standard d'orthographe romanisée pour la traduction du chinois</system:String>
-    <system:String x:Key="ShouldUseDoublePinyin">Use Double Pinyin</system:String>
-    <system:String x:Key="ShouldUseDoublePinyinToolTip">Allows using Double Pinyin to search. Double Pinyin is a variation of Pinyin that uses two characters.</system:String>
-    <system:String x:Key="DoublePinyinSchema">Double Pinyin Schema</system:String>
+    <system:String x:Key="ShouldUseDoublePinyin">Utiliser Double Pinyin</system:String>
+    <system:String x:Key="ShouldUseDoublePinyinToolTip">Permet d'utiliser Double Pinyin pour la recherche. Double Pinyin est une variation de Pinyin qui utilise deux caractères.</system:String>
+    <system:String x:Key="DoublePinyinSchema">Schéma double Pinyin</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao He</system:String>
     <system:String x:Key="DoublePinyinSchemasZiRanMa">Zi Ran Ma</system:String>
     <system:String x:Key="DoublePinyinSchemasWeiRuan">Wei Ruan</system:String>
