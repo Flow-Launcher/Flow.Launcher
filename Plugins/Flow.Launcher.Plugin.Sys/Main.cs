@@ -497,7 +497,15 @@ namespace Flow.Launcher.Plugin.Sys
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\ue790"),
                     Action = c =>
                     {
-                        _context.API.ChangeQuery($"{query.ActionKeyword}{ (string.IsNullOrEmpty(query.ActionKeyword) ? string.Empty : Plugin.Query.ActionKeywordSeparator)}{ThemeSelector.Keyword}{Plugin.Query.ActionKeywordSeparator}");
+                        if (string.IsNullOrEmpty(query.ActionKeyword))
+                        {
+                            _context.API.ChangeQuery($"{ThemeSelector.Keyword}{Plugin.Query.ActionKeywordSeparator}");
+                        }
+                        else
+                        {
+                            _context.API.ChangeQuery($"{query.ActionKeyword}{Plugin.Query.ActionKeywordSeparator}{ThemeSelector.Keyword}{Plugin.Query.ActionKeywordSeparator}");
+
+                        }
                         return false;
                     }
                 }
