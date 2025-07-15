@@ -91,6 +91,7 @@
     <system:String x:Key="typingStartEn">Toujours commencer à taper en mode anglais</system:String>
     <system:String x:Key="typingStartEnTooltip">Changez temporairement votre mode de saisie en mode anglais lors de l'activation de Flow.</system:String>
     <system:String x:Key="autoUpdates">Mettre à jour automatiquement</system:String>
+    <system:String x:Key="autoUpdatesTooltip">Automatically check and update the app when available</system:String>
     <system:String x:Key="select">Sélectionner</system:String>
     <system:String x:Key="hideOnStartup">Cacher Flow Launcher au démarrage</system:String>
     <system:String x:Key="hideOnStartupToolTip">La fenêtre de recherche de Flow Launcher est cachée dans la barre d’état après le démarrage.</system:String>
@@ -115,7 +116,7 @@
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
-    
+
     <system:String x:Key="AlwaysPreview">Toujours prévisualiser</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Toujours ouvrir le panneau d'aperçu lorsque Flow s'active. Appuyez sur {0} pour activer/désactiver l'aperçu.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">L'effet d'ombre n'est pas autorisé lorsque le thème actuel à un effet de flou activé</system:String>
@@ -155,6 +156,8 @@
     <system:String x:Key="autoRestartAfterChangingToolTip">Redémarrez automatiquement Flow Launcher après l'installation / désinstallation / mise à jour du plugin via le magasin des plugins</system:String>
     <system:String x:Key="showUnknownSourceWarning">Afficher l'avertissement de source inconnue</system:String>
     <system:String x:Key="showUnknownSourceWarningToolTip">Afficher un avertissement lors de l'installation de plugins à partir de sources inconnues</system:String>
+    <system:String x:Key="autoUpdatePlugins">Auto update plugins</system:String>
+    <system:String x:Key="autoUpdatePluginsToolTip">Automatically check plugin updates and notify if there are any updates available</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Rechercher des plugins</system:String>
@@ -236,6 +239,11 @@
     <system:String x:Key="ZipFiles">Fichiers zip</system:String>
     <system:String x:Key="SelectZipFile">Veuillez sélectionner un fichier zip</system:String>
     <system:String x:Key="installLocalPluginTooltip">Installer le plugin depuis le chemin local</system:String>
+    <system:String x:Key="updateNoResultTitle">Aucune mise à jour disponible</system:String>
+    <system:String x:Key="updateNoResultSubtitle">Tous les plugins sont à jour</system:String>
+    <system:String x:Key="updateAllPluginsTitle">Plugin updates available</system:String>
+    <system:String x:Key="updateAllPluginsButtonContent">Mettre à jour tous les plugins</system:String>
+    <system:String x:Key="checkPluginUpdatesTooltip">Check plugin updates</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Thèmes</system:String>
