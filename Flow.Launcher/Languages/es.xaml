@@ -91,6 +91,7 @@
     <system:String x:Key="typingStartEn">Empezar a escribir siempre en modo inglés</system:String>
     <system:String x:Key="typingStartEnTooltip">Cambia temporalmente el método de entrada al modo inglés cuando se activa Flow.</system:String>
     <system:String x:Key="autoUpdates">Actualización automática</system:String>
+    <system:String x:Key="autoUpdatesTooltip">Automatically check and update the app when available</system:String>
     <system:String x:Key="select">Seleccionar</system:String>
     <system:String x:Key="hideOnStartup">Ocultar Flow Launcher al inicio</system:String>
     <system:String x:Key="hideOnStartupToolTip">La ventana de búsqueda de Flow Launcher se oculta en la bandeja del sistema tras el arranque.</system:String>
@@ -115,7 +116,7 @@
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
-    
+
     <system:String x:Key="AlwaysPreview">Mostrar siempre vista previa</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Muestra siempre el panel de vista previa al iniciar Flow. Pulsar {0} para mostrar/ocultar la vista previa.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">El efecto de sombra no está permitido si el tema actual tiene activado el efecto de desenfoque</system:String>
@@ -155,6 +156,8 @@
     <system:String x:Key="autoRestartAfterChangingToolTip">Reiniciar Flow Launcher automáticamente después de instalar/desinstalar/actualizar el complemento a través de la Tienda de complementos</system:String>
     <system:String x:Key="showUnknownSourceWarning">Mostrar advertencia de fuente desconocida</system:String>
     <system:String x:Key="showUnknownSourceWarningToolTip">Mostrar advertencia al instalar complementos desde fuentes desconocidas</system:String>
+    <system:String x:Key="autoUpdatePlugins">Auto update plugins</system:String>
+    <system:String x:Key="autoUpdatePluginsToolTip">Automatically check plugin updates and notify if there are any updates available</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Buscar complemento</system:String>
@@ -236,6 +239,11 @@
     <system:String x:Key="ZipFiles">Archivos Zip</system:String>
     <system:String x:Key="SelectZipFile">Por favor, seleccione archivo zip</system:String>
     <system:String x:Key="installLocalPluginTooltip">Instalar complemento desde la ruta local</system:String>
+    <system:String x:Key="updateNoResultTitle">No hay actualizaciones disponibles</system:String>
+    <system:String x:Key="updateNoResultSubtitle">Todos los complementos están actualizados</system:String>
+    <system:String x:Key="updateAllPluginsTitle">Plugin updates available</system:String>
+    <system:String x:Key="updateAllPluginsButtonContent">Actualizar todos los complementos</system:String>
+    <system:String x:Key="checkPluginUpdatesTooltip">Check plugin updates</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Tema</system:String>
