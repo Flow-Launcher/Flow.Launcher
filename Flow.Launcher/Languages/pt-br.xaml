@@ -91,6 +91,7 @@
     <system:String x:Key="typingStartEn">Sempre Começar Digitando em Modo Inglês</system:String>
     <system:String x:Key="typingStartEnTooltip">Temporariamente altere seu método de entrada para o Modo Inglês ao ativar o Flow.</system:String>
     <system:String x:Key="autoUpdates">Atualizar Automaticamente</system:String>
+    <system:String x:Key="autoUpdatesTooltip">Automatically check and update the app when available</system:String>
     <system:String x:Key="select">Selecionar</system:String>
     <system:String x:Key="hideOnStartup">Esconder Flow Launcher na inicialização</system:String>
     <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
@@ -115,7 +116,7 @@
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
-    
+
     <system:String x:Key="AlwaysPreview">Sempre Pré-visualizar</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Sempre abrir o painel de pré-visualização quando o Flow é ativado. Pressione {0} para ativar ou desativar a pré-visualização.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">O efeito de sombra não é permitido enquanto o tema atual tem o efeito de desfoque ativado</system:String>
@@ -155,6 +156,8 @@
     <system:String x:Key="autoRestartAfterChangingToolTip">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugin Store</system:String>
     <system:String x:Key="showUnknownSourceWarning">Show unknown source warning</system:String>
     <system:String x:Key="showUnknownSourceWarningToolTip">Show warning when installing plugins from unknown sources</system:String>
+    <system:String x:Key="autoUpdatePlugins">Auto update plugins</system:String>
+    <system:String x:Key="autoUpdatePluginsToolTip">Automatically check plugin updates and notify if there are any updates available</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Buscar Plugin</system:String>
@@ -236,6 +239,11 @@
     <system:String x:Key="ZipFiles">Zip files</system:String>
     <system:String x:Key="SelectZipFile">Please select zip file</system:String>
     <system:String x:Key="installLocalPluginTooltip">Install plugin from local path</system:String>
+    <system:String x:Key="updateNoResultTitle">No update available</system:String>
+    <system:String x:Key="updateNoResultSubtitle">All plugins are up to date</system:String>
+    <system:String x:Key="updateAllPluginsTitle">Plugin updates available</system:String>
+    <system:String x:Key="updateAllPluginsButtonContent">Update all plugins</system:String>
+    <system:String x:Key="checkPluginUpdatesTooltip">Check plugin updates</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Tema</system:String>
