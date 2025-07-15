@@ -243,6 +243,7 @@ namespace Flow.Launcher
 
                 AutoStartup();
                 AutoUpdates();
+                AutoPluginUpdates();
 
                 API.SaveAppAllSettings();
                 API.LogInfo(ClassName, "End Flow Launcher startup ----------------------------------------------------");
@@ -255,7 +256,7 @@ namespace Flow.Launcher
         /// Check startup only for Release
         /// </summary>
         [Conditional("RELEASE")]
-        private void AutoStartup()
+        private static void AutoStartup()
         {
             // we try to enable auto-startup on first launch, or reenable if it was removed
             // but the user still has the setting set
@@ -276,7 +277,7 @@ namespace Flow.Launcher
         }
 
         [Conditional("RELEASE")]
-        private void AutoUpdates()
+        private static void AutoUpdates()
         {
             _ = Task.Run(async () =>
             {
@@ -289,6 +290,23 @@ namespace Flow.Launcher
                     while (await timer.WaitForNextTickAsync())
                         // check updates on startup
                         await Ioc.Default.GetRequiredService<Updater>().UpdateAppAsync();
+                }
+            });
+        }
+
+        private static void AutoPluginUpdates()
+        {
+            _ = Task.Run(async () =>
+            {
+                if (_settings.AutoUpdatePlugins)
+                {
+                    // check plugin updates every 5 hour
+                    var timer = new PeriodicTimer(TimeSpan.FromHours(5));
+                    await PluginInstaller.CheckForPluginUpdatesAsync();
+
+                    while (await timer.WaitForNextTickAsync())
+                        // check updates on startup
+                        await PluginInstaller.CheckForPluginUpdatesAsync();
                 }
             });
         }
