@@ -91,6 +91,7 @@
     <system:String x:Key="typingStartEn">以英文模式开始输入</system:String>
     <system:String x:Key="typingStartEnTooltip">激活 Flow 时暂时将输入法更改为英文模式。</system:String>
     <system:String x:Key="autoUpdates">自动更新</system:String>
+    <system:String x:Key="autoUpdatesTooltip">Automatically check and update the app when available</system:String>
     <system:String x:Key="select">选择</system:String>
     <system:String x:Key="hideOnStartup">系统启动时不显示主窗口</system:String>
     <system:String x:Key="hideOnStartupToolTip">Flow Launcher 启动后搜索窗口隐藏在托盘中。</system:String>
@@ -115,7 +116,7 @@
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">星空键道</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">大牛双拼</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">小浪双拼</system:String>
-    
+
     <system:String x:Key="AlwaysPreview">始终打开预览</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Flow 启动时总是打开预览面板。按 {0} 以切换预览。</system:String>
     <system:String x:Key="shadowEffectNotAllowed">当前主题已启用模糊效果，不允许启用阴影效果</system:String>
@@ -155,6 +156,8 @@
     <system:String x:Key="autoRestartAfterChangingToolTip">通过插件商店安装/卸载/更新插件后自动重启 Flow Launcher</system:String>
     <system:String x:Key="showUnknownSourceWarning">显示未知来源警告</system:String>
     <system:String x:Key="showUnknownSourceWarningToolTip">安装来自未知来源的插件时显示警告</system:String>
+    <system:String x:Key="autoUpdatePlugins">Auto update plugins</system:String>
+    <system:String x:Key="autoUpdatePluginsToolTip">Automatically check plugin updates and notify if there are any updates available</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">搜索插件</system:String>
@@ -236,6 +239,11 @@
     <system:String x:Key="ZipFiles">Zip 文件</system:String>
     <system:String x:Key="SelectZipFile">请选择 zip 文件</system:String>
     <system:String x:Key="installLocalPluginTooltip">从本地路径安装插件</system:String>
+    <system:String x:Key="updateNoResultTitle">无可用更新</system:String>
+    <system:String x:Key="updateNoResultSubtitle">所有插件都是最新</system:String>
+    <system:String x:Key="updateAllPluginsTitle">Plugin updates available</system:String>
+    <system:String x:Key="updateAllPluginsButtonContent">更新所有插件</system:String>
+    <system:String x:Key="checkPluginUpdatesTooltip">Check plugin updates</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">主题</system:String>
