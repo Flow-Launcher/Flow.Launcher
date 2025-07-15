@@ -91,7 +91,7 @@
     <system:String x:Key="typingStartEn">Vždy písať s anglickou klávesnicou</system:String>
     <system:String x:Key="typingStartEnTooltip">Pri aktivácii Flowu sa dočasne zmení klávesnica na anglickú.</system:String>
     <system:String x:Key="autoUpdates">Automatická aktualizácia</system:String>
-    <system:String x:Key="autoUpdatesTooltip">Automatically check and update the app when available</system:String>
+    <system:String x:Key="autoUpdatesTooltip">Automaticky skontrolovať a aktualizovať aplikáciu, ak je to možné</system:String>
     <system:String x:Key="select">Vybrať</system:String>
     <system:String x:Key="hideOnStartup">Schovať Flow Launcher po spustení</system:String>
     <system:String x:Key="hideOnStartupToolTip">Vyhľadávacie okno Flow launchera sa po spustení skryje v oblasti oznámení.</system:String>
@@ -156,8 +156,8 @@
     <system:String x:Key="autoRestartAfterChangingToolTip">Automaticky reštartovať Flow Launcher po inštalácii/odinštalácii/aktualizáciu pluginu cez Repozitár pluginov</system:String>
     <system:String x:Key="showUnknownSourceWarning">Zobraziť upozornenie na neznámy zdroj</system:String>
     <system:String x:Key="showUnknownSourceWarningToolTip">Zobraziť upozornenie pri inštalácii z neznámych zdrojov</system:String>
-    <system:String x:Key="autoUpdatePlugins">Auto update plugins</system:String>
-    <system:String x:Key="autoUpdatePluginsToolTip">Automatically check plugin updates and notify if there are any updates available</system:String>
+    <system:String x:Key="autoUpdatePlugins">Automaticky aktualizovať pluginy</system:String>
+    <system:String x:Key="autoUpdatePluginsToolTip">Automaticky kontrolovať aktualizácie pluginov a upozorniť na ne, ak sú k dispozícii</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Vyhľadať plugin</system:String>
@@ -241,9 +241,9 @@
     <system:String x:Key="installLocalPluginTooltip">Inštalovať plugin z miestneho úložiska</system:String>
     <system:String x:Key="updateNoResultTitle">Nie je k dispozícii žiadna aktualizácia</system:String>
     <system:String x:Key="updateNoResultSubtitle">Všetky pluginy sú aktuálne</system:String>
-    <system:String x:Key="updateAllPluginsTitle">Plugin updates available</system:String>
+    <system:String x:Key="updateAllPluginsTitle">Dostupná aktualizácia pluginu</system:String>
     <system:String x:Key="updateAllPluginsButtonContent">Aktualizovať všetky pluginy</system:String>
-    <system:String x:Key="checkPluginUpdatesTooltip">Check plugin updates</system:String>
+    <system:String x:Key="checkPluginUpdatesTooltip">Skontrolovať dostupnosť aktualizácií</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Motív</system:String>
