@@ -3,6 +3,8 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">请先进行选择</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">请选择一个文件夹路径。</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">请选择不同的名称或文件夹路径。</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">请选择一个文件夹链接</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">您确定要删除 {0} 吗?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">您确定要永久删除此文件吗？</system:String>
@@ -25,12 +27,14 @@
     <system:String x:Key="plugin_explorer_add">添加</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">通用设置</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">自定义动作关键字</system:String>
+    <system:String x:Key="plugin_explorer_manage_quick_access_links_header">自定义快速访问</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">快速访问链接</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Everything 设置</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">预览面板</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">大小</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">创建日期</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">修改日期</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_age_checkbox">文件时间</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_file_info_label">显示文件信息</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">日期和时间格式</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">排序选项</system:String>
@@ -40,6 +44,7 @@
     <system:String x:Key="plugin_explorer_shell_path">Shell 路径</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">索引搜索排除的路径</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">使用搜索结果的位置作为应用程序的工作目录</system:String>
+    <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">在提示框中显示更多信息，例如大小和年龄</system:String>
     <system:String x:Key="plugin_explorer_default_open_in_file_manager">点击回车在默认文件管理器中打开文件夹</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">使用索引进行路径搜索</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">索引选项</system:String>
@@ -76,17 +81,26 @@
     <!--  Plugin Tooltip  -->
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter 以打开目录</system:String>
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Enter 以打开所在的文件夹</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info">{0}{4}大小：{1}{4}创建日期：{2}{4}修改日期：{3}</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_unknown">未知</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_volume">{0}{3}空闲空间：{1}{3}总空间：{2}</system:String>
 
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">复制路径</system:String>
     <system:String x:Key="plugin_explorer_copypath_subtitle">复制当前结果的路径到剪贴板</system:String>
+    <system:String x:Key="plugin_explorer_copyname">复制名称</system:String>
+    <system:String x:Key="plugin_explorer_copyname_subtitle">复制当前文件的名称到剪贴板</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">复制</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">复制当前文件到剪贴板</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">复制当前文件夹到剪贴板</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder">删除</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">永久删除当前文件</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">永久删除当前文件夹</system:String>
-    <system:String x:Key="plugin_explorer_path">路径:</system:String>
+    <system:String x:Key="plugin_explorer_name">名称</system:String>
+    <system:String x:Key="plugin_explorer_type">类型</system:String>
+    <system:String x:Key="plugin_explorer_path">路径</system:String>
+    <system:String x:Key="plugin_explorer_file">文件</system:String>
+    <system:String x:Key="plugin_explorer_folder">目录</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">删除所选内容</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">以其他用户身份运行</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">使用其他用户帐户运行所选内容</system:String>
@@ -157,9 +171,20 @@
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">您想要启用 Everything 的内容搜索功能吗？</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">如果没有索引，它可能会非常慢（索引仅在 Everything v1.5+ 中支持）</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_everything_not_found">找不到 Everything.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_install_issue">安装 Everything 失败，请手动安装</system:String>
+
     <!--  Native Context Menu  -->
     <system:String x:Key="plugin_explorer_native_context_menu_header">本机上下文菜单</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">显示本机上下文菜单（实验性）</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">您可以在下面指定想要包含在上下文菜单中的项目，它们可以是部分的（例如“pen wit”）或完整的（“打开方式”）。</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">您可以在下面指定要从上下文菜单中排除的项目，它们可以是部分的（例如“pen wit”）或完整的（“打开方式”）。</system:String>
+
+    <!--  Preview Info  -->
+    <system:String x:Key="Today">今天</system:String>
+    <system:String x:Key="DaysAgo">{0}天前</system:String>
+    <system:String x:Key="OneMonthAgo">1个月前</system:String>
+    <system:String x:Key="MonthsAgo">{0}个月前</system:String>
+    <system:String x:Key="OneYearAgo">1年前</system:String>
+    <system:String x:Key="YearsAgo">{0}年前</system:String>
 </ResourceDictionary>

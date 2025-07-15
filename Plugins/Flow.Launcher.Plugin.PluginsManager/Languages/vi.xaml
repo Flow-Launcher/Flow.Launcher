@@ -13,6 +13,8 @@
     <system:String x:Key="plugin_pluginsmanager_installing_plugin">Cài đặt Plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Tải về và cài đặt</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Đã gỡ cài đặt plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_title">Keep plugin settings</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_subtitle">Do you want to keep the settings of the plugin for the next usage?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_success_restart">Đã cài đặt thành công plugin. Đang khởi động lại Flow, vui lòng đợi...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Không thể tìm thấy tệp siêu dữ liệu plugin.json từ tệp zip được giải nén.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Lỗi: Đã tồn tại một plugin có phiên bản tương tự hoặc cao hơn với {0}.</system:String>
@@ -35,16 +37,21 @@
     <system:String x:Key="plugin_pluginsmanager_update_success_restart">Plugin {0} successfully updated. Restarting Flow, please wait...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Cài đặt từ một nguồn không xác định</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">Bạn đang cài đặt plugin này từ một nguồn không xác định và nó có thể chứa những rủi ro tiềm ẩn!{0}{0}Hãy đảm bảo rằng bạn hiểu plugin này đến từ đâu và nó an toàn.{0}{0}Bạn vẫn muốn tiếp tục chứ? {0}{0}(Bạn có thể tắt cảnh báo này thông qua cài đặt)</system:String>
-    
+
     <system:String x:Key="plugin_pluginsmanager_install_success_no_restart">Plugin {0} successfully installed. Please restart Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_success_no_restart">Plugin {0} successfully uninstalled. Please restart Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">Plugin {0} successfully updated. Please restart Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">{0} plugins successfully updated. Please restart Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">Plugin {0} has already been modified. Please restart Flow before making any further changes.</system:String>
-   
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_title">{0} modified already</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_message">Please restart Flow before making any further changes</system:String>
+
+    <system:String x:Key="plugin_pluginsmanager_invalid_zip_title">Invalid zip installer file</system:String>
+    <system:String x:Key="plugin_pluginsmanager_invalid_zip_subtitle">Please check if there is a plugin.json in {0}</system:String>
+
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_name">Trình quản lý plugin</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_description">Quản lý cài đặt, gỡ cài đặt hoặc cập nhật plugin Flow Launcher</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_description">Install, uninstall or update Flow Launcher plugins via the search window</system:String>
     <system:String x:Key="plugin_pluginsmanager_unknown_author">Không rõ tác giả</system:String>
 
     <!--  Context menu items  -->
@@ -59,5 +66,5 @@
 
     <!--  Settings menu items  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Cảnh báo cài đặt từ nguồn không xác định</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Automatically restart Flow Launcher after installing/uninstalling/updating plugins</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugins Manager</system:String>
 </ResourceDictionary>

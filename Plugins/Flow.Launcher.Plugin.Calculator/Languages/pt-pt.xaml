@@ -7,7 +7,7 @@
     <system:String x:Key="flowlauncher_plugin_calculator_expression_not_complete">Expressão errada ou incompleta (esqueceu-se de algum parêntese?)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_copy_number_to_clipboard">Copiar número para a área de transferência</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_seperator">Separador decimal</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_seperator_help">O separador decimal a ser usado no resultado.</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_seperator_help">O separador decimal para utilizar no resultado.</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_use_system_locale">Utilizar definições do sistema</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_comma">Vírgula (,)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_dot">Ponto (.)</system:String>

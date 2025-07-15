@@ -7,10 +7,11 @@
     "*",
     "*"
   ],
+  "HideActionKeywordPanel": true,
   "Name": "Explorer",
   "Description": "Find and manage files and folders via Windows Search or Everything",
   "Author": "Jeremy Wu",
-  "Version": "3.2.4",
+  "Version": "1.0.0",
   "Language": "csharp",
   "Website": "https://github.com/Flow-Launcher/Flow.Launcher",
   "ExecuteFileName": "Flow.Launcher.Plugin.Explorer.dll",

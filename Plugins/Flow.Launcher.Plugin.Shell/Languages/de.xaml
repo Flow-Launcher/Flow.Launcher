@@ -6,6 +6,7 @@
     <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">Drücken Sie eine beliebige Taste, um dieses Fenster zu schließen ...</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">Eingabeaufforderung nach Befehlsausführung nicht schließen</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">Immer als Administrator ausführen</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_use_windows_terminal">Windows-Terminal verwenden</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">Als anderer Benutzer ausführen</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">Shell</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Ermöglicht das Ausführen von Systembefehlen aus Flow Launcher</system:String>

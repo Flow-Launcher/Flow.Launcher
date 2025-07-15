@@ -7,12 +7,18 @@
         Click no if it's already installed, and you will be prompted to select the folder that contains the {1} executable
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Please select the {0} executable</system:String>
+    <system:String x:Key="runtimeExecutableInvalidChooseDownload">
+        Your selected {0} executable is invalid.
+        {2}{2}
+        Click yes if you would like select the {0} executable again. Click no if you would like to download {1}
+    </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Unable to set {0} executable path, please try from Flow's settings (scroll down to the bottom).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Fail to Init Plugins</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">Plugins: {0} - fail to load and would be disabled, please contact plugin creator for help</system:String>
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Failed to register hotkey &quot;{0}&quot;. The hotkey may be in use by another program. Change to a different hotkey, or exit another program.</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">단축키 &quot;{0}&quot; 등록 해제에 실패했습니다. 다시 시도하시거나 로그를 확인하세요</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">{0}을 실행할 수 없습니다.</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Flow Launcher 플러그인 파일 형식이 유효하지 않습니다.</system:String>
@@ -37,6 +43,7 @@
     <system:String x:Key="GameModeToolTip">단축키 사용을 일시중단합니다.</system:String>
     <system:String x:Key="PositionReset">창 위치 초기화</system:String>
     <system:String x:Key="PositionResetToolTip">검색창 위치 초기화</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">검색어 입력</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">설정</system:String>
@@ -44,6 +51,8 @@
     <system:String x:Key="portableMode">포터블 모드</system:String>
     <system:String x:Key="portableModeToolTIp">모든 설정이 폴더안에 들어갑니다. USB 드라이브나 클라우드로 사용 가능합니다.</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">시스템 시작 시 Flow Launcher 실행</system:String>
+    <system:String x:Key="useLogonTaskForStartup">더 빠른 시작을 위해 시작 프로그램 항목 대신 로그온 Task 사용</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">Flow Launcher를 제거한 후에는 작업 스케줄러에서 이 작업(Flow.Launcher Startup)을 수동으로 삭제해야 합니다</system:String>
     <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">포커스 잃으면 Flow Launcher 숨김</system:String>
     <system:String x:Key="dontPromptUpdateMsg">새 버전 알림 끄기</system:String>
@@ -67,8 +76,6 @@
     <system:String x:Key="LastQueryEmpty">직전 쿼리 지우기</system:String>
     <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
     <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
-    <system:String x:Key="KeepMaxResults">창 높이 고정</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">드래그로 창 높이를 조정하지 않습니다.</system:String>
     <system:String x:Key="maxShowResults">표시할 결과 수</system:String>
     <system:String x:Key="maxShowResultsToolTip">Ctrl + '+'키와 Ctrl + '-'키로도 빠르게 조정할 수 있습니다</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">전체화면 모드에서는 단축키 무시</system:String>
@@ -86,7 +93,7 @@
     <system:String x:Key="autoUpdates">자동 업데이트</system:String>
     <system:String x:Key="select">선택</system:String>
     <system:String x:Key="hideOnStartup">시작 시 Flow Launcher 숨김</system:String>
-    <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
+    <system:String x:Key="hideOnStartupToolTip">Flowr Launcher가 트레이에 숨겨진 상태로 시작합니다.</system:String>
     <system:String x:Key="hideNotifyIcon">트레이 아이콘 숨기기</system:String>
     <system:String x:Key="hideNotifyIconToolTip">트레이에서 아이콘을 숨길 경우, 검색창 우클릭으로 설정창을 열 수 있습니다.</system:String>
     <system:String x:Key="querySearchPrecision">쿼리 검색 정밀도</system:String>
@@ -99,6 +106,33 @@
     <system:String x:Key="AlwaysPreview">항상 미리보기</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Flow 사용시 항상 미리보기 패널을 열어둡니다. {0} 키를 눌러 프리뷰창을 켜고 끌 수 있습니다.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">반투명 흐림 효과를 사용하는 경우, 그림자 효과를 쓸 수 없습니다.</system:String>
+    <system:String x:Key="searchDelay">검색 지연</system:String>
+    <system:String x:Key="searchDelayToolTip">타이핑 중 UI 깜빡임과 결과 로드를 줄이기 위해 짧은 지연을 추가합니다. 타이핑 속도가 평균 수준이라면 권장합니다.</system:String>
+    <system:String x:Key="searchDelayNumberBoxToolTip">입력이 완료된 것으로 감지될 때까지의 대기 시간(밀리초 단위)을 입력하세요. 이 항목은 검색 지연이 활성화된 경우에만 편집할 수 있습니다.</system:String>
+    <system:String x:Key="searchDelayTime">기본 검색 지연 시간</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">입력이 멈춘 후 결과를 표시하기까지의 대기 시간입니다. 값이 클수록 더 오래 기다립니다. (ms)</system:String>
+    <system:String x:Key="KoreanImeTitle">한국어 IME 사용 안내</system:String>
+    <system:String x:Key="KoreanImeGuide">
+        Windows 11에서 사용하는 한국어 IME가 Flow Launcher에서 일부 문제를 일으킬 수 있습니다. 문제가 발생하는 경우, “이전 버전의 Microsoft IME 사용” 옵션을 활성화해야 할 수 있습니다. Windows 11 설정을 열고 다음으로 이동하세요: 시간 및 언어 &gt; 언어 및 지역 &gt; 한국어 &gt; 언어 옵션 &gt; 키보드 옵션 – Microsoft IME &gt; 호환성에서 “이전 버전의 Microsoft IME 사용&quot;을 켭니다.
+
+
+    </system:String>
+    <system:String x:Key="KoreanImeOpenLink">시스템의 시간 및 언어 설정 열기</system:String>
+    <system:String x:Key="KoreanImeOpenLinkToolTip">한국어 IME 설정 위치를 엽니다. 한국어&gt;언어 옵션&gt;키보드 - Microsoft IME&gt; 호환성으로 이동하세요</system:String>
+    <system:String x:Key="KoreanImeOpenLinkButton">열기</system:String>
+    <system:String x:Key="KoreanImeRegistry">이전 버전의 Microsoft IME 사용</system:String>
+    <system:String x:Key="KoreanImeRegistryTooltip">이전 버전의 IME를 사용하도록 시스템 설정을 변경합니다</system:String>
+    <system:String x:Key="homePage">홈페이지</system:String>
+    <system:String x:Key="homePageToolTip">쿼리 입력창이 비어있을때, 홈페이지의 결과를 표시합니다.</system:String>
+    <system:String x:Key="historyResultsForHomePage">히스토리를 홈페이지에 표시</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">홈페이지에 표시할 최대 히스토리 수</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
+    <system:String x:Key="showAtTopmost">Show Search Window at Foremost</system:String>
+    <system:String x:Key="showAtTopmostToolTip">Overrides other programs' 'Always on Top' setting and displays Flow in the foremost position.</system:String>
+    <system:String x:Key="autoRestartAfterChanging">Restart after modifying plugin via Plugin Store</system:String>
+    <system:String x:Key="autoRestartAfterChangingToolTip">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugin Store</system:String>
+    <system:String x:Key="showUnknownSourceWarning">Show unknown source warning</system:String>
+    <system:String x:Key="showUnknownSourceWarningToolTip">Show warning when installing plugins from unknown sources</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">플러그인 검색</system:String>
@@ -115,6 +149,13 @@
     <system:String x:Key="currentActionKeywords">현재 액션 키워드</system:String>
     <system:String x:Key="newActionKeyword">새 액션 키워드</system:String>
     <system:String x:Key="actionKeywordsTooltip">액션 키워드 변경</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Plugin search delay time</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Search Delay Time</system:String>
+    <system:String x:Key="FilterComboboxLabel">고급 설정:</system:String>
+    <system:String x:Key="DisplayModeOnOff">켬</system:String>
+    <system:String x:Key="DisplayModePriority">중요</system:String>
+    <system:String x:Key="DisplayModeSearchDelay">검색 지연</system:String>
+    <system:String x:Key="DisplayModeHomeOnOff">홈페이지</system:String>
     <system:String x:Key="currentPriority">현재 중요도:</system:String>
     <system:String x:Key="newPriority">새 중요도:</system:String>
     <system:String x:Key="priority">중요도</system:String>
@@ -126,7 +167,16 @@
     <system:String x:Key="plugin_query_version">버전</system:String>
     <system:String x:Key="plugin_query_web">웹사이트</system:String>
     <system:String x:Key="plugin_uninstall">제거</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
+    <system:String x:Key="failedToRemovePluginCacheTitle">Fail to remove plugin cache</system:String>
+    <system:String x:Key="failedToRemovePluginCacheMessage">Plugins: {0} - Fail to remove plugin cache files, please remove them manually</system:String>
+    <system:String x:Key="pluginModifiedAlreadyTitle">{0} modified already</system:String>
+    <system:String x:Key="pluginModifiedAlreadyMessage">Please restart Flow before making any further changes</system:String>
+    <system:String x:Key="failedToInstallPluginTitle">Fail to install {0}</system:String>
+    <system:String x:Key="failedToUninstallPluginTitle">Fail to uninstall {0}</system:String>
+    <system:String x:Key="fileNotFoundMessage">Unable to find plugin.json from the extracted zip file, or this path {0} does not exist</system:String>
+    <system:String x:Key="pluginExistAlreadyMessage">A plugin with the same ID and version already exists, or the version is greater than this downloaded plugin</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">플러그인 스토어</system:String>
@@ -142,8 +192,28 @@
     <system:String x:Key="LabelNew">새 버전</system:String>
     <system:String x:Key="LabelNewToolTip">이 플러그인은 최근 7일 사이 업데이트 되었습니다</system:String>
     <system:String x:Key="LabelUpdateToolTip">새 업데이트 설치 가능</system:String>
-
-
+    <system:String x:Key="ErrorInstallingPlugin">Error installing plugin</system:String>
+    <system:String x:Key="ErrorUninstallingPlugin">Error uninstalling plugin</system:String>
+    <system:String x:Key="ErrorUpdatingPlugin">Error updating plugin</system:String>
+    <system:String x:Key="KeepPluginSettingsTitle">Keep plugin settings</system:String>
+    <system:String x:Key="KeepPluginSettingsSubtitle">Do you want to keep the settings of the plugin for the next usage?</system:String>
+    <system:String x:Key="InstallSuccessNoRestart">Plugin {0} successfully installed. Please restart Flow.</system:String>
+    <system:String x:Key="UninstallSuccessNoRestart">Plugin {0} successfully uninstalled. Please restart Flow.</system:String>
+    <system:String x:Key="UpdateSuccessNoRestart">Plugin {0} successfully updated. Please restart Flow.</system:String>
+    <system:String x:Key="InstallPromptTitle">Plugin install</system:String>
+    <system:String x:Key="InstallPromptSubtitle">{0} by {1} {2}{2}Would you like to install this plugin?</system:String>
+    <system:String x:Key="UninstallPromptTitle">Plugin uninstall</system:String>
+    <system:String x:Key="UninstallPromptSubtitle">{0} by {1} {2}{2}Would you like to uninstall this plugin?</system:String>
+    <system:String x:Key="UpdatePromptTitle">Plugin update</system:String>
+    <system:String x:Key="UpdatePromptSubtitle">{0} by {1} {2}{2}Would you like to update this plugin?</system:String>
+    <system:String x:Key="DownloadingPlugin">플러그인 다운로드 중</system:String>
+    <system:String x:Key="AutoRestartAfterChange">Automatically restart after installing/uninstalling/updating plugins in plugin store</system:String>
+    <system:String x:Key="ZipFileNotHavePluginJson">Zip file does not have a valid plugin.json configuration</system:String>
+    <system:String x:Key="InstallFromUnknownSourceTitle">Installing from an unknown source</system:String>
+    <system:String x:Key="InstallFromUnknownSourceSubtitle">This plugin is from an unknown source and it may contain potential risks!{0}{0}Please ensure you understand where this plugin is from and that it is safe.{0}{0}Would you like to continue still?{0}{0}(You can switch off this warning in general section of setting window)</system:String>
+    <system:String x:Key="ZipFiles">Zip files</system:String>
+    <system:String x:Key="SelectZipFile">Please select zip file</system:String>
+    <system:String x:Key="installLocalPluginTooltip">Install plugin from local path</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">테마</system:String>
@@ -153,18 +223,21 @@
     <system:String x:Key="hiThere">안녕하세요!</system:String>
     <system:String x:Key="SampleTitleExplorer">탐색기</system:String>
     <system:String x:Key="SampleSubTitleExplorer">Search for files, folders and file contents</system:String>
-    <system:String x:Key="SampleTitleWebSearch">WebSearch</system:String>
-    <system:String x:Key="SampleSubTitleWebSearch">Search the web with different search engine support</system:String>
+    <system:String x:Key="SampleTitleWebSearch">웹 검색</system:String>
+    <system:String x:Key="SampleSubTitleWebSearch">다양한 검색 엔진을 통해 웹을 검색합니다</system:String>
     <system:String x:Key="SampleTitleProgram">프로그램</system:String>
     <system:String x:Key="SampleSubTitleProgram">Launch programs as admin or a different user</system:String>
-    <system:String x:Key="SampleTitleProcessKiller">ProcessKiller</system:String>
-    <system:String x:Key="SampleSubTitleProcessKiller">Terminate unwanted processes</system:String>
+    <system:String x:Key="SampleTitleProcessKiller">프로세스 킬러</system:String>
+    <system:String x:Key="SampleSubTitleProcessKiller">필요없는 프로세스를 종료합니다</system:String>
     <system:String x:Key="SearchBarHeight">검색창 높이</system:String>
     <system:String x:Key="ItemHeight">결과 항목 높이</system:String>
     <system:String x:Key="queryBoxFont">쿼리 상자 글꼴</system:String>
     <system:String x:Key="resultItemFont">결과 제목 글꼴</system:String>
     <system:String x:Key="resultSubItemFont">결과 부제목 글꼴</system:String>
     <system:String x:Key="resetCustomize">초기화</system:String>
+    <system:String x:Key="resetCustomizeToolTip">권장되는 글꼴 및 크기 설정으로 초기화 합니다.</system:String>
+    <system:String x:Key="ImportThemeSize">테마 크기 가져오기</system:String>
+    <system:String x:Key="ImportThemeSizeToolTip">테마 디자이너가 의도한 크기 값이 존재하는 경우, 해당 값을 불러와 적용합니다.</system:String>
     <system:String x:Key="CustomizeToolTip">사용자 지정</system:String>
     <system:String x:Key="windowMode">윈도우 모드</system:String>
     <system:String x:Key="opacity">투명도</system:String>
@@ -191,9 +264,21 @@
     <system:String x:Key="AnimationSpeedCustom">사용자 정의</system:String>
     <system:String x:Key="Clock">시계</system:String>
     <system:String x:Key="Date">날짜</system:String>
-    <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
-    <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
-
+    <system:String x:Key="BackdropType">배경 효과 타입</system:String>
+    <system:String x:Key="BackdropInfo">프리뷰 영역에선 배경효과가 적용되지 않아요.</system:String>
+    <system:String x:Key="BackdropTypeDisabledToolTip">배경 효과는 윈도우 11 빌드 22000 이상부터 지원합니다</system:String>
+    <system:String x:Key="BackdropTypesNone">없음</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">아크릴</system:String>
+    <system:String x:Key="BackdropTypesMica">마이카</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">마이카 변형</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">This theme supports two (light/dark) modes.</system:String>
+    <system:String x:Key="TypeHasBlurToolTip">이 테마는 흐릿한 배경 효과를 지원합니다.</system:String>
+    <system:String x:Key="ShowPlaceholder">안내 텍스트 표시</system:String>
+    <system:String x:Key="ShowPlaceholderTip">입력 내용이 없을때 입력창 위치를 알 수 있는 텍스트를 표시합니다</system:String>
+    <system:String x:Key="PlaceholderText">안내 텍스트</system:String>
+    <system:String x:Key="PlaceholderTextTip">안내 텍스트를 변경하세요. 아무것도 입력하지 않으면 다음을 사용합니다: &quot;{0}&quot;</system:String>
+    <system:String x:Key="KeepMaxResults">창 크기 고정</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">창 크기를 드래그하여 조절할 수 없습니다.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">단축키</system:String>
@@ -203,13 +288,13 @@
     <system:String x:Key="previewHotkey">미리보기 전환</system:String>
     <system:String x:Key="previewHotkeyToolTip">미리보기 패널을 켜고 끌 때 사용할 단축키를 입력하세요.</system:String>
     <system:String x:Key="hotkeyPresets">단축키 프리셋</system:String>
-    <system:String x:Key="hotkeyPresetsToolTip">List of currently registered hotkeys</system:String>
+    <system:String x:Key="hotkeyPresetsToolTip">현재 등록된 단축키 목록</system:String>
     <system:String x:Key="openResultModifiers">결과 선택 단축키</system:String>
     <system:String x:Key="openResultModifiersToolTip">결과 항목을 선택하는 단축키입니다.</system:String>
     <system:String x:Key="showOpenResultHotkey">단축키 표시</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">결과창에서 결과 선택 단축키를 표시합니다.</system:String>
     <system:String x:Key="autoCompleteHotkey">자동 완성</system:String>
-    <system:String x:Key="autoCompleteHotkeyToolTip">Runs autocomplete for the selected items.</system:String>
+    <system:String x:Key="autoCompleteHotkeyToolTip">선택된 항목에 대해 자동 완성을 실행합니다.</system:String>
     <system:String x:Key="SelectNextItemHotkey">다음 항목 선택</system:String>
     <system:String x:Key="SelectPrevItemHotkey">이전 항목 선택</system:String>
     <system:String x:Key="SelectNextPageHotkey">다음 페이지</system:String>
@@ -217,7 +302,7 @@
     <system:String x:Key="CycleHistoryUpHotkey">이전 쿼리로 전환</system:String>
     <system:String x:Key="CycleHistoryDownHotkey">다음 쿼리로 전환</system:String>
     <system:String x:Key="OpenContextMenuHotkey">콘텍스트 메뉴 열기</system:String>
-    <system:String x:Key="OpenNativeContextMenuHotkey">Open Native Context Menu</system:String>
+    <system:String x:Key="OpenNativeContextMenuHotkey">시스템 우클릭 메뉴 열기</system:String>
     <system:String x:Key="SettingWindowHotkey">설정창 열기</system:String>
     <system:String x:Key="CopyFilePathHotkey">파일 경로 복사</system:String>
     <system:String x:Key="ToggleGameModeHotkey">게임 모드 전환</system:String>
@@ -253,6 +338,9 @@
     <system:String x:Key="useGlyphUI">플루언트 아이콘 사용</system:String>
     <system:String x:Key="useGlyphUIEffect">결과 및 일부 메뉴에서 플루언트 아이콘을 사용합니다.</system:String>
     <system:String x:Key="flowlauncherPressHotkey">사용할 키를 누르세요</system:String>
+    <system:String x:Key="showBadges">결과 뱃지 표시</system:String>
+    <system:String x:Key="showBadgesToolTip">For supported plugins, badges are displayed to help distinguish them more easily.</system:String>
+    <system:String x:Key="showBadgesGlobalOnly">전역 검색 결과에서만 뱃지 표시</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP 프록시</system:String>
@@ -293,20 +381,39 @@
     <system:String x:Key="logfolder">로그 폴더</system:String>
     <system:String x:Key="clearlogfolder">로그 삭제</system:String>
     <system:String x:Key="clearlogfolderMessage">정말 모든 로그를 삭제하시겠습니까?</system:String>
+    <system:String x:Key="cachefolder">캐시 폴더</system:String>
+    <system:String x:Key="clearcachefolder">캐시 지우기</system:String>
+    <system:String x:Key="clearcachefolderMessage">모든 캐시를 삭제하시겠습니까?</system:String>
+    <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
     <system:String x:Key="welcomewindow">마법사</system:String>
     <system:String x:Key="userdatapath">사용자 데이터 위치</system:String>
     <system:String x:Key="userdatapathToolTip">사용자 설정과 설치된 플러그인은 사용자 데이터 폴더에 저장됩니다. 이 위치는 휴대용 모드 활성화 여부에 따라 달라질 수 있습니다.</system:String>
     <system:String x:Key="userdatapathButton">폴더 열기</system:String>
+    <system:String x:Key="advanced">Advanced</system:String>
+    <system:String x:Key="logLevel">로그 레벨</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelINFO">Info</system:String>
+    <system:String x:Key="settingWindowFontTitle">설정창 글꼴</system:String>
+
+    <!--  Release Notes Window  -->
+    <system:String x:Key="seeMoreReleaseNotes">See more release notes on GitHub</system:String>
+    <system:String x:Key="checkNetworkConnectionTitle">Failed to fetch release notes</system:String>
+    <system:String x:Key="checkNetworkConnectionSubTitle">Please check your network connection or ensure GitHub is accessible</system:String>
+    <system:String x:Key="appUpdateTitle">Flow Launcher has been updated to {0}</system:String>
+    <system:String x:Key="appUpdateButtonContent">Click here to view the release notes</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">파일관리자 선택</system:String>
-    <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments as required. The &quot;%d&quot; represents the directory path to open for, used by the Arg for Folder field and for commands opening specific directories. The &quot;%f&quot; represents the file path to open for, used by the Arg for File field and for commands opening specific files.</system:String>
-    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fileds blank.</system:String>
+    <system:String x:Key="fileManager_learnMore">더 알아보기</system:String>
+    <system:String x:Key="fileManager_tips">사용 중인 파일 관리자의 파일 위치를 지정하고, 필요한 경우 인수를 추가하세요. &quot;%d&quot;는 열고자 하는 디렉터리 경로를 나타내며, 폴더용 인수 필드 및 특정 디렉터리를 여는 명령어에서 사용됩니다. &quot;%f&quot;는 열고자 하는 파일 경로를 나타내며, 파일용 인수 필드 및 특정 파일을 여는 명령어에서 사용됩니다.</system:String>
+    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fields blank.</system:String>
     <system:String x:Key="fileManager_name">파일관리자</system:String>
     <system:String x:Key="fileManager_profile_name">프로필 이름</system:String>
     <system:String x:Key="fileManager_path">파일관리자 경로</system:String>
     <system:String x:Key="fileManager_directory_arg">폴더경로 인수</system:String>
     <system:String x:Key="fileManager_file_arg">파일경로 인수</system:String>
+    <system:String x:Key="fileManagerPathNotFound">The file manager '{0}' could not be located at '{1}'. Would you like to continue?</system:String>
+    <system:String x:Key="fileManagerPathError">File Manager Path Error</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">기본 웹 브라우저</system:String>
@@ -331,22 +438,33 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">플러그인을 찾을 수 없습니다.</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">새 액션 키워드를 입력하세요.</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">새 액션 키워드가 할당된 플러그인이 이미 있습니다. 다른 액션 키워드를 입력하세요.</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">이 새로운 액션 키워드는 기존 것과 동일합니다. 다른 키워드를 선택해주세요.</system:String>
     <system:String x:Key="success">성공</system:String>
     <system:String x:Key="completedSuccessfully">성공적으로 완료했습니다.</system:String>
-    <system:String x:Key="actionkeyword_tips">플러그인을 시작하는데 필요한 액션 키워드를 입력하세요. 액션 키워드를 지정하지 않으려면 *를 사용하세요. 이 경우 키워드를 입력하지 않아도 동작합니다.</system:String>
+    <system:String x:Key="failedToCopy">Failed to copy</system:String>
+    <system:String x:Key="actionkeyword_tips">플러그인을 실행할 때 사용할 액션 키워드를 입력하세요. 여러 개를 입력할 경우 공백으로 구분하세요. 아무 키워드도 지정하지 않으려면 * 를 입력하세요. 이 경우 액션 키워드 없이도 플러그인이 실행됩니다.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="searchDelayTimeTitle">검색 지연 시간 설정</system:String>
+    <system:String x:Key="searchDelayTimeTips">플러그인에서 사용할 검색 지연 시간(ms)을 입력하세요. 지정하지 않으려면 비워두세요. 기본 검색 지연 시간이 사용됩니다.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="homeTitle">홈페이지</system:String>
+    <system:String x:Key="homeTips">Enable the plugin home page state if you like to show the plugin results when query is empty.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">사용자지정 쿼리 단축키</system:String>
     <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Launcher and input the specified query automatically.</system:String>
     <system:String x:Key="preview">미리보기</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">단축키를 사용할 수 없습니다. 다른 단축키를 입력하세요.</system:String>
-    <system:String x:Key="invalidPluginHotkey">플러그인 단축키가 유효하지 않습니다.</system:String>
+    <system:String x:Key="invalidPluginHotkey">Hotkey is invalid</system:String>
     <system:String x:Key="update">업데이트</system:String>
     <system:String x:Key="hotkeyRegTitle">Binding Hotkey</system:String>
     <system:String x:Key="hotkeyUnavailable">Current hotkey is unavailable.</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for &quot;{0}&quot; and can't be used. Please choose another hotkey.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">This hotkey is already in use by &quot;{0}&quot;. If you press &quot;Overwrite&quot;, it will be removed from &quot;{0}&quot;.</system:String>
-    <system:String x:Key="hotkeyRegGuide">Press the keys you want to use for this function.</system:String>
+    <system:String x:Key="hotkeyRegGuide">이 기능에 사용할 키를 눌러주세요.</system:String>
+    <system:String x:Key="emptyPluginHotkey">Hotkey and action keyword are empty</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">사용자 지정 쿼리 단축어</system:String>
@@ -357,16 +475,18 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     </system:String>
     <system:String x:Key="duplicateShortcut">Shortcut already exists, please enter a new Shortcut or edit the existing one.</system:String>
     <system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
+    <system:String x:Key="invalidShortcut">Shortcut is invalid</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">저장</system:String>
-    <system:String x:Key="commonOverwrite">Overwrite</system:String>
+    <system:String x:Key="commonOverwrite">덮어쓰기</system:String>
     <system:String x:Key="commonCancel">취소</system:String>
-    <system:String x:Key="commonReset">Reset</system:String>
+    <system:String x:Key="commonReset">초기화</system:String>
     <system:String x:Key="commonDelete">삭제</system:String>
     <system:String x:Key="commonOK">확인</system:String>
-    <system:String x:Key="commonYes">Yes</system:String>
-    <system:String x:Key="commonNo">No</system:String>
+    <system:String x:Key="commonYes">예</system:String>
+    <system:String x:Key="commonNo">아니오</system:String>
+    <system:String x:Key="commonBackground">배경</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">버전</system:String>
@@ -383,6 +503,18 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="reportWindow_report_succeed">보고서를 정상적으로 보냈습니다.</system:String>
     <system:String x:Key="reportWindow_report_failed">보고서를 보내지 못했습니다.</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher에 문제가 발생했습니다.</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
+    <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
+    <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
+
+    <!--  File Open Error  -->
+    <system:String x:Key="fileManagerNotFoundTitle">File Manager Error</system:String>
+    <system:String x:Key="fileManagerNotFound">
+        The specified file manager could not be found. Please check the Custom File Manager setting under Settings &gt; General.
+    </system:String>
+    <system:String x:Key="errorTitle">Error</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder. {0}</system:String>
+    <system:String x:Key="browserOpenError">An error occurred while opening the URL in the browser. Please check your Default Web Browser configuration in the General section of the settings window</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">잠시 기다려주세요...</system:String>

@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using Windows.ApplicationModel;
 using Windows.Management.Deployment;
-using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.Program.Logger;
 using Flow.Launcher.Plugin.SharedModels;
 using System.Threading.Channels;
@@ -290,13 +289,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        private static Channel<byte> PackageChangeChannel = Channel.CreateBounded<byte>(1);
+        private static readonly Channel<byte> PackageChangeChannel = Channel.CreateBounded<byte>(1);
+        private static PackageCatalog? catalog;
 
-        public static async Task WatchPackageChange()
+        public static async Task WatchPackageChangeAsync()
         {
             if (Environment.OSVersion.Version.Major >= 10)
             {
-                var catalog = PackageCatalog.OpenForCurrentUser();
+                catalog ??= PackageCatalog.OpenForCurrentUser();
                 catalog.PackageInstalling += (_, args) =>
                 {
                     if (args.IsComplete)
@@ -317,7 +317,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     await Task.Delay(3000).ConfigureAwait(false);
                     PackageChangeChannel.Reader.TryRead(out _);
-                    await Task.Run(Main.IndexUwpPrograms);
+                    await Task.Run(Main.IndexUwpProgramsAsync);
                 }
             }
         }
@@ -403,13 +403,13 @@ namespace Flow.Launcher.Plugin.Program.Programs
             if (!Main._settings.EnableDescription || string.IsNullOrWhiteSpace(Description) || Name.Equals(Description))
             {
                 title = Name;
-                matchResult = StringMatcher.FuzzySearch(query, Name);
+                matchResult = Main.Context.API.FuzzySearch(query, Name);
             }
             else
             {
                 title = $"{Name}: {Description}";
-                var nameMatch = StringMatcher.FuzzySearch(query, Name);
-                var descriptionMatch = StringMatcher.FuzzySearch(query, Description);
+                var nameMatch = Main.Context.API.FuzzySearch(query, Name);
+                var descriptionMatch = Main.Context.API.FuzzySearch(query, Description);
                 if (descriptionMatch.Score > nameMatch.Score)
                 {
                     for (int i = 0; i < descriptionMatch.MatchData.Count; i++)
@@ -425,7 +425,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 }
             }
 
-            if (!matchResult.IsSearchPrecisionScoreMet())
+            if (!matchResult.IsSearchPrecisionScoreMet() && !string.IsNullOrEmpty(query))
                 return null;
 
             var result = new Result
@@ -469,7 +469,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 }
             };
 
-
             return result;
         }
 
@@ -477,7 +476,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
         {
             var contextMenus = new List<Result>
             {
-                new Result
+                new()
                 {
                     Title = api.GetTranslation("flowlauncher_plugin_program_open_containing_folder"),
                     Action = _ =>
@@ -496,9 +495,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 contextMenus.Add(new Result
                 {
                     Title = api.GetTranslation("flowlauncher_plugin_program_run_as_administrator"),
-                    Action = _ =>
+                    Action = c =>
                     {
-                        Task.Run(() => Launch(true)).ConfigureAwait(false);
+                        _ = Task.Run(() => Launch(true)).ConfigureAwait(false);
                         return true;
                     },
                     IcoPath = "Images/cmd.png",
@@ -539,7 +538,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 ProgramLogger.LogException($"|UWP|LogoPathFromUri|{Location}" +
                                            $"|{UserModelId} 's logo uri is null or empty: {Location}",
-                    new ArgumentException("uri"));
+                    new ArgumentException(null, nameof(uri)));
                 return string.Empty;
             }
 

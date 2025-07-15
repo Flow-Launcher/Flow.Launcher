@@ -34,6 +34,8 @@
     <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">Приховує програми з поширеними назвами деінсталяторів, наприклад, unins000.exe</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">Пошук в описі програми</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow буде шукати опис програми</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp">Приховати дублікати застосунків</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp_tooltip">Приховати дублікати програми Win32, які вже є в списку UWP</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Суфікси</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">Максимальна глибина</system:String>
 
@@ -44,6 +46,8 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">Будь ласка, виберіть джерело програми</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">Ви впевнені, що хочете видалити вибрані джерела програм?</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_not_user_added">Виберіть джерела програм, які не були додані вами.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_user_added">Виберіть джерела програм, які були додані вами.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Інше програмне джерело з тим самим розташуванням вже існує.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Вихідний код програми</system:String>
@@ -72,7 +76,7 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Запустити від імені іншого користувача</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Запустити від імені адміністратора</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Відкрити папку</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">Вимкнути відображення цієї програми</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">Приховати</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Відкрити цільову папку</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Програма</system:String>
@@ -82,8 +86,7 @@
 
     <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Кастомізований провідник</system:String>
     <system:String x:Key="flowlauncher_plugin_program_args">Аргументи</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">Ви можете налаштувати провідник, який використовується для відкриття теки контейнера, ввівши змінну середовища провідника, який ви хочете використовувати. Буде корисно скористатися командою CMD для перевірки доступності змінної середовища.</system:String>
-
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">Ви можете налаштувати провідник, який використовується для відкриття теки контейнера, ввівши змінну середовища провідника, який ви хочете використовувати. Буде корисно використовувати CMD, аби перевірити, чи доступна змінна середовища.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Введіть спеціальні аргументи, які ви хочете додати до вашого провідника. %s для батьківського каталогу, %f для повного шляху (працює лише для win32). Докладнішу інформацію можна знайти на веб-сайті провідника.</system:String>
 
     <!--  Dialogs  -->

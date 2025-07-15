@@ -1,28 +1,29 @@
-﻿using Microsoft.Win32;
-using Squirrel;
-using System;
+﻿using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Windows;
-using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Infrastructure.UserSettings;
-using Flow.Launcher.Plugin.SharedCommands;
-using System.Linq;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedCommands;
+using Microsoft.Win32;
+using Squirrel;
 
 namespace Flow.Launcher.Core.Configuration
 {
     public class Portable : IPortable
     {
+        private static readonly string ClassName = nameof(Portable);
+
         private readonly IPublicAPI API = Ioc.Default.GetRequiredService<IPublicAPI>();
 
         /// <summary>
         /// As at Squirrel.Windows version 1.5.2, UpdateManager needs to be disposed after finish
         /// </summary>
         /// <returns></returns>
-        private UpdateManager NewUpdateManager()
+        private static UpdateManager NewUpdateManager()
         {
             var applicationFolderName = Constant.ApplicationDirectory
                                             .Split(new[] { Path.DirectorySeparatorChar }, StringSplitOptions.None)
@@ -51,7 +52,7 @@ namespace Flow.Launcher.Core.Configuration
             }
             catch (Exception e)
             {
-                Log.Exception("|Portable.DisablePortableMode|Error occurred while disabling portable mode", e);
+                API.LogException(ClassName, "Error occurred while disabling portable mode", e);
             }
         }
 
@@ -75,26 +76,22 @@ namespace Flow.Launcher.Core.Configuration
             }
             catch (Exception e)
             {
-                Log.Exception("|Portable.EnablePortableMode|Error occurred while enabling portable mode", e);
+                API.LogException(ClassName, "Error occurred while enabling portable mode", e);
             }
         }
 
         public void RemoveShortcuts()
         {
-            using (var portabilityUpdater = NewUpdateManager())
-            {
-                portabilityUpdater.RemoveShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.StartMenu);
-                portabilityUpdater.RemoveShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.Desktop);
-                portabilityUpdater.RemoveShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.Startup);
-            }
+            using var portabilityUpdater = NewUpdateManager();
+            portabilityUpdater.RemoveShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.StartMenu);
+            portabilityUpdater.RemoveShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.Desktop);
+            portabilityUpdater.RemoveShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.Startup);
         }
 
         public void RemoveUninstallerEntry()
         {
-            using (var portabilityUpdater = NewUpdateManager())
-            {
-                portabilityUpdater.RemoveUninstallerRegistryEntry();
-            }
+            using var portabilityUpdater = NewUpdateManager();
+            portabilityUpdater.RemoveUninstallerRegistryEntry();
         }
 
         public void MoveUserDataFolder(string fromLocation, string toLocation)
@@ -110,12 +107,10 @@ namespace Flow.Launcher.Core.Configuration
 
         public void CreateShortcuts()
         {
-            using (var portabilityUpdater = NewUpdateManager())
-            {
-                portabilityUpdater.CreateShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.StartMenu, false);
-                portabilityUpdater.CreateShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.Desktop, false);
-                portabilityUpdater.CreateShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.Startup, false);
-            }
+            using var portabilityUpdater = NewUpdateManager();
+            portabilityUpdater.CreateShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.StartMenu, false);
+            portabilityUpdater.CreateShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.Desktop, false);
+            portabilityUpdater.CreateShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.Startup, false);
         }
 
         public void CreateUninstallerEntry()
@@ -129,18 +124,14 @@ namespace Flow.Launcher.Core.Configuration
                 subKey2.SetValue("DisplayIcon", Path.Combine(Constant.ApplicationDirectory, "app.ico"), RegistryValueKind.String);
             }
 
-            using (var portabilityUpdater = NewUpdateManager())
-            {
-                _ = portabilityUpdater.CreateUninstallerRegistryEntry();
-            }
+            using var portabilityUpdater = NewUpdateManager();
+            _ = portabilityUpdater.CreateUninstallerRegistryEntry();
         }
 
-        internal void IndicateDeletion(string filePathTodelete)
+        private static void IndicateDeletion(string filePathTodelete)
         {
             var deleteFilePath = Path.Combine(filePathTodelete, DataLocation.DeletionIndicatorFile);
-            using (var _ = File.CreateText(deleteFilePath))
-            {
-            }
+            using var _ = File.CreateText(deleteFilePath);
         }
 
         ///<summary>

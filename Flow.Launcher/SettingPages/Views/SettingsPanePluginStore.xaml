@@ -27,8 +27,8 @@
     </ui:Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="72" />
@@ -37,9 +37,9 @@
         <Border
             Grid.Row="0"
             Grid.Column="0"
-            Padding="5,18,0,0">
+            Padding="5 18 0 0">
             <TextBlock
-                Margin="0,5"
+                Margin="0 5"
                 FontSize="30"
                 Style="{StaticResource PageTitle}"
                 Text="{DynamicResource pluginStore}"
@@ -49,70 +49,117 @@
         <DockPanel
             Grid.Row="0"
             Grid.Column="1"
-            Margin="5,24,0,0">
+            Margin="5 24 0 0">
 
-            <TextBox
-                Name="PluginStoreFilterTextbox"
-                Width="150"
-                Height="34"
-                Margin="0,0,26,0"
-                HorizontalAlignment="Right"
-                ContextMenu="{StaticResource TextBoxContextMenu}"
-                DockPanel.Dock="Right"
-                FontSize="14"
-                Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"
-                TextAlignment="Left"
-                ToolTip="{DynamicResource searchpluginToolTip}"
-                ToolTipService.InitialShowDelay="200"
-                ToolTipService.Placement="Top">
-                <TextBox.Style>
-                    <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
-                        <Style.Resources>
-                            <VisualBrush
-                                x:Key="CueBannerBrush"
-                                AlignmentX="Left"
-                                AlignmentY="Center"
-                                Stretch="None">
-                                <VisualBrush.Visual>
-                                    <Label
-                                        Padding="10,0,0,0"
-                                        Content="{DynamicResource searchplugin}"
-                                        Foreground="{DynamicResource CustomContextDisabled}" />
-                                </VisualBrush.Visual>
-                            </VisualBrush>
-                        </Style.Resources>
-                        <Style.Triggers>
-                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
-                                <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
-                            </Trigger>
-                            <Trigger Property="Text" Value="{x:Null}">
-                                <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
-                            </Trigger>
-                            <Trigger Property="IsKeyboardFocused" Value="True">
-                                <Setter Property="Background" Value="{DynamicResource Color02B}" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBox.Style>
-            </TextBox>
-            <Button
-                Height="34"
-                Margin="0,5,10,5"
-                Padding="12,4"
+            <StackPanel
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
-                Command="{Binding RefreshExternalPluginsCommand}"
-                Content="{DynamicResource refresh}"
                 DockPanel.Dock="Right"
-                FontSize="13" />
+                Orientation="Horizontal">
+                <Button
+                    Height="34"
+                    Margin="0 5 10 5"
+                    Padding="12 4"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Command="{Binding RefreshExternalPluginsCommand}"
+                    Content="{DynamicResource refresh}"
+                    FontSize="13" />
+                <Button Height="34" Margin="0 0 10 0">
+                    <ui:FontIcon FontSize="14" Glyph="&#xe71c;" />
+                    <ui:FlyoutService.Flyout>
+                        <ui:MenuFlyout x:Name="FilterFlyout" Placement="Bottom">
+                            <MenuItem
+                                Header=".Net"
+                                IsCheckable="True"
+                                IsChecked="{Binding ShowDotNet, Mode=TwoWay}"
+                                StaysOpenOnClick="True" />
+                            <MenuItem
+                                Header="Python"
+                                IsCheckable="True"
+                                IsChecked="{Binding ShowPython, Mode=TwoWay}"
+                                StaysOpenOnClick="True" />
+                            <MenuItem
+                                Header="Node.js"
+                                IsCheckable="True"
+                                IsChecked="{Binding ShowNodeJs, Mode=TwoWay}"
+                                StaysOpenOnClick="True" />
+                            <MenuItem
+                                Header="Exe"
+                                IsCheckable="True"
+                                IsChecked="{Binding ShowExecutable, Mode=TwoWay}"
+                                StaysOpenOnClick="True" />
+                        </ui:MenuFlyout>
+                    </ui:FlyoutService.Flyout>
+                </Button>
+                <Button
+                    Height="34"
+                    Margin="0 0 10 0"
+                    Command="{Binding InstallPluginCommand}"
+                    ToolTip="{DynamicResource installLocalPluginTooltip}">
+                    <ui:FontIcon FontSize="14" Glyph="&#xE8DA;" />
+                </Button>
+                <Button
+                    Height="34"
+                    Margin="0 0 10 0"
+                    Command="{Binding CheckPluginUpdatesCommand}"
+                    ToolTip="{DynamicResource checkPluginUpdatesTooltip}">
+                    <ui:FontIcon FontSize="14" Glyph="&#xecc5;" />
+                </Button>
+                <TextBox
+                    Name="PluginStoreFilterTextbox"
+                    Width="150"
+                    Height="34"
+                    Margin="0 0 26 0"
+                    HorizontalAlignment="Right"
+                    ContextMenu="{StaticResource TextBoxContextMenu}"
+                    DockPanel.Dock="Right"
+                    FontSize="14"
+                    Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"
+                    TextAlignment="Left"
+                    ToolTip="{DynamicResource searchpluginToolTip}"
+                    ToolTipService.InitialShowDelay="200"
+                    ToolTipService.Placement="Top">
+                    <TextBox.Style>
+                        <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
+                            <Style.Resources>
+                                <VisualBrush
+                                    x:Key="CueBannerBrush"
+                                    AlignmentX="Left"
+                                    AlignmentY="Center"
+                                    Stretch="None">
+                                    <VisualBrush.Visual>
+                                        <Label
+                                            Padding="10 0 0 0"
+                                            Content="{DynamicResource searchplugin}"
+                                            Foreground="{DynamicResource CustomContextDisabled}" />
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Style.Resources>
+                            <Style.Triggers>
+                                <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                </Trigger>
+                                <Trigger Property="Text" Value="{x:Null}">
+                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                </Trigger>
+                                <Trigger Property="IsKeyboardFocused" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource Color02B}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+            </StackPanel>
+
         </DockPanel>
         <ListView
             x:Name="StoreListBox"
             Grid.Row="1"
             Grid.Column="0"
             Grid.ColumnSpan="2"
-            Margin="4,0,0,0"
-            Padding="0,0,18,0"
+            Margin="4 0 0 0"
+            Padding="0 0 18 0"
             FontSize="14"
             ItemContainerStyle="{StaticResource StoreList}"
             ItemsSource="{Binding Source={StaticResource PluginStoreCollectionView}}"
@@ -125,7 +172,7 @@
                 <ItemsPanelTemplate>
                     <wpftk:VirtualizingWrapPanel
                         x:Name="ItemWrapPanel"
-                        Margin="0,0,0,10"
+                        Margin="0 0 0 10"
                         ItemSize="216,184"
                         MouseWheelDelta="48"
                         ScrollLineDelta="16"
@@ -143,7 +190,7 @@
                                         <Grid>
                                             <StackPanel Orientation="Vertical">
                                                 <TextBlock
-                                                    Margin="2,0,0,10"
+                                                    Margin="2 0 0 10"
                                                     VerticalAlignment="Top"
                                                     FontSize="16"
                                                     FontWeight="Bold"
@@ -231,10 +278,10 @@
                                     <VirtualizingStackPanel
                                         Grid.Row="0"
                                         Grid.Column="0"
-                                        Margin="5,0,0,0"
+                                        Margin="5 0 0 0"
                                         Orientation="Horizontal">
                                         <TextBlock
-                                            Margin="0,0,5,0"
+                                            Margin="0 0 5 0"
                                             VerticalAlignment="Center"
                                             FontSize="14"
                                             FontWeight="Bold"
@@ -253,7 +300,7 @@
                                     <TextBlock
                                         Grid.Row="1"
                                         Grid.Column="0"
-                                        Margin="5,4,0,0"
+                                        Margin="5 4 0 0"
                                         TextWrapping="Wrap">
                                         <Hyperlink
                                             Foreground="{DynamicResource Color04B}"
@@ -267,13 +314,13 @@
                                         Grid.Row="0"
                                         Grid.RowSpan="2"
                                         Grid.Column="1"
-                                        Margin="20,0,0,0"
+                                        Margin="20 0 0 0"
                                         HorizontalAlignment="Right"
                                         Orientation="Horizontal">
                                         <Button
                                             MinHeight="42"
-                                            Margin="5,0"
-                                            Padding="15,5"
+                                            Margin="5 0"
+                                            Padding="15 5"
                                             HorizontalAlignment="Stretch"
                                             VerticalAlignment="Center"
                                             Command="{Binding ShowCommandQueryCommand}"
@@ -282,8 +329,8 @@
                                             Visibility="{Binding LabelInstalled, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter='!'}" />
                                         <Button
                                             MinHeight="42"
-                                            Margin="5,0"
-                                            Padding="15,5"
+                                            Margin="5 0"
+                                            Padding="15 5"
                                             HorizontalAlignment="Right"
                                             VerticalAlignment="Center"
                                             Command="{Binding ShowCommandQueryCommand}"
@@ -292,8 +339,8 @@
                                             Visibility="{Binding LabelInstalled, Converter={StaticResource BoolToVisibilityConverter}}" />
                                         <Button
                                             MinHeight="42"
-                                            Margin="5,0"
-                                            Padding="15,5"
+                                            Margin="5 0"
+                                            Padding="15 5"
                                             HorizontalAlignment="Right"
                                             VerticalAlignment="Center"
                                             Command="{Binding ShowCommandQueryCommand}"
@@ -311,15 +358,15 @@
                                     <Image
                                         Width="32"
                                         Height="32"
-                                        Margin="18,24,0,0"
+                                        Margin="18 24 0 0"
                                         HorizontalAlignment="Left"
                                         RenderOptions.BitmapScalingMode="Fant"
                                         Source="{Binding IcoPath, IsAsync=True}" />
                                     <Border
                                         x:Name="LabelUpdate"
                                         Height="12"
-                                        Margin="10,24,0,0"
-                                        Padding="6,2"
+                                        Margin="10 24 0 0"
+                                        Padding="6 2"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Top"
                                         Background="#45BD59"
@@ -328,7 +375,7 @@
                                         Visibility="{Binding LabelUpdate, Converter={StaticResource BoolToVisibilityConverter}}" />
                                 </StackPanel>
                                 <TextBlock
-                                    Margin="18,10,18,0"
+                                    Margin="18 10 18 0"
                                     FontWeight="SemiBold"
                                     Foreground="{DynamicResource Color05B}"
                                     Text="{Binding Name}"
@@ -336,16 +383,14 @@
                                     ToolTip="{Binding Version}" />
                                 <TextBlock
                                     Height="60"
-                                    Margin="18,6,18,0"
-                                    Padding="0,0,0,10"
+                                    Margin="18 6 18 0"
+                                    Padding="0 0 0 10"
                                     FontSize="12"
                                     Foreground="{DynamicResource Color04B}"
                                     Text="{Binding Description, Mode=OneWay}"
                                     TextTrimming="WordEllipsis"
                                     TextWrapping="Wrap" />
-
                             </StackPanel>
-
                         </Grid>
                     </Button>
                 </DataTemplate>

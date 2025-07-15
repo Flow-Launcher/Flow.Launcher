@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core.ExternalPlugins
 {
@@ -39,10 +40,14 @@ namespace Flow.Launcher.Core.ExternalPlugins
                 var completedTask = await Task.WhenAny(tasks);
                 if (completedTask.IsCompletedSuccessfully)
                 {
-                    // one of the requests completed successfully; keep its results
-                    // and cancel the remaining http requests.
-                    pluginResults = await completedTask;
-                    cts.Cancel();
+                    var result = await completedTask;
+                    if (result != null)
+                    {
+                        // one of the requests completed successfully; keep its results
+                        // and cancel the remaining http requests.
+                        pluginResults = result;
+                        cts.Cancel();
+                    }
                 }
                 tasks.Remove(completedTask);
             }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -13,12 +12,18 @@ namespace Flow.Launcher.Plugin
     /// </summary>
     public class Result
     {
+        /// <summary>
+        /// Maximum score. This can be useful when set one result to the top by default. This is the score for the results set to the topmost by users.
+        /// </summary>
+        public const int MaxScore = int.MaxValue;
 
         private string _pluginDirectory;
 
         private string _icoPath;
 
         private string _copyText = string.Empty;
+
+        private string _badgeIcoPath;
 
         /// <summary>
         /// The title of the result. This is always required.
@@ -62,7 +67,7 @@ namespace Flow.Launcher.Plugin
         /// <remarks>GlyphInfo is prioritized if not null</remarks>
         public string IcoPath
         {
-            get { return _icoPath; }
+            get => _icoPath;
             set
             {
                 // As a standard this property will handle prepping and converting to absolute local path for icon image processing
@@ -83,6 +88,33 @@ namespace Flow.Launcher.Plugin
         }
 
         /// <summary>
+        /// The image to be displayed for the badge of the result.
+        /// </summary>
+        /// <value>Can be a local file path or a URL.</value>
+        /// <remarks>If null or empty, will use plugin icon</remarks>
+        public string BadgeIcoPath
+        {
+            get => _badgeIcoPath;
+            set
+            {
+                // As a standard this property will handle prepping and converting to absolute local path for icon image processing
+                if (!string.IsNullOrEmpty(value)
+                    && !string.IsNullOrEmpty(PluginDirectory)
+                    && !Path.IsPathRooted(value)
+                    && !value.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
+                    && !value.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
+                    && !value.StartsWith("data:image", StringComparison.OrdinalIgnoreCase))
+                {
+                    _badgeIcoPath = Path.Combine(PluginDirectory, value);
+                }
+                else
+                {
+                    _badgeIcoPath = value;
+                }
+            }
+        }
+
+        /// <summary>
         /// Determines if Icon has a border radius
         /// </summary>
         public bool RoundedIcon { get; set; } = false;
@@ -96,13 +128,17 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Delegate to load an icon for this result.
         /// </summary>
-        public IconDelegate Icon;
+        public IconDelegate Icon = null;
+
+        /// <summary>
+        /// Delegate to load an icon for the badge of this result.
+        /// </summary>
+        public IconDelegate BadgeIcon = null;
 
         /// <summary>
         /// Information for Glyph Icon (Prioritized than IcoPath/Icon if user enable Glyph Icons)
         /// </summary>
         public GlyphInfo Glyph { get; init; }
-
 
         /// <summary>
         /// An action to take in the form of a function call when the result has been selected.
@@ -145,57 +181,17 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         public string PluginDirectory
         {
-            get { return _pluginDirectory; }
+            get => _pluginDirectory;
             set
             {
                 _pluginDirectory = value;
 
                 // When the Result object is returned from the query call, PluginDirectory is not provided until
                 // UpdatePluginMetadata call is made at PluginManager.cs L196. Once the PluginDirectory becomes available
-                // we need to update (only if not Uri path) the IcoPath with the full absolute path so the image can be loaded.
+                // we need to update (only if not Uri path) the IcoPath and BadgeIcoPath with the full absolute path so the image can be loaded.
                 IcoPath = _icoPath;
+                BadgeIcoPath = _badgeIcoPath;
             }
-        }
-
-        /// <inheritdoc />
-        public override string ToString()
-        {
-            return Title + SubTitle + Score;
-        }
-
-        /// <summary>
-        /// Clones the current result
-        /// </summary>
-        public Result Clone()
-        {
-            return new Result
-            {
-                Title = Title,
-                SubTitle = SubTitle,
-                ActionKeywordAssigned = ActionKeywordAssigned,
-                CopyText = CopyText,
-                AutoCompleteText = AutoCompleteText,
-                IcoPath = IcoPath,
-                RoundedIcon = RoundedIcon,
-                Icon = Icon,
-                Glyph = Glyph,
-                Action = Action,
-                AsyncAction = AsyncAction,
-                Score = Score,
-                TitleHighlightData = TitleHighlightData,
-                OriginQuery = OriginQuery,
-                PluginDirectory = PluginDirectory,
-                ContextData = ContextData,
-                PluginID = PluginID,
-                TitleToolTip = TitleToolTip,
-                SubTitleToolTip = SubTitleToolTip,
-                PreviewPanel = PreviewPanel,
-                ProgressBar = ProgressBar,
-                ProgressBarColor = ProgressBarColor,
-                Preview = Preview,
-                AddSelectedCount = AddSelectedCount,
-                RecordKey = RecordKey
-            };
         }
 
         /// <summary>
@@ -227,16 +223,6 @@ namespace Flow.Launcher.Plugin
         public Lazy<UserControl> PreviewPanel { get; set; }
 
         /// <summary>
-        /// Run this result, asynchronously
-        /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        public ValueTask<bool> ExecuteAsync(ActionContext context)
-        {
-            return AsyncAction?.Invoke(context) ?? ValueTask.FromResult(Action?.Invoke(context) ?? false);
-        }
-
-        /// <summary>
         /// Progress bar display. Providing an int value between 0-100 will trigger the progress bar to be displayed on the result
         /// </summary>
         public int? ProgressBar { get; set; }
@@ -258,17 +244,72 @@ namespace Flow.Launcher.Plugin
         public bool AddSelectedCount { get; set; } = true;
 
         /// <summary>
-        /// Maximum score. This can be useful when set one result to the top by default. This is the score for the results set to the topmost by users.
-        /// </summary>
-        public const int MaxScore = int.MaxValue;
-
-        /// <summary>
         /// The key to identify the record. This is used when FL checks whether the result is the topmost record. Or FL calculates the hashcode of the result for user selected records.
         /// This can be useful when your plugin will change the Title or SubTitle of the result dynamically.
         /// If the plugin does not specific this, FL just uses Title and SubTitle to identify this result.
         /// Note: Because old data does not have this key, we should use null as the default value for consistency.
         /// </summary>
         public string RecordKey { get; set; } = null;
+
+        /// <summary>
+        /// Determines if the badge icon should be shown.
+        /// If users want to show the result badges and here you set this to true, the results will show the badge icon.
+        /// </summary>
+        public bool ShowBadge { get; set; } = false;
+
+        /// <summary>
+        /// Run this result, asynchronously
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public ValueTask<bool> ExecuteAsync(ActionContext context)
+        {
+            return AsyncAction?.Invoke(context) ?? ValueTask.FromResult(Action?.Invoke(context) ?? false);
+        }
+
+        /// <inheritdoc />
+        public override string ToString()
+        {
+            return Title + SubTitle + Score;
+        }
+
+        /// <summary>
+        /// Clones the current result
+        /// </summary>
+        public Result Clone()
+        {
+            return new Result
+            {
+                Title = Title,
+                SubTitle = SubTitle,
+                ActionKeywordAssigned = ActionKeywordAssigned,
+                CopyText = CopyText,
+                AutoCompleteText = AutoCompleteText,
+                IcoPath = IcoPath,
+                BadgeIcoPath = BadgeIcoPath,
+                RoundedIcon = RoundedIcon,
+                Icon = Icon,
+                BadgeIcon = BadgeIcon,
+                Glyph = Glyph,
+                Action = Action,
+                AsyncAction = AsyncAction,
+                Score = Score,
+                TitleHighlightData = TitleHighlightData,
+                OriginQuery = OriginQuery,
+                PluginDirectory = PluginDirectory,
+                ContextData = ContextData,
+                PluginID = PluginID,
+                TitleToolTip = TitleToolTip,
+                SubTitleToolTip = SubTitleToolTip,
+                PreviewPanel = PreviewPanel,
+                ProgressBar = ProgressBar,
+                ProgressBarColor = ProgressBarColor,
+                Preview = Preview,
+                AddSelectedCount = AddSelectedCount,
+                RecordKey = RecordKey,
+                ShowBadge = ShowBadge,
+            };
+        }
 
         /// <summary>
         /// Info of the preview section of a <see cref="Result"/>

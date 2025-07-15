@@ -13,6 +13,8 @@
     <system:String x:Key="plugin_pluginsmanager_installing_plugin">Installazione del Plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Scarica e installa {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Disinstallazione del plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_title">Keep plugin settings</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_subtitle">Do you want to keep the settings of the plugin for the next usage?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin installato con successo. Riavvio di Flow, attendere...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Impossibile trovare il file dei metadati plugin.json dal file zip estratto.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Errore: esiste già un plugin che ha la stessa o maggiore versione con {0}.</system:String>
@@ -35,16 +37,21 @@
     <system:String x:Key="plugin_pluginsmanager_update_success_restart">Il plugin {0} aggiornato con successo. Riavviando Flow, attendere...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Installazione da una fonte sconosciuta</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">Stai installando questo plugin da una fonte sconosciuta e potrebbe contenere potenziali rischi!{0}{0}Si prega di assicurarsi di capire la provenienza di questo plugin e se sia sicuro.{0}{0}Vuoi comunque continuare?{0}{0}(Puoi disattivare questo avviso dalle impostazioni)</system:String>
-    
+
     <system:String x:Key="plugin_pluginsmanager_install_success_no_restart">Il plugin {0} installato con successo. Riavviare Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_success_no_restart">Il plugin {0} disinstallato con successo. Riavviare Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">Il plugin {0} aggiornato con successo. Riavviare Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">{0} plugin aggiornato con successo. Riavviare Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">Il plugin {0} è già stato modificato. Riavviare Flow prima di fare altre modifiche.</system:String>
-   
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_title">{0} modified already</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_message">Please restart Flow before making any further changes</system:String>
+
+    <system:String x:Key="plugin_pluginsmanager_invalid_zip_title">Invalid zip installer file</system:String>
+    <system:String x:Key="plugin_pluginsmanager_invalid_zip_subtitle">Please check if there is a plugin.json in {0}</system:String>
+
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_name">Gestore dei plugin</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_description">Gestione dell'installazione, disinstallazione o aggiornamento dei plugin di Flow Launcher</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_description">Install, uninstall or update Flow Launcher plugins via the search window</system:String>
     <system:String x:Key="plugin_pluginsmanager_unknown_author">Autore Sconosciuto</system:String>
 
     <!--  Context menu items  -->
@@ -59,5 +66,5 @@
 
     <!--  Settings menu items  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Avviso di installazione da sorgenti sconosciute</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Riavvia automaticamente Flow Launcher dopo l'installazione/disinstallazione/aggiornamento dei plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugins Manager</system:String>
 </ResourceDictionary>

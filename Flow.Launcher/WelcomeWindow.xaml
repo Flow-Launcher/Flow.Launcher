@@ -6,16 +6,19 @@
     xmlns:local="clr-namespace:Flow.Launcher"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     Name="FlowWelcomeWindow"
     Title="{DynamicResource Welcome_Page1_Title}"
     Width="550"
-    Height="650"
+    Height="700"
     MinWidth="550"
-    MinHeight="650"
+    MinHeight="700"
     MaxWidth="550"
-    MaxHeight="650"
+    MaxHeight="700"
+    d:DataContext="{d:DesignInstance Type=vm:WelcomeViewModel}"
     Activated="OnActivated"
     Background="{DynamicResource Color00B}"
+    Closed="Window_Closed"
     Foreground="{DynamicResource PopupTextColor}"
     MouseDown="window_MouseDown"
     WindowStartupLocation="CenterScreen"
@@ -41,12 +44,12 @@
                         Grid.Column="0"
                         Width="16"
                         Height="16"
-                        Margin="10,4,4,4"
+                        Margin="10 4 4 4"
                         RenderOptions.BitmapScalingMode="HighQuality"
                         Source="/Images/app.png" />
                     <TextBlock
                         Grid.Column="1"
-                        Margin="4,0,0,0"
+                        Margin="4 0 0 0"
                         VerticalAlignment="Center"
                         FontSize="12"
                         Foreground="{DynamicResource Color05B}"
@@ -95,7 +98,7 @@
             Grid.Row="1"
             Background="{DynamicResource Color00B}"
             BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
-            BorderThickness="0,1,0,0">
+            BorderThickness="0 1 0 0">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="130" />
@@ -109,11 +112,11 @@
                     VerticalAlignment="Center">
                     <TextBlock
                         Name="PageNavigation"
-                        Margin="0,2,0,0"
+                        Margin="0 2 0 0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         FontSize="14"
-                        Text="{Binding PageDisplay, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}}"
+                        Text="{Binding PageDisplay, Mode=OneWay}"
                         TextAlignment="Center" />
                 </StackPanel>
 
@@ -122,34 +125,34 @@
                     Grid.Column="0"
                     Width="100"
                     Height="40"
-                    Margin="20,5,0,5"
+                    Margin="20 5 0 5"
                     Click="BtnCancel_OnClick"
                     Content="{DynamicResource Skip}"
                     DockPanel.Dock="Right"
                     FontSize="14" />
                 <DockPanel
                     Grid.Column="2"
-                    Margin="0,0,20,0"
+                    Margin="0 0 20 0"
                     VerticalAlignment="Stretch">
                     <Button
                         x:Name="NextButton"
                         Width="40"
                         Height="40"
-                        Margin="8,5,0,5"
+                        Margin="8 5 0 5"
                         Click="ForwardButton_Click"
-                        Content="&#xe76c;"
                         DockPanel.Dock="Right"
-                        FontFamily="/Resources/#Segoe Fluent Icons"
-                        FontSize="18" />
+                        IsEnabled="{Binding NextEnabled, Mode=OneWay}">
+                        <ui:FontIcon FontSize="18" Glyph="&#xe76c;" />
+                    </Button>
                     <Button
                         x:Name="BackButton"
                         Width="40"
                         Height="40"
                         Click="BackwardButton_Click"
-                        Content="&#xe76b;"
                         DockPanel.Dock="Right"
-                        FontFamily="/Resources/#Segoe Fluent Icons"
-                        FontSize="18" />
+                        IsEnabled="{Binding BackEnabled, Mode=OneWay}">
+                        <ui:FontIcon FontSize="18" Glyph="&#xe76b;" />
+                    </Button>
                     <StackPanel />
                 </DockPanel>
 
