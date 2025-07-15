@@ -329,7 +329,19 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /// <summary>
         /// when false Alphabet static service will always return empty results
         /// </summary>
-        public bool ShouldUsePinyin { get; set; } = false;
+        private bool _useAlphabet = true;
+        public bool ShouldUsePinyin
+        {
+            get => _useAlphabet;
+            set
+            {
+                if (_useAlphabet != value)
+                {
+                    _useAlphabet = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private bool _useDoublePinyin = false;
         public bool UseDoublePinyin
@@ -503,7 +515,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             {
                 var list = FixedHotkeys();
 
-                // Customizeable hotkeys
+                // Customizable hotkeys
                 if (!string.IsNullOrEmpty(Hotkey))
                     list.Add(new(Hotkey, "flowlauncherHotkey", () => Hotkey = ""));
                 if (!string.IsNullOrEmpty(PreviewHotkey))

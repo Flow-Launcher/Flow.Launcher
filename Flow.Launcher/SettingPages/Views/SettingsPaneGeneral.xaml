@@ -383,44 +383,39 @@
                     OnContent="{DynamicResource enable}" />
             </cc:Card>
 
-            <cc:CardGroup Margin="0 4 0 0">
-                <cc:Card
-                    Title="{DynamicResource ShouldUsePinyin}"
-                    Icon="&#xe98a;"
-                    Sub="{DynamicResource ShouldUsePinyinToolTip}"
-                    Type="First">
-                    <ui:ToggleSwitch
-                        IsOn="{Binding ShouldUsePinyin}"
-                        OffContent="{DynamicResource disable}"
-                        OnContent="{DynamicResource enable}"
-                        ToolTip="{DynamicResource ShouldUsePinyinToolTip}" />
-                </cc:Card>
-                <cc:Card
-                    Title="{DynamicResource ShouldUseDoublePinyin}"
-                    Icon="&#xf085;"
-                    Sub="{DynamicResource ShouldUseDoublePinyinToolTip}"
-                    Type="Middle"
-                    Visibility="{ext:VisibleWhen {Binding ShouldUsePinyin},
-                                                 IsEqualToBool=True}">
+            <cc:Card
+                Title="{DynamicResource ShouldUsePinyin}"
+                Margin="0 4 0 0"
+                Icon="&#xe98a;"
+                Sub="{DynamicResource ShouldUsePinyinToolTip}">
+                <ui:ToggleSwitch
+                    IsOn="{Binding ShouldUsePinyin}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}"
+                    ToolTip="{DynamicResource ShouldUsePinyinToolTip}" />
+            </cc:Card>
+
+            <cc:ExCard
+                Title="{DynamicResource ShouldUseDoublePinyin}"
+                Icon="&#xf085;"
+                Visibility="{ext:VisibleWhen {Binding ShouldUsePinyin},
+                                    IsEqualToBool=True}"
+                Sub="{DynamicResource ShouldUseDoublePinyinToolTip}">
+                <cc:ExCard.SideContent>
                     <ui:ToggleSwitch
                         IsOn="{Binding UseDoublePinyin}"
                         OffContent="{DynamicResource disable}"
                         OnContent="{DynamicResource enable}"
                         ToolTip="{DynamicResource ShouldUseDoublePinyinToolTip}" />
-                </cc:Card>
-                <cc:Card
-                    Title="{DynamicResource DoublePinyinSchema}"
-                    Sub="{DynamicResource DoublePinyinSchemaToolTip}"
-                    Type="Last"
-                    Visibility="{ext:VisibleWhen {Binding UseDoublePinyin},
-                                                 IsEqualToBool=True}">
+                </cc:ExCard.SideContent>
+                <cc:Card Title="{DynamicResource DoublePinyinSchema}" Type="InsideFit">
                     <ComboBox
                         DisplayMemberPath="Display"
                         ItemsSource="{Binding DoublePinyinSchemas}"
                         SelectedValue="{Binding Settings.DoublePinyinSchema}"
                         SelectedValuePath="Value" />
                 </cc:Card>
-            </cc:CardGroup>
+            </cc:ExCard>
 
             <cc:Card
                 Title="{DynamicResource language}"
