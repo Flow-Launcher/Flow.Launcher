@@ -134,3 +134,12 @@
 \bčeština\b
 \bPortuguês\b
 \bIoc\b
+\bXiaoHe\b
+\bZiRanMa\b
+\bWeiRuan\b
+\bZhiNengABC\b
+\bZiGuangPinYin\b
+\bPinYinJiaJia\b
+\bXingKongJianDao\b
+\bDaNiu\b
+\bXiaoLang\b
