@@ -91,6 +91,7 @@
     <system:String x:Key="typingStartEn">Luôn bắt đầu nhập ở chế độ tiếng Anh</system:String>
     <system:String x:Key="typingStartEnTooltip">Tạm thời chuyển phương thức nhập sang tiếng Anh khi kích hoạt Flow.</system:String>
     <system:String x:Key="autoUpdates">Cập nhật tự động</system:String>
+    <system:String x:Key="autoUpdatesTooltip">Automatically check and update the app when available</system:String>
     <system:String x:Key="select">Chọn</system:String>
     <system:String x:Key="hideOnStartup">Ẩn Flow Launcher khi khởi động</system:String>
     <system:String x:Key="hideOnStartupToolTip">Flow Launcher sẽ ẩn trong khay hệ thống sau khi khởi động.</system:String>
@@ -115,7 +116,7 @@
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
-    
+
     <system:String x:Key="AlwaysPreview">Luôn xem trước</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Luôn mở bảng xem trước khi Flow kích hoạt. Nhấn {0} để chuyển đổi chế độ xem trước.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Hiệu ứng đổ bóng không được phép nếu chủ đề hiện tại bật hiệu ứng làm mờ</system:String>
@@ -155,6 +156,8 @@
     <system:String x:Key="autoRestartAfterChangingToolTip">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugin Store</system:String>
     <system:String x:Key="showUnknownSourceWarning">Show unknown source warning</system:String>
     <system:String x:Key="showUnknownSourceWarningToolTip">Show warning when installing plugins from unknown sources</system:String>
+    <system:String x:Key="autoUpdatePlugins">Auto update plugins</system:String>
+    <system:String x:Key="autoUpdatePluginsToolTip">Automatically check plugin updates and notify if there are any updates available</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Plugin tìm kiếm</system:String>
@@ -236,6 +239,11 @@
     <system:String x:Key="ZipFiles">Zip files</system:String>
     <system:String x:Key="SelectZipFile">Please select zip file</system:String>
     <system:String x:Key="installLocalPluginTooltip">Install plugin from local path</system:String>
+    <system:String x:Key="updateNoResultTitle">Không có cập nhật</system:String>
+    <system:String x:Key="updateNoResultSubtitle">Tất cả các plugin đều được cập nhật</system:String>
+    <system:String x:Key="updateAllPluginsTitle">Plugin updates available</system:String>
+    <system:String x:Key="updateAllPluginsButtonContent">Update all plugins</system:String>
+    <system:String x:Key="checkPluginUpdatesTooltip">Check plugin updates</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Giao Diện</system:String>
