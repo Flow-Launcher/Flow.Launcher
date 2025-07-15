@@ -233,6 +233,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public bool AutoRestartAfterChanging { get; set; } = false;
         public bool ShowUnknownSourceWarning { get; set; } = true;
+        public bool AutoUpdatePlugins { get; set; } = true;
 
         public int CustomExplorerIndex { get; set; } = 0;
 

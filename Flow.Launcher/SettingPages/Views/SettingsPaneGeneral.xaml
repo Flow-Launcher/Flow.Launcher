@@ -182,7 +182,8 @@
             <cc:Card
                 Title="{DynamicResource autoUpdates}"
                 Margin="0 14 0 0"
-                Icon="&#xecc5;">
+                Icon="&#xecc5;"
+                Sub="{DynamicResource autoUpdatesTooltip}">
                 <ui:ToggleSwitch
                     IsOn="{Binding AutoUpdates}"
                     OffContent="{DynamicResource disable}"
@@ -241,9 +242,20 @@
                     Title="{DynamicResource showUnknownSourceWarning}"
                     Icon="&#xE7BA;"
                     Sub="{DynamicResource showUnknownSourceWarningToolTip}"
-                    Type="Last">
+                    Type="Middle">
                     <ui:ToggleSwitch
                         IsOn="{Binding Settings.ShowUnknownSourceWarning}"
+                        OffContent="{DynamicResource disable}"
+                        OnContent="{DynamicResource enable}" />
+                </cc:Card>
+
+                <cc:Card
+                    Title="{DynamicResource autoUpdatePlugins}"
+                    Icon="&#xecc5;"
+                    Sub="{DynamicResource autoUpdatePluginsToolTip}"
+                    Type="Last">
+                    <ui:ToggleSwitch
+                        IsOn="{Binding Settings.AutoUpdatePlugins}"
                         OffContent="{DynamicResource disable}"
                         OnContent="{DynamicResource enable}" />
                 </cc:Card>

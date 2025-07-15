@@ -109,6 +109,12 @@ public partial class SettingsPanePluginStoreViewModel : BaseModel
             await PluginInstaller.InstallPluginAndCheckRestartAsync(file);
     }
 
+    [RelayCommand]
+    private async Task CheckPluginUpdatesAsync()
+    {
+        await PluginInstaller.CheckForPluginUpdatesAsync(silentUpdate: false);
+    }
+
     private static string GetFileFromDialog(string title, string filter = "")
     {
         var dlg = new Microsoft.Win32.OpenFileDialog
