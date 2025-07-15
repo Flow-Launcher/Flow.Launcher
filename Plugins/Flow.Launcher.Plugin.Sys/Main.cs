@@ -72,7 +72,7 @@ namespace Flow.Launcher.Plugin.Sys
 
             var commands = Commands(query);
             var results = new List<Result>();
-            var isEmptyQuery = string.IsNullOrEmpty(query.Search) || string.IsNullOrWhiteSpace(query.Search);
+            var isEmptyQuery = string.IsNullOrWhiteSpace(query.Search);
             foreach (var c in commands)
             {
                 var command = _settings.Commands.First(x => x.Key == c.Title);
