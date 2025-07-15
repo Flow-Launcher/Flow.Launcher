@@ -103,3 +103,13 @@ Reloadable
 metadatas
 WMP
 VSTHRD
+CJK
+XiaoHe
+ZiRanMa
+WeiRuan
+ZhiNengABC
+ZiGuangPinYin
+PinYinJiaJia
+XingKongJianDao
+DaNiu
+XiaoLang
