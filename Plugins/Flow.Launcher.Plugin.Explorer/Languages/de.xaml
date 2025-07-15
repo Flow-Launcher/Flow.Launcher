@@ -2,7 +2,9 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Dialogues  -->
-    <system:String x:Key="plugin_explorer_make_selection_warning">Bitte treffen Sie zuerst eine Auswahl.</system:String>
+    <system:String x:Key="plugin_explorer_make_selection_warning">Bitte treffen Sie zuerst eine Auswahl</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Bitte wählen Sie einen Ordnerpfad aus.</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Bitte wählen Sie einen anderen Namen oder Ordnerpfad.</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Bitte wählen Sie einen Ordner-Link aus</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">Sind Sie sicher, dass Sie {0} löschen wollen?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">Sind Sie sicher, dass Sie diese Datei dauerhaft löschen möchten?</system:String>
@@ -25,12 +27,14 @@
     <system:String x:Key="plugin_explorer_add">Hinzufügen</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">Allgemeine Einstellung</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Aktions-Schlüsselwörter individuell anpassen</system:String>
+    <system:String x:Key="plugin_explorer_manage_quick_access_links_header">Schnellzugriff individuell anpassen</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Schnellzugriff-Links</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Everyhting-Einstellung</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">Vorschau-Panel</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Größe</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Erstellungsdatum</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Änderungsdatum</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_age_checkbox">Dateialter</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Datei-Info anzeigen</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Datums- und Zeitformat</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Sortieroption:</system:String>
@@ -40,8 +44,9 @@
     <system:String x:Key="plugin_explorer_shell_path">Shell-Pfad</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Indexsuche ausgeschlossene Pfade</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Ort des Suchergebnisses als Arbeitsverzeichnis der ausführbaren Datei verwenden</system:String>
-    <system:String x:Key="plugin_explorer_default_open_in_file_manager">Drücken Sie die Enter, um den Ordner im Default-Dateimanager zu öffnen</system:String>
-    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Use Index Search For Path Search</system:String>
+    <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Mehr Informationen wie Größe und Alter in Tooltips anzeigen</system:String>
+    <system:String x:Key="plugin_explorer_default_open_in_file_manager">Drücken Sie Enter, um Ordner im Default-Dateimanager zu öffnen</system:String>
+    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Indexsuche für Pfadsuche verwenden</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Indexierungsoptionen</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Suche:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">Pfad-Suche:</system:String>
@@ -60,10 +65,10 @@
     <system:String x:Key="plugin_explorer_enabled">Aktiviert</system:String>
     <system:String x:Key="plugin_explorer_disabled">Deaktiviert</system:String>
 
-    <system:String x:Key="plugin_explorer_Content_Search_Engine">Content Search Engine</system:String>
-    <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Directory Recursive Search Engine</system:String>
-    <system:String x:Key="plugin_explorer_Index_Search_Engine">Index Search Engine</system:String>
-    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Open Windows Index Option</system:String>
+    <system:String x:Key="plugin_explorer_Content_Search_Engine">Content-Suchmaschine</system:String>
+    <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Verzeichnis Rekursive Suchmaschine</system:String>
+    <system:String x:Key="plugin_explorer_Index_Search_Engine">Suchmaschine indizieren</system:String>
+    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Windows-Indexierungsoptionen öffnen</system:String>
     <system:String x:Key="plugin_explorer_Excluded_File_Types">Ausgeschlossene Dateitypen (durch Komma getrennt)</system:String>
     <system:String x:Key="plugin_explorer_Excluded_File_Types_Tooltip">Zum Beispiel: exe,jpg,png</system:String>
     <system:String x:Key="plugin_explorer_Maximum_Results">Maximale Ergebnisse</system:String>
@@ -76,17 +81,26 @@
     <!--  Plugin Tooltip  -->
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Strg+Enter, um das Verzeichnis zu öffnen</system:String>
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Strg+Enter, um den enthaltenden Ordner zu öffnen</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info">{0}{4}Größe: {1}{4}Erstellungsdatum: {2}{4}Änderunsgdatum: {3}</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_unknown">Unbekannt</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_volume">{0}{3}Platz frei: {1}{3}Größe total: {2}</system:String>
 
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">Pfad kopieren</system:String>
     <system:String x:Key="plugin_explorer_copypath_subtitle">Pfad des aktuellen Elements in Zwischenablage kopieren</system:String>
+    <system:String x:Key="plugin_explorer_copyname">Name kopieren</system:String>
+    <system:String x:Key="plugin_explorer_copyname_subtitle">Name des aktuellen Elements in Zwischenablage kopieren</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">Kopieren</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">Aktuelle Datei in Zwischenablage kopieren</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">Aktuellen Ordner in Zwischenablage kopieren</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder">Löschen</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Aktuelle Datei dauerhaft löschen</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Aktuellen Ordner dauerhaft löschen</system:String>
-    <system:String x:Key="plugin_explorer_path">Pfad:</system:String>
+    <system:String x:Key="plugin_explorer_name">Name</system:String>
+    <system:String x:Key="plugin_explorer_type">Typ</system:String>
+    <system:String x:Key="plugin_explorer_path">Pfad</system:String>
+    <system:String x:Key="plugin_explorer_file">Datei</system:String>
+    <system:String x:Key="plugin_explorer_folder">Ordner</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Ausgewähltes löschen</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Als anderer Benutzer ausführen</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Ausgewähltes unter Verwendung eines anderen Benutzerkontos ausführen</system:String>
@@ -131,12 +145,12 @@
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_path">Pfad</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_size">Größe</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension">Extension</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name">Type Name</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name">Typname</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created">Erstellungsdatum</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified">Änderungsdatum</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes">Attribute</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename">File List FileName</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count">Run Count</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename">Dateilistenname</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count">Ausführungszahl</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed">Datum kürzlich geändert</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed">Zugriffsdatum</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run">Ausführungsdatum</system:String>
@@ -145,7 +159,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Warnung: Dies ist keine Schnellsortieroption, Suchen können langsam sein</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Vollständigen Pfad suchen</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Enable File/Folder Run Count</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Datei-/Ordnerlaufzähler aktivieren</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Klicken, um Everything zu starten oder zu installieren</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Everything-Installation</system:String>
@@ -153,13 +167,24 @@
     <system:String x:Key="flowlauncher_plugin_everything_installationsuccess_subtitle">Everything-Dienst erfolgreich installiert</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installationfailed_subtitle">Der Everything-Dienst konnte nicht automatisch installiert werden. Bitte installieren Sie ihn manuell über https://www.voidtools.com</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_run_service">Klicken Sie hier, um es zu starten</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installing_select">Es kann keine Everything-Installation gefuinden werden, möchten Sie einen Ort manuell auswählen?{0}{0}Klicken Sie auf Nein und Everything wird automatisch für Sie installiert</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installing_select">Es kann keine Everything-Installation gefunden werden, möchten Sie einen Ort manuell auswählen?{0}{0}Klicken Sie auf Nein und Everything wird automatisch für Sie installiert</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Möchten Sie die Inhaltssuche für Everything aktivieren?</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">Es kann sehr langsam sein ohne Index (was nur in Everything v1.5+ unterstützt wird)</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_everything_not_found">Everything.exe kann nicht gefunden werden</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_install_issue">Everything konnte nicht installiert werden, bitte installieren Sie es manuell</system:String>
 
     <!--  Native Context Menu  -->
     <system:String x:Key="plugin_explorer_native_context_menu_header">Natives Kontextmenü</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Natives Kontextmenü anzeigen (experimentell)</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Unten können Sie die Elemente angeben, die Sie in das Kontextmenü aufnehmen möchten. Diese können partiell (z. B. „Stift mit“) oder vollständig („Öffnen mit“) sein.</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Unten können Sie die Elemente angeben, die Sie aus dem Kontextmenü ausschließen möchten. Diese können partiell (z. B. „Stift mit“) oder vollständig („Öffnen mit“) sein.</system:String>
+
+    <!--  Preview Info  -->
+    <system:String x:Key="Today">Heute</system:String>
+    <system:String x:Key="DaysAgo">Vor {0} Tagen</system:String>
+    <system:String x:Key="OneMonthAgo">Vor 1 Monat</system:String>
+    <system:String x:Key="MonthsAgo">Vor {0} Monaten</system:String>
+    <system:String x:Key="OneYearAgo">Vor 1 Jahr</system:String>
+    <system:String x:Key="YearsAgo">Vor {0} Jahren</system:String>
 </ResourceDictionary>

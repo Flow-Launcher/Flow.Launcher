@@ -21,7 +21,8 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// </summary>
         /// <param name="sourcePath"></param>
         /// <param name="targetPath"></param>
-        public static void CopyAll(this string sourcePath, string targetPath)
+        /// <param name="messageBoxExShow"></param>
+        public static void CopyAll(this string sourcePath, string targetPath, Func<string, MessageBoxResult> messageBoxExShow = null)
         {
             // Get the subdirectories for the specified directory.
             DirectoryInfo dir = new DirectoryInfo(sourcePath);
@@ -54,7 +55,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 foreach (DirectoryInfo subdir in dirs)
                 {
                     string temppath = Path.Combine(targetPath, subdir.Name);
-                    CopyAll(subdir.FullName, temppath);
+                    CopyAll(subdir.FullName, temppath, messageBoxExShow);
                 }
             }
             catch (Exception)
@@ -62,8 +63,9 @@ namespace Flow.Launcher.Plugin.SharedCommands
 #if DEBUG
                 throw;
 #else
-                MessageBox.Show(string.Format("Copying path {0} has failed, it will now be deleted for consistency", targetPath));
-                RemoveFolderIfExists(targetPath);
+                messageBoxExShow ??= MessageBox.Show;
+                messageBoxExShow(string.Format("Copying path {0} has failed, it will now be deleted for consistency", targetPath));
+                RemoveFolderIfExists(targetPath, messageBoxExShow);
 #endif
             }
 
@@ -75,8 +77,9 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// </summary>
         /// <param name="fromPath"></param>
         /// <param name="toPath"></param>
+        /// <param name="messageBoxExShow"></param>
         /// <returns></returns>
-        public static bool VerifyBothFolderFilesEqual(this string fromPath, string toPath)
+        public static bool VerifyBothFolderFilesEqual(this string fromPath, string toPath, Func<string, MessageBoxResult> messageBoxExShow = null)
         {
             try
             {
@@ -96,7 +99,8 @@ namespace Flow.Launcher.Plugin.SharedCommands
 #if DEBUG
                 throw;
 #else
-                MessageBox.Show(string.Format("Unable to verify folders and files between {0} and {1}", fromPath, toPath));
+                messageBoxExShow ??= MessageBox.Show;
+                messageBoxExShow(string.Format("Unable to verify folders and files between {0} and {1}", fromPath, toPath));
                 return false;
 #endif
             }
@@ -107,7 +111,8 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// Deletes a folder if it exists
         /// </summary>
         /// <param name="path"></param>
-        public static void RemoveFolderIfExists(this string path)
+        /// <param name="messageBoxExShow"></param>
+        public static void RemoveFolderIfExists(this string path, Func<string, MessageBoxResult> messageBoxExShow = null)
         {
             try
             {
@@ -119,7 +124,8 @@ namespace Flow.Launcher.Plugin.SharedCommands
 #if DEBUG
                 throw;
 #else
-                MessageBox.Show(string.Format("Not able to delete folder {0}, please go to the location and manually delete it", path));
+                messageBoxExShow ??= MessageBox.Show;
+                messageBoxExShow(string.Format("Not able to delete folder {0}, please go to the location and manually delete it", path));
 #endif
             }
         }
@@ -148,7 +154,8 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// Open a directory window (using the OS's default handler, usually explorer)
         /// </summary>
         /// <param name="fileOrFolderPath"></param>
-        public static void OpenPath(string fileOrFolderPath)
+        /// <param name="messageBoxExShow"></param>
+        public static void OpenPath(string fileOrFolderPath, Func<string, MessageBoxResult> messageBoxExShow = null)
         {
             var psi = new ProcessStartInfo
             {
@@ -166,7 +173,8 @@ namespace Flow.Launcher.Plugin.SharedCommands
 #if DEBUG
                 throw;
 #else
-                MessageBox.Show(string.Format("Unable to open the path {0}, please check if it exists", fileOrFolderPath));
+                messageBoxExShow ??= MessageBox.Show;
+                messageBoxExShow(string.Format("Unable to open the path {0}, please check if it exists", fileOrFolderPath));
 #endif
             }
         }
@@ -177,7 +185,8 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// <param name="filePath">File path</param>
         /// <param name="workingDir">Working directory</param>
         /// <param name="asAdmin">Open as Administrator</param>
-        public static void OpenFile(string filePath, string workingDir = "", bool asAdmin = false)
+        /// <param name="messageBoxExShow"></param>
+        public static void OpenFile(string filePath, string workingDir = "", bool asAdmin = false, Func<string, MessageBoxResult> messageBoxExShow = null)
         {
             var psi = new ProcessStartInfo
             {
@@ -196,7 +205,8 @@ namespace Flow.Launcher.Plugin.SharedCommands
 #if DEBUG
                 throw;
 #else
-                MessageBox.Show(string.Format("Unable to open the path {0}, please check if it exists", filePath));
+                messageBoxExShow ??= MessageBox.Show;
+                messageBoxExShow(string.Format("Unable to open the path {0}, please check if it exists", filePath));
 #endif
             }
         }
@@ -254,12 +264,12 @@ namespace Flow.Launcher.Plugin.SharedCommands
             var index = path.LastIndexOf('\\');
             if (index > 0 && index < (path.Length - 1))
             {
-                string previousDirectoryPath = path.Substring(0, index + 1);
-                return locationExists(previousDirectoryPath) ? previousDirectoryPath : "";
+                string previousDirectoryPath = path[..(index + 1)];
+                return locationExists(previousDirectoryPath) ? previousDirectoryPath : string.Empty;
             }
             else
             {
-                return "";
+                return string.Empty;
             }
         }
 
@@ -275,7 +285,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 // not full path, get previous level directory string
                 var indexOfSeparator = path.LastIndexOf('\\');
 
-                return path.Substring(0, indexOfSeparator + 1);
+                return path[..(indexOfSeparator + 1)];
             }
 
             return path;
@@ -307,6 +317,52 @@ namespace Flow.Launcher.Plugin.SharedCommands
         public static string EnsureTrailingSlash(this string path)
         {
             return path.TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar;
+        }
+
+        /// <summary>
+        /// Validates a directory, creating it if it doesn't exist
+        /// </summary>
+        /// <param name="path"></param>
+        public static void ValidateDirectory(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+        }
+
+        /// <summary>
+        /// Validates a data directory, synchronizing it by ensuring all files from a bundled source directory exist in it.
+        /// If files are missing or outdated, they are copied from the bundled directory to the data directory.
+        /// </summary>
+        /// <param name="bundledDataDirectory"></param>
+        /// <param name="dataDirectory"></param>
+        public static void ValidateDataDirectory(string bundledDataDirectory, string dataDirectory)
+        {
+            if (!Directory.Exists(dataDirectory))
+            {
+                Directory.CreateDirectory(dataDirectory);
+            }
+
+            foreach (var bundledDataPath in Directory.GetFiles(bundledDataDirectory))
+            {
+                var data = Path.GetFileName(bundledDataPath);
+                if (data == null) continue;
+                var dataPath = Path.Combine(dataDirectory, data);
+                if (!File.Exists(dataPath))
+                {
+                    File.Copy(bundledDataPath, dataPath);
+                }
+                else
+                {
+                    var time1 = new FileInfo(bundledDataPath).LastWriteTimeUtc;
+                    var time2 = new FileInfo(dataPath).LastWriteTimeUtc;
+                    if (time1 != time2)
+                    {
+                        File.Copy(bundledDataPath, dataPath, true);
+                    }
+                }
+            }
         }
     }
 }

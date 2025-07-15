@@ -13,6 +13,8 @@
     <system:String x:Key="plugin_pluginsmanager_installing_plugin">جاري تثبيت الإضافة</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">تنزيل وتثبيت {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">إلغاء تثبيت الإضافة</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_title">Keep plugin settings</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_subtitle">Do you want to keep the settings of the plugin for the next usage?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_success_restart">تم تثبيت الإضافة {0} بنجاح. جاري إعادة تشغيل Flow، يرجى الانتظار...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">تعذر العثور على ملف metadata plugin.json من ملف zip المستخرج.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">خطأ: توجد إضافة بنفس الإصدار أو بإصدار أحدث من {0}.</system:String>
@@ -35,16 +37,21 @@
     <system:String x:Key="plugin_pluginsmanager_update_success_restart">تم تحديث الإضافة {0} بنجاح. جاري إعادة تشغيل Flow، يرجى الانتظار...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">التثبيت من مصدر غير معروف</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">أنت تقوم بتثبيت هذه الإضافة من مصدر غير معروف وقد تحتوي على مخاطر محتملة!{0}{0}يرجى التأكد من أنك تفهم مصدر هذه الإضافة وأنها آمنة.{0}{0}هل ترغب في المتابعة؟{0}{0}(يمكنك إيقاف هذا التحذير من خلال الإعدادات)</system:String>
-    
+
     <system:String x:Key="plugin_pluginsmanager_install_success_no_restart">تم تثبيت الإضافة {0} بنجاح. يرجى إعادة تشغيل Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_success_no_restart">تم إلغاء تثبيت الإضافة {0} بنجاح. يرجى إعادة تشغيل Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">تم تحديث الإضافة {0} بنجاح. يرجى إعادة تشغيل Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">تم تحديث {0} إضافات بنجاح. يرجى إعادة تشغيل Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">تم تعديل الإضافة {0} بالفعل. يرجى إعادة تشغيل Flow قبل إجراء أي تغييرات أخرى.</system:String>
-   
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_title">{0} modified already</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_message">Please restart Flow before making any further changes</system:String>
+
+    <system:String x:Key="plugin_pluginsmanager_invalid_zip_title">Invalid zip installer file</system:String>
+    <system:String x:Key="plugin_pluginsmanager_invalid_zip_subtitle">Please check if there is a plugin.json in {0}</system:String>
+
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_name">مدير الإضافات</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_description">إدارة تثبيت وإلغاء تثبيت أو تحديث إضافات Flow Launcher</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_description">Install, uninstall or update Flow Launcher plugins via the search window</system:String>
     <system:String x:Key="plugin_pluginsmanager_unknown_author">مؤلف غير معروف</system:String>
 
     <!--  Context menu items  -->
@@ -59,5 +66,5 @@
 
     <!--  Settings menu items  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">تحذير التثبيت من مصدر غير معروف</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">إعادة تشغيل Flow Launcher تلقائيًا بعد تثبيت/إلغاء تثبيت/تحديث الإضافات</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugins Manager</system:String>
 </ResourceDictionary>

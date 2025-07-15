@@ -1,11 +1,14 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <system:String x:Key="flowlauncher_plugin_processkiller_plugin_name">Prozesskiller</system:String>
-    <system:String x:Key="flowlauncher_plugin_processkiller_plugin_description">Beende laufende Prozesse durch Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_plugin_name">Process Killer</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_plugin_description">Laufende Prozesse aus Flow Launcher beenden</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_processkiller_kill_all">alle Instanzen von &quot;{0} &quot; beenden</system:String>
-    <system:String x:Key="flowlauncher_plugin_processkiller_kill_all_count">beende {0} Prozesse</system:String>
-    <system:String x:Key="flowlauncher_plugin_processkiller_kill_instances">alle Instanzen beenden</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_kill_all">Alle Instanzen von &quot;{0}&quot; beenden</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_kill_all_count">{0} Prozesse beenden</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_kill_instances">Alle Instanzen beenden</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_processkiller_show_window_title">Titel für Prozesse mit sichtbaren Fenstern zeigen</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_put_visible_window_process_top">Prozesse mit sichtbaren Fenstern ganz oben setzen</system:String>
 
 </ResourceDictionary>

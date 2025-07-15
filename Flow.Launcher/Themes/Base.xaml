@@ -27,7 +27,6 @@
     <Style x:Key="BaseQueryBoxStyle" TargetType="{x:Type TextBox}">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FontSize" Value="28" />
-        <Setter Property="FontWeight" Value="Regular" />
         <Setter Property="Margin" Value="16 7 0 7" />
         <Setter Property="Padding" Value="0 0 68 0" />
         <Setter Property="Background" Value="Transparent" />
@@ -107,8 +106,12 @@
     </Style>
 
     <Style x:Key="BasePendingLineStyle" TargetType="{x:Type Line}">
-        <Setter Property="Stroke" Value="Blue" />
+        <Setter Property="Stroke" Value="{StaticResource SystemAccentColorLight1Brush}" />
     </Style>
+    <Style
+        x:Key="PendingLineStyle"
+        BasedOn="{StaticResource BasePendingLineStyle}"
+        TargetType="{x:Type Line}" />
 
     <Style x:Key="BaseClockPanelPosition" TargetType="{x:Type Canvas}" />
 
@@ -165,29 +168,6 @@
         BasedOn="{StaticResource BaseClockPanel}"
         TargetType="{x:Type StackPanel}">
         <Setter Property="Orientation" Value="Vertical" />
-        <Setter Property="Visibility" Value="Collapsed" />
-        <Style.Triggers>
-            <MultiDataTrigger>
-                <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding ElementName=QueryTextBox, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0" />
-                    <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Collapsed" />
-                    <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />
-                </MultiDataTrigger.Conditions>
-                <Setter Property="Visibility" Value="Visible" />
-                <MultiDataTrigger.EnterActions>
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimation
-                                Storyboard.TargetProperty="Opacity"
-                                From="0.0"
-                                To="1"
-                                Duration="0:0:0.25" />
-                        </Storyboard>
-                    </BeginStoryboard>
-                </MultiDataTrigger.EnterActions>
-            </MultiDataTrigger>
-        </Style.Triggers>
-
     </Style>
 
     <!--  Item Style  -->
@@ -204,12 +184,14 @@
     <Style x:Key="BaseItemTitleStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#FFFFF8" />
         <Setter Property="FontSize" Value="16" />
-        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="Margin" Value="0 0 0 1" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
     </Style>
     <Style x:Key="BaseItemSubTitleStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#D9D9D4" />
+        <Setter Property="Margin" Value="0 1 0 0" />
+        <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="FontSize" Value="13" />
-        <Setter Property="FontWeight" Value="Normal" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding ElementName=SubTitle, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0">
                 <Setter Property="Height" Value="0" />
@@ -241,11 +223,14 @@
     <Style x:Key="BaseItemTitleSelectedStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#FFFFF8" />
         <Setter Property="FontSize" Value="16" />
-        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="Margin" Value="0 0 0 1" />
+        <Setter Property="VerticalAlignment" Value="Bottom" />
     </Style>
     <Style x:Key="BaseItemSubTitleSelectedStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#D9D9D4" />
         <Setter Property="FontSize" Value="13" />
+        <Setter Property="Margin" Value="0 1 0 0" />
+        <Setter Property="VerticalAlignment" Value="Top" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding ElementName=SubTitle, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0">
                 <Setter Property="Height" Value="0" />
@@ -378,17 +363,41 @@
         <Setter Property="Inline.FontWeight" Value="Bold" />
     </Style>
     <Style x:Key="BaseItemHotkeyStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="15" />
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="Foreground" Value="#8f8f8f" />
     </Style>
     <Style x:Key="BaseItemHotkeySelectedStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="15" />
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="Foreground" Value="#8f8f8f" />
     </Style>
+    <Style x:Key="BaseItemHotkeyBGStyle" TargetType="{x:Type Border}">
+        <Setter Property="Margin" Value="12 0 12 0" />
+        <Setter Property="Padding" Value="6 4 6 4" />
+        <Setter Property="Background" Value="#138A8A8A" />
+        <Setter Property="CornerRadius" Value="4" />
+    </Style>
+    <Style x:Key="BaseItemHotkeyBGSelectedStyle" TargetType="{x:Type Border}">
+        <Setter Property="Margin" Value="12 0 12 0" />
+        <Setter Property="Padding" Value="6 4 6 4" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="Background" Value="#138A8A8A" />
+    </Style>
+    <Style
+        x:Key="ItemHotkeyBGStyle"
+        BasedOn="{StaticResource BaseItemHotkeyBGStyle}"
+        TargetType="{x:Type Border}">
+        <Setter Property="Margin" Value="12 0 12 0" />
+        <Setter Property="Padding" Value="6 4 6 4" />
+        <Setter Property="CornerRadius" Value="4" />
+    </Style>
+    <Style
+        x:Key="ItemHotkeyBGSelectedStyle"
+        BasedOn="{StaticResource BaseItemHotkeyBGSelectedStyle}"
+        TargetType="{x:Type Border}" />
 
     <!--  DO NOT USE THIS KEY. this key for themes with wrong typo. This key should be removed. Right key is BaseItemHotkeySelectedStyle.  -->
     <Style x:Key="BaseItemHotkeySelecetedStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="15" />
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="Foreground" Value="#8f8f8f" />
     </Style>
 
@@ -417,6 +426,7 @@
         <Style.Triggers>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />
                     <Condition Binding="{Binding ElementName=ResultListBox, Path=Items.Count}" Value="0" />
                 </MultiDataTrigger.Conditions>
                 <MultiDataTrigger.Setters>
@@ -458,12 +468,12 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
+
     <Style
         x:Key="PreviewBorderStyle"
         BasedOn="{StaticResource BasePreviewBorderStyle}"
         TargetType="{x:Type Border}">
         <Setter Property="BorderBrush" Value="Gray" />
-
     </Style>
 
     <Style x:Key="PreviewArea" TargetType="{x:Type Grid}">
@@ -473,8 +483,8 @@
                 <MultiDataTrigger.Conditions>
                     <!--
                     <Condition Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Collapsed" />
-                    <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Collapsed" />
-                    <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />-->
+                    <Condition Binding="{Binding ElementName=ResultContextMenu, Path=Visibility}" Value="Collapsed" />-->
+                    <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />
                     <Condition Binding="{Binding ElementName=ResultListBox, Path=Items.Count}" Value="0" />
                 </MultiDataTrigger.Conditions>
                 <MultiDataTrigger.Setters>
@@ -514,7 +524,6 @@
         x:Key="ItemHotkeyStyle"
         BasedOn="{StaticResource BaseItemHotkeyStyle}"
         TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="15" />
         <Setter Property="Foreground" Value="#8f8f8f" />
         <Setter Property="Opacity" Value="0.5" />
     </Style>
@@ -522,7 +531,6 @@
         x:Key="ItemHotkeySelectedStyle"
         BasedOn="{StaticResource BaseItemHotkeySelectedStyle}"
         TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="15" />
         <Setter Property="Foreground" Value="#8f8f8f" />
         <Setter Property="Opacity" Value="0.5" />
     </Style>
@@ -557,6 +565,14 @@
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
+    <Style x:Key="PreviewWindowBorderStyle" TargetType="{x:Type Border}">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="#2F2F2F" />
+        <Setter Property="Padding" Value="0 0 0 0" />
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+    </Style>
     <!--  Style for old version themes  -->
     <Style
         x:Key="PreviewItemTitleStyle"

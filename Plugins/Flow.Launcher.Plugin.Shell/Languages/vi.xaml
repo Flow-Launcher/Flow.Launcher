@@ -6,6 +6,7 @@
     <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">Nhấn phím bất kỳ để đóng cửa sổ này...</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">Không đóng dấu nhắc lệnh sau khi thực hiện lệnh</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">Luôn chạy với tư cách quản trị viên</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_use_windows_terminal">Use Windows Terminal</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">Xóa lựa chọn đã chọn</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">Vỏ</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Allows to execute system commands from Flow Launcher</system:String>

@@ -17,7 +17,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Nøkkelord for handling</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">Nettadresse</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">Søk</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Bruk autofullføring av søkespørring:</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Use Search Query Autocomplete</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Autofullfør data fra:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Vennligst velg et websøk</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Er du sikker på at du ønsker å slette {0}?</system:String>
@@ -29,7 +29,8 @@
         dvs. den generiske formelen for et søk på Netflix er https://www.netflix.com/search?q={q}
     </system:String>
 
-
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">Copy URL</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">Copy search URL to clipboard</system:String>
 
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">Tittel</system:String>

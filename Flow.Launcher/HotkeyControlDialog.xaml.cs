@@ -3,9 +3,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using Flow.Launcher.Core.Resource;
+using ChefKeys;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using ModernWpf.Controls;
 
@@ -15,7 +17,7 @@ namespace Flow.Launcher;
 
 public partial class HotkeyControlDialog : ContentDialog
 {
-    private IHotkeySettings _hotkeySettings;
+    private static readonly IHotkeySettings _hotkeySettings = Ioc.Default.GetRequiredService<Settings>();
     private Action? _overwriteOtherHotkey;
     private string DefaultHotkey { get; }
     public string WindowTitle { get; }
@@ -31,21 +33,30 @@ public partial class HotkeyControlDialog : ContentDialog
 
     public EResultType ResultType { get; private set; } = EResultType.Cancel;
     public string ResultValue { get; private set; } = string.Empty;
-    public static string EmptyHotkey => InternationalizationManager.Instance.GetTranslation("none");
+    public static string EmptyHotkey => App.API.GetTranslation("none");
 
-    public HotkeyControlDialog(string hotkey, string defaultHotkey, IHotkeySettings hotkeySettings, string windowTitle = "")
+    private static bool isOpenFlowHotkey;
+
+    public HotkeyControlDialog(string hotkey, string defaultHotkey, string windowTitle = "")
     {
         WindowTitle = windowTitle switch
         {
-            "" or null => InternationalizationManager.Instance.GetTranslation("hotkeyRegTitle"),
+            "" or null => App.API.GetTranslation("hotkeyRegTitle"),
             _ => windowTitle
         };
         DefaultHotkey = defaultHotkey;
         CurrentHotkey = new HotkeyModel(hotkey);
-        _hotkeySettings = hotkeySettings;
         SetKeysToDisplay(CurrentHotkey);
 
         InitializeComponent();
+
+        // TODO: This is a temporary way to enforce changing only the open flow hotkey to Win, and will be removed by PR #3157
+        isOpenFlowHotkey = _hotkeySettings.RegisteredHotkeys
+                             .Any(x => x.DescriptionResourceKey == "flowlauncherHotkey" 
+                                    && x.Hotkey.ToString() == hotkey);
+
+        ChefKeysManager.StartMenuEnableBlocking = true;
+        ChefKeysManager.Start();
     }
 
     private void Reset(object sender, RoutedEventArgs routedEventArgs)
@@ -61,12 +72,18 @@ public partial class HotkeyControlDialog : ContentDialog
 
     private void Cancel(object sender, RoutedEventArgs routedEventArgs)
     {
+        ChefKeysManager.StartMenuEnableBlocking = false;
+        ChefKeysManager.Stop();
+
         ResultType = EResultType.Cancel;
         Hide();
     }
 
     private void Save(object sender, RoutedEventArgs routedEventArgs)
     {
+        ChefKeysManager.StartMenuEnableBlocking = false;
+        ChefKeysManager.Stop();
+
         if (KeysToDisplay.Count == 1 && KeysToDisplay[0] == EmptyHotkey)
         {
             ResultType = EResultType.Delete;
@@ -84,6 +101,9 @@ public partial class HotkeyControlDialog : ContentDialog
 
         //when alt is pressed, the real key should be e.SystemKey
         Key key = e.Key == Key.System ? e.SystemKey : e.Key;
+
+        if (ChefKeysManager.StartMenuBlocked && key.ToString() == ChefKeysManager.StartMenuSimulatedKey)
+            return;
 
         SpecialKeyState specialKeyState = GlobalHotkey.CheckModifiers();
 
@@ -120,14 +140,14 @@ public partial class HotkeyControlDialog : ContentDialog
         if (_hotkeySettings.RegisteredHotkeys.FirstOrDefault(v => v.Hotkey == hotkey) is { } registeredHotkeyData)
         {
             var description = string.Format(
-                InternationalizationManager.Instance.GetTranslation(registeredHotkeyData.DescriptionResourceKey),
+                App.API.GetTranslation(registeredHotkeyData.DescriptionResourceKey),
                 registeredHotkeyData.DescriptionFormatVariables
             );
             Alert.Visibility = Visibility.Visible;
             if (registeredHotkeyData.RemoveHotkey is not null)
             {
                 tbMsg.Text = string.Format(
-                    InternationalizationManager.Instance.GetTranslation("hotkeyUnavailableEditable"),
+                    App.API.GetTranslation("hotkeyUnavailableEditable"),
                     description
                 );
                 SaveBtn.IsEnabled = false;
@@ -139,7 +159,7 @@ public partial class HotkeyControlDialog : ContentDialog
             else
             {
                 tbMsg.Text = string.Format(
-                    InternationalizationManager.Instance.GetTranslation("hotkeyUnavailableUneditable"),
+                    App.API.GetTranslation("hotkeyUnavailableUneditable"),
                     description
                 );
                 SaveBtn.IsEnabled = false;
@@ -155,7 +175,7 @@ public partial class HotkeyControlDialog : ContentDialog
 
         if (!CheckHotkeyAvailability(hotkey.Value, true))
         {
-            tbMsg.Text = InternationalizationManager.Instance.GetTranslation("hotkeyUnavailable");
+            tbMsg.Text = App.API.GetTranslation("hotkeyUnavailable");
             Alert.Visibility = Visibility.Visible;
             SaveBtn.IsEnabled = false;
             SaveBtn.Visibility = Visibility.Visible;
@@ -168,8 +188,13 @@ public partial class HotkeyControlDialog : ContentDialog
         }
     }
 
-    private static bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture) =>
-        hotkey.Validate(validateKeyGesture) && HotKeyMapper.CheckAvailability(hotkey);
+    private static bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture)
+    {
+        if (isOpenFlowHotkey && (hotkey.ToString() == "LWin" || hotkey.ToString() == "RWin"))
+            return true;
+
+        return hotkey.Validate(validateKeyGesture) && HotKeyMapper.CheckAvailability(hotkey);
+    }
 
     private void Overwrite(object sender, RoutedEventArgs e)
     {

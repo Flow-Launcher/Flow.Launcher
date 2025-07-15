@@ -17,7 +17,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">触发关键字</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">打开链接</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">搜索</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">启用搜索建议</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">使用搜索查询自动补全</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">自动补全数据：</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">请选择一项</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">您确定要删除 {0} 吗?</system:String>
@@ -29,7 +29,8 @@
         那么 Netflix 搜索的表达式就是 https://www.netflix.com/search?q={q}
     </system:String>
 
-
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">复制链接</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">复制搜索网址到剪贴板</system:String>
 
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">标题</system:String>

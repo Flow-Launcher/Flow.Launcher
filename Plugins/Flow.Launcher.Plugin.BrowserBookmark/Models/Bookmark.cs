@@ -18,4 +18,5 @@ public record Bookmark(string Name, string Url, string Source = "")
     }
 
     public List<CustomBrowser> CustomBrowsers { get; set; } = new();
+    public string FaviconPath { get; set; } = string.Empty;
 }

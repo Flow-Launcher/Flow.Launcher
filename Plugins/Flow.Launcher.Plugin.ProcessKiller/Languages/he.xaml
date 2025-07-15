@@ -1,0 +1,14 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <system:String x:Key="flowlauncher_plugin_processkiller_plugin_name">מנהל תהליכים</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_plugin_description">סגור תהליכים פעילים מתוך Flow Launcher</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_processkiller_kill_all">סגור את כל המופעים של &quot;{0}&quot;</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_kill_all_count">סגור {0} תהליכים</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_kill_instances">סגור את כל המופעים</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_processkiller_show_window_title">הצג כותרת עבור תהליכים בעלי חלונות גלויים</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_put_visible_window_process_top">הצב תהליכים עם חלונות גלויים בחלק העליון</system:String>
+
+</ResourceDictionary>

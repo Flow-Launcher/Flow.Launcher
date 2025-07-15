@@ -1,18 +1,22 @@
-﻿using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Infrastructure.UserSettings;
-using Flow.Launcher.Plugin;
-using Flow.Launcher.Plugin.SharedCommands;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows;
 using System.Windows.Forms;
-using Flow.Launcher.Core.Resource;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Core.ExternalPlugins.Environments
 {
     public abstract class AbstractPluginEnvironment
     {
+        private static readonly string ClassName = nameof(AbstractPluginEnvironment);
+
+        protected readonly IPublicAPI API = Ioc.Default.GetRequiredService<IPublicAPI>();
+
         internal abstract string Language { get; }
 
         internal abstract string EnvName { get; }
@@ -25,7 +29,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
         internal virtual string FileDialogFilter => string.Empty;
 
-        internal  abstract string PluginsSettingsFilePath { get; set; }
+        internal abstract string PluginsSettingsFilePath { get; set; }
 
         internal List<PluginMetadata> PluginMetadataList;
 
@@ -39,8 +43,11 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
         internal IEnumerable<PluginPair> Setup()
         {
+            // If no plugin is using the language, return empty list
             if (!PluginMetadataList.Any(o => o.Language.Equals(Language, StringComparison.OrdinalIgnoreCase)))
+            {
                 return new List<PluginPair>();
+            }
 
             if (!string.IsNullOrEmpty(PluginsSettingsFilePath) && FilesFolders.FileExists(PluginsSettingsFilePath))
             {
@@ -52,24 +59,55 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             }
 
             var noRuntimeMessage = string.Format(
-                InternationalizationManager.Instance.GetTranslation("runtimePluginInstalledChooseRuntimePrompt"),
+                API.GetTranslation("runtimePluginInstalledChooseRuntimePrompt"),
                 Language,
                 EnvName,
                 Environment.NewLine
             );
-            if (MessageBox.Show(noRuntimeMessage, string.Empty, MessageBoxButtons.YesNo) == DialogResult.No)
+            if (API.ShowMsgBox(noRuntimeMessage, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
             {
-                var msg = string.Format(InternationalizationManager.Instance.GetTranslation("runtimePluginChooseRuntimeExecutable"), EnvName);
-                string selectedFile;
+                var msg = string.Format(API.GetTranslation("runtimePluginChooseRuntimeExecutable"), EnvName);
 
-                selectedFile = GetFileFromDialog(msg, FileDialogFilter);
+                var selectedFile = GetFileFromDialog(msg, FileDialogFilter);
 
                 if (!string.IsNullOrEmpty(selectedFile))
+                {
                     PluginsSettingsFilePath = selectedFile;
-
+                }
                 // Nothing selected because user pressed cancel from the file dialog window
-                if (string.IsNullOrEmpty(selectedFile))
-                    InstallEnvironment();
+                else
+                {
+                    var forceDownloadMessage = string.Format(
+                        API.GetTranslation("runtimeExecutableInvalidChooseDownload"),
+                        Language,
+                        EnvName,
+                        Environment.NewLine
+                    );
+
+                    // Let users select valid path or choose to download
+                    while (string.IsNullOrEmpty(selectedFile))
+                    {
+                        if (API.ShowMsgBox(forceDownloadMessage, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        {
+                            // Continue select file
+                            selectedFile = GetFileFromDialog(msg, FileDialogFilter);
+                        }
+                        else
+                        {
+                            // User selected no, break the loop
+                            break;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(selectedFile))
+                    {
+                        PluginsSettingsFilePath = selectedFile;
+                    }
+                    else
+                    {
+                        InstallEnvironment();
+                    }
+                }
             }
             else
             {
@@ -82,8 +120,8 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             }
             else
             {
-                MessageBox.Show(string.Format(InternationalizationManager.Instance.GetTranslation("runtimePluginUnableToSetExecutablePath"), Language));
-                Log.Error("PluginsLoader",
+                API.ShowMsgBox(string.Format(API.GetTranslation("runtimePluginUnableToSetExecutablePath"), Language));
+                API.LogError(ClassName,
                     $"Not able to successfully set {EnvName} path, setting's plugin executable path variable is still an empty string.",
                     $"{Language}Environment");
 
@@ -95,13 +133,11 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
         private void EnsureLatestInstalled(string expectedPath, string currentPath, string installedDirPath)
         {
-            if (expectedPath == currentPath)
-                return;
+            if (expectedPath == currentPath) return;
 
-            FilesFolders.RemoveFolderIfExists(installedDirPath);
+            FilesFolders.RemoveFolderIfExists(installedDirPath, (s) => API.ShowMsgBox(s));
 
             InstallEnvironment();
-
         }
 
         internal abstract PluginPair CreatePluginPair(string filePath, PluginMetadata metadata);
@@ -113,13 +149,16 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             foreach (var metadata in PluginMetadataList)
             {
                 if (metadata.Language.Equals(languageToSet, StringComparison.OrdinalIgnoreCase))
+                {
+                    metadata.AssemblyName = string.Empty;
                     pluginPairs.Add(CreatePluginPair(filePath, metadata));
+                }
             }
 
             return pluginPairs;
         }
 
-        private string GetFileFromDialog(string title, string filter = "")
+        private static string GetFileFromDialog(string title, string filter = "")
         {
             var dlg = new OpenFileDialog
             {
@@ -133,7 +172,6 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
             var result = dlg.ShowDialog();
             return result == DialogResult.OK ? dlg.FileName : string.Empty;
-
         }
 
         /// <summary>
@@ -176,31 +214,33 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             else
             {
                 if (IsUsingPortablePath(settings.PluginSettings.PythonExecutablePath, DataLocation.PythonEnvironmentName))
+                {
                     settings.PluginSettings.PythonExecutablePath
                         = GetUpdatedEnvironmentPath(settings.PluginSettings.PythonExecutablePath);
+                }
 
                 if (IsUsingPortablePath(settings.PluginSettings.NodeExecutablePath, DataLocation.NodeEnvironmentName))
+                {
                     settings.PluginSettings.NodeExecutablePath
                         = GetUpdatedEnvironmentPath(settings.PluginSettings.NodeExecutablePath);
+                }
             }
         }
 
         private static bool IsUsingPortablePath(string filePath, string pluginEnvironmentName)
         {
-            if (string.IsNullOrEmpty(filePath))
-                return false;
+            if (string.IsNullOrEmpty(filePath)) return false;
 
             // DataLocation.PortableDataPath returns the current portable path, this determines if an out
             // of date path is also a portable path.
-            var portableAppEnvLocation = $"UserData\\{DataLocation.PluginEnvironments}\\{pluginEnvironmentName}";
+            var portableAppEnvLocation = Path.Combine("UserData", DataLocation.PluginEnvironments, pluginEnvironmentName);
 
             return filePath.Contains(portableAppEnvLocation);
         }
 
         private static bool IsUsingRoamingPath(string filePath)
         {
-            if (string.IsNullOrEmpty(filePath))
-                return false;
+            if (string.IsNullOrEmpty(filePath)) return false;
 
             return filePath.StartsWith(DataLocation.RoamingDataPath);
         }
@@ -210,8 +250,8 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             var index = filePath.IndexOf(DataLocation.PluginEnvironments);
             
             // get the substring after "Environments" because we can not determine it dynamically
-            var ExecutablePathSubstring = filePath.Substring(index + DataLocation.PluginEnvironments.Count());
-            return $"{DataLocation.PluginEnvironmentsPath}{ExecutablePathSubstring}";
+            var executablePathSubstring = filePath[(index + DataLocation.PluginEnvironments.Length)..];
+            return $"{DataLocation.PluginEnvironmentsPath}{executablePathSubstring}";
         }
     }
 }

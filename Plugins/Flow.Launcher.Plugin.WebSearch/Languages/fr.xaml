@@ -17,7 +17,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Mot-clé d'action</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">Rechercher sur</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Utiliser la saisie automatique de la requête de recherche :</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Utiliser la fonction d'auto-complétion des requêtes de recherche</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Saisir automatiquement les données à partir de :</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Veuillez sélectionner une recherche web</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Êtes-vous sûr de vouloir supprimer {0} ?</system:String>
@@ -29,7 +29,8 @@
         Ainsi, la formule générique pour une recherche Netflix est https://www.netflix.com/search?q={q}
     </system:String>
 
-
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">Copier l'URL</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">Copier l'URL de la recherche dans le presse-papiers</system:String>
 
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">Titre</system:String>
@@ -45,7 +46,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_succeed">Ajout</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">Astuce : Vous n'avez pas besoin de placer des images personnalisées dans ce dossier, si la version de Flow est mise à jour, elles seront perdues. Flow copiera automatiquement toutes les images en dehors de ce dossier dans l'emplacement de l'image personnalisée de la Recherche Web.</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_websearch_plugin_name">Recherches Web</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_plugin_name">Recherches web</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_plugin_description">Permet d'effectuer des recherches web</system:String>
 
 </ResourceDictionary>

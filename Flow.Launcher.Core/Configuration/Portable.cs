@@ -1,24 +1,29 @@
-﻿using Microsoft.Win32;
-using Squirrel;
-using System;
+﻿using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Windows;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
-using System.Linq;
+using Microsoft.Win32;
+using Squirrel;
 
 namespace Flow.Launcher.Core.Configuration
 {
     public class Portable : IPortable
     {
+        private static readonly string ClassName = nameof(Portable);
+
+        private readonly IPublicAPI API = Ioc.Default.GetRequiredService<IPublicAPI>();
+
         /// <summary>
         /// As at Squirrel.Windows version 1.5.2, UpdateManager needs to be disposed after finish
         /// </summary>
         /// <returns></returns>
-        private UpdateManager NewUpdateManager()
+        private static UpdateManager NewUpdateManager()
         {
             var applicationFolderName = Constant.ApplicationDirectory
                                             .Split(new[] { Path.DirectorySeparatorChar }, StringSplitOptions.None)
@@ -40,14 +45,14 @@ namespace Flow.Launcher.Core.Configuration
 #endif
                 IndicateDeletion(DataLocation.PortableDataPath);
 
-                MessageBox.Show("Flow Launcher needs to restart to finish disabling portable mode, " +
+                API.ShowMsgBox("Flow Launcher needs to restart to finish disabling portable mode, " +
                     "after the restart your portable data profile will be deleted and roaming data profile kept");
 
                 UpdateManager.RestartApp(Constant.ApplicationFileName);
             }
             catch (Exception e)
             {
-                Log.Exception("|Portable.DisablePortableMode|Error occurred while disabling portable mode", e);
+                API.LogException(ClassName, "Error occurred while disabling portable mode", e);
             }
         }
 
@@ -64,54 +69,48 @@ namespace Flow.Launcher.Core.Configuration
 #endif
                 IndicateDeletion(DataLocation.RoamingDataPath);
 
-                MessageBox.Show("Flow Launcher needs to restart to finish enabling portable mode, " +
+                API.ShowMsgBox("Flow Launcher needs to restart to finish enabling portable mode, " +
                     "after the restart your roaming data profile will be deleted and portable data profile kept");
 
                 UpdateManager.RestartApp(Constant.ApplicationFileName);
             }
             catch (Exception e)
             {
-                Log.Exception("|Portable.EnablePortableMode|Error occurred while enabling portable mode", e);
+                API.LogException(ClassName, "Error occurred while enabling portable mode", e);
             }
         }
 
         public void RemoveShortcuts()
         {
-            using (var portabilityUpdater = NewUpdateManager())
-            {
-                portabilityUpdater.RemoveShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.StartMenu);
-                portabilityUpdater.RemoveShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.Desktop);
-                portabilityUpdater.RemoveShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.Startup);
-            }
+            using var portabilityUpdater = NewUpdateManager();
+            portabilityUpdater.RemoveShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.StartMenu);
+            portabilityUpdater.RemoveShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.Desktop);
+            portabilityUpdater.RemoveShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.Startup);
         }
 
         public void RemoveUninstallerEntry()
         {
-            using (var portabilityUpdater = NewUpdateManager())
-            {
-                portabilityUpdater.RemoveUninstallerRegistryEntry();
-            }
+            using var portabilityUpdater = NewUpdateManager();
+            portabilityUpdater.RemoveUninstallerRegistryEntry();
         }
 
         public void MoveUserDataFolder(string fromLocation, string toLocation)
         {
-            FilesFolders.CopyAll(fromLocation, toLocation);
+            FilesFolders.CopyAll(fromLocation, toLocation, (s) => API.ShowMsgBox(s));
             VerifyUserDataAfterMove(fromLocation, toLocation);
         }
 
         public void VerifyUserDataAfterMove(string fromLocation, string toLocation)
         {
-            FilesFolders.VerifyBothFolderFilesEqual(fromLocation, toLocation);
+            FilesFolders.VerifyBothFolderFilesEqual(fromLocation, toLocation, (s) => API.ShowMsgBox(s));
         }
 
         public void CreateShortcuts()
         {
-            using (var portabilityUpdater = NewUpdateManager())
-            {
-                portabilityUpdater.CreateShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.StartMenu, false);
-                portabilityUpdater.CreateShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.Desktop, false);
-                portabilityUpdater.CreateShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.Startup, false);
-            }
+            using var portabilityUpdater = NewUpdateManager();
+            portabilityUpdater.CreateShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.StartMenu, false);
+            portabilityUpdater.CreateShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.Desktop, false);
+            portabilityUpdater.CreateShortcutsForExecutable(Constant.ApplicationFileName, ShortcutLocation.Startup, false);
         }
 
         public void CreateUninstallerEntry()
@@ -125,18 +124,14 @@ namespace Flow.Launcher.Core.Configuration
                 subKey2.SetValue("DisplayIcon", Path.Combine(Constant.ApplicationDirectory, "app.ico"), RegistryValueKind.String);
             }
 
-            using (var portabilityUpdater = NewUpdateManager())
-            {
-                _ = portabilityUpdater.CreateUninstallerRegistryEntry();
-            }
+            using var portabilityUpdater = NewUpdateManager();
+            _ = portabilityUpdater.CreateUninstallerRegistryEntry();
         }
 
-        internal void IndicateDeletion(string filePathTodelete)
+        private static void IndicateDeletion(string filePathTodelete)
         {
             var deleteFilePath = Path.Combine(filePathTodelete, DataLocation.DeletionIndicatorFile);
-            using (var _ = File.CreateText(deleteFilePath))
-            {
-            }
+            using var _ = File.CreateText(deleteFilePath);
         }
 
         ///<summary>
@@ -157,13 +152,13 @@ namespace Flow.Launcher.Core.Configuration
             // delete it and prompt the user to pick the portable data location
             if (File.Exists(roamingDataDeleteFilePath))
             {
-                FilesFolders.RemoveFolderIfExists(roamingDataDir);
+                FilesFolders.RemoveFolderIfExists(roamingDataDir, (s) => API.ShowMsgBox(s));
 
-                if (MessageBox.Show("Flow Launcher has detected you enabled portable mode, " +
+                if (API.ShowMsgBox("Flow Launcher has detected you enabled portable mode, " +
                                     "would you like to move it to a different location?", string.Empty,
                                     MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    FilesFolders.OpenPath(Constant.RootDirectory);
+                    FilesFolders.OpenPath(Constant.RootDirectory, (s) => API.ShowMsgBox(s));
 
                     Environment.Exit(0);
                 }
@@ -172,9 +167,9 @@ namespace Flow.Launcher.Core.Configuration
             // delete it and notify the user about it.
             else if (File.Exists(portableDataDeleteFilePath))
             {
-                FilesFolders.RemoveFolderIfExists(portableDataDir);
+                FilesFolders.RemoveFolderIfExists(portableDataDir, (s) => API.ShowMsgBox(s));
 
-                MessageBox.Show("Flow Launcher has detected you disabled portable mode, " +
+                API.ShowMsgBox("Flow Launcher has detected you disabled portable mode, " +
                                     "the relevant shortcuts and uninstaller entry have been created");
             }
         }
@@ -186,7 +181,7 @@ namespace Flow.Launcher.Core.Configuration
 
             if (roamingLocationExists && portableLocationExists)
             {
-                MessageBox.Show(string.Format("Flow Launcher detected your user data exists both in {0} and " +
+                API.ShowMsgBox(string.Format("Flow Launcher detected your user data exists both in {0} and " +
                                     "{1}. {2}{2}Please delete {1} in order to proceed. No changes have occurred.", 
                                     DataLocation.PortableDataPath, DataLocation.RoamingDataPath, Environment.NewLine));
 

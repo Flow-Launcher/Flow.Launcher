@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using BitFaster.Caching.Lfu;
@@ -54,7 +52,6 @@ namespace Flow.Launcher.Infrastructure.Image
                 image = value;
                 return image != null;
             }
-
 
             image = null;
             return false;

@@ -1,7 +1,7 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: .NET
+name: Build
 
 on:
   workflow_dispatch:
@@ -19,14 +19,14 @@ jobs:
 
     runs-on: windows-latest
     env:
-      FlowVersion: 1.18.0
+      FlowVersion: 1.19.5
       NUGET_CERT_REVOCATION_MODE: offline
       BUILD_NUMBER: ${{ github.run_number }}
     steps:
       - uses: actions/checkout@v4
       - name: Set Flow.Launcher.csproj version
         id: update
-        uses: vers-one/dotnet-project-version-updater@v1.5
+        uses: vers-one/dotnet-project-version-updater@v1.7
         with:
           file: |
             "**/SolutionAssemblyInfo.cs"
@@ -51,26 +51,27 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 7.0.x
+#          cache: true
+#          cache-dependency-path: |
+#            Flow.Launcher/packages.lock.json
+#            Flow.Launcher.Core/packages.lock.json            
+#            Flow.Launcher.Infrastructure/packages.lock.json
+#            Flow.Launcher.Plugin/packages.lock.json
       - name: Install vpk
-         Install vpk tool (dotnet tool install will not reinstall if already installed)
-         We will update the cli by removing cache
-        run: |
-          if (!(Get-Command vpk -ErrorAction SilentlyContinue)) {
-            dotnet tool install -g vpk
-          }
+        run: dotnet tool install -g vpk
       - name: Restore dependencies
-        run: dotnet restore -r win-arm64
+        run: nuget restore
       - name: Build
-        run: dotnet build --no-restore -c Release -p:FlowRuntimeIdentifier=win-arm64
+        run: dotnet build --no-restore -c Release
       - name: Initialize Service
         run: |
           sc config WSearch start= auto # Starts Windows Search service- Needed for running ExplorerTest
           net start WSearch
-#      - name: Test
-#        run: dotnet test --no-build --verbosity normal -c Release -p:FlowRuntimeIdentifier=win-arm64
+      - name: Test
+        run: dotnet test --no-build --verbosity normal -c Release
       - name: Perform post_build tasks
-        shell: pwsh
-        run: .\Scripts\post_build.ps1 -flowversion "${env:FlowVersion}-build.${env:BUILD_NUMBER}"
+        shell: powershell
+        run: .\Scripts\post_build.ps1
       - name: Upload Plugin Nupkg
         uses: actions/upload-artifact@v4
         with:

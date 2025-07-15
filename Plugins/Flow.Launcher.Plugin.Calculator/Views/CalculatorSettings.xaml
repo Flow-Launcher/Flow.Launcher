@@ -17,7 +17,7 @@
         <core:LocalizationConverter x:Key="LocalizationConverter" />
     </UserControl.Resources>
 
-    <Grid Margin="70,14,0,14">
+    <Grid Margin="{StaticResource SettingPanelMargin}">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
@@ -30,7 +30,7 @@
         <TextBlock
             Grid.Row="0"
             Grid.Column="0"
-            Margin="0,0,10,0"
+            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             VerticalAlignment="Center"
             FontSize="14"
             Text="{DynamicResource flowlauncher_plugin_calculator_output_decimal_seperator}" />
@@ -39,8 +39,9 @@
             Grid.Row="0"
             Grid.Column="1"
             MaxWidth="300"
-            Margin="10,5,0,5"
+            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             HorizontalAlignment="Left"
+            VerticalAlignment="Center"
             ItemsSource="{Binding Source={ui:EnumBindingSource {x:Type calculator:DecimalSeparator}}}"
             SelectedItem="{Binding Settings.DecimalSeparator}">
             <ComboBox.ItemTemplate>
@@ -53,7 +54,7 @@
         <TextBlock
             Grid.Row="1"
             Grid.Column="0"
-            Margin="0,0,10,0"
+            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             VerticalAlignment="Center"
             FontSize="14"
             Text="{DynamicResource flowlauncher_plugin_calculator_max_decimal_places}" />
@@ -61,8 +62,9 @@
             x:Name="MaxDecimalPlaces"
             Grid.Row="1"
             Grid.Column="1"
-            Margin="10,5,0,5"
+            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             HorizontalAlignment="Left"
+            VerticalAlignment="Center"
             ItemsSource="{Binding MaxDecimalPlacesRange}"
             SelectedItem="{Binding Settings.MaxDecimalPlaces}" />
 

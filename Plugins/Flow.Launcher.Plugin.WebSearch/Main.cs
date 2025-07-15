@@ -5,15 +5,13 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.WebSearch
 {
-    public class Main : IAsyncPlugin, ISettingProvider, IPluginI18n, IResultUpdated
+    public class Main : IAsyncPlugin, ISettingProvider, IPluginI18n, IResultUpdated, IContextMenu
     {
-        private PluginInitContext _context;
+        internal static PluginInitContext _context;
 
         private Settings _settings;
         private SettingsViewModel _viewModel;
@@ -73,10 +71,11 @@ namespace Flow.Launcher.Plugin.WebSearch
                         Score = score,
                         Action = c =>
                         {
-                            _context.API.OpenUrl(searchSource.Url.Replace("{q}", Uri.EscapeDataString(keyword)));
+                            _context.API.OpenWebUrl(searchSource.Url.Replace("{q}", Uri.EscapeDataString(keyword)));
 
                             return true;
-                        }
+                        },
+                        ContextData = searchSource.Url.Replace("{q}", Uri.EscapeDataString(keyword)),
                     };
 
                     results.Add(result);
@@ -136,12 +135,32 @@ namespace Flow.Launcher.Plugin.WebSearch
                 ActionKeywordAssigned = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? string.Empty : searchSource.ActionKeyword,
                 Action = c =>
                 {
-                    _context.API.OpenUrl(searchSource.Url.Replace("{q}", Uri.EscapeDataString(o)));
+                    _context.API.OpenWebUrl(searchSource.Url.Replace("{q}", Uri.EscapeDataString(o)));
 
                     return true;
-                }
+                },
+                ContextData = searchSource.Url.Replace("{q}", Uri.EscapeDataString(o)),
             });
             return resultsFromSuggestion;
+        }
+
+        public List<Result> LoadContextMenus(Result selected)
+        {
+            if (selected?.ContextData == null || selected.ContextData is not string) return new List<Result>();
+            return new List<Result>() {
+                new Result
+                {
+                    Title = _context.API.GetTranslation("flowlauncher_plugin_websearch_copyurl_title"),
+                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_websearch_copyurl_subtitle"),
+                    IcoPath = "Images/copylink.png",
+                    Action = c =>
+                    {
+                        _context.API.CopyToClipboard(selected.ContextData as string);
+
+                        return true;
+                    }
+                },
+            };
         }
 
         public Task InitAsync(PluginInitContext context)
@@ -160,11 +179,10 @@ namespace Flow.Launcher.Plugin.WebSearch
 
                 // Default images directory is in the WebSearch's application folder  
                 DefaultImagesDirectory = Path.Combine(pluginDirectory, Images);
-                Helper.ValidateDataDirectory(bundledImagesDirectory, DefaultImagesDirectory);
+                FilesFolders.ValidateDataDirectory(bundledImagesDirectory, DefaultImagesDirectory);
 
-                // Custom images directory is in the WebSearch's data location folder 
-                var name = Path.GetFileNameWithoutExtension(_context.CurrentPluginMetadata.ExecuteFileName);
-                CustomImagesDirectory = Path.Combine(DataLocation.PluginSettingsDirectory, name, "CustomIcons");
+                // Custom images directory is in the WebSearch's data location folder
+                CustomImagesDirectory = Path.Combine(_context.CurrentPluginMetadata.PluginSettingsDirectoryPath, "CustomIcons");
             };
         }
 

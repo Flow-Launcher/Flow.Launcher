@@ -3,8 +3,11 @@ name: Set Milestone
 # Assigns the earliest created milestone that matches the below glob pattern.
 
 on:
-  pull_request:
+  pull_request_target:
     types: [opened]
+
+permissions:
+  pull-requests: write
 
 jobs:
   automation:

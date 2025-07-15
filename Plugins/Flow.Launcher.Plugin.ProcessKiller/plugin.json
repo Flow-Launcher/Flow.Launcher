@@ -4,7 +4,7 @@
     "Name":"Process Killer",
     "Description":"Kill running processes from Flow",
     "Author":"Flow-Launcher",
-    "Version":"3.0.7",
+    "Version": "1.0.0",
     "Language":"csharp",
     "Website":"https://github.com/Flow-Launcher/Flow.Launcher.Plugin.ProcessKiller",
     "IcoPath":"Images\\app.png",

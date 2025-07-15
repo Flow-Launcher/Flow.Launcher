@@ -9,7 +9,10 @@ namespace Flow.Launcher.Resources.Controls
         {
             Default,
             Inside,
-            InsideFit
+            InsideFit,
+            First,
+            Middle,
+            Last
         }
 
         public Card()

@@ -17,7 +17,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">كلمة مفتاحية للعمل</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">الرابط</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">بحث</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">استخدام الإكمال التلقائي لاستعلام البحث:</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Use Search Query Autocomplete</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">بيانات الإكمال التلقائي من:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">يرجى اختيار بحث على الويب</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">هل أنت متأكد أنك تريد حذف {0}؟</system:String>
@@ -29,7 +29,8 @@
         وبالتالي، فإن الصيغة العامة للبحث على نتفليكس هي https://www.netflix.com/search?q={q}
     </system:String>
 
-
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">Copy URL</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">Copy search URL to clipboard</system:String>
 
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">العنوان</system:String>

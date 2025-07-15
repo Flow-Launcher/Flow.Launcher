@@ -3,6 +3,8 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">Najprv vyberte položku</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Vyberte cestu k priečinku.</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Vyberte iný názov alebo cestu k priečinku.</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Vyberte odkaz na priečinok</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">Naozaj chcete odstrániť {0}?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">Naozaj chcete natrvalo odstrániť tento súbor?</system:String>
@@ -25,12 +27,14 @@
     <system:String x:Key="plugin_explorer_add">Pridať</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">Všeobecné nastavenia</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Upraviť aktivačný príkaz</system:String>
+    <system:String x:Key="plugin_explorer_manage_quick_access_links_header">Prispôsobenie Rýchleho prístupu</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Odkazy Rýchleho prístupu</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Nastavenia Everything</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">Panel náhľadu</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Veľkosť</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Dátum vytvorenia</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Dátum úpravy</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_age_checkbox">Čas od vytvorenia</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Zobraziť informácie o súbore</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Formát dátumu a času</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Zoradenie:</system:String>
@@ -40,6 +44,7 @@
     <system:String x:Key="plugin_explorer_shell_path">Cesta k príkazovému riadku</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Vylúčené umiestnenia indexovania</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Použiť umiestnenie výsledku vyhľadávania ako pracovný priečinok spustiteľného súboru</system:String>
+    <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Zobraziť viac informácií v popise ako veľkosť a dátumy</system:String>
     <system:String x:Key="plugin_explorer_default_open_in_file_manager">Stlačením klávesu Enter otvoriť priečinok v predvolenom správcovi súborov</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Na vyhľadanie cesty použiť vyhľadávanie v indexe</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Možnosti indexovania</system:String>
@@ -76,17 +81,26 @@
     <!--  Plugin Tooltip  -->
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter na otvorenie priečinka</system:String>
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Enter na otvorenie umiestnenia priečinka</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info">{0}{4}Veľkosť: {1}{4}Dátum vytvorenia: {2}{4}Dátum úpravy: {3}</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_unknown">Neznáma</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_volume">{0}{3}Voľné miesto: {1}{3}Celková veľkosť: {2}</system:String>
 
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">Kopírovať cestu</system:String>
     <system:String x:Key="plugin_explorer_copypath_subtitle">Skopírovať cestu k aktuálnej položke do schránky</system:String>
+    <system:String x:Key="plugin_explorer_copyname">Kopírovať názov</system:String>
+    <system:String x:Key="plugin_explorer_copyname_subtitle">Skopírovať názov aktuálnej položky do schránky</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">Kopírovať</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">Skopírovať aktuálny súbor do schránky</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">Skopírovať aktuálny priečinok do schránky</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder">Odstrániť</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Natrvalo odstrániť aktuálny súbor</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Natrvalo odstrániť aktuálny priečinok</system:String>
-    <system:String x:Key="plugin_explorer_path">Cesta:</system:String>
+    <system:String x:Key="plugin_explorer_name">Názov</system:String>
+    <system:String x:Key="plugin_explorer_type">Typ</system:String>
+    <system:String x:Key="plugin_explorer_path">Cesta</system:String>
+    <system:String x:Key="plugin_explorer_file">Súbor</system:String>
+    <system:String x:Key="plugin_explorer_folder">Priečinok</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Odstrániť vybraný</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Spustiť ako iný používateľ</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Spustí vybranú položku ako používateľ s iným kontom</system:String>
@@ -157,9 +171,20 @@
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Chcete povoliť vyhľadávanie obsahu cez Everything?</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">Bez indexu (ktorý je podporovaný len v Everything v1.5+) to môže byť veľmi pomalé</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_everything_not_found">Nedá sa nájsť Everything.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_install_issue">Nepodarilo sa nainštalovať Everything, nainštalujte ho manuálne</system:String>
+
     <!--  Native Context Menu  -->
     <system:String x:Key="plugin_explorer_native_context_menu_header">Natívna kontextová ponuka</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Zobraziť natívnu kontextovú ponuku (experimentálne)</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Nižšie môžete určiť položky, ktoré chcete zahrnúť do kontextovej ponuky, môžu byť čiastočné (napr. &quot;tvoriť v program&quot;) alebo úplné (&quot;Otvoriť v programe&quot;).</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Nižšie môžete určiť položky, ktoré chcete vylúčiť z kontextovej ponuky, môžu byť čiastočné (napr. &quot;tvoriť v program&quot;) alebo úplné (&quot;Otvoriť v programe&quot;).</system:String>
+
+    <!--  Preview Info  -->
+    <system:String x:Key="Today">Dnes</system:String>
+    <system:String x:Key="DaysAgo">pred {0} dňami</system:String>
+    <system:String x:Key="OneMonthAgo">pred mesiacom</system:String>
+    <system:String x:Key="MonthsAgo">pred {0} mesiacmi</system:String>
+    <system:String x:Key="OneYearAgo">pred rokom</system:String>
+    <system:String x:Key="YearsAgo">pred {0} rokmi</system:String>
 </ResourceDictionary>

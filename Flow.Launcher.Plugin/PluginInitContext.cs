@@ -5,10 +5,18 @@
     /// </summary>
     public class PluginInitContext
     {
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
         public PluginInitContext()
         {
         }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="currentPluginMetadata"></param>
+        /// <param name="api"></param>
         public PluginInitContext(PluginMetadata currentPluginMetadata, IPublicAPI api)
         {
             CurrentPluginMetadata = currentPluginMetadata;

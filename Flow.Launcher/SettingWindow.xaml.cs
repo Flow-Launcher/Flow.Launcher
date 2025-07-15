@@ -1,55 +1,91 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
-using System.Windows.Forms;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
-using Flow.Launcher.Core;
-using Flow.Launcher.Core.Configuration;
-using Flow.Launcher.Helper;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
-using Flow.Launcher.Plugin;
 using Flow.Launcher.SettingPages.Views;
 using Flow.Launcher.ViewModel;
 using ModernWpf.Controls;
-using TextBox = System.Windows.Controls.TextBox;
+using Screen = System.Windows.Forms.Screen;
 
 namespace Flow.Launcher;
 
 public partial class SettingWindow
 {
-    private readonly IPublicAPI _api;
+    #region Private Fields
+
     private readonly Settings _settings;
     private readonly SettingWindowViewModel _viewModel;
 
-    public SettingWindow(IPublicAPI api, SettingWindowViewModel viewModel)
+    #endregion
+
+    #region Constructor
+
+    public SettingWindow()
     {
-        _settings = viewModel.Settings;
-        DataContext = viewModel;
-        _viewModel = viewModel;
-        _api = api;
-        InitializePosition();
+        _settings = Ioc.Default.GetRequiredService<Settings>();
+        _viewModel = Ioc.Default.GetRequiredService<SettingWindowViewModel>();
+        DataContext = _viewModel;
+        // Since WindowStartupLocation is set to Manual, initialize the window position before calling InitializeComponent
+        UpdatePositionAndState();
         InitializeComponent();
     }
+
+    #endregion
+
+    #region Window Events
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
         RefreshMaximizeRestoreButton();
-        // Fix (workaround) for the window freezes after lock screen (Win+L)
+
+        // Fix (workaround) for the window freezes after lock screen (Win+L) or sleep
         // https://stackoverflow.com/questions/4951058/software-rendering-mode-wpf
         HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
         HwndTarget hwndTarget = hwndSource.CompositionTarget;
-        hwndTarget.RenderMode = RenderMode.Default;
+        hwndTarget.RenderMode = RenderMode.SoftwareOnly;  // Must use software only render mode here
 
-        InitializePosition();
+        UpdatePositionAndState();
+
+        _viewModel.PropertyChanged += ViewModel_PropertyChanged;
+    }
+
+    // Sometimes the navigation is not triggered by button click,
+    // so we need to update the selected item here
+    private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+            case nameof(SettingWindowViewModel.PageType):
+                var selectedIndex = _viewModel.PageType.Name switch
+                {
+                    nameof(SettingsPaneGeneral) => 0,
+                    nameof(SettingsPanePlugins) => 1,
+                    nameof(SettingsPanePluginStore) => 2,
+                    nameof(SettingsPaneTheme) => 3,
+                    nameof(SettingsPaneHotkey) => 4,
+                    nameof(SettingsPaneProxy) => 5,
+                    nameof(SettingsPaneAbout) => 6,
+                    _ => 0
+                };
+                NavView.SelectedItem = NavView.MenuItems[selectedIndex];
+                break;
+        }
     }
 
     private void OnClosed(object sender, EventArgs e)
     {
-        _settings.SettingWindowState = WindowState;
-        _settings.SettingWindowTop = Top;
-        _settings.SettingWindowLeft = Left;
-        _viewModel.Save();
-        _api.SavePluginSettings();
+        _viewModel.PropertyChanged -= ViewModel_PropertyChanged;
+
+        // If app is exiting, settings save is not needed because main window closing event will handle this
+        if (App.LoadingOrExiting) return;
+        // Save settings when window is closed
+        _settings.Save();
+        App.API.SavePluginSettings();
     }
 
     private void OnCloseExecuted(object sender, ExecutedRoutedEventArgs e)
@@ -59,15 +95,32 @@ public partial class SettingWindow
 
     private void window_MouseDown(object sender, MouseButtonEventArgs e) /* for close hotkey popup */
     {
-        if (Keyboard.FocusedElement is not TextBox textBox)
-        {
-            return;
-        }
+        if (Keyboard.FocusedElement is not TextBox textBox) return;
         var tRequest = new TraversalRequest(FocusNavigationDirection.Next);
         textBox.MoveFocus(tRequest);
     }
 
-    /* Custom TitleBar */
+    private void Window_StateChanged(object sender, EventArgs e)
+    {
+        RefreshMaximizeRestoreButton();
+        if (IsLoaded)
+        {
+            _settings.SettingWindowState = WindowState;
+        }
+    }
+
+    private void Window_LocationChanged(object sender, EventArgs e)
+    {
+        if (IsLoaded)
+        {
+            _settings.SettingWindowTop = Top;
+            _settings.SettingWindowLeft = Left;
+        }
+    }
+
+    #endregion
+
+    #region Window Custom TitleBar
 
     private void OnMinimizeButtonClick(object sender, RoutedEventArgs e)
     {
@@ -92,40 +145,62 @@ public partial class SettingWindow
     {
         if (WindowState == WindowState.Maximized)
         {
-            MaximizeButton.Visibility = Visibility.Collapsed;
+            MaximizeButton.Visibility = Visibility.Hidden;
             RestoreButton.Visibility = Visibility.Visible;
         }
         else
         {
             MaximizeButton.Visibility = Visibility.Visible;
-            RestoreButton.Visibility = Visibility.Collapsed;
+            RestoreButton.Visibility = Visibility.Hidden;
         }
     }
 
-    private void Window_StateChanged(object sender, EventArgs e)
-    {
-        RefreshMaximizeRestoreButton();
-    }
+    #endregion
 
-    public void InitializePosition()
+    #region Window Position
+
+    public void UpdatePositionAndState()
     {
         var previousTop = _settings.SettingWindowTop;
         var previousLeft = _settings.SettingWindowLeft;
 
         if (previousTop == null || previousLeft == null || !IsPositionValid(previousTop.Value, previousLeft.Value))
         {
-            Top = WindowTop();
-            Left = WindowLeft();
+            SetWindowPosition(WindowTop(), WindowLeft());
         }
         else
         {
-            Top = previousTop.Value;
-            Left = previousLeft.Value;
+            var left = _settings.SettingWindowLeft.Value;
+            var top = _settings.SettingWindowTop.Value;
+            AdjustWindowPosition(ref top, ref left);
+            SetWindowPosition(top, left);
         }
+
         WindowState = _settings.SettingWindowState;
     }
 
-    private bool IsPositionValid(double top, double left)
+    private void SetWindowPosition(double top, double left)
+    {
+        // Ensure window does not exceed screen boundaries
+        top = Math.Max(top, SystemParameters.VirtualScreenTop);
+        left = Math.Max(left, SystemParameters.VirtualScreenLeft);
+        top = Math.Min(top, SystemParameters.VirtualScreenHeight - ActualHeight);
+        left = Math.Min(left, SystemParameters.VirtualScreenWidth - ActualWidth);
+
+        Top = top;
+        Left = left;
+    }
+
+    private void AdjustWindowPosition(ref double top, ref double left)
+    {
+        // Adjust window position if it exceeds screen boundaries
+        top = Math.Max(top, SystemParameters.VirtualScreenTop);
+        left = Math.Max(left, SystemParameters.VirtualScreenLeft);
+        top = Math.Min(top, SystemParameters.VirtualScreenHeight - ActualHeight);
+        left = Math.Min(left, SystemParameters.VirtualScreenWidth - ActualWidth);
+    }
+
+    private static bool IsPositionValid(double top, double left)
     {
         foreach (var screen in Screen.AllScreens)
         {
@@ -143,27 +218,31 @@ public partial class SettingWindow
     private double WindowLeft()
     {
         var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
-        var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
-        var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
-        var left = (dip2.X - this.ActualWidth) / 2 + dip1.X;
+        var dip1 = Win32Helper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
+        var dip2 = Win32Helper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
+        var left = (dip2.X - ActualWidth) / 2 + dip1.X;
         return left;
     }
 
     private double WindowTop()
     {
         var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
-        var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
-        var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Height);
-        var top = (dip2.Y - this.ActualHeight) / 2 + dip1.Y - 20;
+        var dip1 = Win32Helper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
+        var dip2 = Win32Helper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Height);
+        var top = (dip2.Y - ActualHeight) / 2 + dip1.Y - 20;
         return top;
     }
 
+    #endregion
+
+    #region Navigation View Events
+
     private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
     {
-        var paneData = new PaneData(_settings, _viewModel.Updater, _viewModel.Portable);
         if (args.IsSettingsSelected)
         {
-            ContentFrame.Navigate(typeof(SettingsPaneGeneral), paneData);
+            _viewModel.SetPageType(typeof(SettingsPaneGeneral));
+            ContentFrame.Navigate(typeof(SettingsPaneGeneral));
         }
         else
         {
@@ -185,7 +264,11 @@ public partial class SettingWindow
                 nameof(About) => typeof(SettingsPaneAbout),
                 _ => typeof(SettingsPaneGeneral)
             };
-            ContentFrame.Navigate(pageType, paneData);
+            // Only navigate if the page type changes to fix navigation forward/back issue
+            if (_viewModel.SetPageType(pageType))
+            {
+                ContentFrame.Navigate(pageType);
+            }
         }
     }
 
@@ -203,8 +286,9 @@ public partial class SettingWindow
 
     private void ContentFrame_Loaded(object sender, RoutedEventArgs e)
     {
-        NavView.SelectedItem ??= NavView.MenuItems[0]; /* Set First Page */
+        _viewModel.SetPageType(null); // Set page type to null so that NavigationView_SelectionChanged can navigate the frame
+        NavView.SelectedItem = NavView.MenuItems[0]; /* Set First Page */
     }
 
-    public record PaneData(Settings Settings, Updater Updater, IPortable Portable);
+    #endregion
 }

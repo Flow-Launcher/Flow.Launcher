@@ -4,7 +4,7 @@
   "Name": "Plugin Indicator",
   "Description": "Provides plugin action keyword suggestions",
   "Author": "qianlifeng",
-  "Version": "3.0.6",
+  "Version": "1.0.0",
   "Language": "csharp",
   "Website": "https://github.com/Flow-Launcher/Flow.Launcher",
   "ExecuteFileName": "Flow.Launcher.Plugin.PluginIndicator.dll",

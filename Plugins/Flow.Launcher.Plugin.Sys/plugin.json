@@ -4,7 +4,7 @@
   "Name": "System Commands",
   "Description": "Provide System related commands. e.g. shutdown,lock, setting etc.",
   "Author": "qianlifeng",
-  "Version": "3.1.6",
+  "Version": "1.0.0",
   "Language": "csharp",
   "Website": "https://github.com/Flow-Launcher/Flow.Launcher",
   "ExecuteFileName": "Flow.Launcher.Plugin.Sys.dll",

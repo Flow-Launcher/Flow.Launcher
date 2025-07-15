@@ -1,106 +1,175 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Image;
-using YamlDotNet.Core.Tokens;
 
 namespace Flow.Launcher
 {
     public partial class MessageBoxEx : Window
     {
-        public MessageBoxEx()
+        private static readonly string ClassName = nameof(MessageBoxEx);
+
+        private static MessageBoxEx msgBox;
+        private static MessageBoxResult _result = MessageBoxResult.None;
+
+        private readonly MessageBoxButton _button;
+
+        private MessageBoxEx(MessageBoxButton button)
         {
+            _button = button;
             InitializeComponent();
         }
 
-        public enum MessageBoxType
+        public static MessageBoxResult Show(
+            string messageBoxText,
+            string caption = "",
+            MessageBoxButton button = MessageBoxButton.OK,
+            MessageBoxImage icon = MessageBoxImage.None,
+            MessageBoxResult defaultResult = MessageBoxResult.OK)
         {
-            ConfirmationWithYesNo = 0,
-            ConfirmationWithYesNoCancel,
-            YesNo,
-            Information,
-            Error,
-            Warning
-        }
-
-        public enum MessageBoxImage
-        {
-            Warning = 0,
-            Question,
-            Information,
-            Error,
-            None
-        }
-
-        static MessageBoxEx msgBox;
-        static MessageBoxResult _result = MessageBoxResult.No;
-
-
-        /// 1 parameter
-        public static MessageBoxResult Show(string msg)
-        {
-            return Show(string.Empty, msg, MessageBoxButton.OK, MessageBoxImage.None);
-        }
-
-        // 2 parameter
-        public static MessageBoxResult Show(string caption, string text)
-        {
-            return Show(caption, text, MessageBoxButton.OK, MessageBoxImage.None);
-        }
-
-        /// 3 parameter
-        public static MessageBoxResult Show(string caption, string msg, MessageBoxType type) 
-        {
-            switch (type)
+            if (!Application.Current.Dispatcher.CheckAccess())
             {
-                case MessageBoxType.ConfirmationWithYesNo:
-                    return Show(caption, msg, MessageBoxButton.YesNo,
-                    MessageBoxImage.Question);
-                case MessageBoxType.YesNo:
-                    return Show(caption, msg, MessageBoxButton.YesNo,
-                    MessageBoxImage.Question);
-                case MessageBoxType.ConfirmationWithYesNoCancel:
-                    return Show(caption, msg, MessageBoxButton.YesNoCancel,
-                    MessageBoxImage.Question);
-                case MessageBoxType.Information:
-                    return Show(caption, msg, MessageBoxButton.OK,
-                    MessageBoxImage.Information);
-                case MessageBoxType.Error:
-                    return Show(caption, msg, MessageBoxButton.OK,
-                    MessageBoxImage.Error);
-                case MessageBoxType.Warning:
-                    return Show(caption, msg, MessageBoxButton.OK,
-                    MessageBoxImage.Warning);
-                default:
-                    return MessageBoxResult.No;
+                return Application.Current.Dispatcher.Invoke(() => Show(messageBoxText, caption, button, icon, defaultResult));
+            }
+
+            try
+            {
+                msgBox = new MessageBoxEx(button);
+                if (caption == string.Empty && button == MessageBoxButton.OK && icon == MessageBoxImage.None)
+                {
+                    msgBox.Title = messageBoxText;
+                    msgBox.DescOnlyTextBlock.Visibility = Visibility.Visible;
+                    msgBox.DescOnlyTextBlock.Text = messageBoxText;
+                }
+                else
+                {
+                    msgBox.Title = caption;
+                    msgBox.TitleTextBlock.Text = caption;
+                    msgBox.DescTextBlock.Text = messageBoxText;
+                    _ = SetImageOfMessageBoxAsync(icon);
+                }
+                SetButtonVisibilityFocusAndResult(button, defaultResult);
+                msgBox.ShowDialog();
+                return _result;
+            }
+            catch (Exception e)
+            {
+                App.API.LogError(ClassName, $"An error occurred: {e.Message}");
+                msgBox = null;
+                return MessageBoxResult.None;
             }
         }
 
-        // 4 parameter, Final Display Message. 
-        public static MessageBoxResult Show(string caption, string text, MessageBoxButton button, MessageBoxImage image)
+        private static void SetButtonVisibilityFocusAndResult(MessageBoxButton button, MessageBoxResult defaultResult)
         {
-            msgBox = new MessageBoxEx();
-            msgBox.TitleTextBlock.Text = text;
-            msgBox.DescTextBlock.Text = caption;
-            msgBox.Title = text;
-            SetVisibilityOfButtons(button);
-            SetImageOfMessageBox(image);
-            msgBox.ShowDialog();
-            return _result;
+            switch (button)
+            {
+                case MessageBoxButton.OK:
+                    msgBox.btnCancel.Visibility = Visibility.Collapsed;
+                    msgBox.btnNo.Visibility = Visibility.Collapsed;
+                    msgBox.btnYes.Visibility = Visibility.Collapsed;
+                    msgBox.btnOk.Focus();
+                    _result = MessageBoxResult.OK;
+                    break;
+                case MessageBoxButton.OKCancel:
+                    msgBox.btnNo.Visibility = Visibility.Collapsed;
+                    msgBox.btnYes.Visibility = Visibility.Collapsed;
+                    if (defaultResult == MessageBoxResult.Cancel)
+                    {
+                        msgBox.btnCancel.Focus();
+                        _result = MessageBoxResult.Cancel;
+                    }
+                    else
+                    {
+                        msgBox.btnOk.Focus();
+                        _result = MessageBoxResult.OK;
+                    }
+                    break;
+                case MessageBoxButton.YesNo:
+                    msgBox.btnOk.Visibility = Visibility.Collapsed;
+                    msgBox.btnCancel.Visibility = Visibility.Collapsed;
+                    if (defaultResult == MessageBoxResult.No)
+                    {
+                        msgBox.btnNo.Focus();
+                        _result = MessageBoxResult.No;
+                    }
+                    else
+                    {
+                        msgBox.btnYes.Focus();
+                        _result = MessageBoxResult.Yes;
+                    }
+                    break;
+                case MessageBoxButton.YesNoCancel:
+                    msgBox.btnOk.Visibility = Visibility.Collapsed;
+                    if (defaultResult == MessageBoxResult.No)
+                    {
+                        msgBox.btnNo.Focus();
+                        _result = MessageBoxResult.No;
+                    }
+                    else if (defaultResult == MessageBoxResult.Cancel)
+                    {
+                        msgBox.btnCancel.Focus();
+                        _result = MessageBoxResult.Cancel;
+                    }
+                    else
+                    {
+                        msgBox.btnYes.Focus();
+                        _result = MessageBoxResult.Yes;
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
+
+        private static async Task SetImageOfMessageBoxAsync(MessageBoxImage icon)
+        {
+            switch (icon)
+            {
+                case MessageBoxImage.Exclamation:
+                    await msgBox.SetImageAsync("Exclamation.png");
+                    msgBox.Img.Visibility = Visibility.Visible;
+                    break;
+                case MessageBoxImage.Question:
+                    await msgBox.SetImageAsync("Question.png");
+                    msgBox.Img.Visibility = Visibility.Visible;
+                    break;
+                case MessageBoxImage.Information:
+                    await msgBox.SetImageAsync("Information.png");
+                    msgBox.Img.Visibility = Visibility.Visible;
+                    break;
+                case MessageBoxImage.Error:
+                    await msgBox.SetImageAsync("Error.png");
+                    msgBox.Img.Visibility = Visibility.Visible;
+                    break;
+                default:
+                    msgBox.Img.Visibility = Visibility.Collapsed;
+                    break;
+            }
+        }
+
+        private async Task SetImageAsync(string imageName)
+        {
+            var imagePath = Path.Combine(Constant.ProgramDirectory, "Images", imageName);
+            var imageSource = await App.API.LoadImageAsync(imagePath);
+            Img.Source = imageSource;
+        }
+
+        private void KeyEsc_OnPress(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (_button == MessageBoxButton.YesNo)
+                // Follow System.Windows.MessageBox behavior
+                return;
+            else if (_button == MessageBoxButton.OK)
+                _result = MessageBoxResult.OK;
+            else
+                _result = MessageBoxResult.Cancel;
+            DialogResult = false;
+            Close();
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (sender == btnOk)
@@ -117,76 +186,17 @@ namespace Flow.Launcher
             msgBox = null;
         }
 
-        private static void SetVisibilityOfButtons(MessageBoxButton button)
-        {
-            switch (button)
-            {
-                case MessageBoxButton.OK:
-                    msgBox.btnCancel.Visibility = Visibility.Collapsed;
-                    msgBox.btnNo.Visibility = Visibility.Collapsed;
-                    msgBox.btnYes.Visibility = Visibility.Collapsed;
-                    msgBox.btnOk.Focus();
-                    break;
-                case MessageBoxButton.OKCancel:
-                    msgBox.btnNo.Visibility = Visibility.Collapsed;
-                    msgBox.btnYes.Visibility = Visibility.Collapsed;
-                    msgBox.btnCancel.Focus();
-                    break;
-                case MessageBoxButton.YesNo:
-                    msgBox.btnOk.Visibility = Visibility.Collapsed;
-                    msgBox.btnCancel.Visibility = Visibility.Collapsed;
-                    msgBox.btnNo.Focus();
-                    break;
-                case MessageBoxButton.YesNoCancel:
-                    msgBox.btnOk.Visibility = Visibility.Collapsed;
-                    msgBox.btnCancel.Focus();
-                    break;
-                default:
-                    break;
-            }
-        }
-        private static void SetImageOfMessageBox(MessageBoxImage image)
-        {
-            switch (image)
-            {
-                case MessageBoxImage.Warning:
-                    msgBox.SetImage("Warning.png");
-                    msgBox.Img.Visibility = Visibility.Visible;
-                    break;
-                case MessageBoxImage.Question:
-                    msgBox.SetImage("Question.png");
-                    msgBox.Img.Visibility = Visibility.Visible;
-                    break;
-                case MessageBoxImage.Information:
-                    msgBox.SetImage("Information.png");
-                    msgBox.Img.Visibility = Visibility.Visible;
-                    break;
-                case MessageBoxImage.Error:
-                    msgBox.SetImage("Error.png");
-                    msgBox.Img.Visibility = Visibility.Visible;
-                    break;
-                default:
-                    msgBox.Img.Visibility = Visibility.Collapsed;
-                    break;
-            }
-        }
-        private void SetImage(string imageName)
-        {
-            string uri = Constant.ProgramDirectory + "/Images/" + imageName;
-            var uriSource = new Uri(uri, UriKind.RelativeOrAbsolute);
-            Img.Source = new BitmapImage(uriSource);
-        }
-        private void cmdEsc_OnPress(object sender, ExecutedRoutedEventArgs e)
-        {
-            DialogResult = false;
-            Close();
-        }
-
         private void Button_Cancel(object sender, RoutedEventArgs e)
         {
+            if (_button == MessageBoxButton.YesNo)
+                // Follow System.Windows.MessageBox behavior
+                return;
+            else if (_button == MessageBoxButton.OK)
+                _result = MessageBoxResult.OK;
+            else
+                _result = MessageBoxResult.Cancel;
             msgBox.Close();
             msgBox = null;
         }
-
     }
 }

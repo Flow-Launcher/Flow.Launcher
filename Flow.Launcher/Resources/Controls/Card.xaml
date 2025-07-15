@@ -20,39 +20,39 @@
                         <Setter Property="BorderThickness" Value="1" />
                         <Setter Property="CornerRadius" Value="5" />
                         <Setter Property="MinHeight" Value="68" />
-                        <Setter Property="Padding" Value="0,15,0,15" />
-                        <Setter Property="Margin" Value="0,4,0,0" />
+                        <Setter Property="Padding" Value="0 15 0 15" />
+                        <Setter Property="Margin" Value="0 4 0 0" />
                         <Setter Property="SnapsToDevicePixels" Value="True" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource AncestorType=local:Card}}" Value="Inside">
-                                <Setter Property="BorderThickness" Value="0,1,0,0" />
+                                <Setter Property="BorderThickness" Value="0 1 0 0" />
                                 <Setter Property="CornerRadius" Value="0" />
-                                <Setter Property="Margin" Value="0,0,0,0" />
+                                <Setter Property="Margin" Value="0 0 0 0" />
                                 <Setter Property="Background" Value="Transparent" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource AncestorType=local:Card}}" Value="InsideFit">
-                                <Setter Property="BorderThickness" Value="0,1,0,0" />
+                                <Setter Property="BorderThickness" Value="0 1 0 0" />
                                 <Setter Property="CornerRadius" Value="0" />
-                                <Setter Property="Margin" Value="0,0,0,0" />
-                                <Setter Property="Padding" Value="38,0,26,0" />
+                                <Setter Property="Margin" Value="0 0 0 0" />
+                                <Setter Property="Padding" Value="35 0 26 0" />
                                 <Setter Property="Background" Value="Transparent" />
                             </DataTrigger>
 
-                            <DataTrigger Binding="{Binding (local:CardGroup.Position), RelativeSource={RelativeSource AncestorType=local:Card}}" Value="First">
+                            <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource AncestorType=local:Card}}" Value="First">
                                 <Setter Property="Margin" Value="0" />
                                 <Setter Property="CornerRadius" Value="0" />
                                 <Setter Property="Background" Value="Transparent" />
                                 <Setter Property="BorderThickness" Value="0" />
                             </DataTrigger>
 
-                            <DataTrigger Binding="{Binding (local:CardGroup.Position), RelativeSource={RelativeSource AncestorType=local:Card}}" Value="Middle">
+                            <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource AncestorType=local:Card}}" Value="Middle">
                                 <Setter Property="Margin" Value="0" />
                                 <Setter Property="CornerRadius" Value="0" />
                                 <Setter Property="Background" Value="Transparent" />
                                 <Setter Property="BorderThickness" Value="0 1 0 0" />
                             </DataTrigger>
 
-                            <DataTrigger Binding="{Binding (local:CardGroup.Position), RelativeSource={RelativeSource AncestorType=local:Card}}" Value="Last">
+                            <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource AncestorType=local:Card}}" Value="Last">
                                 <Setter Property="Margin" Value="0" />
                                 <Setter Property="CornerRadius" Value="0" />
                                 <Setter Property="Background" Value="Transparent" />
@@ -73,7 +73,7 @@
                     <ContentControl
                         Grid.Row="0"
                         Grid.Column="2"
-                        Margin="0,0,16,0"
+                        Margin="0 0 16 0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
                         Content="{TemplateBinding Content}" />
@@ -91,7 +91,7 @@
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
-                                    <Setter Property="Margin" Value="0,0,0,0" />
+                                    <Setter Property="Margin" Value="0 0 0 0" />
                                     <Setter Property="TextWrapping" Value="Wrap" />
                                     <Setter Property="VerticalAlignment" Value="Center" />
                                 </Style>
@@ -107,8 +107,8 @@
                                     </Style.Triggers>
                                     <Setter Property="Foreground" Value="{DynamicResource Color04B}" />
                                     <Setter Property="FontSize" Value="12" />
-                                    <Setter Property="Margin" Value="0,0,0,0" />
-                                    <Setter Property="Padding" Value="0,0,24,0" />
+                                    <Setter Property="Margin" Value="0 0 0 0" />
+                                    <Setter Property="Padding" Value="0 0 24 0" />
                                     <Setter Property="TextWrapping" Value="WrapWithOverflow" />
                                 </Style>
                             </TextBlock.Style>
@@ -120,11 +120,11 @@
                             <Style TargetType="{x:Type TextBlock}">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding ElementName=ItemIcon, Path=Text}" Value="{x:Static sys:String.Empty}">
-                                        <Setter Property="Margin" Value="24,0,0,0" />
+                                        <Setter Property="Margin" Value="24 0 0 0" />
                                     </DataTrigger>
                                 </Style.Triggers>
                                 <Setter Property="Grid.Column" Value="0" />
-                                <Setter Property="Margin" Value="24,0,16,0" />
+                                <Setter Property="Margin" Value="24 0 16 0" />
                                 <Setter Property="VerticalAlignment" Value="Center" />
                                 <Setter Property="FontSize" Value="20" />
                                 <Setter Property="FontFamily" Value="/Resources/#Segoe Fluent Icons" />
