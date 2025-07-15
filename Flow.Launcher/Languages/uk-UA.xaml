@@ -91,6 +91,7 @@
     <system:String x:Key="typingStartEn">Завжди починати введення тексту в англійському режимі</system:String>
     <system:String x:Key="typingStartEnTooltip">Тимчасово змінити спосіб введення на англійський при активації Flow.</system:String>
     <system:String x:Key="autoUpdates">Автоматичне оновлення</system:String>
+    <system:String x:Key="autoUpdatesTooltip">Automatically check and update the app when available</system:String>
     <system:String x:Key="select">Вибрати</system:String>
     <system:String x:Key="hideOnStartup">Сховати Flow Launcher при запуску системи</system:String>
     <system:String x:Key="hideOnStartupToolTip">Вікно пошуку Flow Launcher після запуску ховається в треї.</system:String>
@@ -115,7 +116,7 @@
     <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Сін Кон Цзянь Дао</system:String>
     <system:String x:Key="DoublePinyinSchemasDaNiu">Да Ню</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoLang">Сяо Лан</system:String>
-    
+
     <system:String x:Key="AlwaysPreview">Завжди переглядати</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Завжди відкривати панель попереднього перегляду при активації Flow. Натисніть {0}, щоб переключити попередній перегляд.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Ефект тіні не дозволено, коли поточна тема має ефект розмиття</system:String>
@@ -155,6 +156,8 @@
     <system:String x:Key="autoRestartAfterChangingToolTip">Автоматично перезапускати Flow Launcher після встановлення / видалення / оновлення плагіну через Магазин плагінів</system:String>
     <system:String x:Key="showUnknownSourceWarning">Показувати попередження про невідоме джерело</system:String>
     <system:String x:Key="showUnknownSourceWarningToolTip">Показувати попередження під час встановлення плагінів із невідомих джерел</system:String>
+    <system:String x:Key="autoUpdatePlugins">Auto update plugins</system:String>
+    <system:String x:Key="autoUpdatePluginsToolTip">Automatically check plugin updates and notify if there are any updates available</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Плагін для пошуку</system:String>
@@ -236,6 +239,11 @@
     <system:String x:Key="ZipFiles">Zip-файли</system:String>
     <system:String x:Key="SelectZipFile">Виберіть zip-файл</system:String>
     <system:String x:Key="installLocalPluginTooltip">Встановити плагін із локального шляху</system:String>
+    <system:String x:Key="updateNoResultTitle">Оновлень не знайдено</system:String>
+    <system:String x:Key="updateNoResultSubtitle">Всі плагіни оновлено</system:String>
+    <system:String x:Key="updateAllPluginsTitle">Plugin updates available</system:String>
+    <system:String x:Key="updateAllPluginsButtonContent">Оновити всі плагіни</system:String>
+    <system:String x:Key="checkPluginUpdatesTooltip">Check plugin updates</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Тема</system:String>
