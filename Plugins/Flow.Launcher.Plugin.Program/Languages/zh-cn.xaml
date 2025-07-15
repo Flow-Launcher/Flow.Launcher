@@ -30,10 +30,12 @@
     <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">启用时搜索 PATH 环境变量中的程序</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">隐藏应用路径</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">隐藏诸如UWP，lnk 等可执行文件的路径</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers">Hide uninstallers</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">Hides programs with common uninstaller names, such as unins000.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers">隐藏卸载程序</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">隐藏具有常见卸载程序名称的程序，例如 unins000.exe</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">启用程序描述</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow 将搜索程序描述</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp">隐藏重复的应用</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp_tooltip">隐藏已经在UWP列表中重复的Win32程序</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">后缀</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">最大深度</system:String>
 
@@ -44,6 +46,8 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">请先选择一项</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">您确定要删除选定的程序源吗？</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_not_user_added">请选择没有被您添加的程序源</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_user_added">请选择由您添加的程序源</system:String>
     <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">相同位置存在另一个程序源。</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">程序源</system:String>
@@ -72,8 +76,8 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">以其他用户身份运行</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">以管理员身份运行</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">打开文件所在文件夹</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">禁止显示该程序</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Open target folder</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">隐藏</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_open_target_folder">打开目标文件夹</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">程序</system:String>
     <system:String x:Key="flowlauncher_plugin_program_plugin_description">在 Flow Launcher 中搜索程序</system:String>
@@ -82,7 +86,7 @@
 
     <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">自定义资源管理器</system:String>
     <system:String x:Key="flowlauncher_plugin_program_args">参数</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">您可以通过输入要使用的资源管理器的环境变量来自定义用于打开文件夹的资源管理器。 使用CMD来测试环境变量是否可用。</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">您可以通过输入要使用的资源管理器的环境变量来自定义用于打开容器文件夹的资源管理器。使用 CMD 测试环境变量是否可用将很有用。</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_args">输入要为自定义资源管理器添加的自定义参数。 %s代表父目录，%f代表完整路径（仅适用于win32）。 检查资源管理器的网站以获取详细信息。</system:String>
 
     <!--  Dialogs  -->

@@ -4,7 +4,7 @@
   "Description": "Search settings inside Control Panel and Settings App",
   "Name": "Windows Settings",
   "Author": "TobiasSekan",
-  "Version": "4.0.7",
+  "Version": "1.0.0",
   "Language": "csharp",
   "Website": "https://github.com/Flow-Launcher/Flow.Launcher",
   "ExecuteFileName": "Flow.Launcher.Plugin.WindowsSettings.dll",

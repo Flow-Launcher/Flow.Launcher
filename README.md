@@ -219,7 +219,7 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 
 ## 📦 Plugins
 
-- Support wide range of plugins. Visit [here](https://flowlauncher.com/docs/#/plugins) for our plugin portfolio.
+- Support wide range of plugins. Visit [here](https://www.flowlauncher.com/plugins/) for our plugin portfolio.
 - Publish your own plugin to flow! Create plugins in:
 
 <p align="center">
@@ -330,27 +330,32 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
 ## Sponsors
-
 <p align="center">
-  <a href="https://appwrite.io">
-    <img src='https://appwrite.io/assets/logotype/black.svg' width="40%"/>
+  <a href="https://coderabbit.ai/">
+    <img src="https://github.com/Flow-Launcher/Flow.Launcher/assets/6903107/7c996d74-0c69-4011-922f-a95ca7e874b0" width="30%" alt="Coderabbit Logo" />
   </a>
   <br />
-
-</p>
-
-<p align="center">
+  <br />
   <a href="https://github.com/TheBestPessimist">
     <img src='https://avatars.githubusercontent.com/u/4482210?v=4' width="10%"/>
   </a>
-  <br />
-
+  <a href="https://github.com/AjmalParkar006">
+    <img src='https://avatars.githubusercontent.com/u/76547256?v=4' width="10%"/>
+  </a>
 </p>
-
+<p align="center">
+  <a href="https://appwrite.io">
+    <img src='https://appwrite.io/assets/logotype/white.svg' width="30%" alt="Appwrite Logo" />
+  </a>
+  <br />
+</p>
 <p align="center">
   <a href="https://github.com/itsonlyfrans"><img src="https://avatars.githubusercontent.com/u/46535667?v=4" width="10%" /></a>
+  <a href="https://github.com/atilford"><img src="https://avatars.githubusercontent.com/u/13649625?v=4" width="10%" /></a>
   <a href="https://github.com/andreqramos"><img src="https://avatars.githubusercontent.com/u/49326063?v=4" width="10%" /></a>
   <a href="https://github.com/Yuba4"><img src="https://avatars.githubusercontent.com/u/46278200?v=4" width="10%" /></a>
+  <a href="https://github.com/Mavrik327"><img src="https://avatars.githubusercontent.com/u/121626149?v=4" width="10%" /></a>
+  <a href="https://github.com/tikkatek"><img src="https://avatars.githubusercontent.com/u/26571381?v=4" width="10%" /></a>
   <a href="https://github.com/patrickdobler"><img src="https://avatars.githubusercontent.com/u/16536946?v=4" width="10%" /></a>
   <a href="https://github.com/benflap"><img src="https://avatars.githubusercontent.com/u/62034481?v=4" width="10%" /></a>
 </p>
@@ -369,6 +374,10 @@ Yes please, let us know in the [Q&A](https://github.com/Flow-Launcher/Flow.Launc
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
 ## Development
+
+### Localization
+
+Our project localization is based on [Crowdin](https://crowdin.com). If you would like to change them, please go to https://crowdin.com/project/flow-launcher.
 
 ### New changes
 

@@ -32,14 +32,11 @@
             <StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Button
-                        Grid.Column="4"
+                        Grid.Column="1"
                         Click="BtnCancel_OnClick"
                         Style="{StaticResource TitleBarCloseButtonStyle}">
                         <Path
@@ -61,9 +58,9 @@
                     </Button>
                 </Grid>
             </StackPanel>
-            <StackPanel Margin="26,0,26,0">
+            <StackPanel Margin="26 0 26 0">
                 <TextBlock
-                    Margin="0,0,0,12"
+                    Margin="0 0 0 12"
                     FontSize="20"
                     FontWeight="SemiBold"
                     Text="{DynamicResource customeQueryHotkeyTitle}"
@@ -75,10 +72,10 @@
                     TextWrapping="WrapWithOverflow" />
                 <Image
                     Width="478"
-                    Margin="0,20,0,0"
+                    Margin="0 20 0 0"
                     Source="/Images/illustration_01.png" />
 
-                <Grid Width="478" Margin="0,20,0,0">
+                <Grid Width="478" Margin="0 20 0 0">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
@@ -102,12 +99,12 @@
                         Grid.Row="0"
                         Grid.Column="1"
                         Grid.ColumnSpan="2"
-                        Margin="10,0,10,0"
+                        Margin="10 0 10 0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         HorizontalContentAlignment="Left"
-                        HotkeySettings="{Binding Settings}"
-                        DefaultHotkey="" />
+                        DefaultHotkey=""
+                        Type="CustomQueryHotkey" />
                     <TextBlock
                         Grid.Row="1"
                         Grid.Column="0"
@@ -122,13 +119,14 @@
                         Grid.Column="1"
                         Margin="10"
                         HorizontalAlignment="Stretch"
-                        VerticalAlignment="Center" />
+                        VerticalAlignment="Center"
+                        Text="{Binding ActionKeyword}" />
                     <Button
                         x:Name="btnTestActionKeyword"
                         Grid.Row="1"
                         Grid.Column="2"
-                        Margin="0,0,10,0"
-                        Padding="10,5,10,5"
+                        Margin="0 0 10 0"
+                        Padding="10 5 10 5"
                         Click="BtnTestActionKeyword_OnClick"
                         Content="{DynamicResource preview}" />
                 </Grid>
@@ -136,24 +134,37 @@
         </StackPanel>
         <Border
             Grid.Row="1"
-            Margin="0,14,0,0"
+            Margin="0 14 0 0"
             Background="{DynamicResource PopupButtonAreaBGColor}"
             BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
-            BorderThickness="0,1,0,0">
+            BorderThickness="0 1 0 0">
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <Button
                     x:Name="btnCancel"
                     MinWidth="140"
-                    Margin="10,0,5,0"
+                    Margin="10 0 5 0"
                     Click="BtnCancel_OnClick"
                     Content="{DynamicResource cancel}" />
                 <Button
                     x:Name="btnAdd"
                     MinWidth="140"
-                    Margin="5,0,10,0"
+                    Margin="5 0 10 0"
                     Click="btnAdd_OnClick"
                     Style="{StaticResource AccentButtonStyle}">
-                    <TextBlock x:Name="lblAdd" Text="{DynamicResource done}" />
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <TextBlock
+                            x:Name="tbAdd"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Text="{DynamicResource done}"
+                            Visibility="Collapsed" />
+                        <TextBlock
+                            x:Name="tbUpdate"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Text="{DynamicResource update}"
+                            Visibility="Collapsed" />
+                    </Grid>
                 </Button>
             </StackPanel>
         </Border>

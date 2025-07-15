@@ -17,7 +17,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Từ khóa hành động</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">Địa chỉ URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">Tìm kiếm</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Sử dụng Tự động hoàn thành truy vấn tìm kiếm:</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Use Search Query Autocomplete</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Tự động hoàn thành dữ liệu từ:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Vui lòng chọn tìm kiếm trên web</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Bạn có chắc chắn muốn xóa {0} không?</system:String>
@@ -29,7 +29,8 @@
         Thus, the generic formula for a search on Netflix is https://www.netflix.com/search?q={q}
     </system:String>
 
-
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">Copy URL</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">Copy search URL to clipboard</system:String>
 
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">Tiêu đề</system:String>

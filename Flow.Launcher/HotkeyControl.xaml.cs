@@ -1,28 +1,18 @@
-﻿#nullable enable
-
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using Flow.Launcher.Core.Resource;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.UserSettings;
+
+#nullable enable
 
 namespace Flow.Launcher
 {
     public partial class HotkeyControl
     {
-        public IHotkeySettings HotkeySettings {
-            get { return (IHotkeySettings)GetValue(HotkeySettingsProperty); }
-            set { SetValue(HotkeySettingsProperty, value); }
-        }
-
-        public static readonly DependencyProperty HotkeySettingsProperty = DependencyProperty.Register(
-            nameof(HotkeySettings),
-            typeof(IHotkeySettings),
-            typeof(HotkeyControl),
-            new PropertyMetadata()
-        );
         public string WindowTitle {
             get { return (string)GetValue(WindowTitleProperty); }
             set { SetValue(WindowTitleProperty, value); }
@@ -71,10 +61,8 @@ namespace Flow.Launcher
                 return;
             }
 
-            hotkeyControl.SetKeysToDisplay(new HotkeyModel(hotkeyControl.Hotkey));
-            hotkeyControl.CurrentHotkey = new HotkeyModel(hotkeyControl.Hotkey);
+            hotkeyControl.RefreshHotkeyInterface(hotkeyControl.Hotkey);
         }
-
 
         public static readonly DependencyProperty ChangeHotkeyProperty = DependencyProperty.Register(
             nameof(ChangeHotkey),
@@ -89,18 +77,137 @@ namespace Flow.Launcher
             set { SetValue(ChangeHotkeyProperty, value); }
         }
 
-
-        public static readonly DependencyProperty HotkeyProperty = DependencyProperty.Register(
-            nameof(Hotkey),
-            typeof(string),
+        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(
+            nameof(Type),
+            typeof(HotkeyType),
             typeof(HotkeyControl),
-            new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnHotkeyChanged)
+            new FrameworkPropertyMetadata(HotkeyType.None, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnHotkeyChanged)
         );
 
+        public HotkeyType Type
+        {
+            get { return (HotkeyType)GetValue(TypeProperty); }
+            set { SetValue(TypeProperty, value); }
+        }
+
+        public enum HotkeyType
+        {
+            None,
+            // Custom query hotkeys
+            CustomQueryHotkey,
+            // Settings hotkeys
+            Hotkey,
+            PreviewHotkey,
+            OpenContextMenuHotkey,
+            SettingWindowHotkey,
+            OpenHistoryHotkey,
+            CycleHistoryUpHotkey,
+            CycleHistoryDownHotkey,
+            SelectPrevPageHotkey,
+            SelectNextPageHotkey,
+            AutoCompleteHotkey,
+            AutoCompleteHotkey2,
+            SelectPrevItemHotkey,
+            SelectPrevItemHotkey2,
+            SelectNextItemHotkey,
+            SelectNextItemHotkey2
+        }
+
+        // We can initialize settings in static field because it has been constructed in App constuctor
+        // and it will not construct settings instances twice
+        private static readonly Settings _settings = Ioc.Default.GetRequiredService<Settings>();
+
+        private string hotkey = string.Empty;
         public string Hotkey
         {
-            get { return (string)GetValue(HotkeyProperty); }
-            set { SetValue(HotkeyProperty, value); }
+            get
+            {
+                return Type switch
+                {
+                    // Custom query hotkeys
+                    HotkeyType.CustomQueryHotkey => hotkey,
+                    // Settings hotkeys
+                    HotkeyType.Hotkey => _settings.Hotkey,
+                    HotkeyType.PreviewHotkey => _settings.PreviewHotkey,
+                    HotkeyType.OpenContextMenuHotkey => _settings.OpenContextMenuHotkey,
+                    HotkeyType.SettingWindowHotkey => _settings.SettingWindowHotkey,
+                    HotkeyType.OpenHistoryHotkey => _settings.OpenHistoryHotkey,
+                    HotkeyType.CycleHistoryUpHotkey => _settings.CycleHistoryUpHotkey,
+                    HotkeyType.CycleHistoryDownHotkey => _settings.CycleHistoryDownHotkey,
+                    HotkeyType.SelectPrevPageHotkey => _settings.SelectPrevPageHotkey,
+                    HotkeyType.SelectNextPageHotkey => _settings.SelectNextPageHotkey,
+                    HotkeyType.AutoCompleteHotkey => _settings.AutoCompleteHotkey,
+                    HotkeyType.AutoCompleteHotkey2 => _settings.AutoCompleteHotkey2,
+                    HotkeyType.SelectPrevItemHotkey => _settings.SelectPrevItemHotkey,
+                    HotkeyType.SelectPrevItemHotkey2 => _settings.SelectPrevItemHotkey2,
+                    HotkeyType.SelectNextItemHotkey => _settings.SelectNextItemHotkey,
+                    HotkeyType.SelectNextItemHotkey2 => _settings.SelectNextItemHotkey2,
+                    _ => throw new System.NotImplementedException("Hotkey type not set")
+                };
+            }
+            set
+            {
+                switch (Type)
+                {
+                    // Custom query hotkeys
+                    case HotkeyType.CustomQueryHotkey:
+                        // We just need to store it in a local field
+                        // because we will save to settings in other place
+                        hotkey = value;
+                        break;
+                    // Settings hotkeys
+                    case HotkeyType.Hotkey:
+                        _settings.Hotkey = value;
+                        break;
+                    case HotkeyType.PreviewHotkey:
+                        _settings.PreviewHotkey = value;
+                        break;
+                    case HotkeyType.OpenContextMenuHotkey:
+                        _settings.OpenContextMenuHotkey = value;
+                        break;
+                    case HotkeyType.SettingWindowHotkey:
+                        _settings.SettingWindowHotkey = value;
+                        break;
+                    case HotkeyType.OpenHistoryHotkey:
+                        _settings.OpenHistoryHotkey = value;
+                        break;                    
+                    case HotkeyType.CycleHistoryUpHotkey:
+                        _settings.CycleHistoryUpHotkey = value;
+                        break;
+                    case HotkeyType.CycleHistoryDownHotkey:
+                        _settings.CycleHistoryDownHotkey = value;
+                        break;
+                    case HotkeyType.SelectPrevPageHotkey:
+                        _settings.SelectPrevPageHotkey = value;
+                        break;
+                    case HotkeyType.SelectNextPageHotkey:
+                        _settings.SelectNextPageHotkey = value;
+                        break;
+                    case HotkeyType.AutoCompleteHotkey:
+                        _settings.AutoCompleteHotkey = value;
+                        break;
+                    case HotkeyType.AutoCompleteHotkey2:
+                        _settings.AutoCompleteHotkey2 = value;
+                        break;
+                    case HotkeyType.SelectPrevItemHotkey:
+                        _settings.SelectPrevItemHotkey = value;
+                        break;
+                    case HotkeyType.SelectNextItemHotkey:
+                        _settings.SelectNextItemHotkey = value;
+                        break;
+                    case HotkeyType.SelectPrevItemHotkey2:
+                        _settings.SelectPrevItemHotkey2 = value;
+                        break;
+                    case HotkeyType.SelectNextItemHotkey2:
+                        _settings.SelectNextItemHotkey2 = value;
+                        break;
+                    default:
+                        throw new System.NotImplementedException("Hotkey type not set");
+                }
+
+                // After setting the hotkey, we need to refresh the interface
+                RefreshHotkeyInterface(Hotkey);
+            }
         }
 
         public HotkeyControl()
@@ -108,32 +215,43 @@ namespace Flow.Launcher
             InitializeComponent();
 
             HotkeyList.ItemsSource = KeysToDisplay;
-            SetKeysToDisplay(CurrentHotkey);
+
+            // We should not call RefreshHotkeyInterface here because DependencyProperty is not set yet
+            // And it will be called in OnHotkeyChanged event or Hotkey setter later
+        }
+
+        private void RefreshHotkeyInterface(string hotkey)
+        {
+            SetKeysToDisplay(new HotkeyModel(hotkey));
+            CurrentHotkey = new HotkeyModel(hotkey);
         }
 
         private static bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture) =>
             hotkey.Validate(validateKeyGesture) && HotKeyMapper.CheckAvailability(hotkey);
 
-        public string EmptyHotkey => InternationalizationManager.Instance.GetTranslation("none");
+        public string EmptyHotkey => App.API.GetTranslation("none");
 
         public ObservableCollection<string> KeysToDisplay { get; set; } = new();
 
         public HotkeyModel CurrentHotkey { get; private set; } = new(false, false, false, false, Key.None);
 
-
         public void GetNewHotkey(object sender, RoutedEventArgs e)
         {
-            OpenHotkeyDialog();
+            _ = OpenHotkeyDialogAsync();
         }
 
-        private async Task OpenHotkeyDialog()
+        private async Task OpenHotkeyDialogAsync()
         {
             if (!string.IsNullOrEmpty(Hotkey))
             {
                 HotKeyMapper.RemoveHotkey(Hotkey);
             }
 
-            var dialog = new HotkeyControlDialog(Hotkey, DefaultHotkey, HotkeySettings, WindowTitle);
+            var dialog = new HotkeyControlDialog(Hotkey, DefaultHotkey, WindowTitle)
+            {
+                Owner = Window.GetWindow(this)
+            };
+
             await dialog.ShowAsync();
             switch (dialog.ResultType)
             {
@@ -149,12 +267,20 @@ namespace Flow.Launcher
             }
         }
 
-
         private void SetHotkey(HotkeyModel keyModel, bool triggerValidate = true)
         {
             if (triggerValidate)
             {
-                bool hotkeyAvailable = CheckHotkeyAvailability(keyModel, ValidateKeyGesture);
+                bool hotkeyAvailable;
+                // TODO: This is a temporary way to enforce changing only the open flow hotkey to Win, and will be removed by PR #3157
+                if (keyModel.ToString() == "LWin" || keyModel.ToString() == "RWin")
+                {
+                    hotkeyAvailable = true;
+                }
+                else
+                {
+                    hotkeyAvailable = CheckHotkeyAvailability(keyModel, ValidateKeyGesture);
+                }
 
                 if (!hotkeyAvailable)
                 {

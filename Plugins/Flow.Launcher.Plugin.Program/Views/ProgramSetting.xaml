@@ -8,123 +8,111 @@
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </UserControl.Resources>
-    <Grid Margin="0">
+    <Grid Margin="{StaticResource SettingPanelMargin}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <DockPanel
-            Margin="70,10,0,8"
-            HorizontalAlignment="Stretch"
-            LastChildFill="True">
+        <DockPanel HorizontalAlignment="Stretch" LastChildFill="True">
             <TextBlock
                 MinWidth="120"
-                Margin="0,5,10,0"
+                Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
+                VerticalAlignment="Center"
                 Text="{DynamicResource flowlauncher_plugin_program_index_source}" />
             <WrapPanel
                 Width="Auto"
-                Margin="0,0,14,0"
+                Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                 HorizontalAlignment="Right"
                 DockPanel.Dock="Right">
                 <CheckBox
                     Name="UWPEnabled"
-                    Margin="12,0,12,0"
-                    Visibility="{Binding ShowUWPCheckbox, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Margin="{StaticResource SettingPanelItemRightMargin}"
                     Content="{DynamicResource flowlauncher_plugin_program_index_uwp}"
                     IsChecked="{Binding EnableUWP}"
-                    ToolTip="{DynamicResource flowlauncher_plugin_program_index_uwp_tooltip}" />
+                    ToolTip="{DynamicResource flowlauncher_plugin_program_index_uwp_tooltip}"
+                    Visibility="{Binding ShowUWPCheckbox, Converter={StaticResource BooleanToVisibilityConverter}}" />
                 <CheckBox
                     Name="StartMenuEnabled"
-                    Margin="12,0,12,0"
+                    Margin="{StaticResource SettingPanelItemRightMargin}"
                     Content="{DynamicResource flowlauncher_plugin_program_index_start}"
                     IsChecked="{Binding EnableStartMenuSource}"
                     ToolTip="{DynamicResource flowlauncher_plugin_program_index_start_tooltip}" />
                 <CheckBox
                     Name="RegistryEnabled"
-                    Margin="12,0,12,0"
+                    Margin="{StaticResource SettingPanelItemRightMargin}"
                     Content="{DynamicResource flowlauncher_plugin_program_index_registry}"
                     IsChecked="{Binding EnableRegistrySource}"
                     ToolTip="{DynamicResource flowlauncher_plugin_program_index_registry_tooltip}" />
                 <CheckBox
                     Name="PATHEnabled"
-                    Margin="12,0,12,0"
                     Content="{DynamicResource flowlauncher_plugin_program_index_PATH}"
                     IsChecked="{Binding EnablePATHSource}"
                     ToolTip="{DynamicResource flowlauncher_plugin_program_index_PATH_tooltip}" />
             </WrapPanel>
         </DockPanel>
-
         <StackPanel
             Grid.Row="1"
             HorizontalAlignment="Stretch"
             Orientation="Vertical">
-            <Separator
-                Height="1"
-                BorderBrush="{DynamicResource Color03B}"
-                BorderThickness="1" />
-            <DockPanel
-                Margin="70,10,0,8"
-                HorizontalAlignment="Stretch"
-                LastChildFill="True">
+            <Separator Style="{StaticResource SettingPanelSeparatorStyle}" />
+            <DockPanel HorizontalAlignment="Stretch" LastChildFill="True">
                 <TextBlock
                     MinWidth="120"
-                    Margin="0,5,10,0"
+                    Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
+                    VerticalAlignment="Center"
                     Text="{DynamicResource flowlauncher_plugin_program_index_option}" />
                 <WrapPanel
                     Width="Auto"
-                    Margin="0,0,14,0"
                     HorizontalAlignment="Right"
                     DockPanel.Dock="Right">
                     <CheckBox
-                        Name="HideLnkEnabled"
-                        Margin="12,0,12,0"
+                        Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
                         Content="{DynamicResource flowlauncher_plugin_program_enable_hidelnkpath}"
                         IsChecked="{Binding HideAppsPath}"
                         ToolTip="{DynamicResource flowlauncher_plugin_program_enable_hidelnkpath_tooltip}" />
                     <CheckBox
-                        Margin="12 0 12 0"
+                        Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
                         Content="{DynamicResource flowlauncher_plugin_program_enable_hideuninstallers}"
                         IsChecked="{Binding HideUninstallers}"
                         ToolTip="{DynamicResource flowlauncher_plugin_program_enable_hideuninstallers_tooltip}" />
                     <CheckBox
-                        Name="DescriptionEnabled"
-                        Margin="12,0,12,0"
+                        Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
                         Content="{DynamicResource flowlauncher_plugin_program_enable_description}"
                         IsChecked="{Binding EnableDescription}"
                         ToolTip="{DynamicResource flowlauncher_plugin_program_enable_description_tooltip}" />
+                    <CheckBox
+                        Content="{DynamicResource flowlauncher_plugin_program_enable_hideduplicatedwindowsapp}"
+                        IsChecked="{Binding HideDuplicatedWindowsApp}"
+                        ToolTip="{DynamicResource flowlauncher_plugin_program_enable_hideduplicatedwindowsapp_tooltip}" />
                 </WrapPanel>
             </DockPanel>
-            <Separator
-                Height="1"
-                BorderBrush="{DynamicResource Color03B}"
-                BorderThickness="1" />
+            <Separator Style="{StaticResource SettingPanelSeparatorStyle}" />
             <StackPanel
-                Margin="60,0,0,2"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Orientation="Horizontal">
                 <Button
                     x:Name="btnLoadAllProgramSource"
                     MinWidth="120"
-                    Margin="10,10,5,10"
+                    Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
                     HorizontalAlignment="Right"
                     Click="btnLoadAllProgramSource_OnClick"
                     Content="{DynamicResource flowlauncher_plugin_program_all_programs}" />
                 <Button
                     x:Name="btnProgramSuffixes"
                     MinWidth="120"
-                    Margin="5,10,5,10"
+                    Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
                     HorizontalAlignment="Right"
                     Click="BtnProgramSuffixes_OnClick"
                     Content="{DynamicResource flowlauncher_plugin_program_suffixes}" />
                 <Button
                     x:Name="btnReindex"
                     MinWidth="120"
-                    Margin="5,10,5,10"
+                    Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
                     HorizontalAlignment="Right"
                     Click="btnReindex_Click"
                     Content="{DynamicResource flowlauncher_plugin_program_reindex}" />
@@ -137,12 +125,13 @@
                         x:Name="progressBarIndexing"
                         Width="80"
                         Height="20"
+                        Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
                         IsIndeterminate="True"
                         Maximum="100"
                         Minimum="0" />
                     <TextBlock
                         Height="20"
-                        Margin="10,0,0,0"
+                        Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                         HorizontalAlignment="Center"
                         Text="{DynamicResource flowlauncher_plugin_program_indexing}" />
                 </StackPanel>
@@ -151,7 +140,7 @@
         <ListView
             x:Name="programSourceView"
             Grid.Row="2"
-            Margin="70,0,20,0"
+            Margin="{StaticResource SettingPanelItemTopBottomMargin}"
             AllowDrop="True"
             BorderBrush="DarkGray"
             BorderThickness="1"
@@ -200,27 +189,30 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <DockPanel
-            Grid.Row="3"
-            Grid.RowSpan="1"
-            Margin="0,0,20,0">
+        <DockPanel Grid.Row="3">
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                 <Button
                     x:Name="btnProgramSourceStatus"
                     MinWidth="100"
-                    Margin="10"
+                    Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                     Click="btnProgramSourceStatus_OnClick"
                     Content="{DynamicResource flowlauncher_plugin_program_disable}" />
                 <Button
                     x:Name="btnEditProgramSource"
                     MinWidth="100"
-                    Margin="10"
+                    Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                     Click="btnEditProgramSource_OnClick"
                     Content="{DynamicResource flowlauncher_plugin_program_edit}" />
                 <Button
+                    x:Name="btnDeleteProgramSource"
+                    MinWidth="100"
+                    Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
+                    Click="btnDeleteProgramSource_OnClick"
+                    Content="{DynamicResource flowlauncher_plugin_program_delete}" />
+                <Button
                     x:Name="btnAddProgramSource"
                     MinWidth="100"
-                    Margin="10,10,0,10"
+                    Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                     Click="btnAddProgramSource_OnClick"
                     Content="{DynamicResource flowlauncher_plugin_program_add}" />
             </StackPanel>

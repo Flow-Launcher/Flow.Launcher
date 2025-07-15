@@ -17,7 +17,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Palabra clave de acción</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">Busca en</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Usar autocompletado en consultas de búsqueda:</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Usar autocompletado en consultas de búsqueda</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Autocompletar datos desde:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Por favor, seleccione una búsqueda web</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">¿Está seguro de que desea eliminar {0}?</system:String>
@@ -29,7 +29,8 @@
 	De esta manera, la fórmula genérica para una búsqueda en Netflix será https://www.netflix.com/search?q={q}
     </system:String>
 
-
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">Copiar URL</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">Copiar URL de búsqueda al portapapeles</system:String>
 
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">Título</system:String>

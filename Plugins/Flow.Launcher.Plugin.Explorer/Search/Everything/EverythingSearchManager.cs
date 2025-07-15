@@ -11,6 +11,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 {
     public class EverythingSearchManager : IIndexProvider, IContentIndexProvider, IPathIndexProvider
     {
+        private static readonly string ClassName = nameof(EverythingSearchManager);
+
         private Settings Settings { get; }
 
         public EverythingSearchManager(Settings settings)
@@ -42,19 +44,32 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         private async ValueTask<bool> ClickToInstallEverythingAsync(ActionContext _)
         {
-            var installedPath = await EverythingDownloadHelper.PromptDownloadIfNotInstallAsync(Settings.EverythingInstalledPath, Main.Context.API);
-
-            if (installedPath == null)
+            try
             {
-                Main.Context.API.ShowMsgError("Unable to find Everything.exe");
+                var installedPath = await EverythingDownloadHelper.PromptDownloadIfNotInstallAsync(Settings.EverythingInstalledPath, Main.Context.API);
+
+                if (installedPath == null)
+                {
+                    Main.Context.API.ShowMsgError(Main.Context.API.GetTranslation("flowlauncher_plugin_everything_not_found"));
+                    Main.Context.API.LogError(ClassName, "Unable to find Everything.exe");
+
+                    return false;
+                }
+
+                Settings.EverythingInstalledPath = installedPath;
+                Process.Start(installedPath, "-startup");
+
+                return true;
+            }
+            // Sometimes Everything installation will fail because of permission issues or file not found issues
+            // Just let the user know that Everything is not installed properly and ask them to install it manually
+            catch (Exception e)
+            {
+                Main.Context.API.ShowMsgError(Main.Context.API.GetTranslation("flowlauncher_plugin_everything_install_issue"));
+                Main.Context.API.LogException(ClassName, "Failed to install Everything", e);
 
                 return false;
             }
-
-            Settings.EverythingInstalledPath = installedPath;
-            Process.Start(installedPath, "-startup");
-
-            return true;
         }
 
         public async IAsyncEnumerable<SearchResult> SearchAsync(string search, [EnumeratorCancellation] CancellationToken token)
@@ -64,7 +79,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             if (token.IsCancellationRequested)
                 yield break;
 
-            var option = new EverythingSearchOption(search, Settings.SortOption, IsFullPathSearch: Settings.EverythingSearchFullPath);
+            var option = new EverythingSearchOption(search, 
+                Settings.SortOption, 
+                MaxCount: Settings.MaxResult, 
+                IsFullPathSearch: Settings.EverythingSearchFullPath, 
+                IsRunCounterEnabled: Settings.EverythingEnableRunCount);
 
             await foreach (var result in EverythingApi.SearchAsync(option, token))
                 yield return result;
@@ -96,7 +115,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 Settings.SortOption,
                 IsContentSearch: true,
                 ContentSearchKeyword: contentSearch,
-                IsFullPathSearch: Settings.EverythingSearchFullPath);
+                MaxCount: Settings.MaxResult,
+                IsFullPathSearch: Settings.EverythingSearchFullPath,
+                IsRunCounterEnabled: Settings.EverythingEnableRunCount);
 
             await foreach (var result in EverythingApi.SearchAsync(option, token))
             {
@@ -115,7 +136,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 Settings.SortOption,
                 ParentPath: path,
                 IsRecursive: recursive,
-                IsFullPathSearch: Settings.EverythingSearchFullPath);
+                MaxCount: Settings.MaxResult,
+                IsFullPathSearch: Settings.EverythingSearchFullPath,
+                IsRunCounterEnabled: Settings.EverythingEnableRunCount);
 
             await foreach (var result in EverythingApi.SearchAsync(option, token))
                 yield return result;

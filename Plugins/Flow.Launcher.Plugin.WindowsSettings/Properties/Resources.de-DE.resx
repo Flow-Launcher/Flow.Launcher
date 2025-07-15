@@ -126,7 +126,7 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="AccessibilityOptions" xml:space="preserve">
-    <value>Barrierefreiheitsoptionen</value>
+    <value>Optionen für Barrierefreiheit</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AccessoryApps" xml:space="preserve">
@@ -134,15 +134,15 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="AccessWorkOrSchool" xml:space="preserve">
-    <value>Zugriff auf Geschäft, Schule oder Uni</value>
+    <value>Zugriff auf Arbeit oder Schule</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="AccountInfo" xml:space="preserve">
-    <value>Kontoinfo</value>
+    <value>Account-Info</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="Accounts" xml:space="preserve">
-    <value>Konten</value>
+    <value>Accounts</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="ActionCenter" xml:space="preserve">
@@ -154,7 +154,7 @@
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="ActivityHistory" xml:space="preserve">
-    <value>Aktivitätsverlauf</value>
+    <value>Aktivitätshistorie</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="AddHardware" xml:space="preserve">
@@ -166,11 +166,11 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AddYourPhone" xml:space="preserve">
-    <value>Ihr Smartphone hinzufügen</value>
+    <value>Ihr Phone hinzufügen</value>
     <comment>Area Phone</comment>
   </data>
   <data name="AdministrativeTools" xml:space="preserve">
-    <value>Verwaltungstools</value>
+    <value>Administrative Tools</value>
     <comment>Area System</comment>
   </data>
   <data name="AdvancedDisplaySettings" xml:space="preserve">
@@ -178,10 +178,10 @@
     <comment>Area System, only available on devices that support advanced display options</comment>
   </data>
   <data name="AdvancedGraphics" xml:space="preserve">
-    <value>Erweiterte Grafik</value>
+    <value>Erweiterte Grafiken</value>
   </data>
   <data name="AdvertisingId" xml:space="preserve">
-    <value>Anzeigen-ID</value>
+    <value>Werbe-ID</value>
     <comment>Area Privacy, Deprecated in Windows 10, version 1809 and later</comment>
   </data>
   <data name="AirplaneMode" xml:space="preserve">
@@ -189,7 +189,7 @@
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="AltAndTab" xml:space="preserve">
-    <value>ALT+TAB</value>
+    <value>Alt+Tab</value>
     <comment>Means the key  combination "Tabulator+Alt" on the keyboard</comment>
   </data>
   <data name="AlternativeName" xml:space="preserve">
@@ -226,7 +226,7 @@
     <comment>Area Apps</comment>
   </data>
   <data name="AppVolumeAndDevicePreferences" xml:space="preserve">
-    <value>App-Volume und Geräteeinstellungen</value>
+    <value>App-Lautstärke und Gerätevoreinstellungen</value>
     <comment>Area System, Added in Windows 10, version 1903</comment>
   </data>
   <data name="appwiz.cpl" xml:space="preserve">
@@ -238,14 +238,14 @@
     <comment>Mean the settings area or settings category</comment>
   </data>
   <data name="AreaAccounts" xml:space="preserve">
-    <value>Konten</value>
+    <value>Accounts</value>
   </data>
   <data name="AreaAdministrativeTools" xml:space="preserve">
-    <value>Verwaltungstools</value>
+    <value>Administrative Tools</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AreaAppearanceAndPersonalization" xml:space="preserve">
-    <value>Darstellung und Personalisierung</value>
+    <value>Erscheinungsbild und Personalisierung</value>
   </data>
   <data name="AreaApps" xml:space="preserve">
     <value>Apps</value>
@@ -254,7 +254,7 @@
     <value>Uhr und Region</value>
   </data>
   <data name="AreaControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>Systemsteuerung</value>
   </data>
   <data name="AreaCortana" xml:space="preserve">
     <value>Cortana</value>
@@ -275,7 +275,7 @@
     <value>Hardware und Sound</value>
   </data>
   <data name="AreaHomePage" xml:space="preserve">
-    <value>Startseite</value>
+    <value>Homepage</value>
   </data>
   <data name="AreaMixedReality" xml:space="preserve">
     <value>Mixed Reality</value>
@@ -287,16 +287,16 @@
     <value>Personalisierung</value>
   </data>
   <data name="AreaPhone" xml:space="preserve">
-    <value>Smartphone</value>
+    <value>Phone</value>
   </data>
   <data name="AreaPrivacy" xml:space="preserve">
-    <value>Datenschutz</value>
+    <value>Privatsphäre</value>
   </data>
   <data name="AreaPrograms" xml:space="preserve">
     <value>Programme</value>
   </data>
   <data name="AreaSurfaceHub" xml:space="preserve">
-    <value>SurfaceHub</value>
+    <value>Oberflächenhub</value>
   </data>
   <data name="AreaSystem" xml:space="preserve">
     <value>System</value>
@@ -311,7 +311,7 @@
     <value>Update und Sicherheit</value>
   </data>
   <data name="AreaUserAccounts" xml:space="preserve">
-    <value>Benutzerkonten</value>
+    <value>Benutzer-Accounts</value>
   </data>
   <data name="AssignedAccess" xml:space="preserve">
     <value>Zugewiesener Zugriff</value>
@@ -321,7 +321,7 @@
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="AudioAlerts" xml:space="preserve">
-    <value>Audiowarnungen</value>
+    <value>Audio-Alarme</value>
   </data>
   <data name="AudioAndSpeech" xml:space="preserve">
     <value>Audio und Sprache</value>
@@ -332,7 +332,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="AutoPlay" xml:space="preserve">
-    <value>Automatische Wiedergabe</value>
+    <value>AutoPlay</value>
     <comment>Area Device</comment>
   </data>
   <data name="Background" xml:space="preserve">
@@ -344,11 +344,11 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="Backup" xml:space="preserve">
-    <value>Sicherung</value>
+    <value>Backup</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="BackupAndRestore" xml:space="preserve">
-    <value>Sichern und wiederherstellen</value>
+    <value>Sichern und Wiederherstellen</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="BatterySaver" xml:space="preserve">
@@ -356,11 +356,11 @@
     <comment>Area System, only available on devices that have a battery, such as a tablet</comment>
   </data>
   <data name="BatterySaverSettings" xml:space="preserve">
-    <value>Einstellungen für den Akkusparmodus</value>
+    <value>Einstellungen für Akkusparmodus</value>
     <comment>Area System, only available on devices that have a battery, such as a tablet</comment>
   </data>
   <data name="BatterySaverUsageDetails" xml:space="preserve">
-    <value>Nutzungsdetails für den Akkusparmodus</value>
+    <value>Nutzungsdetails für Akkusparmodus</value>
   </data>
   <data name="BatteryUse" xml:space="preserve">
     <value>Akkunutzung</value>
@@ -375,7 +375,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="BlueLight" xml:space="preserve">
-    <value>Blau (hell)</value>
+    <value>Blaues Licht</value>
   </data>
   <data name="Bluetooth" xml:space="preserve">
     <value>Bluetooth</value>
@@ -397,7 +397,7 @@
     <comment>Should not translated</comment>
   </data>
   <data name="Broadcasting" xml:space="preserve">
-    <value>Übertragungen</value>
+    <value>Broadcasting</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="Calendar" xml:space="preserve">
@@ -405,7 +405,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="CallHistory" xml:space="preserve">
-    <value>Anrufliste</value>
+    <value>Anrufhistorie</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="calling" xml:space="preserve">
@@ -420,15 +420,15 @@
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="CapsLock" xml:space="preserve">
-    <value>FESTSTELLTASTE</value>
+    <value>Feststelltaste</value>
     <comment>Mean the "Caps Lock" key</comment>
   </data>
   <data name="CellularAndSim" xml:space="preserve">
-    <value>Mobilfunknetz und SIM-Karte</value>
+    <value>Mobilfunk und SIM</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="ChooseWhichFoldersAppearOnStart" xml:space="preserve">
-    <value>Wählen Sie aus, welche Ordner im Startmenü angezeigt werden</value>
+    <value>Wählen Sie, welche Ordner im Start erscheinen</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="ClientServiceForNetWare" xml:space="preserve">
@@ -464,11 +464,11 @@
     <comment>Area Device</comment>
   </data>
   <data name="Contacts" xml:space="preserve">
-    <value>Kontaktpersonen</value>
+    <value>Kontakte</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="ControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>Systemsteuerung</value>
     <comment>Type of the setting is a "(legacy) Control Panel setting"</comment>
   </data>
   <data name="CopyCommand" xml:space="preserve">
@@ -483,7 +483,7 @@
     <comment>Area Cortana</comment>
   </data>
   <data name="CortanaAcrossMyDevices" xml:space="preserve">
-    <value>Cortana auf meinen Geräten</value>
+    <value>Cortana über meine Geräte</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="CortanaLanguage" xml:space="preserve">
@@ -511,7 +511,7 @@
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="DateAndTime" xml:space="preserve">
-    <value>Datum und Uhrzeit</value>
+    <value>Datum und Zeit</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="DefaultApps" xml:space="preserve">
@@ -543,11 +543,11 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="DesktopThemes" xml:space="preserve">
-    <value>Desktopdesigns</value>
+    <value>Desktop-Themes</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="deuteranopia" xml:space="preserve">
-    <value>deuteranopia</value>
+    <value>Farbenfehlsichtigkeit</value>
     <comment>Medical: Mean you don't can see red colors</comment>
   </data>
   <data name="DeviceManager" xml:space="preserve">
@@ -571,7 +571,7 @@
     <comment>Area NetworkAndInternet, only available if DirectAccess is enabled</comment>
   </data>
   <data name="DirectOpenYourPhone" xml:space="preserve">
-    <value>Smartphone direkt öffnen</value>
+    <value>Ihr Phone direkt öffnen</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="Display" xml:space="preserve">
@@ -599,7 +599,7 @@
     <comment>Area System</comment>
   </data>
   <data name="EaseOfAccessCenter" xml:space="preserve">
-    <value>Erleichterte Bedienung Center</value>
+    <value>Center für erleichterte Bedienung</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Edition" xml:space="preserve">
@@ -607,11 +607,11 @@
     <comment>Means the "Windows Edition"</comment>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>E-Mail-Adresse</value>
+    <value>E-Mail</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="EmailAndAppAccounts" xml:space="preserve">
-    <value>E-Mail- und App-Konten</value>
+    <value>E-Mail- und App-Accounts</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="Encryption" xml:space="preserve">
@@ -654,7 +654,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="FindFast" xml:space="preserve">
-    <value>FindFast</value>
+    <value>Schnell finden</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="findfast.cpl" xml:space="preserve">
@@ -662,18 +662,18 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="FindMyDevice" xml:space="preserve">
-    <value>Mein Gerät suchen.</value>
+    <value>Mein Gerät finden</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="Firewall" xml:space="preserve">
     <value>Firewall</value>
   </data>
   <data name="FocusAssistQuietHours" xml:space="preserve">
-    <value>Benachrichtigungsassistent – ruhige Stunden</value>
+    <value>Fokushilfe - Ruhige Stunden</value>
     <comment>Area System</comment>
   </data>
   <data name="FocusAssistQuietMoments" xml:space="preserve">
-    <value>Benachrichtigungsassistent – ruhige Momente</value>
+    <value>Fokushilfe - Stille Momente</value>
     <comment>Area System</comment>
   </data>
   <data name="FolderOptions" xml:space="preserve">
@@ -697,7 +697,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="GameDvr" xml:space="preserve">
-    <value>Game DVR</value>
+    <value>DVR</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="GameMode" xml:space="preserve">
@@ -721,7 +721,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Glance" xml:space="preserve">
-    <value>Ansicht "Schneller Blick"</value>
+    <value>Kurzer Blick</value>
     <comment>Area Personalization, Deprecated in Windows 10, version 1809 and later</comment>
   </data>
   <data name="GraphicsSettings" xml:space="preserve">
@@ -744,7 +744,7 @@
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="HolographicAudio" xml:space="preserve">
-    <value>Holographische Audiodaten</value>
+    <value>Holographisches Audio</value>
   </data>
   <data name="HolographicEnvironment" xml:space="preserve">
     <value>Holographische Umgebung</value>
@@ -767,7 +767,7 @@
     <value>Bild</value>
   </data>
   <data name="IndexingOptions" xml:space="preserve">
-    <value>Indizierungsoptionen</value>
+    <value>Indexierungsoptionen</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="inetcpl.cpl" xml:space="preserve">
@@ -794,11 +794,11 @@
     <value>Invertierte Farben</value>
   </data>
   <data name="Ip" xml:space="preserve">
-    <value>IP-Adresse</value>
+    <value>IP</value>
     <comment>Should not translated</comment>
   </data>
   <data name="IsolatedBrowsing" xml:space="preserve">
-    <value>Isoliertes Browsen</value>
+    <value>Isoliertes Browsing</value>
   </data>
   <data name="JapanImeSettings" xml:space="preserve">
     <value>Japanische IME-Einstellungen</value>
@@ -824,7 +824,7 @@
     <value>Keypad</value>
   </data>
   <data name="Keys" xml:space="preserve">
-    <value>Schlüssel</value>
+    <value>Tasten</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Sprache</value>
@@ -834,22 +834,22 @@
     <value>Helle Farbe</value>
   </data>
   <data name="LightMode" xml:space="preserve">
-    <value>Lichtmodus</value>
+    <value>Heller Modus</value>
   </data>
   <data name="Location" xml:space="preserve">
-    <value>Speicherort</value>
+    <value>Ort</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="LockScreen" xml:space="preserve">
-    <value>Sperrbildschirm</value>
+    <value>Bildschirm sperren</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="Magnifier" xml:space="preserve">
-    <value>Bildschirmlupe</value>
+    <value>Lupe</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="MailMicrosoftExchangeOrWindowsMessaging" xml:space="preserve">
-    <value>E-Mail – Microsoft Exchange oder Windows-Nachrichten</value>
+    <value>Mail - Microsoft Exchange oder Windows Messaging</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="main.cpl" xml:space="preserve">
@@ -865,7 +865,7 @@
     <comment>Area Apps</comment>
   </data>
   <data name="Messaging" xml:space="preserve">
-    <value>Messaging</value>
+    <value>Nachrichten</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="MeteredConnection" xml:space="preserve">
@@ -876,7 +876,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="MicrosoftMailPostOffice" xml:space="preserve">
-    <value>Microsoft Mail Post Office</value>
+    <value>Microsoft Mail Post</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="mlcfg32.cpl" xml:space="preserve">
@@ -902,7 +902,7 @@
     <value>Mono</value>
   </data>
   <data name="MoreDetails" xml:space="preserve">
-    <value>Weitere Details</value>
+    <value>Mehr Details</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="Motion" xml:space="preserve">
@@ -934,7 +934,7 @@
     <comment>Area System</comment>
   </data>
   <data name="Narrator" xml:space="preserve">
-    <value>Sprachausgabe</value>
+    <value>Erzähler</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="NavigationBar" xml:space="preserve">
@@ -954,7 +954,7 @@
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="NetworkAndSharingCenter" xml:space="preserve">
-    <value>Netzwerk- und Freigabecenter</value>
+    <value>Netzwerk- und Sharing-Center</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="NetworkConnection" xml:space="preserve">
@@ -995,13 +995,13 @@
     <value>Nur verfügbar, wenn Sie ein mobiles Gerät mit Ihrem Gerät verbunden haben.</value>
   </data>
   <data name="NoteAdvancedGraphics" xml:space="preserve">
-    <value>Nur auf Geräten verfügbar, die erweiterte Grafikoptionen unterstützen.</value>
+    <value>Nur verfügbar auf Geräten, die erweiterte Grafikoptionen unterstützen.</value>
   </data>
   <data name="NoteBattery" xml:space="preserve">
-    <value>Nur auf Geräten mit Akku (z. B. Tablet) verfügbar.</value>
+    <value>Nur verfügbar auf Geräten, die einen Akku haben, wie z. B. ein Tablet.</value>
   </data>
   <data name="NoteDeprecated17763" xml:space="preserve">
-    <value>Veraltet in Windows 10, Version 1809 (Build 17763) und höher.</value>
+    <value>Veraltet in Windows 10, Version 1809 (Build 17763) und später.</value>
   </data>
   <data name="NoteDialPaired" xml:space="preserve">
     <value>Nur verfügbar, wenn "Wählen" gekoppelt ist.</value>
@@ -1010,28 +1010,28 @@
     <value>Nur verfügbar, wenn DirectAccess aktiviert ist.</value>
   </data>
   <data name="NoteDisplayGraphics" xml:space="preserve">
-    <value>Nur auf Geräten verfügbar, die erweiterte Anzeigeoptionen unterstützen.</value>
+    <value>Nur verfügbar auf Geräten, die erweiterte Anzeigeoptionen unterstützen.</value>
   </data>
   <data name="NoteEnrolledWIP" xml:space="preserve">
-    <value>Nur vorhanden, wenn der Benutzer für WIP registriert ist.</value>
+    <value>Nur vorhanden, wenn Benutzer in WIP eingeschrieben ist.</value>
   </data>
   <data name="NoteEyetrackerHardware" xml:space="preserve">
     <value>Erfordert Eyetracker-Hardware.</value>
   </data>
   <data name="NoteImeJapan" xml:space="preserve">
-    <value>Verfügbar, wenn der Eingabemethoden-Editor von Microsoft Japan installiert ist.</value>
+    <value>Verfügbar, wenn der Editor für Eingabemethode Microsoft Japan installiert ist.</value>
   </data>
   <data name="NoteImePinyin" xml:space="preserve">
-    <value>Verfügbar, wenn der Eingabemethoden-Editor von Microsoft Pinyin installiert ist.</value>
+    <value>Verfügbar, wenn der Editor für Eingabemethode Microsoft Pinyin installiert ist.</value>
   </data>
   <data name="NoteImeWubi" xml:space="preserve">
-    <value>Verfügbar, wenn der Eingabemethoden-Editor von Microsoft Wubi installiert ist.</value>
+    <value>Verfügbar, wenn der Editor für Eingabemethode Microsoft Wubi installiert ist.</value>
   </data>
   <data name="NoteMixedReality" xml:space="preserve">
     <value>Nur verfügbar, wenn die Mixed Reality Portal-App installiert ist.</value>
   </data>
   <data name="NoteMobileProvisioning" xml:space="preserve">
-    <value>Nur auf mobilen Geräten verfügbar, und wenn das Unternehmen ein Bereitstellungspaket bereitgestellt hat.</value>
+    <value>Nur auf Mobiltelefonen verfügbar und wenn das Unternehmen ein Provisioning-Paket bereitgestellt hat.</value>
   </data>
   <data name="NoteSince18362" xml:space="preserve">
     <value>Hinzugefügt in Windows 10, Version 1903 (Build 18362).</value>
@@ -1046,13 +1046,13 @@
     <value>Nur verfügbar, wenn Touchpad-Hardware vorhanden ist.</value>
   </data>
   <data name="NoteWiFiAdapter" xml:space="preserve">
-    <value>Nur verfügbar, wenn das Gerät über einen WLAN-Adapter verfügt.</value>
+    <value>Nur verfügbar, wenn das Gerät über einen Wi-Fi-Adapter verfügt.</value>
   </data>
   <data name="NoteWindowsAnywhere" xml:space="preserve">
-    <value>Das Gerät muss Windows Anywhere-fähig sein.</value>
+    <value> Gerät muss Windows Anywhere-fähig sein.</value>
   </data>
   <data name="NoteWorkplaceProvisioning" xml:space="preserve">
-    <value>Nur verfügbar, wenn das Unternehmen ein Bereitstellungspaket bereitgestellt hat.</value>
+    <value>Nur verfügbar, wenn das Unternehmen ein Provisioning-Paket bereitgestellt hat.</value>
   </data>
   <data name="Notifications" xml:space="preserve">
     <value>Benachrichtigungen</value>
@@ -1063,7 +1063,7 @@
     <comment>Area System</comment>
   </data>
   <data name="NumLock" xml:space="preserve">
-    <value>NUM-Sperre</value>
+    <value>Num-Sperre</value>
     <comment>Mean the "Num Lock" key</comment>
   </data>
   <data name="nwc.cpl" xml:space="preserve">
@@ -1083,7 +1083,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="OfflineFiles" xml:space="preserve">
-    <value>Offlinedateien</value>
+    <value>Offline-Dateien</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="OfflineMaps" xml:space="preserve">
@@ -1091,11 +1091,11 @@
     <comment>Area Apps</comment>
   </data>
   <data name="OfflineMapsDownloadMaps" xml:space="preserve">
-    <value>Offline Karten – Karten herunterladen</value>
+    <value>Offline-Karten – Karten herunterladen</value>
     <comment>Area Apps</comment>
   </data>
   <data name="OnScreen" xml:space="preserve">
-    <value>Auf dem Bildschirm</value>
+    <value>Auf Bildschirm</value>
   </data>
   <data name="Os" xml:space="preserve">
     <value>Betriebssystem</value>
@@ -1106,14 +1106,14 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="OtherOptions" xml:space="preserve">
-    <value>Weitere Optionen</value>
+    <value>Andere Optionen</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="OtherUsers" xml:space="preserve">
     <value>Andere Benutzer</value>
   </data>
   <data name="ParentalControls" xml:space="preserve">
-    <value>Jugendschutz</value>
+    <value>Elterliche Kontrolle</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Password" xml:space="preserve">
@@ -1124,7 +1124,7 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="PasswordProperties" xml:space="preserve">
-    <value>Kennworteigenschaften</value>
+    <value>Passworteigenschaften</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="PenAndInputDevices" xml:space="preserve">
@@ -1140,15 +1140,15 @@
     <comment>Area Device</comment>
   </data>
   <data name="PeopleNearMe" xml:space="preserve">
-    <value>Personen in meiner Umgebung</value>
+    <value>Leute in meiner Nähe</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="PerformanceInformationAndTools" xml:space="preserve">
-    <value>Leistungsdaten und Tools</value>
+    <value>Leistungsinformationen und Tools</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="PermissionsAndHistory" xml:space="preserve">
-    <value>Berechtigungen und Verlauf</value>
+    <value>Berechtigungen und Historie</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="PersonalizationCategory" xml:space="preserve">
@@ -1156,15 +1156,15 @@
     <comment>Area Personalization</comment>
   </data>
   <data name="Phone" xml:space="preserve">
-    <value>Smartphone</value>
+    <value>Phone</value>
     <comment>Area Phone</comment>
   </data>
   <data name="PhoneAndModem" xml:space="preserve">
-    <value>Telefon und Modem</value>
+    <value>Phone und Modem</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="PhoneAndModemOptions" xml:space="preserve">
-    <value>Telefon und Modem – Optionen</value>
+    <value>Phone und Modem – Optionen</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="PhoneCalls" xml:space="preserve">
@@ -1203,10 +1203,10 @@
     <comment>Area Gaming</comment>
   </data>
   <data name="PluginDescription" xml:space="preserve">
-    <value>Plug-In zum Suchen nach Windows-Einstellungen</value>
+    <value>Plug-in zum Suchen nach Windows-Einstellungen</value>
   </data>
   <data name="PluginTitle" xml:space="preserve">
-    <value>Windows Settings</value>
+    <value>Windows-Einstellungen</value>
   </data>
   <data name="PowerAndSleep" xml:space="preserve">
     <value>Energieeinstellungen und Ruhemodus</value>
@@ -1240,7 +1240,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Processor" xml:space="preserve">
-    <value>Auftragsverarbeiter</value>
+    <value>Prozessor</value>
   </data>
   <data name="ProgramsAndFeatures" xml:space="preserve">
     <value>Programme und Features</value>
@@ -1251,7 +1251,7 @@
     <comment>Area System</comment>
   </data>
   <data name="protanopia" xml:space="preserve">
-    <value>protanopia</value>
+    <value>Protanopie</value>
     <comment>Medical: Mean you don't can see green colors</comment>
   </data>
   <data name="Provisioning" xml:space="preserve">
@@ -1271,7 +1271,7 @@
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="QuietMomentsGame" xml:space="preserve">
-    <value>Spiel mit ruhigen Momenten</value>
+    <value>Stille Momente-Spiel</value>
   </data>
   <data name="Radios" xml:space="preserve">
     <value>Radios</value>
@@ -1324,7 +1324,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="RemoteDesktop" xml:space="preserve">
-    <value>Remotedesktop</value>
+    <value>Remote-Desktop</value>
     <comment>Area System</comment>
   </data>
   <data name="ScannersAndCameras" xml:space="preserve">
@@ -1332,7 +1332,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="schedtasks" xml:space="preserve">
-    <value>schedtasks</value>
+    <value>sedtasks</value>
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Scheduled" xml:space="preserve">
@@ -1343,7 +1343,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="ScreenRotation" xml:space="preserve">
-    <value>Automatische Ausrichtung</value>
+    <value>Bildschirmrotation</value>
     <comment>Area System</comment>
   </data>
   <data name="ScrollBars" xml:space="preserve">
@@ -1366,11 +1366,11 @@
     <comment>Should not translated</comment>
   </data>
   <data name="SecurityCenter" xml:space="preserve">
-    <value>Security Center</value>
+    <value>Sicherheitscenter</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="SecurityProcessor" xml:space="preserve">
-    <value>Sicherheitsauftragsverarbeiter</value>
+    <value>Sicherheitsprozessor</value>
   </data>
   <data name="SessionCleanup" xml:space="preserve">
     <value>Sitzungsbereinigung</value>
@@ -1381,18 +1381,18 @@
     <comment>Area Home, Overview-page for all areas of settings </comment>
   </data>
   <data name="SetUpKiosk" xml:space="preserve">
-    <value>Kiosk einrichten</value>
+    <value>Einen Kiosk einrichten</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="SharedExperiences" xml:space="preserve">
-    <value>Freigegebene Erfahrungen</value>
+    <value>Geteilte Erfahrungen</value>
     <comment>Area System</comment>
   </data>
   <data name="Shortcuts" xml:space="preserve">
-    <value>Tastenkombinationen</value>
+    <value>Shortcuts</value>
   </data>
   <data name="ShortNameWiFi" xml:space="preserve">
-    <value>WLAN</value>
+    <value>Wi-Fi</value>
     <comment>dont translate this, is a short term to find entries</comment>
   </data>
   <data name="SignInOptions" xml:space="preserve">
@@ -1400,7 +1400,7 @@
     <comment>Area UserAccounts</comment>
   </data>
   <data name="SignInOptionsDynamicLock" xml:space="preserve">
-    <value>Anmeldeoptionen – dynamische Sperre</value>
+    <value>Anmeldeoptionen – Dynamische Sperre</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="Size" xml:space="preserve">
@@ -1412,7 +1412,7 @@
     <comment>Area System</comment>
   </data>
   <data name="Speech" xml:space="preserve">
-    <value>Speech</value>
+    <value>Sprache</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="SpeechRecognition" xml:space="preserve">
@@ -1446,7 +1446,7 @@
     <comment>Area System</comment>
   </data>
   <data name="StorageSense" xml:space="preserve">
-    <value>Speicheroptimierung</value>
+    <value>Speicherbedeutung</value>
     <comment>Area System</comment>
   </data>
   <data name="SubtitlePreposition" xml:space="preserve">
@@ -1454,11 +1454,11 @@
     <comment>Example: Area "System" in System settings</comment>
   </data>
   <data name="SyncCenter" xml:space="preserve">
-    <value>Synchronisierungscenter</value>
+    <value>Sync-Center</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="SyncYourSettings" xml:space="preserve">
-    <value>Einstellungen synchronisieren</value>
+    <value>Ihre Einstellungen synchronisieren</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="sysdm.cpl" xml:space="preserve">
@@ -1497,18 +1497,18 @@
     <comment>Area Personalization</comment>
   </data>
   <data name="TaskbarColor" xml:space="preserve">
-    <value>Taskleistenfarbe</value>
+    <value>Farbe der Taskleiste</value>
   </data>
   <data name="Tasks" xml:space="preserve">
-    <value>Aufgaben</value>
+    <value>Tasks</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="TeamConferencing" xml:space="preserve">
-    <value>Teamkonferenzen</value>
+    <value>Team-Konferenzen</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="TeamDeviceManagement" xml:space="preserve">
-    <value>Teamgeräteverwaltung</value>
+    <value>Team-Geräteverwaltung</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="TextToSpeech" xml:space="preserve">
@@ -1516,7 +1516,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Themes" xml:space="preserve">
-    <value>Designs</value>
+    <value>Themes</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="themes.cpl" xml:space="preserve">
@@ -1544,7 +1544,7 @@
     <value>Transparenz</value>
   </data>
   <data name="tritanopia" xml:space="preserve">
-    <value>tritanopia</value>
+    <value>Farbenblindheit (Blau)</value>
     <comment>Medical: Mean you don't can see yellow and blue colors</comment>
   </data>
   <data name="Troubleshoot" xml:space="preserve">
@@ -1552,7 +1552,7 @@
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="TruePlay" xml:space="preserve">
-    <value>TruePlay</value>
+    <value>TruePlaying</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="Typing" xml:space="preserve">
@@ -1568,7 +1568,7 @@
     <comment>Area Device</comment>
   </data>
   <data name="UserAccounts" xml:space="preserve">
-    <value>Benutzerkonten</value>
+    <value>Benutzer-Accounts</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Version" xml:space="preserve">
@@ -1602,7 +1602,7 @@
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="Wallpaper" xml:space="preserve">
-    <value>Hintergrundbild</value>
+    <value>Wallpaper</value>
   </data>
   <data name="WarmerColor" xml:space="preserve">
     <value>Wärmere Farbe</value>
@@ -1612,7 +1612,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WelcomeScreen" xml:space="preserve">
-    <value>Willkommensseite</value>
+    <value>Begrüßungsbildschirm</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="wgpocpl.cpl" xml:space="preserve">
@@ -1624,15 +1624,15 @@
     <comment>Area Device</comment>
   </data>
   <data name="WiFi" xml:space="preserve">
-    <value>WLAN</value>
+    <value>Wi-Fi</value>
     <comment>Area NetworkAndInternet, only available if Wi-Fi calling is enabled</comment>
   </data>
   <data name="WiFiCalling" xml:space="preserve">
-    <value>WLAN-Anrufe</value>
+    <value>WiFi Calling</value>
     <comment>Area NetworkAndInternet, only available if Wi-Fi calling is enabled</comment>
   </data>
   <data name="WiFiSettings" xml:space="preserve">
-    <value>WLAN-Einstellungen</value>
+    <value>Wi-Fi-Einstellungen</value>
     <comment>"Wi-Fi" should not translated</comment>
   </data>
   <data name="WindowBorder" xml:space="preserve">
@@ -1667,7 +1667,7 @@
     <comment>Area UserAccounts</comment>
   </data>
   <data name="WindowsInsiderProgram" xml:space="preserve">
-    <value>Windows-Insider-Programm</value>
+    <value>Windows Insider-Programm</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsMobilityCenter" xml:space="preserve">
@@ -1675,7 +1675,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WindowsSearch" xml:space="preserve">
-    <value>Windows Search</value>
+    <value>Windows-Suche</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="WindowsSecurity" xml:space="preserve">
@@ -1683,7 +1683,7 @@
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdate" xml:space="preserve">
-    <value>Windows Update</value>
+    <value>Windows-Updates</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateAdvancedOptions" xml:space="preserve">
@@ -1691,7 +1691,7 @@
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateCheckForUpdates" xml:space="preserve">
-    <value>Windows Update – nach Updates suchen</value>
+    <value>Windows Update – Nach Updates suchen</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateRestartOptions" xml:space="preserve">
@@ -1699,15 +1699,15 @@
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateViewOptionalUpdates" xml:space="preserve">
-    <value>Windows Update – optionale Updates anzeigen</value>
+    <value>Windows Update – Optionale Updates ansehen</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateViewUpdateHistory" xml:space="preserve">
-    <value>Windows Update – Updateverlauf anzeigen</value>
+    <value>Windows Update – Update-Historie ansehen</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="Wireless" xml:space="preserve">
-    <value>Drahtlos</value>
+    <value>Wireless</value>
   </data>
   <data name="Workplace" xml:space="preserve">
     <value>Arbeitsbereich</value>
@@ -1729,7 +1729,7 @@
     <comment>Area Gaming</comment>
   </data>
   <data name="YourInfo" xml:space="preserve">
-    <value>Ihre Informationen</value>
+    <value>Ihre Info</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="Zoom" xml:space="preserve">
@@ -1737,43 +1737,43 @@
     <comment>Mean zooming of things via a magnifier</comment>
   </data>
   <data name="ChangeDeviceInstallationSettings" xml:space="preserve">
-    <value>Change device installation settings</value>
+    <value>Einstellungen der Geräteinstallation ändern</value>
   </data>
   <data name="TurnOffBackgroundImages" xml:space="preserve">
-    <value>Turn off background images</value>
+    <value>Hintergrundbilder ausschalten</value>
   </data>
   <data name="NavigationProperties" xml:space="preserve">
-    <value>Navigation properties</value>
+    <value>Navigationseigenschaften</value>
   </data>
   <data name="MediaStreamingOptions" xml:space="preserve">
-    <value>Media streaming options</value>
+    <value>Medien-Streaming-Optionen</value>
   </data>
   <data name="MakeAFileTypeAlwaysOpenInASpecificProgram" xml:space="preserve">
-    <value>Make a file type always open in a specific program</value>
+    <value>Einen Dateityp immer in einem spezifischen Programm öffnen lassen</value>
   </data>
   <data name="ChangeTheNarratorSVoice" xml:space="preserve">
-    <value>Change the Narrator’s voice</value>
+    <value>Ändern der Stimme des Erzählers</value>
   </data>
   <data name="FindAndFixKeyboardProblems" xml:space="preserve">
-    <value>Find and fix keyboard problems</value>
+    <value>Tastaturprobleme finden und beheben</value>
   </data>
   <data name="UseScreenReader" xml:space="preserve">
-    <value>Use screen reader</value>
+    <value>Screenreader verwenden</value>
   </data>
   <data name="ShowWhichWorkgroupThisComputerIsOn" xml:space="preserve">
-    <value>Show which workgroup this computer is on</value>
+    <value>Anzeigen, zu welcher Arbeitsgruppe dieser Computer gehört</value>
   </data>
   <data name="ChangeMouseWheelSettings" xml:space="preserve">
-    <value>Change mouse wheel settings</value>
+    <value>Mausrad-Einstellungen ändern</value>
   </data>
   <data name="ManageComputerCertificates" xml:space="preserve">
-    <value>Manage computer certificates</value>
+    <value>Computerzertifikate verwalten</value>
   </data>
   <data name="FindAndFixProblems" xml:space="preserve">
-    <value>Find and fix problems</value>
+    <value>Probleme finden und beheben</value>
   </data>
   <data name="ChangeSettingsForContentReceivedUsingTapAndSend" xml:space="preserve">
-    <value>Change settings for content received using Tap and send</value>
+    <value>Ändern der Einstellungen für Inhalte, die über Tippen und Senden empfangen werden</value>
   </data>
   <data name="ChangeDefaultSettingsForMediaOrDevices" xml:space="preserve">
     <value>Change default settings for media or devices</value>
@@ -1782,10 +1782,10 @@
     <value>Print the speech reference card</value>
   </data>
   <data name="CalibrateDisplayColour" xml:space="preserve">
-    <value>Calibrate display colour</value>
+    <value>Anzeigefarbe kalibrieren</value>
   </data>
   <data name="ManageFileEncryptionCertificates" xml:space="preserve">
-    <value>Manage file encryption certificates</value>
+    <value>Dateiverschlüsselungszertifikate verwalten</value>
   </data>
   <data name="ViewRecentMessagesAboutYourComputer" xml:space="preserve">
     <value>View recent messages about your computer</value>
@@ -1794,133 +1794,133 @@
     <value>Give other users access to this computer</value>
   </data>
   <data name="ShowHiddenFilesAndFolders" xml:space="preserve">
-    <value>Show hidden files and folders</value>
+    <value>Ausgeblendete Dateien und Ordner zeigen</value>
   </data>
   <data name="ChangeWindowsToGoStartUpOptions" xml:space="preserve">
-    <value>Change Windows To Go start-up options</value>
+    <value>Windows To Go-Startoptionen ändern</value>
   </data>
   <data name="SeeWhichProcessesStartUpAutomaticallyWhenYouStartWindows" xml:space="preserve">
-    <value>See which processes start up automatically when you start Windows</value>
+    <value>Sehen Sie, welche Prozesse automatisch starten, wenn Sie Windows starten</value>
   </data>
   <data name="TellIfAnRSSFeedIsAvailableOnAWebsite" xml:space="preserve">
-    <value>Tell if an RSS feed is available on a website</value>
+    <value>Sagen, ob ein RSS-Feed auf einer Website verfügbar ist</value>
   </data>
   <data name="AddClocksForDifferentTimeZones" xml:space="preserve">
-    <value>Add clocks for different time zones</value>
+    <value>Uhren für verschiedene Zeitzonen hinzufügen</value>
   </data>
   <data name="AddABluetoothDevice" xml:space="preserve">
-    <value>Add a Bluetooth device</value>
+    <value>Ein Bluetooth-Gerät hinzufügen</value>
   </data>
   <data name="CustomiseTheMouseButtons" xml:space="preserve">
-    <value>Customise the mouse buttons</value>
+    <value>Individuelles Anpassen der Maustasten</value>
   </data>
   <data name="SetTabletButtonsToPerformCertainTasks" xml:space="preserve">
     <value>Set tablet buttons to perform certain tasks</value>
   </data>
   <data name="ViewInstalledFonts" xml:space="preserve">
-    <value>View installed fonts</value>
+    <value>Installierte Schriftarten ansehen</value>
   </data>
   <data name="ChangeTheWayCurrencyIsDisplayed" xml:space="preserve">
     <value>Change the way currency is displayed</value>
   </data>
   <data name="EditGroupPolicy" xml:space="preserve">
-    <value>Edit group policy</value>
+    <value>Gruppenrichtlinien bearbeiten</value>
   </data>
   <data name="ManageBrowserAddOns" xml:space="preserve">
-    <value>Manage browser add-ons</value>
+    <value>Browser-Add-ons verwalten</value>
   </data>
   <data name="CheckProcessorSpeed" xml:space="preserve">
-    <value>Check processor speed</value>
+    <value>Prozessorgeschwindigkeit überprüfen</value>
   </data>
   <data name="CheckFirewallStatus" xml:space="preserve">
-    <value>Check firewall status</value>
+    <value>Firewall-Status überprüfen</value>
   </data>
   <data name="SendOrReceiveAFile" xml:space="preserve">
-    <value>Send or receive a file</value>
+    <value>Eine Datei senden oder empfangen</value>
   </data>
   <data name="AddOrRemoveUserAccounts" xml:space="preserve">
-    <value>Add or remove user accounts</value>
+    <value>Benutzerkonten hinzufügen oder entfernen</value>
   </data>
   <data name="EditTheSystemEnvironmentVariables" xml:space="preserve">
     <value>Edit the system environment variables</value>
   </data>
   <data name="ManageBitlocker" xml:space="preserve">
-    <value>Manage BitLocker</value>
+    <value>BitLocker verwalten</value>
   </data>
   <data name="AutoHideTheTaskbar" xml:space="preserve">
-    <value>Auto-hide the taskbar</value>
+    <value>Taskleiste automatisch ausblenden</value>
   </data>
   <data name="ChangeSoundCardSettings" xml:space="preserve">
-    <value>Change sound card settings</value>
+    <value>Soundkarten-Einstellungen ändern</value>
   </data>
   <data name="MakeChangesToAccounts" xml:space="preserve">
-    <value>Make changes to accounts</value>
+    <value>Änderungen an Accounts vornehmen</value>
   </data>
   <data name="EditLocalUsersAndGroups" xml:space="preserve">
-    <value>Edit local users and groups</value>
+    <value>Lokale Benutzer und Gruppen bearbeiten</value>
   </data>
   <data name="ViewNetworkComputersAndDevices" xml:space="preserve">
-    <value>View network computers and devices</value>
+    <value>Netzwerkcomputer und -geräte ansehen</value>
   </data>
   <data name="InstallAProgramFromTheNetwork" xml:space="preserve">
-    <value>Install a program from the network</value>
+    <value>Ein Programm aus dem Netzwerk installieren</value>
   </data>
   <data name="ViewScannersAndCameras" xml:space="preserve">
-    <value>View scanners and cameras</value>
+    <value>Scanner und Kameras ansehen</value>
   </data>
   <data name="MicrosoftIMERegisterWordJapanese" xml:space="preserve">
-    <value>Microsoft IME Register Word (Japanese)</value>
+    <value>Microsoft IME Register Word (Japanisch)</value>
   </data>
   <data name="RestoreYourFilesWithFileHistory" xml:space="preserve">
-    <value>Restore your files with File History</value>
+    <value>Ihre Dateien mit File History wiederherstellen</value>
   </data>
   <data name="TurnOnScreenKeyboardOnOrOff" xml:space="preserve">
     <value>Turn On-Screen keyboard on or off</value>
   </data>
   <data name="BlockOrAllowThirdPartyCookies" xml:space="preserve">
-    <value>Block or allow third-party cookies</value>
+    <value>Cookies von Drittanbietern blockieren oder zulassen</value>
   </data>
   <data name="FindAndFixAudioRecordingProblems" xml:space="preserve">
-    <value>Find and fix audio recording problems</value>
+    <value>Audioaufzeichnungsprobleme finden und beheben</value>
   </data>
   <data name="CreateARecoveryDrive" xml:space="preserve">
-    <value>Create a recovery drive</value>
+    <value>Ein Wiederherstellungslaufwerk erstellen</value>
   </data>
   <data name="MicrosoftNewPhoneticSettings" xml:space="preserve">
     <value>Microsoft New Phonetic Settings</value>
   </data>
   <data name="GenerateASystemHealthReport" xml:space="preserve">
-    <value>Generate a system health report</value>
+    <value>Einen Bericht zur Systemgesundheit generieren</value>
   </data>
   <data name="FixProblemsWithYourComputer" xml:space="preserve">
-    <value>Fix problems with your computer</value>
+    <value>Probleme mit Ihrem Computer beheben</value>
   </data>
   <data name="BackUpAndRestoreWindows7" xml:space="preserve">
-    <value>Back up and Restore (Windows 7)</value>
+    <value>Sichern und Wiederherstellen (Windows 7)</value>
   </data>
   <data name="PreviewDeleteShowOrHideFonts" xml:space="preserve">
     <value>Preview, delete, show or hide fonts</value>
   </data>
   <data name="MicrosoftQuickSettings" xml:space="preserve">
-    <value>Microsoft Quick Settings</value>
+    <value>Microsoft-Schnelleinstellungen</value>
   </data>
   <data name="ViewReliabilityHistory" xml:space="preserve">
     <value>View reliability history</value>
   </data>
   <data name="AccessRemoteappAndDesktops" xml:space="preserve">
-    <value>Access RemoteApp and desktops</value>
+    <value>Zugriff auf RemoteApp und Desktops</value>
   </data>
   <data name="SetUpODBCDataSources" xml:space="preserve">
-    <value>Set up ODBC data sources</value>
+    <value>ODBC-Datenquellen einrichten</value>
   </data>
   <data name="ResetSecurityPolicies" xml:space="preserve">
-    <value>Reset Security Policies</value>
+    <value>Sicherheitsrichtlinien zurücksetzen</value>
   </data>
   <data name="BlockOrAllowPopUps" xml:space="preserve">
-    <value>Block or allow pop-ups</value>
+    <value>Pop-ups blockieren oder zulassen</value>
   </data>
   <data name="TurnAutocompleteInInternetExplorerOnOrOff" xml:space="preserve">
-    <value>Turn autocomplete in Internet Explorer on or off</value>
+    <value>Autovervollständigung im Internet Explorer ein- oder ausschalten</value>
   </data>
   <data name="MicrosoftPinyinSimplefastOptions" xml:space="preserve">
     <value>Microsoft Pinyin SimpleFast Options</value>
@@ -1929,19 +1929,19 @@
     <value>Change what closing the lid does</value>
   </data>
   <data name="TurnOffUnnecessaryAnimations" xml:space="preserve">
-    <value>Turn off unnecessary animations</value>
+    <value>Unnötige Animationen ausschalten</value>
   </data>
   <data name="CreateARestorePoint" xml:space="preserve">
-    <value>Create a restore point</value>
+    <value>Einen Wiederherstellungspunkt erstellen</value>
   </data>
   <data name="TurnOffAutomaticWindowArrangement" xml:space="preserve">
-    <value>Turn off automatic window arrangement</value>
+    <value>Automatische Fensteranordnung ausschalten</value>
   </data>
   <data name="TroubleshootingHistory" xml:space="preserve">
-    <value>Troubleshooting History</value>
+    <value>Fehlerbehebungshistorie</value>
   </data>
   <data name="DiagnoseYourComputersMemoryProblems" xml:space="preserve">
-    <value>Diagnose your computer's memory problems</value>
+    <value>Speicherprobleme Ihres Computers diagnostizieren</value>
   </data>
   <data name="ViewRecommendedActionsToKeepWindowsRunningSmoothly" xml:space="preserve">
     <value>View recommended actions to keep Windows running smoothly</value>
@@ -1950,7 +1950,7 @@
     <value>Change cursor blink rate</value>
   </data>
   <data name="AddOrRemovePrograms" xml:space="preserve">
-    <value>Add or remove programs</value>
+    <value>Programme hinzufügen oder entfernen</value>
   </data>
   <data name="CreateAPasswordResetDisk" xml:space="preserve">
     <value>Create a password reset disk</value>
@@ -1959,58 +1959,58 @@
     <value>Configure advanced user profile properties</value>
   </data>
   <data name="StartOrStopUsingAutoplayForAllMediaAndDevices" xml:space="preserve">
-    <value>Start or stop using AutoPlay for all media and devices</value>
+    <value>AutoPlay für alle Medien und Geräte starten oder stoppen</value>
   </data>
   <data name="ChangeAutomaticMaintenanceSettings" xml:space="preserve">
-    <value>Change Automatic Maintenance settings</value>
+    <value>Automatische Wartungseinstellungen ändern</value>
   </data>
   <data name="SpecifySingleOrDoubleClickToOpen" xml:space="preserve">
     <value>Specify single- or double-click to open</value>
   </data>
   <data name="SelectUsersWhoCanUseRemoteDesktop" xml:space="preserve">
-    <value>Select users who can use remote desktop</value>
+    <value>Benutzer auswählen, die den Remote-Desktop verwenden können</value>
   </data>
   <data name="ShowWhichProgramsAreInstalledOnYourComputer" xml:space="preserve">
-    <value>Show which programs are installed on your computer</value>
+    <value>Anzeigen, welche Programme auf Ihrem Computer installiert sind</value>
   </data>
   <data name="AllowRemoteAccessToYourComputer" xml:space="preserve">
-    <value>Allow remote access to your computer</value>
+    <value>Remote-Zugriff auf Ihren Computer erlauben</value>
   </data>
   <data name="ViewAdvancedSystemSettings" xml:space="preserve">
-    <value>View advanced system settings</value>
+    <value>Erweiterte Systemeinstellungen ansehen</value>
   </data>
   <data name="HowToInstallAProgram" xml:space="preserve">
-    <value>How to install a program</value>
+    <value>Wie man ein Programm installiert</value>
   </data>
   <data name="ChangeHowYourKeyboardWorks" xml:space="preserve">
-    <value>Change how your keyboard works</value>
+    <value>Funktionsweise Ihrer Tastatur ändern</value>
   </data>
   <data name="AutomaticallyAdjustForDaylightSavingTime" xml:space="preserve">
     <value>Automatically adjust for daylight saving time</value>
   </data>
   <data name="ChangeTheOrderOfWindowsSideshowGadgets" xml:space="preserve">
-    <value>Change the order of Windows SideShow gadgets</value>
+    <value>Reihenfolge der Windows SideShow-Gadgets ändern</value>
   </data>
   <data name="CheckKeyboardStatus" xml:space="preserve">
-    <value>Check keyboard status</value>
+    <value>Tastaturstatus überprüfen</value>
   </data>
   <data name="ControlTheComputerWithoutTheMouseOrKeyboard" xml:space="preserve">
-    <value>Control the computer without the mouse or keyboard</value>
+    <value>Steuerung des Computers ohne die Maus oder Tastatur</value>
   </data>
   <data name="ChangeOrRemoveAProgram" xml:space="preserve">
-    <value>Change or remove a program</value>
+    <value>Ein Programm ändern oder entfernen</value>
   </data>
   <data name="ChangeMultiTouchGestureSettings" xml:space="preserve">
     <value>Change multi-touch gesture settings</value>
   </data>
   <data name="SetUpODBCDataSources64Bit" xml:space="preserve">
-    <value>Set up ODBC data sources (64-bit)</value>
+    <value>ODBC-Datenquellen (64-Bit) einrichten</value>
   </data>
   <data name="ConfigureProxyServer" xml:space="preserve">
-    <value>Configure proxy server</value>
+    <value>Proxy-Server konfigurieren</value>
   </data>
   <data name="ChangeYourHomepage" xml:space="preserve">
-    <value>Change your homepage</value>
+    <value>Ihre Homepage ändern</value>
   </data>
   <data name="GroupSimilarWindowsOnTheTaskbar" xml:space="preserve">
     <value>Group similar windows on the taskbar</value>
@@ -2019,16 +2019,16 @@
     <value>Change Windows SideShow settings</value>
   </data>
   <data name="UseAudioDescriptionForVideo" xml:space="preserve">
-    <value>Use audio description for video</value>
+    <value>Audiobeschreibung für Video verwenden</value>
   </data>
   <data name="ChangeWorkgroupName" xml:space="preserve">
-    <value>Change workgroup name</value>
+    <value>Arbeitsgruppenname ändern</value>
   </data>
   <data name="FindAndFixPrintingProblems" xml:space="preserve">
     <value>Find and fix printing problems</value>
   </data>
   <data name="ChangeWhenTheComputerSleeps" xml:space="preserve">
-    <value>Change when the computer sleeps</value>
+    <value>Ändern, wann der Computer schläft</value>
   </data>
   <data name="SetUpAVirtualPrivateNetworkVPNConnection" xml:space="preserve">
     <value>Set up a virtual private network (VPN) connection</value>
@@ -2040,37 +2040,37 @@
     <value>Set up a dial-up connection</value>
   </data>
   <data name="SetUpAConnectionOrNetwork" xml:space="preserve">
-    <value>Set up a connection or network</value>
+    <value>Eine Verbindung oder Netzwerk einrichten</value>
   </data>
   <data name="HowToChangeYourWindowsPassword" xml:space="preserve">
-    <value>How to change your Windows password</value>
+    <value>Wie Sie Ihr Windows-Passwort ändern</value>
   </data>
   <data name="MakeItEasierToSeeTheMousePointer" xml:space="preserve">
     <value>Make it easier to see the mouse pointer</value>
   </data>
   <data name="SetUpIscsiInitiator" xml:space="preserve">
-    <value>Set up iSCSI initiator</value>
+    <value>iSCSI-Initiator einrichten</value>
   </data>
   <data name="AccommodateLowVision" xml:space="preserve">
     <value>Accommodate low vision</value>
   </data>
   <data name="ManageOfflineFiles" xml:space="preserve">
-    <value>Manage offline files</value>
+    <value>Offline-Dateien verwalten</value>
   </data>
   <data name="ReviewYourComputersStatusAndResolveIssues" xml:space="preserve">
     <value>Review your computer's status and resolve issues</value>
   </data>
   <data name="MicrosoftChangjieSettings" xml:space="preserve">
-    <value>Microsoft ChangJie Settings</value>
+    <value>Microsoft ChangJie-Einstellungen</value>
   </data>
   <data name="ReplaceSoundsWithVisualCues" xml:space="preserve">
-    <value>Replace sounds with visual cues</value>
+    <value>Sounds durch visuelle Hinweise ersetzen</value>
   </data>
   <data name="ChangeTemporaryInternetFileSettings" xml:space="preserve">
-    <value>Change temporary Internet file settings</value>
+    <value>Temporäre Internet-Dateieinstellungen ändern</value>
   </data>
   <data name="ConnectToTheInternet" xml:space="preserve">
-    <value>Connect to the Internet</value>
+    <value>Mit dem Internet verbinden</value>
   </data>
   <data name="FindAndFixAudioPlaybackProblems" xml:space="preserve">
     <value>Find and fix audio playback problems</value>
@@ -2079,10 +2079,10 @@
     <value>Change the mouse pointer display or speed</value>
   </data>
   <data name="BackUpYourRecoveryKey" xml:space="preserve">
-    <value>Back up your recovery key</value>
+    <value>Ihren Wiederherstellungsschlüssel sichern</value>
   </data>
   <data name="SaveBackupCopiesOfYourFilesWithFileHistory" xml:space="preserve">
-    <value>Save backup copies of your files with File History</value>
+    <value>Backup-Kopien Ihrer Dateien mit File History speichern</value>
   </data>
   <data name="ViewCurrentAccessibilitySettings" xml:space="preserve">
     <value>View current accessibility settings</value>
@@ -2091,25 +2091,25 @@
     <value>Change tablet pen settings</value>
   </data>
   <data name="ChangeHowYourMouseWorks" xml:space="preserve">
-    <value>Change how your mouse works</value>
+    <value>Funktionsweise Ihrer Maus ändern</value>
   </data>
   <data name="ShowHowMuchRAMIsOnThisComputer" xml:space="preserve">
-    <value>Show how much RAM is on this computer</value>
+    <value>Zeigen, wie viel RAM auf diesem Computer vorhanden ist</value>
   </data>
   <data name="EditPowerPlan" xml:space="preserve">
-    <value>Edit power plan</value>
+    <value>Energieplan bearbeiten</value>
   </data>
   <data name="AdjustSystemVolume" xml:space="preserve">
-    <value>Adjust system volume</value>
+    <value>Systemlautstärke anpassen</value>
   </data>
   <data name="DefragmentAndOptimiseYourDrives" xml:space="preserve">
-    <value>Defragment and optimise your drives</value>
+    <value>Ihre Laufwerke defragmentieren und optimieren</value>
   </data>
   <data name="SetUpODBCDataSources32Bit" xml:space="preserve">
-    <value>Set up ODBC data sources (32-bit)</value>
+    <value>ODBC-Datenquellen (32-Bit) einrichten</value>
   </data>
   <data name="ChangeFontSettings" xml:space="preserve">
-    <value>Change Font Settings</value>
+    <value>Schriftarteinstellungen ändern</value>
   </data>
   <data name="MagnifyPortionsOfTheScreenUsingMagnifier" xml:space="preserve">
     <value>Magnify portions of the screen using Magnifier</value>
@@ -2118,89 +2118,89 @@
     <value>Change the file type associated with a file extension</value>
   </data>
   <data name="ViewEventLogs" xml:space="preserve">
-    <value>View event logs</value>
+    <value>Event-Logs ansehen</value>
   </data>
   <data name="ManageWindowsCredentials" xml:space="preserve">
-    <value>Manage Windows Credentials</value>
+    <value>Windows-Anmeldedaten verwalten</value>
   </data>
   <data name="SetUpAMicrophone" xml:space="preserve">
-    <value>Set up a microphone</value>
+    <value>Ein Mikrofon einrichten</value>
   </data>
   <data name="ChangeHowTheMousePointerLooks" xml:space="preserve">
-    <value>Change how the mouse pointer looks</value>
+    <value>Ändern, wie der Mauszeiger ausschaut</value>
   </data>
   <data name="ChangePowerSavingSettings" xml:space="preserve">
-    <value>Change power-saving settings</value>
+    <value>Energiespareinstellungen ändern</value>
   </data>
   <data name="OptimiseForBlindness" xml:space="preserve">
-    <value>Optimise for blindness</value>
+    <value>Optimieren für Blindheit</value>
   </data>
   <data name="null" xml:space="preserve">
     <value>
     </value>
   </data>
   <data name="TurnWindowsFeaturesOnOrOff" xml:space="preserve">
-    <value>Turn Windows features on or off</value>
+    <value>Windows-Features ein- oder ausschalten</value>
   </data>
   <data name="ShowWhichOperatingSystemYourComputerIsRunning" xml:space="preserve">
-    <value>Show which operating system your computer is running</value>
+    <value>Anzeigen, welches Betriebssystem auf Ihrem Computer ausgeführt wird</value>
   </data>
   <data name="ViewLocalServices" xml:space="preserve">
-    <value>View local services</value>
+    <value>Lokale Dienste ansehen</value>
   </data>
   <data name="ManageWorkFolders" xml:space="preserve">
-    <value>Manage Work Folders</value>
+    <value>Arbeitsordner verwalten</value>
   </data>
   <data name="EncryptYourOfflineFiles" xml:space="preserve">
-    <value>Encrypt your offline files</value>
+    <value>Ihre Offline-Dateien verschlüsseln</value>
   </data>
   <data name="TrainTheComputerToRecogniseYourVoice" xml:space="preserve">
-    <value>Train the computer to recognise your voice</value>
+    <value>Trainieren Sie den Computer, Ihre Stimme zu erkennen</value>
   </data>
   <data name="AdvancedPrinterSetup" xml:space="preserve">
-    <value>Advanced printer setup</value>
+    <value>Erweiterte Druckereinrichtung</value>
   </data>
   <data name="ChangeDefaultPrinter" xml:space="preserve">
-    <value>Change default printer</value>
+    <value>Standard-Drucker ändern</value>
   </data>
   <data name="EditEnvironmentVariablesForYourAccount" xml:space="preserve">
     <value>Edit environment variables for your account</value>
   </data>
   <data name="OptimiseVisualDisplay" xml:space="preserve">
-    <value>Optimise visual display</value>
+    <value>Visuelle Anzeige optimieren</value>
   </data>
   <data name="ChangeMouseClickSettings" xml:space="preserve">
-    <value>Change mouse click settings</value>
+    <value>Mausklick-Einstellungen ändern</value>
   </data>
   <data name="ChangeAdvancedColourManagementSettingsForDisplaysScannersAndPrinters" xml:space="preserve">
     <value>Change advanced colour management settings for displays, scanners and printers</value>
   </data>
   <data name="LetWindowsSuggestEaseOfAccessSettings" xml:space="preserve">
-    <value>Let Windows suggest Ease of Access settings</value>
+    <value>Windows die Einstellungen für erleichterte Bedienung vorschlagen lassen</value>
   </data>
   <data name="ClearDiskSpaceByDeletingUnnecessaryFiles" xml:space="preserve">
     <value>Clear disk space by deleting unnecessary files</value>
   </data>
   <data name="ViewDevicesAndPrinters" xml:space="preserve">
-    <value>View devices and printers</value>
+    <value>Geräte und Drucker ansehen</value>
   </data>
   <data name="PrivateCharacterEditor" xml:space="preserve">
-    <value>Private Character Editor</value>
+    <value>Privater Zeichen-Editor</value>
   </data>
   <data name="RecordStepsToReproduceAProblem" xml:space="preserve">
     <value>Record steps to reproduce a problem</value>
   </data>
   <data name="AdjustTheAppearanceAndPerformanceOfWindows" xml:space="preserve">
-    <value>Adjust the appearance and performance of Windows</value>
+    <value>Anpassen des Erscheinungsbildes und der Leistung von Windows</value>
   </data>
   <data name="SettingsForMicrosoftIMEJapanese" xml:space="preserve">
-    <value>Settings for Microsoft IME (Japanese)</value>
+    <value>Einstellungen für Microsoft IME (Japanisch)</value>
   </data>
   <data name="InviteSomeoneToConnectToYourPCAndHelpYouOrOfferToHelpSomeoneElse" xml:space="preserve">
-    <value>Invite someone to connect to your PC and help you, or offer to help someone else</value>
+    <value>Laden Sie jemanden ein, eine Verbindung zu Ihrem PC herzustellen und Ihnen zu helfen, oder bieten Sie an, jemand anderem zu helfen</value>
   </data>
   <data name="RunProgramsMadeForPreviousVersionsOfWindows" xml:space="preserve">
-    <value>Run programs made for previous versions of Windows</value>
+    <value>Programme ausführen, die für frühere Versionen von Windows entwickelt wurden</value>
   </data>
   <data name="ChooseTheOrderOfHowYourScreenRotates" xml:space="preserve">
     <value>Choose the order of how your screen rotates</value>
@@ -2212,10 +2212,10 @@
     <value>Set flicks to perform certain tasks</value>
   </data>
   <data name="ChangeAccountType" xml:space="preserve">
-    <value>Change account type</value>
+    <value>Account-Typ ändern</value>
   </data>
   <data name="ChangeScreenSaver" xml:space="preserve">
-    <value>Change screen saver</value>
+    <value>Bildschirmschoner ändern</value>
   </data>
   <data name="ChangeUserAccountControlSettings" xml:space="preserve">
     <value>Change User Account Control settings</value>
@@ -2236,31 +2236,31 @@
     <value>View basic information about your computer</value>
   </data>
   <data name="ChooseHowYouOpenLinks" xml:space="preserve">
-    <value>Choose how you open links</value>
+    <value>Wählen Sie, wie Sie Links öffnen</value>
   </data>
   <data name="AllowRemoteAssistanceInvitationsToBeSentFromThisComputer" xml:space="preserve">
-    <value>Allow Remote Assistance invitations to be sent from this computer</value>
+    <value>Erlauben, dass Einladungen zur Remote-Unterstützung von diesem Computer aus gesendet werden</value>
   </data>
   <data name="TaskManager" xml:space="preserve">
-    <value>Task Manager</value>
+    <value>Task-Manager</value>
   </data>
   <data name="TurnFlicksOnOrOff" xml:space="preserve">
     <value>Turn flicks on or off</value>
   </data>
   <data name="AddALanguage" xml:space="preserve">
-    <value>Add a language</value>
+    <value>Eine Sprache hinzufügen</value>
   </data>
   <data name="ViewNetworkStatusAndTasks" xml:space="preserve">
-    <value>View network status and tasks</value>
+    <value>Netzwerkstatus und Tasks ansehen</value>
   </data>
   <data name="TurnMagnifierOnOrOff" xml:space="preserve">
-    <value>Turn Magnifier on or off</value>
+    <value>Lupe ein- oder ausschalten</value>
   </data>
   <data name="SeeTheNameOfThisComputer" xml:space="preserve">
-    <value>See the name of this computer</value>
+    <value>Den Namen dieses Computers ansehen</value>
   </data>
   <data name="ViewNetworkConnections" xml:space="preserve">
-    <value>View network connections</value>
+    <value>Netzwerkverbindungen ansehen</value>
   </data>
   <data name="PerformRecommendedMaintenanceTasksAutomatically" xml:space="preserve">
     <value>Perform recommended maintenance tasks automatically</value>
@@ -2269,7 +2269,7 @@
     <value>Manage disk space used by your offline files</value>
   </data>
   <data name="TurnHighContrastOnOrOff" xml:space="preserve">
-    <value>Turn High Contrast on or off</value>
+    <value>Hochkontrast ein- oder ausschalten</value>
   </data>
   <data name="ChangeTheWayTimeIsDisplayed" xml:space="preserve">
     <value>Change the way time is displayed</value>
@@ -2281,16 +2281,16 @@
     <value>Change the way dates and lists are displayed</value>
   </data>
   <data name="ManageAudioDevices" xml:space="preserve">
-    <value>Manage audio devices</value>
+    <value>Audiogeräte verwalten</value>
   </data>
   <data name="ChangeSecuritySettings" xml:space="preserve">
-    <value>Change security settings</value>
+    <value>Sicherheitseinstellungen ändern</value>
   </data>
   <data name="CheckSecurityStatus" xml:space="preserve">
-    <value>Check security status</value>
+    <value>Sicherheitsstatus überprüfen</value>
   </data>
   <data name="DeleteCookiesOrTemporaryFiles" xml:space="preserve">
-    <value>Delete cookies or temporary files</value>
+    <value>Cookies oder temporäre Dateien löschen</value>
   </data>
   <data name="SpecifyWhichHandYouWriteWith" xml:space="preserve">
     <value>Specify which hand you write with</value>
@@ -2302,28 +2302,28 @@
     <value>How to change the size of virtual memory</value>
   </data>
   <data name="HearTextReadAloudWithNarrator" xml:space="preserve">
-    <value>Hear text read aloud with Narrator</value>
+    <value>Text mit Erzähler vorlesen lassen</value>
   </data>
   <data name="SetUpUSBGameControllers" xml:space="preserve">
     <value>Set up USB game controllers</value>
   </data>
   <data name="ShowWhichDomainYourComputerIsOn" xml:space="preserve">
-    <value>Show which domain your computer is on</value>
+    <value>Anzeigen, in welcher Domäne sich Ihr Computer befindet</value>
   </data>
   <data name="ViewAllProblemReports" xml:space="preserve">
-    <value>View all problem reports</value>
+    <value>Alle Problemberichte ansehen</value>
   </data>
   <data name="16BitApplicationSupport" xml:space="preserve">
-    <value>16-Bit Application Support</value>
+    <value>16-Bit-Anwendungsunterstützung</value>
   </data>
   <data name="SetUpDiallingRules" xml:space="preserve">
     <value>Set up dialling rules</value>
   </data>
   <data name="EnableOrDisableSessionCookies" xml:space="preserve">
-    <value>Enable or disable session cookies</value>
+    <value>Session-Cookies aktivieren oder deaktivieren</value>
   </data>
   <data name="GiveAdministrativeRightsToADomainUser" xml:space="preserve">
-    <value>Give administrative rights to a domain user</value>
+    <value>Einem Domänenbenutzer administrative Rechte geben</value>
   </data>
   <data name="ChooseWhenToTurnOffDisplay" xml:space="preserve">
     <value>Choose when to turn off display</value>
@@ -2341,174 +2341,174 @@
     <value>Change text-to-speech settings</value>
   </data>
   <data name="SetTheTimeAndDate" xml:space="preserve">
-    <value>Set the time and date</value>
+    <value>Zeit und Datum festlegen</value>
   </data>
   <data name="ChangeLocationSettings" xml:space="preserve">
     <value>Change location settings</value>
   </data>
   <data name="ChangeMouseSettings" xml:space="preserve">
-    <value>Change mouse settings</value>
+    <value>Maus-Einstellungen ändern</value>
   </data>
   <data name="ManageStorageSpaces" xml:space="preserve">
     <value>Manage Storage Spaces</value>
   </data>
   <data name="ShowOrHideFileExtensions" xml:space="preserve">
-    <value>Show or hide file extensions</value>
+    <value>Dateierweiterungen zeigen oder ausblenden</value>
   </data>
   <data name="AllowAnAppThroughWindowsFirewall" xml:space="preserve">
-    <value>Allow an app through Windows Firewall</value>
+    <value>Eine App über Windows-Firewall erlauben</value>
   </data>
   <data name="ChangeSystemSounds" xml:space="preserve">
-    <value>Change system sounds</value>
+    <value>Systemsounds ändern</value>
   </data>
   <data name="AdjustCleartypeText" xml:space="preserve">
-    <value>Adjust ClearType text</value>
+    <value>ClearType-Text anpassen</value>
   </data>
   <data name="TurnScreenSaverOnOrOff" xml:space="preserve">
-    <value>Turn screen saver on or off</value>
+    <value>Bildschirmschoner ein- oder ausschalten</value>
   </data>
   <data name="FindAndFixWindowsUpdateProblems" xml:space="preserve">
-    <value>Find and fix windows update problems</value>
+    <value>Windows Update-Probleme finden und beheben</value>
   </data>
   <data name="ChangeBluetoothSettings" xml:space="preserve">
-    <value>Change Bluetooth settings</value>
+    <value>Bluetooth-Einstellungen ändern</value>
   </data>
   <data name="ConnectToANetwork" xml:space="preserve">
-    <value>Connect to a network</value>
+    <value>Mit einem Netzwerk verbinden</value>
   </data>
   <data name="ChangeTheSearchProviderInInternetExplorer" xml:space="preserve">
     <value>Change the search provider in Internet Explorer</value>
   </data>
   <data name="JoinADomain" xml:space="preserve">
-    <value>Join a domain</value>
+    <value>Einer Domain beitreten</value>
   </data>
   <data name="AddADevice" xml:space="preserve">
-    <value>Add a device</value>
+    <value>Ein Gerät hinzufügen</value>
   </data>
   <data name="FindAndFixProblemsWithWindowsSearch" xml:space="preserve">
-    <value>Find and fix problems with Windows Search</value>
+    <value>Probleme mit Windows-Suche finden und beheben</value>
   </data>
   <data name="ChooseAPowerPlan" xml:space="preserve">
-    <value>Choose a power plan</value>
+    <value>Einen Energieplan wählen</value>
   </data>
   <data name="ChangeHowTheMousePointerLooksWhenItSMoving" xml:space="preserve">
     <value>Change how the mouse pointer looks when it’s moving</value>
   </data>
   <data name="UninstallAProgram" xml:space="preserve">
-    <value>Uninstall a program</value>
+    <value>Ein Programm deinstallieren</value>
   </data>
   <data name="CreateAndFormatHardDiskPartitions" xml:space="preserve">
     <value>Create and format hard disk partitions</value>
   </data>
   <data name="ChangeDateTimeOrNumberFormats" xml:space="preserve">
-    <value>Change date, time or number formats</value>
+    <value>Datums-, Zeit- oder Zahlenformate ändern</value>
   </data>
   <data name="ChangePCWakeUpSettings" xml:space="preserve">
     <value>Change PC wake-up settings</value>
   </data>
   <data name="ManageNetworkPasswords" xml:space="preserve">
-    <value>Manage network passwords</value>
+    <value>Netzwerkpasswörter verwalten</value>
   </data>
   <data name="ChangeInputMethods" xml:space="preserve">
-    <value>Change input methods</value>
+    <value>Eingabemethoden ändern</value>
   </data>
   <data name="ManageAdvancedSharingSettings" xml:space="preserve">
-    <value>Manage advanced sharing settings</value>
+    <value>Erweiterte Sharing-Einstellungen verwalten</value>
   </data>
   <data name="ChangeBatterySettings" xml:space="preserve">
-    <value>Change battery settings</value>
+    <value>Akku-Einstellungen ändern</value>
   </data>
   <data name="RenameThisComputer" xml:space="preserve">
-    <value>Rename this computer</value>
+    <value>Diesen Computer umbenennen</value>
   </data>
   <data name="LockOrUnlockTheTaskbar" xml:space="preserve">
-    <value>Lock or unlock the taskbar</value>
+    <value>Taskleiste sperren oder entsperren</value>
   </data>
   <data name="ManageWebCredentials" xml:space="preserve">
-    <value>Manage Web Credentials</value>
+    <value>Webanmeldedaten verwalten</value>
   </data>
   <data name="ChangeTheTimeZone" xml:space="preserve">
-    <value>Change the time zone</value>
+    <value>Zeitzone ändern</value>
   </data>
   <data name="StartSpeechRecognition" xml:space="preserve">
-    <value>Start speech recognition</value>
+    <value>Spracherkennung starten</value>
   </data>
   <data name="ViewInstalledUpdates" xml:space="preserve">
-    <value>View installed updates</value>
+    <value>Installierte Updates ansehen</value>
   </data>
   <data name="WhatsHappenedToTheQuickLaunchToolbar" xml:space="preserve">
-    <value>What's happened to the Quick Launch toolbar?</value>
+    <value>Was ist mit der Schnellstart-Toolleiste passiert?</value>
   </data>
   <data name="ChangeSearchOptionsForFilesAndFolders" xml:space="preserve">
-    <value>Change search options for files and folders</value>
+    <value>Suchoptionen für Dateien und Ordner ändern</value>
   </data>
   <data name="AdjustSettingsBeforeGivingAPresentation" xml:space="preserve">
     <value>Adjust settings before giving a presentation</value>
   </data>
   <data name="ScanADocumentOrPicture" xml:space="preserve">
-    <value>Scan a document or picture</value>
+    <value>Ein Dokument oder Bild scannen</value>
   </data>
   <data name="ChangeTheWayMeasurementsAreDisplayed" xml:space="preserve">
     <value>Change the way measurements are displayed</value>
   </data>
   <data name="PressKeyCombinationsOneAtATime" xml:space="preserve">
-    <value>Press key combinations one at a time</value>
+    <value>Tastenkombinationen nacheinander drücken</value>
   </data>
   <data name="RestoreDataFilesOrComputerFromBackupWindows7" xml:space="preserve">
-    <value>Restore data, files or computer from backup (Windows 7)</value>
+    <value>Daten, Dateien oder Computer aus Backup wiederherstellen (Windows 7)</value>
   </data>
   <data name="SetYourDefaultPrograms" xml:space="preserve">
-    <value>Set your default programs</value>
+    <value>Ihre per Default vorgegebenen Programme festlegen</value>
   </data>
   <data name="SetUpABroadbandConnection" xml:space="preserve">
-    <value>Set up a broadband connection</value>
+    <value>Eine Breitbandverbindung einrichten</value>
   </data>
   <data name="CalibrateTheScreenForPenOrTouchInput" xml:space="preserve">
-    <value>Calibrate the screen for pen or touch input</value>
+    <value>Kalibrieren des Screens für Stift- oder Toucheingabe</value>
   </data>
   <data name="ManageUserCertificates" xml:space="preserve">
-    <value>Manage user certificates</value>
+    <value>Benutzerzertifikate verwalten</value>
   </data>
   <data name="ScheduleTasks" xml:space="preserve">
-    <value>Schedule tasks</value>
+    <value>Geplante Tasks</value>
   </data>
   <data name="IgnoreRepeatedKeystrokesUsingFilterkeys" xml:space="preserve">
-    <value>Ignore repeated keystrokes using FilterKeys</value>
+    <value>Wiederholte Tastenanschläge unter Verwendung von FilterKeys ignorieren</value>
   </data>
   <data name="FindAndFixBluescreenProblems" xml:space="preserve">
-    <value>Find and fix bluescreen problems</value>
+    <value>Probleme mit Bluescreens finden und beheben</value>
   </data>
   <data name="HearAToneWhenKeysArePressed" xml:space="preserve">
-    <value>Hear a tone when keys are pressed</value>
+    <value>Einen Ton hören, wenn Tasten gedrückt werden</value>
   </data>
   <data name="DeleteBrowsingHistory" xml:space="preserve">
-    <value>Delete browsing history</value>
+    <value>Browsing-Historie löschen</value>
   </data>
   <data name="ChangeWhatThePowerButtonsDo" xml:space="preserve">
-    <value>Change what the power buttons do</value>
+    <value>Ändern, was die Power-Tasten bewirken</value>
   </data>
   <data name="CreateStandardUserAccount" xml:space="preserve">
-    <value>Create standard user account</value>
+    <value>Standard-Benutzerkonto erstellen</value>
   </data>
   <data name="TakeSpeechTutorials" xml:space="preserve">
     <value>Take speech tutorials</value>
   </data>
   <data name="ViewSystemResourceUsageInTaskManager" xml:space="preserve">
-    <value>View system resource usage in Task Manager</value>
+    <value>Systemressourcennutzung im Task-Manager ansehen</value>
   </data>
   <data name="CreateAnAccount" xml:space="preserve">
-    <value>Create an account</value>
+    <value>Einen Account erstellen</value>
   </data>
   <data name="GetMoreFeaturesWithANewEditionOfWindows" xml:space="preserve">
-    <value>Get more features with a new edition of Windows</value>
+    <value>Erhalten Sie mehr Features mit einer neuen Edition von Windows</value>
   </data>
   <data name="AppControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>Systemsteuerung</value>
   </data>
   <data name="TaskLink" xml:space="preserve">
     <value>TaskLink</value>
   </data>
   <data name="AreaUnknown" xml:space="preserve">
-    <value>Unknown</value>
+    <value>Unbekannt</value>
   </data>
 </root>

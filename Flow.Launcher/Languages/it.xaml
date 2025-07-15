@@ -1,7 +1,24 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <!--  Startup  -->
+    <system:String x:Key="runtimePluginInstalledChooseRuntimePrompt">
+        Flow detected you have installed {0} plugins, which will require {1} to run. Would you like to download {1}?
+        {2}{2}
+        Click no if it's already installed, and you will be prompted to select the folder that contains the {1} executable
+    </system:String>
+    <system:String x:Key="runtimePluginChooseRuntimeExecutable">Please select the {0} executable</system:String>
+    <system:String x:Key="runtimeExecutableInvalidChooseDownload">
+        Your selected {0} executable is invalid.
+        {2}{2}
+        Click yes if you would like select the {0} executable again. Click no if you would like to download {1}
+    </system:String>
+    <system:String x:Key="runtimePluginUnableToSetExecutablePath">Unable to set {0} executable path, please try from Flow's settings (scroll down to the bottom).</system:String>
+    <system:String x:Key="failedToInitializePluginsTitle">Fail to Init Plugins</system:String>
+    <system:String x:Key="failedToInitializePluginsMessage">Plugins: {0} - fail to load and would be disabled, please contact plugin creator for help</system:String>
+
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Registrazione del tasto di scelta rapida &quot;{0}&quot; non riuscita. Il tasto di scelta rapida potrebbe essere in uso da un altro programma. Passa a un altro tasto di scelta rapida o esci da un altro programma.</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Avvio fallito {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Formato file plugin non valido</system:String>
@@ -25,7 +42,8 @@
     <system:String x:Key="GameMode">Modalità gioco</system:String>
     <system:String x:Key="GameModeToolTip">Sospendere l'uso dei tasti di scelta rapida.</system:String>
     <system:String x:Key="PositionReset">Ripristina Posizione</system:String>
-    <system:String x:Key="PositionResetToolTip">Ripristina posizione finestra di ricerca</system:String>
+    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Impostazioni</system:String>
@@ -33,10 +51,12 @@
     <system:String x:Key="portableMode">Modalità portatile</system:String>
     <system:String x:Key="portableModeToolTIp">Memorizzare tutte le impostazioni e i dati dell'utente in un'unica cartella (utile se utilizzato con unità rimovibili o servizi cloud).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Avvia Wow all'avvio di Windows</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
     <system:String x:Key="setAutoStartFailed">Errore nell'impostazione del lancio all'avvio</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Nascondi Flow Launcher quando perde il focus</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Non mostrare le notifiche per una nuova versione</system:String>
-    <system:String x:Key="SearchWindowPosition">Posizione Finestra Di Ricerca</system:String>
+    <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Ricorda L'Ultima Posizione</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Monitora con il cursore del mouse</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Monitora con la finestra in primo piano</system:String>
@@ -54,8 +74,8 @@
     <system:String x:Key="LastQueryPreserved">Conserva ultima ricerca</system:String>
     <system:String x:Key="LastQuerySelected">Seleziona ultima ricerca</system:String>
     <system:String x:Key="LastQueryEmpty">Cancella ultima ricerca</system:String>
-    <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">The window height is not adjustable by dragging.</system:String>
+    <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
+    <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
     <system:String x:Key="maxShowResults">Numero massimo di risultati mostrati</system:String>
     <system:String x:Key="maxShowResultsToolTip">È anche possibile regolarlo rapidamente utilizzando CTRL+Più e CTRL+Meno.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignora i tasti di scelta rapida in applicazione a schermo pieno</system:String>
@@ -73,19 +93,55 @@
     <system:String x:Key="autoUpdates">Aggiornamento automatico</system:String>
     <system:String x:Key="select">Seleziona</system:String>
     <system:String x:Key="hideOnStartup">Nascondi Flow Launcher all'avvio</system:String>
-    <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
+    <system:String x:Key="hideOnStartupToolTip">La finestra di ricerca di Flow Launcher è nascosta nelle applicazioni nascoste dopo l'avvio.</system:String>
     <system:String x:Key="hideNotifyIcon">Nascondi Icona nell'Area di Notifica</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Quando l'icona è nascosta dal menu delle icone nascoste, il menu Impostazioni può essere aperto facendo clic con il tasto destro del mouse sulla finestra di ricerca.</system:String>
     <system:String x:Key="querySearchPrecision">Precisione di ricerca delle query</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Modifica il punteggio minimo richiesto per i risultati.</system:String>
     <system:String x:Key="SearchPrecisionNone">Vuoto</system:String>
-    <system:String x:Key="SearchPrecisionLow">Low</system:String>
-    <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
+    <system:String x:Key="SearchPrecisionLow">Bassa</system:String>
+    <system:String x:Key="SearchPrecisionRegular">Normale</system:String>
     <system:String x:Key="ShouldUsePinyin">Dovrebbe usare il Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Consente di utilizzare il Pinyin per la ricerca. Il Pinyin è il sistema standard di ortografia romanizzata per la traduzione del cinese.</system:String>
     <system:String x:Key="AlwaysPreview">Mostra Sempre Anteprima</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Apri sempre il pannello di anteprima quando Flow si attiva. Premi {0} per attivare l'anteprima.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">L'effetto ombra non è consentito mentre il tema corrente ha un effetto di sfocatura abilitato</system:String>
+    <system:String x:Key="searchDelay">Search Delay</system:String>
+    <system:String x:Key="searchDelayToolTip">Adds a short delay while typing to reduce UI flicker and result load. Recommended if your typing speed is average.</system:String>
+    <system:String x:Key="searchDelayNumberBoxToolTip">Enter the wait time (in ms) until input is considered complete. This can only be edited if Search Delay is enabled.</system:String>
+    <system:String x:Key="searchDelayTime">Default Search Delay Time</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Wait time before showing results after typing stops. Higher values wait longer. (ms)</system:String>
+    <system:String x:Key="KoreanImeTitle">Information for Korean IME user</system:String>
+    <system:String x:Key="KoreanImeGuide">
+        The Korean input method used in Windows 11 may cause some issues in Flow Launcher.
+
+        If you experience any problems, you may need to enable &quot;Use previous version of Korean IME&quot;.
+
+
+        Open Setting in Windows 11 and go to:
+
+        Time &amp; Language &gt; Language &amp; Region &gt; Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility,
+
+        and enable &quot;Use previous version of Microsoft IME&quot;.
+
+
+    </system:String>
+    <system:String x:Key="KoreanImeOpenLink">Open Language and Region System Settings</system:String>
+    <system:String x:Key="KoreanImeOpenLinkToolTip">Opens the Korean IME setting location. Go to Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility</system:String>
+    <system:String x:Key="KoreanImeOpenLinkButton">Apri</system:String>
+    <system:String x:Key="KoreanImeRegistry">Use Previous Korean IME</system:String>
+    <system:String x:Key="KoreanImeRegistryTooltip">You can change the Previous Korean IME settings directly from here</system:String>
+    <system:String x:Key="homePage">Home Page</system:String>
+    <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
+    <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
+    <system:String x:Key="showAtTopmost">Show Search Window at Foremost</system:String>
+    <system:String x:Key="showAtTopmostToolTip">Overrides other programs' 'Always on Top' setting and displays Flow in the foremost position.</system:String>
+    <system:String x:Key="autoRestartAfterChanging">Restart after modifying plugin via Plugin Store</system:String>
+    <system:String x:Key="autoRestartAfterChangingToolTip">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugin Store</system:String>
+    <system:String x:Key="showUnknownSourceWarning">Show unknown source warning</system:String>
+    <system:String x:Key="showUnknownSourceWarningToolTip">Show warning when installing plugins from unknown sources</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Plugin di ricerca</system:String>
@@ -102,6 +158,13 @@
     <system:String x:Key="currentActionKeywords">Parola chiave di azione corrente</system:String>
     <system:String x:Key="newActionKeyword">Nuova parola chiave d'azione</system:String>
     <system:String x:Key="actionKeywordsTooltip">Cambia Keywords Azione</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Plugin search delay time</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Search Delay Time</system:String>
+    <system:String x:Key="FilterComboboxLabel">Advanced Settings:</system:String>
+    <system:String x:Key="DisplayModeOnOff">Abilitato</system:String>
+    <system:String x:Key="DisplayModePriority">Priorità</system:String>
+    <system:String x:Key="DisplayModeSearchDelay">Search Delay</system:String>
+    <system:String x:Key="DisplayModeHomeOnOff">Home Page</system:String>
     <system:String x:Key="currentPriority">Priorità Attuale</system:String>
     <system:String x:Key="newPriority">Nuova Priorità</system:String>
     <system:String x:Key="priority">Priorità</system:String>
@@ -113,7 +176,16 @@
     <system:String x:Key="plugin_query_version">Versione</system:String>
     <system:String x:Key="plugin_query_web">Sito Web</system:String>
     <system:String x:Key="plugin_uninstall">Disinstalla</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
+    <system:String x:Key="failedToRemovePluginCacheTitle">Fail to remove plugin cache</system:String>
+    <system:String x:Key="failedToRemovePluginCacheMessage">Plugins: {0} - Fail to remove plugin cache files, please remove them manually</system:String>
+    <system:String x:Key="pluginModifiedAlreadyTitle">{0} modified already</system:String>
+    <system:String x:Key="pluginModifiedAlreadyMessage">Please restart Flow before making any further changes</system:String>
+    <system:String x:Key="failedToInstallPluginTitle">Fail to install {0}</system:String>
+    <system:String x:Key="failedToUninstallPluginTitle">Fail to uninstall {0}</system:String>
+    <system:String x:Key="fileNotFoundMessage">Unable to find plugin.json from the extracted zip file, or this path {0} does not exist</system:String>
+    <system:String x:Key="pluginExistAlreadyMessage">A plugin with the same ID and version already exists, or the version is greater than this downloaded plugin</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Negozio dei Plugin</system:String>
@@ -129,8 +201,28 @@
     <system:String x:Key="LabelNew">Nuova versione</system:String>
     <system:String x:Key="LabelNewToolTip">Questo plugin è stato aggiornato negli ultimi 7 giorni</system:String>
     <system:String x:Key="LabelUpdateToolTip">Nuovo aggiornamento disponibile</system:String>
-
-
+    <system:String x:Key="ErrorInstallingPlugin">Errore durante l'installazione del plugin</system:String>
+    <system:String x:Key="ErrorUninstallingPlugin">Errore durante la disinstallazione del plugin</system:String>
+    <system:String x:Key="ErrorUpdatingPlugin">Error updating plugin</system:String>
+    <system:String x:Key="KeepPluginSettingsTitle">Keep plugin settings</system:String>
+    <system:String x:Key="KeepPluginSettingsSubtitle">Do you want to keep the settings of the plugin for the next usage?</system:String>
+    <system:String x:Key="InstallSuccessNoRestart">Il plugin {0} installato con successo. Riavviare Flow.</system:String>
+    <system:String x:Key="UninstallSuccessNoRestart">Il plugin {0} disinstallato con successo. Riavviare Flow.</system:String>
+    <system:String x:Key="UpdateSuccessNoRestart">Il plugin {0} aggiornato con successo. Riavviare Flow.</system:String>
+    <system:String x:Key="InstallPromptTitle">Plugin install</system:String>
+    <system:String x:Key="InstallPromptSubtitle">{0} di {1} {2}{2}Vuoi installare questo plugin?</system:String>
+    <system:String x:Key="UninstallPromptTitle">Plugin uninstall</system:String>
+    <system:String x:Key="UninstallPromptSubtitle">{0} di {1} {2}{2}Vuoi disinstallare questo plugin?</system:String>
+    <system:String x:Key="UpdatePromptTitle">Plugin update</system:String>
+    <system:String x:Key="UpdatePromptSubtitle">{0} di {1} {2}{2}Vuoi aggiornare questo plugin?</system:String>
+    <system:String x:Key="DownloadingPlugin">Download del plugin</system:String>
+    <system:String x:Key="AutoRestartAfterChange">Automatically restart after installing/uninstalling/updating plugins in plugin store</system:String>
+    <system:String x:Key="ZipFileNotHavePluginJson">Zip file does not have a valid plugin.json configuration</system:String>
+    <system:String x:Key="InstallFromUnknownSourceTitle">Installazione da una fonte sconosciuta</system:String>
+    <system:String x:Key="InstallFromUnknownSourceSubtitle">This plugin is from an unknown source and it may contain potential risks!{0}{0}Please ensure you understand where this plugin is from and that it is safe.{0}{0}Would you like to continue still?{0}{0}(You can switch off this warning in general section of setting window)</system:String>
+    <system:String x:Key="ZipFiles">Zip files</system:String>
+    <system:String x:Key="SelectZipFile">Please select zip file</system:String>
+    <system:String x:Key="installLocalPluginTooltip">Install plugin from local path</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Tema</system:String>
@@ -146,13 +238,16 @@
     <system:String x:Key="SampleSubTitleProgram">Avvia programmi come amministratore o un altro utente</system:String>
     <system:String x:Key="SampleTitleProcessKiller">ProcessKiller</system:String>
     <system:String x:Key="SampleSubTitleProcessKiller">Termina i processi indesiderati</system:String>
-    <system:String x:Key="SearchBarHeight">Search Bar Height</system:String>
-    <system:String x:Key="ItemHeight">Item Height</system:String>
+    <system:String x:Key="SearchBarHeight">Altezza Barra Di Ricerca</system:String>
+    <system:String x:Key="ItemHeight">Altezza Oggetto</system:String>
     <system:String x:Key="queryBoxFont">Font campo di ricerca</system:String>
-    <system:String x:Key="resultItemFont">Result Title Font</system:String>
-    <system:String x:Key="resultSubItemFont">Result Subtitle Font</system:String>
+    <system:String x:Key="resultItemFont">Font del Titolo del Risultato</system:String>
+    <system:String x:Key="resultSubItemFont">Font del Sottotitolo del Risultato</system:String>
     <system:String x:Key="resetCustomize">Resetta</system:String>
-    <system:String x:Key="CustomizeToolTip">Customize</system:String>
+    <system:String x:Key="resetCustomizeToolTip">Reset to the recommended font and size settings.</system:String>
+    <system:String x:Key="ImportThemeSize">Import Theme Size</system:String>
+    <system:String x:Key="ImportThemeSizeToolTip">If a size value intended by the theme designer is available, it will be retrieved and applied.</system:String>
+    <system:String x:Key="CustomizeToolTip">Personalizza</system:String>
     <system:String x:Key="windowMode">Modalità finestra</system:String>
     <system:String x:Key="opacity">Opacità</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">Il tema {0} non esiste, si ritorna al tema predefinito</system:String>
@@ -167,7 +262,7 @@
     <system:String x:Key="SoundEffectTip">Riproduce un piccolo suono all'apertura della finestra di ricerca</system:String>
     <system:String x:Key="SoundEffectVolume">Volume Effetti Sonori</system:String>
     <system:String x:Key="SoundEffectVolumeTip">Regola il volume degli effetti sonori</system:String>
-    <system:String x:Key="SoundEffectWarning">Windows Media Player is unavailable and is required for Flow's volume adjustment. Please check your installation if you need to adjust volume.</system:String>
+    <system:String x:Key="SoundEffectWarning">Windows Media Player non è disponibile ed è richiesto per regolare il volume da Flow. Si prega di controllare l'installazione per regolare il volume.</system:String>
     <system:String x:Key="Animation">Animazione</system:String>
     <system:String x:Key="AnimationTip">Usa l'animazione nell'interfaccia utente</system:String>
     <system:String x:Key="AnimationSpeed">Velocità di animazione</system:String>
@@ -178,9 +273,21 @@
     <system:String x:Key="AnimationSpeedCustom">Personalizzato</system:String>
     <system:String x:Key="Clock">Orologio</system:String>
     <system:String x:Key="Date">Data</system:String>
-    <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
-    <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
-
+    <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropInfo">The backdrop effect is not applied in the preview.</system:String>
+    <system:String x:Key="BackdropTypeDisabledToolTip">Backdrop supported starting from Windows 11 build 22000 and above</system:String>
+    <system:String x:Key="BackdropTypesNone">Vuoto</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
+    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">This theme supports two (light/dark) modes.</system:String>
+    <system:String x:Key="TypeHasBlurToolTip">Questo tema supporta lo sfondo trasparente blurrato.</system:String>
+    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
+    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
+    <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Tasti scelta rapida</system:String>
@@ -201,10 +308,10 @@
     <system:String x:Key="SelectPrevItemHotkey">Seleziona Elemento Precedente</system:String>
     <system:String x:Key="SelectNextPageHotkey">Pagina Successiva</system:String>
     <system:String x:Key="SelectPrevPageHotkey">Pagina Precedente</system:String>
-    <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
-    <system:String x:Key="CycleHistoryDownHotkey">Cycle Next Query</system:String>
+    <system:String x:Key="CycleHistoryUpHotkey">Cicla Query Precedente</system:String>
+    <system:String x:Key="CycleHistoryDownHotkey">Cicla Query Successiva</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Apri il menu di scelta rapida</system:String>
-    <system:String x:Key="OpenNativeContextMenuHotkey">Open Native Context Menu</system:String>
+    <system:String x:Key="OpenNativeContextMenuHotkey">Apri il Menu Contestuale Nativo</system:String>
     <system:String x:Key="SettingWindowHotkey">Aprire la finestra delle impostazioni</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copia Percorso File</system:String>
     <system:String x:Key="ToggleGameModeHotkey">Attiva/Disattiva Modalità Di Gioco</system:String>
@@ -240,6 +347,9 @@
     <system:String x:Key="useGlyphUI">Usa Icone Segoe Fluent</system:String>
     <system:String x:Key="useGlyphUIEffect">Usa Icone Segoe Fluent per risultati di ricerca dove supportate</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Premi tasto</system:String>
+    <system:String x:Key="showBadges">Show Result Badges</system:String>
+    <system:String x:Key="showBadgesToolTip">For supported plugins, badges are displayed to help distinguish them more easily.</system:String>
+    <system:String x:Key="showBadgesGlobalOnly">Show Result Badges for Global Query Only</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">Proxy HTTP</system:String>
@@ -280,20 +390,39 @@
     <system:String x:Key="logfolder">Cartella dei Log</system:String>
     <system:String x:Key="clearlogfolder">Cancella i log</system:String>
     <system:String x:Key="clearlogfolderMessage">Sei sicuro di voler cancellare tutti i log?</system:String>
+    <system:String x:Key="cachefolder">Cache Folder</system:String>
+    <system:String x:Key="clearcachefolder">Clear Caches</system:String>
+    <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
+    <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
     <system:String x:Key="welcomewindow">Wizard</system:String>
-    <system:String x:Key="userdatapath">User Data Location</system:String>
-    <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
-    <system:String x:Key="userdatapathButton">Open Folder</system:String>
+    <system:String x:Key="userdatapath">Posizione Dati Utente</system:String>
+    <system:String x:Key="userdatapathToolTip">Le impostazioni dell'utente e i plugin installati sono salvati nella cartella dati utente. Questa posizione può variare se è in modalità portable o no.</system:String>
+    <system:String x:Key="userdatapathButton">Apri Cartella</system:String>
+    <system:String x:Key="advanced">Advanced</system:String>
+    <system:String x:Key="logLevel">Log Level</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelINFO">Info</system:String>
+    <system:String x:Key="settingWindowFontTitle">Setting Window Font</system:String>
+
+    <!--  Release Notes Window  -->
+    <system:String x:Key="seeMoreReleaseNotes">See more release notes on GitHub</system:String>
+    <system:String x:Key="checkNetworkConnectionTitle">Failed to fetch release notes</system:String>
+    <system:String x:Key="checkNetworkConnectionSubTitle">Please check your network connection or ensure GitHub is accessible</system:String>
+    <system:String x:Key="appUpdateTitle">Flow Launcher has been updated to {0}</system:String>
+    <system:String x:Key="appUpdateButtonContent">Click here to view the release notes</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Seleziona Gestore File</system:String>
-    <system:String x:Key="fileManager_tips">Specificare la posizione del gestore file che si sta utilizzando e aggiungere argomenti se necessario. Gli argomenti di default sono &quot;%d&quot;, e un percorso è inserito in quella posizione. Per esempio, se è richiesto un comando come &quot;totalcmd.exe /A c:\windows&quot;, l'argomento è /A &quot;%d&quot;.</system:String>
-    <system:String x:Key="fileManager_tips2">&quot;%f&quot; è un argomento che rappresenta il percorso del file. Viene usato per sottolineare il nome del file/cartella quando si apre una posizione specifica del file in file manager di terze parti. Questo argomento è disponibile solo nell'elemento &quot;Arg per File&quot;. Se il file manager non dispone di tale funzione, è possibile utilizzare &quot;%d&quot;.</system:String>
+    <system:String x:Key="fileManager_learnMore">Learn more</system:String>
+    <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments as required. The &quot;%d&quot; represents the directory path to open for, used by the Arg for Folder field and for commands opening specific directories. The &quot;%f&quot; represents the file path to open for, used by the Arg for File field and for commands opening specific files.</system:String>
+    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fields blank.</system:String>
     <system:String x:Key="fileManager_name">Gestore File</system:String>
     <system:String x:Key="fileManager_profile_name">Nome Profilo</system:String>
     <system:String x:Key="fileManager_path">Percorso Gestore File</system:String>
     <system:String x:Key="fileManager_directory_arg">Arg Per Cartella</system:String>
     <system:String x:Key="fileManager_file_arg">Arg Per Cartella</system:String>
+    <system:String x:Key="fileManagerPathNotFound">The file manager '{0}' could not be located at '{1}'. Would you like to continue?</system:String>
+    <system:String x:Key="fileManagerPathError">File Manager Path Error</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Browser predefinito</system:String>
@@ -318,22 +447,33 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Impossibile trovare il plugin specificato</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">La nuova parola chiave d'azione non può essere vuota</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">La nuova parola chiave d'azione è stata assegnata ad un altro plugin, per favore sceglierne una differente</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
     <system:String x:Key="success">Successo</system:String>
     <system:String x:Key="completedSuccessfully">Completato con successo</system:String>
-    <system:String x:Key="actionkeyword_tips">Usa * se non vuoi specificare una parola chiave d'azione</system:String>
+    <system:String x:Key="failedToCopy">Failed to copy</system:String>
+    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="searchDelayTimeTitle">Search Delay Time Setting</system:String>
+    <system:String x:Key="searchDelayTimeTips">Input the search delay time in ms you like to use for the plugin. Input empty if you don't want to specify any, and the plugin will use default search delay time.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="homeTitle">Home Page</system:String>
+    <system:String x:Key="homeTips">Enable the plugin home page state if you like to show the plugin results when query is empty.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Tasti scelta rapida per ricerche personalizzate</system:String>
     <system:String x:Key="customeQueryHotkeyTips">Premere un tasto di scelta rapida personalizzato per aprire Flow Launcher e inserire automaticamente la query specificata.</system:String>
     <system:String x:Key="preview">Anteprima</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Tasto di scelta rapida non disponibile, per favore scegli un nuovo tasto di scelta rapida</system:String>
-    <system:String x:Key="invalidPluginHotkey">Tasto di scelta rapida plugin non valido</system:String>
+    <system:String x:Key="invalidPluginHotkey">Hotkey is invalid</system:String>
     <system:String x:Key="update">Aggiorna</system:String>
     <system:String x:Key="hotkeyRegTitle">Registrare Scorciatoie</system:String>
     <system:String x:Key="hotkeyUnavailable">Scorciatoia corrente non disponibile.</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">Questa scorciatoia è riservata per &quot;{0}&quot; e non può essere utilizzata. Si prega di scegliere un'altra scorciatoia.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">Questa scorciatoia è già in uso da &quot;{0}&quot;. Premendo &quot;Sovrascrivi&quot;, verrà rimossa da &quot;{0}&quot;.</system:String>
     <system:String x:Key="hotkeyRegGuide">Premi i tasti che vuoi usare per questa funzione.</system:String>
+    <system:String x:Key="emptyPluginHotkey">Hotkey and action keyword are empty</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Scorciatoia per ricerca personalizzata</system:String>
@@ -344,6 +484,7 @@ Se si aggiunge un prefisso '@' mentre si inserisce una scorciatoia, corrisponde 
     </system:String>
     <system:String x:Key="duplicateShortcut">La scorciatoia esiste già, inserisci una nuova scorciatoia o modifica quella esistente.</system:String>
     <system:String x:Key="emptyShortcut">La scorciatoia e/o la sua espansione sono vuote.</system:String>
+    <system:String x:Key="invalidShortcut">Shortcut is invalid</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Salva</system:String>
@@ -352,8 +493,9 @@ Se si aggiunge un prefisso '@' mentre si inserisce una scorciatoia, corrisponde 
     <system:String x:Key="commonReset">Resetta</system:String>
     <system:String x:Key="commonDelete">Cancella</system:String>
     <system:String x:Key="commonOK">OK</system:String>
-    <system:String x:Key="commonYes">Yes</system:String>
+    <system:String x:Key="commonYes">Sì</system:String>
     <system:String x:Key="commonNo">No</system:String>
+    <system:String x:Key="commonBackground">Sfondo</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Versione</system:String>
@@ -370,6 +512,18 @@ Se si aggiunge un prefisso '@' mentre si inserisce una scorciatoia, corrisponde 
     <system:String x:Key="reportWindow_report_succeed">Rapporto inviato correttamente</system:String>
     <system:String x:Key="reportWindow_report_failed">Invio rapporto fallito</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher ha riportato un errore</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
+    <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
+    <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
+
+    <!--  File Open Error  -->
+    <system:String x:Key="fileManagerNotFoundTitle">File Manager Error</system:String>
+    <system:String x:Key="fileManagerNotFound">
+        The specified file manager could not be found. Please check the Custom File Manager setting under Settings &gt; General.
+    </system:String>
+    <system:String x:Key="errorTitle">Error</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder. {0}</system:String>
+    <system:String x:Key="browserOpenError">An error occurred while opening the URL in the browser. Please check your Default Web Browser configuration in the General section of the settings window</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Attendere prego...</system:String>
@@ -439,7 +593,7 @@ Se si aggiunge un prefisso '@' mentre si inserisce una scorciatoia, corrisponde 
     <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
 
     <!--  Preview Area  -->
-    <system:String x:Key="FileSize">File Size</system:String>
-    <system:String x:Key="Created">Created</system:String>
-    <system:String x:Key="LastModified">Last Modified</system:String>
+    <system:String x:Key="FileSize">Dimensione File</system:String>
+    <system:String x:Key="Created">Creato</system:String>
+    <system:String x:Key="LastModified">Ultima modifica</system:String>
 </ResourceDictionary>

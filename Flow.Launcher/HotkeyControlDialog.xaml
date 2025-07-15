@@ -5,7 +5,7 @@
     xmlns:ui="http://schemas.modernwpf.com/2019"
     Background="{DynamicResource PopuBGColor}"
     BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
-    BorderThickness="0,1,0,0"
+    BorderThickness="0 1 0 0"
     CornerRadius="8"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
     Foreground="{DynamicResource PopupTextColor}"
@@ -24,14 +24,14 @@
         </Grid.RowDefinitions>
 
         <!--  Window title and the keys in the hotkey  -->
-        <Grid Grid.Row="0" Margin="26,12,26,0">
+        <Grid Grid.Row="0" Margin="26 12 26 0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <StackPanel>
                 <TextBlock
-                    Margin="0,0,0,0"
+                    Margin="0 0 0 0"
                     FontSize="20"
                     FontWeight="SemiBold"
                     Text="{Binding WindowTitle}"
@@ -42,8 +42,8 @@
                 Grid.Row="1"
                 Width="450"
                 Height="100"
-                Margin="0,100,0,0"
-                Padding="26,12,26,0">
+                Margin="0 100 0 0"
+                Padding="26 12 26 0">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                     <ItemsControl ItemsSource="{Binding KeysToDisplay}">
                         <ItemsControl.ItemsPanel>
@@ -56,12 +56,12 @@
                                 <Border
                                     MinWidth="50"
                                     MinHeight="50"
-                                    Margin="5,0,5,0"
+                                    Margin="5 0 5 0"
                                     Padding="8"
                                     Background="{DynamicResource AccentButtonBackground}"
                                     CornerRadius="6">
                                     <TextBlock
-                                        Margin="5,0,5,0"
+                                        Margin="5 0 5 0"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
                                         FontSize="18"
@@ -82,9 +82,9 @@
             <Border
                 x:Name="Alert"
                 Width="420"
-                Padding="0, 10"
-                VerticalAlignment="Center"
+                Padding="0 10"
                 HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 Background="{DynamicResource InfoBarWarningBG}"
                 BorderBrush="{DynamicResource InfoBarBD}"
                 BorderThickness="1"
@@ -97,21 +97,21 @@
                     </Grid.ColumnDefinitions>
                     <ui:FontIcon
                         Grid.Column="0"
-                        Margin="20,0,14,0"
+                        Margin="20 0 14 0"
                         VerticalAlignment="Center"
                         FontSize="15"
                         Foreground="{DynamicResource InfoBarWarningIcon}"
                         Glyph="&#xf167;" />
                     <TextBlock
-                        Grid.Column="1"
                         x:Name="tbMsg"
-                        Margin="0,0,0,2"
-                        Padding="0,0,8,0"
+                        Grid.Column="1"
+                        Margin="0 0 0 2"
+                        Padding="0 0 8 0"
                         HorizontalAlignment="Left"
                         FontSize="13"
                         FontWeight="SemiBold"
-                        TextWrapping="Wrap"
-                        Foreground="{DynamicResource Color05B}" />
+                        Foreground="{DynamicResource Color05B}"
+                        TextWrapping="Wrap" />
                 </Grid>
             </Border>
 
@@ -122,45 +122,45 @@
             Grid.Row="2"
             Background="{DynamicResource PopupButtonAreaBGColor}"
             BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
-            BorderThickness="0,1,0,0"
+            BorderThickness="0 1 0 0"
             CornerRadius="0 0 8 8">
             <StackPanel
-                Margin="10"
+                Margin="10 9 10 10"
                 HorizontalAlignment="Center"
                 Orientation="Horizontal">
                 <Button
                     x:Name="OverwriteBtn"
-                    Height="30"
+                    MinHeight="36"
                     MinWidth="100"
-                    Margin="0,0,4,0"
+                    Margin="0 0 4 0"
                     Click="Overwrite"
                     Content="{DynamicResource commonOverwrite}"
-                    Visibility="Collapsed"
-                    Style="{StaticResource AccentButtonStyle}" />
+                    Style="{StaticResource AccentButtonStyle}"
+                    Visibility="Collapsed" />
                 <Button
                     x:Name="SaveBtn"
-                    Height="30"
+                    MinHeight="36"
                     MinWidth="100"
-                    Margin="0,0,4,0"
+                    Margin="0 0 4 0"
                     Click="Save"
                     Content="{DynamicResource commonSave}"
                     Style="{StaticResource AccentButtonStyle}" />
                 <Button
-                    Height="30"
+                    MinHeight="36"
                     MinWidth="100"
-                    Margin="4,0,4,0"
+                    Margin="4 0 4 0"
                     Click="Reset"
                     Content="{DynamicResource commonReset}" />
                 <Button
-                    Height="30"
+                    MinHeight="36"
                     MinWidth="100"
-                    Margin="4,0,4,0"
+                    Margin="4 0 4 0"
                     Click="Delete"
                     Content="{DynamicResource commonDelete}" />
                 <Button
-                    Height="30"
+                    MinHeight="36"
                     MinWidth="100"
-                    Margin="4,0,0,0"
+                    Margin="4 0 0 0"
                     Click="Cancel"
                     Content="{DynamicResource commonCancel}" />
             </StackPanel>

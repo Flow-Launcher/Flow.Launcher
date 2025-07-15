@@ -1,89 +1,64 @@
-﻿using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Helper;
-using Flow.Launcher.Infrastructure.UserSettings;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows;
 using System.Windows.Controls;
-using Flow.Launcher.ViewModel;
+using System.Windows.Input;
+using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher
 {
     public partial class CustomQueryHotkeySetting : Window
     {
-        private SettingWindow _settingWidow;
-        private bool update;
-        private CustomPluginHotkey updateCustomHotkey;
-        public Settings Settings { get; }
+        public string Hotkey { get; set; } = string.Empty;
+        public string ActionKeyword { get; set; } = string.Empty;
 
-        public CustomQueryHotkeySetting(SettingWindow settingWidow, Settings settings)
+        private readonly bool update;
+        private readonly CustomPluginHotkey originalCustomHotkey;
+
+        public CustomQueryHotkeySetting()
         {
-            _settingWidow = settingWidow;
-            Settings = settings;
             InitializeComponent();
+            tbAdd.Visibility = Visibility.Visible;
+        }
+
+        public CustomQueryHotkeySetting(CustomPluginHotkey hotkey)
+        {
+            originalCustomHotkey = hotkey;
+            update = true;
+            ActionKeyword = originalCustomHotkey.ActionKeyword;
+            InitializeComponent();
+            tbUpdate.Visibility = Visibility.Visible;
+            HotkeyControl.SetHotkey(originalCustomHotkey.Hotkey, false);
         }
 
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
         {
+            DialogResult = false;
             Close();
         }
 
         private void btnAdd_OnClick(object sender, RoutedEventArgs e)
         {
-            if (!update)
+            Hotkey = HotkeyControl.CurrentHotkey.ToString();
+
+            if (string.IsNullOrEmpty(Hotkey) && string.IsNullOrEmpty(ActionKeyword))
             {
-                Settings.CustomPluginHotkeys ??= new ObservableCollection<CustomPluginHotkey>();
-
-                var pluginHotkey = new CustomPluginHotkey
-                {
-                    Hotkey = HotkeyControl.CurrentHotkey.ToString(), ActionKeyword = tbAction.Text
-                };
-                Settings.CustomPluginHotkeys.Add(pluginHotkey);
-
-                HotKeyMapper.SetCustomQueryHotkey(pluginHotkey);
-            }
-            else
-            {
-                var oldHotkey = updateCustomHotkey.Hotkey;
-                updateCustomHotkey.ActionKeyword = tbAction.Text;
-                updateCustomHotkey.Hotkey = HotkeyControl.CurrentHotkey.ToString();
-                //remove origin hotkey
-                HotKeyMapper.RemoveHotkey(oldHotkey);
-                HotKeyMapper.SetCustomQueryHotkey(updateCustomHotkey);
-            }
-
-            Close();
-        }
-
-
-        public void UpdateItem(CustomPluginHotkey item)
-        {
-            updateCustomHotkey = Settings.CustomPluginHotkeys.FirstOrDefault(o =>
-                o.ActionKeyword == item.ActionKeyword && o.Hotkey == item.Hotkey);
-            if (updateCustomHotkey == null)
-            {
-                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("invalidPluginHotkey"));
-                Close();
+                App.API.ShowMsgBox(App.API.GetTranslation("emptyPluginHotkey"));
                 return;
             }
 
-            tbAction.Text = updateCustomHotkey.ActionKeyword;
-            HotkeyControl.SetHotkey(updateCustomHotkey.Hotkey, false);
-            update = true;
-            lblAdd.Text = InternationalizationManager.Instance.GetTranslation("update");
+            DialogResult = !update || originalCustomHotkey.Hotkey != Hotkey || originalCustomHotkey.ActionKeyword != ActionKeyword;
+            Close();
         }
 
         private void BtnTestActionKeyword_OnClick(object sender, RoutedEventArgs e)
         {
             App.API.ChangeQuery(tbAction.Text);
-            Application.Current.MainWindow.Show();
-            Application.Current.MainWindow.Opacity = 1;
+            App.API.ShowMainWindow();
             Application.Current.MainWindow.Focus();
         }
 
         private void cmdEsc_OnPress(object sender, ExecutedRoutedEventArgs e)
         {
+            DialogResult = false;
             Close();
         }
 

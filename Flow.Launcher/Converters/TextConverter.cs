@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using Flow.Launcher.Core.Resource;
 using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.Converters;
@@ -23,7 +22,7 @@ public class TextConverter : IValueConverter
         if (translationKey is null)
             return id;
 
-        return InternationalizationManager.Instance.GetTranslation(translationKey);
+        return App.API.GetTranslation(translationKey);
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new InvalidOperationException();

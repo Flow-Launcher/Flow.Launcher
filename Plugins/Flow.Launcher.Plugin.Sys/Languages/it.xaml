@@ -2,8 +2,9 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Command List  -->
-    <system:String x:Key="flowlauncher_plugin_sys_command">Comando</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_name">Nome</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_desc">Descrizione</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_command">Comando</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer_cmd">Spegni</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_computer_cmd">Riavvia</system:String>
@@ -25,6 +26,9 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips_cmd">Consigli di Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location_cmd">Cartella UserData di Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode_cmd">Attiva/Disattiva Modalità Di Gioco</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector_cmd">Set the Flow Launcher Theme</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_sys_edit">Modifica</system:String>
 
     <!--  Command Descriptions  -->
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">Spegni il computer</system:String>
@@ -47,8 +51,9 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">Visita la documentazione di Flow Launcher per maggiori informazioni e suggerimenti su come usarlo</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Apri la posizione in cui vengono memorizzate le impostazioni di Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode">Attiva/Disattiva Modalità Di Gioco</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector">Quickly change the Flow Launcher theme</system:String>
 
-        <!--  Dialogs  -->
+    <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">Successo</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">Tutte le impostazioni di Flow Launcher sono state salvate</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Ricaricato tutti i dati del plugin applicabili</system:String>
@@ -56,6 +61,15 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">Sei sicuro di voler riavviare il computer?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Sei sicuro di voler riavviare il computer con le Opzioni di Avvio Avanzate?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Sei sicuro di volerti disconettere?</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Command Keyword Setting</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Custom Command Keyword</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword_tip">Enter a keyword to search for command: {0}. This keyword is used to match your query.</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_command_keyword">Command Keyword</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_reset">Resetta</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_confirm">Conferma</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_cancel">Annulla</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_input_command_keyword">Please enter a non-empty command keyword</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">Comandi di Sistema</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Fornisce comandi relativi al sistema, ad esempio spegnimento, blocco, impostazioni ecc.</system:String>

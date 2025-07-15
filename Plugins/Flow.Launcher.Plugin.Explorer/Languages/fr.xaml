@@ -3,6 +3,8 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">Veuillez d'abord effectuer une sélection</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Veuillez sélectionner un chemin d'accès au dossier.</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Veuillez choisir un nom ou un chemin d'accès différent.</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Veuillez sélectionner un lien vers un dossier</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">Êtes-vous sûr de vouloir supprimer {0} ?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">Êtes-vous sûr de vouloir supprimer définitivement ce fichier ?</system:String>
@@ -25,12 +27,14 @@
     <system:String x:Key="plugin_explorer_add">Ajouter</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">Paramètres généraux</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Personnaliser les mots-clés d'action</system:String>
+    <system:String x:Key="plugin_explorer_manage_quick_access_links_header">Personnaliser l'accès rapide</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Liens d'accès rapide</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Paramètres Everything</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">Panneau d'aperçu</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Taille</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Date de création</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Date de modification</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_age_checkbox">Âge du fichier</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Afficher les informations du fichier</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Format de la date et de l'heure</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Option de tri :</system:String>
@@ -40,6 +44,7 @@
     <system:String x:Key="plugin_explorer_shell_path">Chemin d'accès au Shell</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Chemins exclus de la recherche d'index</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Utiliser l'emplacement du résultat de la recherche comme répertoire de travail de l'exécutable</system:String>
+    <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Afficher plus d'informations comme la taille et l'âge dans les infobulles</system:String>
     <system:String x:Key="plugin_explorer_default_open_in_file_manager">Appuyez sur Entrée pour ouvrir le dossier dans le gestionnaire de fichiers par défaut</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Utiliser la recherche d'index pour la recherche de chemin d'accès</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Options d'indexation</system:String>
@@ -49,7 +54,7 @@
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Recherche dans l'index :</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Accès rapide :</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">Mot-clé de l'action en cours</system:String>
-    <system:String x:Key="plugin_explorer_actionkeyword_done">Terminé</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_done">Terminer</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">Activé</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">Lorsqu'il est désactivé, Flow n'exécute pas cette option de recherche et revient en outre à &quot;*&quot; pour libérer le mot-clé d'action.</system:String>
     <system:String x:Key="plugin_explorer_engine_everything">Everything</system:String>
@@ -57,11 +62,17 @@
     <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Énumération directe</system:String>
     <system:String x:Key="plugin_explorer_file_editor_path">Chemin de l'éditeur de fichiers</system:String>
     <system:String x:Key="plugin_explorer_folder_editor_path">Chemin de l'éditeur de dossier</system:String>
+    <system:String x:Key="plugin_explorer_enabled">Activé</system:String>
+    <system:String x:Key="plugin_explorer_disabled">Désactivé</system:String>
 
     <system:String x:Key="plugin_explorer_Content_Search_Engine">Moteur de recherche de contenu</system:String>
     <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Moteur de recherche récursif du répertoire</system:String>
     <system:String x:Key="plugin_explorer_Index_Search_Engine">Moteur de recherche de l'index</system:String>
     <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Ouvrir l'option d'index de Windows</system:String>
+    <system:String x:Key="plugin_explorer_Excluded_File_Types">Types de fichiers exclus (séparés par des virgules)</system:String>
+    <system:String x:Key="plugin_explorer_Excluded_File_Types_Tooltip">Par exemple : exe,jpg,png</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results">Résultats maximums</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results_Tooltip">Le nombre maximum de résultats demandés au moteur de recherche actif</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">Explorateur</system:String>
@@ -70,17 +81,26 @@
     <!--  Plugin Tooltip  -->
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Entrée pour ouvrir le répertoire</system:String>
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Entrée pour ouvrir le dossier contenant</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info">{0}{4} Taille : {1}{4}Date de création : {2}{4}Date de modification : {3}</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_unknown">Inconnu</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_volume">{0}{3}Espace libre : {1}{3}Taille totale : {2}</system:String>
 
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">Copier le chemin</system:String>
     <system:String x:Key="plugin_explorer_copypath_subtitle">Copier le chemin de l'élément actuel dans le presse-papiers</system:String>
+    <system:String x:Key="plugin_explorer_copyname">Copier le nom</system:String>
+    <system:String x:Key="plugin_explorer_copyname_subtitle">Copier le nom de l'élément actuel dans le presse-papiers</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">Copier</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">Copier le fichier actuel dans le presse-papiers</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">Copier le dossier actuel dans le presse-papiers</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder">Supprimer</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Supprimer définitivement le fichier actuel</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Supprimer définitivement le dossier actuel</system:String>
-    <system:String x:Key="plugin_explorer_path">Chemin :</system:String>
+    <system:String x:Key="plugin_explorer_name">Nom</system:String>
+    <system:String x:Key="plugin_explorer_type">Type</system:String>
+    <system:String x:Key="plugin_explorer_path">Chemin</system:String>
+    <system:String x:Key="plugin_explorer_file">Fichier</system:String>
+    <system:String x:Key="plugin_explorer_folder">Dossier</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Supprimer la sélection</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Exécuter en tant qu'utilisateur différent</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Exécuter le programme sélectionné en utilisant un autre compte d'utilisateur</system:String>
@@ -139,6 +159,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Avertissement : Il ne s'agit pas d'une option de tri rapide, les recherches peuvent être lentes.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Recherche du chemin complet</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Activer le nombre d'exécutions de fichiers/dossiers</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Cliquez pour lancer ou installer Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Installation d'Everything</system:String>
@@ -150,9 +171,20 @@
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Voulez-vous activer la recherche de contenu pour Everything ?</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">Il peut être très lent sans index (qui n'est supporté que dans Everything v1.5+).</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_everything_not_found">Impossible de trouver Everything.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_install_issue">Impossible d'installer Everything, veuillez l'installer manuellement</system:String>
+
     <!--  Native Context Menu  -->
-    <system:String x:Key="plugin_explorer_native_context_menu_header">Native Context Menu</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Display native context menu (experimental)</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Below you can specify items you want to include in the context menu, they can be partial (e.g. 'pen wit') or complete ('Open with').</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Below you can specify items you want to exclude from context menu, they can be partial (e.g. 'pen wit') or complete ('Open with')</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_header">Menu contextuel natif</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Afficher le menu contextuel natif (expérimental)</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Ci-dessous, vous pouvez spécifier les éléments que vous souhaitez inclure dans le menu contextuel. Ils peuvent être partiels ('pen wit') ou complets ('Ouvrir avec').</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Vous pouvez spécifier ci-dessous les éléments que vous souhaitez exclure du menu contextuel. Ces éléments peuvent être partiels (par exemple, &quot;pen wit&quot;) ou complets (&quot;Ouvrir avec&quot;).</system:String>
+
+    <!--  Preview Info  -->
+    <system:String x:Key="Today">Aujourd’hui</system:String>
+    <system:String x:Key="DaysAgo">Il y a {0} jours</system:String>
+    <system:String x:Key="OneMonthAgo">il y a 1 mois</system:String>
+    <system:String x:Key="MonthsAgo">Il y a {0} mois</system:String>
+    <system:String x:Key="OneYearAgo">il y a 1 an</system:String>
+    <system:String x:Key="YearsAgo">Il y a {0} ans</system:String>
 </ResourceDictionary>

@@ -2,24 +2,21 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
-using System.Linq;
 using Flow.Launcher.Plugin.Explorer.Helper;
-using MessageBox = System.Windows.Forms.MessageBox;
-using MessageBoxIcon = System.Windows.Forms.MessageBoxIcon;
-using MessageBoxButton = System.Windows.Forms.MessageBoxButtons;
-using DialogResult = System.Windows.Forms.DialogResult;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
     internal class ContextMenu : IContextMenu
     {
+        private static readonly string ClassName = nameof(ContextMenu);
+
         private PluginInitContext Context { get; set; }
 
         private Settings Settings { get; set; }
@@ -78,7 +75,9 @@ namespace Flow.Launcher.Plugin.Explorer
                         {
                             Settings.QuickAccessLinks.Add(new AccessLink
                             {
-                                Path = record.FullPath, Type = record.Type
+                                Name = record.FullPath.GetPathName(),
+                                Path = record.FullPath,
+                                Type = record.Type
                             });
 
                             Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_addfilefoldersuccess"),
@@ -145,6 +144,29 @@ namespace Flow.Launcher.Plugin.Explorer
 
                 contextMenus.Add(new Result
                 {
+                    Title = Context.API.GetTranslation("plugin_explorer_copyname"),
+                    SubTitle = Context.API.GetTranslation("plugin_explorer_copyname_subtitle"),
+                    Action = _ =>
+                    {
+                        try
+                        {
+                            Context.API.CopyToClipboard(Path.GetFileName(record.FullPath));
+                            return true;
+                        }
+                        catch (Exception e)
+                        {
+                            var message = "Fail to set text in clipboard";
+                            LogException(message, e);
+                            Context.API.ShowMsg(message);
+                            return false;
+                        }
+                    },
+                    IcoPath = Constants.CopyImagePath,
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue8c8")
+                });
+
+                contextMenus.Add(new Result
+                {
                     Title = Context.API.GetTranslation("plugin_explorer_copyfilefolder"),
                     SubTitle = isFile ? Context.API.GetTranslation("plugin_explorer_copyfile_subtitle") : Context.API.GetTranslation("plugin_explorer_copyfolder_subtitle"),
                     Action = _ =>
@@ -177,12 +199,12 @@ namespace Flow.Launcher.Plugin.Explorer
                         {
                             try
                             {
-                                if (MessageBox.Show(
+                                if (Context.API.ShowMsgBox(
                                         string.Format(Context.API.GetTranslation("plugin_explorer_delete_folder_link"), record.FullPath),
-                                        string.Empty,
-                                        MessageBoxButton.YesNo,
-                                        MessageBoxIcon.Warning)
-                                    == DialogResult.No)
+                                        Context.API.GetTranslation("plugin_explorer_deletefilefolder"),
+                                        MessageBoxButton.OKCancel,
+                                        MessageBoxImage.Warning)
+                                    == MessageBoxResult.Cancel)
                                     return false;
 
                                 if (isFile)
@@ -246,6 +268,7 @@ namespace Flow.Launcher.Plugin.Explorer
                                 var name = "Plugin: Folder";
                                 var message = $"File not found: {e.Message}";
                                 Context.API.ShowMsgError(name, message);
+                                return false;
                             }
 
                             return true;
@@ -397,7 +420,7 @@ namespace Flow.Launcher.Plugin.Explorer
             {
                 Title = Context.API.GetTranslation("plugin_explorer_excludefromindexsearch"),
                 SubTitle = Context.API.GetTranslation("plugin_explorer_path") + " " + record.FullPath,
-                Action = _ =>
+                Action = c_ =>
                 {
                     if (!Settings.IndexSearchExcludedSubdirectoryPaths.Any(x => string.Equals(x.Path, record.FullPath, StringComparison.OrdinalIgnoreCase)))
                         Settings.IndexSearchExcludedSubdirectoryPaths.Add(new AccessLink
@@ -405,7 +428,7 @@ namespace Flow.Launcher.Plugin.Explorer
                             Path = record.FullPath
                         });
 
-                    Task.Run(() =>
+                    _ = Task.Run(() =>
                     {
                         Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_excludedfromindexsearch_msg"),
                             Context.API.GetTranslation("plugin_explorer_path") +
@@ -473,22 +496,16 @@ namespace Flow.Launcher.Plugin.Explorer
 
         private void LogException(string message, Exception e)
         {
-            Log.Exception($"|Flow.Launcher.Plugin.Folder.ContextMenu|{message}", e);
+            Context.API.LogException(ClassName, message, e);
         }
 
-        private bool CanRunAsDifferentUser(string path)
+        private static bool CanRunAsDifferentUser(string path)
         {
-            switch (Path.GetExtension(path))
+            return Path.GetExtension(path) switch
             {
-                case ".exe":
-                case ".bat":
-                case ".msi":
-                    return true;
-
-                default:
-                    return false;
-
-            }
+                ".exe" or ".bat" or ".msi" => true,
+                _ => false,
+            };
         }
     }
 }

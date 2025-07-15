@@ -1,0 +1,18 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <system:String x:Key="flowlauncher_plugin_cmd_relace_winr">החלף את Win+R</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_close_cmd_after_press">סגור את שורת הפקודה לאחר לחיצה על מקש כלשהו</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">לחץ על מקש כלשהו כדי לסגור חלון זה...</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">אל תסגור את שורת הפקודה לאחר ביצוע הפקודה</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">הפעל תמיד כמנהל</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_use_windows_terminal">השתמש ב-Windows Terminal</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">הפעל כמשתמש אחר</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">שורת פקודה</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">מאפשר להריץ פקודות מערכת מתוך Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_cmd_has_been_executed_times">פקודה זו בוצעה {0} פעמים</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_execute_through_shell">בצע פקודה דרך מעטפת הפקודות</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">הפעל כמנהל</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_copy">העתק את הפקודה</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_history">הצג רק את מספר הפקודות הנפוצות ביותר:</system:String>
+</ResourceDictionary>

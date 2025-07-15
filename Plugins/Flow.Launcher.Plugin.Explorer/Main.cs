@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
 using Flow.Launcher.Plugin.Explorer.Exceptions;
 
@@ -18,7 +17,7 @@ namespace Flow.Launcher.Plugin.Explorer
     {
         internal static PluginInitContext Context { get; set; }
 
-        internal Settings Settings;
+        internal static Settings Settings { get; set; }
 
         private SettingsViewModel viewModel;
 
@@ -36,6 +35,7 @@ namespace Flow.Launcher.Plugin.Explorer
             Context = context;
 
             Settings = context.API.LoadSettingJsonStorage<Settings>();
+            FillQuickAccessLinkNames();
 
             viewModel = new SettingsViewModel(context, Settings);
 
@@ -95,6 +95,18 @@ namespace Flow.Launcher.Plugin.Explorer
         public string GetTranslatedPluginDescription()
         {
             return Context.API.GetTranslation("plugin_explorer_plugin_description");
+        }
+
+        private static void FillQuickAccessLinkNames()
+        {
+            // Legacy version does not have names for quick access links, so we fill them with the path name.
+            foreach (var link in Settings.QuickAccessLinks)
+            {
+                if (string.IsNullOrWhiteSpace(link.Name))
+                {
+                    link.Name = link.Path.GetPathName();
+                }
+            }
         }
     }
 }

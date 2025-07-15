@@ -1,19 +1,17 @@
 name: Assign PR to creator
 
-# Due to GitHub token limitation, only able to assign org members not authors from forks.
-# https://github.com/thomaseizinger/assign-pr-creator-action/issues/3
-
 on:
-  pull_request:
+  pull_request_target:
     types: [opened]
     branches-ignore:
       - l10n_dev
+
+permissions:
+  pull-requests: write
 
 jobs:
   automation:
     runs-on: ubuntu-latest
     steps:
     - name: Assign PR to creator
-      uses: thomaseizinger/assign-pr-creator-action@v1.0.0
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
+      uses: toshimaru/auto-author-assign@v2.1.1

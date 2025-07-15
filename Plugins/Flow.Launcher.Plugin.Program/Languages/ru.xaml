@@ -34,6 +34,8 @@
     <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">Hides programs with common uninstaller names, such as unins000.exe</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">Поиск в описании программы</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow будет искать в описании программ</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp">Hide duplicated apps</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp_tooltip">Hide duplicated Win32 programs that are already in the UWP list</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Суффиксы</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">Макс. глубина</system:String>
 
@@ -44,6 +46,8 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">Пожалуйста, выберите источник программы</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">Вы уверены, что хотите удалить выбранные источники программ?</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_not_user_added">Please select program sources that are not added by you</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_user_added">Please select program sources that are added by you</system:String>
     <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Другой источник программы с таким же расположением уже существует.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Источник программы</system:String>
@@ -72,7 +76,7 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Запустить от имени другого пользователя</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Запустить от имени администратора</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Открыть содержащую папку</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">Отключить отображение этой программы</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">Hide</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Open target folder</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Программа</system:String>
@@ -82,7 +86,7 @@
 
     <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Настраиваемый проводник</system:String>
     <system:String x:Key="flowlauncher_plugin_program_args">Аргументы</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">Вы можете настроить проводник, используемый для открытия папки контейнера, введя переменную окружения проводника, который вы хотите использовать. Будет полезно использовать командную строку для проверки доступности переменной среды.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">You can customize the explorer used for opening the container folder by inputing the Environmental Variable of the explorer you want to use. It will be useful to use CMD to test whether the Environmental Variable is available.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Введите настраиваемые аргументы, которые вы хотите добавить для вашего настраиваемого проводника. %s для родительского каталога, %f для полного пути (работает только для win32). Подробности смотрите на сайте проводника.</system:String>
 
     <!--  Dialogs  -->

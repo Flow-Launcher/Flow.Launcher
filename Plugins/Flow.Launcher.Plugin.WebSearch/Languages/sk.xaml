@@ -17,7 +17,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Aktivačný príkaz</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">Adresa URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">Hľadať</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Použiť automatické dokončovanie výrazov vyhľadávania:</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Použiť automatické dokončovanie výrazov vyhľadávania</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Automatické dokončovanie údajov z:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Vyberte webové vyhľadávanie</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Naozaj chcete odstrániť {0}?</system:String>
@@ -29,7 +29,8 @@
         Všeobecný vzorec pre vyhľadávanie na Netflix je teda https://www.netflix.com/search?q={q}
     </system:String>
 
-
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">Kopírovať URL</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">Kopírovať URL vyhľadávanie do schránky</system:String>
 
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">Názov</system:String>

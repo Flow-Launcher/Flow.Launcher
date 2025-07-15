@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using System.Text.Json.Serialization;
 using System.Windows;
+using System.Windows.Media;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.ViewModel;
@@ -13,12 +15,62 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 {
     public class Settings : BaseModel, IHotkeySettings
     {
-        private string language = "en";
-        private string _theme = Constant.DefaultTheme;
+        private FlowLauncherJsonStorage<Settings> _storage;
+        private StringMatcher _stringMatcher = null;
+
+        public void SetStorage(FlowLauncherJsonStorage<Settings> storage)
+        {
+            _storage = storage;
+        }
+
+        public void Initialize()
+        {
+            // Initialize dependency injection instances after Ioc.Default is created
+            _stringMatcher = Ioc.Default.GetRequiredService<StringMatcher>();
+
+            // Initialize application resources after application is created
+            var settingWindowFont = new FontFamily(SettingWindowFont);
+            Application.Current.Resources["SettingWindowFont"] = settingWindowFont;
+            Application.Current.Resources["ContentControlThemeFontFamily"] = settingWindowFont;
+        }
+
+        public void Save()
+        {
+            _storage.Save();
+        }
+
         public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
-        public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
+
+        private string _openResultModifiers = KeyConstant.Alt;
+        public string OpenResultModifiers
+        {
+            get => _openResultModifiers;
+            set
+            {
+                if (_openResultModifiers != value)
+                {
+                    _openResultModifiers = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public string ColorScheme { get; set; } = "System";
-        public bool ShowOpenResultHotkey { get; set; } = true;
+
+        private bool _showOpenResultHotkey = true;
+        public bool ShowOpenResultHotkey
+        {
+            get => _showOpenResultHotkey;
+            set
+            {
+                if (_showOpenResultHotkey != value)
+                {
+                    _showOpenResultHotkey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public double WindowSize { get; set; } = 580;
         public string PreviewHotkey { get; set; } = $"F1";
         public string AutoCompleteHotkey { get; set; } = $"{KeyConstant.Ctrl} + Tab";
@@ -31,47 +83,56 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string SelectPrevPageHotkey { get; set; } = $"PageDown";
         public string OpenContextMenuHotkey { get; set; } = $"Ctrl+O";
         public string SettingWindowHotkey { get; set; } = $"Ctrl+I";
+        public string OpenHistoryHotkey { get; set; } = $"Ctrl+H";
         public string CycleHistoryUpHotkey { get; set; } = $"{KeyConstant.Alt} + Up";
         public string CycleHistoryDownHotkey { get; set; } = $"{KeyConstant.Alt} + Down";
 
+        private string _language = Constant.SystemLanguageCode;
         public string Language
         {
-            get => language;
+            get => _language;
             set
             {
-                language = value;
-                OnPropertyChanged();
+                if (_language != value)
+                {
+                    _language = value;
+                    OnPropertyChanged();
+                }
             }
         }
+        private string _theme = Constant.DefaultTheme;
         public string Theme
         {
             get => _theme;
             set
             {
-                if (value == _theme)
-                    return;
-                _theme = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(MaxResultsToShow));
+                if (_theme != value)
+                {
+                    _theme = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(MaxResultsToShow));
+                }
             }
         }
         public bool UseDropShadowEffect { get; set; } = true;
+        public BackdropTypes BackdropType { get; set; } = BackdropTypes.None;
+        public string ReleaseNotesVersion { get; set; } = string.Empty;
 
         /* Appearance Settings. It should be separated from the setting later.*/
         public double WindowHeightSize { get; set; } = 42;
         public double ItemHeightSize { get; set; } = 58;
-        public double QueryBoxFontSize { get; set; } = 20;
+        public double QueryBoxFontSize { get; set; } = 16;
         public double ResultItemFontSize { get; set; } = 16;
-        public double ResultSubItemFontSize { get; set; } = 13; 
-        public string QueryBoxFont { get; set; } = FontFamily.GenericSansSerif.Name;
+        public double ResultSubItemFontSize { get; set; } = 13;
+        public string QueryBoxFont { get; set; } = Win32Helper.GetSystemDefaultFont();
         public string QueryBoxFontStyle { get; set; }
         public string QueryBoxFontWeight { get; set; }
         public string QueryBoxFontStretch { get; set; }
-        public string ResultFont { get; set; } = FontFamily.GenericSansSerif.Name;
+        public string ResultFont { get; set; } = Win32Helper.GetSystemDefaultFont();
         public string ResultFontStyle { get; set; }
         public string ResultFontWeight { get; set; }
         public string ResultFontStretch { get; set; }
-        public string ResultSubFont { get; set; } = FontFamily.GenericSansSerif.Name;
+        public string ResultSubFont { get; set; } = Win32Helper.GetSystemDefaultFont();
         public string ResultSubFontStyle { get; set; }
         public string ResultSubFontWeight { get; set; }
         public string ResultSubFontStretch { get; set; }
@@ -79,6 +140,27 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool UseAnimation { get; set; } = true;
         public bool UseSound { get; set; } = true;
         public double SoundVolume { get; set; } = 50;
+        public bool ShowBadges { get; set; } = false;
+        public bool ShowBadgesGlobalOnly { get; set; } = false;
+
+        private string _settingWindowFont { get; set; } = Win32Helper.GetSystemDefaultFont(false);
+        public string SettingWindowFont
+        {
+            get => _settingWindowFont;
+            set
+            {
+                if (_settingWindowFont != value)
+                {
+                    _settingWindowFont = value;
+                    OnPropertyChanged();
+                    if (Application.Current != null)
+                    {
+                        Application.Current.Resources["SettingWindowFont"] = new FontFamily(value);
+                        Application.Current.Resources["ContentControlThemeFontFamily"] = new FontFamily(value);
+                    }
+                }
+            }
+        }
 
         public bool UseClock { get; set; } = true;
         public bool UseDate { get; set; } = false;
@@ -90,7 +172,68 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public double SettingWindowHeight { get; set; } = 700;
         public double? SettingWindowTop { get; set; } = null;
         public double? SettingWindowLeft { get; set; } = null;
-        public System.Windows.WindowState SettingWindowState { get; set; } = WindowState.Normal;
+        public WindowState SettingWindowState { get; set; } = WindowState.Normal;
+
+        private bool _showPlaceholder { get; set; } = true;
+        public bool ShowPlaceholder
+        {
+            get => _showPlaceholder;
+            set
+            {
+                if (_showPlaceholder != value)
+                {
+                    _showPlaceholder = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        private string _placeholderText { get; set; } = string.Empty;
+        public string PlaceholderText
+        {
+            get => _placeholderText;
+            set
+            {
+                if (_placeholderText != value)
+                {
+                    _placeholderText = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private bool _showHomePage { get; set; } = true;
+        public bool ShowHomePage
+        {
+            get => _showHomePage;
+            set
+            {
+                if (_showHomePage != value)
+                {
+                    _showHomePage = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private bool _showHistoryResultsForHomePage = false;
+        public bool ShowHistoryResultsForHomePage
+        {
+            get => _showHistoryResultsForHomePage;
+            set
+            {
+                if (_showHistoryResultsForHomePage != value)
+                {
+                    _showHistoryResultsForHomePage = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public int MaxHistoryResultsToShowForHomePage { get; set; } = 5;
+
+        public bool AutoRestartAfterChanging { get; set; } = false;
+        public bool ShowUnknownSourceWarning { get; set; } = true;
+        public bool AutoUpdatePlugins { get; set; } = true;
 
         public int CustomExplorerIndex { get; set; } = 0;
 
@@ -129,8 +272,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             new()
             {
                 Name = "Files",
-                Path = "Files",
-                DirectoryArgument = "-select \"%d\"",
+                Path = "Files-Stable",
+                DirectoryArgument = "\"%d\"",
                 FileArgument = "-select \"%f\""
             }
         };
@@ -180,14 +323,58 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         };
 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public LOGLEVEL LogLevel { get; set; } = LOGLEVEL.INFO;
 
         /// <summary>
         /// when false Alphabet static service will always return empty results
         /// </summary>
-        public bool ShouldUsePinyin { get; set; } = false;
+        private bool _useAlphabet = true;
+        public bool ShouldUsePinyin
+        {
+            get => _useAlphabet;
+            set
+            {
+                if (_useAlphabet != value)
+                {
+                    _useAlphabet = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private bool _useDoublePinyin = false;
+        public bool UseDoublePinyin
+        {
+            get => _useDoublePinyin;
+            set
+            {
+                if (_useDoublePinyin != value)
+                {
+                    _useDoublePinyin = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private DoublePinyinSchemas _doublePinyinSchema = DoublePinyinSchemas.XiaoHe;
+
+        [JsonInclude, JsonConverter(typeof(JsonStringEnumConverter))]
+        public DoublePinyinSchemas DoublePinyinSchema
+        {
+            get => _doublePinyinSchema;
+            set
+            {
+                if (_doublePinyinSchema != value)
+                {
+                    _doublePinyinSchema = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public bool AlwaysPreview { get; set; } = false;
-        
+
         public bool AlwaysStartEn { get; set; } = false;
 
         private SearchPrecisionScore _querySearchPrecision = SearchPrecisionScore.Regular;
@@ -197,9 +384,12 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             get => _querySearchPrecision;
             set
             {
-                _querySearchPrecision = value;
-                if (StringMatcher.Instance != null)
-                    StringMatcher.Instance.UserSettingSearchPrecision = value;
+                if (_querySearchPrecision != value)
+                {
+                    _querySearchPrecision = value;
+                    if (_stringMatcher != null)
+                        _stringMatcher.UserSettingSearchPrecision = value;
+                }
             }
         }
 
@@ -207,6 +397,10 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public double WindowLeft { get; set; }
         public double WindowTop { get; set; }
+        public double PreviousScreenWidth { get; set; }
+        public double PreviousScreenHeight { get; set; }
+        public double PreviousDpiX { get; set; }
+        public double PreviousDpiY { get; set; }
 
         /// <summary>
         /// Custom left position on selected monitor
@@ -218,19 +412,35 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /// </summary>
         public double CustomWindowTop { get; set; } = 0;
 
-        public bool KeepMaxResults { get; set; } = false;
-        public int MaxResultsToShow { get; set; } = 5;
-        public int ActivateTimes { get; set; }
+        /// <summary>
+        /// Fixed window size
+        /// </summary>
+        private bool _keepMaxResults { get; set; } = false;
+        public bool KeepMaxResults
+        {
+            get => _keepMaxResults;
+            set
+            {
+                if (_keepMaxResults != value)
+                {
+                    _keepMaxResults = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
+        public int MaxResultsToShow { get; set; } = 5;
+
+        public int ActivateTimes { get; set; }
 
         public ObservableCollection<CustomPluginHotkey> CustomPluginHotkeys { get; set; } = new ObservableCollection<CustomPluginHotkey>();
 
         public ObservableCollection<CustomShortcutModel> CustomShortcuts { get; set; } = new ObservableCollection<CustomShortcutModel>();
 
         [JsonIgnore]
-        public ObservableCollection<BuiltinShortcutModel> BuiltinShortcuts { get; set; } = new()
+        public ObservableCollection<BaseBuiltinShortcutModel> BuiltinShortcuts { get; set; } = new()
         {
-            new BuiltinShortcutModel("{clipboard}", "shortcut_clipboard_description", Clipboard.GetText),
+            new AsyncBuiltinShortcutModel("{clipboard}", "shortcut_clipboard_description", () => Win32Helper.StartSTATaskAsync(Clipboard.GetText)),
             new BuiltinShortcutModel("{active_explorer_path}", "shortcut_active_explorer_path", FileExplorerHelper.GetActiveExplorerPath)
         };
 
@@ -238,19 +448,40 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool EnableUpdateLog { get; set; }
 
         public bool StartFlowLauncherOnSystemStartup { get; set; } = false;
+        public bool UseLogonTaskForStartup { get; set; } = false;
         public bool HideOnStartup { get; set; } = true;
-        bool _hideNotifyIcon { get; set; }
+        private bool _hideNotifyIcon;
         public bool HideNotifyIcon
         {
-            get { return _hideNotifyIcon; }
+            get => _hideNotifyIcon;
             set
             {
-                _hideNotifyIcon = value;
-                OnPropertyChanged();
+                if (_hideNotifyIcon != value)
+                {
+                    _hideNotifyIcon = value;
+                    OnPropertyChanged();
+                }
             }
         }
         public bool LeaveCmdOpen { get; set; }
         public bool HideWhenDeactivated { get; set; } = true;
+
+        private bool _showAtTopmost = false;
+        public bool ShowAtTopmost
+        {
+            get => _showAtTopmost;
+            set
+            {
+                if (_showAtTopmost != value)
+                {
+                    _showAtTopmost = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool SearchQueryResultsWithDelay { get; set; }
+        public int SearchDelayTime { get; set; } = 150;
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public SearchWindowScreens SearchWindowScreen { get; set; } = SearchWindowScreens.Cursor;
@@ -274,7 +505,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         [JsonIgnore]
         public bool WMPInstalled { get; set; } = true;
 
-
         // This needs to be loaded last by staying at the bottom
         public PluginsSettings PluginSettings { get; set; } = new PluginsSettings();
 
@@ -285,30 +515,32 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             {
                 var list = FixedHotkeys();
 
-                // Customizeable hotkeys
-                if(!string.IsNullOrEmpty(Hotkey))
+                // Customizable hotkeys
+                if (!string.IsNullOrEmpty(Hotkey))
                     list.Add(new(Hotkey, "flowlauncherHotkey", () => Hotkey = ""));
-                if(!string.IsNullOrEmpty(PreviewHotkey))
+                if (!string.IsNullOrEmpty(PreviewHotkey))
                     list.Add(new(PreviewHotkey, "previewHotkey", () => PreviewHotkey = ""));
-                if(!string.IsNullOrEmpty(AutoCompleteHotkey))
+                if (!string.IsNullOrEmpty(AutoCompleteHotkey))
                     list.Add(new(AutoCompleteHotkey, "autoCompleteHotkey", () => AutoCompleteHotkey = ""));
-                if(!string.IsNullOrEmpty(AutoCompleteHotkey2))
+                if (!string.IsNullOrEmpty(AutoCompleteHotkey2))
                     list.Add(new(AutoCompleteHotkey2, "autoCompleteHotkey", () => AutoCompleteHotkey2 = ""));
-                if(!string.IsNullOrEmpty(SelectNextItemHotkey))
+                if (!string.IsNullOrEmpty(SelectNextItemHotkey))
                     list.Add(new(SelectNextItemHotkey, "SelectNextItemHotkey", () => SelectNextItemHotkey = ""));
-                if(!string.IsNullOrEmpty(SelectNextItemHotkey2))
+                if (!string.IsNullOrEmpty(SelectNextItemHotkey2))
                     list.Add(new(SelectNextItemHotkey2, "SelectNextItemHotkey", () => SelectNextItemHotkey2 = ""));
-                if(!string.IsNullOrEmpty(SelectPrevItemHotkey))
+                if (!string.IsNullOrEmpty(SelectPrevItemHotkey))
                     list.Add(new(SelectPrevItemHotkey, "SelectPrevItemHotkey", () => SelectPrevItemHotkey = ""));
-                if(!string.IsNullOrEmpty(SelectPrevItemHotkey2))
+                if (!string.IsNullOrEmpty(SelectPrevItemHotkey2))
                     list.Add(new(SelectPrevItemHotkey2, "SelectPrevItemHotkey", () => SelectPrevItemHotkey2 = ""));
-                if(!string.IsNullOrEmpty(SettingWindowHotkey))
+                if (!string.IsNullOrEmpty(SettingWindowHotkey))
                     list.Add(new(SettingWindowHotkey, "SettingWindowHotkey", () => SettingWindowHotkey = ""));
-                if(!string.IsNullOrEmpty(OpenContextMenuHotkey))
+                if (!string.IsNullOrEmpty(OpenHistoryHotkey))
+                    list.Add(new(OpenHistoryHotkey, "OpenHistoryHotkey", () => OpenHistoryHotkey = ""));
+                if (!string.IsNullOrEmpty(OpenContextMenuHotkey))
                     list.Add(new(OpenContextMenuHotkey, "OpenContextMenuHotkey", () => OpenContextMenuHotkey = ""));
-                if(!string.IsNullOrEmpty(SelectNextPageHotkey))
+                if (!string.IsNullOrEmpty(SelectNextPageHotkey))
                     list.Add(new(SelectNextPageHotkey, "SelectNextPageHotkey", () => SelectNextPageHotkey = ""));
-                if(!string.IsNullOrEmpty(SelectPrevPageHotkey))
+                if (!string.IsNullOrEmpty(SelectPrevPageHotkey))
                     list.Add(new(SelectPrevPageHotkey, "SelectPrevPageHotkey", () => SelectPrevPageHotkey = ""));
                 if (!string.IsNullOrEmpty(CycleHistoryUpHotkey))
                     list.Add(new(CycleHistoryUpHotkey, "CycleHistoryUpHotkey", () => CycleHistoryUpHotkey = ""));
@@ -339,7 +571,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 new("Alt+Home", "HotkeySelectFirstResult"),
                 new("Alt+End", "HotkeySelectLastResult"),
                 new("Ctrl+R", "HotkeyRequery"),
-                new("Ctrl+H", "ToggleHistoryHotkey"),
                 new("Ctrl+OemCloseBrackets", "QuickWidthHotkey"),
                 new("Ctrl+OemOpenBrackets", "QuickWidthHotkey"),
                 new("Ctrl+OemPlus", "QuickHeightHotkey"),
@@ -370,7 +601,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
     {
         Selected,
         Empty,
-        Preserved
+        Preserved,
+        ActionKeywordPreserved,
+        ActionKeywordSelected
     }
 
     public enum ColorSchemes
@@ -404,5 +637,26 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         Medium,
         Fast,
         Custom
+    }
+
+    public enum BackdropTypes
+    {
+        None,
+        Acrylic,
+        Mica,
+        MicaAlt
+    }
+
+    public enum DoublePinyinSchemas
+    {
+        XiaoHe,
+        ZiRanMa,
+        WeiRuan,
+        ZhiNengABC,
+        ZiGuangPinYin,
+        PinYinJiaJia,
+        XingKongJianDao,
+        DaNiu,
+        XiaoLang
     }
 }

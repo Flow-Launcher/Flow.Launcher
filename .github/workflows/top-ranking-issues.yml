@@ -1,0 +1,25 @@
+name: Top-Ranking Issues
+on:
+  schedule:
+    - cron: '0 0 */1 * *'
+  workflow_dispatch:
+
+jobs:
+  ShowAndLabelTopIssues:
+    name: Display and label top issues.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Top Issues action              
+        uses: rickstaa/top-issues-action@v1.3.101
+        env:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          dashboard: true
+          dashboard_show_total_reactions: true
+          top_list_size: 10
+          top_features: true
+          top_bugs: true
+          dashboard_title: Top-Ranking Issues 📈
+          dashboard_label: ⭐ Dashboard
+          hide_dashboard_footer: true
+          top_issues: false

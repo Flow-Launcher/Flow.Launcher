@@ -1,0 +1,10 @@
+﻿SHGetLocalizedName
+LoadString
+LoadLibraryEx
+FreeLibrary
+ExpandEnvironmentStrings
+S_OK
+SLGP_FLAGS
+WIN32_FIND_DATAW
+SLR_FLAGS
+IShellLinkW

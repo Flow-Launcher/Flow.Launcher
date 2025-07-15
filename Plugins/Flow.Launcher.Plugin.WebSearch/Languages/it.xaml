@@ -17,7 +17,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Parola Chiave</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">Cerca</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Usa Autocompletamento Ricerca:</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Use Search Query Autocomplete</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Autocompleta i dati da:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Seleziona una ricerca web</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Sei sicuro di voler eliminare {0}?</system:String>
@@ -29,7 +29,8 @@
         Così la formula generica per una ricerca su Netflix è https://www.netflix.com/search?q={q}
     </system:String>
 
-
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">Copy URL</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">Copy search URL to clipboard</system:String>
 
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">Titolo</system:String>
