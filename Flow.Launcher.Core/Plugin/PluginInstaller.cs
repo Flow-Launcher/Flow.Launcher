@@ -281,7 +281,7 @@ public static class PluginInstaller
     /// <summary>
     /// Updates the plugin to the latest version available from its source.
     /// </summary>
-    /// <param name="silentUpdate">If true, do not show any messages when there is no udpate available.</param>
+    /// <param name="silentUpdate">If true, do not show any messages when there is no update available.</param>
     /// <param name="usePrimaryUrlOnly">If true, only use the primary URL for updates.</param>
     /// <param name="token">Cancellation token to cancel the update operation.</param>
     /// <returns></returns>
