@@ -169,7 +169,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed_descending">Date Accessed &#x2193;</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run_ascending">Date Run &#x2191;</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run_descending">Date Run &#x2193;</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_ascending">¡ü</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_ascending">&#x2191;</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">&#x2193;</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Warning: This is not a Fast Sort option, searches may be slow</system:String>
 
