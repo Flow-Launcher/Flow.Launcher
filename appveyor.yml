@@ -25,7 +25,7 @@ assembly_info:
   assembly_informational_version: $(flowVersion)
 
 image: Visual Studio 2022
-platform: Any CPU
+platform: ARM64
 configuration: Release
 before_build:
 - ps: |
@@ -41,6 +41,7 @@ before_build:
 build:
   project: Flow.Launcher.sln
   verbosity: minimal
+  
 test_script:
   - dotnet test --no-build -c Release
 after_test:

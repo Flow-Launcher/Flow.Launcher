@@ -141,6 +141,7 @@
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Failed to load Everything SDK</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">Warning: Everything service is not running</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_arm64_not_supported">ARM64 is not supported for everything.</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_query_error">Error while querying Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by">Sort By</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_name">Name</system:String>

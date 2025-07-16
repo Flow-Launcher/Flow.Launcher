@@ -42,11 +42,13 @@ namespace Flow.Launcher.Plugin.Explorer
             contextMenu = new ContextMenu(Context, Settings, viewModel);
             searchManager = new SearchManager(Settings, Context);
             ResultManager.Init(Context, Settings);
-            
+
             SortOptionTranslationHelper.API = context.API;
 
+#if !ARM64
             EverythingApiDllImport.Load(Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "EverythingSDK",
                 Environment.Is64BitProcess ? "x64" : "x86"));
+#endif
             return Task.CompletedTask;
         }
 
@@ -75,7 +77,7 @@ namespace Flow.Launcher.Plugin.Explorer
                         IcoPath = e is EngineNotAvailableException { ErrorIcon: { } iconPath }
                             ? iconPath
                             : Constants.GeneralSearchErrorImagePath,
-                        AsyncAction = e is EngineNotAvailableException {Action: { } action}
+                        AsyncAction = e is EngineNotAvailableException { Action: { } action }
                             ? action
                             : _ =>
                             {
