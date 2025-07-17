@@ -5,6 +5,8 @@
     <system:String x:Key="plugin_explorer_make_selection_warning">Por favor haga una selección primero</system:String>
     <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Por favor, seleccione una ruta de carpeta.</system:String>
     <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Por favor, elija un nombre o ruta de carpeta diferente.</system:String>
+    <system:String x:Key="plugin_explorer_delete_quick_access_link">Are you sure you want to delete this quick access link?</system:String>
+    <system:String x:Key="plugin_explorer_delete_index_search_excluded_path">Are you sure you want to delete this index search excluded path?</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Por favor, seleccione un enlace de carpeta</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">¿Está seguro de que desea eliminar {0}?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">¿Está seguro de que desea eliminar permanentemente este archivo?</system:String>
