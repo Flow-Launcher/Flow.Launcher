@@ -105,7 +105,7 @@
     <system:String x:Key="ShouldUsePinyin">Vyhľadávanie pomocou pchin-jin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Umožňuje vyhľadávanie pomocou pchin-jin. Pchin-jin je systém zápisu čínskeho jazyka pomocou písmen latinky.</system:String>
     <system:String x:Key="ShouldUseDoublePinyin">Použiť Double Pinyin</system:String>
-    <system:String x:Key="ShouldUseDoublePinyinToolTip">Use Double Pinyin instead of Full Pinyin to search.</system:String>
+    <system:String x:Key="ShouldUseDoublePinyinToolTip">Na vyhľadávanie použiť namiesto úplného Pinyinu Double Pinyin.</system:String>
     <system:String x:Key="DoublePinyinSchema">Schéma Double Pinyin</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao He</system:String>
     <system:String x:Key="DoublePinyinSchemasZiRanMa">Zi Ran Ma</system:String>
