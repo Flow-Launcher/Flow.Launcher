@@ -105,7 +105,7 @@
     <system:String x:Key="ShouldUsePinyin">חפש באמצעות Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">מאפשר חיפוש באמצעות Pinyin, מערכת הכתיבה הסטנדרטית לתרגום סינית.</system:String>
     <system:String x:Key="ShouldUseDoublePinyin">Use Double Pinyin</system:String>
-    <system:String x:Key="ShouldUseDoublePinyinToolTip">Allows using Double Pinyin to search. Double Pinyin is a variation of Pinyin that uses two characters.</system:String>
+    <system:String x:Key="ShouldUseDoublePinyinToolTip">Use Double Pinyin instead of Full Pinyin to search.</system:String>
     <system:String x:Key="DoublePinyinSchema">Double Pinyin Schema</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao He</system:String>
     <system:String x:Key="DoublePinyinSchemasZiRanMa">Zi Ran Ma</system:String>
