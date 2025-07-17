@@ -91,7 +91,7 @@
     <system:String x:Key="typingStartEn">Escrever sempre em inglês</system:String>
     <system:String x:Key="typingStartEnTooltip">Alterar, temporariamente, o método de introdução para inglês ao iniciar Flow launcher.</system:String>
     <system:String x:Key="autoUpdates">Atualização automática</system:String>
-    <system:String x:Key="autoUpdatesTooltip">Automatically check and update the app when available</system:String>
+    <system:String x:Key="autoUpdatesTooltip">Procurar atualizações da aplicação e aplicar automaticamente ao iniciar</system:String>
     <system:String x:Key="select">Selecionar</system:String>
     <system:String x:Key="hideOnStartup">Ocultar Flow Launcher ao arrancar</system:String>
     <system:String x:Key="hideOnStartupToolTip">Ocultar caixa de pesquisa na bandeja após iniciar Flow Launcher.</system:String>
@@ -155,8 +155,8 @@
     <system:String x:Key="autoRestartAfterChangingToolTip">Reiniciar Flow Launcher após instalar/desinstalar/atualizar um plugin via Loja de plugins</system:String>
     <system:String x:Key="showUnknownSourceWarning">Mostrar aviso de origem desconhecida</system:String>
     <system:String x:Key="showUnknownSourceWarningToolTip">Mostrar aviso ao instalar plugins de origens desconhecidas</system:String>
-    <system:String x:Key="autoUpdatePlugins">Auto update plugins</system:String>
-    <system:String x:Key="autoUpdatePluginsToolTip">Automatically check plugin updates and notify if there are any updates available</system:String>
+    <system:String x:Key="autoUpdatePlugins">Atualizar plugins automaticamente</system:String>
+    <system:String x:Key="autoUpdatePluginsToolTip">Procurar atualizações para plugins automaticamente e notificar se existirem</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Pesquisar plugins</system:String>
@@ -239,10 +239,10 @@
     <system:String x:Key="SelectZipFile">Selecione o ficheiro Zip</system:String>
     <system:String x:Key="installLocalPluginTooltip">Instalar plugin de um caminho local</system:String>
     <system:String x:Key="updateNoResultTitle">Não existem atualizações</system:String>
-    <system:String x:Key="updateNoResultSubtitle">Todos os plugins estão instalados</system:String>
-    <system:String x:Key="updateAllPluginsTitle">Plugin updates available</system:String>
+    <system:String x:Key="updateNoResultSubtitle">Todos os plugins estão atualizados</system:String>
+    <system:String x:Key="updateAllPluginsTitle">Existem atualizações para plugins</system:String>
     <system:String x:Key="updateAllPluginsButtonContent">Atualizar todos os plugins</system:String>
-    <system:String x:Key="checkPluginUpdatesTooltip">Check plugin updates</system:String>
+    <system:String x:Key="checkPluginUpdatesTooltip">Procurar atualizações para plugins</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Tema</system:String>
