@@ -105,7 +105,7 @@
     <system:String x:Key="ShouldUsePinyin">Pesquisar com Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Permite a utilização de Pinyin para pesquisar. Pinyin é um sistema normalizado de ortografia romanizada para tradução de mandarim.</system:String>
     <system:String x:Key="ShouldUseDoublePinyin">Utilizar Pinyin duplo</system:String>
-    <system:String x:Key="ShouldUseDoublePinyinToolTip">Use Double Pinyin instead of Full Pinyin to search.</system:String>
+    <system:String x:Key="ShouldUseDoublePinyinToolTip">Utilizar Pinyin duplo em vez de Pinyin completo para as pesquisas</system:String>
     <system:String x:Key="DoublePinyinSchema">Esquema Pinyin duplo</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao He</system:String>
     <system:String x:Key="DoublePinyinSchemasZiRanMa">Zi Ran Ma</system:String>
