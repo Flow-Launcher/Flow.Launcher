@@ -728,7 +728,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     dialog.Metadata.Disabled) continue; // Plugin is disabled
 
                 var dialogWindow = _quickSwitchDialogs[dialog];
-                if (dialogWindow.Handle == hwnd)
+                if (dialogWindow != null && dialogWindow.Handle == hwnd)
                 {
                     return dialogWindow;
                 }
