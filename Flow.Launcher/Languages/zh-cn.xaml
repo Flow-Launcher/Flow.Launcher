@@ -105,7 +105,7 @@
     <system:String x:Key="ShouldUsePinyin">使用拼音搜索</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">允许使用拼音进行搜索。</system:String>
     <system:String x:Key="ShouldUseDoublePinyin">使用双拼</system:String>
-    <system:String x:Key="ShouldUseDoublePinyinToolTip">使用双拼进行搜索。双拼使用两个字母代替全拼。</system:String>
+    <system:String x:Key="ShouldUseDoublePinyinToolTip">Use Double Pinyin instead of Full Pinyin to search.</system:String>
     <system:String x:Key="DoublePinyinSchema">双拼方案</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoHe">小鹤双拼</system:String>
     <system:String x:Key="DoublePinyinSchemasZiRanMa">自然码</system:String>
