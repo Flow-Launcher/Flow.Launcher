@@ -380,7 +380,7 @@
     <system:String x:Key="QuickSwitchWindowPositionUnderDialog">Fixed under dialogs. Displayed after dialogs are created and until it is closed</system:String>
     <system:String x:Key="QuickSwitchWindowPositionFollowDefault">Floating as search window. Displayed when activated like search window</system:String>
     <system:String x:Key="quickSwitchResultBehaviour">Quick Switch Result Navigation Behaviour</system:String>
-    <system:String x:Key="quickSwitchResultBehaviourToolTip">Behaviour to navigate file dialogs to paths of the results</system:String>
+    <system:String x:Key="quickSwitchResultBehaviourToolTip">Behaviour to navigate file dialog to the result path</system:String>
     <system:String x:Key="QuickSwitchResultBehaviourLeftClick">Left click or Enter key</system:String>
     <system:String x:Key="QuickSwitchResultBehaviourRightClick">Right click</system:String>
     <system:String x:Key="quickSwitchFileResultBehaviour">Quick Switch File Navigation Behaviour</system:String>
