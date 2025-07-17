@@ -38,8 +38,7 @@ namespace Flow.Launcher.Plugin.Explorer
             FillQuickAccessLinkNames();
 
             viewModel = new SettingsViewModel(context, Settings);
-
-            contextMenu = new ContextMenu(Context, Settings, viewModel);
+            contextMenu = new ContextMenu(Context, Settings);
             searchManager = new SearchManager(Settings, Context);
             ResultManager.Init(Context, Settings);
 
