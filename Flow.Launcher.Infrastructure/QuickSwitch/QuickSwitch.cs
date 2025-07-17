@@ -653,6 +653,9 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             // Check handle
             if (hwnd == nint.Zero) return false;
 
+            // Check path null or empty
+            if (string.IsNullOrEmpty(path)) return false;
+
             // Check path
             if (!CheckPath(path, out var isFile)) return false;
 
@@ -674,6 +677,8 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             {
                 path = _quickSwitchExplorers[_lastExplorer]?.GetExplorerPath();
             }
+
+            // Check path null or empty
             if (string.IsNullOrEmpty(path)) return false;
 
             // Check path
@@ -690,14 +695,19 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         private static bool CheckPath(string path, out bool file)
         {
             file = false;
-            // Is non-null?
-            if (string.IsNullOrEmpty(path)) return false;
-            // Is absolute?
-            if (!Path.IsPathRooted(path)) return false;
+            // shell: and shell::: paths
+            if (path.StartsWith("shell:", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+            // file: URI paths
+            var localPath = path.StartsWith("file:", StringComparison.OrdinalIgnoreCase)
+                ? new Uri(path).LocalPath
+                : path;
             // Is folder?
-            var isFolder = Directory.Exists(path);
+            var isFolder = Directory.Exists(localPath);
             // Is file?
-            var isFile = File.Exists(path);
+            var isFile = File.Exists(localPath);
             file = isFile;
             return isFolder || isFile;
         }
