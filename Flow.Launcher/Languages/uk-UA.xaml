@@ -105,7 +105,7 @@
     <system:String x:Key="ShouldUsePinyin">Використовувати піньїнь</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Дозволяє використовувати пінїнь для пошуку. Піньїнь - це стандартна система написання для перекладу китайської.</system:String>
     <system:String x:Key="ShouldUseDoublePinyin">Використовувати подвійний піньїнь</system:String>
-    <system:String x:Key="ShouldUseDoublePinyinToolTip">Дозволяє використовувати подвійний піньїнь для пошуку. Подвійний піньїнь це варіація піньїнь, яка використовує два символи.</system:String>
+    <system:String x:Key="ShouldUseDoublePinyinToolTip">Use Double Pinyin instead of Full Pinyin to search.</system:String>
     <system:String x:Key="DoublePinyinSchema">Подвійна схема піньїнь</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoHe">Сяо Хе</system:String>
     <system:String x:Key="DoublePinyinSchemasZiRanMa">Цзі Жань Ма</system:String>
