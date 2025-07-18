@@ -619,8 +619,6 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             uint dwmsEventTime
         )
         {
-            // TODO: Remove this logging
-            Log.Debug(ClassName, $"Destorying dialog: {hwnd}");
             // If the dialog window is destroyed, set _dialogWindowHandle to null
             var dialogWindowExist = false;
             lock (_dialogWindowLock)
