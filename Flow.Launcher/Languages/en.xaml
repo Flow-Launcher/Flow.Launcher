@@ -239,6 +239,7 @@
     <system:String x:Key="updateAllPluginsTitle">Plugin updates available</system:String>
     <system:String x:Key="updateAllPluginsButtonContent">Update all plugins</system:String>
     <system:String x:Key="checkPluginUpdatesTooltip">Check plugin updates</system:String>
+    <system:String x:Key="PluginsUpdateSuccessNoRestart">Plugins are successfully updated. Please restart Flow.</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Theme</system:String>
