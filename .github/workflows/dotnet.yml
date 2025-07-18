@@ -16,7 +16,7 @@ jobs:
 
     runs-on: windows-latest
     env:
-      FlowVersion: 1.19.5
+      FlowVersion: 1.20.2
       NUGET_CERT_REVOCATION_MODE: offline
       BUILD_NUMBER: ${{ github.run_number }}
     steps:

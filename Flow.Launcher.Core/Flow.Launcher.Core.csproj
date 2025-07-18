@@ -58,6 +58,7 @@
     <PackageReference Include="FSharp.Core" Version="9.0.201" />
     <PackageReference Include="Meziantou.Framework.Win32.Jobs" Version="3.4.0" />
     <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />
+    <PackageReference Include="SemanticVersioning" Version="3.0.0" />
     <PackageReference Include="squirrel.windows" Version="1.5.2" NoWarn="NU1701" />
     <PackageReference Include="StreamJsonRpc" Version="2.21.10" />
   </ItemGroup>
