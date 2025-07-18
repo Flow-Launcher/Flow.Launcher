@@ -91,7 +91,7 @@
     <system:String x:Key="typingStartEn">Завжди починати введення тексту в англійському режимі</system:String>
     <system:String x:Key="typingStartEnTooltip">Тимчасово змінити спосіб введення на англійський при активації Flow.</system:String>
     <system:String x:Key="autoUpdates">Автоматичне оновлення</system:String>
-    <system:String x:Key="autoUpdatesTooltip">Automatically check and update the app when available</system:String>
+    <system:String x:Key="autoUpdatesTooltip">Автоматично перевіряти та оновлювати застосунок, коли це можливо</system:String>
     <system:String x:Key="select">Вибрати</system:String>
     <system:String x:Key="hideOnStartup">Сховати Flow Launcher при запуску системи</system:String>
     <system:String x:Key="hideOnStartupToolTip">Вікно пошуку Flow Launcher після запуску ховається в треї.</system:String>
@@ -105,7 +105,7 @@
     <system:String x:Key="ShouldUsePinyin">Використовувати піньїнь</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Дозволяє використовувати пінїнь для пошуку. Піньїнь - це стандартна система написання для перекладу китайської.</system:String>
     <system:String x:Key="ShouldUseDoublePinyin">Використовувати подвійний піньїнь</system:String>
-    <system:String x:Key="ShouldUseDoublePinyinToolTip">Use Double Pinyin instead of Full Pinyin to search.</system:String>
+    <system:String x:Key="ShouldUseDoublePinyinToolTip">Для пошуку використовуйте подвійний піньїнь замість повного.</system:String>
     <system:String x:Key="DoublePinyinSchema">Подвійна схема піньїнь</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoHe">Сяо Хе</system:String>
     <system:String x:Key="DoublePinyinSchemasZiRanMa">Цзі Жань Ма</system:String>
@@ -156,8 +156,8 @@
     <system:String x:Key="autoRestartAfterChangingToolTip">Автоматично перезапускати Flow Launcher після встановлення / видалення / оновлення плагіну через Магазин плагінів</system:String>
     <system:String x:Key="showUnknownSourceWarning">Показувати попередження про невідоме джерело</system:String>
     <system:String x:Key="showUnknownSourceWarningToolTip">Показувати попередження під час встановлення плагінів із невідомих джерел</system:String>
-    <system:String x:Key="autoUpdatePlugins">Auto update plugins</system:String>
-    <system:String x:Key="autoUpdatePluginsToolTip">Automatically check plugin updates and notify if there are any updates available</system:String>
+    <system:String x:Key="autoUpdatePlugins">Автооновлення плагінів</system:String>
+    <system:String x:Key="autoUpdatePluginsToolTip">Автоматично перевіряти оновлення плагінів і повідомляти про наявність оновлень</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Плагін для пошуку</system:String>
@@ -241,9 +241,9 @@
     <system:String x:Key="installLocalPluginTooltip">Встановити плагін із локального шляху</system:String>
     <system:String x:Key="updateNoResultTitle">Оновлень не знайдено</system:String>
     <system:String x:Key="updateNoResultSubtitle">Всі плагіни оновлено</system:String>
-    <system:String x:Key="updateAllPluginsTitle">Plugin updates available</system:String>
+    <system:String x:Key="updateAllPluginsTitle">Доступні оновлення плагінів</system:String>
     <system:String x:Key="updateAllPluginsButtonContent">Оновити всі плагіни</system:String>
-    <system:String x:Key="checkPluginUpdatesTooltip">Check plugin updates</system:String>
+    <system:String x:Key="checkPluginUpdatesTooltip">Перевірити оновлення плагінів</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Тема</system:String>
