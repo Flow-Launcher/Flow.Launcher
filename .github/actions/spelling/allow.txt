@@ -8,3 +8,4 @@ Português
 Português (Brasil)
 favicons
 moz
+workaround
