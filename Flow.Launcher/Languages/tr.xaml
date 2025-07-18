@@ -56,7 +56,7 @@
     <system:String x:Key="setAutoStartFailed">Sistemle başlatma ayarı başarısız oldu</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Odak Pencereden Ayrıldığında Gizle</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Güncelleme bildirimlerini gösterme</system:String>
-    <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
+    <system:String x:Key="SearchWindowPosition">Pencere Konumu</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Son Konumu Hatırla</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Fare İmlecinin Bulunduğu Monitör</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Aktif Pencerenin Bulunduğu Monitör</system:String>
