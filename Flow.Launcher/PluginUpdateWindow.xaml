@@ -66,7 +66,13 @@
                     Text="{DynamicResource updateAllPluginsButtonContent}"
                     TextAlignment="Left" />
 
-                <StackPanel x:Name="UpdatePluginStackPanel" Margin="0 5 0 5" />
+                <ScrollViewer
+                    MaxHeight="300"
+                    Margin="0 5 0 5"
+                    HorizontalScrollBarVisibility="Disabled"
+                    VerticalScrollBarVisibility="Auto">
+                    <StackPanel x:Name="UpdatePluginStackPanel" />
+                </ScrollViewer>
 
                 <Rectangle
                     Height="1"
