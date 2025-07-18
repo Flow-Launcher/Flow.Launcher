@@ -611,6 +611,8 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             get => Settings.SortOption;
             set
             {
+                if (value == Settings.SortOption)
+                    return;
                 Settings.SortOption = value;
                 OnPropertyChanged(nameof(SelectedEverythingSortOption));
                 OnPropertyChanged(nameof(FastSortWarningVisibility));
