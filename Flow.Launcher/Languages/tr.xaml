@@ -74,8 +74,8 @@
     <system:String x:Key="LastQueryPreserved">Son Sorguyu Sakla</system:String>
     <system:String x:Key="LastQuerySelected">Son Sorguyu Sakla ve Tümünü Seç</system:String>
     <system:String x:Key="LastQueryEmpty">Sorgu Kutusunu Temizle</system:String>
-    <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
-    <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
+    <system:String x:Key="LastQueryActionKeywordPreserved">Son İşlem Anahtar Kelimesini Koru</system:String>
+    <system:String x:Key="LastQueryActionKeywordSelected">Son İşlem Anahtar Kelimesini Seç</system:String>
     <system:String x:Key="maxShowResults">Maksimum Sonuç Sayısı</system:String>
     <system:String x:Key="maxShowResultsToolTip">Bunu CTRL + ve CTRL - kısayollarıyla da ayarlayabilirsiniz.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Tam Ekran Modunda Kısayol Tuşunu Gözardı Et</system:String>
@@ -104,9 +104,9 @@
     <system:String x:Key="SearchPrecisionRegular">Normal</system:String>
     <system:String x:Key="ShouldUsePinyin">Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Arama yapmak için Pinyin'in kullanılmasına izin ver. Pinyin, Çince'yi çevirmek için standart romanlaştırılmış yazım sistemidir.</system:String>
-    <system:String x:Key="ShouldUseDoublePinyin">Use Double Pinyin</system:String>
-    <system:String x:Key="ShouldUseDoublePinyinToolTip">Use Double Pinyin instead of Full Pinyin to search.</system:String>
-    <system:String x:Key="DoublePinyinSchema">Double Pinyin Schema</system:String>
+    <system:String x:Key="ShouldUseDoublePinyin">Çift Pinyin kullanın</system:String>
+    <system:String x:Key="ShouldUseDoublePinyinToolTip">Arama yapmak için Tam Pinyin yerine Çift Pinyin kullanın.</system:String>
+    <system:String x:Key="DoublePinyinSchema">Çift Pinyin Şeması</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao He</system:String>
     <system:String x:Key="DoublePinyinSchemasZiRanMa">Zi Ran Ma</system:String>
     <system:String x:Key="DoublePinyinSchemasWeiRuan">Wei Ruan</system:String>
@@ -146,14 +146,14 @@
     <system:String x:Key="KoreanImeRegistry">Use Previous Korean IME</system:String>
     <system:String x:Key="KoreanImeRegistryTooltip">You can change the Previous Korean IME settings directly from here</system:String>
     <system:String x:Key="homePage">Ana Sayfa</system:String>
-    <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
-    <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
-    <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
+    <system:String x:Key="homePageToolTip">Sorgu metni boş olduğunda ana sayfa sonuçlarını gösterin.</system:String>
+    <system:String x:Key="historyResultsForHomePage">Geçmiş Sonuçlarını Ana Sayfada Göster</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Ana Sayfada Gösterilen Maksimum Geçmiş Sonuçları</system:String>
     <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
-    <system:String x:Key="showAtTopmost">Show Search Window at Foremost</system:String>
+    <system:String x:Key="showAtTopmost">Arama Penceresini En Üstte Göster</system:String>
     <system:String x:Key="showAtTopmostToolTip">Overrides other programs' 'Always on Top' setting and displays Flow in the foremost position.</system:String>
-    <system:String x:Key="autoRestartAfterChanging">Restart after modifying plugin via Plugin Store</system:String>
-    <system:String x:Key="autoRestartAfterChangingToolTip">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugin Store</system:String>
+    <system:String x:Key="autoRestartAfterChanging">Eklenti Mağazası üzerinden eklenti değiştirdikten sonra uygulamayı yeniden başlatın</system:String>
+    <system:String x:Key="autoRestartAfterChangingToolTip">Eklenti Mağazası aracılığıyla eklenti yükledikten/kaldırdıktan/güncelleştirdikten sonra Flow Launcher'ı otomatik olarak yeniden başlatın</system:String>
     <system:String x:Key="showUnknownSourceWarning">Bilinmeyen kaynak uyarısını göster</system:String>
     <system:String x:Key="showUnknownSourceWarningToolTip">Bilinmeyen kaynaklardan eklenti yüklerken uyarı göster</system:String>
     <system:String x:Key="autoUpdatePlugins">Eklentileri otomatik güncelle</system:String>
@@ -196,10 +196,10 @@
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">Eklenti ön belleği kaldırılamıyor</system:String>
     <system:String x:Key="failedToRemovePluginCacheMessage">Plugins: {0} - Fail to remove plugin cache files, please remove them manually</system:String>
-    <system:String x:Key="pluginModifiedAlreadyTitle">{0} modified already</system:String>
-    <system:String x:Key="pluginModifiedAlreadyMessage">Please restart Flow before making any further changes</system:String>
-    <system:String x:Key="failedToInstallPluginTitle">Fail to install {0}</system:String>
-    <system:String x:Key="failedToUninstallPluginTitle">Fail to uninstall {0}</system:String>
+    <system:String x:Key="pluginModifiedAlreadyTitle">{0} zaten değiştirilmiş</system:String>
+    <system:String x:Key="pluginModifiedAlreadyMessage">Lütfen başka değişiklikler yapmadan önce Flow'u yeniden başlatın</system:String>
+    <system:String x:Key="failedToInstallPluginTitle">{0} yüklenemiyor</system:String>
+    <system:String x:Key="failedToUninstallPluginTitle">{0} kaldırılamıyor</system:String>
     <system:String x:Key="fileNotFoundMessage">Unable to find plugin.json from the extracted zip file, or this path {0} does not exist</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">A plugin with the same ID and version already exists, or the version is greater than this downloaded plugin</system:String>
 
@@ -217,33 +217,33 @@
     <system:String x:Key="LabelNew">Yeni Sürüm</system:String>
     <system:String x:Key="LabelNewToolTip">Bu eklenti son 7 gün içerisinde güncellenmiş.</system:String>
     <system:String x:Key="LabelUpdateToolTip">Yeni Bir Güncelleme Mevcut</system:String>
-    <system:String x:Key="ErrorInstallingPlugin">Error installing plugin</system:String>
-    <system:String x:Key="ErrorUninstallingPlugin">Error uninstalling plugin</system:String>
-    <system:String x:Key="ErrorUpdatingPlugin">Error updating plugin</system:String>
-    <system:String x:Key="KeepPluginSettingsTitle">Keep plugin settings</system:String>
+    <system:String x:Key="ErrorInstallingPlugin">Eklenti yüklenirken bir hata oluştu</system:String>
+    <system:String x:Key="ErrorUninstallingPlugin">Eklenti kaldırılırken bir hata oluştu</system:String>
+    <system:String x:Key="ErrorUpdatingPlugin">Eklenti güncellenirken bir hata oluştu</system:String>
+    <system:String x:Key="KeepPluginSettingsTitle">Eklenti ayarlarını sakla</system:String>
     <system:String x:Key="KeepPluginSettingsSubtitle">Do you want to keep the settings of the plugin for the next usage?</system:String>
-    <system:String x:Key="InstallSuccessNoRestart">Plugin {0} successfully installed. Please restart Flow.</system:String>
-    <system:String x:Key="UninstallSuccessNoRestart">Plugin {0} successfully uninstalled. Please restart Flow.</system:String>
-    <system:String x:Key="UpdateSuccessNoRestart">Plugin {0} successfully updated. Please restart Flow.</system:String>
-    <system:String x:Key="InstallPromptTitle">Plugin install</system:String>
+    <system:String x:Key="InstallSuccessNoRestart">{0} eklentisi başarıyla yüklendi. Lütfen Flow'u yeniden başlatın.</system:String>
+    <system:String x:Key="UninstallSuccessNoRestart">{0} eklentisi başarıyla kaldırıldı. Lütfen Flow'u yeniden başlatın.</system:String>
+    <system:String x:Key="UpdateSuccessNoRestart">{0} eklentisi başarıyla güncellendi. Lütfen Flow'u yeniden başlatın.</system:String>
+    <system:String x:Key="InstallPromptTitle">Eklenti yükleme</system:String>
     <system:String x:Key="InstallPromptSubtitle">{0} by {1} {2}{2}Would you like to install this plugin?</system:String>
-    <system:String x:Key="UninstallPromptTitle">Plugin uninstall</system:String>
+    <system:String x:Key="UninstallPromptTitle">Eklenti kaldırma</system:String>
     <system:String x:Key="UninstallPromptSubtitle">{0} by {1} {2}{2}Would you like to uninstall this plugin?</system:String>
-    <system:String x:Key="UpdatePromptTitle">Plugin update</system:String>
+    <system:String x:Key="UpdatePromptTitle">Eklenti güncellemesi</system:String>
     <system:String x:Key="UpdatePromptSubtitle">{0} by {1} {2}{2}Would you like to update this plugin?</system:String>
-    <system:String x:Key="DownloadingPlugin">Downloading plugin</system:String>
-    <system:String x:Key="AutoRestartAfterChange">Automatically restart after installing/uninstalling/updating plugins in plugin store</system:String>
+    <system:String x:Key="DownloadingPlugin">Eklenti indiriliyor</system:String>
+    <system:String x:Key="AutoRestartAfterChange">Eklenti mağazasındaki eklentileri yükledikten/kaldırdıktan/güncelleştirdikten sonra otomatik olarak yeniden başlat</system:String>
     <system:String x:Key="ZipFileNotHavePluginJson">Zip file does not have a valid plugin.json configuration</system:String>
-    <system:String x:Key="InstallFromUnknownSourceTitle">Installing from an unknown source</system:String>
+    <system:String x:Key="InstallFromUnknownSourceTitle">Bilinmeyen bir kaynaktan yükleniyor</system:String>
     <system:String x:Key="InstallFromUnknownSourceSubtitle">This plugin is from an unknown source and it may contain potential risks!{0}{0}Please ensure you understand where this plugin is from and that it is safe.{0}{0}Would you like to continue still?{0}{0}(You can switch off this warning in general section of setting window)</system:String>
-    <system:String x:Key="ZipFiles">Zip files</system:String>
-    <system:String x:Key="SelectZipFile">Please select zip file</system:String>
-    <system:String x:Key="installLocalPluginTooltip">Install plugin from local path</system:String>
-    <system:String x:Key="updateNoResultTitle">No update available</system:String>
-    <system:String x:Key="updateNoResultSubtitle">All plugins are up to date</system:String>
-    <system:String x:Key="updateAllPluginsTitle">Plugin updates available</system:String>
+    <system:String x:Key="ZipFiles">Zip dosyaları</system:String>
+    <system:String x:Key="SelectZipFile">Lütfen zip dosyasını seçin</system:String>
+    <system:String x:Key="installLocalPluginTooltip">Eklentiyi yerel yoldan yükle</system:String>
+    <system:String x:Key="updateNoResultTitle">Güncelleme mevcut değil</system:String>
+    <system:String x:Key="updateNoResultSubtitle">Bütün eklentiler güncel</system:String>
+    <system:String x:Key="updateAllPluginsTitle">Eklenti güncellemeleri mevcut</system:String>
     <system:String x:Key="updateAllPluginsButtonContent">Tüm eklentileri güncelle</system:String>
-    <system:String x:Key="checkPluginUpdatesTooltip">Check plugin updates</system:String>
+    <system:String x:Key="checkPluginUpdatesTooltip">Eklenti güncellemelerini kontrol et</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Temalar</system:String>
@@ -265,8 +265,8 @@
     <system:String x:Key="resultItemFont">Arama Sonuçları Yazı Tipi</system:String>
     <system:String x:Key="resultSubItemFont">Arama Sonuçları Yazı Tipi</system:String>
     <system:String x:Key="resetCustomize">Sıfırla</system:String>
-    <system:String x:Key="resetCustomizeToolTip">Reset to the recommended font and size settings.</system:String>
-    <system:String x:Key="ImportThemeSize">Import Theme Size</system:String>
+    <system:String x:Key="resetCustomizeToolTip">Önerilen yazı tipi ve boyut ayarlarına sıfırlayın.</system:String>
+    <system:String x:Key="ImportThemeSize">Tema Boyutunu İçe Aktar</system:String>
     <system:String x:Key="ImportThemeSizeToolTip">If a size value intended by the theme designer is available, it will be retrieved and applied.</system:String>
     <system:String x:Key="CustomizeToolTip">Kişiselleştir</system:String>
     <system:String x:Key="windowMode">Pencere Modu</system:String>
@@ -301,11 +301,11 @@
     <system:String x:Key="BackdropTypesAcrylic">Akrilik</system:String>
     <system:String x:Key="BackdropTypesMica">Mika</system:String>
     <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
-    <system:String x:Key="TypeIsDarkToolTip">This theme supports two (light/dark) modes.</system:String>
-    <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
-    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
-    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
-    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">Bu tema iki (açık/koyu) modu destekler.</system:String>
+    <system:String x:Key="TypeHasBlurToolTip">Bu tema Bulanık Şeffaf Arka Planı destekler.</system:String>
+    <system:String x:Key="ShowPlaceholder">Yer tutucuyu göster</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Sorgu boş olduğunda yer tutucuyu görüntüle</system:String>
+    <system:String x:Key="PlaceholderText">Yer tutucu metin</system:String>
     <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
     <system:String x:Key="KeepMaxResults">Sabit Pencere Boyutu</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
@@ -332,7 +332,7 @@
     <system:String x:Key="CycleHistoryUpHotkey">Bir Önceki Sorguya Geç</system:String>
     <system:String x:Key="CycleHistoryDownHotkey">Sonraki Sorguya Geç</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Bağlam Menüsünü Aç</system:String>
-    <system:String x:Key="OpenNativeContextMenuHotkey">Open Native Context Menu</system:String>
+    <system:String x:Key="OpenNativeContextMenuHotkey">Yerel Bağlam Menüsünü Aç</system:String>
     <system:String x:Key="SettingWindowHotkey">Ayarlar Penceresini Aç</system:String>
     <system:String x:Key="CopyFilePathHotkey">Dosya Yolunu Kopyala</system:String>
     <system:String x:Key="ToggleGameModeHotkey">Oyun Modunu Aç/Kapat</system:String>
@@ -368,7 +368,7 @@
     <system:String x:Key="useGlyphUI">Segoe Fluent Simgeleri</system:String>
     <system:String x:Key="useGlyphUIEffect">Arama sonuçlarında mümkünse Segoe Fluent simgelerini kullan.</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Tuşa basın</system:String>
-    <system:String x:Key="showBadges">Show Result Badges</system:String>
+    <system:String x:Key="showBadges">Sonuç Rozetlerini Göster</system:String>
     <system:String x:Key="showBadgesToolTip">For supported plugins, badges are displayed to help distinguish them more easily.</system:String>
     <system:String x:Key="showBadgesGlobalOnly">Show Result Badges for Global Query Only</system:String>
 
@@ -423,10 +423,10 @@
     <system:String x:Key="logLevel">Günlük Düzeyi</system:String>
     <system:String x:Key="LogLevelDEBUG">Hata ayıklama</system:String>
     <system:String x:Key="LogLevelINFO">Bilgi</system:String>
-    <system:String x:Key="settingWindowFontTitle">Setting Window Font</system:String>
+    <system:String x:Key="settingWindowFontTitle">Pencere Yazı Tipini Ayarla</system:String>
 
     <!--  Release Notes Window  -->
-    <system:String x:Key="seeMoreReleaseNotes">See more release notes on GitHub</system:String>
+    <system:String x:Key="seeMoreReleaseNotes">GitHub'da daha fazla sürüm notlarını gör</system:String>
     <system:String x:Key="checkNetworkConnectionTitle">Sürüm notları alınamadı</system:String>
     <system:String x:Key="checkNetworkConnectionSubTitle">Please check your network connection or ensure GitHub is accessible</system:String>
     <system:String x:Key="appUpdateTitle">Flow Launcher has been updated to {0}</system:String>
@@ -443,7 +443,7 @@
     <system:String x:Key="fileManager_directory_arg">Klasör Açarken</system:String>
     <system:String x:Key="fileManager_file_arg">Dosya Açarken</system:String>
     <system:String x:Key="fileManagerPathNotFound">The file manager '{0}' could not be located at '{1}'. Would you like to continue?</system:String>
-    <system:String x:Key="fileManagerPathError">File Manager Path Error</system:String>
+    <system:String x:Key="fileManagerPathError">Dosya Yöneticisi Yol Hatası</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">İnternet Tarayıcı Seçenekleri</system:String>
@@ -475,7 +475,7 @@
     <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
-    <system:String x:Key="searchDelayTimeTitle">Search Delay Time Setting</system:String>
+    <system:String x:Key="searchDelayTimeTitle">Arama Gecikme Süresi Ayarı</system:String>
     <system:String x:Key="searchDelayTimeTips">Input the search delay time in ms you like to use for the plugin. Input empty if you don't want to specify any, and the plugin will use default search delay time.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
@@ -487,7 +487,7 @@
     <system:String x:Key="customeQueryHotkeyTips">Flow Launcher'ı açıp otomatik olarak girdiğiniz sorguyu aratması için bir kısayol atayın.</system:String>
     <system:String x:Key="preview">Önizleme</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Kısayol tuşu kullanılamıyor, lütfen başka bir kombinasyon girin.</system:String>
-    <system:String x:Key="invalidPluginHotkey">Hotkey is invalid</system:String>
+    <system:String x:Key="invalidPluginHotkey">Kısayol tuşu geçersiz</system:String>
     <system:String x:Key="update">Güncelle</system:String>
     <system:String x:Key="hotkeyRegTitle">Kısayol Atanıyor</system:String>
     <system:String x:Key="hotkeyUnavailable">Kullanılamıyor</system:String>
@@ -503,7 +503,7 @@
     </system:String>
     <system:String x:Key="duplicateShortcut">Anahtar kelime zaten mevcut. Yeni bir kısaltma girin veya mevcut kısaltmayı düzenleyin.</system:String>
     <system:String x:Key="emptyShortcut">Kısaltma ve/veya sorgu eksik.</system:String>
-    <system:String x:Key="invalidShortcut">Shortcut is invalid</system:String>
+    <system:String x:Key="invalidShortcut">Kısayol geçersiz</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Kaydet</system:String>
