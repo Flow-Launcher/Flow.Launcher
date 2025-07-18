@@ -1862,8 +1862,12 @@ namespace Flow.Launcher.ViewModel
                 await Task.Delay(300);
             }
 
-            // If handle is cleared, which means the dialog is closed, do nothing
-            if (DialogWindowHandle == nint.Zero) return;
+            // If handle is cleared, which means the dialog is closed, clear quick switch state
+            if (DialogWindowHandle == nint.Zero)
+            {
+                _isQuickSwitch = false;
+                return;
+            }
 
             // Initialize quick switch window
             if (MainWindowVisibilityStatus)
