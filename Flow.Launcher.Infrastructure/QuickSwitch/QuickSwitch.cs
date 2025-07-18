@@ -729,7 +729,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             {
                 if (_dialogWindow != null && _dialogWindow.Handle == hwnd)
                 {
-                    Log.Debug(ClassName, $"Dialog end: {hwnd}");
+                    Log.Debug(ClassName, $"End dialog: {hwnd}");
                     _dialogWindow = null;
                     dialogWindowExist = true;
                 }
