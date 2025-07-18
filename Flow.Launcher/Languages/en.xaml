@@ -564,6 +564,11 @@
     <system:String x:Key="update_flowlauncher_update_files">Update files</system:String>
     <system:String x:Key="update_flowlauncher_update_update_description">Update description</system:String>
 
+    <!--  Plugin Update Window  -->
+    <system:String x:Key="restartAfterUpdating">Restart Flow Launcher after updating plugins</system:String>
+    <system:String x:Key="updatePluginCheckboxContent">{0}: Update from v{1} to v{2}</system:String>
+    <system:String x:Key="updatePluginNoSelected">No plugin selected</system:String>
+
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Skip</system:String>
     <system:String x:Key="Welcome_Page1_Title">Welcome to Flow Launcher</system:String>
