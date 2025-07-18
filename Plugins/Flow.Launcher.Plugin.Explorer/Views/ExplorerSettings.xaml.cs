@@ -39,8 +39,6 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 ExcludedPathsExpander
             };
 
-            // Update labels because the view model is initialized in InitAsync
-            Search.Everything.EverythingSortOptionLocalized.UpdateLabels(_viewModel.AllEverythingSortOptions);
         }
 
         private void AccessLinkDragDrop(string containerName, DragEventArgs e)

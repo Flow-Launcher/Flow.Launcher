@@ -35,7 +35,6 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
             InitializeEngineSelection();
             InitializeActionKeywordModels();
-            EverythingSortOptionLocalized.UpdateLabels(AllEverythingSortOptions);
         }
 
         public void Save()
@@ -579,7 +578,19 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
         #region Everything FastSortWarning
 
-        public List<EverythingSortOptionLocalized> AllEverythingSortOptions { get; } = EverythingSortOptionLocalized.GetValues();
+        private List<EverythingSortOptionLocalized> _allEverythingSortOptions = new();
+        public List<EverythingSortOptionLocalized> AllEverythingSortOptions
+        {
+            get
+            {
+                if (_allEverythingSortOptions.Count == 0)
+                {
+                    _allEverythingSortOptions = EverythingSortOptionLocalized.GetValues();
+                    EverythingSortOptionLocalized.UpdateLabels(_allEverythingSortOptions);
+                }
+                return _allEverythingSortOptions;
+            }
+        }
 
         public EverythingSortOption SelectedEverythingSortOption
         {
