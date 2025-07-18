@@ -77,10 +77,14 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         private static HWINEVENTHOOK _foregroundChangeHook = HWINEVENTHOOK.Null;
         private static HWINEVENTHOOK _locationChangeHook = HWINEVENTHOOK.Null;
         private static HWINEVENTHOOK _destroyChangeHook = HWINEVENTHOOK.Null;
+        private static HWINEVENTHOOK _hideChangeHook = HWINEVENTHOOK.Null;
+        private static HWINEVENTHOOK _dialogEndChangeHook = HWINEVENTHOOK.Null;
 
         private static readonly WINEVENTPROC _fgProc = ForegroundChangeCallback;
         private static readonly WINEVENTPROC _locProc = LocationChangeCallback;
         private static readonly WINEVENTPROC _desProc = DestroyChangeCallback;
+        private static readonly WINEVENTPROC _hideProc = HideChangeCallback;
+        private static readonly WINEVENTPROC _dialogEndProc = DialogEndChangeCallback;
 
         private static DispatcherTimer _dragMoveTimer = null;
 
@@ -166,6 +170,16 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     PInvoke.UnhookWinEvent(_destroyChangeHook);
                     _destroyChangeHook = HWINEVENTHOOK.Null;
                 }
+                if (!_hideChangeHook.IsNull)
+                {
+                    PInvoke.UnhookWinEvent(_hideChangeHook);
+                    _hideChangeHook = HWINEVENTHOOK.Null;
+                }
+                if (!_dialogEndChangeHook.IsNull)
+                {
+                    PInvoke.UnhookWinEvent(_dialogEndChangeHook);
+                    _dialogEndChangeHook = HWINEVENTHOOK.Null;
+                }
 
                 // Hook events
                 _foregroundChangeHook = PInvoke.SetWinEventHook(
@@ -192,10 +206,28 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     0,
                     0,
                     PInvoke.WINEVENT_OUTOFCONTEXT);
+                _hideChangeHook = PInvoke.SetWinEventHook(
+                    PInvoke.EVENT_OBJECT_HIDE,
+                    PInvoke.EVENT_OBJECT_HIDE,
+                    PInvoke.GetModuleHandle((PCWSTR)null),
+                    _hideProc,
+                    0,
+                    0,
+                    PInvoke.WINEVENT_OUTOFCONTEXT);
+                _dialogEndChangeHook = PInvoke.SetWinEventHook(
+                    PInvoke.EVENT_SYSTEM_DIALOGEND,
+                    PInvoke.EVENT_SYSTEM_DIALOGEND,
+                    PInvoke.GetModuleHandle((PCWSTR)null),
+                    _dialogEndProc,
+                    0,
+                    0,
+                    PInvoke.WINEVENT_OUTOFCONTEXT);
 
                 if (_foregroundChangeHook.IsNull ||
                     _locationChangeHook.IsNull ||
-                    _destroyChangeHook.IsNull)
+                    _destroyChangeHook.IsNull ||
+                    _hideChangeHook.IsNull ||
+                    _dialogEndChangeHook.IsNull)
                 {
                     Log.Error(ClassName, "Failed to enable QuickSwitch");
                     return;
@@ -247,6 +279,16 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 {
                     PInvoke.UnhookWinEvent(_destroyChangeHook);
                     _destroyChangeHook = HWINEVENTHOOK.Null;
+                }
+                if (!_hideChangeHook.IsNull)
+                {
+                    PInvoke.UnhookWinEvent(_hideChangeHook);
+                    _hideChangeHook = HWINEVENTHOOK.Null;
+                }
+                if (!_dialogEndChangeHook.IsNull)
+                {
+                    PInvoke.UnhookWinEvent(_dialogEndChangeHook);
+                    _dialogEndChangeHook = HWINEVENTHOOK.Null;
                 }
 
                 // Stop drag move timer
@@ -640,6 +682,68 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
         }
 
+        private static void HideChangeCallback(
+            HWINEVENTHOOK hWinEventHook,
+            uint eventType,
+            HWND hwnd,
+            int idObject,
+            int idChild,
+            uint dwEventThread,
+            uint dwmsEventTime
+        )
+        {
+            // If the dialog window is hidden, set _dialogWindowHandle to null
+            var dialogWindowExist = false;
+            lock (_dialogWindowLock)
+            {
+                if (_dialogWindow != null && _dialogWindow.Handle == hwnd)
+                {
+                    Log.Debug(ClassName, $"Hide dialog: {hwnd}");
+                    _dialogWindow = null;
+                    dialogWindowExist = true;
+                }
+            }
+            if (dialogWindowExist)
+            {
+                lock (_autoSwitchedDialogsLock)
+                {
+                    _autoSwitchedDialogs.Remove(hwnd);
+                }
+                InvokeResetQuickSwitchWindow();
+            }
+        }
+
+        private static void DialogEndChangeCallback(
+            HWINEVENTHOOK hWinEventHook,
+            uint eventType,
+            HWND hwnd,
+            int idObject,
+            int idChild,
+            uint dwEventThread,
+            uint dwmsEventTime
+        )
+        {
+            // If the dialog window is ended, set _dialogWindowHandle to null
+            var dialogWindowExist = false;
+            lock (_dialogWindowLock)
+            {
+                if (_dialogWindow != null && _dialogWindow.Handle == hwnd)
+                {
+                    Log.Debug(ClassName, $"Dialog end: {hwnd}");
+                    _dialogWindow = null;
+                    dialogWindowExist = true;
+                }
+            }
+            if (dialogWindowExist)
+            {
+                lock (_autoSwitchedDialogsLock)
+                {
+                    _autoSwitchedDialogs.Remove(hwnd);
+                }
+                InvokeResetQuickSwitchWindow();
+            }
+        }
+
         #endregion
 
         #endregion
@@ -891,6 +995,16 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             {
                 PInvoke.UnhookWinEvent(_destroyChangeHook);
                 _destroyChangeHook = HWINEVENTHOOK.Null;
+            }
+            if (!_hideChangeHook.IsNull)
+            {
+                PInvoke.UnhookWinEvent(_hideChangeHook);
+                _hideChangeHook = HWINEVENTHOOK.Null;
+            }
+            if (!_dialogEndChangeHook.IsNull)
+            {
+                PInvoke.UnhookWinEvent(_dialogEndChangeHook);
+                _dialogEndChangeHook = HWINEVENTHOOK.Null;
             }
 
             // Dispose explorers
