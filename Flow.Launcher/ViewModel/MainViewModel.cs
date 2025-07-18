@@ -1887,12 +1887,14 @@ namespace Flow.Launcher.ViewModel
             {
                 if (QuickSwitch.QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog)
                 {
-                    Show();
-
+                    // We wait for window to be reset before showing it because if window has results,
+                    // showing it before resetting will cause flickering when results are clearing
                     if (dialogWindowHandleChanged)
                     {
-                        _ = ResetWindowAsync();
+                        await ResetWindowAsync();
                     }
+
+                    Show();
                 }
                 else
                 {
@@ -1912,27 +1914,27 @@ namespace Flow.Launcher.ViewModel
                 _quickSwitchSource = new CancellationTokenSource();
 
                 _ = Task.Run(() =>
+                {
+                    try
                     {
-                        try
-                        {
-                            // Check task cancellation
-                            if (_quickSwitchSource.Token.IsCancellationRequested) return;
+                        // Check task cancellation
+                        if (_quickSwitchSource.Token.IsCancellationRequested) return;
 
-                            // Check dialog handle
-                            if (DialogWindowHandle == nint.Zero) return;
+                        // Check dialog handle
+                        if (DialogWindowHandle == nint.Zero) return;
 
-                            // Wait 150ms to check if quick switch window gets the focus
-                            var timeOut = !SpinWait.SpinUntil(() => !Win32Helper.IsForegroundWindow(DialogWindowHandle), 150);
-                            if (timeOut) return;
+                        // Wait 150ms to check if quick switch window gets the focus
+                        var timeOut = !SpinWait.SpinUntil(() => !Win32Helper.IsForegroundWindow(DialogWindowHandle), 150);
+                        if (timeOut) return;
 
-                            // Bring focus back to the the dialog
-                            Win32Helper.SetForegroundWindow(DialogWindowHandle);
-                        }
-                        catch (Exception e)
-                        {
-                            App.API.LogException(ClassName, "Failed to focus on dialog window", e);
-                        }
-                    });
+                        // Bring focus back to the the dialog
+                        Win32Helper.SetForegroundWindow(DialogWindowHandle);
+                    }
+                    catch (Exception e)
+                    {
+                        App.API.LogException(ClassName, "Failed to focus on dialog window", e);
+                    }
+                });
             }
         }
 
@@ -1952,17 +1954,17 @@ namespace Flow.Launcher.ViewModel
 
             if (_previousMainWindowVisibilityStatus != MainWindowVisibilityStatus)
             {
+                // We wait for window to be reset before showing it because if window has results,
+                // showing it before resetting will cause flickering when results are clearing
+                await ResetWindowAsync();
+
                 // Show or hide to change visibility
                 if (_previousMainWindowVisibilityStatus)
                 {
                     Show();
-
-                    _ = ResetWindowAsync();
                 }
                 else
                 {
-                    await ResetWindowAsync();
-
                     Hide(false);
                 }
             }
