@@ -13,7 +13,7 @@
         Click yes if you would like select the {0} executable again. Click no if you would like to download {1}
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Unable to set {0} executable path, please try from Flow's settings (scroll down to the bottom).</system:String>
-    <system:String x:Key="failedToInitializePluginsTitle">Fail to Init Plugins</system:String>
+    <system:String x:Key="failedToInitializePluginsTitle">Eklentiler başlatılamıyor</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">Plugins: {0} - fail to load and would be disabled, please contact plugin creator for help</system:String>
 
     <!--  MainWindow  -->
@@ -42,8 +42,8 @@
     <system:String x:Key="GameMode">Oyun Modu</system:String>
     <system:String x:Key="GameModeToolTip">Kısayol tuşlarının kullanımını durdurun.</system:String>
     <system:String x:Key="PositionReset">Pencere Konumunu Sıfırla</system:String>
-    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
-    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
+    <system:String x:Key="PositionResetToolTip">Arama penceresinin konumunu sıfırla</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Aramak için buraya yazın</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Ayarlar</system:String>
@@ -51,7 +51,7 @@
     <system:String x:Key="portableMode">Taşınabilir Mod</system:String>
     <system:String x:Key="portableModeToolTIp">Tüm ayarları ve kullanıcı verilerini tek bir klasörde saklayın (Çıkarılabilir sürücüler veya bulut hizmetleri ile kullanıldığında kullanışlıdır).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Sistem ile Başlat</system:String>
-    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Daha hızlı bir başlatma deneyimi için başlangıç girişini yerine oturum açma görevini kullanın</system:String>
     <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
     <system:String x:Key="setAutoStartFailed">Sistemle başlatma ayarı başarısız oldu</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Odak Pencereden Ayrıldığında Gizle</system:String>
@@ -91,7 +91,7 @@
     <system:String x:Key="typingStartEn">İngilizce Klayve Düzeni Kullan</system:String>
     <system:String x:Key="typingStartEnTooltip">Arama yaparken klayve düzenini geçici olarak İngilizce yap.</system:String>
     <system:String x:Key="autoUpdates">Otomatik Güncelle</system:String>
-    <system:String x:Key="autoUpdatesTooltip">Automatically check and update the app when available</system:String>
+    <system:String x:Key="autoUpdatesTooltip">Uygulamanın güncellemelerini otomatik kontrol eder ve günceller</system:String>
     <system:String x:Key="select">Seç</system:String>
     <system:String x:Key="hideOnStartup">Başlangıçta Pencereyi Gizle</system:String>
     <system:String x:Key="hideOnStartupToolTip">Arama kutusu başlangıçtan sonra sistem tepsisinde gizlenir.</system:String>
@@ -154,10 +154,10 @@
     <system:String x:Key="showAtTopmostToolTip">Overrides other programs' 'Always on Top' setting and displays Flow in the foremost position.</system:String>
     <system:String x:Key="autoRestartAfterChanging">Restart after modifying plugin via Plugin Store</system:String>
     <system:String x:Key="autoRestartAfterChangingToolTip">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugin Store</system:String>
-    <system:String x:Key="showUnknownSourceWarning">Show unknown source warning</system:String>
-    <system:String x:Key="showUnknownSourceWarningToolTip">Show warning when installing plugins from unknown sources</system:String>
-    <system:String x:Key="autoUpdatePlugins">Auto update plugins</system:String>
-    <system:String x:Key="autoUpdatePluginsToolTip">Automatically check plugin updates and notify if there are any updates available</system:String>
+    <system:String x:Key="showUnknownSourceWarning">Bilinmeyen kaynak uyarısını göster</system:String>
+    <system:String x:Key="showUnknownSourceWarningToolTip">Bilinmeyen kaynaklardan eklenti yüklerken uyarı göster</system:String>
+    <system:String x:Key="autoUpdatePlugins">Eklentileri otomatik güncelle</system:String>
+    <system:String x:Key="autoUpdatePluginsToolTip">Eklenti güncellemelerini otomatik kontrol et ve eğer herhangi bir güncelleme varsa bildir</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Eklenti Ara</system:String>
@@ -174,10 +174,10 @@
     <system:String x:Key="currentActionKeywords">Geçerli anahtar kelime</system:String>
     <system:String x:Key="newActionKeyword">Yeni anahtar kelime</system:String>
     <system:String x:Key="actionKeywordsTooltip">Anahtar kelimeyi değiştir</system:String>
-    <system:String x:Key="pluginSearchDelayTime">Plugin search delay time</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Eklenti arama gecikme süresi</system:String>
     <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Search Delay Time</system:String>
     <system:String x:Key="FilterComboboxLabel">Gelişmiş Ayarlar:</system:String>
-    <system:String x:Key="DisplayModeOnOff">Enabled</system:String>
+    <system:String x:Key="DisplayModeOnOff">Aktif</system:String>
     <system:String x:Key="DisplayModePriority">Öncelik</system:String>
     <system:String x:Key="DisplayModeSearchDelay">Arama Gecikmesi</system:String>
     <system:String x:Key="DisplayModeHomeOnOff">Ana Sayfa</system:String>
@@ -192,9 +192,9 @@
     <system:String x:Key="plugin_query_version">Sürüm</system:String>
     <system:String x:Key="plugin_query_web">İnternet Sitesi</system:String>
     <system:String x:Key="plugin_uninstall">Kaldır</system:String>
-    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Eklenti ayarları kaldırılamıyor</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
-    <system:String x:Key="failedToRemovePluginCacheTitle">Fail to remove plugin cache</system:String>
+    <system:String x:Key="failedToRemovePluginCacheTitle">Eklenti ön belleği kaldırılamıyor</system:String>
     <system:String x:Key="failedToRemovePluginCacheMessage">Plugins: {0} - Fail to remove plugin cache files, please remove them manually</system:String>
     <system:String x:Key="pluginModifiedAlreadyTitle">{0} modified already</system:String>
     <system:String x:Key="pluginModifiedAlreadyMessage">Please restart Flow before making any further changes</system:String>
