@@ -799,21 +799,29 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
         private static bool CheckPath(string path, out bool file)
         {
             file = false;
-            // shell: and shell::: paths
-            if (path.StartsWith("shell:", StringComparison.OrdinalIgnoreCase))
+            try
             {
-                return true;
+                // shell: and shell::: paths
+                if (path.StartsWith("shell:", StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+                // file: URI paths
+                var localPath = path.StartsWith("file:", StringComparison.OrdinalIgnoreCase)
+                    ? new Uri(path).LocalPath
+                    : path;
+                // Is folder?
+                var isFolder = Directory.Exists(localPath);
+                // Is file?
+                var isFile = File.Exists(localPath);
+                file = isFile;
+                return isFolder || isFile;
             }
-            // file: URI paths
-            var localPath = path.StartsWith("file:", StringComparison.OrdinalIgnoreCase)
-                ? new Uri(path).LocalPath
-                : path;
-            // Is folder?
-            var isFolder = Directory.Exists(localPath);
-            // Is file?
-            var isFile = File.Exists(localPath);
-            file = isFile;
-            return isFolder || isFile;
+            catch (System.Exception e)
+            {
+                Log.Exception(ClassName, "Failed to check path", e);
+                return false;
+            }
         }
 
         private static IQuickSwitchDialogWindowTab GetDialogWindowTab(HWND hwnd)
