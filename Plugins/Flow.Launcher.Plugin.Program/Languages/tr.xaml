@@ -9,7 +9,7 @@
     <system:String x:Key="flowlauncher_plugin_program_name">Ad</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable">Etkin</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enabled">Enabled</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable">Disable</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable">Devre Dışı Bırak</system:String>
     <system:String x:Key="flowlauncher_plugin_program_status">Durum</system:String>
     <system:String x:Key="flowlauncher_plugin_program_true">Enabled</system:String>
     <system:String x:Key="flowlauncher_plugin_program_false">Disabled</system:String>
@@ -73,7 +73,7 @@
         Insert protocols of .url files you want to index. Protocols should be separated by ';', and should end with &quot;://&quot;. (ex&gt;ftp://;mailto://)
     </system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Run As Different User</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Başka Bir Kullanıcı Olarak Çalıştır</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Yönetici Olarak Çalıştır</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">İçeren klasörü aç</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_program">Gizle</system:String>
@@ -84,8 +84,8 @@
 
     <system:String x:Key="flowlauncher_plugin_program_invalid_path">Geçersiz Konum</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Customized Explorer</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_args">Args</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Özelleştirilmiş Gezgin</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_args">Parametreler</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">You can customize the explorer used for opening the container folder by inputing the Environmental Variable of the explorer you want to use. It will be useful to use CMD to test whether the Environmental Variable is available.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Enter the customized args you want to add for your customized explorer. %s for parent directory, %f for full path (which only works for win32). Check the explorer's website for details.</system:String>
 
@@ -93,7 +93,7 @@
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">Başarılı</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_error">Error</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">Successfully disabled this program from displaying in your query</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">This app is not intended to be run as administrator</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">Bu uygulama yönetici olarak çalıştırılmak için tasarlanmamıştır</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_failed">Unable to run {0}</system:String>
 
 </ResourceDictionary>
