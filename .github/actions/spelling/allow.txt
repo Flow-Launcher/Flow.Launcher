@@ -6,3 +6,5 @@ runcount
 Firefox
 Português
 Português (Brasil)
+favicons
+moz
