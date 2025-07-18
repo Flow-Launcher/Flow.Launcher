@@ -4,5 +4,4 @@ ssh
 ubuntu
 runcount
 Firefox
-Português
-Português (Brasil)
+workaround
