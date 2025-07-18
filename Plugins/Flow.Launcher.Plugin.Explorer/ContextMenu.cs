@@ -81,7 +81,7 @@ namespace Flow.Launcher.Plugin.Explorer
                                     Context.API.GetTranslation("plugin_explorer_addfilefoldersuccess_detail"),
                                     Constants.ExplorerIconImageFullPath);
 
-                            Context.API.SaveSettingJsonStorage<Settings>();
+
 
                             return true;
                         },
@@ -105,7 +105,7 @@ namespace Flow.Launcher.Plugin.Explorer
                                     Context.API.GetTranslation("plugin_explorer_removefilefoldersuccess_detail"),
                                     Constants.ExplorerIconImageFullPath);
 
-                            Context.API.SaveSettingJsonStorage<Settings>();
+                            
 
                             return true;
                         },
