@@ -1936,10 +1936,15 @@ namespace Flow.Launcher.ViewModel
 
         public async void ResetQuickSwitch()
         {
-            if (DialogWindowHandle == nint.Zero) return;
+            // Cache original dialog window handle
+            var dialogWindowHandle = DialogWindowHandle;
 
+            // Reset the quick switch state
             DialogWindowHandle = nint.Zero;
             _isQuickSwitch = false;
+
+            // If dialog window handle is not set, we should not reset the main window visibility
+            if (dialogWindowHandle == nint.Zero) return;
 
             if (_previousMainWindowVisibilityStatus != MainWindowVisibilityStatus)
             {
