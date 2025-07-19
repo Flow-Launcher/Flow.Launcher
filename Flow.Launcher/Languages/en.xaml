@@ -237,8 +237,9 @@
     <system:String x:Key="updateNoResultTitle">No update available</system:String>
     <system:String x:Key="updateNoResultSubtitle">All plugins are up to date</system:String>
     <system:String x:Key="updateAllPluginsTitle">Plugin updates available</system:String>
-    <system:String x:Key="updateAllPluginsButtonContent">Update all plugins</system:String>
+    <system:String x:Key="updateAllPluginsButtonContent">Update plugins</system:String>
     <system:String x:Key="checkPluginUpdatesTooltip">Check plugin updates</system:String>
+    <system:String x:Key="PluginsUpdateSuccessNoRestart">Plugins are successfully updated. Please restart Flow.</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Theme</system:String>
@@ -562,6 +563,11 @@
     <system:String x:Key="update_flowlauncher_update_update_files">Following files will be updated</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Update files</system:String>
     <system:String x:Key="update_flowlauncher_update_update_description">Update description</system:String>
+
+    <!--  Plugin Update Window  -->
+    <system:String x:Key="restartAfterUpdating">Restart Flow Launcher after updating plugins</system:String>
+    <system:String x:Key="updatePluginCheckboxContent">{0}: Update from v{1} to v{2}</system:String>
+    <system:String x:Key="updatePluginNoSelected">No plugin selected</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Skip</system:String>
