@@ -103,3 +103,4 @@ Reloadable
 metadatas
 WMP
 VSTHRD
+CJK
