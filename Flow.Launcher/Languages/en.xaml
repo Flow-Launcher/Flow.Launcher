@@ -374,7 +374,7 @@
     <system:String x:Key="autoQuickSwitch">Quick Switch Automatically</system:String>
     <system:String x:Key="autoQuickSwitchToolTip">Automatically navigate to the path of the current file manager when a file dialog is opened. (Experimental)</system:String>
     <system:String x:Key="showQuickSwitchWindow">Show Quick Switch Window</system:String>
-    <system:String x:Key="showQuickSwitchWindowToolTip">Show quick switch search window when file dialogs are opened to navigate its path (Only work for file open dialog).</system:String>
+    <system:String x:Key="showQuickSwitchWindowToolTip">Display quick switch search window when the open/save dialog is shown to quickly navigate to file/folder locations.</system:String>
     <system:String x:Key="quickSwitchWindowPosition">Quick Switch Window Position</system:String>
     <system:String x:Key="quickSwitchWindowPositionToolTip">Select position for quick switch window</system:String>
     <system:String x:Key="QuickSwitchWindowPositionUnderDialog">Fixed under dialogs. Displayed after dialogs are created and until it is closed</system:String>
