@@ -431,10 +431,24 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             {
                 case "QuickAccessLink":
                     if (SelectedQuickAccessLink == null) return;
+                    if (Context.API.ShowMsgBox(
+                            Context.API.GetTranslation("plugin_explorer_delete_quick_access_link"),
+                            Context.API.GetTranslation("plugin_explorer_delete"),
+                            MessageBoxButton.OKCancel,
+                            MessageBoxImage.Warning)
+                        == MessageBoxResult.Cancel)
+                        return;
                     Settings.QuickAccessLinks.Remove(SelectedQuickAccessLink);
                     break;
                 case "IndexSearchExcludedPaths":
                     if (SelectedIndexSearchExcludedPath == null) return;
+                    if (Context.API.ShowMsgBox(
+                            Context.API.GetTranslation("plugin_explorer_delete_index_search_excluded_path"),
+                            Context.API.GetTranslation("plugin_explorer_delete"),
+                            MessageBoxButton.OKCancel,
+                            MessageBoxImage.Warning)
+                        == MessageBoxResult.Cancel)
+                        return;
                     Settings.IndexSearchExcludedSubdirectoryPaths.Remove(SelectedIndexSearchExcludedPath);
                     break;
             }

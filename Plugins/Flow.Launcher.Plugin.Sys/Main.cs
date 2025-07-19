@@ -70,13 +70,19 @@ namespace Flow.Launcher.Plugin.Sys
                 return _themeSelector.Query(query);
             }
 
-            var commands = Commands();
+            var commands = Commands(query);
             var results = new List<Result>();
+            var isEmptyQuery = string.IsNullOrWhiteSpace(query.Search);
             foreach (var c in commands)
             {
                 var command = _settings.Commands.First(x => x.Key == c.Title);
                 c.Title = command.Name;
                 c.SubTitle = command.Description;
+                if (isEmptyQuery)
+                {
+                    results.Add(c);
+                    continue;
+                }
 
                 // Match from localized title & localized subtitle & keyword
                 var titleMatch = _context.API.FuzzySearch(query.Search, c.Title);
@@ -188,7 +194,7 @@ namespace Flow.Launcher.Plugin.Sys
             }
         }
 
-        private List<Result> Commands()
+        private List<Result> Commands(Query query)
         {
             var results = new List<Result>();
             var recycleBinFolder = "shell:RecycleBinFolder";
@@ -496,7 +502,15 @@ namespace Flow.Launcher.Plugin.Sys
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\ue790"),
                     Action = c =>
                     {
-                        _context.API.ChangeQuery($"{ThemeSelector.Keyword} ");
+                        if (string.IsNullOrEmpty(query.ActionKeyword))
+                        {
+                            _context.API.ChangeQuery($"{ThemeSelector.Keyword}{Plugin.Query.ActionKeywordSeparator}");
+                        }
+                        else
+                        {
+                            _context.API.ChangeQuery($"{query.ActionKeyword}{Plugin.Query.ActionKeywordSeparator}{ThemeSelector.Keyword}{Plugin.Query.ActionKeywordSeparator}");
+
+                        }
                         return false;
                     }
                 }

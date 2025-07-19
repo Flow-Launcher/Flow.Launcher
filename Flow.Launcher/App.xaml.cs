@@ -318,11 +318,25 @@ namespace Flow.Launcher
                 {
                     // check plugin updates every 5 hour
                     var timer = new PeriodicTimer(TimeSpan.FromHours(5));
-                    await PluginInstaller.CheckForPluginUpdatesAsync();
+                    await PluginInstaller.CheckForPluginUpdatesAsync((plugins) =>
+                    {
+                        Current.Dispatcher.Invoke(() =>
+                        {
+                            var pluginUpdateWindow = new PluginUpdateWindow(plugins);
+                            pluginUpdateWindow.ShowDialog();
+                        });
+                    });
 
                     while (await timer.WaitForNextTickAsync())
                         // check updates on startup
-                        await PluginInstaller.CheckForPluginUpdatesAsync();
+                        await PluginInstaller.CheckForPluginUpdatesAsync((plugins) =>
+                        {
+                            Current.Dispatcher.Invoke(() =>
+                            {
+                                var pluginUpdateWindow = new PluginUpdateWindow(plugins);
+                                pluginUpdateWindow.ShowDialog();
+                            });
+                        });
                 }
             });
         }
