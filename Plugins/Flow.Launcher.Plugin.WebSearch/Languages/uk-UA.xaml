@@ -17,7 +17,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Ключове слово дії</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">Пошук</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Використовувати автозаповнення пошукового запиту:</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Використовувати автозаповнення пошукового запиту</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Автозаповнення даних з:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Будь ласка, виберіть пошуковий запит в Інтернеті</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Ви впевнені, що хочете видалити {0}?</system:String>
@@ -29,8 +29,8 @@
         Таким чином, загальна формула для пошуку на Netflix має вигляд https://www.netflix.com/search?q={q}
     </system:String>
 
-    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">Copy URL</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">Copy search URL to clipboard</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">Копіювати URL</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">Скопіювати URL-адресу пошуку в буфер обміну</system:String>
 
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">Назва</system:String>

@@ -1,30 +1,33 @@
-﻿<Window
-    x:Class="Flow.Launcher.PriorityChangeWindow"
+<Window
+    x:Class="Flow.Launcher.PluginUpdateWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Flow.Launcher"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ui="http://schemas.modernwpf.com/2019"
-    Title="{DynamicResource changePriorityWindow}"
-    Width="350"
+    xmlns:flowlauncher="clr-namespace:Flow.Launcher"
+    Title="{DynamicResource updateAllPluginsButtonContent}"
+    Width="530"
     Background="{DynamicResource PopuBGColor}"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
     Foreground="{DynamicResource PopupTextColor}"
-    Loaded="PriorityChangeWindow_Loaded"
-    MouseDown="window_MouseDown"
+    Icon="Images\app.png"
     ResizeMode="NoResize"
     SizeToContent="Height"
-    WindowStartupLocation="CenterScreen"
-    mc:Ignorable="d">
+    Topmost="True"
+    WindowStartupLocation="CenterScreen">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
     </WindowChrome.WindowChrome>
+    <Window.InputBindings>
+        <KeyBinding Key="Escape" Command="Close" />
+    </Window.InputBindings>
+    <Window.CommandBindings>
+        <CommandBinding Command="Close" Executed="cmdEsc_OnPress" />
+    </Window.CommandBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="80" />
         </Grid.RowDefinitions>
-
         <StackPanel Grid.Row="0">
             <StackPanel>
                 <Grid>
@@ -55,66 +58,53 @@
                     </Button>
                 </Grid>
             </StackPanel>
-            <StackPanel Margin="26,12,26,0">
-                <StackPanel Margin="0,0,0,12">
-                    <TextBlock
-                        Grid.Column="0"
-                        Margin="0,0,0,0"
-                        FontSize="20"
-                        FontWeight="SemiBold"
-                        Text="{DynamicResource changePriorityWindow}"
-                        TextAlignment="Left" />
-                </StackPanel>
-                <StackPanel>
-                    <TextBlock
-                        FontSize="14"
-                        Text="{DynamicResource priority_tips}"
-                        TextAlignment="Left"
-                        TextWrapping="WrapWithOverflow" />
-                </StackPanel>
+            <StackPanel Margin="26 0 26 0">
+                <TextBlock
+                    Margin="0 0 0 12"
+                    FontSize="20"
+                    FontWeight="SemiBold"
+                    Text="{DynamicResource updateAllPluginsButtonContent}"
+                    TextAlignment="Left" />
 
-                <StackPanel Margin="0,24,0,24" Orientation="Horizontal">
-                    <TextBlock
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        FontSize="14"
-                        Text="{DynamicResource priority}" />
-                    <ui:NumberBox
-                        x:Name="tbAction"
-                        Width="200"
-                        Maximum="100"
-                        Minimum="-100"
-                        Margin="10,0,15,0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        CornerRadius="4"
-                        SmallChange="1"
-                        SpinButtonPlacementMode="Inline" />
-                </StackPanel>
+                <ScrollViewer
+                    MaxHeight="300"
+                    Margin="0 5 0 5"
+                    HorizontalScrollBarVisibility="Disabled"
+                    VerticalScrollBarVisibility="Auto">
+                    <StackPanel x:Name="UpdatePluginStackPanel" />
+                </ScrollViewer>
+
+                <Rectangle
+                    Height="1"
+                    Margin="0 5 0 5"
+                    Fill="{DynamicResource SeparatorForeground}" />
+
+                <CheckBox
+                    Margin="0 10 0 10"
+                    Content="{DynamicResource restartAfterUpdating}"
+                    IsChecked="{Binding Restart, Mode=TwoWay}" />
             </StackPanel>
         </StackPanel>
         <Border
             Grid.Row="1"
+            Margin="0 14 0 0"
             Background="{DynamicResource PopupButtonAreaBGColor}"
             BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
-            BorderThickness="0,1,0,0">
+            BorderThickness="0 1 0 0">
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <Button
                     x:Name="btnCancel"
-                    Width="145"
-                    Height="30"
-                    Margin="0,0,5,0"
+                    MinWidth="140"
+                    Margin="10 0 5 0"
                     Click="BtnCancel_OnClick"
                     Content="{DynamicResource cancel}" />
                 <Button
-                    x:Name="btnDone"
-                    Width="145"
-                    Height="30"
-                    Margin="5,0,0,0"
-                    Click="btnDone_OnClick"
-                    Style="{StaticResource AccentButtonStyle}">
-                    <TextBlock x:Name="lblAdd" Text="{DynamicResource done}" />
-                </Button>
+                    x:Name="btnUpdate"
+                    MinWidth="140"
+                    Margin="5 0 10 0"
+                    Click="btnUpdate_OnClick"
+                    Content="{DynamicResource update}"
+                    Style="{StaticResource AccentButtonStyle}" />
             </StackPanel>
         </Border>
     </Grid>

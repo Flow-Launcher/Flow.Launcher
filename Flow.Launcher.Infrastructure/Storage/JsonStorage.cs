@@ -1,22 +1,27 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Globalization;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedCommands;
+
+#nullable enable
 
 namespace Flow.Launcher.Infrastructure.Storage
 {
     /// <summary>
     /// Serialize object using json format.
     /// </summary>
-    public class JsonStorage<T> where T : new()
+    public class JsonStorage<T> : ISavable where T : new()
     {
+        private static readonly string ClassName = "JsonStorage";
+
         protected T? Data;
 
         // need a new directory name
-        public const string DirectoryName = "Settings";
+        public const string DirectoryName = Constant.Settings;
         public const string FileSuffix = ".json";
 
         protected string FilePath { get; init; } = null!;
@@ -37,7 +42,23 @@ namespace Flow.Launcher.Infrastructure.Storage
             FilePath = filePath;
             DirectoryPath = Path.GetDirectoryName(filePath) ?? throw new ArgumentException("Invalid file path");
 
-            Helper.ValidateDirectory(DirectoryPath);
+            FilesFolders.ValidateDirectory(DirectoryPath);
+        }
+
+        public bool Exists()
+        {
+            return File.Exists(FilePath);
+        }
+
+        public void Delete()
+        {
+            foreach (var path in new[] { FilePath, BackupFilePath, TempFilePath })
+            {
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+            }
         }
 
         public async Task<T> LoadAsync()
@@ -101,7 +122,7 @@ namespace Flow.Launcher.Infrastructure.Storage
 
         private void RestoreBackup()
         {
-            Log.Info($"|JsonStorage.Load|Failed to load settings.json, {BackupFilePath} restored successfully");
+            Log.Info(ClassName, $"Failed to load settings.json, {BackupFilePath} restored successfully");
 
             if (File.Exists(FilePath))
                 File.Replace(BackupFilePath, FilePath, null);
@@ -180,7 +201,10 @@ namespace Flow.Launcher.Infrastructure.Storage
 
         public void Save()
         {
-            string serialized = JsonSerializer.Serialize(Data,
+            // User may delete the directory, so we need to check it
+            FilesFolders.ValidateDirectory(DirectoryPath);
+
+            var serialized = JsonSerializer.Serialize(Data,
                 new JsonSerializerOptions { WriteIndented = true });
 
             File.WriteAllText(TempFilePath, serialized);
@@ -190,6 +214,9 @@ namespace Flow.Launcher.Infrastructure.Storage
 
         public async Task SaveAsync()
         {
+            // User may delete the directory, so we need to check it
+            FilesFolders.ValidateDirectory(DirectoryPath);
+
             await using var tempOutput = File.OpenWrite(TempFilePath);
             await JsonSerializer.SerializeAsync(tempOutput, Data,
                 new JsonSerializerOptions { WriteIndented = true });

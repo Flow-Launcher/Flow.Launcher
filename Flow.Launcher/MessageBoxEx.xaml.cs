@@ -4,13 +4,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Image;
-using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher
 {
     public partial class MessageBoxEx : Window
     {
+        private static readonly string ClassName = nameof(MessageBoxEx);
+
         private static MessageBoxEx msgBox;
         private static MessageBoxResult _result = MessageBoxResult.None;
 
@@ -21,9 +21,6 @@ namespace Flow.Launcher
             _button = button;
             InitializeComponent();
         }
-
-        public static MessageBoxResult Show(string messageBoxText)
-            => Show(messageBoxText, string.Empty, MessageBoxButton.OK, MessageBoxImage.None, MessageBoxResult.OK);
 
         public static MessageBoxResult Show(
             string messageBoxText,
@@ -40,8 +37,9 @@ namespace Flow.Launcher
             try
             {
                 msgBox = new MessageBoxEx(button);
-                if (caption == string.Empty && button == MessageBoxButton.OK && icon == MessageBoxImage.None)
+                if (caption == string.Empty && icon == MessageBoxImage.None)
                 {
+                    // If there is no caption and no icon, use DescOnlyTextBlock for vertically centered text
                     msgBox.Title = messageBoxText;
                     msgBox.DescOnlyTextBlock.Visibility = Visibility.Visible;
                     msgBox.DescOnlyTextBlock.Text = messageBoxText;
@@ -59,7 +57,7 @@ namespace Flow.Launcher
             }
             catch (Exception e)
             {
-                Log.Error($"|MessageBoxEx.Show|An error occurred: {e.Message}");
+                App.API.LogError(ClassName, $"An error occurred: {e.Message}");
                 msgBox = null;
                 return MessageBoxResult.None;
             }
@@ -156,13 +154,14 @@ namespace Flow.Launcher
         private async Task SetImageAsync(string imageName)
         {
             var imagePath = Path.Combine(Constant.ProgramDirectory, "Images", imageName);
-            var imageSource = await ImageLoader.LoadAsync(imagePath);
+            var imageSource = await App.API.LoadImageAsync(imagePath);
             Img.Source = imageSource;
         }
 
         private void KeyEsc_OnPress(object sender, ExecutedRoutedEventArgs e)
         {
             if (_button == MessageBoxButton.YesNo)
+                // Follow System.Windows.MessageBox behavior
                 return;
             else if (_button == MessageBoxButton.OK)
                 _result = MessageBoxResult.OK;
@@ -191,6 +190,7 @@ namespace Flow.Launcher
         private void Button_Cancel(object sender, RoutedEventArgs e)
         {
             if (_button == MessageBoxButton.YesNo)
+                // Follow System.Windows.MessageBox behavior
                 return;
             else if (_button == MessageBoxButton.OK)
                 _result = MessageBoxResult.OK;

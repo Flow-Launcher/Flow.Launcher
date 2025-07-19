@@ -1,74 +1,52 @@
-﻿using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Helper;
-using Flow.Launcher.Infrastructure.UserSettings;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher
 {
     public partial class CustomQueryHotkeySetting : Window
     {
-        private readonly Settings _settings;
-        private bool update;
-        private CustomPluginHotkey updateCustomHotkey;
+        public string Hotkey { get; set; } = string.Empty;
+        public string ActionKeyword { get; set; } = string.Empty;
 
-        public CustomQueryHotkeySetting(Settings settings)
+        private readonly bool update;
+        private readonly CustomPluginHotkey originalCustomHotkey;
+
+        public CustomQueryHotkeySetting()
         {
-            _settings = settings;
             InitializeComponent();
+            tbAdd.Visibility = Visibility.Visible;
+        }
+
+        public CustomQueryHotkeySetting(CustomPluginHotkey hotkey)
+        {
+            originalCustomHotkey = hotkey;
+            update = true;
+            ActionKeyword = originalCustomHotkey.ActionKeyword;
+            InitializeComponent();
+            tbUpdate.Visibility = Visibility.Visible;
+            HotkeyControl.SetHotkey(originalCustomHotkey.Hotkey, false);
         }
 
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
         {
+            DialogResult = false;
             Close();
         }
 
         private void btnAdd_OnClick(object sender, RoutedEventArgs e)
         {
-            if (!update)
+            Hotkey = HotkeyControl.CurrentHotkey.ToString();
+
+            if (string.IsNullOrEmpty(Hotkey) && string.IsNullOrEmpty(ActionKeyword))
             {
-                _settings.CustomPluginHotkeys ??= new ObservableCollection<CustomPluginHotkey>();
-
-                var pluginHotkey = new CustomPluginHotkey
-                {
-                    Hotkey = HotkeyControl.CurrentHotkey.ToString(), ActionKeyword = tbAction.Text
-                };
-                _settings.CustomPluginHotkeys.Add(pluginHotkey);
-
-                HotKeyMapper.SetCustomQueryHotkey(pluginHotkey);
-            }
-            else
-            {
-                var oldHotkey = updateCustomHotkey.Hotkey;
-                updateCustomHotkey.ActionKeyword = tbAction.Text;
-                updateCustomHotkey.Hotkey = HotkeyControl.CurrentHotkey.ToString();
-                //remove origin hotkey
-                HotKeyMapper.RemoveHotkey(oldHotkey);
-                HotKeyMapper.SetCustomQueryHotkey(updateCustomHotkey);
-            }
-
-            Close();
-        }
-
-
-        public void UpdateItem(CustomPluginHotkey item)
-        {
-            updateCustomHotkey = _settings.CustomPluginHotkeys.FirstOrDefault(o =>
-                o.ActionKeyword == item.ActionKeyword && o.Hotkey == item.Hotkey);
-            if (updateCustomHotkey == null)
-            {
-                App.API.ShowMsgBox(InternationalizationManager.Instance.GetTranslation("invalidPluginHotkey"));
-                Close();
+                App.API.ShowMsgBox(App.API.GetTranslation("emptyPluginHotkey"));
                 return;
             }
 
-            tbAction.Text = updateCustomHotkey.ActionKeyword;
-            HotkeyControl.SetHotkey(updateCustomHotkey.Hotkey, false);
-            update = true;
-            lblAdd.Text = InternationalizationManager.Instance.GetTranslation("update");
+            DialogResult = !update || originalCustomHotkey.Hotkey != Hotkey || originalCustomHotkey.ActionKeyword != ActionKeyword;
+            Close();
         }
 
         private void BtnTestActionKeyword_OnClick(object sender, RoutedEventArgs e)
@@ -80,6 +58,7 @@ namespace Flow.Launcher
 
         private void cmdEsc_OnPress(object sender, ExecutedRoutedEventArgs e)
         {
+            DialogResult = false;
             Close();
         }
 

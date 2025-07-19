@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using Flow.Launcher.Plugin.SharedModels;
 
@@ -10,11 +9,11 @@ internal static class BookmarkLoader
 {
     internal static MatchResult MatchProgram(Bookmark bookmark, string queryString)
     {
-        var match = StringMatcher.FuzzySearch(queryString, bookmark.Name);
+        var match = Main._context.API.FuzzySearch(queryString, bookmark.Name);
         if (match.IsSearchPrecisionScoreMet())
             return match;
 
-        return StringMatcher.FuzzySearch(queryString, bookmark.Url);
+        return Main._context.API.FuzzySearch(queryString, bookmark.Url);
     }
 
     internal static List<Bookmark> LoadAllBookmarks(Settings setting)

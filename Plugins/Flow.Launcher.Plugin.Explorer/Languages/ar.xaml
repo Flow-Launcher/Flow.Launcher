@@ -3,6 +3,8 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">يرجى إجراء تحديد أولاً</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Please select a folder path.</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Please choose a different name or folder path.</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">يرجى تحديد رابط المجلد</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">هل أنت متأكد أنك تريد حذف {0}؟</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">هل أنت متأكد أنك تريد حذف هذا الملف نهائيًا؟</system:String>
@@ -25,12 +27,14 @@
     <system:String x:Key="plugin_explorer_add">إضافة</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">إعدادات عامة</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">تخصيص الكلمات المفتاحية للإجراءات</system:String>
+    <system:String x:Key="plugin_explorer_manage_quick_access_links_header">Customise Quick Access</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">روابط الوصول السريع</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">إعدادات Everything</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">لوحة المعاينة</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">الحجم</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">تاريخ الإنشاء</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">تاريخ التعديل</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_age_checkbox">File Age</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_file_info_label">عرض معلومات الملف</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">تنسيق التاريخ والوقت</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">خيارات الترتيب:</system:String>
@@ -40,6 +44,7 @@
     <system:String x:Key="plugin_explorer_shell_path">مسار الشل</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">مسارات مستبعدة من البحث المفهرس</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">استخدام موقع نتيجة البحث كدليل العمل للتنفيذ</system:String>
+    <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Display more information like size and age in tooltips</system:String>
     <system:String x:Key="plugin_explorer_default_open_in_file_manager">اضغط Enter لفتح المجلد في مدير الملفات الافتراضي</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">استخدام البحث المفهرس للبحث في المسار</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">خيارات الفهرسة</system:String>
@@ -76,17 +81,26 @@
     <!--  Plugin Tooltip  -->
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter لفتح الدليل</system:String>
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Enter لفتح المجلد الحاوي</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info">{0}{4}Size: {1}{4}Date created: {2}{4}Date modified: {3}</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_unknown">Unknown</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_volume">{0}{3}Space free: {1}{3}Total size: {2}</system:String>
 
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">نسخ المسار</system:String>
     <system:String x:Key="plugin_explorer_copypath_subtitle">نسخ مسار العنصر الحالي إلى الحافظة</system:String>
+    <system:String x:Key="plugin_explorer_copyname">Copy name</system:String>
+    <system:String x:Key="plugin_explorer_copyname_subtitle">Copy name of current item to clipboard</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">نسخ</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">نسخ الملف الحالي إلى الحافظة</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">نسخ المجلد الحالي إلى الحافظة</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder">حذف</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">حذف الملف الحالي نهائيًا</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">حذف المجلد الحالي نهائيًا</system:String>
-    <system:String x:Key="plugin_explorer_path">المسار:</system:String>
+    <system:String x:Key="plugin_explorer_name">اسم البرنامج</system:String>
+    <system:String x:Key="plugin_explorer_type">Type</system:String>
+    <system:String x:Key="plugin_explorer_path">المسار</system:String>
+    <system:String x:Key="plugin_explorer_file">ملف</system:String>
+    <system:String x:Key="plugin_explorer_folder">مجلد</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">حذف المحدد</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">تشغيل كمستخدم مختلف</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">تشغيل العنصر المحدد باستخدام حساب مستخدم مختلف</system:String>
@@ -157,9 +171,20 @@
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">هل ترغب في تمكين البحث في المحتوى لـ Everything؟</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">قد يكون بطيئًا جدًا بدون فهرسة (المدعومة فقط في Everything v1.5+)</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_everything_not_found">Unable to find Everything.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_install_issue">Failed to install Everything, please install it manually</system:String>
+
     <!--  Native Context Menu  -->
     <system:String x:Key="plugin_explorer_native_context_menu_header">قائمة السياق الأصلية</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">عرض قائمة السياق الأصلية (تجريبي)</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">أدناه يمكنك تحديد العناصر التي تريد تضمينها في قائمة السياق، يمكن أن تكون جزئية (على سبيل المثال 'pen wit') أو كاملة ('فتح بواسطة').</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">يمكنك أدناه تحديد العناصر التي تريد استبعادها من قائمة الضغط الأيمن، يمكن أن تكون جزئية (على سبيل المثال، 'pen wit') أو كاملة ('Open with').</system:String>
+
+    <!--  Preview Info  -->
+    <system:String x:Key="Today">Today</system:String>
+    <system:String x:Key="DaysAgo">{0} days ago</system:String>
+    <system:String x:Key="OneMonthAgo">1 month ago</system:String>
+    <system:String x:Key="MonthsAgo">{0} months ago</system:String>
+    <system:String x:Key="OneYearAgo">1 year ago</system:String>
+    <system:String x:Key="YearsAgo">{0} years ago</system:String>
 </ResourceDictionary>

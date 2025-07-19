@@ -3,10 +3,10 @@
 
     <system:String x:Key="flowlauncher_plugin_websearch_window_title">Search Source Setting</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_open_search_in">Open search in:</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_new_window">New Window</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_new_tab">New Tab</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_new_window">Yeni Pencere</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_new_tab">Yeni Sekme</system:String>
     <system:String x:Key="flowlaucnher_plugin_websearch_set_browser_path">Set browser from path:</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_choose">Choose</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_choose">Seç</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete">Sil</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_edit">Düzenle</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">Ekle</system:String>
@@ -17,7 +17,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Anahtar Kelime</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">Ara:</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Arama önerilerini etkinleştir</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Use Search Query Autocomplete</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Autocomplete Data from:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Lütfen bir web araması seçin</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">{0} bağlantısını silmek istediğinize emin misiniz?</system:String>
@@ -34,7 +34,7 @@
 
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">Başlık</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable">Status</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable">Durum</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_select_icon">Simge Seç</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_icon">Simge</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_cancel">İptal</system:String>

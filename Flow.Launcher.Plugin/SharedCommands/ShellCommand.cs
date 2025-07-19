@@ -8,12 +8,26 @@ using Windows.Win32.Foundation;
 
 namespace Flow.Launcher.Plugin.SharedCommands
 {
+    /// <summary>
+    /// Contains methods for running shell commands
+    /// </summary>
     public static class ShellCommand
     {
+        /// <summary>
+        /// Delegate for EnumThreadWindows
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <param name="lParam"></param>
+        /// <returns></returns>
         public delegate bool EnumThreadDelegate(IntPtr hwnd, IntPtr lParam);
 
         private static bool containsSecurityWindow;
 
+        /// <summary>
+        /// Runs a windows command using the provided ProcessStartInfo
+        /// </summary>
+        /// <param name="processStartInfo"></param>
+        /// <returns></returns>
         public static Process RunAsDifferentUser(ProcessStartInfo processStartInfo)
         {
             processStartInfo.Verb = "RunAsUser";
@@ -65,6 +79,15 @@ namespace Flow.Launcher.Plugin.SharedCommands
             return buffer[..length].ToString();
         }
 
+        /// <summary>
+        /// Runs a windows command using the provided ProcessStartInfo
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="workingDirectory"></param>
+        /// <param name="arguments"></param>
+        /// <param name="verb"></param>
+        /// <param name="createNoWindow"></param>
+        /// <returns></returns>
         public static ProcessStartInfo SetProcessStartInfo(this string fileName, string workingDirectory = "",
             string arguments = "", string verb = "", bool createNoWindow = false)
         {

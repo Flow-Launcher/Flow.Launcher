@@ -7,12 +7,18 @@
         Hãy chọn không nếu nó đã được cài đặt, và bạn sẽ được hỏi chọn thư mục chứa chương trình thực thi {1}
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Please select the {0} executable</system:String>
+    <system:String x:Key="runtimeExecutableInvalidChooseDownload">
+        Your selected {0} executable is invalid.
+        {2}{2}
+        Click yes if you would like select the {0} executable again. Click no if you would like to download {1}
+    </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Unable to set {0} executable path, please try from Flow's settings (scroll down to the bottom).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Fail to Init Plugins</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">Plugins: {0} - fail to load and would be disabled, please contact plugin creator for help</system:String>
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Không thể đăng ký phím nóng &quot;{0}&quot;. Phím nóng có thể được sử dụng bởi một chương trình khác. Chuyển sang phím nóng khác hoặc thoát khỏi chương trình khác.</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Không thể khởi động {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Định dạng tệp plugin Flow Launcher không chính xác</system:String>
@@ -36,7 +42,8 @@
     <system:String x:Key="GameMode">Chế độ trò chơi</system:String>
     <system:String x:Key="GameModeToolTip">Tạm dừng sử dụng phím nóng.</system:String>
     <system:String x:Key="PositionReset">Đặt lại vị trí</system:String>
-    <system:String x:Key="PositionResetToolTip">Đặt lại vị trí của cửa sổ tìm kiếm</system:String>
+    <system:String x:Key="PositionResetToolTip">Cài lại vị trí cửa sổ tìm kiếm</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Cài đặt</system:String>
@@ -44,10 +51,12 @@
     <system:String x:Key="portableMode">Chế độ Portabler</system:String>
     <system:String x:Key="portableModeToolTIp">Lưu trữ tất cả cài đặt và dữ liệu người dùng trong một thư mục (hữu ích khi sử dụng với thiết bị lưu trữ di động hoặc dịch vụ đám mây).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Khởi động Flow Launcher khi khởi động hệ thống</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
     <system:String x:Key="setAutoStartFailed">Không lưu được tính năng tự khởi động khi khởi động hệ thống</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ẩn Flow Launcher khi mất tiêu điểm</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Không hiển thị thông báo khi có phiên bản mới</system:String>
-    <system:String x:Key="SearchWindowPosition">Vị trí Suchfenster</system:String>
+    <system:String x:Key="SearchWindowPosition">Search Window Location</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Ghi nhớ vị trí cuối cùng</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Màn hình bằng con trỏ chuột</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Màn hình có cửa sổ được tập trung</system:String>
@@ -67,8 +76,6 @@
     <system:String x:Key="LastQueryEmpty">Trống truy vấn cuối cùng</system:String>
     <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
     <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
-    <system:String x:Key="KeepMaxResults">Giữ nguyên chiều cao cửa sổ</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">Chiều cao cửa sổ không thể thay đổi bằng cách kéo.</system:String>
     <system:String x:Key="maxShowResults">Số kết quả tối đa</system:String>
     <system:String x:Key="maxShowResultsToolTip">Có thể thiết lập nhanh chóng bằng CTRL+Plus và CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Bỏ qua phím nóng khi cửa sổ ở chế độ toàn màn hình</system:String>
@@ -99,6 +106,42 @@
     <system:String x:Key="AlwaysPreview">Luôn xem trước</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Luôn mở bảng xem trước khi Flow kích hoạt. Nhấn {0} để chuyển đổi chế độ xem trước.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Hiệu ứng đổ bóng không được phép nếu chủ đề hiện tại bật hiệu ứng làm mờ</system:String>
+    <system:String x:Key="searchDelay">Search Delay</system:String>
+    <system:String x:Key="searchDelayToolTip">Adds a short delay while typing to reduce UI flicker and result load. Recommended if your typing speed is average.</system:String>
+    <system:String x:Key="searchDelayNumberBoxToolTip">Enter the wait time (in ms) until input is considered complete. This can only be edited if Search Delay is enabled.</system:String>
+    <system:String x:Key="searchDelayTime">Default Search Delay Time</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Wait time before showing results after typing stops. Higher values wait longer. (ms)</system:String>
+    <system:String x:Key="KoreanImeTitle">Information for Korean IME user</system:String>
+    <system:String x:Key="KoreanImeGuide">
+        The Korean input method used in Windows 11 may cause some issues in Flow Launcher.
+
+        If you experience any problems, you may need to enable &quot;Use previous version of Korean IME&quot;.
+
+
+        Open Setting in Windows 11 and go to:
+
+        Time &amp; Language &gt; Language &amp; Region &gt; Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility,
+
+        and enable &quot;Use previous version of Microsoft IME&quot;.
+
+
+    </system:String>
+    <system:String x:Key="KoreanImeOpenLink">Open Language and Region System Settings</system:String>
+    <system:String x:Key="KoreanImeOpenLinkToolTip">Opens the Korean IME setting location. Go to Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility</system:String>
+    <system:String x:Key="KoreanImeOpenLinkButton">Mở</system:String>
+    <system:String x:Key="KoreanImeRegistry">Use Previous Korean IME</system:String>
+    <system:String x:Key="KoreanImeRegistryTooltip">You can change the Previous Korean IME settings directly from here</system:String>
+    <system:String x:Key="homePage">Home Page</system:String>
+    <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
+    <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
+    <system:String x:Key="showAtTopmost">Show Search Window at Foremost</system:String>
+    <system:String x:Key="showAtTopmostToolTip">Overrides other programs' 'Always on Top' setting and displays Flow in the foremost position.</system:String>
+    <system:String x:Key="autoRestartAfterChanging">Restart after modifying plugin via Plugin Store</system:String>
+    <system:String x:Key="autoRestartAfterChangingToolTip">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugin Store</system:String>
+    <system:String x:Key="showUnknownSourceWarning">Show unknown source warning</system:String>
+    <system:String x:Key="showUnknownSourceWarningToolTip">Show warning when installing plugins from unknown sources</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Plugin tìm kiếm</system:String>
@@ -115,6 +158,13 @@
     <system:String x:Key="currentActionKeywords">Từ hành động hiện tại</system:String>
     <system:String x:Key="newActionKeyword">Từ hành động mới</system:String>
     <system:String x:Key="actionKeywordsTooltip">Thay đổi từ hành động</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Plugin search delay time</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Search Delay Time</system:String>
+    <system:String x:Key="FilterComboboxLabel">Advanced Settings:</system:String>
+    <system:String x:Key="DisplayModeOnOff">Đã bật</system:String>
+    <system:String x:Key="DisplayModePriority">Ưu tiên</system:String>
+    <system:String x:Key="DisplayModeSearchDelay">Search Delay</system:String>
+    <system:String x:Key="DisplayModeHomeOnOff">Home Page</system:String>
     <system:String x:Key="currentPriority">Ưu tiên hiện tại</system:String>
     <system:String x:Key="newPriority">Ưu tiên mới</system:String>
     <system:String x:Key="priority">Ưu tiên</system:String>
@@ -126,7 +176,16 @@
     <system:String x:Key="plugin_query_version">Phiên bản</system:String>
     <system:String x:Key="plugin_query_web">Trang web</system:String>
     <system:String x:Key="plugin_uninstall">Gỡ cài đặt</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
+    <system:String x:Key="failedToRemovePluginCacheTitle">Fail to remove plugin cache</system:String>
+    <system:String x:Key="failedToRemovePluginCacheMessage">Plugins: {0} - Fail to remove plugin cache files, please remove them manually</system:String>
+    <system:String x:Key="pluginModifiedAlreadyTitle">{0} modified already</system:String>
+    <system:String x:Key="pluginModifiedAlreadyMessage">Please restart Flow before making any further changes</system:String>
+    <system:String x:Key="failedToInstallPluginTitle">Fail to install {0}</system:String>
+    <system:String x:Key="failedToUninstallPluginTitle">Fail to uninstall {0}</system:String>
+    <system:String x:Key="fileNotFoundMessage">Unable to find plugin.json from the extracted zip file, or this path {0} does not exist</system:String>
+    <system:String x:Key="pluginExistAlreadyMessage">A plugin with the same ID and version already exists, or the version is greater than this downloaded plugin</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Tải tiện ích mở rộng</system:String>
@@ -142,8 +201,28 @@
     <system:String x:Key="LabelNew">Phiên bản mới</system:String>
     <system:String x:Key="LabelNewToolTip">Plugin này đã được cập nhật trong vòng 7 ngày qua</system:String>
     <system:String x:Key="LabelUpdateToolTip">Đã có bản cập nhật mới</system:String>
-
-
+    <system:String x:Key="ErrorInstallingPlugin">Lỗi cài đặt plugin</system:String>
+    <system:String x:Key="ErrorUninstallingPlugin">Lỗi cài đặt plugin</system:String>
+    <system:String x:Key="ErrorUpdatingPlugin">Error updating plugin</system:String>
+    <system:String x:Key="KeepPluginSettingsTitle">Keep plugin settings</system:String>
+    <system:String x:Key="KeepPluginSettingsSubtitle">Do you want to keep the settings of the plugin for the next usage?</system:String>
+    <system:String x:Key="InstallSuccessNoRestart">Plugin {0} successfully installed. Please restart Flow.</system:String>
+    <system:String x:Key="UninstallSuccessNoRestart">Plugin {0} successfully uninstalled. Please restart Flow.</system:String>
+    <system:String x:Key="UpdateSuccessNoRestart">Plugin {0} successfully updated. Please restart Flow.</system:String>
+    <system:String x:Key="InstallPromptTitle">Plugin install</system:String>
+    <system:String x:Key="InstallPromptSubtitle">{0} by {1} {2}{2}Would you like to install this plugin?</system:String>
+    <system:String x:Key="UninstallPromptTitle">Plugin uninstall</system:String>
+    <system:String x:Key="UninstallPromptSubtitle">{0} by {1} {2}{2}Would you like to uninstall this plugin?</system:String>
+    <system:String x:Key="UpdatePromptTitle">Plugin update</system:String>
+    <system:String x:Key="UpdatePromptSubtitle">{0} by {1} {2}{2}Would you like to update this plugin?</system:String>
+    <system:String x:Key="DownloadingPlugin">Plugin đang được tải</system:String>
+    <system:String x:Key="AutoRestartAfterChange">Automatically restart after installing/uninstalling/updating plugins in plugin store</system:String>
+    <system:String x:Key="ZipFileNotHavePluginJson">Zip file does not have a valid plugin.json configuration</system:String>
+    <system:String x:Key="InstallFromUnknownSourceTitle">Cài đặt từ một nguồn không xác định</system:String>
+    <system:String x:Key="InstallFromUnknownSourceSubtitle">This plugin is from an unknown source and it may contain potential risks!{0}{0}Please ensure you understand where this plugin is from and that it is safe.{0}{0}Would you like to continue still?{0}{0}(You can switch off this warning in general section of setting window)</system:String>
+    <system:String x:Key="ZipFiles">Zip files</system:String>
+    <system:String x:Key="SelectZipFile">Please select zip file</system:String>
+    <system:String x:Key="installLocalPluginTooltip">Install plugin from local path</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Giao Diện</system:String>
@@ -165,6 +244,9 @@
     <system:String x:Key="resultItemFont">Result Title Font</system:String>
     <system:String x:Key="resultSubItemFont">Result Subtitle Font</system:String>
     <system:String x:Key="resetCustomize">Đặt lại</system:String>
+    <system:String x:Key="resetCustomizeToolTip">Reset to the recommended font and size settings.</system:String>
+    <system:String x:Key="ImportThemeSize">Import Theme Size</system:String>
+    <system:String x:Key="ImportThemeSizeToolTip">If a size value intended by the theme designer is available, it will be retrieved and applied.</system:String>
     <system:String x:Key="CustomizeToolTip">Customize</system:String>
     <system:String x:Key="windowMode">chế độ cửa sổ</system:String>
     <system:String x:Key="opacity">độ mờ</system:String>
@@ -191,9 +273,21 @@
     <system:String x:Key="AnimationSpeedCustom">Tùy chỉnh</system:String>
     <system:String x:Key="Clock">Giờ</system:String>
     <system:String x:Key="Date">Ngày</system:String>
-    <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
+    <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropInfo">The backdrop effect is not applied in the preview.</system:String>
+    <system:String x:Key="BackdropTypeDisabledToolTip">Backdrop supported starting from Windows 11 build 22000 and above</system:String>
+    <system:String x:Key="BackdropTypesNone">Không</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
+    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">This theme supports two (light/dark) modes.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
-
+    <system:String x:Key="ShowPlaceholder">Show placeholder</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
+    <system:String x:Key="PlaceholderText">Placeholder text</system:String>
+    <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Phím tắt</system:String>
@@ -253,6 +347,9 @@
     <system:String x:Key="useGlyphUI">Sử dụng biểu tượng Segoe</system:String>
     <system:String x:Key="useGlyphUIEffect">Sử dụng Biểu tượng Segoe Fluent cho kết quả truy vấn nếu được hỗ trợ</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Nhấn phím</system:String>
+    <system:String x:Key="showBadges">Show Result Badges</system:String>
+    <system:String x:Key="showBadgesToolTip">For supported plugins, badges are displayed to help distinguish them more easily.</system:String>
+    <system:String x:Key="showBadgesGlobalOnly">Show Result Badges for Global Query Only</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">Proxy HTTP</system:String>
@@ -295,20 +392,39 @@
     <system:String x:Key="logfolder">Thư mục nhật ký</system:String>
     <system:String x:Key="clearlogfolder">Xóa tệp nhật ký</system:String>
     <system:String x:Key="clearlogfolderMessage">Bạn có chắc chắn muốn xóa tất cả nhật ký không?</system:String>
+    <system:String x:Key="cachefolder">Cache Folder</system:String>
+    <system:String x:Key="clearcachefolder">Clear Caches</system:String>
+    <system:String x:Key="clearcachefolderMessage">Are you sure you want to delete all caches?</system:String>
+    <system:String x:Key="clearfolderfailMessage">Failed to clear part of folders and files. Please see log file for more information</system:String>
     <system:String x:Key="welcomewindow">Wizard</system:String>
     <system:String x:Key="userdatapath">Vị trí dữ liệu người dùng</system:String>
     <system:String x:Key="userdatapathToolTip">Thiết đặt người dùng và plugin đã cài đặt sẽ được lưu trong thư mục dữ liệu người dùng. Vị trí này có thể thay đổi tùy thuộc vào việc nó có ở chế độ di động hay không.</system:String>
     <system:String x:Key="userdatapathButton">Mở thư mục</system:String>
+    <system:String x:Key="advanced">Advanced</system:String>
+    <system:String x:Key="logLevel">Log Level</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelINFO">Info</system:String>
+    <system:String x:Key="settingWindowFontTitle">Setting Window Font</system:String>
+
+    <!--  Release Notes Window  -->
+    <system:String x:Key="seeMoreReleaseNotes">See more release notes on GitHub</system:String>
+    <system:String x:Key="checkNetworkConnectionTitle">Failed to fetch release notes</system:String>
+    <system:String x:Key="checkNetworkConnectionSubTitle">Please check your network connection or ensure GitHub is accessible</system:String>
+    <system:String x:Key="appUpdateTitle">Flow Launcher has been updated to {0}</system:String>
+    <system:String x:Key="appUpdateButtonContent">Click here to view the release notes</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Chọn trình quản lý tệp</system:String>
+    <system:String x:Key="fileManager_learnMore">Learn more</system:String>
     <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments as required. The &quot;%d&quot; represents the directory path to open for, used by the Arg for Folder field and for commands opening specific directories. The &quot;%f&quot; represents the file path to open for, used by the Arg for File field and for commands opening specific files.</system:String>
-    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fileds blank.</system:String>
+    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fields blank.</system:String>
     <system:String x:Key="fileManager_name">Trình quản lý ngày tháng</system:String>
     <system:String x:Key="fileManager_profile_name">Tên hồ sơ</system:String>
     <system:String x:Key="fileManager_path">Đường dẫn quản lý tệp</system:String>
     <system:String x:Key="fileManager_directory_arg">Đối số cho thư mục</system:String>
     <system:String x:Key="fileManager_file_arg">Đối số cho tệp</system:String>
+    <system:String x:Key="fileManagerPathNotFound">The file manager '{0}' could not be located at '{1}'. Would you like to continue?</system:String>
+    <system:String x:Key="fileManagerPathError">File Manager Path Error</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Trình duyệt web tiêu chuẩn</system:String>
@@ -333,22 +449,33 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Không thể tìm thấy plugin được chỉ định</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Từ khóa hành động mới không được để trống</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Từ khóa hành động mới này đã được gán cho một plugin khác, vui lòng chọn một plugin khác</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
     <system:String x:Key="success">Thành công</system:String>
     <system:String x:Key="completedSuccessfully">Đã hoàn tất thành công</system:String>
-    <system:String x:Key="actionkeyword_tips">Sử dụng * nếu bạn muốn xác định từ khóa hành động.</system:String>
+    <system:String x:Key="failedToCopy">Failed to copy</system:String>
+    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="searchDelayTimeTitle">Search Delay Time Setting</system:String>
+    <system:String x:Key="searchDelayTimeTips">Input the search delay time in ms you like to use for the plugin. Input empty if you don't want to specify any, and the plugin will use default search delay time.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="homeTitle">Home Page</system:String>
+    <system:String x:Key="homeTips">Enable the plugin home page state if you like to show the plugin results when query is empty.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Phím nóng truy vấn tùy chỉnh</system:String>
     <system:String x:Key="customeQueryHotkeyTips">Nhấn phím nóng tùy chỉnh để mở Flow Launcher và tự động nhập truy vấn được chỉ định.</system:String>
     <system:String x:Key="preview">Xem trước</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Tổ hợp phím không khả dụng, vui lòng chọn tổ hợp phím khác</system:String>
-    <system:String x:Key="invalidPluginHotkey">Tổ hợp phím plugin không hợp lệ</system:String>
+    <system:String x:Key="invalidPluginHotkey">Hotkey is invalid</system:String>
     <system:String x:Key="update">Cập nhật</system:String>
     <system:String x:Key="hotkeyRegTitle">Binding Hotkey</system:String>
     <system:String x:Key="hotkeyUnavailable">Phím nóng hiện tại không có sẵn.</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for &quot;{0}&quot; and can't be used. Please choose another hotkey.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">This hotkey is already in use by &quot;{0}&quot;. If you press &quot;Overwrite&quot;, it will be removed from &quot;{0}&quot;.</system:String>
     <system:String x:Key="hotkeyRegGuide">Press the keys you want to use for this function.</system:String>
+    <system:String x:Key="emptyPluginHotkey">Hotkey and action keyword are empty</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Phím tắt truy vấn tùy chỉnh</system:String>
@@ -361,6 +488,7 @@
     </system:String>
     <system:String x:Key="duplicateShortcut">Phím tắt đã tồn tại, vui lòng nhập Phím tắt mới hoặc chỉnh sửa phím tắt hiện có.</system:String>
     <system:String x:Key="emptyShortcut">Phím tắt và/hoặc phần mở rộng của nó trống.</system:String>
+    <system:String x:Key="invalidShortcut">Shortcut is invalid</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Lưu</system:String>
@@ -371,6 +499,7 @@
     <system:String x:Key="commonOK">OK</system:String>
     <system:String x:Key="commonYes">Có</system:String>
     <system:String x:Key="commonNo">Không</system:String>
+    <system:String x:Key="commonBackground">Nền</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Phiên bản</system:String>
@@ -387,6 +516,18 @@
     <system:String x:Key="reportWindow_report_succeed">Đã gửi báo cáo thành công</system:String>
     <system:String x:Key="reportWindow_report_failed">Báo cáo lỗi</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Trình khởi chạy luồng có lỗi</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
+    <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
+    <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
+
+    <!--  File Open Error  -->
+    <system:String x:Key="fileManagerNotFoundTitle">File Manager Error</system:String>
+    <system:String x:Key="fileManagerNotFound">
+        The specified file manager could not be found. Please check the Custom File Manager setting under Settings &gt; General.
+    </system:String>
+    <system:String x:Key="errorTitle">Lỗi</system:String>
+    <system:String x:Key="folderOpenError">An error occurred while opening the folder. {0}</system:String>
+    <system:String x:Key="browserOpenError">An error occurred while opening the URL in the browser. Please check your Default Web Browser configuration in the General section of the settings window</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Cảnh báo nhỏ...</system:String>

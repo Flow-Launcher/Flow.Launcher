@@ -13,6 +13,8 @@
     <system:String x:Key="plugin_pluginsmanager_installing_plugin">Instaluje se plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Stáhnout a nainstalovat {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Odinstalovat plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_title">Keep plugin settings</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_subtitle">Do you want to keep the settings of the plugin for the next usage?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin {0} byl úspěšně nainstalován. Restartuje se Flow, vyčkejte prosím...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Instalace se nezdařila: nepodařilo se najít metadata souboru plugin.json z rozbaleného souboru Zip.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Chyba: Zásuvný modul se stejnou nebo vyšší verzí než {0} již existuje.</system:String>
@@ -35,16 +37,21 @@
     <system:String x:Key="plugin_pluginsmanager_update_success_restart">Plugin {0} successfully updated. Restarting Flow, please wait...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Instalace z neznámého zdroje</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">Tento plugin instalujete z neznámého zdroje a může obsahovat potenciální rizika!{0}{0}Ujistěte se, že víte, odkud tento plugin pochází a že je bezpečný.{0}{0}Chcete pokračovat?{0}{0}(Toto varování můžete vypnout v nastavení)</system:String>
-    
+
     <system:String x:Key="plugin_pluginsmanager_install_success_no_restart">Plugin {0} successfully installed. Please restart Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_success_no_restart">Plugin {0} successfully uninstalled. Please restart Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">Plugin {0} successfully updated. Please restart Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">{0} plugins successfully updated. Please restart Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">Plugin {0} has already been modified. Please restart Flow before making any further changes.</system:String>
-   
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_title">{0} modified already</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_message">Please restart Flow before making any further changes</system:String>
+
+    <system:String x:Key="plugin_pluginsmanager_invalid_zip_title">Invalid zip installer file</system:String>
+    <system:String x:Key="plugin_pluginsmanager_invalid_zip_subtitle">Please check if there is a plugin.json in {0}</system:String>
+
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_name">Správce pluginů</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_description">Správa instalace, odinstalace nebo aktualizace pluginů Flow Launcheru</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_description">Install, uninstall or update Flow Launcher plugins via the search window</system:String>
     <system:String x:Key="plugin_pluginsmanager_unknown_author">Neznámý autor</system:String>
 
     <!--  Context menu items  -->
@@ -59,5 +66,5 @@
 
     <!--  Settings menu items  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Upozornění na instalaci z neznámého zdroje</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Automatically restart Flow Launcher after installing/uninstalling/updating plugins</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugins Manager</system:String>
 </ResourceDictionary>

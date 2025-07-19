@@ -3,11 +3,10 @@ name: Publish Default Plugins
 on:
   push:
     branches: ['master']
-    paths: ['Plugins/**']
   workflow_dispatch:
 
 jobs:
-  build:
+  publish:
     runs-on: windows-latest
 
     steps:
@@ -15,41 +14,26 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 7.0.x
+          dotnet-version: 9.0.x
 
-      - name: Determine New Plugin Updates
-        uses: dorny/paths-filter@v3
-        id: changes
-        with:
-          filters: |
-            browserbookmark:
-              - 'Plugins/Flow.Launcher.Plugin.BrowserBookmark/plugin.json'
-            calculator:
-              - 'Plugins/Flow.Launcher.Plugin.Calculator/plugin.json'
-            explorer:
-              - 'Plugins/Flow.Launcher.Plugin.Explorer/plugin.json'
-            pluginindicator:
-              - 'Plugins/Flow.Launcher.Plugin.PluginIndicator/plugin.json'
-            pluginsmanager:
-              - 'Plugins/Flow.Launcher.Plugin.PluginsManager/plugin.json'
-            processkiller:
-              - 'Plugins/Flow.Launcher.Plugin.ProcessKiller/plugin.json'
-            program:
-              - 'Plugins/Flow.Launcher.Plugin.Program/plugin.json'
-            shell:
-              - 'Plugins/Flow.Launcher.Plugin.Shell/plugin.json'
-            sys:
-              - 'Plugins/Flow.Launcher.Plugin.Sys/plugin.json'
-            url:
-              - 'Plugins/Flow.Launcher.Plugin.Url/plugin.json'
-            websearch:
-              - 'Plugins/Flow.Launcher.Plugin.WebSearch/plugin.json'
-            windowssettings:
-              - 'Plugins/Flow.Launcher.Plugin.WindowsSettings/plugin.json'
-          base: 'master'
+      - name: Update Plugins To Production Version
+        run: |
+             $version = "1.0.0"
+             Get-Content appveyor.yml | ForEach-Object {
+                 if ($_ -match "version:\s*'(\d+\.\d+\.\d+)\.") {
+                     $version = $matches[1]
+                 }
+             }
+
+             $jsonFiles = Get-ChildItem -Path ".\Plugins\*\plugin.json"
+             foreach ($file in $jsonFiles) {
+                 $plugin_old_ver = Get-Content $file.FullName -Raw | ConvertFrom-Json
+                 (Get-Content $file) -replace '"Version"\s*:\s*".*?"', "`"Version`": `"$version`"" | Set-Content $file
+                 $plugin_new_ver = Get-Content $file.FullName -Raw | ConvertFrom-Json
+                 Write-Host "Updated" $plugin_old_ver.Name "version from" $plugin_old_ver.Version "to" $plugin_new_ver.Version
+             }
 
       - name: Get BrowserBookmark Version
-        if: steps.changes.outputs.browserbookmark == 'true'
         id: updated-version-browserbookmark
         uses: notiz-dev/github-action-json-property@release
         with:
@@ -57,14 +41,12 @@ jobs:
           prop_path: 'Version'
 
       - name: Build BrowserBookmark
-        if: steps.changes.outputs.browserbookmark == 'true'
         run: |
-          dotnet publish 'Plugins/Flow.Launcher.Plugin.BrowserBookmark/Flow.Launcher.Plugin.BrowserBookmark.csproj' --framework net7.0-windows  -c Release -o "Flow.Launcher.Plugin.BrowserBookmark"
+          dotnet publish 'Plugins/Flow.Launcher.Plugin.BrowserBookmark/Flow.Launcher.Plugin.BrowserBookmark.csproj' --framework net9.0-windows  -c Release -o "Flow.Launcher.Plugin.BrowserBookmark"
           7z a -tzip "Flow.Launcher.Plugin.BrowserBookmark.zip" "./Flow.Launcher.Plugin.BrowserBookmark/*"
           rm -r "Flow.Launcher.Plugin.BrowserBookmark"
 
       - name: Publish BrowserBookmark
-        if: steps.changes.outputs.browserbookmark == 'true'
         uses: softprops/action-gh-release@v2
         with:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.BrowserBookmark"
@@ -76,7 +58,6 @@ jobs:
 
 
       - name: Get Calculator Version
-        if: steps.changes.outputs.calculator == 'true'
         id: updated-version-calculator
         uses: notiz-dev/github-action-json-property@release
         with:
@@ -84,14 +65,12 @@ jobs:
           prop_path: 'Version'
 
       - name: Build Calculator
-        if: steps.changes.outputs.calculator == 'true'
         run: |
-          dotnet publish 'Plugins/Flow.Launcher.Plugin.Calculator/Flow.Launcher.Plugin.Calculator.csproj' --framework net7.0-windows  -c Release -o "Flow.Launcher.Plugin.Calculator"
+          dotnet publish 'Plugins/Flow.Launcher.Plugin.Calculator/Flow.Launcher.Plugin.Calculator.csproj' --framework net9.0-windows  -c Release -o "Flow.Launcher.Plugin.Calculator"
           7z a -tzip "Flow.Launcher.Plugin.Calculator.zip" "./Flow.Launcher.Plugin.Calculator/*"
           rm -r "Flow.Launcher.Plugin.Calculator"
 
       - name: Publish Calculator
-        if: steps.changes.outputs.calculator == 'true'
         uses: softprops/action-gh-release@v2
         with:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.Calculator"
@@ -103,7 +82,6 @@ jobs:
 
 
       - name: Get Explorer Version
-        if: steps.changes.outputs.explorer == 'true'
         id: updated-version-explorer
         uses: notiz-dev/github-action-json-property@release
         with:
@@ -111,14 +89,12 @@ jobs:
           prop_path: 'Version'
 
       - name: Build Explorer
-        if: steps.changes.outputs.explorer == 'true'
         run: |
-          dotnet publish 'Plugins/Flow.Launcher.Plugin.Explorer/Flow.Launcher.Plugin.Explorer.csproj' --framework net7.0-windows  -c Release -o "Flow.Launcher.Plugin.Explorer"
+          dotnet publish 'Plugins/Flow.Launcher.Plugin.Explorer/Flow.Launcher.Plugin.Explorer.csproj' --framework net9.0-windows  -c Release -o "Flow.Launcher.Plugin.Explorer"
           7z a -tzip "Flow.Launcher.Plugin.Explorer.zip" "./Flow.Launcher.Plugin.Explorer/*"
           rm -r "Flow.Launcher.Plugin.Explorer"
 
       - name: Publish Explorer
-        if: steps.changes.outputs.explorer == 'true'
         uses: softprops/action-gh-release@v2
         with:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.Explorer"
@@ -130,7 +106,6 @@ jobs:
 
 
       - name: Get PluginIndicator Version
-        if: steps.changes.outputs.pluginindicator == 'true'
         id: updated-version-pluginindicator
         uses: notiz-dev/github-action-json-property@release
         with:
@@ -138,14 +113,12 @@ jobs:
           prop_path: 'Version'
 
       - name: Build PluginIndicator
-        if: steps.changes.outputs.pluginindicator == 'true'
         run: |
-          dotnet publish 'Plugins/Flow.Launcher.Plugin.PluginIndicator/Flow.Launcher.Plugin.PluginIndicator.csproj' --framework net7.0-windows  -c Release -o "Flow.Launcher.Plugin.PluginIndicator"
+          dotnet publish 'Plugins/Flow.Launcher.Plugin.PluginIndicator/Flow.Launcher.Plugin.PluginIndicator.csproj' --framework net9.0-windows  -c Release -o "Flow.Launcher.Plugin.PluginIndicator"
           7z a -tzip "Flow.Launcher.Plugin.PluginIndicator.zip" "./Flow.Launcher.Plugin.PluginIndicator/*"
           rm -r "Flow.Launcher.Plugin.PluginIndicator"
 
       - name: Publish PluginIndicator
-        if: steps.changes.outputs.pluginindicator == 'true'
         uses: softprops/action-gh-release@v2
         with:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.PluginIndicator"
@@ -157,7 +130,6 @@ jobs:
 
 
       - name: Get PluginsManager Version
-        if: steps.changes.outputs.pluginsmanager == 'true'
         id: updated-version-pluginsmanager
         uses: notiz-dev/github-action-json-property@release
         with:
@@ -165,14 +137,12 @@ jobs:
           prop_path: 'Version'
 
       - name: Build PluginsManager
-        if: steps.changes.outputs.pluginsmanager == 'true'
         run: |
-          dotnet publish 'Plugins/Flow.Launcher.Plugin.PluginsManager/Flow.Launcher.Plugin.PluginsManager.csproj' --framework net7.0-windows  -c Release -o "Flow.Launcher.Plugin.PluginsManager"
+          dotnet publish 'Plugins/Flow.Launcher.Plugin.PluginsManager/Flow.Launcher.Plugin.PluginsManager.csproj' --framework net9.0-windows  -c Release -o "Flow.Launcher.Plugin.PluginsManager"
           7z a -tzip "Flow.Launcher.Plugin.PluginsManager.zip" "./Flow.Launcher.Plugin.PluginsManager/*"
           rm -r "Flow.Launcher.Plugin.PluginsManager"
 
       - name: Publish PluginsManager
-        if: steps.changes.outputs.pluginsmanager == 'true'
         uses: softprops/action-gh-release@v2
         with:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.PluginsManager"
@@ -184,7 +154,6 @@ jobs:
 
 
       - name: Get ProcessKiller Version
-        if: steps.changes.outputs.processkiller == 'true'
         id: updated-version-processkiller
         uses: notiz-dev/github-action-json-property@release
         with:
@@ -192,14 +161,12 @@ jobs:
           prop_path: 'Version'
 
       - name: Build ProcessKiller
-        if: steps.changes.outputs.processkiller == 'true'
         run: |
-          dotnet publish 'Plugins/Flow.Launcher.Plugin.ProcessKiller/Flow.Launcher.Plugin.ProcessKiller.csproj' --framework net7.0-windows  -c Release -o "Flow.Launcher.Plugin.ProcessKiller"
+          dotnet publish 'Plugins/Flow.Launcher.Plugin.ProcessKiller/Flow.Launcher.Plugin.ProcessKiller.csproj' --framework net9.0-windows  -c Release -o "Flow.Launcher.Plugin.ProcessKiller"
           7z a -tzip "Flow.Launcher.Plugin.ProcessKiller.zip" "./Flow.Launcher.Plugin.ProcessKiller/*"
           rm -r "Flow.Launcher.Plugin.ProcessKiller"
 
       - name: Publish ProcessKiller
-        if: steps.changes.outputs.processkiller == 'true'
         uses: softprops/action-gh-release@v2
         with:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.ProcessKiller"
@@ -211,7 +178,6 @@ jobs:
 
 
       - name: Get Program Version
-        if: steps.changes.outputs.program == 'true'
         id: updated-version-program
         uses: notiz-dev/github-action-json-property@release
         with:
@@ -219,14 +185,12 @@ jobs:
           prop_path: 'Version'
 
       - name: Build Program
-        if: steps.changes.outputs.program == 'true'
         run: |
-          dotnet publish 'Plugins/Flow.Launcher.Plugin.Program/Flow.Launcher.Plugin.Program.csproj' --framework net7.0-windows10.0.19041.0  -c Release -o "Flow.Launcher.Plugin.Program"
+          dotnet publish 'Plugins/Flow.Launcher.Plugin.Program/Flow.Launcher.Plugin.Program.csproj' --framework net9.0-windows10.0.19041.0  -c Release -o "Flow.Launcher.Plugin.Program"
           7z a -tzip "Flow.Launcher.Plugin.Program.zip" "./Flow.Launcher.Plugin.Program/*"
           rm -r "Flow.Launcher.Plugin.Program"
 
       - name: Publish Program
-        if: steps.changes.outputs.program == 'true'
         uses: softprops/action-gh-release@v2
         with:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.Program"
@@ -238,7 +202,6 @@ jobs:
 
 
       - name: Get Shell Version
-        if: steps.changes.outputs.shell == 'true'
         id: updated-version-shell
         uses: notiz-dev/github-action-json-property@release
         with:
@@ -246,14 +209,12 @@ jobs:
           prop_path: 'Version'
 
       - name: Build Shell
-        if: steps.changes.outputs.shell == 'true'
         run: |
-          dotnet publish 'Plugins/Flow.Launcher.Plugin.Shell/Flow.Launcher.Plugin.Shell.csproj' --framework net7.0-windows  -c Release -o "Flow.Launcher.Plugin.Shell"
+          dotnet publish 'Plugins/Flow.Launcher.Plugin.Shell/Flow.Launcher.Plugin.Shell.csproj' --framework net9.0-windows  -c Release -o "Flow.Launcher.Plugin.Shell"
           7z a -tzip "Flow.Launcher.Plugin.Shell.zip" "./Flow.Launcher.Plugin.Shell/*"
           rm -r "Flow.Launcher.Plugin.Shell"
 
       - name: Publish Shell
-        if: steps.changes.outputs.shell == 'true'
         uses: softprops/action-gh-release@v2
         with:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.Shell"
@@ -265,7 +226,6 @@ jobs:
 
 
       - name: Get Sys Version
-        if: steps.changes.outputs.sys == 'true'
         id: updated-version-sys
         uses: notiz-dev/github-action-json-property@release
         with:
@@ -273,14 +233,12 @@ jobs:
           prop_path: 'Version'
 
       - name: Build Sys
-        if: steps.changes.outputs.sys == 'true'
         run: |
-          dotnet publish 'Plugins/Flow.Launcher.Plugin.Sys/Flow.Launcher.Plugin.Sys.csproj' --framework net7.0-windows  -c Release -o "Flow.Launcher.Plugin.Sys"
+          dotnet publish 'Plugins/Flow.Launcher.Plugin.Sys/Flow.Launcher.Plugin.Sys.csproj' --framework net9.0-windows  -c Release -o "Flow.Launcher.Plugin.Sys"
           7z a -tzip "Flow.Launcher.Plugin.Sys.zip" "./Flow.Launcher.Plugin.Sys/*"
           rm -r "Flow.Launcher.Plugin.Sys"
 
       - name: Publish Sys
-        if: steps.changes.outputs.sys == 'true'
         uses: softprops/action-gh-release@v2
         with:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.Sys"
@@ -292,7 +250,6 @@ jobs:
 
 
       - name: Get Url Version
-        if: steps.changes.outputs.url == 'true'
         id: updated-version-url
         uses: notiz-dev/github-action-json-property@release
         with:
@@ -300,14 +257,12 @@ jobs:
           prop_path: 'Version'
 
       - name: Build Url
-        if: steps.changes.outputs.url == 'true'
         run: |
-          dotnet publish 'Plugins/Flow.Launcher.Plugin.Url/Flow.Launcher.Plugin.Url.csproj' --framework net7.0-windows  -c Release -o "Flow.Launcher.Plugin.Url"
+          dotnet publish 'Plugins/Flow.Launcher.Plugin.Url/Flow.Launcher.Plugin.Url.csproj' --framework net9.0-windows  -c Release -o "Flow.Launcher.Plugin.Url"
           7z a -tzip "Flow.Launcher.Plugin.Url.zip" "./Flow.Launcher.Plugin.Url/*"
           rm -r "Flow.Launcher.Plugin.Url"
 
       - name: Publish Url
-        if: steps.changes.outputs.url == 'true'
         uses: softprops/action-gh-release@v2
         with:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.Url"
@@ -319,7 +274,6 @@ jobs:
 
 
       - name: Get WebSearch Version
-        if: steps.changes.outputs.websearch == 'true'
         id: updated-version-websearch
         uses: notiz-dev/github-action-json-property@release
         with:
@@ -327,14 +281,12 @@ jobs:
           prop_path: 'Version'
 
       - name: Build WebSearch
-        if: steps.changes.outputs.websearch == 'true'
         run: |
-          dotnet publish 'Plugins/Flow.Launcher.Plugin.WebSearch/Flow.Launcher.Plugin.WebSearch.csproj' --framework net7.0-windows  -c Release -o "Flow.Launcher.Plugin.WebSearch"
+          dotnet publish 'Plugins/Flow.Launcher.Plugin.WebSearch/Flow.Launcher.Plugin.WebSearch.csproj' --framework net9.0-windows  -c Release -o "Flow.Launcher.Plugin.WebSearch"
           7z a -tzip "Flow.Launcher.Plugin.WebSearch.zip" "./Flow.Launcher.Plugin.WebSearch/*"
           rm -r "Flow.Launcher.Plugin.WebSearch"
 
       - name: Publish WebSearch
-        if: steps.changes.outputs.websearch == 'true'
         uses: softprops/action-gh-release@v2
         with:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.WebSearch"
@@ -346,7 +298,6 @@ jobs:
 
 
       - name: Get WindowsSettings Version
-        if: steps.changes.outputs.windowssettings == 'true'
         id: updated-version-windowssettings
         uses: notiz-dev/github-action-json-property@release
         with:
@@ -354,14 +305,12 @@ jobs:
           prop_path: 'Version'
 
       - name: Build WindowsSettings
-        if: steps.changes.outputs.windowssettings == 'true'
         run: |
-          dotnet publish 'Plugins/Flow.Launcher.Plugin.WindowsSettings/Flow.Launcher.Plugin.WindowsSettings.csproj' --framework net7.0-windows  -c Release -o "Flow.Launcher.Plugin.WindowsSettings"
+          dotnet publish 'Plugins/Flow.Launcher.Plugin.WindowsSettings/Flow.Launcher.Plugin.WindowsSettings.csproj' --framework net9.0-windows  -c Release -o "Flow.Launcher.Plugin.WindowsSettings"
           7z a -tzip "Flow.Launcher.Plugin.WindowsSettings.zip" "./Flow.Launcher.Plugin.WindowsSettings/*"
           rm -r "Flow.Launcher.Plugin.WindowsSettings"
 
       - name: Publish WindowsSettings
-        if: steps.changes.outputs.windowssettings == 'true'
         uses: softprops/action-gh-release@v2
         with:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.WindowsSettings"

@@ -20,7 +20,7 @@ namespace Flow.Launcher.Plugin.Calculator
                         @"bin2dec|hex2dec|oct2dec|" +
                         @"factorial|sign|isprime|isinfty|" +
                         @"==|~=|&&|\|\||(?:\<|\>)=?|" +
-                        @"[ei]|[0-9]|[\+\%\-\*\/\^\., ""]|[\(\)\|\!\[\]]" +
+                        @"[ei]|[0-9]|0x[\da-fA-F]+|[\+\%\-\*\/\^\., ""]|[\(\)\|\!\[\]]" +
                         @")+$", RegexOptions.Compiled);
         private static readonly Regex RegBrackets = new Regex(@"[\(\)\[\]]", RegexOptions.Compiled);
         private static Engine MagesEngine;
@@ -155,16 +155,16 @@ namespace Flow.Launcher.Plugin.Calculator
             return value.ToString(numberFormatInfo);
         }
 
-        private string GetDecimalSeparator()
+        private static string GetDecimalSeparator()
         {
-            string systemDecimalSeperator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
-            switch (_settings.DecimalSeparator)
+            string systemDecimalSeparator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+            return _settings.DecimalSeparator switch
             {
-                case DecimalSeparator.UseSystemLocale: return systemDecimalSeperator;
-                case DecimalSeparator.Dot: return dot;
-                case DecimalSeparator.Comma: return comma;
-                default: return systemDecimalSeperator;
-            }
+                DecimalSeparator.UseSystemLocale => systemDecimalSeparator,
+                DecimalSeparator.Dot => dot,
+                DecimalSeparator.Comma => comma,
+                _ => systemDecimalSeparator,
+            };
         }
 
         private bool IsBracketComplete(string query)

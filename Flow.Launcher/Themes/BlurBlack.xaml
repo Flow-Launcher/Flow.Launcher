@@ -10,8 +10,12 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Themes/Base.xaml" />
     </ResourceDictionary.MergedDictionaries>
-
     <system:Boolean x:Key="ThemeBlurEnabled">True</system:Boolean>
+    <system:String x:Key="SystemBG">Dark</system:String>
+    <Color x:Key="LightBG">#B0000000</Color>
+    <Color x:Key="DarkBG">#B6000000</Color>
+    <Thickness x:Key="ResultMargin">0 0 0 8</Thickness>
+
     <Style x:Key="WindowRadius" TargetType="{x:Type Border}">
         <Setter Property="CornerRadius" Value="0" />
     </Style>
@@ -135,17 +139,21 @@
         BasedOn="{StaticResource BaseSearchIconStyle}"
         TargetType="{x:Type Path}">
         <Setter Property="Fill" Value="#ffffff" />
-        <Setter Property="Width" Value="32" />
-        <Setter Property="Height" Value="32" />
+        <Setter Property="Width" Value="30" />
+        <Setter Property="Height" Value="30" />
         <Setter Property="Opacity" Value="0.5" />
     </Style>
-    <Style x:Key="ItemHotkeyStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="14" />
+    <Style
+        x:Key="ItemHotkeyStyle"
+        BasedOn="{StaticResource BaseItemHotkeyStyle}"
+        TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#ffffff" />
         <Setter Property="Opacity" Value="0.5" />
     </Style>
-    <Style x:Key="ItemHotkeySelectedStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="14" />
+    <Style
+        x:Key="ItemHotkeySelectedStyle"
+        BasedOn="{StaticResource BaseItemHotkeySelectedStyle}"
+        TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#ffffff" />
         <Setter Property="Opacity" Value="0.5" />
     </Style>

@@ -7,6 +7,7 @@ using Flow.Launcher.Core;
 using Flow.Launcher.Core.Configuration;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
@@ -16,14 +17,17 @@ namespace Flow.Launcher.SettingPages.ViewModels;
 public partial class SettingsPaneGeneralViewModel : BaseModel
 {
     public Settings Settings { get; }
-    private readonly Updater _updater;
-    private readonly IPortable _portable;
 
-    public SettingsPaneGeneralViewModel(Settings settings, Updater updater, IPortable portable)
+    private readonly Updater _updater;
+    private readonly Portable _portable;
+    private readonly Internationalization _translater;
+
+    public SettingsPaneGeneralViewModel(Settings settings, Updater updater, Portable portable, Internationalization translater)
     {
         Settings = settings;
         _updater = updater;
         _portable = portable;
+        _translater = translater;
         UpdateEnumDropdownLocalizations();
     }
 
@@ -31,6 +35,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public class SearchWindowAlignData : DropdownDataGeneric<SearchWindowAligns> { }
     public class SearchPrecisionData : DropdownDataGeneric<SearchPrecisionScore> { }
     public class LastQueryModeData : DropdownDataGeneric<LastQueryMode> { }
+    public class DoublePinyinSchemaData : DropdownDataGeneric<DoublePinyinSchemas> { }
 
     public bool StartFlowLauncherOnSystemStartup
     {
@@ -45,11 +50,11 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
                 {
                     if (UseLogonTaskForStartup)
                     {
-                        AutoStartup.EnableViaLogonTask();
+                        AutoStartup.ChangeToViaLogonTask();
                     }
                     else
                     {
-                        AutoStartup.EnableViaRegistry();
+                        AutoStartup.ChangeToViaRegistry();
                     }
                 }
                 else
@@ -59,8 +64,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             }
             catch (Exception e)
             {
-                Notification.Show(InternationalizationManager.Instance.GetTranslation("setAutoStartFailed"),
-                    e.Message);
+                App.API.ShowMsg(App.API.GetTranslation("setAutoStartFailed"), e.Message);
             }
         }
     }
@@ -76,7 +80,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             {
                 try
                 {
-                    if (UseLogonTaskForStartup)
+                    if (value)
                     {
                         AutoStartup.ChangeToViaLogonTask();
                     }
@@ -87,8 +91,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
                 }
                 catch (Exception e)
                 {
-                    Notification.Show(InternationalizationManager.Instance.GetTranslation("setAutoStartFailed"),
-                        e.Message);
+                    App.API.ShowMsg(App.API.GetTranslation("setAutoStartFailed"), e.Message);
                 }
             } 
         }
@@ -119,7 +122,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     }
 
     // This is only required to set at startup. When portable mode enabled/disabled a restart is always required
-    private bool _portableMode = DataLocation.PortableDataLocationInUse();
+    private static bool _portableMode = DataLocation.PortableDataLocationInUse();
 
     public bool PortableMode
     {
@@ -143,12 +146,41 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public List<LastQueryModeData> LastQueryModes { get; } =
         DropdownDataGeneric<LastQueryMode>.GetValues<LastQueryModeData>("LastQuery");
 
+    public int SearchDelayTimeValue
+    {
+        get => Settings.SearchDelayTime;
+        set
+        {
+            if (Settings.SearchDelayTime != value)
+            {
+                Settings.SearchDelayTime = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public int MaxHistoryResultsToShowValue
+    {
+        get => Settings.MaxHistoryResultsToShowForHomePage;
+        set
+        {
+            if (Settings.MaxHistoryResultsToShowForHomePage != value)
+            {
+                Settings.MaxHistoryResultsToShowForHomePage = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
     private void UpdateEnumDropdownLocalizations()
     {
         DropdownDataGeneric<SearchWindowScreens>.UpdateLabels(SearchWindowScreens);
         DropdownDataGeneric<SearchWindowAligns>.UpdateLabels(SearchWindowAligns);
         DropdownDataGeneric<SearchPrecisionScore>.UpdateLabels(SearchPrecisionScores);
         DropdownDataGeneric<LastQueryMode>.UpdateLabels(LastQueryModes);
+        DropdownDataGeneric<DoublePinyinSchemas>.UpdateLabels(DoublePinyinSchemas);
+        // Since we are using Binding instead of DynamicResource, we need to manually trigger the update
+        OnPropertyChanged(nameof(AlwaysPreviewToolTip));
     }
 
     public string Language
@@ -156,29 +188,109 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         get => Settings.Language;
         set
         {
-            InternationalizationManager.Instance.ChangeLanguage(value);
+            _translater.ChangeLanguage(value);
 
-            if (InternationalizationManager.Instance.PromptShouldUsePinyin(value))
+            if (_translater.PromptShouldUsePinyin(value))
                 ShouldUsePinyin = true;
 
             UpdateEnumDropdownLocalizations();
         }
     }
 
+    #region Korean IME
+
+    // The new Korean IME used in Windows 11 has compatibility issues with WPF. This issue is difficult to resolve within
+    // WPF itself, but it can be avoided by having the user switch to the legacy IME at the system level. Therefore,
+    // we provide guidance and a direct button for users to make this change themselves. If the relevant registry key does
+    // not exist (i.e., the Korean IME is not installed), this setting will not be shown at all.
+
+    public bool LegacyKoreanIMEEnabled
+    {
+        get => Win32Helper.IsLegacyKoreanIMEEnabled();
+        set
+        {
+            if (Win32Helper.SetLegacyKoreanIMEEnabled(value))
+            {
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(KoreanIMERegistryValueIsZero));
+            }
+            else
+            {
+                //Since this is rarely seen text, language support is not provided.
+                App.API.ShowMsg("Failed to change Korean IME setting", "Please check your system registry access or contact support.");
+            }
+        }
+    }
+
+    public bool KoreanIMERegistryKeyExists
+    {
+        get
+        {
+            var registryKeyExists = Win32Helper.IsKoreanIMEExist();
+            var koreanLanguageInstalled = InputLanguage.InstalledInputLanguages.Cast<InputLanguage>().Any(lang => lang.Culture.Name.StartsWith("ko"));
+            var isWindows11 = Win32Helper.IsWindows11();
+
+            // Return true if Windows 11 with Korean IME installed, or if the registry key exists
+            return (isWindows11 && koreanLanguageInstalled) || registryKeyExists;
+        }
+    }
+
+    public bool KoreanIMERegistryValueIsZero
+    {
+        get
+        {
+            var value = Win32Helper.GetLegacyKoreanIMERegistryValue();
+            if (value is int intValue)
+            {
+                return intValue == 0;
+            }
+            else if (value != null && int.TryParse(value.ToString(), out var parsedValue))
+            {
+                return parsedValue == 0;
+            }
+
+            return false;
+        }
+    }
+
+    [RelayCommand]
+    private void OpenImeSettings()
+    {
+        Win32Helper.OpenImeSettings();
+    }
+
+    #endregion
+
     public bool ShouldUsePinyin
     {
         get => Settings.ShouldUsePinyin;
-        set => Settings.ShouldUsePinyin = value;
+        set
+        {
+            if (value == false && UseDoublePinyin == true)
+            {
+                UseDoublePinyin = false;
+            }
+            Settings.ShouldUsePinyin = value;
+        }
     }
 
-    public List<Language> Languages => InternationalizationManager.Instance.LoadAvailableLanguages();
+    public bool UseDoublePinyin
+    {
+        set => Settings.UseDoublePinyin = value;
+        get => Settings.UseDoublePinyin;
+    }
+
+    public List<DoublePinyinSchemaData> DoublePinyinSchemas { get; } =
+        DropdownDataGeneric<DoublePinyinSchemas>.GetValues<DoublePinyinSchemaData>("DoublePinyinSchemas");
+
+    public List<Language> Languages => _translater.LoadAvailableLanguages();
 
     public string AlwaysPreviewToolTip => string.Format(
-        InternationalizationManager.Instance.GetTranslation("AlwaysPreviewToolTip"),
+        App.API.GetTranslation("AlwaysPreviewToolTip"),
         Settings.PreviewHotkey
     );
 
-    private string GetFileFromDialog(string title, string filter = "")
+    private static string GetFileFromDialog(string title, string filter = "")
     {
         var dlg = new OpenFileDialog
         {
@@ -220,7 +332,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     private void SelectPython()
     {
         var selectedFile = GetFileFromDialog(
-            InternationalizationManager.Instance.GetTranslation("selectPythonExecutable"),
+            App.API.GetTranslation("selectPythonExecutable"),
             "Python|pythonw.exe"
         );
 
@@ -232,7 +344,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     private void SelectNode()
     {
         var selectedFile = GetFileFromDialog(
-            InternationalizationManager.Instance.GetTranslation("selectNodeExecutable"),
+            App.API.GetTranslation("selectNodeExecutable"),
             "node|*.exe"
         );
 
@@ -243,14 +355,14 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     [RelayCommand]
     private void SelectFileManager()
     {
-        var fileManagerChangeWindow = new SelectFileManagerWindow(Settings);
+        var fileManagerChangeWindow = new SelectFileManagerWindow();
         fileManagerChangeWindow.ShowDialog();
     }
 
     [RelayCommand]
     private void SelectBrowser()
     {
-        var browserWindow = new SelectBrowserWindow(Settings);
+        var browserWindow = new SelectBrowserWindow();
         browserWindow.ShowDialog();
     }
 }

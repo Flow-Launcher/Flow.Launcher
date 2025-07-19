@@ -40,7 +40,7 @@
         TargetType="{x:Type Rectangle}">
         <Setter Property="Fill" Value="#4c566a" />
         <Setter Property="Height" Value="1" />
-        <Setter Property="Margin" Value="12,0,12,8" />
+        <Setter Property="Margin" Value="12 0 12 8" />
     </Style>
     <Style
         x:Key="WindowStyle"
@@ -116,12 +116,16 @@
         <Setter Property="Width" Value="32" />
         <Setter Property="Height" Value="32" />
     </Style>
-    <Style x:Key="ItemHotkeyStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="15" />
+    <Style
+        x:Key="ItemHotkeyStyle"
+        BasedOn="{StaticResource BaseItemHotkeyStyle}"
+        TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#8391AB" />
     </Style>
-    <Style x:Key="ItemHotkeySelectedStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="15" />
+    <Style
+        x:Key="ItemHotkeySelectedStyle"
+        BasedOn="{StaticResource BaseItemHotkeySelectedStyle}"
+        TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#8391AB" />
     </Style>
     <Style

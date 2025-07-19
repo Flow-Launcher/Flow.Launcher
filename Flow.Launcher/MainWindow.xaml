@@ -17,20 +17,20 @@
     AllowDrop="True"
     AllowsTransparency="True"
     Background="Transparent"
+    Closed="OnClosed"
     Closing="OnClosing"
     Deactivated="OnDeactivated"
     Icon="Images/app.png"
-    SourceInitialized="OnSourceInitialized"
-    Initialized="OnInitialized"
     Left="{Binding Settings.WindowLeft, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     Loaded="OnLoaded"
     LocationChanged="OnLocationChanged"
-    Opacity="{Binding MainWindowOpacity, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
     PreviewKeyDown="OnKeyDown"
     PreviewKeyUp="OnKeyUp"
+    PreviewMouseMove="OnPreviewMouseMove"
     ResizeMode="CanResize"
     ShowInTaskbar="False"
     SizeToContent="Height"
+    SourceInitialized="OnSourceInitialized"
     Topmost="True"
     Visibility="{Binding MainWindowVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     WindowStartupLocation="Manual"
@@ -63,10 +63,6 @@
         <KeyBinding
             Key="R"
             Command="{Binding ReQueryCommand}"
-            Modifiers="Ctrl" />
-        <KeyBinding
-            Key="H"
-            Command="{Binding LoadHistoryCommand}"
             Modifiers="Ctrl" />
         <KeyBinding
             Key="OemCloseBrackets"
@@ -192,6 +188,10 @@
             Command="{Binding OpenSettingCommand}"
             Modifiers="{Binding SettingWindowHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
         <KeyBinding
+            Key="{Binding OpenHistoryHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding LoadHistoryCommand}"
+            Modifiers="{Binding OpenHistoryHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
             Key="{Binding OpenContextMenuHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
             Command="{Binding LoadContextMenuCommand}"
             Modifiers="{Binding OpenContextMenuHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
@@ -215,9 +215,17 @@
 
     <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">
         <StackPanel Orientation="Vertical">
-            <Grid>
+            <Grid x:Name="QueryBoxArea">
                 <Border MinHeight="30" Style="{DynamicResource QueryBoxBgStyle}">
                     <Grid>
+                        <TextBox
+                            x:Name="QueryTextPlaceholderBox"
+                            Height="{Binding MainWindowHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            FontSize="{Binding QueryBoxFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            IsEnabled="False"
+                            Style="{DynamicResource QuerySuggestionBoxStyle}"
+                            Text="{Binding PlaceholderText, Mode=OneWay}"
+                            Visibility="Collapsed" />
                         <TextBox
                             x:Name="QueryTextSuggestionBox"
                             Height="{Binding MainWindowHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -240,14 +248,15 @@
                             FontSize="{Binding QueryBoxFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             InputMethod.PreferredImeConversionMode="{Binding StartWithEnglishMode, Converter={StaticResource BoolToIMEConversionModeConverter}}"
                             InputMethod.PreferredImeState="{Binding StartWithEnglishMode, Converter={StaticResource BoolToIMEStateConverter}}"
-                            PreviewDragOver="OnPreviewDragOver"
+                            PreviewDragOver="QueryTextBox_OnPreviewDragOver"
                             PreviewKeyUp="QueryTextBox_KeyUp"
                             Style="{DynamicResource QueryBoxStyle}"
-                            Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Text="{Binding QueryText, Mode=OneWay}"
+                            TextChanged="QueryTextBox_TextChanged1"
                             Visibility="Visible"
                             WindowChrome.IsHitTestVisibleInChrome="True">
                             <TextBox.CommandBindings>
-                                <CommandBinding Command="ApplicationCommands.Copy" Executed="OnCopy" />
+                                <CommandBinding Command="ApplicationCommands.Copy" Executed="QueryTextBox_OnCopy" />
                             </TextBox.CommandBindings>
                             <TextBox.ContextMenu>
                                 <ContextMenu MinWidth="160">
@@ -289,7 +298,9 @@
                 <StackPanel
                     x:Name="ClockPanel"
                     IsHitTestVisible="False"
-                    Style="{DynamicResource ClockPanel}">
+                    Opacity="{Binding ClockPanelOpacity}"
+                    Style="{DynamicResource ClockPanel}"
+                    Visibility="{Binding ClockPanelVisibility}">
                     <TextBlock
                         x:Name="ClockBox"
                         Style="{DynamicResource ClockBox}"
@@ -317,6 +328,7 @@
                                 Name="SearchIcon"
                                 Margin="0"
                                 Data="{DynamicResource SearchIconImg}"
+                                Opacity="{Binding SearchIconOpacity}"
                                 Stretch="Fill"
                                 Style="{DynamicResource SearchIconStyle}"
                                 Visibility="{Binding SearchIconVisibility}" />
@@ -331,7 +343,6 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Bottom"
                     StrokeThickness="2"
-                    Style="{DynamicResource PendingLineStyle}"
                     Visibility="{Binding ProgressBarVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     X1="-100"
                     X2="0"
@@ -339,7 +350,7 @@
                     Y2="0" />
             </Grid>
 
-            <Grid ClipToBounds="True">
+            <Grid x:Name="MiddleSeparatorArea" ClipToBounds="True">
                 <ContentControl>
                     <ContentControl.Style>
                         <Style TargetType="ContentControl">
@@ -348,7 +359,7 @@
                                 <MultiDataTrigger>
                                     <MultiDataTrigger.Conditions>
                                         <Condition Binding="{Binding ElementName=ResultListBox, Path=Items.Count}" Value="0" />
-                                        <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Collapsed" />
+                                        <Condition Binding="{Binding ElementName=ResultContextMenu, Path=Visibility}" Value="Collapsed" />
                                         <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />
                                     </MultiDataTrigger.Conditions>
                                     <MultiDataTrigger.Setters>
@@ -362,7 +373,7 @@
                                 <DataTrigger Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Visible">
                                     <Setter Property="Visibility" Value="Visible" />
                                 </DataTrigger>
-                                <DataTrigger Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Visible">
+                                <DataTrigger Binding="{Binding ElementName=ResultContextMenu, Path=Visibility}" Value="Visible">
                                     <Setter Property="Visibility" Value="Visible" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding ElementName=History, Path=Visibility}" Value="Visible">
@@ -377,9 +388,9 @@
                         HorizontalAlignment="Stretch"
                         Style="{DynamicResource SeparatorStyle}" />
                 </ContentControl>
-
             </Grid>
-            <Border Style="{DynamicResource WindowRadius}">
+
+            <Border x:Name="ResultPreviewAreaBoarder" Style="{DynamicResource WindowRadius}">
                 <Border.Clip>
                     <MultiBinding Converter="{StaticResource BorderClipConverter}">
                         <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
@@ -387,12 +398,14 @@
                         <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}" />
                     </MultiBinding>
                 </Border.Clip>
-                <Grid>
+
+                <Grid x:Name="ResultPreviewArea">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" MinWidth="80" />
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="0.85*" MinWidth="244" />
                     </Grid.ColumnDefinitions>
+
                     <StackPanel
                         x:Name="ResultArea"
                         Grid.Column="0"
@@ -406,7 +419,7 @@
                         </ContentControl>
                         <ContentControl>
                             <flowlauncher:ResultListBox
-                                x:Name="ContextMenu"
+                                x:Name="ResultContextMenu"
                                 DataContext="{Binding ContextMenu}"
                                 LeftClickResultCommand="{Binding LeftClickResultCommand}"
                                 RightClickResultCommand="{Binding RightClickResultCommand}" />
@@ -419,7 +432,9 @@
                                 RightClickResultCommand="{Binding RightClickResultCommand}" />
                         </ContentControl>
                     </StackPanel>
+
                     <GridSplitter
+                        x:Name="PreviewMiddleSeparator"
                         Grid.Column="1"
                         Margin="0"
                         HorizontalAlignment="Center"
@@ -433,6 +448,7 @@
                             </ControlTemplate>
                         </GridSplitter.Template>
                     </GridSplitter>
+
                     <Grid
                         x:Name="Preview"
                         Grid.Column="2"
@@ -442,7 +458,7 @@
                         <Border
                             MinHeight="380"
                             d:DataContext="{d:DesignInstance vm:ResultViewModel}"
-                            DataContext="{Binding SelectedItem, ElementName=ResultListBox}"
+                            DataContext="{Binding PreviewSelectedItem, Mode=OneWay}"
                             Visibility="{Binding ShowDefaultPreview}">
                             <Grid
                                 Margin="0 0 10 5"
@@ -519,7 +535,7 @@
                             MaxHeight="{Binding ElementName=ResultListBox, Path=ActualHeight}"
                             Padding="0 0 10 10"
                             d:DataContext="{d:DesignInstance vm:ResultViewModel}"
-                            DataContext="{Binding SelectedItem, ElementName=ResultListBox}"
+                            DataContext="{Binding PreviewSelectedItem, Mode=OneWay}"
                             Visibility="{Binding ShowCustomizedPreview}">
                             <ContentControl Content="{Binding Result.PreviewPanel.Value}" />
                         </Border>

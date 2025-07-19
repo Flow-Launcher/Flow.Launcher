@@ -4,36 +4,68 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:Flow.Launcher.Plugin.Sys"
+    d:DataContext="{d:DesignInstance vm:SettingsViewModel}"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
-    <Grid Margin="70,18,18,18">
+
+    <Grid Margin="{StaticResource SettingPanelMargin}">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
         <ListView
             x:Name="lbxCommands"
             Grid.Row="0"
-            Margin="0"
+            Margin="{StaticResource SettingPanelItemTopBottomMargin}"
             BorderBrush="DarkGray"
             BorderThickness="1"
+            ItemsSource="{Binding Settings.Commands}"
+            MouseDoubleClick="MouseDoubleClickItem"
+            SelectedItem="{Binding Settings.SelectedCommand}"
             SizeChanged="ListView_SizeChanged"
             Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="150" Header="{DynamicResource flowlauncher_plugin_sys_command}">
+                    <GridViewColumn Width="150" Header="{DynamicResource flowlauncher_plugin_sys_name}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis" />
+                                <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+
                     <GridViewColumn Width="379" Header="{DynamicResource flowlauncher_plugin_sys_desc}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding SubTitle}" TextTrimming="CharacterEllipsis" />
+                                <TextBlock Text="{Binding Description}" TextTrimming="CharacterEllipsis" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Width="150" Header="{DynamicResource flowlauncher_plugin_sys_command}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Keyword}" TextTrimming="CharacterEllipsis" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
+
+        <StackPanel
+            Grid.Row="1"
+            Margin="{StaticResource SettingPanelItemTopBottomMargin}"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+            <Button
+                Width="100"
+                Margin="{StaticResource SettingPanelItemLeftMargin}"
+                Click="OnEditCommandKeywordClick"
+                Content="{DynamicResource flowlauncher_plugin_sys_edit}" />
+        </StackPanel>
     </Grid>
 </UserControl>

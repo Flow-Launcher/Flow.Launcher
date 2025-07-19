@@ -67,8 +67,6 @@ namespace Flow.Launcher.Infrastructure
             return explorerWindows.Zip(zOrders).MinBy(x => x.Second).First;
         }
 
-        private delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
-
         /// <summary>
         /// Gets the z-order for one or more windows atomically with respect to each other. In Windows, smaller z-order is higher. If the window is not top level, the z order is returned as -1. 
         /// </summary>
