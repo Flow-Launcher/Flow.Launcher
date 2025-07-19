@@ -27,28 +27,36 @@ namespace Flow.Launcher.Plugin.Program.Programs
             // If there is no resource to localize a file name the method returns a non zero value.
             fixed (char* bufferPtr = buffer)
             {
-                var result = PInvoke.SHGetLocalizedName(path, bufferPtr, capacity, out var id);
-                if (result != HRESULT.S_OK)
+                int id;
+                fixed (char* pathPtr = path)
                 {
-                    return string.Empty;
-                }
+                    var result = PInvoke.SHGetLocalizedName(new PCWSTR(pathPtr), bufferPtr, capacity, &id);
 
-                var resourcePathStr = MemoryMarshal.CreateReadOnlySpanFromNullTerminated(bufferPtr).ToString();
-                _ = PInvoke.ExpandEnvironmentStrings(resourcePathStr, bufferPtr, capacity);
-                using var handle = PInvoke.LoadLibraryEx(resourcePathStr,
-                    LOAD_LIBRARY_FLAGS.DONT_RESOLVE_DLL_REFERENCES | LOAD_LIBRARY_FLAGS.LOAD_LIBRARY_AS_DATAFILE);
-                if (handle.IsInvalid)
-                {
-                    return string.Empty;
-                }
+                    if (result != HRESULT.S_OK)
+                    {
+                        return string.Empty;
+                    }
 
-                // not sure about the behavior of Pinvoke.LoadString, so we clear the buffer before using it (so it must be a null-terminated string)
-                buffer.Clear();
+                    var resourcePathStr = MemoryMarshal.CreateReadOnlySpanFromNullTerminated(bufferPtr).ToString();
+                    fixed (char* resourcePathPtr = resourcePathStr)
+                    {
+                        _ = PInvoke.ExpandEnvironmentStrings(new PCWSTR(resourcePathPtr), bufferPtr, capacity);
+                        using var handle = PInvoke.LoadLibraryEx(resourcePathStr,
+                            LOAD_LIBRARY_FLAGS.DONT_RESOLVE_DLL_REFERENCES | LOAD_LIBRARY_FLAGS.LOAD_LIBRARY_AS_DATAFILE);
+                        if (handle.IsInvalid)
+                        {
+                            return string.Empty;
+                        }
 
-                if (PInvoke.LoadString(handle, (uint)id, bufferPtr, capacity) != 0)
-                {
-                    var lString = MemoryMarshal.CreateReadOnlySpanFromNullTerminated(bufferPtr).ToString();
-                    return lString;
+                        // not sure about the behavior of Pinvoke.LoadString, so we clear the buffer before using it (so it must be a null-terminated string)
+                        buffer.Clear();
+
+                        if (PInvoke.LoadString(handle, (uint)id, buffer, capacity) != 0)
+                        {
+                            var lString = MemoryMarshal.CreateReadOnlySpanFromNullTerminated(bufferPtr).ToString();
+                            return lString;
+                        }
+                    }
                 }
             }
 

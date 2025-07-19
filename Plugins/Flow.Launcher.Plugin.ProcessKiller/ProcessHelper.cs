@@ -163,23 +163,20 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             try
             {
                 var handle = PInvoke.OpenProcess(PROCESS_ACCESS_RIGHTS.PROCESS_QUERY_LIMITED_INFORMATION, false, (uint)p.Id);
-                if (handle.Value == IntPtr.Zero)
+                if (handle == HWND.Null)
                 {
                     return string.Empty;
                 }
 
-                using var safeHandle = new SafeProcessHandle(handle.Value, true);
+                using var safeHandle = new SafeProcessHandle((nint)handle.Value, true);
                 uint capacity = 2000;
                 Span<char> buffer = new char[capacity];
-                fixed (char* pBuffer = buffer)
+                if (!PInvoke.QueryFullProcessImageName(safeHandle, PROCESS_NAME_FORMAT.PROCESS_NAME_WIN32, buffer, ref capacity))
                 {
-                    if (!PInvoke.QueryFullProcessImageName(safeHandle, PROCESS_NAME_FORMAT.PROCESS_NAME_WIN32, (PWSTR)pBuffer, ref capacity))
-                    {
-                        return string.Empty;
-                    }
-
-                    return buffer[..(int)capacity].ToString();
+                    return string.Empty;
                 }
+
+                return buffer[..(int)capacity].ToString();
             }
             catch
             {
