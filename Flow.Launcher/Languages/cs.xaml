@@ -242,8 +242,9 @@
     <system:String x:Key="updateNoResultTitle">Nejsou dostupné žádné aktualizace</system:String>
     <system:String x:Key="updateNoResultSubtitle">Všechny pluginy jsou aktuální</system:String>
     <system:String x:Key="updateAllPluginsTitle">Plugin updates available</system:String>
-    <system:String x:Key="updateAllPluginsButtonContent">Update all plugins</system:String>
+    <system:String x:Key="updateAllPluginsButtonContent">Update plugins</system:String>
     <system:String x:Key="checkPluginUpdatesTooltip">Check plugin updates</system:String>
+    <system:String x:Key="PluginsUpdateSuccessNoRestart">Plugins are successfully updated. Please restart Flow.</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Motiv</system:String>
@@ -569,6 +570,11 @@ Pokud před zkratku při zadávání přidáte znak &quot;@&quot;, bude odpovíd
     <system:String x:Key="update_flowlauncher_update_update_files">Následující soubory budou aktualizovány</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Aktualizovat soubory</system:String>
     <system:String x:Key="update_flowlauncher_update_update_description">Aktualizovat popis</system:String>
+
+    <!--  Plugin Update Window  -->
+    <system:String x:Key="restartAfterUpdating">Restart Flow Launcher after updating plugins</system:String>
+    <system:String x:Key="updatePluginCheckboxContent">{0}: Update from v{1} to v{2}</system:String>
+    <system:String x:Key="updatePluginNoSelected">No plugin selected</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Přeskočit</system:String>
