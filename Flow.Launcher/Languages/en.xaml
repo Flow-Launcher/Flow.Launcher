@@ -370,7 +370,7 @@
     <system:String x:Key="quickSwitchHotkey">Quick Switch</system:String>
     <system:String x:Key="quickSwitchHotkeyToolTip">Enter shortcut to quickly navigate the path of a file dialog to the path of the current file manager.</system:String>
     <system:String x:Key="quickSwitch">Quick Switch</system:String>
-    <system:String x:Key="quickSwitchToolTip">Quickly navigate to the path of the current file manager when a file dialog is opened.</system:String>
+    <system:String x:Key="quickSwitchToolTip">When Open/Save As dialog opens, quickly navigate to the current path of the file manager.</system:String>
     <system:String x:Key="autoQuickSwitch">Quick Switch Automatically</system:String>
     <system:String x:Key="autoQuickSwitchToolTip">Automatically navigate to the path of the current file manager when a file dialog is opened. (Experimental)</system:String>
     <system:String x:Key="showQuickSwitchWindow">Show Quick Switch Window</system:String>
