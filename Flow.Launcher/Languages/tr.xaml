@@ -6,7 +6,7 @@
         {2}{2}
         Click no if it's already installed, and you will be prompted to select the folder that contains the {1} executable
     </system:String>
-    <system:String x:Key="runtimePluginChooseRuntimeExecutable">Please select the {0} executable</system:String>
+    <system:String x:Key="runtimePluginChooseRuntimeExecutable">Lütfen {0} dosyasını seçin</system:String>
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
         Your selected {0} executable is invalid.
         {2}{2}
@@ -52,7 +52,7 @@
     <system:String x:Key="portableModeToolTIp">Tüm ayarları ve kullanıcı verilerini tek bir klasörde saklayın (Çıkarılabilir sürücüler veya bulut hizmetleri ile kullanıldığında kullanışlıdır).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Sistem ile Başlat</system:String>
     <system:String x:Key="useLogonTaskForStartup">Daha hızlı bir başlatma deneyimi için başlangıç girişini yerine oturum açma görevini kullanın</system:String>
-    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">Kaldırma işleminden sonra, bu görevi (Flow.Launcher Startup) Görev Zamanlayıcı üzerinden elle kaldırmanız gerekmektedir</system:String>
     <system:String x:Key="setAutoStartFailed">Sistemle başlatma ayarı başarısız oldu</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Odak Pencereden Ayrıldığında Gizle</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Güncelleme bildirimlerini gösterme</system:String>
