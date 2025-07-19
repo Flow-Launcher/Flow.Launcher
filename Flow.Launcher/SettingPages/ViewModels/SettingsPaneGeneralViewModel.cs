@@ -68,7 +68,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             }
         }
     }
-
+    
     public bool UseLogonTaskForStartup
     {
         get => Settings.UseLogonTaskForStartup;
