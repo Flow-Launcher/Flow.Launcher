@@ -395,7 +395,7 @@ Get in touch if you like to join the Flow-Launcher Team and help build this grea
 
 ### Developing/Debugging
 
-- Flow Launcher's target framework is .Net 7
+- Flow Launcher's target framework is .Net 9
 
 - Install Visual Studio 2022
 
