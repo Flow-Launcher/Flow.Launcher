@@ -55,7 +55,17 @@ public partial class SettingsPaneAboutViewModel : BaseModel
         App.API.GetTranslation("about_activate_times"),
         _settings.ActivateTimes
     );
-
+    
+    public int PrereleaseSelectedIndex
+    {
+        get => _settings.PrereleaseUpdateSource ? 1 : 0;
+        set
+        {
+            _settings.PrereleaseUpdateSource = value == 1;
+            OnPropertyChanged();
+        }
+    }
+    
     public class LogLevelData : DropdownDataGeneric<LOGLEVEL> { }
 
     public List<LogLevelData> LogLevels { get; } =
