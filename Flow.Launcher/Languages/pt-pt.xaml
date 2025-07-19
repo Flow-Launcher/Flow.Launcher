@@ -241,9 +241,9 @@
     <system:String x:Key="updateNoResultTitle">Não existem atualizações</system:String>
     <system:String x:Key="updateNoResultSubtitle">Todos os plugins estão atualizados</system:String>
     <system:String x:Key="updateAllPluginsTitle">Existem atualizações para plugins</system:String>
-    <system:String x:Key="updateAllPluginsButtonContent">Update plugins</system:String>
+    <system:String x:Key="updateAllPluginsButtonContent">Atualizar plugins</system:String>
     <system:String x:Key="checkPluginUpdatesTooltip">Procurar atualizações para plugins</system:String>
-    <system:String x:Key="PluginsUpdateSuccessNoRestart">Plugins are successfully updated. Please restart Flow.</system:String>
+    <system:String x:Key="PluginsUpdateSuccessNoRestart">Plugins atualizados com sucesso. Reinicie Flow Launcher.</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Tema</system:String>
@@ -570,9 +570,9 @@ Queira por favor mover a pasta do seu perfil de {0} para {1}
     <system:String x:Key="update_flowlauncher_update_update_description">Atualizar descrição</system:String>
 
     <!--  Plugin Update Window  -->
-    <system:String x:Key="restartAfterUpdating">Restart Flow Launcher after updating plugins</system:String>
-    <system:String x:Key="updatePluginCheckboxContent">{0}: Update from v{1} to v{2}</system:String>
-    <system:String x:Key="updatePluginNoSelected">No plugin selected</system:String>
+    <system:String x:Key="restartAfterUpdating">Reiniciar Flow Launcher após atualizar os plugins</system:String>
+    <system:String x:Key="updatePluginCheckboxContent">{0}: Atualizar de v{1} para v{2}</system:String>
+    <system:String x:Key="updatePluginNoSelected">Nada selecionado</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Ignorar</system:String>
