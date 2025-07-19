@@ -8,6 +8,7 @@ using Flow.Launcher.Core.Configuration;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.QuickSwitch;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
@@ -146,6 +147,40 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public List<LastQueryModeData> LastQueryModes { get; } =
         DropdownDataGeneric<LastQueryMode>.GetValues<LastQueryModeData>("LastQuery");
 
+    public bool EnableQuickSwitch
+    {
+        get => Settings.EnableQuickSwitch;
+        set
+        {
+            if (Settings.EnableQuickSwitch != value)
+            {
+                Settings.EnableQuickSwitch = value;
+                QuickSwitch.SetupQuickSwitch(value);
+                if (Settings.EnableQuickSwitch)
+                {
+                    HotKeyMapper.SetHotkey(new(Settings.QuickSwitchHotkey), QuickSwitch.OnToggleHotkey);
+                }
+                else
+                {
+                    HotKeyMapper.RemoveHotkey(Settings.QuickSwitchHotkey);
+                }
+            }
+        }
+    }
+
+    public class QuickSwitchWindowPositionData : DropdownDataGeneric<QuickSwitchWindowPositions> { }
+    public class QuickSwitchResultBehaviourData : DropdownDataGeneric<QuickSwitchResultBehaviours> { }
+    public class QuickSwitchFileResultBehaviourData : DropdownDataGeneric<QuickSwitchFileResultBehaviours> { }
+
+    public List<QuickSwitchWindowPositionData> QuickSwitchWindowPositions { get; } =
+        DropdownDataGeneric<QuickSwitchWindowPositions>.GetValues<QuickSwitchWindowPositionData>("QuickSwitchWindowPosition");
+
+    public List<QuickSwitchResultBehaviourData> QuickSwitchResultBehaviours { get; } =
+        DropdownDataGeneric<QuickSwitchResultBehaviours>.GetValues<QuickSwitchResultBehaviourData>("QuickSwitchResultBehaviour");
+
+    public List<QuickSwitchFileResultBehaviourData> QuickSwitchFileResultBehaviours { get; } =
+        DropdownDataGeneric<QuickSwitchFileResultBehaviours>.GetValues<QuickSwitchFileResultBehaviourData>("QuickSwitchFileResultBehaviour");
+
     public int SearchDelayTimeValue
     {
         get => Settings.SearchDelayTime;
@@ -179,6 +214,9 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         DropdownDataGeneric<SearchPrecisionScore>.UpdateLabels(SearchPrecisionScores);
         DropdownDataGeneric<LastQueryMode>.UpdateLabels(LastQueryModes);
         DropdownDataGeneric<DoublePinyinSchemas>.UpdateLabels(DoublePinyinSchemas);
+        DropdownDataGeneric<QuickSwitchWindowPositions>.UpdateLabels(QuickSwitchWindowPositions);
+        DropdownDataGeneric<QuickSwitchResultBehaviours>.UpdateLabels(QuickSwitchResultBehaviours);
+        DropdownDataGeneric<QuickSwitchFileResultBehaviours>.UpdateLabels(QuickSwitchFileResultBehaviours);
         // Since we are using Binding instead of DynamicResource, we need to manually trigger the update
         OnPropertyChanged(nameof(AlwaysPreviewToolTip));
     }

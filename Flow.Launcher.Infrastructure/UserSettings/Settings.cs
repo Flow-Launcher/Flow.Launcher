@@ -86,6 +86,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string OpenHistoryHotkey { get; set; } = $"Ctrl+H";
         public string CycleHistoryUpHotkey { get; set; } = $"{KeyConstant.Alt} + Up";
         public string CycleHistoryDownHotkey { get; set; } = $"{KeyConstant.Alt} + Down";
+        public string QuickSwitchHotkey { get; set; } = $"{KeyConstant.Alt} + G";
 
         private string _language = Constant.SystemLanguageCode;
         public string Language
@@ -323,6 +324,21 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         };
 
+        public bool EnableQuickSwitch { get; set; } = true;
+
+        public bool AutoQuickSwitch { get; set; } = false;
+
+        public bool ShowQuickSwitchWindow { get; set; } = false;
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public QuickSwitchWindowPositions QuickSwitchWindowPosition { get; set; } = QuickSwitchWindowPositions.UnderDialog;
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public QuickSwitchResultBehaviours QuickSwitchResultBehaviour { get; set; } = QuickSwitchResultBehaviours.LeftClick;
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public QuickSwitchFileResultBehaviours QuickSwitchFileResultBehaviour { get; set; } = QuickSwitchFileResultBehaviours.FullPath;
+
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public LOGLEVEL LogLevel { get; set; } = LOGLEVEL.INFO;
 
@@ -546,6 +562,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                     list.Add(new(CycleHistoryUpHotkey, "CycleHistoryUpHotkey", () => CycleHistoryUpHotkey = ""));
                 if (!string.IsNullOrEmpty(CycleHistoryDownHotkey))
                     list.Add(new(CycleHistoryDownHotkey, "CycleHistoryDownHotkey", () => CycleHistoryDownHotkey = ""));
+                if (!string.IsNullOrEmpty(QuickSwitchHotkey))
+                    list.Add(new(QuickSwitchHotkey, "quickSwitchHotkey", () => QuickSwitchHotkey = ""));
 
                 // Custom Query Hotkeys
                 foreach (var customPluginHotkey in CustomPluginHotkeys)
@@ -658,5 +676,24 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         XingKongJianDao,
         DaNiu,
         XiaoLang
+    }
+
+    public enum QuickSwitchWindowPositions
+    {
+        UnderDialog,
+        FollowDefault
+    }
+
+    public enum QuickSwitchResultBehaviours
+    {
+        LeftClick,
+        RightClick
+    }
+
+    public enum QuickSwitchFileResultBehaviours
+    {
+        FullPath,
+        FullPathOpen,
+        Directory
     }
 }

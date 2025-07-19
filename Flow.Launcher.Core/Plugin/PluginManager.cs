@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.QuickSwitch;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -39,6 +40,9 @@ namespace Flow.Launcher.Core.Plugin
         private static IEnumerable<PluginPair> _homePlugins;
         private static IEnumerable<PluginPair> _resultUpdatePlugin;
         private static IEnumerable<PluginPair> _translationPlugins;
+
+        private static readonly List<QuickSwitchExplorerPair> _quickSwitchExplorerPlugins = new();
+        private static readonly List<QuickSwitchDialogPair> _quickSwitchDialogPlugins = new();
 
         /// <summary>
         /// Directories that will hold Flow Launcher plugin directory
@@ -186,6 +190,24 @@ namespace Flow.Launcher.Core.Plugin
             _homePlugins = GetPluginsForInterface<IAsyncHomeQuery>();
             _resultUpdatePlugin = GetPluginsForInterface<IResultUpdated>();
             _translationPlugins = GetPluginsForInterface<IPluginI18n>();
+
+            // Initialize quick switch plugin pairs
+            foreach (var pair in GetPluginsForInterface<IQuickSwitchExplorer>())
+            {
+                _quickSwitchExplorerPlugins.Add(new QuickSwitchExplorerPair
+                {
+                    Plugin = (IQuickSwitchExplorer)pair.Plugin,
+                    Metadata = pair.Metadata
+                });
+            }
+            foreach (var pair in GetPluginsForInterface<IQuickSwitchDialog>())
+            {
+                _quickSwitchDialogPlugins.Add(new QuickSwitchDialogPair
+                {
+                    Plugin = (IQuickSwitchDialog)pair.Plugin,
+                    Metadata = pair.Metadata
+                });
+            }
         }
 
         private static void UpdatePluginDirectory(List<PluginMetadata> metadatas)
@@ -288,20 +310,24 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        public static ICollection<PluginPair> ValidPluginsForQuery(Query query)
+        public static ICollection<PluginPair> ValidPluginsForQuery(Query query, bool quickSwitch)
         {
             if (query is null)
                 return Array.Empty<PluginPair>();
 
             if (!NonGlobalPlugins.TryGetValue(query.ActionKeyword, out var plugin))
             {
-                return GlobalPlugins.Where(p => !PluginModified(p.Metadata.ID)).ToList();
+                if (quickSwitch)
+                    return GlobalPlugins.Where(p => p.Plugin is IAsyncQuickSwitch && !PluginModified(p.Metadata.ID)).ToList();
+                else
+                    return GlobalPlugins.Where(p => !PluginModified(p.Metadata.ID)).ToList();
             }
 
-            if (API.PluginModified(plugin.Metadata.ID))
-            {
+            if (quickSwitch && plugin.Plugin is not IAsyncQuickSwitch)
                 return Array.Empty<PluginPair>();
-            }
+
+            if (API.PluginModified(plugin.Metadata.ID))
+                return Array.Empty<PluginPair>();
 
             return new List<PluginPair>
             {
@@ -387,6 +413,36 @@ namespace Flow.Launcher.Core.Plugin
             }
             return results;
         }
+  
+        public static async Task<List<QuickSwitchResult>> QueryQuickSwitchForPluginAsync(PluginPair pair, Query query, CancellationToken token)
+        {
+            var results = new List<QuickSwitchResult>();
+            var metadata = pair.Metadata;
+
+            try
+            {
+                var milliseconds = await API.StopwatchLogDebugAsync(ClassName, $"Cost for {metadata.Name}",
+                    async () => results = await ((IAsyncQuickSwitch)pair.Plugin).QueryQuickSwitchAsync(query, token).ConfigureAwait(false));
+
+                token.ThrowIfCancellationRequested();
+                if (results == null)
+                    return null;
+                UpdatePluginMetadata(results, metadata, query);
+
+                token.ThrowIfCancellationRequested();
+            }
+            catch (OperationCanceledException)
+            {
+                // null will be fine since the results will only be added into queue if the token hasn't been cancelled
+                return null;
+            }
+            catch (Exception e)
+            {
+                API.LogException(ClassName, $"Failed to query quick switch for plugin: {metadata.Name}", e);
+                return null;
+            }
+            return results;
+        }
 
         public static void UpdatePluginMetadata(IReadOnlyList<Result> results, PluginMetadata metadata, Query query)
         {
@@ -461,6 +517,16 @@ namespace Flow.Launcher.Core.Plugin
         public static bool IsHomePlugin(string id)
         {
             return _homePlugins.Where(p => !PluginModified(p.Metadata.ID)).Any(p => p.Metadata.ID == id);
+        }
+
+        public static IList<QuickSwitchExplorerPair> GetQuickSwitchExplorers()
+        {
+            return _quickSwitchExplorerPlugins.Where(p => !PluginModified(p.Metadata.ID)).ToList();
+        }
+
+        public static IList<QuickSwitchDialogPair> GetQuickSwitchDialogs()
+        {
+            return _quickSwitchDialogPlugins.Where(p => !PluginModified(p.Metadata.ID)).ToList();
         }
 
         public static bool ActionKeywordRegistered(string actionKeyword)

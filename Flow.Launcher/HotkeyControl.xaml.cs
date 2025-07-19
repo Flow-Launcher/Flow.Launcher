@@ -110,7 +110,8 @@ namespace Flow.Launcher
             SelectPrevItemHotkey,
             SelectPrevItemHotkey2,
             SelectNextItemHotkey,
-            SelectNextItemHotkey2
+            SelectNextItemHotkey2,
+            QuickSwitchHotkey,
         }
 
         // We can initialize settings in static field because it has been constructed in App constuctor
@@ -142,6 +143,7 @@ namespace Flow.Launcher
                     HotkeyType.SelectPrevItemHotkey2 => _settings.SelectPrevItemHotkey2,
                     HotkeyType.SelectNextItemHotkey => _settings.SelectNextItemHotkey,
                     HotkeyType.SelectNextItemHotkey2 => _settings.SelectNextItemHotkey2,
+                    HotkeyType.QuickSwitchHotkey => _settings.QuickSwitchHotkey,
                     _ => throw new System.NotImplementedException("Hotkey type not set")
                 };
             }
@@ -200,6 +202,9 @@ namespace Flow.Launcher
                         break;
                     case HotkeyType.SelectNextItemHotkey2:
                         _settings.SelectNextItemHotkey2 = value;
+                        break;
+                    case HotkeyType.QuickSwitchHotkey:
+                        _settings.QuickSwitchHotkey = value;
                         break;
                     default:
                         throw new System.NotImplementedException("Hotkey type not set");

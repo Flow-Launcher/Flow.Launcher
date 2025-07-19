@@ -73,6 +73,18 @@
                 </cc:Card>
             </cc:CardGroup>
 
+            <cc:Card
+                Title="{DynamicResource quickSwitchHotkey}"
+                Margin="0 14 0 0"
+                Sub="{DynamicResource quickSwitchHotkeyToolTip}">
+                <flowlauncher:HotkeyControl
+                    ChangeHotkey="{Binding SetQuickSwitchHotkeyCommand}"
+                    DefaultHotkey="Alt+G"
+                    Type="QuickSwitchHotkey"
+                    ValidateKeyGesture="False"
+                    WindowTitle="{DynamicResource quickSwitchHotkey}" />
+            </cc:Card>
+
             <cc:ExCard
                 Title="{DynamicResource hotkeyPresets}"
                 Margin="0 14 0 0"
