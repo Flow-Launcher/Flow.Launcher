@@ -281,11 +281,12 @@ public static class PluginInstaller
     /// <summary>
     /// Updates the plugin to the latest version available from its source.
     /// </summary>
+    /// <param name="updateAllPlugins">Action to execute when the user chooses to update all plugins.</param>
     /// <param name="silentUpdate">If true, do not show any messages when there is no update available.</param>
     /// <param name="usePrimaryUrlOnly">If true, only use the primary URL for updates.</param>
     /// <param name="token">Cancellation token to cancel the update operation.</param>
     /// <returns></returns>
-    public static async Task CheckForPluginUpdatesAsync(bool silentUpdate = true, bool usePrimaryUrlOnly = false, CancellationToken token = default)
+    public static async Task CheckForPluginUpdatesAsync(Action<List<PluginUpdateInfo>> updateAllPlugins, bool silentUpdate = true, bool usePrimaryUrlOnly = false, CancellationToken token = default)
     {
         // Update the plugin manifest
         await API.UpdatePluginManifestAsync(usePrimaryUrlOnly, token);
@@ -334,14 +335,20 @@ public static class PluginInstaller
             API.GetTranslation("updateAllPluginsButtonContent"),
             () =>
             {
-                UpdateAllPlugins(resultsForUpdate);
+                updateAllPlugins(resultsForUpdate);
             },
             string.Join(", ", resultsForUpdate.Select(x => x.PluginExistingMetadata.Name)));
     }
 
-    private static void UpdateAllPlugins(IEnumerable<PluginUpdateInfo> resultsForUpdate)
+    /// <summary>
+    /// Updates all plugins that have available updates.
+    /// </summary>
+    /// <param name="resultsForUpdate"></param>
+    /// <param name="restart"></param>
+    public static async Task UpdateAllPluginsAsync(IEnumerable<PluginUpdateInfo> resultsForUpdate, bool restart)
     {
-        _ = Task.WhenAll(resultsForUpdate.Select(async plugin =>
+        var anyPluginSuccess = false;
+        await Task.WhenAll(resultsForUpdate.Select(async plugin =>
         {
             var downloadToFilePath = Path.Combine(Path.GetTempPath(), $"{plugin.Name}-{plugin.NewVersion}.zip");
 
@@ -363,6 +370,8 @@ public static class PluginInstaller
                 {
                     return;
                 }
+
+                anyPluginSuccess = true;
             }
             catch (Exception e)
             {
@@ -370,6 +379,19 @@ public static class PluginInstaller
                 API.ShowMsgError(API.GetTranslation("ErrorUpdatingPlugin"));
             }
         }));
+
+        if (!anyPluginSuccess) return;
+
+        if (restart)
+        {
+            API.RestartApp();
+        }
+        else
+        {
+            API.ShowMsg(
+                API.GetTranslation("updatebtn"),
+                API.GetTranslation("PluginsUpdateSuccessNoRestart"));
+        }
     }
 
     /// <summary>
@@ -445,16 +467,16 @@ public static class PluginInstaller
             x.Metadata.Website.StartsWith(constructedUrlPart)
         );
     }
+}
 
-    private record PluginUpdateInfo
-    {
-        public string ID { get; init; }
-        public string Name { get; init; }
-        public string Author { get; init; }
-        public string CurrentVersion { get; init; }
-        public string NewVersion { get; init; }
-        public string IcoPath { get; init; }
-        public PluginMetadata PluginExistingMetadata { get; init; }
-        public UserPlugin PluginNewUserPlugin { get; init; }
-    }
+public record PluginUpdateInfo
+{
+    public string ID { get; init; }
+    public string Name { get; init; }
+    public string Author { get; init; }
+    public string CurrentVersion { get; init; }
+    public string NewVersion { get; init; }
+    public string IcoPath { get; init; }
+    public PluginMetadata PluginExistingMetadata { get; init; }
+    public UserPlugin PluginNewUserPlugin { get; init; }
 }
