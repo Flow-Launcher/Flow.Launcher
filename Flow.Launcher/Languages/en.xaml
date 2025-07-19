@@ -368,7 +368,7 @@
     <system:String x:Key="showBadgesGlobalOnly">Show Result Badges for Global Query Only</system:String>
     <system:String x:Key="showBadgesGlobalOnlyToolTip">Show badges for global query results only</system:String>
     <system:String x:Key="quickSwitchHotkey">Quick Switch</system:String>
-    <system:String x:Key="quickSwitchHotkeyToolTip">Enter shortcut to quickly navigate the path of a file dialog to the path of the current file manager.</system:String>
+    <system:String x:Key="quickSwitchHotkeyToolTip">Enter shortcut to quickly navigate the Open/Save As dialogue to the path of the current file manager.</system:String>
     <system:String x:Key="quickSwitch">Quick Switch</system:String>
     <system:String x:Key="quickSwitchToolTip">When Open/Save As dialog opens, quickly navigate to the current path of the file manager.</system:String>
     <system:String x:Key="autoQuickSwitch">Quick Switch Automatically</system:String>
