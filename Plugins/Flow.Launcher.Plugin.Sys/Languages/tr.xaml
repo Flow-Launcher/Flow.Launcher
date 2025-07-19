@@ -20,7 +20,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_save_all_settings_cmd">Save Settings</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_cmd">Flow Launcher'u Yeniden Başlat</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_setting_cmd">Ayarlar</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data_cmd">Reload Plugin Data</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data_cmd">Eklenti Verisini Yenile</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_check_for_update_cmd">Check For Update</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_log_location_cmd">Open Log Location</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips_cmd">Flow Launcher Tips</system:String>
