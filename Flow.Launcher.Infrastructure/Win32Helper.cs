@@ -118,9 +118,9 @@ namespace Flow.Launcher.Infrastructure
 
         #region Window Foreground
 
-        public static nint GetForegroundWindow()
+        public static unsafe nint GetForegroundWindow()
         {
-            return PInvoke.GetForegroundWindow().Value;
+            return (nint)PInvoke.GetForegroundWindow().Value;
         }
 
         public static bool SetForegroundWindow(Window window)
@@ -279,7 +279,7 @@ namespace Flow.Launcher.Infrastructure
             {
                 var hWndDesktop = PInvoke.FindWindowEx(hWnd, HWND.Null, "SHELLDLL_DefView", null);
                 hWndDesktop = PInvoke.FindWindowEx(hWndDesktop, HWND.Null, "SysListView32", "FolderView");
-                if (hWndDesktop.Value != IntPtr.Zero)
+                if (hWndDesktop != HWND.Null)
                 {
                     return false;
                 }
@@ -480,7 +480,7 @@ namespace Flow.Launcher.Infrastructure
         /// Restores the previously backed-up keyboard layout.
         /// If it wasn't backed up or has already been restored, this method does nothing.
         /// </summary>
-        public static void RestorePreviousKeyboardLayout()
+        public unsafe static void RestorePreviousKeyboardLayout()
         {
             if (_previousLayout == HKL.Null) return;
 
@@ -491,7 +491,7 @@ namespace Flow.Launcher.Infrastructure
                 hwnd,
                 PInvoke.WM_INPUTLANGCHANGEREQUEST,
                 PInvoke.INPUTLANGCHANGE_FORWARD,
-                _previousLayout.Value
+                new LPARAM((nint)_previousLayout.Value)
             );
 
             _previousLayout = HKL.Null;
