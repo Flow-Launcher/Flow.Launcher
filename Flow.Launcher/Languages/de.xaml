@@ -242,8 +242,9 @@
     <system:String x:Key="updateNoResultTitle">Kein Update verfügbar</system:String>
     <system:String x:Key="updateNoResultSubtitle">Alle Plug-ins sind auf dem neuesten Stand</system:String>
     <system:String x:Key="updateAllPluginsTitle">Plugin updates available</system:String>
-    <system:String x:Key="updateAllPluginsButtonContent">Alle Plug-ins aktualisieren</system:String>
+    <system:String x:Key="updateAllPluginsButtonContent">Update plugins</system:String>
     <system:String x:Key="checkPluginUpdatesTooltip">Check plugin updates</system:String>
+    <system:String x:Key="PluginsUpdateSuccessNoRestart">Plugins are successfully updated. Please restart Flow.</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Theme</system:String>
@@ -569,6 +570,11 @@ Wenn Sie bei der Eingabe eines Shortcuts ein '@'-Präfix hinzufügen, stimmt die
     <system:String x:Key="update_flowlauncher_update_update_files">Folgende Dateien werden aktualisiert</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Daten aktualisieren</system:String>
     <system:String x:Key="update_flowlauncher_update_update_description">Update-Beschreibung</system:String>
+
+    <!--  Plugin Update Window  -->
+    <system:String x:Key="restartAfterUpdating">Restart Flow Launcher after updating plugins</system:String>
+    <system:String x:Key="updatePluginCheckboxContent">{0}: Update from v{1} to v{2}</system:String>
+    <system:String x:Key="updatePluginNoSelected">No plugin selected</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Überspringen</system:String>
