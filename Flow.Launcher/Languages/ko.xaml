@@ -233,8 +233,9 @@
     <system:String x:Key="updateNoResultTitle">사용 가능한 업데이트가 없습니다</system:String>
     <system:String x:Key="updateNoResultSubtitle">All plugins are up to date</system:String>
     <system:String x:Key="updateAllPluginsTitle">Plugin updates available</system:String>
-    <system:String x:Key="updateAllPluginsButtonContent">Update all plugins</system:String>
+    <system:String x:Key="updateAllPluginsButtonContent">Update plugins</system:String>
     <system:String x:Key="checkPluginUpdatesTooltip">Check plugin updates</system:String>
+    <system:String x:Key="PluginsUpdateSuccessNoRestart">Plugins are successfully updated. Please restart Flow.</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">테마</system:String>
@@ -560,6 +561,11 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="update_flowlauncher_update_update_files">아래 파일들이 업데이트됩니다.</system:String>
     <system:String x:Key="update_flowlauncher_update_files">업데이트 파일</system:String>
     <system:String x:Key="update_flowlauncher_update_update_description">업데이트 설명</system:String>
+
+    <!--  Plugin Update Window  -->
+    <system:String x:Key="restartAfterUpdating">Restart Flow Launcher after updating plugins</system:String>
+    <system:String x:Key="updatePluginCheckboxContent">{0}: Update from v{1} to v{2}</system:String>
+    <system:String x:Key="updatePluginNoSelected">No plugin selected</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">건너뛰기</system:String>
