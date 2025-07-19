@@ -1,9 +1,7 @@
 ﻿using System.Linq;
 using System.Windows;
 using CommunityToolkit.Mvvm.Input;
-using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 
@@ -29,12 +27,6 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
     }
 
     [RelayCommand]
-    private void SetTogglingHotkey(HotkeyModel hotkey)
-    {
-        HotKeyMapper.SetHotkey(hotkey, HotKeyMapper.OnToggleHotkey);
-    }
-
-    [RelayCommand]
     private void CustomHotkeyDelete()
     {
         var item = SelectedCustomPluginHotkey;
@@ -55,7 +47,6 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
         if (result is MessageBoxResult.Yes)
         {
             Settings.CustomPluginHotkeys.Remove(item);
-            HotKeyMapper.RemoveHotkey(item.Hotkey);
         }
     }
 
@@ -82,8 +73,6 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
 
         var index = Settings.CustomPluginHotkeys.IndexOf(settingItem);
         Settings.CustomPluginHotkeys[index] = new CustomPluginHotkey(window.Hotkey, window.ActionKeyword);
-        HotKeyMapper.RemoveHotkey(settingItem.Hotkey); // remove origin hotkey
-        HotKeyMapper.SetCustomQueryHotkey(Settings.CustomPluginHotkeys[index]); // set new hotkey
     }
 
     [RelayCommand]
@@ -94,7 +83,6 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
         {
             var customHotkey = new CustomPluginHotkey(window.Hotkey, window.ActionKeyword);
             Settings.CustomPluginHotkeys.Add(customHotkey);
-            HotKeyMapper.SetCustomQueryHotkey(customHotkey); // set new hotkey
         }
     }
 
