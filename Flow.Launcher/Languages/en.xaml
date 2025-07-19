@@ -377,7 +377,7 @@
     <system:String x:Key="showQuickSwitchWindowToolTip">Display quick switch search window when the open/save dialog is shown to quickly navigate to file/folder locations.</system:String>
     <system:String x:Key="quickSwitchWindowPosition">Quick Switch Window Position</system:String>
     <system:String x:Key="quickSwitchWindowPositionToolTip">Select position for quick switch window</system:String>
-    <system:String x:Key="QuickSwitchWindowPositionUnderDialog">Fixed under dialogs. Displayed after dialogs are created and until it is closed</system:String>
+    <system:String x:Key="QuickSwitchWindowPositionUnderDialog">Fixed under the Open/Save As dialog. Displayed on dialog open and stays until dialogue is closed</system:String>
     <system:String x:Key="QuickSwitchWindowPositionFollowDefault">Default search window position. Displayed when triggered by search window hotkey</system:String>
     <system:String x:Key="quickSwitchResultBehaviour">Quick Switch Result Navigation Behaviour</system:String>
     <system:String x:Key="quickSwitchResultBehaviourToolTip">Behaviour to navigate Open/Save As dialog to the selected result path</system:String>
