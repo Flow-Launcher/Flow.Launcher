@@ -242,9 +242,9 @@
     <system:String x:Key="updateNoResultTitle">Nie je k dispozícii žiadna aktualizácia</system:String>
     <system:String x:Key="updateNoResultSubtitle">Všetky pluginy sú aktuálne</system:String>
     <system:String x:Key="updateAllPluginsTitle">Dostupná aktualizácia pluginu</system:String>
-    <system:String x:Key="updateAllPluginsButtonContent">Update plugins</system:String>
+    <system:String x:Key="updateAllPluginsButtonContent">Aktualizovať pluginy</system:String>
     <system:String x:Key="checkPluginUpdatesTooltip">Skontrolovať dostupnosť aktualizácií</system:String>
-    <system:String x:Key="PluginsUpdateSuccessNoRestart">Plugins are successfully updated. Please restart Flow.</system:String>
+    <system:String x:Key="PluginsUpdateSuccessNoRestart">Pluginy {0} boli úspešne aktualizované. Prosím, reštartuje Flow.</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Motív</system:String>
@@ -572,9 +572,9 @@ Ak pri zadávaní skratky pred ňu pridáte &quot;@&quot;, bude sa zhodovať s �
     <system:String x:Key="update_flowlauncher_update_update_description">Aktualizovať popis</system:String>
 
     <!--  Plugin Update Window  -->
-    <system:String x:Key="restartAfterUpdating">Restart Flow Launcher after updating plugins</system:String>
-    <system:String x:Key="updatePluginCheckboxContent">{0}: Update from v{1} to v{2}</system:String>
-    <system:String x:Key="updatePluginNoSelected">No plugin selected</system:String>
+    <system:String x:Key="restartAfterUpdating">Po aktualizácii pluginov reštartovať Flow Launcher</system:String>
+    <system:String x:Key="updatePluginCheckboxContent">{0}: Aktualizované z v{1} na v{2}</system:String>
+    <system:String x:Key="updatePluginNoSelected">Nie je vybraný žiaden plugin</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Preskočiť</system:String>
