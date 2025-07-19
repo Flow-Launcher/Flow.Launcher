@@ -592,8 +592,16 @@
       },
       "NLog": {
         "type": "Transitive",
-        "resolved": "4.7.10",
-        "contentHash": "rcegW7kYOCjl7wX0SzsqpPBqnJ51JKi1WkYb6QBVX0Wc5IgH19Pv4t/co+T0s06OS0Ne44xgkY/mHg0PdrmJow=="
+        "resolved": "6.0.1",
+        "contentHash": "qDWiqy8/xdpZKtHna/645KbalwP86N2NFJEzfqhcv+Si4V2iNaEfR/dCneuF/4+Dcwl3f7jHMXj3ndWYftV3Ug=="
+      },
+      "NLog.OutputDebugString": {
+        "type": "Transitive",
+        "resolved": "6.0.1",
+        "contentHash": "wwJCQLaHVzuRf8TsXB+EEdrzVvE3dnzCSMQMDgwkw3AXp8VSp3JSVF/Q/H0oEqggKgKhPs13hh3a7svyQr4s3A==",
+        "dependencies": {
+          "NLog": "6.0.1"
+        }
       },
       "runtime.osx.10.10-x64.CoreCompat.System.Drawing": {
         "type": "Transitive",
@@ -851,7 +859,8 @@
           "Flow.Launcher.Plugin": "[4.7.0, )",
           "MemoryPack": "[1.21.4, )",
           "Microsoft.VisualStudio.Threading": "[17.14.15, )",
-          "NLog": "[4.7.10, )",
+          "NLog": "[6.0.1, )",
+          "NLog.OutputDebugString": "[6.0.1, )",
           "SharpVectors.Wpf": "[1.8.4.2, )",
           "System.Drawing.Common": "[9.0.7, )",
           "ToolGood.Words.Pinyin": "[3.0.1.4, )"
