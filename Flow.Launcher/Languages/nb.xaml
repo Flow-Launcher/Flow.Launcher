@@ -91,6 +91,7 @@
     <system:String x:Key="typingStartEn">Begynn alltid å skrive i engelsk modus</system:String>
     <system:String x:Key="typingStartEnTooltip">Bytt inndatametode midlertidig til engelsk modus når du aktiverer Flow.</system:String>
     <system:String x:Key="autoUpdates">Automatisk oppdatering</system:String>
+    <system:String x:Key="autoUpdatesTooltip">Automatically check and update the app when available</system:String>
     <system:String x:Key="select">Velg</system:String>
     <system:String x:Key="hideOnStartup">Skjul Flow Launcher ved oppstart</system:String>
     <system:String x:Key="hideOnStartupToolTip">Søkevinduet for Flow Launcher er skjult i systemstatusfeltet etter oppstart.</system:String>
@@ -103,6 +104,19 @@
     <system:String x:Key="SearchPrecisionRegular">Vanlig</system:String>
     <system:String x:Key="ShouldUsePinyin">Søk med Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Tillater bruk av Pinyin for å søke. Pinyin er standardsystemet for romanisert stavemåte for å oversette kinesisk.</system:String>
+    <system:String x:Key="ShouldUseDoublePinyin">Use Double Pinyin</system:String>
+    <system:String x:Key="ShouldUseDoublePinyinToolTip">Use Double Pinyin instead of Full Pinyin to search.</system:String>
+    <system:String x:Key="DoublePinyinSchema">Double Pinyin Schema</system:String>
+    <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao He</system:String>
+    <system:String x:Key="DoublePinyinSchemasZiRanMa">Zi Ran Ma</system:String>
+    <system:String x:Key="DoublePinyinSchemasWeiRuan">Wei Ruan</system:String>
+    <system:String x:Key="DoublePinyinSchemasZhiNengABC">Zhi Neng ABC</system:String>
+    <system:String x:Key="DoublePinyinSchemasZiGuangPinYin">Zi Guang Pin Yin</system:String>
+    <system:String x:Key="DoublePinyinSchemasPinYinJiaJia">Pin Yin Jia Jia</system:String>
+    <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
+    <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
+    <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
+
     <system:String x:Key="AlwaysPreview">Alltid forhåndsvisning</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Åpne alltid forhåndsvisningspanel når Flow aktiveres. Trykk på {0} for å velge forhåndsvisning.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Skyggeeffekt er ikke tillatt mens gjeldende tema har uskarphet-effekt aktivert</system:String>
@@ -142,6 +156,8 @@
     <system:String x:Key="autoRestartAfterChangingToolTip">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugin Store</system:String>
     <system:String x:Key="showUnknownSourceWarning">Show unknown source warning</system:String>
     <system:String x:Key="showUnknownSourceWarningToolTip">Show warning when installing plugins from unknown sources</system:String>
+    <system:String x:Key="autoUpdatePlugins">Auto update plugins</system:String>
+    <system:String x:Key="autoUpdatePluginsToolTip">Automatically check plugin updates and notify if there are any updates available</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Søk etter programtillegg</system:String>
@@ -223,6 +239,12 @@
     <system:String x:Key="ZipFiles">Zip files</system:String>
     <system:String x:Key="SelectZipFile">Please select zip file</system:String>
     <system:String x:Key="installLocalPluginTooltip">Install plugin from local path</system:String>
+    <system:String x:Key="updateNoResultTitle">Ingen oppdatering tilgjengelig</system:String>
+    <system:String x:Key="updateNoResultSubtitle">Alle programtillegg er oppdatert</system:String>
+    <system:String x:Key="updateAllPluginsTitle">Plugin updates available</system:String>
+    <system:String x:Key="updateAllPluginsButtonContent">Update plugins</system:String>
+    <system:String x:Key="checkPluginUpdatesTooltip">Check plugin updates</system:String>
+    <system:String x:Key="PluginsUpdateSuccessNoRestart">Plugins are successfully updated. Please restart Flow.</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Drakt</system:String>
@@ -548,6 +570,11 @@ Hvis du legger til et @-prefiks mens du legger inn en snarvei, samsvarer det med
     <system:String x:Key="update_flowlauncher_update_update_files">Følgende filer vil bli oppdatert</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Oppdater filer</system:String>
     <system:String x:Key="update_flowlauncher_update_update_description">Beskrivelse av oppdatering</system:String>
+
+    <!--  Plugin Update Window  -->
+    <system:String x:Key="restartAfterUpdating">Restart Flow Launcher after updating plugins</system:String>
+    <system:String x:Key="updatePluginCheckboxContent">{0}: Update from v{1} to v{2}</system:String>
+    <system:String x:Key="updatePluginNoSelected">No plugin selected</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Hopp over</system:String>
