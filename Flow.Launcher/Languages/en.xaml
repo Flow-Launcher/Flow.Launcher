@@ -384,7 +384,7 @@
     <system:String x:Key="QuickSwitchResultBehaviourLeftClick">Left click or Enter key</system:String>
     <system:String x:Key="QuickSwitchResultBehaviourRightClick">Right click</system:String>
     <system:String x:Key="quickSwitchFileResultBehaviour">Quick Switch File Navigation Behaviour</system:String>
-    <system:String x:Key="quickSwitchFileResultBehaviourToolTip">Behaviour to navigate file dialog when the results are file paths</system:String>
+    <system:String x:Key="quickSwitchFileResultBehaviourToolTip">Behaviour to navigate Open/Save As dialog when the result is a file path</system:String>
     <system:String x:Key="QuickSwitchFileResultBehaviourFullPath">Fill full path in file name box</system:String>
     <system:String x:Key="QuickSwitchFileResultBehaviourFullPathOpen">Fill full path in file name box and open</system:String>
     <system:String x:Key="QuickSwitchFileResultBehaviourDirectory">Fill directory in path box</system:String>
