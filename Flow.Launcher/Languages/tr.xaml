@@ -480,7 +480,7 @@
 
     <!--  Search Delay Settings Dialog  -->
     <system:String x:Key="homeTitle">Ana Sayfa</system:String>
-    <system:String x:Key="homeTips">Enable the plugin home page state if you like to show the plugin results when query is empty.</system:String>
+    <system:String x:Key="homeTips">Sorgu boşken eklenti sonuçlarını göstermek istiyorsanız eklentinin ana sayfa durumunu etkinleştirin.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Özel Sorgu Kısayolları</system:String>
@@ -494,7 +494,7 @@
     <system:String x:Key="hotkeyUnavailableUneditable">Bu kısayol &quot;{0}&quot; için ayrılmıştır, lütfen başka bir kısayol deneyin.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">Bu kısayol zaten &quot;{0}&quot; için kullanılıyor. Eğer &quot;Üstüne Yaz&quot;'ı seçerseniz, &quot;{0}&quot; sorgusu bu kısayol ile kullanılamayacak.</system:String>
     <system:String x:Key="hotkeyRegGuide">Bu işleve atamak istediğiniz kısayol tuşlarına basın.</system:String>
-    <system:String x:Key="emptyPluginHotkey">Hotkey and action keyword are empty</system:String>
+    <system:String x:Key="emptyPluginHotkey">Kısayol tuşu ve eylem anahtar kelimesi boş</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Özel Kısaltmalar</system:String>
@@ -531,18 +531,18 @@
     <system:String x:Key="reportWindow_report_succeed">Hata raporu başarıyla gönderildi</system:String>
     <system:String x:Key="reportWindow_report_failed">Hata raporu gönderimi başarısız oldu</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher'da bir hata oluştu</system:String>
-    <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
-    <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
-    <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">Lütfen yeni bir konu açın</system:String>
+    <system:String x:Key="reportWindow_upload_log">1. Log dosyasını buraya yükleyin: {0}</system:String>
+    <system:String x:Key="reportWindow_copy_below">2. Aşağıdaki istisna mesajını kopyalayın</system:String>
 
     <!--  File Open Error  -->
     <system:String x:Key="fileManagerNotFoundTitle">Dosya Yöneticisi Hatası</system:String>
     <system:String x:Key="fileManagerNotFound">
-        The specified file manager could not be found. Please check the Custom File Manager setting under Settings &gt; General.
+        Belirtilen dosya yöneticisi bulunamadı. Lütfen Ayarlar &gt; Genel bölümündeki Özel Dosya Yöneticisi ayarını kontrol edin.
     </system:String>
     <system:String x:Key="errorTitle">Hata</system:String>
     <system:String x:Key="folderOpenError">Klasör açılırken bir hata oluştu. {0}</system:String>
-    <system:String x:Key="browserOpenError">An error occurred while opening the URL in the browser. Please check your Default Web Browser configuration in the General section of the settings window</system:String>
+    <system:String x:Key="browserOpenError">URL tarayıcıda açılırken bir hata oluştu. Lütfen ayarlar penceresindeki Genel bölümden Varsayılan Web Tarayıcısı ayarını kontrol edin</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Lütfen bekleyin...</system:String>
