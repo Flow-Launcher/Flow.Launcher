@@ -1,5 +1,4 @@
-﻿using Flow.Launcher.Plugin.Everything.Everything;
-using Flow.Launcher.Plugin.Explorer.Search.Everything.Exceptions;
+﻿using Flow.Launcher.Plugin.Explorer.Search.Everything.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -36,7 +35,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         /// <summary>
         /// Checks whether the sort option is Fast Sort.
         /// </summary>
-        public static bool IsFastSortOption(SortOption sortOption)
+        public static bool IsFastSortOption(EverythingSortOption sortOption)
         {
             var fastSortOptionEnabled = EverythingApiDllImport.Everything_IsFastSort(sortOption);
 
@@ -112,7 +111,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 EverythingApiDllImport.Everything_SetSort(option.SortOption);
                 EverythingApiDllImport.Everything_SetMatchPath(option.IsFullPathSearch);
                 
-                if (option.SortOption == SortOption.RUN_COUNT_DESCENDING)
+                if (option.SortOption == EverythingSortOption.RUN_COUNT_DESCENDING)
                 {
                     EverythingApiDllImport.Everything_SetRequestFlags(EVERYTHING_REQUEST_FULL_PATH_AND_FILE_NAME | EVERYTHING_REQUEST_RUN_COUNT);
                 }

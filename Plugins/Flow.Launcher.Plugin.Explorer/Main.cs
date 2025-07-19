@@ -38,12 +38,9 @@ namespace Flow.Launcher.Plugin.Explorer
             FillQuickAccessLinkNames();
 
             viewModel = new SettingsViewModel(context, Settings);
-
-            contextMenu = new ContextMenu(Context, Settings, viewModel);
+            contextMenu = new ContextMenu(Context, Settings);
             searchManager = new SearchManager(Settings, Context);
             ResultManager.Init(Context, Settings);
-            
-            SortOptionTranslationHelper.API = context.API;
 
             EverythingApiDllImport.Load(Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "EverythingSDK",
                 Environment.Is64BitProcess ? "x64" : "x86"));

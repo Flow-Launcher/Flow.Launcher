@@ -1,5 +1,4 @@
-﻿using Flow.Launcher.Plugin.Everything.Everything;
-using Flow.Launcher.Plugin.Explorer.Search;
+﻿using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
@@ -145,10 +144,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public string EverythingInstalledPath { get; set; }
 
-        [JsonIgnore]
-        public SortOption[] SortOptions { get; set; } = Enum.GetValues<SortOption>();
-
-        public SortOption SortOption { get; set; } = SortOption.NAME_ASCENDING;
+        public EverythingSortOption SortOption { get; set; } = EverythingSortOption.NAME_ASCENDING;
 
         public bool EnableEverythingContentSearch { get; set; } = false;
 

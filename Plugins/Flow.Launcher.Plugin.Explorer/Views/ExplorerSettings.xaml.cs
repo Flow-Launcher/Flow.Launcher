@@ -38,6 +38,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 QuickAccessExpander,
                 ExcludedPathsExpander
             };
+
         }
 
         private void AccessLinkDragDrop(string containerName, DragEventArgs e)
@@ -77,14 +78,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         {
             SettingsViewModel.OpenWindowsIndexingOptions();
         }
-        private void EverythingSortOptionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (tbFastSortWarning is not null)
-            {
-                tbFastSortWarning.Visibility = _viewModel.FastSortWarningVisibility;
-                tbFastSortWarning.Text = _viewModel.SortOptionWarningMessage;
-            }
-        }
+
         private void LbxAccessLinks_OnDrop(object sender, DragEventArgs e)
         {
             AccessLinkDragDrop("QuickAccessLink", e);

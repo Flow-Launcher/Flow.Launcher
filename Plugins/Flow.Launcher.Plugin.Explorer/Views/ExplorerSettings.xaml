@@ -2,7 +2,6 @@
     x:Class="Flow.Launcher.Plugin.Explorer.Views.ExplorerSettings"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converters="clr-namespace:Flow.Launcher.Plugin.Explorer.Views.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:qa="clr-namespace:Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks"
@@ -73,8 +72,6 @@
                 </TextBlock>
             </Grid>
         </DataTemplate>
-
-        <converters:EnumNameConverter x:Key="EnumNameConverter" />
 
         <Style x:Key="CustomExpanderStyle" TargetType="Expander">
             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
@@ -631,16 +628,10 @@
                     Grid.Column="1"
                     Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                     VerticalAlignment="Center"
-                    ItemsSource="{Binding Settings.SortOptions, Mode=OneWay}"
-                    SelectedItem="{Binding Settings.SortOption}"
-                    SelectionChanged="EverythingSortOptionChanged">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <TextBlock Text="{Binding Converter={StaticResource EnumNameConverter}}" />
-                            </Grid>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
+                    ItemsSource="{Binding AllEverythingSortOptions}"
+                    SelectedValue="{Binding SelectedEverythingSortOption, Mode=TwoWay}"
+                    SelectedValuePath="Value"
+                    DisplayMemberPath="Display">
                 </ComboBox>
 
                 <TextBlock
@@ -666,10 +657,10 @@
                     Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                     VerticalAlignment="Center"
                     Foreground="Orange"
-                    Text="{Binding SortOptionWarningMessage, Mode=OneTime}"
+                    Text="{Binding SortOptionWarningMessage, Mode=OneWay}"
                     TextAlignment="Left"
                     TextWrapping="Wrap"
-                    Visibility="{Binding FastSortWarningVisibility, Mode=OneTime}" />
+                    Visibility="{Binding FastSortWarningVisibility, Mode=OneWay}" />
             </Grid>
         </Expander>
 
