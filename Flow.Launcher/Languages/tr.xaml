@@ -242,8 +242,9 @@
     <system:String x:Key="updateNoResultTitle">Güncelleme mevcut değil</system:String>
     <system:String x:Key="updateNoResultSubtitle">Bütün eklentiler güncel</system:String>
     <system:String x:Key="updateAllPluginsTitle">Eklenti güncellemeleri mevcut</system:String>
-    <system:String x:Key="updateAllPluginsButtonContent">Tüm eklentileri güncelle</system:String>
+    <system:String x:Key="updateAllPluginsButtonContent">Update plugins</system:String>
     <system:String x:Key="checkPluginUpdatesTooltip">Eklenti güncellemelerini kontrol et</system:String>
+    <system:String x:Key="PluginsUpdateSuccessNoRestart">Plugins are successfully updated. Please restart Flow.</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Temalar</system:String>
@@ -567,6 +568,11 @@
     <system:String x:Key="update_flowlauncher_update_update_files">Aşağıdaki dosyalar güncelleştirilecek</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Güncellenecek dosyalar</system:String>
     <system:String x:Key="update_flowlauncher_update_update_description">Güncelleme açıklaması</system:String>
+
+    <!--  Plugin Update Window  -->
+    <system:String x:Key="restartAfterUpdating">Restart Flow Launcher after updating plugins</system:String>
+    <system:String x:Key="updatePluginCheckboxContent">{0}: Update from v{1} to v{2}</system:String>
+    <system:String x:Key="updatePluginNoSelected">No plugin selected</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Atla</system:String>
