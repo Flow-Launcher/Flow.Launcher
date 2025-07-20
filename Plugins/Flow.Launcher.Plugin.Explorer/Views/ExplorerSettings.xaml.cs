@@ -48,7 +48,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         {
             var files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-            if (files == null || !files.Any())
+            if (files == null || files.Length == 0)
             {
                 return;
             }
@@ -101,7 +101,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             if (sender is Expander expandedExpander)
             {
                 // Ensure _expanders is not null and contains items
-                if (_expanders == null || !_expanders.Any()) return;
+                if (_expanders == null || _expanders.Count == 0) return;
 
                 foreach (var expander in _expanders)
                 {
