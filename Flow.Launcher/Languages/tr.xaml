@@ -262,7 +262,7 @@
     <system:String x:Key="updateAllPluginsTitle">Eklenti güncellemeleri mevcut</system:String>
     <system:String x:Key="updateAllPluginsButtonContent">Eklentileri güncelle</system:String>
     <system:String x:Key="checkPluginUpdatesTooltip">Eklenti güncellemelerini kontrol et</system:String>
-    <system:String x:Key="PluginsUpdateSuccessNoRestart">Plugins are successfully updated. Please restart Flow.</system:String>
+    <system:String x:Key="PluginsUpdateSuccessNoRestart">Eklentiler başarıyla güncellendi. Lütfen Flow'u yeniden başlatın.</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Temalar</system:String>
