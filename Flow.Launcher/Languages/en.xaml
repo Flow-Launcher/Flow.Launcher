@@ -30,6 +30,10 @@
     <system:String x:Key="pluginsHaveErrored">The following plugins have errored and cannot be loaded:</system:String>
     <system:String x:Key="referToLogs">Please refer to the logs for more information</system:String>
 
+    <!--  Http  -->
+    <system:String x:Key="pleaseTryAgain">Please try again</system:String>
+    <system:String x:Key="parseProxyFailed">Unable to parse Http Proxy</system:String>
+
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Failed to register hotkey "{0}". The hotkey may be in use by another program. Change to a different hotkey, or exit another program.</system:String>
     <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey "{0}". Please try again or see log for details</system:String>
@@ -152,6 +156,8 @@
     <system:String x:Key="KoreanImeOpenLinkButton">Open</system:String>
     <system:String x:Key="KoreanImeRegistry">Use Previous Korean IME</system:String>
     <system:String x:Key="KoreanImeRegistryTooltip">You can change the Previous Korean IME settings directly from here</system:String>
+    <system:String x:Key="KoreanImeSettingChangeFailTitle">Failed to change Korean IME setting</system:String>
+    <system:String x:Key="KoreanImeSettingChangeFailSubTitle">Please check your system registry access or contact support.</system:String>
     <system:String x:Key="homePage">Home Page</system:String>
     <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
     <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
