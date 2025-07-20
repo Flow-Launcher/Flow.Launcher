@@ -83,6 +83,11 @@
         "resolved": "1.0.0",
         "contentHash": "nwbZAYd+DblXAIzlnwDSnl0CiCm8jWLfHSYnoN4wYhtIav6AegB3+T/vKzLbU2IZlPB8Bvl8U3NXpx3eaz+N5w=="
       },
+      "InputSimulator": {
+        "type": "Transitive",
+        "resolved": "1.0.4",
+        "contentHash": "D0LvRCPQMX6/FJHBjng+RO+wRDuHTJrfo7IAc7rmkPvRqchdVGJWg3y70peOtDy3OLNK+HSOwVkH4GiuLnkKgA=="
+      },
       "JetBrains.Annotations": {
         "type": "Transitive",
         "resolved": "2024.3.0",
@@ -179,6 +184,19 @@
         "resolved": "13.0.3",
         "contentHash": "HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ=="
       },
+      "NHotkey": {
+        "type": "Transitive",
+        "resolved": "3.0.0",
+        "contentHash": "IEghs0QqWsQYH0uUmvIl0Ye6RaebWRh38eB6ToOkDnQucTYRGFOgtig0gSxlwCszTilYFz3n1ZuY762x+kDR3A=="
+      },
+      "NHotkey.Wpf": {
+        "type": "Transitive",
+        "resolved": "3.0.0",
+        "contentHash": "BIUKlhTG5KtFf9OQzWvkmVmktt5/FFj6AOEgag8Uf0R2YdZt5ajUzs3sVskcJcT2TztWlEHKQr1jFj3KQ0D9Nw==",
+        "dependencies": {
+          "NHotkey": "3.0.0"
+        }
+      },
       "NLog": {
         "type": "Transitive",
         "resolved": "6.0.1",
@@ -237,8 +255,10 @@
           "BitFaster.Caching": "[2.5.4, )",
           "CommunityToolkit.Mvvm": "[8.4.0, )",
           "Flow.Launcher.Plugin": "[4.7.0, )",
+          "InputSimulator": "[1.0.4, )",
           "MemoryPack": "[1.21.4, )",
           "Microsoft.VisualStudio.Threading": "[17.14.15, )",
+          "NHotkey.Wpf": "[3.0.0, )",
           "NLog": "[6.0.1, )",
           "NLog.OutputDebugString": "[6.0.1, )",
           "SharpVectors.Wpf": "[1.8.4.2, )",
