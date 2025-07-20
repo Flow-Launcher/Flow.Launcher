@@ -27,8 +27,8 @@ namespace Flow.Launcher.Core.Resource
         private const string DefaultFile = "en.xaml";
         private const string Extension = ".xaml";
         private readonly Settings _settings;
-        private readonly List<string> _languageDirectories = new();
-        private readonly List<ResourceDictionary> _oldResources = new();
+        private readonly List<string> _languageDirectories = [];
+        private readonly List<ResourceDictionary> _oldResources = [];
         private static string SystemLanguageCode;
 
         public Internationalization(Settings settings)
@@ -36,6 +36,11 @@ namespace Flow.Launcher.Core.Resource
             _settings = settings;
         }
 
+        #region Initialization
+
+        /// <summary>
+        /// Initialize the system language code based on the current culture.
+        /// </summary>
         public static void InitSystemLanguageCode()
         {
             var availableLanguages = AvailableLanguages.GetAvailableLanguages();
@@ -133,6 +138,10 @@ namespace Flow.Launcher.Core.Resource
             _oldResources.Clear();
         }
 
+        #endregion
+
+        #region Change Language
+
         /// <summary>
         /// Change language during runtime. Will change app language and plugin language & save settings.
         /// </summary>
@@ -213,6 +222,10 @@ namespace Flow.Launcher.Core.Resource
             thread.CurrentUICulture = currentCulture;
         }
 
+        #endregion
+
+        #region Prompt Pinyin
+
         public bool PromptShouldUsePinyin(string languageCodeToSet)
         {
             var languageToSet = GetLanguageByLanguageCode(languageCodeToSet);
@@ -232,6 +245,10 @@ namespace Flow.Launcher.Core.Resource
 
             return true;
         }
+
+        #endregion
+
+        #region Language Resources Management
 
         private void RemoveOldLanguageFiles()
         {
@@ -268,46 +285,6 @@ namespace Flow.Launcher.Core.Resource
             }
         }
 
-        public List<Language> LoadAvailableLanguages()
-        {
-            var list = AvailableLanguages.GetAvailableLanguages();
-            list.Insert(0, new Language(Constant.SystemLanguageCode, AvailableLanguages.GetSystemTranslation(SystemLanguageCode)));
-            return list;
-        }
-
-        public static string GetTranslation(string key)
-        {
-            var translation = Application.Current.TryFindResource(key);
-            if (translation is string)
-            {
-                return translation.ToString();
-            }
-            else
-            {
-                API.LogError(ClassName, $"No Translation for key {key}");
-                return $"No Translation for key {key}";
-            }
-        }
-
-        public static void UpdatePluginMetadataTranslations()
-        {
-            // Update plugin metadata name & description
-            foreach (var p in PluginManager.GetTranslationPlugins())
-            {
-                if (p.Plugin is not IPluginI18n pluginI18N) return;
-                try
-                {
-                    p.Metadata.Name = pluginI18N.GetTranslatedPluginTitle();
-                    p.Metadata.Description = pluginI18N.GetTranslatedPluginDescription();
-                    pluginI18N.OnCultureInfoChanged(CultureInfo.CurrentCulture);
-                }
-                catch (Exception e)
-                {
-                    API.LogException(ClassName, $"Failed for <{p.Metadata.Name}>", e);
-                }
-            }
-        }
-
         private static string LanguageFile(string folder, string language)
         {
             if (Directory.Exists(folder))
@@ -337,5 +314,59 @@ namespace Flow.Launcher.Core.Resource
                 return string.Empty;
             }
         }
+
+        #endregion
+
+        #region Available Languages
+
+        public List<Language> LoadAvailableLanguages()
+        {
+            var list = AvailableLanguages.GetAvailableLanguages();
+            list.Insert(0, new Language(Constant.SystemLanguageCode, AvailableLanguages.GetSystemTranslation(SystemLanguageCode)));
+            return list;
+        }
+
+        #endregion
+
+        #region Get Translations
+
+        public static string GetTranslation(string key)
+        {
+            var translation = Application.Current.TryFindResource(key);
+            if (translation is string)
+            {
+                return translation.ToString();
+            }
+            else
+            {
+                API.LogError(ClassName, $"No Translation for key {key}");
+                return $"No Translation for key {key}";
+            }
+        }
+
+        #endregion
+
+        #region Update Metadata
+
+        public static void UpdatePluginMetadataTranslations()
+        {
+            // Update plugin metadata name & description
+            foreach (var p in PluginManager.GetTranslationPlugins())
+            {
+                if (p.Plugin is not IPluginI18n pluginI18N) return;
+                try
+                {
+                    p.Metadata.Name = pluginI18N.GetTranslatedPluginTitle();
+                    p.Metadata.Description = pluginI18N.GetTranslatedPluginDescription();
+                    pluginI18N.OnCultureInfoChanged(CultureInfo.CurrentCulture);
+                }
+                catch (Exception e)
+                {
+                    API.LogException(ClassName, $"Failed for <{p.Metadata.Name}>", e);
+                }
+            }
+        }
+
+        #endregion
     }
 }
