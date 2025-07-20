@@ -29,7 +29,7 @@
     <system:String x:Key="referToLogs">Please refer to the logs for more information</system:String>
 
     <!--  Http  -->
-    <system:String x:Key="pleaseTryAgain">Please try again</system:String>
+    <system:String x:Key="pleaseTryAgain">Lütfen tekrar deneyin</system:String>
     <system:String x:Key="parseProxyFailed">Unable to parse Http Proxy</system:String>
 
     <!--  MainWindow  -->
@@ -260,7 +260,7 @@
     <system:String x:Key="updateNoResultTitle">Güncelleme mevcut değil</system:String>
     <system:String x:Key="updateNoResultSubtitle">Bütün eklentiler güncel</system:String>
     <system:String x:Key="updateAllPluginsTitle">Eklenti güncellemeleri mevcut</system:String>
-    <system:String x:Key="updateAllPluginsButtonContent">Update plugins</system:String>
+    <system:String x:Key="updateAllPluginsButtonContent">Eklentileri güncelle</system:String>
     <system:String x:Key="checkPluginUpdatesTooltip">Eklenti güncellemelerini kontrol et</system:String>
     <system:String x:Key="PluginsUpdateSuccessNoRestart">Plugins are successfully updated. Please restart Flow.</system:String>
 
@@ -406,7 +406,7 @@
     <system:String x:Key="dialogJumpResultBehaviour">Dialog Jump Result Navigation Behaviour</system:String>
     <system:String x:Key="dialogJumpResultBehaviourToolTip">Behaviour to navigate Open/Save As dialog window to the selected result path</system:String>
     <system:String x:Key="DialogJumpResultBehaviourLeftClick">Left click or Enter key</system:String>
-    <system:String x:Key="DialogJumpResultBehaviourRightClick">Right click</system:String>
+    <system:String x:Key="DialogJumpResultBehaviourRightClick">Sağ tık</system:String>
     <system:String x:Key="dialogJumpFileResultBehaviour">Dialog Jump File Navigation Behaviour</system:String>
     <system:String x:Key="dialogJumpFileResultBehaviourToolTip">Behaviour to navigate Open/Save As dialog window when the result is a file path</system:String>
     <system:String x:Key="DialogJumpFileResultBehaviourFullPath">Fill full path in file name box</system:String>
@@ -612,7 +612,7 @@
     <!--  Plugin Update Window  -->
     <system:String x:Key="restartAfterUpdating">Restart Flow Launcher after updating plugins</system:String>
     <system:String x:Key="updatePluginCheckboxContent">{0}: Update from v{1} to v{2}</system:String>
-    <system:String x:Key="updatePluginNoSelected">No plugin selected</system:String>
+    <system:String x:Key="updatePluginNoSelected">Seçilen eklenti yok</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Atla</system:String>
