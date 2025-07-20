@@ -9,10 +9,10 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.DialogJump.Models;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using NHotkey;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.UI.Accessibility;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Flow.Launcher.Infrastructure.DialogJump
 {
@@ -455,7 +455,10 @@ namespace Flow.Launcher.Infrastructure.DialogJump
 
         #region Hotkey
 
-        public static void OnToggleHotkey(object sender, HotkeyEventArgs args)
+        private static RelayCommand _dialogJumpCommand;
+        public static IRelayCommand DialogJumpCommand => _dialogJumpCommand ??= new RelayCommand(OnToggleHotkey);
+
+        private static void OnToggleHotkey()
         {
             _ = Task.Run(async () =>
             {

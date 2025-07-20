@@ -9,6 +9,7 @@ using ChefKeys;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Infrastructure.DialogJump;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -82,6 +83,7 @@ internal static class HotKeyMapper
             
             // Flow Launcher global hotkeys
             new(RegisteredHotkeyType.Toggle, HotkeyType.Global, _settings.Hotkey, "flowlauncherHotkey", _mainViewModel.CheckAndToggleFlowLauncherCommand, null, () => _settings.Hotkey = ""),
+            new(RegisteredHotkeyType.DialogJump, HotkeyType.Global, _settings.DialogJumpHotkey, "dialogJumpHotkey", DialogJump.DialogJumpCommand, null, () => _settings.DialogJumpHotkey = ""),
 
             // Flow Launcher window hotkeys
             new(RegisteredHotkeyType.Preview, HotkeyType.SearchWindow, _settings.PreviewHotkey, "previewHotkey", _mainViewModel.TogglePreviewCommand, null, () => _settings.PreviewHotkey = ""),
@@ -154,6 +156,9 @@ internal static class HotKeyMapper
             // Flow Launcher global hotkeys
             case nameof(_settings.Hotkey):
                 ChangeRegisteredHotkey(RegisteredHotkeyType.Toggle, _settings.Hotkey);
+                break;
+            case nameof(_settings.DialogJumpHotkey):
+                ChangeRegisteredHotkey(RegisteredHotkeyType.DialogJump, _settings.DialogJumpHotkey);
                 break;
 
             // Flow Launcher window hotkeys

@@ -285,6 +285,7 @@ public enum RegisteredHotkeyType
     OpenResultN10,
 
     Toggle,
+    DialogJump,
 
     Preview,
     AutoComplete,

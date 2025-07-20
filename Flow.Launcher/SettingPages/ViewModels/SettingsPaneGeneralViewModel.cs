@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -156,14 +156,6 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             {
                 Settings.EnableDialogJump = value;
                 DialogJump.SetupDialogJump(value);
-                if (Settings.EnableDialogJump)
-                {
-                    HotKeyMapper.SetHotkey(new(Settings.DialogJumpHotkey), DialogJump.OnToggleHotkey);
-                }
-                else
-                {
-                    HotKeyMapper.RemoveHotkey(Settings.DialogJumpHotkey);
-                }
             }
         }
     }
