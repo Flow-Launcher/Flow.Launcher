@@ -12,4 +12,5 @@
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_comma">Кома (,)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_dot">Крапка (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">Макс. кількість знаків після коми</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Copy failed, please try later</system:String>
 </ResourceDictionary>
