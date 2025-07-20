@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -221,7 +221,8 @@ namespace Flow.Launcher
                     case HotkeyType.WindowPluginHotkey:
                         // We should not save it to settings here because it is a custom plugin hotkey
                         // and it will be saved in the plugin settings
-                        hotkey = value;   
+                        hotkey = value;
+                        break;
                     default:
                         throw new System.NotImplementedException("Hotkey type not set");
                 }
