@@ -600,7 +600,6 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 if (_allEverythingSortOptions.Count == 0)
                 {
                     _allEverythingSortOptions = EverythingSortOptionLocalized.GetValues();
-                    EverythingSortOptionLocalized.UpdateLabels(_allEverythingSortOptions);
                 }
                 return _allEverythingSortOptions;
             }
