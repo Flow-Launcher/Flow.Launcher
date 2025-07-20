@@ -453,13 +453,15 @@ namespace Flow.Launcher.Infrastructure.DialogJump
 
         #endregion
 
-        #region Hotkey
+        #region Hotkey Command
 
         private static RelayCommand _dialogJumpCommand;
         public static IRelayCommand DialogJumpCommand => _dialogJumpCommand ??= new RelayCommand(OnToggleHotkey);
 
         private static void OnToggleHotkey()
         {
+            if (!_settings.EnableDialogJump) return;
+
             _ = Task.Run(async () =>
             {
                 try
