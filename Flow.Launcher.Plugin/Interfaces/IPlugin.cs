@@ -32,6 +32,6 @@ namespace Flow.Launcher.Plugin
 
         Task IAsyncPlugin.InitAsync(PluginInitContext context) => Task.Run(() => Init(context));
 
-        Task<List<Result>> IAsyncPlugin.QueryAsync(Query query, CancellationToken token) => Task.Run(() => Query(query));
+        Task<List<Result>> IAsyncPlugin.QueryAsync(Query query, CancellationToken token) => Task.Run(() => Query(query), token);
     }
 }
