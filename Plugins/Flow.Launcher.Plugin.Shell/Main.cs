@@ -338,7 +338,7 @@ namespace Flow.Launcher.Plugin.Shell
             return null;
         }
 
-        private static void Execute(Func<ProcessStartInfo, Process> startProcess, ProcessStartInfo info)
+        private void Execute(Func<ProcessStartInfo, Process> startProcess, ProcessStartInfo info)
         {
             try
             {
