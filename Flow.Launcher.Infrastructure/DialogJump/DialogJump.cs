@@ -34,7 +34,7 @@ namespace Flow.Launcher.Infrastructure.DialogJump
         {
             Metadata = new()
             {
-                ID = "298b197c08a24e90ab66ac060ee2b6b8", // ID is for calculating the hash id of the dialog jump pairs
+                ID = "298b197c08a24e90ab66ac060ee2b6b8", // ID is for calculating the hash id of the Dialog Jump pairs
                 Disabled = false // Disabled is for enabling the Windows DialogJump explorers & dialogs
             },
             Plugin = new WindowsExplorer()
@@ -44,7 +44,7 @@ namespace Flow.Launcher.Infrastructure.DialogJump
         {
             Metadata = new()
             {
-                ID = "a4a113dc51094077ab4abb391e866c7b", // ID is for calculating the hash id of the dialog jump pairs
+                ID = "a4a113dc51094077ab4abb391e866c7b", // ID is for calculating the hash id of the Dialog Jump pairs
                 Disabled = false // Disabled is for enabling the Windows DialogJump explorers & dialogs
             },
             Plugin = new WindowsDialog()
@@ -110,7 +110,7 @@ namespace Flow.Launcher.Infrastructure.DialogJump
         {
             if (_initialized) return;
 
-            // Initialize dialog jump explorers & dialogs
+            // Initialize Dialog Jump explorers & dialogs
             _dialogJumpExplorers.Add(WindowsDialogJumpExplorer, null);
             foreach (var explorer in dialogJumpExplorers)
             {
@@ -129,7 +129,7 @@ namespace Flow.Launcher.Infrastructure.DialogJump
             _dragMoveTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(10) };
             _dragMoveTimer.Tick += (s, e) => InvokeUpdateDialogJumpWindow();
 
-            // Initialize dialog jump window position
+            // Initialize Dialog Jump window position
             DialogJumpWindowPosition = _settings.DialogJumpWindowPosition;
 
             _initialized = true;
@@ -294,7 +294,7 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                 // Stop drag move timer
                 _dragMoveTimer?.Stop();
 
-                // Reset dialog jump window
+                // Reset Dialog Jump window
                 if (dialogWindowExists)
                 {
                     InvokeResetDialogJumpWindow();
@@ -353,16 +353,16 @@ namespace Flow.Launcher.Infrastructure.DialogJump
 
         private static async Task InvokeShowDialogJumpWindowAsync(bool dialogWindowChanged)
         {
-            // Show dialog jump window
+            // Show Dialog Jump window
             if (_settings.ShowDialogJumpWindow)
             {
-                // Save dialog jump window position for one file dialog
+                // Save Dialog Jump window position for one file dialog
                 if (dialogWindowChanged)
                 {
                     DialogJumpWindowPosition = _settings.DialogJumpWindowPosition;
                 }
 
-                // Call show dialog jump window
+                // Call show Dialog Jump window
                 IDialogJumpDialogWindow dialogWindow;
                 lock (_dialogWindowLock)
                 {
@@ -373,7 +373,7 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                     await ShowDialogJumpWindowAsync.Invoke(dialogWindow.Handle);
                 }
 
-                // Hook move size event if dialog jump window is under dialog & dialog window changed
+                // Hook move size event if Dialog Jump window is under dialog & dialog window changed
                 if (DialogJumpWindowPosition == DialogJumpWindowPositions.UnderDialog)
                 {
                     if (dialogWindowChanged)
@@ -428,7 +428,7 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                 _dialogWindow = null;
             }
 
-            // Reset dialog jump window
+            // Reset Dialog Jump window
             ResetDialogJumpWindow?.Invoke();
 
             // Stop drag move timer
@@ -444,7 +444,7 @@ namespace Flow.Launcher.Infrastructure.DialogJump
 
         private static void InvokeHideDialogJumpWindow()
         {
-            // Hide dialog jump window
+            // Hide Dialog Jump window
             HideDialogJumpWindow?.Invoke();
 
             // Stop drag move timer
@@ -536,12 +536,12 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                             alreadySwitched = _autoSwitchedDialogs.Contains(hwnd);
                         }
 
-                        // Just show dialog jump window
+                        // Just show Dialog Jump window
                         if (alreadySwitched)
                         {
                             await InvokeShowDialogJumpWindowAsync(dialogWindowChanged);
                         }
-                        // Show dialog jump window after navigating the path
+                        // Show Dialog Jump window after navigating the path
                         else
                         {
                             if (!await Task.Run(async () =>
@@ -583,9 +583,9 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                             dialogWindowExist = true;
                         }
                     }
-                    if (dialogWindowExist) // Neither dialog jump window nor file dialog window is foreground
+                    if (dialogWindowExist) // Neither Dialog Jump window nor file dialog window is foreground
                     {
-                        // Hide dialog jump window until the file dialog window is brought to the foreground
+                        // Hide Dialog Jump window until the file dialog window is brought to the foreground
                         InvokeHideDialogJumpWindow();
                     }
 
@@ -636,7 +636,7 @@ namespace Flow.Launcher.Infrastructure.DialogJump
             uint dwmsEventTime
         )
         {
-            // If the dialog window is moved, update the dialog jump window position
+            // If the dialog window is moved, update the Dialog Jump window position
             var dialogWindowExist = false;
             lock (_dialogWindowLock)
             {
@@ -661,7 +661,7 @@ namespace Flow.Launcher.Infrastructure.DialogJump
             uint dwmsEventTime
         )
         {
-            // If the dialog window is moved or resized, update the dialog jump window position
+            // If the dialog window is moved or resized, update the Dialog Jump window position
             if (_dragMoveTimer != null)
             {
                 switch (eventType)

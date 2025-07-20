@@ -405,7 +405,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void LoadContextMenu()
         {
-            // For dialog jump and right click mode, we need to navigate to the path 
+            // For Dialog Jump and right click mode, we need to navigate to the path
             if (_isDialogJump && Settings.DialogJumpResultBehaviour == DialogJumpResultBehaviours.RightClick)
             {
                 if (SelectedResults.SelectedItem != null && DialogWindowHandle != nint.Zero)
@@ -498,7 +498,7 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
-            // For dialog jump and left click mode, we need to navigate to the path
+            // For Dialog Jump and left click mode, we need to navigate to the path
             if (_isDialogJump && Settings.DialogJumpResultBehaviour == DialogJumpResultBehaviours.LeftClick)
             {
                 Hide();
@@ -1346,7 +1346,7 @@ namespace Flow.Launcher.ViewModel
             var currentIsHomeQuery = query.IsHomeQuery;
             var currentIsDialogJump = _isDialogJump;
 
-            // Do not show home page for dialog jump window
+            // Do not show home page for Dialog Jump window
             if (currentIsHomeQuery && currentIsDialogJump)
             {
                 ClearResults();
@@ -1862,14 +1862,14 @@ namespace Flow.Launcher.ViewModel
                 await Task.Delay(300);
             }
 
-            // If handle is cleared, which means the dialog is closed, clear dialog jump state
+            // If handle is cleared, which means the dialog is closed, clear Dialog Jump state
             if (DialogWindowHandle == nint.Zero)
             {
                 _isDialogJump = false;
                 return;
             }
 
-            // Initialize dialog jump window
+            // Initialize Dialog Jump window
             if (MainWindowVisibilityStatus)
             {
                 if (dialogWindowHandleChanged)
@@ -1907,7 +1907,7 @@ namespace Flow.Launcher.ViewModel
 
             if (DialogJump.DialogJumpWindowPosition == DialogJumpWindowPositions.UnderDialog)
             {
-                // Cancel the previous dialog jump task
+                // Cancel the previous Dialog Jump task
                 _dialogJumpSource?.Cancel();
 
                 // Create a new cancellation token source
@@ -1923,7 +1923,7 @@ namespace Flow.Launcher.ViewModel
                         // Check dialog handle
                         if (DialogWindowHandle == nint.Zero) return;
 
-                        // Wait 150ms to check if dialog jump window gets the focus
+                        // Wait 150ms to check if Dialog Jump window gets the focus
                         var timeOut = !SpinWait.SpinUntil(() => !Win32Helper.IsForegroundWindow(DialogWindowHandle), 150);
                         if (timeOut) return;
 
@@ -1945,7 +1945,7 @@ namespace Flow.Launcher.ViewModel
             // Cache original dialog window handle
             var dialogWindowHandle = DialogWindowHandle;
 
-            // Reset the dialog jump state
+            // Reset the Dialog Jump state
             DialogWindowHandle = nint.Zero;
             _isDialogJump = false;
 
@@ -1996,7 +1996,7 @@ namespace Flow.Launcher.ViewModel
                 if (DialogJump.DialogJumpWindowPosition == DialogJumpWindowPositions.UnderDialog)
                 {
                     // Warning: Main window is already in foreground
-                    // This is because if you click popup menus in other applications to hide dialog jump window,
+                    // This is because if you click popup menus in other applications to hide Dialog Jump window,
                     // they can steal focus before showing main window
                     if (MainWindowVisibilityStatus)
                     {

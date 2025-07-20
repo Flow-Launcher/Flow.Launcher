@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin;
@@ -148,7 +148,7 @@ namespace Flow.Launcher.Infrastructure.DialogJump.Models
         {
             if (auto)
             {
-                // Use legacy jump folder method for auto dialog jump because file editor is default value.
+                // Use legacy jump folder method for auto Dialog Jump because file editor is default value.
                 // After setting path using file editor, we do not need to revert its value.
                 return JumpFolderWithFileEditor(path, false);
             }

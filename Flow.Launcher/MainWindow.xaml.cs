@@ -217,7 +217,7 @@ namespace Flow.Launcher
             // Without this part, when shown for the first time, switching the context menu does not move the cursor to the end.
             _viewModel.QueryTextCursorMovedToEnd = false;
 
-            // Register dialog jump events
+            // Register Dialog Jump events
             InitializeDialogJump();
 
             // View model property changed event
@@ -604,7 +604,7 @@ namespace Flow.Launcher
                     handled = true;
                     break;
                 case Win32Helper.WM_EXITSIZEMOVE:
-                    // Do do handle size move event for dialog jump window
+                    // Do do handle size move event for Dialog Jump window
                     if (_viewModel.IsDialogJumpWindowUnderDialog())
                     {
                         return IntPtr.Zero;

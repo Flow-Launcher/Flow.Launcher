@@ -191,7 +191,7 @@ namespace Flow.Launcher.Core.Plugin
             _resultUpdatePlugin = GetPluginsForInterface<IResultUpdated>();
             _translationPlugins = GetPluginsForInterface<IPluginI18n>();
 
-            // Initialize dialog jump plugin pairs
+            // Initialize Dialog Jump plugin pairs
             foreach (var pair in GetPluginsForInterface<IDialogJumpExplorer>())
             {
                 _dialogJumpExplorerPlugins.Add(new DialogJumpExplorerPair
@@ -438,7 +438,7 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch (Exception e)
             {
-                API.LogException(ClassName, $"Failed to query dialog jump for plugin: {metadata.Name}", e);
+                API.LogException(ClassName, $"Failed to query Dialog Jump for plugin: {metadata.Name}", e);
                 return null;
             }
             return results;

@@ -1,18 +1,18 @@
 ﻿namespace Flow.Launcher.Plugin
 {
     /// <summary>
-    /// Describes a result of a <see cref="Query"/> executed by a plugin in dialog jump window
+    /// Describes a result of a <see cref="Query"/> executed by a plugin in Dialog Jump window
     /// </summary>
     public class DialogJumpResult : Result
     {
         /// <summary>
         /// This holds the path which can be provided by plugin to be navigated to the
-        /// file dialog when records in dialog jump window is right clicked on a result.
+        /// file dialog when records in Dialog Jump window is right clicked on a result.
         /// </summary>
         public required string DialogJumpPath { get; init; }
 
         /// <summary>
-        /// Clones the current dialog jump result
+        /// Clones the current Dialog Jump result
         /// </summary>
         public new DialogJumpResult Clone()
         {
