@@ -14,7 +14,7 @@ namespace Flow.Launcher.Plugin
     public interface IDialogJump : IAsyncDialogJump
     {
         /// <summary>
-        /// Querying for dialog jump window
+        /// Querying for Dialog Jump window
         /// <para>
         /// This method will be called within a Task.Run,
         /// so please avoid synchrously wait for long.

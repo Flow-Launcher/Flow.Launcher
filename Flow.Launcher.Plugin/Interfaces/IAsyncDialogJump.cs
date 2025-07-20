@@ -10,7 +10,7 @@ namespace Flow.Launcher.Plugin
     public interface IAsyncDialogJump : IFeatures
     {
         /// <summary>
-        /// Asynchronous querying for dialog jump window
+        /// Asynchronous querying for Dialog Jump window
         /// </summary>
         /// <para>
         /// If the Querying method requires high IO transmission
