@@ -12,4 +12,5 @@
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_comma">Запятая (,)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_dot">Точка (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">Макс. число знаков после запятой</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Copy failed, please try later</system:String>
 </ResourceDictionary>
