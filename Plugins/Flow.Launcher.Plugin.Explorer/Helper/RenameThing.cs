@@ -77,7 +77,7 @@ public static class RenameThing
             switch (exception)
             {
                 case FileNotFoundException:
-                    api.ShowMsgError(string.Format(api.GetTranslation("plugin_explorer_file_not_found"), oldInfo.FullName));
+                    api.ShowMsgError(string.Format(api.GetTranslation("plugin_explorer_item_not_found"), oldInfo.FullName));
                     return;
                 case NotANewNameException:
                     api.ShowMsgError(string.Format(api.GetTranslation("plugin_explorer_not_a_new_name"), NewFileName));
