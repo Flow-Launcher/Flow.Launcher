@@ -20,7 +20,7 @@ namespace Flow.Launcher.Infrastructure.DialogJump.Models
 
             // Is it from Explorer?
             var processName = Win32Helper.GetProcessNameFromHwnd(new(hwnd));
-            if (processName.ToLower() == "explorer.exe")
+            if (processName.Equals("explorer.exe", StringComparison.OrdinalIgnoreCase))
             {
                 EnumerateShellWindows((shellWindow) =>
                 {
