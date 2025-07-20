@@ -120,15 +120,15 @@ namespace Flow.Launcher.Core.Plugin
             {
                 var errorPluginString = string.Join(Environment.NewLine, erroredPlugins);
 
-                var errorMessage = "The following "
-                                   + (erroredPlugins.Count > 1 ? "plugins have " : "plugin has ")
-                                   + "errored and cannot be loaded:";
+                var errorMessage = erroredPlugins.Count > 1 ?
+                    API.GetTranslation("pluginsHaveErrored") :
+                    API.GetTranslation("pluginHasErrored");
 
                 _ = Task.Run(() =>
                 {
                     API.ShowMsgBox($"{errorMessage}{Environment.NewLine}{Environment.NewLine}" +
                                     $"{errorPluginString}{Environment.NewLine}{Environment.NewLine}" +
-                                    $"Please refer to the logs for more information", "",
+                                    API.GetTranslation("referToLogs"), string.Empty,
                         MessageBoxButton.OK, MessageBoxImage.Warning);
                 });
             }
