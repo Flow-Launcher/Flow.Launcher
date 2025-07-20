@@ -15,4 +15,6 @@
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">Spustiť ako správca</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_copy">Kopírovať príkaz</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_history">Zobraziť iba počet najpoužívanejších príkazov:</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_command_not_found">Command not found: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_error_running_command">Error running the command: {0}</system:String>
 </ResourceDictionary>
