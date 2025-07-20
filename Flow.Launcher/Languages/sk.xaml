@@ -16,6 +16,22 @@
     <system:String x:Key="failedToInitializePluginsTitle">Nepodarilo sa inicializovať pluginy</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">Pluginy: {0} – nepodarilo sa načítať a mal by byť zakázaný, na pomoc kontaktujte autora pluginu</system:String>
 
+    <!--  Portable  -->
+    <system:String x:Key="restartToDisablePortableMode">Flow Launcher needs to restart to finish disabling portable mode, after the restart your portable data profile will be deleted and roaming data profile kept</system:String>
+    <system:String x:Key="restartToEnablePortableMode">Flow Launcher needs to restart to finish enabling portable mode, after the restart your roaming data profile will be deleted and portable data profile kept</system:String>
+    <system:String x:Key="moveToDifferentLocation">Flow Launcher has detected you enabled portable mode, would you like to move it to a different location?</system:String>
+    <system:String x:Key="shortcutsUninstallerCreated">Flow Launcher has detected you disabled portable mode, the relevant shortcuts and uninstaller entry have been created</system:String>
+    <system:String x:Key="userDataDuplicated">Flow Launcher detected your user data exists both in {0} and {1}. {2}{2}Please delete {1} in order to proceed. No changes have occurred.</system:String>
+
+    <!--  Plugin Loader  -->
+    <system:String x:Key="pluginHasErrored">The following plugin has errored and cannot be loaded:</system:String>
+    <system:String x:Key="pluginsHaveErrored">The following plugins have errored and cannot be loaded:</system:String>
+    <system:String x:Key="referToLogs">Please refer to the logs for more information</system:String>
+
+    <!--  Http  -->
+    <system:String x:Key="pleaseTryAgain">Please try again</system:String>
+    <system:String x:Key="parseProxyFailed">Unable to parse Http Proxy</system:String>
+
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Nepodarilo sa zaregistrovať klávesovú skratku &quot;{0}&quot;. Klávesová skratka môže byť používaná iným programom. Zmeňte klávesovú skratku na inú alebo ukončite iný program.</system:String>
     <system:String x:Key="unregisterHotkeyFailed">Nepodarilo sa registrovať klávesovú skratku &quot;{0}&quot;. Skúste to znova alebo si pozrite podrobnosti v denníku</system:String>
@@ -145,6 +161,8 @@
     <system:String x:Key="KoreanImeOpenLinkButton">Otvoriť</system:String>
     <system:String x:Key="KoreanImeRegistry">Použiť predchádzajúcu verziu editora Microsoft IME</system:String>
     <system:String x:Key="KoreanImeRegistryTooltip">Zmeniť na predchádzajúcu verziu editora Microsoft IME môžete priamo tu</system:String>
+    <system:String x:Key="KoreanImeSettingChangeFailTitle">Failed to change Korean IME setting</system:String>
+    <system:String x:Key="KoreanImeSettingChangeFailSubTitle">Please check your system registry access or contact support.</system:String>
     <system:String x:Key="homePage">Domovská stránka</system:String>
     <system:String x:Key="homePageToolTip">Zobraziť výsledky Domovskej stránky, keď je text dopytu prázdny.</system:String>
     <system:String x:Key="historyResultsForHomePage">Zobraziť výsledky histórie na Domovskej stránke</system:String>
