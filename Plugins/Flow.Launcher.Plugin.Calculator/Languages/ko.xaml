@@ -12,4 +12,5 @@
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_comma">쉼표 (,)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_dot">마침표 (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">최대 소수점 아래 자릿 수</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Copy failed, please try later</system:String>
 </ResourceDictionary>
