@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -9,6 +9,7 @@ using Flow.Launcher.Core.Configuration;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.DialogJump;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
@@ -67,7 +68,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             }
             catch (Exception e)
             {
-                App.API.ShowMsg(App.API.GetTranslation("setAutoStartFailed"), e.Message);
+                App.API.ShowMsgError(App.API.GetTranslation("setAutoStartFailed"), e.Message);
             }
 
             // If we have enabled logon task startup, we need to check if we need to restart the app
@@ -103,7 +104,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
                 }
                 catch (Exception e)
                 {
-                    App.API.ShowMsg(App.API.GetTranslation("setAutoStartFailed"), e.Message);
+                    App.API.ShowMsgError(App.API.GetTranslation("setAutoStartFailed"), e.Message);
                 }
             }
 
@@ -209,6 +210,40 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public List<LastQueryModeData> LastQueryModes { get; } =
         DropdownDataGeneric<LastQueryMode>.GetValues<LastQueryModeData>("LastQuery");
 
+    public bool EnableDialogJump
+    {
+        get => Settings.EnableDialogJump;
+        set
+        {
+            if (Settings.EnableDialogJump != value)
+            {
+                Settings.EnableDialogJump = value;
+                DialogJump.SetupDialogJump(value);
+                if (Settings.EnableDialogJump)
+                {
+                    HotKeyMapper.SetHotkey(new(Settings.DialogJumpHotkey), DialogJump.OnToggleHotkey);
+                }
+                else
+                {
+                    HotKeyMapper.RemoveHotkey(Settings.DialogJumpHotkey);
+                }
+            }
+        }
+    }
+
+    public class DialogJumpWindowPositionData : DropdownDataGeneric<DialogJumpWindowPositions> { }
+    public class DialogJumpResultBehaviourData : DropdownDataGeneric<DialogJumpResultBehaviours> { }
+    public class DialogJumpFileResultBehaviourData : DropdownDataGeneric<DialogJumpFileResultBehaviours> { }
+
+    public List<DialogJumpWindowPositionData> DialogJumpWindowPositions { get; } =
+        DropdownDataGeneric<DialogJumpWindowPositions>.GetValues<DialogJumpWindowPositionData>("DialogJumpWindowPosition");
+
+    public List<DialogJumpResultBehaviourData> DialogJumpResultBehaviours { get; } =
+        DropdownDataGeneric<DialogJumpResultBehaviours>.GetValues<DialogJumpResultBehaviourData>("DialogJumpResultBehaviour");
+
+    public List<DialogJumpFileResultBehaviourData> DialogJumpFileResultBehaviours { get; } =
+        DropdownDataGeneric<DialogJumpFileResultBehaviours>.GetValues<DialogJumpFileResultBehaviourData>("DialogJumpFileResultBehaviour");
+
     public int SearchDelayTimeValue
     {
         get => Settings.SearchDelayTime;
@@ -242,6 +277,9 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         DropdownDataGeneric<SearchPrecisionScore>.UpdateLabels(SearchPrecisionScores);
         DropdownDataGeneric<LastQueryMode>.UpdateLabels(LastQueryModes);
         DropdownDataGeneric<DoublePinyinSchemas>.UpdateLabels(DoublePinyinSchemas);
+        DropdownDataGeneric<DialogJumpWindowPositions>.UpdateLabels(DialogJumpWindowPositions);
+        DropdownDataGeneric<DialogJumpResultBehaviours>.UpdateLabels(DialogJumpResultBehaviours);
+        DropdownDataGeneric<DialogJumpFileResultBehaviours>.UpdateLabels(DialogJumpFileResultBehaviours);
         // Since we are using Binding instead of DynamicResource, we need to manually trigger the update
         OnPropertyChanged(nameof(AlwaysPreviewToolTip));
     }
@@ -279,8 +317,8 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             }
             else
             {
-                //Since this is rarely seen text, language support is not provided.
-                App.API.ShowMsg("Failed to change Korean IME setting", "Please check your system registry access or contact support.");
+                // Since this is rarely seen text, language support is not provided.
+                App.API.ShowMsgError(App.API.GetTranslation("KoreanImeSettingChangeFailTitle"), App.API.GetTranslation("KoreanImeSettingChangeFailSubTitle"));
             }
         }
     }

@@ -59,7 +59,7 @@ namespace Flow.Launcher.Resources.Pages
             }
             catch (Exception e)
             {
-                App.API.ShowMsg(App.API.GetTranslation("setAutoStartFailed"), e.Message);
+                App.API.ShowMsgError(App.API.GetTranslation("setAutoStartFailed"), e.Message);
             }
         }
 

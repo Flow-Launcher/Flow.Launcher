@@ -22,6 +22,10 @@ namespace Flow.Launcher.Core.ExternalPlugins
         private static DateTime lastFetchedAt = DateTime.MinValue;
         private static readonly TimeSpan fetchTimeout = TimeSpan.FromMinutes(2);
 
+        // We should not initialize API in static constructor because it will create another API instance
+        private static IPublicAPI api = null;
+        private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
+
         public static List<UserPlugin> UserPlugins { get; private set; }
 
         public static async Task<bool> UpdateManifestAsync(bool usePrimaryUrlOnly = false, CancellationToken token = default)
@@ -46,7 +50,7 @@ namespace Flow.Launcher.Core.ExternalPlugins
             }
             catch (Exception e)
             {
-                Ioc.Default.GetRequiredService<IPublicAPI>().LogException(ClassName, "Http request failed", e);
+                API.LogException(ClassName, "Http request failed", e);
             }
             finally
             {

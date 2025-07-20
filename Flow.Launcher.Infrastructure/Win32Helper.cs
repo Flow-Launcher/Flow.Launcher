@@ -15,6 +15,7 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Microsoft.Win32;
+using Microsoft.Win32.SafeHandles;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Dwm;
@@ -139,6 +140,11 @@ namespace Flow.Launcher.Infrastructure
         public static bool IsForegroundWindow(Window window)
         {
             return IsForegroundWindow(GetWindowHandle(window));
+        }
+
+        public static bool IsForegroundWindow(nint handle)
+        {
+            return IsForegroundWindow(new HWND(handle));
         }
 
         internal static bool IsForegroundWindow(HWND handle)
@@ -345,6 +351,16 @@ namespace Flow.Launcher.Infrastructure
                 windowHelper.EnsureHandle();
             }
             return new(windowHelper.Handle);
+        }
+
+        internal static HWND GetMainWindowHandle()
+        {
+            // When application is exiting, the Application.Current will be null
+            if (Application.Current == null) return HWND.Null;
+
+            // Get the FL main window
+            var hwnd = GetWindowHandle(Application.Current.MainWindow, true);
+            return hwnd;
         }
 
         #endregion
@@ -761,6 +777,65 @@ namespace Flow.Launcher.Infrastructure
         private static bool TryGetNotoFont(string langKey, out string notoFont)
         {
             return _languageToNotoSans.TryGetValue(langKey, out notoFont);
+        }
+
+        #endregion
+
+        #region Window Rect
+
+        public static unsafe bool GetWindowRect(nint handle, out Rect outRect)
+        {
+            var rect = new RECT();
+            var result = PInvoke.GetWindowRect(new(handle), &rect);
+            if (!result)
+            {
+                outRect = new Rect();
+                return false;
+            }
+
+            // Convert RECT to Rect
+            outRect = new Rect(
+                rect.left,
+                rect.top,
+                rect.right - rect.left,
+                rect.bottom - rect.top
+            );
+            return true;
+        }
+
+        #endregion
+
+        #region Window Process
+
+        internal static unsafe string GetProcessNameFromHwnd(HWND hWnd)
+        {
+            return Path.GetFileName(GetProcessPathFromHwnd(hWnd));
+        }
+
+        internal static unsafe string GetProcessPathFromHwnd(HWND hWnd)
+        {
+            uint pid;
+            var threadId = PInvoke.GetWindowThreadProcessId(hWnd, &pid);
+            if (threadId == 0) return string.Empty;
+
+            var process = PInvoke.OpenProcess(PROCESS_ACCESS_RIGHTS.PROCESS_QUERY_LIMITED_INFORMATION, false, pid);
+            if (process.Value != IntPtr.Zero)
+            {
+                using var safeHandle = new SafeProcessHandle(process.Value, true);
+                uint capacity = 2000;
+                Span<char> buffer = new char[capacity];
+                fixed (char* pBuffer = buffer)
+                {
+                    if (!PInvoke.QueryFullProcessImageName(safeHandle, PROCESS_NAME_FORMAT.PROCESS_NAME_WIN32, (PWSTR)pBuffer, ref capacity))
+                    {
+                        return string.Empty;
+                    }
+
+                    return buffer[..(int)capacity].ToString();
+                }
+            }
+
+            return string.Empty;
         }
 
         #endregion
