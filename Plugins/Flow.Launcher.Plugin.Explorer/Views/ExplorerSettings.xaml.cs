@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
 using DataFormats = System.Windows.DataFormats;
@@ -39,6 +40,8 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 ExcludedPathsExpander
             };
 
+            // Update labels on initialization to update on language change
+            EverythingSortOptionLocalized.UpdateLabels(_viewModel.AllEverythingSortOptions);
         }
 
         private void AccessLinkDragDrop(string containerName, DragEventArgs e)
