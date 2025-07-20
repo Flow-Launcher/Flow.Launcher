@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Media;
@@ -19,6 +19,7 @@ using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Image;
+using Flow.Launcher.Infrastructure.DialogJump;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -119,7 +120,7 @@ namespace Flow.Launcher
             Win32Helper.DisableControlBox(this);
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs _)
+        private void OnLoaded(object sender, RoutedEventArgs e)
         {
             // Check first launch
             if (_settings.FirstLaunch)
@@ -168,10 +169,12 @@ namespace Flow.Launcher
             if (_settings.HideOnStartup)
             {
                 _viewModel.Hide();
+                _viewModel.InitializeVisibilityStatus(false);
             }
             else
             {
                 _viewModel.Show();
+                _viewModel.InitializeVisibilityStatus(true);
                 // When HideOnStartup is off and UseAnimation is on,
                 // there was a bug where the clock would not appear at all on the initial launch
                 // So we need to forcibly trigger animation here to ensure the clock is visible
@@ -214,6 +217,9 @@ namespace Flow.Launcher
             // Without this part, when shown for the first time, switching the context menu does not move the cursor to the end.
             _viewModel.QueryTextCursorMovedToEnd = false;
 
+            // Register Dialog Jump events
+            InitializeDialogJump();
+
             // View model property changed event
             _viewModel.PropertyChanged += (o, e) =>
             {
@@ -226,7 +232,7 @@ namespace Flow.Launcher
                                 if (_viewModel.MainWindowVisibilityStatus)
                                 {
                                     // Play sound effect before activing the window
-                                    if (_settings.UseSound)
+                                    if (_settings.UseSound && !_viewModel.IsDialogJumpWindowUnderDialog())
                                     {
                                         SoundPlay();
                                     }
@@ -249,7 +255,7 @@ namespace Flow.Launcher
                                     QueryTextBox.Focus();
 
                                     // Play window animation
-                                    if (_settings.UseAnimation)
+                                    if (_settings.UseAnimation && !_viewModel.IsDialogJumpWindowUnderDialog())
                                     {
                                         WindowAnimation();
                                     }
@@ -379,6 +385,11 @@ namespace Flow.Launcher
 
         private void OnLocationChanged(object sender, EventArgs e)
         {
+            if (_viewModel.IsDialogJumpWindowUnderDialog())
+            {
+                return;
+            }
+
             if (IsLoaded)
             {
                 _settings.WindowLeft = Left;
@@ -388,6 +399,11 @@ namespace Flow.Launcher
 
         private async void OnDeactivated(object sender, EventArgs e)
         {
+            if (_viewModel.IsDialogJumpWindowUnderDialog())
+            {
+                return;
+            }
+
             _settings.WindowLeft = Left;
             _settings.WindowTop = Top;
 
@@ -577,11 +593,23 @@ namespace Flow.Launcher
             switch (msg)
             {
                 case Win32Helper.WM_ENTERSIZEMOVE:
+                    // Do do handle size move event for dialog jump window
+                    if (_viewModel.IsDialogJumpWindowUnderDialog())
+                    {
+                        return IntPtr.Zero;
+                    }
+
                     _initialWidth = (int)Width;
                     _initialHeight = (int)Height;
                     handled = true;
                     break;
                 case Win32Helper.WM_EXITSIZEMOVE:
+                    // Do do handle size move event for Dialog Jump window
+                    if (_viewModel.IsDialogJumpWindowUnderDialog())
+                    {
+                        return IntPtr.Zero;
+                    }
+
                     //Prevent updating the number of results when the window height is below the height of a single result item.
                     //This situation occurs not only when the user manually resizes the window, but also when the window is released from a side snap, as the OS automatically adjusts the window height.
                     //(Without this check, releasing from a snap can cause the window height to hit the minimum, resulting in only 2 results being shown.)
@@ -792,11 +820,19 @@ namespace Flow.Launcher
 
         #region Window Position
 
-        private void UpdatePosition()
+        public void UpdatePosition()
         {
             // Initialize call twice to work around multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
-            InitializePosition();
-            InitializePosition();
+            if (_viewModel.IsDialogJumpWindowUnderDialog())
+            {
+                InitializeDialogJumpPosition();
+                InitializeDialogJumpPosition();
+            }
+            else
+            {
+                InitializePosition();
+                InitializePosition();
+            }
         }
 
         private async Task PositionResetAsync()
@@ -1350,6 +1386,46 @@ namespace Flow.Launcher
             var textBox = (TextBox)sender;
             _viewModel.QueryText = textBox.Text;
             _viewModel.Query(_settings.SearchQueryResultsWithDelay);
+        }
+
+        #endregion
+
+        #region Dialog Jump
+
+        private void InitializeDialogJump()
+        {
+            DialogJump.ShowDialogJumpWindowAsync = _viewModel.SetupDialogJumpAsync;
+            DialogJump.UpdateDialogJumpWindow = InitializeDialogJumpPosition;
+            DialogJump.ResetDialogJumpWindow = _viewModel.ResetDialogJump;
+            DialogJump.HideDialogJumpWindow = _viewModel.HideDialogJump;
+        }
+
+        private void InitializeDialogJumpPosition()
+        {
+            if (_viewModel.DialogWindowHandle == nint.Zero || !_viewModel.MainWindowVisibilityStatus) return;
+            if (!_viewModel.IsDialogJumpWindowUnderDialog()) return;
+
+            // Get dialog window rect
+            var result = Win32Helper.GetWindowRect(_viewModel.DialogWindowHandle, out var window);
+            if (!result) return;
+
+            // Move window below the bottom of the dialog and keep it center
+            Top = VerticalBottom(window);
+            Left = HorizonCenter(window);
+        }
+
+        private double HorizonCenter(Rect window)
+        {
+            var dip1 = Win32Helper.TransformPixelsToDIP(this, window.X, 0);
+            var dip2 = Win32Helper.TransformPixelsToDIP(this, window.Width, 0);
+            var left = (dip2.X - ActualWidth) / 2 + dip1.X;
+            return left;
+        }
+
+        private double VerticalBottom(Rect window)
+        {
+            var dip1 = Win32Helper.TransformPixelsToDIP(this, 0, window.Bottom);
+            return dip1.Y;
         }
 
         #endregion

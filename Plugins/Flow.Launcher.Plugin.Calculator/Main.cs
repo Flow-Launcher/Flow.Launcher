@@ -97,7 +97,7 @@ namespace Flow.Launcher.Plugin.Calculator
                                 }
                                 catch (ExternalException)
                                 {
-                                    Context.API.ShowMsgBox("Copy failed, please try later");
+                                    Context.API.ShowMsgBox(Context.API.GetTranslation("flowlauncher_plugin_calculator_failed_to_copy"));
                                     return false;
                                 }
                             }
