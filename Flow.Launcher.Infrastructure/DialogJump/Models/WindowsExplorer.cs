@@ -7,16 +7,16 @@ using Windows.Win32.Foundation;
 using Windows.Win32.System.Com;
 using Windows.Win32.UI.Shell;
 
-namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
+namespace Flow.Launcher.Infrastructure.DialogJump.Models
 {
     /// <summary>
-    /// Class for handling Windows Explorer instances in QuickSwitch.
+    /// Class for handling Windows Explorer instances in DialogJump.
     /// </summary>
-    public class WindowsExplorer : IQuickSwitchExplorer
+    public class WindowsExplorer : IDialogJumpExplorer
     {
-        public IQuickSwitchExplorerWindow CheckExplorerWindow(IntPtr hwnd)
+        public IDialogJumpExplorerWindow CheckExplorerWindow(IntPtr hwnd)
         {
-            IQuickSwitchExplorerWindow explorerWindow = null;
+            IDialogJumpExplorerWindow explorerWindow = null;
 
             // Is it from Explorer?
             var processName = Win32Helper.GetProcessNameFromHwnd(new(hwnd));
@@ -78,7 +78,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
         }
     }
 
-    public class WindowsExplorerWindow : IQuickSwitchExplorerWindow
+    public class WindowsExplorerWindow : IDialogJumpExplorerWindow
     {
         public IntPtr Handle { get; }
 

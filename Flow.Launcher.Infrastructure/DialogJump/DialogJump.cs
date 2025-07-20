@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Infrastructure.QuickSwitch.Models;
+using Flow.Launcher.Infrastructure.DialogJump.Models;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using NHotkey;
@@ -14,38 +14,38 @@ using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.UI.Accessibility;
 
-namespace Flow.Launcher.Infrastructure.QuickSwitch
+namespace Flow.Launcher.Infrastructure.DialogJump
 {
-    public static class QuickSwitch
+    public static class DialogJump
     {
         #region Public Properties
 
-        public static Func<nint, Task> ShowQuickSwitchWindowAsync { get; set; } = null;
+        public static Func<nint, Task> ShowDialogJumpWindowAsync { get; set; } = null;
 
-        public static Action UpdateQuickSwitchWindow { get; set; } = null;
+        public static Action UpdateDialogJumpWindow { get; set; } = null;
 
-        public static Action ResetQuickSwitchWindow { get; set; } = null;
+        public static Action ResetDialogJumpWindow { get; set; } = null;
 
-        public static Action HideQuickSwitchWindow { get; set; } = null;
+        public static Action HideDialogJumpWindow { get; set; } = null;
 
-        public static QuickSwitchWindowPositions QuickSwitchWindowPosition { get; private set; }
+        public static DialogJumpWindowPositions DialogJumpWindowPosition { get; private set; }
 
-        public static QuickSwitchExplorerPair WindowsQuickSwitchExplorer { get; } = new()
+        public static DialogJumpExplorerPair WindowsDialogJumpExplorer { get; } = new()
         {
             Metadata = new()
             {
-                ID = "298b197c08a24e90ab66ac060ee2b6b8", // ID is for calculating the hash id of the quick switch pairs
-                Disabled = false // Disabled is for enabling the Windows QuickSwitch explorers & dialogs
+                ID = "298b197c08a24e90ab66ac060ee2b6b8", // ID is for calculating the hash id of the dialog jump pairs
+                Disabled = false // Disabled is for enabling the Windows DialogJump explorers & dialogs
             },
             Plugin = new WindowsExplorer()
         };
 
-        public static QuickSwitchDialogPair WindowsQuickSwitchDialog { get; } = new()
+        public static DialogJumpDialogPair WindowsDialogJumpDialog { get; } = new()
         {
             Metadata = new()
             {
-                ID = "a4a113dc51094077ab4abb391e866c7b", // ID is for calculating the hash id of the quick switch pairs
-                Disabled = false // Disabled is for enabling the Windows QuickSwitch explorers & dialogs
+                ID = "a4a113dc51094077ab4abb391e866c7b", // ID is for calculating the hash id of the dialog jump pairs
+                Disabled = false // Disabled is for enabling the Windows DialogJump explorers & dialogs
             },
             Plugin = new WindowsDialog()
         };
@@ -54,7 +54,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         #region Private Fields
 
-        private static readonly string ClassName = nameof(QuickSwitch);
+        private static readonly string ClassName = nameof(DialogJump);
 
         private static readonly Settings _settings = Ioc.Default.GetRequiredService<Settings>();
 
@@ -64,14 +64,14 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         private static HWND _mainWindowHandle = HWND.Null;
 
-        private static readonly Dictionary<QuickSwitchExplorerPair, IQuickSwitchExplorerWindow> _quickSwitchExplorers = new();
+        private static readonly Dictionary<DialogJumpExplorerPair, IDialogJumpExplorerWindow> _dialogJumpExplorers = new();
 
-        private static QuickSwitchExplorerPair _lastExplorer = null;
+        private static DialogJumpExplorerPair _lastExplorer = null;
         private static readonly object _lastExplorerLock = new();
 
-        private static readonly Dictionary<QuickSwitchDialogPair, IQuickSwitchDialogWindow> _quickSwitchDialogs = new();
+        private static readonly Dictionary<DialogJumpDialogPair, IDialogJumpDialogWindow> _dialogJumpDialogs = new();
 
-        private static IQuickSwitchDialogWindow _dialogWindow = null;
+        private static IDialogJumpDialogWindow _dialogWindow = null;
         private static readonly object _dialogWindowLock = new();
 
         private static HWINEVENTHOOK _foregroundChangeHook = HWINEVENTHOOK.Null;
@@ -105,21 +105,21 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         #region Initialize & Setup
 
-        public static void InitializeQuickSwitch(IList<QuickSwitchExplorerPair> quickSwitchExplorers,
-            IList<QuickSwitchDialogPair> quickSwitchDialogs)
+        public static void InitializeDialogJump(IList<DialogJumpExplorerPair> dialogJumpExplorers,
+            IList<DialogJumpDialogPair> dialogJumpDialogs)
         {
             if (_initialized) return;
 
-            // Initialize quick switch explorers & dialogs
-            _quickSwitchExplorers.Add(WindowsQuickSwitchExplorer, null);
-            foreach (var explorer in quickSwitchExplorers)
+            // Initialize dialog jump explorers & dialogs
+            _dialogJumpExplorers.Add(WindowsDialogJumpExplorer, null);
+            foreach (var explorer in dialogJumpExplorers)
             {
-                _quickSwitchExplorers.Add(explorer, null);
+                _dialogJumpExplorers.Add(explorer, null);
             }
-            _quickSwitchDialogs.Add(WindowsQuickSwitchDialog, null);
-            foreach (var dialog in quickSwitchDialogs)
+            _dialogJumpDialogs.Add(WindowsDialogJumpDialog, null);
+            foreach (var dialog in dialogJumpDialogs)
             {
-                _quickSwitchDialogs.Add(dialog, null);
+                _dialogJumpDialogs.Add(dialog, null);
             }
 
             // Initialize main window handle
@@ -127,15 +127,15 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
             // Initialize timer
             _dragMoveTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(10) };
-            _dragMoveTimer.Tick += (s, e) => InvokeUpdateQuickSwitchWindow();
+            _dragMoveTimer.Tick += (s, e) => InvokeUpdateDialogJumpWindow();
 
-            // Initialize quick switch window position
-            QuickSwitchWindowPosition = _settings.QuickSwitchWindowPosition;
+            // Initialize dialog jump window position
+            DialogJumpWindowPosition = _settings.DialogJumpWindowPosition;
 
             _initialized = true;
         }
 
-        public static void SetupQuickSwitch(bool enabled)
+        public static void SetupDialogJump(bool enabled)
         {
             if (enabled == _enabled) return;
 
@@ -229,22 +229,22 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     _hideChangeHook.IsNull ||
                     _dialogEndChangeHook.IsNull)
                 {
-                    Log.Error(ClassName, "Failed to enable QuickSwitch");
+                    Log.Error(ClassName, "Failed to enable DialogJump");
                     return;
                 }
             }
             else
             {
                 // Remove explorer windows
-                foreach (var explorer in _quickSwitchExplorers.Keys)
+                foreach (var explorer in _dialogJumpExplorers.Keys)
                 {
-                    _quickSwitchExplorers[explorer] = null;
+                    _dialogJumpExplorers[explorer] = null;
                 }
 
                 // Remove dialog windows
-                foreach (var dialog in _quickSwitchDialogs.Keys)
+                foreach (var dialog in _dialogJumpDialogs.Keys)
                 {
-                    _quickSwitchDialogs[dialog] = null;
+                    _dialogJumpDialogs[dialog] = null;
                 }
 
                 // Remove dialog window handle
@@ -294,10 +294,10 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 // Stop drag move timer
                 _dragMoveTimer?.Stop();
 
-                // Reset quick switch window
+                // Reset dialog jump window
                 if (dialogWindowExists)
                 {
-                    InvokeResetQuickSwitchWindow();
+                    InvokeResetDialogJumpWindow();
                 }
             }
 
@@ -313,7 +313,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 // Enum windows from the top to the bottom
                 PInvoke.EnumWindows((hWnd, _) =>
                 {
-                    foreach (var explorer in _quickSwitchExplorers.Keys)
+                    foreach (var explorer in _dialogJumpExplorers.Keys)
                     {
                         if (API.PluginModified(explorer.Metadata.ID) || // Plugin is modified
                             explorer.Metadata.Disabled) continue; // Plugin is disabled
@@ -321,7 +321,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                         var explorerWindow = explorer.Plugin.CheckExplorerWindow(hWnd);
                         if (explorerWindow != null)
                         {
-                            _quickSwitchExplorers[explorer] = explorerWindow;
+                            _dialogJumpExplorers[explorer] = explorerWindow;
                             _lastExplorer = explorer;
                             found = true;
                             return false;
@@ -342,7 +342,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         public static string GetActiveExplorerPath()
         {
-            return RefreshLastExplorer() ? _quickSwitchExplorers[_lastExplorer].GetExplorerPath() : string.Empty;
+            return RefreshLastExplorer() ? _dialogJumpExplorers[_lastExplorer].GetExplorerPath() : string.Empty;
         }
 
         #endregion
@@ -351,30 +351,30 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
 
         #region Invoke Property Events
 
-        private static async Task InvokeShowQuickSwitchWindowAsync(bool dialogWindowChanged)
+        private static async Task InvokeShowDialogJumpWindowAsync(bool dialogWindowChanged)
         {
-            // Show quick switch window
-            if (_settings.ShowQuickSwitchWindow)
+            // Show dialog jump window
+            if (_settings.ShowDialogJumpWindow)
             {
-                // Save quick switch window position for one file dialog
+                // Save dialog jump window position for one file dialog
                 if (dialogWindowChanged)
                 {
-                    QuickSwitchWindowPosition = _settings.QuickSwitchWindowPosition;
+                    DialogJumpWindowPosition = _settings.DialogJumpWindowPosition;
                 }
 
-                // Call show quick switch window
-                IQuickSwitchDialogWindow dialogWindow;
+                // Call show dialog jump window
+                IDialogJumpDialogWindow dialogWindow;
                 lock (_dialogWindowLock)
                 {
                     dialogWindow = _dialogWindow;
                 }
-                if (dialogWindow != null && ShowQuickSwitchWindowAsync != null)
+                if (dialogWindow != null && ShowDialogJumpWindowAsync != null)
                 {
-                    await ShowQuickSwitchWindowAsync.Invoke(dialogWindow.Handle);
+                    await ShowDialogJumpWindowAsync.Invoke(dialogWindow.Handle);
                 }
 
-                // Hook move size event if quick switch window is under dialog & dialog window changed
-                if (QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog)
+                // Hook move size event if dialog jump window is under dialog & dialog window changed
+                if (DialogJumpWindowPosition == DialogJumpWindowPositions.UnderDialog)
                 {
                     if (dialogWindowChanged)
                     {
@@ -416,20 +416,20 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
         }
 
-        private static void InvokeUpdateQuickSwitchWindow()
+        private static void InvokeUpdateDialogJumpWindow()
         {
-            UpdateQuickSwitchWindow?.Invoke();
+            UpdateDialogJumpWindow?.Invoke();
         }
 
-        private static void InvokeResetQuickSwitchWindow()
+        private static void InvokeResetDialogJumpWindow()
         {
             lock (_dialogWindowLock)
             {
                 _dialogWindow = null;
             }
 
-            // Reset quick switch window
-            ResetQuickSwitchWindow?.Invoke();
+            // Reset dialog jump window
+            ResetDialogJumpWindow?.Invoke();
 
             // Stop drag move timer
             _dragMoveTimer?.Stop();
@@ -442,10 +442,10 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
         }
 
-        private static void InvokeHideQuickSwitchWindow()
+        private static void InvokeHideDialogJumpWindow()
         {
-            // Hide quick switch window
-            HideQuickSwitchWindow?.Invoke();
+            // Hide dialog jump window
+            HideDialogJumpWindow?.Invoke();
 
             // Stop drag move timer
             _dragMoveTimer?.Stop();
@@ -481,13 +481,13 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 // Check if it is a file dialog window
                 var isDialogWindow = false;
                 var dialogWindowChanged = false;
-                foreach (var dialog in _quickSwitchDialogs.Keys)
+                foreach (var dialog in _dialogJumpDialogs.Keys)
                 {
                     if (API.PluginModified(dialog.Metadata.ID) || // Plugin is modified
                         dialog.Metadata.Disabled) continue; // Plugin is disabled
 
-                    IQuickSwitchDialogWindow dialogWindow;
-                    var existingDialogWindow = _quickSwitchDialogs[dialog];
+                    IDialogJumpDialogWindow dialogWindow;
+                    var existingDialogWindow = _dialogJumpDialogs[dialog];
                     if (existingDialogWindow != null && existingDialogWindow.Handle == hwnd)
                     {
                         // If the dialog window is already in the list, no need to check again
@@ -517,7 +517,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 {
                     Log.Debug(ClassName, $"Dialog Window: {hwnd}");
                     // Navigate to path
-                    if (_settings.AutoQuickSwitch)
+                    if (_settings.AutoDialogJump)
                     {
                         // Check if we have already switched for this dialog
                         bool alreadySwitched;
@@ -526,26 +526,26 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                             alreadySwitched = _autoSwitchedDialogs.Contains(hwnd);
                         }
 
-                        // Just show quick switch window
+                        // Just show dialog jump window
                         if (alreadySwitched)
                         {
-                            await InvokeShowQuickSwitchWindowAsync(dialogWindowChanged);
+                            await InvokeShowDialogJumpWindowAsync(dialogWindowChanged);
                         }
-                        // Show quick switch window after navigating the path
+                        // Show dialog jump window after navigating the path
                         else
                         {
                             if (!await Task.Run(() => NavigateDialogPathAsync(hwnd, true)))
                             {
-                                await InvokeShowQuickSwitchWindowAsync(dialogWindowChanged);
+                                await InvokeShowDialogJumpWindowAsync(dialogWindowChanged);
                             }
                         }
                     }
                     else
                     {
-                        await InvokeShowQuickSwitchWindowAsync(dialogWindowChanged);
+                        await InvokeShowDialogJumpWindowAsync(dialogWindowChanged);
                     }
                 }
-                // Quick switch window
+                // Dialog jump window
                 else if (hwnd == _mainWindowHandle)
                 {
                     Log.Debug(ClassName, $"Main Window: {hwnd}");
@@ -562,10 +562,10 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                             dialogWindowExist = true;
                         }
                     }
-                    if (dialogWindowExist) // Neither quick switch window nor file dialog window is foreground
+                    if (dialogWindowExist) // Neither dialog jump window nor file dialog window is foreground
                     {
-                        // Hide quick switch window until the file dialog window is brought to the foreground
-                        InvokeHideQuickSwitchWindow();
+                        // Hide dialog jump window until the file dialog window is brought to the foreground
+                        InvokeHideDialogJumpWindow();
                     }
 
                     // Check if there are foreground explorer windows
@@ -573,7 +573,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                     {
                         lock (_lastExplorerLock)
                         {
-                            foreach (var explorer in _quickSwitchExplorers.Keys)
+                            foreach (var explorer in _dialogJumpExplorers.Keys)
                             {
                                 if (API.PluginModified(explorer.Metadata.ID) || // Plugin is modified
                                     explorer.Metadata.Disabled) continue; // Plugin is disabled
@@ -582,7 +582,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                                 if (explorerWindow != null)
                                 {
                                     Log.Debug(ClassName, $"Explorer window: {hwnd}");
-                                    _quickSwitchExplorers[explorer] = explorerWindow;
+                                    _dialogJumpExplorers[explorer] = explorerWindow;
                                     _lastExplorer = explorer;
                                     break;
                                 }
@@ -611,7 +611,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             uint dwmsEventTime
         )
         {
-            // If the dialog window is moved, update the quick switch window position
+            // If the dialog window is moved, update the dialog jump window position
             var dialogWindowExist = false;
             lock (_dialogWindowLock)
             {
@@ -622,7 +622,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
             if (dialogWindowExist)
             {
-                InvokeUpdateQuickSwitchWindow();
+                InvokeUpdateDialogJumpWindow();
             }
         }
 
@@ -636,7 +636,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             uint dwmsEventTime
         )
         {
-            // If the dialog window is moved or resized, update the quick switch window position
+            // If the dialog window is moved or resized, update the dialog jump window position
             if (_dragMoveTimer != null)
             {
                 switch (eventType)
@@ -678,7 +678,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 {
                     _autoSwitchedDialogs.Remove(hwnd);
                 }
-                InvokeResetQuickSwitchWindow();
+                InvokeResetDialogJumpWindow();
             }
         }
 
@@ -709,7 +709,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 {
                     _autoSwitchedDialogs.Remove(hwnd);
                 }
-                InvokeResetQuickSwitchWindow();
+                InvokeResetDialogJumpWindow();
             }
         }
 
@@ -740,7 +740,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 {
                     _autoSwitchedDialogs.Remove(hwnd);
                 }
-                InvokeResetQuickSwitchWindow();
+                InvokeResetDialogJumpWindow();
             }
         }
 
@@ -779,7 +779,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             string path;
             lock (_lastExplorerLock)
             {
-                path = _quickSwitchExplorers[_lastExplorer]?.GetExplorerPath();
+                path = _dialogJumpExplorers[_lastExplorer]?.GetExplorerPath();
             }
 
             // Check path null or empty
@@ -824,7 +824,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
         }
 
-        private static IQuickSwitchDialogWindowTab GetDialogWindowTab(HWND hwnd)
+        private static IDialogJumpDialogWindowTab GetDialogWindowTab(HWND hwnd)
         {
             var dialogWindow = GetDialogWindow(hwnd);
             if (dialogWindow == null) return null;
@@ -832,7 +832,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             return dialogWindowTab;
         }
 
-        private static IQuickSwitchDialogWindow GetDialogWindow(HWND hwnd)
+        private static IDialogJumpDialogWindow GetDialogWindow(HWND hwnd)
         {
             // First check dialog window
             lock (_dialogWindowLock)
@@ -844,12 +844,12 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
 
             // Then check all dialog windows
-            foreach (var dialog in _quickSwitchDialogs.Keys)
+            foreach (var dialog in _dialogJumpDialogs.Keys)
             {
                 if (API.PluginModified(dialog.Metadata.ID) || // Plugin is modified
                     dialog.Metadata.Disabled) continue; // Plugin is disabled
 
-                var dialogWindow = _quickSwitchDialogs[dialog];
+                var dialogWindow = _dialogJumpDialogs[dialog];
                 if (dialogWindow != null && dialogWindow.Handle == hwnd)
                 {
                     return dialogWindow;
@@ -857,13 +857,13 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
 
             // Finally search for the dialog window again
-            foreach (var dialog in _quickSwitchDialogs.Keys)
+            foreach (var dialog in _dialogJumpDialogs.Keys)
             {
                 if (API.PluginModified(dialog.Metadata.ID) || // Plugin is modified
                     dialog.Metadata.Disabled) continue; // Plugin is disabled
 
-                IQuickSwitchDialogWindow dialogWindow;
-                var existingDialogWindow = _quickSwitchDialogs[dialog];
+                IDialogJumpDialogWindow dialogWindow;
+                var existingDialogWindow = _dialogJumpDialogs[dialog];
                 if (existingDialogWindow != null && existingDialogWindow.Handle == hwnd)
                 {
                     // If the dialog window is already in the list, no need to check again
@@ -877,7 +877,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 // Update dialog window if found
                 if (dialogWindow != null)
                 {
-                    _quickSwitchDialogs[dialog] = dialogWindow;
+                    _dialogJumpDialogs[dialog] = dialogWindow;
                     return dialogWindow;
                 }
             }
@@ -885,7 +885,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             return null;
         }
 
-        private static async Task<bool> JumpToPathAsync(IQuickSwitchDialogWindowTab dialog, string path, bool isFile, bool auto = false)
+        private static async Task<bool> JumpToPathAsync(IDialogJumpDialogWindowTab dialog, string path, bool isFile, bool auto = false)
         {
             // Jump after flow launcher window vanished (after JumpAction returned true)
             // and the dialog had been in the foreground.
@@ -900,17 +900,17 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
                 bool result;
                 if (isFile)
                 {
-                    switch (_settings.QuickSwitchFileResultBehaviour)
+                    switch (_settings.DialogJumpFileResultBehaviour)
                     {
-                        case QuickSwitchFileResultBehaviours.FullPath:
+                        case DialogJumpFileResultBehaviours.FullPath:
                             Log.Debug(ClassName, $"File Jump FullPath: {path}");
                             result = FileJump(path, dialog);
                             break;
-                        case QuickSwitchFileResultBehaviours.FullPathOpen:
+                        case DialogJumpFileResultBehaviours.FullPathOpen:
                             Log.Debug(ClassName, $"File Jump FullPathOpen: {path}");
                             result = FileJump(path, dialog, openFile: true);
                             break;
-                        case QuickSwitchFileResultBehaviours.Directory:
+                        case DialogJumpFileResultBehaviours.Directory:
                             Log.Debug(ClassName, $"File Jump Directory (Auto: {auto}): {path}");
                             result = DirJump(Path.GetDirectoryName(path), dialog, auto);
                             break;
@@ -945,7 +945,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
         }
 
-        private static bool FileJump(string filePath, IQuickSwitchDialogWindowTab dialog, bool openFile = false)
+        private static bool FileJump(string filePath, IDialogJumpDialogWindowTab dialog, bool openFile = false)
         {
             if (!dialog.JumpFile(filePath))
             {
@@ -962,7 +962,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             return true;
         }
 
-        private static bool DirJump(string dirPath, IQuickSwitchDialogWindowTab dialog, bool auto = false)
+        private static bool DirJump(string dirPath, IDialogJumpDialogWindowTab dialog, bool auto = false)
         {
             if (!dialog.JumpFolder(dirPath, auto))
             {
@@ -1016,22 +1016,22 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch
             }
 
             // Dispose explorers
-            foreach (var explorer in _quickSwitchExplorers.Keys)
+            foreach (var explorer in _dialogJumpExplorers.Keys)
             {
-                _quickSwitchExplorers[explorer]?.Dispose();
+                _dialogJumpExplorers[explorer]?.Dispose();
             }
-            _quickSwitchExplorers.Clear();
+            _dialogJumpExplorers.Clear();
             lock (_lastExplorerLock)
             {
                 _lastExplorer = null;
             }
 
             // Dispose dialogs
-            foreach (var dialog in _quickSwitchDialogs.Keys)
+            foreach (var dialog in _dialogJumpDialogs.Keys)
             {
-                _quickSwitchDialogs[dialog]?.Dispose();
+                _dialogJumpDialogs[dialog]?.Dispose();
             }
-            _quickSwitchDialogs.Clear();
+            _dialogJumpDialogs.Clear();
             lock (_dialogWindowLock)
             {
                 _dialogWindow = null;

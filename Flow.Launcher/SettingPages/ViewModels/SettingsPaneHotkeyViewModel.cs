@@ -4,7 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
-using Flow.Launcher.Infrastructure.QuickSwitch;
+using Flow.Launcher.Infrastructure.DialogJump;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 
@@ -36,11 +36,11 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
     }
 
     [RelayCommand]
-    private void SetQuickSwitchHotkey(HotkeyModel hotkey)
+    private void SetDialogJumpHotkey(HotkeyModel hotkey)
     {
-        if (Settings.EnableQuickSwitch)
+        if (Settings.EnableDialogJump)
         {
-            HotKeyMapper.SetHotkey(hotkey, QuickSwitch.OnToggleHotkey);
+            HotKeyMapper.SetHotkey(hotkey, DialogJump.OnToggleHotkey);
         }
     }
 

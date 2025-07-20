@@ -1,10 +1,10 @@
 ﻿using Flow.Launcher.Plugin;
 
-namespace Flow.Launcher.Infrastructure.QuickSwitch;
+namespace Flow.Launcher.Infrastructure.DialogJump;
 
-public class QuickSwitchExplorerPair
+public class DialogJumpExplorerPair
 {
-    public IQuickSwitchExplorer Plugin { get; init; }
+    public IDialogJumpExplorer Plugin { get; init; }
 
     public PluginMetadata Metadata { get; init; }
 
@@ -15,7 +15,7 @@ public class QuickSwitchExplorerPair
 
     public override bool Equals(object obj)
     {
-        if (obj is QuickSwitchExplorerPair r)
+        if (obj is DialogJumpExplorerPair r)
         {
             return string.Equals(r.Metadata.ID, Metadata.ID);
         }
@@ -32,9 +32,9 @@ public class QuickSwitchExplorerPair
     }
 }
 
-public class QuickSwitchDialogPair
+public class DialogJumpDialogPair
 {
-    public IQuickSwitchDialog Plugin { get; init; }
+    public IDialogJumpDialog Plugin { get; init; }
 
     public PluginMetadata Metadata { get; init; }
 
@@ -45,7 +45,7 @@ public class QuickSwitchDialogPair
 
     public override bool Equals(object obj)
     {
-        if (obj is QuickSwitchDialogPair r)
+        if (obj is DialogJumpDialogPair r)
         {
             return string.Equals(r.Metadata.ID, Metadata.ID);
         }

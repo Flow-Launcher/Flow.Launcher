@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -8,7 +8,7 @@ using Flow.Launcher.Core.Configuration;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.QuickSwitch;
+using Flow.Launcher.Infrastructure.DialogJump;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
@@ -147,39 +147,39 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public List<LastQueryModeData> LastQueryModes { get; } =
         DropdownDataGeneric<LastQueryMode>.GetValues<LastQueryModeData>("LastQuery");
 
-    public bool EnableQuickSwitch
+    public bool EnableDialogJump
     {
-        get => Settings.EnableQuickSwitch;
+        get => Settings.EnableDialogJump;
         set
         {
-            if (Settings.EnableQuickSwitch != value)
+            if (Settings.EnableDialogJump != value)
             {
-                Settings.EnableQuickSwitch = value;
-                QuickSwitch.SetupQuickSwitch(value);
-                if (Settings.EnableQuickSwitch)
+                Settings.EnableDialogJump = value;
+                DialogJump.SetupDialogJump(value);
+                if (Settings.EnableDialogJump)
                 {
-                    HotKeyMapper.SetHotkey(new(Settings.QuickSwitchHotkey), QuickSwitch.OnToggleHotkey);
+                    HotKeyMapper.SetHotkey(new(Settings.DialogJumpHotkey), DialogJump.OnToggleHotkey);
                 }
                 else
                 {
-                    HotKeyMapper.RemoveHotkey(Settings.QuickSwitchHotkey);
+                    HotKeyMapper.RemoveHotkey(Settings.DialogJumpHotkey);
                 }
             }
         }
     }
 
-    public class QuickSwitchWindowPositionData : DropdownDataGeneric<QuickSwitchWindowPositions> { }
-    public class QuickSwitchResultBehaviourData : DropdownDataGeneric<QuickSwitchResultBehaviours> { }
-    public class QuickSwitchFileResultBehaviourData : DropdownDataGeneric<QuickSwitchFileResultBehaviours> { }
+    public class DialogJumpWindowPositionData : DropdownDataGeneric<DialogJumpWindowPositions> { }
+    public class DialogJumpResultBehaviourData : DropdownDataGeneric<DialogJumpResultBehaviours> { }
+    public class DialogJumpFileResultBehaviourData : DropdownDataGeneric<DialogJumpFileResultBehaviours> { }
 
-    public List<QuickSwitchWindowPositionData> QuickSwitchWindowPositions { get; } =
-        DropdownDataGeneric<QuickSwitchWindowPositions>.GetValues<QuickSwitchWindowPositionData>("QuickSwitchWindowPosition");
+    public List<DialogJumpWindowPositionData> DialogJumpWindowPositions { get; } =
+        DropdownDataGeneric<DialogJumpWindowPositions>.GetValues<DialogJumpWindowPositionData>("DialogJumpWindowPosition");
 
-    public List<QuickSwitchResultBehaviourData> QuickSwitchResultBehaviours { get; } =
-        DropdownDataGeneric<QuickSwitchResultBehaviours>.GetValues<QuickSwitchResultBehaviourData>("QuickSwitchResultBehaviour");
+    public List<DialogJumpResultBehaviourData> DialogJumpResultBehaviours { get; } =
+        DropdownDataGeneric<DialogJumpResultBehaviours>.GetValues<DialogJumpResultBehaviourData>("DialogJumpResultBehaviour");
 
-    public List<QuickSwitchFileResultBehaviourData> QuickSwitchFileResultBehaviours { get; } =
-        DropdownDataGeneric<QuickSwitchFileResultBehaviours>.GetValues<QuickSwitchFileResultBehaviourData>("QuickSwitchFileResultBehaviour");
+    public List<DialogJumpFileResultBehaviourData> DialogJumpFileResultBehaviours { get; } =
+        DropdownDataGeneric<DialogJumpFileResultBehaviours>.GetValues<DialogJumpFileResultBehaviourData>("DialogJumpFileResultBehaviour");
 
     public int SearchDelayTimeValue
     {
@@ -214,9 +214,9 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         DropdownDataGeneric<SearchPrecisionScore>.UpdateLabels(SearchPrecisionScores);
         DropdownDataGeneric<LastQueryMode>.UpdateLabels(LastQueryModes);
         DropdownDataGeneric<DoublePinyinSchemas>.UpdateLabels(DoublePinyinSchemas);
-        DropdownDataGeneric<QuickSwitchWindowPositions>.UpdateLabels(QuickSwitchWindowPositions);
-        DropdownDataGeneric<QuickSwitchResultBehaviours>.UpdateLabels(QuickSwitchResultBehaviours);
-        DropdownDataGeneric<QuickSwitchFileResultBehaviours>.UpdateLabels(QuickSwitchFileResultBehaviours);
+        DropdownDataGeneric<DialogJumpWindowPositions>.UpdateLabels(DialogJumpWindowPositions);
+        DropdownDataGeneric<DialogJumpResultBehaviours>.UpdateLabels(DialogJumpResultBehaviours);
+        DropdownDataGeneric<DialogJumpFileResultBehaviours>.UpdateLabels(DialogJumpFileResultBehaviours);
         // Since we are using Binding instead of DynamicResource, we need to manually trigger the update
         OnPropertyChanged(nameof(AlwaysPreviewToolTip));
     }

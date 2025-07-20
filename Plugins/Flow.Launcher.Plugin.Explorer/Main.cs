@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Plugin.Explorer.Helper;
+using Flow.Launcher.Plugin.Explorer.Helper;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
@@ -14,7 +14,7 @@ using System.Linq;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
-    public class Main : ISettingProvider, IAsyncPlugin, IContextMenu, IPluginI18n, IAsyncQuickSwitch
+    public class Main : ISettingProvider, IAsyncPlugin, IContextMenu, IPluginI18n, IAsyncDialogJump
     {
         internal static PluginInitContext Context { get; set; }
 
@@ -26,7 +26,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
         private SearchManager searchManager;
 
-        private static readonly List<QuickSwitchResult> _emptyQuickSwitchResultList = new();
+        private static readonly List<DialogJumpResult> _emptyDialogJumpResultList = new();
 
         public Control CreateSettingPanel()
         {
@@ -112,16 +112,16 @@ namespace Flow.Launcher.Plugin.Explorer
             }
         }
 
-        public async Task<List<QuickSwitchResult>> QueryQuickSwitchAsync(Query query, CancellationToken token)
+        public async Task<List<DialogJumpResult>> QueryDialogJumpAsync(Query query, CancellationToken token)
         {
             try
             {
                 var results = await searchManager.SearchAsync(query, token);
-                return results.Select(r => QuickSwitchResult.From(r, r.CopyText)).ToList();
+                return results.Select(r => DialogJumpResult.From(r, r.CopyText)).ToList();
             }
             catch (Exception e) when (e is SearchException or EngineNotAvailableException)
             {
-                return _emptyQuickSwitchResultList;
+                return _emptyDialogJumpResultList;
             }
         }
     }

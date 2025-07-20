@@ -2,7 +2,7 @@
 using ChefKeys;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Hotkey;
-using Flow.Launcher.Infrastructure.QuickSwitch;
+using Flow.Launcher.Infrastructure.DialogJump;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.ViewModel;
 using NHotkey;
@@ -23,9 +23,9 @@ internal static class HotKeyMapper
         _settings = Ioc.Default.GetService<Settings>();
 
         SetHotkey(_settings.Hotkey, OnToggleHotkey);
-        if (_settings.EnableQuickSwitch)
+        if (_settings.EnableDialogJump)
         {
-            SetHotkey(_settings.QuickSwitchHotkey, QuickSwitch.OnToggleHotkey);
+            SetHotkey(_settings.DialogJumpHotkey, DialogJump.OnToggleHotkey);
         }
         LoadCustomPluginHotkey();
     }

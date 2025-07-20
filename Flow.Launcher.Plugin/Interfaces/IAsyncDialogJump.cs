@@ -5,20 +5,20 @@ using System.Threading;
 namespace Flow.Launcher.Plugin
 {
     /// <summary>
-    /// Asynchronous Quick Switch Model
+    /// Asynchronous Dialog Jump Model
     /// </summary>
-    public interface IAsyncQuickSwitch : IFeatures
+    public interface IAsyncDialogJump : IFeatures
     {
         /// <summary>
-        /// Asynchronous querying for quick switch window
+        /// Asynchronous querying for dialog jump window
         /// </summary>
         /// <para>
         /// If the Querying method requires high IO transmission
-        /// or performing CPU intense jobs (performing better with cancellation), please use this IAsyncQuickSwitch interface
+        /// or performing CPU intense jobs (performing better with cancellation), please use this IAsyncDialogJump interface
         /// </para>
         /// <param name="query">Query to search</param>
         /// <param name="token">Cancel when querying job is obsolete</param>
         /// <returns></returns>
-        Task<List<QuickSwitchResult>> QueryQuickSwitchAsync(Query query, CancellationToken token);
+        Task<List<DialogJumpResult>> QueryDialogJumpAsync(Query query, CancellationToken token);
     }
 }

@@ -86,7 +86,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string OpenHistoryHotkey { get; set; } = $"Ctrl+H";
         public string CycleHistoryUpHotkey { get; set; } = $"{KeyConstant.Alt} + Up";
         public string CycleHistoryDownHotkey { get; set; } = $"{KeyConstant.Alt} + Down";
-        public string QuickSwitchHotkey { get; set; } = $"{KeyConstant.Alt} + G";
+        public string DialogJumpHotkey { get; set; } = $"{KeyConstant.Alt} + G";
 
         private string _language = Constant.SystemLanguageCode;
         public string Language
@@ -324,20 +324,20 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         };
 
-        public bool EnableQuickSwitch { get; set; } = true;
+        public bool EnableDialogJump { get; set; } = true;
 
-        public bool AutoQuickSwitch { get; set; } = false;
+        public bool AutoDialogJump { get; set; } = false;
 
-        public bool ShowQuickSwitchWindow { get; set; } = false;
-
-        [JsonConverter(typeof(JsonStringEnumConverter))]
-        public QuickSwitchWindowPositions QuickSwitchWindowPosition { get; set; } = QuickSwitchWindowPositions.UnderDialog;
+        public bool ShowDialogJumpWindow { get; set; } = false;
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public QuickSwitchResultBehaviours QuickSwitchResultBehaviour { get; set; } = QuickSwitchResultBehaviours.LeftClick;
+        public DialogJumpWindowPositions DialogJumpWindowPosition { get; set; } = DialogJumpWindowPositions.UnderDialog;
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public QuickSwitchFileResultBehaviours QuickSwitchFileResultBehaviour { get; set; } = QuickSwitchFileResultBehaviours.FullPath;
+        public DialogJumpResultBehaviours DialogJumpResultBehaviour { get; set; } = DialogJumpResultBehaviours.LeftClick;
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public DialogJumpFileResultBehaviours DialogJumpFileResultBehaviour { get; set; } = DialogJumpFileResultBehaviours.FullPath;
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public LOGLEVEL LogLevel { get; set; } = LOGLEVEL.INFO;
@@ -562,8 +562,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                     list.Add(new(CycleHistoryUpHotkey, "CycleHistoryUpHotkey", () => CycleHistoryUpHotkey = ""));
                 if (!string.IsNullOrEmpty(CycleHistoryDownHotkey))
                     list.Add(new(CycleHistoryDownHotkey, "CycleHistoryDownHotkey", () => CycleHistoryDownHotkey = ""));
-                if (!string.IsNullOrEmpty(QuickSwitchHotkey))
-                    list.Add(new(QuickSwitchHotkey, "quickSwitchHotkey", () => QuickSwitchHotkey = ""));
+                if (!string.IsNullOrEmpty(DialogJumpHotkey))
+                    list.Add(new(DialogJumpHotkey, "dialogJumpHotkey", () => DialogJumpHotkey = ""));
 
                 // Custom Query Hotkeys
                 foreach (var customPluginHotkey in CustomPluginHotkeys)
@@ -678,19 +678,19 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         XiaoLang
     }
 
-    public enum QuickSwitchWindowPositions
+    public enum DialogJumpWindowPositions
     {
         UnderDialog,
         FollowDefault
     }
 
-    public enum QuickSwitchResultBehaviours
+    public enum DialogJumpResultBehaviours
     {
         LeftClick,
         RightClick
     }
 
-    public enum QuickSwitchFileResultBehaviours
+    public enum DialogJumpFileResultBehaviours
     {
         FullPath,
         FullPathOpen,

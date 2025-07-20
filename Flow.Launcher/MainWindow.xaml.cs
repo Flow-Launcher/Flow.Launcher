@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Media;
@@ -19,7 +19,7 @@ using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Image;
-using Flow.Launcher.Infrastructure.QuickSwitch;
+using Flow.Launcher.Infrastructure.DialogJump;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -217,8 +217,8 @@ namespace Flow.Launcher
             // Without this part, when shown for the first time, switching the context menu does not move the cursor to the end.
             _viewModel.QueryTextCursorMovedToEnd = false;
 
-            // Register quick switch events
-            InitializeQuickSwitch();
+            // Register dialog jump events
+            InitializeDialogJump();
 
             // View model property changed event
             _viewModel.PropertyChanged += (o, e) =>
@@ -232,7 +232,7 @@ namespace Flow.Launcher
                                 if (_viewModel.MainWindowVisibilityStatus)
                                 {
                                     // Play sound effect before activing the window
-                                    if (_settings.UseSound && !_viewModel.IsQuickSwitchWindowUnderDialog())
+                                    if (_settings.UseSound && !_viewModel.IsDialogJumpWindowUnderDialog())
                                     {
                                         SoundPlay();
                                     }
@@ -255,7 +255,7 @@ namespace Flow.Launcher
                                     QueryTextBox.Focus();
 
                                     // Play window animation
-                                    if (_settings.UseAnimation && !_viewModel.IsQuickSwitchWindowUnderDialog())
+                                    if (_settings.UseAnimation && !_viewModel.IsDialogJumpWindowUnderDialog())
                                     {
                                         WindowAnimation();
                                     }
@@ -385,7 +385,7 @@ namespace Flow.Launcher
 
         private void OnLocationChanged(object sender, EventArgs e)
         {
-            if (_viewModel.IsQuickSwitchWindowUnderDialog())
+            if (_viewModel.IsDialogJumpWindowUnderDialog())
             {
                 return;
             }
@@ -399,7 +399,7 @@ namespace Flow.Launcher
 
         private async void OnDeactivated(object sender, EventArgs e)
         {
-            if (_viewModel.IsQuickSwitchWindowUnderDialog())
+            if (_viewModel.IsDialogJumpWindowUnderDialog())
             {
                 return;
             }
@@ -593,8 +593,8 @@ namespace Flow.Launcher
             switch (msg)
             {
                 case Win32Helper.WM_ENTERSIZEMOVE:
-                    // Do do handle size move event for quick switch window
-                    if (_viewModel.IsQuickSwitchWindowUnderDialog())
+                    // Do do handle size move event for dialog jump window
+                    if (_viewModel.IsDialogJumpWindowUnderDialog())
                     {
                         return IntPtr.Zero;
                     }
@@ -604,8 +604,8 @@ namespace Flow.Launcher
                     handled = true;
                     break;
                 case Win32Helper.WM_EXITSIZEMOVE:
-                    // Do do handle size move event for quick switch window
-                    if (_viewModel.IsQuickSwitchWindowUnderDialog())
+                    // Do do handle size move event for dialog jump window
+                    if (_viewModel.IsDialogJumpWindowUnderDialog())
                     {
                         return IntPtr.Zero;
                     }
@@ -823,10 +823,10 @@ namespace Flow.Launcher
         public void UpdatePosition()
         {
             // Initialize call twice to work around multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
-            if (_viewModel.IsQuickSwitchWindowUnderDialog())
+            if (_viewModel.IsDialogJumpWindowUnderDialog())
             {
-                InitializeQuickSwitchPosition();
-                InitializeQuickSwitchPosition();
+                InitializeDialogJumpPosition();
+                InitializeDialogJumpPosition();
             }
             else
             {
@@ -1390,20 +1390,20 @@ namespace Flow.Launcher
 
         #endregion
 
-        #region Quick Switch
+        #region Dialog Jump
 
-        private void InitializeQuickSwitch()
+        private void InitializeDialogJump()
         {
-            QuickSwitch.ShowQuickSwitchWindowAsync = _viewModel.SetupQuickSwitchAsync;
-            QuickSwitch.UpdateQuickSwitchWindow = InitializeQuickSwitchPosition;
-            QuickSwitch.ResetQuickSwitchWindow = _viewModel.ResetQuickSwitch;
-            QuickSwitch.HideQuickSwitchWindow = _viewModel.HideQuickSwitch;
+            DialogJump.ShowDialogJumpWindowAsync = _viewModel.SetupDialogJumpAsync;
+            DialogJump.UpdateDialogJumpWindow = InitializeDialogJumpPosition;
+            DialogJump.ResetDialogJumpWindow = _viewModel.ResetDialogJump;
+            DialogJump.HideDialogJumpWindow = _viewModel.HideDialogJump;
         }
 
-        private void InitializeQuickSwitchPosition()
+        private void InitializeDialogJumpPosition()
         {
             if (_viewModel.DialogWindowHandle == nint.Zero || !_viewModel.MainWindowVisibilityStatus) return;
-            if (!_viewModel.IsQuickSwitchWindowUnderDialog()) return;
+            if (!_viewModel.IsDialogJumpWindowUnderDialog()) return;
 
             // Get dialog window rect
             var result = Win32Helper.GetWindowRect(_viewModel.DialogWindowHandle, out var window);

@@ -8,16 +8,16 @@ using Windows.Win32.UI.WindowsAndMessaging;
 using WindowsInput;
 using WindowsInput.Native;
 
-namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
+namespace Flow.Launcher.Infrastructure.DialogJump.Models
 {
     /// <summary>
-    /// Class for handling Windows File Dialog instances in QuickSwitch.
+    /// Class for handling Windows File Dialog instances in DialogJump.
     /// </summary>
-    public class WindowsDialog : IQuickSwitchDialog
+    public class WindowsDialog : IDialogJumpDialog
     {
         private const string WindowsDialogClassName = "#32770";
 
-        public IQuickSwitchDialogWindow CheckDialogWindow(IntPtr hwnd)
+        public IDialogJumpDialogWindow CheckDialogWindow(IntPtr hwnd)
         {
             // Is it a Win32 dialog box?
             if (GetClassName(new(hwnd)) == WindowsDialogClassName)
@@ -68,13 +68,13 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
         #endregion
     }
 
-    public class WindowsDialogWindow : IQuickSwitchDialogWindow
+    public class WindowsDialogWindow : IDialogJumpDialogWindow
     {
         public IntPtr Handle { get; private set; } = IntPtr.Zero;
 
         // After jumping folder, file editor handle of Save / SaveAs file dialogs cannot be found anymore
         // So we need to cache the current tab and use the original handle
-        private IQuickSwitchDialogWindowTab _currentTab { get; set; } = null;
+        private IDialogJumpDialogWindowTab _currentTab { get; set; } = null;
 
         private readonly DialogType _dialogType;
 
@@ -84,7 +84,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
             _dialogType = dialogType;
         }
 
-        public IQuickSwitchDialogWindowTab GetCurrentTab()
+        public IDialogJumpDialogWindowTab GetCurrentTab()
         {
             return _currentTab ??= new WindowsDialogTab(Handle, _dialogType);
         }
@@ -95,7 +95,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
         }
     }
 
-    public class WindowsDialogTab : IQuickSwitchDialogWindowTab
+    public class WindowsDialogTab : IDialogJumpDialogWindowTab
     {
         #region Public Properties
 
@@ -148,7 +148,7 @@ namespace Flow.Launcher.Infrastructure.QuickSwitch.Models
         {
             if (auto)
             {
-                // Use legacy jump folder method for auto quick switch because file editor is default value.
+                // Use legacy jump folder method for auto dialog jump because file editor is default value.
                 // After setting path using file editor, we do not need to revert its value.
                 return JumpFolderWithFileEditor(path, false);
             }

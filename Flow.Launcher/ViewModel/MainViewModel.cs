@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -16,7 +16,7 @@ using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
-using Flow.Launcher.Infrastructure.QuickSwitch;
+using Flow.Launcher.Infrastructure.DialogJump;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -53,7 +53,7 @@ namespace Flow.Launcher.ViewModel
         private Task _resultsViewUpdateTask;
 
         private readonly IReadOnlyList<Result> _emptyResult = new List<Result>();
-        private readonly IReadOnlyList<QuickSwitchResult> _emptyQuickSwitchResult = new List<QuickSwitchResult>();
+        private readonly IReadOnlyList<DialogJumpResult> _emptyDialogJumpResult = new List<DialogJumpResult>();
 
         private readonly PluginMetadata _historyMetadata = new()
         {
@@ -405,16 +405,16 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void LoadContextMenu()
         {
-            // For quick switch and right click mode, we need to navigate to the path 
-            if (_isQuickSwitch && Settings.QuickSwitchResultBehaviour == QuickSwitchResultBehaviours.RightClick)
+            // For dialog jump and right click mode, we need to navigate to the path 
+            if (_isDialogJump && Settings.DialogJumpResultBehaviour == DialogJumpResultBehaviours.RightClick)
             {
                 if (SelectedResults.SelectedItem != null && DialogWindowHandle != nint.Zero)
                 {
                     var result = SelectedResults.SelectedItem.Result;
-                    if (result is QuickSwitchResult quickSwitchResult)
+                    if (result is DialogJumpResult dialogJumpResult)
                     {
                         Win32Helper.SetForegroundWindow(DialogWindowHandle);
-                        _ = Task.Run(() => QuickSwitch.JumpToPathAsync(DialogWindowHandle, quickSwitchResult.QuickSwitchPath));
+                        _ = Task.Run(() => DialogJump.JumpToPathAsync(DialogWindowHandle, dialogJumpResult.DialogJumpPath));
                     }
                 }
                 return;
@@ -498,17 +498,17 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
-            // For quick switch and left click mode, we need to navigate to the path
-            if (_isQuickSwitch && Settings.QuickSwitchResultBehaviour == QuickSwitchResultBehaviours.LeftClick)
+            // For dialog jump and left click mode, we need to navigate to the path
+            if (_isDialogJump && Settings.DialogJumpResultBehaviour == DialogJumpResultBehaviours.LeftClick)
             {
                 Hide();
 
                 if (SelectedResults.SelectedItem != null && DialogWindowHandle != nint.Zero)
                 {
-                    if (result is QuickSwitchResult quickSwitchResult)
+                    if (result is DialogJumpResult dialogJumpResult)
                     {
                         Win32Helper.SetForegroundWindow(DialogWindowHandle);
-                        _ = Task.Run(() => QuickSwitch.JumpToPathAsync(DialogWindowHandle, quickSwitchResult.QuickSwitchPath));
+                        _ = Task.Run(() => DialogJump.JumpToPathAsync(DialogWindowHandle, dialogJumpResult.DialogJumpPath));
                     }
                 }
             }
@@ -535,17 +535,17 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private static IReadOnlyList<Result> DeepCloneResults(IReadOnlyList<Result> results, bool isQuickSwitch, CancellationToken token = default)
+        private static IReadOnlyList<Result> DeepCloneResults(IReadOnlyList<Result> results, bool isDialogJump, CancellationToken token = default)
         {
             var resultsCopy = new List<Result>();
 
-            if (isQuickSwitch)
+            if (isDialogJump)
             {
                 foreach (var result in results.ToList())
                 {
                     if (token.IsCancellationRequested) break;
 
-                    var resultCopy = ((QuickSwitchResult)result).Clone();
+                    var resultCopy = ((DialogJumpResult)result).Clone();
                     resultsCopy.Add(resultCopy);
                 }
             }
@@ -1344,10 +1344,10 @@ namespace Flow.Launcher.ViewModel
             App.API.LogDebug(ClassName, $"Start query with ActionKeyword <{query.ActionKeyword}> and RawQuery <{query.RawQuery}>");
 
             var currentIsHomeQuery = query.IsHomeQuery;
-            var currentIsQuickSwitch = _isQuickSwitch;
+            var currentIsDialogJump = _isDialogJump;
 
-            // Do not show home page for quick switch window
-            if (currentIsHomeQuery && currentIsQuickSwitch)
+            // Do not show home page for dialog jump window
+            if (currentIsHomeQuery && currentIsDialogJump)
             {
                 ClearResults();
                 return;
@@ -1385,7 +1385,7 @@ namespace Flow.Launcher.ViewModel
             }
             else
             {
-                plugins = PluginManager.ValidPluginsForQuery(query, currentIsQuickSwitch);
+                plugins = PluginManager.ValidPluginsForQuery(query, currentIsDialogJump);
 
                 if (plugins.Count == 1)
                 {
@@ -1513,8 +1513,8 @@ namespace Flow.Launcher.ViewModel
                 // Task.Yield will force it to run in ThreadPool
                 await Task.Yield();
 
-                IReadOnlyList<Result> results = currentIsQuickSwitch ?
-                    await PluginManager.QueryQuickSwitchForPluginAsync(plugin, query, token) :
+                IReadOnlyList<Result> results = currentIsDialogJump ?
+                    await PluginManager.QueryDialogJumpForPluginAsync(plugin, query, token) :
                         currentIsHomeQuery ?
                             await PluginManager.QueryHomeForPluginAsync(plugin, query, token) :
                             await PluginManager.QueryForPluginAsync(plugin, query, token);
@@ -1524,12 +1524,12 @@ namespace Flow.Launcher.ViewModel
                 IReadOnlyList<Result> resultsCopy;
                 if (results == null)
                 {
-                    resultsCopy = currentIsQuickSwitch ? _emptyQuickSwitchResult : _emptyResult;
+                    resultsCopy = currentIsDialogJump ? _emptyDialogJumpResult : _emptyResult;
                 }
                 else
                 {
                     // make a copy of results to avoid possible issue that FL changes some properties of the records, like score, etc.
-                    resultsCopy = DeepCloneResults(results, currentIsQuickSwitch, token);
+                    resultsCopy = DeepCloneResults(results, currentIsDialogJump, token);
                 }
 
                 foreach (var result in resultsCopy)
@@ -1824,27 +1824,27 @@ namespace Flow.Launcher.ViewModel
 
         #endregion
 
-        #region Quick Switch
+        #region Dialog Jump
 
         public nint DialogWindowHandle { get; private set; } = nint.Zero;
 
-        private bool _isQuickSwitch = false;
+        private bool _isDialogJump = false;
 
         private bool _previousMainWindowVisibilityStatus;
 
-        private CancellationTokenSource _quickSwitchSource;
+        private CancellationTokenSource _dialogJumpSource;
 
         public void InitializeVisibilityStatus(bool visibilityStatus)
         {
             _previousMainWindowVisibilityStatus = visibilityStatus;
         }
 
-        public bool IsQuickSwitchWindowUnderDialog()
+        public bool IsDialogJumpWindowUnderDialog()
         {
-            return _isQuickSwitch && QuickSwitch.QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog;
+            return _isDialogJump && DialogJump.DialogJumpWindowPosition == DialogJumpWindowPositions.UnderDialog;
         }
 
-        public async Task SetupQuickSwitchAsync(nint handle)
+        public async Task SetupDialogJumpAsync(nint handle)
         {
             if (handle == nint.Zero) return;
 
@@ -1854,7 +1854,7 @@ namespace Flow.Launcher.ViewModel
             {
                 DialogWindowHandle = handle;
                 _previousMainWindowVisibilityStatus = MainWindowVisibilityStatus;
-                _isQuickSwitch = true;
+                _isDialogJump = true;
 
                 dialogWindowHandleChanged = true;
 
@@ -1862,14 +1862,14 @@ namespace Flow.Launcher.ViewModel
                 await Task.Delay(300);
             }
 
-            // If handle is cleared, which means the dialog is closed, clear quick switch state
+            // If handle is cleared, which means the dialog is closed, clear dialog jump state
             if (DialogWindowHandle == nint.Zero)
             {
-                _isQuickSwitch = false;
+                _isDialogJump = false;
                 return;
             }
 
-            // Initialize quick switch window
+            // Initialize dialog jump window
             if (MainWindowVisibilityStatus)
             {
                 if (dialogWindowHandleChanged)
@@ -1885,7 +1885,7 @@ namespace Flow.Launcher.ViewModel
             }
             else
             {
-                if (QuickSwitch.QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog)
+                if (DialogJump.DialogJumpWindowPosition == DialogJumpWindowPositions.UnderDialog)
                 {
                     // We wait for window to be reset before showing it because if window has results,
                     // showing it before resetting will cause flickering when results are clearing
@@ -1905,25 +1905,25 @@ namespace Flow.Launcher.ViewModel
                 }
             }
 
-            if (QuickSwitch.QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog)
+            if (DialogJump.DialogJumpWindowPosition == DialogJumpWindowPositions.UnderDialog)
             {
-                // Cancel the previous quick switch task
-                _quickSwitchSource?.Cancel();
+                // Cancel the previous dialog jump task
+                _dialogJumpSource?.Cancel();
 
                 // Create a new cancellation token source
-                _quickSwitchSource = new CancellationTokenSource();
+                _dialogJumpSource = new CancellationTokenSource();
 
                 _ = Task.Run(() =>
                 {
                     try
                     {
                         // Check task cancellation
-                        if (_quickSwitchSource.Token.IsCancellationRequested) return;
+                        if (_dialogJumpSource.Token.IsCancellationRequested) return;
 
                         // Check dialog handle
                         if (DialogWindowHandle == nint.Zero) return;
 
-                        // Wait 150ms to check if quick switch window gets the focus
+                        // Wait 150ms to check if dialog jump window gets the focus
                         var timeOut = !SpinWait.SpinUntil(() => !Win32Helper.IsForegroundWindow(DialogWindowHandle), 150);
                         if (timeOut) return;
 
@@ -1940,14 +1940,14 @@ namespace Flow.Launcher.ViewModel
 
 #pragma warning disable VSTHRD100 // Avoid async void methods
 
-        public async void ResetQuickSwitch()
+        public async void ResetDialogJump()
         {
             // Cache original dialog window handle
             var dialogWindowHandle = DialogWindowHandle;
 
-            // Reset the quick switch state
+            // Reset the dialog jump state
             DialogWindowHandle = nint.Zero;
-            _isQuickSwitch = false;
+            _isDialogJump = false;
 
             // If dialog window handle is not set, we should not reset the main window visibility
             if (dialogWindowHandle == nint.Zero) return;
@@ -1989,14 +1989,14 @@ namespace Flow.Launcher.ViewModel
 
 #pragma warning restore VSTHRD100 // Avoid async void methods
 
-        public void HideQuickSwitch()
+        public void HideDialogJump()
         {
             if (DialogWindowHandle != nint.Zero)
             {
-                if (QuickSwitch.QuickSwitchWindowPosition == QuickSwitchWindowPositions.UnderDialog)
+                if (DialogJump.DialogJumpWindowPosition == DialogJumpWindowPositions.UnderDialog)
                 {
                     // Warning: Main window is already in foreground
-                    // This is because if you click popup menus in other applications to hide quick switch window,
+                    // This is because if you click popup menus in other applications to hide dialog jump window,
                     // they can steal focus before showing main window
                     if (MainWindowVisibilityStatus)
                     {
@@ -2045,7 +2045,7 @@ namespace Flow.Launcher.ViewModel
                     Win32Helper.DWMSetCloakForWindow(mainWindow, false);
 
                     // Set clock and search icon opacity
-                    var opacity = (Settings.UseAnimation && !_isQuickSwitch) ? 0.0 : 1.0;
+                    var opacity = (Settings.UseAnimation && !_isDialogJump) ? 0.0 : 1.0;
                     ClockPanelOpacity = opacity;
                     SearchIconOpacity = opacity;
 
@@ -2117,7 +2117,7 @@ namespace Flow.Launcher.ViewModel
                 if (Application.Current?.MainWindow is MainWindow mainWindow)
                 {
                     // Set clock and search icon opacity
-                    var opacity = (Settings.UseAnimation && !_isQuickSwitch) ? 0.0 : 1.0;
+                    var opacity = (Settings.UseAnimation && !_isDialogJump) ? 0.0 : 1.0;
                     ClockPanelOpacity = opacity;
                     SearchIconOpacity = opacity;
 
@@ -2262,7 +2262,7 @@ namespace Flow.Launcher.ViewModel
                 if (disposing)
                 {
                     _updateSource?.Dispose();
-                    _quickSwitchSource?.Dispose();
+                    _dialogJumpSource?.Dispose();
                     _resultsUpdateChannelWriter?.Complete();
                     if (_resultsViewUpdateTask?.IsCompleted == true)
                     {

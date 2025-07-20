@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.QuickSwitch;
+using Flow.Launcher.Infrastructure.DialogJump;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -41,8 +41,8 @@ namespace Flow.Launcher.Core.Plugin
         private static IEnumerable<PluginPair> _resultUpdatePlugin;
         private static IEnumerable<PluginPair> _translationPlugins;
 
-        private static readonly List<QuickSwitchExplorerPair> _quickSwitchExplorerPlugins = new();
-        private static readonly List<QuickSwitchDialogPair> _quickSwitchDialogPlugins = new();
+        private static readonly List<DialogJumpExplorerPair> _dialogJumpExplorerPlugins = new();
+        private static readonly List<DialogJumpDialogPair> _dialogJumpDialogPlugins = new();
 
         /// <summary>
         /// Directories that will hold Flow Launcher plugin directory
@@ -191,20 +191,20 @@ namespace Flow.Launcher.Core.Plugin
             _resultUpdatePlugin = GetPluginsForInterface<IResultUpdated>();
             _translationPlugins = GetPluginsForInterface<IPluginI18n>();
 
-            // Initialize quick switch plugin pairs
-            foreach (var pair in GetPluginsForInterface<IQuickSwitchExplorer>())
+            // Initialize dialog jump plugin pairs
+            foreach (var pair in GetPluginsForInterface<IDialogJumpExplorer>())
             {
-                _quickSwitchExplorerPlugins.Add(new QuickSwitchExplorerPair
+                _dialogJumpExplorerPlugins.Add(new DialogJumpExplorerPair
                 {
-                    Plugin = (IQuickSwitchExplorer)pair.Plugin,
+                    Plugin = (IDialogJumpExplorer)pair.Plugin,
                     Metadata = pair.Metadata
                 });
             }
-            foreach (var pair in GetPluginsForInterface<IQuickSwitchDialog>())
+            foreach (var pair in GetPluginsForInterface<IDialogJumpDialog>())
             {
-                _quickSwitchDialogPlugins.Add(new QuickSwitchDialogPair
+                _dialogJumpDialogPlugins.Add(new DialogJumpDialogPair
                 {
-                    Plugin = (IQuickSwitchDialog)pair.Plugin,
+                    Plugin = (IDialogJumpDialog)pair.Plugin,
                     Metadata = pair.Metadata
                 });
             }
@@ -310,20 +310,20 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        public static ICollection<PluginPair> ValidPluginsForQuery(Query query, bool quickSwitch)
+        public static ICollection<PluginPair> ValidPluginsForQuery(Query query, bool dialogJump)
         {
             if (query is null)
                 return Array.Empty<PluginPair>();
 
             if (!NonGlobalPlugins.TryGetValue(query.ActionKeyword, out var plugin))
             {
-                if (quickSwitch)
-                    return GlobalPlugins.Where(p => p.Plugin is IAsyncQuickSwitch && !PluginModified(p.Metadata.ID)).ToList();
+                if (dialogJump)
+                    return GlobalPlugins.Where(p => p.Plugin is IAsyncDialogJump && !PluginModified(p.Metadata.ID)).ToList();
                 else
                     return GlobalPlugins.Where(p => !PluginModified(p.Metadata.ID)).ToList();
             }
 
-            if (quickSwitch && plugin.Plugin is not IAsyncQuickSwitch)
+            if (dialogJump && plugin.Plugin is not IAsyncDialogJump)
                 return Array.Empty<PluginPair>();
 
             if (API.PluginModified(plugin.Metadata.ID))
@@ -413,16 +413,16 @@ namespace Flow.Launcher.Core.Plugin
             }
             return results;
         }
-  
-        public static async Task<List<QuickSwitchResult>> QueryQuickSwitchForPluginAsync(PluginPair pair, Query query, CancellationToken token)
+
+        public static async Task<List<DialogJumpResult>> QueryDialogJumpForPluginAsync(PluginPair pair, Query query, CancellationToken token)
         {
-            var results = new List<QuickSwitchResult>();
+            var results = new List<DialogJumpResult>();
             var metadata = pair.Metadata;
 
             try
             {
                 var milliseconds = await API.StopwatchLogDebugAsync(ClassName, $"Cost for {metadata.Name}",
-                    async () => results = await ((IAsyncQuickSwitch)pair.Plugin).QueryQuickSwitchAsync(query, token).ConfigureAwait(false));
+                    async () => results = await ((IAsyncDialogJump)pair.Plugin).QueryDialogJumpAsync(query, token).ConfigureAwait(false));
 
                 token.ThrowIfCancellationRequested();
                 if (results == null)
@@ -438,7 +438,7 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch (Exception e)
             {
-                API.LogException(ClassName, $"Failed to query quick switch for plugin: {metadata.Name}", e);
+                API.LogException(ClassName, $"Failed to query dialog jump for plugin: {metadata.Name}", e);
                 return null;
             }
             return results;
@@ -519,14 +519,14 @@ namespace Flow.Launcher.Core.Plugin
             return _homePlugins.Where(p => !PluginModified(p.Metadata.ID)).Any(p => p.Metadata.ID == id);
         }
 
-        public static IList<QuickSwitchExplorerPair> GetQuickSwitchExplorers()
+        public static IList<DialogJumpExplorerPair> GetDialogJumpExplorers()
         {
-            return _quickSwitchExplorerPlugins.Where(p => !PluginModified(p.Metadata.ID)).ToList();
+            return _dialogJumpExplorerPlugins.Where(p => !PluginModified(p.Metadata.ID)).ToList();
         }
 
-        public static IList<QuickSwitchDialogPair> GetQuickSwitchDialogs()
+        public static IList<DialogJumpDialogPair> GetDialogJumpDialogs()
         {
-            return _quickSwitchDialogPlugins.Where(p => !PluginModified(p.Metadata.ID)).ToList();
+            return _dialogJumpDialogPlugins.Where(p => !PluginModified(p.Metadata.ID)).ToList();
         }
 
         public static bool ActionKeywordRegistered(string actionKeyword)

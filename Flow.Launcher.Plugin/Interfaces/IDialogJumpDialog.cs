@@ -5,9 +5,9 @@
 namespace Flow.Launcher.Plugin
 {
     /// <summary>
-    /// Interface for handling file dialog instances in QuickSwitch.
+    /// Interface for handling file dialog instances in DialogJump.
     /// </summary>
-    public interface IQuickSwitchDialog : IFeatures, IDisposable
+    public interface IDialogJumpDialog : IFeatures, IDisposable
     {
         /// <summary>
         /// Check if the foreground window is a file dialog instance.
@@ -18,13 +18,13 @@ namespace Flow.Launcher.Plugin
         /// <returns>
         /// The window if the foreground window is a file dialog instance. Null if it is not.
         /// </returns>
-        IQuickSwitchDialogWindow? CheckDialogWindow(IntPtr hwnd);
+        IDialogJumpDialogWindow? CheckDialogWindow(IntPtr hwnd);
     }
 
     /// <summary>
-    /// Interface for handling a specific file dialog window in QuickSwitch.
+    /// Interface for handling a specific file dialog window in DialogJump.
     /// </summary>
-    public interface IQuickSwitchDialogWindow : IDisposable
+    public interface IDialogJumpDialogWindow : IDisposable
     {
         /// <summary>
         /// The handle of the dialog window.
@@ -35,13 +35,13 @@ namespace Flow.Launcher.Plugin
         /// Get the current tab of the dialog window.
         /// </summary>
         /// <returns></returns>
-        IQuickSwitchDialogWindowTab GetCurrentTab();
+        IDialogJumpDialogWindowTab GetCurrentTab();
     }
 
     /// <summary>
-    /// Interface for handling a specific tab in a file dialog window in QuickSwitch.
+    /// Interface for handling a specific tab in a file dialog window in DialogJump.
     /// </summary>
-    public interface IQuickSwitchDialogWindowTab : IDisposable
+    public interface IDialogJumpDialogWindowTab : IDisposable
     {
         /// <summary>
         /// The handle of the dialog tab.
