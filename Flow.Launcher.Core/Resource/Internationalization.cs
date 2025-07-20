@@ -118,16 +118,8 @@ namespace Flow.Launcher.Core.Resource
                     var pluginLanguageDir = Path.Combine(dir, Folder);
                     if (!Directory.Exists(pluginLanguageDir)) continue;
 
-                    // Check if the language directory contains default language file
-                    if (File.Exists(Path.Combine(pluginLanguageDir, DefaultFile)))
-                    {
-                        // Add the plugin language directory to the list
-                        _languageDirectories.Add(pluginLanguageDir);
-                    }
-                    else
-                    {
-                        API.LogError(ClassName, $"Can't find default language file in path <{pluginLanguageDir}>");
-                    }
+                    // Check if the language directory contains default language file since it will be checked later
+                    _languageDirectories.Add(pluginLanguageDir);
                 }
             }
         }
