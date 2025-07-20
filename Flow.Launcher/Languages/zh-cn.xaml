@@ -17,20 +17,20 @@
     <system:String x:Key="failedToInitializePluginsMessage">插件：{0} - 无法加载并将被禁用，请联系插件创建者寻求帮助</system:String>
 
     <!--  Portable  -->
-    <system:String x:Key="restartToDisablePortableMode">Flow Launcher needs to restart to finish disabling portable mode, after the restart your portable data profile will be deleted and roaming data profile kept</system:String>
-    <system:String x:Key="restartToEnablePortableMode">Flow Launcher needs to restart to finish enabling portable mode, after the restart your roaming data profile will be deleted and portable data profile kept</system:String>
-    <system:String x:Key="moveToDifferentLocation">Flow Launcher has detected you enabled portable mode, would you like to move it to a different location?</system:String>
-    <system:String x:Key="shortcutsUninstallerCreated">Flow Launcher has detected you disabled portable mode, the relevant shortcuts and uninstaller entry have been created</system:String>
-    <system:String x:Key="userDataDuplicated">Flow Launcher detected your user data exists both in {0} and {1}. {2}{2}Please delete {1} in order to proceed. No changes have occurred.</system:String>
+    <system:String x:Key="restartToDisablePortableMode">Flow Launcher 需要重启以完成禁用便携模式。重新启动后，您的便携数据配置文件将被删除而漫游数据配置文件将被保留</system:String>
+    <system:String x:Key="restartToEnablePortableMode">Flow Launcher 需要重启以完成启用便携模式。重新启动后，您的漫游数据配置文件将被删除而便携数据配置文件将被保留</system:String>
+    <system:String x:Key="moveToDifferentLocation">Flow Launcher 检测到您启用了便携模式。您想要将其移动到别的位置吗？</system:String>
+    <system:String x:Key="shortcutsUninstallerCreated">Flow Launcher 检测到您已禁用便携模式。相关的快捷方式和卸载器条目已创建</system:String>
+    <system:String x:Key="userDataDuplicated">Flow Launcher 检测到您的用户数据存在于 {0} 和 {1} 中。 {2}{2}请删除 {1} 以便继续。目前将不会做任何更改。</system:String>
 
     <!--  Plugin Loader  -->
-    <system:String x:Key="pluginHasErrored">The following plugin has errored and cannot be loaded:</system:String>
-    <system:String x:Key="pluginsHaveErrored">The following plugins have errored and cannot be loaded:</system:String>
-    <system:String x:Key="referToLogs">Please refer to the logs for more information</system:String>
+    <system:String x:Key="pluginHasErrored">下列插件出现错误无法加载：</system:String>
+    <system:String x:Key="pluginsHaveErrored">下列插件发现错误无法加载：</system:String>
+    <system:String x:Key="referToLogs">请参阅日志以获取更多信息</system:String>
 
     <!--  Http  -->
-    <system:String x:Key="pleaseTryAgain">Please try again</system:String>
-    <system:String x:Key="parseProxyFailed">Unable to parse Http Proxy</system:String>
+    <system:String x:Key="pleaseTryAgain">请重试</system:String>
+    <system:String x:Key="parseProxyFailed">无法解析 Http 代理</system:String>
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">无法注册热键“{0}”。该热键可能正在被其他程序使用。更改为不同的热键，或退出其他程序。</system:String>
@@ -161,8 +161,8 @@
     <system:String x:Key="KoreanImeOpenLinkButton">打开</system:String>
     <system:String x:Key="KoreanImeRegistry">使用以前的韩语输入法</system:String>
     <system:String x:Key="KoreanImeRegistryTooltip">您可以直接从这里更改前韩语输入法设置</system:String>
-    <system:String x:Key="KoreanImeSettingChangeFailTitle">Failed to change Korean IME setting</system:String>
-    <system:String x:Key="KoreanImeSettingChangeFailSubTitle">Please check your system registry access or contact support.</system:String>
+    <system:String x:Key="KoreanImeSettingChangeFailTitle">更改韩语输入法设置失败</system:String>
+    <system:String x:Key="KoreanImeSettingChangeFailSubTitle">请检查您的系统注册表访问权限或联系支持。</system:String>
     <system:String x:Key="homePage">首页</system:String>
     <system:String x:Key="homePageToolTip">当查询文本为空时显示主页结果。</system:String>
     <system:String x:Key="historyResultsForHomePage">在主页中显示历史记录</system:String>
@@ -260,9 +260,9 @@
     <system:String x:Key="updateNoResultTitle">无可用更新</system:String>
     <system:String x:Key="updateNoResultSubtitle">所有插件都是最新</system:String>
     <system:String x:Key="updateAllPluginsTitle">插件更新可用</system:String>
-    <system:String x:Key="updateAllPluginsButtonContent">Update plugins</system:String>
+    <system:String x:Key="updateAllPluginsButtonContent">更新插件</system:String>
     <system:String x:Key="checkPluginUpdatesTooltip">检查插件更新</system:String>
-    <system:String x:Key="PluginsUpdateSuccessNoRestart">Plugins are successfully updated. Please restart Flow.</system:String>
+    <system:String x:Key="PluginsUpdateSuccessNoRestart">插件更新成功。请重新启动 Flow Launcher。</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">主题</system:String>
@@ -590,9 +590,9 @@
     <system:String x:Key="update_flowlauncher_update_update_description">更新日志</system:String>
 
     <!--  Plugin Update Window  -->
-    <system:String x:Key="restartAfterUpdating">Restart Flow Launcher after updating plugins</system:String>
-    <system:String x:Key="updatePluginCheckboxContent">{0}: Update from v{1} to v{2}</system:String>
-    <system:String x:Key="updatePluginNoSelected">No plugin selected</system:String>
+    <system:String x:Key="restartAfterUpdating">更新插件后重启 Flow Launcher</system:String>
+    <system:String x:Key="updatePluginCheckboxContent">{0}: 更新从 v{1} 到 v{2}</system:String>
+    <system:String x:Key="updatePluginNoSelected">没有选择插件</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">跳过</system:String>
