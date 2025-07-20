@@ -15,4 +15,6 @@
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">Exécuter en tant qu'administrateur</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_copy">Copier la commande</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_history">Afficher uniquement le nombre de commandes les plus utilisées :</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_command_not_found">Command not found: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_error_running_command">Error running the command: {0}</system:String>
 </ResourceDictionary>
