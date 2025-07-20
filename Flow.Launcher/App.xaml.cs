@@ -267,7 +267,7 @@ namespace Flow.Launcher
                     // but if it fails (permissions, etc) then don't keep retrying
                     // this also gives the user a visual indication in the Settings widget
                     _settings.StartFlowLauncherOnSystemStartup = false;
-                    API.ShowMsg(API.GetTranslation("setAutoStartFailed"), e.Message);
+                    API.ShowMsgError(API.GetTranslation("setAutoStartFailed"), e.Message);
                 }
             }
         }
