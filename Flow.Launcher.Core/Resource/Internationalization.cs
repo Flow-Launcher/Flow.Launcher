@@ -170,7 +170,7 @@ namespace Flow.Launcher.Core.Resource
         private static Language GetLanguageByLanguageCode(string languageCode)
         {
             var lowercase = languageCode.ToLower();
-            var language = AvailableLanguages.GetAvailableLanguages().FirstOrDefault(o => o.LanguageCode.Equals(lowercase, StringComparison.CurrentCultureIgnoreCase));
+            var language = AvailableLanguages.GetAvailableLanguages().FirstOrDefault(o => o.LanguageCode.Equals(lowercase, StringComparison.OrdinalIgnoreCase));
             if (language == null)
             {
                 API.LogError(ClassName, $"Language code can't be found <{languageCode}>");
