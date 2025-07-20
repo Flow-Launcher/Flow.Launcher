@@ -338,11 +338,9 @@ namespace Flow.Launcher.Plugin.Sys
                         var result = PInvoke.SHEmptyRecycleBin(new(), string.Empty, 0);
                         if (result != HRESULT.S_OK && result != HRESULT.E_UNEXPECTED)
                         {
-                            _context.API.ShowMsgBox("Failed to empty the recycle bin. This might happen if:\n" +
-                                            "- A file in the recycle bin is in use\n" +
-                                            "- You don't have permission to delete some items\n" +
-                                            "Please close any applications that might be using these files and try again.",
-                                "Error",
+                            _context.API.ShowMsgBox(
+                                string.Format(_context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_empty_recycle_bin_failed"), Environment.NewLine),
+                                _context.API.GetTranslation("flowlauncher_plugin_sys_dlgtitle_error"),
                                 MessageBoxButton.OK, MessageBoxImage.Error);
                         }
 
