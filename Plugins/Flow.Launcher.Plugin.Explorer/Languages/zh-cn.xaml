@@ -130,11 +130,11 @@
     <system:String x:Key="plugin_explorer_show_contextmenu_title">显示 Windows 上下文菜单</system:String>
     <system:String x:Key="plugin_explorer_openwith">打开方式</system:String>
     <system:String x:Key="plugin_explorer_openwith_subtitle">选择要打开的程序</system:String>
-    <system:String x:Key="plugin_explorer_fail_to_delete">Fail to delete {0}</system:String>
-    <system:String x:Key="plugin_explorer_file_not_found">File not found: {0}</system:String>
-    <system:String x:Key="plugin_explorer_fail_to_open">Fail to open {0}</system:String>
-    <system:String x:Key="plugin_explorer_fail_to_set_text">Fail to set text in clipboard</system:String>
-    <system:String x:Key="plugin_explorer_fail_to_set_files">Fail to set files/folders in clipboard</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_delete">无法删除 {0}</system:String>
+    <system:String x:Key="plugin_explorer_file_not_found">未找到文件：{0}</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_open">无法打开 {0}</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_set_text">无法复制文本到剪切板 </system:String>
+    <system:String x:Key="plugin_explorer_fail_to_set_files">无法复制文件/文件夹到剪切板 </system:String>
 
     <!--  Special Results  -->
     <system:String x:Key="plugin_explorer_diskfreespace">{0} 可用，共 {1}</system:String>
