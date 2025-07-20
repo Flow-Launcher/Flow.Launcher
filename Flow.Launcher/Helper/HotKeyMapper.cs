@@ -139,6 +139,11 @@ internal static class HotKeyMapper
         foreach (var hotkey in list)
         {
             _settings.RegisteredHotkeys.Add(hotkey);
+            if (hotkey.RegisteredType == RegisteredHotkeyType.DialogJump && !_settings.EnableDialogJump)
+            {
+                // If dialog jump is disabled, do not register the hotkey
+                continue;
+            }
             SetHotkey(hotkey);
         }
 
@@ -158,7 +163,10 @@ internal static class HotKeyMapper
                 ChangeRegisteredHotkey(RegisteredHotkeyType.Toggle, _settings.Hotkey);
                 break;
             case nameof(_settings.DialogJumpHotkey):
-                ChangeRegisteredHotkey(RegisteredHotkeyType.DialogJump, _settings.DialogJumpHotkey);
+                ChangeRegisteredHotkey(RegisteredHotkeyType.DialogJump, _settings.DialogJumpHotkey, _settings.EnableDialogJump);
+                break;
+            case nameof(_settings.EnableDialogJump):
+                ChangeRegisteredHotkey(RegisteredHotkeyType.DialogJump, _settings.DialogJumpHotkey, _settings.EnableDialogJump);
                 break;
 
             // Flow Launcher window hotkeys
@@ -592,22 +600,19 @@ internal static class HotKeyMapper
 
     #region Hotkey Changing
 
-    private static void ChangeRegisteredHotkey(RegisteredHotkeyType registeredType, string newHotkeyStr)
+    private static void ChangeRegisteredHotkey(RegisteredHotkeyType registeredType, string newHotkeyStr, bool setHotkey = true)
     {
         var newHotkey = new HotkeyModel(newHotkeyStr);
-        ChangeRegisteredHotkey(registeredType, newHotkey);
+        ChangeRegisteredHotkey(registeredType, newHotkey, setHotkey);
     }
 
-    private static void ChangeRegisteredHotkey(RegisteredHotkeyType registeredType, HotkeyModel newHotkey)
+    private static void ChangeRegisteredHotkey(RegisteredHotkeyType registeredType, HotkeyModel newHotkey, bool setHotkey = true)
     {
         // Find the old registered hotkey data item
         var registeredHotkeyData = _settings.RegisteredHotkeys.FirstOrDefault(h => h.RegisteredType == registeredType);
 
         // If it is not found, return
-        if (registeredHotkeyData == null)
-        {
-            return;
-        }
+        if (registeredHotkeyData == null) return;
 
         // Remove the old hotkey
         RemoveHotkey(registeredHotkeyData);
@@ -616,7 +621,10 @@ internal static class HotKeyMapper
         registeredHotkeyData.SetHotkey(newHotkey);
 
         // Set the new hotkey
-        SetHotkey(registeredHotkeyData);
+        if (setHotkey)
+        {
+            SetHotkey(registeredHotkeyData);
+        }
     }
 
     #endregion

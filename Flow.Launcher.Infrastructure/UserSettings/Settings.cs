@@ -531,7 +531,19 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         };
 
-        public bool EnableDialogJump { get; set; } = true;
+        private bool _enableDialogJump = true;
+        public bool EnableDialogJump
+        {
+            get => _enableDialogJump;
+            set
+            {
+                if (_enableDialogJump != value)
+                {
+                    _enableDialogJump = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public bool AutoDialogJump { get; set; } = false;
 
