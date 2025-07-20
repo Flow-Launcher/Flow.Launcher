@@ -404,6 +404,8 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\app.png",
                     Action = c =>
                     {
+                        // Hide the window first then open setting dialog because main window can be topmost window which will still display on top of the setting dialog for a while
+                        _context.API.HideMainWindow();
                         _context.API.OpenSettingDialog();
                         return true;
                     }
