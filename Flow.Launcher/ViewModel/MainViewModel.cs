@@ -1333,7 +1333,7 @@ namespace Flow.Launcher.ViewModel
 
         private async Task QueryResultsAsync(bool searchDelay, bool isReQuery = false, bool reSelect = true)
         {
-            _updateSource?.Cancel();
+            _updateSource?.CancelAsync();
             _progressQuery = null;
 
             App.API.LogDebug(ClassName, $"Start query with text: <{QueryText}>");
@@ -1425,16 +1425,16 @@ namespace Flow.Launcher.ViewModel
                 }*/
 
                 _ = Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
+                {
+                    // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
+                    if (_progressQuery != null && _progressQuery == query)
                     {
-                        // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
-                        if (_progressQuery != null && _progressQuery == query)
-                        {
-                            ProgressBarVisibility = Visibility.Visible;
-                        }
-                    },
-                    currentCancellationToken,
-                    TaskContinuationOptions.NotOnCanceled,
-                    TaskScheduler.Default);
+                        ProgressBarVisibility = Visibility.Visible;
+                    }
+                },
+                currentCancellationToken,
+                TaskContinuationOptions.NotOnCanceled,
+                TaskScheduler.Default);
 
                 // plugins are ICollection, meaning LINQ will get the Count and preallocate Array
 
@@ -1927,7 +1927,7 @@ namespace Flow.Launcher.ViewModel
             if (DialogJump.DialogJumpWindowPosition == DialogJumpWindowPositions.UnderDialog)
             {
                 // Cancel the previous Dialog Jump task
-                _dialogJumpSource?.Cancel();
+                _dialogJumpSource?.CancelAsync();
 
                 // Create a new cancellation token source
                 _dialogJumpSource = new CancellationTokenSource();
