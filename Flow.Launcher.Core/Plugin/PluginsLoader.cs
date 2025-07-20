@@ -126,7 +126,7 @@ namespace Flow.Launcher.Core.Plugin
 
                 _ = Task.Run(() =>
                 {
-                    Ioc.Default.GetRequiredService<IPublicAPI>().ShowMsgBox($"{errorMessage}{Environment.NewLine}{Environment.NewLine}" +
+                    API.ShowMsgBox($"{errorMessage}{Environment.NewLine}{Environment.NewLine}" +
                                     $"{errorPluginString}{Environment.NewLine}{Environment.NewLine}" +
                                     $"Please refer to the logs for more information", "",
                         MessageBoxButton.OK, MessageBoxImage.Warning);
