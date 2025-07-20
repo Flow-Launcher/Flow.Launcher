@@ -86,6 +86,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string OpenHistoryHotkey { get; set; } = $"Ctrl+H";
         public string CycleHistoryUpHotkey { get; set; } = $"{KeyConstant.Alt} + Up";
         public string CycleHistoryDownHotkey { get; set; } = $"{KeyConstant.Alt} + Down";
+        public string DialogJumpHotkey { get; set; } = $"{KeyConstant.Alt} + G";
 
         private string _language = Constant.SystemLanguageCode;
         public string Language
@@ -323,6 +324,21 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         };
 
+        public bool EnableDialogJump { get; set; } = true;
+
+        public bool AutoDialogJump { get; set; } = false;
+
+        public bool ShowDialogJumpWindow { get; set; } = false;
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public DialogJumpWindowPositions DialogJumpWindowPosition { get; set; } = DialogJumpWindowPositions.UnderDialog;
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public DialogJumpResultBehaviours DialogJumpResultBehaviour { get; set; } = DialogJumpResultBehaviours.LeftClick;
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public DialogJumpFileResultBehaviours DialogJumpFileResultBehaviour { get; set; } = DialogJumpFileResultBehaviours.FullPath;
+
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public LOGLEVEL LogLevel { get; set; } = LOGLEVEL.INFO;
 
@@ -546,6 +562,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                     list.Add(new(CycleHistoryUpHotkey, "CycleHistoryUpHotkey", () => CycleHistoryUpHotkey = ""));
                 if (!string.IsNullOrEmpty(CycleHistoryDownHotkey))
                     list.Add(new(CycleHistoryDownHotkey, "CycleHistoryDownHotkey", () => CycleHistoryDownHotkey = ""));
+                if (!string.IsNullOrEmpty(DialogJumpHotkey))
+                    list.Add(new(DialogJumpHotkey, "dialogJumpHotkey", () => DialogJumpHotkey = ""));
 
                 // Custom Query Hotkeys
                 foreach (var customPluginHotkey in CustomPluginHotkeys)
@@ -658,5 +676,24 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         XingKongJianDao,
         DaNiu,
         XiaoLang
+    }
+
+    public enum DialogJumpWindowPositions
+    {
+        UnderDialog,
+        FollowDefault
+    }
+
+    public enum DialogJumpResultBehaviours
+    {
+        LeftClick,
+        RightClick
+    }
+
+    public enum DialogJumpFileResultBehaviours
+    {
+        FullPath,
+        FullPathOpen,
+        Directory
     }
 }
