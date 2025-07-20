@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
-using System.Security.Permissions;
 
 namespace Peter
 {
@@ -343,7 +341,7 @@ namespace Peter
                 return null;
             }
 
-            IShellFolder oParentFolder = GetParentFolder(arrFI[0].Parent.FullName);
+            IShellFolder oParentFolder = GetParentFolder(arrFI[0].Parent!.FullName);
             if (null == oParentFolder)
             {
                 return null;
@@ -1537,7 +1535,7 @@ namespace Peter
                 m_hookType,
                 m_filterFunc,
                 IntPtr.Zero,
-                (int)AppDomain.GetCurrentThreadId());
+                Environment.CurrentManagedThreadId);
         }
         // ************************************************************************
 

@@ -1,118 +1,128 @@
 ﻿using System;
 using System.IO;
-using System.Reflection;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
+using Flow.Launcher.Plugin.SharedCommands;
+using MemoryPack;
+
+#nullable enable
 
 namespace Flow.Launcher.Infrastructure.Storage
 {
-#pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete.
     /// <summary>
     /// Stroage object using binary data
     /// Normally, it has better performance, but not readable
     /// </summary>
-    public class BinaryStorage<T>
+    /// <remarks>
+    /// It utilizes MemoryPack, which means the object must be MemoryPackSerializable <see href="https://github.com/Cysharp/MemoryPack"/>
+    /// </remarks>
+    public class BinaryStorage<T> : ISavable
     {
-        public BinaryStorage(string filename)
-        {
-            const string directoryName = "Cache";
-            var directoryPath = Path.Combine(DataLocation.DataDirectory(), directoryName);
-            Helper.ValidateDirectory(directoryPath);
+        private static readonly string ClassName = "BinaryStorage";
 
-            const string fileSuffix = ".cache";
-            FilePath = Path.Combine(directoryPath, $"{filename}{fileSuffix}");
+        protected T? Data;
+
+        public const string FileSuffix = ".cache";
+
+        protected string FilePath { get; init; } = null!;
+
+        protected string DirectoryPath { get; init; } = null!;
+
+        // Let the derived class to set the file path
+        protected BinaryStorage()
+        {
         }
 
-        public string FilePath { get; }
-
-        public T TryLoad(T defaultData)
+        public BinaryStorage(string filename)
         {
+            DirectoryPath = DataLocation.CacheDirectory;
+            FilesFolders.ValidateDirectory(DirectoryPath);
+
+            FilePath = Path.Combine(DirectoryPath, $"{filename}{FileSuffix}");
+        }
+
+        // Let the old Program plugin get this constructor
+        [Obsolete("This constructor is obsolete. Use BinaryStorage(string filename) instead.")]
+        public BinaryStorage(string filename, string directoryPath = null!)
+        {
+            DirectoryPath = directoryPath ?? DataLocation.CacheDirectory;
+            FilesFolders.ValidateDirectory(DirectoryPath);
+
+            FilePath = Path.Combine(DirectoryPath, $"{filename}{FileSuffix}");
+        }
+
+        public async ValueTask<T> TryLoadAsync(T defaultData)
+        {
+            if (Data != null) return Data;
+
             if (File.Exists(FilePath))
             {
                 if (new FileInfo(FilePath).Length == 0)
                 {
-                    Log.Error($"|BinaryStorage.TryLoad|Zero length cache file <{FilePath}>");
-                    Save(defaultData);
-                    return defaultData;
+                    Log.Error(ClassName, $"Zero length cache file <{FilePath}>");
+                    Data = defaultData;
+                    await SaveAsync();
                 }
 
-                using (var stream = new FileStream(FilePath, FileMode.Open))
-                {
-                    var d = Deserialize(stream, defaultData);
-                    return d;
-                }
+                await using var stream = new FileStream(FilePath, FileMode.Open);
+                Data = await DeserializeAsync(stream, defaultData);
             }
             else
             {
-                Log.Info("|BinaryStorage.TryLoad|Cache file not exist, load default data");
-                Save(defaultData);
-                return defaultData;
+                Log.Info(ClassName, "Cache file not exist, load default data");
+                Data = defaultData;
+                await SaveAsync();
             }
+
+            return Data;
         }
 
-        private T Deserialize(FileStream stream, T defaultData)
+        private static async ValueTask<T> DeserializeAsync(Stream stream, T defaultData)
         {
-            //http://stackoverflow.com/questions/2120055/binaryformatter-deserialize-gives-serializationexception
-            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-            BinaryFormatter binaryFormatter = new BinaryFormatter
-            {
-                AssemblyFormat = FormatterAssemblyStyle.Simple
-            };
-
             try
             {
-                var t = ((T)binaryFormatter.Deserialize(stream)).NonNull();
-                return t;
+                var t = await MemoryPackSerializer.DeserializeAsync<T>(stream);
+                return t ?? defaultData;
             }
-            catch (System.Exception e)
+            catch (System.Exception)
             {
-                Log.Exception($"|BinaryStorage.Deserialize|Deserialize error for file <{FilePath}>", e);
+                // Log.Exception($"|BinaryStorage.Deserialize|Deserialize error for file <{FilePath}>", e);
                 return defaultData;
             }
-            finally
-            {
-                AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
-            }
         }
 
-        private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        public void Save()
         {
-            Assembly ayResult = null;
-            string sShortAssemblyName = args.Name.Split(',')[0];
-            Assembly[] ayAssemblies = AppDomain.CurrentDomain.GetAssemblies();
-            foreach (Assembly ayAssembly in ayAssemblies)
-            {
-                if (sShortAssemblyName == ayAssembly.FullName.Split(',')[0])
-                {
-                    ayResult = ayAssembly;
-                    break;
-                }
-            }
-            return ayResult;
+            // User may delete the directory, so we need to check it
+            FilesFolders.ValidateDirectory(DirectoryPath);
+
+            var serialized = MemoryPackSerializer.Serialize(Data);
+            File.WriteAllBytes(FilePath, serialized);
         }
 
-        public void Save(T data)
+        public async ValueTask SaveAsync()
         {
-            using (var stream = new FileStream(FilePath, FileMode.Create))
-            {
-                BinaryFormatter binaryFormatter = new BinaryFormatter
-                {
-                    AssemblyFormat = FormatterAssemblyStyle.Simple
-                };
+            await SaveAsync(Data.NonNull());
+        }
 
-                try
-                {
-                    binaryFormatter.Serialize(stream, data);
-                }
-                catch (SerializationException e)
-                {
-                    Log.Exception($"|BinaryStorage.Save|serialize error for file <{FilePath}>", e);
-                }
-            }
+        // ImageCache need to convert data into concurrent dictionary for usage,
+        // so we would better to clear the data
+        public void ClearData()
+        {
+            Data = default;
+        }
+
+        // ImageCache storages data in its class,
+        // so we need to pass it to SaveAsync
+        public async ValueTask SaveAsync(T data)
+        {
+            // User may delete the directory, so we need to check it
+            FilesFolders.ValidateDirectory(DirectoryPath);
+
+            await using var stream = new FileStream(FilePath, FileMode.Create);
+            await MemoryPackSerializer.SerializeAsync(stream, data);
         }
     }
-#pragma warning restore SYSLIB0011
 }

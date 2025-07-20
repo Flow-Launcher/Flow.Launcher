@@ -3,53 +3,38 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace Flow.Launcher.Converters
-{
-    internal class BoolToIMEConversionModeConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is bool v)
-            {
-                if (v)
-                {
-                    return ImeConversionModeValues.Alphanumeric;
-                }
-                else
-                {
-                    return ImeConversionModeValues.DoNotCare;
-                }
-            }
-            return ImeConversionModeValues.DoNotCare;
-        }
+namespace Flow.Launcher.Converters;
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+internal class BoolToIMEConversionModeConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return value switch
         {
-            throw new NotImplementedException();
-        }
+            true => ImeConversionModeValues.Alphanumeric,
+            _ => ImeConversionModeValues.DoNotCare
+        };
     }
 
-    internal class BoolToIMEStateConverter : IValueConverter
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is bool v)
-            {
-                if (v)
-                {
-                    return InputMethodState.Off;
-                }
-                else
-                {
-                    return InputMethodState.DoNotCare;
-                }
-            }
-            return InputMethodState.DoNotCare;
-        }
+        throw new NotImplementedException();
+    }
+}
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+internal class BoolToIMEStateConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return value switch
         {
-            throw new NotImplementedException();
-        }
+            true => InputMethodState.Off,
+            _ => InputMethodState.DoNotCare
+        };
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
     }
 }

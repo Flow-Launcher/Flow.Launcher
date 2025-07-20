@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="Flow.Launcher.Resources.Controls.CardGroup"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:cc="clr-namespace:Flow.Launcher.Resources.Controls"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance cc:CardGroup}"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style TargetType="cc:Card" x:Key="FirstStyle">
+            <Setter Property="cc:CardGroup.Position" Value="First" />
+        </Style>
+        <Style TargetType="cc:Card" x:Key="MiddleStyle">
+            <Setter Property="cc:CardGroup.Position" Value="Middle" />
+        </Style>
+        <Style TargetType="cc:Card" x:Key="LastStyle">
+            <Setter Property="cc:CardGroup.Position" Value="Last" />
+        </Style>
+
+        <cc:CardGroupCardStyleSelector
+            x:Key="CardStyleSelector"
+            FirstStyle="{StaticResource FirstStyle}"
+            MiddleStyle="{StaticResource MiddleStyle}"
+            LastStyle="{StaticResource LastStyle}" />
+    </UserControl.Resources>
+    <Border Background="{DynamicResource Color00B}" BorderBrush="{DynamicResource Color03B}" BorderThickness="1"
+            CornerRadius="5">
+        <ItemsControl ItemsSource="{Binding Content, RelativeSource={RelativeSource AncestorType=cc:CardGroup}}"
+                      ItemContainerStyleSelector="{StaticResource CardStyleSelector}" />
+    </Border>
+</UserControl>

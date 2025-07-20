@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net9.0-windows</TargetFramework>
     <ProjectGuid>{0B9DE348-9361-4940-ADB6-F5953BFFCCEC}</ProjectGuid>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Flow.Launcher.Plugin.Sys</RootNamespace>
@@ -12,8 +12,9 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>portable</DebugType>
@@ -24,7 +25,7 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
@@ -39,7 +40,7 @@
     <ProjectReference Include="..\..\Flow.Launcher.Infrastructure\Flow.Launcher.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <Content Include="Languages\*.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -50,10 +51,17 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  
+
   <ItemGroup>
     <None Include="plugin.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.106">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 </Project>

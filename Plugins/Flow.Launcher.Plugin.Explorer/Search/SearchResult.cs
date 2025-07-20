@@ -1,5 +1,3 @@
-using System;
-
 namespace Flow.Launcher.Plugin.Explorer.Search
 {
     public record struct SearchResult

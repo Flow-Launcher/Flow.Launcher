@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin.Program.Programs;
 

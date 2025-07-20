@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Flow.Launcher.Core.Resource
 {
@@ -23,8 +23,12 @@ namespace Flow.Launcher.Core.Resource
         public static Language Spanish_LatinAmerica = new Language("es-419", "Spanish (Latin America)");
         public static Language Italian = new Language("it", "Italiano");
         public static Language Norwegian_Bokmal = new Language("nb-NO", "Norsk Bokmål");
-        public static Language Slovak = new Language("sk", "Slovenský");
+        public static Language Slovak = new Language("sk", "Slovenčina");
         public static Language Turkish = new Language("tr", "Türkçe");
+        public static Language Czech = new Language("cs", "čeština");
+        public static Language Arabic = new Language("ar", "اللغة العربية");
+        public static Language Vietnamese = new Language("vi-vn", "Tiếng Việt");
+        public static Language Hebrew = new Language("he", "עברית");
 
         public static List<Language> GetAvailableLanguages()
         {
@@ -50,9 +54,46 @@ namespace Flow.Launcher.Core.Resource
                 Italian,
                 Norwegian_Bokmal,
                 Slovak,
-                Turkish
+                Turkish,
+                Czech,
+                Arabic,
+                Vietnamese,
+                Hebrew
             };
             return languages;
+        }
+
+        public static string GetSystemTranslation(string languageCode)
+        {
+            return languageCode switch
+            {
+                "en" => "System",
+                "zh-cn" => "系统",
+                "zh-tw" => "系統",
+                "uk-UA" => "Система",
+                "ru" => "Система",
+                "fr" => "Système",
+                "ja" => "システム",
+                "nl" => "Systeem",
+                "pl" => "System",
+                "da" => "System",
+                "de" => "System",
+                "ko" => "시스템",
+                "sr" => "Систем",
+                "pt-pt" => "Sistema",
+                "pt-br" => "Sistema",
+                "es" => "Sistema",
+                "es-419" => "Sistema",
+                "it" => "Sistema",
+                "nb-NO" => "System",
+                "sk" => "Systém",
+                "tr" => "Sistem",
+                "cs" => "Systém",
+                "ar" => "النظام",
+                "vi-vn" => "Hệ thống",
+                "he" => "מערכת",
+                _ => "System",
+            };
         }
     }
 }

@@ -58,7 +58,7 @@ dotnet_style_prefer_conditional_expression_over_return = true:silent
 ###############################
 # Style Definitions
 dotnet_naming_style.pascal_case_style.capitalization             = pascal_case
-# Use PascalCase for constant fields  
+# Use PascalCase for constant fields
 dotnet_naming_rule.constant_fields_should_be_pascal_case.severity = suggestion
 dotnet_naming_rule.constant_fields_should_be_pascal_case.symbols  = constant_fields
 dotnet_naming_rule.constant_fields_should_be_pascal_case.style = pascal_case_style
@@ -134,7 +134,7 @@ csharp_preserve_single_line_statements = true
 csharp_preserve_single_line_blocks = true
 csharp_using_directive_placement = outside_namespace:silent
 csharp_prefer_simple_using_statement = true:suggestion
-csharp_style_namespace_declarations = block_scoped:silent
+csharp_style_namespace_declarations = file_scoped:silent
 csharp_style_prefer_method_group_conversion = true:silent
 csharp_style_expression_bodied_lambdas = true:silent
 csharp_style_expression_bodied_local_functions = false:silent

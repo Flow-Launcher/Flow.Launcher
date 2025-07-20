@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
-
-namespace Flow.Launcher.Plugin
+﻿namespace Flow.Launcher.Plugin
 {
     /// <summary>
     /// Text with FontFamily specified

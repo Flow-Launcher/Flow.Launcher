@@ -11,7 +11,6 @@
         BasedOn="{StaticResource BaseGlyphStyle}"
         TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#c6c8cb" />
-        <Setter Property="Margin" Value="-4,0,0,0" />
     </Style>
     <Style
         x:Key="QueryBoxStyle"

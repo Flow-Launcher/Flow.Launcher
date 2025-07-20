@@ -158,7 +158,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="AddHardware" xml:space="preserve">
-    <value>Add Hardware</value>
+    <value>Aggiungi Hardware</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AddRemovePrograms" xml:space="preserve">
@@ -254,7 +254,7 @@
     <value>Orologio e area geografica</value>
   </data>
   <data name="AreaControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>Pannello di Controllo</value>
   </data>
   <data name="AreaCortana" xml:space="preserve">
     <value>Cortana</value>
@@ -275,7 +275,7 @@
     <value>Hardware e audio</value>
   </data>
   <data name="AreaHomePage" xml:space="preserve">
-    <value>Home page</value>
+    <value>Pagina iniziale</value>
   </data>
   <data name="AreaMixedReality" xml:space="preserve">
     <value>Realtà mista</value>
@@ -336,7 +336,7 @@
     <comment>Area Device</comment>
   </data>
   <data name="Background" xml:space="preserve">
-    <value>Background</value>
+    <value>Sfondo</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="BackgroundApps" xml:space="preserve">
@@ -456,7 +456,7 @@
     <comment>Area Personalization</comment>
   </data>
   <data name="Command" xml:space="preserve">
-    <value>Command</value>
+    <value>Comando</value>
     <comment>The command to direct start a setting</comment>
   </data>
   <data name="ConnectedDevices" xml:space="preserve">
@@ -468,7 +468,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="ControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>Pannello di Controllo</value>
     <comment>Type of the setting is a "(legacy) Control Panel setting"</comment>
   </data>
   <data name="CopyCommand" xml:space="preserve">
@@ -837,7 +837,7 @@
     <value>Modalità chiara</value>
   </data>
   <data name="Location" xml:space="preserve">
-    <value>Location</value>
+    <value>Posizione</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="LockScreen" xml:space="preserve">
@@ -876,7 +876,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="MicrosoftMailPostOffice" xml:space="preserve">
-    <value>Microsoft Mail Post Office</value>
+    <value>Ufficio Postale Microsoft</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="mlcfg32.cpl" xml:space="preserve">
@@ -1423,7 +1423,7 @@
     <value>Digitazione vocale</value>
   </data>
   <data name="Start" xml:space="preserve">
-    <value>Start</value>
+    <value>Avvio</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="StartPlaces" xml:space="preserve">
@@ -1733,7 +1733,7 @@
     <comment>Area UserAccounts</comment>
   </data>
   <data name="Zoom" xml:space="preserve">
-    <value>Zoom</value>
+    <value>Ingrandisci</value>
     <comment>Mean zooming of things via a magnifier</comment>
   </data>
   <data name="ChangeDeviceInstallationSettings" xml:space="preserve">
@@ -2503,7 +2503,7 @@
     <value>Get more features with a new edition of Windows</value>
   </data>
   <data name="AppControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>Pannello di Controllo</value>
   </data>
   <data name="TaskLink" xml:space="preserve">
     <value>TaskLink</value>

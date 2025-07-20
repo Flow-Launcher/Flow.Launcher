@@ -1,0 +1,91 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - dev
+      - master
+  pull_request:
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    env:
+      FlowVersion: 1.20.2
+      NUGET_CERT_REVOCATION_MODE: offline
+      BUILD_NUMBER: ${{ github.run_number }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set Flow.Launcher.csproj version
+        id: update
+        uses: vers-one/dotnet-project-version-updater@v1.7
+        with:
+          file: |
+            "**/SolutionAssemblyInfo.cs"
+          version: ${{ env.FlowVersion }}.${{ env.BUILD_NUMBER }}
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+#          cache: true
+#          cache-dependency-path: |
+#            Flow.Launcher/packages.lock.json
+#            Flow.Launcher.Core/packages.lock.json            
+#            Flow.Launcher.Infrastructure/packages.lock.json
+#            Flow.Launcher.Plugin/packages.lock.json
+      - name: Install vpk
+        run: dotnet tool install -g vpk
+      - name: Restore dependencies
+        run: nuget restore
+      - name: Build
+        run: dotnet build --no-restore -c Release
+      - name: Initialize Service
+        run: |
+          sc config WSearch start= auto # Starts Windows Search service- Needed for running ExplorerTest
+          net start WSearch
+      - name: Test
+        run: dotnet test --no-build --verbosity normal -c Release
+      - name: Perform post_build tasks
+        shell: powershell
+        run: .\Scripts\post_build.ps1
+      - name: Upload Plugin Nupkg
+        uses: actions/upload-artifact@v4
+        with:
+          name: Plugin nupkg
+          path: |
+            Output\Release\Flow.Launcher.Plugin.*.nupkg
+          compression-level: 0
+      - name: Upload Setup
+        uses: actions/upload-artifact@v4
+        with:
+          name: Flow Installer
+          path: |
+            Output\Packages\Flow-Launcher-*.exe
+          compression-level: 0
+      - name: Upload Portable Version
+        uses: actions/upload-artifact@v4
+        with:
+          name: Portable Version
+          path: |
+            Output\Packages\Flow-Launcher-Portable.zip
+          compression-level: 0
+      - name: Upload Full Nupkg
+        uses: actions/upload-artifact@v4
+        with:
+          name: Full nupkg
+          path: |
+            Output\Packages\FlowLauncher-*-full.nupkg
+
+          compression-level: 0
+      - name: Upload Release Information
+        uses: actions/upload-artifact@v4
+        with:
+          name: RELEASES
+          path: |
+            Output\Packages\RELEASES
+          compression-level: 0

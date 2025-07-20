@@ -1,10 +1,10 @@
 {
   "ID": "6A122269676E40EB86EB543B945932B9",
-  "ActionKeyword": "*",
+  "ActionKeyword": "?",
   "Name": "Plugin Indicator",
   "Description": "Provides plugin action keyword suggestions",
   "Author": "qianlifeng",
-  "Version": "2.0.1",
+  "Version": "1.0.0",
   "Language": "csharp",
   "Website": "https://github.com/Flow-Launcher/Flow.Launcher",
   "ExecuteFileName": "Flow.Launcher.Plugin.PluginIndicator.dll",

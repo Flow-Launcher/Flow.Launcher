@@ -26,12 +26,16 @@
     <system:String x:Key="flowlauncher_plugin_program_index_start_tooltip">Cuando esté activado, Flow cargará los programas desde el menú de inicio</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_registry">Registro</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_registry_tooltip">Cuando esté activado, Flow cargará los programas desde el registro</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_PATH">RUTA (PATH)</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_PATH">PATH</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">Cuando esté activado, Flow cargará los programas desde la variable de entorno PATH</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">Ocultar ruta de aplicación</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">Para los archivos ejecutables como UWP o lnk, oculta la ruta del archivo para que no sea visible</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">Oculta la ruta de los archivos ejecutables, como UWP o lnk</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers">Ocultar desinstaladores</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">Oculta nombres comunes de programas de desinstalación, como unins000.exe</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">Buscar en la descripción del programa</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow buscará la descripción del programa</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow buscará en la descripción del programa</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp">Ocultar aplicaciones duplicadas</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp_tooltip">Ocultar programas Win32 duplicados que ya están en la lista UWP</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Extensiones</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">Profundidad máxima</system:String>
 
@@ -41,7 +45,9 @@
     <system:String x:Key="flowlauncher_plugin_program_max_search_depth">Profundidad de búsqueda máxima (-1 es sin límite):</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">Por favor, seleccione la ruta del programa</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_delete_program_source">¿Está seguro que desea eliminar las fuentes del programa seleccionadas?</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source">¿Está seguro de que desea eliminar las fuentes del programa seleccionadas?</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_not_user_added">Por favor, seleccione las fuentes del programa que no han sido añadidas por usted</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_user_added">Por favor, seleccione las fuentes del programa que han sido añadidas por usted</system:String>
     <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Ya existe otra fuente de programa con la misma ubicación.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Fuente de Programa</system:String>
@@ -70,7 +76,8 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Ejecutar como usuario diferente</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Ejecutar como administrador</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Abrir carpeta contenedora</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">Desactivar la visualización de este programa</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">Ocultar</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Abrir carpeta de destino</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Programa</system:String>
     <system:String x:Key="flowlauncher_plugin_program_plugin_description">Busca programas en Flow Launcher</system:String>
@@ -79,7 +86,7 @@
 
     <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Explorador personalizado</system:String>
     <system:String x:Key="flowlauncher_plugin_program_args">Argumentos</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">Puede personalizar el explorador utilizado para abrir la carpeta contenedor introduciendo la Variable de entorno del explorador que desea utilizar. Será útil usar CMD para probar si la Variable de entorno está disponible.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">Puede personalizar el explorador utilizado para abrir la carpeta contenedora introduciendo la Variable de Entorno del explorador que desea utilizar. Para comprobar si la Variable de Entorno está disponible, puede utilizar CMD.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Introduzca los argumentos personalizados que desea agregar para el explorador personalizado. %s para carpeta contenedora, %f para ruta completa (solo funciona para win32). Consulte la página web del explorador para obtener más detalles.</system:String>
 
     <!--  Dialogs  -->

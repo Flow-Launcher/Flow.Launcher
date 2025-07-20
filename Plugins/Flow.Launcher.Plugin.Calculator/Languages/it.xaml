@@ -11,5 +11,5 @@
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_use_system_locale">Usa il locale del sistema</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_comma">Virgola (,)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_dot">Punto (.)</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">Max. decimal places</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">Max. cifre decimali</system:String>
 </ResourceDictionary>

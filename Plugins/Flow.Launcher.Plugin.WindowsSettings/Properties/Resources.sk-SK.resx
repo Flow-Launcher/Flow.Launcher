@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>O aplikácii</value>
+    <value>O systéme</value>
     <comment>Area System</comment>
   </data>
   <data name="access.cpl" xml:space="preserve">
@@ -226,7 +226,7 @@
     <comment>Area Apps</comment>
   </data>
   <data name="AppVolumeAndDevicePreferences" xml:space="preserve">
-    <value>Predvoľby hlasitosti aplikácia a predvoľby zariadenia</value>
+    <value>Hlasitosť aplikácie a predvoľby zariadenia</value>
     <comment>Area System, Added in Windows 10, version 1903</comment>
   </data>
   <data name="appwiz.cpl" xml:space="preserve">

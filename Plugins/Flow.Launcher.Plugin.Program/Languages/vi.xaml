@@ -1,0 +1,99 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!--  Program setting  -->
+    <system:String x:Key="flowlauncher_plugin_program_reset">Khôi phục về mặc định</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete">Xóa</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit">Sửa</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_add">Thêm</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_name">Tên</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable">Kích hoạt</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enabled">Đã bật</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable">Vô hiệu</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_status">Trạng thái</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_true">Đã bật</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_false">Vô hiệu hóa</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_location">Vị trí</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_all_programs">Tất cả ứng dụng</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes">Loại tệp</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_reindex">Chỉ số hoá</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_indexing">Nhập dữ liệu</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_source">Nguồn chỉ mục</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_option">Tùy chỉnh</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_uwp">UWP Apps</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_uwp_tooltip">When enabled, Flow will load UWP Applications</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_start">Menu Khởi động</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_start_tooltip">Khi được bật, Flow sẽ tải các chương trình từ menu bắt đầu</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_registry">Đăng ký</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_registry_tooltip">Khi được bật, Flow sẽ tải các chương trình từ menu bắt đầu</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_PATH">ĐƯỜNG DẪN</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">Khi được bật, Flow sẽ tải các chương trình từ menu bắt đầu</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">Ẩn đường dẫn ứng dụng</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">Đối với các tệp thực thi như UWP hoặc lnk, hãy ẩn đường dẫn tệp để không hiển thị</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers">Hide uninstallers</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">Hides programs with common uninstaller names, such as unins000.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_description">Tìm kiếm trong Mô tả chương trình</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow will search program's description</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp">Hide duplicated apps</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp_tooltip">Hide duplicated Win32 programs that are already in the UWP list</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Hậu tố</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_max_depth_header">Độ sâu tối đa:</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_program_directory">Danh bạ</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_browse">Duyệt</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_file_suffixes">Hậu tố tệp:</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_max_search_depth">Độ sâu tìm kiếm tối đa (-1 là không giới hạn):</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">Hãy chọn một nguồn dữ liệu</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source">Bạn có chắc chắn là muốn xóa các đặt hàng đã chọn?</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_not_user_added">Please select program sources that are not added by you</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_user_added">Please select program sources that are added by you</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Đã tồn tại một nguồn chương trình khác có cùng vị trí.</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Nguồn chương trình</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_tips">Chỉnh sửa thư mục và trạng thái của nguồn chương trình này.</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_program_update">Cập nhật</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Program Plugin will only index files with selected suffixes and .url files with selected protocols.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_update_file_suffixes">Đã cập nhật thành công hậu tố tệp</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_cannot_empty">Hậu tố tệp không được để trống</system:String>
+    <system:String x:Key="flowlauncher_plugin_protocols_cannot_empty">Trường cổng không được trống</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_executable_types">Hậu tố tệp</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_types">URL Protocols</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_steam">Steam Games</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_epic">Epic Games</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_http">Http/Https</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_custom_urls">Custom URL Protocols</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_custom_file_types">Custom File Suffixes</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_tooltip">
+        Insert file suffixes you want to index. Suffixes should be separated by ';'. (ex&gt;bat;py)
+    </system:String>
+    <system:String x:Key="flowlauncher_plugin_program_protocol_tooltip">
+        Insert protocols of .url files you want to index. Protocols should be separated by ';', and should end with &quot;://&quot;. (ex&gt;ftp://;mailto://)
+    </system:String>
+
+    <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Xóa lựa chọn đã chọn</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Chạy với quyền quản trị</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Mở thư mục chứa</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">Hide</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Mở thư mục đích</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_program_plugin_name">Chương trình</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_plugin_description">Tìm kiếm chương trình trong Flow Launcher</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_program_invalid_path">Đường dẫn không hợp lệ</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Trình khám phá tùy chỉnh</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_args">Đối số</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">You can customize the explorer used for opening the container folder by inputing the Environmental Variable of the explorer you want to use. It will be useful to use CMD to test whether the Environmental Variable is available.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Nhập các đối số tùy chỉnh mà bạn muốn thêm cho trình khám phá tùy chỉnh của mình. %s cho thư mục mẹ, %f cho đường dẫn đầy đủ (chỉ hoạt động với win32). Kiểm tra trang web của nhà thám hiểm để biết chi tiết.</system:String>
+
+    <!--  Dialogs  -->
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">Thành công</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_error">Lỗi</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">Đã vô hiệu hóa thành công chương trình này khỏi hiển thị trong truy vấn của bạn</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">Ứng dụng này không nhằm mục đích chạy với tư cách quản trị viên</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_failed">Không thể đọc {0}</system:String>
+
+</ResourceDictionary>

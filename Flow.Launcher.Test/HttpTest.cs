@@ -1,7 +1,6 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Infrastructure.Http;
 
@@ -18,16 +17,16 @@ namespace Flow.Launcher.Test
 
             proxy.Enabled = true;
             proxy.Server = "127.0.0.1";
-            Assert.AreEqual(Http.WebProxy.Address, new Uri($"http://{proxy.Server}:{proxy.Port}"));
-            Assert.IsNull(Http.WebProxy.Credentials);
+            ClassicAssert.AreEqual(Http.WebProxy.Address, new Uri($"http://{proxy.Server}:{proxy.Port}"));
+            ClassicAssert.IsNull(Http.WebProxy.Credentials);
 
             proxy.UserName = "test";
-            Assert.NotNull(Http.WebProxy.Credentials);
-            Assert.AreEqual(Http.WebProxy.Credentials.GetCredential(Http.WebProxy.Address, "Basic").UserName, proxy.UserName);
-            Assert.AreEqual(Http.WebProxy.Credentials.GetCredential(Http.WebProxy.Address, "Basic").Password, "");
+            ClassicAssert.NotNull(Http.WebProxy.Credentials);
+            ClassicAssert.AreEqual(Http.WebProxy.Credentials.GetCredential(Http.WebProxy.Address, "Basic").UserName, proxy.UserName);
+            ClassicAssert.AreEqual(Http.WebProxy.Credentials.GetCredential(Http.WebProxy.Address, "Basic").Password, "");
 
             proxy.Password = "test password";
-            Assert.AreEqual(Http.WebProxy.Credentials.GetCredential(Http.WebProxy.Address, "Basic").Password, proxy.Password);
+            ClassicAssert.AreEqual(Http.WebProxy.Credentials.GetCredential(Http.WebProxy.Address, "Basic").Password, proxy.Password);
         }
     }
 }

@@ -3,7 +3,7 @@
 
     <!--  Plugin Info  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">瀏覽器書籤</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">搜索你的瀏覽器書籤</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">搜尋你的瀏覽器書籤</system:String>
 
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">書籤資料</system:String>
@@ -18,6 +18,13 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">瀏覽器名稱</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">檔案目錄路徑</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">新增</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_editBrowserBookmark">編輯</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">刪除</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Others</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browseBrowserBookmark">瀏覽</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_others">其他</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">瀏覽器引擎</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">如果你沒有使用 Chrome、Firefox 或 Edge，或者使用它們的便攜版，你需要新增書籤資料位置並選擇正確的瀏覽器引擎，才能讓這個擴充功能正常運作。</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">例如：Brave 瀏覽器的引擎是 Chromium；而它的預設書籤資料位置是「%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData」。對於 Firefox 瀏覽器引擎，書籤資料位置是包含 places.sqlite 檔案的 userdata 資料夾。</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Load favicons (can be time consuming during startup)</system:String>
+
 </ResourceDictionary>

@@ -1,17 +1,22 @@
-﻿using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Plugin.SharedCommands;
-using System;
-using System.Diagnostics;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using Flow.Launcher.Plugin.Explorer.Search.Everything;
+using Flow.Launcher.Plugin.Explorer.Views;
+using Flow.Launcher.Plugin.SharedCommands;
+using Peter;
+using Path = System.IO.Path;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
 {
     public static class ResultManager
     {
+        private static readonly string ClassName = nameof(ResultManager);
+
+        private static readonly string[] SizeUnits = { "B", "KB", "MB", "GB", "TB" };
         private static PluginInitContext Context;
         private static Settings Settings { get; set; }
 
@@ -37,13 +42,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var keyword = usePathSearchActionKeyword ? pathSearchActionKeyword : searchActionKeyword;
 
-            var formatted_path = path;
+            var formattedPath = path;
 
             if (type == ResultType.Folder)
                 // the separator is needed so when navigating the folder structure contents of the folder are listed
-                formatted_path = path.EndsWith(Constants.DirectorySeparator) ? path : path + Constants.DirectorySeparator;
+                formattedPath = path.EndsWith(Constants.DirectorySeparator) ? path : path + Constants.DirectorySeparator;
 
-            return $"{keyword}{formatted_path}";
+            return $"{keyword}{formattedPath}";
         }
 
         public static string GetAutoCompleteText(string title, Query query, string path, ResultType resultType)
@@ -57,12 +62,33 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             return result.Type switch
             {
-                ResultType.Folder or ResultType.Volume => CreateFolderResult(Path.GetFileName(result.FullPath),
-                    result.FullPath, result.FullPath, query, 0, result.WindowsIndexed),
-                ResultType.File => CreateFileResult(
-                    result.FullPath, query, 0, result.WindowsIndexed),
-                _ => throw new ArgumentOutOfRangeException()
+                ResultType.Folder or ResultType.Volume =>
+                    CreateFolderResult(Path.GetFileName(result.FullPath), result.FullPath, result.FullPath, query, result.Score, result.WindowsIndexed),
+                ResultType.File =>
+                    CreateFileResult(result.FullPath, query, result.Score, result.WindowsIndexed),
+                _ => throw new ArgumentOutOfRangeException(null)
             };
+        }
+
+        internal static void ShowNativeContextMenu(string path, ResultType type)
+        {
+            var screenWithMouseCursor = System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position);
+            var xOfScreenCenter = screenWithMouseCursor.WorkingArea.Left + screenWithMouseCursor.WorkingArea.Width / 2;
+            var yOfScreenCenter = screenWithMouseCursor.WorkingArea.Top + screenWithMouseCursor.WorkingArea.Height / 2;
+            var showPosition = new System.Drawing.Point(xOfScreenCenter, yOfScreenCenter);
+
+            switch (type)
+            {
+                case ResultType.File:
+                    var fileInfo = new FileInfo[] { new(path) };
+                    new ShellContextMenu().ShowContextMenu(fileInfo, showPosition);
+                    break;
+
+                case ResultType.Folder:
+                    var folderInfo = new System.IO.DirectoryInfo[] { new(path) };
+                    new ShellContextMenu().ShowContextMenu(folderInfo, showPosition);
+                    break;
+            }
         }
 
         internal static Result CreateFolderResult(string title, string subtitle, string path, Query query, int score = 0, bool windowsIndexed = false)
@@ -73,46 +99,93 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 IcoPath = path,
                 SubTitle = subtitle,
                 AutoCompleteText = GetAutoCompleteText(title, query, path, ResultType.Folder),
-                TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
+                TitleHighlightData = Context.API.FuzzySearch(query.Search, title).MatchData,
                 CopyText = path,
+                Preview = new Result.PreviewInfo
+                {
+                    FilePath = path,
+                },
+                PreviewPanel = new Lazy<UserControl>(() => new PreviewPanel(Settings, path, ResultType.Folder)),
                 Action = c =>
                 {
-                    if (c.SpecialKeyState.CtrlPressed || (!Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled))
+                    if (c.SpecialKeyState.ToModifierKeys() == ModifierKeys.Alt)
+                    {
+                        ShowNativeContextMenu(path, ResultType.Folder);
+                        return false;
+                    }
+                    // open folder
+                    if (c.SpecialKeyState.ToModifierKeys() == (ModifierKeys.Control | ModifierKeys.Shift))
                     {
                         try
                         {
-                            Context.API.OpenDirectory(path);
+                            OpenFolder(path);
                             return true;
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(ex.Message, "Could not start " + path);
+                            Context.API.ShowMsgBox(ex.Message, Context.API.GetTranslation("plugin_explorer_opendir_error"));
+                            return false;
+                        }
+                    }
+                    // Open containing folder
+                    if (c.SpecialKeyState.ToModifierKeys() == ModifierKeys.Control)
+                    {
+                        try
+                        {
+                            Context.API.OpenDirectory(Path.GetDirectoryName(path), path);
+                            return true;
+                        }
+                        catch (Exception ex)
+                        {
+                            Context.API.ShowMsgBox(ex.Message, Context.API.GetTranslation("plugin_explorer_opendir_error"));
                             return false;
                         }
                     }
 
-                    Context.API.ChangeQuery(GetPathWithActionKeyword(path, ResultType.Folder, query.ActionKeyword));
+                    // If path search is disabled just open it in file manager
+                    if (Settings.DefaultOpenFolderInFileManager || (!Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled))
+                    {
+                        try
+                        {
+                            OpenFolder(path);
+                            return true;
+                        }
+                        catch (Exception ex)
+                        {
+                            Context.API.ShowMsgBox(ex.Message, Context.API.GetTranslation("plugin_explorer_opendir_error"));
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        // or make this folder the current query
+                        Context.API.ChangeQuery(GetPathWithActionKeyword(path, ResultType.Folder, query.ActionKeyword));
+                    }
 
                     return false;
                 },
                 Score = score,
-                TitleToolTip = InternationalizationManager.Instance.GetTranslation("plugin_explorer_plugin_ToolTipOpenDirectory"),
-                SubTitleToolTip = path,
-                ContextData = new SearchResult
-                {
-                    Type = ResultType.Folder,
-                    FullPath = path,
-                    WindowsIndexed = windowsIndexed
-                }
+                TitleToolTip = Main.Context.API.GetTranslation("plugin_explorer_plugin_ToolTipOpenDirectory"),
+                SubTitleToolTip = Settings.DisplayMoreInformationInToolTip ? GetFolderMoreInfoTooltip(path) : path,
+                ContextData = new SearchResult { Type = ResultType.Folder, FullPath = path, WindowsIndexed = windowsIndexed }
             };
+        }
+
+        internal static Result CreateDriveSpaceDisplayResult(string path, string actionKeyword, int score)
+        {
+            return CreateDriveSpaceDisplayResult(path, actionKeyword, score, SearchManager.UseIndexSearch(path));
         }
 
         internal static Result CreateDriveSpaceDisplayResult(string path, string actionKeyword, bool windowsIndexed = false)
         {
+            return CreateDriveSpaceDisplayResult(path, actionKeyword, 500, windowsIndexed);
+        }
+
+        private static Result CreateDriveSpaceDisplayResult(string path, string actionKeyword, int score, bool windowsIndexed = false)
+        {
             var progressBarColor = "#26a0da";
             var title = string.Empty; // hide title when use progress bar,
             var driveLetter = path[..1].ToUpper();
-            var driveName = driveLetter + ":\\";
             DriveInfo drv = new DriveInfo(driveLetter);
             var freespace = ToReadableSize(drv.AvailableFreeSpace, 2);
             var totalspace = ToReadableSize(drv.TotalSize, 2);
@@ -124,61 +197,56 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             if (progressValue >= 90)
                 progressBarColor = "#da2626";
 
+            var tooltip = Settings.DisplayMoreInformationInToolTip
+                ? GetVolumeMoreInfoTooltip(path, freespace, totalspace)
+                : path;
+
             return new Result
             {
                 Title = title,
                 SubTitle = subtitle,
                 AutoCompleteText = GetPathWithActionKeyword(path, ResultType.Folder, actionKeyword),
                 IcoPath = path,
-                Score = 500,
+                Score = score,
                 ProgressBar = progressValue,
                 ProgressBarColor = progressBarColor,
-                Action = c =>
+                Preview = new Result.PreviewInfo
                 {
-                    Context.API.OpenDirectory(path);
+                    FilePath = path,
+                },
+                Action = _ =>
+                {
+                    OpenFolder(path);
                     return true;
                 },
-                TitleToolTip = path,
-                SubTitleToolTip = path,
-                ContextData = new SearchResult
-                {
-                    Type = ResultType.Volume,
-                    FullPath = path,
-                    WindowsIndexed = windowsIndexed
-                }
+                TitleToolTip = tooltip,
+                SubTitleToolTip = tooltip,
+                ContextData = new SearchResult { Type = ResultType.Volume, FullPath = path, WindowsIndexed = windowsIndexed }
             };
         }
 
-        private static string ToReadableSize(long pDrvSize, int pi)
+        internal static string ToReadableSize(long sizeOnDrive, int pi)
         {
-            int mok = 0;
-            double drvSize = pDrvSize;
-            string Space = "Byte";
+            var unitIndex = 0;
+            double readableSize = sizeOnDrive;
 
-            while (drvSize > 1024.0)
+            while (readableSize > 1024.0 && unitIndex < SizeUnits.Length - 1)
             {
-                drvSize /= 1024.0;
-                mok++;
+                readableSize /= 1024.0;
+                unitIndex++;
             }
 
-            if (mok == 1)
-                Space = "KB";
-            else if (mok == 2)
-                Space = " MB";
-            else if (mok == 3)
-                Space = " GB";
-            else if (mok == 4)
-                Space = " TB";
+            var unit = SizeUnits[unitIndex] ?? "";
 
-            var returnStr = $"{Convert.ToInt32(drvSize)}{Space}";
-            if (mok != 0)
+            var returnStr = $"{Convert.ToInt32(readableSize)} {unit}";
+            if (unitIndex != 0)
             {
                 returnStr = pi switch
                 {
-                    1 => $"{drvSize:F1}{Space}",
-                    2 => $"{drvSize:F2}{Space}",
-                    3 => $"{drvSize:F3}{Space}",
-                    _ => $"{Convert.ToInt32(drvSize)}{Space}"
+                    1 => $"{readableSize:F1} {unit}",
+                    2 => $"{readableSize:F2} {unit}",
+                    3 => $"{readableSize:F3} {unit}",
+                    _ => $"{Convert.ToInt32(readableSize)} {unit}"
                 };
             }
 
@@ -199,106 +267,148 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 IcoPath = folderPath,
                 Score = 500,
                 CopyText = folderPath,
-                Action = _ =>
+                Action = c =>
                 {
-                    Context.API.OpenDirectory(folderPath);
+                    if (c.SpecialKeyState.ToModifierKeys() == ModifierKeys.Alt)
+                    {
+                        ShowNativeContextMenu(folderPath, ResultType.Folder);
+                        return false;
+                    }
+                    OpenFolder(folderPath);
                     return true;
                 },
-                ContextData = new SearchResult
-                {
-                    Type = ResultType.Folder,
-                    FullPath = folderPath,
-                    WindowsIndexed = windowsIndexed
-                }
+                ContextData = new SearchResult { Type = ResultType.Folder, FullPath = folderPath, WindowsIndexed = windowsIndexed }
             };
         }
 
         internal static Result CreateFileResult(string filePath, Query query, int score = 0, bool windowsIndexed = false)
         {
-            Result.PreviewInfo preview = IsMedia(Path.GetExtension(filePath)) ? new Result.PreviewInfo
-            {
-                IsMedia = true, PreviewImagePath = filePath,
-            } : Result.PreviewInfo.Default;
-
+            bool isMedia = IsMedia(Path.GetExtension(filePath));
             var title = Path.GetFileName(filePath);
+
+            /* Preview Detail */
 
             var result = new Result
             {
                 Title = title,
                 SubTitle = Path.GetDirectoryName(filePath),
                 IcoPath = filePath,
-                Preview = preview,
+                Preview = new Result.PreviewInfo
+                {
+                    IsMedia = isMedia,
+                    PreviewImagePath = isMedia ? filePath : null,
+                    FilePath = filePath,
+                },
                 AutoCompleteText = GetAutoCompleteText(title, query, filePath, ResultType.File),
-                TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
+                TitleHighlightData = Context.API.FuzzySearch(query.Search, title).MatchData,
                 Score = score,
                 CopyText = filePath,
+                PreviewPanel = new Lazy<UserControl>(() => new PreviewPanel(Settings, filePath, ResultType.File)),
                 Action = c =>
                 {
+                    if (c.SpecialKeyState.ToModifierKeys() == ModifierKeys.Alt)
+                    {
+                        ShowNativeContextMenu(filePath, ResultType.File);
+                        return false;
+                    }
                     try
                     {
-                        if (File.Exists(filePath) && c.SpecialKeyState.CtrlPressed && c.SpecialKeyState.ShiftPressed)
+                        if (c.SpecialKeyState.ToModifierKeys() == (ModifierKeys.Control | ModifierKeys.Shift))
                         {
-                            _ = Task.Run(() =>
-                            {
-                                try
-                                {
-                                    Process.Start(new ProcessStartInfo
-                                    {
-                                        FileName = filePath,
-                                        UseShellExecute = true,
-                                        WorkingDirectory = Settings.UseLocationAsWorkingDir ? Path.GetDirectoryName(filePath) : string.Empty,
-                                        Verb = "runas",
-                                    });
-                                }
-                                catch (Exception e)
-                                {
-                                    MessageBox.Show(e.Message, "Could not start " + filePath);
-                                }
-                            });
+                            OpenFile(filePath, Settings.UseLocationAsWorkingDir ? Path.GetDirectoryName(filePath) : string.Empty, true);
                         }
-                        else if (c.SpecialKeyState.CtrlPressed)
+                        else if (c.SpecialKeyState.ToModifierKeys() == ModifierKeys.Control)
                         {
-                            Context.API.OpenDirectory(Path.GetDirectoryName(filePath), filePath);
+                            OpenFolder(filePath, filePath);
                         }
                         else
                         {
-                            FilesFolders.OpenPath(filePath);
+                            OpenFile(filePath, Settings.UseLocationAsWorkingDir ? Path.GetDirectoryName(filePath) : string.Empty);
                         }
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message, "Could not start " + filePath);
+                        Context.API.ShowMsgBox(ex.Message, Context.API.GetTranslation("plugin_explorer_openfile_error"));
                     }
 
                     return true;
                 },
-                TitleToolTip = InternationalizationManager.Instance.GetTranslation("plugin_explorer_plugin_ToolTipOpenContainingFolder"),
-                SubTitleToolTip = filePath,
-                ContextData = new SearchResult
-                {
-                    Type = ResultType.File,
-                    FullPath = filePath,
-                    WindowsIndexed = windowsIndexed
-                }
+                TitleToolTip = Main.Context.API.GetTranslation("plugin_explorer_plugin_ToolTipOpenContainingFolder"),
+                SubTitleToolTip = Settings.DisplayMoreInformationInToolTip ? GetFileMoreInfoTooltip(filePath) : filePath,
+                ContextData = new SearchResult { Type = ResultType.File, FullPath = filePath, WindowsIndexed = windowsIndexed }
             };
             return result;
         }
 
-        public static bool IsMedia(string extension)
+        private static bool IsMedia(string extension)
         {
-            if (string.IsNullOrEmpty(extension))
+            if (string.IsNullOrEmpty(extension)) { return false; }
+
+            return MediaExtensions.Contains(extension.ToLowerInvariant());
+        }
+
+        private static void OpenFile(string filePath, string workingDir = "", bool asAdmin = false)
+        {
+            IncrementEverythingRunCounterIfNeeded(filePath);
+            FilesFolders.OpenFile(filePath, workingDir, asAdmin, (string str) => Context.API.ShowMsgBox(str));
+        }
+
+        private static void OpenFolder(string folderPath, string fileNameOrFilePath = null)
+        {
+            IncrementEverythingRunCounterIfNeeded(folderPath);
+            Context.API.OpenDirectory(folderPath, fileNameOrFilePath);
+        }
+
+        private static void IncrementEverythingRunCounterIfNeeded(string fileOrFolder)
+        {
+            if (Settings.EverythingEnabled && Settings.EverythingEnableRunCount)
+                _ = Task.Run(() => EverythingApi.IncrementRunCounterAsync(fileOrFolder));
+        }
+
+        private static string GetFileMoreInfoTooltip(string filePath)
+        {
+            try
             {
-                return false;
+                var fileSize = PreviewPanel.GetFileSize(filePath);
+                var fileCreatedAt = PreviewPanel.GetFileCreatedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
+                var fileModifiedAt = PreviewPanel.GetFileLastModifiedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
+                return string.Format(Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info"),
+                    filePath, fileSize, fileCreatedAt, fileModifiedAt, Environment.NewLine);
             }
-            else
+            catch (Exception e)
             {
-                return MediaExtensions.Contains(extension.ToLowerInvariant());
+                Context.API.LogException(ClassName, $"Failed to load tooltip for {filePath}", e);
+                return filePath;
             }
         }
 
-        public static readonly string[] MediaExtensions =
+        private static string GetFolderMoreInfoTooltip(string folderPath)
         {
-            ".jpg", ".png", ".avi", ".mkv", ".bmp", ".gif", ".wmv", ".mp3", ".flac", ".mp4"
+            try
+            {
+                var folderSize = PreviewPanel.GetFolderSize(folderPath);
+                var folderCreatedAt = PreviewPanel.GetFolderCreatedAt(folderPath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
+                var folderModifiedAt = PreviewPanel.GetFolderLastModifiedAt(folderPath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
+                return string.Format(Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info"),
+                    folderPath, folderSize, folderCreatedAt, folderModifiedAt, Environment.NewLine);
+            }
+            catch (Exception e)
+            {
+                Context.API.LogException(ClassName, $"Failed to load tooltip for {folderPath}", e);
+                return folderPath;
+            }
+        }
+
+        private static string GetVolumeMoreInfoTooltip(string volumePath, string freespace, string totalspace)
+        {
+            return string.Format(Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_volume"),
+                volumePath, freespace, totalspace, Environment.NewLine);
+        }
+
+        private static readonly string[] MediaExtensions = 
+        { 
+            ".jpg", ".png", ".avi", ".mkv", ".bmp", ".gif", ".wmv", ".mp3", ".flac", ".mp4",
+            ".m4a", ".m4v", ".heic", ".mov", ".flv", ".webm"
         };
     }
 

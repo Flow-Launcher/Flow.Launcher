@@ -1,0 +1,9 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_result_subtitle">تفعيل كلمة مفتاحية لإجراء إضافة {0}</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_name">مؤشر الإضافة</system:String>
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_description">يوفر اقتراحات لكلمات الإجراءات الخاصة بالإضافات</system:String>
+
+</ResourceDictionary>

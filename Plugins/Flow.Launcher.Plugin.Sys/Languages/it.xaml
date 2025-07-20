@@ -2,39 +2,76 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Command List  -->
-    <system:String x:Key="flowlauncher_plugin_sys_command">Command</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_desc">Description</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_name">Nome</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_desc">Descrizione</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_command">Comando</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">Shutdown Computer</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart_computer">Restart Computer</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart_advanced">Restart the computer with Advanced Boot Options for Safe and Debugging modes, as well as other options</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_log_off">Log off</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_lock">Lock this computer</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_exit">Close Flow Launcher</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart">Restart Flow Launcher</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_setting">Tweak Flow Launcher's settings</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_sleep">Put computer to sleep</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin">Empty recycle bin</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin">Open recycle bin</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_indexoption">Indexing Options</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_hibernate">Hibernate computer</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_save_all_settings">Save all Flow Launcher settings</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data">Refreshes plugin data with new content</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_open_log_location">Open Flow Launcher's log location</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_check_for_update">Check for new Flow Launcher update</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">Visit Flow Launcher's documentation for more help and how to use tips</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Open the location where Flow Launcher's settings are stored</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer_cmd">Spegni</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_computer_cmd">Riavvia</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_advanced_cmd">Riavvia con Opzioni di Avvio Avanzate</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_log_off_cmd">Disconnetti</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_lock_cmd">Blocca</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_sleep_cmd">Sospendi</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_hibernate_cmd">Ibernazione</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_indexoption_cmd">Opzioni di Indice</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin_cmd">Svuota Cestino</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin_cmd">Apri Cestino</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_exit_cmd">Esci</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_save_all_settings_cmd">Salva Impostazioni</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_cmd">Riavvia Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_setting_cmd">Impostazioni</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data_cmd">Ricarica i dati del plugin</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_check_for_update_cmd">Controlla Aggiornamenti</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_log_location_cmd">Apri Posizione dei Log</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips_cmd">Consigli di Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location_cmd">Cartella UserData di Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode_cmd">Attiva/Disattiva Modalità Di Gioco</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector_cmd">Set the Flow Launcher Theme</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_sys_edit">Modifica</system:String>
+
+    <!--  Command Descriptions  -->
+    <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">Spegni il computer</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_computer">Riavvia il Computer</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_advanced">Riavvia il computer con le Opzioni di Avvio Avanzato per le Modalità di debug e Provvisoria, così come altre opzioni</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_log_off">Disconnetti</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_lock">Blocca questo computer</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_exit">Chiudi Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart">Riavvia Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_setting">Modifica le impostazioni di Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_sleep">Metti il computer in modalità sospensione</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin">Svuota il Cestino</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin">Apri il Cestino</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_indexoption">Opzioni di Indicizzazione</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_hibernate">Iberna il computer</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_save_all_settings">Salva tutte le impostazioni di Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data">Aggiorna i dati del plugin con nuovi contenuti</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_log_location">Apri la posizione del log di Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_check_for_update">Controlla il nuovo aggiornamento di Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">Visita la documentazione di Flow Launcher per maggiori informazioni e suggerimenti su come usarlo</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Apri la posizione in cui vengono memorizzate le impostazioni di Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode">Attiva/Disattiva Modalità Di Gioco</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector">Quickly change the Flow Launcher theme</system:String>
 
     <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">Successo</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">All Flow Launcher settings saved</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Reloaded all applicable plugin data</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_shutdown_computer">Are you sure you want to shut the computer down?</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">Are you sure you want to restart the computer?</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Are you sure you want to restart the computer with Advanced Boot Options?</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Are you sure you want to log off?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">Tutte le impostazioni di Flow Launcher sono state salvate</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Ricaricato tutti i dati del plugin applicabili</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_shutdown_computer">Sei sicuro di voler spegnere il computer?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">Sei sicuro di voler riavviare il computer?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Sei sicuro di voler riavviare il computer con le Opzioni di Avvio Avanzate?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Sei sicuro di volerti disconettere?</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_sys_plugin_name">System Commands</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Provides System related commands. e.g. shutdown, lock, settings etc.</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Command Keyword Setting</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Custom Command Keyword</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword_tip">Enter a keyword to search for command: {0}. This keyword is used to match your query.</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_command_keyword">Command Keyword</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_reset">Resetta</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_confirm">Conferma</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_cancel">Annulla</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_input_command_keyword">Please enter a non-empty command keyword</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_sys_plugin_name">Comandi di Sistema</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Fornisce comandi relativi al sistema, ad esempio spegnimento, blocco, impostazioni ecc.</system:String>
 
 </ResourceDictionary>

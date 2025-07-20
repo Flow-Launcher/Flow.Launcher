@@ -3,10 +3,12 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">항목을 먼저 선택하세요</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Please select a folder path.</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Please choose a different name or folder path.</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">폴더 링크를 선택하세요</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">{0} - 삭제하시겠습니까?</system:String>
-    <system:String x:Key="plugin_explorer_deletefolderconfirm">이 폴더를 영구적으로 삭제하시겠습니까?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">이 파일을 영구적으로 삭제하시겠습니까?</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Are you sure you want to permanently delete this file/folder?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess">삭제 완료</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">{0} - 성공적으로 삭제했습니다.</system:String>
     <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">글로벌 액션 키워드는 너무 많은 결과를 불러오게 될 수 있습니다. 특정한 액션 키워드를 선택하세요.</system:String>
@@ -16,6 +18,8 @@
     <system:String x:Key="plugin_explorer_alternative">경고 메시지가 꺼졌습니다. 파일 및 폴더 검색을 위한 대안으로 Everything 플러그인을 설치하시겠습니까?{0}{0}Everything 플러그인을 설치하려면 '예'를 선택하고, 반환하려면 '아니오'를 선택하십시오</system:String>
     <system:String x:Key="plugin_explorer_alternative_title">Explorer Alternative</system:String>
     <system:String x:Key="plugin_explorer_directoryinfosearch_error">Error occurred during search: {0}</system:String>
+    <system:String x:Key="plugin_explorer_opendir_error">Could not open folder</system:String>
+    <system:String x:Key="plugin_explorer_openfile_error">Could not open file</system:String>
 
     <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">삭제</system:String>
@@ -23,8 +27,16 @@
     <system:String x:Key="plugin_explorer_add">추가</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">일반 설정</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">사용자 지정 액션 키워드</system:String>
+    <system:String x:Key="plugin_explorer_manage_quick_access_links_header">Customise Quick Access</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">빠른 접근 항목</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Everything 설정</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_setting_header">미리보기 패널</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">크기</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">만든 날짜</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">수정한 날짜</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_age_checkbox">File Age</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_file_info_label">파일 정보 표시</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">시간과 날짜 형식</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">정렬 옵션:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Everything 경로:</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Launch Hidden</system:String>
@@ -32,6 +44,8 @@
     <system:String x:Key="plugin_explorer_shell_path">쉘 경로</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">색인 제외 경로</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">검색 결과위치를 실행 가능한 작업 디렉토리(Working Directory)로 사용</system:String>
+    <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Display more information like size and age in tooltips</system:String>
+    <system:String x:Key="plugin_explorer_default_open_in_file_manager">Enter 키를 눌렀을 때 기본 파일 관리자에서 폴더 열기</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Use Index Search For Path Search</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">색인 옵션</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">검색:</system:String>
@@ -48,11 +62,17 @@
     <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Direct Enumeration</system:String>
     <system:String x:Key="plugin_explorer_file_editor_path">파일 편집기 경로</system:String>
     <system:String x:Key="plugin_explorer_folder_editor_path">폴더 편집기 경로</system:String>
+    <system:String x:Key="plugin_explorer_enabled">켬</system:String>
+    <system:String x:Key="plugin_explorer_disabled">Disabled</system:String>
 
     <system:String x:Key="plugin_explorer_Content_Search_Engine">내용 검색 엔진</system:String>
     <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">경로 재귀 검색 엔진</system:String>
     <system:String x:Key="plugin_explorer_Index_Search_Engine">색인 검색 엔진</system:String>
     <system:String x:Key="plugin_explorer_Open_Window_Index_Option">윈도우 색인 설정 열기</system:String>
+    <system:String x:Key="plugin_explorer_Excluded_File_Types">Excluded File Types (comma seperated)</system:String>
+    <system:String x:Key="plugin_explorer_Excluded_File_Types_Tooltip">For example: exe,jpg,png</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results">Maximum results</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results_Tooltip">The maximum number of results requested from active search engine</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">탐색기</system:String>
@@ -61,17 +81,26 @@
     <!--  Plugin Tooltip  -->
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter으로 폴더 열기</system:String>
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Enter으로 포함된 폴더 열기</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info">{0}{4}Size: {1}{4}Date created: {2}{4}Date modified: {3}</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_unknown">Unknown</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_volume">{0}{3}Space free: {1}{3}Total size: {2}</system:String>
 
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">경로 복사</system:String>
     <system:String x:Key="plugin_explorer_copypath_subtitle">이 항목의 경로를 클립보드에 복사</system:String>
+    <system:String x:Key="plugin_explorer_copyname">이름 복사</system:String>
+    <system:String x:Key="plugin_explorer_copyname_subtitle">이 항목의 이름을 클립보드에 복사</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">복사하기</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">이 파일을 클립보드에 복사</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">이 파일을 클립보드에 복사</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder">삭제</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">이 파일을 영구적으로 삭제</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">이 폴더를 영구적으로 삭제</system:String>
-    <system:String x:Key="plugin_explorer_path">경로:</system:String>
+    <system:String x:Key="plugin_explorer_name">Name</system:String>
+    <system:String x:Key="plugin_explorer_type">Type</system:String>
+    <system:String x:Key="plugin_explorer_path">Path</system:String>
+    <system:String x:Key="plugin_explorer_file">파일</system:String>
+    <system:String x:Key="plugin_explorer_folder">폴더</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">선택 항목을 삭제</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">다른 유저 권한으로 실행</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">선택한 사용자 계정으로 실행</system:String>
@@ -97,11 +126,15 @@
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">빠른 접근에서 제거</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">이 항목을 빠른 접근에서 제거</system:String>
     <system:String x:Key="plugin_explorer_show_contextmenu_title">우클릭 메뉴 보기</system:String>
-    
-    <!-- Special Results-->
+    <system:String x:Key="plugin_explorer_openwith">함께 열기</system:String>
+    <system:String x:Key="plugin_explorer_openwith_subtitle">이 항목을 열 프로그램을 선택</system:String>
+
+    <!--  Special Results  -->
     <system:String x:Key="plugin_explorer_diskfreespace">{0} free of {1}</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder">Open in Default File Manager</system:String>
-    <system:String x:Key="plugin_explorer_openresultfolder_subtitle">Use '&gt;' to search in this directory, '*' to search for file extensions or '&gt;*' to combine both searches.</system:String>
+    <system:String x:Key="plugin_explorer_openresultfolder_subtitle">
+        Use '&gt;' to search in this directory, '*' to search for file extensions or '&gt;*' to combine both searches.
+    </system:String>
 
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Failed to load Everything SDK</system:String>
@@ -125,6 +158,9 @@
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Warning: This is not a Fast Sort option, searches may be slow</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Search Full Path</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Enable File/Folder Run Count</system:String>
+
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Everything을 실행 또는 설치하려면 클릭</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Everything 설치</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">Everything 서비스 설치 중. 잠시 기다려주세요...</system:String>
@@ -135,4 +171,20 @@
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Eveyrhing으로 내용 검색을 활성화하시겠습니까?</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">인덱스가 없으면 매우 느릴 수 있습니다.(Everything v1.5+에서만 지원)</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_everything_not_found">Unable to find Everything.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_install_issue">Failed to install Everything, please install it manually</system:String>
+
+    <!--  Native Context Menu  -->
+    <system:String x:Key="plugin_explorer_native_context_menu_header">Native Context Menu</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Display native context menu (experimental)</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Below you can specify items you want to include in the context menu, they can be partial (e.g. 'pen wit') or complete ('Open with').</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Below you can specify items you want to exclude from context menu, they can be partial (e.g. 'pen wit') or complete ('Open with').</system:String>
+
+    <!--  Preview Info  -->
+    <system:String x:Key="Today">Today</system:String>
+    <system:String x:Key="DaysAgo">{0} days ago</system:String>
+    <system:String x:Key="OneMonthAgo">1 month ago</system:String>
+    <system:String x:Key="MonthsAgo">{0} months ago</system:String>
+    <system:String x:Key="OneYearAgo">1 year ago</system:String>
+    <system:String x:Key="YearsAgo">{0} years ago</system:String>
 </ResourceDictionary>

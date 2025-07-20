@@ -1,0 +1,51 @@
+﻿<UserControl
+    x:Class="Flow.Launcher.Resources.Controls.InstalledPluginDisplayKeyword"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="clr-namespace:Flow.Launcher.ViewModel"
+    d:DataContext="{d:DesignInstance viewModel:PluginViewModel}"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    mc:Ignorable="d">
+    <Border
+        Width="Auto"
+        Height="Auto"
+        Margin="0"
+        Padding="0"
+        BorderThickness="0 1 0 0"
+        CornerRadius="0"
+        Style="{DynamicResource SettingGroupBox}"
+        Visibility="{Binding ActionKeywordsVisibility}">
+        <DockPanel Margin="{StaticResource SettingPanelMargin}">
+            <TextBlock
+                Margin="{StaticResource SettingPanelItemRightMargin}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                DockPanel.Dock="Left"
+                Style="{StaticResource Glyph}">
+                &#xe819;
+            </TextBlock>
+            <TextBlock
+                Margin="{StaticResource SettingPanelItemRightMargin}"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                DockPanel.Dock="Left"
+                Style="{DynamicResource SettingTitleLabel}"
+                Text="{DynamicResource actionKeywords}" />
+            <!--  Here Margin="0 -4.5 0 -4.5" is to remove redundant top bottom margin from Margin="{StaticResource SettingPanelMargin}"  -->
+            <Button
+                Width="auto"
+                MinWidth="100"
+                Margin="0 -4.5 0 -4.5"
+                HorizontalAlignment="Right"
+                Command="{Binding SetActionKeywordsCommand}"
+                Content="{Binding ActionKeywordsText}"
+                Cursor="Hand"
+                DockPanel.Dock="Right"
+                FontWeight="Bold"
+                ToolTip="{DynamicResource actionKeywordsTooltip}" />
+        </DockPanel>
+    </Border>
+</UserControl>

@@ -30,8 +30,12 @@
     <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">When enabled, Flow will load programs from the PATH environment variable</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">Hide app path</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">For executable files such as UWP or lnk, hide the file path from being visible</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers">Hide uninstallers</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">Hides programs with common uninstaller names, such as unins000.exe</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">Search in Program Description</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow will search program's description</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp">Hide duplicated apps</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp_tooltip">Hide duplicated Win32 programs that are already in the UWP list</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Suffixes</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">Max Depth</system:String>
 
@@ -42,6 +46,8 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">Please select a program source</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">Are you sure you want to delete the selected program sources?</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_not_user_added">Please select program sources that are not added by you</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_user_added">Please select program sources that are added by you</system:String>
     <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Another program source with the same location already exists.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Program Source</system:String>
@@ -70,7 +76,8 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Run As Different User</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Run As Administrator</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Open containing folder</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">Disable this program from displaying</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">Hide</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Open target folder</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Program</system:String>
     <system:String x:Key="flowlauncher_plugin_program_plugin_description">Search programs in Flow Launcher</system:String>
@@ -79,7 +86,7 @@
 
     <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Customized Explorer</system:String>
     <system:String x:Key="flowlauncher_plugin_program_args">Args</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">You can customized the explorer used for opening the container folder by inputing the Environmental Variable of the explorer you want to use. It will be useful to use CMD to test whether the Environmental Variable is available.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">You can customize the explorer used for opening the container folder by inputing the Environmental Variable of the explorer you want to use. It will be useful to use CMD to test whether the Environmental Variable is available.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Enter the customized args you want to add for your customized explorer. %s for parent directory, %f for full path (which only works for win32). Check the explorer's website for details.</system:String>
 
     <!--  Dialogs  -->

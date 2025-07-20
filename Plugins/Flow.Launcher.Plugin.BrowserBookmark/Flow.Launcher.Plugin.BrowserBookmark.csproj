@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net9.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <ProjectGuid>{9B130CC5-14FB-41FF-B310-0A95B6894C37}</ProjectGuid>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -11,6 +11,8 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <UseWindowsForms>true</UseWindowsForms>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -34,6 +36,44 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
 
+  <Target Name="RemoveUnnecessaryRuntimesAfterBuild" AfterTargets="Build">
+    <RemoveDir Directories="$(OutputPath)runtimes\browser-wasm;
+                            $(OutputPath)runtimes\linux-arm;
+                            $(OutputPath)runtimes\linux-arm64;
+                            $(OutputPath)runtimes\linux-armel;
+                            $(OutputPath)runtimes\linux-mips64;
+                            $(OutputPath)runtimes\linux-musl-arm;
+                            $(OutputPath)runtimes\linux-musl-arm64;
+                            $(OutputPath)runtimes\linux-musl-x64;
+                            $(OutputPath)runtimes\linux-ppc64le;
+                            $(OutputPath)runtimes\linux-s390x;
+                            $(OutputPath)runtimes\linux-x64;
+                            $(OutputPath)runtimes\linux-x86;
+                            $(OutputPath)runtimes\maccatalyst-arm64;
+                            $(OutputPath)runtimes\maccatalyst-x64;
+                            $(OutputPath)runtimes\osx-arm64;
+                            $(OutputPath)runtimes\osx-x64"/>
+  </Target>
+
+  <Target Name="RemoveUnnecessaryRuntimesAfterPublish" AfterTargets="Publish">
+    <RemoveDir Directories="$(PublishDir)runtimes\browser-wasm;
+                            $(PublishDir)runtimes\linux-arm;
+                            $(PublishDir)runtimes\linux-arm64;
+                            $(PublishDir)runtimes\linux-armel;
+                            $(PublishDir)runtimes\linux-mips64;
+                            $(PublishDir)runtimes\linux-musl-arm;
+                            $(PublishDir)runtimes\linux-musl-arm64;
+                            $(PublishDir)runtimes\linux-musl-x64;
+                            $(PublishDir)runtimes\linux-ppc64le;
+                            $(PublishDir)runtimes\linux-s390x;
+                            $(PublishDir)runtimes\linux-x64;
+                            $(PublishDir)runtimes\linux-x86;
+                            $(PublishDir)runtimes\maccatalyst-arm64;
+                            $(PublishDir)runtimes\maccatalyst-x64;
+                            $(PublishDir)runtimes\osx-arm64;
+                            $(PublishDir)runtimes\osx-x64"/>
+  </Target>
+
   <ItemGroup>
     <None Include="plugin.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -55,28 +95,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Data.SQLite" Version="1.0.116" />
-    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.116" />
-    <PackageReference Include="UnidecodeSharp" Version="1.0.0" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.3" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Bookmark.cs" />
-  </ItemGroup>
-
-  <Target Name="CopyDLLs" AfterTargets="Build">
-    <Message Text="Executing CopyDLLs task" Importance="High" />
-    <Copy
-      SourceFiles="$(TargetDir)\runtimes\win-x64\native\SQLite.Interop.dll"
-      DestinationFolder="$(TargetDir)\x64" />
-    <Copy
-      SourceFiles="$(TargetDir)\runtimes\win-x86\native\SQLite.Interop.dll"
-      DestinationFolder="$(TargetDir)\x86" />
-  </Target>
-
-  <Target Name="DeleteRuntimesFolder" AfterTargets="CopyDLLs">
-    <Message Text="Deleting runtimes folder" Importance="High" />
-    <RemoveDir Directories="$(TargetDir)\runtimes" />
-  </Target>
 
 </Project>

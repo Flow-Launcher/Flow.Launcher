@@ -27,13 +27,13 @@
         x:Key="ItemGlyph"
         BasedOn="{StaticResource BaseGlyphStyle}"
         TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="#bbc1c3" />
+        <Setter Property="Foreground" Value="#eff2f2" />
     </Style>
     <Style
         x:Key="QueryBoxStyle"
         BasedOn="{StaticResource BaseQueryBoxStyle}"
         TargetType="{x:Type TextBox}">
-        <Setter Property="Padding" Value="0,4,50,0" />
+        <Setter Property="Padding" Value="0,0,50,0" />
         <Setter Property="CaretBrush" Value="#336766" />
         <Setter Property="Foreground" Value="#e7e9eb" />
         <Setter Property="FontSize" Value="18" />
@@ -44,7 +44,7 @@
         x:Key="QuerySuggestionBoxStyle"
         BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}"
         TargetType="{x:Type TextBox}">
-        <Setter Property="Padding" Value="0,4,50,0" />
+        <Setter Property="Padding" Value="0,0,50,0" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Height" Value="38" />
         <Setter Property="FontSize" Value="18" />
@@ -56,7 +56,7 @@
         BasedOn="{StaticResource BaseWindowBorderStyle}"
         TargetType="{x:Type Border}">
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="BorderBrush" Value="#09181e" />
+        <Setter Property="BorderBrush" Value="#1e292f" />
         <Setter Property="Background" Value="#0f1f26" />
         <Setter Property="CornerRadius" Value="6" />
         <Setter Property="UseLayoutRounding" Value="True" />
@@ -139,7 +139,7 @@
         <Setter Property="Height" Value="24" />
     </Style>
     <Style x:Key="SearchIconPosition" TargetType="{x:Type Canvas}">
-        <Setter Property="Background" Value="#0f1f26" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Width" Value="32" />
         <Setter Property="Height" Value="32" />
         <Setter Property="Margin" Value="0,8,8,0" />
@@ -155,7 +155,7 @@
         <Setter Property="Foreground" Value="#ffffff" />
     </Style>
     <Style x:Key="ItemGlyphSelectedStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="#58c2b4" />
+        <Setter Property="Foreground" Value="#eff2f2" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="Width" Value="25" />

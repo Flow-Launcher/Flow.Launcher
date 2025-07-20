@@ -1,11 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net9.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -17,8 +18,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Flow.Launcher.Infrastructure\Flow.Launcher.Infrastructure.csproj" />
-	<ProjectReference Include="..\..\Flow.Launcher.Core\Flow.Launcher.Core.csproj" />
     <ProjectReference Include="..\..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj" />
   </ItemGroup>
 
@@ -27,7 +26,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  
+
   <ItemGroup>
     <Content Include="Languages\*.xaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -36,8 +35,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  
+
   <ItemGroup>
-    <PackageReference Include="SharpZipLib" Version="1.3.3" />
+    <PackageReference Include="SharpZipLib" Version="1.4.2" />
   </ItemGroup>
 </Project>

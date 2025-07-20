@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Flow.Launcher.Plugin.PluginsManager
+﻿namespace Flow.Launcher.Plugin.PluginsManager
 {
     internal class Settings
     {
@@ -13,5 +9,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
         internal const string UpdateCommand = "update";
 
         public bool WarnFromUnknownSource { get; set; } = true;
+        
+        public bool AutoRestartAfterChanging { get; set; } = false;
     }
 }

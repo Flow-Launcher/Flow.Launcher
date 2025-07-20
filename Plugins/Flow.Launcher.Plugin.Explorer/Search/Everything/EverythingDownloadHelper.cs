@@ -4,8 +4,8 @@ using Microsoft.Win32;
 using System;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.Everything;
 
@@ -20,10 +20,10 @@ public static class EverythingDownloadHelper
 
         if (string.IsNullOrEmpty(installedLocation))
         {
-            if (System.Windows.Forms.MessageBox.Show(
+            if (api.ShowMsgBox(
                         string.Format(api.GetTranslation("flowlauncher_plugin_everything_installing_select"), Environment.NewLine),
                         api.GetTranslation("flowlauncher_plugin_everything_installing_title"),
-                        System.Windows.Forms.MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                        MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 var dlg = new System.Windows.Forms.OpenFileDialog
                 {
@@ -51,7 +51,7 @@ public static class EverythingDownloadHelper
 
         installedLocation = "C:\\Program Files\\Everything\\Everything.exe";
 
-        FilesFolders.OpenPath(installedLocation);
+        FilesFolders.OpenPath(installedLocation, (string str) => api.ShowMsgBox(str));
 
         return installedLocation;
 

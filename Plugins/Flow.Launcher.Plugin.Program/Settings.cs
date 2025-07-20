@@ -102,7 +102,7 @@ namespace Flow.Launcher.Plugin.Program
             // CustomSuffixes no longer contains custom suffixes
             // users has tweaked the settings
             // or this function has been executed once
-            if (UseCustomSuffixes == true || ProgramSuffixes == null) 
+            if (UseCustomSuffixes == true || ProgramSuffixes == null)
                 return;
             var suffixes = ProgramSuffixes.ToList();
             foreach(var item in BuiltinSuffixesStatus)
@@ -117,17 +117,12 @@ namespace Flow.Launcher.Plugin.Program
         public bool EnableStartMenuSource { get; set; } = true;
         public bool EnableDescription { get; set; } = false;
         public bool HideAppsPath { get; set; } = true;
+        public bool HideUninstallers { get; set; } = false;
         public bool EnableRegistrySource { get; set; } = true;
         public bool EnablePathSource { get; set; } = false;
         public bool EnableUWP { get; set; } = true;
-
-        public string CustomizedExplorer { get; set; } = Explorer;
-        public string CustomizedArgs { get; set; } = ExplorerArgs;
+        public bool HideDuplicatedWindowsApp { get; set; } = false;
 
         internal const char SuffixSeparator = ';';
-
-        internal const string Explorer = "explorer";
-
-        internal const string ExplorerArgs = "%s";
     }
 }

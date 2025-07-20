@@ -1,0 +1,14 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <system:String x:Key="flowlauncher_plugin_processkiller_plugin_name">Buộc Tắt tiến trình</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_plugin_description">Tắt các tiến trình đang chạy từ Flow Launcher</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_processkiller_kill_all">tiêu diệt tất cả các phiên bản của &quot;{0}&quot;</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_kill_all_count">Buộc tắt các tiến trình {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_kill_instances">Tắt tất cả phên bản </system:String>
+
+    <system:String x:Key="flowlauncher_plugin_processkiller_show_window_title">Show title for processes with visible windows</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_put_visible_window_process_top">Put processes with visible windows on the top</system:String>
+
+</ResourceDictionary>

@@ -1,5 +1,4 @@
-﻿using Flow.Launcher.Infrastructure.UserSettings;
-using Flow.Launcher.Plugin;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -9,6 +8,8 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -16,10 +17,13 @@ namespace Flow.Launcher.ViewModel
     {
         #region Private Fields
 
+        private readonly string ClassName = nameof(ResultsViewModel);
+
         public ResultCollection Results { get; }
 
-        private readonly object _collectionLock = new object();
+        private readonly object _collectionLock = new();
         private readonly Settings _settings;
+        private readonly MainViewModel _mainVM;
         private int MaxResults => _settings?.MaxResultsToShow ?? 6;
 
         public ResultsViewModel()
@@ -27,14 +31,22 @@ namespace Flow.Launcher.ViewModel
             Results = new ResultCollection();
             BindingOperations.EnableCollectionSynchronization(Results, _collectionLock);
         }
-        public ResultsViewModel(Settings settings) : this()
+
+        public ResultsViewModel(Settings settings, MainViewModel mainVM) : this()
         {
             _settings = settings;
+            _mainVM = mainVM;
             _settings.PropertyChanged += (s, e) =>
             {
-                if (e.PropertyName == nameof(_settings.MaxResultsToShow))
+                switch (e.PropertyName)
                 {
-                    OnPropertyChanged(nameof(MaxHeight));
+                    case nameof(_settings.MaxResultsToShow):
+                        OnPropertyChanged(nameof(MaxHeight));
+                        break;
+                    case nameof(_settings.ItemHeightSize):
+                        OnPropertyChanged(nameof(ItemHeightSize));
+                        OnPropertyChanged(nameof(MaxHeight));
+                        break;
                 }
             };
         }
@@ -43,14 +55,37 @@ namespace Flow.Launcher.ViewModel
 
         #region Properties
 
-        public double MaxHeight => MaxResults * (double)Application.Current.FindResource("ResultItemHeight")!;
+        public bool IsPreviewOn { get; set; }
+
+        public double MaxHeight
+        {
+            get
+            {
+                var newResultsCount = MaxResults;
+                if (IsPreviewOn)
+                {
+                    newResultsCount = (int)Math.Ceiling(380 / _settings.ItemHeightSize);
+                    if (newResultsCount < MaxResults)
+                    {
+                        newResultsCount = MaxResults;
+                    }
+                }
+                return newResultsCount * _settings.ItemHeightSize;
+            }
+        }
+
+        public double ItemHeightSize
+        {
+            get => _settings.ItemHeightSize;
+            set => _settings.ItemHeightSize = value;
+        }
 
         public int SelectedIndex { get; set; }
 
         public ResultViewModel SelectedItem { get; set; }
         public Thickness Margin { get; set; }
         public Visibility Visibility { get; set; } = Visibility.Collapsed;
-        
+
         public ICommand RightClickResultCommand { get; init; }
         public ICommand LeftClickResultCommand { get; init; }
 
@@ -58,7 +93,7 @@ namespace Flow.Launcher.ViewModel
 
         #region Private Methods
 
-        private int InsertIndexOf(int newScore, IList<ResultViewModel> list)
+        private static int InsertIndexOf(int newScore, IList<ResultViewModel> list)
         {
             int index = 0;
             for (; index < list.Count; index++)
@@ -86,7 +121,6 @@ namespace Flow.Launcher.ViewModel
                 return -1;
             }
         }
-
 
         #endregion
 
@@ -117,6 +151,11 @@ namespace Flow.Launcher.ViewModel
             SelectedIndex = NewIndex(0);
         }
 
+        public void SelectLastResult()
+        {
+            SelectedIndex = NewIndex(Results.Count - 1);
+        }
+
         public void Clear()
         {
             lock (_collectionLock)
@@ -144,34 +183,40 @@ namespace Flow.Launcher.ViewModel
 
             UpdateResults(newResults);
         }
+
         /// <summary>
         /// To avoid deadlock, this method should not called from main thread
         /// </summary>
-        public void AddResults(IEnumerable<ResultsForUpdate> resultsForUpdates, CancellationToken token)
+        public void AddResults(ICollection<ResultsForUpdate> resultsForUpdates, CancellationToken token, bool reselect = true)
         {
+            // Since NewResults may need to clear existing results, do not check token cancellation after this point
             var newResults = NewResults(resultsForUpdates);
 
-            if (token.IsCancellationRequested)
-                return;
-
-            UpdateResults(newResults, token);
+            UpdateResults(newResults, reselect, token);
         }
 
-        private void UpdateResults(List<ResultViewModel> newResults, CancellationToken token = default)
+        private void UpdateResults(List<ResultViewModel> newResults, bool reselect = true, CancellationToken token = default)
         {
             lock (_collectionLock)
             {
                 // update UI in one run, so it can avoid UI flickering
                 Results.Update(newResults, token);
-                if (Results.Any())
+                if (reselect && Results.Any())
                     SelectedItem = Results[0];
             }
+
+            if (token.IsCancellationRequested)
+                return;
 
             switch (Visibility)
             {
                 case Visibility.Collapsed when Results.Count > 0:
-                    SelectedIndex = 0;
-                    Visibility = Visibility.Visible;
+                    if (_mainVM == null || // The results are for preview only in appearance page
+                        _mainVM.ResultsSelected(this)) // The results are selected
+                    {
+                        SelectedIndex = 0;
+                        Visibility = Visibility.Visible;
+                    }
                     break;
                 case Visibility.Visible when Results.Count == 0:
                     Visibility = Visibility.Collapsed;
@@ -184,7 +229,6 @@ namespace Flow.Launcher.ViewModel
             if (newRawResults.Count == 0)
                 return Results;
 
-
             var newResults = newRawResults.Select(r => new ResultViewModel(r, _settings));
 
             return Results.Where(r => r.Result.PluginID != resultId)
@@ -193,19 +237,32 @@ namespace Flow.Launcher.ViewModel
                 .ToList();
         }
 
-        private List<ResultViewModel> NewResults(IEnumerable<ResultsForUpdate> resultsForUpdates)
+        private List<ResultViewModel> NewResults(ICollection<ResultsForUpdate> resultsForUpdates)
         {
             if (!resultsForUpdates.Any())
+            {
+                App.API.LogDebug(ClassName, "No results for updates, returning existing results");
                 return Results;
+            }
 
-            return Results.Where(r => r != null && !resultsForUpdates.Any(u => u.ID == r.Result.PluginID))
-                          .Concat(resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings)))
-                          .OrderByDescending(rv => rv.Result.Score)
-                          .ToList();
+            var newResults = resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings));
+
+            if (resultsForUpdates.Any(x => x.ShouldClearExistingResults))
+            {
+                App.API.LogDebug(ClassName, $"Existing results are cleared for query");
+                return newResults.OrderByDescending(rv => rv.Result.Score).ToList();
+            }
+
+            App.API.LogDebug(ClassName, $"Keeping existing results for {resultsForUpdates.Count} queries");
+            return Results.Where(r => r?.Result != null && resultsForUpdates.All(u => u.ID != r.Result.PluginID))
+                              .Concat(newResults)
+                              .OrderByDescending(rv => rv.Result.Score)
+                              .ToList();
         }
         #endregion
 
         #region FormattedText Dependency Property
+
         public static readonly DependencyProperty FormattedTextProperty = DependencyProperty.RegisterAttached(
             "FormattedText",
             typeof(Inline),
@@ -224,8 +281,7 @@ namespace Flow.Launcher.ViewModel
 
         private static void FormattedTextPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var textBlock = d as TextBlock;
-            if (textBlock == null) return;
+            if (d is not TextBlock textBlock) return;
 
             var inline = (Inline)e.NewValue;
 
@@ -234,45 +290,45 @@ namespace Flow.Launcher.ViewModel
 
             textBlock.Inlines.Add(inline);
         }
+
         #endregion
 
         public class ResultCollection : List<ResultViewModel>, INotifyCollectionChanged
         {
             private long editTime = 0;
 
-            private CancellationToken _token;
-
             public event NotifyCollectionChangedEventHandler CollectionChanged;
-
 
             protected void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
             {
                 CollectionChanged?.Invoke(this, e);
             }
 
-            public void BulkAddAll(List<ResultViewModel> resultViews)
+            private void BulkAddAll(List<ResultViewModel> resultViews, CancellationToken token = default)
             {
                 AddRange(resultViews);
 
                 // can return because the list will be cleared next time updated, which include a reset event
-                if (_token.IsCancellationRequested)
+                if (token.IsCancellationRequested)
                     return;
 
                 // manually update event
                 // wpf use DirectX / double buffered already, so just reset all won't cause ui flickering
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             }
-            private void AddAll(List<ResultViewModel> Items)
+
+            private void AddAll(List<ResultViewModel> Items, CancellationToken token = default)
             {
                 for (int i = 0; i < Items.Count; i++)
                 {
                     var item = Items[i];
-                    if (_token.IsCancellationRequested)
+                    if (token.IsCancellationRequested)
                         return;
                     Add(item);
                     OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, i));
                 }
             }
+
             public void RemoveAll(int Capacity = 512)
             {
                 Clear();
@@ -288,21 +344,30 @@ namespace Flow.Launcher.ViewModel
             /// <param name="newItems"></param>
             public void Update(List<ResultViewModel> newItems, CancellationToken token = default)
             {
-                _token = token;
-                if (Count == 0 && newItems.Count == 0 || _token.IsCancellationRequested)
+                // Since NewResults may need to clear existing results, so we cannot check token cancellation here
+                if (Count == 0 && newItems.Count == 0)
                     return;
 
                 if (editTime < 10 || newItems.Count < 30)
                 {
                     if (Count != 0) RemoveAll(newItems.Count);
-                    AddAll(newItems);
+
+                    // After results are removed, we need to check the token cancellation
+                    // so that we will not add new items from the cancelled queries
+                    if (token.IsCancellationRequested) return;
+
+                    AddAll(newItems, token);
                     editTime++;
-                    return;
                 }
                 else
                 {
                     Clear();
-                    BulkAddAll(newItems);
+
+                    // After results are removed, we need to check the token cancellation
+                    // so that we will not add new items from the cancelled queries
+                    if (token.IsCancellationRequested) return;
+
+                    BulkAddAll(newItems, token);
                     if (Capacity > 8000 && newItems.Count < 3000)
                     {
                         Capacity = newItems.Count;

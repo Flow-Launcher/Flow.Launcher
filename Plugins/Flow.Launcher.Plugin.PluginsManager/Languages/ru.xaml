@@ -6,36 +6,56 @@
     <system:String x:Key="plugin_pluginsmanager_download_success">Successfully downloaded</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_error">Error: Unable to download the plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} by {1} {2}{3}Would you like to uninstall this plugin? After the uninstallation Flow will automatically restart.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_prompt_no_restart">{0} by {1} {2}{2}Would you like to uninstall this plugin?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} by {1} {2}{3}Would you like to install this plugin? After the installation Flow will automatically restart.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_prompt_no_restart">{0} by {1} {2}{2}Would you like to install this plugin?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_title">Plugin Install</system:String>
     <system:String x:Key="plugin_pluginsmanager_installing_plugin">Installing Plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Download and install {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Plugin Uninstall</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_title">Keep plugin settings</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_subtitle">Do you want to keep the settings of the plugin for the next usage?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin successfully installed. Restarting Flow, please wait...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Unable to find the plugin.json metadata file from the extracted zip file.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Error: A plugin which has the same or greater version with {0} already exists.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_title">Error installing plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">Error occurred while trying to install {0}</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_noresult_title">No update available</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_error_title">Error uninstalling plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_noresult_title">Нет доступных обновлений</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_subtitle">All plugins are up to date</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} by {1} {2}{3}Would you like to update this plugin? After the update Flow will automatically restart.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_prompt_no_restart">{0} by {1} {2}{2}Would you like to update this plugin?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_title">Plugin Update</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_exists">This plugin has an update, would you like to see it?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">This plugin is already installed</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_title">Plugin Manifest Download Failed</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Please check if you can connect to github.com. This error means you may not be able to install or update plugins.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Installing from an unknown source</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_title">Update all plugins</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_subtitle">Would you like to update all plugins?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_prompt">Would you like to update {0} plugins?{1}Flow Launcher will restart after updating all plugins.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_prompt_no_restart">Would you like to update {0} plugins?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_success_restart">{0} plugins successfully updated. Restarting Flow, please wait...</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_success_restart">Plugin {0} successfully updated. Restarting Flow, please wait...</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Установка из неизвестного источника</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">You are installing this plugin from an unknown source and it may contain potential risks!{0}{0}Please ensure you understand where this plugin is from and that it is safe.{0}{0}Would you like to continue still?{0}{0}(You can switch off this warning via settings)</system:String>
 
-    <!--  Controls  -->
+    <system:String x:Key="plugin_pluginsmanager_install_success_no_restart">Plugin {0} successfully installed. Please restart Flow.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_success_no_restart">Plugin {0} successfully uninstalled. Please restart Flow.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">Plugin {0} successfully updated. Please restart Flow.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">{0} plugins successfully updated. Please restart Flow.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">Plugin {0} has already been modified. Please restart Flow before making any further changes.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_title">{0} modified already</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_message">Please restart Flow before making any further changes</system:String>
+
+    <system:String x:Key="plugin_pluginsmanager_invalid_zip_title">Invalid zip installer file</system:String>
+    <system:String x:Key="plugin_pluginsmanager_invalid_zip_subtitle">Please check if there is a plugin.json in {0}</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_name">Plugins Manager</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_description">Management of installing, uninstalling or updating Flow Launcher plugins</system:String>
-    <system:String x:Key="plugin_pluginsmanager_unknown_author">Unknown Author</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_description">Install, uninstall or update Flow Launcher plugins via the search window</system:String>
+    <system:String x:Key="plugin_pluginsmanager_unknown_author">Автор неизвестен</system:String>
 
     <!--  Context menu items  -->
-    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_openwebsite_title">Open website</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_openwebsite_title">Перейти на сайт</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_openwebsite_subtitle">Visit the plugin's website</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_title">See source code</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_subtitle">See the plugin's source code</system:String>
@@ -46,4 +66,5 @@
 
     <!--  Settings menu items  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Install from unknown source warning</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugins Manager</system:String>
 </ResourceDictionary>

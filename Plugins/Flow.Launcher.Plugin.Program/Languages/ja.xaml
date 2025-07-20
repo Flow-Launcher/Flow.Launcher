@@ -4,16 +4,16 @@
     <!--  Program setting  -->
     <system:String x:Key="flowlauncher_plugin_program_reset">Reset Default</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete">削除</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_edit">編</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_add">追</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_name">Name</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit">編集</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_add">追加</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_name">名前</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable">有効</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enabled">Enabled</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable">Disable</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable">無効</system:String>
     <system:String x:Key="flowlauncher_plugin_program_status">Status</system:String>
     <system:String x:Key="flowlauncher_plugin_program_true">Enabled</system:String>
     <system:String x:Key="flowlauncher_plugin_program_false">Disabled</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_location">Location</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_location">場所</system:String>
     <system:String x:Key="flowlauncher_plugin_program_all_programs">All Programs</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes">File Type</system:String>
     <system:String x:Key="flowlauncher_plugin_program_reindex">Reindex</system:String>
@@ -28,10 +28,14 @@
     <system:String x:Key="flowlauncher_plugin_program_index_registry_tooltip">When enabled, Flow will load programs from the registry</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_PATH">PATH</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">When enabled, Flow will load programs from the PATH environment variable</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">Hide app path</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">For executable files such as UWP or lnk, hide the file path from being visible</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_description">Search in Program Description</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">アプリのパスを非表示</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">UWPやlnkなどの実行可能ファイルについて、サブタイトル領域にファイルパスが表示されないようにします。</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers">Hide uninstallers</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">Hides programs with common uninstaller names, such as unins000.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_description">プログラムの説明で検索</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow will search program's description</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp">Hide duplicated apps</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp_tooltip">Hide duplicated Win32 programs that are already in the UWP list</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Suffixes</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">Max Depth</system:String>
 
@@ -42,6 +46,8 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">Please select a program source</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">Are your sure to delete {0}?</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_not_user_added">Please select program sources that are not added by you</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_user_added">Please select program sources that are added by you</system:String>
     <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Another program source with the same location already exists.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Program Source</system:String>
@@ -67,19 +73,20 @@
         Insert protocols of .url files you want to index. Protocols should be separated by ';', and should end with &quot;://&quot;. (ex&gt;ftp://;mailto://)
     </system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Run As Different User</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Run As Administrator</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">別のユーザーとして実行</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">管理者として実行</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Open containing folder</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">Disable this program from displaying</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">Hide</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Open target folder</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_plugin_name">Program</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_plugin_description">Search programs in Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_plugin_name">プログラム</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_plugin_description">Flow Launcherでプログラムを検索</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_invalid_path">Invalid Path</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Customized Explorer</system:String>
     <system:String x:Key="flowlauncher_plugin_program_args">Args</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">You can customized the explorer used for opening the container folder by inputing the Environmental Variable of the explorer you want to use. It will be useful to use CMD to test whether the Environmental Variable is available.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">You can customize the explorer used for opening the container folder by inputing the Environmental Variable of the explorer you want to use. It will be useful to use CMD to test whether the Environmental Variable is available.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Enter the customized args you want to add for your customized explorer. %s for parent directory, %f for full path (which only works for win32). Check the explorer's website for details.</system:String>
 
     <!--  Dialogs  -->

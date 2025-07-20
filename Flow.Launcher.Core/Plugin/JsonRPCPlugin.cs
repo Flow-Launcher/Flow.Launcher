@@ -1,31 +1,14 @@
-﻿using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Infrastructure;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Plugin;
 using Microsoft.IO;
-using System.Windows;
-using System.Windows.Controls;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
-using CheckBox = System.Windows.Controls.CheckBox;
-using Control = System.Windows.Controls.Control;
-using Orientation = System.Windows.Controls.Orientation;
-using TextBox = System.Windows.Controls.TextBox;
-using UserControl = System.Windows.Controls.UserControl;
-using System.Windows.Documents;
-using static System.Windows.Forms.LinkLabel;
-using Droplex;
-using System.Windows.Forms;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -33,29 +16,24 @@ namespace Flow.Launcher.Core.Plugin
     /// Represent the plugin that using JsonPRC
     /// every JsonRPC plugin should has its own plugin instance
     /// </summary>
-    internal abstract class JsonRPCPlugin : IAsyncPlugin, IContextMenu, ISettingProvider, ISavable
+    internal abstract class JsonRPCPlugin : JsonRPCPluginBase
     {
-        protected PluginInitContext context;
-        public const string JsonRPC = "JsonRPC";
+        public new const string JsonRPC = "JsonRPC";
+
+        private static readonly string ClassName = nameof(JsonRPCPlugin);
 
         protected abstract Task<Stream> RequestAsync(JsonRPCRequestModel rpcRequest, CancellationToken token = default);
         protected abstract string Request(JsonRPCRequestModel rpcRequest, CancellationToken token = default);
 
         private static readonly RecyclableMemoryStreamManager BufferManager = new();
 
-        private string SettingConfigurationPath => Path.Combine(context.CurrentPluginMetadata.PluginDirectory, "SettingsTemplate.yaml");
-        private string SettingPath => Path.Combine(DataLocation.PluginSettingsDirectory, context.CurrentPluginMetadata.Name, "Settings.json");
+        private int RequestId { get; set; }
 
-        public List<Result> LoadContextMenus(Result selectedResult)
+        public override List<Result> LoadContextMenus(Result selectedResult)
         {
-            var request = new JsonRPCRequestModel
-            {
-                Method = "context_menu",
-                Parameters = new[]
-                {
-                    selectedResult.ContextData
-                }
-            };
+            var request = new JsonRPCRequestModel(RequestId++, 
+                "context_menu", 
+                new[] { selectedResult.ContextData });
             var output = Request(request);
             return DeserializedResult(output);
         }
@@ -75,14 +53,6 @@ namespace Flow.Launcher.Core.Plugin
                 new JsonObjectConverter()
             }
         };
-
-        private static readonly JsonSerializerOptions settingSerializeOption = new()
-        {
-            WriteIndented = true
-        };
-        private Dictionary<string, object> Settings { get; set; }
-
-        private readonly Dictionary<string, FrameworkElement> _settingControls = new();
 
         private async Task<List<Result>> DeserializedResultAsync(Stream output)
         {
@@ -106,84 +76,40 @@ namespace Flow.Launcher.Core.Plugin
             return ParseResults(queryResponseModel);
         }
 
-
-        private List<Result> ParseResults(JsonRPCQueryResponseModel queryResponseModel)
+        protected override async Task<bool> ExecuteResultAsync(JsonRPCResult result)
         {
-            if (queryResponseModel.Result == null) return null;
+            if (result.JsonRPCAction == null) return false;
 
-            if (!string.IsNullOrEmpty(queryResponseModel.DebugMessage))
+            if (string.IsNullOrEmpty(result.JsonRPCAction.Method))
             {
-                context.API.ShowMsg(queryResponseModel.DebugMessage);
+                return !result.JsonRPCAction.DontHideAfterAction;
             }
 
-            foreach (var result in queryResponseModel.Result)
+            if (result.JsonRPCAction.Method.StartsWith("Flow.Launcher."))
             {
-                result.AsyncAction = async c =>
+                ExecuteFlowLauncherAPI(result.JsonRPCAction.Method["Flow.Launcher.".Length..],
+                    result.JsonRPCAction.Parameters);
+            }
+            else
+            {
+                await using var actionResponse = await RequestAsync(result.JsonRPCAction);
+
+                if (actionResponse.Length == 0)
                 {
-                    UpdateSettings(result.SettingsChange);
-
-                    if (result.JsonRPCAction == null) return false;
-
-                    if (string.IsNullOrEmpty(result.JsonRPCAction.Method))
-                    {
-                        return !result.JsonRPCAction.DontHideAfterAction;
-                    }
-
-                    if (result.JsonRPCAction.Method.StartsWith("Flow.Launcher."))
-                    {
-                        ExecuteFlowLauncherAPI(result.JsonRPCAction.Method["Flow.Launcher.".Length..],
-                            result.JsonRPCAction.Parameters);
-                    }
-                    else
-                    {
-                        await using var actionResponse = await RequestAsync(result.JsonRPCAction);
-
-                        if (actionResponse.Length == 0)
-                        {
-                            return !result.JsonRPCAction.DontHideAfterAction;
-                        }
-
-                        var jsonRpcRequestModel = await
-                            JsonSerializer.DeserializeAsync<JsonRPCRequestModel>(actionResponse, options);
-
-                        if (jsonRpcRequestModel?.Method?.StartsWith("Flow.Launcher.") ?? false)
-                        {
-                            ExecuteFlowLauncherAPI(jsonRpcRequestModel.Method["Flow.Launcher.".Length..],
-                                jsonRpcRequestModel.Parameters);
-                        }
-                    }
-
                     return !result.JsonRPCAction.DontHideAfterAction;
-                };
+                }
+
+                var jsonRpcRequestModel = await
+                    JsonSerializer.DeserializeAsync<JsonRPCRequestModel>(actionResponse, options);
+
+                if (jsonRpcRequestModel?.Method?.StartsWith("Flow.Launcher.") ?? false)
+                {
+                    ExecuteFlowLauncherAPI(jsonRpcRequestModel.Method["Flow.Launcher.".Length..],
+                        jsonRpcRequestModel.Parameters);
+                }
             }
 
-            var results = new List<Result>();
-
-            results.AddRange(queryResponseModel.Result);
-
-            UpdateSettings(queryResponseModel.SettingsChange);
-
-            return results;
-        }
-
-        private void ExecuteFlowLauncherAPI(string method, object[] parameters)
-        {
-            var parametersTypeArray = parameters.Select(param => param.GetType()).ToArray();
-            var methodInfo = typeof(IPublicAPI).GetMethod(method, parametersTypeArray);
-            if (methodInfo == null)
-            {
-                return;
-            }
-            try
-            {
-                methodInfo.Invoke(PluginManager.API, parameters);
-            }
-            catch (Exception)
-            {
-#if (DEBUG)
-                throw;
-#endif
-            }
+            return !result.JsonRPCAction.DontHideAfterAction;
         }
 
         /// <summary>
@@ -223,11 +149,11 @@ namespace Flow.Launcher.Core.Plugin
                     var error = standardError.ReadToEnd();
                     if (!string.IsNullOrEmpty(error))
                     {
-                        Log.Error($"|JsonRPCPlugin.Execute|{error}");
+                        Context.API.LogError(ClassName, error);
                         return string.Empty;
                     }
 
-                    Log.Error("|JsonRPCPlugin.Execute|Empty standard output and standard error.");
+                    Context.API.LogError(ClassName, "Empty standard output and standard error.");
                     return string.Empty;
                 }
 
@@ -235,8 +161,8 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch (Exception e)
             {
-                Log.Exception(
-                    $"|JsonRPCPlugin.Execute|Exception for filename <{startInfo.FileName}> with argument <{startInfo.Arguments}>",
+                Context.API.LogException(ClassName,
+                    $"Exception for filename <{startInfo.FileName}> with argument <{startInfo.Arguments}>",
                     e);
                 return string.Empty;
             }
@@ -247,7 +173,7 @@ namespace Flow.Launcher.Core.Plugin
             using var process = Process.Start(startInfo);
             if (process == null)
             {
-                Log.Error("|JsonRPCPlugin.ExecuteAsync|Can't start new process");
+                Context.API.LogError(ClassName, "Can't start new process");
                 return Stream.Null;
             }
 
@@ -267,7 +193,7 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 catch (Exception e)
                 {
-                    Log.Exception("|JsonRPCPlugin.ExecuteAsync|Exception when kill process", e);
+                    Context.API.LogException(ClassName, "Exception when kill process", e);
                 }
             });
 
@@ -288,7 +214,7 @@ namespace Flow.Launcher.Core.Plugin
             {
                 case (0, 0):
                     const string errorMessage = "Empty JSON-RPC Response.";
-                    Log.Warn($"|{nameof(JsonRPCPlugin)}.{nameof(ExecuteAsync)}|{errorMessage}");
+                    Context.API.LogWarn(ClassName, errorMessage);
                     break;
                 case (_, not 0):
                     throw new InvalidDataException(Encoding.UTF8.GetString(errorBuffer.ToArray())); // The process has exited with an error message
@@ -299,379 +225,19 @@ namespace Flow.Launcher.Core.Plugin
             return sourceBuffer;
         }
 
-
-        public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
+        public override async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
-            var request = new JsonRPCRequestModel
-            {
-                Method = "query",
-                Parameters = new object[]
+            var request = new JsonRPCRequestModel(RequestId++,
+                "query",
+                new object[]
                 {
                     query.Search
                 },
-                Settings = Settings
-            };
+                Settings?.Inner);
+
             var output = await RequestAsync(request, token);
+
             return await DeserializedResultAsync(output);
         }
-
-        public async Task InitSettingAsync()
-        {
-            if (!File.Exists(SettingConfigurationPath))
-                return;
-
-            if (File.Exists(SettingPath))
-            {
-                await using var fileStream = File.OpenRead(SettingPath);
-                Settings = await JsonSerializer.DeserializeAsync<Dictionary<string, object>>(fileStream, options);
-            }
-
-            var deserializer = new DeserializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
-            _settingsTemplate = deserializer.Deserialize<JsonRpcConfigurationModel>(await File.ReadAllTextAsync(SettingConfigurationPath));
-
-            Settings ??= new Dictionary<string, object>();
-
-            foreach (var (type, attribute) in _settingsTemplate.Body)
-            {
-                if (type == "textBlock")
-                    continue;
-                if (!Settings.ContainsKey(attribute.Name))
-                {
-                    Settings[attribute.Name] = attribute.DefaultValue;
-                }
-            }
-        }
-
-        public virtual async Task InitAsync(PluginInitContext context)
-        {
-            this.context = context;
-            await InitSettingAsync();
-        }
-        private static readonly Thickness settingControlMargin = new(0, 9, 18, 9);
-        private static readonly Thickness settingCheckboxMargin = new(0, 9, 9, 9);
-        private static readonly Thickness settingPanelMargin = new(0, 0, 0, 0);
-        private static readonly Thickness settingTextBlockMargin = new(70, 9, 18, 9);
-        private static readonly Thickness settingLabelPanelMargin = new(70, 9, 18, 9);
-        private static readonly Thickness settingLabelMargin = new(0, 0, 0, 0);
-        private static readonly Thickness settingDescMargin = new(0, 2, 0, 0);
-        private static readonly Thickness settingSepMargin = new(0, 0, 0, 2);
-        private JsonRpcConfigurationModel _settingsTemplate;
-
-        public Control CreateSettingPanel()
-        {
-            if (Settings == null)
-                return new();
-            var settingWindow = new UserControl();
-            var mainPanel = new Grid
-            {
-                Margin = settingPanelMargin, VerticalAlignment = VerticalAlignment.Center
-            };
-            ColumnDefinition gridCol1 = new ColumnDefinition();
-            ColumnDefinition gridCol2 = new ColumnDefinition();
-
-            gridCol1.Width = new GridLength(70, GridUnitType.Star);
-            gridCol2.Width = new GridLength(30, GridUnitType.Star);
-            mainPanel.ColumnDefinitions.Add(gridCol1);
-            mainPanel.ColumnDefinitions.Add(gridCol2);
-            settingWindow.Content = mainPanel;
-            int rowCount = 0;
-            foreach (var (type, attribute) in _settingsTemplate.Body)
-            {
-                Separator sep = new Separator();
-                sep.VerticalAlignment = VerticalAlignment.Top;
-                sep.Margin = settingSepMargin;
-                sep.SetResourceReference(Separator.BackgroundProperty, "Color03B"); /* for theme change */
-                var panel = new StackPanel
-                {
-                    Orientation = Orientation.Vertical,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    Margin = settingLabelPanelMargin
-                };
-                RowDefinition gridRow = new RowDefinition();
-                mainPanel.RowDefinitions.Add(gridRow);
-                var name = new TextBlock()
-                {
-                    Text = attribute.Label,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    Margin = settingLabelMargin,
-                    TextWrapping = TextWrapping.WrapWithOverflow
-                };
-                var desc = new TextBlock()
-                {
-                    Text = attribute.Description,
-                    FontSize = 12,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    Margin = settingDescMargin,
-                    TextWrapping = TextWrapping.WrapWithOverflow
-                };
-                desc.SetResourceReference(TextBlock.ForegroundProperty, "Color04B");
-
-                if (attribute.Description == null) /* if no description, hide */
-                    desc.Visibility = Visibility.Collapsed;
-
-
-                if (type != "textBlock") /* if textBlock, hide desc */
-                {
-                    panel.Children.Add(name);
-                    panel.Children.Add(desc);
-                }
-
-
-                Grid.SetColumn(panel, 0);
-                Grid.SetRow(panel, rowCount);
-
-                FrameworkElement contentControl;
-
-                switch (type)
-                {
-                    case "textBlock":
-                    {
-                        contentControl = new TextBlock
-                        {
-                            Text = attribute.Description.Replace("\\r\\n", "\r\n"),
-                            Margin = settingTextBlockMargin,
-                            Padding = new Thickness(0, 0, 0, 0),
-                            HorizontalAlignment = System.Windows.HorizontalAlignment.Left,
-                            TextAlignment = TextAlignment.Left,
-                            TextWrapping = TextWrapping.Wrap
-                        };
-                        Grid.SetColumn(contentControl, 0);
-                        Grid.SetColumnSpan(contentControl, 2);
-                        Grid.SetRow(contentControl, rowCount);
-                        if (rowCount != 0)
-                            mainPanel.Children.Add(sep);
-                        Grid.SetRow(sep, rowCount);
-                        Grid.SetColumn(sep, 0);
-                        Grid.SetColumnSpan(sep, 2);
-                        break;
-                    }
-                    case "input":
-                    {
-                        var textBox = new TextBox()
-                        {
-                            Text = Settings[attribute.Name] as string ?? string.Empty,
-                            Margin = settingControlMargin,
-                            HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
-                            ToolTip = attribute.Description
-                        };
-                        textBox.TextChanged += (_, _) =>
-                        {
-                            Settings[attribute.Name] = textBox.Text;
-                        };
-                        contentControl = textBox;
-                        Grid.SetColumn(contentControl, 1);
-                        Grid.SetRow(contentControl, rowCount);
-                        if (rowCount != 0)
-                            mainPanel.Children.Add(sep);
-                        Grid.SetRow(sep, rowCount);
-                        Grid.SetColumn(sep, 0);
-                        Grid.SetColumnSpan(sep, 2);
-                        break;
-                    }
-                    case "inputWithFileBtn":
-                    {
-                        var textBox = new TextBox()
-                        {
-                            Margin = new Thickness(10, 0, 0, 0),
-                            Text = Settings[attribute.Name] as string ?? string.Empty,
-                            HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
-                            ToolTip = attribute.Description
-                        };
-                        textBox.TextChanged += (_, _) =>
-                        {
-                            Settings[attribute.Name] = textBox.Text;
-                        };
-                        var Btn = new System.Windows.Controls.Button()
-                        {
-                            Margin = new Thickness(10, 0, 0, 0), Content = "Browse"
-                        };
-                        var dockPanel = new DockPanel()
-                        {
-                            Margin = settingControlMargin
-                        };
-                        DockPanel.SetDock(Btn, Dock.Right);
-                        dockPanel.Children.Add(Btn);
-                        dockPanel.Children.Add(textBox);
-                        contentControl = dockPanel;
-                        Grid.SetColumn(contentControl, 1);
-                        Grid.SetRow(contentControl, rowCount);
-                        if (rowCount != 0)
-                            mainPanel.Children.Add(sep);
-                        Grid.SetRow(sep, rowCount);
-                        Grid.SetColumn(sep, 0);
-                        Grid.SetColumnSpan(sep, 2);
-                        break;
-                    }
-                    case "textarea":
-                    {
-                        var textBox = new TextBox()
-                        {
-                            Height = 120,
-                            Margin = settingControlMargin,
-                            VerticalAlignment = VerticalAlignment.Center,
-                            TextWrapping = TextWrapping.WrapWithOverflow,
-                            AcceptsReturn = true,
-                            HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
-                            Text = Settings[attribute.Name] as string ?? string.Empty,
-                            ToolTip = attribute.Description
-                        };
-                        textBox.TextChanged += (sender, _) =>
-                        {
-                            Settings[attribute.Name] = ((TextBox)sender).Text;
-                        };
-                        contentControl = textBox;
-                        Grid.SetColumn(contentControl, 1);
-                        Grid.SetRow(contentControl, rowCount);
-                        if (rowCount != 0)
-                            mainPanel.Children.Add(sep);
-                        Grid.SetRow(sep, rowCount);
-                        Grid.SetColumn(sep, 0);
-                        Grid.SetColumnSpan(sep, 2);
-                        break;
-                    }
-                    case "passwordBox":
-                    {
-                        var passwordBox = new PasswordBox()
-                        {
-                            Margin = settingControlMargin,
-                            Password = Settings[attribute.Name] as string ?? string.Empty,
-                            PasswordChar = attribute.passwordChar == default ? '*' : attribute.passwordChar,
-                            HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
-                            ToolTip = attribute.Description
-                        };
-                        passwordBox.PasswordChanged += (sender, _) =>
-                        {
-                            Settings[attribute.Name] = ((PasswordBox)sender).Password;
-                        };
-                        contentControl = passwordBox;
-                        Grid.SetColumn(contentControl, 1);
-                        Grid.SetRow(contentControl, rowCount);
-                        if (rowCount != 0)
-                            mainPanel.Children.Add(sep);
-                        Grid.SetRow(sep, rowCount);
-                        Grid.SetColumn(sep, 0);
-                        Grid.SetColumnSpan(sep, 2);
-                        break;
-                    }
-                    case "dropdown":
-                    {
-                        var comboBox = new System.Windows.Controls.ComboBox()
-                        {
-                            ItemsSource = attribute.Options,
-                            SelectedItem = Settings[attribute.Name],
-                            Margin = settingControlMargin,
-                            HorizontalAlignment = System.Windows.HorizontalAlignment.Right,
-                            ToolTip = attribute.Description
-                        };
-                        comboBox.SelectionChanged += (sender, _) =>
-                        {
-                            Settings[attribute.Name] = (string)((System.Windows.Controls.ComboBox)sender).SelectedItem;
-                        };
-                        contentControl = comboBox;
-                        Grid.SetColumn(contentControl, 1);
-                        Grid.SetRow(contentControl, rowCount);
-                        if (rowCount != 0)
-                            mainPanel.Children.Add(sep);
-                        Grid.SetRow(sep, rowCount);
-                        Grid.SetColumn(sep, 0);
-                        Grid.SetColumnSpan(sep, 2);
-                        break;
-                    }
-                    case "checkbox":
-                        var checkBox = new CheckBox
-                        {
-                            IsChecked = Settings[attribute.Name] is bool isChecked ? isChecked : bool.Parse(attribute.DefaultValue),
-                            Margin = settingCheckboxMargin,
-                            HorizontalAlignment = System.Windows.HorizontalAlignment.Right,
-                            ToolTip = attribute.Description
-                        };
-                        checkBox.Click += (sender, _) =>
-                        {
-                            Settings[attribute.Name] = ((CheckBox)sender).IsChecked;
-                        };
-                        contentControl = checkBox;
-                        Grid.SetColumn(contentControl, 1);
-                        Grid.SetRow(contentControl, rowCount);
-                        if (rowCount != 0)
-                            mainPanel.Children.Add(sep);
-                        Grid.SetRow(sep, rowCount);
-                        Grid.SetColumn(sep, 0);
-                        Grid.SetColumnSpan(sep, 2);
-                        break;
-                    case "hyperlink":
-                        var hyperlink = new Hyperlink
-                        {
-                            ToolTip = attribute.Description, NavigateUri = attribute.url
-                        };
-                        var linkbtn = new System.Windows.Controls.Button
-                        {
-                            HorizontalAlignment = System.Windows.HorizontalAlignment.Right, Margin = settingControlMargin
-                        };
-                        linkbtn.Content = attribute.urlLabel;
-
-                        contentControl = linkbtn;
-                        Grid.SetColumn(contentControl, 1);
-                        Grid.SetRow(contentControl, rowCount);
-                        if (rowCount != 0)
-                            mainPanel.Children.Add(sep);
-                        Grid.SetRow(sep, rowCount);
-                        Grid.SetColumn(sep, 0);
-                        Grid.SetColumnSpan(sep, 2);
-                        break;
-                    default:
-                        continue;
-                }
-                if (type != "textBlock")
-                    _settingControls[attribute.Name] = contentControl;
-                mainPanel.Children.Add(panel);
-                mainPanel.Children.Add(contentControl);
-                rowCount++;
-
-            }
-            return settingWindow;
-        }
-
-        public void Save()
-        {
-            if (Settings != null)
-            {
-                Helper.ValidateDirectory(Path.Combine(DataLocation.PluginSettingsDirectory, context.CurrentPluginMetadata.Name));
-                File.WriteAllText(SettingPath, JsonSerializer.Serialize(Settings, settingSerializeOption));
-            }
-        }
-
-        public void UpdateSettings(Dictionary<string, object> settings)
-        {
-            if (settings == null || settings.Count == 0)
-                return;
-
-            foreach (var (key, value) in settings)
-            {
-                if (Settings.ContainsKey(key))
-                {
-                    Settings[key] = value;
-                }
-                if (_settingControls.ContainsKey(key))
-                {
-
-                    switch (_settingControls[key])
-                    {
-                        case TextBox textBox:
-                            textBox.Dispatcher.Invoke(() => textBox.Text = value as string);
-                            break;
-                        case PasswordBox passwordBox:
-                            passwordBox.Dispatcher.Invoke(() => passwordBox.Password = value as string);
-                            break;
-                        case System.Windows.Controls.ComboBox comboBox:
-                            comboBox.Dispatcher.Invoke(() => comboBox.SelectedItem = value);
-                            break;
-                        case CheckBox checkBox:
-                            checkBox.Dispatcher.Invoke(() => checkBox.IsChecked = value is bool isChecked ? isChecked : bool.Parse(value as string));
-                            break;
-                    }
-                }
-            }
-        }
     }
-
 }

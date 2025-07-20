@@ -1,3 +1,5 @@
+# This file should contain names of products, companies, or individuals that aren't in a standard dictionary (e.g., GitHub, Keptn, VSCode).
+
 crowdin
 DWM
 workflows
@@ -19,7 +21,6 @@ Prioritise
 Segoe
 Google
 Customise
-UWP
 uwp
 Bokmal
 Bokm
@@ -35,7 +36,6 @@ mscorlib
 pythonw
 dotnet
 winget
-jjw24
 wolframalpha
 gmail
 duckduckgo
@@ -50,7 +50,6 @@ srchadmin
 EWX
 dlgtext
 CMD
-appref-ms
 appref
 TSource
 runas
@@ -58,8 +57,6 @@ dpi
 popup
 ptr
 pluginindicator
-TobiasSekan
-Img
 img
 resx
 bak
@@ -70,12 +67,10 @@ dlg
 ddd
 dddd
 clearlogfolder
-ACCENT_ENABLE_TRANSPARENTGRADIENT
-ACCENT_ENABLE_BLURBEHIND
-WCA_ACCENT_POLICY
 HGlobal
 dopusrt
 firefox
+Firefox
 msedge
 svgc
 ime
@@ -84,7 +79,28 @@ txb
 btn
 otf
 searchplugin
-Noresult
 wpftk
 mkv
 flac
+IPublic
+keyevent
+KListener
+requery
+vkcode
+Polski
+Srpski
+Italiano
+quicklook
+Droplex
+Preinstalled
+errormetadatafile
+noresult
+pluginsmanager
+alreadyexists
+Softpedia
+img
+Reloadable
+metadatas
+WMP
+VSTHRD
+CJK

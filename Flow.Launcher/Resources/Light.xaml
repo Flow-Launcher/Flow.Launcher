@@ -7,19 +7,22 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <SolidColorBrush x:Key="SystemThemeBorder" Color="#aaaaaa" />
-    <SolidColorBrush x:Key="QuerySuggestionBoxForeground" Color="#b5b5b5" />
+    <SolidColorBrush x:Key="QuerySuggestionBoxForeground" Color="#51000000" />
     <SolidColorBrush x:Key="QuerySelectionBrush" Color="#0a68d8" />
     <SolidColorBrush x:Key="SubTitleForeground" Color="#818181" />
     <SolidColorBrush x:Key="SubTitleSelectedForeground" Color="#72767d" />
-    <SolidColorBrush x:Key="SearchIconForeground" Color="#d3d3d3" />
-    <SolidColorBrush x:Key="SeparatorForeground" Color="#eaeaea" />
-    <SolidColorBrush x:Key="ThumbColor" Color="#868686" />
+    <SolidColorBrush x:Key="SearchIconForeground" Color="#20000000" />
+    <SolidColorBrush x:Key="SeparatorForeground" Color="#20000000" />
+    <SolidColorBrush x:Key="ThumbColor" Color="#1F000000" />
     <SolidColorBrush x:Key="InlineHighlight" Color="#0078d7" />
-    <SolidColorBrush x:Key="HotkeyForeground" Color="#acacac" />
-    <SolidColorBrush x:Key="HotkeySelectedForeground" Color="#acacac" />
-    <Color x:Key="ItemSelectedBackgroundColorBrush">#198F8F8F</Color>
+    <SolidColorBrush x:Key="HotkeyForeground" Color="#51000000" />
+    <SolidColorBrush x:Key="HotkeySelectedForeground" Color="#51000000" />
+    <SolidColorBrush x:Key="ClockDateForeground" Color="#44000000" />
+    <Color x:Key="ItemSelectedBackgroundColorBrush">#7EFFFFFF</Color>
 
-    <SolidColorBrush x:Key="Color00B" Color="#fbfbfb" />
+    <SolidColorBrush x:Key="BasicSystemAccentColor" Color="{m:DynamicColor SystemAccentColor}" />
+
+    <SolidColorBrush x:Key="Color00B" Color="#FAFAFA" />
     <SolidColorBrush x:Key="Color01B" Color="#f3f3f3" />
     <SolidColorBrush x:Key="Color02B" Color="#ffffff" />
     <SolidColorBrush x:Key="Color03B" Color="#e5e5e5" />
@@ -50,8 +53,13 @@
     <SolidColorBrush x:Key="PluginInfoColor" Color="#8f8f8f" />
     <SolidColorBrush x:Key="BasicLabelColor" Color="#1b1b1b" />
 
+    <SolidColorBrush x:Key="NewHotkeyForeground" Color="#5E000000" />
+    <SolidColorBrush x:Key="BasicHotkeyBGColor" Color="#0A000000" />
+
     <SolidColorBrush x:Key="ThemeHoverButton" Color="#f6f6f6" />
+    <!--  Typo  -->
     <SolidColorBrush x:Key="PopuBGColor" Color="#ffffff" />
+    <SolidColorBrush x:Key="PopupBGColor" Color="#ffffff" />
     <SolidColorBrush x:Key="PopupTextColor" Color="#1b1b1b" />
     <SolidColorBrush x:Key="PopupButtonAreaBGColor" Color="#f3f3f3" />
     <SolidColorBrush x:Key="PopupButtonAreaBorderColor" Color="#e5e5e5" />
@@ -91,8 +99,33 @@
     <Color x:Key="NumberBoxColor24">#f5f5f5</Color>
     <Color x:Key="NumberBoxColor25">#878787</Color>
     <Color x:Key="NumberBoxColor26">#1b1b1b</Color>
+    <SolidColorBrush x:Key="NumberBoxPlaceHolder" Color="#A2A2A2" />
     <Color x:Key="HoverStoreGrid">#f6f6f6</Color>
 
+
+
+    <!--  Resources for HotkeyControl  -->
+    <SolidColorBrush x:Key="CustomHotkeyHover" Color="#f6f6f6" />
+    <!--  Resources for Expander  -->
+    <SolidColorBrush x:Key="CustomExpanderHover" Color="#f6f6f6" />
+    <!--  Resource for ContentDialog  -->
+    <SolidColorBrush x:Key="ContentDialogOverlayBG" Color="#4D000000" />
+
+    <!--  DIY Infobar  -->
+    <SolidColorBrush x:Key="InfoBarBD" Color="#0F000000" />
+    <SolidColorBrush
+        x:Key="InfoBarInfoIcon"
+        Opacity="0.8"
+        Color="{m:DynamicColor SystemAccentColor}" />
+    <SolidColorBrush x:Key="InfoBarInfoBG" Color="{m:DynamicColor Color01}" />
+    <SolidColorBrush x:Key="InfoBarWarningIcon" Color="#9D5D00" />
+    <SolidColorBrush x:Key="InfoBarWarningBG" Color="#FFF4CE" />
+    <SolidColorBrush x:Key="InfoBarSuccessIcon" Color="#3f973e" />
+    <SolidColorBrush x:Key="InfoBarSuccessBG" Color="#dff6dd" />
+    <SolidColorBrush x:Key="InfoBarErrorIcon" Color="#c42b1c" />
+    <SolidColorBrush x:Key="InfoBarErrorBG" Color="#fde7e9" />
+
+    <SolidColorBrush x:Key="MouseOverWindowCloseButtonForegroundBrush" Color="#ffffff" />
 
     <SolidColorBrush x:Key="ButtonOutBorder" Color="#e5e5e5" />
     <SolidColorBrush x:Key="ButtonInsideBorder" Color="#d3d3d3" />
@@ -122,8 +155,17 @@
     <m:StaticResource x:Key="CustomComboOutline" ResourceKey="Color13B" />
     <m:StaticResource x:Key="CustomComboInline" ResourceKey="Color21B" />
     <m:StaticResource x:Key="PopUpBorderBG" ResourceKey="Color07B" />
+    <SolidColorBrush x:Key="CustomPopUpBorderBG" Color="#f6f6f6" />
+    <SolidColorBrush
+        x:Key="CustomComboBorder"
+        Opacity="0.14"
+        Color="#000000" />
     <m:StaticResource x:Key="CustomComboHoverBG" ResourceKey="Color07B" />
     <m:StaticResource x:Key="CustomComboPressedBG" ResourceKey="Color07B" />
+
+    <SolidColorBrush x:Key="CustomComboItemHoverBG" Color="#E5E5E5" />
+    <SolidColorBrush x:Key="CustomComboItemSelectedHoverBG" Color="#D9D9D9" />
+
     <m:StaticResource x:Key="CustomComboPressedOutLine" ResourceKey="Color13B" />
     <m:StaticResource x:Key="CustomComboPressedText" ResourceKey="Color08B" />
     <m:StaticResource x:Key="CustomComboDisabledBG" ResourceKey="Color07B" />
@@ -134,7 +176,7 @@
 
     <Thickness x:Key="CustomComboOutlineThickness">1,1,1,0</Thickness>
     <Thickness x:Key="CustomComboInlineThickness">0,0,0,2</Thickness>
-    <Thickness x:Key="PressedCustomComboOutlineThickness">1,1,1,1</Thickness>
+    <Thickness x:Key="PressedCustomComboOutlineThickness">1,1,1,0</Thickness>
     <Thickness x:Key="DisabledCustomComboOutlineThickness">1,1,1,1</Thickness>
 
 
@@ -1017,7 +1059,8 @@
 
     <!--  Resources for NavigationView  -->
     <m:StaticResource x:Key="NavigationViewDefaultPaneBackground" ResourceKey="AcrylicInAppFillColorDefaultBrush" />
-    <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="{m:StaticColor SystemChromeMediumColor}" />
+    <!--<SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="{m:StaticColor SystemChromeMediumColor}" />-->
+    <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="{m:StaticColor Color01}" />
     <m:StaticResource x:Key="NavigationViewTopPaneBackground" ResourceKey="AcrylicInAppFillColorDefaultBrush" />
 
     <m:StaticResource x:Key="NavigationViewItemBackground" ResourceKey="SystemControlTransparentRevealBackgroundBrush" />
@@ -1594,9 +1637,11 @@
     <m:StaticResource x:Key="AccentButtonForegroundPointerOver" ResourceKey="SystemControlForegroundChromeWhiteBrush" />
     <m:StaticResource x:Key="AccentButtonForegroundPressed" ResourceKey="SystemControlForegroundChromeWhiteBrush" />
     <m:StaticResource x:Key="AccentButtonForegroundDisabled" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
-    <m:StaticResource x:Key="AccentButtonBorderBrush" ResourceKey="SystemControlForegroundTransparentBrush" />
-    <m:StaticResource x:Key="AccentButtonBorderBrushPointerOver" ResourceKey="SystemControlForegroundTransparentBrush" />
+    <m:StaticResource x:Key="AccentButtonBorderBrush" ResourceKey="SystemAccentColorDark2Brush" />
+    <m:StaticResource x:Key="AccentButtonBorderBrushPointerOver" ResourceKey="SystemAccentColorDark2Brush" />
     <m:StaticResource x:Key="AccentButtonBorderBrushPressed" ResourceKey="SystemControlHighlightTransparentBrush" />
+    <m:StaticResource x:Key="AccentButtonBorderBGPointerOver" ResourceKey="SystemControlForegroundTransparentBrush" />
+    <m:StaticResource x:Key="AccentButtonBorderBGPressed" ResourceKey="SystemControlForegroundTransparentBrush" />
     <m:StaticResource x:Key="AccentButtonBorderBrushDisabled" ResourceKey="SystemControlDisabledTransparentBrush" />
 
     <sys:Boolean x:Key="UseSystemFocusVisuals">True</sys:Boolean>

@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
-using System.Windows;
 using System.Windows.Controls;
 using Mages.Core;
-using Flow.Launcher.Plugin.Caculator.ViewModels;
-using Flow.Launcher.Plugin.Caculator.Views;
+using Flow.Launcher.Plugin.Calculator.ViewModels;
+using Flow.Launcher.Plugin.Calculator.Views;
 
-namespace Flow.Launcher.Plugin.Caculator
+namespace Flow.Launcher.Plugin.Calculator
 {
     public class Main : IPlugin, IPluginI18n, ISettingProvider
     {
@@ -19,8 +18,9 @@ namespace Flow.Launcher.Plugin.Caculator
                         @"sin|cos|tan|arcsin|arccos|arctan|" +
                         @"eigval|eigvec|eig|sum|polar|plot|round|sort|real|zeta|" +
                         @"bin2dec|hex2dec|oct2dec|" +
-                        @"==|~=|&&|\|\||" +
-                        @"[ei]|[0-9]|[\+\-\*\/\^\., ""]|[\(\)\|\!\[\]]" +
+                        @"factorial|sign|isprime|isinfty|" +
+                        @"==|~=|&&|\|\||(?:\<|\>)=?|" +
+                        @"[ei]|[0-9]|0x[\da-fA-F]+|[\+\%\-\*\/\^\., ""]|[\(\)\|\!\[\]]" +
                         @")+$", RegexOptions.Compiled);
         private static readonly Regex RegBrackets = new Regex(@"[\(\)\[\]]", RegexOptions.Compiled);
         private static Engine MagesEngine;
@@ -61,7 +61,7 @@ namespace Flow.Launcher.Plugin.Caculator
                 switch (_settings.DecimalSeparator)
                 {
                     case DecimalSeparator.Comma:
-                    case DecimalSeparator.UseSystemLocale when CultureInfo.DefaultThreadCurrentCulture.NumberFormat.NumberDecimalSeparator == ",":
+                    case DecimalSeparator.UseSystemLocale when CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator == ",":
                         expression = query.Search.Replace(",", ".");
                         break;
                     default:
@@ -95,12 +95,12 @@ namespace Flow.Launcher.Plugin.Caculator
                             {
                                 try
                                 {
-                                    Clipboard.SetDataObject(newResult);
+                                    Context.API.CopyToClipboard(newResult);
                                     return true;
                                 }
                                 catch (ExternalException)
                                 {
-                                    MessageBox.Show("Copy failed, please try later");
+                                    Context.API.ShowMsgBox("Copy failed, please try later");
                                     return false;
                                 }
                             }
@@ -155,16 +155,16 @@ namespace Flow.Launcher.Plugin.Caculator
             return value.ToString(numberFormatInfo);
         }
 
-        private string GetDecimalSeparator()
+        private static string GetDecimalSeparator()
         {
-            string systemDecimalSeperator = CultureInfo.DefaultThreadCurrentCulture.NumberFormat.NumberDecimalSeparator;
-            switch (_settings.DecimalSeparator)
+            string systemDecimalSeparator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+            return _settings.DecimalSeparator switch
             {
-                case DecimalSeparator.UseSystemLocale: return systemDecimalSeperator;
-                case DecimalSeparator.Dot: return dot;
-                case DecimalSeparator.Comma: return comma;
-                default: return systemDecimalSeperator;
-            }
+                DecimalSeparator.UseSystemLocale => systemDecimalSeparator,
+                DecimalSeparator.Dot => dot,
+                DecimalSeparator.Comma => comma,
+                _ => systemDecimalSeparator,
+            };
         }
 
         private bool IsBracketComplete(string query)

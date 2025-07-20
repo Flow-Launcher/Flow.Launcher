@@ -1,7 +1,25 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <!--  Startup  -->
+    <system:String x:Key="runtimePluginInstalledChooseRuntimePrompt">
+        Flow zistil, že máte nainštalované {0} pluginy, ktoré vyžadujú na spustenie {1}. Chcete stiahnuť {1}?
+        {2}{2}
+        Ak už ho máte nainštalovaný, kliknite na nie, a budete vyzvaný na zadanie cesty k priečinku spustiteľného súboru {1}
+    </system:String>
+    <system:String x:Key="runtimePluginChooseRuntimeExecutable">Vyberte spustiteľný súbor {0}</system:String>
+    <system:String x:Key="runtimeExecutableInvalidChooseDownload">
+        Vybrali ste nesprávny spustiteľný súbor {0}.
+        {2}{2}
+        Ak chcete znovu vybrať spustiteľný súbor {0}, kliknite na Áno. Kliknutím na Nie sa stiahne {1}.
+    </system:String>
+    <system:String x:Key="runtimePluginUnableToSetExecutablePath">Nie je možné nastaviť cestu ku spustiteľnému súboru {0}, skúste to v nastaveniach Flowu (prejdite nadol).</system:String>
+    <system:String x:Key="failedToInitializePluginsTitle">Nepodarilo sa inicializovať pluginy</system:String>
+    <system:String x:Key="failedToInitializePluginsMessage">Pluginy: {0} – nepodarilo sa načítať a mal by byť zakázaný, na pomoc kontaktujte autora pluginu</system:String>
+
     <!--  MainWindow  -->
-    <system:String x:Key="registerHotkeyFailed">Nepodarilo sa registrovať klávesovú skratku {0}</system:String>
+    <system:String x:Key="registerHotkeyFailed">Nepodarilo sa zaregistrovať klávesovú skratku &quot;{0}&quot;. Klávesová skratka môže byť používaná iným programom. Zmeňte klávesovú skratku na inú alebo ukončite iný program.</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Nepodarilo sa registrovať klávesovú skratku &quot;{0}&quot;. Skúste to znova alebo si pozrite podrobnosti v denníku</system:String>
+    <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Nepodarilo sa spustiť {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Neplatný formát súboru pre plugin Flow Launchera</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">Pri tomto výraze umiestniť navrchu</system:String>
@@ -25,6 +43,7 @@
     <system:String x:Key="GameModeToolTip">Pozastaviť používanie klávesových skratiek.</system:String>
     <system:String x:Key="PositionReset">Resetovať pozíciu</system:String>
     <system:String x:Key="PositionResetToolTip">Resetovať pozíciu vyhľadávacieho okna</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Zadajte text na vyhľadávanie</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Nastavenia</system:String>
@@ -32,21 +51,31 @@
     <system:String x:Key="portableMode">Prenosný režim</system:String>
     <system:String x:Key="portableModeToolTIp">Uloží všetky nastavenia a používateľské údaje do jedného priečinka (Užitočné pri vymeniteľných diskoch a cloudových službách).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Spustiť Flow Launcher pri spustení systému</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Pre rýchlejšie spustenie použiť úlohu pri prihlásení namiesto položky po spustení</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">Po odinštalovaní musíte úlohu manuálne odstrániť (Flow.Launcher Startup) cez Plánovač úloh</system:String>
     <system:String x:Key="setAutoStartFailed">Chybné nastavenie spustenia pri spustení</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Schovať Flow Launcher po strate fokusu</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Nezobrazovať upozornenia na novú verziu</system:String>
-    <system:String x:Key="SearchWindowPosition">Pozícia vyhľadávacieho okna</system:String>
-    <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">Zapamätať si poslednú pozíciu</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenCenter">Obrazovka zameraná na myš – Stred</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenCenterTop">Obrazovka zameraná na myš – Hore v strede</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenLeftTop">Obrazovka zameraná na myš – Vľavo hore</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenRightTop">Obrazovka zameraná na myš – Vpravo hore</system:String>
+    <system:String x:Key="SearchWindowPosition">Poloha vyhľadávacieho okna</system:String>
+    <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Zapamätať si poslednú pozíciu</system:String>
+    <system:String x:Key="SearchWindowScreenCursor">Monitor s kurzorom myši</system:String>
+    <system:String x:Key="SearchWindowScreenFocus">Monitor s aktívnym oknom</system:String>
+    <system:String x:Key="SearchWindowScreenPrimary">Primárny monitor</system:String>
+    <system:String x:Key="SearchWindowScreenCustom">Vlastný monitor</system:String>
+    <system:String x:Key="SearchWindowAlign">Poloha vyhľadávacieho okna na monitore</system:String>
+    <system:String x:Key="SearchWindowAlignCenter">Stred</system:String>
+    <system:String x:Key="SearchWindowAlignCenterTop">Hore v strede</system:String>
+    <system:String x:Key="SearchWindowAlignLeftTop">Vľavo hore</system:String>
+    <system:String x:Key="SearchWindowAlignRightTop">Vpravo hore</system:String>
+    <system:String x:Key="SearchWindowAlignCustom">Vlastná pozícia</system:String>
     <system:String x:Key="language">Jazyk</system:String>
     <system:String x:Key="lastQueryMode">Posledné vyhľadávanie</system:String>
     <system:String x:Key="lastQueryModeToolTip">Zobrazí/skryje predchádzajúce výsledky pri opätovnej aktivácii Flow Launchera.</system:String>
     <system:String x:Key="LastQueryPreserved">Ponechať</system:String>
     <system:String x:Key="LastQuerySelected">Označiť</system:String>
     <system:String x:Key="LastQueryEmpty">Vymazať</system:String>
+    <system:String x:Key="LastQueryActionKeywordPreserved">Ponechať posledný akčný príkaz</system:String>
+    <system:String x:Key="LastQueryActionKeywordSelected">Označiť posledný akčný príkaz</system:String>
     <system:String x:Key="maxShowResults">Maximum výsledkov</system:String>
     <system:String x:Key="maxShowResultsToolTip">Túto hodnotu môžete rýchlo upraviť aj pomocou klávesových skratiek CTRL + znamienko plus (+) a CTRL + znamienko mínus (-).</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorovať klávesové skratky v režime na celú obrazovku</system:String>
@@ -64,15 +93,55 @@
     <system:String x:Key="autoUpdates">Automatická aktualizácia</system:String>
     <system:String x:Key="select">Vybrať</system:String>
     <system:String x:Key="hideOnStartup">Schovať Flow Launcher po spustení</system:String>
+    <system:String x:Key="hideOnStartupToolTip">Vyhľadávacie okno Flow launchera sa po spustení skryje v oblasti oznámení.</system:String>
     <system:String x:Key="hideNotifyIcon">Schovať ikonu z oblasti oznámení</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Keď je ikona skrytá z oblasti oznámení, nastavenia možno otvoriť kliknutím pravým tlačidlom myši na okno vyhľadávania.</system:String>
     <system:String x:Key="querySearchPrecision">Presnosť vyhľadávania</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Mení minimálne skóre zhody potrebné na zobrazenie výsledkov.</system:String>
+    <system:String x:Key="SearchPrecisionNone">Žiadna</system:String>
+    <system:String x:Key="SearchPrecisionLow">Nízka</system:String>
+    <system:String x:Key="SearchPrecisionRegular">Normálna</system:String>
     <system:String x:Key="ShouldUsePinyin">Vyhľadávanie pomocou pchin-jin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Umožňuje vyhľadávanie pomocou pchin-jin. Pchin-jin je systém zápisu čínskeho jazyka pomocou písmen latinky.</system:String>
     <system:String x:Key="AlwaysPreview">Vždy zobraziť náhľad</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Pri aktivácii Flowu vždy otvoriť panel s náhľadom. Stlačením klávesu {0} prepnete náhľad.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Efekt tieňa nie je povolený, kým má aktuálny motív povolený efekt rozostrenia</system:String>
+    <system:String x:Key="searchDelay">Oneskorenie vyhľadávania</system:String>
+    <system:String x:Key="searchDelayToolTip">Pridá krátke oneskorenie počas písania, aby na zníženie blikanie rozhrania počas načítavania. Odporúča sa pri priemernej rýchlosti písania.</system:String>
+    <system:String x:Key="searchDelayNumberBoxToolTip">Zadajte čas (v ms) čakania, kým vstup bude považovaný za ukončený. Úprava je povolená len vtedy, ak je povolené oneskorenie vyhľadávania.</system:String>
+    <system:String x:Key="searchDelayTime">Predvolené oneskorenie vyhľadávania</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Čas čakania pred zobrazením výsledkov po ukončení písania. Pri vyšších hodnotách sa čaká dlhšie. (ms)</system:String>
+    <system:String x:Key="KoreanImeTitle">Informácie pre kórejského používateľa IME</system:String>
+    <system:String x:Key="KoreanImeGuide">
+        Kórejská metóda vstupu použitá vo Windows 11 môže spôsobiť určité problémy vo Flow Launcheri.
+
+        Ak sa vyskytnú problémy, možno bude potrebné povoliť &quot;Použiť predchádzajúcu verziu editora Microsoft IME&quot;.
+
+
+        Otvorte nastavenia Windows 11 a prejdite do:
+
+        Čas a jazyk &gt; Jazyk a oblasť &gt; Kórejčina&gt; Možnosti jazyka &gt; Klávesnice – Microsoft IME &gt; Možnosti klávesnice – Kompatibilita,
+
+        a povoľte &quot;Predcházdajúca verzia editora Microsoft IME&quot;.
+
+
+    </system:String>
+    <system:String x:Key="KoreanImeOpenLink">Otvoriť nastavenia systému Jazyk a oblasť</system:String>
+    <system:String x:Key="KoreanImeOpenLinkToolTip">Otvorí okno s nastaveniami kórejského editora Microsoft IME. Prejdite do Kórejčina &gt; Možnosti jazyka &gt; Klávesnice – Microsoft IME &gt; Možnosti klávesnice – Kompatibilita</system:String>
+    <system:String x:Key="KoreanImeOpenLinkButton">Otvoriť</system:String>
+    <system:String x:Key="KoreanImeRegistry">Použiť predchádzajúcu verziu editora Microsoft IME</system:String>
+    <system:String x:Key="KoreanImeRegistryTooltip">Zmeniť na predchádzajúcu verziu editora Microsoft IME môžete priamo tu</system:String>
+    <system:String x:Key="homePage">Domovská stránka</system:String>
+    <system:String x:Key="homePageToolTip">Zobraziť výsledky Domovskej stránky, keď je text dopytu prázdny.</system:String>
+    <system:String x:Key="historyResultsForHomePage">Zobraziť výsledky histórie na Domovskej stránke</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Maximálny počet zobrazených výsledkov histórie na Domovskej stránke</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">Úprava je možná len vtedy, ak plugin podporuje funkciu Domovská stránka a Domovská stránka je povolená.</system:String>
+    <system:String x:Key="showAtTopmost">Zobraziť vyhľadávacie okno v popredí</system:String>
+    <system:String x:Key="showAtTopmostToolTip">Prepíše nastavenie &quot;Vždy na vrchu&quot; ostatných programov a zobrazí navrchu Flow.</system:String>
+    <system:String x:Key="autoRestartAfterChanging">Reštartovať po úprave pluginu cez Repozitár pluginov</system:String>
+    <system:String x:Key="autoRestartAfterChangingToolTip">Automaticky reštartovať Flow Launcher po inštalácii/odinštalácii/aktualizáciu pluginu cez Repozitár pluginov</system:String>
+    <system:String x:Key="showUnknownSourceWarning">Zobraziť upozornenie na neznámy zdroj</system:String>
+    <system:String x:Key="showUnknownSourceWarningToolTip">Zobraziť upozornenie pri inštalácii z neznámych zdrojov</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Vyhľadať plugin</system:String>
@@ -80,6 +149,7 @@
     <system:String x:Key="searchplugin_Noresult_Title">Nenašli sa žiadne výsledky</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Skúste použiť iné vyhľadávanie.</system:String>
     <system:String x:Key="plugin">Pluginy</system:String>
+    <system:String x:Key="plugins">Pluginy</system:String>
     <system:String x:Key="browserMorePlugins">Nájsť ďalšie pluginy</system:String>
     <system:String x:Key="enable">Zapnuté</system:String>
     <system:String x:Key="disable">Vypnuté</system:String>
@@ -88,6 +158,13 @@
     <system:String x:Key="currentActionKeywords">Aktuálny aktivačný príkaz</system:String>
     <system:String x:Key="newActionKeyword">Nový aktivačný príkaz</system:String>
     <system:String x:Key="actionKeywordsTooltip">Upraviť aktivačný príkaz</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Oneskorenie vyhľadávania pluginu</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Zmení oneskorenie vyhľadávania pluginu</system:String>
+    <system:String x:Key="FilterComboboxLabel">Rozšírené nastavenia:</system:String>
+    <system:String x:Key="DisplayModeOnOff">Povolené</system:String>
+    <system:String x:Key="DisplayModePriority">Priorita</system:String>
+    <system:String x:Key="DisplayModeSearchDelay">Oneskorenie vyhľadávania</system:String>
+    <system:String x:Key="DisplayModeHomeOnOff">Domovská stránka</system:String>
     <system:String x:Key="currentPriority">Aktuálna priorita</system:String>
     <system:String x:Key="newPriority">Nová priorita</system:String>
     <system:String x:Key="priority">Priorita</system:String>
@@ -99,13 +176,22 @@
     <system:String x:Key="plugin_query_version">Verzia</system:String>
     <system:String x:Key="plugin_query_web">Webstránka</system:String>
     <system:String x:Key="plugin_uninstall">Odinštalovať</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Nepodarilo sa odstrániť nastavenia pluginu</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Pluginy: {0} – Nepodarilo sa odstrániť súbory s nastaveniami pluginu, odstráňte ich manuálne</system:String>
+    <system:String x:Key="failedToRemovePluginCacheTitle">Nepodarilo sa odstrániť vyrovnávaciu pamäť pluginu</system:String>
+    <system:String x:Key="failedToRemovePluginCacheMessage">Pluginy: {0} – Nepodarilo sa odstrániť vyrovnávaciu pamäť pluginu, odstráňte ju manuálne</system:String>
+    <system:String x:Key="pluginModifiedAlreadyTitle">Plugin {0} už bol upravený</system:String>
+    <system:String x:Key="pluginModifiedAlreadyMessage">Pred vykonaním ďalších zmien reštartujte Flow Launcher</system:String>
+    <system:String x:Key="failedToInstallPluginTitle">Nepodarilo sa nainštalovať {0}</system:String>
+    <system:String x:Key="failedToUninstallPluginTitle">Nepodarilo sa odinštalovať {0}</system:String>
+    <system:String x:Key="fileNotFoundMessage">Súbor plugin.json sa nenašiel v rozbalenom zip súbore, alebo táto cesta {0} neexistuje</system:String>
+    <system:String x:Key="pluginExistAlreadyMessage">Plugin s rovnakým ID už existuje, alebo ide o vyššiu verziu ako stiahnutý plugin</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Repozitár pluginov</system:String>
     <system:String x:Key="pluginStore_NewRelease">Nová verzia</system:String>
     <system:String x:Key="pluginStore_RecentlyUpdated">Nedávno aktualizované</system:String>
-    <system:String x:Key="pluginStore_None">Plugin</system:String>
+    <system:String x:Key="pluginStore_None">Pluginy</system:String>
     <system:String x:Key="pluginStore_Installed">Nainštalované</system:String>
     <system:String x:Key="refresh">Obnoviť</system:String>
     <system:String x:Key="installbtn">Inštalovať</system:String>
@@ -115,11 +201,32 @@
     <system:String x:Key="LabelNew">Nová verzia</system:String>
     <system:String x:Key="LabelNewToolTip">Tento plugin bol aktualizovaný za posledných 7 dní</system:String>
     <system:String x:Key="LabelUpdateToolTip">K dispozícii je nová aktualizácia</system:String>
-
-
+    <system:String x:Key="ErrorInstallingPlugin">Chyba inštalácie pluginu</system:String>
+    <system:String x:Key="ErrorUninstallingPlugin">Chyba odinštalácie pluginu</system:String>
+    <system:String x:Key="ErrorUpdatingPlugin">Chyba aktualizácie pluginu</system:String>
+    <system:String x:Key="KeepPluginSettingsTitle">Ponechať nastavenia pluginu</system:String>
+    <system:String x:Key="KeepPluginSettingsSubtitle">Chcete zachovať nastavenia pluginu na ďalšie použitie?</system:String>
+    <system:String x:Key="InstallSuccessNoRestart">Plugin {0} bol úspešne nainštalovaný. Prosím, reštartuje Flow.</system:String>
+    <system:String x:Key="UninstallSuccessNoRestart">Plugin {0} bol úspešne odinštalovaný. Prosím, reštartuje Flow.</system:String>
+    <system:String x:Key="UpdateSuccessNoRestart">Plugin {0} bol úspešne aktualizovaný. Prosím, reštartuje Flow.</system:String>
+    <system:String x:Key="InstallPromptTitle">Inštalácia pluginu</system:String>
+    <system:String x:Key="InstallPromptSubtitle">{0} od {1} {2}{2}Chcete nainštalovať tento plugin?</system:String>
+    <system:String x:Key="UninstallPromptTitle">Odinštalácia pluginu</system:String>
+    <system:String x:Key="UninstallPromptSubtitle">{0} od {1} {2}{2}Chcete odinštalovať tento plugin?</system:String>
+    <system:String x:Key="UpdatePromptTitle">Aktualizácia pluginu</system:String>
+    <system:String x:Key="UpdatePromptSubtitle">{0} od {1} {2}{2}Chcete aktualizovať tento plugin?</system:String>
+    <system:String x:Key="DownloadingPlugin">Sťahovanie pluginu</system:String>
+    <system:String x:Key="AutoRestartAfterChange">Automaticky reštartovať po inštalácii/odinštalácii/aktualizáciu pluginov cez Repozitár pluginov</system:String>
+    <system:String x:Key="ZipFileNotHavePluginJson">V zipe sa nenachádza platná konfigurácia plugin.json</system:String>
+    <system:String x:Key="InstallFromUnknownSourceTitle">Inštalácia z neznámeho zdroja</system:String>
+    <system:String x:Key="InstallFromUnknownSourceSubtitle">Tento plugin pochádza z neznámeho zdroja a môže predstavovať potenciálne riziká!{0}{0}Uistite sa, že viete, odkiaľ tento plugin pochádza, a že je bezpečný.{0}{0}Stále chcete pokračovať?{0}{0}(Toto upozornenie môžete vypnúť sekcii Všeobecné v nastaveniach)</system:String>
+    <system:String x:Key="ZipFiles">Zip súbory</system:String>
+    <system:String x:Key="SelectZipFile">Vyberte zip súbor</system:String>
+    <system:String x:Key="installLocalPluginTooltip">Inštalovať plugin z miestneho úložiska</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Motív</system:String>
+    <system:String x:Key="appearance">Vzhľad</system:String>
     <system:String x:Key="browserMoreThemes">Galéria motívov</system:String>
     <system:String x:Key="howToCreateTheme">Ako vytvoriť motív</system:String>
     <system:String x:Key="hiThere">Ahojte</system:String>
@@ -131,8 +238,16 @@
     <system:String x:Key="SampleSubTitleProgram">Spúšťanie programov ako správca alebo iný používateľ</system:String>
     <system:String x:Key="SampleTitleProcessKiller">ProcessKiller</system:String>
     <system:String x:Key="SampleSubTitleProcessKiller">Ukončenie nežiaducich procesov</system:String>
+    <system:String x:Key="SearchBarHeight">Výška vyhľadávacieho panela</system:String>
+    <system:String x:Key="ItemHeight">Výška položky</system:String>
     <system:String x:Key="queryBoxFont">Písmo vyhľadávacieho poľa</system:String>
-    <system:String x:Key="resultItemFont">Písmo výsledkov</system:String>
+    <system:String x:Key="resultItemFont">Písmo nadpisu výsledku</system:String>
+    <system:String x:Key="resultSubItemFont">Písmo podnadpisu výsledku</system:String>
+    <system:String x:Key="resetCustomize">Resetovať</system:String>
+    <system:String x:Key="resetCustomizeToolTip">Resetuje písmo a jeho veľkosť na predvolené hodnoty.</system:String>
+    <system:String x:Key="ImportThemeSize">Importovať rozmery motívu</system:String>
+    <system:String x:Key="ImportThemeSizeToolTip">Ak je k dispozícii hodnota veľkosti definovaná autorom motívu, načíta sa a použije.</system:String>
+    <system:String x:Key="CustomizeToolTip">Prispôsobiť</system:String>
     <system:String x:Key="windowMode">Režim okno</system:String>
     <system:String x:Key="opacity">Nepriehľadnosť</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">Motív {0} neexistuje, použije sa predvolený motív</system:String>
@@ -145,23 +260,72 @@
     <system:String x:Key="ColorSchemeDark">Tmavá</system:String>
     <system:String x:Key="SoundEffect">Zvukový efekt</system:String>
     <system:String x:Key="SoundEffectTip">Po otvorení okna vyhľadávania prehrať krátky zvuk</system:String>
+    <system:String x:Key="SoundEffectVolume">Hlasitosť zvukového efektu</system:String>
+    <system:String x:Key="SoundEffectVolumeTip">Upraviť hlasitosť zvukového efektu</system:String>
+    <system:String x:Key="SoundEffectWarning">Prehrávač Windows Media Player, ktorý sa vyžaduje sa na nastavenie hlasitosti Flow Launchera nie je k dispozícii. Ak potrebujete upraviť hlasitosť, prosím, skontrolujte si svoju inštaláciu.</system:String>
     <system:String x:Key="Animation">Animácia</system:String>
     <system:String x:Key="AnimationTip">Animovať používateľské rozhranie</system:String>
+    <system:String x:Key="AnimationSpeed">Rýchlosť animácie</system:String>
+    <system:String x:Key="AnimationSpeedTip">Rýchlosť animácie grafického rozhrania</system:String>
+    <system:String x:Key="AnimationSpeedSlow">Pomaly</system:String>
+    <system:String x:Key="AnimationSpeedMedium">Stredne</system:String>
+    <system:String x:Key="AnimationSpeedFast">Rýchlo</system:String>
+    <system:String x:Key="AnimationSpeedCustom">Vlastné</system:String>
     <system:String x:Key="Clock">Hodiny</system:String>
     <system:String x:Key="Date">Dátum</system:String>
+    <system:String x:Key="BackdropType">Typ pozadia (backdrop)</system:String>
+    <system:String x:Key="BackdropInfo">Efekt pozadia sa v náhľade nezobrazuje.</system:String>
+    <system:String x:Key="BackdropTypeDisabledToolTip">Pozadie je podporované od Windows 11 zostava 22000 a novších</system:String>
+    <system:String x:Key="BackdropTypesNone">Žiadny</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
+    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">Tento motív podporuje 2 režimy (svetlý/tmavý).</system:String>
+    <system:String x:Key="TypeHasBlurToolTip">Tento motív podporuje rozostrenie priehľadného pozadia.</system:String>
+    <system:String x:Key="ShowPlaceholder">Zobraziť zástupný text</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Zobrazí zástupný text v prázdnom vyhľadávacom poli</system:String>
+    <system:String x:Key="PlaceholderText">Zástupný text</system:String>
+    <system:String x:Key="PlaceholderTextTip">Zobrazí zástupný text. V prázdnom poli sa zobrazí: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Pevná veľkosť okna</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">Veľkosť okna sa nedá nastaviť ťahaním.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Klávesové skratky</system:String>
-    <system:String x:Key="flowlauncherHotkey">Klávesová skratka pre Flow Launcher</system:String>
+    <system:String x:Key="hotkeys">Klávesové skratky</system:String>
+    <system:String x:Key="flowlauncherHotkey">Otvoriť Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Zadajte skratku na zobrazenie/skrytie Flow Launchera.</system:String>
-    <system:String x:Key="previewHotkey">Klávesová skratka pre náhľad</system:String>
-    <system:String x:Key="previewHotkeyToolTip">Zadajte klávesovú skratku pre zobrazenie/skytie náhľadu vo vyhľadávacom okne.</system:String>
+    <system:String x:Key="previewHotkey">Prepnúť náhľad</system:String>
+    <system:String x:Key="previewHotkeyToolTip">Zadajte klávesovú skratku pre zobrazenie/skrytie náhľadu vo vyhľadávacom okne.</system:String>
+    <system:String x:Key="hotkeyPresets">Predvoľby klávesových skratiek</system:String>
+    <system:String x:Key="hotkeyPresetsToolTip">Zoznam aktuálne registrovaných klávesových skratiek</system:String>
     <system:String x:Key="openResultModifiers">Modifikačný kláves na otvorenie výsledkov</system:String>
     <system:String x:Key="openResultModifiersToolTip">Vyberte modifikačný kláves na otvorenie vybraného výsledku pomocou klávesnice.</system:String>
     <system:String x:Key="showOpenResultHotkey">Zobraziť klávesovú skratku</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Zobrazí klávesovú skratku spolu s výsledkami.</system:String>
-    <system:String x:Key="customQueryHotkey">Klávesová skratka vlastného vyhľadávania</system:String>
-    <system:String x:Key="customQueryShortcut">Klávesová skratka vlastného dopytu</system:String>
+    <system:String x:Key="autoCompleteHotkey">Automatické dokončovanie</system:String>
+    <system:String x:Key="autoCompleteHotkeyToolTip">Spustí automatické dokončovanie vybraných položiek.</system:String>
+    <system:String x:Key="SelectNextItemHotkey">Vybrať ďalšiu položku</system:String>
+    <system:String x:Key="SelectPrevItemHotkey">Vybrať prechádzajúcu položku</system:String>
+    <system:String x:Key="SelectNextPageHotkey">Ďalšia strana</system:String>
+    <system:String x:Key="SelectPrevPageHotkey">Predchádzajúca strana</system:String>
+    <system:String x:Key="CycleHistoryUpHotkey">Prejsť na predchádzajúci dopyt</system:String>
+    <system:String x:Key="CycleHistoryDownHotkey">Prejsť na nasledujúci dopyt</system:String>
+    <system:String x:Key="OpenContextMenuHotkey">Otvoriť kontextovú ponuku</system:String>
+    <system:String x:Key="OpenNativeContextMenuHotkey">Otvoriť natívnu kontextovú ponuku</system:String>
+    <system:String x:Key="SettingWindowHotkey">Otvoriť okno s nastaveniami</system:String>
+    <system:String x:Key="CopyFilePathHotkey">Kopírovať cestu k súboru</system:String>
+    <system:String x:Key="ToggleGameModeHotkey">Prepnúť herný režim</system:String>
+    <system:String x:Key="ToggleHistoryHotkey">Prepnúť históriu</system:String>
+    <system:String x:Key="OpenContainFolderHotkey">Otvoriť umiestnenie priečinka</system:String>
+    <system:String x:Key="RunAsAdminHotkey">Spustiť ako správca</system:String>
+    <system:String x:Key="RequeryHotkey">Aktualizovať výsledky vyhľadávania</system:String>
+    <system:String x:Key="ReloadPluginHotkey">Znova načítať údaje pluginov</system:String>
+    <system:String x:Key="QuickWidthHotkey">Rýchla úprava šírky okna</system:String>
+    <system:String x:Key="QuickHeightHotkey">Rýchla úprava výšky okna</system:String>
+    <system:String x:Key="ReloadPluginHotkeyToolTip">Použite, ak potrebujete, aby pluginy znovu načítali a aktualizovali svoje existujúce údaje.</system:String>
+    <system:String x:Key="AdditionalHotkeyToolTip">Pre túto funkciu môžete pridať alternatívnu klávesovú skratku.</system:String>
+    <system:String x:Key="customQueryHotkey">Klávesové skratky vlastného vyhľadávania</system:String>
+    <system:String x:Key="customQueryShortcut">Klávesové skratky vlastného dopytu</system:String>
     <system:String x:Key="builtinShortcuts">Vstavané skratky</system:String>
     <system:String x:Key="customQuery">Dopyt</system:String>
     <system:String x:Key="customShortcut">Skratka</system:String>
@@ -170,10 +334,12 @@
     <system:String x:Key="delete">Odstrániť</system:String>
     <system:String x:Key="edit">Upraviť</system:String>
     <system:String x:Key="add">Pridať</system:String>
+    <system:String x:Key="none">Žiadna</system:String>
     <system:String x:Key="pleaseSelectAnItem">Vyberte položku, prosím</system:String>
-    <system:String x:Key="deleteCustomHotkeyWarning">Ste si istý, že chcete odstrániť klávesovú skratku {0} pre plugin?</system:String>
+    <system:String x:Key="deleteCustomHotkeyWarning">Naozaj chcete odstrániť klávesovú skratku {0} pre plugin?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Naozaj chcete odstrániť skratku: {0} pre dopyt {1}?</system:String>
     <system:String x:Key="shortcut_clipboard_description">Kopírovať text do schránky.</system:String>
+    <system:String x:Key="shortcut_active_explorer_path">Získať cestu z aktívneho Prieskumníka.</system:String>
     <system:String x:Key="queryWindowShadowEffect">Tieňový efekt v poli vyhľadávania</system:String>
     <system:String x:Key="shadowEffectCPUUsage">Tieňový efekt významne využíva GPU. Neodporúča sa, ak je výkon počítača obmedzený.</system:String>
     <system:String x:Key="windowWidthSize">Šírka okna</system:String>
@@ -181,6 +347,9 @@
     <system:String x:Key="useGlyphUI">Použiť ikony Segoe Fluent</system:String>
     <system:String x:Key="useGlyphUIEffect">Použiť ikony Segoe Fluent, ak sú podporované</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Stlačte kláves</system:String>
+    <system:String x:Key="showBadges">Zobraziť výsledok v odznaku</system:String>
+    <system:String x:Key="showBadgesToolTip">Ak to plugin podporuje, zobrazí sa jeho ikona v odznaku na jednoduchšie odlíšenie.</system:String>
+    <system:String x:Key="showBadgesGlobalOnly">Zobraziť výsledok v odznaku len pre globálne vyhľadávanie</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP proxy</system:String>
@@ -221,17 +390,39 @@
     <system:String x:Key="logfolder">Priečinok s logmi</system:String>
     <system:String x:Key="clearlogfolder">Vymazať logy</system:String>
     <system:String x:Key="clearlogfolderMessage">Naozaj chcete odstrániť všetky logy?</system:String>
+    <system:String x:Key="cachefolder">Priečinok vyrovnávacej pamäte</system:String>
+    <system:String x:Key="clearcachefolder">Vymazať vyrovnávaciu pamäť</system:String>
+    <system:String x:Key="clearcachefolderMessage">Naozaj chcete vymazať všetky vyrovnávacie pamäte?</system:String>
+    <system:String x:Key="clearfolderfailMessage">Nepodarilo sa odstrániť niektoré priečinky a súbory. Pre viac informácií si pozrite súbor logu</system:String>
     <system:String x:Key="welcomewindow">Sprievodca</system:String>
+    <system:String x:Key="userdatapath">Cesta k používateľskému priečinku</system:String>
+    <system:String x:Key="userdatapathToolTip">Nastavenia používateľa a nainštalované pluginy sa ukladajú do používateľského priečinka. Toto umiestnenie sa môže líšiť v závislosti od toho, či je v prenosnom režime alebo nie.</system:String>
+    <system:String x:Key="userdatapathButton">Otvoriť priečinok</system:String>
+    <system:String x:Key="advanced">Rozšírené</system:String>
+    <system:String x:Key="logLevel">Úroveň logovania</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelINFO">Info</system:String>
+    <system:String x:Key="settingWindowFontTitle">Nastavenie písma okna</system:String>
+
+    <!--  Release Notes Window  -->
+    <system:String x:Key="seeMoreReleaseNotes">Ďalšie poznámky k vydaniu na Githube</system:String>
+    <system:String x:Key="checkNetworkConnectionTitle">Nepodarilo sa načítať poznámky k vydaniu</system:String>
+    <system:String x:Key="checkNetworkConnectionSubTitle">Skontrolujte sieťové pripojenie alebo sa uistite, že je Github dostupný</system:String>
+    <system:String x:Key="appUpdateTitle">Flow Launcher bol aktualizovaný na {0}</system:String>
+    <system:String x:Key="appUpdateButtonContent">Na zobrazenie poznámok k vydaniu kliknite sem</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Vyberte správcu súborov</system:String>
-    <system:String x:Key="fileManager_tips">Zadajte umiestnenie súboru správcu súborov, ktorý používate, a v prípade potreby pridajte argumenty. Predvolené argumenty sú &quot;%d&quot; a cesta sa zadáva na tomto mieste. Napríklad, ak sa vyžaduje príkaz, ako napríklad &quot;totalcmd.exe /A c:\windows&quot;, argument je /A &quot;%d&quot;.</system:String>
-    <system:String x:Key="fileManager_tips2">&quot;%f&quot; je argument, ktorý predstavuje cestu k súboru.  Používa sa na zvýraznenie názvu súboru/priečinka pri otváraní konkrétneho umiestnenia súboru v správcovi súborov tretej strany. Tento argument je k dispozícii len v položke &quot;Arg. pre súbor&quot;. Ak správca súborov nemá túto funkciu, môžete použiť &quot;%d&quot;.</system:String>
+    <system:String x:Key="fileManager_learnMore">Viac informácií</system:String>
+    <system:String x:Key="fileManager_tips">Zadajte umiestnenie súboru správcu súborov, ktorý používate, a podľa potreby pridajte argumenty. &quot;%d&quot; predstavuje cestu k priečinku, ktorý sa má otvoriť, používa sa v poli Arg pre priečinok a pri príkazoch na otvorenie konkrétnych priečinkov. &quot;%f&quot; predstavuje cestu k súboru, ktorá sa má otvoriť a používa sa v poli Arg pre súbor a pri príkazoch na otvorenie konkrétnych súborov.</system:String>
+    <system:String x:Key="fileManager_tips2">Napríklad, ak správca súborov používa príkaz ako &quot;totalcmd.exe /A c:\windows&quot; na otvorenie priečinka c:\windows, cesta správcu súborov bude totalcmd.exe a Arg pre priečinok bude /A &quot;%d&quot;. Niektorí správcovia súborov, ako napríklad QTTabBar, môžu vyžadovať len zadanie cesty, v tomto prípade použite &quot;%d&quot; ako cestu správcu súborov a zvyšok súborov nechajte prázdny.</system:String>
     <system:String x:Key="fileManager_name">Správca súborov</system:String>
     <system:String x:Key="fileManager_profile_name">Názov profilu</system:String>
     <system:String x:Key="fileManager_path">Cesta k správcovi súborov</system:String>
     <system:String x:Key="fileManager_directory_arg">Arg. pre priečinok</system:String>
     <system:String x:Key="fileManager_file_arg">Arg. pre súbor</system:String>
+    <system:String x:Key="fileManagerPathNotFound">Správca súborov '{0}' sa nenachádza na '{1}'. Chcete pokračovať?</system:String>
+    <system:String x:Key="fileManagerPathError">Chyba v ceste k správcovi súborov</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Predvolený webový prehliadač</system:String>
@@ -256,26 +447,55 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Nepodarilo sa nájsť zadaný plugin</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Nový aktivačný príkaz nemôže byť prázdny</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Nový aktivačný príkaz už bol priradený inému pluginu, prosím, zvoľte iný aktivačný príkaz</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">Tento nový aktivačný príkaz je rovnaký ako starý, vyberte iný</system:String>
     <system:String x:Key="success">Úspešné</system:String>
     <system:String x:Key="completedSuccessfully">Úspešne dokončené</system:String>
-    <system:String x:Key="actionkeyword_tips">Zadajte aktivačný príkaz, ktorý je potrebný na spustenie pluginu. Ak nechcete zadať aktivačný príkaz, použite * a plugin bude spustený bez aktivačného príkazu.</system:String>
+    <system:String x:Key="failedToCopy">Nepodarilo sa skopírovať</system:String>
+    <system:String x:Key="actionkeyword_tips">Zadajte aktivačné príkazy, ktoré chcete používať na spustenie pluginu a oddeľte ich medzerou. Ak nechcete zadať aktivačný príkaz, použite * a plugin bude spustený bez aktivačného príkazu.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="searchDelayTimeTitle">Nastavenie oneskoreného vyhľadávania</system:String>
+    <system:String x:Key="searchDelayTimeTips">Zadajte oneskorenie vyhľadávania v ms, ktoré chcete použiť pre plugin. Nechajte prázdne, ak nechcete zadať žiadne, plugin použije predvolené oneskorenie vyhľadávania.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="homeTitle">Domovská stránka</system:String>
+    <system:String x:Key="homeTips">Ak chcete zobrazovať výsledky pluginu, keď je dopyt prázdny, povoľte funkciu Domovská stránka.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Klávesová skratka vlastného vyhľadávania</system:String>
     <system:String x:Key="customeQueryHotkeyTips">Stlačením vlastnej klávesovej skratky otvoríte Flow Launcher a automaticky vložíte zadaný dotaz.</system:String>
     <system:String x:Key="preview">Náhľad</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Klávesová skratka je nedostupná, prosím, zadajte novú skratku</system:String>
-    <system:String x:Key="invalidPluginHotkey">Neplatná klávesová skratka pluginu</system:String>
+    <system:String x:Key="invalidPluginHotkey">Klávesová skratka je neplatná</system:String>
     <system:String x:Key="update">Aktualizovať</system:String>
+    <system:String x:Key="hotkeyRegTitle">Priradenie klávesovej skratky</system:String>
+    <system:String x:Key="hotkeyUnavailable">Aktuálna klávesová skratka nie je k dispozícii.</system:String>
+    <system:String x:Key="hotkeyUnavailableUneditable">Táto skratka je rezervovaná pre &quot;{0}&quot; a nemôže byť použitá. Prosím, vyberte inú skratku.</system:String>
+    <system:String x:Key="hotkeyUnavailableEditable">Táto skratka sa používa pre &quot;{0}&quot;. Ak stlačíte &quot;Prepísať&quot;, odstráni sa pre &quot;{0}&quot;.</system:String>
+    <system:String x:Key="hotkeyRegGuide">Stlačte kláves, ktorý chcete nastaviť pre túto funkciu.</system:String>
+    <system:String x:Key="emptyPluginHotkey">Klávesová skratka a aktivačný príkaz sú prázdne</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Klávesová skratka vlastného dopytu</system:String>
     <system:String x:Key="customeQueryShortcutTips">Zadajte skratku, ktorá automaticky vloží konkrétny dopyt.</system:String>
+    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">Skratka sa rozbalí, keď sa presne zhoduje s dopytom. 
+
+Ak pri zadávaní skratky pred ňu pridáte &quot;@&quot;, bude sa zhodovať s ľubovoľnou pozíciou v dotaze. Vstavané skratky zodpovedajú akejkoľvek pozícii v dotaze.
+    </system:String>
     <system:String x:Key="duplicateShortcut">Skratka už existuje, zadajte novú skratku alebo upravte existujúcu.</system:String>
     <system:String x:Key="emptyShortcut">Skratka a/alebo jej celé znenie je prázdne.</system:String>
+    <system:String x:Key="invalidShortcut">Skratka je neplatná</system:String>
 
-    <!--  Hotkey Control  -->
-    <system:String x:Key="hotkeyUnavailable">Klávesová skratka je nedostupná</system:String>
+    <!--  Common Action  -->
+    <system:String x:Key="commonSave">Uložiť</system:String>
+    <system:String x:Key="commonOverwrite">Prepísať</system:String>
+    <system:String x:Key="commonCancel">Zrušiť</system:String>
+    <system:String x:Key="commonReset">Resetovať</system:String>
+    <system:String x:Key="commonDelete">Odstrániť</system:String>
+    <system:String x:Key="commonOK">OK</system:String>
+    <system:String x:Key="commonYes">Áno</system:String>
+    <system:String x:Key="commonNo">Nie</system:String>
+    <system:String x:Key="commonBackground">Pozadie</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Verzia</system:String>
@@ -292,6 +512,18 @@
     <system:String x:Key="reportWindow_report_succeed">Hlásenie bolo úspešne odoslané</system:String>
     <system:String x:Key="reportWindow_report_failed">Odoslanie hlásenia zlyhalo</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher zaznamenal chybu</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">Prosím, otvorte nové issue na</system:String>
+    <system:String x:Key="reportWindow_upload_log">1. Nahrajte súbor logu: {0}</system:String>
+    <system:String x:Key="reportWindow_copy_below">2. Skopírujte nižšie uvedenú správu o výnimke</system:String>
+
+    <!--  File Open Error  -->
+    <system:String x:Key="fileManagerNotFoundTitle">Chyba správcu súborov</system:String>
+    <system:String x:Key="fileManagerNotFound">
+        Zadaný správca súborov sa nenašiel. Skontrolujte nastavenie vlastného správcu súborov v Nastavenia &gt; Všeobecné.
+    </system:String>
+    <system:String x:Key="errorTitle">Chyba</system:String>
+    <system:String x:Key="folderOpenError">Počas otvárania priečinka sa vyskytla chyba. {0}</system:String>
+    <system:String x:Key="browserOpenError">Pri otváraní adresy URL v prehliadači došlo k chybe. Skontrolujte konfiguráciu predvoleného webového prehliadača v nastaveniach Všeobecné</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Čakajte, prosím...</system:String>
@@ -337,13 +569,19 @@
     <system:String x:Key="HotkeyLeftRightDesc">Navigácia medzi položkami</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">Otvoriť kontextovú ponuku</system:String>
     <system:String x:Key="HotkeyCtrlEnterDesc">Otvoriť umiestnenie priečinka</system:String>
-    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Spustiť ako správca</system:String>
+    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Spustiť ako správca/Otvoriť priečinok v predvolenom správcovi súborov</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">História dopytov</system:String>
     <system:String x:Key="HotkeyESCDesc">Návrat na výsledky z kontextovej ponuky</system:String>
     <system:String x:Key="HotkeyTabDesc">Automatické dokončovanie</system:String>
     <system:String x:Key="HotkeyRunDesc">Otvoriť/spustiť vybranú položku</system:String>
     <system:String x:Key="HotkeyCtrlIDesc">Otvoriť okno s nastaveniami</system:String>
     <system:String x:Key="HotkeyF5Desc">Znova načítať údaje pluginov</system:String>
+
+    <system:String x:Key="HotkeySelectFirstResult">Vybrať prvý výsledok</system:String>
+    <system:String x:Key="HotkeySelectLastResult">Vybrať posledný výsledok</system:String>
+    <system:String x:Key="HotkeyRequery">Spustiť aktuálny dopyt znova</system:String>
+    <system:String x:Key="HotkeyOpenResult">Otvoriť výsledok</system:String>
+    <system:String x:Key="HotkeyOpenResultN">Otvoriť výsledok #{0}</system:String>
 
     <system:String x:Key="RecommendWeather">Počasie</system:String>
     <system:String x:Key="RecommendWeatherDesc">Počasie na Googli</system:String>
@@ -354,4 +592,8 @@
     <system:String x:Key="RecommendAcronyms">sn</system:String>
     <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
 
+    <!--  Preview Area  -->
+    <system:String x:Key="FileSize">Veľkosť súboru</system:String>
+    <system:String x:Key="Created">Vytvorené</system:String>
+    <system:String x:Key="LastModified">Upravené</system:String>
 </ResourceDictionary>

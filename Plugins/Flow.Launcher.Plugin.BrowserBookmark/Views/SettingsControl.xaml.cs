@@ -1,74 +1,117 @@
 ﻿using System.Windows;
-using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using System.Windows.Input;
-using System.ComponentModel;
-using System.Windows.Controls;
+using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Flow.Launcher.Plugin.BrowserBookmark.Models;
 
-namespace Flow.Launcher.Plugin.BrowserBookmark.Views
+namespace Flow.Launcher.Plugin.BrowserBookmark.Views;
+
+[INotifyPropertyChanged]
+public partial class SettingsControl
 {
-    public partial class SettingsControl : INotifyPropertyChanged
+    public Settings Settings { get; }
+    public CustomBrowser SelectedCustomBrowser { get; set; }
+
+    public SettingsControl(Settings settings)
     {
-        public Settings Settings { get; }
-        
-        public CustomBrowser SelectedCustomBrowser { get; set; }
-        
-        public bool OpenInNewBrowserWindow
+        Settings = settings;
+        InitializeComponent();
+    }
+
+    public bool LoadChromeBookmark
+    {
+        get => Settings.LoadChromeBookmark;
+        set
         {
-            get => Settings.OpenInNewBrowserWindow;
-            set
+            Settings.LoadChromeBookmark = value;
+            _ = Task.Run(() => Main.ReloadAllBookmarks());
+        }
+    }
+
+    public bool LoadFirefoxBookmark
+    {
+        get => Settings.LoadFirefoxBookmark;
+        set
+        {
+            Settings.LoadFirefoxBookmark = value;
+            _ = Task.Run(() => Main.ReloadAllBookmarks());
+        }
+    }
+
+    public bool LoadEdgeBookmark
+    {
+        get => Settings.LoadEdgeBookmark;
+        set
+        {
+            Settings.LoadEdgeBookmark = value;
+            _ = Task.Run(() => Main.ReloadAllBookmarks());
+        }
+    }
+
+    public bool OpenInNewBrowserWindow
+    {
+        get => Settings.OpenInNewBrowserWindow;
+        set
+        {
+            Settings.OpenInNewBrowserWindow = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private void NewCustomBrowser(object sender, RoutedEventArgs e)
+    {
+        var newBrowser = new CustomBrowser();
+        var window = new CustomBrowserSettingWindow(newBrowser);
+        window.ShowDialog();
+        if (newBrowser is not
             {
-                Settings.OpenInNewBrowserWindow = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(OpenInNewBrowserWindow)));
-            }
-        }
-
-        public SettingsControl(Settings settings)
+                Name: null,
+                DataDirectoryPath: null
+            })
         {
-            Settings = settings;
-            InitializeComponent();
+            Settings.CustomChromiumBrowsers.Add(newBrowser);
+            _ = Task.Run(() => Main.ReloadAllBookmarks());
         }
+    }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void NewCustomBrowser(object sender, RoutedEventArgs e)
+    private void DeleteCustomBrowser(object sender, RoutedEventArgs e)
+    {
+        if (CustomBrowsers.SelectedItem is CustomBrowser selectedCustomBrowser)
         {
-            var newBrowser = new CustomBrowser();
-            var window = new CustomBrowserSettingWindow(newBrowser);
-            window.ShowDialog();
-            if (newBrowser is not
-                {
-                    Name: null,
-                    DataDirectoryPath: null
-                })
-            {
-                Settings.CustomChromiumBrowsers.Add(newBrowser);
-            }
+            Settings.CustomChromiumBrowsers.Remove(selectedCustomBrowser);
+            _ = Task.Run(() => Main.ReloadAllBookmarks());
         }
+    }
 
-        private void DeleteCustomBrowser(object sender, RoutedEventArgs e)
-        {
-            if (CustomBrowsers.SelectedItem is CustomBrowser selectedCustomBrowser)
-            {
-                Settings.CustomChromiumBrowsers.Remove(selectedCustomBrowser);
-            }
-        }
-        private void MouseDoubleClickOnSelectedCustomBrowser(object sender, MouseButtonEventArgs e)
-        {
-            if (SelectedCustomBrowser is null)
-                return;
+    private void MouseDoubleClickOnSelectedCustomBrowser(object sender, MouseButtonEventArgs e)
+    {
+        EditSelectedCustomBrowser();
+    }
 
-            var window = new CustomBrowserSettingWindow(SelectedCustomBrowser);
-            window.ShowDialog();
-        }
-        private void Others_Click(object sender, RoutedEventArgs e)
+    private void Others_Click(object sender, RoutedEventArgs e)
+    {
+        CustomBrowsersList.Visibility = CustomBrowsersList.Visibility switch
         {
+            Visibility.Collapsed => Visibility.Visible,
+            _ => Visibility.Collapsed
+        };
+    }
 
-            if (CustomBrowsersList.Visibility == Visibility.Collapsed)
-            {
-                CustomBrowsersList.Visibility = Visibility.Visible;
-            }
-            else
-                CustomBrowsersList.Visibility = Visibility.Collapsed;
+    private void EditCustomBrowser(object sender, RoutedEventArgs e)
+    {
+        EditSelectedCustomBrowser();
+    }
+
+    private void EditSelectedCustomBrowser()
+    {
+        if (SelectedCustomBrowser is null)
+            return;
+
+        var window = new CustomBrowserSettingWindow(SelectedCustomBrowser);
+        var result = window.ShowDialog() ?? false;
+        if (result)
+        {
+            _ = Task.Run(() => Main.ReloadAllBookmarks());
         }
     }
 }

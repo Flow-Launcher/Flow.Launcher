@@ -1,11 +1,6 @@
-﻿using Flow.Launcher.Infrastructure.Http;
-using Flow.Launcher.Infrastructure.Logger;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net.Http;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Text.Json;
 using System.Linq;
@@ -13,16 +8,17 @@ using System.Threading;
 
 namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
 {
-    class Bing : SuggestionSource
+    public class Bing : SuggestionSource
     {
+        private static readonly string ClassName = nameof(Bing);
+
         public override async Task<List<string>> SuggestionsAsync(string query, CancellationToken token)
         {
-
             try
             {
                 const string api = "https://api.bing.com/qsonhs.aspx?q=";
 
-                await using var resultStream = await Http.GetStreamAsync(api + Uri.EscapeDataString(query), token).ConfigureAwait(false);
+                await using var resultStream = await Main._context.API.HttpGetStreamAsync(api + Uri.EscapeDataString(query), token).ConfigureAwait(false);
 
                 using var json = (await JsonDocument.ParseAsync(resultStream, cancellationToken: token));
                 var root = json.RootElement.GetProperty("AS");
@@ -36,18 +32,15 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
                         .EnumerateArray()
                         .Select(s => s.GetProperty("Txt").GetString()))
                     .ToList();
-
-
-
             }
             catch (Exception e) when (e is HttpRequestException or { InnerException: TimeoutException })
             {
-                Log.Exception("|Baidu.Suggestions|Can't get suggestion from baidu", e);
+                Main._context.API.LogException(ClassName, "Can't get suggestion from Bing", e);
                 return null;
             }
             catch (JsonException e)
             {
-                Log.Exception("|Bing.Suggestions|can't parse suggestions", e);
+                Main._context.API.LogException(ClassName, "Can't parse suggestions", e);
                 return new List<string>();
             }
         }

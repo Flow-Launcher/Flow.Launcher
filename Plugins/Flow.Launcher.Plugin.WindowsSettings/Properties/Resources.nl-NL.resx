@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>About</value>
+    <value>Over</value>
     <comment>Area System</comment>
   </data>
   <data name="access.cpl" xml:space="preserve">
@@ -456,7 +456,7 @@
     <comment>Area Personalization</comment>
   </data>
   <data name="Command" xml:space="preserve">
-    <value>Command</value>
+    <value>Opdracht</value>
     <comment>The command to direct start a setting</comment>
   </data>
   <data name="ConnectedDevices" xml:space="preserve">
@@ -701,7 +701,7 @@
     <comment>Area Gaming</comment>
   </data>
   <data name="GameMode" xml:space="preserve">
-    <value>Game Mode</value>
+    <value>Spelmodus</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="Gateway" xml:space="preserve">

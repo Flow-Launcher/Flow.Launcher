@@ -6,10 +6,11 @@
     xmlns:local="clr-namespace:Flow.Launcher"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     Title="{DynamicResource fileManagerWindow}"
     Width="600"
+    d:DataContext="{d:DesignInstance vm:SelectFileManagerViewModel}"
     Background="{DynamicResource PopuBGColor}"
-    DataContext="{Binding RelativeSource={RelativeSource Self}}"
     Foreground="{DynamicResource PopupTextColor}"
     ResizeMode="NoResize"
     SizeToContent="Height"
@@ -28,14 +29,11 @@
                 <StackPanel>
                     <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <Button
-                            Grid.Column="4"
+                            Grid.Column="1"
                             Click="btnCancel_Click"
                             Style="{StaticResource TitleBarCloseButtonStyle}">
                             <Path
@@ -57,11 +55,11 @@
                         </Button>
                     </Grid>
                 </StackPanel>
-                <StackPanel Margin="26,12,26,0">
-                    <StackPanel Grid.Row="1" Margin="0,0,0,12">
+                <StackPanel Margin="26 12 26 0">
+                    <StackPanel Grid.Row="1" Margin="0 0 0 12">
                         <TextBlock
                             Grid.Column="0"
-                            Margin="0,0,0,0"
+                            Margin="0 0 0 0"
                             FontSize="20"
                             FontWeight="SemiBold"
                             Text="{DynamicResource fileManagerWindow}"
@@ -73,12 +71,20 @@
                             Text="{DynamicResource fileManager_tips}"
                             TextAlignment="Left"
                             TextWrapping="WrapWithOverflow" />
-                        <TextBlock Margin="0,14,0,0" FontSize="14">
+                        <TextBlock Margin="0 14 0 0" FontSize="14">
                             <TextBlock Text="{DynamicResource fileManager_tips2}" TextWrapping="WrapWithOverflow" />
                         </TextBlock>
+                        <TextBlock Margin="0 14 0 0" VerticalAlignment="Center">
+                            <Hyperlink NavigateUri="https://www.flowlauncher.com/docs/#/filemanager" RequestNavigate="Hyperlink_RequestNavigate">
+                                <TextBlock FontSize="14" Text="{DynamicResource fileManager_learnMore}" />
+                            </Hyperlink>
+                        </TextBlock>
                     </StackPanel>
-
-                    <StackPanel Margin="14,28,0,0" Orientation="Horizontal">
+                    <Rectangle
+                        Height="1"
+                        Margin="0 20 0 20"
+                        Fill="{StaticResource SeparatorForeground}" />
+                    <StackPanel Margin="14 0 0 0" Orientation="Horizontal">
                         <TextBlock
                             Grid.Column="1"
                             HorizontalAlignment="Left"
@@ -89,7 +95,7 @@
                             Name="comboBox"
                             Width="200"
                             Height="35"
-                            Margin="14,0,0,0"
+                            Margin="14 0 0 0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             ItemsSource="{Binding CustomExplorers}"
@@ -101,22 +107,22 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
                         <Button
-                            Margin="10,0,0,0"
-                            Click="btnAdd_Click"
+                            Margin="10 0 0 0"
+                            Command="{Binding AddCommand}"
                             Content="{DynamicResource add}" />
                         <Button
-                            Margin="10,0,0,0"
-                            Click="btnDelete_Click"
+                            Margin="10 0 0 0"
+                            Command="{Binding DeleteCommand}"
                             Content="{DynamicResource delete}"
                             IsEnabled="{Binding CustomExplorer.Editable}" />
 
                     </StackPanel>
                     <Rectangle
                         Height="1"
-                        Margin="0,20,0,12"
-                        Fill="{StaticResource Color03B}" />
+                        Margin="0 20 0 12"
+                        Fill="{StaticResource SeparatorForeground}" />
                     <StackPanel
-                        Margin="0,0,0,0"
+                        Margin="0 0 0 0"
                         HorizontalAlignment="Stretch"
                         DataContext="{Binding CustomExplorer}"
                         Orientation="Horizontal">
@@ -134,7 +140,7 @@
                             <TextBlock
                                 Grid.Row="0"
                                 Grid.Column="0"
-                                Margin="14,5,20,0"
+                                Margin="14 5 20 0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 FontSize="14"
@@ -144,7 +150,7 @@
                                 Grid.Row="0"
                                 Grid.Column="1"
                                 Width="Auto"
-                                Margin="10,5,15,0"
+                                Margin="10 5 15 0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
                                 IsEnabled="{Binding Editable}"
@@ -152,7 +158,7 @@
                             <TextBlock
                                 Grid.Row="1"
                                 Grid.Column="0"
-                                Margin="14,10,20,0"
+                                Margin="14 10 20 0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 FontSize="14"
@@ -160,7 +166,7 @@
                             <DockPanel Grid.Row="1" Grid.Column="1">
                                 <Button
                                     Name="btnBrowseFile"
-                                    Margin="0,10,15,0"
+                                    Margin="0 10 15 0"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Center"
                                     Click="btnBrowseFile_Click"
@@ -178,7 +184,7 @@
                                 </Button>
                                 <TextBox
                                     x:Name="PathTextBox"
-                                    Margin="10,10,10,0"
+                                    Margin="10 10 10 0"
                                     HorizontalAlignment="Stretch"
                                     VerticalAlignment="Center"
                                     IsEnabled="{Binding Editable}"
@@ -187,7 +193,7 @@
                             <TextBlock
                                 Grid.Row="2"
                                 Grid.Column="0"
-                                Margin="14,10,20,0"
+                                Margin="14 10 20 0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 FontSize="14"
@@ -198,7 +204,7 @@
                                 Grid.Row="2"
                                 Grid.Column="1"
                                 Width="Auto"
-                                Margin="10,10,15,0"
+                                Margin="10 10 15 0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
                                 IsEnabled="{Binding Editable}"
@@ -206,7 +212,7 @@
                             <TextBlock
                                 Grid.Row="3"
                                 Grid.Column="0"
-                                Margin="14,10,20,20"
+                                Margin="14 10 20 20"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 FontSize="14"
@@ -217,7 +223,7 @@
                                 Grid.Row="3"
                                 Grid.Column="1"
                                 Width="Auto"
-                                Margin="10,10,15,20"
+                                Margin="10 10 15 20"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
                                 IsEnabled="{Binding Editable}"
@@ -232,18 +238,18 @@
             Grid.Row="2"
             Background="{DynamicResource PopupButtonAreaBGColor}"
             BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
-            BorderThickness="0,1,0,0">
+            BorderThickness="0 1 0 0">
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <Button
                     x:Name="btnCancel"
                     Width="145"
-                    Margin="0,0,5,0"
+                    Margin="0 0 5 0"
                     Click="btnCancel_Click"
                     Content="{DynamicResource cancel}" />
                 <Button
                     x:Name="btnDone"
                     Width="145"
-                    Margin="5,0,0,0"
+                    Margin="5 0 0 0"
                     Click="btnDone_Click"
                     Content="{DynamicResource done}"
                     ForceCursor="True">
@@ -254,12 +260,6 @@
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding Text.Length, ElementName=PathTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Text.Length, ElementName=directoryArgTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
-                                    <Setter Property="IsEnabled" Value="False" />
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding Text.Length, ElementName=fileArgTextBox, UpdateSourceTrigger=PropertyChanged}" Value="0">
                                     <Setter Property="IsEnabled" Value="False" />
                                 </DataTrigger>
                             </Style.Triggers>

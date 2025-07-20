@@ -1,0 +1,2514 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>אודות</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="access.cpl" xml:space="preserve">
+    <value>access.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="AccessibilityOptions" xml:space="preserve">
+    <value>אפשרויות נגישות</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="AccessoryApps" xml:space="preserve">
+    <value>יישומי עזר</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="AccessWorkOrSchool" xml:space="preserve">
+    <value>גישה לעבודה או לבית ספר</value>
+    <comment>Area UserAccounts</comment>
+  </data>
+  <data name="AccountInfo" xml:space="preserve">
+    <value>פרטי חשבון</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="Accounts" xml:space="preserve">
+    <value>חשבונות</value>
+    <comment>Area SurfaceHub</comment>
+  </data>
+  <data name="ActionCenter" xml:space="preserve">
+    <value>מרכז הפעולות</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Activation" xml:space="preserve">
+    <value>הפעלה</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="ActivityHistory" xml:space="preserve">
+    <value>היסטוריית פעילות</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="AddHardware" xml:space="preserve">
+    <value>הוספת חומרה</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="AddRemovePrograms" xml:space="preserve">
+    <value>הוספה/הסרה של תוכניות</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="AddYourPhone" xml:space="preserve">
+    <value>הוסף את הטלפון שלך</value>
+    <comment>Area Phone</comment>
+  </data>
+  <data name="AdministrativeTools" xml:space="preserve">
+    <value>כלי ניהול</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="AdvancedDisplaySettings" xml:space="preserve">
+    <value>הגדרות תצוגה מתקדמות</value>
+    <comment>Area System, only available on devices that support advanced display options</comment>
+  </data>
+  <data name="AdvancedGraphics" xml:space="preserve">
+    <value>גרפיקה מתקדמת</value>
+  </data>
+  <data name="AdvertisingId" xml:space="preserve">
+    <value>מזהה פרסום</value>
+    <comment>Area Privacy, Deprecated in Windows 10, version 1809 and later</comment>
+  </data>
+  <data name="AirplaneMode" xml:space="preserve">
+    <value>מצב טיסה</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
+  <data name="AltAndTab" xml:space="preserve">
+    <value>Alt+Tab</value>
+    <comment>Means the key  combination "Tabulator+Alt" on the keyboard</comment>
+  </data>
+  <data name="AlternativeName" xml:space="preserve">
+    <value>שמות חלופיים</value>
+  </data>
+  <data name="Animations" xml:space="preserve">
+    <value>אנימציות</value>
+  </data>
+  <data name="AppColor" xml:space="preserve">
+    <value>צבע יישום</value>
+  </data>
+  <data name="AppDiagnostics" xml:space="preserve">
+    <value>אבחון יישומים</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="AppFeatures" xml:space="preserve">
+    <value>תכונות יישום</value>
+    <comment>Area Apps</comment>
+  </data>
+  <data name="Application" xml:space="preserve">
+    <value>יישום</value>
+    <comment>Short/modern name for application</comment>
+  </data>
+  <data name="AppsAndFeatures" xml:space="preserve">
+    <value>יישומים ותכונות</value>
+    <comment>Area Apps</comment>
+  </data>
+  <data name="AppSettingsApp" xml:space="preserve">
+    <value>הגדרות מערכת</value>
+    <comment>Type of the setting is a "Modern Windows settings". We use the same term as used in start menu search at the moment. </comment>
+  </data>
+  <data name="AppsForWebsites" xml:space="preserve">
+    <value>יישומים לאתרים</value>
+    <comment>Area Apps</comment>
+  </data>
+  <data name="AppVolumeAndDevicePreferences" xml:space="preserve">
+    <value>עוצמת קול והעדפות התקן ליישומים</value>
+    <comment>Area System, Added in Windows 10, version 1903</comment>
+  </data>
+  <data name="appwiz.cpl" xml:space="preserve">
+    <value>appwiz.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="Area" xml:space="preserve">
+    <value>אזור</value>
+    <comment>Mean the settings area or settings category</comment>
+  </data>
+  <data name="AreaAccounts" xml:space="preserve">
+    <value>חשבונות</value>
+  </data>
+  <data name="AreaAdministrativeTools" xml:space="preserve">
+    <value>כלי ניהול</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="AreaAppearanceAndPersonalization" xml:space="preserve">
+    <value>מראה והתאמה אישית</value>
+  </data>
+  <data name="AreaApps" xml:space="preserve">
+    <value>יישומים</value>
+  </data>
+  <data name="AreaClockAndRegion" xml:space="preserve">
+    <value>שעון ואזור</value>
+  </data>
+  <data name="AreaControlPanel" xml:space="preserve">
+    <value>לוח הבקרה</value>
+  </data>
+  <data name="AreaCortana" xml:space="preserve">
+    <value>קורטנה</value>
+  </data>
+  <data name="AreaDevices" xml:space="preserve">
+    <value>התקנים</value>
+  </data>
+  <data name="AreaEaseOfAccess" xml:space="preserve">
+    <value>נוחות גישה</value>
+  </data>
+  <data name="AreaExtras" xml:space="preserve">
+    <value>תוספות</value>
+  </data>
+  <data name="AreaGaming" xml:space="preserve">
+    <value>משחקים</value>
+  </data>
+  <data name="AreaHardwareAndSound" xml:space="preserve">
+    <value>חומרה וצלילים</value>
+  </data>
+  <data name="AreaHomePage" xml:space="preserve">
+    <value>דף הבית</value>
+  </data>
+  <data name="AreaMixedReality" xml:space="preserve">
+    <value>מציאות מעורבת</value>
+  </data>
+  <data name="AreaNetworkAndInternet" xml:space="preserve">
+    <value>רשת ואינטרנט</value>
+  </data>
+  <data name="AreaPersonalization" xml:space="preserve">
+    <value>התאמה אישית</value>
+  </data>
+  <data name="AreaPhone" xml:space="preserve">
+    <value>טלפון</value>
+  </data>
+  <data name="AreaPrivacy" xml:space="preserve">
+    <value>פרטיות</value>
+  </data>
+  <data name="AreaPrograms" xml:space="preserve">
+    <value>תוכניות</value>
+  </data>
+  <data name="AreaSurfaceHub" xml:space="preserve">
+    <value>SurfaceHub</value>
+  </data>
+  <data name="AreaSystem" xml:space="preserve">
+    <value>מערכת</value>
+  </data>
+  <data name="AreaSystemAndSecurity" xml:space="preserve">
+    <value>מערכת ואבטחה</value>
+  </data>
+  <data name="AreaTimeAndLanguage" xml:space="preserve">
+    <value>שעה ושפה</value>
+  </data>
+  <data name="AreaUpdateAndSecurity" xml:space="preserve">
+    <value>עדכון ואבטחה</value>
+  </data>
+  <data name="AreaUserAccounts" xml:space="preserve">
+    <value>חשבונות משתמשים</value>
+  </data>
+  <data name="AssignedAccess" xml:space="preserve">
+    <value>גישה מוקצית</value>
+  </data>
+  <data name="Audio" xml:space="preserve">
+    <value>שמע</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="AudioAlerts" xml:space="preserve">
+    <value>התראות שמע</value>
+  </data>
+  <data name="AudioAndSpeech" xml:space="preserve">
+    <value>שמע ודיבור</value>
+    <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
+  </data>
+  <data name="AutomaticFileDownloads" xml:space="preserve">
+    <value>הורדת קבצים אוטומטית</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="AutoPlay" xml:space="preserve">
+    <value>הפעלה אוטומטית</value>
+    <comment>Area Device</comment>
+  </data>
+  <data name="Background" xml:space="preserve">
+    <value>רקע</value>
+    <comment>Area Personalization</comment>
+  </data>
+  <data name="BackgroundApps" xml:space="preserve">
+    <value>יישומים שפועלים ברקע</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="Backup" xml:space="preserve">
+    <value>גיבוי</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="BackupAndRestore" xml:space="preserve">
+    <value>גיבוי ושחזור</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="BatterySaver" xml:space="preserve">
+    <value>חיסכון בסוללה</value>
+    <comment>Area System, only available on devices that have a battery, such as a tablet</comment>
+  </data>
+  <data name="BatterySaverSettings" xml:space="preserve">
+    <value>הגדרות חיסכון בסוללה</value>
+    <comment>Area System, only available on devices that have a battery, such as a tablet</comment>
+  </data>
+  <data name="BatterySaverUsageDetails" xml:space="preserve">
+    <value>פרטי שימוש בחיסכון בסוללה</value>
+  </data>
+  <data name="BatteryUse" xml:space="preserve">
+    <value>שימוש בסוללה</value>
+    <comment>Area System, only available on devices that have a battery, such as a tablet</comment>
+  </data>
+  <data name="BiometricDevices" xml:space="preserve">
+    <value>התקנים ביומטריים</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="BitLockerDriveEncryption" xml:space="preserve">
+    <value>הצפנת כונן BitLocker</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="BlueLight" xml:space="preserve">
+    <value>אור כחול</value>
+  </data>
+  <data name="Bluetooth" xml:space="preserve">
+    <value>Bluetooth</value>
+    <comment>Area Device</comment>
+  </data>
+  <data name="BluetoothDevices" xml:space="preserve">
+    <value>התקני בלוטות'</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="BlueYellow" xml:space="preserve">
+    <value>כחול-צהוב</value>
+  </data>
+  <data name="BopomofoIme" xml:space="preserve">
+    <value>Bopomofo IME</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
+  <data name="bpmf" xml:space="preserve">
+    <value>bpmf</value>
+    <comment>Should not translated</comment>
+  </data>
+  <data name="Broadcasting" xml:space="preserve">
+    <value>שידור</value>
+    <comment>Area Gaming</comment>
+  </data>
+  <data name="Calendar" xml:space="preserve">
+    <value>יומן</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="CallHistory" xml:space="preserve">
+    <value>היסטוריית שיחות</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="calling" xml:space="preserve">
+    <value>שיחות</value>
+  </data>
+  <data name="Camera" xml:space="preserve">
+    <value>מצלמה</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="CangjieIme" xml:space="preserve">
+    <value>קלט Cangjie</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
+  <data name="CapsLock" xml:space="preserve">
+    <value>Caps Lock</value>
+    <comment>Mean the "Caps Lock" key</comment>
+  </data>
+  <data name="CellularAndSim" xml:space="preserve">
+    <value>תקשורת סלולרית ו-SIM</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
+  <data name="ChooseWhichFoldersAppearOnStart" xml:space="preserve">
+    <value>בחר אילו תיקיות יופיעו בתפריט התחלה</value>
+    <comment>Area Personalization</comment>
+  </data>
+  <data name="ClientServiceForNetWare" xml:space="preserve">
+    <value>שירות לקוח עבור NetWare</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Clipboard" xml:space="preserve">
+    <value>לוח גזירים</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="ClosedCaptions" xml:space="preserve">
+    <value>כתוביות סגורות</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="ColorFilters" xml:space="preserve">
+    <value>מסנני צבע</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="ColorManagement" xml:space="preserve">
+    <value>ניהול צבעים</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Colors" xml:space="preserve">
+    <value>צבעים</value>
+    <comment>Area Personalization</comment>
+  </data>
+  <data name="Command" xml:space="preserve">
+    <value>פקודה</value>
+    <comment>The command to direct start a setting</comment>
+  </data>
+  <data name="ConnectedDevices" xml:space="preserve">
+    <value>התקנים מחוברים</value>
+    <comment>Area Device</comment>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>אנשי קשר</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="ControlPanel" xml:space="preserve">
+    <value>לוח הבקרה</value>
+    <comment>Type of the setting is a "(legacy) Control Panel setting"</comment>
+  </data>
+  <data name="CopyCommand" xml:space="preserve">
+    <value>העתק פקודה</value>
+  </data>
+  <data name="CoreIsolation" xml:space="preserve">
+    <value>בידוד ליבה</value>
+    <comment>Means the protection of the system core</comment>
+  </data>
+  <data name="Cortana" xml:space="preserve">
+    <value>קורטנה</value>
+    <comment>Area Cortana</comment>
+  </data>
+  <data name="CortanaAcrossMyDevices" xml:space="preserve">
+    <value>Cortana בכל ההתקנים שלי</value>
+    <comment>Area Cortana</comment>
+  </data>
+  <data name="CortanaLanguage" xml:space="preserve">
+    <value>Cortana - שפה</value>
+    <comment>Area Cortana</comment>
+  </data>
+  <data name="CredentialManager" xml:space="preserve">
+    <value>מנהל האישורים</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Crossdevice" xml:space="preserve">
+    <value>שימוש חוצה התקנים</value>
+  </data>
+  <data name="CustomDevices" xml:space="preserve">
+    <value>התקנים מותאמים אישית</value>
+  </data>
+  <data name="DarkColor" xml:space="preserve">
+    <value>צבע כהה</value>
+  </data>
+  <data name="DarkMode" xml:space="preserve">
+    <value>מצב כהה</value>
+  </data>
+  <data name="DataUsage" xml:space="preserve">
+    <value>שימוש בנתונים</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
+  <data name="DateAndTime" xml:space="preserve">
+    <value>תאריך ושעה</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
+  <data name="DefaultApps" xml:space="preserve">
+    <value>יישומים ברירת מחדל</value>
+    <comment>Area Apps</comment>
+  </data>
+  <data name="DefaultCamera" xml:space="preserve">
+    <value>מצלמת ברירת מחדל</value>
+    <comment>Area Device</comment>
+  </data>
+  <data name="DefaultLocation" xml:space="preserve">
+    <value>מיקום ברירת מחדל</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="DefaultPrograms" xml:space="preserve">
+    <value>תוכניות ברירת מחדל</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="DefaultSaveLocations" xml:space="preserve">
+    <value>מיקומי שמירה ברירת מחדל</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="DeliveryOptimization" xml:space="preserve">
+    <value>מיטוב משלוחים</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="desk.cpl" xml:space="preserve">
+    <value>desk.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="DesktopThemes" xml:space="preserve">
+    <value>ערכות נושא לשולחן העבודה</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="deuteranopia" xml:space="preserve">
+    <value>עיוורון צבעים – אדום־ירוק</value>
+    <comment>Medical: Mean you don't can see red colors</comment>
+  </data>
+  <data name="DeviceManager" xml:space="preserve">
+    <value>מנהל ההתקנים</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="DevicesAndPrinters" xml:space="preserve">
+    <value>התקנים ומדפסות</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Dhcp" xml:space="preserve">
+    <value>DHCP</value>
+    <comment>Should not translated</comment>
+  </data>
+  <data name="DialUp" xml:space="preserve">
+    <value>חיוג לרשת</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
+  <data name="DirectAccess" xml:space="preserve">
+    <value>גישה ישירה</value>
+    <comment>Area NetworkAndInternet, only available if DirectAccess is enabled</comment>
+  </data>
+  <data name="DirectOpenYourPhone" xml:space="preserve">
+    <value>פתיחה ישירה של הטלפון</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="Display" xml:space="preserve">
+    <value>תצוגה</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="DisplayProperties" xml:space="preserve">
+    <value>מאפייני תצוגה</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="DNS" xml:space="preserve">
+    <value>DNS</value>
+    <comment>Should not translated</comment>
+  </data>
+  <data name="Documents" xml:space="preserve">
+    <value>מסמכים</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="DuplicatingMyDisplay" xml:space="preserve">
+    <value>שכפול תצוגה</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="DuringTheseHours" xml:space="preserve">
+    <value>במהלך שעות אלו</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="EaseOfAccessCenter" xml:space="preserve">
+    <value>מרכז נוחות גישה</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Edition" xml:space="preserve">
+    <value>מהדורה</value>
+    <comment>Means the "Windows Edition"</comment>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>דוא"ל</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="EmailAndAppAccounts" xml:space="preserve">
+    <value>חשבונות דוא"ל ויישומים</value>
+    <comment>Area UserAccounts</comment>
+  </data>
+  <data name="Encryption" xml:space="preserve">
+    <value>הצפנה</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="Environment" xml:space="preserve">
+    <value>סביבה</value>
+    <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
+  </data>
+  <data name="Ethernet" xml:space="preserve">
+    <value>אינטרנט קווי</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
+  <data name="ExploitProtection" xml:space="preserve">
+    <value>הגנה מפני ניצול פרצות</value>
+  </data>
+  <data name="Extras" xml:space="preserve">
+    <value>תוספות</value>
+    <comment>Area Extra, , only used for setting of 3rd-Party tools</comment>
+  </data>
+  <data name="EyeControl" xml:space="preserve">
+    <value>שליטה באמצעות עיניים</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="EyeTracker" xml:space="preserve">
+    <value>מעקב עיניים</value>
+    <comment>Area Privacy, requires eyetracker hardware</comment>
+  </data>
+  <data name="FamilyAndOtherPeople" xml:space="preserve">
+    <value>משפחה ואנשים נוספים</value>
+    <comment>Area UserAccounts</comment>
+  </data>
+  <data name="FeedbackAndDiagnostics" xml:space="preserve">
+    <value>משוב ואבחון</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="FileSystem" xml:space="preserve">
+    <value>מערכת קבצים</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="FindFast" xml:space="preserve">
+    <value>FindFast</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="findfast.cpl" xml:space="preserve">
+    <value>findfast.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="FindMyDevice" xml:space="preserve">
+    <value>מצא את המכשיר שלי</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="Firewall" xml:space="preserve">
+    <value>חומת אש</value>
+  </data>
+  <data name="FocusAssistQuietHours" xml:space="preserve">
+    <value>סיוע בריכוז - שעות שקטות</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="FocusAssistQuietMoments" xml:space="preserve">
+    <value>סיוע בריכוז - רגעים שקטים</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="FolderOptions" xml:space="preserve">
+    <value>אפשרויות תיקיות</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Fonts" xml:space="preserve">
+    <value>גופנים</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="ForDevelopers" xml:space="preserve">
+    <value>למפתחים</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="GameBar" xml:space="preserve">
+    <value>סרגל המשחקים</value>
+    <comment>Area Gaming</comment>
+  </data>
+  <data name="GameControllers" xml:space="preserve">
+    <value>בקרי משחק</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="GameDvr" xml:space="preserve">
+    <value>מקליט משחקים</value>
+    <comment>Area Gaming</comment>
+  </data>
+  <data name="GameMode" xml:space="preserve">
+    <value>מצב משחק</value>
+    <comment>Area Gaming</comment>
+  </data>
+  <data name="Gateway" xml:space="preserve">
+    <value>Gateway</value>
+    <comment>Should not translated</comment>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>כללי</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="GetPrograms" xml:space="preserve">
+    <value>השגת תוכניות</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="GettingStarted" xml:space="preserve">
+    <value>תחילת העבודה</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Glance" xml:space="preserve">
+    <value>הצצה</value>
+    <comment>Area Personalization, Deprecated in Windows 10, version 1809 and later</comment>
+  </data>
+  <data name="GraphicsSettings" xml:space="preserve">
+    <value>הגדרות גרפיקה</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="Grayscale" xml:space="preserve">
+    <value>גווני אפור</value>
+  </data>
+  <data name="GreenWeek" xml:space="preserve">
+    <value>שבוע ירוק</value>
+    <comment>Mean you don't can see green colors</comment>
+  </data>
+  <data name="HeadsetDisplay" xml:space="preserve">
+    <value>תצוגת אוזניות</value>
+    <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
+  </data>
+  <data name="HighContrast" xml:space="preserve">
+    <value>ניגודיות גבוהה</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="HolographicAudio" xml:space="preserve">
+    <value>אודיו הולוגרפי</value>
+  </data>
+  <data name="HolographicEnvironment" xml:space="preserve">
+    <value>סביבה הולוגרפית</value>
+  </data>
+  <data name="HolographicHeadset" xml:space="preserve">
+    <value>אוזניות הולוגרפיות</value>
+  </data>
+  <data name="HolographicManagement" xml:space="preserve">
+    <value>ניהול הולוגרפי</value>
+  </data>
+  <data name="HomeGroup" xml:space="preserve">
+    <value>קבוצת בית</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>מזהה</value>
+    <comment>MEans The "Windows Identifier"</comment>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>תמונה</value>
+  </data>
+  <data name="IndexingOptions" xml:space="preserve">
+    <value>אפשרויות יצירת אינדקס</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="inetcpl.cpl" xml:space="preserve">
+    <value>inetcpl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="Infrared" xml:space="preserve">
+    <value>אינפרה-אדום</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="InkingAndTyping" xml:space="preserve">
+    <value>כתיבה בכתב יד והקלדה</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="InternetOptions" xml:space="preserve">
+    <value>אפשרויות אינטרנט</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="intl.cpl" xml:space="preserve">
+    <value>intl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="InvertedColors" xml:space="preserve">
+    <value>צבעים הפוכים</value>
+  </data>
+  <data name="Ip" xml:space="preserve">
+    <value>IP</value>
+    <comment>Should not translated</comment>
+  </data>
+  <data name="IsolatedBrowsing" xml:space="preserve">
+    <value>גלישה מבודדת</value>
+  </data>
+  <data name="JapanImeSettings" xml:space="preserve">
+    <value>הגדרות IME יפני</value>
+    <comment>Area TimeAndLanguage, available if the Microsoft Japan input method editor is installed</comment>
+  </data>
+  <data name="joy.cpl" xml:space="preserve">
+    <value>joy.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="JoystickProperties" xml:space="preserve">
+    <value>מאפייני ג'ויסטיק</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="jpnime" xml:space="preserve">
+    <value>jpnime</value>
+    <comment>Should not translated</comment>
+  </data>
+  <data name="Keyboard" xml:space="preserve">
+    <value>מקלדת</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="Keypad" xml:space="preserve">
+    <value>לוח מקשים</value>
+  </data>
+  <data name="Keys" xml:space="preserve">
+    <value>מקשים</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>שפה</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
+  <data name="LightColor" xml:space="preserve">
+    <value>צבע בהיר</value>
+  </data>
+  <data name="LightMode" xml:space="preserve">
+    <value>מצב בהיר</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>מיקום</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="LockScreen" xml:space="preserve">
+    <value>מסך נעילה</value>
+    <comment>Area Personalization</comment>
+  </data>
+  <data name="Magnifier" xml:space="preserve">
+    <value>זכוכית מגדלת</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="MailMicrosoftExchangeOrWindowsMessaging" xml:space="preserve">
+    <value>דואר - Microsoft Exchange או Windows Messaging</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="main.cpl" xml:space="preserve">
+    <value>main.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="ManageKnownNetworks" xml:space="preserve">
+    <value>ניהול רשתות מוכרות</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
+  <data name="ManageOptionalFeatures" xml:space="preserve">
+    <value>ניהול תכונות אופציונליות</value>
+    <comment>Area Apps</comment>
+  </data>
+  <data name="Messaging" xml:space="preserve">
+    <value>הודעות</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="MeteredConnection" xml:space="preserve">
+    <value>חיבור עם תעריף משתנה</value>
+  </data>
+  <data name="Microphone" xml:space="preserve">
+    <value>מיקרופון</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="MicrosoftMailPostOffice" xml:space="preserve">
+    <value>תיבת דואר של Microsoft</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="mlcfg32.cpl" xml:space="preserve">
+    <value>mlcfg32.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="mmsys.cpl" xml:space="preserve">
+    <value>mmsys.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="MobileDevices" xml:space="preserve">
+    <value>התקנים ניידים</value>
+  </data>
+  <data name="MobileHotspot" xml:space="preserve">
+    <value>נקודת גישה ניידת</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
+  <data name="modem.cpl" xml:space="preserve">
+    <value>modem.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="Mono" xml:space="preserve">
+    <value>מונו</value>
+  </data>
+  <data name="MoreDetails" xml:space="preserve">
+    <value>פרטים נוספים</value>
+    <comment>Area Cortana</comment>
+  </data>
+  <data name="Motion" xml:space="preserve">
+    <value>תנועה</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="Mouse" xml:space="preserve">
+    <value>עכבר</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="MouseAndTouchpad" xml:space="preserve">
+    <value>עכבר ומשטח מגע</value>
+    <comment>Area Device</comment>
+  </data>
+  <data name="MouseFontsKeyboardAndPrintersProperties" xml:space="preserve">
+    <value>מאפייני עכבר, גופנים, מקלדת ומדפסות</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="MousePointer" xml:space="preserve">
+    <value>מצביע עכבר</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="MultimediaProperties" xml:space="preserve">
+    <value>מאפייני מולטימדיה</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Multitasking" xml:space="preserve">
+    <value>ריבוי משימות</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="Narrator" xml:space="preserve">
+    <value>קורא מסך</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="NavigationBar" xml:space="preserve">
+    <value>סרגל ניווט</value>
+    <comment>Area Personalization</comment>
+  </data>
+  <data name="netcpl.cpl" xml:space="preserve">
+    <value>netcpl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="netsetup.cpl" xml:space="preserve">
+    <value>netsetup.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="Network" xml:space="preserve">
+    <value>רשת</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
+  <data name="NetworkAndSharingCenter" xml:space="preserve">
+    <value>מרכז הרשת והשיתוף</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="NetworkConnection" xml:space="preserve">
+    <value>חיבורי רשת</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="NetworkProperties" xml:space="preserve">
+    <value>מאפייני רשת</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="NetworkSetupWizard" xml:space="preserve">
+    <value>אשף הגדרת רשת</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="NetworkStatus" xml:space="preserve">
+    <value>מצב רשת</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
+  <data name="NFC" xml:space="preserve">
+    <value>NFC</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
+  <data name="NFCTransactions" xml:space="preserve">
+    <value>עסקאות NFC</value>
+    <comment>"NFC should not translated"</comment>
+  </data>
+  <data name="NightLight" xml:space="preserve">
+    <value>תאורת לילה</value>
+  </data>
+  <data name="NightLightSettings" xml:space="preserve">
+    <value>הגדרות תאורת לילה</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>הערה</value>
+  </data>
+  <data name="NoteAddYourPhone" xml:space="preserve">
+    <value>זמין רק כאשר חיברת מכשיר נייד למכשיר שלך.</value>
+  </data>
+  <data name="NoteAdvancedGraphics" xml:space="preserve">
+    <value>זמין רק במכשירים התומכים באפשרויות גרפיקה מתקדמות.</value>
+  </data>
+  <data name="NoteBattery" xml:space="preserve">
+    <value>זמין רק במכשירים עם סוללה, כגון טאבלט.</value>
+  </data>
+  <data name="NoteDeprecated17763" xml:space="preserve">
+    <value>הוצא משימוש ב-Windows 10, גרסה 1809 (build 17763) ואילך.</value>
+  </data>
+  <data name="NoteDialPaired" xml:space="preserve">
+    <value>זמין רק אם Dial מחובר.</value>
+  </data>
+  <data name="NoteDirectAccess" xml:space="preserve">
+    <value>זמין רק אם DirectAccess מופעלת.</value>
+  </data>
+  <data name="NoteDisplayGraphics" xml:space="preserve">
+    <value>זמין רק במכשירים התומכים באפשרויות תצוגה מתקדמות.</value>
+  </data>
+  <data name="NoteEnrolledWIP" xml:space="preserve">
+    <value>זמין רק אם המשתמש רשום ל-WIP.</value>
+  </data>
+  <data name="NoteEyetrackerHardware" xml:space="preserve">
+    <value>דורש חומרת מעקב עיניים.</value>
+  </data>
+  <data name="NoteImeJapan" xml:space="preserve">
+    <value>זמין אם מותקן עורך קלט של Microsoft Japan.</value>
+  </data>
+  <data name="NoteImePinyin" xml:space="preserve">
+    <value>זמין אם מותקן עורך קלט של Microsoft Pinyin.</value>
+  </data>
+  <data name="NoteImeWubi" xml:space="preserve">
+    <value>זמין אם מותקן עורך שיטות הקלט של Microsoft Wubi.</value>
+  </data>
+  <data name="NoteMixedReality" xml:space="preserve">
+    <value>זמין רק אם האפליקציה Mixed Reality Portal מותקנת.</value>
+  </data>
+  <data name="NoteMobileProvisioning" xml:space="preserve">
+    <value>זמין רק במכשירים ניידים ואם הארגון פרס חבילת פריסה.</value>
+  </data>
+  <data name="NoteSince18362" xml:space="preserve">
+    <value>נוסף ב-Windows 10, גרסה 1903 (build 18362).</value>
+  </data>
+  <data name="NoteSince19041" xml:space="preserve">
+    <value>נוסף ב-Windows 10, גרסה 2004 (build 19041).</value>
+  </data>
+  <data name="NoteThirdParty" xml:space="preserve">
+    <value>זמין רק אם מותקנות "אפליקציות הגדרות", לדוגמה, על ידי צד שלישי.</value>
+  </data>
+  <data name="NoteTouchpad" xml:space="preserve">
+    <value>זמין רק אם קיימת חומרת לוח המגע.</value>
+  </data>
+  <data name="NoteWiFiAdapter" xml:space="preserve">
+    <value>זמין רק אם למכשיר יש מתאם Wi-Fi.</value>
+  </data>
+  <data name="NoteWindowsAnywhere" xml:space="preserve">
+    <value>המכשיר חייב לתמוך ב-Windows Anywhere.</value>
+  </data>
+  <data name="NoteWorkplaceProvisioning" xml:space="preserve">
+    <value>זמין רק אם הארגון פרס חבילת הקצאה.</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>התראות</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="NotificationsAndActions" xml:space="preserve">
+    <value>התראות ופעולות</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="NumLock" xml:space="preserve">
+    <value>Num Lock</value>
+    <comment>Mean the "Num Lock" key</comment>
+  </data>
+  <data name="nwc.cpl" xml:space="preserve">
+    <value>nwc.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="odbccp32.cpl" xml:space="preserve">
+    <value>odbccp32.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="OdbcDataSourceAdministrator32Bit" xml:space="preserve">
+    <value>מנהל מקור נתונים ODBC (32 סיביות)</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="OdbcDataSourceAdministrator64Bit" xml:space="preserve">
+    <value>מנהל מקור נתונים ODBC (64 סיביות)</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="OfflineFiles" xml:space="preserve">
+    <value>קבצים לא מקוונים</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="OfflineMaps" xml:space="preserve">
+    <value>מפות לא מקוונות</value>
+    <comment>Area Apps</comment>
+  </data>
+  <data name="OfflineMapsDownloadMaps" xml:space="preserve">
+    <value>מפות לא מקוונות - הורדת מפות</value>
+    <comment>Area Apps</comment>
+  </data>
+  <data name="OnScreen" xml:space="preserve">
+    <value>על המסך</value>
+  </data>
+  <data name="Os" xml:space="preserve">
+    <value>מערכת הפעלה</value>
+    <comment>Means the "Operating System"</comment>
+  </data>
+  <data name="OtherDevices" xml:space="preserve">
+    <value>התקנים אחרים</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="OtherOptions" xml:space="preserve">
+    <value>אפשרויות נוספות</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="OtherUsers" xml:space="preserve">
+    <value>משתמשים אחרים</value>
+  </data>
+  <data name="ParentalControls" xml:space="preserve">
+    <value>בקרת הורים</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>סיסמה</value>
+  </data>
+  <data name="password.cpl" xml:space="preserve">
+    <value>password.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="PasswordProperties" xml:space="preserve">
+    <value>מאפייני סיסמה</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="PenAndInputDevices" xml:space="preserve">
+    <value>עט והתקני קלט</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="PenAndTouch" xml:space="preserve">
+    <value>עט ומגע</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="PenAndWindowsInk" xml:space="preserve">
+    <value>עט ו-Windows Ink</value>
+    <comment>Area Device</comment>
+  </data>
+  <data name="PeopleNearMe" xml:space="preserve">
+    <value>אנשים בקרבתי</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="PerformanceInformationAndTools" xml:space="preserve">
+    <value>מידע וכלים לביצועים</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="PermissionsAndHistory" xml:space="preserve">
+    <value>הרשאות והיסטוריה</value>
+    <comment>Area Cortana</comment>
+  </data>
+  <data name="PersonalizationCategory" xml:space="preserve">
+    <value>התאמה אישית (קטגוריה)</value>
+    <comment>Area Personalization</comment>
+  </data>
+  <data name="Phone" xml:space="preserve">
+    <value>טלפון</value>
+    <comment>Area Phone</comment>
+  </data>
+  <data name="PhoneAndModem" xml:space="preserve">
+    <value>טלפון ומודם</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="PhoneAndModemOptions" xml:space="preserve">
+    <value>טלפון ומודם - אפשרויות</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="PhoneCalls" xml:space="preserve">
+    <value>שיחות טלפון</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="PhoneDefaultApps" xml:space="preserve">
+    <value>טלפון - יישומי ברירת מחדל</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="Picture" xml:space="preserve">
+    <value>תמונה</value>
+  </data>
+  <data name="Pictures" xml:space="preserve">
+    <value>תמונות</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="PinyinImeSettings" xml:space="preserve">
+    <value>Pinyin IME settings</value>
+    <comment>Area TimeAndLanguage, available if the Microsoft Pinyin input method editor is installed</comment>
+  </data>
+  <data name="PinyinImeSettingsDomainLexicon" xml:space="preserve">
+    <value>Pinyin IME settings - domain lexicon</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
+  <data name="PinyinImeSettingsKeyConfiguration" xml:space="preserve">
+    <value>Pinyin IME settings - Key configuration</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
+  <data name="PinyinImeSettingsUdp" xml:space="preserve">
+    <value>Pinyin IME settings - UDP</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
+  <data name="PlayingGameFullScreen" xml:space="preserve">
+    <value>משחק במסך מלא</value>
+    <comment>Area Gaming</comment>
+  </data>
+  <data name="PluginDescription" xml:space="preserve">
+    <value>תוסף לחיפוש הגדרות Windows</value>
+  </data>
+  <data name="PluginTitle" xml:space="preserve">
+    <value>הגדרות Windows</value>
+  </data>
+  <data name="PowerAndSleep" xml:space="preserve">
+    <value>צריכת חשמל ושינה</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="powercfg.cpl" xml:space="preserve">
+    <value>powercfg.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="PowerOptions" xml:space="preserve">
+    <value>אפשרויות צריכת חשמל</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Presentation" xml:space="preserve">
+    <value>מצגת</value>
+  </data>
+  <data name="Printers" xml:space="preserve">
+    <value>מדפסות</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="PrintersAndScanners" xml:space="preserve">
+    <value>מדפסות וסורקים</value>
+    <comment>Area Device</comment>
+  </data>
+  <data name="PrintScreen" xml:space="preserve">
+    <value>צילום מסך</value>
+    <comment>Mean the "Print screen" key</comment>
+  </data>
+  <data name="ProblemReportsAndSolutions" xml:space="preserve">
+    <value>דוחות בעיות ופתרונות</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Processor" xml:space="preserve">
+    <value>מעבד</value>
+  </data>
+  <data name="ProgramsAndFeatures" xml:space="preserve">
+    <value>תוכניות ותכונות</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="ProjectingToThisPc" xml:space="preserve">
+    <value>הקרנה למחשב זה</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="protanopia" xml:space="preserve">
+    <value>עיוורון צבעים – אדום</value>
+    <comment>Medical: Mean you don't can see green colors</comment>
+  </data>
+  <data name="Provisioning" xml:space="preserve">
+    <value>הקצאה</value>
+    <comment>Area UserAccounts, only available if enterprise has deployed a provisioning package</comment>
+  </data>
+  <data name="Proximity" xml:space="preserve">
+    <value>קירבה</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
+  <data name="Proxy" xml:space="preserve">
+    <value>פרוקסי</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
+  <data name="Quickime" xml:space="preserve">
+    <value>Quickime</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
+  <data name="QuietMomentsGame" xml:space="preserve">
+    <value>משחק רגעים שקטים</value>
+  </data>
+  <data name="Radios" xml:space="preserve">
+    <value>משדרים</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="Ram" xml:space="preserve">
+    <value>זיכרון RAM</value>
+    <comment>Means the Read-Access-Memory (typical the used to inform about the size)</comment>
+  </data>
+  <data name="Recognition" xml:space="preserve">
+    <value>זיהוי</value>
+  </data>
+  <data name="Recovery" xml:space="preserve">
+    <value>שחזור</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="RedEye" xml:space="preserve">
+    <value>עין אדומה</value>
+    <comment>Mean red eye effect by over-the-night flights</comment>
+  </data>
+  <data name="RedGreen" xml:space="preserve">
+    <value>אדום-ירוק</value>
+    <comment>Mean the weakness you can't differ between red and green colors</comment>
+  </data>
+  <data name="RedWeek" xml:space="preserve">
+    <value>שבוע אדום</value>
+    <comment>Mean you don't can see red colors</comment>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>אזור</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
+  <data name="RegionalLanguage" xml:space="preserve">
+    <value>שפה אזורית</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
+  <data name="RegionalSettingsProperties" xml:space="preserve">
+    <value>מאפייני הגדרות אזוריות</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="RegionAndLanguage" xml:space="preserve">
+    <value>אזור ושפה</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="RegionFormatting" xml:space="preserve">
+    <value>תבנית אזורית</value>
+  </data>
+  <data name="RemoteAppAndDesktopConnections" xml:space="preserve">
+    <value>חיבורים ליישומים ושולחן עבודה מרוחק</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="RemoteDesktop" xml:space="preserve">
+    <value>שולחן עבודה מרוחק</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="ScannersAndCameras" xml:space="preserve">
+    <value>סורקים ומצלמות</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="schedtasks" xml:space="preserve">
+    <value>משימות מתוזמנות</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="Scheduled" xml:space="preserve">
+    <value>מתוזמן</value>
+  </data>
+  <data name="ScheduledTasks" xml:space="preserve">
+    <value>משימות מתוזמנות</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="ScreenRotation" xml:space="preserve">
+    <value>סיבוב מסך</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="ScrollBars" xml:space="preserve">
+    <value>סרגלי גלילה</value>
+  </data>
+  <data name="ScrollLock" xml:space="preserve">
+    <value>Scroll Lock</value>
+    <comment>Mean the "Scroll Lock" key</comment>
+  </data>
+  <data name="Sdns" xml:space="preserve">
+    <value>SDNS</value>
+    <comment>Should not translated</comment>
+  </data>
+  <data name="SearchingWindows" xml:space="preserve">
+    <value>חיפוש ב-Windows</value>
+    <comment>Area Cortana</comment>
+  </data>
+  <data name="SecureDNS" xml:space="preserve">
+    <value>SecureDNS</value>
+    <comment>Should not translated</comment>
+  </data>
+  <data name="SecurityCenter" xml:space="preserve">
+    <value>מרכז האבטחה</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="SecurityProcessor" xml:space="preserve">
+    <value>מעבד אבטחה</value>
+  </data>
+  <data name="SessionCleanup" xml:space="preserve">
+    <value>ניקוי הפעלות</value>
+    <comment>Area SurfaceHub</comment>
+  </data>
+  <data name="SettingsHomePage" xml:space="preserve">
+    <value>דף הבית של ההגדרות</value>
+    <comment>Area Home, Overview-page for all areas of settings </comment>
+  </data>
+  <data name="SetUpKiosk" xml:space="preserve">
+    <value>הגדרת קיוסק</value>
+    <comment>Area UserAccounts</comment>
+  </data>
+  <data name="SharedExperiences" xml:space="preserve">
+    <value>חוויות משותפות</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="Shortcuts" xml:space="preserve">
+    <value>קיצורי דרך</value>
+  </data>
+  <data name="ShortNameWiFi" xml:space="preserve">
+    <value>wifi</value>
+    <comment>dont translate this, is a short term to find entries</comment>
+  </data>
+  <data name="SignInOptions" xml:space="preserve">
+    <value>אפשרויות כניסה</value>
+    <comment>Area UserAccounts</comment>
+  </data>
+  <data name="SignInOptionsDynamicLock" xml:space="preserve">
+    <value>אפשרויות כניסה - נעילה דינמית</value>
+    <comment>Area UserAccounts</comment>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>גודל</value>
+    <comment>Size for text and symbols</comment>
+  </data>
+  <data name="Sound" xml:space="preserve">
+    <value>צליל</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="Speech" xml:space="preserve">
+    <value>דיבור</value>
+    <comment>Area EaseOfAccess</comment>
+  </data>
+  <data name="SpeechRecognition" xml:space="preserve">
+    <value>זיהוי דיבור</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="SpeechTyping" xml:space="preserve">
+    <value>הקלדה קולית</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>התחלה</value>
+    <comment>Area Personalization</comment>
+  </data>
+  <data name="StartPlaces" xml:space="preserve">
+    <value>מיקומי התחלה</value>
+  </data>
+  <data name="StartupApps" xml:space="preserve">
+    <value>יישומי הפעלה</value>
+    <comment>Area Apps</comment>
+  </data>
+  <data name="sticpl.cpl" xml:space="preserve">
+    <value>sticpl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="Storage" xml:space="preserve">
+    <value>אחסון</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="StoragePolicies" xml:space="preserve">
+    <value>מדיניות אחסון</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="StorageSense" xml:space="preserve">
+    <value>חיישן אחסון</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="SubtitlePreposition" xml:space="preserve">
+    <value>in</value>
+    <comment>Example: Area "System" in System settings</comment>
+  </data>
+  <data name="SyncCenter" xml:space="preserve">
+    <value>מרכז הסנכרון</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="SyncYourSettings" xml:space="preserve">
+    <value>סנכרן את ההגדרות שלך</value>
+    <comment>Area UserAccounts</comment>
+  </data>
+  <data name="sysdm.cpl" xml:space="preserve">
+    <value>sysdm.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="System" xml:space="preserve">
+    <value>מערכת</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="SystemPropertiesAndAddNewHardwareWizard" xml:space="preserve">
+    <value>מאפייני מערכת ואשף הוספת חומרה חדשה</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Tab" xml:space="preserve">
+    <value>טאב</value>
+    <comment>Means the key "Tabulator" on the keyboard</comment>
+  </data>
+  <data name="TabletMode" xml:space="preserve">
+    <value>מצב טאבלט</value>
+    <comment>Area System</comment>
+  </data>
+  <data name="TabletPcSettings" xml:space="preserve">
+    <value>הגדרות Tablet PC</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Talk" xml:space="preserve">
+    <value>שיחה</value>
+  </data>
+  <data name="TalkToCortana" xml:space="preserve">
+    <value>דבר עם Cortana</value>
+    <comment>Area Cortana</comment>
+  </data>
+  <data name="Taskbar" xml:space="preserve">
+    <value>שורת המשימות</value>
+    <comment>Area Personalization</comment>
+  </data>
+  <data name="TaskbarColor" xml:space="preserve">
+    <value>צבע שורת המשימות</value>
+  </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>משימות</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="TeamConferencing" xml:space="preserve">
+    <value>שיחות ועידה בצוות</value>
+    <comment>Area SurfaceHub</comment>
+  </data>
+  <data name="TeamDeviceManagement" xml:space="preserve">
+    <value>ניהול התקני צוות</value>
+    <comment>Area SurfaceHub</comment>
+  </data>
+  <data name="TextToSpeech" xml:space="preserve">
+    <value>טקסט לדיבור</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Themes" xml:space="preserve">
+    <value>ערכות נושא</value>
+    <comment>Area Personalization</comment>
+  </data>
+  <data name="themes.cpl" xml:space="preserve">
+    <value>themes.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="timedate.cpl" xml:space="preserve">
+    <value>timedate.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="Timeline" xml:space="preserve">
+    <value>ציר זמן</value>
+  </data>
+  <data name="Touch" xml:space="preserve">
+    <value>מגע</value>
+  </data>
+  <data name="TouchFeedback" xml:space="preserve">
+    <value>משוב מגע</value>
+  </data>
+  <data name="Touchpad" xml:space="preserve">
+    <value>משטח מגע</value>
+    <comment>Area Device</comment>
+  </data>
+  <data name="Transparency" xml:space="preserve">
+    <value>שקיפות</value>
+  </data>
+  <data name="tritanopia" xml:space="preserve">
+    <value>עיוורון צבעים – כחול</value>
+    <comment>Medical: Mean you don't can see yellow and blue colors</comment>
+  </data>
+  <data name="Troubleshoot" xml:space="preserve">
+    <value>פתרון בעיות</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="TruePlay" xml:space="preserve">
+    <value>TruePlay</value>
+    <comment>Area Gaming</comment>
+  </data>
+  <data name="Typing" xml:space="preserve">
+    <value>הקלדה</value>
+    <comment>Area Device</comment>
+  </data>
+  <data name="Uninstall" xml:space="preserve">
+    <value>הסרה</value>
+    <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
+  </data>
+  <data name="Usb" xml:space="preserve">
+    <value>USB</value>
+    <comment>Area Device</comment>
+  </data>
+  <data name="UserAccounts" xml:space="preserve">
+    <value>חשבונות משתמשים</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>גרסה</value>
+    <comment>Means The "Windows Version"</comment>
+  </data>
+  <data name="VideoPlayback" xml:space="preserve">
+    <value>הפעלת וידאו</value>
+    <comment>Area Apps</comment>
+  </data>
+  <data name="Videos" xml:space="preserve">
+    <value>סרטונים</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="VirtualDesktops" xml:space="preserve">
+    <value>שולחנות עבודה וירטואליים</value>
+  </data>
+  <data name="Virus" xml:space="preserve">
+    <value>וירוס</value>
+    <comment>Means the virus in computers and software</comment>
+  </data>
+  <data name="VoiceActivation" xml:space="preserve">
+    <value>הפעלת קול</value>
+    <comment>Area Privacy</comment>
+  </data>
+  <data name="Volume" xml:space="preserve">
+    <value>עוצמת קול</value>
+  </data>
+  <data name="Vpn" xml:space="preserve">
+    <value>VPN</value>
+    <comment>Area NetworkAndInternet</comment>
+  </data>
+  <data name="Wallpaper" xml:space="preserve">
+    <value>טפט</value>
+  </data>
+  <data name="WarmerColor" xml:space="preserve">
+    <value>צבע חמים</value>
+  </data>
+  <data name="WelcomeCenter" xml:space="preserve">
+    <value>מרכז קבלת הפנים</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="WelcomeScreen" xml:space="preserve">
+    <value>מסך קבלת הפנים</value>
+    <comment>Area SurfaceHub</comment>
+  </data>
+  <data name="wgpocpl.cpl" xml:space="preserve">
+    <value>wgpocpl.cpl</value>
+    <comment>File name, Should not translated</comment>
+  </data>
+  <data name="Wheel" xml:space="preserve">
+    <value>גלגל</value>
+    <comment>Area Device</comment>
+  </data>
+  <data name="WiFi" xml:space="preserve">
+    <value>Wi-Fi</value>
+    <comment>Area NetworkAndInternet, only available if Wi-Fi calling is enabled</comment>
+  </data>
+  <data name="WiFiCalling" xml:space="preserve">
+    <value>שיחות Wi-Fi</value>
+    <comment>Area NetworkAndInternet, only available if Wi-Fi calling is enabled</comment>
+  </data>
+  <data name="WiFiSettings" xml:space="preserve">
+    <value>הגדרות Wi-Fi</value>
+    <comment>"Wi-Fi" should not translated</comment>
+  </data>
+  <data name="WindowBorder" xml:space="preserve">
+    <value>גבול חלון</value>
+  </data>
+  <data name="WindowsAnytimeUpgrade" xml:space="preserve">
+    <value>שדרוג Windows Anytime</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="WindowsAnywhere" xml:space="preserve">
+    <value>Windows Anywhere</value>
+    <comment>Area UserAccounts, device must be Windows Anywhere-capable</comment>
+  </data>
+  <data name="WindowsCardSpace" xml:space="preserve">
+    <value>Windows CardSpace</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="WindowsDefender" xml:space="preserve">
+    <value>Windows Defender</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="WindowsFirewall" xml:space="preserve">
+    <value>חומת האש של Windows</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="WindowsHelloSetupFace" xml:space="preserve">
+    <value>הגדרת Windows Hello - זיהוי פנים</value>
+    <comment>Area UserAccounts</comment>
+  </data>
+  <data name="WindowsHelloSetupFingerprint" xml:space="preserve">
+    <value>הגדרת Windows Hello - טביעת אצבע</value>
+    <comment>Area UserAccounts</comment>
+  </data>
+  <data name="WindowsInsiderProgram" xml:space="preserve">
+    <value>תוכנית Windows Insider</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="WindowsMobilityCenter" xml:space="preserve">
+    <value>מרכז הניידות של Windows</value>
+    <comment>Area Control Panel (legacy settings)</comment>
+  </data>
+  <data name="WindowsSearch" xml:space="preserve">
+    <value>חיפוש Windows</value>
+    <comment>Area Cortana</comment>
+  </data>
+  <data name="WindowsSecurity" xml:space="preserve">
+    <value>אבטחת Windows</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="WindowsUpdate" xml:space="preserve">
+    <value>עדכוני Windows</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="WindowsUpdateAdvancedOptions" xml:space="preserve">
+    <value>Windows Update - אפשרויות מתקדמות</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="WindowsUpdateCheckForUpdates" xml:space="preserve">
+    <value>Windows Update - בדוק עדכונים</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="WindowsUpdateRestartOptions" xml:space="preserve">
+    <value>Windows Update - אפשרויות הפעלה מחדש</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="WindowsUpdateViewOptionalUpdates" xml:space="preserve">
+    <value>Windows Update - הצג עדכונים אופציונליים</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="WindowsUpdateViewUpdateHistory" xml:space="preserve">
+    <value>Windows Update - הצג היסטוריית עדכונים</value>
+    <comment>Area UpdateAndSecurity</comment>
+  </data>
+  <data name="Wireless" xml:space="preserve">
+    <value>אלחוטי</value>
+  </data>
+  <data name="Workplace" xml:space="preserve">
+    <value>מקום עבודה</value>
+  </data>
+  <data name="WorkplaceProvisioning" xml:space="preserve">
+    <value>הקצאת מקום עבודה</value>
+    <comment>Area UserAccounts</comment>
+  </data>
+  <data name="WubiImeSettings" xml:space="preserve">
+    <value>הגדרות Wubi IME</value>
+    <comment>Area TimeAndLanguage, available if the Microsoft Wubi input method editor is installed</comment>
+  </data>
+  <data name="WubiImeSettingsUdp" xml:space="preserve">
+    <value>הגדרות Wubi IME - UDP</value>
+    <comment>Area TimeAndLanguage</comment>
+  </data>
+  <data name="XboxNetworking" xml:space="preserve">
+    <value>רשת Xbox</value>
+    <comment>Area Gaming</comment>
+  </data>
+  <data name="YourInfo" xml:space="preserve">
+    <value>המידע שלך</value>
+    <comment>Area UserAccounts</comment>
+  </data>
+  <data name="Zoom" xml:space="preserve">
+    <value>התקרבות</value>
+    <comment>Mean zooming of things via a magnifier</comment>
+  </data>
+  <data name="ChangeDeviceInstallationSettings" xml:space="preserve">
+    <value>שנה הגדרות התקנת התקן</value>
+  </data>
+  <data name="TurnOffBackgroundImages" xml:space="preserve">
+    <value>כבה תמונות רקע</value>
+  </data>
+  <data name="NavigationProperties" xml:space="preserve">
+    <value>מאפייני ניווט</value>
+  </data>
+  <data name="MediaStreamingOptions" xml:space="preserve">
+    <value>אפשרויות הזרמת מדיה</value>
+  </data>
+  <data name="MakeAFileTypeAlwaysOpenInASpecificProgram" xml:space="preserve">
+    <value>קבע שסוג קובץ ייפתח תמיד בתוכנית מסוימת</value>
+  </data>
+  <data name="ChangeTheNarratorSVoice" xml:space="preserve">
+    <value>שנה את קול הקריין</value>
+  </data>
+  <data name="FindAndFixKeyboardProblems" xml:space="preserve">
+    <value>אתר ותקן בעיות במקלדת</value>
+  </data>
+  <data name="UseScreenReader" xml:space="preserve">
+    <value>השתמש בקורא מסך</value>
+  </data>
+  <data name="ShowWhichWorkgroupThisComputerIsOn" xml:space="preserve">
+    <value>הצג באיזו קבוצת עבודה מחשב זה נמצא</value>
+  </data>
+  <data name="ChangeMouseWheelSettings" xml:space="preserve">
+    <value>שנה הגדרות גלגל העכבר</value>
+  </data>
+  <data name="ManageComputerCertificates" xml:space="preserve">
+    <value>נהל אישורי מחשב</value>
+  </data>
+  <data name="FindAndFixProblems" xml:space="preserve">
+    <value>אתר ותקן בעיות</value>
+  </data>
+  <data name="ChangeSettingsForContentReceivedUsingTapAndSend" xml:space="preserve">
+    <value>שנה הגדרות עבור תוכן שהתקבל באמצעות Tap and Send</value>
+  </data>
+  <data name="ChangeDefaultSettingsForMediaOrDevices" xml:space="preserve">
+    <value>שנה הגדרות ברירת מחדל עבור מדיה או התקנים</value>
+  </data>
+  <data name="PrintTheSpeechReferenceCard" xml:space="preserve">
+    <value>הדפס כרטיס עזר לדיבור</value>
+  </data>
+  <data name="CalibrateDisplayColour" xml:space="preserve">
+    <value>כייל צבעי תצוגה</value>
+  </data>
+  <data name="ManageFileEncryptionCertificates" xml:space="preserve">
+    <value>נהל אישורי הצפנת קבצים</value>
+  </data>
+  <data name="ViewRecentMessagesAboutYourComputer" xml:space="preserve">
+    <value>הצג הודעות אחרונות על המחשב שלך</value>
+  </data>
+  <data name="GiveOtherUsersAccessToThisComputer" xml:space="preserve">
+    <value>הענק למשתמשים אחרים גישה למחשב זה</value>
+  </data>
+  <data name="ShowHiddenFilesAndFolders" xml:space="preserve">
+    <value>הצג קבצים ותיקיות מוסתרים</value>
+  </data>
+  <data name="ChangeWindowsToGoStartUpOptions" xml:space="preserve">
+    <value>שנה אפשרויות אתחול של Windows To Go</value>
+  </data>
+  <data name="SeeWhichProcessesStartUpAutomaticallyWhenYouStartWindows" xml:space="preserve">
+    <value>הצג אילו תהליכים מופעלים אוטומטית עם הפעלת Windows</value>
+  </data>
+  <data name="TellIfAnRSSFeedIsAvailableOnAWebsite" xml:space="preserve">
+    <value>בדוק אם עדכון RSS זמין באתר</value>
+  </data>
+  <data name="AddClocksForDifferentTimeZones" xml:space="preserve">
+    <value>הוסף שעונים לאזורי זמן שונים</value>
+  </data>
+  <data name="AddABluetoothDevice" xml:space="preserve">
+    <value>הוסף התקן Bluetooth</value>
+  </data>
+  <data name="CustomiseTheMouseButtons" xml:space="preserve">
+    <value>התאם אישית את כפתורי העכבר</value>
+  </data>
+  <data name="SetTabletButtonsToPerformCertainTasks" xml:space="preserve">
+    <value>הגדר כפתורי טאבלט לביצוע משימות מסוימות</value>
+  </data>
+  <data name="ViewInstalledFonts" xml:space="preserve">
+    <value>הצג גופנים מותקנים</value>
+  </data>
+  <data name="ChangeTheWayCurrencyIsDisplayed" xml:space="preserve">
+    <value>שנה את אופן הצגת המטבע</value>
+  </data>
+  <data name="EditGroupPolicy" xml:space="preserve">
+    <value>ערוך מדיניות קבוצתית</value>
+  </data>
+  <data name="ManageBrowserAddOns" xml:space="preserve">
+    <value>נהל תוספים לדפדפן</value>
+  </data>
+  <data name="CheckProcessorSpeed" xml:space="preserve">
+    <value>בדוק מהירות מעבד</value>
+  </data>
+  <data name="CheckFirewallStatus" xml:space="preserve">
+    <value>בדוק את מצב חומת האש</value>
+  </data>
+  <data name="SendOrReceiveAFile" xml:space="preserve">
+    <value>שלח או קבל קובץ</value>
+  </data>
+  <data name="AddOrRemoveUserAccounts" xml:space="preserve">
+    <value>הוסף או הסר חשבונות משתמש</value>
+  </data>
+  <data name="EditTheSystemEnvironmentVariables" xml:space="preserve">
+    <value>ערוך משתני סביבה של המערכת</value>
+  </data>
+  <data name="ManageBitlocker" xml:space="preserve">
+    <value>נהל את BitLocker</value>
+  </data>
+  <data name="AutoHideTheTaskbar" xml:space="preserve">
+    <value>הסתר אוטומטית את שורת המשימות</value>
+  </data>
+  <data name="ChangeSoundCardSettings" xml:space="preserve">
+    <value>שנה הגדרות כרטיס קול</value>
+  </data>
+  <data name="MakeChangesToAccounts" xml:space="preserve">
+    <value>בצע שינויים בחשבונות</value>
+  </data>
+  <data name="EditLocalUsersAndGroups" xml:space="preserve">
+    <value>ערוך משתמשים וקבוצות מקומיים</value>
+  </data>
+  <data name="ViewNetworkComputersAndDevices" xml:space="preserve">
+    <value>הצג מחשבים והתקנים ברשת</value>
+  </data>
+  <data name="InstallAProgramFromTheNetwork" xml:space="preserve">
+    <value>התקן תוכנה מהרשת</value>
+  </data>
+  <data name="ViewScannersAndCameras" xml:space="preserve">
+    <value>הצג סורקים ומצלמות</value>
+  </data>
+  <data name="MicrosoftIMERegisterWordJapanese" xml:space="preserve">
+    <value>Microsoft IME רישום מילה (יפנית)</value>
+  </data>
+  <data name="RestoreYourFilesWithFileHistory" xml:space="preserve">
+    <value>שחזר את הקבצים שלך עם היסטוריית קבצים</value>
+  </data>
+  <data name="TurnOnScreenKeyboardOnOrOff" xml:space="preserve">
+    <value>הפעל או כבה את המקלדת הווירטואלית</value>
+  </data>
+  <data name="BlockOrAllowThirdPartyCookies" xml:space="preserve">
+    <value>חסום או אפשר קובצי Cookie של צד שלישי</value>
+  </data>
+  <data name="FindAndFixAudioRecordingProblems" xml:space="preserve">
+    <value>אתר ותקן בעיות בהקלטת שמע</value>
+  </data>
+  <data name="CreateARecoveryDrive" xml:space="preserve">
+    <value>צור כונן שחזור</value>
+  </data>
+  <data name="MicrosoftNewPhoneticSettings" xml:space="preserve">
+    <value>הגדרות Microsoft New Phonetic</value>
+  </data>
+  <data name="GenerateASystemHealthReport" xml:space="preserve">
+    <value>צור דוח בריאות מערכת</value>
+  </data>
+  <data name="FixProblemsWithYourComputer" xml:space="preserve">
+    <value>תקן בעיות במחשב שלך</value>
+  </data>
+  <data name="BackUpAndRestoreWindows7" xml:space="preserve">
+    <value>גיבוי ושחזור (Windows 7)</value>
+  </data>
+  <data name="PreviewDeleteShowOrHideFonts" xml:space="preserve">
+    <value>תצוגה מקדימה, מחיקה, הצגה או הסתרת גופנים</value>
+  </data>
+  <data name="MicrosoftQuickSettings" xml:space="preserve">
+    <value>הגדרות מהירות של Microsoft</value>
+  </data>
+  <data name="ViewReliabilityHistory" xml:space="preserve">
+    <value>הצג היסטוריית אמינות</value>
+  </data>
+  <data name="AccessRemoteappAndDesktops" xml:space="preserve">
+    <value>גישה ל-RemoteApp ולשולחנות עבודה מרוחקים</value>
+  </data>
+  <data name="SetUpODBCDataSources" xml:space="preserve">
+    <value>הגדר מקורות נתונים ODBC</value>
+  </data>
+  <data name="ResetSecurityPolicies" xml:space="preserve">
+    <value>אפס מדיניות אבטחה</value>
+  </data>
+  <data name="BlockOrAllowPopUps" xml:space="preserve">
+    <value>חסום או אפשר חלונות קופצים</value>
+  </data>
+  <data name="TurnAutocompleteInInternetExplorerOnOrOff" xml:space="preserve">
+    <value>הפעל או כבה השלמה אוטומטית ב-Internet Explorer</value>
+  </data>
+  <data name="MicrosoftPinyinSimplefastOptions" xml:space="preserve">
+    <value>אפשרויות Microsoft Pinyin SimpleFast</value>
+  </data>
+  <data name="ChangeWhatClosingTheLidDoes" xml:space="preserve">
+    <value>שנה את הפעולה בעת סגירת המכסה</value>
+  </data>
+  <data name="TurnOffUnnecessaryAnimations" xml:space="preserve">
+    <value>כבה אנימציות מיותרות</value>
+  </data>
+  <data name="CreateARestorePoint" xml:space="preserve">
+    <value>צור נקודת שחזור</value>
+  </data>
+  <data name="TurnOffAutomaticWindowArrangement" xml:space="preserve">
+    <value>כבה סידור אוטומטי של חלונות</value>
+  </data>
+  <data name="TroubleshootingHistory" xml:space="preserve">
+    <value>היסטוריית פתרון בעיות</value>
+  </data>
+  <data name="DiagnoseYourComputersMemoryProblems" xml:space="preserve">
+    <value>אבחן בעיות זיכרון במחשב שלך</value>
+  </data>
+  <data name="ViewRecommendedActionsToKeepWindowsRunningSmoothly" xml:space="preserve">
+    <value>הצג פעולות מומלצות לשמירה על פעילות תקינה של Windows</value>
+  </data>
+  <data name="ChangeCursorBlinkRate" xml:space="preserve">
+    <value>שנה את קצב ההבהוב של הסמן</value>
+  </data>
+  <data name="AddOrRemovePrograms" xml:space="preserve">
+    <value>הוסף או הסר תוכניות</value>
+  </data>
+  <data name="CreateAPasswordResetDisk" xml:space="preserve">
+    <value>צור דיסק לאיפוס סיסמה</value>
+  </data>
+  <data name="ConfigureAdvancedUserProfileProperties" xml:space="preserve">
+    <value>הגדר תכונות מתקדמות של פרופיל משתמש</value>
+  </data>
+  <data name="StartOrStopUsingAutoplayForAllMediaAndDevices" xml:space="preserve">
+    <value>הפעל או השבת את הפעלה אוטומטית לכל המדיה וההתקנים</value>
+  </data>
+  <data name="ChangeAutomaticMaintenanceSettings" xml:space="preserve">
+    <value>שנה הגדרות תחזוקה אוטומטית</value>
+  </data>
+  <data name="SpecifySingleOrDoubleClickToOpen" xml:space="preserve">
+    <value>ציין לחיצה אחת או כפולה לפתיחה</value>
+  </data>
+  <data name="SelectUsersWhoCanUseRemoteDesktop" xml:space="preserve">
+    <value>בחר משתמשים שיכולים להשתמש בשולחן עבודה מרוחק</value>
+  </data>
+  <data name="ShowWhichProgramsAreInstalledOnYourComputer" xml:space="preserve">
+    <value>הצג אילו תוכניות מותקנות במחשב שלך</value>
+  </data>
+  <data name="AllowRemoteAccessToYourComputer" xml:space="preserve">
+    <value>אפשר גישה מרחוק למחשב שלך</value>
+  </data>
+  <data name="ViewAdvancedSystemSettings" xml:space="preserve">
+    <value>הצג הגדרות מערכת מתקדמות</value>
+  </data>
+  <data name="HowToInstallAProgram" xml:space="preserve">
+    <value>כיצד להתקין תוכנה</value>
+  </data>
+  <data name="ChangeHowYourKeyboardWorks" xml:space="preserve">
+    <value>שנה את אופן פעולת המקלדת שלך</value>
+  </data>
+  <data name="AutomaticallyAdjustForDaylightSavingTime" xml:space="preserve">
+    <value>כוונן אוטומטית לשעון קיץ</value>
+  </data>
+  <data name="ChangeTheOrderOfWindowsSideshowGadgets" xml:space="preserve">
+    <value>שנה את סדר הגאדג'טים של Windows SideShow</value>
+  </data>
+  <data name="CheckKeyboardStatus" xml:space="preserve">
+    <value>בדוק את מצב המקלדת</value>
+  </data>
+  <data name="ControlTheComputerWithoutTheMouseOrKeyboard" xml:space="preserve">
+    <value>שלוט במחשב ללא עכבר או מקלדת</value>
+  </data>
+  <data name="ChangeOrRemoveAProgram" xml:space="preserve">
+    <value>שנה או הסר תוכנה</value>
+  </data>
+  <data name="ChangeMultiTouchGestureSettings" xml:space="preserve">
+    <value>שנה הגדרות מחוות Multi-Touch</value>
+  </data>
+  <data name="SetUpODBCDataSources64Bit" xml:space="preserve">
+    <value>הגדר מקורות נתונים ODBC (64-bit)</value>
+  </data>
+  <data name="ConfigureProxyServer" xml:space="preserve">
+    <value>הגדר שרת Proxy</value>
+  </data>
+  <data name="ChangeYourHomepage" xml:space="preserve">
+    <value>שנה את דף הבית שלך</value>
+  </data>
+  <data name="GroupSimilarWindowsOnTheTaskbar" xml:space="preserve">
+    <value>קבץ חלונות דומים בשורת המשימות</value>
+  </data>
+  <data name="ChangeWindowsSideshowSettings" xml:space="preserve">
+    <value>שנה הגדרות Windows SideShow</value>
+  </data>
+  <data name="UseAudioDescriptionForVideo" xml:space="preserve">
+    <value>השתמש בתיאור שמע לווידאו</value>
+  </data>
+  <data name="ChangeWorkgroupName" xml:space="preserve">
+    <value>שנה את שם קבוצת העבודה</value>
+  </data>
+  <data name="FindAndFixPrintingProblems" xml:space="preserve">
+    <value>אתר ותקן בעיות הדפסה</value>
+  </data>
+  <data name="ChangeWhenTheComputerSleeps" xml:space="preserve">
+    <value>שנה מתי המחשב עובר למצב שינה</value>
+  </data>
+  <data name="SetUpAVirtualPrivateNetworkVPNConnection" xml:space="preserve">
+    <value>הגדר חיבור רשת פרטית וירטואלית (VPN)</value>
+  </data>
+  <data name="AccommodateLearningAbilities" xml:space="preserve">
+    <value>התאם ליכולות למידה</value>
+  </data>
+  <data name="SetUpADialUpConnection" xml:space="preserve">
+    <value>הגדר חיבור חיוג</value>
+  </data>
+  <data name="SetUpAConnectionOrNetwork" xml:space="preserve">
+    <value>הגדר חיבור או רשת</value>
+  </data>
+  <data name="HowToChangeYourWindowsPassword" xml:space="preserve">
+    <value>כיצד לשנות את סיסמת Windows שלך</value>
+  </data>
+  <data name="MakeItEasierToSeeTheMousePointer" xml:space="preserve">
+    <value>הקל על זיהוי סמן העכבר</value>
+  </data>
+  <data name="SetUpIscsiInitiator" xml:space="preserve">
+    <value>הגדר יוזם iSCSI</value>
+  </data>
+  <data name="AccommodateLowVision" xml:space="preserve">
+    <value>התאם ללקויי ראייה</value>
+  </data>
+  <data name="ManageOfflineFiles" xml:space="preserve">
+    <value>נהל קבצים לא מקוונים</value>
+  </data>
+  <data name="ReviewYourComputersStatusAndResolveIssues" xml:space="preserve">
+    <value>בדוק את מצב המחשב שלך ופתור בעיות</value>
+  </data>
+  <data name="MicrosoftChangjieSettings" xml:space="preserve">
+    <value>הגדרות Microsoft ChangJie</value>
+  </data>
+  <data name="ReplaceSoundsWithVisualCues" xml:space="preserve">
+    <value>החלף צלילים ברמזים חזותיים</value>
+  </data>
+  <data name="ChangeTemporaryInternetFileSettings" xml:space="preserve">
+    <value>שנה הגדרות קבצי אינטרנט זמניים</value>
+  </data>
+  <data name="ConnectToTheInternet" xml:space="preserve">
+    <value>התחבר לאינטרנט</value>
+  </data>
+  <data name="FindAndFixAudioPlaybackProblems" xml:space="preserve">
+    <value>אתר ותקן בעיות בהפעלת שמע</value>
+  </data>
+  <data name="ChangeTheMousePointerDisplayOrSpeed" xml:space="preserve">
+    <value>שנה את הצגת או מהירות סמן העכבר</value>
+  </data>
+  <data name="BackUpYourRecoveryKey" xml:space="preserve">
+    <value>גבה את מפתח השחזור שלך</value>
+  </data>
+  <data name="SaveBackupCopiesOfYourFilesWithFileHistory" xml:space="preserve">
+    <value>שמור עותקי גיבוי של הקבצים שלך עם היסטוריית קבצים</value>
+  </data>
+  <data name="ViewCurrentAccessibilitySettings" xml:space="preserve">
+    <value>הצג הגדרות נגישות נוכחיות</value>
+  </data>
+  <data name="ChangeTabletPenSettings" xml:space="preserve">
+    <value>שנה הגדרות עט טאבלט</value>
+  </data>
+  <data name="ChangeHowYourMouseWorks" xml:space="preserve">
+    <value>שנה את אופן פעולת העכבר שלך</value>
+  </data>
+  <data name="ShowHowMuchRAMIsOnThisComputer" xml:space="preserve">
+    <value>הצג כמה זיכרון RAM יש במחשב זה</value>
+  </data>
+  <data name="EditPowerPlan" xml:space="preserve">
+    <value>ערוך תוכנית חשמל</value>
+  </data>
+  <data name="AdjustSystemVolume" xml:space="preserve">
+    <value>כוונן את עוצמת המערכת</value>
+  </data>
+  <data name="DefragmentAndOptimiseYourDrives" xml:space="preserve">
+    <value>בצע איחוי ואופטימיזציה לכוננים שלך</value>
+  </data>
+  <data name="SetUpODBCDataSources32Bit" xml:space="preserve">
+    <value>הגדר מקורות נתונים ODBC (32-bit)</value>
+  </data>
+  <data name="ChangeFontSettings" xml:space="preserve">
+    <value>שנה הגדרות גופנים</value>
+  </data>
+  <data name="MagnifyPortionsOfTheScreenUsingMagnifier" xml:space="preserve">
+    <value>הגדל חלקים מהמסך באמצעות מגדלת</value>
+  </data>
+  <data name="ChangeTheFileTypeAssociatedWithAFileExtension" xml:space="preserve">
+    <value>שנה את סוג הקובץ המשויך לסיומת קובץ</value>
+  </data>
+  <data name="ViewEventLogs" xml:space="preserve">
+    <value>הצג יומני אירועים</value>
+  </data>
+  <data name="ManageWindowsCredentials" xml:space="preserve">
+    <value>נהל אישורי Windows</value>
+  </data>
+  <data name="SetUpAMicrophone" xml:space="preserve">
+    <value>הגדר מיקרופון</value>
+  </data>
+  <data name="ChangeHowTheMousePointerLooks" xml:space="preserve">
+    <value>שנה את מראה סמן העכבר</value>
+  </data>
+  <data name="ChangePowerSavingSettings" xml:space="preserve">
+    <value>שנה הגדרות חיסכון בחשמל</value>
+  </data>
+  <data name="OptimiseForBlindness" xml:space="preserve">
+    <value>התאם לעיוורון</value>
+  </data>
+  <data name="null" xml:space="preserve">
+    <value>
+    </value>
+  </data>
+  <data name="TurnWindowsFeaturesOnOrOff" xml:space="preserve">
+    <value>הפעל או כבה תכונות Windows</value>
+  </data>
+  <data name="ShowWhichOperatingSystemYourComputerIsRunning" xml:space="preserve">
+    <value>הצג איזה מערכת הפעלה המחשב שלך מריץ</value>
+  </data>
+  <data name="ViewLocalServices" xml:space="preserve">
+    <value>הצג שירותים מקומיים</value>
+  </data>
+  <data name="ManageWorkFolders" xml:space="preserve">
+    <value>נהל תיקיות עבודה</value>
+  </data>
+  <data name="EncryptYourOfflineFiles" xml:space="preserve">
+    <value>הצפן את הקבצים הלא מקוונים שלך</value>
+  </data>
+  <data name="TrainTheComputerToRecogniseYourVoice" xml:space="preserve">
+    <value>אמן את המחשב לזהות את קולך</value>
+  </data>
+  <data name="AdvancedPrinterSetup" xml:space="preserve">
+    <value>הגדרת מדפסת מתקדמת</value>
+  </data>
+  <data name="ChangeDefaultPrinter" xml:space="preserve">
+    <value>שנה מדפסת ברירת מחדל</value>
+  </data>
+  <data name="EditEnvironmentVariablesForYourAccount" xml:space="preserve">
+    <value>ערוך משתני סביבה עבור החשבון שלך</value>
+  </data>
+  <data name="OptimiseVisualDisplay" xml:space="preserve">
+    <value>התאם תצוגה חזותית</value>
+  </data>
+  <data name="ChangeMouseClickSettings" xml:space="preserve">
+    <value>שנה הגדרות לחיצת עכבר</value>
+  </data>
+  <data name="ChangeAdvancedColourManagementSettingsForDisplaysScannersAndPrinters" xml:space="preserve">
+    <value>שנה הגדרות ניהול צבע מתקדמות עבור תצוגות, סורקים ומדפסות</value>
+  </data>
+  <data name="LetWindowsSuggestEaseOfAccessSettings" xml:space="preserve">
+    <value>אפשר ל-Windows להציע הגדרות נגישות</value>
+  </data>
+  <data name="ClearDiskSpaceByDeletingUnnecessaryFiles" xml:space="preserve">
+    <value>פנה שטח דיסק על ידי מחיקת קבצים מיותרים</value>
+  </data>
+  <data name="ViewDevicesAndPrinters" xml:space="preserve">
+    <value>הצג התקנים ומדפסות</value>
+  </data>
+  <data name="PrivateCharacterEditor" xml:space="preserve">
+    <value>עורך תווים מותאמים אישית</value>
+  </data>
+  <data name="RecordStepsToReproduceAProblem" xml:space="preserve">
+    <value>הקלט שלבים לשחזור בעיה</value>
+  </data>
+  <data name="AdjustTheAppearanceAndPerformanceOfWindows" xml:space="preserve">
+    <value>כוונן את המראה והביצועים של Windows</value>
+  </data>
+  <data name="SettingsForMicrosoftIMEJapanese" xml:space="preserve">
+    <value>הגדרות עבור Microsoft IME (יפנית)</value>
+  </data>
+  <data name="InviteSomeoneToConnectToYourPCAndHelpYouOrOfferToHelpSomeoneElse" xml:space="preserve">
+    <value>הזמן מישהו להתחבר למחשב שלך כדי לעזור לך, או הצע עזרה לאחרים</value>
+  </data>
+  <data name="RunProgramsMadeForPreviousVersionsOfWindows" xml:space="preserve">
+    <value>הפעל תוכניות שנוצרו עבור גרסאות קודמות של Windows</value>
+  </data>
+  <data name="ChooseTheOrderOfHowYourScreenRotates" xml:space="preserve">
+    <value>בחר את סדר סיבוב המסך שלך</value>
+  </data>
+  <data name="ChangeHowWindowsSearches" xml:space="preserve">
+    <value>שנה כיצד Windows מחפש</value>
+  </data>
+  <data name="SetFlicksToPerformCertainTasks" xml:space="preserve">
+    <value>הגדר מחוות Flicks לביצוע משימות מסוימות</value>
+  </data>
+  <data name="ChangeAccountType" xml:space="preserve">
+    <value>שנה סוג חשבון</value>
+  </data>
+  <data name="ChangeScreenSaver" xml:space="preserve">
+    <value>שנה שומר מסך</value>
+  </data>
+  <data name="ChangeUserAccountControlSettings" xml:space="preserve">
+    <value>שנה הגדרות בקרת חשבון משתמש</value>
+  </data>
+  <data name="TurnOnEasyAccessKeys" xml:space="preserve">
+    <value>הפעל מקשי גישה קלה</value>
+  </data>
+  <data name="IdentifyAndRepairNetworkProblems" xml:space="preserve">
+    <value>זהה ותקן בעיות רשת</value>
+  </data>
+  <data name="FindAndFixNetworkingAndConnectionProblems" xml:space="preserve">
+    <value>אתר ותקן בעיות רשת וחיבור</value>
+  </data>
+  <data name="PlayCdsOrOtherMediaAutomatically" xml:space="preserve">
+    <value>נגן תקליטורים או מדיה אחרת באופן אוטומטי</value>
+  </data>
+  <data name="ViewBasicInformationAboutYourComputer" xml:space="preserve">
+    <value>הצג מידע בסיסי על המחשב שלך</value>
+  </data>
+  <data name="ChooseHowYouOpenLinks" xml:space="preserve">
+    <value>בחר כיצד לפתוח קישורים</value>
+  </data>
+  <data name="AllowRemoteAssistanceInvitationsToBeSentFromThisComputer" xml:space="preserve">
+    <value>אפשר שליחת הזמנות לסיוע מרחוק ממחשב זה</value>
+  </data>
+  <data name="TaskManager" xml:space="preserve">
+    <value>מנהל המשימות</value>
+  </data>
+  <data name="TurnFlicksOnOrOff" xml:space="preserve">
+    <value>הפעל או השבת מחוות Flicks</value>
+  </data>
+  <data name="AddALanguage" xml:space="preserve">
+    <value>הוסף שפה</value>
+  </data>
+  <data name="ViewNetworkStatusAndTasks" xml:space="preserve">
+    <value>הצג מצב רשת ומשימות</value>
+  </data>
+  <data name="TurnMagnifierOnOrOff" xml:space="preserve">
+    <value>הפעל או השבת את המגדלת</value>
+  </data>
+  <data name="SeeTheNameOfThisComputer" xml:space="preserve">
+    <value>הצג את שם המחשב הזה</value>
+  </data>
+  <data name="ViewNetworkConnections" xml:space="preserve">
+    <value>הצג חיבורי רשת</value>
+  </data>
+  <data name="PerformRecommendedMaintenanceTasksAutomatically" xml:space="preserve">
+    <value>בצע משימות תחזוקה מומלצות באופן אוטומטי</value>
+  </data>
+  <data name="ManageDiskSpaceUsedByYourOfflineFiles" xml:space="preserve">
+    <value>נהל את שטח הדיסק המשמש את הקבצים הלא מקוונים שלך</value>
+  </data>
+  <data name="TurnHighContrastOnOrOff" xml:space="preserve">
+    <value>הפעל או השבת ניגודיות גבוהה</value>
+  </data>
+  <data name="ChangeTheWayTimeIsDisplayed" xml:space="preserve">
+    <value>שנה את אופן הצגת השעה</value>
+  </data>
+  <data name="ChangeHowWebPagesAreDisplayedInTabs" xml:space="preserve">
+    <value>שנה את אופן הצגת דפי אינטרנט בלשוניות</value>
+  </data>
+  <data name="ChangeTheWayDatesAndListsAreDisplayed" xml:space="preserve">
+    <value>שנה את אופן הצגת תאריכים ורשימות</value>
+  </data>
+  <data name="ManageAudioDevices" xml:space="preserve">
+    <value>נהל התקני שמע</value>
+  </data>
+  <data name="ChangeSecuritySettings" xml:space="preserve">
+    <value>שנה הגדרות אבטחה</value>
+  </data>
+  <data name="CheckSecurityStatus" xml:space="preserve">
+    <value>בדוק את מצב האבטחה</value>
+  </data>
+  <data name="DeleteCookiesOrTemporaryFiles" xml:space="preserve">
+    <value>מחק קובצי Cookie או קבצים זמניים</value>
+  </data>
+  <data name="SpecifyWhichHandYouWriteWith" xml:space="preserve">
+    <value>ציין באיזו יד אתה כותב</value>
+  </data>
+  <data name="ChangeTouchInputSettings" xml:space="preserve">
+    <value>שנה הגדרות קלט מגע</value>
+  </data>
+  <data name="HowToChangeTheSizeOfVirtualMemory" xml:space="preserve">
+    <value>כיצד לשנות את גודל הזיכרון הווירטואלי</value>
+  </data>
+  <data name="HearTextReadAloudWithNarrator" xml:space="preserve">
+    <value>האזן לטקסט מוקרא על ידי הקריין</value>
+  </data>
+  <data name="SetUpUSBGameControllers" xml:space="preserve">
+    <value>הגדר בקרי משחק USB</value>
+  </data>
+  <data name="ShowWhichDomainYourComputerIsOn" xml:space="preserve">
+    <value>הצג באיזה תחום המחשב שלך נמצא</value>
+  </data>
+  <data name="ViewAllProblemReports" xml:space="preserve">
+    <value>הצג את כל דוחות הבעיות</value>
+  </data>
+  <data name="16BitApplicationSupport" xml:space="preserve">
+    <value>תמיכה ביישומי 16-bit</value>
+  </data>
+  <data name="SetUpDiallingRules" xml:space="preserve">
+    <value>הגדר כללי חיוג</value>
+  </data>
+  <data name="EnableOrDisableSessionCookies" xml:space="preserve">
+    <value>אפשר או השבת קובצי Cookie של הפעלה</value>
+  </data>
+  <data name="GiveAdministrativeRightsToADomainUser" xml:space="preserve">
+    <value>הענק הרשאות ניהול למשתמש תחום</value>
+  </data>
+  <data name="ChooseWhenToTurnOffDisplay" xml:space="preserve">
+    <value>בחר מתי לכבות את התצוגה</value>
+  </data>
+  <data name="MoveThePointerWithTheKeypadUsingMousekeys" xml:space="preserve">
+    <value>הזז את הסמן באמצעות המקלדת עם מקשי עכבר</value>
+  </data>
+  <data name="ChangeWindowsSideshowCompatibleDeviceSettings" xml:space="preserve">
+    <value>שנה הגדרות התקנים תואמי Windows SideShow</value>
+  </data>
+  <data name="AdjustCommonlyUsedMobilitySettings" xml:space="preserve">
+    <value>כוונן הגדרות ניידות נפוצות</value>
+  </data>
+  <data name="ChangeTextToSpeechSettings" xml:space="preserve">
+    <value>שנה הגדרות טקסט לדיבור</value>
+  </data>
+  <data name="SetTheTimeAndDate" xml:space="preserve">
+    <value>הגדר את השעה והתאריך</value>
+  </data>
+  <data name="ChangeLocationSettings" xml:space="preserve">
+    <value>שנה הגדרות מיקום</value>
+  </data>
+  <data name="ChangeMouseSettings" xml:space="preserve">
+    <value>שנה הגדרות עכבר</value>
+  </data>
+  <data name="ManageStorageSpaces" xml:space="preserve">
+    <value>נהל מרחבי אחסון</value>
+  </data>
+  <data name="ShowOrHideFileExtensions" xml:space="preserve">
+    <value>הצג או הסתר סיומות קבצים</value>
+  </data>
+  <data name="AllowAnAppThroughWindowsFirewall" xml:space="preserve">
+    <value>אפשר יישום דרך חומת האש של Windows</value>
+  </data>
+  <data name="ChangeSystemSounds" xml:space="preserve">
+    <value>שנה צלילי מערכת</value>
+  </data>
+  <data name="AdjustCleartypeText" xml:space="preserve">
+    <value>כוונן טקסט ClearType</value>
+  </data>
+  <data name="TurnScreenSaverOnOrOff" xml:space="preserve">
+    <value>הפעל או השבת שומר מסך</value>
+  </data>
+  <data name="FindAndFixWindowsUpdateProblems" xml:space="preserve">
+    <value>אתר ותקן בעיות בעדכון Windows</value>
+  </data>
+  <data name="ChangeBluetoothSettings" xml:space="preserve">
+    <value>שנה הגדרות Bluetooth</value>
+  </data>
+  <data name="ConnectToANetwork" xml:space="preserve">
+    <value>התחבר לרשת</value>
+  </data>
+  <data name="ChangeTheSearchProviderInInternetExplorer" xml:space="preserve">
+    <value>שנה את ספק החיפוש ב-Internet Explorer</value>
+  </data>
+  <data name="JoinADomain" xml:space="preserve">
+    <value>הצטרף לתחום</value>
+  </data>
+  <data name="AddADevice" xml:space="preserve">
+    <value>הוסף התקן</value>
+  </data>
+  <data name="FindAndFixProblemsWithWindowsSearch" xml:space="preserve">
+    <value>אתר ותקן בעיות בחיפוש של Windows</value>
+  </data>
+  <data name="ChooseAPowerPlan" xml:space="preserve">
+    <value>בחר תוכנית חשמל</value>
+  </data>
+  <data name="ChangeHowTheMousePointerLooksWhenItSMoving" xml:space="preserve">
+    <value>שנה את מראה סמן העכבר בעת תנועה</value>
+  </data>
+  <data name="UninstallAProgram" xml:space="preserve">
+    <value>הסר התקנת תוכנה</value>
+  </data>
+  <data name="CreateAndFormatHardDiskPartitions" xml:space="preserve">
+    <value>צור ועצב מחיצות בכונן הקשיח</value>
+  </data>
+  <data name="ChangeDateTimeOrNumberFormats" xml:space="preserve">
+    <value>שנה תבניות תאריך, שעה או מספרים</value>
+  </data>
+  <data name="ChangePCWakeUpSettings" xml:space="preserve">
+    <value>שנה הגדרות הפעלה מהמחשב</value>
+  </data>
+  <data name="ManageNetworkPasswords" xml:space="preserve">
+    <value>נהל סיסמאות רשת</value>
+  </data>
+  <data name="ChangeInputMethods" xml:space="preserve">
+    <value>שנה שיטות קלט</value>
+  </data>
+  <data name="ManageAdvancedSharingSettings" xml:space="preserve">
+    <value>נהל הגדרות שיתוף מתקדמות</value>
+  </data>
+  <data name="ChangeBatterySettings" xml:space="preserve">
+    <value>שנה הגדרות סוללה</value>
+  </data>
+  <data name="RenameThisComputer" xml:space="preserve">
+    <value>שנה את שם מחשב זה</value>
+  </data>
+  <data name="LockOrUnlockTheTaskbar" xml:space="preserve">
+    <value>נעל או בטל נעילה של שורת המשימות</value>
+  </data>
+  <data name="ManageWebCredentials" xml:space="preserve">
+    <value>נהל אישורי רשת</value>
+  </data>
+  <data name="ChangeTheTimeZone" xml:space="preserve">
+    <value>שנה אזור זמן</value>
+  </data>
+  <data name="StartSpeechRecognition" xml:space="preserve">
+    <value>הפעל זיהוי דיבור</value>
+  </data>
+  <data name="ViewInstalledUpdates" xml:space="preserve">
+    <value>הצג עדכונים מותקנים</value>
+  </data>
+  <data name="WhatsHappenedToTheQuickLaunchToolbar" xml:space="preserve">
+    <value>מה קרה לסרגל ההפעלה המהירה?</value>
+  </data>
+  <data name="ChangeSearchOptionsForFilesAndFolders" xml:space="preserve">
+    <value>שנה אפשרויות חיפוש עבור קבצים ותיקיות</value>
+  </data>
+  <data name="AdjustSettingsBeforeGivingAPresentation" xml:space="preserve">
+    <value>כוונן הגדרות לפני הצגת מצגת</value>
+  </data>
+  <data name="ScanADocumentOrPicture" xml:space="preserve">
+    <value>סרוק מסמך או תמונה</value>
+  </data>
+  <data name="ChangeTheWayMeasurementsAreDisplayed" xml:space="preserve">
+    <value>שנה את אופן הצגת יחידות מידה</value>
+  </data>
+  <data name="PressKeyCombinationsOneAtATime" xml:space="preserve">
+    <value>לחץ על צירופי מקשים אחד בכל פעם</value>
+  </data>
+  <data name="RestoreDataFilesOrComputerFromBackupWindows7" xml:space="preserve">
+    <value>שחזר נתונים, קבצים או מחשב מגיבוי (Windows 7)</value>
+  </data>
+  <data name="SetYourDefaultPrograms" xml:space="preserve">
+    <value>הגדר את תוכניות ברירת המחדל שלך</value>
+  </data>
+  <data name="SetUpABroadbandConnection" xml:space="preserve">
+    <value>הגדר חיבור פס רחב</value>
+  </data>
+  <data name="CalibrateTheScreenForPenOrTouchInput" xml:space="preserve">
+    <value>כייל את המסך לקלט עט או מגע</value>
+  </data>
+  <data name="ManageUserCertificates" xml:space="preserve">
+    <value>נהל אישורי משתמש</value>
+  </data>
+  <data name="ScheduleTasks" xml:space="preserve">
+    <value>תזמן משימות</value>
+  </data>
+  <data name="IgnoreRepeatedKeystrokesUsingFilterkeys" xml:space="preserve">
+    <value>התעלם מהקשות חוזרות באמצעות FilterKeys</value>
+  </data>
+  <data name="FindAndFixBluescreenProblems" xml:space="preserve">
+    <value>אתר ותקן בעיות מסך כחול</value>
+  </data>
+  <data name="HearAToneWhenKeysArePressed" xml:space="preserve">
+    <value>השמע צליל בעת לחיצה על מקשים</value>
+  </data>
+  <data name="DeleteBrowsingHistory" xml:space="preserve">
+    <value>מחק היסטוריית גלישה</value>
+  </data>
+  <data name="ChangeWhatThePowerButtonsDo" xml:space="preserve">
+    <value>שנה את פעולת לחצני ההפעלה</value>
+  </data>
+  <data name="CreateStandardUserAccount" xml:space="preserve">
+    <value>צור חשבון משתמש רגיל</value>
+  </data>
+  <data name="TakeSpeechTutorials" xml:space="preserve">
+    <value>קח הדרכות דיבור</value>
+  </data>
+  <data name="ViewSystemResourceUsageInTaskManager" xml:space="preserve">
+    <value>הצג את שימוש משאבי המערכת במנהל המשימות</value>
+  </data>
+  <data name="CreateAnAccount" xml:space="preserve">
+    <value>צור חשבון</value>
+  </data>
+  <data name="GetMoreFeaturesWithANewEditionOfWindows" xml:space="preserve">
+    <value>קבל תכונות נוספות עם מהדורה חדשה של Windows</value>
+  </data>
+  <data name="AppControlPanel" xml:space="preserve">
+    <value>לוח הבקרה</value>
+  </data>
+  <data name="TaskLink" xml:space="preserve">
+    <value>TaskLink</value>
+  </data>
+  <data name="AreaUnknown" xml:space="preserve">
+    <value>לא ידוע</value>
+  </data>
+</root>

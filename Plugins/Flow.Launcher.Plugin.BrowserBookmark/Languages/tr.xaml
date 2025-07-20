@@ -2,22 +2,29 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Plugin Info  -->
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Yer İşaretleri</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Tarayıcılarınızdaki yer işaretlerini arayın.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Yer İmleri</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Tarayıcınızdaki yer işaretlerini arayın</system:String>
 
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Yer İmleri Verisi</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Open bookmarks in:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Yer imlerini şurada aç:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newWindow">Yeni Pencere</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">Yeni Sekme</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">Dizin üzerinden tarayıcı seç:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">Seç</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">Url Kopyala</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Copy the bookmark's url to clipboard</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Load Browser From:</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Browser Name</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Data Directory Path</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Yer imi bağlantısını kopyala</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Taraycılardan İçe Aktar:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Tarayıcı Adı</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Veri Dizini</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Ekle</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_editBrowserBookmark">Düzenle</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Sil</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Others</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browseBrowserBookmark">Gözat</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Diğerleri</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Tarayıcı Motoru</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">Eğer Chrome, Firefox veya Edge kullanmıyor veya bu tarayıcıların taşınabilir sürümlerini kullanıyorsanız tarayıcı motorunu ve yer imlerinin saklandığı dizini elle girmeniz gerekir.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">Örneğin: Brave tarayıcısı Chromium tabanlıdır ve yer imleri varsayılan olarak &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot; klasöründe saklanır. Firefox tabanlı tarayıcılar için bu places.sqlite dosyasının bulunduğu kullanıcı verisi klasörüdür.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Load favicons (can be time consuming during startup)</system:String>
+
 </ResourceDictionary>

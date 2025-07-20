@@ -1,0 +1,80 @@
+# -*- mode: yaml -*-
+# This example configuration for provides basic automations to get started with gitStream.
+# View the gitStream quickstart for more examples: https://docs.gitstream.cm/examples/
+manifest:
+  version: 1.0
+
+
+triggers:
+  exclude:
+    branch:
+      - l10n_dev
+      - dev
+      - r/([Dd]ependabot|[Rr]enovate)/
+
+
+automations:
+  # Add a label that indicates how many minutes it will take to review the PR.
+  estimated_time_to_review:
+    on:
+      - commit
+    if:
+      - true
+    run:
+      - action: add-label@v1
+        args:
+          label: "{{ calc.etr }} min review"
+          color: {{ colors.red if (calc.etr >= 20) else ( colors.yellow if (calc.etr >= 5) else colors.green ) }}
+  # Post a comment that lists the best experts for the files that were modified.
+  explain_code_experts:
+    if:
+      - true
+    run:
+      - action: explain-code-experts@v1
+        args:
+          gt: 10
+  # Post a comment notifying that the PR contains a TODO statement.
+  review_todo_comments:
+    if:
+      - {{ source.diff.files | matchDiffLines(regex=r/^[+].*\b(TODO|todo)\b/) | some }}
+    run:
+      - action: add-comment@v1
+        args:
+          comment: |
+            This PR contains a TODO statement. Please check to see if they should be removed.
+  # Post a comment that request a before and after screenshot
+  request_screenshot:
+    # Triggered for PRs that lack an image file or link to an image in the PR description
+    if:
+      - {{ not (has.screenshot_link or has.image_uploaded) }}
+    run:
+      - action: add-comment@v1
+        args:
+          comment: |
+            Be a legend :trophy: by adding a before and after screenshot of the changes you made, especially if they are around UI/UX.
+
+
+# +----------------------------------------------------------------------------+
+# | Custom Expressions                                                         |
+# | https://docs.gitstream.cm/how-it-works/#custom-expressions                 |
+# +----------------------------------------------------------------------------+
+
+calc:
+  etr: {{ branch | estimatedReviewTime }}
+
+colors:
+  red: 'b60205'
+  yellow: 'fbca04'
+  green: '0e8a16'
+
+changes:
+  # Sum all the lines added/edited in the PR
+  additions: {{ branch.diff.files_metadata | map(attr='additions') | sum }}
+  # Sum all the line removed in the PR
+  deletions: {{ branch.diff.files_metadata | map(attr='deletions') | sum }}
+  # Calculate the ratio of new code
+  ratio: {{ (changes.additions / (changes.additions + changes.deletions)) * 100 | round(2) }}
+
+has:
+  screenshot_link: {{ pr.description | includes(regex=r/!\[.*\]\(.*(jpg|svg|png|gif|psd).*\)/) }}
+  image_uploaded: {{ pr.description | includes(regex=r/(<img.*src.*(jpg|svg|png|gif|psd).*>)|!\[image\]\(.*github\.com.*\)/) }}

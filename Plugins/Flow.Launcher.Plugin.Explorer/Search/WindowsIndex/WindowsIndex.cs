@@ -1,6 +1,4 @@
-﻿using Flow.Launcher.Infrastructure.Logger;
-using Microsoft.Search.Interop;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.OleDb;
 using System.Linq;
@@ -8,13 +6,14 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 using Flow.Launcher.Plugin.Explorer.Exceptions;
+using Microsoft.Search.Interop;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 {
     internal static class WindowsIndex
     {
+        private static readonly string ClassName = nameof(WindowsIndex);
 
         // Reserved keywords in oleDB
         private static Regex _reservedPatternMatcher = new(@"^[`\@\＠\#\＃\＊\^,\&\＆\/\\\$\%_;\[\]]+$", RegexOptions.Compiled);
@@ -34,7 +33,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             }
             catch (OleDbException e)
             {
-                Log.Exception($"|WindowsIndex.ExecuteWindowsIndexSearchAsync|Failed to execute windows index search query: {indexQueryString}", e);
+                Main.Context.API.LogException(ClassName, $"Failed to execute windows index search query: {indexQueryString}", e);
                 yield break;
             }
             await using var dataReader = dataReaderAttempt;
@@ -48,21 +47,22 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             while (await dataReader.ReadAsync(token))
             {
                 token.ThrowIfCancellationRequested();
-                if (dataReader.GetValue(0) == DBNull.Value || dataReader.GetValue(1) == DBNull.Value)
+                if (dataReader.GetValue(0) is DBNull
+                    || dataReader.GetValue(1) is not string rawFragmentPath
+                    || string.Equals(rawFragmentPath, "file:", StringComparison.OrdinalIgnoreCase)
+                    || dataReader.GetValue(2) is not string extension)
                 {
                     continue;
                 }
                 // # is URI syntax for the fragment component, need to be encoded so LocalPath returns complete path   
-                var encodedFragmentPath = dataReader
-                    .GetString(1)
-                    .Replace("#", "%23", StringComparison.OrdinalIgnoreCase);
+                var encodedFragmentPath = rawFragmentPath.Replace("#", "%23", StringComparison.OrdinalIgnoreCase);
 
                 var path = new Uri(encodedFragmentPath).LocalPath;
 
                 yield return new SearchResult
                 {
                     FullPath = path,
-                    Type = dataReader.GetString(2) == "Directory" ? ResultType.Folder : ResultType.File,
+                    Type = string.Equals(extension, "Directory", StringComparison.Ordinal) ? ResultType.Folder : ResultType.File,
                     WindowsIndexed = true
                 };
             }

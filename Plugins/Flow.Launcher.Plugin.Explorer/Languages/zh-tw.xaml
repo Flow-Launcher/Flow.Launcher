@@ -3,12 +3,14 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">Please make a selection first</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Please select a folder path.</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Please choose a different name or folder path.</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">請選擇一個資料夾</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">你確認要刪除{0}嗎？</system:String>
-    <system:String x:Key="plugin_explorer_deletefolderconfirm">Are you sure you want to permanently delete this folder?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">Are you sure you want to permanently delete this file?</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Deletion successful</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Successfully deleted {0}</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Are you sure you want to permanently delete this file/folder?</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefoldersuccess">成功刪除</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">已成功刪除 {0}</system:String>
     <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Assigning the global action keyword could bring up too many results during search. Please choose a specific action keyword</system:String>
     <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">Quick Access can not be set to the global action keyword when enabled. Please choose a specific action keyword</system:String>
     <system:String x:Key="plugin_explorer_windowsSearchServiceNotRunning">The required service for Windows Index Search does not appear to be running</system:String>
@@ -16,6 +18,8 @@
     <system:String x:Key="plugin_explorer_alternative">The warning message has been switched off. As an alternative for searching files and folders, would you like to install Everything plugin?{0}{0}Select 'Yes' to install Everything plugin, or 'No' to return</system:String>
     <system:String x:Key="plugin_explorer_alternative_title">Explorer Alternative</system:String>
     <system:String x:Key="plugin_explorer_directoryinfosearch_error">Error occurred during search: {0}</system:String>
+    <system:String x:Key="plugin_explorer_opendir_error">Could not open folder</system:String>
+    <system:String x:Key="plugin_explorer_openfile_error">Could not open file</system:String>
 
     <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">刪除</system:String>
@@ -23,8 +27,16 @@
     <system:String x:Key="plugin_explorer_add">新增</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">General Setting</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Customise Action Keywords</system:String>
-    <system:String x:Key="plugin_explorer_quickaccesslinks_header">Quick Access Links</system:String>
+    <system:String x:Key="plugin_explorer_manage_quick_access_links_header">Customise Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_quickaccesslinks_header">快速訪問連結</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Everything Setting</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_setting_header">Preview Panel</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">大小</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">創建日期</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">修改日期</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_age_checkbox">File Age</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Display File Info</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Date and time format</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Sort Option:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Everything Path:</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Launch Hidden</system:String>
@@ -32,13 +44,15 @@
     <system:String x:Key="plugin_explorer_shell_path">Shell Path</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Index Search Excluded Paths</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">使用程式所在目錄作為工作目錄</system:String>
+    <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Display more information like size and age in tooltips</system:String>
+    <system:String x:Key="plugin_explorer_default_open_in_file_manager">Hit Enter to open folder in Default File Manager</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Use Index Search For Path Search</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">索引選項</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">搜尋:</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">Path Search:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">路徑搜尋：</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">File Content Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Index Search:</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Quick Access:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">快速存取：</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">Current Action Keyword</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_done">確</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">已啟用</system:String>
@@ -48,30 +62,45 @@
     <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Direct Enumeration</system:String>
     <system:String x:Key="plugin_explorer_file_editor_path">文件編輯器路徑</system:String>
     <system:String x:Key="plugin_explorer_folder_editor_path">文件夾編輯器路徑</system:String>
+    <system:String x:Key="plugin_explorer_enabled">已啟用</system:String>
+    <system:String x:Key="plugin_explorer_disabled">Disabled</system:String>
 
     <system:String x:Key="plugin_explorer_Content_Search_Engine">Content Search Engine</system:String>
     <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Directory Recursive Search Engine</system:String>
     <system:String x:Key="plugin_explorer_Index_Search_Engine">Index Search Engine</system:String>
     <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Open Windows Index Option</system:String>
+    <system:String x:Key="plugin_explorer_Excluded_File_Types">Excluded File Types (comma seperated)</system:String>
+    <system:String x:Key="plugin_explorer_Excluded_File_Types_Tooltip">For example: exe,jpg,png</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results">Maximum results</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results_Tooltip">The maximum number of results requested from active search engine</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">檔案總管</system:String>
-    <system:String x:Key="plugin_explorer_plugin_description">Find and manage files and folders via Windows Search or Everything</system:String>
+    <system:String x:Key="plugin_explorer_plugin_description">透過 Windows 搜尋或 Everything 搜尋和管理檔案和資料夾</system:String>
 
     <!--  Plugin Tooltip  -->
-    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter to open the directory</system:String>
+    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter 以開啟該目錄。</system:String>
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Enter to open the containing folder</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info">{0}{4}Size: {1}{4}Date created: {2}{4}Date modified: {3}</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_unknown">Unknown</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_volume">{0}{3}Space free: {1}{3}Total size: {2}</system:String>
 
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">複製路徑</system:String>
     <system:String x:Key="plugin_explorer_copypath_subtitle">Copy path of current item to clipboard</system:String>
+    <system:String x:Key="plugin_explorer_copyname">Copy name</system:String>
+    <system:String x:Key="plugin_explorer_copyname_subtitle">Copy name of current item to clipboard</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">複製</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">Copy current file to clipboard</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">Copy current folder to clipboard</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder">刪除</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Permanently delete current file</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Permanently delete current folder</system:String>
-    <system:String x:Key="plugin_explorer_path">路徑:</system:String>
+    <system:String x:Key="plugin_explorer_name">名稱</system:String>
+    <system:String x:Key="plugin_explorer_type">Type</system:String>
+    <system:String x:Key="plugin_explorer_path">路徑</system:String>
+    <system:String x:Key="plugin_explorer_file">檔案</system:String>
+    <system:String x:Key="plugin_explorer_folder">資料夾</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">刪除所選內容</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Run as different user</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Run the selected using a different user account</system:String>
@@ -88,20 +117,24 @@
     <system:String x:Key="plugin_explorer_openindexingoptions_errormsg">Failed to open Windows Indexing Options</system:String>
     <system:String x:Key="plugin_explorer_add_to_quickaccess_title">Add to Quick Access</system:String>
     <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Add current item to Quick Access</system:String>
-    <system:String x:Key="plugin_explorer_addfilefoldersuccess">Successfully Added</system:String>
+    <system:String x:Key="plugin_explorer_addfilefoldersuccess">添加成功</system:String>
     <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">Successfully added to Quick Access</system:String>
     <system:String x:Key="plugin_explorer_removefilefoldersuccess">Successfully Removed</system:String>
     <system:String x:Key="plugin_explorer_removefilefoldersuccess_detail">Successfully removed from Quick Access</system:String>
     <system:String x:Key="plugin_explorer_contextmenu_titletooltip">Add to Quick Access so it can be opened with Explorer's Search Activation action keyword</system:String>
-    <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">Remove from Quick Access</system:String>
-    <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Remove from Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">從快速訪問中移除</system:String>
+    <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">從快速訪問中移除</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Remove current item from Quick Access</system:String>
     <system:String x:Key="plugin_explorer_show_contextmenu_title">Show Windows Context Menu</system:String>
-    
-    <!-- Special Results-->
+    <system:String x:Key="plugin_explorer_openwith">Open With</system:String>
+    <system:String x:Key="plugin_explorer_openwith_subtitle">Select a program to open with</system:String>
+
+    <!--  Special Results  -->
     <system:String x:Key="plugin_explorer_diskfreespace">{0} free of {1}</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder">Open in Default File Manager</system:String>
-    <system:String x:Key="plugin_explorer_openresultfolder_subtitle">Use '&gt;' to search in this directory, '*' to search for file extensions or '&gt;*' to combine both searches.</system:String>
+    <system:String x:Key="plugin_explorer_openresultfolder_subtitle">
+        Use '&gt;' to search in this directory, '*' to search for file extensions or '&gt;*' to combine both searches.
+    </system:String>
 
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Failed to load Everything SDK</system:String>
@@ -125,14 +158,33 @@
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Warning: This is not a Fast Sort option, searches may be slow</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Search Full Path</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Enable File/Folder Run Count</system:String>
+
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Click to launch or install Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Everything 安裝程序</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">正在安裝 Everything 服務，請稍後...</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installationsuccess_subtitle">成功安裝 Everything 服務</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installationfailed_subtitle">Failed to automatically install Everything service. Please manually install it from https://www.voidtools.com</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_run_service">點此開始</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installing_select">Unable to find an Everything installation, would you like to manually select a location?{0}{0}Click no and Everything will be automatically installed for you</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installing_select">無法找到任何已安裝的 Everything，您想手動選擇位置嗎？{0}{0}點擊不 Everything 將會自動為您安裝。</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Do you want to enable content search for Everything?</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">It can be very slow without index (which is only supported in Everything v1.5+)</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_everything_not_found">Unable to find Everything.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_install_issue">Failed to install Everything, please install it manually</system:String>
+
+    <!--  Native Context Menu  -->
+    <system:String x:Key="plugin_explorer_native_context_menu_header">Native Context Menu</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Display native context menu (experimental)</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Below you can specify items you want to include in the context menu, they can be partial (e.g. 'pen wit') or complete ('Open with').</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Below you can specify items you want to exclude from context menu, they can be partial (e.g. 'pen wit') or complete ('Open with').</system:String>
+
+    <!--  Preview Info  -->
+    <system:String x:Key="Today">Today</system:String>
+    <system:String x:Key="DaysAgo">{0} days ago</system:String>
+    <system:String x:Key="OneMonthAgo">1 month ago</system:String>
+    <system:String x:Key="MonthsAgo">{0} months ago</system:String>
+    <system:String x:Key="OneYearAgo">1 year ago</system:String>
+    <system:String x:Key="YearsAgo">{0} years ago</system:String>
 </ResourceDictionary>

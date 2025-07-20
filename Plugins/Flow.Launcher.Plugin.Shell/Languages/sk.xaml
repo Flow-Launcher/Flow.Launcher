@@ -2,12 +2,15 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <system:String x:Key="flowlauncher_plugin_cmd_relace_winr">Nahradiť Win+R</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_close_cmd_after_press">Zatvoriť príkazový riadok po stlačení ľubovoľného klávesu</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">Toto okno zatvoríte stlačením ľubovoľného klávesu…</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">Nezatvárať príkazový riadok po dokončení príkazu</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">Spustiť vždy ako správca</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_use_windows_terminal">Použiť Windows Terminál</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">Spustiť ako iný používateľ</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">Shell</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Umožňuje spúšťať systémové príkazy z Flow Launcheru. Príkazy začínajú znakom &gt;</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_cmd_has_been_executed_times">tento príkaz bol vykonaný {0} krát</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Umožňuje vykonávať systémové príkazy z Flow Launchera</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_cmd_has_been_executed_times">tento príkaz bol vykonaný {0}-krát</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_execute_through_shell">vykonať príkaz cez príkazový riadok</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">Spustiť ako správca</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_copy">Kopírovať príkaz</system:String>

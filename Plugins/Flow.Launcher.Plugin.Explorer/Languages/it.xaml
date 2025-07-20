@@ -2,113 +2,146 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Dialogues  -->
-    <system:String x:Key="plugin_explorer_make_selection_warning">Please make a selection first</system:String>
-    <system:String x:Key="plugin_explorer_select_folder_link_warning">Please select a folder link</system:String>
-    <system:String x:Key="plugin_explorer_delete_folder_link">Are you sure you want to delete {0}?</system:String>
-    <system:String x:Key="plugin_explorer_deletefolderconfirm">Are you sure you want to permanently delete this folder?</system:String>
-    <system:String x:Key="plugin_explorer_deletefileconfirm">Are you sure you want to permanently delete this file?</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Deletion successful</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Successfully deleted {0}</system:String>
-    <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Assigning the global action keyword could bring up too many results during search. Please choose a specific action keyword</system:String>
-    <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">Quick Access can not be set to the global action keyword when enabled. Please choose a specific action keyword</system:String>
-    <system:String x:Key="plugin_explorer_windowsSearchServiceNotRunning">The required service for Windows Index Search does not appear to be running</system:String>
-    <system:String x:Key="plugin_explorer_windowsSearchServiceFix">To fix this, start the Windows Search service. Select here to remove this warning</system:String>
-    <system:String x:Key="plugin_explorer_alternative">The warning message has been switched off. As an alternative for searching files and folders, would you like to install Everything plugin?{0}{0}Select 'Yes' to install Everything plugin, or 'No' to return</system:String>
-    <system:String x:Key="plugin_explorer_alternative_title">Explorer Alternative</system:String>
-    <system:String x:Key="plugin_explorer_directoryinfosearch_error">Error occurred during search: {0}</system:String>
+    <system:String x:Key="plugin_explorer_make_selection_warning">Effettua prima una selezione</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Please select a folder path.</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Please choose a different name or folder path.</system:String>
+    <system:String x:Key="plugin_explorer_select_folder_link_warning">Si prega di selezionare un collegamento alla cartella</system:String>
+    <system:String x:Key="plugin_explorer_delete_folder_link">Sei sicuro di voler eliminare {0}?</system:String>
+    <system:String x:Key="plugin_explorer_deletefileconfirm">Sei sicuro di voler eliminare definitivamente questo file?</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Sei sicuro di voler eliminare definitivamente questo/a file/cartella?</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Eliminato con successo</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">{0} eliminato correttamente</system:String>
+    <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">L'assegnazione della parola chiave globale potrebbe portare a troppi risultati durante la ricerca. Scegli una parola chiave specifica per l'azione</system:String>
+    <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">L'accesso rapido non può essere impostato sulla parola chiave globale quando abilitata. Si prega di scegliere una parola chiave specifica</system:String>
+    <system:String x:Key="plugin_explorer_windowsSearchServiceNotRunning">Il servizio richiesto per Windows Index Search non sembra essere in esecuzione</system:String>
+    <system:String x:Key="plugin_explorer_windowsSearchServiceFix">Per risolvere il problema, avvia il servizio Ricerca Windows. Seleziona qui per rimuovere questo avviso</system:String>
+    <system:String x:Key="plugin_explorer_alternative">Il messaggio di avviso è stato spento. In alternativa per la ricerca di file e cartelle, vuoi installare il plugin Everything?{0}{0} Seleziona 'Sì' per installare il plugin Everything, o 'No' per tornare</system:String>
+    <system:String x:Key="plugin_explorer_alternative_title">Alternativa all'Esplora Risorse</system:String>
+    <system:String x:Key="plugin_explorer_directoryinfosearch_error">Errore durante la ricerca: {0}</system:String>
+    <system:String x:Key="plugin_explorer_opendir_error">Impossibile aprire la cartella</system:String>
+    <system:String x:Key="plugin_explorer_openfile_error">Impossibile aprire il file</system:String>
 
     <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">Cancella</system:String>
     <system:String x:Key="plugin_explorer_edit">Modifica</system:String>
     <system:String x:Key="plugin_explorer_add">Aggiungi</system:String>
-    <system:String x:Key="plugin_explorer_generalsetting_header">General Setting</system:String>
-    <system:String x:Key="plugin_explorer_manageactionkeywords_header">Customise Action Keywords</system:String>
-    <system:String x:Key="plugin_explorer_quickaccesslinks_header">Quick Access Links</system:String>
-    <system:String x:Key="plugin_explorer_everything_setting_header">Everything Setting</system:String>
-    <system:String x:Key="plugin_explorer_everything_sort_option">Sort Option:</system:String>
-    <system:String x:Key="plugin_explorer_everything_installed_path">Everything Path:</system:String>
-    <system:String x:Key="plugin_explorer_launch_hidden">Launch Hidden</system:String>
+    <system:String x:Key="plugin_explorer_generalsetting_header">Impostazione Generale</system:String>
+    <system:String x:Key="plugin_explorer_manageactionkeywords_header">Personalizza Parola Chiave</system:String>
+    <system:String x:Key="plugin_explorer_manage_quick_access_links_header">Customise Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_quickaccesslinks_header">Collegamenti ad Accesso Rapido</system:String>
+    <system:String x:Key="plugin_explorer_everything_setting_header">Impostazioni di Everything</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_setting_header">Pannello Anteprima</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Dimensioni</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Data di creazione</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Data della modifica</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_age_checkbox">File Age</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Visualizza Informazioni File</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Formato data e ora</system:String>
+    <system:String x:Key="plugin_explorer_everything_sort_option">Opzioni di ordinamento:</system:String>
+    <system:String x:Key="plugin_explorer_everything_installed_path">Percorso di Everything:</system:String>
+    <system:String x:Key="plugin_explorer_launch_hidden">Avvia nascosto</system:String>
     <system:String x:Key="plugin_explorer_editor_path">Tasto di accesso rapido alla finestra</system:String>
-    <system:String x:Key="plugin_explorer_shell_path">Shell Path</system:String>
-    <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Index Search Excluded Paths</system:String>
+    <system:String x:Key="plugin_explorer_shell_path">Percorso Shell</system:String>
+    <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Percorsi Esclusi dall'Indice di Ricerca</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Utilizza il percorso ottenuto dalla ricerca come cartella di lavoro</system:String>
-    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Use Index Search For Path Search</system:String>
-    <system:String x:Key="plugin_explorer_manageindexoptions">Indexing Options</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_search">Search:</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">Path Search:</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">File Content Search:</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Index Search:</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Quick Access:</system:String>
-    <system:String x:Key="plugin_explorer_actionkeyword_current">Current Action Keyword</system:String>
+    <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Display more information like size and age in tooltips</system:String>
+    <system:String x:Key="plugin_explorer_default_open_in_file_manager">Premi Invio per aprire la cartella nel gestore file predefinito</system:String>
+    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Usa Indice di Ricerca per la Ricerca Percorso</system:String>
+    <system:String x:Key="plugin_explorer_manageindexoptions">Opzioni di Indicizzazione</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_search">Cerca:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">Ricerca Percorso:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">Ricerca Contenuto File:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Ricerca in Indice:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Accesso Rapido:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_current">Parola Chiave Corrente</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_done">Conferma</system:String>
-    <system:String x:Key="plugin_explorer_actionkeyword_enabled">Enabled</system:String>
-    <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">When disabled Flow will not execute this search option, and will additionally revert back to '*' to free up the action keyword</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_enabled">Abilitato</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">Quando disabilitato Flow non eseguirà questa opzione di ricerca, e ripristinerà a &quot;*&quot; per liberare la parola chiave</system:String>
     <system:String x:Key="plugin_explorer_engine_everything">Tutto</system:String>
-    <system:String x:Key="plugin_explorer_engine_windows_index">Windows Index</system:String>
-    <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Direct Enumeration</system:String>
+    <system:String x:Key="plugin_explorer_engine_windows_index">Indice Di Windows</system:String>
+    <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Enumerazione Diretta</system:String>
     <system:String x:Key="plugin_explorer_file_editor_path">Percorso dell'editor di file</system:String>
     <system:String x:Key="plugin_explorer_folder_editor_path">Percorso dell'editor delle cartelle</system:String>
+    <system:String x:Key="plugin_explorer_enabled">Abilitato</system:String>
+    <system:String x:Key="plugin_explorer_disabled">Disabilitato</system:String>
 
-    <system:String x:Key="plugin_explorer_Content_Search_Engine">Content Search Engine</system:String>
-    <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Directory Recursive Search Engine</system:String>
-    <system:String x:Key="plugin_explorer_Index_Search_Engine">Index Search Engine</system:String>
-    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Open Windows Index Option</system:String>
+    <system:String x:Key="plugin_explorer_Content_Search_Engine">Motore di Ricerca dei Contenuti</system:String>
+    <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Motore di Ricerca Ricorsivo sulle Catelle</system:String>
+    <system:String x:Key="plugin_explorer_Index_Search_Engine">Indice del Motore di Ricerca</system:String>
+    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Apri Opzioni di Indicizzazione di Windows</system:String>
+    <system:String x:Key="plugin_explorer_Excluded_File_Types">Excluded File Types (comma seperated)</system:String>
+    <system:String x:Key="plugin_explorer_Excluded_File_Types_Tooltip">For example: exe,jpg,png</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results">Maximum results</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results_Tooltip">The maximum number of results requested from active search engine</system:String>
 
     <!--  Plugin Infos  -->
-    <system:String x:Key="plugin_explorer_plugin_name">Explorer</system:String>
-    <system:String x:Key="plugin_explorer_plugin_description">Find and manage files and folders via Windows Search or Everything</system:String>
+    <system:String x:Key="plugin_explorer_plugin_name">Esplora Risorse</system:String>
+    <system:String x:Key="plugin_explorer_plugin_description">Trova e gestisci file e cartelle tramite Ricerca di Windows o Everything</system:String>
 
     <!--  Plugin Tooltip  -->
-    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter to open the directory</system:String>
-    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Enter to open the containing folder</system:String>
+    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Invio per aprire la cartella</system:String>
+    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Invio per aprire la cartella che lo contiene</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info">{0}{4}Size: {1}{4}Date created: {2}{4}Date modified: {3}</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_unknown">Unknown</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_volume">{0}{3}Space free: {1}{3}Total size: {2}</system:String>
 
     <!--  Context menu items  -->
-    <system:String x:Key="plugin_explorer_copypath">Copy path</system:String>
-    <system:String x:Key="plugin_explorer_copypath_subtitle">Copy path of current item to clipboard</system:String>
-    <system:String x:Key="plugin_explorer_copyfilefolder">Copy</system:String>
-    <system:String x:Key="plugin_explorer_copyfile_subtitle">Copy current file to clipboard</system:String>
-    <system:String x:Key="plugin_explorer_copyfolder_subtitle">Copy current folder to clipboard</system:String>
+    <system:String x:Key="plugin_explorer_copypath">Copia percorso</system:String>
+    <system:String x:Key="plugin_explorer_copypath_subtitle">Copia negli appunti il percorso dell'elemento corrente</system:String>
+    <system:String x:Key="plugin_explorer_copyname">Copy name</system:String>
+    <system:String x:Key="plugin_explorer_copyname_subtitle">Copy name of current item to clipboard</system:String>
+    <system:String x:Key="plugin_explorer_copyfilefolder">Copia</system:String>
+    <system:String x:Key="plugin_explorer_copyfile_subtitle">Copia file corrente negli appunti</system:String>
+    <system:String x:Key="plugin_explorer_copyfolder_subtitle">Copia cartella corrente negli appunti</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder">Cancella</system:String>
-    <system:String x:Key="plugin_explorer_deletefile_subtitle">Permanently delete current file</system:String>
-    <system:String x:Key="plugin_explorer_deletefolder_subtitle">Permanently delete current folder</system:String>
-    <system:String x:Key="plugin_explorer_path">Path:</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Delete the selected</system:String>
-    <system:String x:Key="plugin_explorer_runasdifferentuser">Run as different user</system:String>
-    <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Run the selected using a different user account</system:String>
-    <system:String x:Key="plugin_explorer_opencontainingfolder">Open containing folder</system:String>
-    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Open the location that contains current item</system:String>
-    <system:String x:Key="plugin_explorer_openwitheditor">Open With Editor:</system:String>
-    <system:String x:Key="plugin_explorer_openwitheditor_error">Failed to open file at {0} with Editor {1} at {2}</system:String>
-    <system:String x:Key="plugin_explorer_openwithshell">Open With Shell:</system:String>
-    <system:String x:Key="plugin_explorer_openwithshell_error">Failed to open folder {0} with Shell {1} at {2}</system:String>
-    <system:String x:Key="plugin_explorer_excludefromindexsearch">Exclude current and sub-directories from Index Search</system:String>
-    <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Excluded from Index Search</system:String>
-    <system:String x:Key="plugin_explorer_openindexingoptions">Open Windows Indexing Options</system:String>
-    <system:String x:Key="plugin_explorer_openindexingoptions_subtitle">Manage indexed files and folders</system:String>
-    <system:String x:Key="plugin_explorer_openindexingoptions_errormsg">Failed to open Windows Indexing Options</system:String>
-    <system:String x:Key="plugin_explorer_add_to_quickaccess_title">Add to Quick Access</system:String>
-    <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Add current item to Quick Access</system:String>
-    <system:String x:Key="plugin_explorer_addfilefoldersuccess">Successfully Added</system:String>
-    <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">Successfully added to Quick Access</system:String>
-    <system:String x:Key="plugin_explorer_removefilefoldersuccess">Successfully Removed</system:String>
-    <system:String x:Key="plugin_explorer_removefilefoldersuccess_detail">Successfully removed from Quick Access</system:String>
-    <system:String x:Key="plugin_explorer_contextmenu_titletooltip">Add to Quick Access so it can be opened with Explorer's Search Activation action keyword</system:String>
-    <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">Remove from Quick Access</system:String>
-    <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Remove from Quick Access</system:String>
-    <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Remove current item from Quick Access</system:String>
-    <system:String x:Key="plugin_explorer_show_contextmenu_title">Show Windows Context Menu</system:String>
-    
-    <!-- Special Results-->
-    <system:String x:Key="plugin_explorer_diskfreespace">{0} free of {1}</system:String>
-    <system:String x:Key="plugin_explorer_openresultfolder">Open in Default File Manager</system:String>
-    <system:String x:Key="plugin_explorer_openresultfolder_subtitle">Use '&gt;' to search in this directory, '*' to search for file extensions or '&gt;*' to combine both searches.</system:String>
+    <system:String x:Key="plugin_explorer_deletefile_subtitle">Elimina permanentemente il file corrente</system:String>
+    <system:String x:Key="plugin_explorer_deletefolder_subtitle">Elimina definitivamente la cartella corrente</system:String>
+    <system:String x:Key="plugin_explorer_name">Nome</system:String>
+    <system:String x:Key="plugin_explorer_type">Type</system:String>
+    <system:String x:Key="plugin_explorer_path">Percorso</system:String>
+    <system:String x:Key="plugin_explorer_file">File</system:String>
+    <system:String x:Key="plugin_explorer_folder">Cartella</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Elimina il selezionato</system:String>
+    <system:String x:Key="plugin_explorer_runasdifferentuser">Esegui come utente differente</system:String>
+    <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Esegui la selezione utilizzando un altro account utente</system:String>
+    <system:String x:Key="plugin_explorer_opencontainingfolder">Apri percorso file</system:String>
+    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Apri la posizione che contiene l'elemento corrente</system:String>
+    <system:String x:Key="plugin_explorer_openwitheditor">Apri nell'Editor:</system:String>
+    <system:String x:Key="plugin_explorer_openwitheditor_error">Apertura del file in {0} con l'editor {1} in {2} non riuscita</system:String>
+    <system:String x:Key="plugin_explorer_openwithshell">Apri Con Shell:</system:String>
+    <system:String x:Key="plugin_explorer_openwithshell_error">Apertura della cartella {0} con Shell {1} in {2} non riuscita</system:String>
+    <system:String x:Key="plugin_explorer_excludefromindexsearch">Escludi cartelle e sottocartelle dall'Indice di Ricerca</system:String>
+    <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Escludi dall'Indice di Ricerca</system:String>
+    <system:String x:Key="plugin_explorer_openindexingoptions">Apri Opzioni di Indicizzazione di Windows</system:String>
+    <system:String x:Key="plugin_explorer_openindexingoptions_subtitle">Gestisci file e cartelle indicizzati</system:String>
+    <system:String x:Key="plugin_explorer_openindexingoptions_errormsg">Impossibile aprire le Opzioni di Indicizzazione di Windows</system:String>
+    <system:String x:Key="plugin_explorer_add_to_quickaccess_title">Aggiungi ad Accesso Rapido</system:String>
+    <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Aggiungi elemento corrente all'Accesso Rapido</system:String>
+    <system:String x:Key="plugin_explorer_addfilefoldersuccess">Aggiunto con successo</system:String>
+    <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">Aggiunto con successo ad Accesso Rapido</system:String>
+    <system:String x:Key="plugin_explorer_removefilefoldersuccess">Rimosso con Successo</system:String>
+    <system:String x:Key="plugin_explorer_removefilefoldersuccess_detail">Rimosso con successo da Accesso Rapido</system:String>
+    <system:String x:Key="plugin_explorer_contextmenu_titletooltip">Aggiungi ad Accesso Rapido in modo che possa essere aperto con la parola chiave di ricerca dell'Esplora Risorse</system:String>
+    <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">Rimuovi da Accesso Rapido</system:String>
+    <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Rimuovi da Accesso Rapido</system:String>
+    <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Rimuovi elemento corrente dall'Accesso Rapido</system:String>
+    <system:String x:Key="plugin_explorer_show_contextmenu_title">Mostra Menu Contestuale di Windows</system:String>
+    <system:String x:Key="plugin_explorer_openwith">Apri Con</system:String>
+    <system:String x:Key="plugin_explorer_openwith_subtitle">Seleziona un programma con cui aprire</system:String>
+
+    <!--  Special Results  -->
+    <system:String x:Key="plugin_explorer_diskfreespace">{0} disponibili su {1}</system:String>
+    <system:String x:Key="plugin_explorer_openresultfolder">Aprire con il Gestore File Predefinito</system:String>
+    <system:String x:Key="plugin_explorer_openresultfolder_subtitle">
+        Usa '&gt;' per cercare in questa directory, '*' per cercare estensioni file o '&gt;*' per combinare entrambe le ricerche.
+    </system:String>
 
     <!--  Everything  -->
-    <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Failed to load Everything SDK</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Impossibile caricare l'SDK di Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">Attenzione: Il servizio &quot;Everything&quot; non è in esecuzione</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_query_error">Errore nell'interrogazione di Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by">Ordina per</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_name">Name</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_name">Nome</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_path">Percorso</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_size">Dimensioni</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension">Estensione</system:String>
@@ -125,14 +158,33 @@
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Attenzione: Questa non è un'opzione di ordinamento rapido, le ricerche potrebbero essere lente</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Click to launch or install Everything</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Cerca Percorso Completo</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Enable File/Folder Run Count</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Clicca per avviare o installare Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Installazione di Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">Installazione di everything. Si prega di attendere...</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installationsuccess_subtitle">Everything è stato installato con successo</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installationfailed_subtitle">Failed to automatically install Everything service. Please manually install it from https://www.voidtools.com</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installationfailed_subtitle">Impossibile installare automaticamente il servizio Everything. Si prega di installarlo manualmente da https://www.voidtools.com</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_run_service">Premi per avviare</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_select">Impossibile trovare l'installazione di Everything, vuoi inserire manualmente un percorso? {0} {0} Premi no per installare automaticamente Everything</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Do you want to enable content search for Everything?</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">It can be very slow without index (which is only supported in Everything v1.5+)</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Vuoi abilitare la ricerca di contenuti per Everything?</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">Può essere molto lento senza indice (che è supportato solo in Everything v1.5+)</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_everything_not_found">Unable to find Everything.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_install_issue">Failed to install Everything, please install it manually</system:String>
+
+    <!--  Native Context Menu  -->
+    <system:String x:Key="plugin_explorer_native_context_menu_header">Menu Contestuale Nativo</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Visualizza il menu contestuale nativo (sperimentale)</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Sotto si può specificare elementi che si vuole includere nel menu contestuale, che possono essere parziali (es 'pri co') o completi ('Apri con').</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Below you can specify items you want to exclude from context menu, they can be partial (e.g. 'pen wit') or complete ('Open with').</system:String>
+
+    <!--  Preview Info  -->
+    <system:String x:Key="Today">Today</system:String>
+    <system:String x:Key="DaysAgo">{0} days ago</system:String>
+    <system:String x:Key="OneMonthAgo">1 month ago</system:String>
+    <system:String x:Key="MonthsAgo">{0} months ago</system:String>
+    <system:String x:Key="OneYearAgo">1 year ago</system:String>
+    <system:String x:Key="YearsAgo">{0} years ago</system:String>
 </ResourceDictionary>

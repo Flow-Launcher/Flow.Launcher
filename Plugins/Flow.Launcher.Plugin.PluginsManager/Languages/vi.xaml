@@ -1,0 +1,70 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!--  Dialogues  -->
+    <system:String x:Key="plugin_pluginsmanager_downloading_plugin">Plugin đang được tải</system:String>
+    <system:String x:Key="plugin_pluginsmanager_download_success">Đã tải xuống thành công!</system:String>
+    <system:String x:Key="plugin_pluginsmanager_download_error">Lỗi: Không thể tải plugin xuống</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} bởi {1} {2}{3}Bạn có muốn gỡ cài đặt plugin này không? Sau khi gỡ cài đặt Flow sẽ tự động khởi động lại.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_prompt_no_restart">{0} by {1} {2}{2}Would you like to uninstall this plugin?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} bởi {1} {2}{3}Bạn có muốn gỡ cài đặt plugin này không? Sau khi gỡ cài đặt Flow sẽ tự động khởi động lại.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_prompt_no_restart">{0} by {1} {2}{2}Would you like to install this plugin?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_title">Đã cài đặt plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_installing_plugin">Cài đặt Plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_from_web">Tải về và cài đặt</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_title">Đã gỡ cài đặt plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_title">Keep plugin settings</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_subtitle">Do you want to keep the settings of the plugin for the next usage?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_success_restart">Đã cài đặt thành công plugin. Đang khởi động lại Flow, vui lòng đợi...</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Không thể tìm thấy tệp siêu dữ liệu plugin.json từ tệp zip được giải nén.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Lỗi: Đã tồn tại một plugin có phiên bản tương tự hoặc cao hơn với {0}.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_error_title">Lỗi cài đặt plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">Đã xảy ra lỗi khi cố gắng cài đặt {0}</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_error_title">Lỗi cài đặt plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_noresult_title">Không có cập nhật</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_noresult_subtitle">Tất cả các plugin đều được cập nhật</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} bởi {1} {2}{3}Bạn có muốn gỡ cài đặt plugin này không? Sau khi gỡ cài đặt Flow sẽ tự động khởi động lại.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_prompt_no_restart">{0} by {1} {2}{2}Would you like to update this plugin?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_title">Cập nhật plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Đã cài đặt plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_failed_title">Tải xuống bản kê khai plugin không thành công</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Vui lòng kiểm tra xem bạn có thể kết nối với github.com không. Lỗi này có nghĩa là bạn không thể cài đặt hoặc cập nhật plugin.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_title">Update all plugins</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_subtitle">Would you like to update all plugins?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_prompt">Would you like to update {0} plugins?{1}Flow Launcher will restart after updating all plugins.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_prompt_no_restart">Would you like to update {0} plugins?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_success_restart">{0} plugins successfully updated. Restarting Flow, please wait...</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_success_restart">Plugin {0} successfully updated. Restarting Flow, please wait...</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Cài đặt từ một nguồn không xác định</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">Bạn đang cài đặt plugin này từ một nguồn không xác định và nó có thể chứa những rủi ro tiềm ẩn!{0}{0}Hãy đảm bảo rằng bạn hiểu plugin này đến từ đâu và nó an toàn.{0}{0}Bạn vẫn muốn tiếp tục chứ? {0}{0}(Bạn có thể tắt cảnh báo này thông qua cài đặt)</system:String>
+
+    <system:String x:Key="plugin_pluginsmanager_install_success_no_restart">Plugin {0} successfully installed. Please restart Flow.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_success_no_restart">Plugin {0} successfully uninstalled. Please restart Flow.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">Plugin {0} successfully updated. Please restart Flow.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">{0} plugins successfully updated. Please restart Flow.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">Plugin {0} has already been modified. Please restart Flow before making any further changes.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_title">{0} modified already</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_message">Please restart Flow before making any further changes</system:String>
+
+    <system:String x:Key="plugin_pluginsmanager_invalid_zip_title">Invalid zip installer file</system:String>
+    <system:String x:Key="plugin_pluginsmanager_invalid_zip_subtitle">Please check if there is a plugin.json in {0}</system:String>
+
+    <!--  Plugin Infos  -->
+    <system:String x:Key="plugin_pluginsmanager_plugin_name">Trình quản lý plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_description">Install, uninstall or update Flow Launcher plugins via the search window</system:String>
+    <system:String x:Key="plugin_pluginsmanager_unknown_author">Không rõ tác giả</system:String>
+
+    <!--  Context menu items  -->
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_openwebsite_title">Mở website</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_openwebsite_subtitle">Truy cập trang web của plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_title">Xem mã nguồn</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_subtitle">Xem mã nguồn của plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_newissue_title">Đề xuất cải tiến hoặc gửi vấn đề</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_newissue_subtitle">Đề xuất cải tiến hoặc gửi vấn đề cho nhà phát triển plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_title">Đi tới kho plugin của Flow</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_subtitle">Truy cập kho lưu trữ PluginsManifest để xem các bản gửi plugin do cộng đồng gửi</system:String>
+
+    <!--  Settings menu items  -->
+    <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Cảnh báo cài đặt từ nguồn không xác định</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugins Manager</system:String>
+</ResourceDictionary>

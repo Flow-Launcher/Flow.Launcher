@@ -1,0 +1,22 @@
+name: Set Milestone
+
+# Assigns the earliest created milestone that matches the below glob pattern.
+
+on:
+  pull_request_target:
+    types: [opened]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  automation:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: set-milestone
+        uses: andrefcdias/add-to-milestone@v1.3.0
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          milestone: "+([0-9]).+([0-9]).+([0-9])"
+          use-expression: true

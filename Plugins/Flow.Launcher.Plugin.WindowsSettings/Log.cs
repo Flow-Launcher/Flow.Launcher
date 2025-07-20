@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Plugin.WindowsSettings
 {
@@ -12,10 +11,12 @@ namespace Flow.Launcher.Plugin.WindowsSettings
         {
             _api = api;
         }
+
         public static void Exception(string message, Exception exception, Type type, [CallerMemberName] string methodName = "")
         {
             _api?.LogException(type.FullName, message, exception, methodName);
         }
+
         public static void Warn(string message, Type type, [CallerMemberName] string methodName = "")
         {
             _api?.LogWarn(type.FullName, message, methodName);

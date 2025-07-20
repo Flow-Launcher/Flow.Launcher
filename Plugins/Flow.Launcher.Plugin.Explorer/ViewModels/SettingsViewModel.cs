@@ -1,24 +1,24 @@
 ﻿#nullable enable
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Windows;
+using System.Windows.Forms;
+using CommunityToolkit.Mvvm.Input;
+using Flow.Launcher.Plugin.Explorer.Helper;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.Search.Everything.Exceptions;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Flow.Launcher.Plugin.Explorer.Views;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Linq;
-using System.Windows;
-using System.Windows.Forms;
-using System.Windows.Input;
-using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace Flow.Launcher.Plugin.Explorer.ViewModels
 {
-    public class SettingsViewModel : BaseModel
+    public partial class SettingsViewModel : BaseModel
     {
         public Settings Settings { get; set; }
 
@@ -37,7 +37,6 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             InitializeActionKeywordModels();
         }
 
-
         public void Save()
         {
             Context.API.SaveSettingJsonStorage<Settings>();
@@ -48,7 +47,6 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         private EnumBindingModel<Settings.IndexSearchEngineOption> _selectedIndexSearchEngine;
         private EnumBindingModel<Settings.ContentIndexSearchEngineOption> _selectedContentSearchEngine;
         private EnumBindingModel<Settings.PathEnumerationEngineOption> _selectedPathEnumerationEngine;
-
 
         public EnumBindingModel<Settings.IndexSearchEngineOption> SelectedIndexSearchEngine
         {
@@ -102,7 +100,168 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
         #endregion
 
+        #region Native Context Menu
 
+        public bool ShowWindowsContextMenu
+        {
+            get => Settings.ShowInlinedWindowsContextMenu;
+            set
+            {
+                Settings.ShowInlinedWindowsContextMenu = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string WindowsContextMenuIncludedItems
+        {
+            get => Settings.WindowsContextMenuIncludedItems;
+            set
+            {
+                Settings.WindowsContextMenuIncludedItems = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string WindowsContextMenuExcludedItems
+        {
+            get => Settings.WindowsContextMenuExcludedItems;
+            set
+            {
+                Settings.WindowsContextMenuExcludedItems = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region Preview Panel
+
+        public bool ShowFileSizeInPreviewPanel
+        {
+            get => Settings.ShowFileSizeInPreviewPanel;
+            set
+            {
+                Settings.ShowFileSizeInPreviewPanel = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool ShowCreatedDateInPreviewPanel
+        {
+            get => Settings.ShowCreatedDateInPreviewPanel;
+            set
+            {
+                Settings.ShowCreatedDateInPreviewPanel = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(ShowPreviewPanelDateTimeChoices));
+                OnPropertyChanged(nameof(PreviewPanelDateTimeChoicesVisibility));
+            }
+        }
+
+        public bool ShowModifiedDateInPreviewPanel
+        {
+            get => Settings.ShowModifiedDateInPreviewPanel;
+            set
+            {
+                Settings.ShowModifiedDateInPreviewPanel = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(ShowPreviewPanelDateTimeChoices));
+                OnPropertyChanged(nameof(PreviewPanelDateTimeChoicesVisibility));
+            }
+        }
+
+        public bool ShowFileAgeInPreviewPanel
+        {
+            get => Settings.ShowFileAgeInPreviewPanel;
+            set
+            {
+                Settings.ShowFileAgeInPreviewPanel = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(ShowPreviewPanelDateTimeChoices));
+                OnPropertyChanged(nameof(PreviewPanelDateTimeChoicesVisibility));
+            }
+        }
+
+        public string PreviewPanelDateFormat
+        {
+            get => Settings.PreviewPanelDateFormat;
+            set
+            {
+                Settings.PreviewPanelDateFormat = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(PreviewPanelDateFormatDemo));
+            }
+        }
+
+        public string PreviewPanelTimeFormat
+        {
+            get => Settings.PreviewPanelTimeFormat;
+            set
+            {
+                Settings.PreviewPanelTimeFormat = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(PreviewPanelTimeFormatDemo));
+            }
+        }
+
+        public string PreviewPanelDateFormatDemo => DateTime.Now.ToString(PreviewPanelDateFormat, CultureInfo.CurrentCulture);
+        public string PreviewPanelTimeFormatDemo => DateTime.Now.ToString(PreviewPanelTimeFormat, CultureInfo.CurrentCulture);
+
+        public bool ShowPreviewPanelDateTimeChoices => ShowCreatedDateInPreviewPanel || ShowModifiedDateInPreviewPanel;
+
+        public Visibility PreviewPanelDateTimeChoicesVisibility => ShowCreatedDateInPreviewPanel || ShowModifiedDateInPreviewPanel ? Visibility.Visible : Visibility.Collapsed;
+
+
+        public List<string> TimeFormatList { get; } = new()
+        {
+            "h:mm",
+            "hh:mm",
+            "H:mm",
+            "HH:mm",
+            "tt h:mm",
+            "tt hh:mm",
+            "h:mm tt",
+            "hh:mm tt",
+            "hh:mm:ss tt",
+            "HH:mm:ss"
+        };
+
+
+        public List<string> DateFormatList { get; } = new()
+        {
+            "dd/MM/yyyy",
+            "dd/MM/yyyy ddd",
+            "dd/MM/yyyy, dddd",
+            "dd-MM-yyyy",
+            "dd-MM-yyyy ddd",
+            "dd-MM-yyyy, dddd",
+            "dd.MM.yyyy",
+            "dd.MM.yyyy ddd",
+            "dd.MM.yyyy, dddd",
+            "MM/dd/yyyy",
+            "MM/dd/yyyy ddd",
+            "MM/dd/yyyy, dddd",
+            "yyyy-MM-dd",
+            "yyyy-MM-dd ddd",
+            "yyyy-MM-dd, dddd",
+            "dd/MMM/yyyy",
+            "dd/MMM/yyyy ddd",
+            "dd/MMM/yyyy, dddd",
+            "dd-MMM-yyyy",
+            "dd-MMM-yyyy ddd",
+            "dd-MMM-yyyy, dddd",
+            "dd.MMM.yyyy",
+            "dd.MMM.yyyy ddd",
+            "dd.MMM.yyyy, dddd",
+            "MMM/dd/yyyy",
+            "MMM/dd/yyyy ddd",
+            "MMM/dd/yyyy, dddd",
+            "yyyy-MMM-dd",
+            "yyyy-MMM-dd ddd",
+            "yyyy-MMM-dd, dddd",
+        };
+
+        #endregion
 
         #region ActionKeyword
 
@@ -128,8 +287,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
         public ActionKeywordModel? SelectedActionKeyword { get; set; }
 
-        public ICommand EditActionKeywordCommand => new RelayCommand(EditActionKeyword);
-
+        [RelayCommand]
         private void EditActionKeyword(object obj)
         {
             if (SelectedActionKeyword is not { } actionKeyword)
@@ -174,12 +332,6 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         public AccessLink? SelectedQuickAccessLink { get; set; }
         public AccessLink? SelectedIndexSearchExcludedPath { get; set; }
 
-
-
-        public ICommand RemoveLinkCommand => new RelayCommand(RemoveLink);
-        public ICommand EditLinkCommand => new RelayCommand(EditLink);
-        public ICommand AddLinkCommand => new RelayCommand(AddLink);
-
         public void AppendLink(string containerName, AccessLink link)
         {
             var container = containerName switch
@@ -191,14 +343,11 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             container.Add(link);
         }
 
-        private void EditLink(object commandParameter)
+        [RelayCommand]
+        private void EditIndexSearchExcludePaths()
         {
-            var (selectedLink, collection) = commandParameter switch
-            {
-                "QuickAccessLink" => (SelectedQuickAccessLink, Settings.QuickAccessLinks),
-                "IndexSearchExcludedPaths" => (SelectedIndexSearchExcludedPath, Settings.IndexSearchExcludedSubdirectoryPaths),
-                _ => throw new ArgumentOutOfRangeException(nameof(commandParameter))
-            };
+            var selectedLink = SelectedIndexSearchExcludedPath;
+            var collection = Settings.IndexSearchExcludedSubdirectoryPaths;
 
             if (selectedLink is null)
             {
@@ -217,28 +366,18 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             collection.Remove(selectedLink);
             collection.Add(new AccessLink
             {
-                Path = path, Type = selectedLink.Type,
+                Path = path, Type = selectedLink.Type, Name = path.GetPathName()
             });
+            Save();
         }
 
-        private void ShowUnselectedMessage()
+        [RelayCommand]
+        private void AddIndexSearchExcludePaths()
         {
-            var warning = Context.API.GetTranslation("plugin_explorer_make_selection_warning");
-            MessageBox.Show(warning);
-        }
+            var container = Settings.IndexSearchExcludedSubdirectoryPaths;
 
-
-        private void AddLink(object commandParameter)
-        {
-            var container = commandParameter switch
-            {
-                "QuickAccessLink" => Settings.QuickAccessLinks,
-                "IndexSearchExcludedPaths" => Settings.IndexSearchExcludedSubdirectoryPaths,
-                _ => throw new ArgumentOutOfRangeException(nameof(commandParameter))
-            };
-
-            ArgumentNullException.ThrowIfNull(container);
-
+            if (container is null) return;
+            
             var folderBrowserDialog = new FolderBrowserDialog();
 
             if (folderBrowserDialog.ShowDialog() != DialogResult.OK)
@@ -246,33 +385,85 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
             var newAccessLink = new AccessLink
             {
+                Name = folderBrowserDialog.SelectedPath.GetPathName(),
                 Path = folderBrowserDialog.SelectedPath
             };
 
             container.Add(newAccessLink);
+            Save();
         }
 
-        private void RemoveLink(object obj)
+        [RelayCommand]
+        private void EditQuickAccessLink()
         {
-            if (obj is not string container) return;
+            var selectedLink = SelectedQuickAccessLink;
+            var collection = Settings.QuickAccessLinks;
+
+            if (selectedLink is null)
+            {
+                ShowUnselectedMessage();
+                return;
+            }
+
+            var quickAccessLinkSettings = new QuickAccessLinkSettings(collection, SelectedQuickAccessLink);
+            if (quickAccessLinkSettings.ShowDialog() == true)
+            {
+                Save();
+            }
+        }
+        
+        [RelayCommand]
+        private void AddQuickAccessLink()
+        {
+            var quickAccessLinkSettings = new QuickAccessLinkSettings(Settings.QuickAccessLinks);
+            if (quickAccessLinkSettings.ShowDialog() == true)
+            {
+                Save();
+            }
+        }
+
+        [RelayCommand]
+        private void RemoveLink(object commandParameter)
+        {
+            if (commandParameter is not string container) return;
 
             switch (container)
             {
                 case "QuickAccessLink":
                     if (SelectedQuickAccessLink == null) return;
+                    if (Context.API.ShowMsgBox(
+                            Context.API.GetTranslation("plugin_explorer_delete_quick_access_link"),
+                            Context.API.GetTranslation("plugin_explorer_delete"),
+                            MessageBoxButton.OKCancel,
+                            MessageBoxImage.Warning)
+                        == MessageBoxResult.Cancel)
+                        return;
                     Settings.QuickAccessLinks.Remove(SelectedQuickAccessLink);
                     break;
                 case "IndexSearchExcludedPaths":
                     if (SelectedIndexSearchExcludedPath == null) return;
+                    if (Context.API.ShowMsgBox(
+                            Context.API.GetTranslation("plugin_explorer_delete_index_search_excluded_path"),
+                            Context.API.GetTranslation("plugin_explorer_delete"),
+                            MessageBoxButton.OKCancel,
+                            MessageBoxImage.Warning)
+                        == MessageBoxResult.Cancel)
+                        return;
                     Settings.IndexSearchExcludedSubdirectoryPaths.Remove(SelectedIndexSearchExcludedPath);
                     break;
             }
             Save();
         }
+        
+        private void ShowUnselectedMessage()
+        {
+            var warning = Context.API.GetTranslation("plugin_explorer_make_selection_warning");
+            Context.API.ShowMsgBox(warning);
+        }
 
         #endregion
 
-        private string? PromptUserSelectPath(ResultType type, string? initialDirectory = null)
+        private static string? PromptUserSelectPath(ResultType type, string? initialDirectory = null)
         {
             string? path = null;
 
@@ -302,7 +493,6 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             return path;
         }
 
-
         internal static void OpenWindowsIndexingOptions()
         {
             var psi = new ProcessStartInfo
@@ -315,39 +505,35 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             Process.Start(psi);
         }
 
-        private ICommand? _openFileEditorPathCommand;
-
-        public ICommand OpenFileEditorPath => _openFileEditorPathCommand ??= new RelayCommand(_ =>
+        [RelayCommand]
+        private void OpenFileEditorPath()
         {
             var path = PromptUserSelectPath(ResultType.File, Settings.EditorPath != null ? Path.GetDirectoryName(Settings.EditorPath) : null);
             if (path is null)
                 return;
 
             FileEditorPath = path;
-        });
+        }
 
-        private ICommand? _openFolderEditorPathCommand;
-
-        public ICommand OpenFolderEditorPath => _openFolderEditorPathCommand ??= new RelayCommand(_ =>
+        [RelayCommand]
+        private void OpenFolderEditorPath()
         {
             var path = PromptUserSelectPath(ResultType.File, Settings.FolderEditorPath != null ? Path.GetDirectoryName(Settings.FolderEditorPath) : null);
             if (path is null)
                 return;
 
             FolderEditorPath = path;
-        });
+        }
 
-        private ICommand? _openShellPathCommand;
-
-        public ICommand OpenShellPath => _openShellPathCommand ??= new RelayCommand(_ =>
+        [RelayCommand]
+        private void OpenShellPath()
         {
             var path = PromptUserSelectPath(ResultType.File, Settings.EditorPath != null ? Path.GetDirectoryName(Settings.EditorPath) : null);
             if (path is null)
                 return;
 
             ShellPath = path;
-        });
-
+        }
 
         public string FileEditorPath
         {
@@ -379,6 +565,30 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             }
         }
 
+        public string ExcludedFileTypes
+        {
+            get => Settings.ExcludedFileTypes;
+            set
+            {
+                // remove spaces and dots from the string before saving
+                string sanitized = string.IsNullOrEmpty(value) ? "" : value.Replace(" ", "").Replace(".", "");
+                Settings.ExcludedFileTypes = sanitized;
+                OnPropertyChanged();
+            }
+        }
+
+        public int MaxResultLowerLimit => 1;
+        public int MaxResultUpperLimit => 100000;
+
+        public int MaxResult
+        {
+            get => Settings.MaxResult;
+            set
+            {
+                Settings.MaxResult = Math.Clamp(value, MaxResultLowerLimit, MaxResultUpperLimit);
+                OnPropertyChanged();
+            }
+        }
 
         #region Everything FastSortWarning
 
@@ -435,7 +645,5 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         }
 
         #endregion
-
-
     }
 }

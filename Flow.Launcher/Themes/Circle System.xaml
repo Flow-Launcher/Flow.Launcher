@@ -1,3 +1,8 @@
+<!--
+    Name: Circle
+    IsDark: True
+    HasBlur: True
+-->
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -7,6 +12,10 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Themes/Base.xaml" />
     </ResourceDictionary.MergedDictionaries>
+    <system:Boolean x:Key="ThemeBlurEnabled">True</system:Boolean>
+    <system:String x:Key="SystemBG">Auto</system:String>
+    <Color x:Key="LightBG">#CEFAFAFA</Color>
+    <Color x:Key="DarkBG">#D6202020</Color>
     <Style
         x:Key="ItemGlyph"
         BasedOn="{StaticResource BaseGlyphStyle}"
@@ -17,8 +26,8 @@
         x:Key="QueryBoxStyle"
         BasedOn="{StaticResource BaseQueryBoxStyle}"
         TargetType="{x:Type TextBox}">
-        <Setter Property="Padding" Value="0,4,50,0" />
-        <Setter Property="Foreground" Value="{m:DynamicColor SystemControlPageTextBaseHighBrush}" />
+        <Setter Property="Padding" Value="0 0 50 0" />
+        <Setter Property="Foreground" Value="{m:DynamicColor SystemControlHighlightBaseHighBrush}" />
         <Setter Property="FontSize" Value="18" />
         <Setter Property="Height" Value="38" />
     </Style>
@@ -27,7 +36,7 @@
         x:Key="QuerySuggestionBoxStyle"
         BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}"
         TargetType="{x:Type TextBox}">
-        <Setter Property="Padding" Value="0,4,50,0" />
+        <Setter Property="Padding" Value="0 0 50 0" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Height" Value="38" />
         <Setter Property="FontSize" Value="18" />
@@ -70,9 +79,9 @@
         x:Key="SeparatorStyle"
         BasedOn="{StaticResource BaseSeparatorStyle}"
         TargetType="{x:Type Rectangle}">
-        <Setter Property="Fill" Value="{m:DynamicColor SystemControlBackgroundChromeMediumBrush}" />
+        <Setter Property="Fill" Value="{DynamicResource SeparatorForeground}" />
         <Setter Property="Height" Value="1" />
-        <Setter Property="Margin" Value="0,0,0,8" />
+        <Setter Property="Margin" Value="0 0 0 8" />
     </Style>
     <Style x:Key="HighlightStyle" />
     <Style
@@ -123,7 +132,7 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Width" Value="32" />
         <Setter Property="Height" Value="32" />
-        <Setter Property="Margin" Value="0,8,8,0" />
+        <Setter Property="Margin" Value="0 8 8 0" />
         <Setter Property="HorizontalAlignment" Value="Right" />
     </Style>
 
@@ -150,7 +159,7 @@
         x:Key="ClockPanel"
         BasedOn="{StaticResource ClockPanel}"
         TargetType="{x:Type StackPanel}">
-        <Setter Property="Margin" Value="0,0,54,0" />
+        <Setter Property="Margin" Value="0 0 54 0" />
     </Style>
     <Style
         x:Key="ClockBox"

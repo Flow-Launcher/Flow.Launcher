@@ -77,5 +77,13 @@ namespace Flow.Launcher.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
+        internal static System.Drawing.Icon dev
+        {
+            get
+            {
+                object obj = ResourceManager.GetObject("dev", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
     }
 }

@@ -1,0 +1,99 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!--  Program setting  -->
+    <system:String x:Key="flowlauncher_plugin_program_reset">איפוס לברירת מחדל</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete">מחק</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit">ערוך</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_add">הוסף</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_name">שם</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable">הפעל</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enabled">מופעל</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable">השבת</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_status">סטטוס</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_true">מופעל</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_false">מושבת</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_location">מיקום</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_all_programs">כל התוכניות</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes">סוג קובץ</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_reindex">בצע אינדוקס מחדש</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_indexing">מבצע אינדוקס</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_source">מקורות אינדוקס</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_option">אפשרויות</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_uwp">אפליקציות UWP</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_uwp_tooltip">כאשר האפשרות מופעלת, Flow יטען אפליקציות UWP</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_start">תפריט התחלה</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_start_tooltip">כאשר האפשרות מופעלת, Flow יטען תוכניות מתפריט ההתחלה</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_registry">רישום</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_registry_tooltip">כאשר האפשרות מופעלת, Flow יטען תוכניות מהרישום</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_PATH">משתנה PATH</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">כאשר האפשרות מופעלת, Flow יטען תוכניות מהמשתנה PATH</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">הסתר נתיב אפליקציה</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">לקבצי הפעלה כמו UWP או lnk, הסתר את נתיב הקובץ מהתצוגה</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers">הסתר מסירי התקנה</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">מסתיר תוכניות עם שמות מסירי התקנה נפוצים, כגון unins000.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_description">חיפוש בתיאור התוכנית</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow יחפש בתיאור התוכנית</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp">הסתר אפליקציות כפולות</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp_tooltip">הסתר תוכניות Win32 כפולות שכבר קיימות ברשימת UWP</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_header">סיומות</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_max_depth_header">עומק מקסימלי</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_program_directory">תיקייה</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_browse">עיון</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_file_suffixes">סיומות קבצים:</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_max_search_depth">עומק חיפוש מקסימלי (-1 ללא הגבלה):</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">אנא בחר מקור תוכנה</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source">האם אתה בטוח שברצונך למחוק את מקורות התוכניות שנבחרו?</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_not_user_added">Please select program sources that are not added by you</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_user_added">Please select program sources that are added by you</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">מקור תוכנה נוסף עם אותו מיקום כבר קיים.</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">מקור תוכנה</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_tips">ערוך את התיקייה והסטטוס של מקור תוכנה זה.</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_program_update">עדכון</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_only_index_tip">תוסף התוכנה יאנדקס רק קבצים עם סיומות נבחרות וקובצי .url עם פרוטוקולים נבחרים.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_update_file_suffixes">סיומות הקבצים עודכנו בהצלחה</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_cannot_empty">סיומות הקבצים לא יכולות להיות ריקות</system:String>
+    <system:String x:Key="flowlauncher_plugin_protocols_cannot_empty">פרוטוקולים לא יכולים להיות ריקים</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_executable_types">סיומות קבצים</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_types">פרוטוקולי URL</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_steam">משחקי Steam</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_epic">משחקי Epic</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_http">Http/Https</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_custom_urls">פרוטוקולי URL מותאמים אישית</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_custom_file_types">סיומות קבצים מותאמות אישית</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_tooltip">
+        הכנס סיומות קבצים שברצונך לאנדקס. סיומות יש להפריד באמצעות ';'. (לדוגמה: bat;py)
+    </system:String>
+    <system:String x:Key="flowlauncher_plugin_program_protocol_tooltip">
+        הכנס פרוטוקולים של קובצי .url שברצונך לאנדקס. יש להפריד פרוטוקולים באמצעות ';', ולסיים ב- &quot;://&quot;. (לדוגמה: ftp://;mailto://)
+    </system:String>
+
+    <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">הפעל כמשתמש אחר</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">הפעל כמנהל</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">פתח תיקייה מכילה</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">הסתר</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_open_target_folder">פתח תיקיית יעד</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_program_plugin_name">תוכנה</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_plugin_description">חיפוש תוכניות ב-Flow Launcher</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_program_invalid_path">נתיב לא חוקי</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">סייר מותאם אישית</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_args">ארגומנטים</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">באפשרותך להתאים אישית את הסייר שבו נעשה שימוש לפתיחת תיקיית המכולה על ידי הזנת משתנה הסביבה של הסייר שברצונך להשתמש בו. כדאי לבדוק באמצעות CMD אם משתנה הסביבה זמין.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_args">הזן את הארגומנטים שברצונך להוסיף לסייר המותאם אישית שלך. %s עבור ספריית האב, %f עבור הנתיב המלא (זמין רק עבור win32). בדוק באתר הסייר לפרטים נוספים.</system:String>
+
+    <!--  Dialogs  -->
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">הצליח</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_error">שגיאה</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">התוכנית הוסרה מהתצוגה בהצלחה</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">אפליקציה זו אינה מיועדת להפעלה כמנהל</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_failed">לא ניתן להפעיל את {0}</system:String>
+
+</ResourceDictionary>

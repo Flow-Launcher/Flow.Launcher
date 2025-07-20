@@ -18,13 +18,13 @@ namespace Flow.Launcher.Plugin.Program.Views
     /// </summary>
     public partial class ProgramSetting : UserControl
     {
-        private PluginInitContext context;
-        private Settings _settings;
+        private readonly PluginInitContext context;
+        private readonly Settings _settings;
         private GridViewColumnHeader _lastHeaderClicked;
         private ListSortDirection _lastDirection;
 
         // We do not save all program sources to settings, so using
-        // this as temporary holder for displaying all loaded programs sources. 
+        // this as temporary holder for displaying all loaded programs sources.
         internal static List<ProgramSource> ProgramSettingDisplayList { get; set; }
 
         public bool EnableDescription
@@ -44,6 +44,26 @@ namespace Flow.Launcher.Plugin.Program.Views
             {
                 Main.ResetCache();
                 _settings.HideAppsPath = value;
+            }
+        }
+
+        public bool HideUninstallers
+        {
+            get => _settings.HideUninstallers;
+            set
+            {
+                Main.ResetCache();
+                _settings.HideUninstallers = value;
+            }
+        }
+
+        public bool HideDuplicatedWindowsApp
+        {
+            get => _settings.HideDuplicatedWindowsApp;
+            set
+            {
+                Main.ResetCache();
+                _settings.HideDuplicatedWindowsApp = value;
             }
         }
 
@@ -87,21 +107,9 @@ namespace Flow.Launcher.Plugin.Program.Views
             }
         }
 
-        public string CustomizedExplorerPath
-        {
-            get => _settings.CustomizedExplorer;
-            set => _settings.CustomizedExplorer = value;
-        }
+        public bool ShowUWPCheckbox => UWPPackage.SupportUWP();
 
-        public string CustomizedExplorerArg
-        {
-            get => _settings.CustomizedArgs;
-            set => _settings.CustomizedArgs = value;
-        }
-
-        public bool ShowUWPCheckbox => UWP.SupportUWP();
-
-        public ProgramSetting(PluginInitContext context, Settings settings, Win32[] win32s, UWP.Application[] uwps)
+        public ProgramSetting(PluginInitContext context, Settings settings)
         {
             this.context = context;
             _settings = settings;
@@ -125,6 +133,7 @@ namespace Flow.Launcher.Plugin.Program.Views
             {
                 btnProgramSourceStatus.Visibility = Visibility.Hidden;
                 btnEditProgramSource.Visibility = Visibility.Hidden;
+                btnDeleteProgramSource.Visibility = Visibility.Hidden;
             }
 
             if (programSourceView.Items.Count > 0
@@ -133,11 +142,13 @@ namespace Flow.Launcher.Plugin.Program.Views
             {
                 btnProgramSourceStatus.Visibility = Visibility.Visible;
                 btnEditProgramSource.Visibility = Visibility.Visible;
+                btnDeleteProgramSource.Visibility = Visibility.Visible;
             }
 
             programSourceView.Items.Refresh();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         private async void ReIndexing()
         {
             ViewRefresh();
@@ -161,9 +172,9 @@ namespace Flow.Launcher.Plugin.Program.Views
         private void DeleteProgramSources(List<ProgramSource> itemsToDelete)
         {
             itemsToDelete.ForEach(t1 => _settings.ProgramSources
-                                                    .Remove(_settings.ProgramSources
-                                                                        .Where(x => x.UniqueIdentifier == t1.UniqueIdentifier)
-                                                                        .FirstOrDefault()));
+                .Remove(_settings.ProgramSources
+                    .Where(x => x.UniqueIdentifier == t1.UniqueIdentifier)
+                    .FirstOrDefault()));
             itemsToDelete.ForEach(x => ProgramSettingDisplayList.Remove(x));
 
             ReIndexing();
@@ -175,12 +186,13 @@ namespace Flow.Launcher.Plugin.Program.Views
             EditProgramSource(selectedProgramSource);
         }
 
-        private void EditProgramSource(ProgramSource selectedProgramSource)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
+        private async void EditProgramSource(ProgramSource selectedProgramSource)
         {
             if (selectedProgramSource == null)
             {
                 string msg = context.API.GetTranslation("flowlauncher_plugin_program_pls_select_program_source");
-                MessageBox.Show(msg);
+                context.API.ShowMsgBox(msg);
             }
             else
             {
@@ -194,16 +206,20 @@ namespace Flow.Launcher.Plugin.Program.Views
                 {
                     if (selectedProgramSource.Enabled)
                     {
-                        ProgramSettingDisplay.SetProgramSourcesStatus(new List<ProgramSource> { selectedProgramSource }, true);  // sync status in win32, uwp and disabled
+                        await ProgramSettingDisplay.SetProgramSourcesStatusAsync(new List<ProgramSource> { selectedProgramSource },
+                            true); // sync status in win32, uwp and disabled
                         ProgramSettingDisplay.RemoveDisabledFromSettings();
                     }
                     else
                     {
-                        ProgramSettingDisplay.SetProgramSourcesStatus(new List<ProgramSource> { selectedProgramSource }, false);
+                        await ProgramSettingDisplay.SetProgramSourcesStatusAsync(new List<ProgramSource> { selectedProgramSource },
+                            false);
                         ProgramSettingDisplay.StoreDisabledInSettings();
                     }
+
                     ReIndexing();
                 }
+
                 programSourceView.SelectedIndex = selectedIndex;
             }
         }
@@ -245,7 +261,8 @@ namespace Flow.Launcher.Plugin.Program.Views
                 foreach (string directory in directories)
                 {
                     if (Directory.Exists(directory)
-                        && !ProgramSettingDisplayList.Any(x => x.UniqueIdentifier.Equals(directory, System.StringComparison.OrdinalIgnoreCase)))
+                        && !ProgramSettingDisplayList.Any(x =>
+                            x.UniqueIdentifier.Equals(directory, System.StringComparison.OrdinalIgnoreCase)))
                     {
                         var source = new ProgramSource(directory);
 
@@ -255,8 +272,8 @@ namespace Flow.Launcher.Plugin.Program.Views
 
                 if (directoriesToAdd.Count > 0)
                 {
-                    directoriesToAdd.ForEach(x => _settings.ProgramSources.Add(x));
-                    directoriesToAdd.ForEach(x => ProgramSettingDisplayList.Add(x));
+                    directoriesToAdd.ForEach(_settings.ProgramSources.Add);
+                    directoriesToAdd.ForEach(ProgramSettingDisplayList.Add);
 
                     ViewRefresh();
                     ReIndexing();
@@ -264,51 +281,41 @@ namespace Flow.Launcher.Plugin.Program.Views
             }
         }
 
-        private void btnLoadAllProgramSource_OnClick(object sender, RoutedEventArgs e)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
+        private async void btnLoadAllProgramSource_OnClick(object sender, RoutedEventArgs e)
         {
-            ProgramSettingDisplay.DisplayAllPrograms();
+            await ProgramSettingDisplay.DisplayAllProgramsAsync();
 
             ViewRefresh();
         }
 
-        private void btnProgramSourceStatus_OnClick(object sender, RoutedEventArgs e)
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
+        private async void btnProgramSourceStatus_OnClick(object sender, RoutedEventArgs e)
         {
             var selectedItems = programSourceView
-                                .SelectedItems.Cast<ProgramSource>()
-                                .ToList();
+                .SelectedItems.Cast<ProgramSource>()
+                .ToList();
 
             if (selectedItems.Count == 0)
             {
-                string msg = context.API.GetTranslation("flowlauncher_plugin_program_pls_select_program_source");
-                MessageBox.Show(msg);
+                context.API.ShowMsgBox(context.API.GetTranslation("flowlauncher_plugin_program_pls_select_program_source"));
                 return;
             }
 
-            if (IsAllItemsUserAdded(selectedItems))
+            if (HasMoreOrEqualEnabledItems(selectedItems))
             {
-                var msg = string.Format(context.API.GetTranslation("flowlauncher_plugin_program_delete_program_source"));
-
-                if (MessageBox.Show(msg, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
-                {
-                    return;
-                }
-
-                DeleteProgramSources(selectedItems);
-            }
-            else if (HasMoreOrEqualEnabledItems(selectedItems))
-            {
-                ProgramSettingDisplay.SetProgramSourcesStatus(selectedItems, false);
+                await ProgramSettingDisplay.SetProgramSourcesStatusAsync(selectedItems, false);
 
                 ProgramSettingDisplay.StoreDisabledInSettings();
             }
             else
             {
-                ProgramSettingDisplay.SetProgramSourcesStatus(selectedItems, true);
+                await ProgramSettingDisplay.SetProgramSourcesStatusAsync(selectedItems, true);
 
                 ProgramSettingDisplay.RemoveDisabledFromSettings();
             }
 
-            if (selectedItems.IsReindexRequired())
+            if (await selectedItems.IsReindexRequiredAsync())
                 ReIndexing();
 
             programSourceView.SelectedItems.Clear();
@@ -323,10 +330,9 @@ namespace Flow.Launcher.Plugin.Program.Views
 
         private void GridViewColumnHeaderClickedHandler(object sender, RoutedEventArgs e)
         {
-            var headerClicked = e.OriginalSource as GridViewColumnHeader;
             ListSortDirection direction;
 
-            if (headerClicked != null)
+            if (e.OriginalSource is GridViewColumnHeader headerClicked)
             {
                 if (headerClicked.Role != GridViewColumnHeaderRole.Padding)
                 {
@@ -362,7 +368,7 @@ namespace Flow.Launcher.Plugin.Program.Views
             var dataView = CollectionViewSource.GetDefaultView(programSourceView.ItemsSource);
 
             dataView.SortDescriptions.Clear();
-            SortDescription sd = new SortDescription(sortBy, direction);
+            var sd = new SortDescription(sortBy, direction);
             dataView.SortDescriptions.Add(sd);
             dataView.Refresh();
         }
@@ -376,14 +382,10 @@ namespace Flow.Launcher.Plugin.Program.Views
         private void programSourceView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedItems = programSourceView
-                                    .SelectedItems.Cast<ProgramSource>()
-                                    .ToList();
+                .SelectedItems.Cast<ProgramSource>()
+                .ToList();
 
-            if (IsAllItemsUserAdded(selectedItems))
-            {
-                btnProgramSourceStatus.Content = context.API.GetTranslation("flowlauncher_plugin_program_delete");
-            }
-            else if (HasMoreOrEqualEnabledItems(selectedItems))
+            if (HasMoreOrEqualEnabledItems(selectedItems))
             {
                 btnProgramSourceStatus.Content = context.API.GetTranslation("flowlauncher_plugin_program_disable");
             }
@@ -402,6 +404,41 @@ namespace Flow.Launcher.Plugin.Program.Views
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
+        private async void btnDeleteProgramSource_OnClick(object sender, RoutedEventArgs e)
+        {
+            var selectedItems = programSourceView
+                .SelectedItems.Cast<ProgramSource>()
+                .ToList();
+
+            if (selectedItems.Count == 0)
+            {
+                context.API.ShowMsgBox(context.API.GetTranslation("flowlauncher_plugin_program_pls_select_program_source"));
+                return;
+            }
+
+            if (!IsAllItemsUserAdded(selectedItems))
+            {
+                context.API.ShowMsgBox(context.API.GetTranslation("flowlauncher_plugin_program_delete_program_source_select_user_added"));
+                return;
+            }
+
+            if (context.API.ShowMsgBox(context.API.GetTranslation("flowlauncher_plugin_program_delete_program_source"),
+                string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
+            {
+                return;
+            }
+
+            DeleteProgramSources(selectedItems);
+
+            if (await selectedItems.IsReindexRequiredAsync())
+                ReIndexing();
+
+            programSourceView.SelectedItems.Clear();
+
+            ViewRefresh();
+        }
+
         private bool IsAllItemsUserAdded(List<ProgramSource> items)
         {
             return items.All(x => _settings.ProgramSources.Any(y => y.UniqueIdentifier == x.UniqueIdentifier));
@@ -409,10 +446,14 @@ namespace Flow.Launcher.Plugin.Program.Views
 
         private void ListView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            ListView listView = sender as ListView;
-            GridView gView = listView.View as GridView;
+            var listView = sender as ListView;
+            var gView = listView.View as GridView;
 
-            var workingWidth = listView.ActualWidth - SystemParameters.VerticalScrollBarWidth; // take into account vertical scrollbar
+            var workingWidth =
+                listView.ActualWidth - SystemParameters.VerticalScrollBarWidth; // take into account vertical scrollbar
+
+            if (workingWidth <= 0) return;
+
             var col1 = 0.25;
             var col2 = 0.15;
             var col3 = 0.60;

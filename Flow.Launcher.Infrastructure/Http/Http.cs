@@ -1,34 +1,31 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
-using System;
-using System.ComponentModel;
-using System.Threading;
-using System.Windows.Interop;
 using Flow.Launcher.Plugin;
+using JetBrains.Annotations;
 
 namespace Flow.Launcher.Infrastructure.Http
 {
     public static class Http
     {
+        private static readonly string ClassName = nameof(Http);
+
         private const string UserAgent = @"Mozilla/5.0 (Trident/7.0; rv:11.0) like Gecko";
 
-        private static HttpClient client = new HttpClient();
-
-        public static IPublicAPI API { get; set; }
+        private static readonly HttpClient client = new();
 
         static Http()
         {
             // need to be added so it would work on a win10 machine
             ServicePointManager.Expect100Continue = true;
             ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls
-                                                    | SecurityProtocolType.Tls11
-                                                    | SecurityProtocolType.Tls12;
+                | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
 
             client.DefaultRequestHeaders.Add("User-Agent", UserAgent);
             HttpClient.DefaultProxy = WebProxy;
@@ -38,7 +35,7 @@ namespace Flow.Launcher.Infrastructure.Http
 
         public static HttpProxy Proxy
         {
-            private get { return proxy; }
+            private get => proxy;
             set
             {
                 proxy = value;
@@ -76,25 +73,60 @@ namespace Flow.Launcher.Infrastructure.Http
                     ProxyProperty.Port => (new Uri($"http://{Proxy.Server}:{Proxy.Port}"), WebProxy.Credentials),
                     ProxyProperty.UserName => (WebProxy.Address, new NetworkCredential(Proxy.UserName, Proxy.Password)),
                     ProxyProperty.Password => (WebProxy.Address, new NetworkCredential(Proxy.UserName, Proxy.Password)),
-                    _ => throw new ArgumentOutOfRangeException()
+                    _ => throw new ArgumentOutOfRangeException(null)
                 };
             }
             catch (UriFormatException e)
             {
-                API.ShowMsg("Please try again", "Unable to parse Http Proxy");
-                Log.Exception("Flow.Launcher.Infrastructure.Http", "Unable to parse Uri", e);
+                Ioc.Default.GetRequiredService<IPublicAPI>().ShowMsg("Please try again", "Unable to parse Http Proxy");
+                Log.Exception(ClassName, "Unable to parse Uri", e);
             }
         }
 
-        public static async Task DownloadAsync([NotNull] string url, [NotNull] string filePath, CancellationToken token = default)
+        public static async Task DownloadAsync([NotNull] string url, [NotNull] string filePath, Action<double> reportProgress = null, CancellationToken token = default)
         {
             try
             {
                 using var response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, token);
+
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    await using var fileStream = new FileStream(filePath, FileMode.CreateNew);
-                    await response.Content.CopyToAsync(fileStream, token);
+                    var totalBytes = response.Content.Headers.ContentLength ?? -1L;
+                    var canReportProgress = totalBytes != -1;
+
+                    if (canReportProgress && reportProgress != null)
+                    {
+                        await using var contentStream = await response.Content.ReadAsStreamAsync(token);
+                        await using var fileStream = new FileStream(filePath, FileMode.CreateNew, FileAccess.Write, FileShare.None, 8192, true);
+
+                        var buffer = new byte[8192];
+                        long totalRead = 0;
+                        int read;
+                        double progressValue = 0;
+
+                        reportProgress(0);
+
+                        while ((read = await contentStream.ReadAsync(buffer, token)) > 0)
+                        {
+                            await fileStream.WriteAsync(buffer.AsMemory(0, read), token);
+                            totalRead += read;
+
+                            progressValue = totalRead * 100.0 / totalBytes;
+
+                            if (token.IsCancellationRequested)
+                                return;
+                            else
+                                reportProgress(progressValue);
+                        }
+
+                        if (progressValue < 100)
+                            reportProgress(100);
+                    }
+                    else
+                    {
+                        await using var fileStream = new FileStream(filePath, FileMode.CreateNew);
+                        await response.Content.CopyToAsync(fileStream, token);
+                    }
                 }
                 else
                 {
@@ -103,7 +135,7 @@ namespace Flow.Launcher.Infrastructure.Http
             }
             catch (HttpRequestException e)
             {
-                Log.Exception("Infrastructure.Http", "Http Request Error", e, "DownloadAsync");
+                Log.Exception(ClassName, "Http Request Error", e, "DownloadAsync");
                 throw;
             }
         }
@@ -116,7 +148,7 @@ namespace Flow.Launcher.Infrastructure.Http
         /// <returns>The Http result as string. Null if cancellation requested</returns>
         public static Task<string> GetAsync([NotNull] string url, CancellationToken token = default)
         {
-            Log.Debug($"|Http.Get|Url <{url}>");
+            Log.Debug(ClassName, $"Url <{url}>");
             return GetAsync(new Uri(url), token);
         }
 
@@ -128,7 +160,7 @@ namespace Flow.Launcher.Infrastructure.Http
         /// <returns>The Http result as string. Null if cancellation requested</returns>
         public static async Task<string> GetAsync([NotNull] Uri url, CancellationToken token = default)
         {
-            Log.Debug($"|Http.Get|Url <{url}>");
+            Log.Debug(ClassName, $"Url <{url}>");
             using var response = await client.GetAsync(url, token);
             var content = await response.Content.ReadAsStringAsync(token);
             if (response.StatusCode != HttpStatusCode.OK)
@@ -150,7 +182,6 @@ namespace Flow.Launcher.Infrastructure.Http
         public static Task<Stream> GetStreamAsync([NotNull] string url,
             CancellationToken token = default) => GetStreamAsync(new Uri(url), token);
 
-
         /// <summary>
         /// Send a GET request to the specified Uri with an HTTP completion option and a cancellation token as an asynchronous operation.
         /// </summary>
@@ -160,7 +191,7 @@ namespace Flow.Launcher.Infrastructure.Http
         public static async Task<Stream> GetStreamAsync([NotNull] Uri url,
             CancellationToken token = default)
         {
-            Log.Debug($"|Http.Get|Url <{url}>");
+            Log.Debug(ClassName, $"Url <{url}>");
             return await client.GetStreamAsync(url, token);
         }
 
@@ -171,7 +202,7 @@ namespace Flow.Launcher.Infrastructure.Http
         public static async Task<HttpResponseMessage> GetResponseAsync([NotNull] Uri url, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
             CancellationToken token = default)
         {
-            Log.Debug($"|Http.Get|Url <{url}>");
+            Log.Debug(ClassName, $"Url <{url}>");
             return await client.GetAsync(url, completionOption, token);
         }
 
@@ -180,7 +211,27 @@ namespace Flow.Launcher.Infrastructure.Http
         /// </summary>
         public static async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, CancellationToken token = default)
         {
-            return await client.SendAsync(request, completionOption, token);
+            try
+            {
+                return await client.SendAsync(request, completionOption, token);
+            }
+            catch (System.Exception)
+            {
+                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        public static async Task<string> GetStringAsync(string url, CancellationToken token = default)
+        {
+            try
+            {
+                Log.Debug(ClassName, $"Url <{url}>");
+                return await client.GetStringAsync(url, token);
+            }
+            catch (System.Exception e)
+            {
+                return string.Empty;
+            }
         }
     }
 }

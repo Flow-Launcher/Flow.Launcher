@@ -1,15 +1,13 @@
 name: Publish to Winget
 
 on:
-  release:
-    types: [released]
+  workflow_dispatch:
 
 jobs:
   publish:
-    # Action can only be run on windows
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
-      - uses: vedantmgoyal2009/winget-releaser@v1
+      - uses: vedantmgoyal2009/winget-releaser@v2
         with:
           identifier: Flow-Launcher.Flow-Launcher
           token: ${{ secrets.WINGET_TOKEN }}

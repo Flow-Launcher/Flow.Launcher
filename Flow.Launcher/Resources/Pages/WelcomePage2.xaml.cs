@@ -1,52 +1,41 @@
-﻿using Flow.Launcher.Helper;
+﻿using System.Windows.Media;
+using System.Windows.Navigation;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
-using System;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Navigation;
+using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.Resources.Pages
 {
     public partial class WelcomePage2
     {
-        private Settings Settings { get; set; }
-
-        private Brush tbMsgForegroundColorOriginal;
-
-        private string tbMsgTextOriginal;
+        public Settings Settings { get; } = Ioc.Default.GetRequiredService<Settings>();
+        private readonly WelcomeViewModel _viewModel = Ioc.Default.GetRequiredService<WelcomeViewModel>();
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (e.ExtraData is Settings settings)
-                Settings = settings;
-            else
-                throw new ArgumentException("Unexpected Parameter setting.");
-            
-            InitializeComponent();
-            tbMsgTextOriginal = HotkeyControl.tbMsg.Text;
-            tbMsgForegroundColorOriginal = HotkeyControl.tbMsg.Foreground;
+            // Sometimes the navigation is not triggered by button click,
+            // so we need to reset the page number
+            _viewModel.PageNum = 2;
 
-            HotkeyControl.SetHotkeyAsync(Settings.Hotkey, false);
-        }
-        private void HotkeyControl_OnGotFocus(object sender, RoutedEventArgs args)
-        {
-            HotKeyMapper.RemoveHotkey(Settings.Hotkey);
-        }
-        private void HotkeyControl_OnLostFocus(object sender, RoutedEventArgs args)
-        {
-            if (HotkeyControl.CurrentHotkeyAvailable)
+            if (!IsInitialized)
             {
-                HotKeyMapper.SetHotkey(HotkeyControl.CurrentHotkey, HotKeyMapper.OnToggleHotkey);
-                Settings.Hotkey = HotkeyControl.CurrentHotkey.ToString();
+                InitializeComponent();
             }
-            else
-            {
-                HotKeyMapper.SetHotkey(new HotkeyModel(Settings.Hotkey), HotKeyMapper.OnToggleHotkey);
-            }
+            base.OnNavigatedTo(e);
+        }
 
-            HotkeyControl.tbMsg.Text = tbMsgTextOriginal;
-            HotkeyControl.tbMsg.Foreground = tbMsgForegroundColorOriginal;
+        [RelayCommand]
+        private static void SetTogglingHotkey(HotkeyModel hotkey)
+        {
+            HotKeyMapper.SetHotkey(hotkey, HotKeyMapper.OnToggleHotkey);
+        }
+
+        public Brush PreviewBackground
+        {
+            get => WallpaperPathRetrieval.GetWallpaperBrush();
         }
     }
 }

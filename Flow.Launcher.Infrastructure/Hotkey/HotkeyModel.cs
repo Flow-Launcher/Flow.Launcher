@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
-using System.Windows.Navigation;
 
 namespace Flow.Launcher.Infrastructure.Hotkey
 {
-    public class HotkeyModel
+    public record struct HotkeyModel
     {
         public bool Alt { get; set; }
         public bool Shift { get; set; }
@@ -17,8 +17,7 @@ namespace Flow.Launcher.Infrastructure.Hotkey
 
         private static readonly Dictionary<Key, string> specialSymbolDictionary = new Dictionary<Key, string>
         {
-            {Key.Space, "Space"},
-            {Key.Oem3, "~"}
+            { Key.Space, "Space" }, { Key.Oem3, "~" }
         };
 
         public ModifierKeys ModifierKeys
@@ -30,18 +29,22 @@ namespace Flow.Launcher.Infrastructure.Hotkey
                 {
                     modifierKeys |= ModifierKeys.Alt;
                 }
+
                 if (Shift)
                 {
                     modifierKeys |= ModifierKeys.Shift;
                 }
+
                 if (Win)
                 {
                     modifierKeys |= ModifierKeys.Windows;
                 }
+
                 if (Ctrl)
                 {
                     modifierKeys |= ModifierKeys.Control;
                 }
+
                 return modifierKeys;
             }
         }
@@ -66,31 +69,37 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             {
                 return;
             }
+
             List<string> keys = hotkeyString.Replace(" ", "").Split('+').ToList();
             if (keys.Contains("Alt"))
             {
                 Alt = true;
                 keys.Remove("Alt");
             }
+
             if (keys.Contains("Shift"))
             {
                 Shift = true;
                 keys.Remove("Shift");
             }
+
             if (keys.Contains("Win"))
             {
                 Win = true;
                 keys.Remove("Win");
             }
+
             if (keys.Contains("Ctrl"))
             {
                 Ctrl = true;
                 keys.Remove("Ctrl");
             }
+
             if (keys.Count == 1)
             {
                 string charKey = keys[0];
-                KeyValuePair<Key, string>? specialSymbolPair = specialSymbolDictionary.FirstOrDefault(pair => pair.Value == charKey);
+                KeyValuePair<Key, string>? specialSymbolPair =
+                    specialSymbolDictionary.FirstOrDefault(pair => pair.Value == charKey);
                 if (specialSymbolPair.Value.Value != null)
                 {
                     CharKey = specialSymbolPair.Value.Key;
@@ -99,11 +108,10 @@ namespace Flow.Launcher.Infrastructure.Hotkey
                 {
                     try
                     {
-                        CharKey = (Key) Enum.Parse(typeof (Key), charKey);
+                        CharKey = (Key)Enum.Parse(typeof(Key), charKey);
                     }
                     catch (ArgumentException)
                     {
-
                     }
                 }
             }
@@ -111,34 +119,45 @@ namespace Flow.Launcher.Infrastructure.Hotkey
 
         public override string ToString()
         {
-            List<string> keys = new List<string>();
-            if (Ctrl)
+            return string.Join(" + ", EnumerateDisplayKeys());
+        }
+
+        public IEnumerable<string> EnumerateDisplayKeys()
+        {
+            if (Ctrl && CharKey is not (Key.LeftCtrl or Key.RightCtrl))
             {
-                keys.Add("Ctrl");
+                yield return "Ctrl";
             }
-            if (Alt)
+
+            if (Alt && CharKey is not (Key.LeftAlt or Key.RightAlt))
             {
-                keys.Add("Alt");
+                yield return "Alt";
             }
-            if (Shift)
+
+            if (Shift && CharKey is not (Key.LeftShift or Key.RightShift))
             {
-                keys.Add("Shift");
+                yield return "Shift";
             }
-            if (Win)
+
+            if (Win && CharKey is not (Key.LWin or Key.RWin))
             {
-                keys.Add("Win");
+                yield return "Win";
             }
 
             if (CharKey != Key.None)
             {
-                keys.Add(specialSymbolDictionary.ContainsKey(CharKey)
-                    ? specialSymbolDictionary[CharKey]
-                    : CharKey.ToString());
+                yield return specialSymbolDictionary.TryGetValue(CharKey, out var value)
+                    ? value
+                    : CharKey.ToString();
             }
-            return string.Join(" + ", keys);
         }
 
-        public bool Validate()
+        /// <summary>
+        /// Validate hotkey
+        /// </summary>
+        /// <param name="validateKeyGestrue">Try to validate hotkey as a KeyGesture.</param>
+        /// <returns></returns>
+        public bool Validate(bool validateKeyGestrue = false)
         {
             switch (CharKey)
             {
@@ -150,31 +169,57 @@ namespace Flow.Launcher.Infrastructure.Hotkey
                 case Key.RightShift:
                 case Key.LWin:
                 case Key.RWin:
+                case Key.None:
                     return false;
                 default:
+                    if (validateKeyGestrue)
+                    {
+                        try
+                        {
+                            KeyGesture keyGesture = new KeyGesture(CharKey, ModifierKeys);
+                        }
+                        catch (System.Exception e) when
+                            (e is NotSupportedException || e is InvalidEnumArgumentException)
+                        {
+                            return false;
+                        }
+                    }
+
                     if (ModifierKeys == ModifierKeys.None)
                     {
-                        return !((CharKey >= Key.A && CharKey <= Key.Z) ||
-                            (CharKey >= Key.D0 && CharKey <= Key.D9) ||
-                            (CharKey >= Key.NumPad0 && CharKey <= Key.NumPad9));
+                        return !IsPrintableCharacter(CharKey);
                     }
                     else
                     {
-                        return CharKey != Key.None;
+                        return true;
                     }
             }
         }
 
-        public override bool Equals(object obj)
+        private static bool IsPrintableCharacter(Key key)
         {
-            if (obj is HotkeyModel other)
-            {
-                return ModifierKeys == other.ModifierKeys && CharKey == other.CharKey;
-            }
-            else
-            {
-                return false;
-            }
+            // https://stackoverflow.com/questions/11881199/identify-if-a-event-key-is-text-not-only-alphanumeric
+            return (key >= Key.A && key <= Key.Z) ||
+                   (key >= Key.D0 && key <= Key.D9) ||
+                   (key >= Key.NumPad0 && key <= Key.NumPad9) ||
+                   key == Key.OemQuestion ||
+                   key == Key.OemQuotes ||
+                   key == Key.OemPlus ||
+                   key == Key.OemOpenBrackets ||
+                   key == Key.OemCloseBrackets ||
+                   key == Key.OemMinus ||
+                   key == Key.DeadCharProcessed ||
+                   key == Key.Oem1 ||
+                   key == Key.Oem7 ||
+                   key == Key.OemPeriod ||
+                   key == Key.OemComma ||
+                   key == Key.OemMinus ||
+                   key == Key.Add ||
+                   key == Key.Divide ||
+                   key == Key.Multiply ||
+                   key == Key.Subtract ||
+                   key == Key.Oem102 ||
+                   key == Key.Decimal;
         }
 
         public override int GetHashCode()

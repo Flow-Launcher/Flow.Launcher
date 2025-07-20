@@ -1,7 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net9.0-windows</TargetFramework>
     <ProjectGuid>{4FD29318-A8AB-4D8F-AA47-60BC241B8DA3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <UseWpf>true</UseWpf>
@@ -12,6 +12,7 @@
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -36,6 +37,10 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <AdditionalFiles Include="NativeMethods.txt" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <Compile Include="..\SolutionAssemblyInfo.cs" Link="Properties\SolutionAssemblyInfo.cs" />
     <None Include="FodyWeavers.xml" />
   </ItemGroup>
@@ -49,20 +54,27 @@
 
   <ItemGroup>
     <PackageReference Include="Ben.Demystifier" Version="0.4.1" />
+    <PackageReference Include="BitFaster.Caching" Version="2.5.3" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Fody" Version="6.5.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Threading" Version="17.4.27" />
+    <PackageReference Include="MemoryPack" Version="1.21.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading" Version="17.12.19" />
+    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.106">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="NLog" Version="4.7.10" />
-    <PackageReference Include="NLog.Schema" Version="4.7.10" />
-    <PackageReference Include="NLog.Web.AspNetCore" Version="4.13.0" />
-    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
+    <PackageReference Include="PropertyChanged.Fody" Version="3.4.0">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="SharpVectors.Wpf" Version="1.8.4.2" />
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
     <!--ToolGood.Words.Pinyin v3.0.2.6 results in high memory usage when search with pinyin is enabled-->
     <!--Bumping to it or higher needs to test and ensure this is no longer a problem-->
     <PackageReference Include="ToolGood.Words.Pinyin" Version="3.1.0" />
   </ItemGroup>
 
-  
 </Project>

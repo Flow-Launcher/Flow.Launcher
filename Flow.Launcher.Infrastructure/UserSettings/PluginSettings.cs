@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
@@ -6,8 +7,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
     public class PluginsSettings : BaseModel
     {
         private string pythonExecutablePath = string.Empty;
-        public string PythonExecutablePath {
-            get { return pythonExecutablePath; }
+        public string PythonExecutablePath
+        {
+            get => pythonExecutablePath;
             set
             {
                 pythonExecutablePath = value;
@@ -18,7 +20,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         private string nodeExecutablePath = string.Empty;
         public string NodeExecutablePath
         {
-            get { return nodeExecutablePath; }
+            get => nodeExecutablePath;
             set 
             {
                 nodeExecutablePath = value;
@@ -26,41 +28,32 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
-        // TODO: Remove. This is backwards compatibility for 1.10.0 release.
-        public string PythonDirectory { get; set; }
+        /// <summary>
+        /// Only used for serialization
+        /// </summary>
+        public Dictionary<string, Plugin> Plugins { get; set; } = new();
 
-        public Dictionary<string, Plugin> Plugins { get; set; } = new Dictionary<string, Plugin>();
-
+        /// <summary>
+        /// Update plugin settings with metadata.
+        /// FL will get default values from metadata first and then load settings to metadata
+        /// </summary>
+        /// <param name="metadatas">Parsed plugin metadatas</param>
         public void UpdatePluginSettings(List<PluginMetadata> metadatas)
         {
             foreach (var metadata in metadatas)
             {
-                if (Plugins.ContainsKey(metadata.ID))
+                if (Plugins.TryGetValue(metadata.ID, out var settings))
                 {
-                    var settings = Plugins[metadata.ID];
-                    
-                    if (metadata.ID == "572be03c74c642baae319fc283e561a8" && metadata.ActionKeywords.Count > settings.ActionKeywords.Count)
-                    {
-                        // TODO: Remove. This is backwards compatibility for Explorer 1.8.0 release.
-                        // Introduced two new action keywords in Explorer, so need to update plugin setting in the UserData folder.
-                        if (settings.Version.CompareTo("1.8.0") < 0)
-                        {
-                            settings.ActionKeywords.Add(Query.GlobalPluginWildcardSign); // for index search
-                            settings.ActionKeywords.Add(Query.GlobalPluginWildcardSign); // for path search
-                            settings.ActionKeywords.Add(Query.GlobalPluginWildcardSign); // for quick access action keyword
-                        }
-
-                        // TODO: Remove. This is backwards compatibility for Explorer 1.9.0 release.
-                        // Introduced a new action keywords in Explorer since 1.8.0, so need to update plugin setting in the UserData folder.
-                        if (settings.Version.CompareTo("1.8.0") > 0)
-                        {
-                            settings.ActionKeywords.Add(Query.GlobalPluginWildcardSign); // for quick access action keyword
-                        }
-                    }
-
+                    // If settings exist, update settings & metadata value
+                    // update settings values with metadata
                     if (string.IsNullOrEmpty(settings.Version))
+                    {
                         settings.Version = metadata.Version;
+                    }
+                    settings.DefaultActionKeywords = metadata.ActionKeywords; // metadata provides default values
+                    settings.DefaultSearchDelayTime = metadata.SearchDelayTime; // metadata provides default values
 
+                    // update metadata values with settings
                     if (settings.ActionKeywords?.Count > 0)
                     {
                         metadata.ActionKeywords = settings.ActionKeywords;
@@ -73,33 +66,70 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                     }
                     metadata.Disabled = settings.Disabled;
                     metadata.Priority = settings.Priority;
+                    metadata.SearchDelayTime = settings.SearchDelayTime;
+                    metadata.HomeDisabled = settings.HomeDisabled;
                 }
                 else
                 {
+                    // If settings does not exist, create a new one
                     Plugins[metadata.ID] = new Plugin
                     {
                         ID = metadata.ID,
                         Name = metadata.Name,
                         Version = metadata.Version,
-                        ActionKeywords = metadata.ActionKeywords, 
+                        DefaultActionKeywords = metadata.ActionKeywords, // metadata provides default values
+                        ActionKeywords = metadata.ActionKeywords, // use default value
                         Disabled = metadata.Disabled,
-                        Priority = metadata.Priority
+                        HomeDisabled = metadata.HomeDisabled,
+                        Priority = metadata.Priority,
+                        DefaultSearchDelayTime = metadata.SearchDelayTime, // metadata provides default values
+                        SearchDelayTime = metadata.SearchDelayTime, // use default value
                     };
                 }
             }
         }
+
+        public Plugin GetPluginSettings(string id)
+        {
+            if (Plugins.TryGetValue(id, out var plugin))
+            {
+                return plugin;
+            }
+            return null;
+        }
+
+        public Plugin RemovePluginSettings(string id)
+        {
+            Plugins.Remove(id, out var plugin);
+            return plugin;
+        }
     }
+
     public class Plugin
     {
         public string ID { get; set; }
+
         public string Name { get; set; }
+
         public string Version { get; set; }
-        public List<string> ActionKeywords { get; set; } // a reference of the action keywords from plugin manager
+
+        [JsonIgnore]
+        public List<string> DefaultActionKeywords { get; set; }
+
+        // a reference of the action keywords from plugin manager
+        public List<string> ActionKeywords { get; set; }
+
         public int Priority { get; set; }
+
+        [JsonIgnore]
+        public int? DefaultSearchDelayTime { get; set; }
+
+        public int? SearchDelayTime { get; set; }
 
         /// <summary>
         /// Used only to save the state of the plugin in settings
         /// </summary>
         public bool Disabled { get; set; }
+        public bool HomeDisabled { get; set; }
     }
 }

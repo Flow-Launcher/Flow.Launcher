@@ -1,43 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Globalization;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 
-namespace Flow.Launcher.Converters
+namespace Flow.Launcher.Converters;
+
+public class BoolToVisibilityConverter : IValueConverter
 {
-    public class BoolToVisibilityConverter : IValueConverter
+    public object Convert(object value, System.Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object value, System.Type targetType, object parameter, CultureInfo culture)
+        return (value, parameter) switch
         {
-            if (parameter != null)
-            {
-                if (value is true)
-                {
-                    return Visibility.Collapsed;
-                }
+            (true, not null) => Visibility.Collapsed,
+            (_, not null) => Visibility.Visible,
 
-                else
-                {
-                    return Visibility.Visible;
-                }
-            }
-            else { 
-                if (value is true)
-                {
-                    return Visibility.Visible;
-                }
-
-                else { 
-                    return Visibility.Collapsed;
-                }
-            }
-        }
-
-        public object ConvertBack(object value, System.Type targetType, object parameter, CultureInfo culture) => throw new System.InvalidOperationException();
+            (true, null) => Visibility.Visible,
+            (_, null) => Visibility.Collapsed
+        };
     }
+
+    public object ConvertBack(object value, System.Type targetType, object parameter, CultureInfo culture) => throw new System.InvalidOperationException();
+}
+
+public class SplitterConverter : IValueConverter
+/* Prevents the dragging part of the preview area from working when preview is turned off. */
+{
+    public object Convert(object value, System.Type targetType, object parameter, CultureInfo culture)
+    {
+        return (value, parameter) switch
+        {
+            (true, not null) => 0,
+            (_, not null) => 5,
+
+            (true, null) => 5,
+            (_, null) => 0
+        };
+    }
+
+    public object ConvertBack(object value, System.Type targetType, object parameter, CultureInfo culture) => throw new System.InvalidOperationException();
 }

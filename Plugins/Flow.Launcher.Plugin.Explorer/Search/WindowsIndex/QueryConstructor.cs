@@ -1,18 +1,21 @@
 ﻿using System;
-using System.Buffers;
+using System.Text.RegularExpressions;
 using Microsoft.Search.Interop;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 {
     public class QueryConstructor
     {
-        private Settings settings { get; }
+        private static readonly Regex _specialCharacterMatcher = new(@"[\@\＠\#\＃\&\＆＊_;,\%\|\!\(\)\{\}\[\]\^\~\?\\""\/\:\=\-]+", RegexOptions.Compiled);
+        private static readonly Regex _multiWhiteSpacesMatcher = new(@"\s+", RegexOptions.Compiled);
+
+        private Settings Settings { get; }
 
         private const string SystemIndex = "SystemIndex";
 
         public QueryConstructor(Settings settings)
         {
-            this.settings = settings;
+            Settings = settings;
         }
 
         public CSearchQueryHelper CreateBaseQuery()
@@ -20,7 +23,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             var baseQuery = CreateQueryHelper();
 
             // Set the number of results we want. Don't set this property if all results are needed.
-            baseQuery.QueryMaxResults = settings.MaxResult;
+            baseQuery.QueryMaxResults = Settings.MaxResult;
 
             // Set list of columns we want to display, getting the path presently
             baseQuery.QuerySelectColumns = "System.FileName, System.ItemUrl, System.ItemType";
@@ -34,7 +37,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             return baseQuery;
         }
 
-        internal CSearchQueryHelper CreateQueryHelper()
+        internal static CSearchQueryHelper CreateQueryHelper()
         {
             // This uses the Microsoft.Search.Interop assembly
             // Throws COMException if Windows Search service is not running/disabled, this needs to be caught
@@ -51,20 +54,19 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 
         public static string TopLevelDirectoryConstraint(ReadOnlySpan<char> path) => $"directory='file:{path}'";
         public static string RecursiveDirectoryConstraint(ReadOnlySpan<char> path) => $"scope='file:{path}'";
-
         
         ///<summary>
         /// Search will be performed on all folders and files on the first level of a specified directory.
         ///</summary>
         public string Directory(ReadOnlySpan<char> path, ReadOnlySpan<char> searchString = default, bool recursive = false)
         {
-            var queryConstraint = searchString.IsWhiteSpace() ? "" : $"AND ({FileName} LIKE '{searchString}%' OR CONTAINS({FileName},'\"{searchString}*\"'))";
+            var queryConstraint = searchString.IsWhiteSpace() ? "" : $"AND (System.FileName LIKE '{searchString}%' OR CONTAINS(System.FileName,'\"{searchString}*\"'))";
 
             var scopeConstraint = recursive
                 ? RecursiveDirectoryConstraint(path)
                 : TopLevelDirectoryConstraint(path);
 
-            var query = $"SELECT TOP {settings.MaxResult} {CreateBaseQuery().QuerySelectColumns} FROM {SystemIndex} WHERE {scopeConstraint} {queryConstraint} ORDER BY {FileName}";
+            var query = $"SELECT TOP {Settings.MaxResult} {CreateBaseQuery().QuerySelectColumns} FROM {SystemIndex} WHERE {scopeConstraint} {queryConstraint} ORDER BY {OrderIdentifier}";
 
             return query;
         }
@@ -77,8 +79,39 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             if (userSearchString.IsWhiteSpace())
                 userSearchString = "*";
 
+            // Remove any special characters that might cause issues with the query
+            var replacedSearchString = ReplaceSpecialCharacterWithTwoSideWhiteSpace(userSearchString);
+
             // Generate SQL from constructed parameters, converting the userSearchString from AQS->WHERE clause
-            return $"{CreateBaseQuery().GenerateSQLFromUserQuery(userSearchString.ToString())} AND {RestrictionsForAllFilesAndFoldersSearch} ORDER BY {FileName}";
+            return $"{CreateBaseQuery().GenerateSQLFromUserQuery(replacedSearchString)} AND {RestrictionsForAllFilesAndFoldersSearch} ORDER BY {OrderIdentifier}";
+        }
+
+        /// <summary>
+        /// If one special character have white space on one side, replace it with one white space.
+        /// So command will not have "[special character]+*" which will cause OLEDB exception.
+        /// </summary>
+        private static string ReplaceSpecialCharacterWithTwoSideWhiteSpace(ReadOnlySpan<char> input)
+        {
+            const string whiteSpace = " ";
+
+            var inputString = input.ToString();
+
+            // Use regex to match special characters with whitespace on one side
+            // and replace them with a single space
+            var result = _specialCharacterMatcher.Replace(inputString, match =>
+            {
+                // Check if the match has whitespace on one side
+                bool hasLeadingWhitespace = match.Index > 0 && char.IsWhiteSpace(inputString[match.Index - 1]);
+                bool hasTrailingWhitespace = match.Index + match.Length < inputString.Length && char.IsWhiteSpace(inputString[match.Index + match.Length]);
+                if (hasLeadingWhitespace || hasTrailingWhitespace)
+                {
+                    return whiteSpace;
+                }
+                return match.Value;
+            });
+
+            // Remove any extra spaces that might have been introduced
+            return _multiWhiteSpacesMatcher.Replace(result, whiteSpace).Trim();
         }
 
         ///<summary>
@@ -87,10 +120,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         public const string RestrictionsForAllFilesAndFoldersSearch = "scope='file:'";
 
         /// <summary>
-        /// Order identifier: file name
+        /// Order identifier: System.Search.Rank DESC
         /// </summary>
-        public const string FileName = "System.FileName";
-
+        /// <remarks>
+        /// <see href="https://docs.microsoft.com/en-us/windows/win32/properties/props-system-search-rank"/>
+        /// </remarks>
+        public const string OrderIdentifier = "System.Search.Rank DESC";
 
         ///<summary>
         /// Search will be performed on all indexed file contents for the specified search keywords.
@@ -98,7 +133,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         public string FileContent(ReadOnlySpan<char> userSearchString)
         {
             string query =
-                $"SELECT TOP {settings.MaxResult} {CreateBaseQuery().QuerySelectColumns} FROM {SystemIndex} WHERE {RestrictionsForFileContentSearch(userSearchString)} AND {RestrictionsForAllFilesAndFoldersSearch} ORDER BY {FileName}";
+                $"SELECT TOP {Settings.MaxResult} {CreateBaseQuery().QuerySelectColumns} FROM {SystemIndex} WHERE {RestrictionsForFileContentSearch(userSearchString)} AND {RestrictionsForAllFilesAndFoldersSearch} ORDER BY {OrderIdentifier}";
 
             return query;
         }

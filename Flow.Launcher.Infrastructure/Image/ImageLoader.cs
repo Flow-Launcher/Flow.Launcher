@@ -1,49 +1,50 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
-using static Flow.Launcher.Infrastructure.Http.Http;
+using SharpVectors.Converters;
+using SharpVectors.Renderers.Wpf;
 
 namespace Flow.Launcher.Infrastructure.Image
 {
     public static class ImageLoader
     {
+        private static readonly string ClassName = nameof(ImageLoader);
+
         private static readonly ImageCache ImageCache = new();
-        private static BinaryStorage<Dictionary<(string, bool), int>> _storage;
+        private static SemaphoreSlim storageLock { get; } = new SemaphoreSlim(1, 1);
+        private static BinaryStorage<List<(string, bool)>> _storage;
         private static readonly ConcurrentDictionary<string, string> GuidToKey = new();
         private static IImageHashGenerator _hashGenerator;
         private static readonly bool EnableImageHash = true;
+        public static ImageSource Image { get; } = new BitmapImage(new Uri(Constant.ImageIcon));
         public static ImageSource MissingImage { get; } = new BitmapImage(new Uri(Constant.MissingImgIcon));
         public static ImageSource LoadingImage { get; } = new BitmapImage(new Uri(Constant.LoadingImgIcon));
         public const int SmallIconSize = 64;
         public const int FullIconSize = 256;
+        public const int FullImageSize = 320;
 
+        private static readonly string[] ImageExtensions = { ".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tiff", ".ico" };
+        private static readonly string SvgExtension = ".svg";
 
-        private static readonly string[] ImageExtensions =
+        public static async Task InitializeAsync()
         {
-            ".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tiff", ".ico"
-        };
-
-        public static void Initialize()
-        {
-            _storage = new BinaryStorage<Dictionary<(string, bool), int>>("Image");
+            _storage = new BinaryStorage<List<(string, bool)>>("Image");
             _hashGenerator = new ImageHashGenerator();
 
-            var usage = LoadStorageToConcurrentDictionary();
+            var usage = await LoadStorageToConcurrentDictionaryAsync();
+            _storage.ClearData();
 
-            foreach (var icon in new[]
-                     {
-                         Constant.DefaultIcon, Constant.MissingImgIcon
-                     })
+            ImageCache.Initialize(usage);
+
+            foreach (var icon in new[] { Constant.DefaultIcon, Constant.MissingImgIcon })
             {
                 ImageSource img = new BitmapImage(new Uri(icon));
                 img.Freeze();
@@ -52,35 +53,53 @@ namespace Flow.Launcher.Infrastructure.Image
 
             _ = Task.Run(async () =>
             {
-                await Stopwatch.NormalAsync("|ImageLoader.Initialize|Preload images cost", async () =>
+                await Stopwatch.InfoAsync(ClassName, "Preload images cost", async () =>
                 {
-                    foreach (var ((path, isFullImage), _) in ImageCache.Data)
+                    foreach (var (path, isFullImage) in usage)
                     {
                         await LoadAsync(path, isFullImage);
                     }
                 });
-                Log.Info($"|ImageLoader.Initialize|Number of preload images is <{ImageCache.CacheSize()}>, Images Number: {ImageCache.CacheSize()}, Unique Items {ImageCache.UniqueImagesInCache()}");
+                Log.Info(ClassName, $"Number of preload images is <{ImageCache.CacheSize()}>, Images Number: {ImageCache.CacheSize()}, Unique Items {ImageCache.UniqueImagesInCache()}");
             });
         }
 
-        public static void Save()
+        public static async Task SaveAsync()
         {
-            lock (_storage)
+            await storageLock.WaitAsync();
+
+            try
             {
-                _storage.Save(ImageCache.Data
-                    .ToDictionary(
-                        x => x.Key,
-                        x => x.Value.usage));
+                await _storage.SaveAsync(ImageCache.EnumerateEntries()
+                    .Select(x => x.Key)
+                    .ToList());
+            }
+            catch (System.Exception e)
+            {
+                Log.Exception(ClassName, "Failed to save image cache to file", e);
+            }
+            finally
+            {
+                storageLock.Release();
             }
         }
 
-        private static ConcurrentDictionary<(string, bool), int> LoadStorageToConcurrentDictionary()
+        public static async Task WaitSaveAsync()
         {
-            lock (_storage)
-            {
-                var loaded = _storage.TryLoad(new Dictionary<(string, bool), int>());
+            await storageLock.WaitAsync();
+            storageLock.Release();
+        }
 
-                return new ConcurrentDictionary<(string, bool), int>(loaded);
+        private static async Task<List<(string, bool)>> LoadStorageToConcurrentDictionaryAsync()
+        {
+            await storageLock.WaitAsync();
+            try
+            {
+                return await _storage.TryLoadAsync(new List<(string, bool)>());
+            }
+            finally
+            {
+                storageLock.Release();
             }
         }
 
@@ -118,9 +137,12 @@ namespace Flow.Launcher.Infrastructure.Image
                     return new ImageResult(MissingImage, ImageType.Error);
                 }
 
-                if (ImageCache.ContainsKey(path, loadFullImage))
+                // extra scope for use of same variable name
                 {
-                    return new ImageResult(ImageCache[path, loadFullImage], ImageType.Cache);
+                    if (ImageCache.TryGetValue(path, loadFullImage, out var imageSource))
+                    {
+                        return new ImageResult(imageSource, ImageType.Cache);
+                    }
                 }
 
                 if (Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out var uriResult)
@@ -130,7 +152,8 @@ namespace Flow.Launcher.Infrastructure.Image
                     ImageCache[path, loadFullImage] = image;
                     return new ImageResult(image, ImageType.ImageFile);
                 }
-                if (path.StartsWith("data:", StringComparison.OrdinalIgnoreCase))
+
+                if (path.StartsWith("data:image", StringComparison.OrdinalIgnoreCase))
                 {
                     var imageSource = new BitmapImage(new Uri(path));
                     imageSource.Freeze();
@@ -148,8 +171,8 @@ namespace Flow.Launcher.Infrastructure.Image
                 }
                 catch (System.Exception e2)
                 {
-                    Log.Exception($"|ImageLoader.Load|Failed to get thumbnail for {path} on first try", e);
-                    Log.Exception($"|ImageLoader.Load|Failed to get thumbnail for {path} on second try", e2);
+                    Log.Exception(ClassName, $"Failed to get thumbnail for {path} on first try", e);
+                    Log.Exception(ClassName, $"Failed to get thumbnail for {path} on second try", e2);
 
                     ImageSource image = ImageCache[Constant.MissingImgIcon, false];
                     ImageCache[path, false] = image;
@@ -159,10 +182,11 @@ namespace Flow.Launcher.Infrastructure.Image
 
             return imageResult;
         }
+
         private static async Task<BitmapImage> LoadRemoteImageAsync(bool loadFullImage, Uri uriResult)
         {
             // Download image from url
-            await using var resp = await GetStreamAsync(uriResult);
+            await using var resp = await Http.Http.GetStreamAsync(uriResult);
             await using var buffer = new MemoryStream();
             await resp.CopyToAsync(buffer);
             buffer.Seek(0, SeekOrigin.Begin);
@@ -174,6 +198,7 @@ namespace Flow.Launcher.Infrastructure.Image
                 image.DecodePixelHeight = SmallIconSize;
                 image.DecodePixelWidth = SmallIconSize;
             }
+
             image.StreamSource = buffer;
             image.EndInit();
             image.StreamSource = null;
@@ -189,8 +214,8 @@ namespace Flow.Launcher.Infrastructure.Image
             if (Directory.Exists(path))
             {
                 /* Directories can also have thumbnails instead of shell icons.
-                 * Generating thumbnails for a bunch of folder results while scrolling 
-                 * could have a big impact on performance and Flow.Launcher responsibility. 
+                 * Generating thumbnails for a bunch of folder results while scrolling
+                 * could have a big impact on performance and Flow.Launcher responsibility.
                  * - Solution: just load the icon
                  */
                 type = ImageType.Folder;
@@ -204,17 +229,40 @@ namespace Flow.Launcher.Infrastructure.Image
                     type = ImageType.ImageFile;
                     if (loadFullImage)
                     {
-                        image = LoadFullImage(path);
-                        type = ImageType.FullImageFile;
+                        try
+                        {
+                            image = LoadFullImage(path);
+                            type = ImageType.FullImageFile;
+                        }
+                        catch (NotSupportedException ex)
+                        {
+                            image = Image;
+                            type = ImageType.Error;
+                            Log.Exception(ClassName, $"Failed to load image file from path {path}: {ex.Message}", ex);
+                        }
                     }
                     else
                     {
-                        /* Although the documentation for GetImage on MSDN indicates that 
+                        /* Although the documentation for GetImage on MSDN indicates that
                          * if a thumbnail is available it will return one, this has proved to not
-                         * be the case in many situations while testing. 
+                         * be the case in many situations while testing.
                          * - Solution: explicitly pass the ThumbnailOnly flag
                          */
                         image = GetThumbnail(path, ThumbnailOptions.ThumbnailOnly);
+                    }
+                }
+                else if (extension == SvgExtension)
+                {
+                    try
+                    {
+                        image = LoadSvgImage(path, loadFullImage);
+                        type = ImageType.FullImageFile;
+                    }
+                    catch (System.Exception ex)
+                    {
+                        image = Image;
+                        type = ImageType.Error;
+                        Log.Exception(ClassName, $"Failed to load SVG image from path {path}: {ex.Message}", ex);
                     }
                 }
                 else
@@ -237,7 +285,8 @@ namespace Flow.Launcher.Infrastructure.Image
             return new ImageResult(image, type);
         }
 
-        private static BitmapSource GetThumbnail(string path, ThumbnailOptions option = ThumbnailOptions.ThumbnailOnly, int size = SmallIconSize)
+        private static BitmapSource GetThumbnail(string path, ThumbnailOptions option = ThumbnailOptions.ThumbnailOnly,
+            int size = SmallIconSize)
         {
             return WindowsThumbnailProvider.GetThumbnail(
                 path,
@@ -256,68 +305,119 @@ namespace Flow.Launcher.Infrastructure.Image
             return ImageCache.TryGetValue(path, loadFullImage, out image);
         }
 
-        public static async ValueTask<ImageSource> LoadAsync(string path, bool loadFullImage = false)
+        public static async ValueTask<ImageSource> LoadAsync(string path, bool loadFullImage = false, bool cacheImage = true)
         {
             var imageResult = await LoadInternalAsync(path, loadFullImage);
 
             var img = imageResult.ImageSource;
             if (imageResult.ImageType != ImageType.Error && imageResult.ImageType != ImageType.Cache)
-            { // we need to get image hash
+            {
+                // we need to get image hash
                 string hash = EnableImageHash ? _hashGenerator.GetHashFromImage(img) : null;
                 if (hash != null)
                 {
-
                     if (GuidToKey.TryGetValue(hash, out string key))
-                    { // image already exists
-                        img = ImageCache[key, false] ?? img;
+                    {
+                        // image already exists
+                        img = ImageCache[key, loadFullImage] ?? img;
                     }
-                    else
-                    { // new guid
-
+                    else if (cacheImage)
+                    {
+                        // save guid key
                         GuidToKey[hash] = path;
                     }
                 }
 
-                // update cache
-                ImageCache[path, loadFullImage] = img;
+                if (cacheImage)
+                {
+                    // update cache
+                    ImageCache[path, loadFullImage] = img;
+                }
             }
 
             return img;
         }
 
-        private static BitmapImage LoadFullImage(string path)
+        private static ImageSource LoadFullImage(string path)
         {
             BitmapImage image = new BitmapImage();
             image.BeginInit();
             image.CacheOption = BitmapCacheOption.OnLoad;
-            image.UriSource = new Uri(path);            
+            image.UriSource = new Uri(path);
             image.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
             image.EndInit();
 
-            if (image.PixelWidth > 320)
+            if (image.PixelWidth > FullImageSize)
             {
                 BitmapImage resizedWidth = new BitmapImage();
                 resizedWidth.BeginInit();
                 resizedWidth.CacheOption = BitmapCacheOption.OnLoad;
                 resizedWidth.UriSource = new Uri(path);
                 resizedWidth.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
-                resizedWidth.DecodePixelWidth = 320;
+                resizedWidth.DecodePixelWidth = FullImageSize;
                 resizedWidth.EndInit();
 
-                if (resizedWidth.PixelHeight > 320)
+                if (resizedWidth.PixelHeight > FullImageSize)
                 {
                     BitmapImage resizedHeight = new BitmapImage();
                     resizedHeight.BeginInit();
                     resizedHeight.CacheOption = BitmapCacheOption.OnLoad;
                     resizedHeight.UriSource = new Uri(path);
                     resizedHeight.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
-                    resizedHeight.DecodePixelHeight = 320;
+                    resizedHeight.DecodePixelHeight = FullImageSize;
                     resizedHeight.EndInit();
                     return resizedHeight;
                 }
+
                 return resizedWidth;
             }
+
             return image;
+        }
+
+        private static ImageSource LoadSvgImage(string path, bool loadFullImage = false)
+        {
+            // Set up drawing settings
+            var desiredHeight = loadFullImage ? FullImageSize : SmallIconSize;
+            var drawingSettings = new WpfDrawingSettings
+            {
+                IncludeRuntime = true,
+                // Set IgnoreRootViewbox to false to respect the SVG's viewBox
+                IgnoreRootViewbox = false
+            };
+
+            // Load and render the SVG
+            var converter = new FileSvgReader(drawingSettings);
+            var drawing = converter.Read(new Uri(path));
+
+            // Calculate scale to achieve desired height
+            var drawingBounds = drawing.Bounds;
+            if (drawingBounds.Height <= 0)
+            {
+                throw new InvalidOperationException($"Invalid SVG dimensions: Height must be greater than zero in {path}");
+            }
+            var scale = desiredHeight / drawingBounds.Height;
+            var scaledWidth = drawingBounds.Width * scale;
+            var scaledHeight = drawingBounds.Height * scale;
+
+            // Convert the Drawing to a Bitmap
+            var drawingVisual = new DrawingVisual();
+            using (DrawingContext drawingContext = drawingVisual.RenderOpen())
+            {
+                drawingContext.PushTransform(new ScaleTransform(scale, scale));
+                drawingContext.DrawDrawing(drawing);
+            }
+
+            // Create a RenderTargetBitmap to hold the rendered image
+            var bitmap = new RenderTargetBitmap(
+                (int)Math.Ceiling(scaledWidth),
+                (int)Math.Ceiling(scaledHeight),
+                96, // DpiX
+                96, // DpiY
+                PixelFormats.Pbgra32);
+            bitmap.Render(drawingVisual);
+
+            return bitmap;
         }
     }
 }

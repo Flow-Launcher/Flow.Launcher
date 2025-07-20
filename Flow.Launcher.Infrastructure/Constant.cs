@@ -7,6 +7,7 @@ namespace Flow.Launcher.Infrastructure
     public static class Constant
     {
         public const string FlowLauncher = "Flow.Launcher";
+        public const string FlowLauncherFullName = "Flow Launcher";
         public const string Plugins = "Plugins";
         public const string PluginMetadataFileName = "plugin.json";
 
@@ -19,7 +20,7 @@ namespace Flow.Launcher.Infrastructure
         public static readonly string RootDirectory = Directory.GetParent(ApplicationDirectory).ToString();
         
         public static readonly string PreinstalledDirectory = Path.Combine(ProgramDirectory, Plugins);
-        public const string Issue = "https://github.com/Flow-Launcher/Flow.Launcher/issues/new";
+        public const string IssuesUrl = "https://github.com/Flow-Launcher/Flow.Launcher/issues";
         public static readonly string Version = FileVersionInfo.GetVersionInfo(Assembly.Location.NonNull()).ProductVersion;
         public static readonly string Dev = "Dev";
         public const string Documentation = "https://flowlauncher.com/docs/#/usage-tips";
@@ -30,6 +31,8 @@ namespace Flow.Launcher.Infrastructure
         public static readonly string ErrorIcon = Path.Combine(ImagesDirectory, "app_error.png");
         public static readonly string MissingImgIcon = Path.Combine(ImagesDirectory, "app_missing_img.png");
         public static readonly string LoadingImgIcon = Path.Combine(ImagesDirectory, "loading.png");
+        public static readonly string ImageIcon = Path.Combine(ImagesDirectory, "image.png");
+        public static readonly string HistoryIcon = Path.Combine(ImagesDirectory, "history.png");
 
         public static string PythonPath;
         public static string NodePath;
@@ -45,10 +48,13 @@ namespace Flow.Launcher.Infrastructure
         public const string Themes = "Themes";
         public const string Settings = "Settings";
         public const string Logs = "Logs";
+        public const string Cache = "Cache";
 
         public const string Website = "https://flowlauncher.com";
         public const string SponsorPage = "https://github.com/sponsors/Flow-Launcher";
         public const string GitHub = "https://github.com/Flow-Launcher/Flow.Launcher";
         public const string Docs = "https://flowlauncher.com/docs";
+
+        public const string SystemLanguageCode = "system";
     }
 }

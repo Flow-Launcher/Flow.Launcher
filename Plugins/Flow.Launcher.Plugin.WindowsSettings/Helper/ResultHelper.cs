@@ -1,9 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.WindowsSettings.Classes;
 using Flow.Launcher.Plugin.WindowsSettings.Properties;
 
@@ -200,6 +200,21 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
             {
                 Process.Start(processStartInfo);
                 return true;
+            }
+            catch (Win32Exception)
+            {
+                try
+                {
+                    processStartInfo.UseShellExecute = true;
+                    processStartInfo.Verb = "runas";
+                    Process.Start(processStartInfo);
+                    return true;
+                }
+                catch (Exception exception)
+                {
+                    Log.Exception("can't open settings on elevated permission", exception, typeof(ResultHelper));
+                    return false;
+                }
             }
             catch (Exception exception)
             {

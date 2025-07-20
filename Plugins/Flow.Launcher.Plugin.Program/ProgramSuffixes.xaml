@@ -46,8 +46,8 @@
             <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="CornerRadius" Value="5" />
-            <Setter Property="Margin" Value="0,5,0,0" />
-            <Setter Property="Padding" Value="15,15,15,15" />
+            <Setter Property="Margin" Value="0 5 0 0" />
+            <Setter Property="Padding" Value="15 15 15 15" />
             <Setter Property="SnapsToDevicePixels" Value="True" />
             <Setter Property="Visibility" Value="Collapsed" />
             <Style.Triggers>
@@ -65,8 +65,8 @@
             <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="CornerRadius" Value="5" />
-            <Setter Property="Margin" Value="0,5,0,0" />
-            <Setter Property="Padding" Value="15,15,15,15" />
+            <Setter Property="Margin" Value="0 5 0 0" />
+            <Setter Property="Padding" Value="15 15 15 15" />
             <Setter Property="SnapsToDevicePixels" Value="True" />
             <Setter Property="Visibility" Value="Collapsed" />
             <Style.Triggers>
@@ -120,20 +120,20 @@
                     </Button>
                 </Grid>
             </StackPanel>
-            <StackPanel Margin="26,12,26,0">
+            <StackPanel Margin="26 12 26 0">
 
-                <StackPanel Margin="0,0,0,12">
+                <StackPanel Margin="0 0 0 12">
 
                     <TextBlock
                         Grid.Column="0"
-                        Margin="0,0,0,0"
+                        Margin="0 0 0 0"
                         FontSize="20"
                         FontWeight="SemiBold"
                         Text="{DynamicResource flowlauncher_plugin_program_suffixes}"
                         TextAlignment="Left" />
                 </StackPanel>
                 <TextBlock
-                    Margin="0,0,0,10"
+                    Margin="0 0 0 10"
                     FontSize="14"
                     Text="{DynamicResource flowlauncher_plugin_program_only_index_tip}"
                     TextWrapping="Wrap" />
@@ -151,82 +151,82 @@
                         TextWrapping="Wrap" />
                 </Border>
 
-                <Grid Margin="0,20,0,12">
+                <Grid Margin="0 20 0 12">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="250" />
                         <ColumnDefinition Width="250" />
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel Grid.Column="0" Margin="0,0,0,0">
+                    <StackPanel Grid.Column="0" Margin="0 0 0 0">
                         <TextBlock
-                            Margin="0,0,0,8"
+                            Margin="0 0 0 8"
                             FontSize="16"
                             FontWeight="SemiBold"
                             Text="{DynamicResource flowlauncher_plugin_program_suffixes_executable_types}" />
                         <CheckBox
                             Name="apprefMS"
-                            Margin="10,0,0,0"
+                            Margin="10 0 0 0"
                             IsChecked="{Binding SuffixesStatus[appref-ms]}">
                             appref-ms
                         </CheckBox>
                         <CheckBox
                             Name="exe"
-                            Margin="10,0,0,0"
+                            Margin="10 0 0 0"
                             IsChecked="{Binding SuffixesStatus[exe]}">
                             exe
                         </CheckBox>
                         <CheckBox
                             Name="lnk"
-                            Margin="10,0,0,0"
+                            Margin="10 0 0 0"
                             IsChecked="{Binding SuffixesStatus[lnk]}">
                             lnk
                         </CheckBox>
                         <CheckBox
                             Name="CustomFiles"
-                            Margin="10,0,0,0"
+                            Margin="10 0 0 0"
                             Content="{DynamicResource flowlauncher_plugin_program_suffixes_custom_file_types}"
                             IsChecked="{Binding UseCustomSuffixes}" />
                         <TextBox
                             x:Name="tbSuffixes"
-                            Margin="10,4,0,10"
+                            Margin="10 4 0 10"
                             Style="{StaticResource CustomFileTypeTextBox}" />
                     </StackPanel>
 
                     <Border
                         Grid.Column="1"
-                        Margin="20,0,0,10"
-                        Padding="20,0,0,0"
+                        Margin="20 0 0 10"
+                        Padding="20 0 0 0"
                         BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
-                        BorderThickness="1,0,0,0">
+                        BorderThickness="1 0 0 0">
                         <StackPanel>
                             <TextBlock
-                                Margin="0,0,0,8"
+                                Margin="0 0 0 8"
                                 FontSize="16"
                                 FontWeight="SemiBold"
                                 Text="{DynamicResource flowlauncher_plugin_program_suffixes_URL_types}" />
                             <CheckBox
                                 Name="steam"
-                                Margin="10,0,0,0"
+                                Margin="10 0 0 0"
                                 Content="{DynamicResource flowlauncher_plugin_program_suffixes_URL_steam}"
                                 IsChecked="{Binding ProtocolsStatus[steam]}" />
                             <CheckBox
                                 Name="epic"
-                                Margin="10,0,0,0"
+                                Margin="10 0 0 0"
                                 Content="{DynamicResource flowlauncher_plugin_program_suffixes_URL_epic}"
                                 IsChecked="{Binding ProtocolsStatus[epic]}" />
                             <CheckBox
                                 Name="http"
-                                Margin="10,0,0,0"
+                                Margin="10 0 0 0"
                                 Content="{DynamicResource flowlauncher_plugin_program_suffixes_URL_http}"
                                 IsChecked="{Binding ProtocolsStatus[http]}" />
                             <CheckBox
                                 Name="CustomProtocol"
-                                Margin="10,0,0,0"
+                                Margin="10 0 0 0"
                                 Content="{DynamicResource flowlauncher_plugin_program_suffixes_custom_urls}"
                                 IsChecked="{Binding UseCustomProtocols}" />
                             <TextBox
                                 x:Name="tbProtocols"
-                                Margin="10,4,0,0"
+                                Margin="10 4 0 0"
                                 Style="{StaticResource CustomURLTypeTextBox}" />
                         </StackPanel>
                     </Border>
@@ -237,27 +237,27 @@
             Grid.Row="1"
             Background="{DynamicResource PopupButtonAreaBGColor}"
             BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
-            BorderThickness="0,1,0,0">
+            BorderThickness="0 1 0 0">
             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                 <Button
                     x:Name="btnReset"
                     Height="30"
                     MinWidth="140"
-                    Margin="0,0,5,0"
+                    Margin="0 0 5 0"
                     Click="BtnReset_OnClick"
                     Content="{DynamicResource flowlauncher_plugin_program_reset}" />
                 <Button
                     x:Name="btnCancel"
                     Height="30"
                     MinWidth="140"
-                    Margin="5,0,5,0"
+                    Margin="5 0 5 0"
                     Click="BtnCancel_OnClick"
                     Content="{DynamicResource cancel}" />
 
                 <Button
                     Height="30"
                     MinWidth="140"
-                    Margin="5,0,0,0"
+                    Margin="5 0 0 0"
                     HorizontalAlignment="Right"
                     Click="BtnAdd_OnClick"
                     Content="{DynamicResource flowlauncher_plugin_program_update}"

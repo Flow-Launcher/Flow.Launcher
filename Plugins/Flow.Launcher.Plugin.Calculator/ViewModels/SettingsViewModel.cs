@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Flow.Launcher.Infrastructure.Storage;
-using Flow.Launcher.Infrastructure.UserSettings;
 
-namespace Flow.Launcher.Plugin.Caculator.ViewModels
+namespace Flow.Launcher.Plugin.Calculator.ViewModels
 {
     public class SettingsViewModel : BaseModel
     {
