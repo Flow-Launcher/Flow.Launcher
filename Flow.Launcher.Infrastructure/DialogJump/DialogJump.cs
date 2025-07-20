@@ -589,9 +589,9 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                             }
                         }
                     }
-                    catch (System.Exception)
+                    catch (System.Exception ex)
                     {
-                        // Ignored
+                        Log.Exception(ClassName, "An error occurred while checking foreground explorer windows", ex);
                     }
                 }
             }
