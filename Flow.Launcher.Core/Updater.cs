@@ -111,7 +111,7 @@ namespace Flow.Launcher.Core
                 }
 
                 if (!silentUpdate)
-                    _api.ShowMsg(_api.GetTranslation("update_flowlauncher_fail"),
+                    _api.ShowMsgError(_api.GetTranslation("update_flowlauncher_fail"),
                         _api.GetTranslation("update_flowlauncher_check_connection"));
             }
             finally
