@@ -816,20 +816,17 @@ namespace Flow.Launcher.Infrastructure
             if (threadId == 0) return string.Empty;
 
             var process = PInvoke.OpenProcess(PROCESS_ACCESS_RIGHTS.PROCESS_QUERY_LIMITED_INFORMATION, false, pid);
-            if (process.Value != IntPtr.Zero)
+            if (process != HWND.Null)
             {
-                using var safeHandle = new SafeProcessHandle(process.Value, true);
+                using var safeHandle = new SafeProcessHandle((nint)process.Value, true);
                 uint capacity = 2000;
                 Span<char> buffer = new char[capacity];
-                fixed (char* pBuffer = buffer)
+                if (!PInvoke.QueryFullProcessImageName(safeHandle, PROCESS_NAME_FORMAT.PROCESS_NAME_WIN32, buffer, ref capacity))
                 {
-                    if (!PInvoke.QueryFullProcessImageName(safeHandle, PROCESS_NAME_FORMAT.PROCESS_NAME_WIN32, (PWSTR)pBuffer, ref capacity))
-                    {
-                        return string.Empty;
-                    }
-
-                    return buffer[..(int)capacity].ToString();
+                    return string.Empty;
                 }
+
+                return buffer[..(int)capacity].ToString();
             }
 
             return string.Empty;
