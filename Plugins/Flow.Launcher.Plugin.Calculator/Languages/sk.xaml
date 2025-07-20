@@ -12,5 +12,5 @@
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_comma">Čiarka (,)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_dot">Bodka (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">Desatinné miesta</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Copy failed, please try later</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Kopírovanie zlyhalo, skúste to neskôr</system:String>
 </ResourceDictionary>
