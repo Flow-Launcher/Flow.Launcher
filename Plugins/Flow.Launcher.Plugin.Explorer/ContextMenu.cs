@@ -221,9 +221,8 @@ namespace Flow.Launcher.Plugin.Explorer
                             }
                             catch (Exception e)
                             {
-                                var message = $"Fail to delete {record.FullPath}";
-                                LogException(message, e);
-                                Context.API.ShowMsgError(message);
+                                LogException($"Fail to delete {record.FullPath}", e);
+                                Context.API.ShowMsgError(string.Format(Context.API.GetTranslation("plugin_explorer_fail_to_delete"), record.FullPath));
                                 return false;
                             }
 
@@ -265,9 +264,9 @@ namespace Flow.Launcher.Plugin.Explorer
                             }
                             catch (FileNotFoundException e)
                             {
-                                var name = "Plugin: Folder";
-                                var message = $"File not found: {e.Message}";
-                                Context.API.ShowMsgError(name, message);
+                                Context.API.ShowMsgError(
+                                    Context.API.GetTranslation("plugin_explorer_plugin_name"),
+                                    string.Format(Context.API.GetTranslation("plugin_explorer_file_not_found"), e.Message));
                                 return false;
                             }
 
@@ -334,9 +333,8 @@ namespace Flow.Launcher.Plugin.Explorer
                     }
                     catch (Exception e)
                     {
-                        var message = $"Fail to open file at {record.FullPath}";
-                        LogException(message, e);
-                        Context.API.ShowMsgError(message);
+                        LogException($"Fail to open file at {record.FullPath}", e);
+                        Context.API.ShowMsgError(string.Format(Context.API.GetTranslation("plugin_explorer_fail_to_open"), record.FullPath));
                         return false;
                     }
 
