@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -111,6 +111,7 @@ namespace Flow.Launcher
             SelectPrevItemHotkey2,
             SelectNextItemHotkey,
             SelectNextItemHotkey2,
+            DialogJumpHotkey,
             // Plugin hotkeys
             GlobalPluginHotkey,
             WindowPluginHotkey,
@@ -145,6 +146,7 @@ namespace Flow.Launcher
                     HotkeyType.SelectPrevItemHotkey2 => _settings.SelectPrevItemHotkey2,
                     HotkeyType.SelectNextItemHotkey => _settings.SelectNextItemHotkey,
                     HotkeyType.SelectNextItemHotkey2 => _settings.SelectNextItemHotkey2,
+                    HotkeyType.DialogJumpHotkey => _settings.DialogJumpHotkey,
                     // Plugin hotkeys
                     HotkeyType.GlobalPluginHotkey => hotkey,
                     HotkeyType.WindowPluginHotkey => hotkey,
@@ -207,6 +209,9 @@ namespace Flow.Launcher
                     case HotkeyType.SelectNextItemHotkey2:
                         _settings.SelectNextItemHotkey2 = value;
                         break;
+                    case HotkeyType.DialogJumpHotkey:
+                        _settings.DialogJumpHotkey = value;
+                        break;
                     // Plugin hotkeys
                     case HotkeyType.GlobalPluginHotkey:
                         // We should not save it to settings here because it is a custom plugin hotkey
@@ -216,8 +221,7 @@ namespace Flow.Launcher
                     case HotkeyType.WindowPluginHotkey:
                         // We should not save it to settings here because it is a custom plugin hotkey
                         // and it will be saved in the plugin settings
-                        hotkey = value;
-                        break;
+                        hotkey = value;   
                     default:
                         throw new System.NotImplementedException("Hotkey type not set");
                 }

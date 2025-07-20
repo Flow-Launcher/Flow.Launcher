@@ -72,6 +72,18 @@
                 </cc:Card>
             </cc:CardGroup>
 
+            <cc:Card
+                Title="{DynamicResource dialogJumpHotkey}"
+                Margin="0 14 0 0"
+                Sub="{DynamicResource dialogJumpHotkeyToolTip}">
+                <flowlauncher:HotkeyControl
+                    ChangeHotkey="{Binding SetDialogJumpHotkeyCommand}"
+                    DefaultHotkey="Alt+G"
+                    Type="DialogJumpHotkey"
+                    ValidateKeyGesture="False"
+                    WindowTitle="{DynamicResource dialogJumpHotkey}" />
+            </cc:Card>
+
             <cc:ExCard
                 Title="{DynamicResource hotkeyPresets}"
                 Margin="0 14 0 0"

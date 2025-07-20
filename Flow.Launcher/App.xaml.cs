@@ -16,6 +16,7 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.DialogJump;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -233,6 +234,9 @@ namespace Flow.Launcher
                 // Initialize theme for main window
                 Ioc.Default.GetRequiredService<Theme>().ChangeTheme();
 
+                DialogJump.InitializeDialogJump(PluginManager.GetDialogJumpExplorers(), PluginManager.GetDialogJumpDialogs());
+                DialogJump.SetupDialogJump(_settings.EnableDialogJump);
+
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
                 RegisterExitEvents();
@@ -267,7 +271,7 @@ namespace Flow.Launcher
                     // but if it fails (permissions, etc) then don't keep retrying
                     // this also gives the user a visual indication in the Settings widget
                     _settings.StartFlowLauncherOnSystemStartup = false;
-                    API.ShowMsg(API.GetTranslation("setAutoStartFailed"), e.Message);
+                    API.ShowMsgError(API.GetTranslation("setAutoStartFailed"), e.Message);
                 }
             }
         }
@@ -412,6 +416,7 @@ namespace Flow.Launcher
                     // since some resources owned by the thread need to be disposed.
                     _mainWindow?.Dispatcher.Invoke(_mainWindow.Dispose);
                     _mainVM?.Dispose();
+                    DialogJump.Dispose();
                 }
 
                 API.LogInfo(ClassName, "End Flow Launcher dispose ----------------------------------------------------");

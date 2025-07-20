@@ -20,6 +20,10 @@ namespace Flow.Launcher.Infrastructure.Http
 
         private static readonly HttpClient client = new();
 
+        // We should not initialize API in static constructor because it will create another API instance
+        private static IPublicAPI api = null;
+        private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
+
         static Http()
         {
             // need to be added so it would work on a win10 machine
@@ -78,7 +82,7 @@ namespace Flow.Launcher.Infrastructure.Http
             }
             catch (UriFormatException e)
             {
-                Ioc.Default.GetRequiredService<IPublicAPI>().ShowMsg("Please try again", "Unable to parse Http Proxy");
+                API.ShowMsgError(API.GetTranslation("pleaseTryAgain"), API.GetTranslation("parseProxyFailed"));
                 Log.Exception(ClassName, "Unable to parse Uri", e);
             }
         }

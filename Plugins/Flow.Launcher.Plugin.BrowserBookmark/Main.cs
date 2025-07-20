@@ -223,11 +223,8 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
                     }
                     catch (Exception e)
                     {
-                        var message = "Failed to set url in clipboard";
-                        _context.API.LogException(ClassName, message, e);
-
-                        _context.API.ShowMsg(message);
-
+                        _context.API.LogException(ClassName, "Failed to set url in clipboard", e);
+                        _context.API.ShowMsgError(_context.API.GetTranslation("flowlauncher_plugin_browserbookmark_copy_failed"));
                         return false;
                     }
                 },

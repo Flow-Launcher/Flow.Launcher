@@ -281,6 +281,20 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
+        private string _dialogJumpHotkey = $"{KeyConstant.Alt} + G";
+        public string DialogJumpHotkey
+        {
+            get => _dialogJumpHotkey;
+            set
+            {
+                if (_dialogJumpHotkey != value)
+                {
+                    _dialogJumpHotkey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         private string _language = Constant.SystemLanguageCode;
         public string Language
         {
@@ -516,6 +530,21 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 Editable = false
             }
         };
+
+        public bool EnableDialogJump { get; set; } = true;
+
+        public bool AutoDialogJump { get; set; } = false;
+
+        public bool ShowDialogJumpWindow { get; set; } = false;
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public DialogJumpWindowPositions DialogJumpWindowPosition { get; set; } = DialogJumpWindowPositions.UnderDialog;
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public DialogJumpResultBehaviours DialogJumpResultBehaviour { get; set; } = DialogJumpResultBehaviours.LeftClick;
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public DialogJumpFileResultBehaviours DialogJumpFileResultBehaviour { get; set; } = DialogJumpFileResultBehaviours.FullPath;
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public LOGLEVEL LogLevel { get; set; } = LOGLEVEL.INFO;
@@ -767,5 +796,24 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         XingKongJianDao,
         DaNiu,
         XiaoLang
+    }
+
+    public enum DialogJumpWindowPositions
+    {
+        UnderDialog,
+        FollowDefault
+    }
+
+    public enum DialogJumpResultBehaviours
+    {
+        LeftClick,
+        RightClick
+    }
+
+    public enum DialogJumpFileResultBehaviours
+    {
+        FullPath,
+        FullPathOpen,
+        Directory
     }
 }
