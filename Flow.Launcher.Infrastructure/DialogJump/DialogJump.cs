@@ -457,7 +457,17 @@ namespace Flow.Launcher.Infrastructure.DialogJump
 
         public static void OnToggleHotkey(object sender, HotkeyEventArgs args)
         {
-            _ = Task.Run(() => NavigateDialogPathAsync(PInvoke.GetForegroundWindow()));
+            _ = Task.Run(async () =>
+            {
+                try
+                {
+                    await NavigateDialogPathAsync(PInvoke.GetForegroundWindow());
+                }
+                catch (System.Exception ex)
+                {
+                    Log.Exception(ClassName, "Failed to navigate dialog path", ex);
+                }
+            });
         }
 
         #endregion
@@ -534,7 +544,18 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                         // Show dialog jump window after navigating the path
                         else
                         {
-                            if (!await Task.Run(() => NavigateDialogPathAsync(hwnd, true)))
+                            if (!await Task.Run(async () =>
+                            {
+                                try
+                                {
+                                    return await NavigateDialogPathAsync(hwnd, true);
+                                }
+                                catch (System.Exception ex)
+                                {
+                                    Log.Exception(ClassName, "Failed to navigate dialog path", ex);
+                                    return false;
+                                }
+                            }))
                             {
                                 await InvokeShowDialogJumpWindowAsync(dialogWindowChanged);
                             }
