@@ -102,13 +102,6 @@ namespace Flow.Launcher.Core.Resource
                 return;
             }
 
-            // Check if the language directory contains default language file
-            if (!File.Exists(Path.Combine(directory, DefaultFile)))
-            {
-                API.LogError(ClassName, $"Default language file can't be found in path <{directory}>");
-                return;
-            }
-
             _languageDirectories.Add(directory);
         }
 
