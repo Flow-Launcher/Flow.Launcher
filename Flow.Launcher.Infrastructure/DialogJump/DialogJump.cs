@@ -595,6 +595,10 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                     }
                 }
             }
+            catch (System.Exception ex)
+            {
+                Log.Exception(ClassName, "Failed to invoke ForegroundChangeCallback", ex);
+            }
             finally
             {
                 _foregroundChangeLock.Release();

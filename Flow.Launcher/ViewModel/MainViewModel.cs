@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -1927,7 +1927,7 @@ namespace Flow.Launcher.ViewModel
                         var timeOut = !SpinWait.SpinUntil(() => !Win32Helper.IsForegroundWindow(DialogWindowHandle), 150);
                         if (timeOut) return;
 
-                        // Bring focus back to the the dialog
+                        // Bring focus back to the dialog
                         Win32Helper.SetForegroundWindow(DialogWindowHandle);
                     }
                     catch (Exception e)

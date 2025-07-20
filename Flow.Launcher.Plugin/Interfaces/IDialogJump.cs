@@ -24,6 +24,6 @@ namespace Flow.Launcher.Plugin
         /// <returns></returns>
         List<DialogJumpResult> QueryDialogJump(Query query);
 
-        Task<List<DialogJumpResult>> IAsyncDialogJump.QueryDialogJumpAsync(Query query, CancellationToken token) => Task.Run(() => QueryDialogJump(query));
+        Task<List<DialogJumpResult>> IAsyncDialogJump.QueryDialogJumpAsync(Query query, CancellationToken token) => Task.Run(() => QueryDialogJump(query), token);
     }
 }
