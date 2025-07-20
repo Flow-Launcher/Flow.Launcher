@@ -719,7 +719,7 @@ namespace Flow.Launcher.Core.Plugin
                 catch (Exception e)
                 {
                     API.LogException(ClassName, $"Failed to delete plugin settings folder for {plugin.Name}", e);
-                    API.ShowMsg(API.GetTranslation("failedToRemovePluginSettingsTitle"),
+                    API.ShowMsgError(API.GetTranslation("failedToRemovePluginSettingsTitle"),
                         string.Format(API.GetTranslation("failedToRemovePluginSettingsMessage"), plugin.Name));
                 }
             }
@@ -735,7 +735,7 @@ namespace Flow.Launcher.Core.Plugin
                 catch (Exception e)
                 {
                     API.LogException(ClassName, $"Failed to delete plugin cache folder for {plugin.Name}", e);
-                    API.ShowMsg(API.GetTranslation("failedToRemovePluginCacheTitle"),
+                    API.ShowMsgError(API.GetTranslation("failedToRemovePluginCacheTitle"),
                         string.Format(API.GetTranslation("failedToRemovePluginCacheMessage"), plugin.Name));
                 }
                 Settings.RemovePluginSettings(plugin.ID);

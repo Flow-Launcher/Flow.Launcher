@@ -132,9 +132,8 @@ namespace Flow.Launcher.Plugin.Explorer
                         }
                         catch (Exception e)
                         {
-                            var message = "Fail to set text in clipboard";
-                            LogException(message, e);
-                            Context.API.ShowMsg(message);
+                            LogException("Fail to set text in clipboard", e);
+                            Context.API.ShowMsgError(Context.API.GetTranslation("plugin_explorer_fail_to_set_text"));
                             return false;
                         }
                     },
@@ -155,9 +154,8 @@ namespace Flow.Launcher.Plugin.Explorer
                         }
                         catch (Exception e)
                         {
-                            var message = "Fail to set text in clipboard";
-                            LogException(message, e);
-                            Context.API.ShowMsg(message);
+                            LogException("Fail to set text in clipboard", e);
+                            Context.API.ShowMsgError(Context.API.GetTranslation("plugin_explorer_fail_to_set_text"));
                             return false;
                         }
                     },
@@ -178,9 +176,8 @@ namespace Flow.Launcher.Plugin.Explorer
                         }
                         catch (Exception e)
                         {
-                            var message = $"Fail to set file/folder in clipboard";
-                            LogException(message, e);
-                            Context.API.ShowMsg(message);
+                            LogException($"Fail to set file/folder in clipboard", e);
+                            Context.API.ShowMsgError(Context.API.GetTranslation("plugin_explorer_fail_to_set_files"));
                             return false;
                         }
 

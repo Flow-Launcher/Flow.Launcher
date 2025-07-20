@@ -64,7 +64,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             }
             catch (Exception e)
             {
-                App.API.ShowMsg(App.API.GetTranslation("setAutoStartFailed"), e.Message);
+                App.API.ShowMsgError(App.API.GetTranslation("setAutoStartFailed"), e.Message);
             }
         }
     }
@@ -91,7 +91,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
                 }
                 catch (Exception e)
                 {
-                    App.API.ShowMsg(App.API.GetTranslation("setAutoStartFailed"), e.Message);
+                    App.API.ShowMsgError(App.API.GetTranslation("setAutoStartFailed"), e.Message);
                 }
             } 
         }
@@ -217,7 +217,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             else
             {
                 // Since this is rarely seen text, language support is not provided.
-                App.API.ShowMsg(App.API.GetTranslation("KoreanImeSettingChangeFailTitle"), App.API.GetTranslation("KoreanImeSettingChangeFailSubTitle"));
+                App.API.ShowMsgError(App.API.GetTranslation("KoreanImeSettingChangeFailTitle"), App.API.GetTranslation("KoreanImeSettingChangeFailSubTitle"));
             }
         }
     }

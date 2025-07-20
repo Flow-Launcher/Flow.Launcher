@@ -446,7 +446,7 @@ namespace Flow.Launcher.Plugin.Program
                 var title = Context.API.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_error");
                 var message = string.Format(Context.API.GetTranslation("flowlauncher_plugin_program_run_failed"),
                     info.FileName);
-                Context.API.ShowMsg(title, string.Format(message, info.FileName), string.Empty);
+                Context.API.ShowMsgError(title, string.Format(message, info.FileName));
             }
         }
 

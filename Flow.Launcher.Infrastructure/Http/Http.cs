@@ -82,7 +82,7 @@ namespace Flow.Launcher.Infrastructure.Http
             }
             catch (UriFormatException e)
             {
-                API.ShowMsg(API.GetTranslation("pleaseTryAgain"), API.GetTranslation("parseProxyFailed"));
+                API.ShowMsgError(API.GetTranslation("pleaseTryAgain"), API.GetTranslation("parseProxyFailed"));
                 Log.Exception(ClassName, "Unable to parse Uri", e);
             }
         }
