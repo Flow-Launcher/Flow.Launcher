@@ -73,9 +73,7 @@
     </PackageReference>
     <PackageReference Include="SharpVectors.Wpf" Version="1.8.4.2" />
     <PackageReference Include="System.Drawing.Common" Version="9.0.7" />
-    <!--ToolGood.Words.Pinyin v3.0.2.6 results in high memory usage when search with pinyin is enabled-->
-    <!--Bumping to it or higher needs to test and ensure this is no longer a problem-->
-    <PackageReference Include="ToolGood.Words.Pinyin" Version="3.0.1.4" />
+    <PackageReference Include="ToolGood.Words.Pinyin" Version="3.1.0.3" />
   </ItemGroup>
 
 </Project>

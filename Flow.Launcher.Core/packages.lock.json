@@ -222,8 +222,8 @@
       },
       "ToolGood.Words.Pinyin": {
         "type": "Transitive",
-        "resolved": "3.0.1.4",
-        "contentHash": "uQo97618y9yzLDxrnehPN+/tuiOlk5BqieEdwctHZOAS9miMXnHKgMFYVw8CSGXRglyTYXlrW7qtUlU7Fje5Ew=="
+        "resolved": "3.1.0.3",
+        "contentHash": "VKcf8sUq/+LyY99WgLhOu7Q32ROEyR30/2xCCj9ADRi45wVC7kpXrYCf9vH1qirkmrIfpL8inoxAbrqAlfXxsQ=="
       },
       "YamlDotNet": {
         "type": "Transitive",
@@ -243,7 +243,7 @@
           "NLog.OutputDebugString": "[6.0.1, )",
           "SharpVectors.Wpf": "[1.8.4.2, )",
           "System.Drawing.Common": "[9.0.7, )",
-          "ToolGood.Words.Pinyin": "[3.0.1.4, )"
+          "ToolGood.Words.Pinyin": "[3.1.0.3, )"
         }
       },
       "flow.launcher.plugin": {
