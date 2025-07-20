@@ -15,6 +15,6 @@
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">以管理员身份运行</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_copy">复制命令</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_history">显示最常用的命令个数：</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_command_not_found">Command not found: {0}</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_error_running_command">Error running the command: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_command_not_found">找不到命令：{0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_error_running_command">运行命令时出错：{0}</system:String>
 </ResourceDictionary>
