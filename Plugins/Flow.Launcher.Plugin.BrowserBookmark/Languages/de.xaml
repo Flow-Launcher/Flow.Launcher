@@ -6,7 +6,7 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Ihre Browser-Lesezeichen durchsuchen</system:String>
 
     <!--  Main  -->
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">Failed to set url in clipboard</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">URL in Zwischenablage konnte nicht festgelegt werden</system:String>
 
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Lesezeichen-Daten</system:String>
