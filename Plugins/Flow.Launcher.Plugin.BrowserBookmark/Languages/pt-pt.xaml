@@ -6,7 +6,7 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Pesquisar nos marcadores do navegador</system:String>
 
     <!--  Main  -->
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">Failed to set url in clipboard</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">Falha ao definir o URL na área de transferência</system:String>
 
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Dados do marcador</system:String>
