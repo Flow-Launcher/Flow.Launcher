@@ -65,6 +65,6 @@
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_subtitle">Visit the PluginsManifest repository to see community-made plugin submissions</system:String>
 
     <!--  Settings menu items  -->
-    <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Install from unknown source warning</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Bilinmeyen kaynaktan yükleme uyarısı</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugins Manager</system:String>
 </ResourceDictionary>
