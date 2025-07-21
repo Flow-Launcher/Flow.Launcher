@@ -17,20 +17,20 @@
     <system:String x:Key="failedToInitializePluginsMessage">Complemento: {0} - no se pudo cargar y se desactivará, póngase en contacto con el creador del complemento para obtener ayuda</system:String>
 
     <!--  Portable  -->
-    <system:String x:Key="restartToDisablePortableMode">Flow Launcher needs to restart to finish disabling portable mode, after the restart your portable data profile will be deleted and roaming data profile kept</system:String>
-    <system:String x:Key="restartToEnablePortableMode">Flow Launcher needs to restart to finish enabling portable mode, after the restart your roaming data profile will be deleted and portable data profile kept</system:String>
-    <system:String x:Key="moveToDifferentLocation">Flow Launcher has detected you enabled portable mode, would you like to move it to a different location?</system:String>
-    <system:String x:Key="shortcutsUninstallerCreated">Flow Launcher has detected you disabled portable mode, the relevant shortcuts and uninstaller entry have been created</system:String>
-    <system:String x:Key="userDataDuplicated">Flow Launcher detected your user data exists both in {0} and {1}. {2}{2}Please delete {1} in order to proceed. No changes have occurred.</system:String>
+    <system:String x:Key="restartToDisablePortableMode">Flow Launcher necesita reiniciarse para terminar de deshabilitar el modo portable, después de reiniciar se borrará el perfil de datos portables y se mantendrá el perfil de datos itinerantes</system:String>
+    <system:String x:Key="restartToEnablePortableMode">Flow Launcher necesita reiniciarse para terminar de habilitar el modo portable, después de reiniciar se borrará el perfil de datos itinerantes y se mantendrá el perfil de datos portables</system:String>
+    <system:String x:Key="moveToDifferentLocation">Flow Launcher ha detectado que tiene activado el modo portable, ¿desea moverlo a otra ubicación?</system:String>
+    <system:String x:Key="shortcutsUninstallerCreated">Flow Launcher ha detectado que tiene desactivado el modo portable, los accesos directos relevantes y la entrada del desinstalador han sido creados</system:String>
+    <system:String x:Key="userDataDuplicated">Flow Launcher ha detectado que los datos de usario existen tanto en {0} como en {1}. {2}{2}Por favor, elimine {1} para continuar. No se han producido cambios.</system:String>
 
     <!--  Plugin Loader  -->
-    <system:String x:Key="pluginHasErrored">The following plugin has errored and cannot be loaded:</system:String>
-    <system:String x:Key="pluginsHaveErrored">The following plugins have errored and cannot be loaded:</system:String>
-    <system:String x:Key="referToLogs">Please refer to the logs for more information</system:String>
+    <system:String x:Key="pluginHasErrored">El siguiente complemento ha sufrido un error y no puede cargarse:</system:String>
+    <system:String x:Key="pluginsHaveErrored">Los siguientes complementos han sufrido un error y no pueden cargarse:</system:String>
+    <system:String x:Key="referToLogs">Por favor, consulte los registros para más información</system:String>
 
     <!--  Http  -->
-    <system:String x:Key="pleaseTryAgain">Please try again</system:String>
-    <system:String x:Key="parseProxyFailed">Unable to parse Http Proxy</system:String>
+    <system:String x:Key="pleaseTryAgain">Por favor, inténtalo de nuevo</system:String>
+    <system:String x:Key="parseProxyFailed">No se puede analizar el proxy Http</system:String>
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">No se ha podido registrar el atajo de teclado &quot;{0}&quot;. El atajo de teclado puede estar siendo utilizado por otro programa. Seleccione un atajo de teclado diferente o salga del otro programa.</system:String>
@@ -107,7 +107,7 @@
     <system:String x:Key="typingStartEn">Empezar a escribir siempre en modo inglés</system:String>
     <system:String x:Key="typingStartEnTooltip">Cambia temporalmente el método de entrada al modo inglés cuando se activa Flow.</system:String>
     <system:String x:Key="autoUpdates">Actualización automática</system:String>
-    <system:String x:Key="autoUpdatesTooltip">Automatically check and update the app when available</system:String>
+    <system:String x:Key="autoUpdatesTooltip">Comprobar y actualizar automáticamente la aplicación cuando esté disponible</system:String>
     <system:String x:Key="select">Seleccionar</system:String>
     <system:String x:Key="hideOnStartup">Ocultar Flow Launcher al inicio</system:String>
     <system:String x:Key="hideOnStartupToolTip">La ventana de búsqueda de Flow Launcher se oculta en la bandeja del sistema tras el arranque.</system:String>
@@ -120,9 +120,9 @@
     <system:String x:Key="SearchPrecisionRegular">Normal</system:String>
     <system:String x:Key="ShouldUsePinyin">Buscar con Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Permite utilizar Pinyin para la búsqueda. Pinyin es el sistema estándar de ortografía romanizado para traducir chino.</system:String>
-    <system:String x:Key="ShouldUseDoublePinyin">Use Double Pinyin</system:String>
-    <system:String x:Key="ShouldUseDoublePinyinToolTip">Use Double Pinyin instead of Full Pinyin to search.</system:String>
-    <system:String x:Key="DoublePinyinSchema">Double Pinyin Schema</system:String>
+    <system:String x:Key="ShouldUseDoublePinyin">Usar Pinyin doble</system:String>
+    <system:String x:Key="ShouldUseDoublePinyinToolTip">Use Pinyin doble en lugar de Pinyin completo para buscar.</system:String>
+    <system:String x:Key="DoublePinyinSchema">Esquema Pinyin doble</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao He</system:String>
     <system:String x:Key="DoublePinyinSchemasZiRanMa">Zi Ran Ma</system:String>
     <system:String x:Key="DoublePinyinSchemasWeiRuan">Wei Ruan</system:String>
@@ -161,8 +161,8 @@
     <system:String x:Key="KoreanImeOpenLinkButton">Abrir</system:String>
     <system:String x:Key="KoreanImeRegistry">Utilizar IME Coreano anterior</system:String>
     <system:String x:Key="KoreanImeRegistryTooltip">Se puede cambiar la configuración anterior del IME coreano directamente desde aquí</system:String>
-    <system:String x:Key="KoreanImeSettingChangeFailTitle">Failed to change Korean IME setting</system:String>
-    <system:String x:Key="KoreanImeSettingChangeFailSubTitle">Please check your system registry access or contact support.</system:String>
+    <system:String x:Key="KoreanImeSettingChangeFailTitle">No se ha podido cambiar la configuración del IME coreano</system:String>
+    <system:String x:Key="KoreanImeSettingChangeFailSubTitle">Por favor, compruebe el acceso al registro de su sistema o póngase en contacto con el soporte técnico.</system:String>
     <system:String x:Key="homePage">Página de inicio</system:String>
     <system:String x:Key="homePageToolTip">Muestra los resultados de la página de inicio cuando el texto de la consulta está vacío.</system:String>
     <system:String x:Key="historyResultsForHomePage">Mostrar historial de resultados en la página de inicio</system:String>
@@ -174,8 +174,8 @@
     <system:String x:Key="autoRestartAfterChangingToolTip">Reiniciar Flow Launcher automáticamente después de instalar/desinstalar/actualizar el complemento a través de la Tienda de complementos</system:String>
     <system:String x:Key="showUnknownSourceWarning">Mostrar advertencia de fuente desconocida</system:String>
     <system:String x:Key="showUnknownSourceWarningToolTip">Mostrar advertencia al instalar complementos desde fuentes desconocidas</system:String>
-    <system:String x:Key="autoUpdatePlugins">Auto update plugins</system:String>
-    <system:String x:Key="autoUpdatePluginsToolTip">Automatically check plugin updates and notify if there are any updates available</system:String>
+    <system:String x:Key="autoUpdatePlugins">Actualizar automáticamente los complementos</system:String>
+    <system:String x:Key="autoUpdatePluginsToolTip">Comprobar automáticamente las actualizaciones del complemento y notificar si hay actualizaciones disponibles</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Buscar complemento</system:String>
@@ -216,8 +216,8 @@
     <system:String x:Key="failedToRemovePluginCacheMessage">Complementos: {0} - Fallo al eliminar los archivos de caché del complemento, por favor elimínelos manualmente</system:String>
     <system:String x:Key="pluginModifiedAlreadyTitle">{0} ya está modificado</system:String>
     <system:String x:Key="pluginModifiedAlreadyMessage">Reiniciar Flow antes de realizar más cambios</system:String>
-    <system:String x:Key="failedToInstallPluginTitle">No se pudo instalar {0}</system:String>
-    <system:String x:Key="failedToUninstallPluginTitle">No se pudo desinstalar {0}</system:String>
+    <system:String x:Key="failedToInstallPluginTitle">Fallo al instalar {0}</system:String>
+    <system:String x:Key="failedToUninstallPluginTitle">Fallo al desinstalar {0}</system:String>
     <system:String x:Key="fileNotFoundMessage">No se puede encontrar plugin.json en el archivo zip extraído, o esta ruta {0} no existe</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">Ya existe un complemento con el mismo ID y versión, o la versión es superior a la de este complemento descargado</system:String>
 
@@ -259,10 +259,10 @@
     <system:String x:Key="installLocalPluginTooltip">Instalar complemento desde la ruta local</system:String>
     <system:String x:Key="updateNoResultTitle">No hay actualizaciones disponibles</system:String>
     <system:String x:Key="updateNoResultSubtitle">Todos los complementos están actualizados</system:String>
-    <system:String x:Key="updateAllPluginsTitle">Plugin updates available</system:String>
-    <system:String x:Key="updateAllPluginsButtonContent">Update plugins</system:String>
-    <system:String x:Key="checkPluginUpdatesTooltip">Check plugin updates</system:String>
-    <system:String x:Key="PluginsUpdateSuccessNoRestart">Plugins are successfully updated. Please restart Flow.</system:String>
+    <system:String x:Key="updateAllPluginsTitle">Actualizaciones de complementos disponibles</system:String>
+    <system:String x:Key="updateAllPluginsButtonContent">Actualizar complementos</system:String>
+    <system:String x:Key="checkPluginUpdatesTooltip">Comprobar las actualizaciones de los complementos</system:String>
+    <system:String x:Key="PluginsUpdateSuccessNoRestart">Los complementos se han actualizado correctamente. Por favor, reinicie Flow.</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Tema</system:String>
@@ -390,15 +390,15 @@
     <system:String x:Key="showBadges">Mostrar distintivos en resultados</system:String>
     <system:String x:Key="showBadgesToolTip">Para los complementos compatibles, se muestran distintivos que ayudan a distinguirlos más fácilmente.</system:String>
     <system:String x:Key="showBadgesGlobalOnly">Mostrar distintivos en resultados solo para consulta global</system:String>
-    <system:String x:Key="showBadgesGlobalOnlyToolTip">Show badges for global query results only</system:String>
-    <system:String x:Key="dialogJumpHotkey">Dialog Jump</system:String>
-    <system:String x:Key="dialogJumpHotkeyToolTip">Enter shortcut to quickly navigate the Open/Save As dialog window to the path of the current file manager.</system:String>
-    <system:String x:Key="dialogJump">Dialog Jump</system:String>
-    <system:String x:Key="dialogJumpToolTip">When Open/Save As dialog window opens, quickly navigate to the current path of the file manager.</system:String>
-    <system:String x:Key="autoDialogJump">Dialog Jump Automatically</system:String>
-    <system:String x:Key="autoDialogJumpToolTip">When Open/Save As dialog window is displayed, automatically navigate to the path of the current file manager. (Experimental)</system:String>
-    <system:String x:Key="showDialogJumpWindow">Show Dialog Jump Window</system:String>
-    <system:String x:Key="showDialogJumpWindowToolTip">Display Dialog Jump search window when the open/save dialog window is shown to quickly navigate to file/folder locations.</system:String>
+    <system:String x:Key="showBadgesGlobalOnlyToolTip">Mostrar distintivos solo para los resultados de consultas globales</system:String>
+    <system:String x:Key="dialogJumpHotkey">Salto de diálogo</system:String>
+    <system:String x:Key="dialogJumpHotkeyToolTip">Introducir acceso directo para navegar rápidamente por la ventana de diálogo Abrir/Guardar como hasta la ruta del administrador de archivos actual.</system:String>
+    <system:String x:Key="dialogJump">Salto de diálogo</system:String>
+    <system:String x:Key="dialogJumpToolTip">Cuando se abre la ventana de diálogo Abrir/Guardar como, navega rápidamente hasta la ruta actual del administrador de archivos.</system:String>
+    <system:String x:Key="autoDialogJump">Salto de diálogo automáticamente</system:String>
+    <system:String x:Key="autoDialogJumpToolTip">Cuando se muestra la ventana de diálogo Abrir/Guardar como, navega automáticamente a la ruta del administrador de archivos actual. (Experimental)</system:String>
+    <system:String x:Key="showDialogJumpWindow">Mostrar ventana de salto de diálogo</system:String>
+    <system:String x:Key="showDialogJumpWindowToolTip">Muestra la ventana de búsqueda de salto de diálogo cuando se muestra la ventana de diálogo de abrir/guardar para navegar rápidamente a las ubicaciones de archivos/carpetas.</system:String>
     <system:String x:Key="dialogJumpWindowPosition">Dialog Jump Window Position</system:String>
     <system:String x:Key="dialogJumpWindowPositionToolTip">Select position for the Dialog Jump search window</system:String>
     <system:String x:Key="DialogJumpWindowPositionUnderDialog">Fixed under the Open/Save As dialog window. Displayed on open and stays until the window is closed</system:String>
@@ -455,7 +455,7 @@
     <system:String x:Key="cachefolder">Carpeta del caché</system:String>
     <system:String x:Key="clearcachefolder">Limpiar cachés</system:String>
     <system:String x:Key="clearcachefolderMessage">¿Está seguro de que desea eliminar todos los cachés?</system:String>
-    <system:String x:Key="clearfolderfailMessage">No se pudo eliminar parte de las carpetas y archivos. Por favor, consulte el archivo de registro para más información</system:String>
+    <system:String x:Key="clearfolderfailMessage">No se ha podido eliminar parte de las carpetas y archivos. Por favor, consulte el archivo de registro para más información</system:String>
     <system:String x:Key="welcomewindow">Asistente</system:String>
     <system:String x:Key="userdatapath">Ubicación de datos del usuario</system:String>
     <system:String x:Key="userdatapathToolTip">La configuración del usuario y los complementos instalados se guardan en la carpeta de datos del usuario. Esta ubicación puede variar dependiendo de si está en modo portable o no.</system:String>
@@ -468,7 +468,7 @@
 
     <!--  Release Notes Window  -->
     <system:String x:Key="seeMoreReleaseNotes">Ver más notas de la versión en GitHub</system:String>
-    <system:String x:Key="checkNetworkConnectionTitle">No se pudo obtener las notas de la versión</system:String>
+    <system:String x:Key="checkNetworkConnectionTitle">No se ha podido obtener las notas de la versión</system:String>
     <system:String x:Key="checkNetworkConnectionSubTitle">Por favor, compruebe su conexión de red o asegúrese de que GitHub es accesible</system:String>
     <system:String x:Key="appUpdateTitle">Flow Launcher ha sido actualizado a {0}</system:String>
     <system:String x:Key="appUpdateButtonContent">Haga clic aquí para ver las notas de la versión</system:String>
@@ -512,7 +512,7 @@
     <system:String x:Key="newActionKeywordsSameAsOld">Esta nueva palabra clave de acción es la misma que la anterior, por favor elija una diferente</system:String>
     <system:String x:Key="success">Correcto</system:String>
     <system:String x:Key="completedSuccessfully">Finalizado correctamente</system:String>
-    <system:String x:Key="failedToCopy">No se pudo copiar</system:String>
+    <system:String x:Key="failedToCopy">No se ha podido copiar</system:String>
     <system:String x:Key="actionkeyword_tips">Introducir las palabras claves de acción que se desean utilizar para iniciar el complemento, utilizando espacios en blanco para separarlas. Utilizar * si no se desea especificar ninguna, para que el complemento se inicie sin ninguna palabra clave de acción.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
@@ -612,9 +612,9 @@ Si añade un prefijo &quot;@&quot; al introducir un acceso directo, éste coinci
     <system:String x:Key="update_flowlauncher_update_update_description">Actualizar descripción</system:String>
 
     <!--  Plugin Update Window  -->
-    <system:String x:Key="restartAfterUpdating">Restart Flow Launcher after updating plugins</system:String>
-    <system:String x:Key="updatePluginCheckboxContent">{0}: Update from v{1} to v{2}</system:String>
-    <system:String x:Key="updatePluginNoSelected">No plugin selected</system:String>
+    <system:String x:Key="restartAfterUpdating">Reiniciar Flow Launcher después de actualizar complementos</system:String>
+    <system:String x:Key="updatePluginCheckboxContent">{0}: Actualizar desde v{1} a v{2}</system:String>
+    <system:String x:Key="updatePluginNoSelected">No se ha seleccionado ningún complemento</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Omitir</system:String>
