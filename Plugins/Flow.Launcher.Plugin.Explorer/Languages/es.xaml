@@ -5,8 +5,8 @@
     <system:String x:Key="plugin_explorer_make_selection_warning">Por favor haga una selección primero</system:String>
     <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Por favor, seleccione una ruta de carpeta.</system:String>
     <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Por favor, elija un nombre o ruta de carpeta diferente.</system:String>
-    <system:String x:Key="plugin_explorer_delete_quick_access_link">Are you sure you want to delete this quick access link?</system:String>
-    <system:String x:Key="plugin_explorer_delete_index_search_excluded_path">Are you sure you want to delete this index search excluded path?</system:String>
+    <system:String x:Key="plugin_explorer_delete_quick_access_link">¿Está seguro de que desea eliminar este enlace de acceso rápido?</system:String>
+    <system:String x:Key="plugin_explorer_delete_index_search_excluded_path">¿Está seguro de que desea eliminar esta ruta excluida de la búsqueda de índices?</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Por favor, seleccione un enlace de carpeta</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">¿Está seguro de que desea eliminar {0}?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">¿Está seguro de que desea eliminar permanentemente este archivo?</system:String>
@@ -109,9 +109,9 @@
     <system:String x:Key="plugin_explorer_opencontainingfolder">Abrir carpeta contenedora</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Abre la ubicación que contiene al elemento actual</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Abrir con el editor:</system:String>
-    <system:String x:Key="plugin_explorer_openwitheditor_error">No se pudo abrir el archivo en {0} con el editor {1} en {2}</system:String>
+    <system:String x:Key="plugin_explorer_openwitheditor_error">No se ha podido abrir el archivo en {0} con el editor {1} en {2}</system:String>
     <system:String x:Key="plugin_explorer_openwithshell">Abrir con Shell:</system:String>
-    <system:String x:Key="plugin_explorer_openwithshell_error">No se pudo abrir la carpeta {0} con Shell {1} en {2}</system:String>
+    <system:String x:Key="plugin_explorer_openwithshell_error">No se ha podido abrir la carpeta {0} con Shell {1} en {2}</system:String>
     <system:String x:Key="plugin_explorer_excludefromindexsearch">Excluir la carpeta actual y sus subcarpetas del índice de búsqueda</system:String>
     <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Excluido del índice de búsqueda</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions">Abrir opciones de indexación de Windows</system:String>
@@ -130,11 +130,11 @@
     <system:String x:Key="plugin_explorer_show_contextmenu_title">Mostrar menú contextual de Windows</system:String>
     <system:String x:Key="plugin_explorer_openwith">Abrir con</system:String>
     <system:String x:Key="plugin_explorer_openwith_subtitle">Seleccione un programa para abrir con</system:String>
-    <system:String x:Key="plugin_explorer_fail_to_delete">Fail to delete {0}</system:String>
-    <system:String x:Key="plugin_explorer_file_not_found">File not found: {0}</system:String>
-    <system:String x:Key="plugin_explorer_fail_to_open">Fail to open {0}</system:String>
-    <system:String x:Key="plugin_explorer_fail_to_set_text">Fail to set text in clipboard</system:String>
-    <system:String x:Key="plugin_explorer_fail_to_set_files">Fail to set files/folders in clipboard</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_delete">No se pudo eliminar {0}</system:String>
+    <system:String x:Key="plugin_explorer_file_not_found">Archivo no encontrado: {0}</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_open">Fallo al abrir {0}</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_set_text">Fallo al establecer texto en el portapapeles</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_set_files">Fallo al establecer archivos/carpetas en el portapapeles</system:String>
 
     <!--  Special Results  -->
     <system:String x:Key="plugin_explorer_diskfreespace">{0} libre de {1}</system:String>
