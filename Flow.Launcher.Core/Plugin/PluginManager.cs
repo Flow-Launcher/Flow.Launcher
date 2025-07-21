@@ -57,7 +57,7 @@ namespace Flow.Launcher.Core.Plugin
         /// </summary>
         public static void Save()
         {
-            foreach (var pluginPair in GetAllPlugins())
+            foreach (var pluginPair in GetAllInitializedPlugins())
             {
                 var savable = pluginPair.Plugin as ISavable;
                 try
@@ -76,7 +76,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static async ValueTask DisposePluginsAsync()
         {
-            foreach (var pluginPair in GetAllPlugins())
+            foreach (var pluginPair in GetAllInitializedPlugins())
             {
                 await DisposePluginAsync(pluginPair);
             }
@@ -104,7 +104,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static async Task ReloadDataAsync()
         {
-            await Task.WhenAll([.. GetAllPlugins().Select(plugin => plugin.Plugin switch
+            await Task.WhenAll([.. GetAllInitializedPlugins().Select(plugin => plugin.Plugin switch
             {
                 IReloadable p => Task.Run(p.ReloadData),
                 IAsyncReloadable p => p.ReloadDataAsync(),
@@ -118,7 +118,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static async Task OpenExternalPreviewAsync(string path, bool sendFailToast = true)
         {
-            await Task.WhenAll([.. GetAllPlugins().Select(plugin => plugin.Plugin switch
+            await Task.WhenAll([.. GetAllInitializedPlugins().Select(plugin => plugin.Plugin switch
             {
                 IAsyncExternalPreview p => p.OpenPreviewAsync(path, sendFailToast),
                 _ => Task.CompletedTask,
@@ -127,7 +127,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static async Task CloseExternalPreviewAsync()
         {
-            await Task.WhenAll([.. GetAllPlugins().Select(plugin => plugin.Plugin switch
+            await Task.WhenAll([.. GetAllInitializedPlugins().Select(plugin => plugin.Plugin switch
             {
                 IAsyncExternalPreview p => p.ClosePreviewAsync(),
                 _ => Task.CompletedTask,
@@ -136,7 +136,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static async Task SwitchExternalPreviewAsync(string path, bool sendFailToast = true)
         {
-            await Task.WhenAll([.. GetAllPlugins().Select(plugin => plugin.Plugin switch
+            await Task.WhenAll([.. GetAllInitializedPlugins().Select(plugin => plugin.Plugin switch
             {
                 IAsyncExternalPreview p => p.SwitchPreviewAsync(path, sendFailToast),
                 _ => Task.CompletedTask,
@@ -512,14 +512,14 @@ namespace Flow.Launcher.Core.Plugin
         /// <returns></returns>
         public static PluginPair GetPluginForId(string id)
         {
-            return GetAllPlugins().FirstOrDefault(o => o.Metadata.ID == id);
+            return GetAllInitializedPlugins().FirstOrDefault(o => o.Metadata.ID == id);
         }
 
         #endregion
 
         #region Get Plugin List
 
-        public static List<PluginPair> GetAllPlugins()
+        public static List<PluginPair> GetAllInitializedPlugins()
         {
             return [.. _allPlugins.Values];
         }
@@ -697,7 +697,7 @@ namespace Flow.Launcher.Core.Plugin
             if (!Version.TryParse(newMetadata.Version, out var newVersion))
                 return true; // If version is not valid, we assume it is lesser than any existing version
 
-            return GetAllPlugins().Any(x => x.Metadata.ID == newMetadata.ID
+            return GetAllInitializedPlugins().Any(x => x.Metadata.ID == newMetadata.ID
                                        && Version.TryParse(x.Metadata.Version, out var version)
                                        && newVersion <= version);
         }
@@ -839,7 +839,7 @@ namespace Flow.Launcher.Core.Plugin
                 // If we want to remove plugin from AllPlugins,
                 // we need to dispose them so that they can release file handles
                 // which can help FL to delete the plugin settings & cache folders successfully
-                var pluginPairs = GetAllPlugins().Where(p => p.Metadata.ID == plugin.ID).ToList();
+                var pluginPairs = GetAllInitializedPlugins().Where(p => p.Metadata.ID == plugin.ID).ToList();
                 foreach (var pluginPair in pluginPairs)
                 {
                     await DisposePluginAsync(pluginPair);

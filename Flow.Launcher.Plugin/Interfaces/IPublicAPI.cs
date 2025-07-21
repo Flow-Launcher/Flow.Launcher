@@ -171,7 +171,7 @@ namespace Flow.Launcher.Plugin
         string GetTranslation(string key);
 
         /// <summary>
-        /// Get all loaded plugins
+        /// Get all initialized plugins
         /// </summary>
         /// <returns></returns>
         List<PluginPair> GetAllPlugins();

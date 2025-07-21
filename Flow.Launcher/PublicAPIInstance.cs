@@ -251,7 +251,7 @@ namespace Flow.Launcher
 
         public string GetTranslation(string key) => Internationalization.GetTranslation(key);
 
-        public List<PluginPair> GetAllPlugins() => PluginManager.GetAllPlugins();
+        public List<PluginPair> GetAllPlugins() => PluginManager.GetAllInitializedPlugins();
 
         public MatchResult FuzzySearch(string query, string stringToCompare) =>
             StringMatcher.FuzzySearch(query, stringToCompare);
