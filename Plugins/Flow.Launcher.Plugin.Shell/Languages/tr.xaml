@@ -7,7 +7,7 @@
     <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">Çalıştırma sona erdikten sonra komut istemini kapatma</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">Always run as administrator</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_use_windows_terminal">Use Windows Terminal</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">Run as different user</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">Başka bir kullanıcı olarak çalıştır</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">Kabuk</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Allows to execute system commands from Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_cmd_has_been_executed_times">Bu komut {0} kez çalıştırıldı</system:String>
