@@ -115,7 +115,7 @@ public partial class SettingsPanePluginsViewModel : BaseModel
     }
 
     private IList<PluginViewModel>? _pluginViewModels;
-    public IList<PluginViewModel> PluginViewModels => _pluginViewModels ??= PluginManager.AllPlugins
+    public IList<PluginViewModel> PluginViewModels => _pluginViewModels ??= PluginManager.GetAllPlugins()
         .OrderBy(plugin => plugin.Metadata.Disabled)
         .ThenBy(plugin => plugin.Metadata.Name)
         .Select(plugin => new PluginViewModel

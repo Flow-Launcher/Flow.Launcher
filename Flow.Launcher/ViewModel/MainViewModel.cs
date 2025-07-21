@@ -437,7 +437,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void Backspace(object index)
         {
-            var query = QueryBuilder.Build(QueryText.Trim(), PluginManager.NonGlobalPlugins);
+            var query = QueryBuilder.Build(QueryText.Trim(), PluginManager.GetNonGlobalPlugins());
 
             // GetPreviousExistingDirectory does not require trailing '\', otherwise will return empty string
             var path = FilesFolders.GetPreviousExistingDirectory((_) => true, query.Search.TrimEnd('\\'));
@@ -1573,7 +1573,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (string.IsNullOrWhiteSpace(queryText))
             {
-                return QueryBuilder.Build(string.Empty, PluginManager.NonGlobalPlugins);
+                return QueryBuilder.Build(string.Empty, PluginManager.GetNonGlobalPlugins());
             }
 
             var queryBuilder = new StringBuilder(queryText);
@@ -1593,7 +1593,7 @@ namespace Flow.Launcher.ViewModel
             // Applying builtin shortcuts
             await BuildQueryAsync(builtInShortcuts, queryBuilder, queryBuilderTmp);
 
-            return QueryBuilder.Build(queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
+            return QueryBuilder.Build(queryBuilder.ToString().Trim(), PluginManager.GetNonGlobalPlugins());
         }
 
         private async Task BuildQueryAsync(IEnumerable<BaseBuiltinShortcutModel> builtInShortcuts,

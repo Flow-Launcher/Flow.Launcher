@@ -209,22 +209,10 @@ namespace Flow.Launcher
 
                 var imageLoadertask = ImageLoader.InitializeAsync();
 
-                AbstractPluginEnvironment.PreStartPluginExecutablePathUpdate(_settings);
-
-                PluginManager.LoadPlugins(_settings.PluginSettings);
-
-                // Register ResultsUpdated event after all plugins are loaded
-                Ioc.Default.GetRequiredService<MainViewModel>().RegisterResultsUpdatedEvent();
-
                 Http.Proxy = _settings.Proxy;
 
                 // Initialize plugin manifest before initializing plugins so that they can use the manifest instantly
                 await API.UpdatePluginManifestAsync();
-
-                await PluginManager.InitializePluginsAsync();
-
-                // Update plugin titles after plugins are initialized with their api instances
-                Internationalization.UpdatePluginMetadataTranslations();
 
                 await imageLoadertask;
 
@@ -235,7 +223,7 @@ namespace Flow.Launcher
 
                 // Initialize quick jump before hotkey mapper since hotkey mapper will register quick jump hotkey
                 // Initialize quick jump after main window is created so that it can access main window handle
-                DialogJump.InitializeDialogJump(PluginManager.GetDialogJumpExplorers(), PluginManager.GetDialogJumpDialogs());
+                DialogJump.InitializeDialogJump();
                 DialogJump.SetupDialogJump(_settings.EnableDialogJump);
 
                 // Initialize hotkey mapper instantly after main window is created because
@@ -251,10 +239,27 @@ namespace Flow.Launcher
 
                 AutoStartup();
                 AutoUpdates();
-                AutoPluginUpdates();
 
                 API.SaveAppAllSettings();
-                API.LogInfo(ClassName, "End Flow Launcher startup ----------------------------------------------------");
+                API.LogInfo(ClassName, "End Flow Launcher startup ------------------------------------------------------");
+
+                _ = API.StopwatchLogInfoAsync(ClassName, "Startup cost", async () =>
+                {
+                    API.LogInfo(ClassName, "Begin plugin initialization ----------------------------------------------------");
+
+                    AbstractPluginEnvironment.PreStartPluginExecutablePathUpdate(_settings);
+
+                    var allPlugins = PluginManager.LoadPlugins(_settings.PluginSettings);
+
+                    await PluginManager.InitializePluginsAsync(allPlugins, _mainVM);
+
+                    AutoPluginUpdates();
+
+                    // Save all settings since we possibly update the plugin environment paths
+                    API.SaveAppAllSettings();
+
+                    API.LogInfo(ClassName, "End plugin initialization ------------------------------------------------------");
+                });
             });
         }
 
