@@ -543,7 +543,7 @@ namespace Flow.Launcher.Core.Plugin
 
         #region Get Context Menus
 
-        public static IList<Result> GetContextMenusForPlugin(Result result)
+        public static List<Result> GetContextMenusForPlugin(Result result)
         {
             var results = new List<Result>();
             var pluginPair = _contextMenuPlugins.Where(p => !PluginModified(p.Metadata.ID)).FirstOrDefault(o => o.Metadata.ID == result.PluginID);
