@@ -27,7 +27,7 @@ using ModernWpf;
 
 namespace Flow.Launcher.ViewModel
 {
-    public partial class MainViewModel : BaseModel, ISavable, IDisposable
+    public partial class MainViewModel : BaseModel, ISavable, IDisposable, IResultUpdateRegister
     {
         #region Private Fields
 
@@ -274,52 +274,50 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public void RegisterResultsUpdatedEvent()
+        public void RegisterResultsUpdatedEvent(PluginPair pair)
         {
-            foreach (var pair in PluginManager.GetResultUpdatePlugin())
+            if (pair.Plugin is not IResultUpdated plugin) return;
+
+            plugin.ResultsUpdated += (s, e) =>
             {
-                var plugin = (IResultUpdated)pair.Plugin;
-                plugin.ResultsUpdated += (s, e) =>
+                if (e.Query.RawQuery != QueryText || e.Token.IsCancellationRequested)
                 {
-                    if (e.Query.RawQuery != QueryText || e.Token.IsCancellationRequested)
+                    return;
+                }
+
+                var token = e.Token == default ? _updateToken : e.Token;
+
+                IReadOnlyList<Result> resultsCopy;
+                if (e.Results == null)
+                {
+                    resultsCopy = _emptyResult;
+                }
+                else
+                {
+                    // make a clone to avoid possible issue that plugin will also change the list and items when updating view model
+                    resultsCopy = DeepCloneResults(e.Results, false, token);
+                }
+
+                foreach (var result in resultsCopy)
+                {
+                    if (string.IsNullOrEmpty(result.BadgeIcoPath))
                     {
-                        return;
+                        result.BadgeIcoPath = pair.Metadata.IcoPath;
                     }
+                }
 
-                    var token = e.Token == default ? _updateToken : e.Token;
+                PluginManager.UpdatePluginMetadata(resultsCopy, pair.Metadata, e.Query);
 
-                    IReadOnlyList<Result> resultsCopy;
-                    if (e.Results == null)
-                    {
-                        resultsCopy = _emptyResult;
-                    }
-                    else
-                    {
-                        // make a clone to avoid possible issue that plugin will also change the list and items when updating view model
-                        resultsCopy = DeepCloneResults(e.Results, false, token);
-                    }
+                if (token.IsCancellationRequested) return;
 
-                    foreach (var result in resultsCopy)
-                    {
-                        if (string.IsNullOrEmpty(result.BadgeIcoPath))
-                        {
-                            result.BadgeIcoPath = pair.Metadata.IcoPath;
-                        }
-                    }
+                App.API.LogDebug(ClassName, $"Update results for plugin <{pair.Metadata.Name}>");
 
-                    PluginManager.UpdatePluginMetadata(resultsCopy, pair.Metadata, e.Query);
-
-                    if (token.IsCancellationRequested) return;
-
-                    App.API.LogDebug(ClassName, $"Update results for plugin <{pair.Metadata.Name}>");
-
-                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query,
-                        token)))
-                    {
-                        App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
-                    }
-                };
-            }
+                if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query,
+                    token)))
+                {
+                    App.API.LogError(ClassName, "Unable to add item to Result Update Queue");
+                }
+            };
         }
 
         private async Task RegisterClockAndDateUpdateAsync()
