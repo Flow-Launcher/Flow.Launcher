@@ -273,24 +273,11 @@ namespace Flow.Launcher.Core.Plugin
                 // Register ResultsUpdated event so that plugin query can use results updated interface
                 register.RegisterResultsUpdatedEvent(pair);
 
-                // Register plugin's action keywords so that plugins can be queried in results
-                // set distinct on each plugin's action keywords helps only firing global(*) and action keywords once where a plugin
-                // has multiple global and action keywords because we will only add them here once.
-                foreach (var actionKeyword in pair.Metadata.ActionKeywords.Distinct())
-                {
-                    switch (actionKeyword)
-                    {
-                        case Query.GlobalPluginWildcardSign:
-                            _globalPlugins.TryAdd(pair.Metadata.ID, pair);
-                            break;
-                        default:
-                            _nonGlobalPlugins.TryAdd(actionKeyword, pair);
-                            break;
-                    }
-                }
-
                 // Update plugin metadata translation after the plugin is initialized with IPublicAPI instance
                 Internationalization.UpdatePluginMetadataTranslation(pair);
+
+                // Register plugin action keywords so that plugins can be queried in results
+                RegisterPluginActionKeywords(pair);
 
                 // Add plugin to Dialog Jump plugin list after the plugin is initialized
                 DialogJump.InitializeDialogJumpPlugin(pair);
@@ -313,6 +300,24 @@ namespace Flow.Launcher.Core.Plugin
                     "",
                     false
                 );
+            }
+        }
+
+        private static void RegisterPluginActionKeywords(PluginPair pair)
+        {
+            // set distinct on each plugin's action keywords helps only firing global(*) and action keywords once where a plugin
+            // has multiple global and action keywords because we will only add them here once.
+            foreach (var actionKeyword in pair.Metadata.ActionKeywords.Distinct())
+            {
+                switch (actionKeyword)
+                {
+                    case Query.GlobalPluginWildcardSign:
+                        _globalPlugins.TryAdd(pair.Metadata.ID, pair);
+                        break;
+                    default:
+                        _nonGlobalPlugins.TryAdd(actionKeyword, pair);
+                        break;
+                }
             }
         }
 
