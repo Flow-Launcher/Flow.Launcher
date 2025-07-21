@@ -533,7 +533,7 @@ namespace Flow.Launcher.Core.Plugin
             else
             {
                 return [.. _allInitializedPlugins.Values
-                    .Where(p => !_initFailedPlugins.ContainsKey(p.Metadata.ID))];
+                    .Where(p => !IsInitFailed(p.Metadata.ID))];
             }
         }
 
@@ -592,6 +592,15 @@ namespace Flow.Launcher.Core.Plugin
         public static bool IsHomePlugin(string id)
         {
             return _homePlugins.Where(p => !PluginModified(p.Metadata.ID)).Any(p => p.Metadata.ID == id);
+        }
+
+        #endregion
+
+        #region Check Init Failed
+
+        public static bool IsInitFailed(string id)
+        {
+            return _initFailedPlugins.ContainsKey(id);
         }
 
         #endregion
