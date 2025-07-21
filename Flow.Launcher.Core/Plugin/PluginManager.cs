@@ -227,8 +227,10 @@ namespace Flow.Launcher.Core.Plugin
         }
 
         /// <summary>
-        /// Call initialize for all plugins
+        /// Initialize all plugins asynchronously.
         /// </summary>
+        /// <param name="allPlugins">List of all plugins to initialize.</param>
+        /// <param name="register">The register to register results updated event for each plugin.</param>
         /// <returns>return the list of failed to init plugins or null for none</returns>
         public static async Task InitializePluginsAsync(List<PluginPair> allPlugins, IResultUpdateRegister register)
         {
