@@ -270,24 +270,6 @@ namespace Flow.Launcher.Core.Plugin
                     return;
                 }
 
-                // Initialize plugin lists after the plugin is initialized
-                if (pair.Plugin is IContextMenu)
-                {
-                    _contextMenuPlugins.Add(pair);
-                }
-                if (pair.Plugin is IAsyncHomeQuery)
-                {
-                    _homePlugins.Add(pair);
-                }
-                if (pair.Plugin is IPluginI18n)
-                {
-                    _translationPlugins.Add(pair);
-                }
-                if (pair.Plugin is IAsyncExternalPreview)
-                {
-                    _externalPreviewPlugins.Add(pair);
-                }
-
                 // Register ResultsUpdated event so that plugin query can use results updated interface
                 register.RegisterResultsUpdatedEvent(pair);
 
@@ -313,8 +295,8 @@ namespace Flow.Launcher.Core.Plugin
                 // Add plugin to Dialog Jump plugin list after the plugin is initialized
                 DialogJump.InitializeDialogJumpPlugin(pair);
 
-                // Add plugin to all plugin list
-                _allPlugins.TryAdd(pair.Metadata.ID, pair);
+                // Add plugin to lists after the plugin is initialized
+                AddPluginToLists(pair);
             }));
 
             await Task.WhenAll(InitTasks);
@@ -332,6 +314,27 @@ namespace Flow.Launcher.Core.Plugin
                     false
                 );
             }
+        }
+
+        private static void AddPluginToLists(PluginPair pair)
+        {
+            if (pair.Plugin is IContextMenu)
+            {
+                _contextMenuPlugins.Add(pair);
+            }
+            if (pair.Plugin is IAsyncHomeQuery)
+            {
+                _homePlugins.Add(pair);
+            }
+            if (pair.Plugin is IPluginI18n)
+            {
+                _translationPlugins.Add(pair);
+            }
+            if (pair.Plugin is IAsyncExternalPreview)
+            {
+                _externalPreviewPlugins.Add(pair);
+            }
+            _allPlugins.TryAdd(pair.Metadata.ID, pair);
         }
 
         public static ICollection<PluginPair> ValidPluginsForQuery(Query query, bool dialogJump)
