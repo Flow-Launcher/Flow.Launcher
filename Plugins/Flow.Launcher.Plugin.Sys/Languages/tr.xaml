@@ -16,7 +16,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_indexoption_cmd">Index Option</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin_cmd">Empty Recycle Bin</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin_cmd">Open Recycle Bin</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_exit_cmd">Çıkı</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_exit_cmd">Çıkış</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_save_all_settings_cmd">Save Settings</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_cmd">Flow Launcher'u Yeniden Başlat</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_setting_cmd">Ayarlar</system:String>
@@ -42,7 +42,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_sleep">Bilgisayarı Uyku Moduna Al</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin">Geri Dönüşüm Kutusunu Boşalt</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin">Open recycle bin</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_indexoption">Indexing Options</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_indexoption">Dizin Oluşturma Seçenekleri</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_hibernate">Bilgisayarı Askıya Al</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_save_all_settings">Tüm Flow Launcher Ayarlarını Kaydet</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data">Eklentilerin verilerini Flow Launcher'un açılışından sonra yapılan değişiklikleri için günceller. Eklentilerin bu özelliği zaten eklemiş olması gerekir.</system:String>
