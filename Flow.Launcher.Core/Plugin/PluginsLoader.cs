@@ -113,7 +113,9 @@ namespace Flow.Launcher.Core.Plugin
 
                     plugins.Add(new PluginPair { Plugin = plugin, Metadata = metadata });
                 });
+
                 metadata.InitTime += milliseconds;
+                API.LogInfo(ClassName, $"Constructor cost for <{metadata.Name}> is <{metadata.InitTime}ms>");
             }
 
             if (erroredPlugins.Count > 0)
