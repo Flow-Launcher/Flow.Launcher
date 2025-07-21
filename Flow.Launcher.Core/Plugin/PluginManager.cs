@@ -236,7 +236,7 @@ namespace Flow.Launcher.Core.Plugin
         {
             var failedPlugins = new ConcurrentQueue<PluginPair>();
 
-            var InitTasks = allPlugins.Select(pair => Task.Run(async () =>
+            var initTasks = allPlugins.Select(pair => Task.Run(async () =>
             {
                 try
                 {
@@ -286,7 +286,7 @@ namespace Flow.Launcher.Core.Plugin
                 AddPluginToLists(pair);
             }));
 
-            await Task.WhenAll(InitTasks);
+            await Task.WhenAll(initTasks);
 
             if (!failedPlugins.IsEmpty)
             {
