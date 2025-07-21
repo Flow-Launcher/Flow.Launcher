@@ -180,10 +180,10 @@ namespace Flow.Launcher.Core.Plugin
         }
 
         /// <summary>
-        /// because InitializePlugins needs API, so LoadPlugins needs to be called first
-        /// todo happlebao The API should be removed
+        /// Load plugins from the directories specified in Directories.
         /// </summary>
         /// <param name="settings"></param>
+        /// <returns></returns>
         public static List<PluginPair> LoadPlugins(PluginsSettings settings)
         {
             var metadatas = PluginConfig.Parse(Directories);
