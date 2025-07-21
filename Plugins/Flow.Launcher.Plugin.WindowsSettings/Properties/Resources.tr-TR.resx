@@ -1776,7 +1776,7 @@
     <value>Change settings for content received using Tap and send</value>
   </data>
   <data name="ChangeDefaultSettingsForMediaOrDevices" xml:space="preserve">
-    <value>Change default settings for media or devices</value>
+    <value>Medya veya cihazlar için varsayılan ayarları değiştir</value>
   </data>
   <data name="PrintTheSpeechReferenceCard" xml:space="preserve">
     <value>Print the speech reference card</value>
@@ -1788,7 +1788,7 @@
     <value>Dosya şifreleme sertifikalarını yönet</value>
   </data>
   <data name="ViewRecentMessagesAboutYourComputer" xml:space="preserve">
-    <value>View recent messages about your computer</value>
+    <value>Bilgisayarınızla ilgili son mesajları görüntüleyin</value>
   </data>
   <data name="GiveOtherUsersAccessToThisComputer" xml:space="preserve">
     <value>Diğer kullanıcılara bu bilgisayara erişim izni ver</value>
@@ -1800,13 +1800,13 @@
     <value>Windows To Go başlatma seçeneklerini değiştir</value>
   </data>
   <data name="SeeWhichProcessesStartUpAutomaticallyWhenYouStartWindows" xml:space="preserve">
-    <value>See which processes start up automatically when you start Windows</value>
+    <value>Windows'u başlattığınızda hangi işlemlerin otomatik olarak başladığını görün</value>
   </data>
   <data name="TellIfAnRSSFeedIsAvailableOnAWebsite" xml:space="preserve">
     <value>Tell if an RSS feed is available on a website</value>
   </data>
   <data name="AddClocksForDifferentTimeZones" xml:space="preserve">
-    <value>Add clocks for different time zones</value>
+    <value>Farklı zaman dilimleri için saatler ekleyin</value>
   </data>
   <data name="AddABluetoothDevice" xml:space="preserve">
     <value>Bir Bluetooth cihazı ekle</value>
@@ -2130,10 +2130,10 @@
     <value>Change how the mouse pointer looks</value>
   </data>
   <data name="ChangePowerSavingSettings" xml:space="preserve">
-    <value>Change power-saving settings</value>
+    <value>Güç tasarrufu ayarlarını değiştir</value>
   </data>
   <data name="OptimiseForBlindness" xml:space="preserve">
-    <value>Optimise for blindness</value>
+    <value>Körlük için optimize et</value>
   </data>
   <data name="null" xml:space="preserve">
     <value>
@@ -2338,40 +2338,40 @@
     <value>Adjust commonly used mobility settings</value>
   </data>
   <data name="ChangeTextToSpeechSettings" xml:space="preserve">
-    <value>Change text-to-speech settings</value>
+    <value>Metinden sese ayarlarını değiştir</value>
   </data>
   <data name="SetTheTimeAndDate" xml:space="preserve">
-    <value>Set the time and date</value>
+    <value>Saat ve tarihi ayarla</value>
   </data>
   <data name="ChangeLocationSettings" xml:space="preserve">
-    <value>Change location settings</value>
+    <value>Konum ayarlarını değiştir</value>
   </data>
   <data name="ChangeMouseSettings" xml:space="preserve">
-    <value>Change mouse settings</value>
+    <value>Fare ayarlarını değiştir</value>
   </data>
   <data name="ManageStorageSpaces" xml:space="preserve">
-    <value>Manage Storage Spaces</value>
+    <value>Depolama Alanlarını Yönet</value>
   </data>
   <data name="ShowOrHideFileExtensions" xml:space="preserve">
-    <value>Show or hide file extensions</value>
+    <value>Dosya uzantılarını göster/gizle</value>
   </data>
   <data name="AllowAnAppThroughWindowsFirewall" xml:space="preserve">
-    <value>Allow an app through Windows Firewall</value>
+    <value>Windows Güvenlik Duvarı üzerinden bir uygulamaya izin ver</value>
   </data>
   <data name="ChangeSystemSounds" xml:space="preserve">
-    <value>Change system sounds</value>
+    <value>Sistem seslerini değiştir</value>
   </data>
   <data name="AdjustCleartypeText" xml:space="preserve">
     <value>Adjust ClearType text</value>
   </data>
   <data name="TurnScreenSaverOnOrOff" xml:space="preserve">
-    <value>Turn screen saver on or off</value>
+    <value>Ekran koruyucuyu aç/kapat</value>
   </data>
   <data name="FindAndFixWindowsUpdateProblems" xml:space="preserve">
-    <value>Find and fix windows update problems</value>
+    <value>Windows güncelleme sorunlarını bul ve düzelt</value>
   </data>
   <data name="ChangeBluetoothSettings" xml:space="preserve">
-    <value>Change Bluetooth settings</value>
+    <value>Bluetooth ayarlarını değiştir</value>
   </data>
   <data name="ConnectToANetwork" xml:space="preserve">
     <value>Connect to a network</value>
