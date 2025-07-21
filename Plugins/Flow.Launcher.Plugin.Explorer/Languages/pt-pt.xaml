@@ -130,11 +130,11 @@
     <system:String x:Key="plugin_explorer_show_contextmenu_title">Mostrar menu de contexto do Windows</system:String>
     <system:String x:Key="plugin_explorer_openwith">Abrir com</system:String>
     <system:String x:Key="plugin_explorer_openwith_subtitle">Selecione o programa a utilizar</system:String>
-    <system:String x:Key="plugin_explorer_fail_to_delete">Fail to delete {0}</system:String>
-    <system:String x:Key="plugin_explorer_file_not_found">File not found: {0}</system:String>
-    <system:String x:Key="plugin_explorer_fail_to_open">Fail to open {0}</system:String>
-    <system:String x:Key="plugin_explorer_fail_to_set_text">Fail to set text in clipboard</system:String>
-    <system:String x:Key="plugin_explorer_fail_to_set_files">Fail to set files/folders in clipboard</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_delete">Falha ao eliminar {0}</system:String>
+    <system:String x:Key="plugin_explorer_file_not_found">Ficheiro não encontrado: {0}</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_open">Falha ao abrir {0}</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_set_text">Falha ao definir texto na área de transferência</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_set_files">Falha ao definir ficheiros/pasta na área de transferência</system:String>
 
     <!--  Special Results  -->
     <system:String x:Key="plugin_explorer_diskfreespace">{0} livre de {1} no total</system:String>
