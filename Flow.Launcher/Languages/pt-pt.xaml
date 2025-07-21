@@ -17,20 +17,20 @@
     <system:String x:Key="failedToInitializePluginsMessage">Plugin: {0} - não foi possível iniciar e será desativado. Contacte o criador do plugin para obter ajuda.</system:String>
 
     <!--  Portable  -->
-    <system:String x:Key="restartToDisablePortableMode">Flow Launcher needs to restart to finish disabling portable mode, after the restart your portable data profile will be deleted and roaming data profile kept</system:String>
-    <system:String x:Key="restartToEnablePortableMode">Flow Launcher needs to restart to finish enabling portable mode, after the restart your roaming data profile will be deleted and portable data profile kept</system:String>
+    <system:String x:Key="restartToDisablePortableMode">Tem que reiniciar Flow Launcher para terminar a desativação do modo portátil. Após reiniciar, o seu perfil de dados portáteis será eliminado mas o perfil na pasta &quot;Roaming&quot; será mantido.</system:String>
+    <system:String x:Key="restartToEnablePortableMode">Tem que reiniciar Flow Launcher para terminar a ativação do modo portátil. Após reiniciar, o seu perfil de dados na pasta &quot;Roaming&quot; será eliminado mas o perfil de dados portáteis será mantido.</system:String>
     <system:String x:Key="moveToDifferentLocation">Flow Launcher has detected you enabled portable mode, would you like to move it to a different location?</system:String>
-    <system:String x:Key="shortcutsUninstallerCreated">Flow Launcher has detected you disabled portable mode, the relevant shortcuts and uninstaller entry have been created</system:String>
-    <system:String x:Key="userDataDuplicated">Flow Launcher detected your user data exists both in {0} and {1}. {2}{2}Please delete {1} in order to proceed. No changes have occurred.</system:String>
+    <system:String x:Key="shortcutsUninstallerCreated">Flow Launcher detetou que desativou o modo portátil. De seguida, serão criados os atalhos e o desintalador.</system:String>
+    <system:String x:Key="userDataDuplicated">Flow Launcher detetou que os seus dados de utilizador existem e {0} e {1}. {2}{2}Deve eliminar {1} para continuar. Nenhuma alteração foi efetuada.</system:String>
 
     <!--  Plugin Loader  -->
-    <system:String x:Key="pluginHasErrored">The following plugin has errored and cannot be loaded:</system:String>
-    <system:String x:Key="pluginsHaveErrored">The following plugins have errored and cannot be loaded:</system:String>
-    <system:String x:Key="referToLogs">Please refer to the logs for more information</system:String>
+    <system:String x:Key="pluginHasErrored">Ocorreu um erro com o plugin indicado e os dados não foram carregados:</system:String>
+    <system:String x:Key="pluginsHaveErrored">Ocorreu um erro com os plugins indicados e os dados não foram carregados:</system:String>
+    <system:String x:Key="referToLogs">Consulte o registo para mais informações</system:String>
 
     <!--  Http  -->
-    <system:String x:Key="pleaseTryAgain">Please try again</system:String>
-    <system:String x:Key="parseProxyFailed">Unable to parse Http Proxy</system:String>
+    <system:String x:Key="pleaseTryAgain">Por favor tente novamente</system:String>
+    <system:String x:Key="parseProxyFailed">Não foi possível processar o proxy HTTP</system:String>
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Falha ao registar a tecla de atalho &quot;{0}&quot;. A tecla de atalho pode estar a ser usada por outra aplicação. Utilize uma tecla de atalho diferente ou feche o outro programa.</system:String>
@@ -38,9 +38,9 @@
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Não foi possível iniciar {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Formato do ficheiro inválido como plugin</system:String>
-    <system:String x:Key="setAsTopMostInThisQuery">Definir como principal para esta consulta</system:String>
-    <system:String x:Key="cancelTopMostInThisQuery">Cancelar como principal para esta consulta</system:String>
-    <system:String x:Key="executeQuery">Executar consulta: {0}</system:String>
+    <system:String x:Key="setAsTopMostInThisQuery">Definir como principal para esta pesquisa</system:String>
+    <system:String x:Key="cancelTopMostInThisQuery">Cancelar como principal para esta pesquisa</system:String>
+    <system:String x:Key="executeQuery">Executar pesquisa: {0}</system:String>
     <system:String x:Key="lastExecuteTime">Última execução: {0}</system:String>
     <system:String x:Key="iconTrayOpen">Abrir</system:String>
     <system:String x:Key="iconTraySettings">Definições</system:String>
@@ -85,11 +85,11 @@
     <system:String x:Key="SearchWindowAlignRightTop">Direita, cima</system:String>
     <system:String x:Key="SearchWindowAlignCustom">Posição personalizada</system:String>
     <system:String x:Key="language">Idioma</system:String>
-    <system:String x:Key="lastQueryMode">Estilo da última consulta</system:String>
+    <system:String x:Key="lastQueryMode">Estilo da última pesquisa</system:String>
     <system:String x:Key="lastQueryModeToolTip">Mostrar/ocultar resultados anteriores ao reiniciar Flow Launcher</system:String>
-    <system:String x:Key="LastQueryPreserved">Manter última consulta</system:String>
-    <system:String x:Key="LastQuerySelected">Selecionar última consulta</system:String>
-    <system:String x:Key="LastQueryEmpty">Limpar última consulta</system:String>
+    <system:String x:Key="LastQueryPreserved">Manter última pesquisa</system:String>
+    <system:String x:Key="LastQuerySelected">Selecionar última pesquisa</system:String>
+    <system:String x:Key="LastQueryEmpty">Limpar última pesquisa</system:String>
     <system:String x:Key="LastQueryActionKeywordPreserved">Manter palavra-chave da última ação</system:String>
     <system:String x:Key="LastQueryActionKeywordSelected">Selecionar palavra-chave da última ação</system:String>
     <system:String x:Key="maxShowResults">Número máximo de resultados</system:String>
@@ -113,8 +113,8 @@
     <system:String x:Key="hideOnStartupToolTip">Ocultar caixa de pesquisa na bandeja após iniciar Flow Launcher.</system:String>
     <system:String x:Key="hideNotifyIcon">Ocultar ícone na bandeja</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Se o ícone da bandeja estiver oculto, pode abrir as Definições com um clique com o botão direito do rato na caixa de pesquisa.</system:String>
-    <system:String x:Key="querySearchPrecision">Precisão da consulta</system:String>
-    <system:String x:Key="querySearchPrecisionToolTip">Altera a precisão mínima necessário para obter resultados</system:String>
+    <system:String x:Key="querySearchPrecision">Precisão da pesquisa</system:String>
+    <system:String x:Key="querySearchPrecisionToolTip">Altera a precisão mínima para a obtenção dos resultados</system:String>
     <system:String x:Key="SearchPrecisionNone">Nenhuma</system:String>
     <system:String x:Key="SearchPrecisionLow">Baixa</system:String>
     <system:String x:Key="SearchPrecisionRegular">Normal</system:String>
@@ -160,8 +160,8 @@
     <system:String x:Key="KoreanImeOpenLinkButton">Abrir</system:String>
     <system:String x:Key="KoreanImeRegistry">Utilizar versão anterior de IME Coreano</system:String>
     <system:String x:Key="KoreanImeRegistryTooltip">Pode alterar as definições do método de introdução coreano aqui</system:String>
-    <system:String x:Key="KoreanImeSettingChangeFailTitle">Failed to change Korean IME setting</system:String>
-    <system:String x:Key="KoreanImeSettingChangeFailSubTitle">Please check your system registry access or contact support.</system:String>
+    <system:String x:Key="KoreanImeSettingChangeFailTitle">falha ao alterar a definição IME Coreano</system:String>
+    <system:String x:Key="KoreanImeSettingChangeFailSubTitle">Verifique se tem acesso ao registo do sistema ou contacte o suporte.</system:String>
     <system:String x:Key="homePage">Página inicial</system:String>
     <system:String x:Key="homePageToolTip">Mostrar resultados da página inicial se o termo de pesquisa estiver vazio.</system:String>
     <system:String x:Key="historyResultsForHomePage">Mostrar histórico na página inicial</system:String>
@@ -205,7 +205,7 @@
     <system:String x:Key="pluginDirectory">Pasta de plugins</system:String>
     <system:String x:Key="author">de</system:String>
     <system:String x:Key="plugin_init_time">Tempo de arranque:</system:String>
-    <system:String x:Key="plugin_query_time">Tempo de consulta:</system:String>
+    <system:String x:Key="plugin_query_time">Tempo de pesquisa:</system:String>
     <system:String x:Key="plugin_query_version">Versão</system:String>
     <system:String x:Key="plugin_query_web">Site</system:String>
     <system:String x:Key="plugin_uninstall">Desinstalar</system:String>
@@ -279,7 +279,7 @@
     <system:String x:Key="SampleSubTitleProcessKiller">Terminar processos indesejados</system:String>
     <system:String x:Key="SearchBarHeight">Altura da barra de pesquisa</system:String>
     <system:String x:Key="ItemHeight">Altura do item</system:String>
-    <system:String x:Key="queryBoxFont">Tipo de letra da consulta</system:String>
+    <system:String x:Key="queryBoxFont">Tipo de letra da caixa de pesquisa</system:String>
     <system:String x:Key="resultItemFont">Tipo de letra dos títulos</system:String>
     <system:String x:Key="resultSubItemFont">Tipo de letra dos subtítulos</system:String>
     <system:String x:Key="resetCustomize">Repor</system:String>
@@ -322,7 +322,7 @@
     <system:String x:Key="TypeIsDarkToolTip">Este tema tem suporte a dois modos (claro/escuro).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Este tema tem suporte a fundo transparente desfocado.</system:String>
     <system:String x:Key="ShowPlaceholder">Mostrar marcador de posição</system:String>
-    <system:String x:Key="ShowPlaceholderTip">Mostrar marcador de posição se a consulta estiver vazia</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Mostrar marcador de posição se a pesquisa estiver vazia</system:String>
     <system:String x:Key="PlaceholderText">Texto do marcador</system:String>
     <system:String x:Key="PlaceholderTextTip">O texto do marcador de posição. Se vazio, será utilizado: {0}</system:String>
     <system:String x:Key="KeepMaxResults">Janela com tamanho fixo</system:String>
@@ -347,8 +347,8 @@
     <system:String x:Key="SelectPrevItemHotkey">Selecionar anterior</system:String>
     <system:String x:Key="SelectNextPageHotkey">Página seguinte</system:String>
     <system:String x:Key="SelectPrevPageHotkey">Página anterior</system:String>
-    <system:String x:Key="CycleHistoryUpHotkey">Ir para consulta anterior</system:String>
-    <system:String x:Key="CycleHistoryDownHotkey">Ir para consulta seguinte</system:String>
+    <system:String x:Key="CycleHistoryUpHotkey">Ir para pesquisa anterior</system:String>
+    <system:String x:Key="CycleHistoryDownHotkey">Ir para pesquisa seguinte</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Abrir menu de contexto</system:String>
     <system:String x:Key="OpenNativeContextMenuHotkey">Abrir menu de contexto nativo</system:String>
     <system:String x:Key="SettingWindowHotkey">Abrir janela de definições</system:String>
@@ -364,9 +364,9 @@
     <system:String x:Key="ReloadPluginHotkeyToolTip">Para utilizar quando pretende recarregar o plugin e os dados existentes.</system:String>
     <system:String x:Key="AdditionalHotkeyToolTip">Ainda pode adicionar mais uma tecla de atalho para esta função.</system:String>
     <system:String x:Key="customQueryHotkey">Teclas de atalho personalizadas</system:String>
-    <system:String x:Key="customQueryShortcut">Atalhos de consultas personalizadas</system:String>
+    <system:String x:Key="customQueryShortcut">Atalhos personalizados para pesquisas</system:String>
     <system:String x:Key="builtinShortcuts">Atalhos nativos</system:String>
-    <system:String x:Key="customQuery">Consulta</system:String>
+    <system:String x:Key="customQuery">Pesquisa</system:String>
     <system:String x:Key="customShortcut">Atalho</system:String>
     <system:String x:Key="customShortcutExpansion">Expansão</system:String>
     <system:String x:Key="builtinShortcutDescription">Descrição</system:String>
@@ -386,10 +386,10 @@
     <system:String x:Key="useGlyphUI">Utilizar ícones Segoe Fluent</system:String>
     <system:String x:Key="useGlyphUIEffect">Se possível, utilizar ícones Segoe Fluent para os resultados</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Prima a tecla</system:String>
-    <system:String x:Key="showBadges">Mostrar emblemas dos resultados</system:String>
-    <system:String x:Key="showBadgesToolTip">Para plugins suportados, são mostrados emblemas para nos ajudar a distingui-los mais facilmente.</system:String>
-    <system:String x:Key="showBadgesGlobalOnly">Mostrar emblemas apenas para a consulta global</system:String>
-    <system:String x:Key="showBadgesGlobalOnlyToolTip">Show badges for global query results only</system:String>
+    <system:String x:Key="showBadges">Mostrar indicador dos resultados</system:String>
+    <system:String x:Key="showBadgesToolTip">Para plugins suportados, são mostrados indicadores para nos ajudar a distingui-los mais facilmente.</system:String>
+    <system:String x:Key="showBadgesGlobalOnly">Mostrar indicadores apenas para a pesquisa global</system:String>
+    <system:String x:Key="showBadgesGlobalOnlyToolTip">Mostrar indicadores apenas para a pesquisa global</system:String>
     <system:String x:Key="dialogJumpHotkey">Dialog Jump</system:String>
     <system:String x:Key="dialogJumpHotkeyToolTip">Enter shortcut to quickly navigate the Open/Save As dialog window to the path of the current file manager.</system:String>
     <system:String x:Key="dialogJump">Dialog Jump</system:String>
