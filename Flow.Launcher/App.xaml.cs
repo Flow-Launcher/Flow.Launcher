@@ -181,12 +181,14 @@ namespace Flow.Launcher
                 // So set to OnExplicitShutdown to prevent the application from shutting down before main window is created
                 Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
+                // Setup log level before any logging is done
                 Log.SetLogLevel(_settings.LogLevel);
 
                 // Update dynamic resources base on settings
                 Current.Resources["SettingWindowFont"] = new FontFamily(_settings.SettingWindowFont);
                 Current.Resources["ContentControlThemeFontFamily"] = new FontFamily(_settings.SettingWindowFont);
 
+                // Initialize notification system before any notification api is called
                 Notification.Install();
 
                 // Enable Win32 dark mode if the system is in dark mode before creating all windows
@@ -195,6 +197,7 @@ namespace Flow.Launcher
                 // Initialize language before portable clean up since it needs translations
                 await Ioc.Default.GetRequiredService<Internationalization>().InitializeLanguageAsync();
 
+                // Clean up after portability update
                 Ioc.Default.GetRequiredService<Portable>().PreStartCleanUpAfterPortabilityUpdate();
 
                 API.LogInfo(ClassName, "Begin Flow Launcher startup ----------------------------------------------------");
