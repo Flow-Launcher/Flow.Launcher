@@ -1333,7 +1333,7 @@ namespace Flow.Launcher.ViewModel
 
         private async Task QueryResultsAsync(bool searchDelay, bool isReQuery = false, bool reSelect = true)
         {
-            _updateSource?.CancelAsync();
+            await _updateSource?.CancelAsync();
             _progressQuery = null;
 
             App.API.LogDebug(ClassName, $"Start query with text: <{QueryText}>");
@@ -1927,7 +1927,7 @@ namespace Flow.Launcher.ViewModel
             if (DialogJump.DialogJumpWindowPosition == DialogJumpWindowPositions.UnderDialog)
             {
                 // Cancel the previous Dialog Jump task
-                _dialogJumpSource?.CancelAsync();
+                await _dialogJumpSource?.CancelAsync();
 
                 // Create a new cancellation token source
                 _dialogJumpSource = new CancellationTokenSource();
