@@ -368,7 +368,7 @@ namespace Flow.Launcher.Core.Plugin
             if (dialogJump && plugin.Plugin is not IAsyncDialogJump)
                 return Array.Empty<PluginPair>();
 
-            if (API.PluginModified(plugin.Metadata.ID))
+            if (PluginModified(plugin.Metadata.ID))
                 return Array.Empty<PluginPair>();
 
             return [plugin];
