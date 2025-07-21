@@ -139,7 +139,7 @@ namespace Flow.Launcher.Infrastructure.DialogJump
                 };
                 _dialogJumpExplorers.TryAdd(dialogJumpExplorer, null);
             }
-            else if (pair.Plugin is IDialogJumpDialog dialog)
+            if (pair.Plugin is IDialogJumpDialog dialog)
             {
                 var dialogJumpDialog = new DialogJumpDialogPair
                 {
