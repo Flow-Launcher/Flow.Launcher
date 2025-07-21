@@ -707,6 +707,8 @@ namespace Flow.Launcher.Core.Plugin
 
         public static bool PluginModified(string id)
         {
+            // We should consider initializing plugin as modified since it cannot be installed/uninstalled/updated and
+            // we cannot call any plugin methods
             return ModifiedPlugins.Contains(id) && _allInitializedPlugins.ContainsKey(id);
         }
 
