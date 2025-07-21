@@ -244,9 +244,6 @@ namespace Flow.Launcher.Core.Plugin
                     pair.Metadata.InitTime += milliseconds;
                     API.LogInfo(ClassName,
                         $"Total init cost for <{pair.Metadata.Name}> is <{pair.Metadata.InitTime}ms>");
-
-                    // Add it in all plugin list
-                    _allPlugins.TryAdd(pair.Metadata.ID, pair);
                 }
                 catch (Exception e)
                 {
@@ -312,6 +309,9 @@ namespace Flow.Launcher.Core.Plugin
 
                 // Add plugin to Dialog Jump plugin list after the plugin is initialized
                 DialogJump.InitializeDialogJumpPlugin(pair);
+
+                // Add plugin to all plugin list
+                _allPlugins.TryAdd(pair.Metadata.ID, pair);
             }));
 
             await Task.WhenAll(InitTasks);
