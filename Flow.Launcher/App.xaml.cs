@@ -249,9 +249,9 @@ namespace Flow.Launcher
 
                     AbstractPluginEnvironment.PreStartPluginExecutablePathUpdate(_settings);
 
-                    var allPlugins = PluginManager.LoadPlugins(_settings.PluginSettings);
+                    PluginManager.LoadPlugins(_settings.PluginSettings);
 
-                    await PluginManager.InitializePluginsAsync(allPlugins, _mainVM);
+                    await PluginManager.InitializePluginsAsync(_mainVM);
 
                     AutoPluginUpdates();
 

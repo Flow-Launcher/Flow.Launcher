@@ -30,7 +30,8 @@ namespace Flow.Launcher.Core.Plugin
         private static IPublicAPI api = null;
         private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
 
-        private static readonly ConcurrentDictionary<string, PluginPair> _allPlugins = [];
+        private static List<PluginPair> _allLoadedPlugins;
+        private static readonly ConcurrentDictionary<string, PluginPair> _allInitializedPlugins = [];
         private static readonly ConcurrentDictionary<string, PluginPair> _globalPlugins = [];
         private static readonly ConcurrentDictionary<string, PluginPair> _nonGlobalPlugins = [];
 
@@ -192,20 +193,17 @@ namespace Flow.Launcher.Core.Plugin
         /// Load plugins from the directories specified in Directories.
         /// </summary>
         /// <param name="settings"></param>
-        /// <returns></returns>
-        public static List<PluginPair> LoadPlugins(PluginsSettings settings)
+        public static void LoadPlugins(PluginsSettings settings)
         {
             var metadatas = PluginConfig.Parse(Directories);
             Settings = settings;
             Settings.UpdatePluginSettings(metadatas);
 
             // Load plugins
-            var allPlugins = PluginsLoader.Plugins(metadatas, Settings);
+            _allLoadedPlugins = PluginsLoader.Plugins(metadatas, Settings);
 
             // Since dotnet plugins need to get assembly name first, we should update plugin directory after loading plugins
             UpdatePluginDirectory(metadatas);
-
-            return allPlugins;
         }
 
         private static void UpdatePluginDirectory(List<PluginMetadata> metadatas)
@@ -238,14 +236,13 @@ namespace Flow.Launcher.Core.Plugin
         /// <summary>
         /// Initialize all plugins asynchronously.
         /// </summary>
-        /// <param name="allPlugins">List of all plugins to initialize.</param>
         /// <param name="register">The register to register results updated event for each plugin.</param>
         /// <returns>return the list of failed to init plugins or null for none</returns>
-        public static async Task InitializePluginsAsync(List<PluginPair> allPlugins, IResultUpdateRegister register)
+        public static async Task InitializePluginsAsync(IResultUpdateRegister register)
         {
             var failedPlugins = new ConcurrentQueue<PluginPair>();
 
-            var initTasks = allPlugins.Select(pair => Task.Run(async () =>
+            var initTasks = _allLoadedPlugins.Select(pair => Task.Run(async () =>
             {
                 try
                 {
@@ -275,7 +272,7 @@ namespace Flow.Launcher.Core.Plugin
 
                     // Even if the plugin cannot be initialized, we still need to add it in all plugin list so that
                     // we can remove the plugin from Plugin or Store page or Plugin Manager plugin.
-                    _allPlugins.TryAdd(pair.Metadata.ID, pair);
+                    _allInitializedPlugins.TryAdd(pair.Metadata.ID, pair);
                     return;
                 }
 
@@ -348,7 +345,7 @@ namespace Flow.Launcher.Core.Plugin
             {
                 _externalPreviewPlugins.Add(pair);
             }
-            _allPlugins.TryAdd(pair.Metadata.ID, pair);
+            _allInitializedPlugins.TryAdd(pair.Metadata.ID, pair);
         }
 
         #endregion
@@ -519,9 +516,14 @@ namespace Flow.Launcher.Core.Plugin
 
         #region Get Plugin List
 
+        public static List<PluginPair> GetAllLoadedPlugins()
+        {
+            return [.. _allLoadedPlugins];
+        }
+
         public static List<PluginPair> GetAllInitializedPlugins()
         {
-            return [.. _allPlugins.Values];
+            return [.. _allInitializedPlugins.Values];
         }
 
         public static List<PluginPair> GetGlobalPlugins()
@@ -884,7 +886,7 @@ namespace Flow.Launcher.Core.Plugin
                         string.Format(API.GetTranslation("failedToRemovePluginCacheMessage"), plugin.Name));
                 }
                 Settings.RemovePluginSettings(plugin.ID);
-                _allPlugins.TryRemove(plugin.ID, out var item);
+                _allInitializedPlugins.TryRemove(plugin.ID, out var item);
                 _globalPlugins.TryRemove(plugin.ID, out var item1);
                 var keysToRemove = _nonGlobalPlugins.Where(p => p.Value.Metadata.ID == plugin.ID).Select(p => p.Key).ToList();
                 foreach (var key in keysToRemove)
