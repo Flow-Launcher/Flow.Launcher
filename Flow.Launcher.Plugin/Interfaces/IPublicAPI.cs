@@ -534,7 +534,8 @@ namespace Flow.Launcher.Plugin
 
         /// <summary>
         /// Check if the plugin has been modified.
-        /// If this plugin is updated, installed or uninstalled and users do not restart the app,
+        /// If this plugin is initializing, it will be marked as modified.
+        /// Or if this plugin is updated, installed or uninstalled and users do not restart the app,
         /// it will be marked as modified
         /// </summary>
         /// <param name="id">Plugin id</param>

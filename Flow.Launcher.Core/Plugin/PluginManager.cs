@@ -713,7 +713,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static bool PluginModified(string id)
         {
-            return ModifiedPlugins.Contains(id);
+            return ModifiedPlugins.Contains(id) && _allInitializedPlugins.ContainsKey(id);
         }
 
         public static async Task<bool> UpdatePluginAsync(PluginMetadata existingVersion, UserPlugin newVersion, string zipFilePath)
