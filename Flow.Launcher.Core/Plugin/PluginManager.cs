@@ -236,7 +236,7 @@ namespace Flow.Launcher.Core.Plugin
         {
             var failedPlugins = new ConcurrentQueue<PluginPair>();
 
-            var InitTasks = allPlugins.Select(pair => Task.Run(async delegate
+            var InitTasks = allPlugins.Select(pair => Task.Run(async () =>
             {
                 try
                 {
