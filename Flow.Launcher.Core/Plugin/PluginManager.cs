@@ -31,8 +31,8 @@ namespace Flow.Launcher.Core.Plugin
         private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
 
         private static List<PluginPair> _allLoadedPlugins;
-        private static readonly ConcurrentDictionary<string, PluginPair> _initFailedPlugins = [];
         private static readonly ConcurrentDictionary<string, PluginPair> _allInitializedPlugins = [];
+        private static readonly ConcurrentDictionary<string, PluginPair> _initFailedPlugins = [];
         private static readonly ConcurrentDictionary<string, PluginPair> _globalPlugins = [];
         private static readonly ConcurrentDictionary<string, PluginPair> _nonGlobalPlugins = [];
 
