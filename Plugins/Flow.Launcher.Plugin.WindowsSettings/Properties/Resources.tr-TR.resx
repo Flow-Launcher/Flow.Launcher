@@ -2013,7 +2013,7 @@
     <value>Ana sayfayı değiştir</value>
   </data>
   <data name="GroupSimilarWindowsOnTheTaskbar" xml:space="preserve">
-    <value>Group similar windows on the taskbar</value>
+    <value>Görev çubuğunda benzer pencereleri gruplama</value>
   </data>
   <data name="ChangeWindowsSideshowSettings" xml:space="preserve">
     <value>Change Windows SideShow settings</value>
@@ -2091,10 +2091,10 @@
     <value>Tablet kalemi ayarlarını değiştir</value>
   </data>
   <data name="ChangeHowYourMouseWorks" xml:space="preserve">
-    <value>Change how your mouse works</value>
+    <value>Farenin çalışma şeklini değiştir</value>
   </data>
   <data name="ShowHowMuchRAMIsOnThisComputer" xml:space="preserve">
-    <value>Show how much RAM is on this computer</value>
+    <value>Bu bilgisayarda ne kadar RAM olduğunu göster</value>
   </data>
   <data name="EditPowerPlan" xml:space="preserve">
     <value>Güç planını düzenle</value>
@@ -2118,13 +2118,13 @@
     <value>Change the file type associated with a file extension</value>
   </data>
   <data name="ViewEventLogs" xml:space="preserve">
-    <value>View event logs</value>
+    <value>Olay günlüklerini görüntüle</value>
   </data>
   <data name="ManageWindowsCredentials" xml:space="preserve">
     <value>Manage Windows Credentials</value>
   </data>
   <data name="SetUpAMicrophone" xml:space="preserve">
-    <value>Set up a microphone</value>
+    <value>Bir mikrofon ayarla</value>
   </data>
   <data name="ChangeHowTheMousePointerLooks" xml:space="preserve">
     <value>Change how the mouse pointer looks</value>
@@ -2290,31 +2290,31 @@
     <value>Güvenlik durumunu kontrol et</value>
   </data>
   <data name="DeleteCookiesOrTemporaryFiles" xml:space="preserve">
-    <value>Delete cookies or temporary files</value>
+    <value>Çerezleri veya geçici dosyaları sil</value>
   </data>
   <data name="SpecifyWhichHandYouWriteWith" xml:space="preserve">
-    <value>Specify which hand you write with</value>
+    <value>Hangi elinizle yazdığınızı belirtin</value>
   </data>
   <data name="ChangeTouchInputSettings" xml:space="preserve">
-    <value>Change touch input settings</value>
+    <value>Dokunmatik giriş ayarlarını değiştir</value>
   </data>
   <data name="HowToChangeTheSizeOfVirtualMemory" xml:space="preserve">
-    <value>How to change the size of virtual memory</value>
+    <value>Sanal bellek boyutu nasıl değiştirilir</value>
   </data>
   <data name="HearTextReadAloudWithNarrator" xml:space="preserve">
     <value>Hear text read aloud with Narrator</value>
   </data>
   <data name="SetUpUSBGameControllers" xml:space="preserve">
-    <value>Set up USB game controllers</value>
+    <value>USB oyun kumandalarını ayarla</value>
   </data>
   <data name="ShowWhichDomainYourComputerIsOn" xml:space="preserve">
     <value>Show which domain your computer is on</value>
   </data>
   <data name="ViewAllProblemReports" xml:space="preserve">
-    <value>View all problem reports</value>
+    <value>Tüm sorun raporlarını görüntüle</value>
   </data>
   <data name="16BitApplicationSupport" xml:space="preserve">
-    <value>16-Bit Application Support</value>
+    <value>16-Bit Uygulama Desteği</value>
   </data>
   <data name="SetUpDiallingRules" xml:space="preserve">
     <value>Set up dialling rules</value>
