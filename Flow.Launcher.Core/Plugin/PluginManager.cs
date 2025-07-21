@@ -505,11 +505,14 @@ namespace Flow.Launcher.Core.Plugin
         /// <summary>
         /// get specified plugin, return null if not found
         /// </summary>
+        /// <remarks>
+        /// Plugin may not be initialized, so do not use its plugin model to execute any commands
+        /// </remarks>
         /// <param name="id"></param>
         /// <returns></returns>
         public static PluginPair GetPluginForId(string id)
         {
-            return GetAllInitializedPlugins().FirstOrDefault(o => o.Metadata.ID == id);
+            return GetAllLoadedPlugins().FirstOrDefault(o => o.Metadata.ID == id);
         }
 
         #endregion
