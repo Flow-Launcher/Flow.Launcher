@@ -533,7 +533,7 @@ namespace Flow.Launcher.Core.Plugin
             else
             {
                 return [.. _allInitializedPlugins.Values
-                    .Where(p => !IsInitFailed(p.Metadata.ID))];
+                    .Where(p => !_initFailedPlugins.ContainsKey(p.Metadata.ID))];
             }
         }
 
@@ -596,11 +596,24 @@ namespace Flow.Launcher.Core.Plugin
 
         #endregion
 
-        #region Check Init Failed
+        #region Check Initializing or Init Failed
 
-        public static bool IsInitFailed(string id)
+        public static bool IsInitializingOrInitFailed(string id)
         {
-            return _initFailedPlugins.ContainsKey(id);
+            // Id does not exist in loaded plugins
+            if (!_allLoadedPlugins.Any(x => x.Metadata.ID == id)) return false;
+
+            // Plugin initialized already
+            if (_allInitializedPlugins.ContainsKey(id))
+            {
+                // Check if the plugin initialization failed
+                return _initFailedPlugins.ContainsKey(id);
+            }
+            // Plugin is still initializing
+            else
+            {
+                return true;
+            }
         }
 
         #endregion

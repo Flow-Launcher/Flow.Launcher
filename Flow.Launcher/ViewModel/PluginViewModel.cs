@@ -121,7 +121,7 @@ namespace Flow.Launcher.ViewModel
         public Control BottomPart2 => IsExpanded ? _bottomPart2 ??= new InstalledPluginDisplayBottomData() : null;
 
         public bool HasSettingControl =>
-            !PluginManager.IsInitFailed(PluginPair.Metadata.ID) && // Do not show setting panel for init failed plugins
+            !PluginManager.IsInitializingOrInitFailed(PluginPair.Metadata.ID) && // Do not show setting panel for initializing or init failed plugins
             PluginPair.Plugin is ISettingProvider &&
             (PluginPair.Plugin is not JsonRPCPluginBase jsonRPCPluginBase || // Is not JsonRPC plugin
             jsonRPCPluginBase.NeedCreateSettingPanel()); // Is JsonRPC plugin and need to create setting panel
