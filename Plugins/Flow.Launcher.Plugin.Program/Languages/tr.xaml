@@ -25,11 +25,11 @@
     <system:String x:Key="flowlauncher_plugin_program_index_start">Başlat Menüsü</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_start_tooltip">Etkinleştirildiğinde Flow, programları başlat menüsünden yükleyecektir</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_registry">Kayıt Defteri</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_registry_tooltip">When enabled, Flow will load programs from the registry</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_registry_tooltip">Etkinleştirildiğinde Flow, programları kayıt defterinden yükleyecektir</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_PATH">YOL</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">When enabled, Flow will load programs from the PATH environment variable</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">Etkinleştirildiğinde Flow, programları PATH ortam değişkeninden yükleyecektir</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">Uygulama yolunu gizle</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">For executable files such as UWP or lnk, hide the file path from being visible</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">UWP ya da lnk gibi dosyalar için dosya yolunu gösterme</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers">Kaldırıcıları gizle</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">unins000.exe gibi yaygın kaldırıcı adlarına sahip programları gizler</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">Program Açıklamasında Ara</system:String>
@@ -54,7 +54,7 @@
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_tips">Bu programın kaynağının dizinini ve durumunu düzenleyin.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_update">Güncelle</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Program Plugin will only index files with selected suffixes and .url files with selected protocols.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Program eklentisi yalnızca seçilen uzantılara sahip dosyaları ve belirli protokollere sahip .url dosyalarını dizine ekler.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_update_file_suffixes">Dosya uzantıları başarıyla güncellendi</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_cannot_empty">Dosya uzantıları boş olamaz</system:String>
     <system:String x:Key="flowlauncher_plugin_protocols_cannot_empty">Protokoller boş olamaz</system:String>
