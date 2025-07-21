@@ -2,19 +2,19 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <system:String x:Key="flowlauncher_plugin_cmd_relace_winr">Win+R kısayolunu kullan</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_close_cmd_after_press">Close Command Prompt after pressing any key</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">Press any key to close this window...</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_close_cmd_after_press">Herhangi bir tuşa bastıktan sonra Komut İstemi'ni kapatma</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">Bu pencereyi kapatmak için herhangi bir tuşa basın...</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">Çalıştırma sona erdikten sonra komut istemini kapatma</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">Always run as administrator</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_use_windows_terminal">Use Windows Terminal</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">Her zaman yönetici olarak çalıştır</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_use_windows_terminal">Windows Terminal Kullan</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">Başka bir kullanıcı olarak çalıştır</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">Kabuk</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Allows to execute system commands from Flow Launcher</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_cmd_has_been_executed_times">Bu komut {0} kez çalıştırıldı</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_execute_through_shell">Komut isteminde çalıştır</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Flow Launcher'dan sistem komutlarının yürütülmesine izin verir</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_cmd_has_been_executed_times">bu komut {0} kez çalıştırıldı</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_execute_through_shell">komut isteminde çalıştır</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">Yönetici Olarak Çalıştır</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_copy">Copy the command</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_history">Only show number of most used commands:</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_command_not_found">Command not found: {0}</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_error_running_command">Error running the command: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_copy">Komutu kopyala</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_history">Sadece en çok kullanılan komutların sayısını gösterir:</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_command_not_found">Komut bulunamadı: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_error_running_command">Komut çalıştırılırken hata oluştu: {0}</system:String>
 </ResourceDictionary>
