@@ -233,15 +233,17 @@ namespace Flow.Launcher
                 Current.MainWindow = _mainWindow;
                 Current.MainWindow.Title = Constant.FlowLauncher;
 
+                // Initialize quick jump before hotkey mapper since hotkey mapper will register quick jump hotkey
+                // Initialize quick jump after main window is created so that it can access main window handle
+                DialogJump.InitializeDialogJump(PluginManager.GetDialogJumpExplorers(), PluginManager.GetDialogJumpDialogs());
+                DialogJump.SetupDialogJump(_settings.EnableDialogJump);
+
                 // Initialize hotkey mapper instantly after main window is created because
                 // it will steal focus from main window which causes window hide
                 HotKeyMapper.Initialize();
 
                 // Initialize theme for main window
                 Ioc.Default.GetRequiredService<Theme>().ChangeTheme();
-
-                DialogJump.InitializeDialogJump(PluginManager.GetDialogJumpExplorers(), PluginManager.GetDialogJumpDialogs());
-                DialogJump.SetupDialogJump(_settings.EnableDialogJump);
 
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
