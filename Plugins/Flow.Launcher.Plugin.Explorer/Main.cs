@@ -1,4 +1,4 @@
-using Flow.Launcher.Plugin.Explorer.Helper;
+﻿using Flow.Launcher.Plugin.Explorer.Helper;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using Flow.Launcher.Plugin.Explorer.Exceptions;
 using System.Linq;
+using System.Globalization;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
@@ -95,6 +96,12 @@ namespace Flow.Launcher.Plugin.Explorer
         public string GetTranslatedPluginDescription()
         {
             return Context.API.GetTranslation("plugin_explorer_plugin_description");
+        }
+
+        public void OnCultureInfoChanged(CultureInfo newCulture)
+        {
+            // Update labels for setting view model
+            EverythingSortOptionLocalized.UpdateLabels(viewModel.AllEverythingSortOptions);
         }
 
         private static void FillQuickAccessLinkNames()
