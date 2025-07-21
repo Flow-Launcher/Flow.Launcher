@@ -31,6 +31,7 @@ namespace Flow.Launcher.Core.Plugin
         private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
 
         private static List<PluginPair> _allLoadedPlugins;
+        private static readonly ConcurrentDictionary<string, PluginPair> _initFailedPlugins = [];
         private static readonly ConcurrentDictionary<string, PluginPair> _allInitializedPlugins = [];
         private static readonly ConcurrentDictionary<string, PluginPair> _globalPlugins = [];
         private static readonly ConcurrentDictionary<string, PluginPair> _nonGlobalPlugins = [];
@@ -240,8 +241,6 @@ namespace Flow.Launcher.Core.Plugin
         /// <returns>return the list of failed to init plugins or null for none</returns>
         public static async Task InitializePluginsAsync(IResultUpdateRegister register)
         {
-            var failedPlugins = new ConcurrentQueue<PluginPair>();
-
             var initTasks = _allLoadedPlugins.Select(pair => Task.Run(async () =>
             {
                 try
@@ -266,7 +265,7 @@ namespace Flow.Launcher.Core.Plugin
                     {
                         pair.Metadata.Disabled = true;
                         pair.Metadata.HomeDisabled = true;
-                        failedPlugins.Enqueue(pair);
+                        _initFailedPlugins.TryAdd(pair.Metadata.ID, pair);
                         API.LogDebug(ClassName, $"Disable plugin <{pair.Metadata.Name}> because init failed");
                     }
 
@@ -294,9 +293,9 @@ namespace Flow.Launcher.Core.Plugin
 
             await Task.WhenAll(initTasks);
 
-            if (!failedPlugins.IsEmpty)
+            if (!_initFailedPlugins.IsEmpty)
             {
-                var failed = string.Join(",", failedPlugins.Select(x => x.Metadata.Name));
+                var failed = string.Join(",", _initFailedPlugins.Values.Select(x => x.Metadata.Name));
                 API.ShowMsg(
                     API.GetTranslation("failedToInitializePluginsTitle"),
                     string.Format(
