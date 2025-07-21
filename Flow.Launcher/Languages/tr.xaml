@@ -24,13 +24,13 @@
     <system:String x:Key="userDataDuplicated">Flow Launcher detected your user data exists both in {0} and {1}. {2}{2}Please delete {1} in order to proceed. No changes have occurred.</system:String>
 
     <!--  Plugin Loader  -->
-    <system:String x:Key="pluginHasErrored">The following plugin has errored and cannot be loaded:</system:String>
-    <system:String x:Key="pluginsHaveErrored">The following plugins have errored and cannot be loaded:</system:String>
-    <system:String x:Key="referToLogs">Please refer to the logs for more information</system:String>
+    <system:String x:Key="pluginHasErrored">Aşağıdaki eklentide hata oluştu ve yüklenemiyor:</system:String>
+    <system:String x:Key="pluginsHaveErrored">Aşağıdaki eklentilerde hata oluştu ve yüklenemiyor:</system:String>
+    <system:String x:Key="referToLogs">Daha fazla bilgi için günlüklere bakın</system:String>
 
     <!--  Http  -->
     <system:String x:Key="pleaseTryAgain">Lütfen tekrar deneyin</system:String>
-    <system:String x:Key="parseProxyFailed">Unable to parse Http Proxy</system:String>
+    <system:String x:Key="parseProxyFailed">Http Proxy verisi ayrıştırılamadı</system:String>
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">&quot;{0}&quot; kısayolunu atama başarısız oldu. Kısayolu başka bir program kullanıyorsa kapatmayı deneyin veya kısayolu değiştirin.</system:String>
@@ -161,8 +161,8 @@
     <system:String x:Key="KoreanImeOpenLinkButton">Aç</system:String>
     <system:String x:Key="KoreanImeRegistry">Önceki Korece IME'sini Kullan</system:String>
     <system:String x:Key="KoreanImeRegistryTooltip">Önceki Korece IME ayarlarını doğrudan buradan değiştirebilirsiniz</system:String>
-    <system:String x:Key="KoreanImeSettingChangeFailTitle">Failed to change Korean IME setting</system:String>
-    <system:String x:Key="KoreanImeSettingChangeFailSubTitle">Please check your system registry access or contact support.</system:String>
+    <system:String x:Key="KoreanImeSettingChangeFailTitle">Korece IME ayarı değiştirilemedi</system:String>
+    <system:String x:Key="KoreanImeSettingChangeFailSubTitle">Lütfen sistem kayıt defteri erişiminizi kontrol edin veya destekle iletişime geçin.</system:String>
     <system:String x:Key="homePage">Ana Sayfa</system:String>
     <system:String x:Key="homePageToolTip">Sorgu metni boş olduğunda ana sayfa sonuçlarını gösterin.</system:String>
     <system:String x:Key="historyResultsForHomePage">Geçmiş Sonuçlarını Ana Sayfada Göster</system:String>
@@ -390,22 +390,22 @@
     <system:String x:Key="showBadges">Sonuç Rozetlerini Göster</system:String>
     <system:String x:Key="showBadgesToolTip">Desteklenen eklentilere, kolayca ayırt edilebilmeleri için rozet eklenir.</system:String>
     <system:String x:Key="showBadgesGlobalOnly">Yalnızca Global Sorgular için Sonuç Rozetlerini Göster</system:String>
-    <system:String x:Key="showBadgesGlobalOnlyToolTip">Show badges for global query results only</system:String>
-    <system:String x:Key="dialogJumpHotkey">Dialog Jump</system:String>
-    <system:String x:Key="dialogJumpHotkeyToolTip">Enter shortcut to quickly navigate the Open/Save As dialog window to the path of the current file manager.</system:String>
-    <system:String x:Key="dialogJump">Dialog Jump</system:String>
-    <system:String x:Key="dialogJumpToolTip">When Open/Save As dialog window opens, quickly navigate to the current path of the file manager.</system:String>
-    <system:String x:Key="autoDialogJump">Dialog Jump Automatically</system:String>
-    <system:String x:Key="autoDialogJumpToolTip">When Open/Save As dialog window is displayed, automatically navigate to the path of the current file manager. (Experimental)</system:String>
-    <system:String x:Key="showDialogJumpWindow">Show Dialog Jump Window</system:String>
-    <system:String x:Key="showDialogJumpWindowToolTip">Display Dialog Jump search window when the open/save dialog window is shown to quickly navigate to file/folder locations.</system:String>
-    <system:String x:Key="dialogJumpWindowPosition">Dialog Jump Window Position</system:String>
+    <system:String x:Key="showBadgesGlobalOnlyToolTip">Yalnızca global sorgu sonuçları için rozetleri göster</system:String>
+    <system:String x:Key="dialogJumpHotkey">Diyalog Atlama</system:String>
+    <system:String x:Key="dialogJumpHotkeyToolTip">Farklı Aç/Kaydet iletişim penceresinde geçerli dosya yöneticisinin yoluna hızlıca gitmek için kısayol girin.</system:String>
+    <system:String x:Key="dialogJump">Diyalog Atlama</system:String>
+    <system:String x:Key="dialogJumpToolTip">Farklı Aç/Kaydet iletişim penceresi açıldığında, hızlı bir şekilde dosya yöneticisinin geçerli yoluna gidin.</system:String>
+    <system:String x:Key="autoDialogJump">Otomatik Olarak Diyalog Atlama</system:String>
+    <system:String x:Key="autoDialogJumpToolTip">Farklı Aç/Kaydet iletişim penceresi görüntülendiğinde, otomatik olarak geçerli dosya yöneticisinin yoluna gidin. (Deneysel)</system:String>
+    <system:String x:Key="showDialogJumpWindow">Diyalog Atlama Penceresini Göster</system:String>
+    <system:String x:Key="showDialogJumpWindowToolTip">Dosya/klasör konumlarına hızlı erişim için aç/kaydet penceresi gösterildiğinde Diyalog Atlama arama penceresini görüntüle.</system:String>
+    <system:String x:Key="dialogJumpWindowPosition">Diyalog Atlama Penceresi Konumu</system:String>
     <system:String x:Key="dialogJumpWindowPositionToolTip">Select position for the Dialog Jump search window</system:String>
     <system:String x:Key="DialogJumpWindowPositionUnderDialog">Fixed under the Open/Save As dialog window. Displayed on open and stays until the window is closed</system:String>
     <system:String x:Key="DialogJumpWindowPositionFollowDefault">Default search window position. Displayed when triggered by search window hotkey</system:String>
     <system:String x:Key="dialogJumpResultBehaviour">Dialog Jump Result Navigation Behaviour</system:String>
     <system:String x:Key="dialogJumpResultBehaviourToolTip">Behaviour to navigate Open/Save As dialog window to the selected result path</system:String>
-    <system:String x:Key="DialogJumpResultBehaviourLeftClick">Left click or Enter key</system:String>
+    <system:String x:Key="DialogJumpResultBehaviourLeftClick">Sol tık veya Enter tuşu</system:String>
     <system:String x:Key="DialogJumpResultBehaviourRightClick">Sağ tık</system:String>
     <system:String x:Key="dialogJumpFileResultBehaviour">Dialog Jump File Navigation Behaviour</system:String>
     <system:String x:Key="dialogJumpFileResultBehaviourToolTip">Behaviour to navigate Open/Save As dialog window when the result is a file path</system:String>
@@ -610,7 +610,7 @@
     <system:String x:Key="update_flowlauncher_update_update_description">Güncelleme açıklaması</system:String>
 
     <!--  Plugin Update Window  -->
-    <system:String x:Key="restartAfterUpdating">Restart Flow Launcher after updating plugins</system:String>
+    <system:String x:Key="restartAfterUpdating">Eklentileri güncelledikten sonra Flow Launcher'ı yeniden başlat</system:String>
     <system:String x:Key="updatePluginCheckboxContent">{0}: Update from v{1} to v{2}</system:String>
     <system:String x:Key="updatePluginNoSelected">Seçilen eklenti yok</system:String>
 
