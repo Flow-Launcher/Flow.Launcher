@@ -10,9 +10,9 @@
     <system:String x:Key="flowlauncher_plugin_websearch_delete">Sil</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_edit">Düzenle</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">Ekle</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">Enabled</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_true">Enabled</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_false">Disabled</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">Etkin</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_true">Etkin</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_false">Devre dışı</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">Onayla</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Anahtar Kelime</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
