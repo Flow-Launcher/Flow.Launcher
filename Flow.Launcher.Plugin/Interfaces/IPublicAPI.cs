@@ -615,7 +615,7 @@ namespace Flow.Launcher.Plugin
         event ActualApplicationThemeChangedEventHandler ActualApplicationThemeChanged;
 
         /// <summary>
-        /// Get the data directory of Flow Launcher.
+        /// Get the user data directory of Flow Launcher.
         /// </summary>
         /// <returns></returns>
         string GetDataDirectory();
