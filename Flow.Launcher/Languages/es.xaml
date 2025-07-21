@@ -333,9 +333,9 @@
     <system:String x:Key="hotkey">Atajo de teclado</system:String>
     <system:String x:Key="hotkeys">Atajos de teclado</system:String>
     <system:String x:Key="flowlauncherHotkey">Abrir/Cerrar Flow Launcher</system:String>
-    <system:String x:Key="flowlauncherHotkeyToolTip">Introduzca el atajo de teclado para abrir/cerrar Flow Launcher.</system:String>
+    <system:String x:Key="flowlauncherHotkeyToolTip">Introducir atajo de teclado para abrir/cerrar Flow Launcher.</system:String>
     <system:String x:Key="previewHotkey">Mostrar/Ocultar vista previa</system:String>
-    <system:String x:Key="previewHotkeyToolTip">Introduzca el atajo de teclado para mostrar/ocultar la vista previa en la ventana de búsqueda.</system:String>
+    <system:String x:Key="previewHotkeyToolTip">Introducir atajo de teclado para mostrar/ocultar la vista previa en la ventana de búsqueda.</system:String>
     <system:String x:Key="hotkeyPresets">Atajos de teclado preestablecidos</system:String>
     <system:String x:Key="hotkeyPresetsToolTip">Lista de atajos de teclado actualmente registrados</system:String>
     <system:String x:Key="openResultModifiers">Tecla modificadora para abrir resultado</system:String>
@@ -392,7 +392,7 @@
     <system:String x:Key="showBadgesGlobalOnly">Mostrar distintivos en resultados solo para consulta global</system:String>
     <system:String x:Key="showBadgesGlobalOnlyToolTip">Mostrar distintivos solo para los resultados de consultas globales</system:String>
     <system:String x:Key="dialogJumpHotkey">Salto de diálogo</system:String>
-    <system:String x:Key="dialogJumpHotkeyToolTip">Introducir acceso directo para navegar rápidamente por la ventana de diálogo Abrir/Guardar como hasta la ruta del administrador de archivos actual.</system:String>
+    <system:String x:Key="dialogJumpHotkeyToolTip">Introducir atajo de teclado para acceder rápidamente a la ventana de diálogo Abrir/Guardar como en la ruta del administrador de archivos actual.</system:String>
     <system:String x:Key="dialogJump">Salto de diálogo</system:String>
     <system:String x:Key="dialogJumpToolTip">Cuando se abre la ventana de diálogo Abrir/Guardar como, navega rápidamente hasta la ruta actual del administrador de archivos.</system:String>
     <system:String x:Key="autoDialogJump">Salto de diálogo automáticamente</system:String>
