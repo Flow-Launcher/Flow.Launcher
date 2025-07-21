@@ -265,13 +265,13 @@ namespace Flow.Launcher.Core.Plugin
                     {
                         pair.Metadata.Disabled = true;
                         pair.Metadata.HomeDisabled = true;
-                        _initFailedPlugins.TryAdd(pair.Metadata.ID, pair);
                         API.LogDebug(ClassName, $"Disable plugin <{pair.Metadata.Name}> because init failed");
                     }
 
                     // Even if the plugin cannot be initialized, we still need to add it in all plugin list so that
                     // we can remove the plugin from Plugin or Store page or Plugin Manager plugin.
                     _allInitializedPlugins.TryAdd(pair.Metadata.ID, pair);
+                    _initFailedPlugins.TryAdd(pair.Metadata.ID, pair);
                     return;
                 }
 
