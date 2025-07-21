@@ -55,7 +55,7 @@ namespace Flow.Launcher.Core.Plugin
             return plugins;
         }
 
-        private static IEnumerable<PluginPair> DotNetPlugins(List<PluginMetadata> source)
+        private static List<PluginPair> DotNetPlugins(List<PluginMetadata> source)
         {
             var erroredPlugins = new List<string>();
 
@@ -65,54 +65,54 @@ namespace Flow.Launcher.Core.Plugin
             foreach (var metadata in metadatas)
             {
                 var milliseconds = API.StopwatchLogDebug(ClassName, $"Constructor init cost for {metadata.Name}", () =>
+                {
+                    Assembly assembly = null;
+                    IAsyncPlugin plugin = null;
+
+                    try
                     {
-                        Assembly assembly = null;
-                        IAsyncPlugin plugin = null;
+                        var assemblyLoader = new PluginAssemblyLoader(metadata.ExecuteFilePath);
+                        assembly = assemblyLoader.LoadAssemblyAndDependencies();
 
-                        try
-                        {
-                            var assemblyLoader = new PluginAssemblyLoader(metadata.ExecuteFilePath);
-                            assembly = assemblyLoader.LoadAssemblyAndDependencies();
+                        var type = assemblyLoader.FromAssemblyGetTypeOfInterface(assembly,
+                            typeof(IAsyncPlugin));
 
-                            var type = assemblyLoader.FromAssemblyGetTypeOfInterface(assembly,
-                                typeof(IAsyncPlugin));
+                        plugin = Activator.CreateInstance(type) as IAsyncPlugin;
 
-                            plugin = Activator.CreateInstance(type) as IAsyncPlugin;
-
-                            metadata.AssemblyName = assembly.GetName().Name;
-                        }
+                        metadata.AssemblyName = assembly.GetName().Name;
+                    }
 #if DEBUG
-                        catch (Exception)
-                        {
-                            throw;
-                        }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
 #else
-                        catch (Exception e) when (assembly == null)
-                        {
-                            Log.Exception(ClassName, $"Couldn't load assembly for the plugin: {metadata.Name}", e);
-                        }
-                        catch (InvalidOperationException e)
-                        {
-                            Log.Exception(ClassName, $"Can't find the required IPlugin interface for the plugin: <{metadata.Name}>", e);
-                        }
-                        catch (ReflectionTypeLoadException e)
-                        {
-                            Log.Exception(ClassName, $"The GetTypes method was unable to load assembly types for the plugin: <{metadata.Name}>", e);
-                        }
-                        catch (Exception e)
-                        {
-                            Log.Exception(ClassName, $"The following plugin has errored and can not be loaded: <{metadata.Name}>", e);
-                        }
+                    catch (Exception e) when (assembly == null)
+                    {
+                        Log.Exception(ClassName, $"Couldn't load assembly for the plugin: {metadata.Name}", e);
+                    }
+                    catch (InvalidOperationException e)
+                    {
+                        Log.Exception(ClassName, $"Can't find the required IPlugin interface for the plugin: <{metadata.Name}>", e);
+                    }
+                    catch (ReflectionTypeLoadException e)
+                    {
+                        Log.Exception(ClassName, $"The GetTypes method was unable to load assembly types for the plugin: <{metadata.Name}>", e);
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Exception(ClassName, $"The following plugin has errored and can not be loaded: <{metadata.Name}>", e);
+                    }
 #endif
 
-                        if (plugin == null)
-                        {
-                            erroredPlugins.Add(metadata.Name);
-                            return;
-                        }
+                    if (plugin == null)
+                    {
+                        erroredPlugins.Add(metadata.Name);
+                        return;
+                    }
 
-                        plugins.Add(new PluginPair { Plugin = plugin, Metadata = metadata });
-                    });
+                    plugins.Add(new PluginPair { Plugin = plugin, Metadata = metadata });
+                });
                 metadata.InitTime += milliseconds;
             }
 
