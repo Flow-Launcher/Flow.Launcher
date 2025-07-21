@@ -116,7 +116,7 @@ public partial class SettingsPanePluginsViewModel : BaseModel
 
     private List<PluginViewModel>? _pluginViewModels;
     // Get all initialized plugins and ignore those that are not initialized
-    public List<PluginViewModel> PluginViewModels => _pluginViewModels ??= App.API.GetAllPlugins()
+    public List<PluginViewModel> PluginViewModels => _pluginViewModels ??= PluginManager.GetAllInitializedPlugins()
         .OrderBy(plugin => plugin.Metadata.Disabled)
         .ThenBy(plugin => plugin.Metadata.Name)
         .Select(plugin => new PluginViewModel
