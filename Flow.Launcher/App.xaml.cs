@@ -207,14 +207,14 @@ namespace Flow.Launcher
                 RegisterDispatcherUnhandledException();
                 RegisterTaskSchedulerUnhandledException();
 
-                var imageLoadertask = ImageLoader.InitializeAsync();
+                var imageLoaderTask = ImageLoader.InitializeAsync();
 
                 Http.Proxy = _settings.Proxy;
 
                 // Initialize plugin manifest before initializing plugins so that they can use the manifest instantly
                 await API.UpdatePluginManifestAsync();
 
-                await imageLoadertask;
+                await imageLoaderTask;
 
                 _mainWindow = new MainWindow();
 
