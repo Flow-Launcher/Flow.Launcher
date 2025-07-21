@@ -50,24 +50,7 @@ namespace Flow.Launcher.Core.Plugin
             Constant.PreinstalledDirectory, DataLocation.PluginsDirectory
         ];
 
-        private static void DeletePythonBinding()
-        {
-            const string binding = "flowlauncher.py";
-            foreach (var subDirectory in Directory.GetDirectories(DataLocation.PluginsDirectory))
-            {
-                File.Delete(Path.Combine(subDirectory, binding));
-            }
-        }
-
-        public static List<PluginPair> GetAllPlugins()
-        {
-            return [.. _allPlugins.Values];
-        }
-
-        public static Dictionary<string, PluginPair> GetNonGlobalPlugins()
-        {
-            return _nonGlobalPlugins.ToDictionary();
-        }
+        #region Save & Dispose & Reload Plugin
 
         /// <summary>
         /// Save json and ISavable
@@ -129,6 +112,10 @@ namespace Flow.Launcher.Core.Plugin
             })]);
         }
 
+        #endregion
+
+        #region External Preview
+
         public static async Task OpenExternalPreviewAsync(string path, bool sendFailToast = true)
         {
             await Task.WhenAll([.. GetAllPlugins().Select(plugin => plugin.Plugin switch
@@ -171,6 +158,15 @@ namespace Flow.Launcher.Core.Plugin
             return ((IAsyncExternalPreview)plugin.Plugin).AllowAlwaysPreview();
         }
 
+        private static IList<PluginPair> GetExternalPreviewPlugins()
+        {
+            return [.. _externalPreviewPlugins.Where(p => !PluginModified(p.Metadata.ID))];
+        }
+
+        #endregion
+
+        #region Constructor
+
         static PluginManager()
         {
             // validate user directory
@@ -178,6 +174,19 @@ namespace Flow.Launcher.Core.Plugin
             // force old plugins use new python binding
             DeletePythonBinding();
         }
+
+        private static void DeletePythonBinding()
+        {
+            const string binding = "flowlauncher.py";
+            foreach (var subDirectory in Directory.GetDirectories(DataLocation.PluginsDirectory))
+            {
+                File.Delete(Path.Combine(subDirectory, binding));
+            }
+        }
+
+        #endregion
+
+        #region Load & Initialize Plugins
 
         /// <summary>
         /// Load plugins from the directories specified in Directories.
@@ -342,6 +351,10 @@ namespace Flow.Launcher.Core.Plugin
             _allPlugins.TryAdd(pair.Metadata.ID, pair);
         }
 
+        #endregion
+
+        #region Validate & Query Plugins
+
         public static ICollection<PluginPair> ValidPluginsForQuery(Query query, bool dialogJump)
         {
             if (query is null)
@@ -350,9 +363,9 @@ namespace Flow.Launcher.Core.Plugin
             if (!_nonGlobalPlugins.TryGetValue(query.ActionKeyword, out var plugin))
             {
                 if (dialogJump)
-                    return [.. _globalPlugins.Values.Where(p => p.Plugin is IAsyncDialogJump && !PluginModified(p.Metadata.ID))];
+                    return [.. GetGlobalPlugins().Where(p => p.Plugin is IAsyncDialogJump && !PluginModified(p.Metadata.ID))];
                 else
-                    return [.. _globalPlugins.Values.Where(p => !PluginModified(p.Metadata.ID))];
+                    return [.. GetGlobalPlugins().Where(p => !PluginModified(p.Metadata.ID))];
             }
 
             if (dialogJump && plugin.Plugin is not IAsyncDialogJump)
@@ -473,6 +486,10 @@ namespace Flow.Launcher.Core.Plugin
             return results;
         }
 
+        #endregion
+
+        #region Update Metadata & Get Plugin
+
         public static void UpdatePluginMetadata(IReadOnlyList<Result> results, PluginMetadata metadata, Query query)
         {
             foreach (var r in results)
@@ -498,12 +515,35 @@ namespace Flow.Launcher.Core.Plugin
             return GetAllPlugins().FirstOrDefault(o => o.Metadata.ID == id);
         }
 
-        public static IList<PluginPair> GetTranslationPlugins()
+        #endregion
+
+        #region Get Plugin List
+
+        public static List<PluginPair> GetAllPlugins()
+        {
+            return [.. _allPlugins.Values];
+        }
+
+        public static List<PluginPair> GetGlobalPlugins()
+        {
+            return [.. _globalPlugins.Values];
+        }
+
+        public static Dictionary<string, PluginPair> GetNonGlobalPlugins()
+        {
+            return _nonGlobalPlugins.ToDictionary();
+        }
+
+        public static List<PluginPair> GetTranslationPlugins()
         {
             return [.. _translationPlugins.Where(p => !PluginModified(p.Metadata.ID))];
         }
 
-        public static List<Result> GetContextMenusForPlugin(Result result)
+        #endregion
+
+        #region Get Context Menus
+
+        public static IList<Result> GetContextMenusForPlugin(Result result)
         {
             var results = new List<Result>();
             var pluginPair = _contextMenuPlugins.Where(p => !PluginModified(p.Metadata.ID)).FirstOrDefault(o => o.Metadata.ID == result.PluginID);
@@ -532,15 +572,18 @@ namespace Flow.Launcher.Core.Plugin
             return results;
         }
 
+        #endregion
+
+        #region Check Home Plugin
+
         public static bool IsHomePlugin(string id)
         {
             return _homePlugins.Where(p => !PluginModified(p.Metadata.ID)).Any(p => p.Metadata.ID == id);
         }
 
-        private static List<PluginPair> GetExternalPreviewPlugins()
-        {
-            return [.. _externalPreviewPlugins.Where(p => !PluginModified(p.Metadata.ID))];
-        }
+        #endregion
+
+        #region Plugin Action Keyword
 
         public static bool ActionKeywordRegistered(string actionKeyword)
         {
@@ -623,6 +666,12 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
+        #endregion
+
+        #region Plugin Install & Uninstall & Update
+
+        #region Private Functions
+
         private static string GetContainingFolderPathAfterUnzip(string unzippedParentFolderPath)
         {
             var unzippedFolderCount = Directory.GetDirectories(unzippedParentFolderPath).Length;
@@ -653,7 +702,9 @@ namespace Flow.Launcher.Core.Plugin
                                        && newVersion <= version);
         }
 
-        #region Public functions
+        #endregion
+
+        #region Public Functions
 
         public static bool PluginModified(string id)
         {
@@ -691,7 +742,7 @@ namespace Flow.Launcher.Core.Plugin
 
         #endregion
 
-        #region Internal functions
+        #region Internal Functions
 
         internal static bool InstallPlugin(UserPlugin plugin, string zipFilePath, bool checkModified)
         {
@@ -852,6 +903,8 @@ namespace Flow.Launcher.Core.Plugin
 
             return true;
         }
+
+        #endregion
 
         #endregion
     }
