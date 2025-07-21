@@ -107,7 +107,7 @@
     <system:String x:Key="typingStartEn">Empezar a escribir siempre en modo inglés</system:String>
     <system:String x:Key="typingStartEnTooltip">Cambia temporalmente el método de entrada al modo inglés cuando se activa Flow.</system:String>
     <system:String x:Key="autoUpdates">Actualización automática</system:String>
-    <system:String x:Key="autoUpdatesTooltip">Comprobar y actualizar automáticamente la aplicación cuando esté disponible</system:String>
+    <system:String x:Key="autoUpdatesTooltip">Comprueba y actualiza automáticamente la aplicación cuando esté disponible</system:String>
     <system:String x:Key="select">Seleccionar</system:String>
     <system:String x:Key="hideOnStartup">Ocultar Flow Launcher al inicio</system:String>
     <system:String x:Key="hideOnStartupToolTip">La ventana de búsqueda de Flow Launcher se oculta en la bandeja del sistema tras el arranque.</system:String>
@@ -120,9 +120,9 @@
     <system:String x:Key="SearchPrecisionRegular">Normal</system:String>
     <system:String x:Key="ShouldUsePinyin">Buscar con Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Permite utilizar Pinyin para la búsqueda. Pinyin es el sistema estándar de ortografía romanizado para traducir chino.</system:String>
-    <system:String x:Key="ShouldUseDoublePinyin">Usar Pinyin doble</system:String>
-    <system:String x:Key="ShouldUseDoublePinyinToolTip">Use Pinyin doble en lugar de Pinyin completo para buscar.</system:String>
-    <system:String x:Key="DoublePinyinSchema">Esquema Pinyin doble</system:String>
+    <system:String x:Key="ShouldUseDoublePinyin">Utilizar Doble Pinyin</system:String>
+    <system:String x:Key="ShouldUseDoublePinyinToolTip">Utiliza Doble Pinyin en lugar de Pinyin Completo para buscar.</system:String>
+    <system:String x:Key="DoublePinyinSchema">Esquema Doble Pinyin</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao He</system:String>
     <system:String x:Key="DoublePinyinSchemasZiRanMa">Zi Ran Ma</system:String>
     <system:String x:Key="DoublePinyinSchemasWeiRuan">Wei Ruan</system:String>
@@ -171,9 +171,9 @@
     <system:String x:Key="showAtTopmost">Mostrar ventana de búsqueda en primer plano</system:String>
     <system:String x:Key="showAtTopmostToolTip">Anula el ajuste «Siempre arriba» de otros programas y muestra Flow en primer plano.</system:String>
     <system:String x:Key="autoRestartAfterChanging">Reiniciar después de modificar el complemento a través de la Tienda de complementos</system:String>
-    <system:String x:Key="autoRestartAfterChangingToolTip">Reiniciar Flow Launcher automáticamente después de instalar/desinstalar/actualizar el complemento a través de la Tienda de complementos</system:String>
+    <system:String x:Key="autoRestartAfterChangingToolTip">Reinicia Flow Launcher automáticamente después de instalar/desinstalar/actualizar el complemento a través de la Tienda de complementos</system:String>
     <system:String x:Key="showUnknownSourceWarning">Mostrar advertencia de fuente desconocida</system:String>
-    <system:String x:Key="showUnknownSourceWarningToolTip">Mostrar advertencia al instalar complementos desde fuentes desconocidas</system:String>
+    <system:String x:Key="showUnknownSourceWarningToolTip">Muestra advertencia al instalar complementos desde fuentes desconocidas</system:String>
     <system:String x:Key="autoUpdatePlugins">Actualizar automáticamente los complementos</system:String>
     <system:String x:Key="autoUpdatePluginsToolTip">Comprobar automáticamente las actualizaciones del complemento y notificar si hay actualizaciones disponibles</system:String>
 
