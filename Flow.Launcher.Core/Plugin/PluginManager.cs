@@ -46,9 +46,9 @@ namespace Flow.Launcher.Core.Plugin
         /// Directories that will hold Flow Launcher plugin directory
         /// </summary>
         public static readonly string[] Directories =
-        {
+        [
             Constant.PreinstalledDirectory, DataLocation.PluginsDirectory
-        };
+        ];
 
         private static void DeletePythonBinding()
         {
@@ -121,39 +121,39 @@ namespace Flow.Launcher.Core.Plugin
 
         public static async Task ReloadDataAsync()
         {
-            await Task.WhenAll(GetAllPlugins().Select(plugin => plugin.Plugin switch
+            await Task.WhenAll([.. GetAllPlugins().Select(plugin => plugin.Plugin switch
             {
                 IReloadable p => Task.Run(p.ReloadData),
                 IAsyncReloadable p => p.ReloadDataAsync(),
                 _ => Task.CompletedTask,
-            }).ToArray());
+            })]);
         }
 
         public static async Task OpenExternalPreviewAsync(string path, bool sendFailToast = true)
         {
-            await Task.WhenAll(GetAllPlugins().Select(plugin => plugin.Plugin switch
+            await Task.WhenAll([.. GetAllPlugins().Select(plugin => plugin.Plugin switch
             {
                 IAsyncExternalPreview p => p.OpenPreviewAsync(path, sendFailToast),
                 _ => Task.CompletedTask,
-            }).ToArray());
+            })]);
         }
 
         public static async Task CloseExternalPreviewAsync()
         {
-            await Task.WhenAll(GetAllPlugins().Select(plugin => plugin.Plugin switch
+            await Task.WhenAll([.. GetAllPlugins().Select(plugin => plugin.Plugin switch
             {
                 IAsyncExternalPreview p => p.ClosePreviewAsync(),
                 _ => Task.CompletedTask,
-            }).ToArray());
+            })]);
         }
 
         public static async Task SwitchExternalPreviewAsync(string path, bool sendFailToast = true)
         {
-            await Task.WhenAll(GetAllPlugins().Select(plugin => plugin.Plugin switch
+            await Task.WhenAll([.. GetAllPlugins().Select(plugin => plugin.Plugin switch
             {
                 IAsyncExternalPreview p => p.SwitchPreviewAsync(path, sendFailToast),
                 _ => Task.CompletedTask,
-            }).ToArray());
+            })]);
         }
 
         public static bool UseExternalPreview()
@@ -339,9 +339,9 @@ namespace Flow.Launcher.Core.Plugin
             if (!_nonGlobalPlugins.TryGetValue(query.ActionKeyword, out var plugin))
             {
                 if (dialogJump)
-                    return _globalPlugins.Values.Where(p => p.Plugin is IAsyncDialogJump && !PluginModified(p.Metadata.ID)).ToList();
+                    return [.. _globalPlugins.Values.Where(p => p.Plugin is IAsyncDialogJump && !PluginModified(p.Metadata.ID))];
                 else
-                    return _globalPlugins.Values.Where(p => !PluginModified(p.Metadata.ID)).ToList();
+                    return [.. _globalPlugins.Values.Where(p => !PluginModified(p.Metadata.ID))];
             }
 
             if (dialogJump && plugin.Plugin is not IAsyncDialogJump)
@@ -350,15 +350,12 @@ namespace Flow.Launcher.Core.Plugin
             if (API.PluginModified(plugin.Metadata.ID))
                 return Array.Empty<PluginPair>();
 
-            return
-            [
-                plugin
-            ];
+            return [plugin];
         }
 
         public static ICollection<PluginPair> ValidPluginsForHomeQuery()
         {
-            return _homePlugins.Where(p => !PluginModified(p.Metadata.ID)).ToList();
+            return [.. _homePlugins.Where(p => !PluginModified(p.Metadata.ID))];
         }
 
         public static async Task<List<Result>> QueryForPluginAsync(PluginPair pair, Query query, CancellationToken token)
@@ -492,7 +489,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static IList<PluginPair> GetTranslationPlugins()
         {
-            return _translationPlugins.Where(p => !PluginModified(p.Metadata.ID)).ToList();
+            return [.. _translationPlugins.Where(p => !PluginModified(p.Metadata.ID))];
         }
 
         public static List<Result> GetContextMenusForPlugin(Result result)
@@ -531,7 +528,7 @@ namespace Flow.Launcher.Core.Plugin
 
         private static List<PluginPair> GetExternalPreviewPlugins()
         {
-            return _externalPreviewPlugins.Where(p => !PluginModified(p.Metadata.ID)).ToList();
+            return [.. _externalPreviewPlugins.Where(p => !PluginModified(p.Metadata.ID))];
         }
 
         public static bool ActionKeywordRegistered(string actionKeyword)
