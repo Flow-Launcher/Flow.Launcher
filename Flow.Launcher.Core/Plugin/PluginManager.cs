@@ -651,12 +651,6 @@ namespace Flow.Launcher.Core.Plugin
             if (oldActionkeyword != Query.GlobalPluginWildcardSign)
             {
                 _nonGlobalPlugins.TryRemove(oldActionkeyword, out var item);
-                // If the removed item is not the same as the plugin being removed,
-                // we should add it back to non-global plugins
-                if (item.Metadata.ID != id)
-                {
-                    _nonGlobalPlugins.TryAdd(oldActionkeyword, item);
-                }
             }
 
             // Update action keywords and action keyword in plugin metadata
