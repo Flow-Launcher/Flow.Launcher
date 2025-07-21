@@ -12,5 +12,5 @@
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_comma">Coma (,)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_dot">Punto (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">Número máximo de decimales</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Copy failed, please try later</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Ha fallado la copia, inténtelo más tarde</system:String>
 </ResourceDictionary>
