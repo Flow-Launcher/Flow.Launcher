@@ -47,7 +47,7 @@
                     Title="{DynamicResource useLogonTaskForStartup}"
                     Icon="&#xE823;"
                     Sub="{DynamicResource useLogonTaskForStartupTooltip}"
-                    Type="InsideFit">
+                    Type="Inside">
                     <ui:ToggleSwitch
                         IsOn="{Binding UseLogonTaskForStartup}"
                         OffContent="{DynamicResource disable}"
@@ -480,9 +480,9 @@
             <cc:ExCard
                 Title="{DynamicResource ShouldUseDoublePinyin}"
                 Icon="&#xf085;"
+                Sub="{DynamicResource ShouldUseDoublePinyinToolTip}"
                 Visibility="{ext:VisibleWhen {Binding ShouldUsePinyin},
-                                    IsEqualToBool=True}"
-                Sub="{DynamicResource ShouldUseDoublePinyinToolTip}">
+                                             IsEqualToBool=True}">
                 <cc:ExCard.SideContent>
                     <ui:ToggleSwitch
                         IsOn="{Binding UseDoublePinyin}"
