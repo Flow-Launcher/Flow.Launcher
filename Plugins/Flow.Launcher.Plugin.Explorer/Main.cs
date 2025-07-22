@@ -23,7 +23,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
         private SettingsViewModel viewModel;
 
-        private IContextMenu contextMenu;
+        private ContextMenu contextMenu;
 
         private SearchManager searchManager;
 
