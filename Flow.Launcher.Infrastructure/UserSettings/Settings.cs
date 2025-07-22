@@ -86,6 +86,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string OpenHistoryHotkey { get; set; } = $"Ctrl+H";
         public string CycleHistoryUpHotkey { get; set; } = $"{KeyConstant.Alt} + Up";
         public string CycleHistoryDownHotkey { get; set; } = $"{KeyConstant.Alt} + Down";
+        public string DialogJumpHotkey { get; set; } = $"{KeyConstant.Alt} + G";
 
         private string _language = Constant.SystemLanguageCode;
         public string Language
@@ -233,6 +234,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public bool AutoRestartAfterChanging { get; set; } = false;
         public bool ShowUnknownSourceWarning { get; set; } = true;
+        public bool AutoUpdatePlugins { get; set; } = true;
 
         public int CustomExplorerIndex { get; set; } = 0;
 
@@ -322,13 +324,40 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         };
 
+        public bool EnableDialogJump { get; set; } = true;
+
+        public bool AutoDialogJump { get; set; } = false;
+
+        public bool ShowDialogJumpWindow { get; set; } = false;
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public DialogJumpWindowPositions DialogJumpWindowPosition { get; set; } = DialogJumpWindowPositions.UnderDialog;
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public DialogJumpResultBehaviours DialogJumpResultBehaviour { get; set; } = DialogJumpResultBehaviours.LeftClick;
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public DialogJumpFileResultBehaviours DialogJumpFileResultBehaviour { get; set; } = DialogJumpFileResultBehaviours.FullPath;
+
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public LOGLEVEL LogLevel { get; set; } = LOGLEVEL.INFO;
 
         /// <summary>
         /// when false Alphabet static service will always return empty results
         /// </summary>
-        public bool ShouldUsePinyin { get; set; } = false;
+        private bool _useAlphabet = true;
+        public bool ShouldUsePinyin
+        {
+            get => _useAlphabet;
+            set
+            {
+                if (_useAlphabet != value)
+                {
+                    _useAlphabet = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private bool _useDoublePinyin = false;
         public bool UseDoublePinyin
@@ -502,7 +531,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             {
                 var list = FixedHotkeys();
 
-                // Customizeable hotkeys
+                // Customizable hotkeys
                 if (!string.IsNullOrEmpty(Hotkey))
                     list.Add(new(Hotkey, "flowlauncherHotkey", () => Hotkey = ""));
                 if (!string.IsNullOrEmpty(PreviewHotkey))
@@ -533,6 +562,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                     list.Add(new(CycleHistoryUpHotkey, "CycleHistoryUpHotkey", () => CycleHistoryUpHotkey = ""));
                 if (!string.IsNullOrEmpty(CycleHistoryDownHotkey))
                     list.Add(new(CycleHistoryDownHotkey, "CycleHistoryDownHotkey", () => CycleHistoryDownHotkey = ""));
+                if (!string.IsNullOrEmpty(DialogJumpHotkey))
+                    list.Add(new(DialogJumpHotkey, "dialogJumpHotkey", () => DialogJumpHotkey = ""));
 
                 // Custom Query Hotkeys
                 foreach (var customPluginHotkey in CustomPluginHotkeys)
@@ -645,5 +676,24 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         XingKongJianDao,
         DaNiu,
         XiaoLang
+    }
+
+    public enum DialogJumpWindowPositions
+    {
+        UnderDialog,
+        FollowDefault
+    }
+
+    public enum DialogJumpResultBehaviours
+    {
+        LeftClick,
+        RightClick
+    }
+
+    public enum DialogJumpFileResultBehaviours
+    {
+        FullPath,
+        FullPathOpen,
+        Directory
     }
 }

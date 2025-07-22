@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.DialogJump;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -40,10 +41,13 @@ namespace Flow.Launcher.Core.Plugin
         private static IEnumerable<PluginPair> _resultUpdatePlugin;
         private static IEnumerable<PluginPair> _translationPlugins;
 
+        private static readonly List<DialogJumpExplorerPair> _dialogJumpExplorerPlugins = new();
+        private static readonly List<DialogJumpDialogPair> _dialogJumpDialogPlugins = new();
+
         /// <summary>
         /// Directories that will hold Flow Launcher plugin directory
         /// </summary>
-        private static readonly string[] Directories =
+        public static readonly string[] Directories =
         {
             Constant.PreinstalledDirectory, DataLocation.PluginsDirectory
         };
@@ -186,6 +190,24 @@ namespace Flow.Launcher.Core.Plugin
             _homePlugins = GetPluginsForInterface<IAsyncHomeQuery>();
             _resultUpdatePlugin = GetPluginsForInterface<IResultUpdated>();
             _translationPlugins = GetPluginsForInterface<IPluginI18n>();
+
+            // Initialize Dialog Jump plugin pairs
+            foreach (var pair in GetPluginsForInterface<IDialogJumpExplorer>())
+            {
+                _dialogJumpExplorerPlugins.Add(new DialogJumpExplorerPair
+                {
+                    Plugin = (IDialogJumpExplorer)pair.Plugin,
+                    Metadata = pair.Metadata
+                });
+            }
+            foreach (var pair in GetPluginsForInterface<IDialogJumpDialog>())
+            {
+                _dialogJumpDialogPlugins.Add(new DialogJumpDialogPair
+                {
+                    Plugin = (IDialogJumpDialog)pair.Plugin,
+                    Metadata = pair.Metadata
+                });
+            }
         }
 
         private static void UpdatePluginDirectory(List<PluginMetadata> metadatas)
@@ -288,20 +310,24 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        public static ICollection<PluginPair> ValidPluginsForQuery(Query query)
+        public static ICollection<PluginPair> ValidPluginsForQuery(Query query, bool dialogJump)
         {
             if (query is null)
                 return Array.Empty<PluginPair>();
 
             if (!NonGlobalPlugins.TryGetValue(query.ActionKeyword, out var plugin))
             {
-                return GlobalPlugins.Where(p => !PluginModified(p.Metadata.ID)).ToList();
+                if (dialogJump)
+                    return GlobalPlugins.Where(p => p.Plugin is IAsyncDialogJump && !PluginModified(p.Metadata.ID)).ToList();
+                else
+                    return GlobalPlugins.Where(p => !PluginModified(p.Metadata.ID)).ToList();
             }
 
-            if (API.PluginModified(plugin.Metadata.ID))
-            {
+            if (dialogJump && plugin.Plugin is not IAsyncDialogJump)
                 return Array.Empty<PluginPair>();
-            }
+
+            if (API.PluginModified(plugin.Metadata.ID))
+                return Array.Empty<PluginPair>();
 
             return new List<PluginPair>
             {
@@ -388,6 +414,36 @@ namespace Flow.Launcher.Core.Plugin
             return results;
         }
 
+        public static async Task<List<DialogJumpResult>> QueryDialogJumpForPluginAsync(PluginPair pair, Query query, CancellationToken token)
+        {
+            var results = new List<DialogJumpResult>();
+            var metadata = pair.Metadata;
+
+            try
+            {
+                var milliseconds = await API.StopwatchLogDebugAsync(ClassName, $"Cost for {metadata.Name}",
+                    async () => results = await ((IAsyncDialogJump)pair.Plugin).QueryDialogJumpAsync(query, token).ConfigureAwait(false));
+
+                token.ThrowIfCancellationRequested();
+                if (results == null)
+                    return null;
+                UpdatePluginMetadata(results, metadata, query);
+
+                token.ThrowIfCancellationRequested();
+            }
+            catch (OperationCanceledException)
+            {
+                // null will be fine since the results will only be added into queue if the token hasn't been cancelled
+                return null;
+            }
+            catch (Exception e)
+            {
+                API.LogException(ClassName, $"Failed to query Dialog Jump for plugin: {metadata.Name}", e);
+                return null;
+            }
+            return results;
+        }
+
         public static void UpdatePluginMetadata(IReadOnlyList<Result> results, PluginMetadata metadata, Query query)
         {
             foreach (var r in results)
@@ -461,6 +517,16 @@ namespace Flow.Launcher.Core.Plugin
         public static bool IsHomePlugin(string id)
         {
             return _homePlugins.Where(p => !PluginModified(p.Metadata.ID)).Any(p => p.Metadata.ID == id);
+        }
+
+        public static IList<DialogJumpExplorerPair> GetDialogJumpExplorers()
+        {
+            return _dialogJumpExplorerPlugins.Where(p => !PluginModified(p.Metadata.ID)).ToList();
+        }
+
+        public static IList<DialogJumpDialogPair> GetDialogJumpDialogs()
+        {
+            return _dialogJumpDialogPlugins.Where(p => !PluginModified(p.Metadata.ID)).ToList();
         }
 
         public static bool ActionKeywordRegistered(string actionKeyword)
@@ -719,7 +785,7 @@ namespace Flow.Launcher.Core.Plugin
                 catch (Exception e)
                 {
                     API.LogException(ClassName, $"Failed to delete plugin settings folder for {plugin.Name}", e);
-                    API.ShowMsg(API.GetTranslation("failedToRemovePluginSettingsTitle"),
+                    API.ShowMsgError(API.GetTranslation("failedToRemovePluginSettingsTitle"),
                         string.Format(API.GetTranslation("failedToRemovePluginSettingsMessage"), plugin.Name));
                 }
             }
@@ -735,7 +801,7 @@ namespace Flow.Launcher.Core.Plugin
                 catch (Exception e)
                 {
                     API.LogException(ClassName, $"Failed to delete plugin cache folder for {plugin.Name}", e);
-                    API.ShowMsg(API.GetTranslation("failedToRemovePluginCacheTitle"),
+                    API.ShowMsgError(API.GetTranslation("failedToRemovePluginCacheTitle"),
                         string.Format(API.GetTranslation("failedToRemovePluginCacheMessage"), plugin.Name));
                 }
                 Settings.RemovePluginSettings(plugin.ID);

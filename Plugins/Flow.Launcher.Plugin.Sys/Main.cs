@@ -5,8 +5,6 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
-using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.UserSettings;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.Security;
@@ -52,6 +50,8 @@ namespace Flow.Launcher.Plugin.Sys
         private const SHUTDOWN_REASON REASON = SHUTDOWN_REASON.SHTDN_REASON_MAJOR_OTHER |
             SHUTDOWN_REASON.SHTDN_REASON_FLAG_PLANNED;
 
+        private const string Documentation = "https://flowlauncher.com/docs/#/usage-tips";
+
         private PluginInitContext _context;
         private Settings _settings;
         private ThemeSelector _themeSelector;
@@ -70,13 +70,19 @@ namespace Flow.Launcher.Plugin.Sys
                 return _themeSelector.Query(query);
             }
 
-            var commands = Commands();
+            var commands = Commands(query);
             var results = new List<Result>();
+            var isEmptyQuery = string.IsNullOrWhiteSpace(query.Search);
             foreach (var c in commands)
             {
                 var command = _settings.Commands.First(x => x.Key == c.Title);
                 c.Title = command.Name;
                 c.SubTitle = command.Description;
+                if (isEmptyQuery)
+                {
+                    results.Add(c);
+                    continue;
+                }
 
                 // Match from localized title & localized subtitle & keyword
                 var titleMatch = _context.API.FuzzySearch(query.Search, c.Title);
@@ -188,7 +194,7 @@ namespace Flow.Launcher.Plugin.Sys
             }
         }
 
-        private List<Result> Commands()
+        private List<Result> Commands(Query query)
         {
             var results = new List<Result>();
             var recycleBinFolder = "shell:RecycleBinFolder";
@@ -332,11 +338,9 @@ namespace Flow.Launcher.Plugin.Sys
                         var result = PInvoke.SHEmptyRecycleBin(new(), string.Empty, 0);
                         if (result != HRESULT.S_OK && result != HRESULT.E_UNEXPECTED)
                         {
-                            _context.API.ShowMsgBox("Failed to empty the recycle bin. This might happen if:\n" +
-                                            "- A file in the recycle bin is in use\n" +
-                                            "- You don't have permission to delete some items\n" +
-                                            "Please close any applications that might be using these files and try again.",
-                                "Error",
+                            _context.API.ShowMsgBox(
+                                string.Format(_context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_empty_recycle_bin_failed"), Environment.NewLine),
+                                _context.API.GetTranslation("flowlauncher_plugin_sys_dlgtitle_error"),
                                 MessageBoxButton.OK, MessageBoxImage.Error);
                         }
 
@@ -398,6 +402,8 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\app.png",
                     Action = c =>
                     {
+                        // Hide the window first then open setting dialog because main window can be topmost window which will still display on top of the setting dialog for a while
+                        _context.API.HideMainWindow();
                         _context.API.OpenSettingDialog();
                         return true;
                     }
@@ -439,11 +445,11 @@ namespace Flow.Launcher.Plugin.Sys
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xf12b"),
                     Title = "Open Log Location",
                     IcoPath = "Images\\app.png",
-                    CopyText = DataLocation.VersionLogDirectory,
-                    AutoCompleteText = DataLocation.VersionLogDirectory,
+                    CopyText = _context.API.GetLogDirectory(),
+                    AutoCompleteText = _context.API.GetLogDirectory(),
                     Action = c =>
                     {
-                        _context.API.OpenDirectory(DataLocation.VersionLogDirectory);
+                        _context.API.OpenDirectory(_context.API.GetLogDirectory());
                         return true;
                     }
                 },
@@ -452,11 +458,11 @@ namespace Flow.Launcher.Plugin.Sys
                     Title = "Flow Launcher Tips",
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe897"),
                     IcoPath = "Images\\app.png",
-                    CopyText = Constant.Documentation,
-                    AutoCompleteText = Constant.Documentation,
+                    CopyText = Documentation,
+                    AutoCompleteText = Documentation,
                     Action = c =>
                     {
-                        _context.API.OpenUrl(Constant.Documentation);
+                        _context.API.OpenUrl(Documentation);
                         return true;
                     }
                 },
@@ -465,11 +471,11 @@ namespace Flow.Launcher.Plugin.Sys
                     Title = "Flow Launcher UserData Folder",
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xf12b"),
                     IcoPath = "Images\\app.png",
-                    CopyText = DataLocation.DataDirectory(),
-                    AutoCompleteText = DataLocation.DataDirectory(),
+                    CopyText = _context.API.GetDataDirectory(),
+                    AutoCompleteText = _context.API.GetDataDirectory(),
                     Action = c =>
                     {
-                        _context.API.OpenDirectory(DataLocation.DataDirectory());
+                        _context.API.OpenDirectory(_context.API.GetDataDirectory());
                         return true;
                     }
                 },
@@ -491,7 +497,15 @@ namespace Flow.Launcher.Plugin.Sys
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\ue790"),
                     Action = c =>
                     {
-                        _context.API.ChangeQuery($"{ThemeSelector.Keyword} ");
+                        if (string.IsNullOrEmpty(query.ActionKeyword))
+                        {
+                            _context.API.ChangeQuery($"{ThemeSelector.Keyword}{Plugin.Query.ActionKeywordSeparator}");
+                        }
+                        else
+                        {
+                            _context.API.ChangeQuery($"{query.ActionKeyword}{Plugin.Query.ActionKeywordSeparator}{ThemeSelector.Keyword}{Plugin.Query.ActionKeywordSeparator}");
+
+                        }
                         return false;
                     }
                 }

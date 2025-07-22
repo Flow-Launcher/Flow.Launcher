@@ -2,7 +2,7 @@
   
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows10.0.19041.0</TargetFramework>
+    <TargetFramework>net9.0-windows10.0.19041.0</TargetFramework>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>false</UseWindowsForms>
     <StartupObject>Flow.Launcher.App</StartupObject>
@@ -12,6 +12,7 @@
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -77,7 +78,7 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\Segoe Fluent Icons.ttf">
+    <Content Include="Resources\SegoeFluentIcons.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -89,7 +90,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="InputSimulator" Version="1.0.4" />
     <PackageReference Include="MdXaml" Version="1.27.0" />
     <PackageReference Include="MdXaml.AnimatedGif" Version="1.27.0" />
     <PackageReference Include="MdXaml.Html" Version="1.27.0" />
@@ -102,7 +102,6 @@
     <!-- ModernWpfUI v0.9.5 introduced WinRT changes that causes Notification platform unavailable error on some machines -->
     <!-- https://github.com/Flow-Launcher/Flow.Launcher/issues/1772#issuecomment-1502440801 -->
     <PackageReference Include="ModernWpfUI" Version="0.9.4" />
-    <PackageReference Include="NHotkey.Wpf" Version="3.0.0" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
