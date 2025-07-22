@@ -251,7 +251,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListBox">
-                    <ui:ScrollViewerEx Focusable="false" Template="{DynamicResource ScrollViewerControlTemplate}">
+                    <ui:ScrollViewerEx Focusable="False" Template="{DynamicResource ScrollViewerControlTemplate}">
                         <ui:ScrollViewerEx.Style>
                             <Style TargetType="ScrollViewer">
                                 <Style.Triggers>
