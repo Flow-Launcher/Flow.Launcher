@@ -120,7 +120,7 @@
     <system:String x:Key="plugin_explorer_add_to_quickaccess_title">Hızlı Erişime Sabitle</system:String>
     <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Add current item to Quick Access</system:String>
     <system:String x:Key="plugin_explorer_addfilefoldersuccess">Başarıyla Eklendi</system:String>
-    <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">Successfully added to Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">Hızlı Erişim'e başarıyla eklendi</system:String>
     <system:String x:Key="plugin_explorer_removefilefoldersuccess">Başarıyla Kaldırıldı</system:String>
     <system:String x:Key="plugin_explorer_removefilefoldersuccess_detail">Hızlı Erişim'den başarıyla kaldırıldı</system:String>
     <system:String x:Key="plugin_explorer_contextmenu_titletooltip">Add to Quick Access so it can be opened with Explorer's Search Activation action keyword</system:String>
