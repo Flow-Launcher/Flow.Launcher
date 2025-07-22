@@ -166,7 +166,7 @@
                 </Grid>
 
                 <!--  Do not use scroll function of MarkdownViewer because it does not support smooth scroll  -->
-                <ScrollViewer
+                <ui:ScrollViewerEx
                     x:Name="MarkdownScrollViewer"
                     Grid.Row="2"
                     Grid.Column="0"
@@ -193,7 +193,7 @@
                             VerticalScrollBarVisibility="Disabled"
                             Visibility="Collapsed" />
                     </Grid>
-                </ScrollViewer>
+                </ui:ScrollViewerEx>
 
                 <!--  This Grid is for display progress ring and refresh button.  -->
                 <!--  And it is also for changing the size of the MarkdownViewer.  -->
