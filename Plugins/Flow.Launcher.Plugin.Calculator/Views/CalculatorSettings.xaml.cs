@@ -19,11 +19,5 @@ namespace Flow.Launcher.Plugin.Calculator.Views
             DataContext = _viewModel;
             InitializeComponent();
         }
-
-        private void CalculatorSettings_Loaded(object sender, RoutedEventArgs e)
-        {
-            DecimalSeparatorComboBox.SelectedItem = _settings.DecimalSeparator;
-            MaxDecimalPlaces.SelectedItem = _settings.MaxDecimalPlaces;
-        }
     }
 }

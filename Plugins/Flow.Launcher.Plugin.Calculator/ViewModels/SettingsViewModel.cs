@@ -8,12 +8,11 @@ namespace Flow.Launcher.Plugin.Calculator.ViewModels
         public SettingsViewModel(Settings settings)
         {
             Settings = settings;
-            DecimalSeparatorLocalized.UpdateLabels(AllDecimalSeparator);
         }
 
         public Settings Settings { get; init; }
 
-        public IEnumerable<int> MaxDecimalPlacesRange => Enumerable.Range(1, 20);
+        public static IEnumerable<int> MaxDecimalPlacesRange => Enumerable.Range(1, 20);
 
         public List<DecimalSeparatorLocalized> AllDecimalSeparator { get; } = DecimalSeparatorLocalized.GetValues();
 

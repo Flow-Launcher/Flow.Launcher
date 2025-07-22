@@ -9,7 +9,6 @@
     d:DataContext="{d:DesignInstance Type=viewModels:SettingsViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    Loaded="CalculatorSettings_Loaded"
     mc:Ignorable="d">
 
     <Grid Margin="{StaticResource SettingPanelMargin}">

@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using Mages.Core;
 using Flow.Launcher.Plugin.Calculator.Views;
+using Flow.Launcher.Plugin.Calculator.ViewModels;
 
 namespace Flow.Launcher.Plugin.Calculator
 {
@@ -28,12 +29,14 @@ namespace Flow.Launcher.Plugin.Calculator
 
         internal static PluginInitContext Context { get; set; } = null!;
 
-        private static Settings _settings;
+        private Settings _settings;
+        private SettingsViewModel _viewModel;
 
         public void Init(PluginInitContext context)
         {
             Context = context;
             _settings = context.API.LoadSettingJsonStorage<Settings>();
+            _viewModel = new SettingsViewModel(_settings);
 
             MagesEngine = new Engine(new Configuration
             {
@@ -152,7 +155,7 @@ namespace Flow.Launcher.Plugin.Calculator
             return value.ToString(numberFormatInfo);
         }
 
-        private static string GetDecimalSeparator()
+        private string GetDecimalSeparator()
         {
             string systemDecimalSeparator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
             return _settings.DecimalSeparator switch
@@ -196,6 +199,11 @@ namespace Flow.Launcher.Plugin.Calculator
         public Control CreateSettingPanel()
         {
             return new CalculatorSettings(_settings);
+        }
+
+        public void OnCultureInfoChanged(CultureInfo newCulture)
+        {
+            DecimalSeparatorLocalized.UpdateLabels(_viewModel.AllDecimalSeparator);
         }
     }
 }
