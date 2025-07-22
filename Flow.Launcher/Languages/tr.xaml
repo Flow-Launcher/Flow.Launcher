@@ -409,9 +409,9 @@
     <system:String x:Key="DialogJumpResultBehaviourRightClick">Sağ tık</system:String>
     <system:String x:Key="dialogJumpFileResultBehaviour">Dialog Jump File Navigation Behaviour</system:String>
     <system:String x:Key="dialogJumpFileResultBehaviourToolTip">Behaviour to navigate Open/Save As dialog window when the result is a file path</system:String>
-    <system:String x:Key="DialogJumpFileResultBehaviourFullPath">Fill full path in file name box</system:String>
-    <system:String x:Key="DialogJumpFileResultBehaviourFullPathOpen">Fill full path in file name box and open</system:String>
-    <system:String x:Key="DialogJumpFileResultBehaviourDirectory">Fill directory in path box</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourFullPath">Dosya adı kutusuna tam yolu girin</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourFullPathOpen">Dosya adı kutusuna tam yolu girin ve açın</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourDirectory">Dizini yol kutusuna girin</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">Vekil Sunucu</system:String>
@@ -611,7 +611,7 @@
 
     <!--  Plugin Update Window  -->
     <system:String x:Key="restartAfterUpdating">Eklentileri güncelledikten sonra Flow Launcher'ı yeniden başlat</system:String>
-    <system:String x:Key="updatePluginCheckboxContent">{0}: Update from v{1} to v{2}</system:String>
+    <system:String x:Key="updatePluginCheckboxContent">{0}: v{1}'den v{2}'ye güncelleme</system:String>
     <system:String x:Key="updatePluginNoSelected">Seçilen eklenti yok</system:String>
 
     <!--  Welcome Window  -->
