@@ -10,7 +10,6 @@
     xmlns:viewModels="clr-namespace:Flow.Launcher.Plugin.Calculator.ViewModels"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    Loaded="CalculatorSettings_Loaded"
     mc:Ignorable="d">
 
     <UserControl.Resources>
