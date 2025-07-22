@@ -20,7 +20,6 @@
     </ui:Page.Resources>
     <ui:ScrollViewerEx
         Margin="0"
-        CanContentScroll="False"
         FontSize="14"
         VirtualizingPanel.ScrollUnit="Pixel"
         VirtualizingStackPanel.IsVirtualizing="True">

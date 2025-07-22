@@ -82,10 +82,7 @@
                 <ui:Frame
                     x:Name="ContentFrame"
                     HorizontalAlignment="Stretch"
-                    Loaded="ContentFrame_Loaded"
-                    ScrollViewer.CanContentScroll="True"
-                    ScrollViewer.HorizontalScrollBarVisibility="Visible"
-                    ScrollViewer.VerticalScrollBarVisibility="Visible">
+                    Loaded="ContentFrame_Loaded">
                     <ui:Frame.ContentTransitions>
                         <ui:TransitionCollection>
                             <ui:NavigationThemeTransition />

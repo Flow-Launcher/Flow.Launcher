@@ -18,7 +18,6 @@
     </Page.Resources>
     <ui:ScrollViewerEx
         Padding="5 0 24 0"
-        CanContentScroll="True"
         FontSize="14"
         VirtualizingStackPanel.IsVirtualizing="True"
         VirtualizingStackPanel.ScrollUnit="Pixel">

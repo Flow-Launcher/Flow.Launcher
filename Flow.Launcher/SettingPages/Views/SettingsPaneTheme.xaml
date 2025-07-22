@@ -25,7 +25,6 @@
     </ui:Page.Resources>
     <ui:ScrollViewerEx
         Padding="6 0 24 0"
-        CanContentScroll="False"
         FontSize="14"
         VirtualizingStackPanel.IsVirtualizing="True"
         VirtualizingStackPanel.ScrollUnit="Pixel">
@@ -89,10 +88,7 @@
                             </Style.Triggers>
                         </Style>
                     </Border.Style>
-                    <ui:ScrollViewerEx
-                        ScrollViewer.CanContentScroll="False"
-                        VirtualizingStackPanel.IsVirtualizing="True"
-                        VirtualizingStackPanel.ScrollUnit="Pixel">
+                    <ui:ScrollViewerEx VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.ScrollUnit="Pixel">
                         <StackPanel>
                             <Slider
                                 Name="WindowHeightValue"
