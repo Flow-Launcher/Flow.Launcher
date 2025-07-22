@@ -12,17 +12,8 @@ namespace Flow.Launcher.Plugin.Calculator
 {
     public class Main : IPlugin, IPluginI18n, ISettingProvider
     {
-        private static readonly Regex RegValidExpressChar = new Regex(
-                        @"^(" +
-                        @"ceil|floor|exp|pi|e|max|min|det|abs|log|ln|sqrt|" +
-                        @"sin|cos|tan|arcsin|arccos|arctan|" +
-                        @"eigval|eigvec|eig|sum|polar|plot|round|sort|real|zeta|" +
-                        @"bin2dec|hex2dec|oct2dec|" +
-                        @"factorial|sign|isprime|isinfty|" +
-                        @"==|~=|&&|\|\||(?:\<|\>)=?|" +
-                        @"[ei]|[0-9]|0x[\da-fA-F]+|[\+\%\-\*\/\^\., ""]|[\(\)\|\!\[\]]" +
-                        @")+$", RegexOptions.Compiled);
-        private static readonly Regex RegBrackets = new Regex(@"[\(\)\[\]]", RegexOptions.Compiled);
+        private static readonly Regex RegValidExpressChar = MainRegexHelper.GetRegValidExpressChar();
+        private static readonly Regex RegBrackets = MainRegexHelper.GetRegBrackets();
         private static Engine MagesEngine;
         private const string Comma = ",";
         private const string Dot = ".";
@@ -155,7 +146,7 @@ namespace Flow.Launcher.Plugin.Calculator
             return value.ToString(numberFormatInfo);
         }
 
-        private string GetDecimalSeparator()
+        private  string GetDecimalSeparator()
         {
             string systemDecimalSeparator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
             return _settings.DecimalSeparator switch
