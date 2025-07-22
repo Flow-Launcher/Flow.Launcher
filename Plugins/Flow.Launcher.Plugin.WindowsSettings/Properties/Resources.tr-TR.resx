@@ -2374,28 +2374,28 @@
     <value>Bluetooth ayarlarını değiştir</value>
   </data>
   <data name="ConnectToANetwork" xml:space="preserve">
-    <value>Connect to a network</value>
+    <value>Bir ağa bağlan</value>
   </data>
   <data name="ChangeTheSearchProviderInInternetExplorer" xml:space="preserve">
-    <value>Change the search provider in Internet Explorer</value>
+    <value>Internet Explorer'da arama sağlayıcısını değiştir</value>
   </data>
   <data name="JoinADomain" xml:space="preserve">
     <value>Join a domain</value>
   </data>
   <data name="AddADevice" xml:space="preserve">
-    <value>Add a device</value>
+    <value>Bir cihaz ekle</value>
   </data>
   <data name="FindAndFixProblemsWithWindowsSearch" xml:space="preserve">
-    <value>Find and fix problems with Windows Search</value>
+    <value>Windows Arama ile ilgili sorunları bul ve düzelt</value>
   </data>
   <data name="ChooseAPowerPlan" xml:space="preserve">
-    <value>Choose a power plan</value>
+    <value>Bir güç planı seç</value>
   </data>
   <data name="ChangeHowTheMousePointerLooksWhenItSMoving" xml:space="preserve">
     <value>Change how the mouse pointer looks when it’s moving</value>
   </data>
   <data name="UninstallAProgram" xml:space="preserve">
-    <value>Uninstall a program</value>
+    <value>Bir program kaldır</value>
   </data>
   <data name="CreateAndFormatHardDiskPartitions" xml:space="preserve">
     <value>Create and format hard disk partitions</value>
@@ -2416,19 +2416,19 @@
     <value>Manage advanced sharing settings</value>
   </data>
   <data name="ChangeBatterySettings" xml:space="preserve">
-    <value>Change battery settings</value>
+    <value>Pil ayarlarını değiştir</value>
   </data>
   <data name="RenameThisComputer" xml:space="preserve">
-    <value>Rename this computer</value>
+    <value>Bilgisayarı yeniden adlandır</value>
   </data>
   <data name="LockOrUnlockTheTaskbar" xml:space="preserve">
-    <value>Lock or unlock the taskbar</value>
+    <value>Görev çubuğunu kilitle/kilidi aç</value>
   </data>
   <data name="ManageWebCredentials" xml:space="preserve">
     <value>Manage Web Credentials</value>
   </data>
   <data name="ChangeTheTimeZone" xml:space="preserve">
-    <value>Change the time zone</value>
+    <value>Saat dilimini değiştir</value>
   </data>
   <data name="StartSpeechRecognition" xml:space="preserve">
     <value>Start speech recognition</value>
@@ -2455,10 +2455,10 @@
     <value>Press key combinations one at a time</value>
   </data>
   <data name="RestoreDataFilesOrComputerFromBackupWindows7" xml:space="preserve">
-    <value>Restore data, files or computer from backup (Windows 7)</value>
+    <value>Verileri, dosyaları veya bilgisayarı yedekten geri yükleme (Windows 7)</value>
   </data>
   <data name="SetYourDefaultPrograms" xml:space="preserve">
-    <value>Set your default programs</value>
+    <value>Varsayılan programlarınızı ayarlayın</value>
   </data>
   <data name="SetUpABroadbandConnection" xml:space="preserve">
     <value>Set up a broadband connection</value>
@@ -2467,10 +2467,10 @@
     <value>Calibrate the screen for pen or touch input</value>
   </data>
   <data name="ManageUserCertificates" xml:space="preserve">
-    <value>Manage user certificates</value>
+    <value>Kullanıcı sertifikalarını yönet</value>
   </data>
   <data name="ScheduleTasks" xml:space="preserve">
-    <value>Schedule tasks</value>
+    <value>Görevleri planla</value>
   </data>
   <data name="IgnoreRepeatedKeystrokesUsingFilterkeys" xml:space="preserve">
     <value>Ignore repeated keystrokes using FilterKeys</value>
@@ -2482,33 +2482,33 @@
     <value>Hear a tone when keys are pressed</value>
   </data>
   <data name="DeleteBrowsingHistory" xml:space="preserve">
-    <value>Delete browsing history</value>
+    <value>Tarama geçmişini sil</value>
   </data>
   <data name="ChangeWhatThePowerButtonsDo" xml:space="preserve">
-    <value>Change what the power buttons do</value>
+    <value>Güç düğmelerinin ne yaptığını değiştir</value>
   </data>
   <data name="CreateStandardUserAccount" xml:space="preserve">
-    <value>Create standard user account</value>
+    <value>Standart kullanıcı hesabı oluştur</value>
   </data>
   <data name="TakeSpeechTutorials" xml:space="preserve">
-    <value>Take speech tutorials</value>
+    <value>Konuşma eğitimleri al</value>
   </data>
   <data name="ViewSystemResourceUsageInTaskManager" xml:space="preserve">
-    <value>View system resource usage in Task Manager</value>
+    <value>Görev Yöneticisi'nde sistem kaynağı kullanımını görüntüle</value>
   </data>
   <data name="CreateAnAccount" xml:space="preserve">
-    <value>Create an account</value>
+    <value>Bir hesap oluştur</value>
   </data>
   <data name="GetMoreFeaturesWithANewEditionOfWindows" xml:space="preserve">
-    <value>Get more features with a new edition of Windows</value>
+    <value>Windows'un yeni sürümüyle daha fazla özellik edinin</value>
   </data>
   <data name="AppControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>Denetim Masası</value>
   </data>
   <data name="TaskLink" xml:space="preserve">
     <value>TaskLink</value>
   </data>
   <data name="AreaUnknown" xml:space="preserve">
-    <value>Unknown</value>
+    <value>Bilinmiyor</value>
   </data>
 </root>
