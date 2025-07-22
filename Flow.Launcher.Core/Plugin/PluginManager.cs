@@ -47,7 +47,7 @@ namespace Flow.Launcher.Core.Plugin
         /// <summary>
         /// Directories that will hold Flow Launcher plugin directory
         /// </summary>
-        private static readonly string[] Directories =
+        public static readonly string[] Directories =
         {
             Constant.PreinstalledDirectory, DataLocation.PluginsDirectory
         };

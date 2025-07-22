@@ -196,6 +196,9 @@ namespace Flow.Launcher
                 // Enable Win32 dark mode if the system is in dark mode before creating all windows
                 Win32Helper.EnableWin32DarkMode(_settings.ColorScheme);
 
+                // Initialize language before portable clean up since it needs translations
+                await Ioc.Default.GetRequiredService<Internationalization>().InitializeLanguageAsync();
+
                 Ioc.Default.GetRequiredService<Portable>().PreStartCleanUpAfterPortabilityUpdate();
 
                 API.LogInfo(ClassName, "Begin Flow Launcher startup ----------------------------------------------------");
@@ -221,8 +224,8 @@ namespace Flow.Launcher
 
                 await PluginManager.InitializePluginsAsync();
 
-                // Change language after all plugins are initialized because we need to update plugin title based on their api
-                await Ioc.Default.GetRequiredService<Internationalization>().InitializeLanguageAsync();
+                // Update plugin titles after plugins are initialized with their api instances
+                Internationalization.UpdatePluginMetadataTranslations();
 
                 await imageLoadertask;
 

@@ -599,6 +599,10 @@ namespace Flow.Launcher
             remove => _mainVM.ActualApplicationThemeChanged -= value;
         }
 
+        public string GetDataDirectory() => DataLocation.DataDirectory();
+
+        public string GetLogDirectory() => DataLocation.VersionLogDirectory;
+
         #endregion
 
         #region Private Methods
