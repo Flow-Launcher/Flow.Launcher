@@ -2025,7 +2025,7 @@
     <value>Change workgroup name</value>
   </data>
   <data name="FindAndFixPrintingProblems" xml:space="preserve">
-    <value>Find and fix printing problems</value>
+    <value>Yazıcı sorunlarını bul ve düzelt</value>
   </data>
   <data name="ChangeWhenTheComputerSleeps" xml:space="preserve">
     <value>Change when the computer sleeps</value>
@@ -2037,10 +2037,10 @@
     <value>Accommodate learning abilities</value>
   </data>
   <data name="SetUpADialUpConnection" xml:space="preserve">
-    <value>Set up a dial-up connection</value>
+    <value>Bir çevirmeli bağlantı kur</value>
   </data>
   <data name="SetUpAConnectionOrNetwork" xml:space="preserve">
-    <value>Set up a connection or network</value>
+    <value>Bir bağlantı veya ağ kur</value>
   </data>
   <data name="HowToChangeYourWindowsPassword" xml:space="preserve">
     <value>Windows parolanızı nasıl değiştirirsiniz</value>
