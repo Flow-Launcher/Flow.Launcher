@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using SkiaSharp;
+using Svg.Skia;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Helper;
 
@@ -65,12 +67,58 @@ public static class FaviconHelper
         }
     }
 
-    public static bool IsSvgData(byte[] data)
+    public static byte[] TryConvertToWebp(byte[] data)
     {
-        if (data.Length < 5)
-            return false;
-        string start = System.Text.Encoding.ASCII.GetString(data, 0, Math.Min(100, data.Length));
-        return start.Contains("<svg") ||
-               (start.StartsWith("<?xml") && start.Contains("<svg"));
+        if (data == null || data.Length == 0)
+            return null;
+        
+        SKBitmap bitmap = null;
+
+        try
+        {
+            using (var ms = new MemoryStream(data))
+            {
+                var svg = new SKSvg();
+                if (svg.Load(ms) != null && svg.Picture != null)
+                {
+                    bitmap = new SKBitmap((int)svg.Picture.CullRect.Width, (int)svg.Picture.CullRect.Height);
+                    using (var canvas = new SKCanvas(bitmap))
+                    {
+                        canvas.Clear(SKColors.Transparent);
+                        canvas.DrawPicture(svg.Picture);
+                        canvas.Flush();
+                    }
+                }
+            }
+        }
+        catch { /* Not an SVG */ }
+
+        if (bitmap == null)
+        {
+            try
+            {
+                bitmap = SKBitmap.Decode(data);
+            }
+            catch { /* Not a decodable bitmap */ }
+        }
+
+        if (bitmap != null)
+        {
+            try
+            {
+                using (var image = SKImage.FromBitmap(bitmap))
+                using (var webp = image.Encode(SKEncodedImageFormat.Webp, 65))
+                {
+                    if (webp != null)
+                        return webp.ToArray();
+                }
+            }
+            finally
+            {
+                bitmap.Dispose();
+            }
+        }
+
+        return null;
     }
 }
