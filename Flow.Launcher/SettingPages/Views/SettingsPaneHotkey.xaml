@@ -76,6 +76,7 @@
             <cc:Card
                 Title="{DynamicResource dialogJumpHotkey}"
                 Margin="0 14 0 0"
+                Icon="&#xE8AB;"
                 Sub="{DynamicResource dialogJumpHotkeyToolTip}">
                 <flowlauncher:HotkeyControl
                     ChangeHotkey="{Binding SetDialogJumpHotkeyCommand}"
