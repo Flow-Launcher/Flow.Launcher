@@ -7,6 +7,7 @@ using System.Windows.Interop;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.SettingPages.Views;
 using Flow.Launcher.ViewModel;
 using ModernWpf.Controls;

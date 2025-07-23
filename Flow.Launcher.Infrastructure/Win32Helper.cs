@@ -13,6 +13,7 @@ using System.Windows.Interop;
 using System.Windows.Markup;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin.SharedModels;
 using Microsoft.Win32;
 using Microsoft.Win32.SafeHandles;
 using Windows.Win32;

@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Plugin.SharedModels;
 
 namespace Flow.Launcher
 {

@@ -23,6 +23,7 @@ using Flow.Launcher.Infrastructure.DialogJump;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
+using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.ViewModel;
 using Microsoft.Win32;
 using ModernWpf.Controls;
