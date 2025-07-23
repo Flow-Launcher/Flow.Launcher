@@ -1,11 +1,8 @@
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using Flow.Launcher.Plugin.Calculator.ViewModels;
 
 namespace Flow.Launcher.Plugin.Calculator.Views
 {
-    /// <summary>
-    /// Interaction logic for CalculatorSettings.xaml
-    /// </summary>
     public partial class CalculatorSettings : UserControl
     {
         private readonly SettingsViewModel _viewModel;
@@ -19,5 +16,4 @@ namespace Flow.Launcher.Plugin.Calculator.Views
             InitializeComponent();
         }
     }
-
 }
