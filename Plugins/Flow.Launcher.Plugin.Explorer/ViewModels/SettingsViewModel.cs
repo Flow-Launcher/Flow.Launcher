@@ -602,7 +602,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 if (value == Settings.SortOption)
                     return;
                 Settings.SortOption = value;
-                OnPropertyChanged(nameof(SelectedEverythingSortOption));
+                OnPropertyChanged();
                 OnPropertyChanged(nameof(FastSortWarningVisibility));
                 OnPropertyChanged(nameof(SortOptionWarningMessage));
             }
@@ -628,6 +628,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 }
             }
         }
+
         public string SortOptionWarningMessage
         {
             get
