@@ -25,7 +25,6 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.ViewModel;
-using Microsoft.Win32;
 using ModernWpf.Controls;
 using DataObject = System.Windows.DataObject;
 using Key = System.Windows.Input.Key;
@@ -96,7 +95,6 @@ namespace Flow.Launcher
 
             InitSoundEffects();
             DataObject.AddPastingHandler(QueryTextBox, QueryTextBox_OnPaste);
-            SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
             _viewModel.ActualApplicationThemeChanged += ViewModel_ActualApplicationThemeChanged;
         }
 
@@ -670,6 +668,16 @@ namespace Flow.Launcher
                         handled = true;
                     }
                     break;
+                case Win32Helper.WM_POWERBROADCAST: // Handle power broadcast messages
+                    // https://learn.microsoft.com/en-us/windows/win32/power/wm-powerbroadcast
+                    if (wParam.ToInt32() == Win32Helper.PBT_APMRESUMEAUTOMATIC)
+                    {
+                        // Fix for sound not playing after sleep / hibernate
+                        // https://stackoverflow.com/questions/64805186/mediaplayer-doesnt-play-after-computer-sleeps
+                        InitSoundEffects();
+                    }
+                    handled = true;
+                    break;
             }
 
             return IntPtr.Zero;
@@ -678,16 +686,6 @@ namespace Flow.Launcher
         #endregion
 
         #region Window Sound Effects
-
-        private void SystemEvents_PowerModeChanged(object sender, PowerModeChangedEventArgs e)
-        {
-            // Fix for sound not playing after sleep / hibernate
-            // https://stackoverflow.com/questions/64805186/mediaplayer-doesnt-play-after-computer-sleeps
-            if (e.Mode == PowerModes.Resume)
-            {
-                InitSoundEffects();
-            }
-        }
 
         private void InitSoundEffects()
         {
@@ -1443,7 +1441,6 @@ namespace Flow.Launcher
                     animationSoundWMP?.Close();
                     animationSoundWPF?.Dispose();
                     _viewModel.ActualApplicationThemeChanged -= ViewModel_ActualApplicationThemeChanged;
-                    SystemEvents.PowerModeChanged -= SystemEvents_PowerModeChanged;
                 }
 
                 _disposed = true;

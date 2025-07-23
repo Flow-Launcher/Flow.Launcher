@@ -338,6 +338,9 @@ namespace Flow.Launcher.Infrastructure
         public const int SC_MAXIMIZE = (int)PInvoke.SC_MAXIMIZE;
         public const int SC_MINIMIZE = (int)PInvoke.SC_MINIMIZE;
 
+        public const int WM_POWERBROADCAST = (int)PInvoke.WM_POWERBROADCAST;
+        public const int PBT_APMRESUMEAUTOMATIC = (int)PInvoke.PBT_APMRESUMEAUTOMATIC;
+
         #endregion
 
         #region Window Handle
