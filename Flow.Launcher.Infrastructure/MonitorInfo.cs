@@ -102,11 +102,7 @@ public class MonitorInfo
     /// <returns>The display monitor that contains the cursor, or null if no monitor is found.</returns>
     public static unsafe MonitorInfo GetCursorDisplayMonitor()
     {
-        if (!PInvoke.GetCursorPos(out var pt))
-        {
-            Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
-        }
-        var cursorMonitor = PInvoke.MonitorFromPoint(pt, MONITOR_FROM_FLAGS.MONITOR_DEFAULTTONEAREST);
+        var cursorMonitor = PInvoke.MonitorFromPoint(CursorInfo.Position, MONITOR_FROM_FLAGS.MONITOR_DEFAULTTONEAREST);
         MonitorInfo cursorMonitorInfo = null;
         var callback = new MONITORENUMPROC((monitor, deviceContext, rect, data) =>
         {
