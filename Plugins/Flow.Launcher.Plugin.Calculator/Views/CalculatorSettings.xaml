@@ -27,7 +27,7 @@
             Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             VerticalAlignment="Center"
             FontSize="14"
-            Text="{DynamicResource flowlauncher_plugin_calculator_output_decimal_seperator}" />
+            Text="{DynamicResource flowlauncher_plugin_calculator_output_decimal_separator}" />
         <ComboBox
             x:Name="DecimalSeparatorComboBox"
             Grid.Row="0"
