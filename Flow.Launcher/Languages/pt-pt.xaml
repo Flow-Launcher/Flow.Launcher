@@ -19,7 +19,7 @@
     <!--  Portable  -->
     <system:String x:Key="restartToDisablePortableMode">Tem que reiniciar Flow Launcher para terminar a desativação do modo portátil. Após reiniciar, o seu perfil de dados portáteis será eliminado mas o perfil na pasta &quot;Roaming&quot; será mantido.</system:String>
     <system:String x:Key="restartToEnablePortableMode">Tem que reiniciar Flow Launcher para terminar a ativação do modo portátil. Após reiniciar, o seu perfil de dados na pasta &quot;Roaming&quot; será eliminado mas o perfil de dados portáteis será mantido.</system:String>
-    <system:String x:Key="moveToDifferentLocation">Flow Launcher has detected you enabled portable mode, would you like to move it to a different location?</system:String>
+    <system:String x:Key="moveToDifferentLocation">Flow Launcher detetou que você ativou o modo portátil . Gostaria de mover a pasta da aplicação para outro local?</system:String>
     <system:String x:Key="shortcutsUninstallerCreated">Flow Launcher detetou que desativou o modo portátil. De seguida, serão criados os atalhos e o desintalador.</system:String>
     <system:String x:Key="userDataDuplicated">Flow Launcher detetou que os seus dados de utilizador existem e {0} e {1}. {2}{2}Deve eliminar {1} para continuar. Nenhuma alteração foi efetuada.</system:String>
 
