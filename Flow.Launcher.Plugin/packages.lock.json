@@ -4,9 +4,9 @@
     "net9.0-windows7.0": {
       "Fody": {
         "type": "Direct",
-        "requested": "[6.5.4, )",
-        "resolved": "6.5.4",
-        "contentHash": "GXZuti428IZctfby10xkMbWLCibcb6s29I/psLbBoO2vHJI5eTNVybnlV/Wi1tlIu9GG0bgW/PQwMH+MCldHxw=="
+        "requested": "[6.5.5, )",
+        "resolved": "6.5.5",
+        "contentHash": "Krca41L/PDva1VsmDec5n52cQZxQAQp/bsHdzsNi8iLLI0lqKL94fNIkNaC8tVolUkCyWsbzvxfxJCeD2789fA=="
       },
       "JetBrains.Annotations": {
         "type": "Direct",
