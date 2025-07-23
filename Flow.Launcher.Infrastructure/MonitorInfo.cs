@@ -165,7 +165,7 @@ public class MonitorInfo
     public Rect WorkingArea { get; }
 
     /// <summary>
-    /// Gets if the monitor is the the primary display monitor.
+    /// Gets if the monitor is the primary display monitor.
     /// </summary>
     public bool IsPrimary => _monitor == PInvoke.MonitorFromWindow(new(IntPtr.Zero), MONITOR_FROM_FLAGS.MONITOR_DEFAULTTOPRIMARY);
 
