@@ -7,7 +7,7 @@ using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Gdi;
 using Windows.Win32.UI.WindowsAndMessaging;
 
-namespace Flow.Launcher.Infrastructure;
+namespace Flow.Launcher.Plugin.SharedModels;
 
 /// <summary>
 /// Contains full information about a display monitor.
@@ -75,7 +75,7 @@ public class MonitorInfo
     /// <returns>The primary display monitor, or null if no monitor is found.</returns>
     public static unsafe MonitorInfo GetPrimaryDisplayMonitor()
     {
-        var primaryMonitor = PInvoke.MonitorFromWindow(new HWND(IntPtr.Zero), MONITOR_FROM_FLAGS.MONITOR_DEFAULTTOPRIMARY);
+        var primaryMonitor = PInvoke.MonitorFromWindow(new HWND(nint.Zero), MONITOR_FROM_FLAGS.MONITOR_DEFAULTTOPRIMARY);
         MonitorInfo primaryMonitorInfo = null;
         var callback = new MONITORENUMPROC((monitor, deviceContext, rect, data) =>
         {
@@ -163,7 +163,7 @@ public class MonitorInfo
     /// <summary>
     /// Gets if the monitor is the primary display monitor.
     /// </summary>
-    public bool IsPrimary => _monitor == PInvoke.MonitorFromWindow(new(IntPtr.Zero), MONITOR_FROM_FLAGS.MONITOR_DEFAULTTOPRIMARY);
+    public bool IsPrimary => _monitor == PInvoke.MonitorFromWindow(new(nint.Zero), MONITOR_FROM_FLAGS.MONITOR_DEFAULTTOPRIMARY);
 
     /// <inheritdoc />
     public override string ToString() => $"{Name} {Bounds.Width}x{Bounds.Height}";

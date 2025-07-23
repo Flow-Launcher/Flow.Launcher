@@ -34,14 +34,6 @@ WINDOW_STYLE
 SetLastError
 WINDOW_EX_STYLE
 
-GetSystemMetrics
-EnumDisplayMonitors
-MonitorFromWindow
-GetMonitorInfo
-MONITORINFOEXW
-GetCursorPos
-MonitorFromPoint
-
 WM_ENTERSIZEMOVE
 WM_EXITSIZEMOVE
 WM_NCLBUTTONDBLCLK

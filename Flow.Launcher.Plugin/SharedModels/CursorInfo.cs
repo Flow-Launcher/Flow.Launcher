@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using Windows.Win32;
 
-namespace Flow.Launcher.Infrastructure;
+namespace Flow.Launcher.Plugin.SharedModels;
 
 /// <summary>
 /// Contains full information about a cursor.
@@ -12,6 +12,9 @@ namespace Flow.Launcher.Infrastructure;
 /// </remarks>
 public class CursorInfo
 {
+    /// <summary>
+    /// Gets the current position of the cursor in screen coordinates.
+    /// </summary>
     public static Point Position
     {
         get
