@@ -293,8 +293,8 @@ namespace Flow.Launcher.Infrastructure
             }
 
             var monitorInfo = MonitorInfo.GetNearestDisplayMonitor(hWnd);
-            return (appBounds.bottom - appBounds.top) == monitorInfo.RectMonitor.Height &&
-                   (appBounds.right - appBounds.left) == monitorInfo.RectMonitor.Width;
+            return (appBounds.bottom - appBounds.top) == monitorInfo.Bounds.Height &&
+                   (appBounds.right - appBounds.left) == monitorInfo.Bounds.Width;
         }
 
         #endregion

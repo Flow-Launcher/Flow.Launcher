@@ -39,6 +39,8 @@ EnumDisplayMonitors
 MonitorFromWindow
 GetMonitorInfo
 MONITORINFOEXW
+GetCursorPos
+MonitorFromPoint
 
 WM_ENTERSIZEMOVE
 WM_EXITSIZEMOVE
