@@ -25,6 +25,8 @@ namespace Flow.Launcher.Plugin.Calculator
                         @")+$", RegexOptions.Compiled);
         private static readonly Regex RegBrackets = new Regex(@"[\(\)\[\]]", RegexOptions.Compiled);
         private static readonly Regex ThousandGroupRegex = new Regex(@"\B(?=(\d{3})+(?!\d))");
+        private static readonly Regex NumberRegex = new Regex(@"[\d\.,]+", RegexOptions.Compiled);
+
         private static Engine MagesEngine;
         private const string comma = ",";
         private const string dot = ".";
@@ -34,8 +36,15 @@ namespace Flow.Launcher.Plugin.Calculator
         private static Settings _settings;
         private static SettingsViewModel _viewModel;
 
-        private string _inputDecimalSeparator;
-        private bool _inputUsesGroupSeparators;
+        /// <summary>
+        /// Holds the formatting information for a single query.
+        /// This is used to ensure thread safety by keeping query state local.
+        /// </summary>
+        private class ParsingContext
+        {
+            public string InputDecimalSeparator { get; set; }
+            public bool InputUsesGroupSeparators { get; set; }
+        }
 
         public void Init(PluginInitContext context)
         {
@@ -59,13 +68,11 @@ namespace Flow.Launcher.Plugin.Calculator
                 return new List<Result>();
             }
 
-            _inputDecimalSeparator = null;
-            _inputUsesGroupSeparators = false;
+            var context = new ParsingContext();
 
             try
             {
-                var numberRegex = new Regex(@"[\d\.,]+");
-                var expression = numberRegex.Replace(query.Search, m => NormalizeNumber(m.Value));
+                var expression = NumberRegex.Replace(query.Search, m => NormalizeNumber(m.Value, context));
 
                 var result = MagesEngine.Interpret(expression);
 
@@ -78,7 +85,7 @@ namespace Flow.Launcher.Plugin.Calculator
                 if (!string.IsNullOrEmpty(result?.ToString()))
                 {
                     decimal roundedResult = Math.Round(Convert.ToDecimal(result), _settings.MaxDecimalPlaces, MidpointRounding.AwayFromZero);
-                    string newResult = FormatResult(roundedResult);
+                    string newResult = FormatResult(roundedResult, context);
 
                     return new List<Result>
                     {
@@ -117,10 +124,10 @@ namespace Flow.Launcher.Plugin.Calculator
         /// <summary>
         /// Parses a string representation of a number, detecting its format. It uses structural analysis
         /// (checking for 3-digit groups) and falls back to system culture for ambiguous cases (e.g., "1,234").
-        /// It sets instance fields to remember the user's format for later output formatting.
+        /// It populates the provided ParsingContext with the detected format for later use.
         /// </summary>
         /// <returns>A normalized number string with '.' as the decimal separator for the Mages engine.</returns>
-        private string NormalizeNumber(string numberStr)
+        private string NormalizeNumber(string numberStr, ParsingContext context)
         {
             var systemFormat = CultureInfo.CurrentCulture.NumberFormat;
             string systemDecimalSeparator = systemFormat.NumberDecimalSeparator;
@@ -131,18 +138,18 @@ namespace Flow.Launcher.Plugin.Calculator
             // Unambiguous case: both separators are present. The last one wins as decimal separator.
             if (hasDot && hasComma)
             {
-                _inputUsesGroupSeparators = true;
+                context.InputUsesGroupSeparators = true;
                 int lastDotPos = numberStr.LastIndexOf(dot);
                 int lastCommaPos = numberStr.LastIndexOf(comma);
 
                 if (lastDotPos > lastCommaPos) // e.g. 1,234.56
                 {
-                    _inputDecimalSeparator = dot;
+                    context.InputDecimalSeparator = dot;
                     return numberStr.Replace(comma, string.Empty);
                 }
                 else // e.g. 1.234,56
                 {
-                    _inputDecimalSeparator = comma;
+                    context.InputDecimalSeparator = comma;
                     return numberStr.Replace(dot, string.Empty).Replace(comma, dot);
                 }
             }
@@ -158,19 +165,19 @@ namespace Flow.Launcher.Plugin.Calculator
                     // Ambiguous case: "1,234". Resolve using culture.
                     if (systemDecimalSeparator == comma)
                     {
-                        _inputDecimalSeparator = comma;
+                        context.InputDecimalSeparator = comma;
                         return numberStr.Replace(comma, dot);
                     }
                     else
                     {
-                        _inputUsesGroupSeparators = true;
+                        context.InputUsesGroupSeparators = true;
                         return numberStr.Replace(comma, string.Empty);
                     }
                 }
                 else
                 {
                     // Unambiguous decimal: "123,45" or "1,2,345"
-                    _inputDecimalSeparator = comma;
+                    context.InputDecimalSeparator = comma;
                     return numberStr.Replace(comma, dot);
                 }
             }
@@ -184,18 +191,18 @@ namespace Flow.Launcher.Plugin.Calculator
                 {
                     if (systemDecimalSeparator == dot)
                     {
-                        _inputDecimalSeparator = dot;
+                        context.InputDecimalSeparator = dot;
                         return numberStr;
                     }
                     else
                     {
-                        _inputUsesGroupSeparators = true;
+                        context.InputUsesGroupSeparators = true;
                         return numberStr.Replace(dot, string.Empty);
                     }
                 }
                 else
                 {
-                    _inputDecimalSeparator = dot;
+                    context.InputDecimalSeparator = dot;
                     return numberStr; // Already in Mages-compatible format
                 }
             }
@@ -204,10 +211,10 @@ namespace Flow.Launcher.Plugin.Calculator
             return numberStr;
         }
 
-        private string FormatResult(decimal roundedResult)
+        private string FormatResult(decimal roundedResult, ParsingContext context)
         {
             // Use the detected decimal separator from the input; otherwise, fall back to settings.
-            string decimalSeparator = _inputDecimalSeparator ?? GetDecimalSeparator();
+            string decimalSeparator = context.InputDecimalSeparator ?? GetDecimalSeparator();
             string groupSeparator = decimalSeparator == dot ? comma : dot;
 
             string resultStr = roundedResult.ToString(CultureInfo.InvariantCulture);
@@ -216,7 +223,7 @@ namespace Flow.Launcher.Plugin.Calculator
             string integerPart = parts[0];
             string fractionalPart = parts.Length > 1 ? parts[1] : string.Empty;
 
-            if (_inputUsesGroupSeparators)
+            if (context.InputUsesGroupSeparators)
             {
                 integerPart = ThousandGroupRegex.Replace(integerPart, groupSeparator);
             }
