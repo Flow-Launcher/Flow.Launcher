@@ -24,7 +24,7 @@ namespace Flow.Launcher.Plugin.Calculator
                         @"[ei]|[0-9]|0x[\da-fA-F]+|[\+\%\-\*\/\^\., ""]|[\(\)\|\!\[\]]" +
                         @")+$", RegexOptions.Compiled);
         private static readonly Regex RegBrackets = new Regex(@"[\(\)\[\]]", RegexOptions.Compiled);
-        private static readonly Regex ThousandGroupRegex = new Regex(@"\B(?=(\d{3})+(?!\d))");
+        private static readonly Regex ThousandGroupRegex = new Regex(@"\B(?=(\d{3})+(?!\d))", RegexOptions.Compiled);
         private static readonly Regex NumberRegex = new Regex(@"[\d\.,]+", RegexOptions.Compiled);
 
         private static Engine MagesEngine;
