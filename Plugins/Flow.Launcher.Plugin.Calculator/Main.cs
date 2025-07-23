@@ -219,11 +219,10 @@ namespace Flow.Launcher.Plugin.Calculator
             return numberStr;
         }
 
-
         private string FormatResult(decimal roundedResult, ParsingContext context)
         {
             string decimalSeparator = context.InputDecimalSeparator ?? GetDecimalSeparator();
-            string groupSeparator = decimalSeparator == dot ? comma : dot;
+            string groupSeparator = GetGroupSeparator(decimalSeparator);
 
             string resultStr = roundedResult.ToString(CultureInfo.InvariantCulture);
 
@@ -231,7 +230,7 @@ namespace Flow.Launcher.Plugin.Calculator
             string integerPart = parts[0];
             string fractionalPart = parts.Length > 1 ? parts[1] : string.Empty;
 
-            if (context.InputUsesGroupSeparators)
+            if (context.InputUsesGroupSeparators && integerPart.Length > 3)
             {
                 integerPart = ThousandGroupRegex.Replace(integerPart, groupSeparator);
             }
@@ -244,9 +243,17 @@ namespace Flow.Launcher.Plugin.Calculator
             return integerPart;
         }
 
+        private string GetGroupSeparator(string decimalSeparator)
+        {
+            // Use system culture's group separator when available and it doesn't conflict
+            var systemGroupSep = CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator;
+            return decimalSeparator == systemGroupSep 
+                ? (decimalSeparator == dot ? comma : dot)
+                : systemGroupSep;
+        }
+
         private bool CanCalculate(Query query)
         {
-            // Don't execute when user only input "e" or "i" keyword
             if (query.Search.Length < 2)
             {
                 return false;
