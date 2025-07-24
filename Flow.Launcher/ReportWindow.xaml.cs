@@ -1,15 +1,15 @@
-﻿using Flow.Launcher.Core.ExternalPlugins;
-using System;
+﻿using System;
 using System.Globalization;
 using System.IO;
-using System.Text;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Documents;
+using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher
 {
@@ -44,7 +44,7 @@ namespace Flow.Launcher
 
             var websiteUrl = exception switch
             {
-                FlowPluginException pluginException =>GetIssuesUrl(pluginException.Metadata.Website),
+                FlowPluginException pluginException => GetIssuesUrl(pluginException.Metadata.Website),
                 _ => Constant.IssuesUrl
             };
 
@@ -73,17 +73,36 @@ namespace Flow.Launcher
                 Margin = new Thickness(0)
             };
 
-            var link = new Hyperlink
+            Hyperlink link = null;
+            try
             {
-                IsEnabled = true
-            };
-            link.Inlines.Add(url);
-            link.NavigateUri = new Uri(url);
-            link.Click += (s, e) => SearchWeb.OpenInBrowserTab(url);
+                var uri = new Uri(url);
+
+                link = new Hyperlink
+                {
+                    IsEnabled = true
+                };
+                link.Inlines.Add(url);
+                link.NavigateUri = uri;
+                link.Click += (s, e) => SearchWeb.OpenInBrowserTab(url);
+            }
+            catch (Exception)
+            {
+                // Leave link as null if the URL is invalid
+            }
 
             paragraph.Inlines.Add(textBeforeUrl);
             paragraph.Inlines.Add(" ");
-            paragraph.Inlines.Add(link);
+            if (link is null)
+            {
+                // Add the URL as plain text if it is invalid
+                paragraph.Inlines.Add(url);
+            }
+            else
+            {
+                // Add the hyperlink if it is valid
+                paragraph.Inlines.Add(link);
+            }
             paragraph.Inlines.Add("\n");
 
             return paragraph;
