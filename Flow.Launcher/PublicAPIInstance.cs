@@ -5,7 +5,6 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -251,7 +250,7 @@ namespace Flow.Launcher
 
         public string GetTranslation(string key) => Internationalization.GetTranslation(key);
 
-        public List<PluginPair> GetAllPlugins() => PluginManager.AllPlugins.ToList();
+        public List<PluginPair> GetAllPlugins() => PluginManager.GetAllLoadedPlugins();
 
         public MatchResult FuzzySearch(string query, string stringToCompare) =>
             StringMatcher.FuzzySearch(query, stringToCompare);
