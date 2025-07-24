@@ -5,13 +5,13 @@ namespace Flow.Launcher.Plugin.Calculator
     [EnumLocalize]
     public enum DecimalSeparator
     {
-        [EnumLocalizeKey(nameof(Localize.flowlauncher_plugin_calculator_decimal_seperator_use_system_locale))]
+        [EnumLocalizeKey(nameof(Localize.flowlauncher_plugin_calculator_decimal_separator_use_system_locale))]
         UseSystemLocale,
         
-        [EnumLocalizeKey(nameof(Localize.flowlauncher_plugin_calculator_decimal_seperator_dot))]
+        [EnumLocalizeKey(nameof(Localize.flowlauncher_plugin_calculator_decimal_separator_dot))]
         Dot, 
         
-        [EnumLocalizeKey(nameof(Localize.flowlauncher_plugin_calculator_decimal_seperator_comma))]
+        [EnumLocalizeKey(nameof(Localize.flowlauncher_plugin_calculator_decimal_separator_comma))]
         Comma
     }
 }
