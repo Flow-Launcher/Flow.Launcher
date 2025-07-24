@@ -616,5 +616,17 @@ namespace Flow.Launcher.Plugin
         /// Invoked when the actual theme of the application has changed. Currently, the plugin will continue to be subscribed even if it is turned off.
         /// </summary>
         event ActualApplicationThemeChangedEventHandler ActualApplicationThemeChanged;
+
+        /// <summary>
+        /// Get the user data directory of Flow Launcher.
+        /// </summary>
+        /// <returns></returns>
+        string GetDataDirectory();
+
+        /// <summary>
+        /// Get the log directory of Flow Launcher.
+        /// </summary>
+        /// <returns></returns>
+        string GetLogDirectory();
     }
 }

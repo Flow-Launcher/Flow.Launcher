@@ -499,15 +499,14 @@ namespace Flow.Launcher.ViewModel
             // For Dialog Jump and left click mode, we need to navigate to the path
             if (_isDialogJump && Settings.DialogJumpResultBehaviour == DialogJumpResultBehaviours.LeftClick)
             {
-                Hide();
-
-                if (SelectedResults.SelectedItem != null && DialogWindowHandle != nint.Zero)
+                if (result is DialogJumpResult dialogJumpResult)
                 {
-                    if (result is DialogJumpResult dialogJumpResult)
-                    {
-                        Win32Helper.SetForegroundWindow(DialogWindowHandle);
-                        _ = Task.Run(() => DialogJump.JumpToPathAsync(DialogWindowHandle, dialogJumpResult.DialogJumpPath));
-                    }
+                    Win32Helper.SetForegroundWindow(DialogWindowHandle);
+                    _ = Task.Run(() => DialogJump.JumpToPathAsync(DialogWindowHandle, dialogJumpResult.DialogJumpPath));
+                }
+                else
+                {
+                    App.API.LogError(ClassName, "DialogJumpResult expected but got a different result type.");
                 }
             }
             // For query mode, we execute the result
