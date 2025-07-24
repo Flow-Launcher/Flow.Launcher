@@ -120,7 +120,7 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="SearchPrecisionLow">Nízka</system:String>
     <system:String x:Key="SearchPrecisionRegular">Normálna</system:String>
     <system:String x:Key="ShouldUsePinyin">Vyhľadávanie pomocou pchin-jin</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">Umožňuje vyhľadávanie pomocou pchin-jin. Pchin-jin je systém zápisu čínskeho jazyka pomocou písmen latinky.</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">Pinyin is the standard system of romanized spelling for translating Chinese. Please note, enabling this can significantly increase memory usage during search.</system:String>
     <system:String x:Key="ShouldUseDoublePinyin">Použiť Double Pinyin</system:String>
     <system:String x:Key="ShouldUseDoublePinyinToolTip">Na vyhľadávanie použiť namiesto úplného Pinyinu Double Pinyin.</system:String>
     <system:String x:Key="DoublePinyinSchema">Schéma Double Pinyin</system:String>
