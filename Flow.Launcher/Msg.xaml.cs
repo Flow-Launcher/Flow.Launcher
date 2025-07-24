@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Plugin.SharedModels;
 
 namespace Flow.Launcher
 {
@@ -16,7 +16,7 @@ namespace Flow.Launcher
         public Msg()
         {
             InitializeComponent();
-            var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
+            var screen = MonitorInfo.GetCursorDisplayMonitor();
             var dipWorkingArea = Win32Helper.TransformPixelsToDIP(this,
                 screen.WorkingArea.Width,
                 screen.WorkingArea.Height);
