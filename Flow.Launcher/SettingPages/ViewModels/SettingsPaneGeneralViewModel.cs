@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -174,9 +174,9 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     {
         get
         {
-            var screens = Screen.AllScreens;
+            var screens = MonitorInfo.GetDisplayMonitors();
             var screenNumbers = new List<int>();
-            for (int i = 1; i <= screens.Length; i++)
+            for (int i = 1; i <= screens.Count; i++)
             {
                 screenNumbers.Add(i);
             }

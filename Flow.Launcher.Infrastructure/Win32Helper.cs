@@ -14,6 +14,7 @@ using System.Windows.Interop;
 using System.Windows.Markup;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin.SharedModels;
 using Microsoft.Win32;
 using Microsoft.Win32.SafeHandles;
 using Windows.Win32;
@@ -122,9 +123,9 @@ namespace Flow.Launcher.Infrastructure
 
         #region Window Foreground
 
-        public static nint GetForegroundWindow()
+        public static unsafe nint GetForegroundWindow()
         {
-            return PInvoke.GetForegroundWindow().Value;
+            return (nint)PInvoke.GetForegroundWindow().Value;
         }
 
         public static bool SetForegroundWindow(Window window)
@@ -295,8 +296,8 @@ namespace Flow.Launcher.Infrastructure
             }
 
             var monitorInfo = MonitorInfo.GetNearestDisplayMonitor(hWnd);
-            return (appBounds.bottom - appBounds.top) == monitorInfo.RectMonitor.Height &&
-                   (appBounds.right - appBounds.left) == monitorInfo.RectMonitor.Width;
+            return (appBounds.bottom - appBounds.top) == monitorInfo.Bounds.Height &&
+                   (appBounds.right - appBounds.left) == monitorInfo.Bounds.Width;
         }
 
         #endregion
@@ -338,6 +339,9 @@ namespace Flow.Launcher.Infrastructure
 
         public const int SC_MAXIMIZE = (int)PInvoke.SC_MAXIMIZE;
         public const int SC_MINIMIZE = (int)PInvoke.SC_MINIMIZE;
+
+        public const int WM_POWERBROADCAST = (int)PInvoke.WM_POWERBROADCAST;
+        public const int PBT_APMRESUMEAUTOMATIC = (int)PInvoke.PBT_APMRESUMEAUTOMATIC;
 
         #endregion
 
@@ -499,7 +503,7 @@ namespace Flow.Launcher.Infrastructure
         /// Restores the previously backed-up keyboard layout.
         /// If it wasn't backed up or has already been restored, this method does nothing.
         /// </summary>
-        public static void RestorePreviousKeyboardLayout()
+        public unsafe static void RestorePreviousKeyboardLayout()
         {
             if (_previousLayout == HKL.Null) return;
 
@@ -510,7 +514,7 @@ namespace Flow.Launcher.Infrastructure
                 hwnd,
                 PInvoke.WM_INPUTLANGCHANGEREQUEST,
                 PInvoke.INPUTLANGCHANGE_FORWARD,
-                _previousLayout.Value
+                new LPARAM((nint)_previousLayout.Value)
             );
 
             _previousLayout = HKL.Null;
@@ -819,20 +823,17 @@ namespace Flow.Launcher.Infrastructure
             if (threadId == 0) return string.Empty;
 
             var process = PInvoke.OpenProcess(PROCESS_ACCESS_RIGHTS.PROCESS_QUERY_LIMITED_INFORMATION, false, pid);
-            if (process.Value != IntPtr.Zero)
+            if (process != HWND.Null)
             {
-                using var safeHandle = new SafeProcessHandle(process.Value, true);
+                using var safeHandle = new SafeProcessHandle((nint)process.Value, true);
                 uint capacity = 2000;
                 Span<char> buffer = new char[capacity];
-                fixed (char* pBuffer = buffer)
+                if (!PInvoke.QueryFullProcessImageName(safeHandle, PROCESS_NAME_FORMAT.PROCESS_NAME_WIN32, buffer, ref capacity))
                 {
-                    if (!PInvoke.QueryFullProcessImageName(safeHandle, PROCESS_NAME_FORMAT.PROCESS_NAME_WIN32, (PWSTR)pBuffer, ref capacity))
-                    {
-                        return string.Empty;
-                    }
-
-                    return buffer[..(int)capacity].ToString();
+                    return string.Empty;
                 }
+
+                return buffer[..(int)capacity].ToString();
             }
 
             return string.Empty;

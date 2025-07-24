@@ -596,6 +596,10 @@ namespace Flow.Launcher
             remove => _mainVM.ActualApplicationThemeChanged -= value;
         }
 
+        public string GetDataDirectory() => DataLocation.DataDirectory();
+
+        public string GetLogDirectory() => DataLocation.VersionLogDirectory;
+
         public bool StartProcess(string fileName, string workingDirectory = "", string arguments = "", bool useShellExecute = false, string verb = "", bool createNoWindow = false)
         {
             try

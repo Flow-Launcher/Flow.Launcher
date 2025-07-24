@@ -76,7 +76,7 @@ deploy:
       This build includes new changes from commit:
       $(APPVEYOR_REPO_COMMIT_MESSAGE)
       
-      See all changes in this early access by going to the [milstones](https://github.com/Flow-Launcher/Flow.Launcher/milestones?sort=title&direction=asc) section and choosing the upcoming milestone.
+      See all changes in this early access by going to the [milestones](https://github.com/Flow-Launcher/Flow.Launcher/milestones?sort=title&direction=asc) section and choosing the upcoming milestone.
       For latest production release visit [here](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest)
       
       Please report any bugs or issues over at the [main repository](https://github.com/Flow-Launcher/Flow.Launcher/issues)'

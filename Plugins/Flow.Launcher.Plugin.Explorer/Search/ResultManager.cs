@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.Views;
 using Flow.Launcher.Plugin.SharedCommands;
+using Flow.Launcher.Plugin.SharedModels;
 using Peter;
 using Path = System.IO.Path;
 
@@ -72,10 +73,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static void ShowNativeContextMenu(string path, ResultType type)
         {
-            var screenWithMouseCursor = System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position);
+            var screenWithMouseCursor = MonitorInfo.GetCursorDisplayMonitor();
             var xOfScreenCenter = screenWithMouseCursor.WorkingArea.Left + screenWithMouseCursor.WorkingArea.Width / 2;
             var yOfScreenCenter = screenWithMouseCursor.WorkingArea.Top + screenWithMouseCursor.WorkingArea.Height / 2;
-            var showPosition = new System.Drawing.Point(xOfScreenCenter, yOfScreenCenter);
+            var showPosition = new System.Drawing.Point((int)xOfScreenCenter, (int)yOfScreenCenter);
 
             switch (type)
             {
