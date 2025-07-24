@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
-    xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     xmlns:viewModels="clr-namespace:Flow.Launcher.SettingPages.ViewModels"
     Title="Proxy"
     d:DataContext="{d:DesignInstance viewModels:SettingsPaneProxyViewModel}"
@@ -16,9 +16,8 @@
     <Page.Resources>
         <ResourceDictionary Source="pack://application:,,,/Resources/SettingWindowStyle.xaml" />
     </Page.Resources>
-    <ScrollViewer
+    <ui:ScrollViewerEx
         Padding="5 0 24 0"
-        CanContentScroll="True"
         FontSize="14"
         VirtualizingStackPanel.IsVirtualizing="True"
         VirtualizingStackPanel.ScrollUnit="Pixel">
@@ -76,5 +75,5 @@
                     IsEnabled="{Binding Settings.Proxy.Enabled}" />
             </cc:Card>
         </StackPanel>
-    </ScrollViewer>
+    </ui:ScrollViewerEx>
 </ui:Page>

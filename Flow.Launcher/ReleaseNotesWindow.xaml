@@ -7,7 +7,7 @@
     xmlns:local="clr-namespace:Flow.Launcher"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mdxam="clr-namespace:MdXaml;assembly=MdXaml"
-    xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     Title="{DynamicResource releaseNotes}"
     Width="940"
@@ -166,7 +166,7 @@
                 </Grid>
 
                 <!--  Do not use scroll function of MarkdownViewer because it does not support smooth scroll  -->
-                <ScrollViewer
+                <ui:ScrollViewerEx
                     x:Name="MarkdownScrollViewer"
                     Grid.Row="2"
                     Grid.Column="0"
@@ -193,7 +193,7 @@
                             VerticalScrollBarVisibility="Disabled"
                             Visibility="Collapsed" />
                     </Grid>
-                </ScrollViewer>
+                </ui:ScrollViewerEx>
 
                 <!--  This Grid is for display progress ring and refresh button.  -->
                 <!--  And it is also for changing the size of the MarkdownViewer.  -->
