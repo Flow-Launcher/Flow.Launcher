@@ -87,3 +87,17 @@ EVENT_SYSTEM_DIALOGEND
 
 WM_POWERBROADCAST
 PBT_APMRESUMEAUTOMATIC
+
+OpenProcessToken
+GetCurrentProcess
+LookupPrivilegeValue
+SE_INCREASE_QUOTA_NAME
+CloseHandle
+TOKEN_PRIVILEGES
+AdjustTokenPrivileges
+GetShellWindow
+GetWindowThreadProcessId
+OpenProcess
+GetProcessId
+DuplicateTokenEx
+CreateProcessWithTokenW

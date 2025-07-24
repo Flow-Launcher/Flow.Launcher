@@ -47,7 +47,7 @@ namespace Flow.Launcher.Core.Configuration
 
                 API.ShowMsgBox(API.GetTranslation("restartToDisablePortableMode"));
 
-                UpdateManager.RestartApp(Constant.ApplicationFileName);
+                API.RestartApp();
             }
             catch (Exception e)
             {
@@ -70,7 +70,7 @@ namespace Flow.Launcher.Core.Configuration
 
                 API.ShowMsgBox(API.GetTranslation("restartToEnablePortableMode"));
 
-                UpdateManager.RestartApp(Constant.ApplicationFileName);
+                API.RestartApp();
             }
             catch (Exception e)
             {
