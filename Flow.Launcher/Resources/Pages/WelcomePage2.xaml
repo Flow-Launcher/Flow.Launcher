@@ -38,7 +38,7 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="250" />
-                <RowDefinition Height="340"/>
+                <RowDefinition Height="340" />
             </Grid.RowDefinitions>
 
             <Border Grid.Row="0" HorizontalAlignment="Stretch">
@@ -90,11 +90,12 @@
             </Border>
 
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible">
-                <StackPanel  Margin="24 20 24 20">
+                <StackPanel Margin="24 20 24 20">
                     <TextBlock
                         FontSize="20"
                         FontWeight="SemiBold"
-                        Text="{DynamicResource Welcome_Page2_Title}" TextWrapping="WrapWithOverflow"/>
+                        Text="{DynamicResource Welcome_Page2_Title}"
+                        TextWrapping="WrapWithOverflow" />
                     <TextBlock
                         Margin="0 10 0 0"
                         FontSize="14"
@@ -112,7 +113,6 @@
                         Text="{DynamicResource flowlauncherHotkey}" />
                     <flowlauncher:HotkeyControl
                         Margin="0 8 0 0"
-                        ChangeHotkey="{Binding SetTogglingHotkeyCommand}"
                         DefaultHotkey="Alt+Space"
                         Type="Hotkey"
                         ValidateKeyGesture="True"

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 
 namespace Flow.Launcher.Infrastructure.Hotkey;
 
@@ -13,5 +13,5 @@ public interface IHotkeySettings
     /// A list of hotkeys that have already been registered. The dialog will display these hotkeys and provide a way to
     /// unregister them.
     /// </summary>
-    public List<RegisteredHotkeyData> RegisteredHotkeys { get; }
+    public ObservableCollection<RegisteredHotkeyData> RegisteredHotkeys { get; }
 }

@@ -365,6 +365,9 @@ namespace Flow.Launcher.Core.Resource
                     API.LogException(ClassName, $"Failed for <{p.Metadata.Name}>", e);
                 }
             }
+
+            // Update plugin hotkey name & description
+            PluginManager.UpdatePluginHotkeyInfoTranslations();
         }
 
         #endregion

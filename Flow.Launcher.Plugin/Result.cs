@@ -258,6 +258,12 @@ namespace Flow.Launcher.Plugin
         public bool ShowBadge { get; set; } = false;
 
         /// <summary>
+        /// List of hotkey IDs that are supported for this result.
+        /// Those hotkeys should be registered by IPluginHotkey interface.
+        /// </summary>
+        public IList<int> HotkeyIds { get; set; } = new List<int>();
+
+        /// <summary>
         /// Run this result, asynchronously
         /// </summary>
         /// <param name="context"></param>
@@ -307,7 +313,8 @@ namespace Flow.Launcher.Plugin
                 Preview = Preview,
                 AddSelectedCount = AddSelectedCount,
                 RecordKey = RecordKey,
-                ShowBadge = ShowBadge
+                ShowBadge = ShowBadge,
+                HotkeyIds = HotkeyIds,
             };
         }
 
