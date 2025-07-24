@@ -119,7 +119,7 @@
     <system:String x:Key="SearchPrecisionLow">Lav</system:String>
     <system:String x:Key="SearchPrecisionRegular">Vanlig</system:String>
     <system:String x:Key="ShouldUsePinyin">Søk med Pinyin</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">Tillater bruk av Pinyin for å søke. Pinyin er standardsystemet for romanisert stavemåte for å oversette kinesisk.</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">Pinyin is the standard system of romanized spelling for translating Chinese. Please note, enabling this can significantly increase memory usage during search.</system:String>
     <system:String x:Key="ShouldUseDoublePinyin">Use Double Pinyin</system:String>
     <system:String x:Key="ShouldUseDoublePinyinToolTip">Use Double Pinyin instead of Full Pinyin to search.</system:String>
     <system:String x:Key="DoublePinyinSchema">Double Pinyin Schema</system:String>
