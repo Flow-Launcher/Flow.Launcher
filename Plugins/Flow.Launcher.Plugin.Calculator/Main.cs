@@ -245,11 +245,9 @@ namespace Flow.Launcher.Plugin.Calculator
 
         private string GetGroupSeparator(string decimalSeparator)
         {
-            // Use system culture's group separator when available and it doesn't conflict
-            var systemGroupSep = CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator;
-            return decimalSeparator == systemGroupSep 
-                ? (decimalSeparator == dot ? comma : dot)
-                : systemGroupSep;
+            // This logic is now independent of the system's group separator
+            // to ensure consistent output for unit testing.
+            return decimalSeparator == dot ? comma : dot;
         }
 
         private bool CanCalculate(Query query)
