@@ -534,8 +534,6 @@
                             MinHeight="380"
                             MaxHeight="{Binding ElementName=ResultListBox, Path=ActualHeight}"
                             Padding="0 0 10 10"
-
-
                             Visibility="{Binding ShowCustomizedPreview}">
                             <ContentControl Content="{Binding CustomizedPreviewControl}" />
                         </Border>
