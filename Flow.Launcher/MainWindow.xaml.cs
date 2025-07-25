@@ -330,6 +330,11 @@ namespace Flow.Launcher
                 }
             };
 
+            if (_settings.SelectAllQueryOnReopen)
+            {
+                SelectAllQueryText();
+            }
+
             // QueryTextBox.Text change detection (modified to only work when character count is 1 or higher)
             QueryTextBox.TextChanged += (s, e) => UpdateClockPanelVisibility();
 
@@ -1455,5 +1460,10 @@ namespace Flow.Launcher
         }
 
         #endregion
+
+        private void SelectAllQueryText()
+        {
+            QueryTextBox.SelectAll();
+        }
     }
 }
