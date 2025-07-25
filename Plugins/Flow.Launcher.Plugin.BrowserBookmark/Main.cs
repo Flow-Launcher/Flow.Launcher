@@ -19,7 +19,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
 
     internal static string _faviconCacheDir;
 
-    internal static PluginInitContext _context;
+    internal static PluginInitContext Context { get; private set; }
 
     internal static Settings _settings;
 
@@ -29,7 +29,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
     
     public void Init(PluginInitContext context)
     {
-        _context = context;
+        Context = context;
 
         _settings = context.API.LoadSettingJsonStorage<Settings>();
 
@@ -42,7 +42,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
 
     private static void LoadBookmarksIfEnabled()
     {
-        if (_context.CurrentPluginMetadata.Disabled)
+        if (Context.CurrentPluginMetadata.Disabled)
         {
             // Don't load or monitor files if disabled
             return;
@@ -84,7 +84,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
                         Score = BookmarkLoader.MatchProgram(c, param).Score,
                         Action = _ =>
                         {
-                            _context.API.OpenUrl(c.Url);
+                            Context.API.OpenUrl(c.Url);
 
                             return true;
                         },
@@ -108,7 +108,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
                         Score = 5,
                         Action = _ =>
                         {
-                            _context.API.OpenUrl(c.Url);
+                            Context.API.OpenUrl(c.Url);
                             return true;
                         },
                         ContextData = new BookmarkAttributes { Url = c.Url }
@@ -192,12 +192,12 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
 
     public string GetTranslatedPluginTitle()
     {
-        return _context.API.GetTranslation("flowlauncher_plugin_browserbookmark_plugin_name");
+        return Localize.flowlauncher_plugin_browserbookmark_plugin_name();
     }
 
     public string GetTranslatedPluginDescription()
     {
-        return _context.API.GetTranslation("flowlauncher_plugin_browserbookmark_plugin_description");
+        return Context.API.GetTranslation("flowlauncher_plugin_browserbookmark_plugin_description");
     }
 
     public Control CreateSettingPanel()
@@ -211,20 +211,20 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
         {
             new()
             {
-                Title = _context.API.GetTranslation("flowlauncher_plugin_browserbookmark_copyurl_title"),
-                SubTitle = _context.API.GetTranslation("flowlauncher_plugin_browserbookmark_copyurl_subtitle"),
+                Title = Context.API.GetTranslation("flowlauncher_plugin_browserbookmark_copyurl_title"),
+                SubTitle = Context.API.GetTranslation("flowlauncher_plugin_browserbookmark_copyurl_subtitle"),
                 Action = _ =>
                 {
                     try
                     {
-                        _context.API.CopyToClipboard(((BookmarkAttributes)selectedResult.ContextData).Url);
+                        Context.API.CopyToClipboard(((BookmarkAttributes)selectedResult.ContextData).Url);
 
                         return true;
                     }
                     catch (Exception e)
                     {
-                        _context.API.LogException(ClassName, "Failed to set url in clipboard", e);
-                        _context.API.ShowMsgError(_context.API.GetTranslation("flowlauncher_plugin_browserbookmark_copy_failed"));
+                        Context.API.LogException(ClassName, "Failed to set url in clipboard", e);
+                        Context.API.ShowMsgError(Context.API.GetTranslation("flowlauncher_plugin_browserbookmark_copy_failed"));
                         return false;
                     }
                 },
