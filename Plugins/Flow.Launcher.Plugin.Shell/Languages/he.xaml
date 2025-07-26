@@ -15,4 +15,6 @@
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">הפעל כמנהל</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_copy">העתק את הפקודה</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_history">הצג רק את מספר הפקודות הנפוצות ביותר:</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_command_not_found">Command not found: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_error_running_command">Error running the command: {0}</system:String>
 </ResourceDictionary>

@@ -27,7 +27,7 @@
     <system:String x:Key="plugin_pluginsmanager_update_prompt_no_restart">{0} por {1} {2}{2}¿Desea actualizar este complemento?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_title">Actualizar complemento</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Este complemento ya está instalado</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_failed_title">La descarga del manifiesto del complemento ha fallado</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_failed_title">Ha fallado la descarga del manifiesto del complemento</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Por favor, compruebe que puede establecer conexión con github.com. Este error significa que es posible que no pueda instalar o actualizar complementos.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_title">Actualizar todos los complementos</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_subtitle">¿Desea actualizar todos los complementos?</system:String>

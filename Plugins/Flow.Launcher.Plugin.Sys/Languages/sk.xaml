@@ -22,7 +22,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_setting_cmd">Nastavenia</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data_cmd">Znova načítať údaje pluginov</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_check_for_update_cmd">Skontrolovať aktualizácie</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_open_log_location_cmd">Otvoriť umiestnenie denníka</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_log_location_cmd">Otvoriť umiestnenie logu</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips_cmd">Tipy pre Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location_cmd">Používateľský priečinok Flow Launchera</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode_cmd">Prepnúť herný režim</system:String>
@@ -46,7 +46,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_hibernate">Hibernovať počítač</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_save_all_settings">Uložiť všetky nastavenia Flow Launchera</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data">Aktualizovať všetky nové dáta pluginov</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_open_log_location">Otvoriť umiestnenie denníka Flow Launchera</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_log_location">Otvoriť umiestnenie logu Flow Launchera</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_check_for_update">Skontrolovať aktualizácie Flow Launchera</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">V dokumentácii k aplikácii Flow Launcher nájdete ďalšiu pomoc a tipy na používanie</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Otvoriť umiestnenie, kde sú uložené nastavenia Flow Launchera</system:String>
@@ -61,6 +61,8 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">Naozaj chcete počítač reštartovať?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Naozaj chcete počítač reštartovať s pokročilými možnosťami spúšťania?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Naozaj sa chcete odhlásiť?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_error">Chyba</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_empty_recycle_bin_failed">Nepodarilo sa vyprázdniť kôš. Môže sa to stať, ak:{0}– Niektoré položky sa práve používajú{0}– Niektoré položky sa nedajú odstrániť pre nedostatočné oprávnenia{0}Prosím, ukončite každú aplikáciu, ktorá môže používať tieto súbory a skúste to znova.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Nastavenia kľúčového slova príkazu</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Vlastné kľúčové slovo príkazu</system:String>

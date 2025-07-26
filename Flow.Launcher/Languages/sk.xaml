@@ -16,9 +16,26 @@
     <system:String x:Key="failedToInitializePluginsTitle">Nepodarilo sa inicializovať pluginy</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">Pluginy: {0} – nepodarilo sa načítať a mal by byť zakázaný, na pomoc kontaktujte autora pluginu</system:String>
 
+    <!--  Portable  -->
+    <system:String x:Key="restartToDisablePortableMode">Flow Launcher sa musí reštartovať, aby sa vypol prenosný režim, po reštarte sa váš prenosný dátový profil odstráni a roamingový dátový profil sa zachová</system:String>
+    <system:String x:Key="restartToEnablePortableMode">Flow Launcher sa musí reštartovať, aby sa zapol prenosný režim, po reštarte sa váš roamingový dátový profil odstráni a prenosný dátový profil sa zachová</system:String>
+    <system:String x:Key="moveToDifferentLocation">Flow Launcher zistil, že máte zapnutý prenosný režim, chcete ho presunúť na iné miesto?</system:String>
+    <system:String x:Key="shortcutsUninstallerCreated">Flow Launcher zistil, že máte vypnutý prenosný režim, boli vytvorení príslušní zástupcovia a položka odinštalátora</system:String>
+    <system:String x:Key="userDataDuplicated">Flow Launcher zistil, že vaše používateľské údaje existujú v {0} aj {1}. {2}{2}Prosím, odstráňte {1}, aby ste mohli pokračovať.
+Nevykonali sa žiadne zmeny.</system:String>
+
+    <!--  Plugin Loader  -->
+    <system:String x:Key="pluginHasErrored">Nasledujúci plugin je chybný a nie je možné ho načítať:</system:String>
+    <system:String x:Key="pluginsHaveErrored">Nasledujúc pluginy sú chybné nie je možné ich načítať:</system:String>
+    <system:String x:Key="referToLogs">Ďalšie informácie nájdete v logoch</system:String>
+
+    <!--  Http  -->
+    <system:String x:Key="pleaseTryAgain">Prosím, skúste to znova</system:String>
+    <system:String x:Key="parseProxyFailed">Nie je možné analyzovať Http Proxy</system:String>
+
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Nepodarilo sa zaregistrovať klávesovú skratku &quot;{0}&quot;. Klávesová skratka môže byť používaná iným programom. Zmeňte klávesovú skratku na inú alebo ukončite iný program.</system:String>
-    <system:String x:Key="unregisterHotkeyFailed">Nepodarilo sa registrovať klávesovú skratku &quot;{0}&quot;. Skúste to znova alebo si pozrite podrobnosti v denníku</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Nepodarilo sa registrovať klávesovú skratku &quot;{0}&quot;. Skúste to znova alebo si pozrite podrobnosti v logu</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Nepodarilo sa spustiť {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Neplatný formát súboru pre plugin Flow Launchera</system:String>
@@ -91,6 +108,7 @@
     <system:String x:Key="typingStartEn">Vždy písať s anglickou klávesnicou</system:String>
     <system:String x:Key="typingStartEnTooltip">Pri aktivácii Flowu sa dočasne zmení klávesnica na anglickú.</system:String>
     <system:String x:Key="autoUpdates">Automatická aktualizácia</system:String>
+    <system:String x:Key="autoUpdatesTooltip">Automaticky skontrolovať a aktualizovať aplikáciu, ak je to možné</system:String>
     <system:String x:Key="select">Vybrať</system:String>
     <system:String x:Key="hideOnStartup">Schovať Flow Launcher po spustení</system:String>
     <system:String x:Key="hideOnStartupToolTip">Vyhľadávacie okno Flow launchera sa po spustení skryje v oblasti oznámení.</system:String>
@@ -102,7 +120,20 @@
     <system:String x:Key="SearchPrecisionLow">Nízka</system:String>
     <system:String x:Key="SearchPrecisionRegular">Normálna</system:String>
     <system:String x:Key="ShouldUsePinyin">Vyhľadávanie pomocou pchin-jin</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">Umožňuje vyhľadávanie pomocou pchin-jin. Pchin-jin je systém zápisu čínskeho jazyka pomocou písmen latinky.</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">Pchin-jin je systém zápisu čínskeho jazyka pomocou písmen latinky. Upozorňujeme, že zapnutie tejto funkcie môže výrazne zvýšiť využitie pamäte počas vyhľadávania.</system:String>
+    <system:String x:Key="ShouldUseDoublePinyin">Použiť Double Pinyin</system:String>
+    <system:String x:Key="ShouldUseDoublePinyinToolTip">Na vyhľadávanie použiť namiesto úplného Pinyinu Double Pinyin.</system:String>
+    <system:String x:Key="DoublePinyinSchema">Schéma Double Pinyin</system:String>
+    <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao He</system:String>
+    <system:String x:Key="DoublePinyinSchemasZiRanMa">Zi Ran Ma</system:String>
+    <system:String x:Key="DoublePinyinSchemasWeiRuan">Wei Ruan</system:String>
+    <system:String x:Key="DoublePinyinSchemasZhiNengABC">Zhi Neng ABC</system:String>
+    <system:String x:Key="DoublePinyinSchemasZiGuangPinYin">Zi Guang Pin Yin</system:String>
+    <system:String x:Key="DoublePinyinSchemasPinYinJiaJia">Pin Yin Jia Jia</system:String>
+    <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
+    <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
+    <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
+
     <system:String x:Key="AlwaysPreview">Vždy zobraziť náhľad</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Pri aktivácii Flowu vždy otvoriť panel s náhľadom. Stlačením klávesu {0} prepnete náhľad.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Efekt tieňa nie je povolený, kým má aktuálny motív povolený efekt rozostrenia</system:String>
@@ -131,6 +162,8 @@
     <system:String x:Key="KoreanImeOpenLinkButton">Otvoriť</system:String>
     <system:String x:Key="KoreanImeRegistry">Použiť predchádzajúcu verziu editora Microsoft IME</system:String>
     <system:String x:Key="KoreanImeRegistryTooltip">Zmeniť na predchádzajúcu verziu editora Microsoft IME môžete priamo tu</system:String>
+    <system:String x:Key="KoreanImeSettingChangeFailTitle">Nepodarilo sa zmeniť nastavenie kórejského IME</system:String>
+    <system:String x:Key="KoreanImeSettingChangeFailSubTitle">Skontrolujte prístup do systémového registra alebo kontaktujte podporu.</system:String>
     <system:String x:Key="homePage">Domovská stránka</system:String>
     <system:String x:Key="homePageToolTip">Zobraziť výsledky Domovskej stránky, keď je text dopytu prázdny.</system:String>
     <system:String x:Key="historyResultsForHomePage">Zobraziť výsledky histórie na Domovskej stránke</system:String>
@@ -142,6 +175,8 @@
     <system:String x:Key="autoRestartAfterChangingToolTip">Automaticky reštartovať Flow Launcher po inštalácii/odinštalácii/aktualizáciu pluginu cez Repozitár pluginov</system:String>
     <system:String x:Key="showUnknownSourceWarning">Zobraziť upozornenie na neznámy zdroj</system:String>
     <system:String x:Key="showUnknownSourceWarningToolTip">Zobraziť upozornenie pri inštalácii z neznámych zdrojov</system:String>
+    <system:String x:Key="autoUpdatePlugins">Automaticky aktualizovať pluginy</system:String>
+    <system:String x:Key="autoUpdatePluginsToolTip">Automaticky kontrolovať aktualizácie pluginov a upozorniť na ne, ak sú k dispozícii</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Vyhľadať plugin</system:String>
@@ -223,6 +258,12 @@
     <system:String x:Key="ZipFiles">Zip súbory</system:String>
     <system:String x:Key="SelectZipFile">Vyberte zip súbor</system:String>
     <system:String x:Key="installLocalPluginTooltip">Inštalovať plugin z miestneho úložiska</system:String>
+    <system:String x:Key="updateNoResultTitle">Nie je k dispozícii žiadna aktualizácia</system:String>
+    <system:String x:Key="updateNoResultSubtitle">Všetky pluginy sú aktuálne</system:String>
+    <system:String x:Key="updateAllPluginsTitle">Dostupná aktualizácia pluginu</system:String>
+    <system:String x:Key="updateAllPluginsButtonContent">Aktualizovať pluginy</system:String>
+    <system:String x:Key="checkPluginUpdatesTooltip">Skontrolovať dostupnosť aktualizácií</system:String>
+    <system:String x:Key="PluginsUpdateSuccessNoRestart">Pluginy {0} boli úspešne aktualizované. Prosím, reštartuje Flow.</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Motív</system:String>
@@ -350,6 +391,28 @@
     <system:String x:Key="showBadges">Zobraziť výsledok v odznaku</system:String>
     <system:String x:Key="showBadgesToolTip">Ak to plugin podporuje, zobrazí sa jeho ikona v odznaku na jednoduchšie odlíšenie.</system:String>
     <system:String x:Key="showBadgesGlobalOnly">Zobraziť výsledok v odznaku len pre globálne vyhľadávanie</system:String>
+    <system:String x:Key="showBadgesGlobalOnlyToolTip">Show badges for global query results only</system:String>
+    <system:String x:Key="dialogJumpHotkey">Dialog Jump</system:String>
+    <system:String x:Key="dialogJumpHotkeyToolTip">Enter shortcut to quickly navigate the Open/Save As dialog window to the path of the current file manager.</system:String>
+    <system:String x:Key="dialogJump">Dialog Jump</system:String>
+    <system:String x:Key="dialogJumpToolTip">When Open/Save As dialog window opens, quickly navigate to the current path of the file manager.</system:String>
+    <system:String x:Key="autoDialogJump">Dialog Jump Automatically</system:String>
+    <system:String x:Key="autoDialogJumpToolTip">When Open/Save As dialog window is displayed, automatically navigate to the path of the current file manager. (Experimental)</system:String>
+    <system:String x:Key="showDialogJumpWindow">Show Dialog Jump Window</system:String>
+    <system:String x:Key="showDialogJumpWindowToolTip">Display Dialog Jump search window when the open/save dialog window is shown to quickly navigate to file/folder locations.</system:String>
+    <system:String x:Key="dialogJumpWindowPosition">Dialog Jump Window Position</system:String>
+    <system:String x:Key="dialogJumpWindowPositionToolTip">Select position for the Dialog Jump search window</system:String>
+    <system:String x:Key="DialogJumpWindowPositionUnderDialog">Fixed under the Open/Save As dialog window. Displayed on open and stays until the window is closed</system:String>
+    <system:String x:Key="DialogJumpWindowPositionFollowDefault">Default search window position. Displayed when triggered by search window hotkey</system:String>
+    <system:String x:Key="dialogJumpResultBehaviour">Dialog Jump Result Navigation Behaviour</system:String>
+    <system:String x:Key="dialogJumpResultBehaviourToolTip">Behaviour to navigate Open/Save As dialog window to the selected result path</system:String>
+    <system:String x:Key="DialogJumpResultBehaviourLeftClick">Left click or Enter key</system:String>
+    <system:String x:Key="DialogJumpResultBehaviourRightClick">Right click</system:String>
+    <system:String x:Key="dialogJumpFileResultBehaviour">Dialog Jump File Navigation Behaviour</system:String>
+    <system:String x:Key="dialogJumpFileResultBehaviourToolTip">Behaviour to navigate Open/Save As dialog window when the result is a file path</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourFullPath">Fill full path in file name box</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourFullPathOpen">Fill full path in file name box and open</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourDirectory">Fill directory in path box</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP proxy</system:String>
@@ -548,6 +611,11 @@ Ak pri zadávaní skratky pred ňu pridáte &quot;@&quot;, bude sa zhodovať s �
     <system:String x:Key="update_flowlauncher_update_update_files">Nasledujúce súbory budú aktualizované</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Aktualizovať súbory</system:String>
     <system:String x:Key="update_flowlauncher_update_update_description">Aktualizovať popis</system:String>
+
+    <!--  Plugin Update Window  -->
+    <system:String x:Key="restartAfterUpdating">Po aktualizácii pluginov reštartovať Flow Launcher</system:String>
+    <system:String x:Key="updatePluginCheckboxContent">{0}: Aktualizované z v{1} na v{2}</system:String>
+    <system:String x:Key="updatePluginNoSelected">Nie je vybraný žiaden plugin</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Preskočiť</system:String>

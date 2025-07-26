@@ -61,6 +61,8 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">Tem a certeza que deseja reiniciar o computador?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Tem certeza de que deseja reiniciar o computador com as opções avançadas de arranque?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Tem certeza de que deseja terminar a sessão?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_error">Erro</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_empty_recycle_bin_failed">Falha ao limpar a Reciclagem. Isto pode aparecer se: {0} - alguns itens estão a ser usados {0} - alguns itens não podem ser eliminados (permissões) {0}Experimente fechar quaisquer aplicações que possam estar a usar os ficheiros e tente novamente.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Definição de palavra-chave</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Palavra-chave personalizada</system:String>
