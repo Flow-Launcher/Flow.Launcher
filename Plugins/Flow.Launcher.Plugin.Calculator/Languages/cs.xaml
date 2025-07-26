@@ -6,10 +6,10 @@
     <system:String x:Key="flowlauncher_plugin_calculator_not_a_number">Není číslo (NaN)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_expression_not_complete">Nesprávný nebo neúplný výraz (Nezapomněli jste na závorky?)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_copy_number_to_clipboard">Kopírování výsledku do schránky</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_seperator">Oddělovač desetinných míst</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_seperator_help">Oddělovač desetinných míst použitý ve výsledku.</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_use_system_locale">Použít podle systému</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_comma">Čárka (,)</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_dot">Tečka (.)</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_separator">Oddělovač desetinných míst</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_separator_help">Oddělovač desetinných míst použitý ve výsledku.</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_use_system_locale">Použít podle systému</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_comma">Čárka (,)</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_dot">Tečka (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">Desetinná místa</system:String>
 </ResourceDictionary>

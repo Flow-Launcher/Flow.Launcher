@@ -27,9 +27,9 @@ public static class FaviconHelper
             }
             catch (Exception ex1)
             {
-                Main._context.API.LogException(ClassName, $"Failed to delete temporary favicon DB: {tempDbPath}", ex1);
+                Main.Context.API.LogException(ClassName, $"Failed to delete temporary favicon DB: {tempDbPath}", ex1);
             }
-            Main._context.API.LogException(ClassName, $"Failed to copy favicon DB: {dbPath}", ex);
+            Main.Context.API.LogException(ClassName, $"Failed to copy favicon DB: {dbPath}", ex);
             return;
         }
 
@@ -39,7 +39,7 @@ public static class FaviconHelper
         }
         catch (Exception ex)
         {
-            Main._context.API.LogException(ClassName, $"Failed to connect to SQLite: {tempDbPath}", ex);
+            Main.Context.API.LogException(ClassName, $"Failed to connect to SQLite: {tempDbPath}", ex);
         }
 
         // Delete temporary file
@@ -49,7 +49,7 @@ public static class FaviconHelper
         }
         catch (Exception ex)
         {
-            Main._context.API.LogException(ClassName, $"Failed to delete temporary favicon DB: {tempDbPath}", ex);
+            Main.Context.API.LogException(ClassName, $"Failed to delete temporary favicon DB: {tempDbPath}", ex);
         }
     }
 
@@ -61,7 +61,7 @@ public static class FaviconHelper
         }
         catch (Exception ex)
         {
-            Main._context.API.LogException(ClassName, $"Failed to save image: {outputPath}", ex);
+            Main.Context.API.LogException(ClassName, $"Failed to save image: {outputPath}", ex);
         }
     }
 

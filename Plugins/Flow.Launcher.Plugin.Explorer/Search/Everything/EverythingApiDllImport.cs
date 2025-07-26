@@ -1,5 +1,4 @@
-﻿using Flow.Launcher.Plugin.Everything.Everything;
-using System;
+﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -114,11 +113,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         // Everything 1.4
 
         [DllImport(DLL)]
-        public static extern void Everything_SetSort(SortOption dwSortType);
+        public static extern void Everything_SetSort(EverythingSortOption dwSortType);
         [DllImport(DLL)]
-        public static extern bool Everything_IsFastSort(SortOption dwSortType);
+        public static extern bool Everything_IsFastSort(EverythingSortOption dwSortType);
         [DllImport(DLL)]
-        public static extern SortOption Everything_GetSort();
+        public static extern EverythingSortOption Everything_GetSort();
         [DllImport(DLL)]
         public static extern uint Everything_GetResultListSort();
         [DllImport(DLL)]
