@@ -6,11 +6,11 @@
     <system:String x:Key="flowlauncher_plugin_calculator_not_a_number">Not a number (NaN)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_expression_not_complete">Expression wrong or incomplete (Did you forget some parentheses?)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_copy_number_to_clipboard">この数字をクリップボードにコピーします</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_seperator">Decimal separator</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_seperator_help">The decimal separator to be used in the output.</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_use_system_locale">Use system locale</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_comma">Comma (,)</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_dot">Dot (.)</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_separator">Decimal separator</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_separator_help">The decimal separator to be used in the output.</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_use_system_locale">Use system locale</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_comma">Comma (,)</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_dot">Dot (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">Max. decimal places</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Copy failed, please try later</system:String>
 </ResourceDictionary>
