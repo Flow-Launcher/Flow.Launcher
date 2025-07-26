@@ -6,11 +6,11 @@
     <system:String x:Key="flowlauncher_plugin_calculator_not_a_number">不是一個數 (NaN)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_expression_not_complete">Expression wrong or incomplete (Did you forget some parentheses?)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_copy_number_to_clipboard">複製此數至剪貼簿</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_seperator">小數點分隔符號</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_seperator_help">The decimal separator to be used in the output.</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_use_system_locale">使用系統區域設定</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_comma">逗號 (,)</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_dot">點 (.)</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_separator">小數點分隔符號</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_separator_help">The decimal separator to be used in the output.</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_use_system_locale">使用系統區域設定</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_comma">逗號 (,)</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_dot">點 (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">小數點後最大位數</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Copy failed, please try later</system:String>
 </ResourceDictionary>
