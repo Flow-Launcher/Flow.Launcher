@@ -1,0 +1,15 @@
+name: Assign PR to creator
+
+on:
+  pull_request_target:
+    types: [opened]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  automation:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Assign PR to creator
+      uses: toshimaru/auto-author-assign@v2.1.1
