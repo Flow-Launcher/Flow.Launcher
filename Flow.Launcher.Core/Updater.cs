@@ -21,16 +21,24 @@ namespace Flow.Launcher.Core
 {
     public class Updater
     {
-        public string GitHubRepository { get; init; }
+        public string GitHubReleaseRepository { get; }
+        public string GitHubPrereleaseRepository { get; }
 
         private static readonly string ClassName = nameof(Updater);
 
+        public bool UpdateToPrerelease => _settings.PrereleaseUpdateSource;
+
+        public string GitHubRepository => UpdateToPrerelease ? GitHubPrereleaseRepository : GitHubReleaseRepository;
+
+        private readonly Settings _settings;
         private readonly IPublicAPI _api;
 
-        public Updater(IPublicAPI publicAPI, string gitHubRepository)
+        public Updater(Settings settings, IPublicAPI publicAPI, string gitHubReleaseRepository, string gitHubPrereleaseRepository)
         {
+            _settings = settings;
             _api = publicAPI;
-            GitHubRepository = gitHubRepository;
+            GitHubReleaseRepository = gitHubReleaseRepository;
+            GitHubPrereleaseRepository = gitHubPrereleaseRepository;
         }
 
         private SemaphoreSlim UpdateLock { get; } = new SemaphoreSlim(1);
