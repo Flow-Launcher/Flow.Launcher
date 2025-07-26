@@ -1,0 +1,75 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+    <RootNamespace>Flow.Launcher.Localization</RootNamespace>
+    <AssemblyName>Flow.Launcher.Localization</AssemblyName>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <DevelopmentDependency>false</DevelopmentDependency>
+    <NoPackageAnalysis>true</NoPackageAnalysis>
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Version>0.0.3</Version>
+    <PackageVersion>0.0.3</PackageVersion>
+    <AssemblyVersion>0.0.3</AssemblyVersion>
+    <FileVersion>0.0.3</FileVersion>
+    <PackageId>Flow.Launcher.Localization</PackageId>
+    <Title>Flow Launcher Localization Toolkit</Title>
+    <Description>Localization toolkit for Flow Launcher and its plugins</Description>
+    <Authors>Flow-Launcher</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/Flow-Launcher/Flow.Launcher.Localization</RepositoryUrl>
+    <PackageDescription>Localization toolkit for Flow Launcher and its plugins</PackageDescription>
+    <PackageTags>localization-tool; localization-toolkit; flow-launcher; flow-launcher-plugins; flowlauncher; localization-tools; flow-launcher-plugin</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Flow.Launcher.Localization.Analyzers\Flow.Launcher.Localization.Analyzers.csproj">
+      <PrivateAssets>All</PrivateAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\Flow.Launcher.Localization.Attributes\Flow.Launcher.Localization.Attributes.csproj">
+      <IncludeAssets>runtime</IncludeAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\Flow.Launcher.Localization.Shared\Flow.Launcher.Localization.Shared.csproj">
+      <PrivateAssets>All</PrivateAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\Flow.Launcher.Localization.SourceGenerators\Flow.Launcher.Localization.SourceGenerators.csproj">
+      <PrivateAssets>All</PrivateAssets>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="$(OutputPath)\Flow.Launcher.Localization.Analyzers.dll">
+      <Pack>true</Pack>
+      <PackagePath>analyzers/dotnet/cs</PackagePath>
+      <Visible>false</Visible>
+    </None>
+    <None Include="$(OutputPath)\Flow.Launcher.Localization.Attributes.dll">
+      <Pack>true</Pack>
+      <PackagePath>lib/$(TargetFramework)</PackagePath>
+      <Visible>true</Visible>
+    </None>
+    <None Include="$(OutputPath)\Flow.Launcher.Localization.Shared.dll">
+      <Pack>true</Pack>
+      <PackagePath>analyzers/dotnet/cs</PackagePath>
+      <Visible>false</Visible>
+    </None>
+    <None Include="$(OutputPath)\Flow.Launcher.Localization.SourceGenerators.dll">
+      <Pack>true</Pack>
+      <PackagePath>analyzers/dotnet/cs</PackagePath>
+      <Visible>false</Visible>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="build\Flow.Launcher.Localization.props" Pack="true" PackagePath="build" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,54 @@
+name: build
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+  pull_request:
+
+jobs:
+
+  build:
+
+    runs-on: windows-latest
+
+    env:
+      Dotnet_Version: 8.0.x
+      Project_Path: Flow.Launcher.Localization\Flow.Launcher.Localization.csproj
+
+    steps:
+
+    # Checkout codes
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    # Install the .NET Core workload
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.Dotnet_Version }}
+
+    # Restore dependencies
+    - name: Restore dependencies
+      run: dotnet restore ${{ env.Project_Path }}
+
+    # Build the project
+    - name: Build
+      run: dotnet build ${{ env.Project_Path }} --configuration Release --no-restore
+
+    # Execute all unit tests in the solution
+    - name: Execute unit tests
+      if: github.event_name == 'push' && github.ref != 'refs/heads/main'
+      run: dotnet test --configuration Release --no-build
+
+    # Pack the NuGet package
+    - name: Create NuGet package
+      run: dotnet pack ${{ env.Project_Path }} --configuration Release --no-build --output nupkgs
+
+    # Upload the NuGet package
+    - name: Upload NuGet package
+      uses: actions/upload-artifact@v4
+      with:
+        name: Full nupkg
+        path: nupkgs/Flow.Launcher.Localization.*.nupkg
+        compression-level: 0

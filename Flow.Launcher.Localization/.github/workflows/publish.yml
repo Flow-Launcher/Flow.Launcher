@@ -1,0 +1,61 @@
+name: publish
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*'
+
+jobs:
+
+  publish:
+
+    runs-on: windows-latest
+
+    env:
+      Dotnet_Version: 8.0.x
+      Project_Path: Flow.Launcher.Localization\Flow.Launcher.Localization.csproj
+
+    steps:
+
+    # Checkout codes
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    # Install the .NET Core workload
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.Dotnet_Version }}
+
+    # Restore dependencies
+    - name: Restore dependencies
+      run: dotnet restore ${{ env.Project_Path }}
+
+    # Build the project
+    - name: Build
+      run: dotnet build ${{ env.Project_Path }} --configuration Release --no-restore
+
+    # Pack the NuGet package
+    - name: Create NuGet package
+      run: dotnet pack ${{ env.Project_Path }} --configuration Release --no-build --output nupkgs
+
+    # Publish to NuGet.org
+    - name: Push to NuGet
+      #   if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      run: nuget push nupkgs\*.nupkg -source 'https://api.nuget.org/v3/index.json' -apikey ${{ secrets.NUGET_API_KEY }}
+
+    # Get package version
+    - name: Get Package Version
+      # if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      run: |
+        $version = [system.diagnostics.fileversioninfo]::getversioninfo("Flow.Launcher.Localization\bin\Release\netstandard2.0\Flow.Launcher.Localization.dll").fileversion
+        echo "release_version=$version" | out-file -filepath $env:github_env -encoding utf-8 -append
+
+    # Publish to GitHub releases
+    - name: Publish GitHub releases
+      # if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      uses: softprops/action-gh-release@v1
+      with:
+        files: "nupkgs/*.nupkg"
+        tag_name: "v${{ env.release_version }}"
