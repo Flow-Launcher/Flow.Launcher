@@ -6,11 +6,11 @@
     <system:String x:Key="flowlauncher_plugin_calculator_not_a_number">Не є числом (NaN)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_expression_not_complete">Вираз неправильний або неповний (Ви забули якісь дужки?)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_copy_number_to_clipboard">Скопіюйте це число в буфер обміну</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_seperator">Десятковий роздільник</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_seperator_help">Десятковий роздільник, який буде використовуватися у виведенні.</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_use_system_locale">Використовувати системну локаль</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_comma">Кома (,)</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_dot">Крапка (.)</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_separator">Десятковий роздільник</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_separator_help">Десятковий роздільник, який буде використовуватися у виведенні.</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_use_system_locale">Використовувати системну локаль</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_comma">Кома (,)</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_dot">Крапка (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">Макс. кількість знаків після коми</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Copy failed, please try later</system:String>
 </ResourceDictionary>
