@@ -119,7 +119,7 @@
     <system:String x:Key="SearchPrecisionLow">Baja</system:String>
     <system:String x:Key="SearchPrecisionRegular">Normal</system:String>
     <system:String x:Key="ShouldUsePinyin">Buscar con Pinyin</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">Pinyin es el sistema estándar de ortografía romanizada para traducir chino. Tenga en cuenta que activar esto puede aumentar significativamente el uso de memoria durante la búsqueda.</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">Pinyin es el sistema estándar de ortografía romanizada para traducir chino. Tenga en cuenta que activar esta opción puede aumentar significativamente el uso de memoria durante la búsqueda.</system:String>
     <system:String x:Key="ShouldUseDoublePinyin">Utilizar Doble Pinyin</system:String>
     <system:String x:Key="ShouldUseDoublePinyinToolTip">Utiliza Doble Pinyin en lugar de Pinyin Completo para buscar.</system:String>
     <system:String x:Key="DoublePinyinSchema">Esquema Doble Pinyin</system:String>
