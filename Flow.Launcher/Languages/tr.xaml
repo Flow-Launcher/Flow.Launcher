@@ -143,16 +143,16 @@
     <system:String x:Key="searchDelayTimeToolTip">Yazmayı bıraktıktan sonra sonuçların görünmesi için geçecek süre. Daha yüksek değerler daha fazla bekleme anlamına gelir. (ms)</system:String>
     <system:String x:Key="KoreanImeTitle">Korece IME kullanıcısı için bilgiler</system:String>
     <system:String x:Key="KoreanImeGuide">
-        The Korean input method used in Windows 11 may cause some issues in Flow Launcher.
+        Windows 11'de kullanılan Korece giriş yöntemi Flow Launcher'da bazı sorunlara neden olabilir.
 
-        If you experience any problems, you may need to enable &quot;Use previous version of Korean IME&quot;.
+        Herhangi bir sorunla karşılaşırsanız, &quot;Korece IME'nin önceki sürümünü kullan&quot; seçeneğini etkinleştirmeniz gerekebilir.
 
 
-        Open Setting in Windows 11 and go to:
+        Windows 11'de Ayarlar'ı açın ve şuraya gidin:
 
-        Time &amp; Language &gt; Language &amp; Region &gt; Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility,
+        Saat ve Dil &gt; Dil ve Bölge &gt; Korece &gt; Dil Seçenekleri &gt; Klavye - Microsoft IME &gt; Uyumluluk,
 
-        and enable &quot;Use previous version of Microsoft IME&quot;.
+        ve &quot;Microsoft IME'nin önceki sürümünü kullan&quot; seçeneğini etkinleştirin.
 
 
     </system:String>
@@ -401,14 +401,14 @@
     <system:String x:Key="showDialogJumpWindowToolTip">Dosya/klasör konumlarına hızlı erişim için aç/kaydet penceresi gösterildiğinde Diyalog Atlama arama penceresini görüntüle.</system:String>
     <system:String x:Key="dialogJumpWindowPosition">Diyalog Atlama Penceresi Konumu</system:String>
     <system:String x:Key="dialogJumpWindowPositionToolTip">Select position for the Dialog Jump search window</system:String>
-    <system:String x:Key="DialogJumpWindowPositionUnderDialog">Fixed under the Open/Save As dialog window. Displayed on open and stays until the window is closed</system:String>
-    <system:String x:Key="DialogJumpWindowPositionFollowDefault">Default search window position. Displayed when triggered by search window hotkey</system:String>
+    <system:String x:Key="DialogJumpWindowPositionUnderDialog">Farklı Aç/Kaydet iletişim penceresinin altında düzeltildi. Açıldığında görüntülenir ve pencere kapatılana kadar kalır</system:String>
+    <system:String x:Key="DialogJumpWindowPositionFollowDefault">Varsayılan arama penceresi konumu. Arama penceresi kısayol tuşu tarafından tetiklendiğinde görüntülenir</system:String>
     <system:String x:Key="dialogJumpResultBehaviour">Dialog Jump Result Navigation Behaviour</system:String>
-    <system:String x:Key="dialogJumpResultBehaviourToolTip">Behaviour to navigate Open/Save As dialog window to the selected result path</system:String>
+    <system:String x:Key="dialogJumpResultBehaviourToolTip">Farklı Aç/Kaydet iletişim penceresini seçilen sonuç yoluna yönlendirmek için davranış</system:String>
     <system:String x:Key="DialogJumpResultBehaviourLeftClick">Sol tık veya Enter tuşu</system:String>
     <system:String x:Key="DialogJumpResultBehaviourRightClick">Sağ tık</system:String>
     <system:String x:Key="dialogJumpFileResultBehaviour">Dialog Jump File Navigation Behaviour</system:String>
-    <system:String x:Key="dialogJumpFileResultBehaviourToolTip">Behaviour to navigate Open/Save As dialog window when the result is a file path</system:String>
+    <system:String x:Key="dialogJumpFileResultBehaviourToolTip">Sonuç bir dosya yolu olduğunda Farklı Aç/Kaydet iletişim penceresinde gezinme davranışı</system:String>
     <system:String x:Key="DialogJumpFileResultBehaviourFullPath">Dosya adı kutusuna tam yolu girin</system:String>
     <system:String x:Key="DialogJumpFileResultBehaviourFullPathOpen">Dosya adı kutusuna tam yolu girin ve açın</system:String>
     <system:String x:Key="DialogJumpFileResultBehaviourDirectory">Dizini yol kutusuna girin</system:String>
@@ -476,14 +476,14 @@
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Dosya Yöneticisi Seçenekleri</system:String>
     <system:String x:Key="fileManager_learnMore">Daha fazla bilgi</system:String>
-    <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments as required. The &quot;%d&quot; represents the directory path to open for, used by the Arg for Folder field and for commands opening specific directories. The &quot;%f&quot; represents the file path to open for, used by the Arg for File field and for commands opening specific files.</system:String>
-    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fields blank.</system:String>
+    <system:String x:Key="fileManager_tips">Lütfen kullandığınız dosya yöneticisinin dosya konumunu belirtin ve gerektiği şekilde argümanlar ekleyin. &quot;%d&quot;, Arg for Folder alanı tarafından ve belirli dizinleri açan komutlar için kullanılan açılacak dizin yolunu temsil eder. &quot;%f&quot;, Dosya için Arg alanı tarafından ve belirli dosyaları açan komutlar için kullanılan açılacak dosya yolunu temsil eder.</system:String>
+    <system:String x:Key="fileManager_tips2">Örneğin, dosya yöneticisi c:\windows dizinini açmak için &quot;totalcmd.exe /A c:\windows&quot; gibi bir komut kullanıyorsa, Dosya Yöneticisi Yolu totalcmd.exe ve Arg Klasör için /A &quot;%d&quot; olacaktır. QTTabBar gibi bazı dosya yöneticileri sadece bir yol sağlanmasını gerektirebilir, bu durumda Dosya Yöneticisi Yolu olarak &quot;%d&quot; kullanın ve geri kalan alanları boş bırakın.</system:String>
     <system:String x:Key="fileManager_name">Dosya Yöneticisi</system:String>
     <system:String x:Key="fileManager_profile_name">Profil Adı</system:String>
     <system:String x:Key="fileManager_path">Dosya Yöneticisi Yolu</system:String>
     <system:String x:Key="fileManager_directory_arg">Klasör Açarken</system:String>
     <system:String x:Key="fileManager_file_arg">Dosya Açarken</system:String>
-    <system:String x:Key="fileManagerPathNotFound">The file manager '{0}' could not be located at '{1}'. Would you like to continue?</system:String>
+    <system:String x:Key="fileManagerPathNotFound">'{0}' dosya yöneticisi '{1}' konumunda bulunamadı. Devam etmek ister misiniz?</system:String>
     <system:String x:Key="fileManagerPathError">Dosya Yöneticisi Yol Hatası</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
@@ -509,15 +509,15 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Belirtilen eklenti bulunamadı</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Yeni anahtar kelime boş olamaz</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Yeni anahtar kelime başka bir eklentiye atanmış durumda. Lütfen başka bir anahtar kelime seçin.</system:String>
-    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">Bu yeni Anahtar Kelimesi eskisiyle aynı, lütfen farklı bir tane seçin</system:String>
     <system:String x:Key="success">Başarılı</system:String>
     <system:String x:Key="completedSuccessfully">Başarıyla tamamlandı</system:String>
     <system:String x:Key="failedToCopy">Kopyalanamadı</system:String>
-    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
+    <system:String x:Key="actionkeyword_tips">Eklentiyi başlatmak için kullanmak istediğiniz anahtar kelimelerini girin ve bunları bölmek için boşluk kullanın. Herhangi bir anahtar kelime belirtmek istemiyorsanız * kullanın, eklenti herhangi bir anahtar kelimesi olmadan tetiklenecektir.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
     <system:String x:Key="searchDelayTimeTitle">Arama Gecikme Süresi Ayarı</system:String>
-    <system:String x:Key="searchDelayTimeTips">Input the search delay time in ms you like to use for the plugin. Input empty if you don't want to specify any, and the plugin will use default search delay time.</system:String>
+    <system:String x:Key="searchDelayTimeTips">Eklenti için kullanmak istediğiniz arama gecikme süresini ms cinsinden girin. Herhangi bir şey belirtmek istemiyorsanız boş girin, eklenti varsayılan arama gecikme süresini kullanacaktır.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
     <system:String x:Key="homeTitle">Ana Sayfa</system:String>
