@@ -7,8 +7,8 @@
     <system:String x:Key="flowlauncher_plugin_calculator_expression_not_complete">Expresión incorrecta o incompleta (¿Ha olvidado algunos paréntesis?)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_copy_number_to_clipboard">Copiar este número al portapapeles</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_separator">Separador decimal</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_separator_help">El separador decimal que se utilizará en la salida.</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_use_system_locale">Usar configuración regional del sistema</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_separator_help">Separador decimal que se utilizará en la salida.</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_use_system_locale">Utilizar configuración regional del sistema</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_comma">Coma (,)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_dot">Punto (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">Número máximo de decimales</system:String>
