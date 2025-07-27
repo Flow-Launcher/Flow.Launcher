@@ -179,12 +179,12 @@ namespace Flow.Launcher.Plugin.Calculator
 
         public string GetTranslatedPluginTitle()
         {
-            return Localize.flowlauncher_plugin_caculator_plugin_name();
+            return Localize.flowlauncher_plugin_calculator_plugin_name();
         }
 
         public string GetTranslatedPluginDescription()
         {
-            return Localize.flowlauncher_plugin_caculator_plugin_description();
+            return Localize.flowlauncher_plugin_calculator_plugin_description();
         }
 
         public Control CreateSettingPanel()
