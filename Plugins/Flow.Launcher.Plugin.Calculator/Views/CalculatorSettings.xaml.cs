@@ -1,4 +1,4 @@
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using Flow.Launcher.Plugin.Calculator.ViewModels;
 
@@ -12,20 +12,12 @@ namespace Flow.Launcher.Plugin.Calculator.Views
         private readonly SettingsViewModel _viewModel;
         private readonly Settings _settings;
 
-        public CalculatorSettings(SettingsViewModel viewModel)
+        public CalculatorSettings(Settings settings)
         {
-            _viewModel = viewModel;
-            _settings = viewModel.Settings;
-            DataContext = viewModel;
+            _viewModel = new SettingsViewModel(settings);
+            _settings = _viewModel.Settings;
+            DataContext = _viewModel;
             InitializeComponent();
         }
-
-        private void CalculatorSettings_Loaded(object sender, RoutedEventArgs e)
-        {
-            DecimalSeparatorComboBox.SelectedItem = _settings.DecimalSeparator;
-            MaxDecimalPlaces.SelectedItem = _settings.MaxDecimalPlaces;
-        }
     }
-
-    
 }
