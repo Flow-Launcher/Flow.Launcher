@@ -6,35 +6,27 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using Mages.Core;
-using Flow.Launcher.Plugin.Calculator.ViewModels;
 using Flow.Launcher.Plugin.Calculator.Views;
+using Flow.Launcher.Plugin.Calculator.ViewModels;
 
 namespace Flow.Launcher.Plugin.Calculator
 {
     public class Main : IPlugin, IPluginI18n, ISettingProvider
     {
-        private static readonly Regex RegValidExpressChar = new Regex(
-                        @"^(" +
-                        @"ceil|floor|exp|pi|e|max|min|det|abs|log|ln|sqrt|" +
-                        @"sin|cos|tan|arcsin|arccos|arctan|" +
-                        @"eigval|eigvec|eig|sum|polar|plot|round|sort|real|zeta|" +
-                        @"bin2dec|hex2dec|oct2dec|" +
-                        @"factorial|sign|isprime|isinfty|" +
-                        @"==|~=|&&|\|\||(?:\<|\>)=?|" +
-                        @"[ei]|[0-9]|0x[\da-fA-F]+|[\+\%\-\*\/\^\., ""]|[\(\)\|\!\[\]]" +
-                        @")+$", RegexOptions.Compiled);
-        private static readonly Regex RegBrackets = new Regex(@"[\(\)\[\]]", RegexOptions.Compiled);
+        private static readonly Regex RegValidExpressChar = MainRegexHelper.GetRegValidExpressChar();
+        private static readonly Regex RegBrackets = MainRegexHelper.GetRegBrackets();
         private static readonly Regex ThousandGroupRegex = new Regex(@"\B(?=(\d{3})+(?!\d))", RegexOptions.Compiled);
         private static readonly Regex NumberRegex = new Regex(@"[\d\.,]+", RegexOptions.Compiled);
 
+
         private static Engine MagesEngine;
-        private const string comma = ",";
-        private const string dot = ".";
+        private const string Comma = ",";
+        private const string Dot = ".";
 
-        private PluginInitContext Context { get; set; }
+        internal static PluginInitContext Context { get; set; } = null!;
 
-        private static Settings _settings;
-        private static SettingsViewModel _viewModel;
+        private Settings _settings;
+        private SettingsViewModel _viewModel;
 
         /// <summary>
         /// Holds the formatting information for a single query.
@@ -77,10 +69,10 @@ namespace Flow.Launcher.Plugin.Calculator
                 var result = MagesEngine.Interpret(expression);
 
                 if (result?.ToString() == "NaN")
-                    result = Context.API.GetTranslation("flowlauncher_plugin_calculator_not_a_number");
+                    result = Localize.flowlauncher_plugin_calculator_not_a_number();
 
                 if (result is Function)
-                    result = Context.API.GetTranslation("flowlauncher_plugin_calculator_expression_not_complete");
+                    result = Localize.flowlauncher_plugin_calculator_expression_not_complete();
 
                 if (!string.IsNullOrEmpty(result?.ToString()))
                 {
@@ -94,7 +86,7 @@ namespace Flow.Launcher.Plugin.Calculator
                             Title = newResult,
                             IcoPath = "Images/calculator.png",
                             Score = 300,
-                            SubTitle = Context.API.GetTranslation("flowlauncher_plugin_calculator_copy_number_to_clipboard"),
+                            SubTitle = Localize.flowlauncher_plugin_calculator_copy_number_to_clipboard(),
                             CopyText = newResult,
                             Action = c =>
                             {
@@ -105,7 +97,7 @@ namespace Flow.Launcher.Plugin.Calculator
                                 }
                                 catch (ExternalException)
                                 {
-                                    Context.API.ShowMsgBox(Context.API.GetTranslation("flowlauncher_plugin_calculator_failed_to_copy"));
+                                    Context.API.ShowMsgBox(Localize.flowlauncher_plugin_calculator_failed_to_copy());
                                     return false;
                                 }
                             }
@@ -139,13 +131,13 @@ namespace Flow.Launcher.Plugin.Calculator
                 context.InputUsesGroupSeparators = true;
                 if (numberStr.LastIndexOf('.') > numberStr.LastIndexOf(','))
                 {
-                    context.InputDecimalSeparator = dot;
-                    return numberStr.Replace(comma, string.Empty);
+                    context.InputDecimalSeparator = Dot;
+                    return numberStr.Replace(Comma, string.Empty);
                 }
                 else
                 {
-                    context.InputDecimalSeparator = comma;
-                    return numberStr.Replace(dot, string.Empty).Replace(comma, dot);
+                    context.InputDecimalSeparator = Comma;
+                    return numberStr.Replace(Dot, string.Empty).Replace(Comma, Dot);
                 }
             }
 
@@ -155,29 +147,29 @@ namespace Flow.Launcher.Plugin.Calculator
                 if (dotCount > 1)
                 {
                     context.InputUsesGroupSeparators = true;
-                    return numberStr.Replace(dot, string.Empty);
+                    return numberStr.Replace(Dot, string.Empty);
                 }
-                // A number is ambiguous if it has a single dot in the thousands position,
+                // A number is ambiguous if it has a single Dot in the thousands position,
                 // and does not start with a "0." or "."
                 bool isAmbiguous = numberStr.Length - numberStr.LastIndexOf('.') == 4
                                    && !numberStr.StartsWith("0.")
                                    && !numberStr.StartsWith(".");
                 if (isAmbiguous)
                 {
-                    if (systemGroupSep == dot)
+                    if (systemGroupSep == Dot)
                     {
                         context.InputUsesGroupSeparators = true;
-                        return numberStr.Replace(dot, string.Empty);
+                        return numberStr.Replace(Dot, string.Empty);
                     }
                     else
                     {
-                        context.InputDecimalSeparator = dot;
+                        context.InputDecimalSeparator = Dot;
                         return numberStr;
                     }
                 }
                 else // Unambiguous decimal (e.g., "12.34" or "0.123" or ".123")
                 {
-                    context.InputDecimalSeparator = dot;
+                    context.InputDecimalSeparator = Dot;
                     return numberStr;
                 }
             }
@@ -188,30 +180,30 @@ namespace Flow.Launcher.Plugin.Calculator
                 if (commaCount > 1)
                 {
                     context.InputUsesGroupSeparators = true;
-                    return numberStr.Replace(comma, string.Empty);
+                    return numberStr.Replace(Comma, string.Empty);
                 }
-                // A number is ambiguous if it has a single comma in the thousands position,
+                // A number is ambiguous if it has a single Comma in the thousands position,
                 // and does not start with a "0," or ","
                 bool isAmbiguous = numberStr.Length - numberStr.LastIndexOf(',') == 4
                                    && !numberStr.StartsWith("0,")
                                    && !numberStr.StartsWith(",");
                 if (isAmbiguous)
                 {
-                    if (systemGroupSep == comma)
+                    if (systemGroupSep == Comma)
                     {
                         context.InputUsesGroupSeparators = true;
-                        return numberStr.Replace(comma, string.Empty);
+                        return numberStr.Replace(Comma, string.Empty);
                     }
                     else
                     {
-                        context.InputDecimalSeparator = comma;
-                        return numberStr.Replace(comma, dot);
+                        context.InputDecimalSeparator = Comma;
+                        return numberStr.Replace(Comma, Dot);
                     }
                 }
                 else // Unambiguous decimal (e.g., "12,34" or "0,123" or ",123")
                 {
-                    context.InputDecimalSeparator = comma;
-                    return numberStr.Replace(comma, dot);
+                    context.InputDecimalSeparator = Comma;
+                    return numberStr.Replace(Comma, Dot);
                 }
             }
 
@@ -247,7 +239,7 @@ namespace Flow.Launcher.Plugin.Calculator
         {
             // This logic is now independent of the system's group separator
             // to ensure consistent output for unit testing.
-            return decimalSeparator == dot ? comma : dot;
+            return decimalSeparator == Dot ? Comma : Dot;
         }
 
         private bool CanCalculate(Query query)
@@ -270,19 +262,19 @@ namespace Flow.Launcher.Plugin.Calculator
             return true;
         }
 
-        private static string GetDecimalSeparator()
+        private string GetDecimalSeparator()
         {
             string systemDecimalSeparator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
             return _settings.DecimalSeparator switch
             {
                 DecimalSeparator.UseSystemLocale => systemDecimalSeparator,
-                DecimalSeparator.Dot => dot,
-                DecimalSeparator.Comma => comma,
+                DecimalSeparator.Dot => Dot,
+                DecimalSeparator.Comma => Comma,
                 _ => systemDecimalSeparator,
             };
         }
 
-        private bool IsBracketComplete(string query)
+        private static bool IsBracketComplete(string query)
         {
             var matchs = RegBrackets.Matches(query);
             var leftBracketCount = 0;
@@ -303,17 +295,22 @@ namespace Flow.Launcher.Plugin.Calculator
 
         public string GetTranslatedPluginTitle()
         {
-            return Context.API.GetTranslation("flowlauncher_plugin_caculator_plugin_name");
+            return Localize.flowlauncher_plugin_caculator_plugin_name();
         }
 
         public string GetTranslatedPluginDescription()
         {
-            return Context.API.GetTranslation("flowlauncher_plugin_caculator_plugin_description");
+            return Localize.flowlauncher_plugin_caculator_plugin_description();
         }
 
         public Control CreateSettingPanel()
         {
-            return new CalculatorSettings(_viewModel);
+            return new CalculatorSettings(_settings);
+        }
+
+        public void OnCultureInfoChanged(CultureInfo newCulture)
+        {
+            DecimalSeparatorLocalized.UpdateLabels(_viewModel.AllDecimalSeparator);
         }
     }
 }
