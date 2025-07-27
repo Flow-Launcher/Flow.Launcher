@@ -323,9 +323,9 @@
     <system:String x:Key="TypeIsDarkToolTip">Este tema soporta dos modos (claro/oscuro).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Este tema soporta fondo transparente desenfocado.</system:String>
     <system:String x:Key="ShowPlaceholder">Mostrar marcador de posición</system:String>
-    <system:String x:Key="ShowPlaceholderTip">Mostrar marcador de posición cuando la consulta esté vacía</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Muestra marcador de posición cuando la consulta esté vacía</system:String>
     <system:String x:Key="PlaceholderText">Texto del marcador de posición</system:String>
-    <system:String x:Key="PlaceholderTextTip">Cambiar el texto del marcador de posición. La entrada vacía utilizará: {0}</system:String>
+    <system:String x:Key="PlaceholderTextTip">Cambia el texto del marcador de posición. La entrada vacía utilizará: {0}</system:String>
     <system:String x:Key="KeepMaxResults">Tamaño fijo de la ventana</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">El tamaño de la ventana no se puede ajustar mediante arrastre.</system:String>
 
@@ -400,7 +400,7 @@
     <system:String x:Key="showDialogJumpWindow">Mostrar ventana de salto de diálogo</system:String>
     <system:String x:Key="showDialogJumpWindowToolTip">Muestra la ventana de búsqueda de salto de diálogo cuando se presenta la ventana de diálogo de abrir/guardar para acceder rápidamente a las ubicaciones de los archivos/carpetas.</system:String>
     <system:String x:Key="dialogJumpWindowPosition">Posición de la ventana de salto de diálogo</system:String>
-    <system:String x:Key="dialogJumpWindowPositionToolTip">Seleccionar la posición de la ventana de búsqueda de salto de diálogo</system:String>
+    <system:String x:Key="dialogJumpWindowPositionToolTip">Selecciona la posición de la ventana de búsqueda de salto de diálogo</system:String>
     <system:String x:Key="DialogJumpWindowPositionUnderDialog">Fijada bajo la ventana de diálogo Abrir/Guardar como. Se muestra al abrir y permanece hasta que se cierra la ventana</system:String>
     <system:String x:Key="DialogJumpWindowPositionFollowDefault">Posición predeterminada de la ventana de búsqueda. Se muestra cuando se activa con el atajo de teclado de la ventana de búsqueda</system:String>
     <system:String x:Key="dialogJumpResultBehaviour">Comportamiento de navegación de los resultados de salto de diálogo</system:String>
