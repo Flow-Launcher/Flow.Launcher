@@ -175,7 +175,7 @@
     <system:String x:Key="showUnknownSourceWarning">Mostrar advertencia de fuente desconocida</system:String>
     <system:String x:Key="showUnknownSourceWarningToolTip">Muestra advertencia al instalar complementos desde fuentes desconocidas</system:String>
     <system:String x:Key="autoUpdatePlugins">Actualizar automáticamente los complementos</system:String>
-    <system:String x:Key="autoUpdatePluginsToolTip">Comprobar automáticamente las actualizaciones del complemento y notificar si hay actualizaciones disponibles</system:String>
+    <system:String x:Key="autoUpdatePluginsToolTip">Comprueba automáticamente las actualizaciones del complemento y notifica si hay actualizaciones disponibles</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Buscar complemento</system:String>
