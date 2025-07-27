@@ -6,10 +6,10 @@
     <system:String x:Key="flowlauncher_plugin_calculator_not_a_number">Pas un nombre (NaN)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_expression_not_complete">Expression incorrecte ou incomplète (avez-vous oublié certaines parenthèses ?)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_copy_number_to_clipboard">Copier ce chiffre dans le presse-papiers</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_seperator">Séparateur décimal</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_seperator_help">Le séparateur décimal à utiliser dans la sortie.</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_use_system_locale">Utiliser les paramètres régionaux du système</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_comma">Virgule (,)</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_dot">Point (.)</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_separator">Séparateur décimal</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_separator_help">Le séparateur décimal à utiliser dans la sortie.</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_use_system_locale">Utiliser les paramètres régionaux du système</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_comma">Virgule (,)</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_dot">Point (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">Décimales max.</system:String>
 </ResourceDictionary>

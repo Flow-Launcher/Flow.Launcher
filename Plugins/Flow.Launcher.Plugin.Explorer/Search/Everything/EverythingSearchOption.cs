@@ -1,10 +1,8 @@
-﻿using Flow.Launcher.Plugin.Everything.Everything;
-
-namespace Flow.Launcher.Plugin.Explorer.Search.Everything
+﻿namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 {
     public record struct EverythingSearchOption(
         string Keyword,
-        SortOption SortOption,
+        EverythingSortOption SortOption,
         bool IsContentSearch = false,
         string ContentSearchKeyword = default,
         string ParentPath = default,

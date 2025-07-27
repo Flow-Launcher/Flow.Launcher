@@ -124,6 +124,10 @@
 # version suffix <word>v#
 (?:(?<=[A-Z]{2})V|(?<=[a-z]{2}|[A-Z]{2})v)\d+(?:\b|(?=[a-zA-Z_]))
 
+# Non-English
+[a-zA-Z]*[ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýÿĀāŁłŃńŅņŒœŚśŠšŜŝŸŽžź][a-zA-Z]{3}[a-zA-ZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýÿĀāŁłŃńŅņŒœŚśŠšŜŝŸŽžź]*
+
+
 \bjjw24\b
 \bappref-ms\b
 \bTobiasSekan\b
@@ -143,3 +147,4 @@
 \bXing\s*Kong\s*Jian\s*Dao\b
 \bDa\s*Niu\b
 \bXiao\s*Lang\b
+\b[Ss]ettings [Ss]ettings\b
