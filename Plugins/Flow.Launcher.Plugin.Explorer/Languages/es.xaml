@@ -156,8 +156,8 @@
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_size_descending">Tamaño ↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension_ascending">Extensión ↑</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension_descending">Extensión ↓</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name_ascending">Type Name ↑</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name_descending">Type Name ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name_ascending">Tipo ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name_descending">Tipo ↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created_ascending">Fecha de creación ↑</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created_descending">Fecha de creación ↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified_ascending">Fecha de modificación ↑</system:String>
@@ -168,8 +168,8 @@
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename_descending">Nombre de la lista de archivos ↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count_ascending">Número de ejecuciones ↑</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count_descending">Número de ejecuciones ↓</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed_ascending">Date Recently Changed ↑</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed_descending">Date Recently Changed ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed_ascending">Fecha modificada recientemente ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed_descending">Fecha modificada recientemente ↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed_ascending">Fecha de último acceso ↑</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed_descending">Fecha de último acceso ↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run_ascending">Fecha de ejecución ↑</system:String>
