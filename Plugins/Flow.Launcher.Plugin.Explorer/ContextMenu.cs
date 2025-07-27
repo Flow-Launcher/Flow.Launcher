@@ -23,13 +23,10 @@ namespace Flow.Launcher.Plugin.Explorer
 
         private Settings Settings { get; set; }
 
-        private SettingsViewModel ViewModel { get; set; }
-
-        public ContextMenu(PluginInitContext context, Settings settings, SettingsViewModel vm)
+        public ContextMenu(PluginInitContext context, Settings settings)
         {
             Context = context;
             Settings = settings;
-            ViewModel = vm;
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
@@ -86,7 +83,7 @@ namespace Flow.Launcher.Plugin.Explorer
                                     Context.API.GetTranslation("plugin_explorer_addfilefoldersuccess_detail"),
                                     Constants.ExplorerIconImageFullPath);
 
-                            ViewModel.Save();
+
 
                             return true;
                         },
@@ -110,7 +107,7 @@ namespace Flow.Launcher.Plugin.Explorer
                                     Context.API.GetTranslation("plugin_explorer_removefilefoldersuccess_detail"),
                                     Constants.ExplorerIconImageFullPath);
 
-                            ViewModel.Save();
+                            
 
                             return true;
                         },

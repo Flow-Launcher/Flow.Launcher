@@ -24,7 +24,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
         private SettingsViewModel viewModel;
 
-        private IContextMenu contextMenu;
+        private ContextMenu contextMenu;
 
         private SearchManager searchManager;
 
@@ -43,12 +43,9 @@ namespace Flow.Launcher.Plugin.Explorer
             FillQuickAccessLinkNames();
 
             viewModel = new SettingsViewModel(context, Settings);
-
-            contextMenu = new ContextMenu(Context, Settings, viewModel);
+            contextMenu = new ContextMenu(Context, Settings);
             searchManager = new SearchManager(Settings, Context);
             ResultManager.Init(Context, Settings);
-
-            SortOptionTranslationHelper.API = context.API;
 
             EverythingApiDllImport.Load(Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "EverythingSDK",
                 Environment.Is64BitProcess ? "x64" : "x86"));
@@ -101,6 +98,12 @@ namespace Flow.Launcher.Plugin.Explorer
         public string GetTranslatedPluginDescription()
         {
             return Context.API.GetTranslation("plugin_explorer_plugin_description");
+        }
+
+        public void OnCultureInfoChanged(CultureInfo newCulture)
+        {
+            // Update labels for setting view model
+            EverythingSortOptionLocalized.UpdateLabels(viewModel.AllEverythingSortOptions);
         }
 
         private static void FillQuickAccessLinkNames()

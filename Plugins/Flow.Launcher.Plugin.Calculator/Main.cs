@@ -5,32 +5,23 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using Mages.Core;
-using Flow.Launcher.Plugin.Calculator.ViewModels;
 using Flow.Launcher.Plugin.Calculator.Views;
+using Flow.Launcher.Plugin.Calculator.ViewModels;
 
 namespace Flow.Launcher.Plugin.Calculator
 {
     public class Main : IPlugin, IPluginI18n, ISettingProvider
     {
-        private static readonly Regex RegValidExpressChar = new Regex(
-                        @"^(" +
-                        @"ceil|floor|exp|pi|e|max|min|det|abs|log|ln|sqrt|" +
-                        @"sin|cos|tan|arcsin|arccos|arctan|" +
-                        @"eigval|eigvec|eig|sum|polar|plot|round|sort|real|zeta|" +
-                        @"bin2dec|hex2dec|oct2dec|" +
-                        @"factorial|sign|isprime|isinfty|" +
-                        @"==|~=|&&|\|\||(?:\<|\>)=?|" +
-                        @"[ei]|[0-9]|0x[\da-fA-F]+|[\+\%\-\*\/\^\., ""]|[\(\)\|\!\[\]]" +
-                        @")+$", RegexOptions.Compiled);
-        private static readonly Regex RegBrackets = new Regex(@"[\(\)\[\]]", RegexOptions.Compiled);
+        private static readonly Regex RegValidExpressChar = MainRegexHelper.GetRegValidExpressChar();
+        private static readonly Regex RegBrackets = MainRegexHelper.GetRegBrackets();
         private static Engine MagesEngine;
-        private const string comma = ",";
-        private const string dot = ".";
+        private const string Comma = ",";
+        private const string Dot = ".";
 
-        private PluginInitContext Context { get; set; }
+        internal static PluginInitContext Context { get; set; } = null!;
 
-        private static Settings _settings;
-        private static SettingsViewModel _viewModel;
+        private Settings _settings;
+        private SettingsViewModel _viewModel;
 
         public void Init(PluginInitContext context)
         {
@@ -72,10 +63,10 @@ namespace Flow.Launcher.Plugin.Calculator
                 var result = MagesEngine.Interpret(expression);
 
                 if (result?.ToString() == "NaN")
-                    result = Context.API.GetTranslation("flowlauncher_plugin_calculator_not_a_number");
+                    result = Localize.flowlauncher_plugin_calculator_not_a_number();
 
                 if (result is Function)
-                    result = Context.API.GetTranslation("flowlauncher_plugin_calculator_expression_not_complete");
+                    result = Localize.flowlauncher_plugin_calculator_expression_not_complete();
 
                 if (!string.IsNullOrEmpty(result?.ToString()))
                 {
@@ -89,7 +80,7 @@ namespace Flow.Launcher.Plugin.Calculator
                             Title = newResult,
                             IcoPath = "Images/calculator.png",
                             Score = 300,
-                            SubTitle = Context.API.GetTranslation("flowlauncher_plugin_calculator_copy_number_to_clipboard"),
+                            SubTitle = Localize.flowlauncher_plugin_calculator_copy_number_to_clipboard(),
                             CopyText = newResult,
                             Action = c =>
                             {
@@ -100,7 +91,7 @@ namespace Flow.Launcher.Plugin.Calculator
                                 }
                                 catch (ExternalException)
                                 {
-                                    Context.API.ShowMsgBox(Context.API.GetTranslation("flowlauncher_plugin_calculator_failed_to_copy"));
+                                    Context.API.ShowMsgBox(Localize.flowlauncher_plugin_calculator_failed_to_copy());
                                     return false;
                                 }
                             }
@@ -134,16 +125,16 @@ namespace Flow.Launcher.Plugin.Calculator
                 return false;
             }
 
-            if ((query.Search.Contains(dot) && GetDecimalSeparator() != dot) ||
-                (query.Search.Contains(comma) && GetDecimalSeparator() != comma))
+            if ((query.Search.Contains(Dot) && GetDecimalSeparator() != Dot) ||
+                (query.Search.Contains(Comma) && GetDecimalSeparator() != Comma))
                 return false;
 
             return true;
         }
 
-        private string ChangeDecimalSeparator(decimal value, string newDecimalSeparator)
+        private static string ChangeDecimalSeparator(decimal value, string newDecimalSeparator)
         {
-            if (String.IsNullOrEmpty(newDecimalSeparator))
+            if (string.IsNullOrEmpty(newDecimalSeparator))
             {
                 return value.ToString();
             }
@@ -155,19 +146,19 @@ namespace Flow.Launcher.Plugin.Calculator
             return value.ToString(numberFormatInfo);
         }
 
-        private static string GetDecimalSeparator()
+        private  string GetDecimalSeparator()
         {
             string systemDecimalSeparator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
             return _settings.DecimalSeparator switch
             {
                 DecimalSeparator.UseSystemLocale => systemDecimalSeparator,
-                DecimalSeparator.Dot => dot,
-                DecimalSeparator.Comma => comma,
+                DecimalSeparator.Dot => Dot,
+                DecimalSeparator.Comma => Comma,
                 _ => systemDecimalSeparator,
             };
         }
 
-        private bool IsBracketComplete(string query)
+        private static bool IsBracketComplete(string query)
         {
             var matchs = RegBrackets.Matches(query);
             var leftBracketCount = 0;
@@ -188,17 +179,22 @@ namespace Flow.Launcher.Plugin.Calculator
 
         public string GetTranslatedPluginTitle()
         {
-            return Context.API.GetTranslation("flowlauncher_plugin_caculator_plugin_name");
+            return Localize.flowlauncher_plugin_caculator_plugin_name();
         }
 
         public string GetTranslatedPluginDescription()
         {
-            return Context.API.GetTranslation("flowlauncher_plugin_caculator_plugin_description");
+            return Localize.flowlauncher_plugin_caculator_plugin_description();
         }
 
         public Control CreateSettingPanel()
         {
-            return new CalculatorSettings(_viewModel);
+            return new CalculatorSettings(_settings);
+        }
+
+        public void OnCultureInfoChanged(CultureInfo newCulture)
+        {
+            DecimalSeparatorLocalized.UpdateLabels(_viewModel.AllDecimalSeparator);
         }
     }
 }
