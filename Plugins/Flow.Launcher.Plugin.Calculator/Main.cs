@@ -15,9 +15,8 @@ namespace Flow.Launcher.Plugin.Calculator
     {
         private static readonly Regex RegValidExpressChar = MainRegexHelper.GetRegValidExpressChar();
         private static readonly Regex RegBrackets = MainRegexHelper.GetRegBrackets();
-        private static readonly Regex ThousandGroupRegex = new Regex(@"\B(?=(\d{3})+(?!\d))", RegexOptions.Compiled);
-        private static readonly Regex NumberRegex = new Regex(@"[\d\.,]+", RegexOptions.Compiled);
-
+        private static readonly Regex ThousandGroupRegex = MainRegexHelper.GetThousandGroupRegex();
+        private static readonly Regex NumberRegex = MainRegexHelper.GetNumberRegex();
 
         private static Engine MagesEngine;
         private const string Comma = ",";
