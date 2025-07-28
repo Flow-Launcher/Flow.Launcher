@@ -4,7 +4,7 @@
     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <system:String x:Key="flowlauncher_plugin_calculator_plugin_name">Calculator</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_plugin_description">Allows to do mathematical calculations.(Try 5*3-2 in Flow Launcher)</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_plugin_description">Perform mathematical calculations (including hexadecimal values). Use ',' or '.' as thousand separator or decimal place.</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_not_a_number">Not a number (NaN)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_expression_not_complete">Expression wrong or incomplete (Did you forget some parentheses?)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_copy_number_to_clipboard">Copy this number to the clipboard</system:String>
