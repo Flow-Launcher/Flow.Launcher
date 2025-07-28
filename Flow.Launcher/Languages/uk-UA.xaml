@@ -17,20 +17,20 @@
     <system:String x:Key="failedToInitializePluginsMessage">Плагіни: {0} - не вдалося підвантажити і буде вимкнено, зверніться за допомогою до автора плагіна</system:String>
 
     <!--  Portable  -->
-    <system:String x:Key="restartToDisablePortableMode">Flow Launcher needs to restart to finish disabling portable mode, after the restart your portable data profile will be deleted and roaming data profile kept</system:String>
-    <system:String x:Key="restartToEnablePortableMode">Flow Launcher needs to restart to finish enabling portable mode, after the restart your roaming data profile will be deleted and portable data profile kept</system:String>
-    <system:String x:Key="moveToDifferentLocation">Flow Launcher has detected you enabled portable mode, would you like to move it to a different location?</system:String>
-    <system:String x:Key="shortcutsUninstallerCreated">Flow Launcher has detected you disabled portable mode, the relevant shortcuts and uninstaller entry have been created</system:String>
-    <system:String x:Key="userDataDuplicated">Flow Launcher detected your user data exists both in {0} and {1}. {2}{2}Please delete {1} in order to proceed. No changes have occurred.</system:String>
+    <system:String x:Key="restartToDisablePortableMode">Flow Launcher потрібно перезапустити, щоб завершити вимкнення портативного режиму. Після перезапуску ваш портативний профіль даних буде видалено, а профіль даних роумінгу збережено</system:String>
+    <system:String x:Key="restartToEnablePortableMode">Flow Launcher потрібно перезапустити, щоб завершити ввімкнення портативного режиму. Після перезапуску ваш профіль даних роумінгу буде видалено, а профіль портативних даних збережено</system:String>
+    <system:String x:Key="moveToDifferentLocation">Flow Launcher виявив, що ви ввімкнули портативний режим. Чи хочете перемістити його в інше місце?</system:String>
+    <system:String x:Key="shortcutsUninstallerCreated">Flow Launcher виявив, що ви вимкнули портативний режим, відповідні ярлики та запис для видалення були створені</system:String>
+    <system:String x:Key="userDataDuplicated">Flow Launcher виявив, що ваші дані користувача існують як в {0}, так і в {1}. {2}{2}Видаліть {1}, щоби продовжити. Зміни не відбулися.</system:String>
 
     <!--  Plugin Loader  -->
-    <system:String x:Key="pluginHasErrored">The following plugin has errored and cannot be loaded:</system:String>
-    <system:String x:Key="pluginsHaveErrored">The following plugins have errored and cannot be loaded:</system:String>
-    <system:String x:Key="referToLogs">Please refer to the logs for more information</system:String>
+    <system:String x:Key="pluginHasErrored">Наступний плагін містить помилку і не може бути завантажений:</system:String>
+    <system:String x:Key="pluginsHaveErrored">Наступні плагіни мають помилки і не можуть бути завантажені:</system:String>
+    <system:String x:Key="referToLogs">Для отримання додаткової інформації зверніться до журналів</system:String>
 
     <!--  Http  -->
-    <system:String x:Key="pleaseTryAgain">Please try again</system:String>
-    <system:String x:Key="parseProxyFailed">Unable to parse Http Proxy</system:String>
+    <system:String x:Key="pleaseTryAgain">Спробуйте ще раз</system:String>
+    <system:String x:Key="parseProxyFailed">Неможливо проаналізувати Http Proxy</system:String>
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Не вдалося зареєструвати гарячу клавішу &quot;{0}&quot;. Можливо, гаряча клавіша використовується іншою програмою. Змініть її на іншу гарячу клавішу або вийдіть з програми, де вона використовується.</system:String>
@@ -95,10 +95,10 @@
     <system:String x:Key="maxShowResults">Максимальна кількість результатів</system:String>
     <system:String x:Key="maxShowResultsToolTip">Ви також можете швидко налаштувати цей параметр за допомогою клавіш CTRL+Плюс чи CTRL+Мінус.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ігнорувати гарячі клавіші в повноекранному режимі</system:String>
-    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Вимкнути активацію Flow Launcher коли активовано повноекранний додаток (Рекомендується для ігор).</system:String>
+    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Вимкнути активацію Flow Launcher коли активовано повноекранний застосунок (Рекомендується для ігор).</system:String>
     <system:String x:Key="defaultFileManager">Стандартний Файловий Менеджер</system:String>
     <system:String x:Key="defaultFileManagerToolTip">Виберіть файловий менеджер для використання під час відкриття теки.</system:String>
-    <system:String x:Key="defaultBrowser">Браузер за замовчуванням</system:String>
+    <system:String x:Key="defaultBrowser">Типовий браузер</system:String>
     <system:String x:Key="defaultBrowserToolTip">Налаштування нової вкладки, нового вікна, приватного режиму.</system:String>
     <system:String x:Key="pythonFilePath">Шлях до Python</system:String>
     <system:String x:Key="nodeFilePath">Шлях до Node.js</system:String>
@@ -119,7 +119,7 @@
     <system:String x:Key="SearchPrecisionLow">Мало</system:String>
     <system:String x:Key="SearchPrecisionRegular">Звичайно</system:String>
     <system:String x:Key="ShouldUsePinyin">Використовувати піньїнь</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">Pinyin is the standard system of romanized spelling for translating Chinese. Please note, enabling this can significantly increase memory usage during search.</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">Піньїнь — це стандартна система латинізації для перекладу китайської мови. Зверніть увагу, що ввімкнення цієї функції може значно збільшити використання пам’яті під час пошуку.</system:String>
     <system:String x:Key="ShouldUseDoublePinyin">Використовувати подвійний піньїнь</system:String>
     <system:String x:Key="ShouldUseDoublePinyinToolTip">Для пошуку використовуйте подвійний піньїнь замість повного.</system:String>
     <system:String x:Key="DoublePinyinSchema">Подвійна схема піньїнь</system:String>
@@ -161,8 +161,8 @@
     <system:String x:Key="KoreanImeOpenLinkButton">Відкрити</system:String>
     <system:String x:Key="KoreanImeRegistry">Використовувати попередній корейський IME</system:String>
     <system:String x:Key="KoreanImeRegistryTooltip">Ви можете змінити попередні налаштування корейського IME безпосередньо звідси.</system:String>
-    <system:String x:Key="KoreanImeSettingChangeFailTitle">Failed to change Korean IME setting</system:String>
-    <system:String x:Key="KoreanImeSettingChangeFailSubTitle">Please check your system registry access or contact support.</system:String>
+    <system:String x:Key="KoreanImeSettingChangeFailTitle">Не вдалося змінити налаштування корейського IME</system:String>
+    <system:String x:Key="KoreanImeSettingChangeFailSubTitle">Перевірте доступ до системного реєстру або зверніться до служби підтримки.</system:String>
     <system:String x:Key="homePage">Головна сторінка</system:String>
     <system:String x:Key="homePageToolTip">Показувати результати на головній сторінці, коли текст запиту порожній.</system:String>
     <system:String x:Key="historyResultsForHomePage">Показати результати історії на головній</system:String>
@@ -260,9 +260,9 @@
     <system:String x:Key="updateNoResultTitle">Оновлень не знайдено</system:String>
     <system:String x:Key="updateNoResultSubtitle">Всі плагіни оновлено</system:String>
     <system:String x:Key="updateAllPluginsTitle">Доступні оновлення плагінів</system:String>
-    <system:String x:Key="updateAllPluginsButtonContent">Update plugins</system:String>
+    <system:String x:Key="updateAllPluginsButtonContent">Оновити плагіни</system:String>
     <system:String x:Key="checkPluginUpdatesTooltip">Перевірити оновлення плагінів</system:String>
-    <system:String x:Key="PluginsUpdateSuccessNoRestart">Plugins are successfully updated. Please restart Flow.</system:String>
+    <system:String x:Key="PluginsUpdateSuccessNoRestart">Плагіни успішно оновлено. Перезапустіть Flow.</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Тема</system:String>
@@ -272,7 +272,7 @@
     <system:String x:Key="hiThere">Привіт усім</system:String>
     <system:String x:Key="SampleTitleExplorer">Провідник</system:String>
     <system:String x:Key="SampleSubTitleExplorer">Пошук файлів, папок і вмісту файлів</system:String>
-    <system:String x:Key="SampleTitleWebSearch">Веб-пошук</system:String>
+    <system:String x:Key="SampleTitleWebSearch">Вебпошук</system:String>
     <system:String x:Key="SampleSubTitleWebSearch">Пошук в Інтернеті за допомогою різних пошукових систем</system:String>
     <system:String x:Key="SampleTitleProgram">Програма</system:String>
     <system:String x:Key="SampleSubTitleProgram">Запуск програм від імені адміністратора або іншого користувача</system:String>
@@ -290,12 +290,12 @@
     <system:String x:Key="CustomizeToolTip">Підлаштувати</system:String>
     <system:String x:Key="windowMode">Віконний режим</system:String>
     <system:String x:Key="opacity">Прозорість</system:String>
-    <system:String x:Key="theme_load_failure_path_not_exists">Тема {0} не існує, повернення до теми за замовчуванням</system:String>
-    <system:String x:Key="theme_load_failure_parse_error">Не вдалось завантажити тему {0}, повернення до теми за замовчуванням</system:String>
+    <system:String x:Key="theme_load_failure_path_not_exists">Тема {0} не існує, повернення до типової теми</system:String>
+    <system:String x:Key="theme_load_failure_parse_error">Не вдалось завантажити тему {0}, повернення до типової теми</system:String>
     <system:String x:Key="ThemeFolder">Тека з темою</system:String>
     <system:String x:Key="OpenThemeFolder">Відкрити теку з темою</system:String>
     <system:String x:Key="ColorScheme">Схема кольорів</system:String>
-    <system:String x:Key="ColorSchemeSystem">За замовчуванням</system:String>
+    <system:String x:Key="ColorSchemeSystem">Як у системі</system:String>
     <system:String x:Key="ColorSchemeLight">Світла</system:String>
     <system:String x:Key="ColorSchemeDark">Темна</system:String>
     <system:String x:Key="SoundEffect">Звуковий ефект</system:String>
@@ -363,7 +363,7 @@
     <system:String x:Key="QuickWidthHotkey">Швидке регулювання ширини вікна</system:String>
     <system:String x:Key="QuickHeightHotkey">Швидке регулювання висоти вікна</system:String>
     <system:String x:Key="ReloadPluginHotkeyToolTip">Використовуйте, коли плагінам потрібно перезавантажити та оновити наявні дані.</system:String>
-    <system:String x:Key="AdditionalHotkeyToolTip">Ви можете додати ще одну галавішу для цієї функції.</system:String>
+    <system:String x:Key="AdditionalHotkeyToolTip">Ви можете додати ще одну гарячу клавішу для цієї функції.</system:String>
     <system:String x:Key="customQueryHotkey">Задані гарячі клавіші для запитів</system:String>
     <system:String x:Key="customQueryShortcut">Користувацькі скорочення запитів</system:String>
     <system:String x:Key="builtinShortcuts">Вбудовані скорочення</system:String>
@@ -390,28 +390,28 @@
     <system:String x:Key="showBadges">Показувати значки результатів</system:String>
     <system:String x:Key="showBadgesToolTip">Для підтримуваних плагінів показуються значки для легшого розрізнення.</system:String>
     <system:String x:Key="showBadgesGlobalOnly">Показувати значки результатів тільки для глобального запиту</system:String>
-    <system:String x:Key="showBadgesGlobalOnlyToolTip">Show badges for global query results only</system:String>
-    <system:String x:Key="dialogJumpHotkey">Dialog Jump</system:String>
-    <system:String x:Key="dialogJumpHotkeyToolTip">Enter shortcut to quickly navigate the Open/Save As dialog window to the path of the current file manager.</system:String>
-    <system:String x:Key="dialogJump">Dialog Jump</system:String>
-    <system:String x:Key="dialogJumpToolTip">When Open/Save As dialog window opens, quickly navigate to the current path of the file manager.</system:String>
-    <system:String x:Key="autoDialogJump">Dialog Jump Automatically</system:String>
-    <system:String x:Key="autoDialogJumpToolTip">When Open/Save As dialog window is displayed, automatically navigate to the path of the current file manager. (Experimental)</system:String>
-    <system:String x:Key="showDialogJumpWindow">Show Dialog Jump Window</system:String>
-    <system:String x:Key="showDialogJumpWindowToolTip">Display Dialog Jump search window when the open/save dialog window is shown to quickly navigate to file/folder locations.</system:String>
-    <system:String x:Key="dialogJumpWindowPosition">Dialog Jump Window Position</system:String>
-    <system:String x:Key="dialogJumpWindowPositionToolTip">Select position for the Dialog Jump search window</system:String>
-    <system:String x:Key="DialogJumpWindowPositionUnderDialog">Fixed under the Open/Save As dialog window. Displayed on open and stays until the window is closed</system:String>
-    <system:String x:Key="DialogJumpWindowPositionFollowDefault">Default search window position. Displayed when triggered by search window hotkey</system:String>
-    <system:String x:Key="dialogJumpResultBehaviour">Dialog Jump Result Navigation Behaviour</system:String>
-    <system:String x:Key="dialogJumpResultBehaviourToolTip">Behaviour to navigate Open/Save As dialog window to the selected result path</system:String>
-    <system:String x:Key="DialogJumpResultBehaviourLeftClick">Left click or Enter key</system:String>
-    <system:String x:Key="DialogJumpResultBehaviourRightClick">Right click</system:String>
-    <system:String x:Key="dialogJumpFileResultBehaviour">Dialog Jump File Navigation Behaviour</system:String>
-    <system:String x:Key="dialogJumpFileResultBehaviourToolTip">Behaviour to navigate Open/Save As dialog window when the result is a file path</system:String>
-    <system:String x:Key="DialogJumpFileResultBehaviourFullPath">Fill full path in file name box</system:String>
-    <system:String x:Key="DialogJumpFileResultBehaviourFullPathOpen">Fill full path in file name box and open</system:String>
-    <system:String x:Key="DialogJumpFileResultBehaviourDirectory">Fill directory in path box</system:String>
+    <system:String x:Key="showBadgesGlobalOnlyToolTip">Показати значки тільки для результатів глобального запиту</system:String>
+    <system:String x:Key="dialogJumpHotkey">Перейти до діалогу</system:String>
+    <system:String x:Key="dialogJumpHotkeyToolTip">Введіть ярлик для швидкого переходу у вікні діалогу «Відкрити/Зберегти як» до шляху поточного файлового менеджера.</system:String>
+    <system:String x:Key="dialogJump">Перейти до діалогу</system:String>
+    <system:String x:Key="dialogJumpToolTip">Коли відкриється діалогове вікно «Відкрити/Зберегти як», швидко перейти до поточного шляху файлового менеджера.</system:String>
+    <system:String x:Key="autoDialogJump">Автоматично перейти до діалогу</system:String>
+    <system:String x:Key="autoDialogJumpToolTip">Коли показується діалогове вікно «Відкрити/Зберегти як», автоматично перейти до шляху поточного файлового менеджера. (Експериментально)</system:String>
+    <system:String x:Key="showDialogJumpWindow">Показати діалогове вікно переходу</system:String>
+    <system:String x:Key="showDialogJumpWindowToolTip">Показати діалогове вікно «Перейти до вікна пошуку», коли показано діалогове вікно «Відкрити/Зберегти», щоби швидко перейти до розташування файлів/тек.</system:String>
+    <system:String x:Key="dialogJumpWindowPosition">Позиція вікна переходу до діалогу</system:String>
+    <system:String x:Key="dialogJumpWindowPositionToolTip">Виберіть положення для вікна пошуку «Перейти до діалогу»</system:String>
+    <system:String x:Key="DialogJumpWindowPositionUnderDialog">Фіксоване під діалоговим вікном «Відкрити/Зберегти як». Показується при відкритті та залишається до закриття вікна</system:String>
+    <system:String x:Key="DialogJumpWindowPositionFollowDefault">Типова позиція вікна пошуку. Показується при активації гарячою клавішею вікна пошуку</system:String>
+    <system:String x:Key="dialogJumpResultBehaviour">Навігація за результатами діалогового переходу</system:String>
+    <system:String x:Key="dialogJumpResultBehaviourToolTip">Дії для переходу до діалогового вікна «Відкрити/Зберегти як» у вибраному шляху до результату</system:String>
+    <system:String x:Key="DialogJumpResultBehaviourLeftClick">Ліва кнопка миші або клавіша Enter</system:String>
+    <system:String x:Key="DialogJumpResultBehaviourRightClick">Права кнопка миші</system:String>
+    <system:String x:Key="dialogJumpFileResultBehaviour">Поведінка переходу між діалогами</system:String>
+    <system:String x:Key="dialogJumpFileResultBehaviourToolTip">Поведінка при навігації у вікні діалогу «Відкрити/Зберегти як», коли результатом є шлях до файлу</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourFullPath">Введіть повний шлях у полі назви файлу</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourFullPathOpen">Введіть повний шлях у поле назви файлу та відкрийте його</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourDirectory">Заповніть каталог у полі шляху</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP-проксі</system:String>
@@ -431,7 +431,7 @@
 
     <!--  Setting About  -->
     <system:String x:Key="about">Про Flow Launcher</system:String>
-    <system:String x:Key="website">Веб-сайт</system:String>
+    <system:String x:Key="website">Вебсайт</system:String>
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">Документація</system:String>
     <system:String x:Key="version">Версія</system:String>
@@ -487,8 +487,8 @@
     <system:String x:Key="fileManagerPathError">Помилка шляху до файлового менеджера</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
-    <system:String x:Key="defaultBrowserTitle">Веб-браузер за замовчуванням</system:String>
-    <system:String x:Key="defaultBrowser_tips">Налаштування за замовчуванням відповідають налаштуванню браузера за замовчуванням в операційній системі. Якщо вказано окремо, Flow використовує цей браузер.</system:String>
+    <system:String x:Key="defaultBrowserTitle">Типовий веббраузер</system:String>
+    <system:String x:Key="defaultBrowser_tips">Типові налаштування відповідають налаштуванню типового браузера в операційній системі. Якщо вказано окремо, Flow використовує цей браузер.</system:String>
     <system:String x:Key="defaultBrowser_name">Браузер</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Назва браузера</system:String>
     <system:String x:Key="defaultBrowser_path">Шлях до браузера</system:String>
@@ -562,7 +562,7 @@
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Версія</system:String>
     <system:String x:Key="reportWindow_time">Час</system:String>
-    <system:String x:Key="reportWindow_reproduce">Будь ласка, розкажіть нам, як додаток вийшов із ладу, щоб ми могли це виправити</system:String>
+    <system:String x:Key="reportWindow_reproduce">Розкажіть нам, як застосунок вийшов із ладу, щоб ми могли це виправити</system:String>
     <system:String x:Key="reportWindow_send_report">Надіслати звіт</system:String>
     <system:String x:Key="reportWindow_cancel">Скасувати</system:String>
     <system:String x:Key="reportWindow_general">Основні</system:String>
@@ -573,7 +573,7 @@
     <system:String x:Key="reportWindow_sending">Відправляється</system:String>
     <system:String x:Key="reportWindow_report_succeed">Звіт успішно відправлено</system:String>
     <system:String x:Key="reportWindow_report_failed">Не вдалося відправити звіт</system:String>
-    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Стався збій в додатку Flow Launcher</system:String>
+    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Стався збій в застосунку Flow Launcher</system:String>
     <system:String x:Key="reportWindow_please_open_issue">Створіть нову проблему в</system:String>
     <system:String x:Key="reportWindow_upload_log">1. Завантажте файл журналу: {0}</system:String>
     <system:String x:Key="reportWindow_copy_below">2. Скопіюйте нижче повідомлення про виняток</system:String>
@@ -612,9 +612,9 @@
     <system:String x:Key="update_flowlauncher_update_update_description">Опис оновлення</system:String>
 
     <!--  Plugin Update Window  -->
-    <system:String x:Key="restartAfterUpdating">Restart Flow Launcher after updating plugins</system:String>
-    <system:String x:Key="updatePluginCheckboxContent">{0}: Update from v{1} to v{2}</system:String>
-    <system:String x:Key="updatePluginNoSelected">No plugin selected</system:String>
+    <system:String x:Key="restartAfterUpdating">Перезапустити Flow Launcher після оновлення плагінів</system:String>
+    <system:String x:Key="updatePluginCheckboxContent">{0}: оновлено з v{1} до v{2}</system:String>
+    <system:String x:Key="updatePluginNoSelected">Плагін не вибрано</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Пропустити</system:String>
@@ -636,7 +636,7 @@
     <system:String x:Key="HotkeyLeftRightDesc">Навігація елементами</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">Відкрити контекстне меню</system:String>
     <system:String x:Key="HotkeyCtrlEnterDesc">Відкрийте папку, що містить файл</system:String>
-    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Запустити від імені адміністратора / Відкрити папку у файловому менеджері за замовчуванням</system:String>
+    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Запустити від імені адміністратора / Відкрити теку у типовому файловому менеджері</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">Історія запитів</system:String>
     <system:String x:Key="HotkeyESCDesc">Повернутися до результату в контекстному меню</system:String>
     <system:String x:Key="HotkeyTabDesc">Автодоповнення</system:String>
