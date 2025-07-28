@@ -81,7 +81,7 @@ namespace Flow.Launcher.Core.Resource
                 "da" => "System",
                 "de" => "System",
                 "ko" => "시스템",
-                "sr" => "Srpski",
+                "sr" => "Sistem",
                 "sr-Cyrl-RS" => "Систем",
                 "pt-pt" => "Sistema",
                 "pt-br" => "Sistema",
