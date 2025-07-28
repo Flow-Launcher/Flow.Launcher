@@ -6,7 +6,7 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Пошук у закладках браузера</system:String>
 
     <!--  Main  -->
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">Failed to set url in clipboard</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">Не вдалося вставити Url-адресу в буфер обміну</system:String>
 
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Дані закладок</system:String>
@@ -27,7 +27,7 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Інші</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Браузерний рушій</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">Якщо ви не використовуєте Chrome, Firefox або Edge, або використовуєте їхні портативні версії, вам потрібно додати каталог даних закладок і вибрати правильний рушій браузера, щоб цей плагін працював.</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">Наприклад: Рушій Brave - Chromium, і за замовчуванням розташування даних закладок: &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. Для браузера Firefox директорія закладок - це папка userdata, що містить файл places.sqlite.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">Наприклад: рушій Brave — Chromium, і типово розташування даних закладок: «%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData». Для браузера Firefox директорія закладок — це тека userdata, що містить файл places.sqlite.</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Завантажити піктограми (може зайняти багато часу під час запуску)</system:String>
 
 </ResourceDictionary>
