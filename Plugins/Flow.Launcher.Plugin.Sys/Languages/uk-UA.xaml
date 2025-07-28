@@ -62,7 +62,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Ви впевнені, що хочете перезавантажити комп'ютер за допомогою додаткових параметрів завантаження?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Ви впевнені, що хочете вийти з системи?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_error">Помилка</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_empty_recycle_bin_failed">Failed to empty the recycle bin. This might happen if:{0}- Some items are currently in use{0}- Some items can't be deleted due to permissions{0}Please close any applications that might be using these files and try again.</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_empty_recycle_bin_failed">Не вдалося очистити кошик. Це може статися, якщо:{0}- Деякі елементи зараз використовуються{0}- Деякі елементи не можна видалити через обмеження доступу{0}Закрийте всі застосунки, які можуть використовувати ці файли, і спробуйте ще раз.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Налаштування ключового слова команди</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Власне ключове слово команди</system:String>
