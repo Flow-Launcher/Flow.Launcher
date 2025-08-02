@@ -256,12 +256,12 @@
     <system:String x:Key="InstallFromUnknownSourceSubtitle">¡Este complemento es de una fuente desconocida y puede contener riesgos potenciales!{0}{0}Asegúrese de entender de dónde proviene este complemento y que es seguro.{0}{0}¿Desea continuar aún?{0}{0}(Puede desactivar esta advertencia en la sección general de la ventana de configuración)</system:String>
     <system:String x:Key="ZipFiles">Archivos Zip</system:String>
     <system:String x:Key="SelectZipFile">Por favor, seleccione archivo zip</system:String>
-    <system:String x:Key="installLocalPluginTooltip">Instalar complemento desde la ruta local</system:String>
+    <system:String x:Key="installLocalPluginTooltip">Instalar complemento desde ruta local</system:String>
     <system:String x:Key="updateNoResultTitle">No hay actualizaciones disponibles</system:String>
     <system:String x:Key="updateNoResultSubtitle">Todos los complementos están actualizados</system:String>
     <system:String x:Key="updateAllPluginsTitle">Actualizaciones de complementos disponibles</system:String>
     <system:String x:Key="updateAllPluginsButtonContent">Actualizar complementos</system:String>
-    <system:String x:Key="checkPluginUpdatesTooltip">Comprobar las actualizaciones de los complementos</system:String>
+    <system:String x:Key="checkPluginUpdatesTooltip">Comprobar actualizaciones de los complementos</system:String>
     <system:String x:Key="PluginsUpdateSuccessNoRestart">Los complementos se han actualizado correctamente. Por favor, reinicie Flow.</system:String>
 
     <!--  Setting Theme  -->
