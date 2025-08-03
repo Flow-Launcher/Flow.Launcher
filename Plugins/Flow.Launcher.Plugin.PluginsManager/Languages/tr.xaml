@@ -6,7 +6,7 @@
     <system:String x:Key="plugin_pluginsmanager_download_success">Successfully downloaded</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_error">Hata: Eklenti indirilemiyor</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} by {1} {2}{3}Would you like to uninstall this plugin? After the uninstallation Flow will automatically restart.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_uninstall_prompt_no_restart">{0} by {1} {2}{2}Would you like to uninstall this plugin?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_prompt_no_restart">{0} - {1} tarafından geliştirildi {2}{2}Bu eklentiyi kaldırmak ister misiniz?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} by {1} {2}{3}Would you like to install this plugin? After the installation Flow will automatically restart.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_prompt_no_restart">{0} by {1} {2}{2}Would you like to install this plugin?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_title">Eklenti Yükleme</system:String>
@@ -61,7 +61,7 @@
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_subtitle">Eklentinin kaynak kodunu görüntüle</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_newissue_title">Suggest an enhancement or submit an issue</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_newissue_subtitle">Suggest an enhancement or submit an issue to the plugin developer</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_title">Go to Flow's plugins repository</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_title">Flow'un eklenti deposuna gidin</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_subtitle">Visit the PluginsManifest repository to see community-made plugin submissions</system:String>
 
     <!--  Settings menu items  -->
