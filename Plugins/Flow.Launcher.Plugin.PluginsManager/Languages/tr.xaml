@@ -31,7 +31,7 @@
     <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Please check if you can connect to github.com. This error means you may not be able to install or update plugins.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_title">Tüm eklentileri güncelle</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_subtitle">Tüm eklentileri güncellemek ister misiniz?</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_prompt">Would you like to update {0} plugins?{1}Flow Launcher will restart after updating all plugins.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_prompt">{0} eklentiyi güncellemek ister misiniz? {1}Flow Launcher tüm eklentileri güncelledikten sonra yeniden başlayacaktır.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_prompt_no_restart">{0} eklentisini güncellemek ister misiniz?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_success_restart">{0} eklentileri başarıyla güncellendi. Flow yeniden başlatılıyor, lütfen bekleyin...</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_success_restart">{0} eklentisi başarıyla güncellendi. Flow yeniden başlatılıyor, lütfen bekleyin...</system:String>
@@ -59,8 +59,8 @@
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_openwebsite_subtitle">Eklentinin web sitesini ziyaret edin</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_title">Kaynak kodunu görüntüle</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_subtitle">Eklentinin kaynak kodunu görüntüle</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_newissue_title">Suggest an enhancement or submit an issue</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_newissue_subtitle">Suggest an enhancement or submit an issue to the plugin developer</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_newissue_title">Bir geliştirme öner veya bir sorun gönder</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_newissue_subtitle">Eklenti geliştiricisine bir geliştirme önerin veya bir sorun gönderin</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_title">Flow'un eklenti deposuna gidin</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_subtitle">Visit the PluginsManifest repository to see community-made plugin submissions</system:String>
 
