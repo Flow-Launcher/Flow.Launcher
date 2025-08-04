@@ -5,26 +5,26 @@
     <system:String x:Key="plugin_pluginsmanager_downloading_plugin">Eklenti indiriliyor</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_success">Successfully downloaded</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_error">Hata: Eklenti indirilemiyor</system:String>
-    <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} by {1} {2}{3}Would you like to uninstall this plugin? After the uninstallation Flow will automatically restart.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0}, {1} tarafından geliştirildi {2}{3}Bu eklentiyi kaldırmak ister misiniz? Kaldırma işlemi tamamlandığında Flow kendiliğinden yeniden başlatılacak.</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt_no_restart">{0} - {1} tarafından geliştirildi {2}{2}Bu eklentiyi kaldırmak ister misiniz?</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} by {1} {2}{3}Would you like to install this plugin? After the installation Flow will automatically restart.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_prompt_no_restart">{0} by {1} {2}{2}Would you like to install this plugin?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_prompt">{0}, {1} tarafından geliştirildi {2}{3}Bu eklentiyi yüklemek ister misiniz? Yükleme işlemi tamamlandığında Flow kendiliğinden yeniden başlatılacak.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_prompt_no_restart">{0} - {1} tarafından geliştirildi {2}{2}Bu eklentiyi yüklemek ister misiniz?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_title">Eklenti Yükleme</system:String>
     <system:String x:Key="plugin_pluginsmanager_installing_plugin">Eklenti Yükleniyor</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">{0} İndir ve yükle</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Eklenti Kaldırma</system:String>
     <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_title">Eklenti ayarlarını sakla</system:String>
-    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_subtitle">Do you want to keep the settings of the plugin for the next usage?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_subtitle">Eklentinin ayarlarını bir sonraki kullanım için saklamak istiyor musunuz?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin successfully installed. Restarting Flow, please wait...</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Unable to find the plugin.json metadata file from the extracted zip file.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Çıkarılan zip dosyasından plugin.json metadata dosyası bulunamıyor.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Error: A plugin which has the same or greater version with {0} already exists.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_title">Eklenti yüklenirken bir hata oluştu</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">{0} yüklenmeye çalışılırken hata oluştu</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_error_title">Eklenti kaldırılırken bir hata oluştu</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_title">Güncelleme mevcut değil</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_subtitle">Tüm eklentiler güncel</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} by {1} {2}{3}Would you like to update this plugin? After the update Flow will automatically restart.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_prompt_no_restart">{0} by {1} {2}{2}Would you like to update this plugin?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_prompt">{0}, {1} tarafından geliştirildi {2}{3}Bu eklentiyi güncellemek ister misiniz? Güncelleme tamamlandığında Flow kendiliğinden yeniden başlatılacak.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_prompt_no_restart">{0} - {1} tarafından geliştirildi {2}{2}Bu eklentiyi güncellemek ister misiniz?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_title">Eklenti Güncellemesi</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Bu eklenti zaten yüklü</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_title">Eklenti Manifestosu İndirme Başarısız Oldu</system:String>
@@ -66,5 +66,5 @@
 
     <!--  Settings menu items  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Bilinmeyen kaynaktan yükleme uyarısı</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugins Manager</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Eklenti Yöneticisi aracılığıyla eklentiyi yükledikten/kaldırdıktan/güncelleştirdikten sonra Flow Launcher'ı otomatik olarak yeniden başlatın</system:String>
 </ResourceDictionary>
