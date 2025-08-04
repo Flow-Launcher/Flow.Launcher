@@ -1803,7 +1803,7 @@
     <value>Windows'u başlattığınızda hangi işlemlerin otomatik olarak başladığını görün</value>
   </data>
   <data name="TellIfAnRSSFeedIsAvailableOnAWebsite" xml:space="preserve">
-    <value>Tell if an RSS feed is available on a website</value>
+    <value>Bir RSS beslemesinin bir web sitesinde mevcut olup olmadığını söyle</value>
   </data>
   <data name="AddClocksForDifferentTimeZones" xml:space="preserve">
     <value>Farklı zaman dilimleri için saatler ekleyin</value>
@@ -2019,16 +2019,16 @@
     <value>Change Windows SideShow settings</value>
   </data>
   <data name="UseAudioDescriptionForVideo" xml:space="preserve">
-    <value>Use audio description for video</value>
+    <value>Video için sesli açıklama kullan</value>
   </data>
   <data name="ChangeWorkgroupName" xml:space="preserve">
-    <value>Change workgroup name</value>
+    <value>Çalışma grubu adını değiştir</value>
   </data>
   <data name="FindAndFixPrintingProblems" xml:space="preserve">
     <value>Yazıcı sorunlarını bul ve düzelt</value>
   </data>
   <data name="ChangeWhenTheComputerSleeps" xml:space="preserve">
-    <value>Change when the computer sleeps</value>
+    <value>Bilgisayarın uyku zamanını değiştir</value>
   </data>
   <data name="SetUpAVirtualPrivateNetworkVPNConnection" xml:space="preserve">
     <value>Bir sanal özel ağ (VPN) bağlantısı kur</value>
@@ -2127,7 +2127,7 @@
     <value>Bir mikrofon ayarla</value>
   </data>
   <data name="ChangeHowTheMousePointerLooks" xml:space="preserve">
-    <value>Change how the mouse pointer looks</value>
+    <value>Fare işaretçisinin görünümünü değiştir</value>
   </data>
   <data name="ChangePowerSavingSettings" xml:space="preserve">
     <value>Güç tasarrufu ayarlarını değiştir</value>
@@ -2143,7 +2143,7 @@
     <value>Windows özelliklerini aç veya kapat</value>
   </data>
   <data name="ShowWhichOperatingSystemYourComputerIsRunning" xml:space="preserve">
-    <value>Show which operating system your computer is running</value>
+    <value>Bilgisayarınızın hangi işletim sistemini çalıştırdığını gösterin</value>
   </data>
   <data name="ViewLocalServices" xml:space="preserve">
     <value>Yerel hizmetleri görüntüle</value>
@@ -2179,7 +2179,7 @@
     <value>Let Windows suggest Ease of Access settings</value>
   </data>
   <data name="ClearDiskSpaceByDeletingUnnecessaryFiles" xml:space="preserve">
-    <value>Clear disk space by deleting unnecessary files</value>
+    <value>Gereksiz dosyaları silerek disk alanını temizle</value>
   </data>
   <data name="ViewDevicesAndPrinters" xml:space="preserve">
     <value>Cihazları ve yazıcıları görüntüle</value>
@@ -2191,22 +2191,22 @@
     <value>Record steps to reproduce a problem</value>
   </data>
   <data name="AdjustTheAppearanceAndPerformanceOfWindows" xml:space="preserve">
-    <value>Adjust the appearance and performance of Windows</value>
+    <value>Windows'un görünümünü ve performansını ayarla</value>
   </data>
   <data name="SettingsForMicrosoftIMEJapanese" xml:space="preserve">
-    <value>Settings for Microsoft IME (Japanese)</value>
+    <value>Microsoft IME için ayarlar (Japonca)</value>
   </data>
   <data name="InviteSomeoneToConnectToYourPCAndHelpYouOrOfferToHelpSomeoneElse" xml:space="preserve">
-    <value>Invite someone to connect to your PC and help you, or offer to help someone else</value>
+    <value>Bilgisayarınıza bağlanıp size yardım etmesi için birini davet edin veya başka birine yardım etmeyi teklif edin</value>
   </data>
   <data name="RunProgramsMadeForPreviousVersionsOfWindows" xml:space="preserve">
-    <value>Run programs made for previous versions of Windows</value>
+    <value>Windows'un önceki sürümleri için hazırlanmış programları çalıştırma</value>
   </data>
   <data name="ChooseTheOrderOfHowYourScreenRotates" xml:space="preserve">
-    <value>Choose the order of how your screen rotates</value>
+    <value>Ekranınızın dönme sırasını seçin</value>
   </data>
   <data name="ChangeHowWindowsSearches" xml:space="preserve">
-    <value>Change how Windows searches</value>
+    <value>Windows'un arama şeklini değiştir</value>
   </data>
   <data name="SetFlicksToPerformCertainTasks" xml:space="preserve">
     <value>Set flicks to perform certain tasks</value>
@@ -2257,28 +2257,28 @@
     <value>Turn Magnifier on or off</value>
   </data>
   <data name="SeeTheNameOfThisComputer" xml:space="preserve">
-    <value>See the name of this computer</value>
+    <value>Bu bilgisayarın adına bakın</value>
   </data>
   <data name="ViewNetworkConnections" xml:space="preserve">
     <value>Ağ bağlantılarını görüntüle</value>
   </data>
   <data name="PerformRecommendedMaintenanceTasksAutomatically" xml:space="preserve">
-    <value>Perform recommended maintenance tasks automatically</value>
+    <value>Önerilen bakım görevlerini otomatik olarak gerçekleştirin</value>
   </data>
   <data name="ManageDiskSpaceUsedByYourOfflineFiles" xml:space="preserve">
-    <value>Manage disk space used by your offline files</value>
+    <value>Çevrimdışı dosyalarınız tarafından kullanılan disk alanını yönetin</value>
   </data>
   <data name="TurnHighContrastOnOrOff" xml:space="preserve">
     <value>Yüksek Kontrast'ı aç veya kapat</value>
   </data>
   <data name="ChangeTheWayTimeIsDisplayed" xml:space="preserve">
-    <value>Change the way time is displayed</value>
+    <value>Saatin görüntülenme şeklini değiştirme</value>
   </data>
   <data name="ChangeHowWebPagesAreDisplayedInTabs" xml:space="preserve">
-    <value>Change how web pages are displayed in tabs</value>
+    <value>Web sayfalarının sekmelerde görüntülenme şeklini değiştirme</value>
   </data>
   <data name="ChangeTheWayDatesAndListsAreDisplayed" xml:space="preserve">
-    <value>Change the way dates and lists are displayed</value>
+    <value>Tarihlerin ve listelerin görüntülenme şeklini değiştirme</value>
   </data>
   <data name="ManageAudioDevices" xml:space="preserve">
     <value>Ses cihazlarını yönet</value>
@@ -2302,13 +2302,13 @@
     <value>Sanal bellek boyutu nasıl değiştirilir</value>
   </data>
   <data name="HearTextReadAloudWithNarrator" xml:space="preserve">
-    <value>Hear text read aloud with Narrator</value>
+    <value>Anlatıcı ile yüksek sesle okunan metni dinleyin</value>
   </data>
   <data name="SetUpUSBGameControllers" xml:space="preserve">
     <value>USB oyun kumandalarını ayarla</value>
   </data>
   <data name="ShowWhichDomainYourComputerIsOn" xml:space="preserve">
-    <value>Show which domain your computer is on</value>
+    <value>Bilgisayarınızın hangi etki alanında olduğunu gösterme</value>
   </data>
   <data name="ViewAllProblemReports" xml:space="preserve">
     <value>Tüm sorun raporlarını görüntüle</value>
@@ -2317,7 +2317,7 @@
     <value>16-Bit Uygulama Desteği</value>
   </data>
   <data name="SetUpDiallingRules" xml:space="preserve">
-    <value>Set up dialling rules</value>
+    <value>Arama kurallarını ayarla</value>
   </data>
   <data name="EnableOrDisableSessionCookies" xml:space="preserve">
     <value>Enable or disable session cookies</value>
@@ -2380,7 +2380,7 @@
     <value>Internet Explorer'da arama sağlayıcısını değiştir</value>
   </data>
   <data name="JoinADomain" xml:space="preserve">
-    <value>Join a domain</value>
+    <value>Bir etki alanına katılın</value>
   </data>
   <data name="AddADevice" xml:space="preserve">
     <value>Bir cihaz ekle</value>
@@ -2398,22 +2398,22 @@
     <value>Bir program kaldır</value>
   </data>
   <data name="CreateAndFormatHardDiskPartitions" xml:space="preserve">
-    <value>Create and format hard disk partitions</value>
+    <value>Sabit disk bölümleri oluştur ve biçimlendir</value>
   </data>
   <data name="ChangeDateTimeOrNumberFormats" xml:space="preserve">
-    <value>Change date, time or number formats</value>
+    <value>Tarih, saat veya sayı biçimlerini değiştir</value>
   </data>
   <data name="ChangePCWakeUpSettings" xml:space="preserve">
-    <value>Change PC wake-up settings</value>
+    <value>PC uyandırma ayarlarını değiştir</value>
   </data>
   <data name="ManageNetworkPasswords" xml:space="preserve">
-    <value>Manage network passwords</value>
+    <value>Ağ parolalarını yönet</value>
   </data>
   <data name="ChangeInputMethods" xml:space="preserve">
-    <value>Change input methods</value>
+    <value>Giriş yöntemlerini değiştir</value>
   </data>
   <data name="ManageAdvancedSharingSettings" xml:space="preserve">
-    <value>Manage advanced sharing settings</value>
+    <value>Gelişmiş paylaşım ayarlarını yönet</value>
   </data>
   <data name="ChangeBatterySettings" xml:space="preserve">
     <value>Pil ayarlarını değiştir</value>
@@ -2425,34 +2425,34 @@
     <value>Görev çubuğunu kilitle/kilidi aç</value>
   </data>
   <data name="ManageWebCredentials" xml:space="preserve">
-    <value>Manage Web Credentials</value>
+    <value>Web Kimlik Bilgilerini Yönet</value>
   </data>
   <data name="ChangeTheTimeZone" xml:space="preserve">
     <value>Saat dilimini değiştir</value>
   </data>
   <data name="StartSpeechRecognition" xml:space="preserve">
-    <value>Start speech recognition</value>
+    <value>Konuşma tanımayı başlat</value>
   </data>
   <data name="ViewInstalledUpdates" xml:space="preserve">
-    <value>View installed updates</value>
+    <value>Yüklü güncellemeleri görüntüle</value>
   </data>
   <data name="WhatsHappenedToTheQuickLaunchToolbar" xml:space="preserve">
-    <value>What's happened to the Quick Launch toolbar?</value>
+    <value>Hızlı Başlat araç çubuğuna ne oldu?</value>
   </data>
   <data name="ChangeSearchOptionsForFilesAndFolders" xml:space="preserve">
-    <value>Change search options for files and folders</value>
+    <value>Dosya ve klasörler için arama seçeneklerini değiştir</value>
   </data>
   <data name="AdjustSettingsBeforeGivingAPresentation" xml:space="preserve">
     <value>Adjust settings before giving a presentation</value>
   </data>
   <data name="ScanADocumentOrPicture" xml:space="preserve">
-    <value>Scan a document or picture</value>
+    <value>Bir belgeyi veya resmi tara</value>
   </data>
   <data name="ChangeTheWayMeasurementsAreDisplayed" xml:space="preserve">
-    <value>Change the way measurements are displayed</value>
+    <value>Ölçümlerin görüntülenme şeklini değiştirme</value>
   </data>
   <data name="PressKeyCombinationsOneAtATime" xml:space="preserve">
-    <value>Press key combinations one at a time</value>
+    <value>Tuş kombinasyonlarına teker teker basın</value>
   </data>
   <data name="RestoreDataFilesOrComputerFromBackupWindows7" xml:space="preserve">
     <value>Verileri, dosyaları veya bilgisayarı yedekten geri yükleme (Windows 7)</value>
@@ -2461,7 +2461,7 @@
     <value>Varsayılan programlarınızı ayarlayın</value>
   </data>
   <data name="SetUpABroadbandConnection" xml:space="preserve">
-    <value>Set up a broadband connection</value>
+    <value>Geniş bant bağlantısı kur</value>
   </data>
   <data name="CalibrateTheScreenForPenOrTouchInput" xml:space="preserve">
     <value>Calibrate the screen for pen or touch input</value>
@@ -2476,10 +2476,10 @@
     <value>Ignore repeated keystrokes using FilterKeys</value>
   </data>
   <data name="FindAndFixBluescreenProblems" xml:space="preserve">
-    <value>Find and fix bluescreen problems</value>
+    <value>Mavi ekran sorunlarını bul ve düzelt</value>
   </data>
   <data name="HearAToneWhenKeysArePressed" xml:space="preserve">
-    <value>Hear a tone when keys are pressed</value>
+    <value>Tuşlara basıldığında bir ses duy</value>
   </data>
   <data name="DeleteBrowsingHistory" xml:space="preserve">
     <value>Tarama geçmişini sil</value>
