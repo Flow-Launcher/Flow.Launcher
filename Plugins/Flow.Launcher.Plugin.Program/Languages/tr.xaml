@@ -46,8 +46,8 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">İşlem yapmak istediğiniz klasörü seçin.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">Seçili program kaynaklarını silmek istediğinizden emin misiniz?</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_not_user_added">Please select program sources that are not added by you</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_user_added">Please select program sources that are added by you</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_not_user_added">Lütfen sizin tarafınızdan eklenmemiş program kaynaklarını seçin</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_user_added">Lütfen sizin tarafınızdan eklenmiş program kaynaklarını seçin</system:String>
     <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Another program source with the same location already exists.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Program Kaynağı</system:String>
