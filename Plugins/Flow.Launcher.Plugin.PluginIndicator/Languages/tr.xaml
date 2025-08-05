@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <system:String x:Key="flowlauncher_plugin_pluginindicator_result_subtitle">Activate {0} plugin action keyword</system:String>
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_result_subtitle">{0} eklenti anahtar sözcüğünü etkinleştir</system:String>
 
     <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_name">Eklenti Göstergesi</system:String>
     <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_description">Eklenti eylemleri hakkında kelime önerileri sunar</system:String>
