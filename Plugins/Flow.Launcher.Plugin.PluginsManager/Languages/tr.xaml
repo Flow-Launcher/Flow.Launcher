@@ -17,7 +17,7 @@
     <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_subtitle">Eklentinin ayarlarını bir sonraki kullanım için saklamak istiyor musunuz?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin successfully installed. Restarting Flow, please wait...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Çıkarılan zip dosyasından plugin.json metadata dosyası bulunamıyor.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Error: A plugin which has the same or greater version with {0} already exists.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Hata: {0} ile aynı veya daha yüksek sürüme sahip bir eklenti zaten mevcut.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_title">Eklenti yüklenirken bir hata oluştu</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">{0} yüklenmeye çalışılırken hata oluştu</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_error_title">Eklenti kaldırılırken bir hata oluştu</system:String>
@@ -28,7 +28,7 @@
     <system:String x:Key="plugin_pluginsmanager_update_title">Eklenti Güncellemesi</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Bu eklenti zaten yüklü</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_title">Eklenti Manifestosu İndirme Başarısız Oldu</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Please check if you can connect to github.com. This error means you may not be able to install or update plugins.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Lütfen github.com'a bağlanıp bağlanamadığınızı kontrol edin. Bu hata, eklentileri yükleyemeyeceğiniz veya güncelleyemeyeceğiniz anlamına gelir.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_title">Tüm eklentileri güncelle</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_subtitle">Tüm eklentileri güncellemek ister misiniz?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_prompt">{0} eklentiyi güncellemek ister misiniz? {1}Flow Launcher tüm eklentileri güncelledikten sonra yeniden başlayacaktır.</system:String>
@@ -36,7 +36,7 @@
     <system:String x:Key="plugin_pluginsmanager_update_all_success_restart">{0} eklentileri başarıyla güncellendi. Flow yeniden başlatılıyor, lütfen bekleyin...</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_success_restart">{0} eklentisi başarıyla güncellendi. Flow yeniden başlatılıyor, lütfen bekleyin...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Bilinmeyen bir kaynaktan yükleniyor</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">You are installing this plugin from an unknown source and it may contain potential risks!{0}{0}Please ensure you understand where this plugin is from and that it is safe.{0}{0}Would you like to continue still?{0}{0}(You can switch off this warning via settings)</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">Bu eklentiyi bilinmeyen bir kaynaktan yüklüyorsunuz ve potansiyel riskler içerebilir!{0}{0}Lütfen bu eklentinin nereden geldiğini ve güvenli olduğunu anladığınızdan emin olun.{0}{0}Devam etmek ister misiniz?{0}{0}(Bu uyarıyı ayarlardan kapatabilirsiniz)</system:String>
 
     <system:String x:Key="plugin_pluginsmanager_install_success_no_restart">{0} eklentisi başarıyla yüklendi. Lütfen Flow'u yeniden başlatın.</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_success_no_restart">{0} eklentisi başarıyla kaldırıldı. Lütfen Flow'u yeniden başlatın.</system:String>
