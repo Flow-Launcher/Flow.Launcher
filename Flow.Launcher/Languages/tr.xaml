@@ -17,11 +17,11 @@
     <system:String x:Key="failedToInitializePluginsMessage">Eklentiler: {0} - yüklenemedi ve devre dışı bırakılacak, lütfen eklenti geliştiricisi ile iletişime geçin</system:String>
 
     <!--  Portable  -->
-    <system:String x:Key="restartToDisablePortableMode">Flow Launcher needs to restart to finish disabling portable mode, after the restart your portable data profile will be deleted and roaming data profile kept</system:String>
-    <system:String x:Key="restartToEnablePortableMode">Flow Launcher needs to restart to finish enabling portable mode, after the restart your roaming data profile will be deleted and portable data profile kept</system:String>
-    <system:String x:Key="moveToDifferentLocation">Flow Launcher has detected you enabled portable mode, would you like to move it to a different location?</system:String>
-    <system:String x:Key="shortcutsUninstallerCreated">Flow Launcher has detected you disabled portable mode, the relevant shortcuts and uninstaller entry have been created</system:String>
-    <system:String x:Key="userDataDuplicated">Flow Launcher detected your user data exists both in {0} and {1}. {2}{2}Please delete {1} in order to proceed. No changes have occurred.</system:String>
+    <system:String x:Key="restartToDisablePortableMode">Flow Launcher'ın taşınabilir modu devre dışı bırakmayı bitirmek için yeniden başlatılması gerekir, yeniden başlatmanın ardından taşınabilir veri profiliniz silinecek ve dolaşımdaki veri profiliniz saklanacaktır</system:String>
+    <system:String x:Key="restartToEnablePortableMode">Flow Launcher'ın taşınabilir modu etkinleştirmeyi tamamlamak için yeniden başlatılması gerekir, yeniden başlatmadan sonra dolaşım veri profiliniz silinecek ve taşınabilir veri profili saklanacaktır</system:String>
+    <system:String x:Key="moveToDifferentLocation">Flow Launcher taşınabilir modu etkinleştirdiğinizi tespit etti, farklı bir konuma taşımak ister misiniz?</system:String>
+    <system:String x:Key="shortcutsUninstallerCreated">Flow Launcher taşınabilir modu devre dışı bıraktığınızı algıladı, ilgili kısayollar ve kaldırıcı girişi oluşturuldu</system:String>
+    <system:String x:Key="userDataDuplicated">Flow Launcher, kullanıcı verilerinizin hem {0} hem de {1}'de bulunduğunu algıladı. {2}{2} Devam etmek için lütfen {1}'i silin. Hiçbir değişiklik olmadı.</system:String>
 
     <!--  Plugin Loader  -->
     <system:String x:Key="pluginHasErrored">Aşağıdaki eklentide hata oluştu ve yüklenemiyor:</system:String>
