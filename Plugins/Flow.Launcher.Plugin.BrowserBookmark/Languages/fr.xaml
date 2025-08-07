@@ -6,7 +6,7 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Rechercher dans les favoris de votre navigateur</system:String>
 
     <!--  Main  -->
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">Failed to set url in clipboard</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">Impossible de mettre l'url dans le presse-papiers</system:String>
 
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Données des favoris</system:String>
