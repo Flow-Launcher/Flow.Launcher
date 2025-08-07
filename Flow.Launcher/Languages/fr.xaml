@@ -17,20 +17,20 @@
     <system:String x:Key="failedToInitializePluginsMessage">Plugins : {0} - n'ont pas pu être chargés et doivent être désactivés, veuillez contacter le créateur du plugin pour obtenir de l'aide</system:String>
 
     <!--  Portable  -->
-    <system:String x:Key="restartToDisablePortableMode">Flow Launcher needs to restart to finish disabling portable mode, after the restart your portable data profile will be deleted and roaming data profile kept</system:String>
-    <system:String x:Key="restartToEnablePortableMode">Flow Launcher needs to restart to finish enabling portable mode, after the restart your roaming data profile will be deleted and portable data profile kept</system:String>
-    <system:String x:Key="moveToDifferentLocation">Flow Launcher has detected you enabled portable mode, would you like to move it to a different location?</system:String>
-    <system:String x:Key="shortcutsUninstallerCreated">Flow Launcher has detected you disabled portable mode, the relevant shortcuts and uninstaller entry have been created</system:String>
-    <system:String x:Key="userDataDuplicated">Flow Launcher detected your user data exists both in {0} and {1}. {2}{2}Please delete {1} in order to proceed. No changes have occurred.</system:String>
+    <system:String x:Key="restartToDisablePortableMode">Flow Launcher doit redémarrer pour terminer la désactivation le mode portable, après le redémarrage, les données du profile portable seront supprimé et les données roaming conservé</system:String>
+    <system:String x:Key="restartToEnablePortableMode">Flow Launcher doit redémarrer pour terminer l'activation du mode portable, après le redémarrage, les données du profile roaming seront supprimé et les données du profile portable conservé</system:String>
+    <system:String x:Key="moveToDifferentLocation">Flow Launcher à détecter que vous avez activé le mode portable, voulez-vous le déplacer à un autre emplacement ?</system:String>
+    <system:String x:Key="shortcutsUninstallerCreated">Flow Launcher a détecté que vous avez désactivé le mode portable, les raccourcis liés et l'entrée de désinstallation ont été créés</system:String>
+    <system:String x:Key="userDataDuplicated">Flow Launcher a détecté que vos données utilisateur existent à la fois dans {0} et {1}. {2}{2}Veuillez supprimer {1} pour continuer. Aucune modification n'a été apportée.</system:String>
 
     <!--  Plugin Loader  -->
-    <system:String x:Key="pluginHasErrored">The following plugin has errored and cannot be loaded:</system:String>
-    <system:String x:Key="pluginsHaveErrored">The following plugins have errored and cannot be loaded:</system:String>
-    <system:String x:Key="referToLogs">Please refer to the logs for more information</system:String>
+    <system:String x:Key="pluginHasErrored">Le plugin suivant a produit une erreur et ne peut être chargé :</system:String>
+    <system:String x:Key="pluginsHaveErrored">Les plugins suivants ont produit une erreur et ne peuvent pas être chargés :</system:String>
+    <system:String x:Key="referToLogs">Veuillez vous référer aux logs pour plus d'informations</system:String>
 
     <!--  Http  -->
-    <system:String x:Key="pleaseTryAgain">Please try again</system:String>
-    <system:String x:Key="parseProxyFailed">Unable to parse Http Proxy</system:String>
+    <system:String x:Key="pleaseTryAgain">Veuillez réessayer</system:String>
+    <system:String x:Key="parseProxyFailed">Impossible d'analyser le proxy Http</system:String>
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Échec lors de l'enregistrement du raccourci : {0}</system:String>
@@ -161,8 +161,8 @@
     <system:String x:Key="KoreanImeOpenLinkButton">Ouvrir</system:String>
     <system:String x:Key="KoreanImeRegistry">Utilisez l'IME coréenne précédente</system:String>
     <system:String x:Key="KoreanImeRegistryTooltip">Vous pouvez modifier les paramètres de l'IME coréen précédent directement à partir d'ici</system:String>
-    <system:String x:Key="KoreanImeSettingChangeFailTitle">Failed to change Korean IME setting</system:String>
-    <system:String x:Key="KoreanImeSettingChangeFailSubTitle">Please check your system registry access or contact support.</system:String>
+    <system:String x:Key="KoreanImeSettingChangeFailTitle">Impossible de changer le paramètre IME coréen</system:String>
+    <system:String x:Key="KoreanImeSettingChangeFailSubTitle">Veuillez vérifier votre accès au registre du système ou contacter le support.</system:String>
     <system:String x:Key="homePage">Page d'accueil</system:String>
     <system:String x:Key="homePageToolTip">Afficher les résultats de la page d'accueil lorsque le texte de la requête est vide.</system:String>
     <system:String x:Key="historyResultsForHomePage">Afficher les résultats de l'historique sur la page d'accueil</system:String>
@@ -390,13 +390,13 @@
     <system:String x:Key="showBadges">Afficher les badges de résultats</system:String>
     <system:String x:Key="showBadgesToolTip">Pour les plugins pris en charge, des badges sont affichés afin de les distinguer plus facilement.</system:String>
     <system:String x:Key="showBadgesGlobalOnly">Afficher les badges de résultats pour la requête globale uniquement</system:String>
-    <system:String x:Key="showBadgesGlobalOnlyToolTip">Show badges for global query results only</system:String>
+    <system:String x:Key="showBadgesGlobalOnlyToolTip">Afficher les badges pour les résultats des requêtes globales uniquement</system:String>
     <system:String x:Key="dialogJumpHotkey">Dialog Jump</system:String>
-    <system:String x:Key="dialogJumpHotkeyToolTip">Enter shortcut to quickly navigate the Open/Save As dialog window to the path of the current file manager.</system:String>
+    <system:String x:Key="dialogJumpHotkeyToolTip">Entrez le raccourci pour naviguer rapidement dans la fenêtre de dialogue Ouvrir/Enregistrer sous, vers le chemin du gestionnaire de fichiers actuel.</system:String>
     <system:String x:Key="dialogJump">Dialog Jump</system:String>
-    <system:String x:Key="dialogJumpToolTip">When Open/Save As dialog window opens, quickly navigate to the current path of the file manager.</system:String>
+    <system:String x:Key="dialogJumpToolTip">Lorsque la fenêtre de dialogue Ouvrir/Enregistrer sous s'ouvre, accédez rapidement au chemin d'accès actuel du gestionnaire de fichiers.</system:String>
     <system:String x:Key="autoDialogJump">Dialog Jump Automatically</system:String>
-    <system:String x:Key="autoDialogJumpToolTip">When Open/Save As dialog window is displayed, automatically navigate to the path of the current file manager. (Experimental)</system:String>
+    <system:String x:Key="autoDialogJumpToolTip">Lorsque la fenêtre de dialogue Ouvrir/Enregistrer sous est affichée, naviguez automatiquement vers le chemin du gestionnaire de fichiers actuel. (Expérimental)</system:String>
     <system:String x:Key="showDialogJumpWindow">Show Dialog Jump Window</system:String>
     <system:String x:Key="showDialogJumpWindowToolTip">Display Dialog Jump search window when the open/save dialog window is shown to quickly navigate to file/folder locations.</system:String>
     <system:String x:Key="dialogJumpWindowPosition">Dialog Jump Window Position</system:String>
@@ -406,12 +406,12 @@
     <system:String x:Key="dialogJumpResultBehaviour">Dialog Jump Result Navigation Behaviour</system:String>
     <system:String x:Key="dialogJumpResultBehaviourToolTip">Behaviour to navigate Open/Save As dialog window to the selected result path</system:String>
     <system:String x:Key="DialogJumpResultBehaviourLeftClick">Left click or Enter key</system:String>
-    <system:String x:Key="DialogJumpResultBehaviourRightClick">Right click</system:String>
+    <system:String x:Key="DialogJumpResultBehaviourRightClick">Clique droit</system:String>
     <system:String x:Key="dialogJumpFileResultBehaviour">Dialog Jump File Navigation Behaviour</system:String>
     <system:String x:Key="dialogJumpFileResultBehaviourToolTip">Behaviour to navigate Open/Save As dialog window when the result is a file path</system:String>
-    <system:String x:Key="DialogJumpFileResultBehaviourFullPath">Fill full path in file name box</system:String>
-    <system:String x:Key="DialogJumpFileResultBehaviourFullPathOpen">Fill full path in file name box and open</system:String>
-    <system:String x:Key="DialogJumpFileResultBehaviourDirectory">Fill directory in path box</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourFullPath">Remplir le chemin complet dans la zone de nom de fichier</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourFullPathOpen">Remplir le chemin complet dans la zone de nom de fichier et ouvrir</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourDirectory">Remplir le répertoire dans la zone de chemin</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">Proxy HTTP</system:String>
