@@ -3,5 +3,8 @@
     <AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
     <!-- Work around https://github.com/dotnet/runtime/issues/109682 -->
     <CETCompat>false</CETCompat>
+    <!-- Since Flow.Launcher publish profiles are for win-x64 only -->
+    <!-- rutime identifier is set to it so that we do not need to remove unnecessary runtime files -->
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
   </PropertyGroup>
 </Project>

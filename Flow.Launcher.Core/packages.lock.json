@@ -272,6 +272,13 @@
           "JetBrains.Annotations": "[2024.3.0, )"
         }
       }
+    },
+    "net9.0-windows7.0/win-x64": {
+      "Microsoft.Win32.SystemEvents": {
+        "type": "Transitive",
+        "resolved": "9.0.7",
+        "contentHash": "lFGY2aGgmMREPJEfOmZcA6v0CLjWVpcfNHRgqYMoSQhy80+GxhYqdW5xe+DCLrVqE1M7/0RpOkIo49/KH/cd/A=="
+      }
     }
   }
 }
