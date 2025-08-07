@@ -12,5 +12,5 @@
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_comma">Virgule (,)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_dot">Point (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">Décimales max.</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Copy failed, please try later</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Échec de la copie, réessayer plus tard</system:String>
 </ResourceDictionary>
