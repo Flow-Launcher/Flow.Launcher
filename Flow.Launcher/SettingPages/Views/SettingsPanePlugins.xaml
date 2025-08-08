@@ -122,6 +122,7 @@
                 FontSize="14"
                 ItemContainerStyle="{StaticResource PluginList}"
                 ItemsSource="{Binding Source={StaticResource PluginCollectionView}}"
+                Loaded="PluginListBox_Loaded"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 SnapsToDevicePixels="True"
                 Style="{DynamicResource PluginListStyle}"
