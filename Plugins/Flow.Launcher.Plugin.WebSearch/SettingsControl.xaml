@@ -11,10 +11,6 @@
     mc:Ignorable="d">
 
     <UserControl.Resources>
-        <Style x:Key="BrowserPathBoxStyle" TargetType="TextBox">
-            <Setter Property="Height" Value="28" />
-            <Setter Property="VerticalContentAlignment" Value="Center" />
-        </Style>
         <DataTemplate x:Key="HeaderTemplateArrowUp">
             <DockPanel>
                 <TextBlock HorizontalAlignment="Center" Text="{Binding}" />
