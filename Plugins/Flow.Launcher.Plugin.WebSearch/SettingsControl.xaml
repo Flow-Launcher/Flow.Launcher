@@ -96,6 +96,20 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+                    <GridViewColumn
+                        Width="120"
+                        Header="{DynamicResource flowlauncher_plugin_websearch_private_mode_label}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    IsChecked="{Binding IsPrivateMode}"
+                                    IsEnabled="False"
+                                    />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
