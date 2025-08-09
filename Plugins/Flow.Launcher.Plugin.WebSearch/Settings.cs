@@ -7,6 +7,8 @@ namespace Flow.Launcher.Plugin.WebSearch
 {
     public class Settings : BaseModel
     {
+        private bool enableSuggestion;
+
         public Settings()
         {
             SelectedSuggestion = Suggestions[0];
@@ -191,7 +193,15 @@ namespace Flow.Launcher.Plugin.WebSearch
         [JsonIgnore]
         public SearchSource SelectedSearchSource { get; set; }
 
-        public bool EnableSuggestion { get; set; }
+        public bool EnableSuggestion
+        {
+            get => enableSuggestion;
+            set
+            {
+                enableSuggestion = value;
+                OnPropertyChanged(nameof(EnableSuggestion));
+            }
+        }
 
         [JsonIgnore]
         public SuggestionSource[] Suggestions { get; set; } = {
