@@ -485,6 +485,43 @@ namespace Flow.Launcher.Core.Plugin
 
         #endregion
 
+        #region Get Plugin List
+
+        public static List<PluginPair> GetAllLoadedPlugins()
+        {
+            return [.. _allLoadedPlugins];
+        }
+
+        public static List<PluginPair> GetAllInitializedPlugins(bool includeFailed)
+        {
+            if (includeFailed)
+            {
+                return [.. _allInitializedPlugins.Values];
+            }
+            else
+            {
+                return [.. _allInitializedPlugins.Values
+                    .Where(p => !_initFailedPlugins.ContainsKey(p.Metadata.ID))];
+            }
+        }
+
+        public static List<PluginPair> GetGlobalPlugins()
+        {
+            return [.. _globalPlugins.Values];
+        }
+
+        public static Dictionary<string, PluginPair> GetNonGlobalPlugins()
+        {
+            return _nonGlobalPlugins.ToDictionary();
+        }
+
+        public static List<PluginPair> GetTranslationPlugins()
+        {
+            return [.. _translationPlugins.Where(p => !PluginModified(p.Metadata.ID))];
+        }
+
+        #endregion
+
         #region Update Metadata & Get Plugin
 
         public static void UpdatePluginMetadata(IReadOnlyList<Result> results, PluginMetadata metadata, Query query)
@@ -513,43 +550,6 @@ namespace Flow.Launcher.Core.Plugin
         public static PluginPair GetPluginForId(string id)
         {
             return GetAllLoadedPlugins().FirstOrDefault(o => o.Metadata.ID == id);
-        }
-
-        #endregion
-
-        #region Get Plugin List
-
-        public static List<PluginPair> GetAllLoadedPlugins()
-        {
-            return [.. _allLoadedPlugins];
-        }
-
-        public static List<PluginPair> GetAllInitializedPlugins(bool containFailed)
-        {
-            if (containFailed)
-            {
-                return [.. _allInitializedPlugins.Values];
-            }
-            else
-            {
-                return [.. _allInitializedPlugins.Values
-                    .Where(p => !_initFailedPlugins.ContainsKey(p.Metadata.ID))];
-            }
-        }
-
-        public static List<PluginPair> GetGlobalPlugins()
-        {
-            return [.. _globalPlugins.Values];
-        }
-
-        public static Dictionary<string, PluginPair> GetNonGlobalPlugins()
-        {
-            return _nonGlobalPlugins.ToDictionary();
-        }
-
-        public static List<PluginPair> GetTranslationPlugins()
-        {
-            return [.. _translationPlugins.Where(p => !PluginModified(p.Metadata.ID))];
         }
 
         #endregion
