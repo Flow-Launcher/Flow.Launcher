@@ -11,7 +11,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_edit">편집</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">추가</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">켬</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_private_mode_label">Private mode</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_private_mode_label">Private Mode</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_true">켬</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_false">Disabled</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">확인</system:String>

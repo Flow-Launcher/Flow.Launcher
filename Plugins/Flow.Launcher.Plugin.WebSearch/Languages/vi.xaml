@@ -11,7 +11,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_edit">Sửa</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">Thêm</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">Đã bật</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_private_mode_label">Private mode</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_private_mode_label">Private Mode</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_true">Đã bật</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_false">Vô hiệu hóa</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">Xác nhận</system:String>

@@ -11,7 +11,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_edit">編輯</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">新增</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">已啟用</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_private_mode_label">Private mode</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_private_mode_label">Private Mode</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_true">已啟用</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_false">Disabled</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">確定</system:String>
