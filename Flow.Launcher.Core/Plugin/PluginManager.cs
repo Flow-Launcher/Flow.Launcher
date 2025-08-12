@@ -183,7 +183,14 @@ namespace Flow.Launcher.Core.Plugin
             const string binding = "flowlauncher.py";
             foreach (var subDirectory in Directory.GetDirectories(DataLocation.PluginsDirectory))
             {
-                File.Delete(Path.Combine(subDirectory, binding));
+                try
+                {
+                    File.Delete(Path.Combine(subDirectory, binding));
+                }
+                catch (Exception e)
+                {
+                    API.LogDebug(ClassName, $"Failed to delete {binding} in {subDirectory}: {e.Message}");
+                }
             }
         }
 
