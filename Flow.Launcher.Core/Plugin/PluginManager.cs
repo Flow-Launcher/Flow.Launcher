@@ -914,13 +914,19 @@ namespace Flow.Launcher.Core.Plugin
                         string.Format(API.GetTranslation("failedToRemovePluginCacheMessage"), plugin.Name));
                 }
                 Settings.RemovePluginSettings(plugin.ID);
-                _allInitializedPlugins.TryRemove(plugin.ID, out var item);
-                _initFailedPlugins.TryRemove(plugin.ID, out var item1);
-                _globalPlugins.TryRemove(plugin.ID, out var item2);
+                {
+                    _allInitializedPlugins.TryRemove(plugin.ID, out var _);
+                }
+                {
+                    _initFailedPlugins.TryRemove(plugin.ID, out var _);
+                }
+                {
+                    _globalPlugins.TryRemove(plugin.ID, out var _);
+                }
                 var keysToRemove = _nonGlobalPlugins.Where(p => p.Value.Metadata.ID == plugin.ID).Select(p => p.Key).ToList();
                 foreach (var key in keysToRemove)
                 {
-                    _nonGlobalPlugins.Remove(key, out var item3);
+                    _nonGlobalPlugins.Remove(key, out var ite3);
                 }
             }
 
