@@ -648,14 +648,7 @@ namespace Flow.Launcher.Core.Plugin
             }
             else
             {
-                if (_nonGlobalPlugins.TryGetValue(newActionKeyword, out var item))
-                {
-                    _nonGlobalPlugins.TryUpdate(newActionKeyword, plugin, item);
-                }
-                else
-                {
-                    _nonGlobalPlugins.TryAdd(newActionKeyword, plugin);
-                }
+                _nonGlobalPlugins.AddOrUpdate(newActionKeyword, plugin, (key, oldValue) => plugin);
             }
 
             // Update action keywords and action keyword in plugin metadata
