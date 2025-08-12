@@ -915,6 +915,9 @@ namespace Flow.Launcher.Core.Plugin
                 }
                 Settings.RemovePluginSettings(plugin.ID);
                 {
+                    _allLoadedPlugins.RemoveAll(p => p.Metadata.ID == plugin.ID);
+                }
+                {
                     _allInitializedPlugins.TryRemove(plugin.ID, out var _);
                 }
                 {
