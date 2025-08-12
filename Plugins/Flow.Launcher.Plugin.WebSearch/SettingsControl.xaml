@@ -11,10 +11,6 @@
     mc:Ignorable="d">
 
     <UserControl.Resources>
-        <Style x:Key="BrowserPathBoxStyle" TargetType="TextBox">
-            <Setter Property="Height" Value="28" />
-            <Setter Property="VerticalContentAlignment" Value="Center" />
-        </Style>
         <DataTemplate x:Key="HeaderTemplateArrowUp">
             <DockPanel>
                 <TextBlock HorizontalAlignment="Center" Text="{Binding}" />
@@ -152,7 +148,7 @@
                     Margin="{StaticResource SettingPanelItemLeftMargin}"
                     VerticalAlignment="Center"
                     FontSize="11"
-                    IsEnabled="{Binding ElementName=EnableSuggestion, Path=IsChecked}"
+                    IsEnabled="{Binding Settings.EnableSuggestion}"
                     ItemsSource="{Binding Settings.Suggestions}"
                     SelectedItem="{Binding Settings.SelectedSuggestion}" />
                 <CheckBox
@@ -163,7 +159,6 @@
                     Content="{DynamicResource flowlauncher_plugin_websearch_enable_suggestion}"
                     IsChecked="{Binding Settings.EnableSuggestion}" />
             </StackPanel>
-            <!--  Not sure why binding IsEnabled directly to Settings.EnableWebSearchSuggestion is not working  -->
         </DockPanel>
     </Grid>
 </UserControl>
