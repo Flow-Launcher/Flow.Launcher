@@ -24,9 +24,9 @@ namespace Flow.Launcher.Infrastructure.Image
         private static readonly ConcurrentDictionary<string, string> GuidToKey = new();
         private static IImageHashGenerator _hashGenerator;
         private static readonly bool EnableImageHash = true;
-        public static ImageSource Image { get; } = new BitmapImage(new Uri(Constant.ImageIcon));
-        public static ImageSource MissingImage { get; } = new BitmapImage(new Uri(Constant.MissingImgIcon));
-        public static ImageSource LoadingImage { get; } = new BitmapImage(new Uri(Constant.LoadingImgIcon));
+        public static ImageSource Image => ImageCache[Constant.ImageIcon, false];
+        public static ImageSource MissingImage => ImageCache[Constant.MissingImgIcon, false];
+        public static ImageSource LoadingImage => ImageCache[Constant.LoadingImgIcon, false];
         public const int SmallIconSize = 64;
         public const int FullIconSize = 256;
         public const int FullImageSize = 320;
@@ -46,7 +46,7 @@ namespace Flow.Launcher.Infrastructure.Image
 
                 ImageCache.Initialize(usage);
 
-                foreach (var icon in new[] { Constant.DefaultIcon, Constant.MissingImgIcon })
+                foreach (var icon in new[] { Constant.DefaultIcon, Constant.ImageIcon, Constant.MissingImgIcon, Constant.LoadingImgIcon })
                 {
                     ImageSource img = new BitmapImage(new Uri(icon));
                     img.Freeze();
@@ -163,7 +163,7 @@ namespace Flow.Launcher.Infrastructure.Image
                     Log.Exception(ClassName, $"Failed to get thumbnail for {path} on first try", e);
                     Log.Exception(ClassName, $"Failed to get thumbnail for {path} on second try", e2);
 
-                    ImageSource image = ImageCache[Constant.MissingImgIcon, false];
+                    ImageSource image = MissingImage;
                     ImageCache[path, false] = image;
                     imageResult = new ImageResult(image, ImageType.Error);
                 }
@@ -262,7 +262,7 @@ namespace Flow.Launcher.Infrastructure.Image
             }
             else
             {
-                image = ImageCache[Constant.MissingImgIcon, false];
+                image = MissingImage;
                 path = Constant.MissingImgIcon;
             }
 
