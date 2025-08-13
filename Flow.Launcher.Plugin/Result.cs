@@ -317,7 +317,8 @@ namespace Flow.Launcher.Plugin
                 Preview = Preview,
                 AddSelectedCount = AddSelectedCount,
                 RecordKey = RecordKey,
-                ShowBadge = ShowBadge
+                ShowBadge = ShowBadge,
+                QuerySuggestionText = QuerySuggestionText
             };
         }
 
