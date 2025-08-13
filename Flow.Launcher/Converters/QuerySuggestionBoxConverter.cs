@@ -33,15 +33,17 @@ public class QuerySuggestionBoxConverter : IMultiValueConverter
         {
             var selectedResult = selectedItem.Result;
             var selectedResultActionKeyword = string.IsNullOrEmpty(selectedResult.ActionKeywordAssigned) ? "" : selectedResult.ActionKeywordAssigned + " ";
-            var selectedResultPossibleSuggestion = selectedResultActionKeyword + selectedResult.Title;
+            var selectedResultPossibleSuggestion = selectedResultActionKeyword +
+                (string.IsNullOrEmpty(selectedResult.QuerySuggestionText) ?
+                selectedResult.Title :
+                selectedResult.QuerySuggestionText);
 
             if (!selectedResultPossibleSuggestion.StartsWith(queryText, StringComparison.CurrentCultureIgnoreCase))
                 return string.Empty;
 
-
             // For AutocompleteQueryCommand.
             // When user typed lower case and result title is uppercase, we still want to display suggestion
-            selectedItem.QuerySuggestionText = queryText + selectedResultPossibleSuggestion.Substring(queryText.Length);
+            selectedItem.QuerySuggestionText = string.Concat(queryText, selectedResultPossibleSuggestion.AsSpan(queryText.Length));
 
             // Check if Text will be larger than our QueryTextBox
             Typeface typeface = new Typeface(queryTextBox.FontFamily, queryTextBox.FontStyle, queryTextBox.FontWeight, queryTextBox.FontStretch);
