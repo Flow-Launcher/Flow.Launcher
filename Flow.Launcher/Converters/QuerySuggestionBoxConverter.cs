@@ -33,12 +33,34 @@ public class QuerySuggestionBoxConverter : IMultiValueConverter
         {
             var selectedResult = selectedItem.Result;
             var selectedResultActionKeyword = string.IsNullOrEmpty(selectedResult.ActionKeywordAssigned) ? "" : selectedResult.ActionKeywordAssigned + " ";
-            var selectedResultPossibleSuggestion = selectedResultActionKeyword +
-                (string.IsNullOrEmpty(selectedResult.QuerySuggestionText) ?
-                selectedResult.Title :
-                selectedResult.QuerySuggestionText);
 
-            if (!selectedResultPossibleSuggestion.StartsWith(queryText, StringComparison.CurrentCultureIgnoreCase))
+            string selectedResultPossibleSuggestion = null;
+            
+            // Firstly check if the result has QuerySuggestionText
+            if (!string.IsNullOrEmpty(selectedResult.QuerySuggestionText))
+            {
+                selectedResultPossibleSuggestion = selectedResultActionKeyword + selectedResult.QuerySuggestionText;
+
+                // If this QuerySuggestionText does not start with the queryText, set it to null
+                if (!selectedResultPossibleSuggestion.StartsWith(queryText, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    selectedResultPossibleSuggestion = null;
+                }
+            }
+
+            // Then check Title as suggestion
+            if (string.IsNullOrEmpty(selectedResultPossibleSuggestion))
+            {
+                selectedResultPossibleSuggestion = selectedResultActionKeyword + selectedResult.Title;
+
+                // If this QuerySuggestionText does not start with the queryText, set it to null
+                if (!selectedResultPossibleSuggestion.StartsWith(queryText, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    selectedResultPossibleSuggestion = null;
+                }
+            }
+
+            if (string.IsNullOrEmpty(selectedResultPossibleSuggestion))
                 return string.Empty;
 
             // For AutocompleteQueryCommand.
