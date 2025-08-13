@@ -260,7 +260,11 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// This holds the text which can be shown as a query suggestion.
         /// </summary>
-        /// <remarks>When a value is not set, the <see cref="Title"/> will be used.</remarks>
+        /// <remarks>
+        /// When a value is not set, the <see cref="Title"/> will be used.
+        /// If the it does not start with the query text, it will not be shown as a suggestion.
+        /// So make sure to set this value to start with the query text.
+        /// </remarks>
         public string QuerySuggestionText { get; set; }
 
         /// <summary>
