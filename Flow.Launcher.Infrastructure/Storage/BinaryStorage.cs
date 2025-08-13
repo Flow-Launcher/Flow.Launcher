@@ -12,7 +12,7 @@ using MemoryPack;
 namespace Flow.Launcher.Infrastructure.Storage
 {
     /// <summary>
-    /// Stroage object using binary data
+    /// Storage object using binary data
     /// Normally, it has better performance, but not readable
     /// </summary>
     /// <remarks>
