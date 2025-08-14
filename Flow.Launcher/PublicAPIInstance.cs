@@ -399,16 +399,16 @@ namespace Flow.Launcher
             {
                 LogError(ClassName, "File Manager not found");
                 ShowMsgError(
-                    string.Format(GetTranslation("fileManagerNotFound"), ex.Message),
-                    GetTranslation("fileManagerNotFoundTitle")
+                    GetTranslation("fileManagerNotFoundTitle"),
+                    string.Format(GetTranslation("fileManagerNotFound"), ex.Message)
                 );
             }
             catch (Exception ex)
             {
                 LogException(ClassName, "Failed to open folder", ex);
                 ShowMsgError(
-                    string.Format(GetTranslation("folderOpenError"), ex.Message),
-                    GetTranslation("errorTitle")
+                    GetTranslation("errorTitle"),
+                    string.Format(GetTranslation("folderOpenError"), ex.Message)
                 );
             }
         }
@@ -437,8 +437,8 @@ namespace Flow.Launcher
                     var tabOrWindow = browserInfo.OpenInTab ? "tab" : "window";
                     LogException(ClassName, $"Failed to open URL in browser {tabOrWindow}: {path}, {inPrivate ?? browserInfo.EnablePrivate}, {browserInfo.PrivateArg}", e);
                     ShowMsgError(
-                        GetTranslation("browserOpenError"),
-                        GetTranslation("errorTitle")
+                        GetTranslation("errorTitle"),
+                        GetTranslation("browserOpenError")
                     );
                 }
             }
