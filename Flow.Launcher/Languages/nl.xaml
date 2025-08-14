@@ -29,7 +29,7 @@
     <system:String x:Key="referToLogs">Please refer to the logs for more information</system:String>
 
     <!--  Http  -->
-    <system:String x:Key="pleaseTryAgain">Please try again</system:String>
+    <system:String x:Key="pleaseTryAgain">Probeer het opnieuw</system:String>
     <system:String x:Key="parseProxyFailed">Unable to parse Http Proxy</system:String>
 
     <!--  MainWindow  -->
@@ -59,7 +59,7 @@
     <system:String x:Key="GameModeToolTip">Stop het gebruik van Sneltoetsen.</system:String>
     <system:String x:Key="PositionReset">Positie resetten</system:String>
     <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
-    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Type om te zoeken</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Instellingen</system:String>
@@ -119,11 +119,11 @@
     <system:String x:Key="SearchPrecisionLow">Laag</system:String>
     <system:String x:Key="SearchPrecisionRegular">Normaal</system:String>
     <system:String x:Key="ShouldUsePinyin">Zou Pinyin moeten gebruiken</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">Pinyin is the standard system of romanized spelling for translating Chinese. Please note, enabling this can significantly increase memory usage during search.</system:String>
-    <system:String x:Key="ShouldUseDoublePinyin">Use Double Pinyin</system:String>
-    <system:String x:Key="ShouldUseDoublePinyinToolTip">Use Double Pinyin instead of Full Pinyin to search.</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">Pinyin is het standaard systeem van geromaniseerde spelling voor Chinees vertalen. Let op, het inschakelen van dit systeem kan het geheugengebruik tijdens het zoeken aanzienlijk verhogen.</system:String>
+    <system:String x:Key="ShouldUseDoublePinyin">Dubbele Pinyin gebruiken</system:String>
+    <system:String x:Key="ShouldUseDoublePinyinToolTip">Gebruik Double Pinyin in plaats van Full Pinyin om te zoeken.</system:String>
     <system:String x:Key="DoublePinyinSchema">Double Pinyin Schema</system:String>
-    <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao He</system:String>
+    <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao Hij</system:String>
     <system:String x:Key="DoublePinyinSchemasZiRanMa">Zi Ran Ma</system:String>
     <system:String x:Key="DoublePinyinSchemasWeiRuan">Wei Ruan</system:String>
     <system:String x:Key="DoublePinyinSchemasZhiNengABC">Zhi Neng ABC</system:String>
@@ -136,12 +136,12 @@
     <system:String x:Key="AlwaysPreview">Altijd voorbeeld</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Open altijd het voorbeeld paneel wanneer Flow activeert. Druk op {0} om voorbeeld te schakelen.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Schaduw effect is niet toegestaan omdat het huidige thema een vervagingseffect heeft</system:String>
-    <system:String x:Key="searchDelay">Search Delay</system:String>
-    <system:String x:Key="searchDelayToolTip">Adds a short delay while typing to reduce UI flicker and result load. Recommended if your typing speed is average.</system:String>
-    <system:String x:Key="searchDelayNumberBoxToolTip">Enter the wait time (in ms) until input is considered complete. This can only be edited if Search Delay is enabled.</system:String>
-    <system:String x:Key="searchDelayTime">Default Search Delay Time</system:String>
-    <system:String x:Key="searchDelayTimeToolTip">Wait time before showing results after typing stops. Higher values wait longer. (ms)</system:String>
-    <system:String x:Key="KoreanImeTitle">Information for Korean IME user</system:String>
+    <system:String x:Key="searchDelay">Vertraging voor zoeken</system:String>
+    <system:String x:Key="searchDelayToolTip">Voegt een korte vertraging toe tijdens het typen om flikkeren van de UI en systeembelasting te verminderen. Aanbevolen als uw typsnelheid gemiddeld is.</system:String>
+    <system:String x:Key="searchDelayNumberBoxToolTip">Voer de wachttijd in (in ms) totdat de invoer is voltooid. Dit kan alleen worden bewerkt als de Vertraging voor zoeken optie is ingeschakeld.</system:String>
+    <system:String x:Key="searchDelayTime">Standaard wachttijd Vertraging voor zoeken</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Wacht op het tonen van resultaten na het typen stopt. Hogere waarden wachten langer. (ms)</system:String>
+    <system:String x:Key="KoreanImeTitle">Informatie voor Koreaanse IME-gebruiker</system:String>
     <system:String x:Key="KoreanImeGuide">
         The Korean input method used in Windows 11 may cause some issues in Flow Launcher.
 
@@ -197,7 +197,7 @@
     <system:String x:Key="FilterComboboxLabel">Advanced Settings:</system:String>
     <system:String x:Key="DisplayModeOnOff">Enabled</system:String>
     <system:String x:Key="DisplayModePriority">Priority</system:String>
-    <system:String x:Key="DisplayModeSearchDelay">Search Delay</system:String>
+    <system:String x:Key="DisplayModeSearchDelay">Vertraging voor zoeken</system:String>
     <system:String x:Key="DisplayModeHomeOnOff">Home Page</system:String>
     <system:String x:Key="currentPriority">Huidige Prioriteit</system:String>
     <system:String x:Key="newPriority">Nieuwe Prioriteit</system:String>
