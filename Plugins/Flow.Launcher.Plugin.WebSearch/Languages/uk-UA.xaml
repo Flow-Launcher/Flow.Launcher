@@ -11,6 +11,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_edit">Редагувати</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">Додати</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">Увімкнено</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_private_mode_label">Приватний режим</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_true">Увімкнено</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_false">Вимкнено</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">Підтвердити</system:String>
