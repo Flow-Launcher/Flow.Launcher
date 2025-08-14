@@ -11,6 +11,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_edit">Düzenle</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">Ekle</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">Etkin</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_private_mode_label">Gizli Mod</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_true">Etkin</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_false">Devre dışı</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">Onayla</system:String>
