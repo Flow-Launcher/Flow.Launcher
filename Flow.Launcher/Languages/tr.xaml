@@ -2,15 +2,15 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  Startup  -->
     <system:String x:Key="runtimePluginInstalledChooseRuntimePrompt">
-        Flow detected you have installed {0} plugins, which will require {1} to run. Would you like to download {1}?
+        Flow, {0} eklenti yüklediğinizi tespit etti, bu eklentilerin çalışması için {1} gerekir. {1} indirilsin mi?
         {2}{2}
-        Click no if it's already installed, and you will be prompted to select the folder that contains the {1} executable
+        Zaten yüklüyse hayır'a tıklayın ve {1} yürütülebilir dosyasının bulunduğu klasörü seçin
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Lütfen {0} dosyasını seçin</system:String>
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
-        Your selected {0} executable is invalid.
+        Seçtiğiniz {0} yürütülebilir dosyası geçersiz.
         {2}{2}
-        Click yes if you would like select the {0} executable again. Click no if you would like to download {1}
+        {0} yürütülebilir dosyasını tekrar seçmek istiyorsanız evet'e tıklayın. {1} dosyasını indirmek istiyorsanız hayır'a tıklayın
     </system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">{0} dosya yolu ayarlanamadı, lütfen Flow’un ayarlarından deneyin (en alta inerek).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Eklentiler başlatılamıyor</system:String>
@@ -119,7 +119,7 @@
     <system:String x:Key="SearchPrecisionLow">Düşük</system:String>
     <system:String x:Key="SearchPrecisionRegular">Normal</system:String>
     <system:String x:Key="ShouldUsePinyin">Pinyin</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">Pinyin is the standard system of romanized spelling for translating Chinese. Please note, enabling this can significantly increase memory usage during search.</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">Pinyin, Çince'yi çevirmek için kullanılan standart romanize yazım sistemidir. Bunu etkinleştirmenin arama sırasında bellek kullanımını önemli ölçüde artırabileceğini lütfen unutmayın.</system:String>
     <system:String x:Key="ShouldUseDoublePinyin">Çift Pinyin kullanın</system:String>
     <system:String x:Key="ShouldUseDoublePinyinToolTip">Arama yapmak için Tam Pinyin yerine Çift Pinyin kullanın.</system:String>
     <system:String x:Key="DoublePinyinSchema">Çift Pinyin Şeması</system:String>
