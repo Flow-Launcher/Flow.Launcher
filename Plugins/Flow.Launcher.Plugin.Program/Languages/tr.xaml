@@ -70,7 +70,7 @@
         Insert file suffixes you want to index. Suffixes should be separated by ';'. (ex&gt;bat;py)
     </system:String>
     <system:String x:Key="flowlauncher_plugin_program_protocol_tooltip">
-        Insert protocols of .url files you want to index. Protocols should be separated by ';', and should end with &quot;://&quot;. (ex&gt;ftp://;mailto://)
+        İndekslemek istediğiniz .url dosyalarının protokollerini girin. Protokoller ';' ile ayrılmalı ve &quot;://&quot; ile bitmelidir. (örn&gt;ftp://;mailto://)
     </system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Başka Bir Kullanıcı Olarak Çalıştır</system:String>
