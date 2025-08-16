@@ -37,12 +37,17 @@ namespace Flow.Launcher.ViewModel
             OnPropertyChanged(nameof(Image));
         }
 
+        private bool _imageLoaded = false;
+
         public ImageSource Image
         {
             get
             {
-                if (_image == ImageLoader.MissingImage)
+                if (!_imageLoaded)
+                {
+                    _imageLoaded = true;
                     _ = LoadIconAsync();
+                }
 
                 return _image;
             }
