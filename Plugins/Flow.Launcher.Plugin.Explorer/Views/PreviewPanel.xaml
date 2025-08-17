@@ -37,15 +37,6 @@
             </Grid>
         </Grid>
         <StackPanel Grid.Row="1">
-            <StackPanel.Style>
-                <Style TargetType="StackPanel">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Result.SubTitle.Length}" Value="0">
-                            <Setter Property="Visibility" Value="Collapsed" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </StackPanel.Style>
             <Rectangle
                 x:Name="PreviewSep"
                 Width="Auto"
