@@ -31,7 +31,7 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Top"
                     Style="{DynamicResource PreviewItemTitleStyle}"
-                    Text="{Binding Result.Title}"
+                    Text="{Binding FileName}"
                     TextAlignment="Center"
                     TextWrapping="Wrap" />
             </Grid>
