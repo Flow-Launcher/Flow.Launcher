@@ -62,7 +62,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Flow.Launcher.Localization" Version="0.0.4" />
+    <PackageReference Include="Flow.Launcher.Localization" Version="0.0.5" />
     <PackageReference Include="Mages" Version="3.0.0" />
   </ItemGroup>
   

@@ -137,8 +137,8 @@
     <PackageReference Include="MdXaml.Html" Version="1.27.0" />
     <PackageReference Include="MdXaml.Plugins" Version="1.27.0" />
     <PackageReference Include="MdXaml.Svg" Version="1.27.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.7" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.7" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.8" />
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications" Version="7.1.3" />
     <!-- ModernWpfUI v0.9.5 introduced WinRT changes that causes Notification platform unavailable error on some machines -->
     <!-- https://github.com/Flow-Launcher/Flow.Launcher/issues/1772#issuecomment-1502440801 -->
@@ -148,7 +148,7 @@
     </PackageReference>
     <PackageReference Include="SemanticVersioning" Version="3.0.0" />
     <PackageReference Include="TaskScheduler" Version="2.12.2" />
-    <PackageReference Include="VirtualizingWrapPanel" Version="2.3.0" />
+    <PackageReference Include="VirtualizingWrapPanel" Version="2.3.1" />
   </ItemGroup>
 
   <ItemGroup>

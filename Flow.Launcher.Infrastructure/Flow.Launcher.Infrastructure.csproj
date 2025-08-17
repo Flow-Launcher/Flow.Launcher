@@ -68,13 +68,13 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="NHotkey.Wpf" Version="3.0.0" />
-    <PackageReference Include="NLog" Version="6.0.1" />
-    <PackageReference Include="NLog.OutputDebugString" Version="6.0.1" />
+    <PackageReference Include="NLog" Version="6.0.3" />
+    <PackageReference Include="NLog.OutputDebugString" Version="6.0.3" />
     <PackageReference Include="PropertyChanged.Fody" Version="4.1.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="SharpVectors.Wpf" Version="1.8.4.2" />
-    <PackageReference Include="System.Drawing.Common" Version="9.0.7" />
+    <PackageReference Include="SharpVectors.Wpf" Version="1.8.5" />
+    <PackageReference Include="System.Drawing.Common" Version="9.0.8" />
     <PackageReference Include="ToolGood.Words.Pinyin" Version="3.1.0.3" />
   </ItemGroup>
 
