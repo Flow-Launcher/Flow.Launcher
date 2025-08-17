@@ -21,19 +21,10 @@
             </Grid.RowDefinitions>
             <Image
                 Grid.Row="0"
+                MaxWidth="96"
+                MaxHeight="96"
                 Margin="5 12 8 0"
-                Source="{Binding PreviewImage, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
-                <Image.Style>
-                    <Style TargetType="Image">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding UseBigThumbnail}" Value="False">
-                                <Setter Property="MaxWidth" Value="96" />
-                                <Setter Property="MaxHeight" Value="96" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Image.Style>
-            </Image>
+                Source="{Binding PreviewImage, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" />
             <Grid Grid.Row="1">
                 <TextBlock
                     Margin="5 6 5 16"
