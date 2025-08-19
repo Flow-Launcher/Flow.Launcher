@@ -94,7 +94,8 @@ namespace Flow.Launcher.Plugin.WebSearch
             var columnBinding = headerClicked.Column.DisplayMemberBinding as Binding;
             var sortBy = columnBinding?.Path.Path ?? headerClicked.Column.Header as string;
 
-            if(sortBy != null) { 
+            if (sortBy != null)
+            {
                 Sort(sortBy, direction);
 
                 if (direction == ListSortDirection.Ascending)
