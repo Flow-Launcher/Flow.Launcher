@@ -32,6 +32,10 @@
     <system:String x:Key="pleaseTryAgain">Please try again</system:String>
     <system:String x:Key="parseProxyFailed">Unable to parse Http Proxy</system:String>
 
+    <!--  AbstractPluginEnvironment  -->
+    <system:String x:Key="failToInstallTypeScriptEnv">Failed to install TypeScript environment. Please try again later</system:String>
+    <system:String x:Key="failToInstallPythonEnv">Failed to install Python environment. Please try again later.</system:String>
+
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Falha em registrar a tecla de atalho &quot;{0}&quot;. A combinação pode estar em uso por outro programa. Mude para uma tecla de atalho diferente, ou encerre o outro programa.</system:String>
     <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
