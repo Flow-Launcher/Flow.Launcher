@@ -34,8 +34,8 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="parseProxyFailed">Nie je možné analyzovať Http Proxy</system:String>
 
     <!--  AbstractPluginEnvironment  -->
-    <system:String x:Key="failToInstallTypeScriptEnv">Failed to install TypeScript environment. Please try again later</system:String>
-    <system:String x:Key="failToInstallPythonEnv">Failed to install Python environment. Please try again later.</system:String>
+    <system:String x:Key="failToInstallTypeScriptEnv">Nepodarilo sa nainštalovať prostredie TypeScript. Skúste to neskôr.</system:String>
+    <system:String x:Key="failToInstallPythonEnv">Nepodarilo sa nainštalovať prostredie Python. Skúste to neskôr.</system:String>
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Nepodarilo sa zaregistrovať klávesovú skratku &quot;{0}&quot;. Klávesová skratka môže byť používaná iným programom. Zmeňte klávesovú skratku na inú alebo ukončite iný program.</system:String>
