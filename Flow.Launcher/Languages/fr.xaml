@@ -33,8 +33,8 @@
     <system:String x:Key="parseProxyFailed">Impossible d'analyser le proxy Http</system:String>
 
     <!--  AbstractPluginEnvironment  -->
-    <system:String x:Key="failToInstallTypeScriptEnv">Failed to install TypeScript environment. Please try again later</system:String>
-    <system:String x:Key="failToInstallPythonEnv">Failed to install Python environment. Please try again later.</system:String>
+    <system:String x:Key="failToInstallTypeScriptEnv">Échec de l'installation de l'environnement TypeScript. Veuillez réessayer plus tard.</system:String>
+    <system:String x:Key="failToInstallPythonEnv">Échec de l'installation de l'environnement Python. Veuillez réessayer plus tard.</system:String>
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Échec lors de l'enregistrement du raccourci : {0}</system:String>
