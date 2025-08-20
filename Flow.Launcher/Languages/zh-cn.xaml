@@ -32,6 +32,10 @@
     <system:String x:Key="pleaseTryAgain">请重试</system:String>
     <system:String x:Key="parseProxyFailed">无法解析 Http 代理</system:String>
 
+    <!--  AbstractPluginEnvironment  -->
+    <system:String x:Key="failToInstallTypeScriptEnv">Failed to install TypeScript environment. Please try again later</system:String>
+    <system:String x:Key="failToInstallPythonEnv">Failed to install Python environment. Please try again later.</system:String>
+
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">无法注册热键“{0}”。该热键可能正在被其他程序使用。更改为不同的热键，或退出其他程序。</system:String>
     <system:String x:Key="unregisterHotkeyFailed">未能取消注册快捷键&quot;{0}&quot;。请重试或查看日志以获取详细信息</system:String>
