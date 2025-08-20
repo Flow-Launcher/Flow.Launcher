@@ -32,6 +32,10 @@
     <system:String x:Key="pleaseTryAgain">Please try again</system:String>
     <system:String x:Key="parseProxyFailed">Unable to parse Http Proxy</system:String>
 
+    <!--  AbstractPluginEnvironment  -->
+    <system:String x:Key="failToInstallTypeScriptEnv">Failed to install TypeScript environment. Please try again later</system:String>
+    <system:String x:Key="failToInstallPythonEnv">Failed to install Python environment. Please try again later.</system:String>
+
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Failed to register hotkey &quot;{0}&quot;. The hotkey may be in use by another program. Change to a different hotkey, or exit another program.</system:String>
     <system:String x:Key="unregisterHotkeyFailed">단축키 &quot;{0}&quot; 등록 해제에 실패했습니다. 다시 시도하시거나 로그를 확인하세요</system:String>
