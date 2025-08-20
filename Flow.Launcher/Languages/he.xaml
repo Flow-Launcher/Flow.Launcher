@@ -32,6 +32,10 @@
     <system:String x:Key="pleaseTryAgain">Please try again</system:String>
     <system:String x:Key="parseProxyFailed">Unable to parse Http Proxy</system:String>
 
+    <!--  AbstractPluginEnvironment  -->
+    <system:String x:Key="failToInstallTypeScriptEnv">Failed to install TypeScript environment. Please try again later</system:String>
+    <system:String x:Key="failToInstallPythonEnv">Failed to install Python environment. Please try again later.</system:String>
+
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">רישום מקש הקיצור &quot;{0}&quot; נכשל. ייתכן שמקש הקיצור נמצא בשימוש על ידי תוכנה אחרת. שנה למקש קיצור אחר, או צא מהתוכנה האחרת.</system:String>
     <system:String x:Key="unregisterHotkeyFailed">ביטול הרישום של מקש קיצור &quot;{0}&quot; נכשל. אנא נסה שוב או עיין ביומן הרישום לפרטים נוספים</system:String>
