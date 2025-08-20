@@ -32,6 +32,10 @@
     <system:String x:Key="pleaseTryAgain">Probeer het opnieuw</system:String>
     <system:String x:Key="parseProxyFailed">Unable to parse Http Proxy</system:String>
 
+    <!--  AbstractPluginEnvironment  -->
+    <system:String x:Key="failToInstallTypeScriptEnv">Failed to install TypeScript environment. Please try again later</system:String>
+    <system:String x:Key="failToInstallPythonEnv">Failed to install Python environment. Please try again later.</system:String>
+
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Sneltoets &quot;{0}&quot; registreren. De sneltoets kan in gebruik zijn door een ander programma. Verander naar een andere sneltoets of sluit een ander programma.</system:String>
     <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
