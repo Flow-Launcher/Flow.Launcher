@@ -32,6 +32,10 @@
     <system:String x:Key="pleaseTryAgain">Por favor inténtelo de nuevo</system:String>
     <system:String x:Key="parseProxyFailed">No se puede analizar el proxy Http</system:String>
 
+    <!--  AbstractPluginEnvironment  -->
+    <system:String x:Key="failToInstallTypeScriptEnv">Failed to install TypeScript environment. Please try again later</system:String>
+    <system:String x:Key="failToInstallPythonEnv">Failed to install Python environment. Please try again later.</system:String>
+
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">No se ha podido registrar el atajo de teclado &quot;{0}&quot;. El atajo de teclado puede estar siendo utilizado por otro programa. Seleccione un atajo de teclado diferente o salga del otro programa.</system:String>
     <system:String x:Key="unregisterHotkeyFailed">No se ha podido anular el registro de la tecla de acceso rápido «{0}». Inténtelo de nuevo o consulte el registro para obtener más detalles</system:String>
