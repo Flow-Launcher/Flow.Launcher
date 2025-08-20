@@ -10,17 +10,17 @@
             <ResourceDictionary.MergedDictionaries>
                 <ui:ThemeResources>
                     <ui:ThemeResources.ThemeDictionaries>
-                        <ResourceDictionary x:Key="Light">
+                        <ResourceDictionary x:Key="Light" ui:ThemeDictionary.Key="Light">
                             <ResourceDictionary.MergedDictionaries>
                                 <ResourceDictionary Source="pack://application:,,,/Resources/Light.xaml" />
                             </ResourceDictionary.MergedDictionaries>
                         </ResourceDictionary>
-                        <ResourceDictionary x:Key="Dark">
+                        <ResourceDictionary x:Key="Dark" ui:ThemeDictionary.Key="Dark">
                             <ResourceDictionary.MergedDictionaries>
                                 <ResourceDictionary Source="pack://application:,,,/Resources/Dark.xaml" />
                             </ResourceDictionary.MergedDictionaries>
                         </ResourceDictionary>
-                        <ResourceDictionary x:Key="HighContrast">
+                        <ResourceDictionary x:Key="HighContrast" ui:ThemeDictionary.Key="HighContrast">
                             <ResourceDictionary.MergedDictionaries>
                                 <ResourceDictionary Source="pack://application:,,,/Resources/Dark.xaml" />
                             </ResourceDictionary.MergedDictionaries>
