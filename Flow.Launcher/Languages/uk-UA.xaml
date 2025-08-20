@@ -32,6 +32,10 @@
     <system:String x:Key="pleaseTryAgain">Спробуйте ще раз</system:String>
     <system:String x:Key="parseProxyFailed">Неможливо проаналізувати Http Proxy</system:String>
 
+    <!--  AbstractPluginEnvironment  -->
+    <system:String x:Key="failToInstallTypeScriptEnv">Failed to install TypeScript environment. Please try again later</system:String>
+    <system:String x:Key="failToInstallPythonEnv">Failed to install Python environment. Please try again later.</system:String>
+
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Не вдалося зареєструвати гарячу клавішу &quot;{0}&quot;. Можливо, гаряча клавіша використовується іншою програмою. Змініть її на іншу гарячу клавішу або вийдіть з програми, де вона використовується.</system:String>
     <system:String x:Key="unregisterHotkeyFailed">Не вдалося скасувати реєстрацію гарячої клавіші «{0}». Спробуйте ще раз або перегляньте журнал для отримання подробиць</system:String>
