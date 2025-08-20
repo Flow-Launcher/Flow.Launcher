@@ -32,6 +32,10 @@
     <system:String x:Key="pleaseTryAgain">Veuillez réessayer</system:String>
     <system:String x:Key="parseProxyFailed">Impossible d'analyser le proxy Http</system:String>
 
+    <!--  AbstractPluginEnvironment  -->
+    <system:String x:Key="failToInstallTypeScriptEnv">Failed to install TypeScript environment. Please try again later</system:String>
+    <system:String x:Key="failToInstallPythonEnv">Failed to install Python environment. Please try again later.</system:String>
+
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Échec lors de l'enregistrement du raccourci : {0}</system:String>
     <system:String x:Key="unregisterHotkeyFailed">Échec de la réinitialisation du raccourci &quot;{0}&quot;. Veuillez réessayer ou consulter le journal pour plus de détails</system:String>
