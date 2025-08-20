@@ -32,6 +32,10 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="pleaseTryAgain">Please try again</system:String>
     <system:String x:Key="parseProxyFailed">Unable to parse Http Proxy</system:String>
 
+    <!--  AbstractPluginEnvironment  -->
+    <system:String x:Key="failToInstallTypeScriptEnv">Failed to install TypeScript environment. Please try again later</system:String>
+    <system:String x:Key="failToInstallPythonEnv">Failed to install Python environment. Please try again later.</system:String>
+
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Nie udało się zarejestrować skrótu klawiszowego „{0}”. Skrót może być używany przez inny program. Zmień skrót na inny lub zamknij program, który go używa.</system:String>
     <system:String x:Key="unregisterHotkeyFailed">Nie udało się wyrejestrować skrótu „{0}”. Spróbuj ponownie lub sprawdź szczegóły w dzienniku</system:String>
