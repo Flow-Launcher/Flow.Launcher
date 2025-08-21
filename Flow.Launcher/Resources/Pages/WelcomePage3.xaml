@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:cc="clr-namespace:Flow.Launcher.Resources.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ikw="http://schemas.inkore.net/lib/ui/wpf"
     xmlns:local="clr-namespace:Flow.Launcher.Resources.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
@@ -47,67 +48,90 @@
             HorizontalAlignment="Stretch"
             FontSize="13">
             <StackPanel Margin="24 0 24 0">
-                <Border
-                    BorderBrush="{DynamicResource Color03B}"
-                    BorderThickness="0"
-                    CornerRadius="5">
-                    <StackPanel>
-                        <cc:Card
-                            Title="{DynamicResource HotkeyUpDownDesc}"
-                            BorderThickness="0 0 0 0"
-                            Type="Inside">
-                            <StackPanel Orientation="Horizontal">
-                                <cc:HotkeyDisplay Keys="←+→" Type="Small" />
-                            </StackPanel>
-                        </cc:Card>
-                        <cc:Card
-                            Title="{DynamicResource HotkeyLeftRightDesc}"
-                            BorderThickness="0 0 0 0"
-                            Type="Inside">
-                            <StackPanel Orientation="Horizontal">
-                                <cc:HotkeyDisplay Keys="↑+↓" Type="Small" />
-                            </StackPanel>
-                        </cc:Card>
-                        <cc:Card
-                            Title="{DynamicResource HotkeyESCDesc}"
-                            BorderThickness="0 0 0 0"
-                            Type="Inside">
-                            <StackPanel Orientation="Horizontal">
-                                <cc:HotkeyDisplay Keys="ESC" Type="Small" />
-                            </StackPanel>
-                        </cc:Card>
-                        <cc:Card
-                            Title="{DynamicResource HotkeyRunDesc}"
-                            BorderThickness="0 0 0 0"
-                            Type="Inside">
-                            <cc:HotkeyDisplay Keys="ENTER" Type="Small" />
-                        </cc:Card>
-                        <cc:Card
-                            Title="{DynamicResource HotkeyShiftEnterDesc}"
-                            BorderThickness="0 0 0 0"
-                            Type="Inside">
-                            <StackPanel Orientation="Horizontal">
-                                <cc:HotkeyDisplay Keys="SHIFT+ENTER" Type="Small" />
-                            </StackPanel>
-                        </cc:Card>
-                        <cc:Card
-                            Title="{DynamicResource HotkeyCtrlEnterDesc}"
-                            BorderThickness="0 0 0 0"
-                            Type="Inside">
-                            <StackPanel Orientation="Horizontal">
-                                <cc:HotkeyDisplay Keys="CTRL+ENTER" Type="Small" />
-                            </StackPanel>
-                        </cc:Card>
-                        <cc:Card
-                            Title="{DynamicResource HotkeyCtrlShiftEnterDesc}"
-                            BorderThickness="0 0 0 0"
-                            Type="Inside">
-                            <StackPanel Orientation="Horizontal">
-                                <cc:HotkeyDisplay Keys="CTRL+SHIFT+ENTER" Type="Small" />
-                            </StackPanel>
-                        </cc:Card>
+                <ui:SettingsCard
+                    Background="Transparent"
+                    BorderThickness="0 0 0 0"
+                    Header="{DynamicResource HotkeyUpDownDesc}">
+                    <StackPanel Orientation="Horizontal">
+                        <cc:HotkeyDisplay Keys="←+→" Type="Small" />
                     </StackPanel>
-                </Border>
+                </ui:SettingsCard>
+                <Border
+                    Height="1"
+                    Background="{DynamicResource Color03B}"
+                    BorderThickness="0" />
+
+                <ui:SettingsCard
+                    Background="Transparent"
+                    BorderThickness="0 0 0 0"
+                    Header="{DynamicResource HotkeyLeftRightDesc}">
+                    <StackPanel Orientation="Horizontal">
+                        <cc:HotkeyDisplay Keys="↑+↓" Type="Small" />
+                    </StackPanel>
+                </ui:SettingsCard>
+                <Border
+                    Height="1"
+                    Background="{DynamicResource Color03B}"
+                    BorderThickness="0" />
+
+                <ui:SettingsCard
+                    Background="Transparent"
+                    BorderThickness="0 0 0 0"
+                    Header="{DynamicResource HotkeyESCDesc}">
+                    <StackPanel Orientation="Horizontal">
+                        <cc:HotkeyDisplay Keys="ESC" Type="Small" />
+                    </StackPanel>
+                </ui:SettingsCard>
+                <Border
+                    Height="1"
+                    Background="{DynamicResource Color03B}"
+                    BorderThickness="0" />
+
+                <ui:SettingsCard
+                    Background="Transparent"
+                    BorderThickness="0 0 0 0"
+                    Header="{DynamicResource HotkeyRunDesc}">
+                    <cc:HotkeyDisplay Keys="ENTER" Type="Small" />
+                </ui:SettingsCard>
+                <Border
+                    Height="1"
+                    Background="{DynamicResource Color03B}"
+                    BorderThickness="0" />
+
+                <ui:SettingsCard
+                    Background="Transparent"
+                    BorderThickness="0 0 0 0"
+                    Header="{DynamicResource HotkeyShiftEnterDesc}">
+                    <StackPanel Orientation="Horizontal">
+                        <cc:HotkeyDisplay Keys="SHIFT+ENTER" Type="Small" />
+                    </StackPanel>
+                </ui:SettingsCard>
+                <Border
+                    Height="1"
+                    Background="{DynamicResource Color03B}"
+                    BorderThickness="0" />
+
+                <ui:SettingsCard
+                    Background="Transparent"
+                    BorderThickness="0 0 0 0"
+                    Header="{DynamicResource HotkeyCtrlEnterDesc}">
+                    <StackPanel Orientation="Horizontal">
+                        <cc:HotkeyDisplay Keys="CTRL+ENTER" Type="Small" />
+                    </StackPanel>
+                </ui:SettingsCard>
+                <Border
+                    Height="1"
+                    Background="{DynamicResource Color03B}"
+                    BorderThickness="0" />
+
+                <ui:SettingsCard
+                    Background="Transparent"
+                    BorderThickness="0 0 0 0"
+                    Header="{DynamicResource HotkeyCtrlShiftEnterDesc}">
+                    <StackPanel Orientation="Horizontal">
+                        <cc:HotkeyDisplay Keys="CTRL+SHIFT+ENTER" Type="Small" />
+                    </StackPanel>
+                </ui:SettingsCard>
             </StackPanel>
         </ui:ScrollViewerEx>
     </Grid>
