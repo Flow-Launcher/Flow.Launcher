@@ -75,9 +75,9 @@
                             <TextBlock Text="{DynamicResource fileManager_tips2}" TextWrapping="WrapWithOverflow" />
                         </TextBlock>
                         <TextBlock Margin="0 14 0 0" VerticalAlignment="Center">
-                            <Hyperlink NavigateUri="https://www.flowlauncher.com/docs/#/filemanager" RequestNavigate="Hyperlink_RequestNavigate">
+                            <ui:HyperlinkButton NavigateUri="https://www.flowlauncher.com/docs/#/filemanager">
                                 <TextBlock FontSize="14" Text="{DynamicResource fileManager_learnMore}" />
-                            </Hyperlink>
+                            </ui:HyperlinkButton>
                         </TextBlock>
                     </StackPanel>
                     <Rectangle

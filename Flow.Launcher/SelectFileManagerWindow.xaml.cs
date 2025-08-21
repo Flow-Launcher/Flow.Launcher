@@ -30,12 +30,6 @@ namespace Flow.Launcher
             }
         }
 
-        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
-        {
-            _viewModel.OpenUrl(e.Uri.AbsoluteUri);
-            e.Handled = true;
-        }
-
         private void btnBrowseFile_Click(object sender, RoutedEventArgs e)
         {
             var selectedFilePath = _viewModel.SelectFile();
