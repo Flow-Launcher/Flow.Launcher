@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:cc="clr-namespace:Flow.Launcher.Resources.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ikw="http://schemas.inkore.net/lib/ui/wpf"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
@@ -34,13 +35,13 @@
                 Style="{StaticResource PageTitle}"
                 Text="{DynamicResource plugins}"
                 TextAlignment="Left" />
-            <StackPanel
+            <ikw:SimpleStackPanel
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
                 DockPanel.Dock="Right"
-                Orientation="Horizontal">
+                Orientation="Horizontal"
+                Spacing="8">
                 <TextBlock
-                    Margin="0 0 6 0"
                     VerticalAlignment="Center"
                     FontSize="14"
                     Foreground="{DynamicResource Color15B}"
@@ -51,7 +52,6 @@
                     Height="34"
                     MinWidth="150"
                     MaxWidth="150"
-                    Margin="0 0 4 0"
                     HorizontalContentAlignment="Left"
                     Background="{DynamicResource Color00B}"
                     DisplayMemberPath="Display"
@@ -61,7 +61,7 @@
                 <Button
                     Width="34"
                     Height="34"
-                    Margin="0 0 20 0"
+                    Padding="0"
                     Command="{Binding OpenHelperCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource Self}}"
                     FontSize="14">
@@ -109,7 +109,7 @@
                         </Style>
                     </TextBox.Style>
                 </TextBox>
-            </StackPanel>
+            </ikw:SimpleStackPanel>
         </DockPanel>
 
         <Border

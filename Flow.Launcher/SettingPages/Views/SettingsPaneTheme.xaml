@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ext="clr-namespace:Flow.Launcher.Resources.MarkupExtensions"
     xmlns:flowlauncher="clr-namespace:Flow.Launcher"
+    xmlns:ikw="http://schemas.inkore.net/lib/ui/wpf"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
@@ -392,301 +393,313 @@
             </Grid>
 
             <!--  Theme  -->
-            <cc:ExCard
+            <ui:SettingsExpander
                 x:Name="ThemeCard"
-                Title="{DynamicResource theme}"
                 Margin="0 8 0 0"
-                Icon="&#xe790;">
-                <cc:ExCard.SideContent>
-                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                        <ui:PathIcon
-                            Width="12"
-                            Margin="0 1 8 0"
-                            VerticalAlignment="Center"
-                            Data="{DynamicResource circle_half_stroke_solid}"
-                            ToolTip="{DynamicResource TypeIsDarkToolTip}"
-                            ToolTipService.InitialShowDelay="0"
-                            Visibility="{Binding SelectedTheme.IsDark, Converter={StaticResource BoolToVisibilityConverter}}" />
-                        <ui:FontIcon
-                            Margin="0 2 8 0"
-                            VerticalAlignment="Center"
-                            FontSize="12"
-                            Glyph="&#xEB42;"
-                            ToolTip="{DynamicResource TypeHasBlurToolTip}"
-                            ToolTipService.InitialShowDelay="0"
-                            Visibility="{Binding SelectedTheme.HasBlur, Converter={StaticResource BoolToVisibilityConverter}}" />
-                        <TextBlock Text="{Binding SelectedTheme.Name}" />
-                    </StackPanel>
-                </cc:ExCard.SideContent>
-                <ListBox
-                    HorizontalAlignment="Stretch"
-                    HorizontalContentAlignment="Stretch"
-                    Background="Transparent"
-                    ItemContainerStyle="{DynamicResource ThemeList}"
-                    ItemsSource="{Binding Themes}"
-                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                    ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                    SelectedValue="{Binding SelectedTheme}">
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel />
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid
-                                Width="Auto"
-                                Height="34"
-                                Margin="0"
-                                Focusable="True">
-                                <StackPanel Margin="14 2 14 0" Orientation="Horizontal">
-                                    <TextBlock
-                                        Margin="0 0 0 0"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Text="{Binding Name}"
-                                        TextWrapping="Wrap" />
-                                    <ui:PathIcon
-                                        Width="12"
-                                        Margin="8 1 0 0"
-                                        VerticalAlignment="Center"
-                                        Data="{DynamicResource circle_half_stroke_solid}"
-                                        ToolTip="{DynamicResource TypeIsDarkToolTip}"
-                                        ToolTipService.InitialShowDelay="0"
-                                        Visibility="{Binding IsDark, Converter={StaticResource BoolToVisibilityConverter}}" />
-                                    <ui:FontIcon
-                                        Margin="8 1 0 0"
-                                        VerticalAlignment="Center"
-                                        FontSize="12"
-                                        Glyph="&#xEB42;"
-                                        ToolTip="{DynamicResource TypeHasBlurToolTip}"
-                                        ToolTipService.InitialShowDelay="0"
-                                        Visibility="{Binding HasBlur, Converter={StaticResource BoolToVisibilityConverter}}" />
-                                </StackPanel>
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                    <ListBox.Template>
-                        <ControlTemplate>
-                            <Border
-                                Padding="18 12 18 12"
-                                BorderBrush="{DynamicResource Color03B}"
-                                BorderThickness="0 1 0 0">
-                                <ItemsPresenter />
-                            </Border>
-                        </ControlTemplate>
-                    </ListBox.Template>
-                </ListBox>
-            </cc:ExCard>
+                Header="{DynamicResource theme}">
+                <ui:SettingsExpander.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xe790;" />
+                </ui:SettingsExpander.HeaderIcon>
 
-            <cc:CardGroup Margin="0 10 0 0">
-                <!--  Backdrop effect  -->
-                <cc:Card
-                    Title="{DynamicResource BackdropType}"
-                    Margin="0 0 0 0"
-                    Icon="&#xeb42;"
-                    Sub="{Binding BackdropSubText}"
-                    Type="First">
-                    <ComboBox
-                        MinWidth="160"
+                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                    <ui:PathIcon
+                        Width="12"
+                        Margin="0 1 8 0"
                         VerticalAlignment="Center"
-                        DisplayMemberPath="Display"
-                        FontSize="14"
-                        IsEnabled="{Binding IsBackdropEnabled}"
-                        ItemsSource="{Binding BackdropTypesList}"
-                        SelectedValue="{Binding BackdropType, Mode=TwoWay}"
-                        SelectedValuePath="Value" />
-                </cc:Card>
+                        Data="{DynamicResource circle_half_stroke_solid}"
+                        ToolTip="{DynamicResource TypeIsDarkToolTip}"
+                        ToolTipService.InitialShowDelay="0"
+                        Visibility="{Binding SelectedTheme.IsDark, Converter={StaticResource BoolToVisibilityConverter}}" />
+                    <ui:FontIcon
+                        Margin="0 2 8 0"
+                        VerticalAlignment="Center"
+                        FontSize="12"
+                        Glyph="&#xEB42;"
+                        ToolTip="{DynamicResource TypeHasBlurToolTip}"
+                        ToolTipService.InitialShowDelay="0"
+                        Visibility="{Binding SelectedTheme.HasBlur, Converter={StaticResource BoolToVisibilityConverter}}" />
+                    <TextBlock Text="{Binding SelectedTheme.Name}" />
+                </StackPanel>
 
-                <!--  Drop shadow effect  -->
-                <cc:Card
-                    Title="{DynamicResource queryWindowShadowEffect}"
-                    Margin="0 0 0 0"
-                    Icon="&#xeb91;"
-                    Type="Last">
-                    <ui:ToggleSwitch
-                        IsEnabled="{Binding IsDropShadowEnabled}"
-                        IsOn="{Binding DropShadowEffect}"
-                        OffContent="{DynamicResource disable}"
-                        OnContent="{DynamicResource enable}" />
-                </cc:Card>
-            </cc:CardGroup>
-            <cc:HyperLink
-                Margin="10"
+                <ui:SettingsExpander.ItemsHeader>
+                    <StackPanel Background="{DynamicResource SettingsCardBackground}">
+                        <ListBox
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Stretch"
+                            Background="Transparent"
+                            ItemContainerStyle="{DynamicResource ThemeList}"
+                            ItemsSource="{Binding Themes}"
+                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                            ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                            SelectedValue="{Binding SelectedTheme}">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid
+                                        Width="Auto"
+                                        Height="34"
+                                        Margin="0"
+                                        Focusable="True">
+                                        <StackPanel Margin="14 2 14 0" Orientation="Horizontal">
+                                            <TextBlock
+                                                Margin="0 0 0 0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Text="{Binding Name}"
+                                                TextWrapping="Wrap" />
+                                            <ui:PathIcon
+                                                Width="12"
+                                                Margin="8 1 0 0"
+                                                VerticalAlignment="Center"
+                                                Data="{DynamicResource circle_half_stroke_solid}"
+                                                ToolTip="{DynamicResource TypeIsDarkToolTip}"
+                                                ToolTipService.InitialShowDelay="0"
+                                                Visibility="{Binding IsDark, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                            <ui:FontIcon
+                                                Margin="8 1 0 0"
+                                                VerticalAlignment="Center"
+                                                FontSize="12"
+                                                Glyph="&#xEB42;"
+                                                ToolTip="{DynamicResource TypeHasBlurToolTip}"
+                                                ToolTipService.InitialShowDelay="0"
+                                                Visibility="{Binding HasBlur, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                        </StackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                            <ListBox.Template>
+                                <ControlTemplate>
+                                    <Border
+                                        Padding="18 12 18 12"
+                                        BorderBrush="{DynamicResource Color03B}"
+                                        BorderThickness="0 1 0 0">
+                                        <ItemsPresenter />
+                                    </Border>
+                                </ControlTemplate>
+                            </ListBox.Template>
+                        </ListBox>
+                    </StackPanel>
+                </ui:SettingsExpander.ItemsHeader>
+            </ui:SettingsExpander>
+
+            <!--  Backdrop effect  -->
+            <ui:SettingsCard
+                Margin="0 10 0 0"
+                Description="{Binding BackdropSubText}"
+                Header="{DynamicResource BackdropType}">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xeb42;" />
+                </ui:SettingsCard.HeaderIcon>
+
+                <ComboBox
+                    MinWidth="160"
+                    VerticalAlignment="Center"
+                    DisplayMemberPath="Display"
+                    FontSize="14"
+                    IsEnabled="{Binding IsBackdropEnabled}"
+                    ItemsSource="{Binding BackdropTypesList}"
+                    SelectedValue="{Binding BackdropType, Mode=TwoWay}"
+                    SelectedValuePath="Value" />
+            </ui:SettingsCard>
+
+            <!--  Drop shadow effect  -->
+            <ui:SettingsCard Margin="0 0 0 0" Header="{DynamicResource queryWindowShadowEffect}">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xeb91;" />
+                </ui:SettingsCard.HeaderIcon>
+
+                <ui:ToggleSwitch
+                    IsEnabled="{Binding IsDropShadowEnabled}"
+                    IsOn="{Binding DropShadowEffect}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
+            </ui:SettingsCard>
+            <ui:HyperlinkButton
+                Margin="0 10 0 10"
                 HorizontalAlignment="Right"
-                Text="{DynamicResource browserMoreThemes}"
-                Uri="{Binding LinkThemeGallery}" />
+                Content="{DynamicResource browserMoreThemes}"
+                NavigateUri="{Binding LinkThemeGallery}" />
 
             <!--  Fixed size  -->
-            <cc:ExCard
-                Title="{DynamicResource KeepMaxResults}"
+            <ui:SettingsExpander
                 Margin="0 20 0 0"
-                Icon="&#xE744;"
-                Sub="{DynamicResource KeepMaxResultsToolTip}">
-                <cc:ExCard.SideContent>
-                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                        <ui:ToggleSwitch
-                            IsOn="{Binding KeepMaxResults}"
-                            OffContent="{DynamicResource disable}"
-                            OnContent="{DynamicResource enable}" />
-                    </StackPanel>
-                </cc:ExCard.SideContent>
-                <cc:Card
-                    Title="{DynamicResource maxShowResults}"
-                    Sub="{DynamicResource maxShowResultsToolTip}"
-                    Type="InsideFit">
-                    <ComboBox
-                        Width="100"
-                        ItemsSource="{Binding MaxResultsRange}"
-                        SelectedItem="{Binding Settings.MaxResultsToShow}" />
-                </cc:Card>
-            </cc:ExCard>
+                Description="{DynamicResource KeepMaxResultsToolTip}"
+                Header="{DynamicResource KeepMaxResults}">
+                <ui:SettingsExpander.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xE744;" />
+                </ui:SettingsExpander.HeaderIcon>
+
+                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                    <ui:ToggleSwitch
+                        IsOn="{Binding KeepMaxResults}"
+                        OffContent="{DynamicResource disable}"
+                        OnContent="{DynamicResource enable}" />
+                </StackPanel>
+
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard Description="{DynamicResource maxShowResultsToolTip}" Header="{DynamicResource maxShowResults}">
+                        <ComboBox
+                            Width="100"
+                            ItemsSource="{Binding MaxResultsRange}"
+                            SelectedItem="{Binding Settings.MaxResultsToShow}" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
 
             <!--  Time and date  -->
-            <cc:CardGroup Margin="0 14 0 0">
-                <cc:Card
-                    Title="{DynamicResource Clock}"
-                    Icon="&#xec92;"
-                    Type="First">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Foreground="{DynamicResource Color04B}"
-                            Text="{Binding ClockText}" />
-                        <ComboBox
-                            MinWidth="180"
-                            Margin="10 0 18 0"
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            ItemsSource="{Binding TimeFormatList}"
-                            SelectedItem="{Binding TimeFormat}" />
-                        <ui:ToggleSwitch
-                            IsOn="{Binding UseClock}"
-                            OffContent="{DynamicResource disable}"
-                            OnContent="{DynamicResource enable}" />
-                    </StackPanel>
-                </cc:Card>
+            <ui:SettingsCard Margin="0 14 0 0" Header="{DynamicResource Clock}">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xec92;" />
+                </ui:SettingsCard.HeaderIcon>
 
-                <cc:Card
-                    Title="{DynamicResource Date}"
-                    Icon="&#xe787;"
-                    Type="Last">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Foreground="{DynamicResource Color04B}"
-                            Text="{Binding DateText}" />
-                        <ComboBox
-                            MinWidth="180"
-                            Margin="10 0 18 0"
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            ItemsSource="{Binding DateFormatList}"
-                            SelectedItem="{Binding DateFormat}" />
-                        <ui:ToggleSwitch
-                            IsOn="{Binding UseDate}"
-                            OffContent="{DynamicResource disable}"
-                            OnContent="{DynamicResource enable}" />
-                    </StackPanel>
-                </cc:Card>
-            </cc:CardGroup>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Foreground="{DynamicResource Color04B}"
+                        Text="{Binding ClockText}" />
+                    <ComboBox
+                        MinWidth="180"
+                        Margin="10 0 18 0"
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        ItemsSource="{Binding TimeFormatList}"
+                        SelectedItem="{Binding TimeFormat}" />
+                    <ui:ToggleSwitch
+                        IsOn="{Binding UseClock}"
+                        OffContent="{DynamicResource disable}"
+                        OnContent="{DynamicResource enable}" />
+                </StackPanel>
+            </ui:SettingsCard>
+
+            <ui:SettingsCard Header="{DynamicResource Date}">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xe787;" />
+                </ui:SettingsCard.HeaderIcon>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Foreground="{DynamicResource Color04B}"
+                        Text="{Binding DateText}" />
+                    <ComboBox
+                        MinWidth="180"
+                        Margin="10 0 18 0"
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        ItemsSource="{Binding DateFormatList}"
+                        SelectedItem="{Binding DateFormat}" />
+                    <ui:ToggleSwitch
+                        IsOn="{Binding UseDate}"
+                        OffContent="{DynamicResource disable}"
+                        OnContent="{DynamicResource enable}" />
+                </StackPanel>
+            </ui:SettingsCard>
 
             <!--  Placeholder text  -->
-            <cc:ExCard
-                Title="{DynamicResource ShowPlaceholder}"
+            <ui:SettingsExpander
                 Margin="0 4 0 0"
-                Icon="&#xea80;"
-                Sub="{DynamicResource ShowPlaceholderTip}">
-                <cc:ExCard.SideContent>
-                    <ui:ToggleSwitch
-                        IsOn="{Binding ShowPlaceholder}"
-                        OffContent="{DynamicResource disable}"
-                        OnContent="{DynamicResource enable}" />
-                </cc:ExCard.SideContent>
-                <cc:Card
-                    Title="{DynamicResource PlaceholderText}"
-                    Sub="{Binding PlaceholderTextTip}"
-                    Type="InsideFit">
-                    <TextBox
-                        MinWidth="150"
-                        Text="{Binding PlaceholderText}"
-                        TextWrapping="NoWrap" />
-                </cc:Card>
-            </cc:ExCard>
+                Description="{DynamicResource ShowPlaceholderTip}"
+                Header="{DynamicResource ShowPlaceholder}">
+                <ui:SettingsExpander.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xea80;" />
+                </ui:SettingsExpander.HeaderIcon>
+
+                <ui:ToggleSwitch
+                    IsOn="{Binding ShowPlaceholder}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
+
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard Description="{Binding PlaceholderTextTip}" Header="{DynamicResource PlaceholderText}">
+                        <TextBox
+                            MinWidth="150"
+                            Text="{Binding PlaceholderText}"
+                            TextWrapping="NoWrap" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
 
             <!--  Animation  -->
-            <cc:ExCard
-                Title="{DynamicResource Animation}"
+            <ui:SettingsExpander
                 Margin="0 18 0 0"
-                Icon="&#xedb5;"
-                Sub="{DynamicResource AnimationTip}">
-                <cc:ExCard.SideContent>
-                    <ui:ToggleSwitch
-                        IsOn="{Binding UseAnimation}"
-                        OffContent="{DynamicResource disable}"
-                        OnContent="{DynamicResource enable}" />
-                </cc:ExCard.SideContent>
-                <cc:Card
-                    Title="{DynamicResource AnimationSpeed}"
-                    Sub="{DynamicResource AnimationSpeedTip}"
-                    Type="InsideFit">
-                    <StackPanel Orientation="Horizontal">
-                        <ComboBox
-                            MinWidth="160"
-                            VerticalAlignment="Center"
-                            DisplayMemberPath="Display"
-                            FontSize="14"
-                            ItemsSource="{Binding AnimationSpeeds}"
-                            SelectedValue="{Binding Settings.AnimationSpeed}"
-                            SelectedValuePath="Value" />
+                Description="{DynamicResource AnimationTip}"
+                Header="{DynamicResource Animation}">
+                <ui:SettingsExpander.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xedb5;" />
+                </ui:SettingsExpander.HeaderIcon>
 
-                        <TextBox
-                            MinWidth="80"
-                            Margin="18 0 0 0"
-                            Text="{Binding Settings.CustomAnimationLength}"
-                            TextWrapping="NoWrap"
-                            Visibility="{ext:VisibleWhen {Binding Settings.AnimationSpeed},
-                                                         IsEqualTo={x:Static userSettings:AnimationSpeeds.Custom}}" />
-                    </StackPanel>
-                </cc:Card>
-            </cc:ExCard>
+                <ui:ToggleSwitch
+                    IsOn="{Binding UseAnimation}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
+
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard Description="{DynamicResource AnimationSpeedTip}" Header="{DynamicResource AnimationSpeed}">
+                        <StackPanel Orientation="Horizontal">
+                            <ComboBox
+                                MinWidth="160"
+                                VerticalAlignment="Center"
+                                DisplayMemberPath="Display"
+                                FontSize="14"
+                                ItemsSource="{Binding AnimationSpeeds}"
+                                SelectedValue="{Binding Settings.AnimationSpeed}"
+                                SelectedValuePath="Value" />
+
+                            <TextBox
+                                MinWidth="80"
+                                Margin="18 0 0 0"
+                                Text="{Binding Settings.CustomAnimationLength}"
+                                TextWrapping="NoWrap"
+                                Visibility="{ext:VisibleWhen {Binding Settings.AnimationSpeed},
+                                                             IsEqualTo={x:Static userSettings:AnimationSpeeds.Custom}}" />
+                        </StackPanel>
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
 
             <!--  SFX  -->
-            <cc:ExCard
-                Title="{DynamicResource SoundEffect}"
+            <ui:SettingsExpander
                 Margin="0 4 0 0"
-                Icon="&#xe7f5;"
-                Sub="{DynamicResource SoundEffectTip}">
-                <cc:ExCard.SideContent>
-                    <ui:ToggleSwitch
-                        IsOn="{Binding UseSound}"
-                        OffContent="{DynamicResource disable}"
-                        OnContent="{DynamicResource enable}" />
-                </cc:ExCard.SideContent>
-                <cc:Card
-                    Title="{DynamicResource SoundEffectVolume}"
-                    IsEnabled="{Binding EnableVolumeAdjustment}"
-                    Sub="{DynamicResource SoundEffectVolumeTip}"
-                    Type="InsideFit">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock
-                            Margin="0 0 8 0"
-                            VerticalAlignment="Center"
-                            Text="{Binding SoundEffectVolume}" />
-                        <Slider
-                            Width="250"
-                            VerticalAlignment="Center"
-                            IsMoveToPointEnabled="True"
-                            IsSnapToTickEnabled="True"
-                            Maximum="100"
-                            Minimum="0"
-                            TickFrequency="1"
-                            Value="{Binding SoundEffectVolume}" />
-                    </StackPanel>
-                </cc:Card>
-            </cc:ExCard>
+                Description="{DynamicResource SoundEffectTip}"
+                Header="{DynamicResource SoundEffect}">
+                <ui:SettingsExpander.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xe7f5;" />
+                </ui:SettingsExpander.HeaderIcon>
+                <ui:ToggleSwitch
+                    IsOn="{Binding UseSound}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
+
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard
+                        Description="{DynamicResource SoundEffectVolumeTip}"
+                        Header="{DynamicResource SoundEffectVolume}"
+                        IsEnabled="{Binding EnableVolumeAdjustment}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                Margin="0 0 8 0"
+                                VerticalAlignment="Center"
+                                Text="{Binding SoundEffectVolume}" />
+                            <Slider
+                                Width="250"
+                                VerticalAlignment="Center"
+                                IsMoveToPointEnabled="True"
+                                IsSnapToTickEnabled="True"
+                                Maximum="100"
+                                Minimum="0"
+                                TickFrequency="1"
+                                Value="{Binding SoundEffectVolume}" />
+                        </StackPanel>
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
+            <!--  WMP warning  -->
             <Border
                 Name="WMPWarning"
                 Padding="0 10"
@@ -723,42 +736,50 @@
             </Border>
 
             <!--  Fonts and icons  -->
-            <cc:Card
-                Title="{DynamicResource useGlyphUI}"
+            <ui:SettingsCard
                 Margin="0 18 0 0"
-                Icon="&#xf6b8;"
-                Sub="{DynamicResource useGlyphUIEffect}">
+                Description="{DynamicResource useGlyphUIEffect}"
+                Header="{DynamicResource useGlyphUI}">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xf6b8;" />
+                </ui:SettingsCard.HeaderIcon>
+
                 <ui:ToggleSwitch
                     IsOn="{Binding UseGlyphIcons}"
                     OffContent="{DynamicResource disable}"
                     OnContent="{DynamicResource enable}" />
-            </cc:Card>
+            </ui:SettingsCard>
 
             <!--  Badges  -->
-            <cc:ExCard
-                Title="{DynamicResource showBadges}"
+            <ui:SettingsExpander
                 Margin="0 4 0 0"
-                Icon="&#xEC1B;"
-                Sub="{DynamicResource showBadgesToolTip}">
-                <cc:ExCard.SideContent>
-                    <ui:ToggleSwitch
-                        IsOn="{Binding Settings.ShowBadges}"
-                        OffContent="{DynamicResource disable}"
-                        OnContent="{DynamicResource enable}" />
-                </cc:ExCard.SideContent>
-                <cc:Card Title="{DynamicResource showBadgesGlobalOnly}" Type="InsideFit">
-                    <ui:ToggleSwitch
-                        IsOn="{Binding Settings.ShowBadgesGlobalOnly}"
-                        OffContent="{DynamicResource disable}"
-                        OnContent="{DynamicResource enable}" />
-                </cc:Card>
-            </cc:ExCard>
+                Description="{DynamicResource showBadgesToolTip}"
+                Header="{DynamicResource showBadges}">
+                <ui:SettingsExpander.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xEC1B;" />
+                </ui:SettingsExpander.HeaderIcon>
+
+                <ui:ToggleSwitch
+                    IsOn="{Binding Settings.ShowBadges}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
+
+                <ui:SettingsExpander.Items>
+                    <ui:SettingsCard Header="{DynamicResource showBadgesGlobalOnly}">
+                        <ui:ToggleSwitch
+                            IsOn="{Binding Settings.ShowBadgesGlobalOnly}"
+                            OffContent="{DynamicResource disable}"
+                            OnContent="{DynamicResource enable}" />
+                    </ui:SettingsCard>
+                </ui:SettingsExpander.Items>
+            </ui:SettingsExpander>
 
             <!--  Settings color scheme  -->
-            <cc:Card
-                Title="{DynamicResource ColorScheme}"
-                Margin="0 14 0 0"
-                Icon="&#xe793;">
+            <ui:SettingsCard Margin="0 14 0 0" Header="{DynamicResource ColorScheme}">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xe793;" />
+                </ui:SettingsCard.HeaderIcon>
+
                 <ComboBox
                     MinWidth="180"
                     DisplayMemberPath="Display"
@@ -766,25 +787,26 @@
                     ItemsSource="{Binding ColorSchemes}"
                     SelectedValue="{Binding ColorScheme, Mode=TwoWay}"
                     SelectedValuePath="Value" />
-            </cc:Card>
+            </ui:SettingsCard>
 
             <!--  Theme folder  -->
-            <cc:Card
-                Title="{DynamicResource ThemeFolder}"
-                Margin="0 14 0 0"
-                Icon="&#xe838;">
+            <ui:SettingsCard Margin="0 14 0 0" Header="{DynamicResource ThemeFolder}">
+                <ui:SettingsCard.HeaderIcon>
+                    <ui:FontIcon Glyph="&#xe838;" />
+                </ui:SettingsCard.HeaderIcon>
+
                 <Button
                     MinWidth="180"
                     Command="{Binding OpenThemesFolderCommand}"
                     Content="{DynamicResource OpenThemeFolder}" />
-            </cc:Card>
+            </ui:SettingsCard>
 
             <!--  How to create theme link  -->
-            <cc:HyperLink
-                Margin="10 10 10 28"
+            <ui:HyperlinkButton
+                Margin="10 10 0 28"
                 HorizontalAlignment="Right"
-                Text="{DynamicResource howToCreateTheme}"
-                Uri="{Binding LinkHowToCreateTheme}" />
+                Content="{DynamicResource howToCreateTheme}"
+                NavigateUri="{Binding LinkHowToCreateTheme}" />
         </StackPanel>
     </ui:ScrollViewerEx>
 </ui:Page>
