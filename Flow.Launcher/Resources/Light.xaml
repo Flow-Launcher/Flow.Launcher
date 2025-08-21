@@ -51,12 +51,12 @@
     <SolidColorBrush x:Key="NumberBoxColor26B" Color="#1b1b1b" />
     <SolidColorBrush x:Key="CustomNumberBoxBG" Color="#fdfdfd" />
     <SolidColorBrush x:Key="PluginInfoColor" Color="#8f8f8f" />
-    <SolidColorBrush x:Key="BasicLabelColor" Color="#1b1b1b" />
 
     <SolidColorBrush x:Key="NewHotkeyForeground" Color="#5E000000" />
     <SolidColorBrush x:Key="BasicHotkeyBGColor" Color="#0A000000" />
 
     <SolidColorBrush x:Key="ThemeHoverButton" Color="#f6f6f6" />
+
     <!--  Typo  -->
     <SolidColorBrush x:Key="PopuBGColor" Color="#ffffff" />
     <SolidColorBrush x:Key="PopupBGColor" Color="#ffffff" />
@@ -70,8 +70,6 @@
     <SolidColorBrush x:Key="CustomContextClick" Color="#ececec" />
     <SolidColorBrush x:Key="CustomContextDisabled" Color="#868686" />
     <SolidColorBrush x:Key="ContextSeparator" Color="#dadada" />
-
-    <SolidColorBrush x:Key="HoverStoreGrid2">#f6f6f6</SolidColorBrush>
 
     <Color x:Key="Color01">#f3f3f3</Color>
     <Color x:Key="Color02">#ffffff</Color>
@@ -99,8 +97,6 @@
     <Color x:Key="NumberBoxColor24">#f5f5f5</Color>
     <Color x:Key="NumberBoxColor25">#878787</Color>
     <Color x:Key="NumberBoxColor26">#1b1b1b</Color>
-    <SolidColorBrush x:Key="NumberBoxPlaceHolder" Color="#A2A2A2" />
-    <Color x:Key="HoverStoreGrid">#f6f6f6</Color>
 
     <!--  Resources for HotkeyControl  -->
     <SolidColorBrush x:Key="CustomHotkeyHover" Color="#f6f6f6" />
@@ -111,20 +107,12 @@
     <!--  Resource for ContentDialog  -->
     <SolidColorBrush x:Key="ContentDialogOverlayBG" Color="#4D000000" />
 
-    <!--  DIY Infobar  -->
+    <!--  Resource for HotkeyControlDialog  -->
     <SolidColorBrush x:Key="InfoBarBD" Color="#0F000000" />
-    <SolidColorBrush
-        x:Key="InfoBarInfoIcon"
-        Opacity="0.8"
-        Color="{m:DynamicColor SystemAccentColor}" />
-    <SolidColorBrush x:Key="InfoBarInfoBG" Color="{m:DynamicColor Color01}" />
     <SolidColorBrush x:Key="InfoBarWarningIcon" Color="#9D5D00" />
     <SolidColorBrush x:Key="InfoBarWarningBG" Color="#FFF4CE" />
-    <SolidColorBrush x:Key="InfoBarSuccessIcon" Color="#3f973e" />
-    <SolidColorBrush x:Key="InfoBarSuccessBG" Color="#dff6dd" />
-    <SolidColorBrush x:Key="InfoBarErrorIcon" Color="#c42b1c" />
-    <SolidColorBrush x:Key="InfoBarErrorBG" Color="#fde7e9" />
 
+    <!--  Resource for TitleBar  -->
     <SolidColorBrush x:Key="MouseOverWindowCloseButtonForegroundBrush" Color="#ffffff" />
 
     <SolidColorBrush x:Key="ButtonOutBorder" Color="#e5e5e5" />
@@ -144,12 +132,5 @@
     <Thickness x:Key="PressedCustomButtonInsideBorderThickness">0,0,0,1</Thickness>
     <Thickness x:Key="DisabledCustomButtonOutBorderThickness">1,1,1,1</Thickness>
     <Thickness x:Key="DisabledCustomButtonInsideBorderThickness">0,0,0,0</Thickness>
-
-    <SolidColorBrush x:Key="CustomRadioBorder" Color="#858585" />
-    <SolidColorBrush x:Key="CustomRadioBackground" Color="#ededed" />
-    <SolidColorBrush x:Key="HoverCustomRadioBorder" Color="#858585" />
-    <SolidColorBrush x:Key="HoverCustomRadioBackground" Color="#e5e5e5" />
-    <SolidColorBrush x:Key="PressedCustomRadioBorder" Color="#b4b4b4" />
-    <SolidColorBrush x:Key="PressedCustomRadioBackground" Color="#dcdcdc" />
 
 </ResourceDictionary>
