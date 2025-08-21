@@ -1282,6 +1282,436 @@
         </Style.Triggers>
     </Style>
 
+    <!--  Content Dialog  -->
+    <Style x:Key="ContentDialog" TargetType="ui:ContentDialog">
+        <Setter Property="Foreground" Value="{DynamicResource PopupTextColor}" />
+        <Setter Property="Background" Value="{DynamicResource PopupBGColor}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource ContentDialogBorderWidth}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ContentDialogBorderBrush}" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="CornerRadius" Value="{DynamicResource OverlayCornerRadius}" />
+        <Setter Property="PrimaryButtonStyle" Value="{DynamicResource DefaultButtonStyle}" />
+        <Setter Property="SecondaryButtonStyle" Value="{DynamicResource DefaultButtonStyle}" />
+        <Setter Property="CloseButtonStyle" Value="{DynamicResource DefaultButtonStyle}" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="IsShadowEnabled" Value="{DynamicResource {x:Static SystemParameters.DropShadowKey}}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ui:ContentDialog">
+                    <Border x:Name="Container">
+                        <VisualStateManager.CustomVisualStateManager>
+                            <ui:SimpleVisualStateManager />
+                        </VisualStateManager.CustomVisualStateManager>
+                        <Grid
+                            x:Name="LayoutRoot"
+                            Background="{DynamicResource ContentDialogOverlayBG}"
+                            SnapsToDevicePixels="True"
+                            Visibility="Collapsed">
+                            <Grid
+                                x:Name="BackgroundElement"
+                                MinWidth="{DynamicResource ContentDialogMinWidth}"
+                                MinHeight="{DynamicResource ContentDialogMinHeight}"
+                                MaxWidth="{DynamicResource ContentDialogMaxWidth}"
+                                MaxHeight="{DynamicResource ContentDialogMaxHeight}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FlowDirection="{TemplateBinding FlowDirection}"
+                                RenderTransformOrigin="0.5,0.5">
+                                <Grid.RenderTransform>
+                                    <ScaleTransform x:Name="ScaleTransform" />
+                                </Grid.RenderTransform>
+                                <ui:ThemeShadowChrome
+                                    x:Name="Shdw"
+                                    Margin="{DynamicResource ContentDialogBorderWidth}"
+                                    CornerRadius="{TemplateBinding CornerRadius}"
+                                    IsShadowEnabled="{TemplateBinding IsShadowEnabled}" />
+                                <Border
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="{TemplateBinding CornerRadius}">
+                                    <Border x:Name="DialogSpace" Padding="0">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition x:Name="CommandSpaceRow" Height="80" />
+                                            </Grid.RowDefinitions>
+                                            <ui:ScrollViewerEx
+                                                x:Name="ContentScrollViewer"
+                                                Margin="{DynamicResource ContentDialogContentScrollViewerMargin}"
+                                                HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                                IsTabStop="False"
+                                                VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+                                                <Grid Margin="{DynamicResource ContentDialogPadding}">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto" />
+                                                        <RowDefinition Height="*" />
+                                                    </Grid.RowDefinitions>
+                                                    <ContentControl
+                                                        x:Name="Title"
+                                                        Margin="{DynamicResource ContentDialogTitleMargin}"
+                                                        HorizontalAlignment="Left"
+                                                        VerticalAlignment="Top"
+                                                        Content="{TemplateBinding Title}"
+                                                        ContentTemplate="{TemplateBinding TitleTemplate}"
+                                                        FontFamily="{DynamicResource {x:Static SystemFonts.MessageFontFamilyKey}}"
+                                                        FontSize="20"
+                                                        FontWeight="Normal"
+                                                        Foreground="{TemplateBinding Foreground}"
+                                                        IsTabStop="False"
+                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                                        <ContentControl.Template>
+                                                            <ControlTemplate TargetType="ContentControl">
+                                                                <ui:ContentPresenterEx
+                                                                    Margin="{TemplateBinding Padding}"
+                                                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                    Content="{TemplateBinding Content}"
+                                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                                    TextWrapping="Wrap" />
+                                                            </ControlTemplate>
+                                                        </ContentControl.Template>
+                                                    </ContentControl>
+                                                    <ui:ContentPresenterEx
+                                                        x:Name="Content"
+                                                        Grid.Row="1"
+                                                        Margin="{DynamicResource ContentDialogContentMargin}"
+                                                        Content="{TemplateBinding Content}"
+                                                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                                        TextElement.FontFamily="{DynamicResource ContentControlThemeFontFamily}"
+                                                        TextElement.FontSize="{DynamicResource ControlContentThemeFontSize}"
+                                                        TextElement.Foreground="{TemplateBinding Foreground}"
+                                                        TextWrapping="Wrap" />
+                                                </Grid>
+                                            </ui:ScrollViewerEx>
+                                            <Border
+                                                x:Name="ButtonAreaBorder"
+                                                Grid.Row="1"
+                                                Padding="26 0 26 0"
+                                                Background="{DynamicResource PopupButtonAreaBGColor}"
+                                                BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
+                                                BorderThickness="0 1 0 0"
+                                                CornerRadius="0 0 8 8">
+                                                <Grid
+                                                    x:Name="CommandSpace"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Center"
+                                                    KeyboardNavigation.DirectionalNavigation="Contained">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition Width="0.5*" />
+                                                        <ColumnDefinition Width="0.5*" />
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Button
+                                                        x:Name="PrimaryButton"
+                                                        Grid.Column="0"
+                                                        Margin="0 0 2 0"
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Stretch"
+                                                        Content="{TemplateBinding PrimaryButtonText}"
+                                                        IsEnabled="{TemplateBinding IsPrimaryButtonEnabled}"
+                                                        Style="{TemplateBinding PrimaryButtonStyle}" />
+                                                    <Button
+                                                        x:Name="SecondaryButton"
+                                                        Grid.Column="1"
+                                                        Grid.ColumnSpan="2"
+                                                        Margin="2 0 2 0"
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Stretch"
+                                                        Content="{TemplateBinding SecondaryButtonText}"
+                                                        IsEnabled="{TemplateBinding IsSecondaryButtonEnabled}"
+                                                        Style="{TemplateBinding SecondaryButtonStyle}" />
+                                                    <Button
+                                                        x:Name="CloseButton"
+                                                        Grid.Column="3"
+                                                        Margin="2 0 0 0"
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Stretch"
+                                                        Content="{TemplateBinding CloseButtonText}"
+                                                        Style="{TemplateBinding CloseButtonStyle}" />
+                                                </Grid>
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+                                </Border>
+                            </Grid>
+                        </Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="DialogShowingStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition To="DialogHidden">
+                                        <Storyboard>
+                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="SnapsToDevicePixels">
+                                                <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False" />
+                                            </BooleanAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="Visibility">
+                                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="IsHitTestVisible">
+                                                <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False" />
+                                            </BooleanAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ScaleTransform" Storyboard.TargetProperty="ScaleX">
+                                                <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.0" />
+                                                <SplineDoubleKeyFrame
+                                                    KeySpline="0.1,0.9 0.2,1.0"
+                                                    KeyTime="0:0:0.5"
+                                                    Value="1.05" />
+                                            </DoubleAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ScaleTransform" Storyboard.TargetProperty="ScaleY">
+                                                <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.0" />
+                                                <SplineDoubleKeyFrame
+                                                    KeySpline="0.1,0.9 0.2,1.0"
+                                                    KeyTime="0:0:0.5"
+                                                    Value="1.05" />
+                                            </DoubleAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="Opacity">
+                                                <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.0" />
+                                                <LinearDoubleKeyFrame KeyTime="0:0:0.083" Value="0.0" />
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualTransition>
+                                    <VisualTransition To="DialogShowing">
+                                        <Storyboard>
+                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="SnapsToDevicePixels">
+                                                <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="False" />
+                                            </BooleanAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="Visibility">
+                                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ScaleTransform" Storyboard.TargetProperty="ScaleX">
+                                                <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.05" />
+                                                <SplineDoubleKeyFrame
+                                                    KeySpline="0.1,0.9 0.2,1.0"
+                                                    KeyTime="0:0:0.5"
+                                                    Value="1.0" />
+                                            </DoubleAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ScaleTransform" Storyboard.TargetProperty="ScaleY">
+                                                <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1.05" />
+                                                <SplineDoubleKeyFrame
+                                                    KeySpline="0.1,0.9 0.2,1.0"
+                                                    KeyTime="0:0:0.5"
+                                                    Value="1.0" />
+                                            </DoubleAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="Opacity">
+                                                <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0.0" />
+                                                <LinearDoubleKeyFrame KeyTime="0:0:0.167" Value="1.0" />
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualTransition>
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="DialogHidden" />
+                                <VisualState x:Name="DialogShowing">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BackgroundElement" Storyboard.TargetProperty="(KeyboardNavigation.TabNavigation)">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static KeyboardNavigationMode.Cycle}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="DialogShowingWithoutSmokeLayer">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Visible}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot" Storyboard.TargetProperty="Background">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Null}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="DialogSizingStates">
+                                <VisualState x:Name="DefaultDialogSizing" />
+                                <VisualState x:Name="FullDialogSizing">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BackgroundElement" Storyboard.TargetProperty="VerticalAlignment">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static VerticalAlignment.Stretch}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="ButtonsVisibilityStates">
+                                <VisualState x:Name="AllVisible" />
+                                <VisualState x:Name="NoneVisible">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CommandSpace" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <!--
+                                            If the window has no buttons, it's assumed that the buttons are drawn directly within the window itself (as in the case of the HotkeyDialog).
+                                            In this case, the command space area is completely hidden.
+                                        -->
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonAreaBorder" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CommandSpaceRow" Storyboard.TargetProperty="Height">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static GridLength.Auto}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="PrimaryVisible">
+                                    <Storyboard>
+                                        <Int32AnimationUsingKeyFrames Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="(Grid.Column)">
+                                            <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="1" />
+                                        </Int32AnimationUsingKeyFrames>
+                                        <Int32AnimationUsingKeyFrames Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="(Grid.ColumnSpan)">
+                                            <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="2" />
+                                        </Int32AnimationUsingKeyFrames>
+                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="Margin">
+                                            <DiscreteThicknessKeyFrame KeyTime="0:0:0" Value="0,0,0,0" />
+                                        </ThicknessAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SecondaryButton" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CloseButton" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="SecondaryVisible">
+                                    <Storyboard>
+                                        <Int32AnimationUsingKeyFrames Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="(Grid.Column)">
+                                            <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="1" />
+                                        </Int32AnimationUsingKeyFrames>
+                                        <Int32AnimationUsingKeyFrames Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="(Grid.ColumnSpan)">
+                                            <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="2" />
+                                        </Int32AnimationUsingKeyFrames>
+                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="Margin">
+                                            <DiscreteThicknessKeyFrame KeyTime="0:0:0" Value="0,0,0,0" />
+                                        </ThicknessAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SecondaryButton" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CloseButton" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="CloseVisible">
+                                    <Storyboard>
+                                        <Int32AnimationUsingKeyFrames Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="(Grid.Column)">
+                                            <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="1" />
+                                        </Int32AnimationUsingKeyFrames>
+                                        <Int32AnimationUsingKeyFrames Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="(Grid.ColumnSpan)">
+                                            <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="2" />
+                                        </Int32AnimationUsingKeyFrames>
+                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="Margin">
+                                            <DiscreteThicknessKeyFrame KeyTime="0:0:0" Value="0,0,0,0" />
+                                        </ThicknessAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SecondaryButton" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CloseButton" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="PrimaryAndSecondaryVisible">
+                                    <Storyboard>
+                                        <Int32AnimationUsingKeyFrames Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="(Grid.ColumnSpan)">
+                                            <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="2" />
+                                        </Int32AnimationUsingKeyFrames>
+                                        <Int32AnimationUsingKeyFrames Storyboard.TargetName="SecondaryButton" Storyboard.TargetProperty="(Grid.Column)">
+                                            <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="2" />
+                                        </Int32AnimationUsingKeyFrames>
+                                        <Int32AnimationUsingKeyFrames Storyboard.TargetName="SecondaryButton" Storyboard.TargetProperty="(Grid.ColumnSpan)">
+                                            <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="2" />
+                                        </Int32AnimationUsingKeyFrames>
+                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="SecondaryButton" Storyboard.TargetProperty="Margin">
+                                            <DiscreteThicknessKeyFrame KeyTime="0:0:0" Value="2,0,0,0" />
+                                        </ThicknessAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CloseButton" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="PrimaryAndCloseVisible">
+                                    <Storyboard>
+                                        <Int32AnimationUsingKeyFrames Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="(Grid.ColumnSpan)">
+                                            <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="2" />
+                                        </Int32AnimationUsingKeyFrames>
+                                        <Int32AnimationUsingKeyFrames Storyboard.TargetName="CloseButton" Storyboard.TargetProperty="(Grid.Column)">
+                                            <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="2" />
+                                        </Int32AnimationUsingKeyFrames>
+                                        <Int32AnimationUsingKeyFrames Storyboard.TargetName="CloseButton" Storyboard.TargetProperty="(Grid.ColumnSpan)">
+                                            <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="2" />
+                                        </Int32AnimationUsingKeyFrames>
+                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="CloseButton" Storyboard.TargetProperty="Margin">
+                                            <DiscreteThicknessKeyFrame KeyTime="0:0:0" Value="2,0,0,0" />
+                                        </ThicknessAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SecondaryButton" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="SecondaryAndCloseVisible">
+                                    <Storyboard>
+                                        <Int32AnimationUsingKeyFrames Storyboard.TargetName="SecondaryButton" Storyboard.TargetProperty="(Grid.Column)">
+                                            <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="0" />
+                                        </Int32AnimationUsingKeyFrames>
+                                        <Int32AnimationUsingKeyFrames Storyboard.TargetName="SecondaryButton" Storyboard.TargetProperty="(Grid.ColumnSpan)">
+                                            <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="2" />
+                                        </Int32AnimationUsingKeyFrames>
+                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="SecondaryButton" Storyboard.TargetProperty="Margin">
+                                            <DiscreteThicknessKeyFrame KeyTime="0:0:0" Value="0,0,2,0" />
+                                        </ThicknessAnimationUsingKeyFrames>
+                                        <Int32AnimationUsingKeyFrames Storyboard.TargetName="CloseButton" Storyboard.TargetProperty="(Grid.Column)">
+                                            <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="2" />
+                                        </Int32AnimationUsingKeyFrames>
+                                        <Int32AnimationUsingKeyFrames Storyboard.TargetName="CloseButton" Storyboard.TargetProperty="(Grid.ColumnSpan)">
+                                            <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="2" />
+                                        </Int32AnimationUsingKeyFrames>
+                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="CloseButton" Storyboard.TargetProperty="Margin">
+                                            <DiscreteThicknessKeyFrame KeyTime="0:0:0" Value="2,0,0,0" />
+                                        </ThicknessAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="DefaultButtonStates">
+                                <VisualState x:Name="NoDefaultButton" />
+                                <VisualState x:Name="PrimaryAsDefaultButton" />
+                                <VisualState x:Name="SecondaryAsDefaultButton" />
+                                <VisualState x:Name="CloseAsDefaultButton" />
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="DialogBorderStates">
+                                <VisualState x:Name="NoBorder" />
+                                <VisualState x:Name="AccentColorBorder">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BackgroundElement" Storyboard.TargetProperty="BorderBrush">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{DynamicResource SystemControlForegroundAccentBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsShadowEnabled" Value="False">
+                            <Setter TargetName="Shdw" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="DefaultButton" Value="Primary">
+                            <Setter TargetName="PrimaryButton" Property="Style" Value="{DynamicResource AccentButtonStyle}" />
+                        </Trigger>
+                        <Trigger Property="DefaultButton" Value="Secondary">
+                            <Setter TargetName="SecondaryButton" Property="Style" Value="{DynamicResource AccentButtonStyle}" />
+                        </Trigger>
+                        <Trigger Property="DefaultButton" Value="Close">
+                            <Setter TargetName="CloseButton" Property="Style" Value="{DynamicResource AccentButtonStyle}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!--  Navigation View  -->
     <system:Double x:Key="NavigationViewCompactPaneLength">48</system:Double>
 
