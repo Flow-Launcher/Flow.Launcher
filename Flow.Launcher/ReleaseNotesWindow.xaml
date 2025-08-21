@@ -16,6 +16,7 @@
     MinHeight="600"
     Background="{DynamicResource PopuBGColor}"
     Closed="Window_Closed"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
     Foreground="{DynamicResource PopupTextColor}"
     Loaded="Window_Loaded"
     ResizeMode="CanResize"
@@ -44,7 +45,7 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="32" />
-                    <RowDefinition Height="24" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <!--  TitleBar and Control  -->
@@ -161,8 +162,11 @@
                     Grid.Row="1"
                     Grid.Column="0"
                     Grid.ColumnSpan="5"
-                    Margin="18 0 18 0">
-                    <cc:HyperLink x:Name="SeeMore" Text="{DynamicResource seeMoreReleaseNotes}" />
+                    Margin="8 0 18 0">
+                    <ui:HyperlinkButton
+                        x:Name="SeeMore"
+                        Content="{DynamicResource seeMoreReleaseNotes}"
+                        NavigateUri="{Binding ReleaseNotes}" />
                 </Grid>
 
                 <!--  Do not use scroll function of MarkdownViewer because it does not support smooth scroll  -->

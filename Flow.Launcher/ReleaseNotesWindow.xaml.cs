@@ -16,12 +16,11 @@ namespace Flow.Launcher
 {
     public partial class ReleaseNotesWindow : Window
     {
-        private static readonly string ReleaseNotes = Properties.Settings.Default.GithubRepo + "/releases";
+        public string ReleaseNotes => Properties.Settings.Default.GithubRepo + "/releases";
 
         public ReleaseNotesWindow()
         {
             InitializeComponent();
-            SeeMore.Uri = ReleaseNotes;
             ThemeManager.Current.ActualApplicationThemeChanged += ThemeManager_ActualApplicationThemeChanged;
         }
 
