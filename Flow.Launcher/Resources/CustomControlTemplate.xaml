@@ -173,6 +173,12 @@
         </Setter>
     </Style>
 
+    <!--  // TODO: Make it work? How can I apply MinWidth to all ui:NumberBox?  -->
+    <!--  Number Box  -->
+    <Style TargetType="ui:NumberBox">
+        <Setter Property="MinWidth" Value="120" />
+    </Style>
+
     <!--  Toggle Button  -->
     <Style x:Key="CustomToggleButtonStyle" TargetType="ToggleButton">
         <Setter Property="OverridesDefaultStyle" Value="True" />
