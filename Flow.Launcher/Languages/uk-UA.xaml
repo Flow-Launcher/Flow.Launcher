@@ -33,8 +33,8 @@
     <system:String x:Key="parseProxyFailed">Неможливо проаналізувати Http Proxy</system:String>
 
     <!--  AbstractPluginEnvironment  -->
-    <system:String x:Key="failToInstallTypeScriptEnv">Failed to install TypeScript environment. Please try again later</system:String>
-    <system:String x:Key="failToInstallPythonEnv">Failed to install Python environment. Please try again later.</system:String>
+    <system:String x:Key="failToInstallTypeScriptEnv">Не вдалося встановити середовище TypeScript. Спробуйте ще раз пізніше</system:String>
+    <system:String x:Key="failToInstallPythonEnv">Не вдалося встановити середовище Python. Спробуйте ще раз пізніше.</system:String>
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Не вдалося зареєструвати гарячу клавішу &quot;{0}&quot;. Можливо, гаряча клавіша використовується іншою програмою. Змініть її на іншу гарячу клавішу або вийдіть з програми, де вона використовується.</system:String>
