@@ -63,7 +63,6 @@
     <PackageReference Include="InputSimulator" Version="1.0.4" />
     <PackageReference Include="MemoryPack" Version="1.21.4" />
     <PackageReference Include="Microsoft.VisualStudio.Threading" Version="17.14.15" />
-    <PackageReference Include="Microsoft.Win32.SystemEvents" Version="9.0.8" />
     <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.183">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -75,7 +74,9 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="SharpVectors.Wpf" Version="1.8.4.2" />
-    <PackageReference Include="System.Drawing.Common" Version="9.0.7" />
+    <!-- Do not upgrade this to higher version since it can cause this issue on WinForm platform: -->
+    <!-- PlatformNotSupportedException: SystemEvents is not supported on this platform. -->
+    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
     <PackageReference Include="ToolGood.Words.Pinyin" Version="3.1.0.3" />
   </ItemGroup>
 
