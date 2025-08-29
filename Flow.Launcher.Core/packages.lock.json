@@ -161,8 +161,8 @@
       },
       "Microsoft.Win32.SystemEvents": {
         "type": "Transitive",
-        "resolved": "7.0.0",
-        "contentHash": "2nXPrhdAyAzir0gLl8Yy8S5Mnm/uBSQQA7jEsILOS1MTyS7DbmV1NgViMtvV1sfCD1ebITpNwb1NIinKeJgUVQ=="
+        "resolved": "9.0.8",
+        "contentHash": "64oQBN8I8EOcyHGNt6+rlcqm4tlcKfqOpswtBCJZnpzBQ15L6IFKqjnbjbOWBpG9wKq9A/aC2LFSmSqplbwTYA=="
       },
       "Mono.Cecil": {
         "type": "Transitive",
@@ -258,6 +258,7 @@
           "InputSimulator": "[1.0.4, )",
           "MemoryPack": "[1.21.4, )",
           "Microsoft.VisualStudio.Threading": "[17.14.15, )",
+          "Microsoft.Win32.SystemEvents": "[9.0.8, )",
           "NHotkey.Wpf": "[3.0.0, )",
           "NLog": "[6.0.1, )",
           "NLog.OutputDebugString": "[6.0.1, )",

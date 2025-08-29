@@ -56,6 +56,12 @@
           "Microsoft.VisualStudio.Validation": "17.8.8"
         }
       },
+      "Microsoft.Win32.SystemEvents": {
+        "type": "Direct",
+        "requested": "[9.0.8, )",
+        "resolved": "9.0.8",
+        "contentHash": "64oQBN8I8EOcyHGNt6+rlcqm4tlcKfqOpswtBCJZnpzBQ15L6IFKqjnbjbOWBpG9wKq9A/aC2LFSmSqplbwTYA=="
+      },
       "Microsoft.Windows.CsWin32": {
         "type": "Direct",
         "requested": "[0.3.183, )",
@@ -153,11 +159,6 @@
         "type": "Transitive",
         "resolved": "17.8.8",
         "contentHash": "rWXThIpyQd4YIXghNkiv2+VLvzS+MCMKVRDR0GAMlflsdo+YcAN2g2r5U1Ah98OFjQMRexTFtXQQ2LkajxZi3g=="
-      },
-      "Microsoft.Win32.SystemEvents": {
-        "type": "Transitive",
-        "resolved": "9.0.7",
-        "contentHash": "lFGY2aGgmMREPJEfOmZcA6v0CLjWVpcfNHRgqYMoSQhy80+GxhYqdW5xe+DCLrVqE1M7/0RpOkIo49/KH/cd/A=="
       },
       "Microsoft.Windows.SDK.Win32Docs": {
         "type": "Transitive",
