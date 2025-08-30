@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -31,7 +31,7 @@ namespace Flow.Launcher.Core.Plugin
         public static readonly HashSet<PluginPair> GlobalPlugins = new();
         public static readonly Dictionary<string, PluginPair> NonGlobalPlugins = new();
 
-        public static Action<PluginHotkeyChangedEvent> PluginHotkeyChanged { get; set; }
+        public static event Action<PluginHotkeyChangedEvent> PluginHotkeyChanged;
 
         // We should not initialize API in static constructor because it will create another API instance
         private static IPublicAPI api = null;
