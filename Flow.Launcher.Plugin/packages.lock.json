@@ -10,9 +10,9 @@
       },
       "JetBrains.Annotations": {
         "type": "Direct",
-        "requested": "[2025.2.0, )",
-        "resolved": "2025.2.0",
-        "contentHash": "2BvMkOSW+50EbQFhWFIPWTqmcDLiyyjwkMN7lN386bhP2vN/7ts5t59qu11HtenmHFxqDzaD8J1fFoh+QTOzVA=="
+        "requested": "[2025.2.1, )",
+        "resolved": "2025.2.1",
+        "contentHash": "63fHdqhM9JuFSithjKbbcEPf1BA76JyXgRqYO6paN9xcKeL6XvttjUUjrfiZ94v8aXn9+6U4pYSHIYAY+5qgFQ=="
       },
       "Microsoft.SourceLink.GitHub": {
         "type": "Direct",
