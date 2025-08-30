@@ -124,13 +124,9 @@ namespace Flow.Launcher.Core.Plugin
                     API.GetTranslation("pluginsHaveErrored") :
                     API.GetTranslation("pluginHasErrored");
 
-                _ = Task.Run(() =>
-                {
-                    API.ShowMsgBox($"{errorMessage}{Environment.NewLine}{Environment.NewLine}" +
-                                    $"{errorPluginString}{Environment.NewLine}{Environment.NewLine}" +
-                                    API.GetTranslation("referToLogs"), string.Empty,
-                        MessageBoxButton.OK, MessageBoxImage.Warning);
-                });
+                API.ShowMsgError($"{errorMessage}{Environment.NewLine}{Environment.NewLine}" +
+                    $"{errorPluginString}{Environment.NewLine}{Environment.NewLine}" +
+                    API.GetTranslation("referToLogs"));
             }
 
             return plugins;

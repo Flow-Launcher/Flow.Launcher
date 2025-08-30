@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -382,24 +383,35 @@ namespace Flow.Launcher
                     explorer.Start();
                 }
             }
+            catch (COMException ex) when (ex.ErrorCode == unchecked((int)0x80004004))
+            {
+                /*
+                 * The COMException with HResult 0x80004004 is E_ABORT (operation aborted).
+                 * Shell APIs often return this when the operation is canceled or the shell cannot complete it cleanly.
+                 * It most likely comes from Win32Helper.OpenFolderAndSelectFile(targetPath).
+                 * Typical triggers:
+                 * The target file/folder was deleted/moved between computing targetPath and the shell call.
+                 * The folder is on an offline network/removable drive.
+                 * Explorer is restarting/busy and aborts the request.
+                 * A selection request to a new/closing Explorer window is canceled.
+                 * Because it is commonly user- or environment-driven and not actionable,
+                 * we should treat it as expected noise and ignore it to avoid bothering users.
+                 */
+            }
             catch (Win32Exception ex) when (ex.NativeErrorCode == 2)
             {
                 LogError(ClassName, "File Manager not found");
-                ShowMsgBox(
-                    string.Format(GetTranslation("fileManagerNotFound"), ex.Message),
+                ShowMsgError(
                     GetTranslation("fileManagerNotFoundTitle"),
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
+                    string.Format(GetTranslation("fileManagerNotFound"), ex.Message)
                 );
             }
             catch (Exception ex)
             {
                 LogException(ClassName, "Failed to open folder", ex);
-                ShowMsgBox(
-                    string.Format(GetTranslation("folderOpenError"), ex.Message),
+                ShowMsgError(
                     GetTranslation("errorTitle"),
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
+                    string.Format(GetTranslation("folderOpenError"), ex.Message)
                 );
             }
         }
@@ -427,11 +439,9 @@ namespace Flow.Launcher
                 {
                     var tabOrWindow = browserInfo.OpenInTab ? "tab" : "window";
                     LogException(ClassName, $"Failed to open URL in browser {tabOrWindow}: {path}, {inPrivate ?? browserInfo.EnablePrivate}, {browserInfo.PrivateArg}", e);
-                    ShowMsgBox(
-                        GetTranslation("browserOpenError"),
+                    ShowMsgError(
                         GetTranslation("errorTitle"),
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error
+                        GetTranslation("browserOpenError")
                     );
                 }
             }
