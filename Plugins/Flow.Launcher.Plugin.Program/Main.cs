@@ -481,12 +481,12 @@ namespace Flow.Launcher.Plugin.Program
                     Visible = true,
                     Action = (r) =>
                     {
-                        if (r.ContextData is UWPApp uwp)
+                        if (r?.ContextData is UWPApp uwp)
                         {
                             Context.API.OpenDirectory(uwp.Location);
                             return true;
                         }
-                        else if (r.ContextData is Win32 win32)
+                        else if (r?.ContextData is Win32 win32)
                         {
                             Context.API.OpenDirectory(win32.ParentDirectory, win32.FullPath);
                             return true;
