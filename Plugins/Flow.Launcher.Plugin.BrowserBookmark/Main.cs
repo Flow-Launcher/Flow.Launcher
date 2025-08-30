@@ -36,6 +36,26 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
         _faviconCacheDir = Path.Combine(
             context.CurrentPluginMetadata.PluginCacheDirectoryPath,
             "FaviconCache");
+        
+        try
+        {
+            if (Directory.Exists(_faviconCacheDir))
+            {
+                var files = Directory.GetFiles(_faviconCacheDir);
+                foreach (var file in files)
+                {
+                    var extension = Path.GetExtension(file);
+                    if (extension is ".db-shm" or ".db-wal" or ".sqlite-shm" or ".sqlite-wal")
+                    {
+                        File.Delete(file);
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Context.API.LogException(ClassName, "Failed to clean up orphaned cache files.", e);
+        }
 
         LoadBookmarksIfEnabled();
     }

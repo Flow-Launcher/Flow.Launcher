@@ -9,6 +9,7 @@ using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -889,6 +890,12 @@ namespace Flow.Launcher.ViewModel
                 }
             }
         }
+
+        public Visibility ShowCustomizedPreview
+            => InternalPreviewVisible && PreviewSelectedItem?.Result.PreviewPanel != null ? Visibility.Visible : Visibility.Collapsed;
+
+        public UserControl CustomizedPreviewControl
+            => ShowCustomizedPreview == Visibility.Visible ? PreviewSelectedItem?.Result.PreviewPanel.Value : null;
 
         public Visibility ProgressBarVisibility { get; set; }
         public Visibility MainWindowVisibility { get; set; }

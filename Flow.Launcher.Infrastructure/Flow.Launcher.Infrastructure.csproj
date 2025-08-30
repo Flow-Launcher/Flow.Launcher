@@ -74,7 +74,9 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="SharpVectors.Wpf" Version="1.8.4.2" />
-    <PackageReference Include="System.Drawing.Common" Version="9.0.7" />
+    <!-- Do not upgrade this to higher version since it can cause this issue on WinForm platform: -->
+    <!-- PlatformNotSupportedException: SystemEvents is not supported on this platform. -->
+    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
     <PackageReference Include="ToolGood.Words.Pinyin" Version="3.1.0.3" />
   </ItemGroup>
 
