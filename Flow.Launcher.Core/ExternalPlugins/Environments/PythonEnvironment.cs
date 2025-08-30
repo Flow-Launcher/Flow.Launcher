@@ -11,6 +11,8 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 {
     internal class PythonEnvironment : AbstractPluginEnvironment
     {
+        private static readonly string ClassName = nameof(PythonEnvironment);
+
         internal override string Language => AllowedLanguage.Python;
 
         internal override string EnvName => DataLocation.PythonEnvironmentName;
@@ -39,9 +41,20 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
             // Python 3.11.4 is no longer Windows 7 compatible. If user is on Win 7 and
             // uses Python plugin they need to custom install and use v3.8.9
-            JTF.Run(() => DroplexPackage.Drop(App.python_3_11_4_embeddable, InstallPath));
+            JTF.Run(async () =>
+            {
+                try
+                {
+                    await DroplexPackage.Drop(App.python_3_11_4_embeddable, InstallPath);
 
-            PluginsSettingsFilePath = ExecutablePath;
+                    PluginsSettingsFilePath = ExecutablePath;
+                }
+                catch (System.Exception e)
+                {
+                    API.ShowMsgError(API.GetTranslation("failToInstallPythonEnv"));
+                    API.LogException(ClassName, "Failed to install Python environment", e);
+                }
+            });
         }
 
         internal override PluginPair CreatePluginPair(string filePath, PluginMetadata metadata)
