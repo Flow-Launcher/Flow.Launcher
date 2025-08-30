@@ -371,10 +371,8 @@
                             MinHeight="380"
                             MaxHeight="{Binding ElementName=ResultListBox, Path=ActualHeight}"
                             Padding="0 0 10 10"
-                            d:DataContext="{d:DesignInstance vm:ResultViewModel}"
-                            DataContext="{Binding PreviewSelectedItem, Mode=OneWay}"
                             Visibility="{Binding ShowCustomizedPreview}">
-                            <ContentControl Content="{Binding Result.PreviewPanel.Value}" />
+                            <ContentControl Content="{Binding CustomizedPreviewControl}" />
                         </Border>
                     </Grid>
                 </Grid>

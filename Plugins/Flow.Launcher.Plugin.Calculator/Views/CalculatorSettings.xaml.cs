@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using Flow.Launcher.Plugin.Calculator.ViewModels;
 
 namespace Flow.Launcher.Plugin.Calculator.Views

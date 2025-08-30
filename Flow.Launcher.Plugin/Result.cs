@@ -57,7 +57,10 @@ namespace Flow.Launcher.Plugin
         /// for user on the plugin result. If autocomplete action for example is tab, pressing tab will have
         /// the default constructed autocomplete text (result's Title), or the text provided here if not empty.
         /// </summary>
-        /// <remarks>When a value is not set, the <see cref="Title"/> will be used.</remarks>
+        /// <remarks>
+        /// When a value is not set, the <see cref="Title"/> will be used.
+        /// Please include the action keyword prefix when necessary because Flow does not prepend it automatically.
+        /// </remarks>
         public string AutoCompleteText { get; set; }
 
         /// <summary>
@@ -258,6 +261,17 @@ namespace Flow.Launcher.Plugin
         public bool ShowBadge { get; set; } = false;
 
         /// <summary>
+        /// This holds the text which can be shown as a query suggestion.
+        /// </summary>
+        /// <remarks>
+        /// When a value is not set, the <see cref="Title"/> will be used.
+        /// Do not include the action keyword prefix because Flow prepends it automatically.
+        /// If the it does not start with the query text, it will not be shown as a suggestion.
+        /// So make sure to set this value to start with the query text.
+        /// </remarks>
+        public string QuerySuggestionText { get; set; }
+
+        /// <summary>
         /// List of hotkey IDs that are supported for this result.
         /// Those hotkeys should be registered by IPluginHotkey interface.
         /// </summary>
@@ -314,6 +328,7 @@ namespace Flow.Launcher.Plugin
                 AddSelectedCount = AddSelectedCount,
                 RecordKey = RecordKey,
                 ShowBadge = ShowBadge,
+                QuerySuggestionText = QuerySuggestionText,
                 HotkeyIds = HotkeyIds,
             };
         }

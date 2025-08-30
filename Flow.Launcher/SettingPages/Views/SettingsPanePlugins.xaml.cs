@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Navigation;
@@ -31,6 +33,14 @@ public partial class SettingsPanePlugins
         }
         _viewModel.PropertyChanged += ViewModel_PropertyChanged;
         base.OnNavigatedTo(e);
+    }
+
+    private void PluginListBox_Loaded(object sender, RoutedEventArgs e)
+    {
+        // After list is loaded, we need to clear selection to make sure all items can be mouse hovered
+        // because the selected item cannot be hovered.
+        if (sender is not ListBox listBox) return;
+        listBox.SelectedIndex = -1;
     }
 
     private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
