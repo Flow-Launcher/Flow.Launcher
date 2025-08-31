@@ -117,18 +117,23 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 
 - Save file or folder locations for quick access.
 
-#### Drag & Drop
-
-<img src="https://user-images.githubusercontent.com/6903107/207159486-1993510f-09f2-4e33-bba7-4ca59ca1bc5a.png" width="500">
-
-- Drag a file/folder to File Explorer, or even Discord.
-- Copy/move behavior can be change via <kbd>Ctrl</kbd> or <kbd>Shift</kbd>, and the operation is displayed on the mouse cursor.
-
 ### Windows & Control Panel Settings
 
 <img src="https://user-images.githubusercontent.com/6903107/207140658-52c1bea6-5b14-4db8-ae35-acc65e6bda85.png" width="400">
 
 - Search for Windows & Control Panel settings.
+
+### Dialog Jump
+
+- Use <kbd>Alt</kbd>+<kbd>G</kbd> to quickly jump the Open/Save As dialog window path to the path of the active file manager.
+- Search a file/folder and quickly jump to its path in the Open/Save As dialog window.
+
+### Drag & Drop
+
+<img src="https://user-images.githubusercontent.com/6903107/207159486-1993510f-09f2-4e33-bba7-4ca59ca1bc5a.png" width="500">
+
+- Drag a file/folder to File Explorer, or even Discord.
+- Copy/move behavior can be change via <kbd>Ctrl</kbd> or <kbd>Shift</kbd>, and the operation is displayed on the mouse cursor.
 
 ### Priority
 
@@ -157,7 +162,7 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 
 - There are various themes and you also can make your own.
 
-#### Date & Time Display In Search Window
+### Date & Time Display In Search Window
 
 <img src="https://user-images.githubusercontent.com/6903107/207159348-8b0c7a2b-0836-4764-916b-e0236087f7f3.png" width="400">
 
@@ -185,6 +190,7 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
   <li>de, Deutsch</li>
   <li>ko, 한국어</li>
   <li>Srpski</li>
+  <li>Српски</li>
   <li>Português</li>
   <li>Português (Brasil)</li>
   <li>Spanish</li>
@@ -196,6 +202,7 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
   <li>čeština</li>
   <li>اللغة العربية</li>
   <li>Tiếng Việt</li>
+  <li>עברית</li>
 </ul>
 </details>
 
