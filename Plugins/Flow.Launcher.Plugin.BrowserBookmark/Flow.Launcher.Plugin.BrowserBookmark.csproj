@@ -54,7 +54,10 @@
                             $(OutputPath)runtimes\maccatalyst-x64;
                             $(OutputPath)runtimes\osx;
                             $(OutputPath)runtimes\osx-arm64;
-                            $(OutputPath)runtimes\osx-x64"/>
+                            $(OutputPath)runtimes\osx-x64;
+                            $(PublishDir)runtimes\win-arm;
+                            $(PublishDir)runtimes\win-arm64;
+                            $(PublishDir)runtimes\win-x86"/>
   </Target>
 
   <Target Name="RemoveUnnecessaryRuntimesAfterPublish" AfterTargets="Publish">
@@ -75,7 +78,10 @@
                             $(PublishDir)runtimes\maccatalyst-x64;
                             $(PublishDir)runtimes\osx;
                             $(PublishDir)runtimes\osx-arm64;
-                            $(PublishDir)runtimes\osx-x64"/>
+                            $(PublishDir)runtimes\osx-x64;
+                            $(PublishDir)runtimes\win-arm;
+                            $(PublishDir)runtimes\win-arm64;
+                            $(PublishDir)runtimes\win-x86"/>
   </Target>
 
   <ItemGroup>
