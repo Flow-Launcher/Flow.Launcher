@@ -75,7 +75,7 @@ namespace Flow.Launcher
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
-        public async void RestartApp()
+        public void RestartApp()
         {
             _mainVM.Hide();
 
@@ -83,9 +83,6 @@ namespace Flow.Launcher
             // UpdateManager.RestartApp() will call Environment.Exit(0)
             // which will cause ungraceful exit
             SaveAppAllSettings();
-
-            // Wait for all image caches to be saved before restarting
-            await ImageLoader.WaitSaveAsync();
 
             // Restart requires Squirrel's Update.exe to be present in the parent folder, 
             // it is only published from the project's release pipeline. When debugging without it,
@@ -116,8 +113,8 @@ namespace Flow.Launcher
                 _settings.Save();
                 PluginManager.Save();
                 _mainVM.Save();
+                ImageLoader.Save();
             }
-            _ = ImageLoader.SaveAsync();
         }
 
         public Task ReloadAllPluginData() => PluginManager.ReloadDataAsync();
