@@ -33,15 +33,39 @@ public class QuerySuggestionBoxConverter : IMultiValueConverter
         {
             var selectedResult = selectedItem.Result;
             var selectedResultActionKeyword = string.IsNullOrEmpty(selectedResult.ActionKeywordAssigned) ? "" : selectedResult.ActionKeywordAssigned + " ";
-            var selectedResultPossibleSuggestion = selectedResultActionKeyword + selectedResult.Title;
 
-            if (!selectedResultPossibleSuggestion.StartsWith(queryText, StringComparison.CurrentCultureIgnoreCase))
+            string selectedResultPossibleSuggestion = null;
+            
+            // Firstly check if the result has QuerySuggestionText
+            if (!string.IsNullOrEmpty(selectedResult.QuerySuggestionText))
+            {
+                selectedResultPossibleSuggestion = selectedResultActionKeyword + selectedResult.QuerySuggestionText;
+
+                // If this QuerySuggestionText does not start with the queryText, set it to null
+                if (!selectedResultPossibleSuggestion.StartsWith(queryText, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    selectedResultPossibleSuggestion = null;
+                }
+            }
+
+            // Then check Title as suggestion
+            if (string.IsNullOrEmpty(selectedResultPossibleSuggestion))
+            {
+                selectedResultPossibleSuggestion = selectedResultActionKeyword + selectedResult.Title;
+
+                // If this QuerySuggestionText does not start with the queryText, set it to null
+                if (!selectedResultPossibleSuggestion.StartsWith(queryText, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    selectedResultPossibleSuggestion = null;
+                }
+            }
+
+            if (string.IsNullOrEmpty(selectedResultPossibleSuggestion))
                 return string.Empty;
-
 
             // For AutocompleteQueryCommand.
             // When user typed lower case and result title is uppercase, we still want to display suggestion
-            selectedItem.QuerySuggestionText = queryText + selectedResultPossibleSuggestion.Substring(queryText.Length);
+            selectedItem.QuerySuggestionText = string.Concat(queryText, selectedResultPossibleSuggestion.AsSpan(queryText.Length));
 
             // Check if Text will be larger than our QueryTextBox
             Typeface typeface = new Typeface(queryTextBox.FontFamily, queryTextBox.FontStyle, queryTextBox.FontWeight, queryTextBox.FontStretch);

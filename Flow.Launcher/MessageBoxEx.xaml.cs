@@ -37,8 +37,9 @@ namespace Flow.Launcher
             try
             {
                 msgBox = new MessageBoxEx(button);
-                if (caption == string.Empty && button == MessageBoxButton.OK && icon == MessageBoxImage.None)
+                if (caption == string.Empty && icon == MessageBoxImage.None)
                 {
+                    // If there is no caption and no icon, use DescOnlyTextBlock for vertically centered text
                     msgBox.Title = messageBoxText;
                     msgBox.DescOnlyTextBlock.Visibility = Visibility.Visible;
                     msgBox.DescOnlyTextBlock.Text = messageBoxText;

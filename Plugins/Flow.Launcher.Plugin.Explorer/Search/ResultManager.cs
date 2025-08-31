@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.Views;
 using Flow.Launcher.Plugin.SharedCommands;
+using Flow.Launcher.Plugin.SharedModels;
 using Peter;
 using Path = System.IO.Path;
 
@@ -72,10 +73,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static void ShowNativeContextMenu(string path, ResultType type)
         {
-            var screenWithMouseCursor = System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position);
+            var screenWithMouseCursor = MonitorInfo.GetCursorDisplayMonitor();
             var xOfScreenCenter = screenWithMouseCursor.WorkingArea.Left + screenWithMouseCursor.WorkingArea.Width / 2;
             var yOfScreenCenter = screenWithMouseCursor.WorkingArea.Top + screenWithMouseCursor.WorkingArea.Height / 2;
-            var showPosition = new System.Drawing.Point(xOfScreenCenter, yOfScreenCenter);
+            var showPosition = new System.Drawing.Point((int)xOfScreenCenter, (int)yOfScreenCenter);
 
             switch (type)
             {
@@ -283,15 +284,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static Result CreateFileResult(string filePath, Query query, int score = 0, bool windowsIndexed = false)
         {
-            bool isMedia = IsMedia(Path.GetExtension(filePath));
-            var title = Path.GetFileName(filePath);
+            var isMedia = IsMedia(Path.GetExtension(filePath));
+            var title = Path.GetFileName(filePath) ?? string.Empty;
+            var directory = Path.GetDirectoryName(filePath) ?? string.Empty;
 
             /* Preview Detail */
 
             var result = new Result
             {
                 Title = title,
-                SubTitle = Path.GetDirectoryName(filePath),
+                SubTitle = directory,
                 IcoPath = filePath,
                 Preview = new Result.PreviewInfo
                 {
@@ -315,7 +317,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     {
                         if (c.SpecialKeyState.ToModifierKeys() == (ModifierKeys.Control | ModifierKeys.Shift))
                         {
-                            OpenFile(filePath, Settings.UseLocationAsWorkingDir ? Path.GetDirectoryName(filePath) : string.Empty, true);
+                            OpenFile(filePath, Settings.UseLocationAsWorkingDir ? directory : string.Empty, true);
                         }
                         else if (c.SpecialKeyState.ToModifierKeys() == ModifierKeys.Control)
                         {
@@ -323,7 +325,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         }
                         else
                         {
-                            OpenFile(filePath, Settings.UseLocationAsWorkingDir ? Path.GetDirectoryName(filePath) : string.Empty);
+                            OpenFile(filePath, Settings.UseLocationAsWorkingDir ? directory : string.Empty);
                         }
                     }
                     catch (Exception ex)

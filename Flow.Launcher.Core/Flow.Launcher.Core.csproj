@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0-windows</TargetFramework>
+    <TargetFramework>net9.0-windows</TargetFramework>
     <UseWpf>true</UseWpf>
     <UseWindowsForms>true</UseWindowsForms>
     <OutputType>Library</OutputType>
@@ -12,6 +12,7 @@
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
   
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -54,11 +55,12 @@
   
   <ItemGroup>
     <PackageReference Include="Droplex" Version="1.7.0" />
-    <PackageReference Include="FSharp.Core" Version="9.0.201" />
-    <PackageReference Include="Meziantou.Framework.Win32.Jobs" Version="3.4.0" />
+    <PackageReference Include="FSharp.Core" Version="9.0.300" />
+    <PackageReference Include="Meziantou.Framework.Win32.Jobs" Version="3.4.3" />
     <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />
+    <PackageReference Include="SemanticVersioning" Version="3.0.0" />
     <PackageReference Include="squirrel.windows" Version="1.5.2" NoWarn="NU1701" />
-    <PackageReference Include="StreamJsonRpc" Version="2.21.10" />
+    <PackageReference Include="StreamJsonRpc" Version="2.22.11" />
   </ItemGroup>
   
   <ItemGroup>

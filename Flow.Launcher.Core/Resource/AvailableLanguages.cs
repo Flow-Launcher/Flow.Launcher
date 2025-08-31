@@ -17,6 +17,7 @@ namespace Flow.Launcher.Core.Resource
         public static Language German = new Language("de", "Deutsch");
         public static Language Korean = new Language("ko", "한국어");
         public static Language Serbian = new Language("sr", "Srpski");
+        public static Language Serbian_Cyrillic = new Language("sr-Cyrl-RS", "Српски");
         public static Language Portuguese_Portugal = new Language("pt-pt", "Português");
         public static Language Portuguese_Brazil = new Language("pt-br", "Português (Brasil)");
         public static Language Spanish = new Language("es", "Spanish");
@@ -47,6 +48,7 @@ namespace Flow.Launcher.Core.Resource
                 German,
                 Korean,
                 Serbian,
+                Serbian_Cyrillic,
                 Portuguese_Portugal,
                 Portuguese_Brazil,
                 Spanish,
@@ -79,7 +81,8 @@ namespace Flow.Launcher.Core.Resource
                 "da" => "System",
                 "de" => "System",
                 "ko" => "시스템",
-                "sr" => "Систем",
+                "sr" => "Sistem",
+                "sr-Cyrl-RS" => "Систем",
                 "pt-pt" => "Sistema",
                 "pt-br" => "Sistema",
                 "es" => "Sistema",

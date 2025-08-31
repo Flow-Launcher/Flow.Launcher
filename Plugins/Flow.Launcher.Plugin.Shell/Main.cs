@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -335,15 +335,17 @@ namespace Flow.Launcher.Plugin.Shell
             }
             catch (FileNotFoundException e)
             {
-                var name = "Plugin: Shell";
-                var message = $"Command not found: {e.Message}";
-                Context.API.ShowMsg(name, message);
+                Context.API.ShowMsgError(GetTranslatedPluginTitle(),
+                    string.Format(Context.API.GetTranslation("flowlauncher_plugin_cmd_command_not_found"), e.Message));
             }
             catch (Win32Exception e)
             {
-                var name = "Plugin: Shell";
-                var message = $"Error running the command: {e.Message}";
-                Context.API.ShowMsg(name, message);
+                Context.API.ShowMsgError(GetTranslatedPluginTitle(),
+                    string.Format(Context.API.GetTranslation("flowlauncher_plugin_cmd_error_running_command"), e.Message));
+            }
+            catch (Exception e)
+            {
+                Context.API.LogException(ClassName, $"Error executing command: {info.FileName} {string.Join(" ", info.ArgumentList)}", e);
             }
         }
 

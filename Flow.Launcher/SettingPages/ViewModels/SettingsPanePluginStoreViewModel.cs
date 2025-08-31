@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Plugin;
@@ -112,7 +113,14 @@ public partial class SettingsPanePluginStoreViewModel : BaseModel
     [RelayCommand]
     private async Task CheckPluginUpdatesAsync()
     {
-        await PluginInstaller.CheckForPluginUpdatesAsync(silentUpdate: false);
+        await PluginInstaller.CheckForPluginUpdatesAsync((plugins) =>
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                var pluginUpdateWindow = new PluginUpdateWindow(plugins);
+                pluginUpdateWindow.ShowDialog();
+            });
+        }, silentUpdate: false);
     }
 
     private static string GetFileFromDialog(string title, string filter = "")

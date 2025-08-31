@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Media;
@@ -18,18 +18,17 @@ using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
-using Flow.Launcher.Infrastructure.Image;
+using Flow.Launcher.Infrastructure.DialogJump;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
+using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.ViewModel;
-using Microsoft.Win32;
 using ModernWpf.Controls;
 using DataObject = System.Windows.DataObject;
 using Key = System.Windows.Input.Key;
 using MouseButtons = System.Windows.Forms.MouseButtons;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
-using Screen = System.Windows.Forms.Screen;
 
 namespace Flow.Launcher
 {
@@ -95,7 +94,6 @@ namespace Flow.Launcher
 
             InitSoundEffects();
             DataObject.AddPastingHandler(QueryTextBox, QueryTextBox_OnPaste);
-            SystemEvents.PowerModeChanged += SystemEvents_PowerModeChanged;
             _viewModel.ActualApplicationThemeChanged += ViewModel_ActualApplicationThemeChanged;
         }
 
@@ -119,7 +117,7 @@ namespace Flow.Launcher
             Win32Helper.DisableControlBox(this);
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs _)
+        private void OnLoaded(object sender, RoutedEventArgs e)
         {
             // Check first launch
             if (_settings.FirstLaunch)
@@ -168,10 +166,12 @@ namespace Flow.Launcher
             if (_settings.HideOnStartup)
             {
                 _viewModel.Hide();
+                _viewModel.InitializeVisibilityStatus(false);
             }
             else
             {
                 _viewModel.Show();
+                _viewModel.InitializeVisibilityStatus(true);
                 // When HideOnStartup is off and UseAnimation is on,
                 // there was a bug where the clock would not appear at all on the initial launch
                 // So we need to forcibly trigger animation here to ensure the clock is visible
@@ -214,6 +214,9 @@ namespace Flow.Launcher
             // Without this part, when shown for the first time, switching the context menu does not move the cursor to the end.
             _viewModel.QueryTextCursorMovedToEnd = false;
 
+            // Register Dialog Jump events
+            InitializeDialogJump();
+
             // View model property changed event
             _viewModel.PropertyChanged += (o, e) =>
             {
@@ -226,7 +229,7 @@ namespace Flow.Launcher
                                 if (_viewModel.MainWindowVisibilityStatus)
                                 {
                                     // Play sound effect before activing the window
-                                    if (_settings.UseSound)
+                                    if (_settings.UseSound && !_viewModel.IsDialogJumpWindowUnderDialog())
                                     {
                                         SoundPlay();
                                     }
@@ -249,7 +252,7 @@ namespace Flow.Launcher
                                     QueryTextBox.Focus();
 
                                     // Play window animation
-                                    if (_settings.UseAnimation)
+                                    if (_settings.UseAnimation && !_viewModel.IsDialogJumpWindowUnderDialog())
                                     {
                                         WindowAnimation();
                                     }
@@ -354,7 +357,6 @@ namespace Flow.Launcher
                 _notifyIcon.Visible = false;
                 App.API.SaveAppAllSettings();
                 e.Cancel = true;
-                await ImageLoader.WaitSaveAsync();
                 await PluginManager.DisposePluginsAsync();
                 Notification.Uninstall();
                 // After plugins are all disposed, we shutdown application to close app
@@ -379,6 +381,11 @@ namespace Flow.Launcher
 
         private void OnLocationChanged(object sender, EventArgs e)
         {
+            if (_viewModel.IsDialogJumpWindowUnderDialog())
+            {
+                return;
+            }
+
             if (IsLoaded)
             {
                 _settings.WindowLeft = Left;
@@ -388,6 +395,11 @@ namespace Flow.Launcher
 
         private async void OnDeactivated(object sender, EventArgs e)
         {
+            if (_viewModel.IsDialogJumpWindowUnderDialog())
+            {
+                return;
+            }
+
             _settings.WindowLeft = Left;
             _settings.WindowTop = Top;
 
@@ -516,7 +528,7 @@ namespace Flow.Launcher
                         double yRatio = mousePos.Y / maxHeight;
 
                         // Current monitor information
-                        var screen = Screen.FromHandle(new WindowInteropHelper(this).Handle);
+                        var screen = MonitorInfo.GetNearestDisplayMonitor(new WindowInteropHelper(this).Handle);
                         var workingArea = screen.WorkingArea;
                         var screenLeftTop = Win32Helper.TransformPixelsToDIP(this, workingArea.X, workingArea.Y);
 
@@ -577,11 +589,23 @@ namespace Flow.Launcher
             switch (msg)
             {
                 case Win32Helper.WM_ENTERSIZEMOVE:
+                    // Do do handle size move event for dialog jump window
+                    if (_viewModel.IsDialogJumpWindowUnderDialog())
+                    {
+                        return IntPtr.Zero;
+                    }
+
                     _initialWidth = (int)Width;
                     _initialHeight = (int)Height;
                     handled = true;
                     break;
                 case Win32Helper.WM_EXITSIZEMOVE:
+                    // Do do handle size move event for Dialog Jump window
+                    if (_viewModel.IsDialogJumpWindowUnderDialog())
+                    {
+                        return IntPtr.Zero;
+                    }
+
                     //Prevent updating the number of results when the window height is below the height of a single result item.
                     //This situation occurs not only when the user manually resizes the window, but also when the window is released from a side snap, as the OS automatically adjusts the window height.
                     //(Without this check, releasing from a snap can cause the window height to hit the minimum, resulting in only 2 results being shown.)
@@ -642,6 +666,16 @@ namespace Flow.Launcher
                         handled = true;
                     }
                     break;
+                case Win32Helper.WM_POWERBROADCAST: // Handle power broadcast messages
+                    // https://learn.microsoft.com/en-us/windows/win32/power/wm-powerbroadcast
+                    if (wParam.ToInt32() == Win32Helper.PBT_APMRESUMEAUTOMATIC)
+                    {
+                        // Fix for sound not playing after sleep / hibernate
+                        // https://stackoverflow.com/questions/64805186/mediaplayer-doesnt-play-after-computer-sleeps
+                        InitSoundEffects();
+                    }
+                    handled = true;
+                    break;
             }
 
             return IntPtr.Zero;
@@ -650,16 +684,6 @@ namespace Flow.Launcher
         #endregion
 
         #region Window Sound Effects
-
-        private void SystemEvents_PowerModeChanged(object sender, PowerModeChangedEventArgs e)
-        {
-            // Fix for sound not playing after sleep / hibernate
-            // https://stackoverflow.com/questions/64805186/mediaplayer-doesnt-play-after-computer-sleeps
-            if (e.Mode == PowerModes.Resume)
-            {
-                InitSoundEffects();
-            }
-        }
 
         private void InitSoundEffects()
         {
@@ -792,11 +816,19 @@ namespace Flow.Launcher
 
         #region Window Position
 
-        private void UpdatePosition()
+        public void UpdatePosition()
         {
             // Initialize call twice to work around multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
-            InitializePosition();
-            InitializePosition();
+            if (_viewModel.IsDialogJumpWindowUnderDialog())
+            {
+                InitializeDialogJumpPosition();
+                InitializeDialogJumpPosition();
+            }
+            else
+            {
+                InitializePosition();
+                InitializePosition();
+            }
         }
 
         private async Task PositionResetAsync()
@@ -918,36 +950,36 @@ namespace Flow.Launcher
             }
         }
 
-        private Screen SelectedScreen()
+        private MonitorInfo SelectedScreen()
         {
-            Screen screen;
+            MonitorInfo screen;
             switch (_settings.SearchWindowScreen)
             {
                 case SearchWindowScreens.Cursor:
-                    screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
-                    break;
-                case SearchWindowScreens.Primary:
-                    screen = Screen.PrimaryScreen;
+                    screen = MonitorInfo.GetCursorDisplayMonitor();
                     break;
                 case SearchWindowScreens.Focus:
-                    var foregroundWindowHandle = Win32Helper.GetForegroundWindow();
-                    screen = Screen.FromHandle(foregroundWindowHandle);
+                    screen = MonitorInfo.GetNearestDisplayMonitor(Win32Helper.GetForegroundWindow());
+                    break;
+                case SearchWindowScreens.Primary:
+                    screen = MonitorInfo.GetPrimaryDisplayMonitor();
                     break;
                 case SearchWindowScreens.Custom:
-                    if (_settings.CustomScreenNumber <= Screen.AllScreens.Length)
-                        screen = Screen.AllScreens[_settings.CustomScreenNumber - 1];
+                    var allScreens = MonitorInfo.GetDisplayMonitors();
+                    if (_settings.CustomScreenNumber <= allScreens.Count)
+                        screen = allScreens[_settings.CustomScreenNumber - 1];
                     else
-                        screen = Screen.AllScreens[0];
+                        screen = allScreens[0];
                     break;
                 default:
-                    screen = Screen.AllScreens[0];
+                    screen = MonitorInfo.GetDisplayMonitors()[0];
                     break;
             }
 
-            return screen ?? Screen.AllScreens[0];
+            return screen ?? MonitorInfo.GetDisplayMonitors()[0];
         }
 
-        private double HorizonCenter(Screen screen)
+        private double HorizonCenter(MonitorInfo screen)
         {
             var dip1 = Win32Helper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
             var dip2 = Win32Helper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
@@ -955,7 +987,7 @@ namespace Flow.Launcher
             return left;
         }
 
-        private double VerticalCenter(Screen screen)
+        private double VerticalCenter(MonitorInfo screen)
         {
             var dip1 = Win32Helper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
             var dip2 = Win32Helper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Height);
@@ -963,7 +995,7 @@ namespace Flow.Launcher
             return top;
         }
 
-        private double HorizonRight(Screen screen)
+        private double HorizonRight(MonitorInfo screen)
         {
             var dip1 = Win32Helper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
             var dip2 = Win32Helper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
@@ -971,14 +1003,14 @@ namespace Flow.Launcher
             return left;
         }
 
-        private double HorizonLeft(Screen screen)
+        private double HorizonLeft(MonitorInfo screen)
         {
             var dip1 = Win32Helper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
             var left = dip1.X + 10;
             return left;
         }
 
-        public double VerticalTop(Screen screen)
+        private double VerticalTop(MonitorInfo screen)
         {
             var dip1 = Win32Helper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
             var top = dip1.Y + 10;
@@ -1354,6 +1386,46 @@ namespace Flow.Launcher
 
         #endregion
 
+        #region Dialog Jump
+
+        private void InitializeDialogJump()
+        {
+            DialogJump.ShowDialogJumpWindowAsync = _viewModel.SetupDialogJumpAsync;
+            DialogJump.UpdateDialogJumpWindow = InitializeDialogJumpPosition;
+            DialogJump.ResetDialogJumpWindow = _viewModel.ResetDialogJump;
+            DialogJump.HideDialogJumpWindow = _viewModel.HideDialogJump;
+        }
+
+        private void InitializeDialogJumpPosition()
+        {
+            if (_viewModel.DialogWindowHandle == nint.Zero || !_viewModel.MainWindowVisibilityStatus) return;
+            if (!_viewModel.IsDialogJumpWindowUnderDialog()) return;
+
+            // Get dialog window rect
+            var result = Win32Helper.GetWindowRect(_viewModel.DialogWindowHandle, out var window);
+            if (!result) return;
+
+            // Move window below the bottom of the dialog and keep it center
+            Top = VerticalBottom(window);
+            Left = HorizonCenter(window);
+        }
+
+        private double HorizonCenter(Rect window)
+        {
+            var dip1 = Win32Helper.TransformPixelsToDIP(this, window.X, 0);
+            var dip2 = Win32Helper.TransformPixelsToDIP(this, window.Width, 0);
+            var left = (dip2.X - ActualWidth) / 2 + dip1.X;
+            return left;
+        }
+
+        private double VerticalBottom(Rect window)
+        {
+            var dip1 = Win32Helper.TransformPixelsToDIP(this, 0, window.Bottom);
+            return dip1.Y;
+        }
+
+        #endregion
+
         #region IDisposable
 
         protected virtual void Dispose(bool disposing)
@@ -1367,7 +1439,6 @@ namespace Flow.Launcher
                     animationSoundWMP?.Close();
                     animationSoundWPF?.Dispose();
                     _viewModel.ActualApplicationThemeChanged -= ViewModel_ActualApplicationThemeChanged;
-                    SystemEvents.PowerModeChanged -= SystemEvents_PowerModeChanged;
                 }
 
                 _disposed = true;

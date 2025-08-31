@@ -9,6 +9,7 @@ using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -16,6 +17,7 @@ using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.DialogJump;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -52,6 +54,7 @@ namespace Flow.Launcher.ViewModel
         private Task _resultsViewUpdateTask;
 
         private readonly IReadOnlyList<Result> _emptyResult = new List<Result>();
+        private readonly IReadOnlyList<DialogJumpResult> _emptyDialogJumpResult = new List<DialogJumpResult>();
 
         private readonly PluginMetadata _historyMetadata = new()
         {
@@ -215,7 +218,8 @@ namespace Flow.Launcher.ViewModel
             var resultUpdateChannel = Channel.CreateUnbounded<ResultsForUpdate>();
             _resultsUpdateChannelWriter = resultUpdateChannel.Writer;
             _resultsViewUpdateTask =
-                Task.Run(UpdateActionAsync).ContinueWith(continueAction, CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.Default);
+                Task.Run(UpdateActionAsync).ContinueWith(continueAction,
+                    CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.Default);
 
             async Task UpdateActionAsync()
             {
@@ -285,8 +289,16 @@ namespace Flow.Launcher.ViewModel
 
                     var token = e.Token == default ? _updateToken : e.Token;
 
-                    // make a clone to avoid possible issue that plugin will also change the list and items when updating view model
-                    var resultsCopy = DeepCloneResults(e.Results, token);
+                    IReadOnlyList<Result> resultsCopy;
+                    if (e.Results == null)
+                    {
+                        resultsCopy = _emptyResult;
+                    }
+                    else
+                    {
+                        // make a clone to avoid possible issue that plugin will also change the list and items when updating view model
+                        resultsCopy = DeepCloneResults(e.Results, false, token);
+                    }
 
                     foreach (var result in resultsCopy)
                     {
@@ -394,12 +406,30 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void LoadContextMenu()
         {
+            // For Dialog Jump and right click mode, we need to navigate to the path
+            if (_isDialogJump && Settings.DialogJumpResultBehaviour == DialogJumpResultBehaviours.RightClick)
+            {
+                if (SelectedResults.SelectedItem != null && DialogWindowHandle != nint.Zero)
+                {
+                    var result = SelectedResults.SelectedItem.Result;
+                    if (result is DialogJumpResult dialogJumpResult)
+                    {
+                        Win32Helper.SetForegroundWindow(DialogWindowHandle);
+                        _ = Task.Run(() => DialogJump.JumpToPathAsync(DialogWindowHandle, dialogJumpResult.DialogJumpPath));
+                    }
+                }
+                return;
+            }
+
+            // For query mode, we load context menu
             if (QueryResultsSelected())
             {
                 // When switch to ContextMenu from QueryResults, but no item being chosen, should do nothing
                 // i.e. Shift+Enter/Ctrl+O right after Alt + Space should do nothing
                 if (SelectedResults.SelectedItem != null)
+                {
                     SelectedResults = ContextMenu;
+                }
             }
             else
             {
@@ -469,12 +499,33 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
 
-            var hideWindow = await result.ExecuteAsync(new ActionContext
+            // For Dialog Jump and left click mode, we need to navigate to the path
+            if (_isDialogJump && Settings.DialogJumpResultBehaviour == DialogJumpResultBehaviours.LeftClick)
             {
-                // not null means pressing modifier key + number, should ignore the modifier key
-                SpecialKeyState = index is not null ? SpecialKeyState.Default : GlobalHotkey.CheckModifiers()
-            })
-            .ConfigureAwait(false);
+                if (result is DialogJumpResult dialogJumpResult)
+                {
+                    Win32Helper.SetForegroundWindow(DialogWindowHandle);
+                    _ = Task.Run(() => DialogJump.JumpToPathAsync(DialogWindowHandle, dialogJumpResult.DialogJumpPath));
+                }
+                else
+                {
+                    App.API.LogError(ClassName, "DialogJumpResult expected but got a different result type.");
+                }
+            }
+            // For query mode, we execute the result
+            else
+            {
+                var hideWindow = await result.ExecuteAsync(new ActionContext
+                {
+                    // not null means pressing modifier key + number, should ignore the modifier key
+                    SpecialKeyState = index is not null ? SpecialKeyState.Default : GlobalHotkey.CheckModifiers()
+                }).ConfigureAwait(false);
+
+                if (hideWindow)
+                {
+                    Hide();
+                }
+            }
 
             if (QueryResultsSelected())
             {
@@ -482,26 +533,33 @@ namespace Flow.Launcher.ViewModel
                 _history.Add(result.OriginQuery.RawQuery);
                 lastHistoryIndex = 1;
             }
-
-            if (hideWindow)
-            {
-                Hide();
-            }
         }
 
-        private static IReadOnlyList<Result> DeepCloneResults(IReadOnlyList<Result> results, CancellationToken token = default)
+        private static IReadOnlyList<Result> DeepCloneResults(IReadOnlyList<Result> results, bool isDialogJump, CancellationToken token = default)
         {
             var resultsCopy = new List<Result>();
-            foreach (var result in results.ToList())
-            {
-                if (token.IsCancellationRequested)
-                {
-                    break;
-                }
 
-                var resultCopy = result.Clone();
-                resultsCopy.Add(resultCopy);
+            if (isDialogJump)
+            {
+                foreach (var result in results.ToList())
+                {
+                    if (token.IsCancellationRequested) break;
+
+                    var resultCopy = ((DialogJumpResult)result).Clone();
+                    resultsCopy.Add(resultCopy);
+                }
             }
+            else
+            {
+                foreach (var result in results.ToList())
+                {
+                    if (token.IsCancellationRequested) break;
+
+                    var resultCopy = result.Clone();
+                    resultsCopy.Add(resultCopy);
+                }
+            }
+            
             return resultsCopy;
         }
 
@@ -825,6 +883,12 @@ namespace Flow.Launcher.ViewModel
                 }
             }
         }
+
+        public Visibility ShowCustomizedPreview
+            => InternalPreviewVisible && PreviewSelectedItem?.Result.PreviewPanel != null ? Visibility.Visible : Visibility.Collapsed;
+
+        public UserControl CustomizedPreviewControl
+            => ShowCustomizedPreview == Visibility.Visible ? PreviewSelectedItem?.Result.PreviewPanel.Value : null;
 
         public Visibility ProgressBarVisibility { get; set; }
         public Visibility MainWindowVisibility { get; set; }
@@ -1279,25 +1343,21 @@ namespace Flow.Launcher.ViewModel
 
             if (query == null) // shortcut expanded
             {
-                App.API.LogDebug(ClassName, $"Clear query results");
-
-                // Hide and clear results again because running query may show and add some results
-                Results.Visibility = Visibility.Collapsed;
-                Results.Clear();
-
-                // Reset plugin icon
-                PluginIconPath = null;
-                PluginIconSource = null;
-                SearchIconVisibility = Visibility.Visible;
-
-                // Hide progress bar again because running query may set this to visible
-                ProgressBarVisibility = Visibility.Hidden;
+                ClearResults();
                 return;
             }
 
             App.API.LogDebug(ClassName, $"Start query with ActionKeyword <{query.ActionKeyword}> and RawQuery <{query.RawQuery}>");
 
             var currentIsHomeQuery = query.IsHomeQuery;
+            var currentIsDialogJump = _isDialogJump;
+
+            // Do not show home page for Dialog Jump window
+            if (currentIsHomeQuery && currentIsDialogJump)
+            {
+                ClearResults();
+                return;
+            }
 
             _updateSource?.Dispose();
 
@@ -1331,7 +1391,7 @@ namespace Flow.Launcher.ViewModel
             }
             else
             {
-                plugins = PluginManager.ValidPluginsForQuery(query);
+                plugins = PluginManager.ValidPluginsForQuery(query, currentIsDialogJump);
 
                 if (plugins.Count == 1)
                 {
@@ -1425,6 +1485,23 @@ namespace Flow.Launcher.ViewModel
             }
 
             // Local function
+            void ClearResults()
+            {
+                App.API.LogDebug(ClassName, $"Clear query results");
+
+                // Hide and clear results again because running query may show and add some results
+                Results.Visibility = Visibility.Collapsed;
+                Results.Clear();
+
+                // Reset plugin icon
+                PluginIconPath = null;
+                PluginIconSource = null;
+                SearchIconVisibility = Visibility.Visible;
+
+                // Hide progress bar again because running query may set this to visible
+                ProgressBarVisibility = Visibility.Hidden;
+            }
+
             async Task QueryTaskAsync(PluginPair plugin, CancellationToken token)
             {
                 App.API.LogDebug(ClassName, $"Wait for querying plugin <{plugin.Metadata.Name}>");
@@ -1442,21 +1519,23 @@ namespace Flow.Launcher.ViewModel
                 // Task.Yield will force it to run in ThreadPool
                 await Task.Yield();
 
-                var results = currentIsHomeQuery ?
-                    await PluginManager.QueryHomeForPluginAsync(plugin, query, token) :
-                    await PluginManager.QueryForPluginAsync(plugin, query, token);
+                IReadOnlyList<Result> results = currentIsDialogJump ?
+                    await PluginManager.QueryDialogJumpForPluginAsync(plugin, query, token) :
+                        currentIsHomeQuery ?
+                            await PluginManager.QueryHomeForPluginAsync(plugin, query, token) :
+                            await PluginManager.QueryForPluginAsync(plugin, query, token);
 
                 if (token.IsCancellationRequested) return;
 
                 IReadOnlyList<Result> resultsCopy;
                 if (results == null)
                 {
-                    resultsCopy = _emptyResult;
+                    resultsCopy = currentIsDialogJump ? _emptyDialogJumpResult : _emptyResult;
                 }
                 else
                 {
                     // make a copy of results to avoid possible issue that FL changes some properties of the records, like score, etc.
-                    resultsCopy = DeepCloneResults(results, token);
+                    resultsCopy = DeepCloneResults(results, currentIsDialogJump, token);
                 }
 
                 foreach (var result in resultsCopy)
@@ -1751,6 +1830,208 @@ namespace Flow.Launcher.ViewModel
 
         #endregion
 
+        #region Dialog Jump
+
+        public nint DialogWindowHandle { get; private set; } = nint.Zero;
+
+        private bool _isDialogJump = false;
+
+        private bool _previousMainWindowVisibilityStatus;
+
+        private CancellationTokenSource _dialogJumpSource;
+
+        public void InitializeVisibilityStatus(bool visibilityStatus)
+        {
+            _previousMainWindowVisibilityStatus = visibilityStatus;
+        }
+
+        public bool IsDialogJumpWindowUnderDialog()
+        {
+            return _isDialogJump && DialogJump.DialogJumpWindowPosition == DialogJumpWindowPositions.UnderDialog;
+        }
+
+        public async Task SetupDialogJumpAsync(nint handle)
+        {
+            if (handle == nint.Zero) return;
+
+            // Only set flag & reset window once for one file dialog
+            var dialogWindowHandleChanged = false;
+            if (DialogWindowHandle != handle)
+            {
+                DialogWindowHandle = handle;
+                _previousMainWindowVisibilityStatus = MainWindowVisibilityStatus;
+                _isDialogJump = true;
+
+                dialogWindowHandleChanged = true;
+
+                // If don't give a time, Positioning will be weird
+                await Task.Delay(300);
+            }
+
+            // If handle is cleared, which means the dialog is closed, clear Dialog Jump state
+            if (DialogWindowHandle == nint.Zero)
+            {
+                _isDialogJump = false;
+                return;
+            }
+
+            // Initialize Dialog Jump window
+            if (MainWindowVisibilityStatus)
+            {
+                if (dialogWindowHandleChanged)
+                {
+                    // Only update the position
+                    Application.Current?.Dispatcher.Invoke(() =>
+                    {
+                        (Application.Current?.MainWindow as MainWindow)?.UpdatePosition();
+                    });
+
+                    _ = ResetWindowAsync();
+                }
+            }
+            else
+            {
+                if (DialogJump.DialogJumpWindowPosition == DialogJumpWindowPositions.UnderDialog)
+                {
+                    // We wait for window to be reset before showing it because if window has results,
+                    // showing it before resetting will cause flickering when results are clearing
+                    if (dialogWindowHandleChanged)
+                    {
+                        await ResetWindowAsync();
+                    }
+
+                    Show();
+                }
+                else
+                {
+                    if (dialogWindowHandleChanged)
+                    {
+                        _ = ResetWindowAsync();
+                    }
+                }
+            }
+
+            if (DialogJump.DialogJumpWindowPosition == DialogJumpWindowPositions.UnderDialog)
+            {
+                // Cancel the previous Dialog Jump task
+                _dialogJumpSource?.Cancel();
+
+                // Create a new cancellation token source
+                _dialogJumpSource = new CancellationTokenSource();
+
+                _ = Task.Run(() =>
+                {
+                    try
+                    {
+                        // Check task cancellation
+                        if (_dialogJumpSource.Token.IsCancellationRequested) return;
+
+                        // Check dialog handle
+                        if (DialogWindowHandle == nint.Zero) return;
+
+                        // Wait 150ms to check if Dialog Jump window gets the focus
+                        var timeOut = !SpinWait.SpinUntil(() => !Win32Helper.IsForegroundWindow(DialogWindowHandle), 150);
+                        if (timeOut) return;
+
+                        // Bring focus back to the dialog
+                        Win32Helper.SetForegroundWindow(DialogWindowHandle);
+                    }
+                    catch (Exception e)
+                    {
+                        App.API.LogException(ClassName, "Failed to focus on dialog window", e);
+                    }
+                });
+            }
+        }
+
+#pragma warning disable VSTHRD100 // Avoid async void methods
+
+        public async void ResetDialogJump()
+        {
+            // Cache original dialog window handle
+            var dialogWindowHandle = DialogWindowHandle;
+
+            // Reset the Dialog Jump state
+            DialogWindowHandle = nint.Zero;
+            _isDialogJump = false;
+
+            // If dialog window handle is not set, we should not reset the main window visibility
+            if (dialogWindowHandle == nint.Zero) return;
+
+            if (_previousMainWindowVisibilityStatus != MainWindowVisibilityStatus)
+            {
+                // We wait for window to be reset before showing it because if window has results,
+                // showing it before resetting will cause flickering when results are clearing
+                await ResetWindowAsync();
+
+                // Show or hide to change visibility
+                if (_previousMainWindowVisibilityStatus)
+                {
+                    Show();
+                }
+                else
+                {
+                    Hide(false);
+                }
+            }
+            else
+            {
+                if (_previousMainWindowVisibilityStatus)
+                {
+                    // Only update the position
+                    Application.Current?.Dispatcher.Invoke(() =>
+                    {
+                        (Application.Current?.MainWindow as MainWindow)?.UpdatePosition();
+                    });
+
+                    _ = ResetWindowAsync();
+                }
+                else
+                {
+                    _ = ResetWindowAsync();
+                }
+            }
+        }
+
+#pragma warning restore VSTHRD100 // Avoid async void methods
+
+        public void HideDialogJump()
+        {
+            if (DialogWindowHandle != nint.Zero)
+            {
+                if (DialogJump.DialogJumpWindowPosition == DialogJumpWindowPositions.UnderDialog)
+                {
+                    // Warning: Main window is already in foreground
+                    // This is because if you click popup menus in other applications to hide Dialog Jump window,
+                    // they can steal focus before showing main window
+                    if (MainWindowVisibilityStatus)
+                    {
+                        Hide();
+                    }
+                }
+            }
+        }
+
+        // Reset index & preview & selected results & query text
+        private async Task ResetWindowAsync()
+        {
+            lastHistoryIndex = 1;
+
+            if (ExternalPreviewVisible)
+            {
+                await CloseExternalPreviewAsync();
+            }
+
+            if (!QueryResultsSelected())
+            {
+                SelectedResults = Results;
+            }
+
+            await ChangeQueryTextAsync(string.Empty, true);
+        }
+
+        #endregion
+
         #region Public Methods
 
 #pragma warning disable VSTHRD100 // Avoid async void methods
@@ -1770,7 +2051,7 @@ namespace Flow.Launcher.ViewModel
                     Win32Helper.DWMSetCloakForWindow(mainWindow, false);
 
                     // Set clock and search icon opacity
-                    var opacity = Settings.UseAnimation ? 0.0 : 1.0;
+                    var opacity = (Settings.UseAnimation && !_isDialogJump) ? 0.0 : 1.0;
                     ClockPanelOpacity = opacity;
                     SearchIconOpacity = opacity;
 
@@ -1799,37 +2080,40 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public async void Hide()
+        public async void Hide(bool reset = true)
         {
-            lastHistoryIndex = 1;
-
-            if (ExternalPreviewVisible)
+            if (reset)
             {
-                await CloseExternalPreviewAsync();
-            }
+                lastHistoryIndex = 1;
 
-            BackToQueryResults();
+                if (ExternalPreviewVisible)
+                {
+                    await CloseExternalPreviewAsync();
+                }
 
-            switch (Settings.LastQueryMode)
-            {
-                case LastQueryMode.Empty:
-                    await ChangeQueryTextAsync(string.Empty);
-                    break;
-                case LastQueryMode.Preserved:
-                case LastQueryMode.Selected:
-                    LastQuerySelected = Settings.LastQueryMode == LastQueryMode.Preserved;
-                    break;
-                case LastQueryMode.ActionKeywordPreserved:
-                case LastQueryMode.ActionKeywordSelected:
-                    var newQuery = _lastQuery?.ActionKeyword;
+                BackToQueryResults();
 
-                    if (!string.IsNullOrEmpty(newQuery))
-                        newQuery += " ";
-                    await ChangeQueryTextAsync(newQuery);
+                switch (Settings.LastQueryMode)
+                {
+                    case LastQueryMode.Empty:
+                        await ChangeQueryTextAsync(string.Empty);
+                        break;
+                    case LastQueryMode.Preserved:
+                    case LastQueryMode.Selected:
+                        LastQuerySelected = Settings.LastQueryMode == LastQueryMode.Preserved;
+                        break;
+                    case LastQueryMode.ActionKeywordPreserved:
+                    case LastQueryMode.ActionKeywordSelected:
+                        var newQuery = _lastQuery.ActionKeyword;
 
-                    if (Settings.LastQueryMode == LastQueryMode.ActionKeywordSelected)
-                        LastQuerySelected = false;
-                    break;
+                        if (!string.IsNullOrEmpty(newQuery))
+                            newQuery += " ";
+                        await ChangeQueryTextAsync(newQuery);
+
+                        if (Settings.LastQueryMode == LastQueryMode.ActionKeywordSelected)
+                            LastQuerySelected = false;
+                        break;
+                }
             }
 
             // When application is exiting, the Application.Current will be null
@@ -1839,7 +2123,7 @@ namespace Flow.Launcher.ViewModel
                 if (Application.Current?.MainWindow is MainWindow mainWindow)
                 {
                     // Set clock and search icon opacity
-                    var opacity = Settings.UseAnimation ? 0.0 : 1.0;
+                    var opacity = (Settings.UseAnimation && !_isDialogJump) ? 0.0 : 1.0;
                     ClockPanelOpacity = opacity;
                     SearchIconOpacity = opacity;
 
@@ -1984,6 +2268,7 @@ namespace Flow.Launcher.ViewModel
                 if (disposing)
                 {
                     _updateSource?.Dispose();
+                    _dialogJumpSource?.Dispose();
                     _resultsUpdateChannelWriter?.Complete();
                     if (_resultsViewUpdateTask?.IsCompleted == true)
                     {
