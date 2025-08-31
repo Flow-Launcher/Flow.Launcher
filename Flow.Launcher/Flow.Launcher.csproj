@@ -58,9 +58,9 @@
                             $(OutputPath)runtimes\osx;
                             $(OutputPath)runtimes\osx-arm64;
                             $(OutputPath)runtimes\osx-x64;
-                            $(PublishDir)runtimes\win-arm;
-                            $(PublishDir)runtimes\win-arm64;
-                            $(PublishDir)runtimes\win-x86;"/>
+                            $(OutputPath)runtimes\win-arm;
+                            $(OutputPath)runtimes\win-arm64;
+                            $(OutputPath)runtimes\win-x86;"/>
   </Target>
 
   <Target Name="RemoveUnnecessaryRuntimesAfterPublish" AfterTargets="Publish">
