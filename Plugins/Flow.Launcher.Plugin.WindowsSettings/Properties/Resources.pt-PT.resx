@@ -1779,7 +1779,7 @@
     <value>Alterar definições padrão para multimédia e dispositivos</value>
   </data>
   <data name="PrintTheSpeechReferenceCard" xml:space="preserve">
-    <value>Imprimir o cartão de referência de fala</value>
+    <value>Imprimir cartão de referência de fala</value>
   </data>
   <data name="CalibrateDisplayColour" xml:space="preserve">
     <value>Calibrar ecrã</value>
@@ -2227,10 +2227,10 @@
     <value>Identificar e reparar problemas de rede</value>
   </data>
   <data name="FindAndFixNetworkingAndConnectionProblems" xml:space="preserve">
-    <value>Encontrar e corrigir problemas de rede e conexão</value>
+    <value>Encontrar e corrigir problemas de rede e ligações</value>
   </data>
   <data name="PlayCdsOrOtherMediaAutomatically" xml:space="preserve">
-    <value>Reproduzir CDs ou outras mídias automaticamente</value>
+    <value>Reproduzir CDs ou outas unidades automaticamente</value>
   </data>
   <data name="ViewBasicInformationAboutYourComputer" xml:space="preserve">
     <value>Ver informações básicas sobre seu computador</value>
