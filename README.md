@@ -42,7 +42,7 @@ Dedicated to making your work flow more seamless. Search everything from applica
 
 ### Installation
 
-[Windows 7+ Installer](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Setup.exe) or [Portable Version](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Portable.zip)
+[Windows 10+ Installer](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Setup.exe) or [Portable Version](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Portable.zip)
 
 #### Winget
 
