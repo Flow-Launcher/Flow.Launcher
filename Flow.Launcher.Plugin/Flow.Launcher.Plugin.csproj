@@ -15,10 +15,10 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>4.7.0</Version>
-    <PackageVersion>4.7.0</PackageVersion>
-    <AssemblyVersion>4.7.0</AssemblyVersion>
-    <FileVersion>4.7.0</FileVersion>
+    <Version>4.8.0</Version>
+    <PackageVersion>4.8.0</PackageVersion>
+    <AssemblyVersion>4.8.0</AssemblyVersion>
+    <FileVersion>4.8.0</FileVersion>
     <PackageId>Flow.Launcher.Plugin</PackageId>
     <Authors>Flow-Launcher</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
