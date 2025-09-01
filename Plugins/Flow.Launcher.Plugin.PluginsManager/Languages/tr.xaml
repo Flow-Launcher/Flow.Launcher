@@ -62,7 +62,7 @@
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_newissue_title">Bir geliştirme öner veya bir sorun gönder</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_newissue_subtitle">Eklenti geliştiricisine bir geliştirme önerin veya bir sorun gönderin</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_title">Flow'un eklenti deposuna gidin</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_subtitle">Visit the PluginsManifest repository to see community-made plugin submissions</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_subtitle">Topluluk tarafından yapılan eklenti gönderimlerini görmek için PluginsManifest deposunu ziyaret edin</system:String>
 
     <!--  Settings menu items  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Bilinmeyen kaynaktan yükleme uyarısı</system:String>
