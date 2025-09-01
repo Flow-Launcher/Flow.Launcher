@@ -1746,7 +1746,7 @@
     <value>Navigasyon özellikleri</value>
   </data>
   <data name="MediaStreamingOptions" xml:space="preserve">
-    <value>Media streaming options</value>
+    <value>Medya akış seçenekleri</value>
   </data>
   <data name="MakeAFileTypeAlwaysOpenInASpecificProgram" xml:space="preserve">
     <value>Bir dosya türünün her zaman belirli bir programda açılmasını sağla</value>
@@ -1761,7 +1761,7 @@
     <value>Ekran okuyucu kullan</value>
   </data>
   <data name="ShowWhichWorkgroupThisComputerIsOn" xml:space="preserve">
-    <value>Show which workgroup this computer is on</value>
+    <value>Bu bilgisayarın hangi çalışma grubunda olduğunu göster</value>
   </data>
   <data name="ChangeMouseWheelSettings" xml:space="preserve">
     <value>Fare tekerleği ayarlarını değiştir</value>
@@ -1965,7 +1965,7 @@
     <value>Change Automatic Maintenance settings</value>
   </data>
   <data name="SpecifySingleOrDoubleClickToOpen" xml:space="preserve">
-    <value>Specify single- or double-click to open</value>
+    <value>Açmak için tek veya çift tıkla</value>
   </data>
   <data name="SelectUsersWhoCanUseRemoteDesktop" xml:space="preserve">
     <value>Select users who can use remote desktop</value>
@@ -2034,7 +2034,7 @@
     <value>Bir sanal özel ağ (VPN) bağlantısı kur</value>
   </data>
   <data name="AccommodateLearningAbilities" xml:space="preserve">
-    <value>Accommodate learning abilities</value>
+    <value>Öğrenme yeteneklerine uyum sağla</value>
   </data>
   <data name="SetUpADialUpConnection" xml:space="preserve">
     <value>Bir çevirmeli bağlantı kur</value>
@@ -2052,7 +2052,7 @@
     <value>iSCSI başlatıcıyı ayarla</value>
   </data>
   <data name="AccommodateLowVision" xml:space="preserve">
-    <value>Accommodate low vision</value>
+    <value>Az görmeye uyum sağla</value>
   </data>
   <data name="ManageOfflineFiles" xml:space="preserve">
     <value>Çevrim dışı dosyaları yönet</value>
