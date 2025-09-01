@@ -33,8 +33,8 @@
     <system:String x:Key="parseProxyFailed">Http Proxy verisi ayrıştırılamadı</system:String>
 
     <!--  AbstractPluginEnvironment  -->
-    <system:String x:Key="failToInstallTypeScriptEnv">Failed to install TypeScript environment. Please try again later</system:String>
-    <system:String x:Key="failToInstallPythonEnv">Failed to install Python environment. Please try again later.</system:String>
+    <system:String x:Key="failToInstallTypeScriptEnv">TypeScript ortamı yüklenemedi. Lütfen daha sonra tekrar deneyin</system:String>
+    <system:String x:Key="failToInstallPythonEnv">Python ortamı yüklenemedi. Lütfen daha sonra tekrar deneyin.</system:String>
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">&quot;{0}&quot; kısayolunu atama başarısız oldu. Kısayolu başka bir program kullanıyorsa kapatmayı deneyin veya kısayolu değiştirin.</system:String>
