@@ -397,7 +397,7 @@ Get in touch if you like to join the Flow-Launcher Team and help build this grea
 
 - Flow Launcher's target framework is .Net 9
 
-- Install Visual Studio 2022
+- Install Visual Studio 2022 (v17.12+)
 
 - Install .Net 9 SDK
   - via Visual Studio installer
