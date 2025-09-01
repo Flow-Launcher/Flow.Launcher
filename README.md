@@ -125,6 +125,8 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 
 ### Dialog Jump
 
+<img src="https://github.com/user-attachments/assets/046c00da-6e4e-4960-8424-b413852300ad" width="400"/>
+
 - Use <kbd>Alt</kbd>+<kbd>G</kbd> to quickly jump the Open/Save As dialog window path to the path of the active file manager.
 - Search a file/folder and quickly jump to its path in the Open/Save As dialog window.
 
