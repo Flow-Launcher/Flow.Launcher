@@ -45,16 +45,16 @@ namespace Flow.Launcher.Core.ExternalPlugins
 
                     lastFetchedAt = DateTime.Now;
 
-                    var updatedPluginResult = new List<UserPlugin>();
+                    var updatedPluginResults = new List<UserPlugin>();
                     var appVersion = SemanticVersioning.Version.Parse(Constant.Version);
                     
                     for (int i = 0; i < results.Count; i++)
                     {
                         if (IsMinimumAppVersionSatisfied(results[i], appVersion))
-                            updatedPluginResult.Add(results[i]);
+                            updatedPluginResults.Add(results[i]);
                     }
 
-                    UserPlugins = updatedPluginResult;
+                    UserPlugins = updatedPluginResults;
 
                     return true;
                 }
