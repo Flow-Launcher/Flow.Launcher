@@ -132,14 +132,14 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 
 ### Drag & Drop
 
-<img src="https://user-images.githubusercontent.com/6903107/207159486-1993510f-09f2-4e33-bba7-4ca59ca1bc5a.png" width="500">
+<img src="https://user-images.githubusercontent.com/6903107/207159486-1993510f-09f2-4e33-bba7-4ca59ca1bc5a.png" width="400">
 
 - Drag a file/folder to File Explorer, or even Discord.
 - Copy/move behavior can be change via <kbd>Ctrl</kbd> or <kbd>Shift</kbd>, and the operation is displayed on the mouse cursor.
 
 ### Priority
 
-<img src="https://user-images.githubusercontent.com/6903107/144517677-857a2b0a-4b94-4be0-bc89-f35723ecddf9.png" width="500">
+<img src="https://user-images.githubusercontent.com/6903107/144517677-857a2b0a-4b94-4be0-bc89-f35723ecddf9.png" width="400">
 
 - Prioritise the order of each plugin's results.
 
@@ -154,12 +154,12 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 
 ### Customizations
 
-<img src="https://user-images.githubusercontent.com/6903107/144693887-1b92ed16-dca1-4b7e-8644-5e9524cdfb31.gif" width="500">
+<img src="https://user-images.githubusercontent.com/6903107/144693887-1b92ed16-dca1-4b7e-8644-5e9524cdfb31.gif" width="400">
 
 - Window size adjustment, animation, and sound
 - Color Scheme (aka Dark Mode)
 
-<img src="https://user-images.githubusercontent.com/6903107/144527796-7c06ca31-d933-4f6b-9eb0-4fb06fa94384.png" width="500">
+<img src="https://user-images.githubusercontent.com/6903107/144527796-7c06ca31-d933-4f6b-9eb0-4fb06fa94384.png" width="400">
 
 - There are various themes and you also can make your own.
 
