@@ -127,7 +127,7 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 
 <img src="https://github.com/user-attachments/assets/046c00da-6e4e-4960-8424-b413852300ad" width="400"/>
 
-- Search a file/folder and quickly jump to its path in the Open/Save As dialog window.
+- Search for a file/folder and quickly jump to its path in the Open/Save As dialog window.
 - Use <kbd>Alt</kbd>+<kbd>G</kbd> to quickly jump the Open/Save As dialog window path to the path of the active file manager.
 
 ### Drag & Drop
@@ -397,7 +397,7 @@ Each of the pull requests will be marked with a milestone indicating the planned
 
 Contributions are very welcome, in addition to the main project(C#) there are also [documentation](https://github.com/Flow-Launcher/docs)(md), [website](https://github.com/Flow-Launcher/flow-launcher.github.io)(html/css) and [others](https://github.com/Flow-Launcher) that can be contributed to. If you are unsure of a change you want to make, let us know in the [Discussions](https://github.com/Flow-Launcher/Flow.Launcher/discussions/categories/ideas), otherwise feel free to put in a pull request.
 
-You will find the main goals of flow placed under the [Projects board](https://github.com/Flow-Launcher/Flow.Launcher/projects), so feel free to contribute on that. If you would like to make small incremental changes, feel free to do so as well.
+You will find the main goals of flow placed under the [Projects board](https://github.com/orgs/Flow-Launcher/projects/4), so feel free to contribute on that. If you would like to make small incremental changes, feel free to do so as well.
 
 Get in touch if you like to join the Flow-Launcher Team and help build this great tool.
 
