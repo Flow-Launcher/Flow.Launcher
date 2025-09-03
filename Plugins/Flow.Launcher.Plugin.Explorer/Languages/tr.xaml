@@ -197,8 +197,8 @@
     <!--  Native Context Menu  -->
     <system:String x:Key="plugin_explorer_native_context_menu_header">Yerel Bağlam Menüsünü Aç</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Yerel bağlam menüsünü göster (deneysel)</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Below you can specify items you want to include in the context menu, they can be partial (e.g. 'pen wit') or complete ('Open with').</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Below you can specify items you want to exclude from context menu, they can be partial (e.g. 'pen wit') or complete ('Open with').</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Aşağıda, içerik menüsüne dahil etmek istediğiniz öğeleri belirtebilirsiniz, bunlar kısmi ('irlikte a' gibi) veya tam ('Birlikte aç') olabilir.</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Aşağıda, içerik menüsünden hariç tutmak istediğiniz öğeleri belirtebilirsiniz, bunlar kısmi ('irlikte a' gibi) veya tam ('Birlikte aç') olabilir.</system:String>
 
     <!--  Preview Info  -->
     <system:String x:Key="Today">Bugün</system:String>
