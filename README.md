@@ -330,6 +330,7 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 | Flow Launcher Tips                 | Visit Flow Launcher's documentation for more help and how to use tips       |
 | Flow Launcher UserData Folder      | Open the location where Flow Launcher's settings are stored                 |
 | Toggle Game Mode                   | Toggle Game Mode                                                            |
+| Set Flow Launcher Theme            | Set the Flow Launcher Theme                                                 |
 
 ### 💁‍♂️ Tips
 
