@@ -272,7 +272,7 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 
 ### 🛒 Plugin Store
 
-<img src="https://user-images.githubusercontent.com/6903107/207155616-d559f0d2-ee95-4072-a7bc-3ffcc2faec27.png" width="700">
+<img src="https://cdn.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@plugin_api_v2/assets/plugin_store.png" width="700">
 
 - You can view the full plugin list or quickly install a plugin via the Plugin Store menu inside Settings
 
