@@ -333,6 +333,7 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="PlaceholderTextTip">Zobrazí zástupný text. V prázdnom poli sa zobrazí: {0}</system:String>
     <system:String x:Key="KeepMaxResults">Pevná veľkosť okna</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">Veľkosť okna sa nedá nastaviť ťahaním.</system:String>
+    <system:String x:Key="MaxShowResultsCannotWorkWithAlwaysPreview">Since Always Preview is on, maximum results shown may not take effect because preview panel requires a certain minimum height</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Klávesové skratky</system:String>
