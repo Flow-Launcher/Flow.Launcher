@@ -214,7 +214,7 @@
     <comment>Short/modern name for application</comment>
   </data>
   <data name="AppsAndFeatures" xml:space="preserve">
-    <value>Додатки та функції</value>
+    <value>Застосунки та функції</value>
     <comment>Area Apps</comment>
   </data>
   <data name="AppSettingsApp" xml:space="preserve">
@@ -222,7 +222,7 @@
     <comment>Type of the setting is a "Modern Windows settings". We use the same term as used in start menu search at the moment. </comment>
   </data>
   <data name="AppsForWebsites" xml:space="preserve">
-    <value>Додатки для веб-сайтів</value>
+    <value>Застосунки для вебсайтів</value>
     <comment>Area Apps</comment>
   </data>
   <data name="AppVolumeAndDevicePreferences" xml:space="preserve">
@@ -248,7 +248,7 @@
     <value>Зовнішній вигляд та персоналізація</value>
   </data>
   <data name="AreaApps" xml:space="preserve">
-    <value>Додатки</value>
+    <value>Застосунки</value>
   </data>
   <data name="AreaClockAndRegion" xml:space="preserve">
     <value>Час і регіон</value>
@@ -515,23 +515,23 @@
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="DefaultApps" xml:space="preserve">
-    <value>Програми за замовчуванням</value>
+    <value>Типові програми</value>
     <comment>Area Apps</comment>
   </data>
   <data name="DefaultCamera" xml:space="preserve">
-    <value>Камера за замовчуванням</value>
+    <value>Типова камера</value>
     <comment>Area Device</comment>
   </data>
   <data name="DefaultLocation" xml:space="preserve">
-    <value>Розташування за замовчуванням</value>
+    <value>Типове розташування</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="DefaultPrograms" xml:space="preserve">
-    <value>Програми за замовчуванням</value>
+    <value>Типові програми</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="DefaultSaveLocations" xml:space="preserve">
-    <value>Місця збереження за замовчуванням</value>
+    <value>Типові місця збереження</value>
     <comment>Area System</comment>
   </data>
   <data name="DeliveryOptimization" xml:space="preserve">
@@ -611,7 +611,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="EmailAndAppAccounts" xml:space="preserve">
-    <value>Облікові записи електронної пошти та додатків</value>
+    <value>Облікові записи пошти та застосунків</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="Encryption" xml:space="preserve">
@@ -1028,7 +1028,7 @@
     <value>Доступно, якщо встановлено редактор методів введення Microsoft Wubi.</value>
   </data>
   <data name="NoteMixedReality" xml:space="preserve">
-    <value>Доступно лише якщо встановлено додаток Портал змішаної реальності.</value>
+    <value>Доступно лише якщо встановлено застосунок «Портал змішаної реальності».</value>
   </data>
   <data name="NoteMobileProvisioning" xml:space="preserve">
     <value>Доступно лише на мобільних пристроях або якщо на підприємстві розгорнуто пакет забезпечення.</value>
@@ -1172,7 +1172,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="PhoneDefaultApps" xml:space="preserve">
-    <value>Телефон - Програми за замовчуванням</value>
+    <value>Телефон: типові програми</value>
     <comment>Area System</comment>
   </data>
   <data name="Picture" xml:space="preserve">
@@ -1687,7 +1687,7 @@
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateAdvancedOptions" xml:space="preserve">
-    <value>Оновлення Windows - Додаткові параметри</value>
+    <value>Оновлення Windows: додаткові параметри</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateCheckForUpdates" xml:space="preserve">
@@ -1699,7 +1699,7 @@
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateViewOptionalUpdates" xml:space="preserve">
-    <value>Оновлення Windows - Перегляд додаткових оновлень</value>
+    <value>Оновлення Windows: перегляд додаткових оновлень</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateViewUpdateHistory" xml:space="preserve">
@@ -1776,7 +1776,7 @@
     <value>Зміна налаштувань для вмісту, отриманого за допомогою функції "Доторкнутись і відправити"</value>
   </data>
   <data name="ChangeDefaultSettingsForMediaOrDevices" xml:space="preserve">
-    <value>Зміна налаштувань за замовчуванням для носіїв або пристроїв</value>
+    <value>Зміна типових налаштувань для носіїв або пристроїв</value>
   </data>
   <data name="PrintTheSpeechReferenceCard" xml:space="preserve">
     <value>Роздрукувати мовленнєву довідкову картку</value>
@@ -1803,7 +1803,7 @@
     <value>Переглянути, які процеси запускаються автоматично під час запуску Windows</value>
   </data>
   <data name="TellIfAnRSSFeedIsAvailableOnAWebsite" xml:space="preserve">
-    <value>Визначити, чи є на веб-сайті RSS-канал</value>
+    <value>Визначити, чи є на вебсайті RSS-канал</value>
   </data>
   <data name="AddClocksForDifferentTimeZones" xml:space="preserve">
     <value>Додати годинник для різних часових поясів</value>
@@ -2161,7 +2161,7 @@
     <value>Розширене налаштування принтера</value>
   </data>
   <data name="ChangeDefaultPrinter" xml:space="preserve">
-    <value>Змінити принтер за замовчуванням</value>
+    <value>Змінити типовий принтер</value>
   </data>
   <data name="EditEnvironmentVariablesForYourAccount" xml:space="preserve">
     <value>Редагування змінних середовища для вашого облікового запису</value>
@@ -2275,7 +2275,7 @@
     <value>Змінити спосіб відображення часу</value>
   </data>
   <data name="ChangeHowWebPagesAreDisplayedInTabs" xml:space="preserve">
-    <value>Зміна способу відображення веб-сторінок у вкладках</value>
+    <value>Зміна способу відображення вебсторінок у вкладках</value>
   </data>
   <data name="ChangeTheWayDatesAndListsAreDisplayed" xml:space="preserve">
     <value>Зміна способу відображення дат і списків</value>
@@ -2314,7 +2314,7 @@
     <value>Переглянути всі звіти про проблеми</value>
   </data>
   <data name="16BitApplicationSupport" xml:space="preserve">
-    <value>Підтримка 16-бітних додатків</value>
+    <value>Підтримка 16-бітних застосунків</value>
   </data>
   <data name="SetUpDiallingRules" xml:space="preserve">
     <value>Налаштуйте правила набору</value>
@@ -2425,7 +2425,7 @@
     <value>Блокування або розблокування панелі завдань</value>
   </data>
   <data name="ManageWebCredentials" xml:space="preserve">
-    <value>Керування веб-обліковими даними</value>
+    <value>Керування вебобліковими даними</value>
   </data>
   <data name="ChangeTheTimeZone" xml:space="preserve">
     <value>Зміна часового поясу</value>
@@ -2458,7 +2458,7 @@
     <value>Відновлення даних, файлів або комп'ютера з резервної копії (Windows 7)</value>
   </data>
   <data name="SetYourDefaultPrograms" xml:space="preserve">
-    <value>Налаштування програм за замовчуванням</value>
+    <value>Налаштування типових програм</value>
   </data>
   <data name="SetUpABroadbandConnection" xml:space="preserve">
     <value>Налаштування широкосмугового з'єднання</value>
