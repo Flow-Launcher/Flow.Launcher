@@ -332,7 +332,7 @@
     <system:String x:Key="PlaceholderTextTip">Modifier le texte de l'espace réservé. Les entrées vides utiliseront : {0}</system:String>
     <system:String x:Key="KeepMaxResults">Taille de la fenêtre fixe</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">La taille de la fenêtre n'est pas réglable par glissement.</system:String>
-    <system:String x:Key="MaxShowResultsCannotWorkWithAlwaysPreview">Since Always Preview is on, maximum results shown may not take effect because preview panel requires a certain minimum height</system:String>
+    <system:String x:Key="MaxShowResultsCannotWorkWithAlwaysPreview">Étant donné que Always Preview est toujours activé, les résultats maximaux indiqués peuvent ne pas prendre effet car le panneau d'aperçu nécessite une certaine hauteur minimale</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Raccourcis</system:String>
