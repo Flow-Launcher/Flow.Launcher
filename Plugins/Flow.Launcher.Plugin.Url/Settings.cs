@@ -2,8 +2,12 @@
 {
     public class Settings
     {
-        public string BrowserPath { get; set; }
+        public bool UseCustomBrowser { get; set; } = false;
 
-        public bool OpenInNewBrowserWindow { get; set; } = true;
+        public string BrowserPath { get; set; } = string.Empty;
+
+        public bool OpenInNewBrowserWindow { get; set; } = false;
+
+        public bool OpenInPrivateMode { get; set; } = false;
     }
 }
