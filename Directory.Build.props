@@ -3,5 +3,6 @@
     <AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
     <!-- Work around https://github.com/dotnet/runtime/issues/109682 -->
     <CETCompat>false</CETCompat>
+    <PublishAot>true</PublishAot>
   </PropertyGroup>
 </Project>

@@ -23,11 +23,23 @@
         "resolved": "3.4.3",
         "contentHash": "REjInKnQ0OrhjjtSMPQtLtdURctCroB4L8Sd2gjTOYDysklvsdnrStx1tHS7uLv+fSyFF3aazZmo5Ka0v1oz/w=="
       },
+      "Microsoft.DotNet.ILCompiler": {
+        "type": "Direct",
+        "requested": "[9.0.8, )",
+        "resolved": "9.0.8",
+        "contentHash": "cMwVh5hsxAhv+oMHQdgcXodt2kDpfviofBO4IXupSAHJW2vZOZOOIhvPWRGO6NeGcP8SR4OpSwktRqb0i79KFA=="
+      },
       "Microsoft.IO.RecyclableMemoryStream": {
         "type": "Direct",
         "requested": "[3.0.1, )",
         "resolved": "3.0.1",
         "contentHash": "s/s20YTVY9r9TPfTrN5g8zPF1YhwxyqO6PxUkrYTGI2B+OGPe9AdajWZrLhFqXIvqIW23fnUE4+ztrUWNU1+9g=="
+      },
+      "Microsoft.NET.ILLink.Tasks": {
+        "type": "Direct",
+        "requested": "[9.0.8, )",
+        "resolved": "9.0.8",
+        "contentHash": "rd1CbIsMtVPtZNTIVD6Xydue//klYOOQIDpRgu3BHtv17AlpRs74/6QFbcYgMm/jL+naVU2T3OFLxVSLV5lQLQ=="
       },
       "SemanticVersioning": {
         "type": "Direct",
