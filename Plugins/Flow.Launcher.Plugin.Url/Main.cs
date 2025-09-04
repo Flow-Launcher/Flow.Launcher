@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Windows.Controls;
 using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.Url
 {
-    public class Main : IPlugin, IPluginI18n
+    public class Main : IPlugin, IPluginI18n, ISettingProvider
     {
         //based on https://gist.github.com/dperini/729294
         private const string UrlPattern = "^" +
@@ -122,6 +123,11 @@ namespace Flow.Launcher.Plugin.Url
         public string GetTranslatedPluginDescription()
         {
             return Context.API.GetTranslation("flowlauncher_plugin_url_plugin_description");
+        }
+
+        public Control CreateSettingPanel()
+        {
+            return new SettingsControl();
         }
     }
 }
