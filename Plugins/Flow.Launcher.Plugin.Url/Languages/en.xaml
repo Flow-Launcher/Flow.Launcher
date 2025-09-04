@@ -3,10 +3,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <system:String x:Key="flowlauncher_plugin_url_open_search_in">Open search in:</system:String>
-    <system:String x:Key="flowlauncher_plugin_new_window">New Window</system:String>
-    <system:String x:Key="flowlauncher_plugin_new_tab">New Tab</system:String>
-
     <system:String x:Key="flowlauncher_plugin_url_open_url">Open url:{0}</system:String>
     <system:String x:Key="flowlauncher_plugin_url_cannot_open_url">Can't open url:{0}</system:String>
 
@@ -18,6 +14,6 @@
     <system:String x:Key="flowlauncher_plugin_url_plugin_filter">Application(*.exe)|*.exe|All files|*.*</system:String>
 
     <system:String x:Key="flowlauncher_plugin_use_custom_browser">Use custom browser</system:String>
-
-    <system:String x:Key="flowlauncher_plugin_open_url_in_private">Open url in private</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_open_in_new_window">Open url in new window</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_open_in_private">Open url in private</system:String>
 </ResourceDictionary>
