@@ -7,7 +7,7 @@ namespace Flow.Launcher.Plugin.Url
     public class Main : IPlugin, IPluginI18n
     {
         //based on https://gist.github.com/dperini/729294
-        private const string urlPattern = "^" +
+        private const string UrlPattern = "^" +
             // protocol identifier
             "(?:(?:https?|ftp)://|)" +
             // user:pass authentication
@@ -39,7 +39,7 @@ namespace Flow.Launcher.Plugin.Url
             // resource path
             "(?:/\\S*)?" +
             "$";
-        private readonly Regex reg = new Regex(urlPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private readonly Regex UrlRegex = new(UrlPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         public static PluginInitContext Context { get; private set; }
 
@@ -50,9 +50,9 @@ namespace Flow.Launcher.Plugin.Url
             var raw = query.Search;
             if (IsURL(raw))
             {
-                return new List<Result>
-                {
-                    new Result
+                return
+                [
+                    new()
                     {
                         Title = raw,
                         SubTitle = string.Format(Context.API.GetTranslation("flowlauncher_plugin_url_open_url"),raw),
@@ -60,7 +60,7 @@ namespace Flow.Launcher.Plugin.Url
                         Score = 8,
                         Action = _ =>
                         {
-                            if (!raw.ToLower().StartsWith("http"))
+                            if (!raw.StartsWith("http", StringComparison.OrdinalIgnoreCase))
                             {
                                 raw = "http://" + raw;
                             }
@@ -77,16 +77,17 @@ namespace Flow.Launcher.Plugin.Url
                             }
                         }
                     }
-                };
+                ];
             }
-            return new List<Result>(0);
+
+            return [];
         }
 
         public bool IsURL(string raw)
         {
             raw = raw.ToLower();
 
-            if (reg.Match(raw).Value == raw) return true;
+            if (UrlRegex.Match(raw).Value == raw) return true;
 
             if (raw == "localhost" || raw.StartsWith("localhost:") ||
                 raw == "http://localhost" || raw.StartsWith("http://localhost:") ||
