@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.Url
 {
@@ -66,8 +67,15 @@ namespace Flow.Launcher.Plugin.Url
                             }
                             try
                             {
-                                Context.API.OpenUrl(raw);
-                                
+                                var browserPath = Settings.UseCustomBrowser ? Settings.BrowserPath : string.Empty;
+                                if (Settings.OpenInNewBrowserWindow)
+                                {
+                                    SearchWeb.OpenInBrowserWindow(raw, browserPath, Settings.OpenInPrivateMode);
+                                }
+                                else
+                                {
+                                    SearchWeb.OpenInBrowserTab(raw, browserPath, Settings.OpenInPrivateMode);
+                                }
                                 return true;
                             }
                             catch(Exception)
