@@ -332,6 +332,7 @@
     <system:String x:Key="PlaceholderTextTip">更改占位符文本。输入空将使用：{0}</system:String>
     <system:String x:Key="KeepMaxResults">固定窗口大小</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">窗口高度不能通过拖动来调整。</system:String>
+    <system:String x:Key="MaxShowResultsCannotWorkWithAlwaysPreview">Since Always Preview is on, maximum results shown may not take effect because preview panel requires a certain minimum height</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">热键</system:String>
