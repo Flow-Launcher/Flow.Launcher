@@ -39,10 +39,12 @@ namespace Flow.Launcher.Plugin.Url
             // resource path
             "(?:/\\S*)?" +
             "$";
-        Regex reg = new Regex(urlPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        private PluginInitContext context;
-        private Settings _settings;
-        
+        private readonly Regex reg = new Regex(urlPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+        public static PluginInitContext Context { get; private set; }
+
+        public static Settings Settings { get; private set; }
+
         public List<Result> Query(Query query)
         {
             var raw = query.Search;
@@ -53,7 +55,7 @@ namespace Flow.Launcher.Plugin.Url
                     new Result
                     {
                         Title = raw,
-                        SubTitle = string.Format(context.API.GetTranslation("flowlauncher_plugin_url_open_url"),raw),
+                        SubTitle = string.Format(Context.API.GetTranslation("flowlauncher_plugin_url_open_url"),raw),
                         IcoPath = "Images/url.png",
                         Score = 8,
                         Action = _ =>
@@ -64,13 +66,13 @@ namespace Flow.Launcher.Plugin.Url
                             }
                             try
                             {
-                                context.API.OpenUrl(raw);
+                                Context.API.OpenUrl(raw);
                                 
                                 return true;
                             }
                             catch(Exception)
                             {
-                                context.API.ShowMsgError(string.Format(context.API.GetTranslation("flowlauncher_plugin_url_cannot_open_url"), raw));
+                                Context.API.ShowMsgError(string.Format(Context.API.GetTranslation("flowlauncher_plugin_url_cannot_open_url"), raw));
                                 return false;
                             }
                         }
@@ -99,19 +101,18 @@ namespace Flow.Launcher.Plugin.Url
 
         public void Init(PluginInitContext context)
         {
-            this.context = context;
-            
-            _settings = context.API.LoadSettingJsonStorage<Settings>();
+            Context = context;
+            Settings = context.API.LoadSettingJsonStorage<Settings>();
         }
 
         public string GetTranslatedPluginTitle()
         {
-            return context.API.GetTranslation("flowlauncher_plugin_url_plugin_name");
+            return Context.API.GetTranslation("flowlauncher_plugin_url_plugin_name");
         }
 
         public string GetTranslatedPluginDescription()
         {
-            return context.API.GetTranslation("flowlauncher_plugin_url_plugin_description");
+            return Context.API.GetTranslation("flowlauncher_plugin_url_plugin_description");
         }
     }
 }
