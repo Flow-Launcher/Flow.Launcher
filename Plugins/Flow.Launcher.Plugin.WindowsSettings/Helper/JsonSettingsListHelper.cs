@@ -39,13 +39,10 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
                     throw new Exception("stream is null");
                 }
 
-                var options = new JsonSerializerOptions();
-                options.Converters.Add(new JsonStringEnumConverter());
-
                 using var reader = new StreamReader(stream);
                 var text = reader.ReadToEnd();
 
-                settingsList = JsonSerializer.Deserialize<IEnumerable<WindowsSetting>>(text, options);
+                settingsList = JsonSerializer.Deserialize(text, MyJsonContext.Default.IEnumerableWindowsSetting);
             }
             catch (Exception exception)
             {
@@ -54,5 +51,14 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
 
             return settingsList ?? Enumerable.Empty<WindowsSetting>();
         }
+    }
+
+    [JsonSourceGenerationOptions(
+        Converters = new[] { typeof(JsonStringEnumConverter) },
+        PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase
+    )]
+    [JsonSerializable(typeof(IEnumerable<WindowsSetting>))]
+    internal partial class MyJsonContext : JsonSerializerContext
+    {
     }
 }
