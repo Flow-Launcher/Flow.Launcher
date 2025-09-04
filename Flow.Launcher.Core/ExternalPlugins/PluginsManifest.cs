@@ -88,7 +88,7 @@ namespace Flow.Launcher.Core.ExternalPlugins
                 return false;
             }
 
-            API.LogDebug(ClassName, $"Plugin {plugin.Name} requires minimum Flow Launcher version {plugin.MinimumAppVersion}, "
+            API.LogInfo(ClassName, $"Plugin {plugin.Name} requires minimum Flow Launcher version {plugin.MinimumAppVersion}, "
                     + $"but current version is {Constant.Version}. Plugin excluded from manifest.");
 
             return false;
