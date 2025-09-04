@@ -9,11 +9,11 @@
     <system:String x:Key="flowlauncher_plugin_url_plugin_name">URL</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_description">Open the typed URL from Flow Launcher</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_url_plugin_set_tip">Please set your browser path:</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_choose">Choose</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_filter">Application(*.exe)|*.exe|All files|*.*</system:String>
 
     <system:String x:Key="flowlauncher_plugin_use_custom_browser">Use custom browser</system:String>
+    <system:String x:Key="flowlauncher_plugin_browser_path">Browser path:</system:String>
     <system:String x:Key="flowlauncher_plugin_url_open_in_new_window">Open url in new window</system:String>
     <system:String x:Key="flowlauncher_plugin_url_open_in_private">Open url in private</system:String>
 </ResourceDictionary>
