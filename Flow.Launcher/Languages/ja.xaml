@@ -71,7 +71,7 @@
     <system:String x:Key="portableMode">ポータブルモード</system:String>
     <system:String x:Key="portableModeToolTIp">すべての設定とユーザーデータを1つのフォルダに保存します(リムーバブルドライブやクラウドサービスで使用する場合に便利です)。</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">スタートアップ時にFlow Launcherを起動する</system:String>
-    <system:String x:Key="useLogonTaskForStartup">高速起動のためにスタートアップではなくログオンタスクを使用</system:String>
+    <system:String x:Key="useLogonTaskForStartup">起動の高速化のためにスタートアップではなくログオンタスクを使用</system:String>
     <system:String x:Key="useLogonTaskForStartupTooltip">アンインストール後は、「タスク スケジューラ」からこのタスク（Flow.Launcher Startup）を手動で削除する必要があります。</system:String>
     <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">フォーカスを失った時にFlow Launcherを隠す</system:String>
@@ -343,7 +343,7 @@
     <system:String x:Key="previewHotkeyToolTip">検索ウィンドウでプレビューの表示/非表示を切り替えるショートカットを入力してください。</system:String>
     <system:String x:Key="hotkeyPresets">Hotkey Presets</system:String>
     <system:String x:Key="hotkeyPresetsToolTip">List of currently registered hotkeys</system:String>
-    <system:String x:Key="openResultModifiers">結果修飾子を開く</system:String>
+    <system:String x:Key="openResultModifiers">結果を開くための修飾キー</system:String>
     <system:String x:Key="openResultModifiersToolTip">Select a modifier key to open selected result via keyboard.</system:String>
     <system:String x:Key="showOpenResultHotkey">ホットキーを表示</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Show result selection hotkey with results.</system:String>
@@ -380,7 +380,7 @@
     <system:String x:Key="edit">編集</system:String>
     <system:String x:Key="add">追加</system:String>
     <system:String x:Key="none">None</system:String>
-    <system:String x:Key="pleaseSelectAnItem">項目選択してください</system:String>
+    <system:String x:Key="pleaseSelectAnItem">項目を選択してください</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">{0} プラグインのホットキーを本当に削除しますか？</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">本当にこのショートカットを削除しますか？： {0} を {1} に展開</system:String>
     <system:String x:Key="shortcut_clipboard_description">Get text from clipboard.</system:String>
@@ -431,7 +431,7 @@
     <system:String x:Key="portCantBeEmpty">ポートは空白にできません</system:String>
     <system:String x:Key="invalidPortFormat">ポートの形式が正しくありません</system:String>
     <system:String x:Key="saveProxySuccessfully">プロキシの保存に成功しました</system:String>
-    <system:String x:Key="proxyIsCorrect">プロキシは正しいです</system:String>
+    <system:String x:Key="proxyIsCorrect">プロキシは正しく構成されています</system:String>
     <system:String x:Key="proxyConnectFailed">プロキシ接続に失敗しました</system:String>
 
     <!--  Setting About  -->
@@ -507,13 +507,13 @@
     <system:String x:Key="invalidPriority">Please provide an valid integer for Priority!</system:String>
 
     <!--  Action Keyword Setting Dialog  -->
-    <system:String x:Key="oldActionKeywords">古いアクションキーボード</system:String>
-    <system:String x:Key="newActionKeywords">新しいアクションキーボード</system:String>
+    <system:String x:Key="oldActionKeywords">古いアクションキーワード</system:String>
+    <system:String x:Key="newActionKeywords">新しいアクションキーワード</system:String>
     <system:String x:Key="cancel">キャンセル</system:String>
     <system:String x:Key="done">完了</system:String>
-    <system:String x:Key="cannotFindSpecifiedPlugin">プラグインが見つかりません</system:String>
-    <system:String x:Key="newActionKeywordsCannotBeEmpty">新しいアクションキーボードを空にすることはできません</system:String>
-    <system:String x:Key="newActionKeywordsHasBeenAssigned">新しいアクションキーボードは他のプラグインに割り当てられています。他のアクションキーボードを指定してください</system:String>
+    <system:String x:Key="cannotFindSpecifiedPlugin">指定されたプラグインが見つかりません</system:String>
+    <system:String x:Key="newActionKeywordsCannotBeEmpty">新しいアクションキーワードを空にすることはできません</system:String>
+    <system:String x:Key="newActionKeywordsHasBeenAssigned">新しいアクションキーワードは他のプラグインに割り当てられています。他のアクションキーワードを入力してください</system:String>
     <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
     <system:String x:Key="success">成功しました</system:String>
     <system:String x:Key="completedSuccessfully">Completed successfully</system:String>
@@ -529,7 +529,7 @@
     <system:String x:Key="homeTips">Enable the plugin home page state if you like to show the plugin results when query is empty.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
-    <system:String x:Key="customeQueryHotkeyTitle"></system:String>
+    <system:String x:Key="customeQueryHotkeyTitle">カスタムクエリのホットキー</system:String>
     <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Launcher and input the specified query automatically.</system:String>
     <system:String x:Key="preview">プレビュー</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">ホットキーは使用できません。新しいホットキーを選択してください</system:String>
@@ -543,13 +543,13 @@
     <system:String x:Key="emptyPluginHotkey">Hotkey and action keyword are empty</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
-    <system:String x:Key="customeQueryShortcutTitle">カスタムクエリショートカット</system:String>
-    <system:String x:Key="customeQueryShortcutTips">指定したクエリに自動的に展開するショートカットを入力してください。</system:String>
+    <system:String x:Key="customeQueryShortcutTitle">カスタムクエリのショートカット</system:String>
+    <system:String x:Key="customeQueryShortcutTips">指定したクエリを自動的に展開するためのショートカットを入力してください。</system:String>
     <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">クエリに正確に一致すると、ショートカットが展開されます。
 
 ショートカットの入力で「@」プレフィクスをつけた場合、クエリのどこにあってもマッチするようになります。組み込みのショートカットはクエリのどこにあってもマッチします。
     </system:String>
-    <system:String x:Key="duplicateShortcut">ショートカットが既に存在します。新しいショートカットを入力するか、既存のショートカットを編集してください。</system:String>
+    <system:String x:Key="duplicateShortcut">そのショートカットは既に存在します。新しいショートカットを入力するか、既存のショートカットを編集してください。</system:String>
     <system:String x:Key="emptyShortcut">ショートカット、展開の少なくとも一方が空です。</system:String>
     <system:String x:Key="invalidShortcut">Shortcut is invalid</system:String>
 
@@ -567,7 +567,7 @@
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">バージョン</system:String>
     <system:String x:Key="reportWindow_time">時間</system:String>
-    <system:String x:Key="reportWindow_reproduce">アプリケーションが突然終了した手順を私たちに教えてくださると、バグ修正ができます</system:String>
+    <system:String x:Key="reportWindow_reproduce">バクの修正のため、アプリケーションが突然終了した手順を私たちに教えてください</system:String>
     <system:String x:Key="reportWindow_send_report">クラッシュレポートを送信</system:String>
     <system:String x:Key="reportWindow_cancel">キャンセル</system:String>
     <system:String x:Key="reportWindow_general">一般</system:String>
