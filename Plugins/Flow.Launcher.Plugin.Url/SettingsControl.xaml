@@ -19,73 +19,99 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
 
         <CheckBox
             Grid.Row="0"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
             Margin="{StaticResource SettingPanelItemTopBottomMargin}"
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
-            Content="{DynamicResource flowlauncher_plugin_use_custom_browser}"
+            Content="{DynamicResource flowlauncher_plugin_url_use_custom_browser}"
             IsChecked="{Binding Settings.UseCustomBrowser, Mode=TwoWay}" />
 
-        <TextBlock
-            Grid.Row="1"
-            Grid.Column="0"
-            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
-            VerticalAlignment="Center"
-            FontSize="14"
-            Text="{DynamicResource flowlauncher_plugin_browser_path}" />
         <Grid
             Grid.Row="1"
-            Grid.Column="1"
-            Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}">
+            HorizontalAlignment="Left"
+            Visibility="{Binding Settings.UseCustomBrowser, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <TextBox
+            <TextBlock
+                Grid.Row="0"
                 Grid.Column="0"
-                HorizontalAlignment="Stretch"
+                Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
                 VerticalAlignment="Center"
-                IsReadOnly="True"
-                Text="{Binding Settings.BrowserPath, Mode=OneWay}" />
-            <Button
+                FontSize="14"
+                Text="{DynamicResource flowlauncher_plugin_url_browser_path}" />
+            <Grid
+                Grid.Row="0"
                 Grid.Column="1"
-                Margin="{StaticResource SettingPanelItemLeftMargin}"
-                HorizontalAlignment="Left"
+                Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBox
+                    Grid.Column="0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    IsReadOnly="True"
+                    Text="{Binding Settings.BrowserPath, Mode=OneWay}" />
+                <Button
+                    Grid.Column="1"
+                    Margin="{StaticResource SettingPanelItemLeftMargin}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Click="SelectBrowserPath"
+                    Content="{DynamicResource flowlauncher_plugin_url_plugin_choose}" />
+            </Grid>
+
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
+                Orientation="Horizontal">
+                <RadioButton Content="{DynamicResource flowlauncher_plugin_url_new_tab}" IsChecked="{Binding Settings.OpenInNewBrowserWindow, Converter={StaticResource InverseBoolConverter}, Mode=TwoWay}" />
+                <RadioButton Content="{DynamicResource flowlauncher_plugin_url_new_window}" IsChecked="{Binding Settings.OpenInNewBrowserWindow, Mode=TwoWay}" />
+            </StackPanel>
+
+            <TextBlock
+                Grid.Row="2"
+                Grid.Column="0"
+                Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                 VerticalAlignment="Center"
-                Click="SelectBrowserPath"
-                Content="{DynamicResource flowlauncher_plugin_url_plugin_choose}" />
+                FontSize="14"
+                Text="{DynamicResource flowlauncher_plugin_url_private_mode}" />
+            <Grid
+                Grid.Row="2"
+                Grid.Column="1"
+                Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBox
+                    Grid.Column="0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    Text="{Binding Settings.PrivateModeArgument, Mode=TwoWay}" />
+                <CheckBox
+                    Grid.Column="1"
+                    Margin="{StaticResource SettingPanelItemLeftMargin}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Content=""
+                    IsChecked="{Binding Settings.OpenInPrivateMode, Mode=TwoWay}" />
+            </Grid>
         </Grid>
-
-        <CheckBox
-            Grid.Row="2"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
-            Margin="{StaticResource SettingPanelItemTopBottomMargin}"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Content="{DynamicResource flowlauncher_plugin_url_open_in_new_window}"
-            IsChecked="{Binding Settings.OpenInNewBrowserWindow, Mode=TwoWay}" />
-
-        <CheckBox
-            Grid.Row="3"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
-            Margin="{StaticResource SettingPanelItemTopBottomMargin}"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Content="{DynamicResource flowlauncher_plugin_url_open_in_private}"
-            IsChecked="{Binding Settings.OpenInPrivateMode, Mode=TwoWay}" />
     </Grid>
 </UserControl>
