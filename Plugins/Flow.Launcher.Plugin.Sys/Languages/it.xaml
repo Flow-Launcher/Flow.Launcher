@@ -61,6 +61,8 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">Sei sicuro di voler riavviare il computer?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Sei sicuro di voler riavviare il computer con le Opzioni di Avvio Avanzate?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Sei sicuro di volerti disconettere?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_error">Error</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_empty_recycle_bin_failed">Failed to empty the recycle bin. This might happen if:{0}- Some items are currently in use{0}- Some items can't be deleted due to permissions{0}Please close any applications that might be using these files and try again.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Command Keyword Setting</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Custom Command Keyword</system:String>

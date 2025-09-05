@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -88,9 +88,6 @@ namespace Flow.Launcher
             // which will cause ungraceful exit
             SaveAppAllSettings();
 
-            // Wait for all image caches to be saved before restarting
-            await ImageLoader.WaitSaveAsync();
-
             // Restart requires Squirrel's Update.exe to be present in the parent folder, 
             // it is only published from the project's release pipeline. When debugging without it,
             // the project may not restart or just terminates. This is expected.
@@ -120,8 +117,8 @@ namespace Flow.Launcher
                 _settings.Save();
                 PluginManager.Save();
                 _mainVM.Save();
+                ImageLoader.Save();
             }
-            _ = ImageLoader.SaveAsync();
         }
 
         public Task ReloadAllPluginData() => PluginManager.ReloadDataAsync();

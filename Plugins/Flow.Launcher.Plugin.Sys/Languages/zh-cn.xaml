@@ -61,6 +61,8 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">您确定要重启吗？</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">您确定要以高级启动选项重启吗？</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">您确定要注销吗？</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_error">错误</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_empty_recycle_bin_failed">清空回收站失败。 可能会发生这种情况：{0}- 某些项目目前正在使用。{0}- 某些项目由于权限而无法删除。{0}请关闭任何可能使用这些文件的应用程序，然后重试。</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">命令关键词设置</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">自定义命令关键词</system:String>

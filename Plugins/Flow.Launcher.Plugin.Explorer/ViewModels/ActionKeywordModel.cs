@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 
 namespace Flow.Launcher.Plugin.Explorer.ViewModels
 {
