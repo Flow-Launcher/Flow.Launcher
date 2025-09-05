@@ -553,10 +553,11 @@
             <ui:InfoBar
                 Title=""
                 Margin="0 4 0 0"
+                IsClosable="True"
                 IsIconVisible="True"
+                IsOpen="{Binding Settings.AlwaysPreview, Mode=OneWay}"
                 Message="{DynamicResource MaxShowResultsCannotWorkWithAlwaysPreview}"
-                Severity="Warning"
-                Visibility="{Binding Settings.AlwaysPreview, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                Severity="Warning" />
 
             <!--  Time and date  -->
             <ui:SettingsCard Margin="0 14 0 0" Header="{DynamicResource Clock}">

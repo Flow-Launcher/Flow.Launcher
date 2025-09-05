@@ -520,7 +520,9 @@
                 <ui:InfoBar
                     Title="{DynamicResource KoreanImeTitle}"
                     Margin="0 14 0 0"
+                    IsClosable="False"
                     IsIconVisible="True"
+                    IsOpen="True"
                     Message="{DynamicResource KoreanImeGuide}"
                     Severity="Warning"
                     Visibility="{Binding LegacyKoreanIMEEnabled, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=Inverted, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
