@@ -2,7 +2,19 @@
 {
     public class Settings : BaseModel
     {
-        public bool UseCustomBrowser { get; set; } = false;
+        private bool _useCustomBrowser = false;
+        public bool UseCustomBrowser
+        {
+            get => _useCustomBrowser;
+            set
+            {
+                if (_useCustomBrowser != value)
+                {
+                    _useCustomBrowser = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private string _browserPath = string.Empty;
         public string BrowserPath
@@ -18,8 +30,22 @@
             }
         }
 
-        public bool OpenInNewBrowserWindow { get; set; } = false;
+        private bool _openInNewBrowserWindow = false;
+        public bool OpenInNewBrowserWindow
+        {
+            get => _openInNewBrowserWindow;
+            set
+            {
+                if (_openInNewBrowserWindow != value)
+                {
+                    _openInNewBrowserWindow = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public bool OpenInPrivateMode { get; set; } = false;
+
+        public string PrivateModeArgument { get; set; } = string.Empty;
     }
 }
