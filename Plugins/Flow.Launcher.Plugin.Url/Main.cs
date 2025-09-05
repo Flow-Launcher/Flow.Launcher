@@ -68,14 +68,20 @@ namespace Flow.Launcher.Plugin.Url
                             }
                             try
                             {
-                                var browserPath = Settings.UseCustomBrowser ? Settings.BrowserPath : string.Empty;
-                                if (Settings.OpenInNewBrowserWindow)
+                                if (Settings.UseCustomBrowser)
                                 {
-                                    SearchWeb.OpenInBrowserWindow(raw, browserPath, Settings.OpenInPrivateMode);
+                                    if (Settings.OpenInNewBrowserWindow)
+                                    {
+                                        SearchWeb.OpenInBrowserWindow(raw, Settings.BrowserPath, Settings.OpenInPrivateMode, Settings.PrivateModeArgument);
+                                    }
+                                    else
+                                    {
+                                        SearchWeb.OpenInBrowserTab(raw, Settings.BrowserPath, Settings.OpenInPrivateMode, Settings.PrivateModeArgument);
+                                    }
                                 }
                                 else
                                 {
-                                    SearchWeb.OpenInBrowserTab(raw, browserPath, Settings.OpenInPrivateMode);
+                                    Context.API.OpenWebUrl(raw);
                                 }
                                 return true;
                             }
