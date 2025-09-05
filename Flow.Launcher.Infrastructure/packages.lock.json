@@ -123,8 +123,8 @@
       },
       "JetBrains.Annotations": {
         "type": "Transitive",
-        "resolved": "2025.2.1",
-        "contentHash": "63fHdqhM9JuFSithjKbbcEPf1BA76JyXgRqYO6paN9xcKeL6XvttjUUjrfiZ94v8aXn9+6U4pYSHIYAY+5qgFQ=="
+        "resolved": "2025.2.2",
+        "contentHash": "0X56ZRizuHdrnPpgXjWV7f2tQO1FlQg5O1967OGKnI/4ZRNOK642J8L7brM1nYvrxTTU5TP1yRyXLRLaXLPQ8A=="
       },
       "MemoryPack.Core": {
         "type": "Transitive",
@@ -190,7 +190,7 @@
       "flow.launcher.plugin": {
         "type": "Project",
         "dependencies": {
-          "JetBrains.Annotations": "[2025.2.1, )"
+          "JetBrains.Annotations": "[2025.2.2, )"
         }
       }
     }
