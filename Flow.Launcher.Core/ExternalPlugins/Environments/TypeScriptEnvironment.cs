@@ -11,6 +11,8 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 {
     internal class TypeScriptEnvironment : AbstractPluginEnvironment
     {
+        private static readonly string ClassName = nameof(TypeScriptEnvironment);
+
         internal override string Language => AllowedLanguage.TypeScript;
 
         internal override string EnvName => DataLocation.NodeEnvironmentName;
@@ -34,9 +36,20 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
         {
             FilesFolders.RemoveFolderIfExists(InstallPath, (s) => API.ShowMsgBox(s));
 
-            JTF.Run(() => DroplexPackage.Drop(App.nodejs_16_18_0, InstallPath));
+            JTF.Run(async () =>
+            {
+                try
+                {
+                    await DroplexPackage.Drop(App.nodejs_16_18_0, InstallPath);
 
-            PluginsSettingsFilePath = ExecutablePath;
+                    PluginsSettingsFilePath = ExecutablePath;
+                }
+                catch (System.Exception e)
+                {
+                    API.ShowMsgError(API.GetTranslation("failToInstallTypeScriptEnv"));
+                    API.LogException(ClassName, "Failed to install TypeScript environment", e);
+                }
+            });
         }
 
         internal override PluginPair CreatePluginPair(string filePath, PluginMetadata metadata)

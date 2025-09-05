@@ -592,6 +592,22 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
         #region Everything FastSortWarning
 
+        public List<EverythingSortOptionLocalized> AllEverythingSortOptions = EverythingSortOptionLocalized.GetValues();
+
+        public EverythingSortOption SelectedEverythingSortOption
+        {
+            get => Settings.SortOption;
+            set
+            {
+                if (value == Settings.SortOption)
+                    return;
+                Settings.SortOption = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(FastSortWarningVisibility));
+                OnPropertyChanged(nameof(SortOptionWarningMessage));
+            }
+        }
+
         public Visibility FastSortWarningVisibility
         {
             get
@@ -612,6 +628,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 }
             }
         }
+
         public string SortOptionWarningMessage
         {
             get
@@ -621,15 +638,15 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                     // this method is used to determine if Everything service is running because as at Everything v1.4.1
                     // the sdk does not provide a dedicated interface to determine if it is running.
                     return EverythingApi.IsFastSortOption(Settings.SortOption) ? string.Empty
-                        : Context.API.GetTranslation("flowlauncher_plugin_everything_nonfastsort_warning");
+                        : Localize.flowlauncher_plugin_everything_nonfastsort_warning();
                 }
                 catch (IPCErrorException)
                 {
-                    return Context.API.GetTranslation("flowlauncher_plugin_everything_is_not_running");
+                    return Localize.flowlauncher_plugin_everything_is_not_running();
                 }
                 catch (DllNotFoundException)
                 {
-                    return Context.API.GetTranslation("flowlauncher_plugin_everything_sdk_issue");
+                    return Localize.flowlauncher_plugin_everything_sdk_issue();
                 }
             }
         }

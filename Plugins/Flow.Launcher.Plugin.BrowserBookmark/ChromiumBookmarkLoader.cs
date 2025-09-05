@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -45,7 +45,7 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
             }
             catch (Exception ex)
             {
-                Main._context.API.LogException(ClassName, $"Failed to register bookmark file monitoring: {bookmarkPath}", ex);
+                Main.Context.API.LogException(ClassName, $"Failed to register bookmark file monitoring: {bookmarkPath}", ex);
                 continue;
             }
 
@@ -58,7 +58,7 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
                 var faviconDbPath = Path.Combine(profile, "Favicons");
                 if (File.Exists(faviconDbPath))
                 {
-                    Main._context.API.StopwatchLogInfo(ClassName, $"Load {profileBookmarks.Count} favicons cost", () =>
+                    Main.Context.API.StopwatchLogInfo(ClassName, $"Load {profileBookmarks.Count} favicons cost", () =>
                     {
                         LoadFaviconsFromDb(faviconDbPath, profileBookmarks);
                     });
@@ -125,7 +125,7 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
             }
             else
             {
-                Main._context.API.LogError(ClassName, $"type property not found for {subElement.GetString()}");
+                Main.Context.API.LogError(ClassName, $"type property not found for {subElement.GetString()}");
             }
         }
     }
@@ -190,7 +190,7 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
                 }
                 catch (Exception ex)
                 {
-                    Main._context.API.LogException(ClassName, $"Failed to extract bookmark favicon: {bookmark.Url}", ex);
+                    Main.Context.API.LogException(ClassName, $"Failed to extract bookmark favicon: {bookmark.Url}", ex);
                 }
                 finally
                 {

@@ -12,7 +12,7 @@ using MemoryPack;
 namespace Flow.Launcher.Infrastructure.Storage
 {
     /// <summary>
-    /// Stroage object using binary data
+    /// Storage object using binary data
     /// Normally, it has better performance, but not readable
     /// </summary>
     /// <remarks>
@@ -53,6 +53,45 @@ namespace Flow.Launcher.Infrastructure.Storage
             FilePath = Path.Combine(DirectoryPath, $"{filename}{FileSuffix}");
         }
 
+        public T TryLoad(T defaultData)
+        {
+            if (Data != null) return Data;
+
+            if (File.Exists(FilePath))
+            {
+                if (new FileInfo(FilePath).Length == 0)
+                {
+                    Log.Error(ClassName, $"Zero length cache file <{FilePath}>");
+                    Data = defaultData;
+                    Save();
+                }
+
+                var bytes = File.ReadAllBytes(FilePath);
+                Data = Deserialize(bytes, defaultData);
+            }
+            else
+            {
+                Log.Info(ClassName, "Cache file not exist, load default data");
+                Data = defaultData;
+                Save();
+            }
+            return Data;
+        }
+
+        private T Deserialize(ReadOnlySpan<byte> bytes, T defaultData)
+        {
+            try
+            {
+                var t = MemoryPackSerializer.Deserialize<T>(bytes);
+                return t ?? defaultData;
+            }
+            catch (System.Exception e)
+            {
+                Log.Exception(ClassName, $"Deserialize error for file <{FilePath}>", e);
+                return defaultData;
+            }
+        }
+
         public async ValueTask<T> TryLoadAsync(T defaultData)
         {
             if (Data != null) return Data;
@@ -79,26 +118,31 @@ namespace Flow.Launcher.Infrastructure.Storage
             return Data;
         }
 
-        private static async ValueTask<T> DeserializeAsync(Stream stream, T defaultData)
+        private async ValueTask<T> DeserializeAsync(Stream stream, T defaultData)
         {
             try
             {
                 var t = await MemoryPackSerializer.DeserializeAsync<T>(stream);
                 return t ?? defaultData;
             }
-            catch (System.Exception)
+            catch (System.Exception e)
             {
-                // Log.Exception($"|BinaryStorage.Deserialize|Deserialize error for file <{FilePath}>", e);
+                Log.Exception(ClassName, $"Deserialize error for file <{FilePath}>", e);
                 return defaultData;
             }
         }
 
         public void Save()
         {
+            Save(Data.NonNull());
+        }
+
+        public void Save(T data)
+        {
             // User may delete the directory, so we need to check it
             FilesFolders.ValidateDirectory(DirectoryPath);
 
-            var serialized = MemoryPackSerializer.Serialize(Data);
+            var serialized = MemoryPackSerializer.Serialize(data);
             File.WriteAllBytes(FilePath, serialized);
         }
 
@@ -107,15 +151,6 @@ namespace Flow.Launcher.Infrastructure.Storage
             await SaveAsync(Data.NonNull());
         }
 
-        // ImageCache need to convert data into concurrent dictionary for usage,
-        // so we would better to clear the data
-        public void ClearData()
-        {
-            Data = default;
-        }
-
-        // ImageCache storages data in its class,
-        // so we need to pass it to SaveAsync
         public async ValueTask SaveAsync(T data)
         {
             // User may delete the directory, so we need to check it
@@ -123,6 +158,13 @@ namespace Flow.Launcher.Infrastructure.Storage
 
             await using var stream = new FileStream(FilePath, FileMode.Create);
             await MemoryPackSerializer.SerializeAsync(stream, data);
+        }
+
+        // ImageCache need to convert data into concurrent dictionary for usage,
+        // so we would better to clear the data
+        public void ClearData()
+        {
+            Data = default;
         }
     }
 }

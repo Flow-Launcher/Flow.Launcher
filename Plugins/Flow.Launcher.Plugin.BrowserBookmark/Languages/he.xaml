@@ -5,6 +5,9 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">סימניות דפדפן</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">חפש בסימניות הדפדפן שלך</system:String>
 
+    <!--  Main  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">Failed to set url in clipboard</system:String>
+
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">נתוני סימניות</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">פתח סימניות ב:</system:String>

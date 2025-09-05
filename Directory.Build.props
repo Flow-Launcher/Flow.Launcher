@@ -1,5 +1,7 @@
 <Project>
   <PropertyGroup>
     <AccelerateBuildsInVisualStudio>true</AccelerateBuildsInVisualStudio>
+    <!-- Work around https://github.com/dotnet/runtime/issues/109682 -->
+    <CETCompat>false</CETCompat>
   </PropertyGroup>
 </Project>

@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
 using Flow.Launcher.Plugin.BrowserBookmark.Helper;
@@ -49,7 +50,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
         }
         catch (Exception ex)
         {
-            Main._context.API.LogException(ClassName, $"Failed to register Firefox bookmark file monitoring: {placesPath}", ex);
+            Main.Context.API.LogException(ClassName, $"Failed to register Firefox bookmark file monitoring: {placesPath}", ex);
             return bookmarks;
         }
 
@@ -84,7 +85,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
                 var faviconDbPath = Path.Combine(Path.GetDirectoryName(placesPath), "favicons.sqlite");
                 if (File.Exists(faviconDbPath))
                 {
-                    Main._context.API.StopwatchLogInfo(ClassName, $"Load {bookmarks.Count} favicons cost", () =>
+                    Main.Context.API.StopwatchLogInfo(ClassName, $"Load {bookmarks.Count} favicons cost", () =>
                     {
                         LoadFaviconsFromDb(faviconDbPath, bookmarks);
                     });
@@ -98,7 +99,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
         }
         catch (Exception ex)
         {
-            Main._context.API.LogException(ClassName, $"Failed to load Firefox bookmarks: {placesPath}", ex);
+            Main.Context.API.LogException(ClassName, $"Failed to load Firefox bookmarks: {placesPath}", ex);
         }
 
         // Delete temporary file
@@ -111,7 +112,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
         }
         catch (Exception ex)
         {
-            Main._context.API.LogException(ClassName, $"Failed to delete temporary favicon DB: {tempDbPath}", ex);
+            Main.Context.API.LogException(ClassName, $"Failed to delete temporary favicon DB: {tempDbPath}", ex);
         }
 
         return bookmarks;
@@ -134,10 +135,6 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
 
                 try
                 {
-                    if (string.IsNullOrEmpty(bookmark.Url))
-                        return;
-
-                    // Extract domain from URL
                     if (!Uri.TryCreate(bookmark.Url, UriKind.Absolute, out Uri uri))
                         return;
 
@@ -146,47 +143,53 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
                     // Query for latest Firefox version favicon structure
                     using var cmd = connection.CreateCommand();
                     cmd.CommandText = @"
-                        SELECT i.data
+                        SELECT i.id, i.data
                         FROM moz_icons i
                         JOIN moz_icons_to_pages ip ON i.id = ip.icon_id
                         JOIN moz_pages_w_icons p ON ip.page_id = p.id
-                        WHERE p.page_url LIKE @url
-                        AND i.data IS NOT NULL
-                        ORDER BY i.width DESC  -- Select largest icon available
+                        WHERE p.page_url LIKE @domain
+                        ORDER BY i.width DESC
                         LIMIT 1";
 
-                    cmd.Parameters.AddWithValue("@url", $"%{domain}%");
+                    cmd.Parameters.AddWithValue("@domain", $"%{domain}%");
 
                     using var reader = cmd.ExecuteReader();
-                    if (!reader.Read() || reader.IsDBNull(0))
+                    if (!reader.Read() || reader.IsDBNull(1))
                         return;
 
+                    var iconId = reader.GetInt64(0).ToString();
                     var imageData = (byte[])reader["data"];
 
                     if (imageData is not { Length: > 0 })
                         return;
 
-                    string faviconPath;
-                    if (FaviconHelper.IsSvgData(imageData))
+                    // Check if the image data is compressed (GZip)
+                    if (imageData.Length > 2 && imageData[0] == 0x1f && imageData[1] == 0x8b)
                     {
-                        faviconPath = Path.Combine(_faviconCacheDir, $"firefox_{domain}.svg");
-                    }
-                    else
-                    {
-                        faviconPath = Path.Combine(_faviconCacheDir, $"firefox_{domain}.png");
-                    }
-
-                    // Filter out duplicate favicons
-                    if (savedPaths.TryAdd(faviconPath, true))
-                    {
-                        FaviconHelper.SaveBitmapData(imageData, faviconPath);
+                        using var inputStream = new MemoryStream(imageData);
+                        using var gZipStream = new GZipStream(inputStream, CompressionMode.Decompress);
+                        using var outputStream = new MemoryStream();
+                        gZipStream.CopyTo(outputStream);
+                        imageData = outputStream.ToArray();
                     }
 
-                    bookmark.FaviconPath = faviconPath;
+                    // Convert the image data to WebP format
+                    var webpData = FaviconHelper.TryConvertToWebp(imageData);
+                    if (webpData != null)
+                    {
+                        var faviconPath = Path.Combine(_faviconCacheDir, $"firefox_{domain}_{iconId}.webp");
+
+                        if (savedPaths.TryAdd(faviconPath, true))
+                        {
+                            FaviconHelper.SaveBitmapData(webpData, faviconPath);
+                        }
+
+                        bookmark.FaviconPath = faviconPath;
+                    }
                 }
                 catch (Exception ex)
                 {
-                    Main._context.API.LogException(ClassName, $"Failed to extract Firefox favicon: {bookmark.Url}", ex);
+                    Main.Context.API.LogException(ClassName, $"Failed to extract Firefox favicon: {bookmark.Url}", ex);
                 }
                 finally
                 {

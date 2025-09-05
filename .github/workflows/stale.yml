@@ -18,7 +18,7 @@ jobs:
       issues: write
       pull-requests: write
     steps:
-      - uses: actions/stale@v9
+      - uses: actions/stale@v10
         with:
           stale-issue-message: 'This issue is stale because it has been open ${{ env.days-before-stale }} days with no activity. Remove stale label or comment or this will be closed in ${{ env.days-before-stale }} days.\n\nAlternatively this issue can be kept open by adding one of the following labels:\n${{ env.exempt-issue-labels }}'
           days-before-stale: ${{ env.days-before-stale }}

@@ -101,6 +101,7 @@
                                     <RowDefinition />
                                     <RowDefinition />
                                     <RowDefinition />
+                                    <RowDefinition />
                                 </Grid.RowDefinitions>
                                 <TextBlock
                                     Grid.Row="0"
@@ -181,11 +182,25 @@
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     FontSize="14"
-                                    Text="{DynamicResource flowlauncher_plugin_websearch_enabled_label}" />
+                                    Text="{DynamicResource flowlauncher_plugin_websearch_private_mode_label}" />
                                 <CheckBox
                                     Grid.Row="4"
                                     Grid.Column="1"
                                     Margin="10 10 10 15"
+                                    VerticalAlignment="Center"
+                                    IsChecked="{Binding SearchSource.IsPrivateMode}" />
+                                <TextBlock
+                                    Grid.Row="5"
+                                    Grid.Column="0"
+                                    Margin="10 0 10 10"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Text="{DynamicResource flowlauncher_plugin_websearch_enabled_label}" />
+                                <CheckBox
+                                    Grid.Row="5"
+                                    Grid.Column="1"
+                                    Margin="10 0 10 10"
                                     VerticalAlignment="Center"
                                     IsChecked="{Binding SearchSource.Enabled}" />
                             </Grid>

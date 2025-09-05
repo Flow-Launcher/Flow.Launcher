@@ -11,6 +11,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_edit">Editovat</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">Přidat</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">Povoleno</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_private_mode_label">Soukromý režim</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_true">Povoleno</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_false">Deaktivován</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">Potvrdit</system:String>
