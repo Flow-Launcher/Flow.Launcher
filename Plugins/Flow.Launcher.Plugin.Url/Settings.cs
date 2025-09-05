@@ -30,7 +30,7 @@
             }
         }
 
-        private bool _openInNewBrowserWindow = false;
+        private bool _openInNewBrowserWindow = true;
         public bool OpenInNewBrowserWindow
         {
             get => _openInNewBrowserWindow;
