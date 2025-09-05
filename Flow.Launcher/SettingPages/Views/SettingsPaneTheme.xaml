@@ -550,6 +550,14 @@
                 </ui:SettingsExpander.Items>
             </ui:SettingsExpander>
 
+            <ui:InfoBar
+                Title=""
+                Margin="0 4 0 0"
+                IsIconVisible="True"
+                Message="{DynamicResource MaxShowResultsCannotWorkWithAlwaysPreview}"
+                Severity="Warning"
+                Visibility="{Binding Settings.AlwaysPreview, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+
             <!--  Time and date  -->
             <ui:SettingsCard Margin="0 14 0 0" Header="{DynamicResource Clock}">
                 <ui:SettingsCard.HeaderIcon>

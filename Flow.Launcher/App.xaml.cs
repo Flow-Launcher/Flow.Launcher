@@ -301,6 +301,7 @@ namespace Flow.Launcher
             });
         }
 
+        [Conditional("RELEASE")]
         private static void AutoPluginUpdates()
         {
             _ = Task.Run(async () =>

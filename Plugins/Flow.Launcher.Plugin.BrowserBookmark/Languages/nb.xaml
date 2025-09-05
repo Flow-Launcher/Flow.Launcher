@@ -5,6 +5,9 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Nettleserbokmerker</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Søk i nettleserbokmerker</system:String>
 
+    <!--  Main  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">Failed to set url in clipboard</system:String>
+
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Bokmerkedata</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Åpne bokmerker i:</system:String>

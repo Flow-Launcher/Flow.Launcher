@@ -5,6 +5,9 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Záložky prehliadača</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Vyhľadáva záložky prehliadača</system:String>
 
+    <!--  Main  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">Nepodarilo sa nastaviť URL v schránke</system:String>
+
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Nastavenia pluginu</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Otvoriť záložky v:</system:String>

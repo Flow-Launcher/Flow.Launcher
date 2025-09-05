@@ -34,6 +34,10 @@
     <system:String x:Key="pleaseTryAgain">Please try again</system:String>
     <system:String x:Key="parseProxyFailed">Unable to parse Http Proxy</system:String>
 
+    <!--  AbstractPluginEnvironment  -->
+    <system:String x:Key="failToInstallTypeScriptEnv">Failed to install TypeScript environment. Please try again later</system:String>
+    <system:String x:Key="failToInstallPythonEnv">Failed to install Python environment. Please try again later.</system:String>
+
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Failed to register hotkey "{0}". The hotkey may be in use by another program. Change to a different hotkey, or exit another program.</system:String>
     <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey "{0}". Please try again or see log for details</system:String>
@@ -323,6 +327,7 @@
     <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
     <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
+    <system:String x:Key="MaxShowResultsCannotWorkWithAlwaysPreview">Since Always Preview is on, maximum results shown may not take effect because preview panel requires a certain minimum height</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Hotkey</system:String>
