@@ -89,7 +89,7 @@
                 </StackPanel>
             </Border>
 
-            <ui:ScrollViewerEx Grid.Row="1" VerticalScrollBarVisibility="Visible">
+            <Grid Grid.Row="1">
                 <StackPanel Margin="24 20 24 20">
                     <TextBlock
                         FontSize="20"
@@ -120,7 +120,7 @@
                         WindowTitle="{DynamicResource flowlauncherHotkey}" />
                 </StackPanel>
 
-            </ui:ScrollViewerEx>
+            </Grid>
         </Grid>
     </ui:ScrollViewerEx>
 </ui:Page>
