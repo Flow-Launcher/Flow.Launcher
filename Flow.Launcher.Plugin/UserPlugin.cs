@@ -76,5 +76,10 @@ namespace Flow.Launcher.Plugin
         /// Indicates whether the plugin is installed from a local path
         /// </summary>
         public bool IsFromLocalInstallPath => !string.IsNullOrEmpty(LocalInstallPath);
+
+        /// <summary>
+        /// The minimum Flow Launcher version required for this plugin. Default is "".
+        /// </summary>
+        public string MinimumAppVersion { get; set; } = string.Empty;
     }
 }
