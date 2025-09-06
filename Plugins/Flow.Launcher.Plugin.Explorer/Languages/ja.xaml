@@ -2,7 +2,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Dialogues  -->
-    <system:String x:Key="plugin_explorer_make_selection_warning">Please make a selection first</system:String>
+    <system:String x:Key="plugin_explorer_make_selection_warning">項目を選択してください</system:String>
     <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Please select a folder path.</system:String>
     <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Please choose a different name or folder path.</system:String>
     <system:String x:Key="plugin_explorer_delete_quick_access_link">Are you sure you want to delete this quick access link?</system:String>
@@ -65,7 +65,7 @@
     <system:String x:Key="plugin_explorer_file_editor_path">ファイル エディターのパス</system:String>
     <system:String x:Key="plugin_explorer_folder_editor_path">フォルダー エディターのパス</system:String>
     <system:String x:Key="plugin_explorer_enabled">Enabled</system:String>
-    <system:String x:Key="plugin_explorer_disabled">Disabled</system:String>
+    <system:String x:Key="plugin_explorer_disabled">無効</system:String>
 
     <system:String x:Key="plugin_explorer_Content_Search_Engine">Content Search Engine</system:String>
     <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Directory Recursive Search Engine</system:String>
@@ -201,10 +201,10 @@
     <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Below you can specify items you want to exclude from context menu, they can be partial (e.g. 'pen wit') or complete ('Open with').</system:String>
 
     <!--  Preview Info  -->
-    <system:String x:Key="Today">Today</system:String>
-    <system:String x:Key="DaysAgo">{0} days ago</system:String>
-    <system:String x:Key="OneMonthAgo">1 month ago</system:String>
-    <system:String x:Key="MonthsAgo">{0} months ago</system:String>
-    <system:String x:Key="OneYearAgo">1 year ago</system:String>
-    <system:String x:Key="YearsAgo">{0} years ago</system:String>
+    <system:String x:Key="Today">今日</system:String>
+    <system:String x:Key="DaysAgo">{0} 日前</system:String>
+    <system:String x:Key="OneMonthAgo">1 か月前</system:String>
+    <system:String x:Key="MonthsAgo">{0} か月前</system:String>
+    <system:String x:Key="OneYearAgo">1 年前</system:String>
+    <system:String x:Key="YearsAgo">{0} 年前</system:String>
 </ResourceDictionary>
