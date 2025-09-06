@@ -119,7 +119,7 @@ namespace Flow.Launcher.Core.Plugin
                 // for plugins which doesn't has ActionKeywords key
                 metadata.ActionKeywords ??= new List<string> { metadata.ActionKeyword };
                 // for plugin still use old ActionKeyword
-                metadata.ActionKeyword = metadata.ActionKeywords?.Count == 0 ? string.Empty : metadata.ActionKeywords?[0];
+                metadata.ActionKeyword = metadata.ActionKeywords?.FirstOrDefault() ?? string.Empty;
             }
             catch (Exception e)
             {
