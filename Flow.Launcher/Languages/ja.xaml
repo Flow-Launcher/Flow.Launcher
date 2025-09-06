@@ -21,7 +21,7 @@
     <system:String x:Key="restartToEnablePortableMode">Flow Launcherはポータブルモードの有効化のために再起動する必要があります。再起動の後、パソコンに保存された設定項目は削除され、ポータブルな形式で保存されます</system:String>
     <system:String x:Key="moveToDifferentLocation">Flow Launcherはポータブルモードの有効化を検知しました。Flow Launcherを別の場所に移動しますか？</system:String>
     <system:String x:Key="shortcutsUninstallerCreated">Flow Launcherはポータブルモードの無効化を検知しました。関連するショートカットやアンインストーラーが配置されます</system:String>
-    <system:String x:Key="userDataDuplicated">Flow Launcher detected your user data exists both in {0} and {1}. {2}{2}Please delete {1} in order to proceed. No changes have occurred.</system:String>
+    <system:String x:Key="userDataDuplicated">Flow Launcherはあなたのユーザーデータが{0} と {1} の両方に存在することを検知しました。{2}{2}続行するには、{1}を削除してください。処理は中断されました。</system:String>
 
     <!--  Plugin Loader  -->
     <system:String x:Key="pluginHasErrored">The following plugin has errored and cannot be loaded:</system:String>
@@ -253,7 +253,7 @@
     <system:String x:Key="UninstallPromptSubtitle">{0} by {1} {2}{2}このプラグインをアンインストールしますか？</system:String>
     <system:String x:Key="UpdatePromptTitle">プラグインの更新</system:String>
     <system:String x:Key="UpdatePromptSubtitle">{0} by {1} {2}{2}このプラグインを更新しますか？</system:String>
-    <system:String x:Key="DownloadingPlugin">Downloading plugin</system:String>
+    <system:String x:Key="DownloadingPlugin">プラグインをダウンロード中</system:String>
     <system:String x:Key="AutoRestartAfterChange">Automatically restart after installing/uninstalling/updating plugins in plugin store</system:String>
     <system:String x:Key="ZipFileNotHavePluginJson">Zip file does not have a valid plugin.json configuration</system:String>
     <system:String x:Key="InstallFromUnknownSourceTitle">不明なソースからのインストール</system:String>
@@ -329,10 +329,10 @@
     <system:String x:Key="ShowPlaceholder">プレースホルダーを表示</system:String>
     <system:String x:Key="ShowPlaceholderTip">クエリが空の場合にプレースホルダを表示します</system:String>
     <system:String x:Key="PlaceholderText">検索欄の案内文</system:String>
-    <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
+    <system:String x:Key="PlaceholderTextTip">プレースホルダのテキストを変更します。空にすると、 {0} が使用されます</system:String>
     <system:String x:Key="KeepMaxResults">ウィンドウサイズの固定</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">ウィンドウのサイズを固定し、ドラッグでの変更を無効にします。</system:String>
-    <system:String x:Key="MaxShowResultsCannotWorkWithAlwaysPreview">Since Always Preview is on, maximum results shown may not take effect because preview panel requires a certain minimum height</system:String>
+    <system:String x:Key="MaxShowResultsCannotWorkWithAlwaysPreview">「常にプレビューする」が有効になっているため、プレビューパネルの高さの確保のために「結果の最大表示件数」設定は無視される可能性があります</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">ホットキー</system:String>
@@ -372,7 +372,7 @@
     <system:String x:Key="customQueryHotkey">カスタムクエリ ホットキー</system:String>
     <system:String x:Key="customQueryShortcut">Custom Query Shortcut</system:String>
     <system:String x:Key="builtinShortcuts">組み込みショートカット</system:String>
-    <system:String x:Key="customQuery">Query</system:String>
+    <system:String x:Key="customQuery">クエリー</system:String>
     <system:String x:Key="customShortcut">ショートカット</system:String>
     <system:String x:Key="customShortcutExpansion">展開</system:String>
     <system:String x:Key="builtinShortcutDescription">説明</system:String>
@@ -383,7 +383,7 @@
     <system:String x:Key="pleaseSelectAnItem">項目を選択してください</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">{0} プラグインのホットキーを本当に削除しますか？</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">本当にこのショートカットを削除しますか？： {0} を {1} に展開</system:String>
-    <system:String x:Key="shortcut_clipboard_description">Get text from clipboard.</system:String>
+    <system:String x:Key="shortcut_clipboard_description">クリップボードからテキストを取得します。</system:String>
     <system:String x:Key="shortcut_active_explorer_path">アクティブなエクスプローラーからパスを取得します。</system:String>
     <system:String x:Key="queryWindowShadowEffect">検索ウィンドウの落陰効果</system:String>
     <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU. Not recommended if your computer performance is limited.</system:String>
@@ -392,9 +392,9 @@
     <system:String x:Key="useGlyphUI">Segoe Fluent アイコンを使用する</system:String>
     <system:String x:Key="useGlyphUIEffect">サポートされているクエリ結果にSegoe Fluentアイコンを使用する</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Press Key</system:String>
-    <system:String x:Key="showBadges">Show Result Badges</system:String>
+    <system:String x:Key="showBadges">結果のバッジを表示</system:String>
     <system:String x:Key="showBadgesToolTip">サポートされているプラグインでは、バッジが表示され、より簡単に区別できます。</system:String>
-    <system:String x:Key="showBadgesGlobalOnly">Show Result Badges for Global Query Only</system:String>
+    <system:String x:Key="showBadgesGlobalOnly">グローバルクエリのみ、結果のバッジを表示</system:String>
     <system:String x:Key="showBadgesGlobalOnlyToolTip">Show badges for global query results only</system:String>
     <system:String x:Key="dialogJumpHotkey">Dialog Jump</system:String>
     <system:String x:Key="dialogJumpHotkeyToolTip">Enter shortcut to quickly navigate the Open/Save As dialog window to the path of the current file manager.</system:String>
