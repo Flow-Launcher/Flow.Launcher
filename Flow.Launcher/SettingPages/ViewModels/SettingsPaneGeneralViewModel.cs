@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -8,6 +8,7 @@ using Flow.Launcher.Core.Configuration;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.DialogJump;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
@@ -35,6 +36,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public class SearchWindowAlignData : DropdownDataGeneric<SearchWindowAligns> { }
     public class SearchPrecisionData : DropdownDataGeneric<SearchPrecisionScore> { }
     public class LastQueryModeData : DropdownDataGeneric<LastQueryMode> { }
+    public class DoublePinyinSchemaData : DropdownDataGeneric<DoublePinyinSchemas> { }
 
     public bool StartFlowLauncherOnSystemStartup
     {
@@ -63,7 +65,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             }
             catch (Exception e)
             {
-                App.API.ShowMsg(App.API.GetTranslation("setAutoStartFailed"), e.Message);
+                App.API.ShowMsgError(App.API.GetTranslation("setAutoStartFailed"), e.Message);
             }
         }
     }
@@ -90,7 +92,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
                 }
                 catch (Exception e)
                 {
-                    App.API.ShowMsg(App.API.GetTranslation("setAutoStartFailed"), e.Message);
+                    App.API.ShowMsgError(App.API.GetTranslation("setAutoStartFailed"), e.Message);
                 }
             } 
         }
@@ -109,9 +111,9 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     {
         get
         {
-            var screens = Screen.AllScreens;
+            var screens = MonitorInfo.GetDisplayMonitors();
             var screenNumbers = new List<int>();
-            for (int i = 1; i <= screens.Length; i++)
+            for (int i = 1; i <= screens.Count; i++)
             {
                 screenNumbers.Add(i);
             }
@@ -145,6 +147,40 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public List<LastQueryModeData> LastQueryModes { get; } =
         DropdownDataGeneric<LastQueryMode>.GetValues<LastQueryModeData>("LastQuery");
 
+    public bool EnableDialogJump
+    {
+        get => Settings.EnableDialogJump;
+        set
+        {
+            if (Settings.EnableDialogJump != value)
+            {
+                Settings.EnableDialogJump = value;
+                DialogJump.SetupDialogJump(value);
+                if (Settings.EnableDialogJump)
+                {
+                    HotKeyMapper.SetHotkey(new(Settings.DialogJumpHotkey), DialogJump.OnToggleHotkey);
+                }
+                else
+                {
+                    HotKeyMapper.RemoveHotkey(Settings.DialogJumpHotkey);
+                }
+            }
+        }
+    }
+
+    public class DialogJumpWindowPositionData : DropdownDataGeneric<DialogJumpWindowPositions> { }
+    public class DialogJumpResultBehaviourData : DropdownDataGeneric<DialogJumpResultBehaviours> { }
+    public class DialogJumpFileResultBehaviourData : DropdownDataGeneric<DialogJumpFileResultBehaviours> { }
+
+    public List<DialogJumpWindowPositionData> DialogJumpWindowPositions { get; } =
+        DropdownDataGeneric<DialogJumpWindowPositions>.GetValues<DialogJumpWindowPositionData>("DialogJumpWindowPosition");
+
+    public List<DialogJumpResultBehaviourData> DialogJumpResultBehaviours { get; } =
+        DropdownDataGeneric<DialogJumpResultBehaviours>.GetValues<DialogJumpResultBehaviourData>("DialogJumpResultBehaviour");
+
+    public List<DialogJumpFileResultBehaviourData> DialogJumpFileResultBehaviours { get; } =
+        DropdownDataGeneric<DialogJumpFileResultBehaviours>.GetValues<DialogJumpFileResultBehaviourData>("DialogJumpFileResultBehaviour");
+
     public int SearchDelayTimeValue
     {
         get => Settings.SearchDelayTime;
@@ -177,6 +213,10 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         DropdownDataGeneric<SearchWindowAligns>.UpdateLabels(SearchWindowAligns);
         DropdownDataGeneric<SearchPrecisionScore>.UpdateLabels(SearchPrecisionScores);
         DropdownDataGeneric<LastQueryMode>.UpdateLabels(LastQueryModes);
+        DropdownDataGeneric<DoublePinyinSchemas>.UpdateLabels(DoublePinyinSchemas);
+        DropdownDataGeneric<DialogJumpWindowPositions>.UpdateLabels(DialogJumpWindowPositions);
+        DropdownDataGeneric<DialogJumpResultBehaviours>.UpdateLabels(DialogJumpResultBehaviours);
+        DropdownDataGeneric<DialogJumpFileResultBehaviours>.UpdateLabels(DialogJumpFileResultBehaviours);
         // Since we are using Binding instead of DynamicResource, we need to manually trigger the update
         OnPropertyChanged(nameof(AlwaysPreviewToolTip));
     }
@@ -214,8 +254,8 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             }
             else
             {
-                //Since this is rarely seen text, language support is not provided.
-                App.API.ShowMsg("Failed to change Korean IME setting", "Please check your system registry access or contact support.");
+                // Since this is rarely seen text, language support is not provided.
+                App.API.ShowMsgError(App.API.GetTranslation("KoreanImeSettingChangeFailTitle"), App.API.GetTranslation("KoreanImeSettingChangeFailSubTitle"));
             }
         }
     }
@@ -262,8 +302,24 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public bool ShouldUsePinyin
     {
         get => Settings.ShouldUsePinyin;
-        set => Settings.ShouldUsePinyin = value;
+        set
+        {
+            if (value == false && UseDoublePinyin == true)
+            {
+                UseDoublePinyin = false;
+            }
+            Settings.ShouldUsePinyin = value;
+        }
     }
+
+    public bool UseDoublePinyin
+    {
+        set => Settings.UseDoublePinyin = value;
+        get => Settings.UseDoublePinyin;
+    }
+
+    public List<DoublePinyinSchemaData> DoublePinyinSchemas { get; } =
+        DropdownDataGeneric<DoublePinyinSchemas>.GetValues<DoublePinyinSchemaData>("DoublePinyinSchemas");
 
     public List<Language> Languages => _translater.LoadAvailableLanguages();
 

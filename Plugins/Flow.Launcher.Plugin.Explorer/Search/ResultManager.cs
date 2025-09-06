@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.Views;
 using Flow.Launcher.Plugin.SharedCommands;
+using Flow.Launcher.Plugin.SharedModels;
 using Peter;
 using Path = System.IO.Path;
 
@@ -14,6 +15,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 {
     public static class ResultManager
     {
+        private static readonly string ClassName = nameof(ResultManager);
+
         private static readonly string[] SizeUnits = { "B", "KB", "MB", "GB", "TB" };
         private static PluginInitContext Context;
         private static Settings Settings { get; set; }
@@ -70,10 +73,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static void ShowNativeContextMenu(string path, ResultType type)
         {
-            var screenWithMouseCursor = System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position);
+            var screenWithMouseCursor = MonitorInfo.GetCursorDisplayMonitor();
             var xOfScreenCenter = screenWithMouseCursor.WorkingArea.Left + screenWithMouseCursor.WorkingArea.Width / 2;
             var yOfScreenCenter = screenWithMouseCursor.WorkingArea.Top + screenWithMouseCursor.WorkingArea.Height / 2;
-            var showPosition = new System.Drawing.Point(xOfScreenCenter, yOfScreenCenter);
+            var showPosition = new System.Drawing.Point((int)xOfScreenCenter, (int)yOfScreenCenter);
 
             switch (type)
             {
@@ -103,6 +106,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 {
                     FilePath = path,
                 },
+                PreviewPanel = new Lazy<UserControl>(() => new PreviewPanel(Settings, path, ResultType.Folder)),
                 Action = c =>
                 {
                     if (c.SpecialKeyState.ToModifierKeys() == ModifierKeys.Alt)
@@ -163,12 +167,22 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 },
                 Score = score,
                 TitleToolTip = Main.Context.API.GetTranslation("plugin_explorer_plugin_ToolTipOpenDirectory"),
-                SubTitleToolTip = path,
+                SubTitleToolTip = Settings.DisplayMoreInformationInToolTip ? GetFolderMoreInfoTooltip(path) : path,
                 ContextData = new SearchResult { Type = ResultType.Folder, FullPath = path, WindowsIndexed = windowsIndexed }
             };
         }
 
+        internal static Result CreateDriveSpaceDisplayResult(string path, string actionKeyword, int score)
+        {
+            return CreateDriveSpaceDisplayResult(path, actionKeyword, score, SearchManager.UseIndexSearch(path));
+        }
+
         internal static Result CreateDriveSpaceDisplayResult(string path, string actionKeyword, bool windowsIndexed = false)
+        {
+            return CreateDriveSpaceDisplayResult(path, actionKeyword, 500, windowsIndexed);
+        }
+
+        private static Result CreateDriveSpaceDisplayResult(string path, string actionKeyword, int score, bool windowsIndexed = false)
         {
             var progressBarColor = "#26a0da";
             var title = string.Empty; // hide title when use progress bar,
@@ -184,13 +198,17 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             if (progressValue >= 90)
                 progressBarColor = "#da2626";
 
+            var tooltip = Settings.DisplayMoreInformationInToolTip
+                ? GetVolumeMoreInfoTooltip(path, freespace, totalspace)
+                : path;
+
             return new Result
             {
                 Title = title,
                 SubTitle = subtitle,
                 AutoCompleteText = GetPathWithActionKeyword(path, ResultType.Folder, actionKeyword),
                 IcoPath = path,
-                Score = 500,
+                Score = score,
                 ProgressBar = progressValue,
                 ProgressBarColor = progressBarColor,
                 Preview = new Result.PreviewInfo
@@ -202,8 +220,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     OpenFolder(path);
                     return true;
                 },
-                TitleToolTip = path,
-                SubTitleToolTip = path,
+                TitleToolTip = tooltip,
+                SubTitleToolTip = tooltip,
                 ContextData = new SearchResult { Type = ResultType.Volume, FullPath = path, WindowsIndexed = windowsIndexed }
             };
         }
@@ -266,16 +284,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static Result CreateFileResult(string filePath, Query query, int score = 0, bool windowsIndexed = false)
         {
-            bool isMedia = IsMedia(Path.GetExtension(filePath));
-            var title = Path.GetFileName(filePath);
-
+            var isMedia = IsMedia(Path.GetExtension(filePath));
+            var title = Path.GetFileName(filePath) ?? string.Empty;
+            var directory = Path.GetDirectoryName(filePath) ?? string.Empty;
 
             /* Preview Detail */
 
             var result = new Result
             {
                 Title = title,
-                SubTitle = Path.GetDirectoryName(filePath),
+                SubTitle = directory,
                 IcoPath = filePath,
                 Preview = new Result.PreviewInfo
                 {
@@ -287,7 +305,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 TitleHighlightData = Context.API.FuzzySearch(query.Search, title).MatchData,
                 Score = score,
                 CopyText = filePath,
-                PreviewPanel = new Lazy<UserControl>(() => new PreviewPanel(Settings, filePath)),
+                PreviewPanel = new Lazy<UserControl>(() => new PreviewPanel(Settings, filePath, ResultType.File)),
                 Action = c =>
                 {
                     if (c.SpecialKeyState.ToModifierKeys() == ModifierKeys.Alt)
@@ -299,7 +317,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     {
                         if (c.SpecialKeyState.ToModifierKeys() == (ModifierKeys.Control | ModifierKeys.Shift))
                         {
-                            OpenFile(filePath, Settings.UseLocationAsWorkingDir ? Path.GetDirectoryName(filePath) : string.Empty, true);
+                            OpenFile(filePath, Settings.UseLocationAsWorkingDir ? directory : string.Empty, true);
                         }
                         else if (c.SpecialKeyState.ToModifierKeys() == ModifierKeys.Control)
                         {
@@ -307,7 +325,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         }
                         else
                         {
-                            OpenFile(filePath, Settings.UseLocationAsWorkingDir ? Path.GetDirectoryName(filePath) : string.Empty);
+                            OpenFile(filePath, Settings.UseLocationAsWorkingDir ? directory : string.Empty);
                         }
                     }
                     catch (Exception ex)
@@ -318,7 +336,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     return true;
                 },
                 TitleToolTip = Main.Context.API.GetTranslation("plugin_explorer_plugin_ToolTipOpenContainingFolder"),
-                SubTitleToolTip = filePath,
+                SubTitleToolTip = Settings.DisplayMoreInformationInToolTip ? GetFileMoreInfoTooltip(filePath) : filePath,
                 ContextData = new SearchResult { Type = ResultType.File, FullPath = filePath, WindowsIndexed = windowsIndexed }
             };
             return result;
@@ -347,6 +365,46 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             if (Settings.EverythingEnabled && Settings.EverythingEnableRunCount)
                 _ = Task.Run(() => EverythingApi.IncrementRunCounterAsync(fileOrFolder));
+        }
+
+        private static string GetFileMoreInfoTooltip(string filePath)
+        {
+            try
+            {
+                var fileSize = PreviewPanel.GetFileSize(filePath);
+                var fileCreatedAt = PreviewPanel.GetFileCreatedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
+                var fileModifiedAt = PreviewPanel.GetFileLastModifiedAt(filePath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
+                return string.Format(Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info"),
+                    filePath, fileSize, fileCreatedAt, fileModifiedAt, Environment.NewLine);
+            }
+            catch (Exception e)
+            {
+                Context.API.LogException(ClassName, $"Failed to load tooltip for {filePath}", e);
+                return filePath;
+            }
+        }
+
+        private static string GetFolderMoreInfoTooltip(string folderPath)
+        {
+            try
+            {
+                var folderSize = PreviewPanel.GetFolderSize(folderPath);
+                var folderCreatedAt = PreviewPanel.GetFolderCreatedAt(folderPath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
+                var folderModifiedAt = PreviewPanel.GetFolderLastModifiedAt(folderPath, Settings.PreviewPanelDateFormat, Settings.PreviewPanelTimeFormat, Settings.ShowFileAgeInPreviewPanel);
+                return string.Format(Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info"),
+                    folderPath, folderSize, folderCreatedAt, folderModifiedAt, Environment.NewLine);
+            }
+            catch (Exception e)
+            {
+                Context.API.LogException(ClassName, $"Failed to load tooltip for {folderPath}", e);
+                return folderPath;
+            }
+        }
+
+        private static string GetVolumeMoreInfoTooltip(string volumePath, string freespace, string totalspace)
+        {
+            return string.Format(Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_volume"),
+                volumePath, freespace, totalspace, Environment.NewLine);
         }
 
         private static readonly string[] MediaExtensions = 

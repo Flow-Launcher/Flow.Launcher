@@ -103,3 +103,8 @@ Reloadable
 metadatas
 WMP
 VSTHRD
+CJK
+Msix
+dummyprofile
+browserbookmark
+copyurl

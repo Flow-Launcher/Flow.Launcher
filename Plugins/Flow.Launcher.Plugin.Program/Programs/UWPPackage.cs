@@ -425,7 +425,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 }
             }
 
-            if (!matchResult.IsSearchPrecisionScoreMet())
+            if (!matchResult.IsSearchPrecisionScoreMet() && !string.IsNullOrEmpty(query))
                 return null;
 
             var result = new Result
@@ -462,13 +462,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         var message =
                             api.GetTranslation(
                                 "flowlauncher_plugin_program_run_as_administrator_not_supported_message");
-                        api.ShowMsg(title, message, string.Empty);
+                        api.ShowMsgError(title, message);
                     }
 
                     return true;
                 }
             };
-
 
             return result;
         }

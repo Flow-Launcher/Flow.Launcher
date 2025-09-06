@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -44,7 +44,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         {
             var files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-            if (files == null || !files.Any())
+            if (files == null || files.Length == 0)
             {
                 return;
             }
@@ -77,14 +77,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         {
             SettingsViewModel.OpenWindowsIndexingOptions();
         }
-        private void EverythingSortOptionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (tbFastSortWarning is not null)
-            {
-                tbFastSortWarning.Visibility = _viewModel.FastSortWarningVisibility;
-                tbFastSortWarning.Text = _viewModel.SortOptionWarningMessage;
-            }
-        }
+
         private void LbxAccessLinks_OnDrop(object sender, DragEventArgs e)
         {
             AccessLinkDragDrop("QuickAccessLink", e);
@@ -104,7 +97,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             if (sender is Expander expandedExpander)
             {
                 // Ensure _expanders is not null and contains items
-                if (_expanders == null || !_expanders.Any()) return;
+                if (_expanders == null || _expanders.Count == 0) return;
 
                 foreach (var expander in _expanders)
                 {
@@ -124,6 +117,23 @@ namespace Flow.Launcher.Plugin.Explorer.Views
         private void lbxExcludedPaths_Loaded(object sender, RoutedEventArgs e)
         {
             lbxExcludedPaths.Items.SortDescriptions.Add(new SortDescription("Path", ListSortDirection.Ascending));
+        }
+
+        private void lbxAccessLinks_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (sender is not ListView listView) return;
+            if (listView.View is not GridView gView) return; 
+
+            var workingWidth =
+                listView.ActualWidth - SystemParameters.VerticalScrollBarWidth; // take into account vertical scrollbar
+
+            if (workingWidth <= 0) return;
+
+            var col1 = 0.4;
+            var col2 = 0.6;
+
+            gView.Columns[0].Width = workingWidth * col1;
+            gView.Columns[1].Width = workingWidth * col2;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿<ui:Page
+<ui:Page
     x:Class="Flow.Launcher.SettingPages.Views.SettingsPanePluginStore"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -98,6 +98,13 @@
                     Command="{Binding InstallPluginCommand}"
                     ToolTip="{DynamicResource installLocalPluginTooltip}">
                     <ui:FontIcon FontSize="14" Glyph="&#xE8DA;" />
+                </Button>
+                <Button
+                    Height="34"
+                    Margin="0 0 10 0"
+                    Command="{Binding CheckPluginUpdatesCommand}"
+                    ToolTip="{DynamicResource checkPluginUpdatesTooltip}">
+                    <ui:FontIcon FontSize="14" Glyph="&#xecc5;" />
                 </Button>
                 <TextBox
                     Name="PluginStoreFilterTextbox"

@@ -246,6 +246,18 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         public bool IsFileContentSearch(string actionKeyword) => actionKeyword == Settings.FileContentSearchActionKeyword;
 
+        public static bool UseIndexSearch(string path)
+        {
+            if (Main.Settings.IndexSearchEngine is not Settings.IndexSearchEngineOption.WindowsIndex)
+                return false;
+
+            // Check if the path is using windows index search
+            var pathToDirectory = FilesFolders.ReturnPreviousDirectoryIfIncompleteString(path);
+
+            return !Main.Settings.IndexSearchExcludedSubdirectoryPaths.Any(
+                       x => FilesFolders.ReturnPreviousDirectoryIfIncompleteString(pathToDirectory).StartsWith(x.Path, StringComparison.OrdinalIgnoreCase))
+                   && WindowsIndex.WindowsIndex.PathIsIndexed(pathToDirectory);
+        }
 
         private bool UseWindowsIndexForDirectorySearch(string locationPath)
         {

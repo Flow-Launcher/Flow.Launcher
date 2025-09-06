@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -13,10 +13,13 @@ using System.Windows.Interop;
 using System.Windows.Markup;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin.SharedModels;
 using Microsoft.Win32;
+using Microsoft.Win32.SafeHandles;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Dwm;
+using Windows.Win32.System.Threading;
 using Windows.Win32.UI.Input.KeyboardAndMouse;
 using Windows.Win32.UI.Shell.Common;
 using Windows.Win32.UI.WindowsAndMessaging;
@@ -118,9 +121,9 @@ namespace Flow.Launcher.Infrastructure
 
         #region Window Foreground
 
-        public static nint GetForegroundWindow()
+        public static unsafe nint GetForegroundWindow()
         {
-            return PInvoke.GetForegroundWindow().Value;
+            return (nint)PInvoke.GetForegroundWindow().Value;
         }
 
         public static bool SetForegroundWindow(Window window)
@@ -136,6 +139,11 @@ namespace Flow.Launcher.Infrastructure
         public static bool IsForegroundWindow(Window window)
         {
             return IsForegroundWindow(GetWindowHandle(window));
+        }
+
+        public static bool IsForegroundWindow(nint handle)
+        {
+            return IsForegroundWindow(new HWND(handle));
         }
 
         internal static bool IsForegroundWindow(HWND handle)
@@ -279,15 +287,15 @@ namespace Flow.Launcher.Infrastructure
             {
                 var hWndDesktop = PInvoke.FindWindowEx(hWnd, HWND.Null, "SHELLDLL_DefView", null);
                 hWndDesktop = PInvoke.FindWindowEx(hWndDesktop, HWND.Null, "SysListView32", "FolderView");
-                if (hWndDesktop.Value != IntPtr.Zero)
+                if (hWndDesktop != HWND.Null)
                 {
                     return false;
                 }
             }
 
             var monitorInfo = MonitorInfo.GetNearestDisplayMonitor(hWnd);
-            return (appBounds.bottom - appBounds.top) == monitorInfo.RectMonitor.Height &&
-                   (appBounds.right - appBounds.left) == monitorInfo.RectMonitor.Width;
+            return (appBounds.bottom - appBounds.top) == monitorInfo.Bounds.Height &&
+                   (appBounds.right - appBounds.left) == monitorInfo.Bounds.Width;
         }
 
         #endregion
@@ -330,6 +338,9 @@ namespace Flow.Launcher.Infrastructure
         public const int SC_MAXIMIZE = (int)PInvoke.SC_MAXIMIZE;
         public const int SC_MINIMIZE = (int)PInvoke.SC_MINIMIZE;
 
+        public const int WM_POWERBROADCAST = (int)PInvoke.WM_POWERBROADCAST;
+        public const int PBT_APMRESUMEAUTOMATIC = (int)PInvoke.PBT_APMRESUMEAUTOMATIC;
+
         #endregion
 
         #region Window Handle
@@ -342,6 +353,16 @@ namespace Flow.Launcher.Infrastructure
                 windowHelper.EnsureHandle();
             }
             return new(windowHelper.Handle);
+        }
+
+        internal static HWND GetMainWindowHandle()
+        {
+            // When application is exiting, the Application.Current will be null
+            if (Application.Current == null) return HWND.Null;
+
+            // Get the FL main window
+            var hwnd = GetWindowHandle(Application.Current.MainWindow, true);
+            return hwnd;
         }
 
         #endregion
@@ -480,7 +501,7 @@ namespace Flow.Launcher.Infrastructure
         /// Restores the previously backed-up keyboard layout.
         /// If it wasn't backed up or has already been restored, this method does nothing.
         /// </summary>
-        public static void RestorePreviousKeyboardLayout()
+        public unsafe static void RestorePreviousKeyboardLayout()
         {
             if (_previousLayout == HKL.Null) return;
 
@@ -491,7 +512,7 @@ namespace Flow.Launcher.Infrastructure
                 hwnd,
                 PInvoke.WM_INPUTLANGCHANGEREQUEST,
                 PInvoke.INPUTLANGCHANGE_FORWARD,
-                _previousLayout.Value
+                new LPARAM((nint)_previousLayout.Value)
             );
 
             _previousLayout = HKL.Null;
@@ -761,6 +782,62 @@ namespace Flow.Launcher.Infrastructure
 
         #endregion
 
+        #region Window Rect
+
+        public static unsafe bool GetWindowRect(nint handle, out Rect outRect)
+        {
+            var rect = new RECT();
+            var result = PInvoke.GetWindowRect(new(handle), &rect);
+            if (!result)
+            {
+                outRect = new Rect();
+                return false;
+            }
+
+            // Convert RECT to Rect
+            outRect = new Rect(
+                rect.left,
+                rect.top,
+                rect.right - rect.left,
+                rect.bottom - rect.top
+            );
+            return true;
+        }
+
+        #endregion
+
+        #region Window Process
+
+        internal static unsafe string GetProcessNameFromHwnd(HWND hWnd)
+        {
+            return Path.GetFileName(GetProcessPathFromHwnd(hWnd));
+        }
+
+        internal static unsafe string GetProcessPathFromHwnd(HWND hWnd)
+        {
+            uint pid;
+            var threadId = PInvoke.GetWindowThreadProcessId(hWnd, &pid);
+            if (threadId == 0) return string.Empty;
+
+            var process = PInvoke.OpenProcess(PROCESS_ACCESS_RIGHTS.PROCESS_QUERY_LIMITED_INFORMATION, false, pid);
+            if (process != HWND.Null)
+            {
+                using var safeHandle = new SafeProcessHandle((nint)process.Value, true);
+                uint capacity = 2000;
+                Span<char> buffer = new char[capacity];
+                if (!PInvoke.QueryFullProcessImageName(safeHandle, PROCESS_NAME_FORMAT.PROCESS_NAME_WIN32, buffer, ref capacity))
+                {
+                    return string.Empty;
+                }
+
+                return buffer[..(int)capacity].ToString();
+            }
+
+            return string.Empty;
+        }
+
+        #endregion
+
         #region Explorer
 
         // https://learn.microsoft.com/en-us/windows/win32/api/shlobj_core/nf-shlobj_core-shopenfolderandselectitems
@@ -787,6 +864,42 @@ namespace Flow.Launcher.Infrastructure
             {
                 if (pidlFile != null) PInvoke.CoTaskMemFree(pidlFile);
                 if (pidlFolder != null) PInvoke.CoTaskMemFree(pidlFolder);
+            }
+        }
+
+        #endregion
+
+        #region Win32 Dark Mode
+
+        /*
+         * Inspired by https://github.com/ysc3839/win32-darkmode
+         */
+
+        [DllImport("uxtheme.dll", EntryPoint = "#135", SetLastError = true)]
+        private static extern int SetPreferredAppMode(int appMode);
+
+        public static void EnableWin32DarkMode(string colorScheme)
+        {
+            try
+            {
+                // Undocumented API from Windows 10 1809
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) &&
+                    Environment.OSVersion.Version.Build >= 17763)
+                {
+                    var flag = colorScheme switch
+                    {
+                        Constant.Light => 3, // ForceLight
+                        Constant.Dark => 2, // ForceDark
+                        Constant.System => 1, // AllowDark
+                        _ => 0 // Default
+                    };
+                    _ = SetPreferredAppMode(flag);
+                }
+
+            }
+            catch
+            {
+                // Ignore errors on unsupported OS
             }
         }
 

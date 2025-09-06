@@ -16,6 +16,7 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.DialogJump;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -186,6 +187,14 @@ namespace Flow.Launcher
                 Current.Resources["SettingWindowFont"] = new FontFamily(_settings.SettingWindowFont);
                 Current.Resources["ContentControlThemeFontFamily"] = new FontFamily(_settings.SettingWindowFont);
 
+                Notification.Install();
+
+                // Enable Win32 dark mode if the system is in dark mode before creating all windows
+                Win32Helper.EnableWin32DarkMode(_settings.ColorScheme);
+
+                // Initialize language before portable clean up since it needs translations
+                await Ioc.Default.GetRequiredService<Internationalization>().InitializeLanguageAsync();
+
                 Ioc.Default.GetRequiredService<Portable>().PreStartCleanUpAfterPortabilityUpdate();
 
                 API.LogInfo(ClassName, "Begin Flow Launcher startup ----------------------------------------------------");
@@ -211,8 +220,8 @@ namespace Flow.Launcher
 
                 await PluginManager.InitializePluginsAsync();
 
-                // Change language after all plugins are initialized because we need to update plugin title based on their api
-                await Ioc.Default.GetRequiredService<Internationalization>().InitializeLanguageAsync();
+                // Update plugin titles after plugins are initialized with their api instances
+                Internationalization.UpdatePluginMetadataTranslations();
 
                 await imageLoadertask;
 
@@ -228,12 +237,16 @@ namespace Flow.Launcher
                 // Initialize theme for main window
                 Ioc.Default.GetRequiredService<Theme>().ChangeTheme();
 
+                DialogJump.InitializeDialogJump(PluginManager.GetDialogJumpExplorers(), PluginManager.GetDialogJumpDialogs());
+                DialogJump.SetupDialogJump(_settings.EnableDialogJump);
+
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
                 RegisterExitEvents();
 
                 AutoStartup();
                 AutoUpdates();
+                AutoPluginUpdates();
 
                 API.SaveAppAllSettings();
                 API.LogInfo(ClassName, "End Flow Launcher startup ----------------------------------------------------");
@@ -246,7 +259,7 @@ namespace Flow.Launcher
         /// Check startup only for Release
         /// </summary>
         [Conditional("RELEASE")]
-        private void AutoStartup()
+        private static void AutoStartup()
         {
             // we try to enable auto-startup on first launch, or reenable if it was removed
             // but the user still has the setting set
@@ -261,13 +274,13 @@ namespace Flow.Launcher
                     // but if it fails (permissions, etc) then don't keep retrying
                     // this also gives the user a visual indication in the Settings widget
                     _settings.StartFlowLauncherOnSystemStartup = false;
-                    API.ShowMsg(API.GetTranslation("setAutoStartFailed"), e.Message);
+                    API.ShowMsgError(API.GetTranslation("setAutoStartFailed"), e.Message);
                 }
             }
         }
 
         [Conditional("RELEASE")]
-        private void AutoUpdates()
+        private static void AutoUpdates()
         {
             _ = Task.Run(async () =>
             {
@@ -280,6 +293,38 @@ namespace Flow.Launcher
                     while (await timer.WaitForNextTickAsync())
                         // check updates on startup
                         await Ioc.Default.GetRequiredService<Updater>().UpdateAppAsync();
+                }
+            });
+        }
+
+        [Conditional("RELEASE")]
+        private static void AutoPluginUpdates()
+        {
+            _ = Task.Run(async () =>
+            {
+                if (_settings.AutoUpdatePlugins)
+                {
+                    // check plugin updates every 5 hour
+                    var timer = new PeriodicTimer(TimeSpan.FromHours(5));
+                    await PluginInstaller.CheckForPluginUpdatesAsync((plugins) =>
+                    {
+                        Current.Dispatcher.Invoke(() =>
+                        {
+                            var pluginUpdateWindow = new PluginUpdateWindow(plugins);
+                            pluginUpdateWindow.ShowDialog();
+                        });
+                    });
+
+                    while (await timer.WaitForNextTickAsync())
+                        // check updates on startup
+                        await PluginInstaller.CheckForPluginUpdatesAsync((plugins) =>
+                        {
+                            Current.Dispatcher.Invoke(() =>
+                            {
+                                var pluginUpdateWindow = new PluginUpdateWindow(plugins);
+                                pluginUpdateWindow.ShowDialog();
+                            });
+                        });
                 }
             });
         }
@@ -375,6 +420,7 @@ namespace Flow.Launcher
                     // since some resources owned by the thread need to be disposed.
                     _mainWindow?.Dispatcher.Invoke(_mainWindow.Dispose);
                     _mainVM?.Dispose();
+                    DialogJump.Dispose();
                 }
 
                 API.LogInfo(ClassName, "End Flow Launcher dispose ----------------------------------------------------");

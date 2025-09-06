@@ -191,7 +191,19 @@ namespace Flow.Launcher.Plugin.WebSearch
         [JsonIgnore]
         public SearchSource SelectedSearchSource { get; set; }
 
-        public bool EnableSuggestion { get; set; }
+        private bool enableSuggestion;
+        public bool EnableSuggestion
+        {
+            get => enableSuggestion;
+            set
+            {
+                if (enableSuggestion != value)
+                {
+                    enableSuggestion = value;
+                    OnPropertyChanged(nameof(EnableSuggestion));
+                }
+            }
+        }
 
         [JsonIgnore]
         public SuggestionSource[] Suggestions { get; set; } = {
@@ -221,9 +233,5 @@ namespace Flow.Launcher.Plugin.WebSearch
                 }
             }
         }
-
-        public string BrowserPath { get; set; }
-
-        public bool OpenInNewBrowser { get; set; } = true;
     }
 }

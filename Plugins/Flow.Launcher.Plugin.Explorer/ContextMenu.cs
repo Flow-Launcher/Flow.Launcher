@@ -21,13 +21,10 @@ namespace Flow.Launcher.Plugin.Explorer
 
         private Settings Settings { get; set; }
 
-        private SettingsViewModel ViewModel { get; set; }
-
-        public ContextMenu(PluginInitContext context, Settings settings, SettingsViewModel vm)
+        public ContextMenu(PluginInitContext context, Settings settings)
         {
             Context = context;
             Settings = settings;
-            ViewModel = vm;
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
@@ -75,14 +72,16 @@ namespace Flow.Launcher.Plugin.Explorer
                         {
                             Settings.QuickAccessLinks.Add(new AccessLink
                             {
-                                Path = record.FullPath, Type = record.Type
+                                Name = record.FullPath.GetPathName(),
+                                Path = record.FullPath,
+                                Type = record.Type
                             });
 
                             Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_addfilefoldersuccess"),
                                     Context.API.GetTranslation("plugin_explorer_addfilefoldersuccess_detail"),
                                     Constants.ExplorerIconImageFullPath);
 
-                            ViewModel.Save();
+
 
                             return true;
                         },
@@ -106,7 +105,7 @@ namespace Flow.Launcher.Plugin.Explorer
                                     Context.API.GetTranslation("plugin_explorer_removefilefoldersuccess_detail"),
                                     Constants.ExplorerIconImageFullPath);
 
-                            ViewModel.Save();
+                            
 
                             return true;
                         },
@@ -130,9 +129,8 @@ namespace Flow.Launcher.Plugin.Explorer
                         }
                         catch (Exception e)
                         {
-                            var message = "Fail to set text in clipboard";
-                            LogException(message, e);
-                            Context.API.ShowMsg(message);
+                            LogException("Fail to set text in clipboard", e);
+                            Context.API.ShowMsgError(Context.API.GetTranslation("plugin_explorer_fail_to_set_text"));
                             return false;
                         }
                     },
@@ -153,9 +151,8 @@ namespace Flow.Launcher.Plugin.Explorer
                         }
                         catch (Exception e)
                         {
-                            var message = "Fail to set text in clipboard";
-                            LogException(message, e);
-                            Context.API.ShowMsg(message);
+                            LogException("Fail to set text in clipboard", e);
+                            Context.API.ShowMsgError(Context.API.GetTranslation("plugin_explorer_fail_to_set_text"));
                             return false;
                         }
                     },
@@ -176,9 +173,8 @@ namespace Flow.Launcher.Plugin.Explorer
                         }
                         catch (Exception e)
                         {
-                            var message = $"Fail to set file/folder in clipboard";
-                            LogException(message, e);
-                            Context.API.ShowMsg(message);
+                            LogException($"Fail to set file/folder in clipboard", e);
+                            Context.API.ShowMsgError(Context.API.GetTranslation("plugin_explorer_fail_to_set_files"));
                             return false;
                         }
 
@@ -219,9 +215,8 @@ namespace Flow.Launcher.Plugin.Explorer
                             }
                             catch (Exception e)
                             {
-                                var message = $"Fail to delete {record.FullPath}";
-                                LogException(message, e);
-                                Context.API.ShowMsgError(message);
+                                LogException($"Fail to delete {record.FullPath}", e);
+                                Context.API.ShowMsgError(string.Format(Context.API.GetTranslation("plugin_explorer_fail_to_delete"), record.FullPath));
                                 return false;
                             }
 
@@ -263,9 +258,9 @@ namespace Flow.Launcher.Plugin.Explorer
                             }
                             catch (FileNotFoundException e)
                             {
-                                var name = "Plugin: Folder";
-                                var message = $"File not found: {e.Message}";
-                                Context.API.ShowMsgError(name, message);
+                                Context.API.ShowMsgError(
+                                    Context.API.GetTranslation("plugin_explorer_plugin_name"),
+                                    string.Format(Context.API.GetTranslation("plugin_explorer_file_not_found"), e.Message));
                                 return false;
                             }
 
@@ -332,9 +327,8 @@ namespace Flow.Launcher.Plugin.Explorer
                     }
                     catch (Exception e)
                     {
-                        var message = $"Fail to open file at {record.FullPath}";
-                        LogException(message, e);
-                        Context.API.ShowMsgError(message);
+                        LogException($"Fail to open file at {record.FullPath}", e);
+                        Context.API.ShowMsgError(string.Format(Context.API.GetTranslation("plugin_explorer_fail_to_open"), record.FullPath));
                         return false;
                     }
 
