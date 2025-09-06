@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -923,7 +923,10 @@ namespace Flow.Launcher.Infrastructure
         /// </summary>
         public static unsafe bool RunAsDesktopUser(string app, string currentDir, string cmdLine, bool loadProfile, bool createNoWindow, out string errorInfo)
         {
-            STARTUPINFOW si = new();
+            STARTUPINFOW si = new()
+            {
+                cb = (uint)Marshal.SizeOf<STARTUPINFOW>()
+            };
             PROCESS_INFORMATION pi = new();
             errorInfo = string.Empty;
             HANDLE hShellProcess = HANDLE.Null, hShellProcessToken = HANDLE.Null, hPrimaryToken = HANDLE.Null;
