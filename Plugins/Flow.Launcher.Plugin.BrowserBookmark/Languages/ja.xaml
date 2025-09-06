@@ -9,12 +9,12 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">Failed to set url in clipboard</system:String>
 
     <!--  Settings  -->
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Bookmark Data</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">ブックマークのデータ</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">ブックマークを開く場所：</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newWindow">新しいウインドウ</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">新しいタブ</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">Set browser from path:</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">Choose</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">以下のパスからブラウザーを設定：</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">選択</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">URLをコピー</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">ブックマークのURLをクリップボードにコピー</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">次のブラウザから読み込む：</system:String>
