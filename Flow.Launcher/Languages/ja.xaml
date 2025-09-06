@@ -17,10 +17,10 @@
     <system:String x:Key="failedToInitializePluginsMessage">Plugins: {0} - fail to load and would be disabled, please contact plugin creator for help</system:String>
 
     <!--  Portable  -->
-    <system:String x:Key="restartToDisablePortableMode">Flow Launcher needs to restart to finish disabling portable mode, after the restart your portable data profile will be deleted and roaming data profile kept</system:String>
-    <system:String x:Key="restartToEnablePortableMode">Flow Launcher needs to restart to finish enabling portable mode, after the restart your roaming data profile will be deleted and portable data profile kept</system:String>
-    <system:String x:Key="moveToDifferentLocation">Flow Launcher has detected you enabled portable mode, would you like to move it to a different location?</system:String>
-    <system:String x:Key="shortcutsUninstallerCreated">Flow Launcher has detected you disabled portable mode, the relevant shortcuts and uninstaller entry have been created</system:String>
+    <system:String x:Key="restartToDisablePortableMode">Flow Launcherはポータブルモードの無効化のために再起動する必要があります。再起動の後、ポータブルな形式の設定項目は削除され、あなたのパソコンのフォルダに保存されます</system:String>
+    <system:String x:Key="restartToEnablePortableMode">Flow Launcherはポータブルモードの有効化のために再起動する必要があります。再起動の後、パソコンに保存された設定項目は削除され、ポータブルな形式で保存されます</system:String>
+    <system:String x:Key="moveToDifferentLocation">Flow Launcherはポータブルモードの有効化を検知しました。Flow Launcherを別の場所に移動しますか？</system:String>
+    <system:String x:Key="shortcutsUninstallerCreated">Flow Launcherはポータブルモードの無効化を検知しました。関連するショートカットやアンインストーラーが配置されます</system:String>
     <system:String x:Key="userDataDuplicated">Flow Launcher detected your user data exists both in {0} and {1}. {2}{2}Please delete {1} in order to proceed. No changes have occurred.</system:String>
 
     <!--  Plugin Loader  -->
@@ -94,8 +94,8 @@
     <system:String x:Key="LastQueryPreserved">前回のクエリを保存</system:String>
     <system:String x:Key="LastQuerySelected">前回のクエリを選択</system:String>
     <system:String x:Key="LastQueryEmpty">前回のクエリを消去</system:String>
-    <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
-    <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
+    <system:String x:Key="LastQueryActionKeywordPreserved">前回のアクションキーワードを保持する</system:String>
+    <system:String x:Key="LastQueryActionKeywordSelected">前回のアクションキーワードを選択</system:String>
     <system:String x:Key="maxShowResults">結果の最大表示件数</system:String>
     <system:String x:Key="maxShowResultsToolTip">CTRL+PlusとCTRL+Minusを使用すれば、簡単に調整することもできます。</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">ウィンドウがフルスクリーン時にホットキーを無効にする</system:String>
@@ -119,9 +119,9 @@
     <system:String x:Key="hideNotifyIconToolTip">トレイアイコンが非表示になっているときは、検索ウィンドウを右クリックすることで設定メニューを開くことができます。</system:String>
     <system:String x:Key="querySearchPrecision">クエリ検索精度</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">表示する結果に必要な一致スコアの最小値を変更します。</system:String>
-    <system:String x:Key="SearchPrecisionNone">None</system:String>
-    <system:String x:Key="SearchPrecisionLow">Low</system:String>
-    <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
+    <system:String x:Key="SearchPrecisionNone">最低</system:String>
+    <system:String x:Key="SearchPrecisionLow">低</system:String>
+    <system:String x:Key="SearchPrecisionRegular">標準</system:String>
     <system:String x:Key="ShouldUsePinyin">ピンインによる検索</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Pinyin is the standard system of romanized spelling for translating Chinese. Please note, enabling this can significantly increase memory usage during search.</system:String>
     <system:String x:Key="ShouldUseDoublePinyin">Use Double Pinyin</system:String>
@@ -143,8 +143,8 @@
     <system:String x:Key="searchDelay">検索遅延</system:String>
     <system:String x:Key="searchDelayToolTip">入力中に短い遅延を追加することで、UIのちらつきや結果の読み込みを軽減します。平均的なタイピング速度のユーザーにおすすめです。</system:String>
     <system:String x:Key="searchDelayNumberBoxToolTip">Enter the wait time (in ms) until input is considered complete. This can only be edited if Search Delay is enabled.</system:String>
-    <system:String x:Key="searchDelayTime">Default Search Delay Time</system:String>
-    <system:String x:Key="searchDelayTimeToolTip">Wait time before showing results after typing stops. Higher values wait longer. (ms)</system:String>
+    <system:String x:Key="searchDelayTime">デフォルトの検索遅延時間</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">入力が停止した後に結果が表示されるまでの待ち時間。値が大きいほど長く待機します。(単位 ms)</system:String>
     <system:String x:Key="KoreanImeTitle">Information for Korean IME user</system:String>
     <system:String x:Key="KoreanImeGuide">
         The Korean input method used in Windows 11 may cause some issues in Flow Launcher.
@@ -167,17 +167,17 @@
     <system:String x:Key="KoreanImeRegistryTooltip">You can change the Previous Korean IME settings directly from here</system:String>
     <system:String x:Key="KoreanImeSettingChangeFailTitle">Failed to change Korean IME setting</system:String>
     <system:String x:Key="KoreanImeSettingChangeFailSubTitle">Please check your system registry access or contact support.</system:String>
-    <system:String x:Key="homePage">Home Page</system:String>
-    <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
+    <system:String x:Key="homePage">ホームページ</system:String>
+    <system:String x:Key="homePageToolTip">検索文字列が空の場合、ホームページの結果を表示します。</system:String>
     <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
     <system:String x:Key="historyResultsCountForHomePage">Maximum History Results Shown in Home Page</system:String>
     <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
     <system:String x:Key="showAtTopmost">Show Search Window at Foremost</system:String>
-    <system:String x:Key="showAtTopmostToolTip">Overrides other programs' 'Always on Top' setting and displays Flow in the foremost position.</system:String>
-    <system:String x:Key="autoRestartAfterChanging">Restart after modifying plugin via Plugin Store</system:String>
-    <system:String x:Key="autoRestartAfterChangingToolTip">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugin Store</system:String>
-    <system:String x:Key="showUnknownSourceWarning">Show unknown source warning</system:String>
-    <system:String x:Key="showUnknownSourceWarningToolTip">Show warning when installing plugins from unknown sources</system:String>
+    <system:String x:Key="showAtTopmostToolTip">他のプログラムの 'Always on Top' （最前面に表示）設定を上書きし、常に最前面のウィンドウで Flow を表示します。</system:String>
+    <system:String x:Key="autoRestartAfterChanging">プラグインストアでプラグインを変更した後に再起動します</system:String>
+    <system:String x:Key="autoRestartAfterChangingToolTip">プラグインストア経由でプラグインをインストール、アンインストール、または更新した後、Flow Lancherを自動的に再起動します</system:String>
+    <system:String x:Key="showUnknownSourceWarning">不明なソースの警告を表示</system:String>
+    <system:String x:Key="showUnknownSourceWarningToolTip">不明なソースからプラグインをインストールするときに警告を表示する</system:String>
     <system:String x:Key="autoUpdatePlugins">Auto update plugins</system:String>
     <system:String x:Key="autoUpdatePluginsToolTip">Automatically check plugin updates and notify if there are any updates available</system:String>
 
@@ -199,10 +199,10 @@
     <system:String x:Key="pluginSearchDelayTime">Plugin search delay time</system:String>
     <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Search Delay Time</system:String>
     <system:String x:Key="FilterComboboxLabel">詳細設定:</system:String>
-    <system:String x:Key="DisplayModeOnOff">Enabled</system:String>
+    <system:String x:Key="DisplayModeOnOff">有効</system:String>
     <system:String x:Key="DisplayModePriority">重要度</system:String>
     <system:String x:Key="DisplayModeSearchDelay">検索遅延</system:String>
-    <system:String x:Key="DisplayModeHomeOnOff">Home Page</system:String>
+    <system:String x:Key="DisplayModeHomeOnOff">ホームページ</system:String>
     <system:String x:Key="currentPriority">Current Priority</system:String>
     <system:String x:Key="newPriority">New Priority</system:String>
     <system:String x:Key="priority">重要度</system:String>
@@ -327,7 +327,7 @@
     <system:String x:Key="TypeIsDarkToolTip">This theme supports two (light/dark) modes.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
     <system:String x:Key="ShowPlaceholder">プレースホルダーを表示</system:String>
-    <system:String x:Key="ShowPlaceholderTip">Display placeholder when query is empty</system:String>
+    <system:String x:Key="ShowPlaceholderTip">クエリが空の場合にプレースホルダを表示します</system:String>
     <system:String x:Key="PlaceholderText">検索欄の案内文</system:String>
     <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
     <system:String x:Key="KeepMaxResults">ウィンドウサイズの固定</system:String>
@@ -389,11 +389,11 @@
     <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU. Not recommended if your computer performance is limited.</system:String>
     <system:String x:Key="windowWidthSize">Window Width Size</system:String>
     <system:String x:Key="windowWidthSizeToolTip">You can also quickly adjust this by using Ctrl+[ and Ctrl+].</system:String>
-    <system:String x:Key="useGlyphUI">Use Segoe Fluent Icons</system:String>
-    <system:String x:Key="useGlyphUIEffect">Use Segoe Fluent Icons for query results where supported</system:String>
+    <system:String x:Key="useGlyphUI">Segoe Fluent アイコンを使用する</system:String>
+    <system:String x:Key="useGlyphUIEffect">サポートされているクエリ結果にSegoe Fluentアイコンを使用する</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Press Key</system:String>
     <system:String x:Key="showBadges">Show Result Badges</system:String>
-    <system:String x:Key="showBadgesToolTip">For supported plugins, badges are displayed to help distinguish them more easily.</system:String>
+    <system:String x:Key="showBadgesToolTip">サポートされているプラグインでは、バッジが表示され、より簡単に区別できます。</system:String>
     <system:String x:Key="showBadgesGlobalOnly">Show Result Badges for Global Query Only</system:String>
     <system:String x:Key="showBadgesGlobalOnlyToolTip">Show badges for global query results only</system:String>
     <system:String x:Key="dialogJumpHotkey">Dialog Jump</system:String>
@@ -440,7 +440,7 @@
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">ドキュメント</system:String>
     <system:String x:Key="version">バージョン</system:String>
-    <system:String x:Key="icons">Icons</system:String>
+    <system:String x:Key="icons">アイコン</system:String>
     <system:String x:Key="about_activate_times">あなたはFlow Launcherを {0} 回利用しました</system:String>
     <system:String x:Key="checkUpdates">アップデートを確認する</system:String>
     <system:String x:Key="BecomeASponsor">スポンサーになる</system:String>
@@ -525,7 +525,7 @@
     <system:String x:Key="searchDelayTimeTips">Input the search delay time in ms you like to use for the plugin. Input empty if you don't want to specify any, and the plugin will use default search delay time.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
-    <system:String x:Key="homeTitle">Home Page</system:String>
+    <system:String x:Key="homeTitle">ホームページ</system:String>
     <system:String x:Key="homeTips">Enable the plugin home page state if you like to show the plugin results when query is empty.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
@@ -655,17 +655,17 @@
     <system:String x:Key="HotkeyOpenResult">Open result</system:String>
     <system:String x:Key="HotkeyOpenResultN">Open result #{0}</system:String>
 
-    <system:String x:Key="RecommendWeather">Weather</system:String>
+    <system:String x:Key="RecommendWeather">天気</system:String>
     <system:String x:Key="RecommendWeatherDesc">Weather in Google Result</system:String>
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
-    <system:String x:Key="RecommendShellDesc">Shell Command</system:String>
+    <system:String x:Key="RecommendShellDesc">シェルコマンド</system:String>
     <system:String x:Key="RecommendBluetooth">s Bluetooth</system:String>
-    <system:String x:Key="RecommendBluetoothDesc">Bluetooth in Windows Settings</system:String>
+    <system:String x:Key="RecommendBluetoothDesc">Windowsの設定内のBluetooth</system:String>
     <system:String x:Key="RecommendAcronyms">sn</system:String>
-    <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
+    <system:String x:Key="RecommendAcronymsDesc">付箋</system:String>
 
     <!--  Preview Area  -->
-    <system:String x:Key="FileSize">File Size</system:String>
-    <system:String x:Key="Created">Created</system:String>
-    <system:String x:Key="LastModified">Last Modified</system:String>
+    <system:String x:Key="FileSize">ファイルサイズ</system:String>
+    <system:String x:Key="Created">作成日時</system:String>
+    <system:String x:Key="LastModified">最終更新日時</system:String>
 </ResourceDictionary>
