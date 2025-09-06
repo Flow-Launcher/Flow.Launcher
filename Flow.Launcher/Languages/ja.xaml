@@ -2,9 +2,9 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  Startup  -->
     <system:String x:Key="runtimePluginInstalledChooseRuntimePrompt">
-        Flow detected you have installed {0} plugins, which will require {1} to run. Would you like to download {1}?
+        Flow はあなたが {0} プラグインをインストールしており、実行するために {1} が必要であることを検知しました。{1} をインストールしますか？
         {2}{2}
-        Click no if it's already installed, and you will be prompted to select the folder that contains the {1} executable
+        {1}がすでにインストールされている場合は「いいえ」をクリックし、それが入っているフォルダーを選択してください
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Please select the {0} executable</system:String>
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
@@ -111,7 +111,7 @@
     <system:String x:Key="typingStartEn">常に英語モードで入力を開始する</system:String>
     <system:String x:Key="typingStartEnTooltip">Flowを起動したとき、一時的に入力方法を英語モードに変更します。</system:String>
     <system:String x:Key="autoUpdates">自動更新</system:String>
-    <system:String x:Key="autoUpdatesTooltip">Automatically check and update the app when available</system:String>
+    <system:String x:Key="autoUpdatesTooltip">利用可能な場合、Flow Launcherを自動的に確認して更新します</system:String>
     <system:String x:Key="select">選択</system:String>
     <system:String x:Key="hideOnStartup">起動時にFlow Launcherを隠す</system:String>
     <system:String x:Key="hideOnStartupToolTip">起動後、Flow Launcher の検索ウィンドウは非表示になり、トレイに格納されます。</system:String>
@@ -123,7 +123,7 @@
     <system:String x:Key="SearchPrecisionLow">低</system:String>
     <system:String x:Key="SearchPrecisionRegular">標準</system:String>
     <system:String x:Key="ShouldUsePinyin">ピンインによる検索</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">Pinyin is the standard system of romanized spelling for translating Chinese. Please note, enabling this can significantly increase memory usage during search.</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">Pinyinは中国語を翻訳するためのローマ字入力の標準的な方法です。有効にすると、検索時のメモリ使用量が大幅に増加する可能性があります。</system:String>
     <system:String x:Key="ShouldUseDoublePinyin">Use Double Pinyin</system:String>
     <system:String x:Key="ShouldUseDoublePinyinToolTip">Use Double Pinyin instead of Full Pinyin to search.</system:String>
     <system:String x:Key="DoublePinyinSchema">Double Pinyin Schema</system:String>
@@ -172,17 +172,17 @@
     <system:String x:Key="historyResultsForHomePage">クエリの履歴をホームページに表示</system:String>
     <system:String x:Key="historyResultsCountForHomePage">ホームページに表示される最大の履歴の数</system:String>
     <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
-    <system:String x:Key="showAtTopmost">Show Search Window at Foremost</system:String>
+    <system:String x:Key="showAtTopmost">検索ウィンドウを最前面に表示</system:String>
     <system:String x:Key="showAtTopmostToolTip">他のプログラムの 'Always on Top' （最前面に表示）設定を上書きし、常に最前面のウィンドウで Flow を表示します。</system:String>
-    <system:String x:Key="autoRestartAfterChanging">プラグインストアでプラグインを変更した後に再起動します</system:String>
+    <system:String x:Key="autoRestartAfterChanging">プラグインストアでプラグインを変更した後に再起動</system:String>
     <system:String x:Key="autoRestartAfterChangingToolTip">プラグインストア経由でプラグインをインストール、アンインストール、または更新した後、Flow Lancherを自動的に再起動します</system:String>
     <system:String x:Key="showUnknownSourceWarning">不明なソースの警告を表示</system:String>
     <system:String x:Key="showUnknownSourceWarningToolTip">不明なソースからプラグインをインストールするときに警告を表示する</system:String>
-    <system:String x:Key="autoUpdatePlugins">Auto update plugins</system:String>
-    <system:String x:Key="autoUpdatePluginsToolTip">Automatically check plugin updates and notify if there are any updates available</system:String>
+    <system:String x:Key="autoUpdatePlugins">プラグインの自動アップデート</system:String>
+    <system:String x:Key="autoUpdatePluginsToolTip">プラグインの更新を自動的にチェックし、利用可能な更新がある場合に通知します</system:String>
 
     <!--  Setting Plugin  -->
-    <system:String x:Key="searchplugin">Search Plugin</system:String>
+    <system:String x:Key="searchplugin">プラグインの検索</system:String>
     <system:String x:Key="searchpluginToolTip">Ctrl+F でプラグインを検索します</system:String>
     <system:String x:Key="searchplugin_Noresult_Title">検索結果が見つかりませんでした</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">別の検索を試してみてください。</system:String>
@@ -230,7 +230,7 @@
     <system:String x:Key="pluginStore_NewRelease">新規リリース</system:String>
     <system:String x:Key="pluginStore_RecentlyUpdated">最近の更新</system:String>
     <system:String x:Key="pluginStore_None">プラグイン</system:String>
-    <system:String x:Key="pluginStore_Installed">Installed</system:String>
+    <system:String x:Key="pluginStore_Installed">インストール済み</system:String>
     <system:String x:Key="refresh">更新</system:String>
     <system:String x:Key="installbtn">インストール</system:String>
     <system:String x:Key="uninstallbtn">アンインストール</system:String>
@@ -251,8 +251,8 @@
     <system:String x:Key="InstallPromptSubtitle">{0} by {1} {2}{2}このプラグインをインストールしますか？</system:String>
     <system:String x:Key="UninstallPromptTitle">プラグインのアンインストール</system:String>
     <system:String x:Key="UninstallPromptSubtitle">{0} by {1} {2}{2}このプラグインをアンインストールしますか？</system:String>
-    <system:String x:Key="UpdatePromptTitle">Plugin update</system:String>
-    <system:String x:Key="UpdatePromptSubtitle">{0} by {1} {2}{2}Would you like to update this plugin?</system:String>
+    <system:String x:Key="UpdatePromptTitle">プラグインの更新</system:String>
+    <system:String x:Key="UpdatePromptSubtitle">{0} by {1} {2}{2}このプラグインを更新しますか？</system:String>
     <system:String x:Key="DownloadingPlugin">Downloading plugin</system:String>
     <system:String x:Key="AutoRestartAfterChange">Automatically restart after installing/uninstalling/updating plugins in plugin store</system:String>
     <system:String x:Key="ZipFileNotHavePluginJson">Zip file does not have a valid plugin.json configuration</system:String>
@@ -265,7 +265,7 @@
     <system:String x:Key="updateNoResultSubtitle">All plugins are up to date</system:String>
     <system:String x:Key="updateAllPluginsTitle">Plugin updates available</system:String>
     <system:String x:Key="updateAllPluginsButtonContent">Update plugins</system:String>
-    <system:String x:Key="checkPluginUpdatesTooltip">Check plugin updates</system:String>
+    <system:String x:Key="checkPluginUpdatesTooltip">プラグインの更新を確認</system:String>
     <system:String x:Key="PluginsUpdateSuccessNoRestart">Plugins are successfully updated. Please restart Flow.</system:String>
 
     <!--  Setting Theme  -->
@@ -480,26 +480,26 @@
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">デフォルトのファイルマネージャー</system:String>
-    <system:String x:Key="fileManager_learnMore">Learn more</system:String>
-    <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments as required. The &quot;%d&quot; represents the directory path to open for, used by the Arg for Folder field and for commands opening specific directories. The &quot;%f&quot; represents the file path to open for, used by the Arg for File field and for commands opening specific files.</system:String>
-    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fields blank.</system:String>
-    <system:String x:Key="fileManager_name">File Manager</system:String>
-    <system:String x:Key="fileManager_profile_name">Profile Name</system:String>
-    <system:String x:Key="fileManager_path">File Manager Path</system:String>
-    <system:String x:Key="fileManager_directory_arg">Arg For Folder</system:String>
-    <system:String x:Key="fileManager_file_arg">Arg For File</system:String>
+    <system:String x:Key="fileManager_learnMore">詳細を見る</system:String>
+    <system:String x:Key="fileManager_tips">使用したいファイルマネージャーのファイルの位置を指定し、コマンドライン引数を入力してください。&quot;%d&quot; は開こうとしているフォルダーのパスを表し、「フォルダー用の引数」の欄で特定のフォルダーを開くために使用されます。&quot;%f&quot; は開こうとしているファイルのパスを表し、「ファイル用の引数」の欄で特定のファイルを開くために使用されます。</system:String>
+    <system:String x:Key="fileManager_tips2">例として、ファイルマネージャーが &quot;totalcmd.exe /A c:\windows&quot; というコマンドを c:\windows というフォルダを開くために使用する場合を考えます。この場合、ファイルマネージャーのパスは totalcmd.exe で、フォルダー用の引数は /A &quot;%d&quot; になります。QTTabBarのように、パスのみを要求するファイルマネージャーの場合、”%d” をファイルマネージャーのパスの欄に指定し、残りを空欄にしてください。</system:String>
+    <system:String x:Key="fileManager_name">ファイル マネージャー</system:String>
+    <system:String x:Key="fileManager_profile_name">プロファイル名</system:String>
+    <system:String x:Key="fileManager_path">ファイルマネージャーのパス</system:String>
+    <system:String x:Key="fileManager_directory_arg">フォルダー用の引数</system:String>
+    <system:String x:Key="fileManager_file_arg">ファイル用の引数</system:String>
     <system:String x:Key="fileManagerPathNotFound">The file manager '{0}' could not be located at '{1}'. Would you like to continue?</system:String>
     <system:String x:Key="fileManagerPathError">File Manager Path Error</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">デフォルトのウェブブラウザー</system:String>
-    <system:String x:Key="defaultBrowser_tips">The default setting follows the OS default browser setting. If specified separately, flow uses that browser.</system:String>
-    <system:String x:Key="defaultBrowser_name">Browser</system:String>
-    <system:String x:Key="defaultBrowser_profile_name">Browser Name</system:String>
-    <system:String x:Key="defaultBrowser_path">Browser Path</system:String>
-    <system:String x:Key="defaultBrowser_newWindow">New Window</system:String>
-    <system:String x:Key="defaultBrowser_newTab">New Tab</system:String>
-    <system:String x:Key="defaultBrowser_parameter">Private Mode</system:String>
+    <system:String x:Key="defaultBrowser_tips">デフォルトの設定は、OS のデフォルトのブラウザ設定に従います。別々に指定すると、Flow はそのブラウザを使用します。</system:String>
+    <system:String x:Key="defaultBrowser_name">ブラウザー</system:String>
+    <system:String x:Key="defaultBrowser_profile_name">ブラウザー名</system:String>
+    <system:String x:Key="defaultBrowser_path">ブラウザーのパス</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">新しいウィンドウ</system:String>
+    <system:String x:Key="defaultBrowser_newTab">新しいタブ</system:String>
+    <system:String x:Key="defaultBrowser_parameter">プライベートモード</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Change Priority</system:String>
