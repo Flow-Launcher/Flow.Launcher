@@ -43,8 +43,6 @@ namespace Flow.Launcher.Core.ExternalPlugins
                     if (results.Count == 0)
                         return false;
 
-                    lastFetchedAt = DateTime.Now;
-
                     var updatedPluginResults = new List<UserPlugin>();
                     var appVersion = SemanticVersioning.Version.Parse(Constant.Version);
                     
@@ -55,6 +53,8 @@ namespace Flow.Launcher.Core.ExternalPlugins
                     }
 
                     UserPlugins = updatedPluginResults;
+
+                    lastFetchedAt = DateTime.Now;
 
                     return true;
                 }
@@ -73,10 +73,22 @@ namespace Flow.Launcher.Core.ExternalPlugins
 
         private static bool IsMinimumAppVersionSatisfied(UserPlugin plugin, SemanticVersioning.Version appVersion)
         {
-            if (string.IsNullOrEmpty(plugin.MinimumAppVersion) || appVersion >= SemanticVersioning.Version.Parse(plugin.MinimumAppVersion))
+            if (string.IsNullOrEmpty(plugin.MinimumAppVersion))
                 return true;
 
-            API.LogDebug(ClassName, $"Plugin {plugin.Name} requires minimum Flow Launcher version {plugin.MinimumAppVersion}, "
+            try
+            {
+                if (appVersion >= SemanticVersioning.Version.Parse(plugin.MinimumAppVersion))
+                    return true;
+            }
+            catch (Exception e)
+            {
+                API.LogException(ClassName, $"Failed to parse the minimum app version {plugin.MinimumAppVersion} for plugin {plugin.Name}. "
+                    + "Plugin excluded from manifest", e);
+                return false;
+            }
+
+            API.LogInfo(ClassName, $"Plugin {plugin.Name} requires minimum Flow Launcher version {plugin.MinimumAppVersion}, "
                     + $"but current version is {Constant.Version}. Plugin excluded from manifest.");
 
             return false;

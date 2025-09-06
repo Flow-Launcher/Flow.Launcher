@@ -68,7 +68,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Custom Command Keyword</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword_tip">Enter a keyword to search for command: {0}. This keyword is used to match your query.</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_command_keyword">Command Keyword</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_reset">Reset</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_reset">リセット</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_confirm">確認</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_cancel">キャンセル</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_input_command_keyword">Please enter a non-empty command keyword</system:String>
