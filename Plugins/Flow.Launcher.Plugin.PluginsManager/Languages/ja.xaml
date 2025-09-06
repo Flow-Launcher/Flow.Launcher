@@ -5,10 +5,10 @@
     <system:String x:Key="plugin_pluginsmanager_downloading_plugin">Downloading plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_success">Successfully downloaded</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_error">Error: Unable to download the plugin</system:String>
-    <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} by {1} {2}{3}Would you like to uninstall this plugin? After the uninstallation Flow will automatically restart.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_uninstall_prompt_no_restart">{0} by {1} {2}{2}Would you like to uninstall this plugin?</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} by {1} {2}{3}Would you like to install this plugin? After the installation Flow will automatically restart.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_prompt_no_restart">{0} by {1} {2}{2}Would you like to install this plugin?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} by {1} {2}{3}このプラグインをアンインストールしますか？アンインストール後、Flow Launcherは自動的に再起動されます。</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_prompt_no_restart">{0} by {1} {2}{2}このプラグインをアンインストールしますか？</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} by {1} {2}{3}このプラグインをインストールしますか？インストール後、Flow Launcherは自動的に再起動されます。</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_prompt_no_restart">{0} by {1} {2}{2}このプラグインをインストールしますか？</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_title">Plugin Install</system:String>
     <system:String x:Key="plugin_pluginsmanager_installing_plugin">Installing Plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Download and install {0}</system:String>
@@ -23,7 +23,7 @@
     <system:String x:Key="plugin_pluginsmanager_uninstall_error_title">Error uninstalling plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_title">No update available</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_subtitle">All plugins are up to date</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} by {1} {2}{3}Would you like to update this plugin? After the update Flow will automatically restart.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} by {1} {2}{3}このプラグインを更新しますか？更新後、Flow Launcherは自動的に再起動されます。</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt_no_restart">{0} by {1} {2}{2}Would you like to update this plugin?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_title">Plugin Update</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">This plugin is already installed</system:String>
@@ -36,7 +36,7 @@
     <system:String x:Key="plugin_pluginsmanager_update_all_success_restart">{0} plugins successfully updated. Restarting Flow, please wait...</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_success_restart">Plugin {0} successfully updated. Restarting Flow, please wait...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Installing from an unknown source</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">You are installing this plugin from an unknown source and it may contain potential risks!{0}{0}Please ensure you understand where this plugin is from and that it is safe.{0}{0}Would you like to continue still?{0}{0}(You can switch off this warning via settings)</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">あなたは不明なソースから提供されたプラグインをインストールしようとしており、潜在的なリスクを含んでいる可能性があります！{0}{0}このプラグインの開発元をよく調べ、安全であることをご自身で確かめてください。{0}{0}それでもあなたはこのプラグインをインストールしますか？{0}{0}(この警告は設定で無効にすることができます)</system:String>
 
     <system:String x:Key="plugin_pluginsmanager_install_success_no_restart">Plugin {0} successfully installed. Please restart Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_success_no_restart">Plugin {0} successfully uninstalled. Please restart Flow.</system:String>
