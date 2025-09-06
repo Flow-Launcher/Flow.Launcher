@@ -66,5 +66,5 @@
 
     <!--  Settings menu items  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Upozornenie na inštaláciu z neznámeho zdroja</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Automaticky reštartovať Flow Launcher po inštalácii/odinštalácii/aktualizáciu pluginu cez Správcu pluginov</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Automaticky reštartovať Flow Launcher po inštalácii/odinštalácii/aktualizácii pluginu cez Správcu pluginov</system:String>
 </ResourceDictionary>
