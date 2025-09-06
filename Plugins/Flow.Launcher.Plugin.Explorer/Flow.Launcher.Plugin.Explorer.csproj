@@ -19,7 +19,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <OutputPath>..\..\Output\Release\Plugins\Flow.Launcher.Plugin.Explorer</OutputPath>
-    <NoWarn>FLSG0007</NoWarn>
+    <NoWarn>$(NoWarn);FLSG0007</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
