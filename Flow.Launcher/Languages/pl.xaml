@@ -331,6 +331,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="PlaceholderTextTip">Zmień tekst placeholdera. Jeśli pole będzie puste, zostanie użyty: {0}</system:String>
     <system:String x:Key="KeepMaxResults">Stały rozmiar okna</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">Nie można zmienić rozmiaru okna, przeciągając.</system:String>
+    <system:String x:Key="MaxShowResultsCannotWorkWithAlwaysPreview">Since Always Preview is on, maximum results shown may not take effect because preview panel requires a certain minimum height</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Skrót klawiszowy</system:String>
