@@ -396,27 +396,27 @@
     <system:String x:Key="showBadgesToolTip">サポートされているプラグインでは、バッジが表示され、より簡単に区別できます。</system:String>
     <system:String x:Key="showBadgesGlobalOnly">グローバルクエリのみ、結果のバッジを表示</system:String>
     <system:String x:Key="showBadgesGlobalOnlyToolTip">Show badges for global query results only</system:String>
-    <system:String x:Key="dialogJumpHotkey">Dialog Jump</system:String>
-    <system:String x:Key="dialogJumpHotkeyToolTip">Enter shortcut to quickly navigate the Open/Save As dialog window to the path of the current file manager.</system:String>
-    <system:String x:Key="dialogJump">Dialog Jump</system:String>
-    <system:String x:Key="dialogJumpToolTip">When Open/Save As dialog window opens, quickly navigate to the current path of the file manager.</system:String>
+    <system:String x:Key="dialogJumpHotkey">ダイアログジャンプ</system:String>
+    <system:String x:Key="dialogJumpHotkeyToolTip">ショートカットを入力して、「名前を付けて開く/保存」ダイアログ・ウィンドウを現在のファイルマネージャのパスにすばやくナビゲートします。</system:String>
+    <system:String x:Key="dialogJump">ダイアログジャンプ</system:String>
+    <system:String x:Key="dialogJumpToolTip">「名前を付けて開く/保存」ダイアログウィンドウが開いたら、すぐにファイルマネージャの現在のパスに移動します。</system:String>
     <system:String x:Key="autoDialogJump">Dialog Jump Automatically</system:String>
     <system:String x:Key="autoDialogJumpToolTip">When Open/Save As dialog window is displayed, automatically navigate to the path of the current file manager. (Experimental)</system:String>
-    <system:String x:Key="showDialogJumpWindow">Show Dialog Jump Window</system:String>
-    <system:String x:Key="showDialogJumpWindowToolTip">Display Dialog Jump search window when the open/save dialog window is shown to quickly navigate to file/folder locations.</system:String>
-    <system:String x:Key="dialogJumpWindowPosition">Dialog Jump Window Position</system:String>
-    <system:String x:Key="dialogJumpWindowPositionToolTip">Select position for the Dialog Jump search window</system:String>
-    <system:String x:Key="DialogJumpWindowPositionUnderDialog">Fixed under the Open/Save As dialog window. Displayed on open and stays until the window is closed</system:String>
-    <system:String x:Key="DialogJumpWindowPositionFollowDefault">Default search window position. Displayed when triggered by search window hotkey</system:String>
-    <system:String x:Key="dialogJumpResultBehaviour">Dialog Jump Result Navigation Behaviour</system:String>
-    <system:String x:Key="dialogJumpResultBehaviourToolTip">Behaviour to navigate Open/Save As dialog window to the selected result path</system:String>
-    <system:String x:Key="DialogJumpResultBehaviourLeftClick">Left click or Enter key</system:String>
-    <system:String x:Key="DialogJumpResultBehaviourRightClick">Right click</system:String>
-    <system:String x:Key="dialogJumpFileResultBehaviour">Dialog Jump File Navigation Behaviour</system:String>
-    <system:String x:Key="dialogJumpFileResultBehaviourToolTip">Behaviour to navigate Open/Save As dialog window when the result is a file path</system:String>
-    <system:String x:Key="DialogJumpFileResultBehaviourFullPath">Fill full path in file name box</system:String>
-    <system:String x:Key="DialogJumpFileResultBehaviourFullPathOpen">Fill full path in file name box and open</system:String>
-    <system:String x:Key="DialogJumpFileResultBehaviourDirectory">Fill directory in path box</system:String>
+    <system:String x:Key="showDialogJumpWindow">ダイアログジャンプウィンドウを表示</system:String>
+    <system:String x:Key="showDialogJumpWindowToolTip">「名前をつけて保存/開く」ダイアログウィンドウが表示されたときにダイアログジャンプのウィンドウを開いて、ファイルやフォルダーを素早く開く。</system:String>
+    <system:String x:Key="dialogJumpWindowPosition">ダイアログジャンプのウィンドウの位置</system:String>
+    <system:String x:Key="dialogJumpWindowPositionToolTip">ダイアログジャンプ検索ウィンドウの位置を選択します</system:String>
+    <system:String x:Key="DialogJumpWindowPositionUnderDialog">「名前を付けて開く/保存」ダイアログウィンドウの下に固定。ウィンドウが閉じるまで開いたまま表示されます</system:String>
+    <system:String x:Key="DialogJumpWindowPositionFollowDefault">デフォルトの検索ウィンドウの位置。検索ウィンドウのホットキーによってトリガーされたときに表示されます</system:String>
+    <system:String x:Key="dialogJumpResultBehaviour">ダイアログジャンプの検索結果の開き方</system:String>
+    <system:String x:Key="dialogJumpResultBehaviourToolTip">「開く/名前を付けて保存」ダイアログウィンドウの選択した結果パスに移動する動作</system:String>
+    <system:String x:Key="DialogJumpResultBehaviourLeftClick">左クリックまたはEnter キー</system:String>
+    <system:String x:Key="DialogJumpResultBehaviourRightClick">右クリック</system:String>
+    <system:String x:Key="dialogJumpFileResultBehaviour">ダイアログジャンプのファイルに対する動作</system:String>
+    <system:String x:Key="dialogJumpFileResultBehaviourToolTip">結果がファイルパスの場合の、「開く/名前を付けて保存」ダイアログウィンドウに対する動作</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourFullPath">フルパスをファイル名ボックスに入力</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourFullPathOpen">フルパスをファイル名ボックスに入力して開く</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourDirectory">パスボックスに含まれるフォルダを入力</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP プロキシ</system:String>
@@ -618,7 +618,7 @@
 
     <!--  Plugin Update Window  -->
     <system:String x:Key="restartAfterUpdating">Restart Flow Launcher after updating plugins</system:String>
-    <system:String x:Key="updatePluginCheckboxContent">{0}: Update from v{1} to v{2}</system:String>
+    <system:String x:Key="updatePluginCheckboxContent">{0}: v{1} から v{2} へ更新</system:String>
     <system:String x:Key="updatePluginNoSelected">No plugin selected</system:String>
 
     <!--  Welcome Window  -->
