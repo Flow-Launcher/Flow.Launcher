@@ -332,6 +332,7 @@
     <system:String x:Key="PlaceholderTextTip">Змінення тексту заповнювача. Ввід буде використовувати: {0}</system:String>
     <system:String x:Key="KeepMaxResults">Фіксований розмір вікна</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">Розмір вікна не можна регулювати шляхом перетягування.</system:String>
+    <system:String x:Key="MaxShowResultsCannotWorkWithAlwaysPreview">Оскільки функція «Завжди переглядати» ввімкнена, максимальні результати можуть не показуватися, оскільки панель передперегляду вимагає певної мінімальної висоти</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Гаряча клавіша</system:String>

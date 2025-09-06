@@ -331,6 +331,7 @@
     <system:String x:Key="PlaceholderTextTip">שנה את טקסט מציין המיקום. אם הקלט ריק, ייעשה שימוש ב: {0}</system:String>
     <system:String x:Key="KeepMaxResults">גודל חלון קבוע</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">לא ניתן להתאים את גודל החלון באמצעות גרירה.</system:String>
+    <system:String x:Key="MaxShowResultsCannotWorkWithAlwaysPreview">Since Always Preview is on, maximum results shown may not take effect because preview panel requires a certain minimum height</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">מקש קיצור</system:String>

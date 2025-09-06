@@ -323,6 +323,7 @@
     <system:String x:Key="PlaceholderTextTip">안내 텍스트를 변경하세요. 아무것도 입력하지 않으면 다음을 사용합니다: &quot;{0}&quot;</system:String>
     <system:String x:Key="KeepMaxResults">창 크기 고정</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">창 크기를 드래그하여 조절할 수 없습니다.</system:String>
+    <system:String x:Key="MaxShowResultsCannotWorkWithAlwaysPreview">Since Always Preview is on, maximum results shown may not take effect because preview panel requires a certain minimum height</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">단축키</system:String>

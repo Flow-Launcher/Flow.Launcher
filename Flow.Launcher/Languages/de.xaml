@@ -332,6 +332,7 @@
     <system:String x:Key="PlaceholderTextTip">Platzhaltertext ändern. Eingabe leer wird verwendet: {0}</system:String>
     <system:String x:Key="KeepMaxResults">Festgelegte Fenstergröße</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">Die Fenstergröße ist durch Ziehen nicht anpassbar.</system:String>
+    <system:String x:Key="MaxShowResultsCannotWorkWithAlwaysPreview">Since Always Preview is on, maximum results shown may not take effect because preview panel requires a certain minimum height</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Hotkey</system:String>
