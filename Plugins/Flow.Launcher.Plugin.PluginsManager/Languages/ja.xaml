@@ -2,8 +2,8 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Dialogues  -->
-    <system:String x:Key="plugin_pluginsmanager_downloading_plugin">Downloading plugin</system:String>
-    <system:String x:Key="plugin_pluginsmanager_download_success">Successfully downloaded</system:String>
+    <system:String x:Key="plugin_pluginsmanager_downloading_plugin">プラグインをダウンロード中</system:String>
+    <system:String x:Key="plugin_pluginsmanager_download_success">{0} のダウンロードに成功</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_error">Error: Unable to download the plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} by {1} {2}{3}このプラグインをアンインストールしますか？アンインストール後、Flow Launcherは自動的に再起動されます。</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt_no_restart">{0} by {1} {2}{2}このプラグインをアンインストールしますか？</system:String>
@@ -11,7 +11,7 @@
     <system:String x:Key="plugin_pluginsmanager_install_prompt_no_restart">{0} by {1} {2}{2}このプラグインをインストールしますか？</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_title">Plugin Install</system:String>
     <system:String x:Key="plugin_pluginsmanager_installing_plugin">Installing Plugin</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_from_web">Download and install {0}</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_from_web">{0} をダウンロードしてインストール中</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Plugin Uninstall</system:String>
     <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_title">Keep plugin settings</system:String>
     <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_subtitle">Do you want to keep the settings of the plugin for the next usage?</system:String>
