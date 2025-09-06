@@ -176,7 +176,7 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="showAtTopmost">Zobraziť vyhľadávacie okno v popredí</system:String>
     <system:String x:Key="showAtTopmostToolTip">Prepíše nastavenie &quot;Vždy na vrchu&quot; ostatných programov a zobrazí navrchu Flow.</system:String>
     <system:String x:Key="autoRestartAfterChanging">Reštartovať po úprave pluginu cez Repozitár pluginov</system:String>
-    <system:String x:Key="autoRestartAfterChangingToolTip">Automaticky reštartovať Flow Launcher po inštalácii/odinštalácii/aktualizáciu pluginu cez Repozitár pluginov</system:String>
+    <system:String x:Key="autoRestartAfterChangingToolTip">Automaticky reštartovať Flow Launcher po inštalácii/odinštalácii/aktualizácii pluginu cez Repozitár pluginov</system:String>
     <system:String x:Key="showUnknownSourceWarning">Zobraziť upozornenie na neznámy zdroj</system:String>
     <system:String x:Key="showUnknownSourceWarningToolTip">Zobraziť upozornenie pri inštalácii z neznámych zdrojov</system:String>
     <system:String x:Key="autoUpdatePlugins">Automaticky aktualizovať pluginy</system:String>
@@ -255,7 +255,7 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="UpdatePromptTitle">Aktualizácia pluginu</system:String>
     <system:String x:Key="UpdatePromptSubtitle">{0} od {1} {2}{2}Chcete aktualizovať tento plugin?</system:String>
     <system:String x:Key="DownloadingPlugin">Sťahovanie pluginu</system:String>
-    <system:String x:Key="AutoRestartAfterChange">Automaticky reštartovať po inštalácii/odinštalácii/aktualizáciu pluginov cez Repozitár pluginov</system:String>
+    <system:String x:Key="AutoRestartAfterChange">Automaticky reštartovať po inštalácii/odinštalácii/aktualizácii pluginov cez Repozitár pluginov</system:String>
     <system:String x:Key="ZipFileNotHavePluginJson">V zipe sa nenachádza platná konfigurácia plugin.json</system:String>
     <system:String x:Key="InstallFromUnknownSourceTitle">Inštalácia z neznámeho zdroja</system:String>
     <system:String x:Key="InstallFromUnknownSourceSubtitle">Tento plugin pochádza z neznámeho zdroja a môže predstavovať potenciálne riziká!{0}{0}Uistite sa, že viete, odkiaľ tento plugin pochádza, a že je bezpečný.{0}{0}Stále chcete pokračovať?{0}{0}(Toto upozornenie môžete vypnúť sekcii Všeobecné v nastaveniach)</system:String>
@@ -267,7 +267,7 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="updateAllPluginsTitle">Dostupná aktualizácia pluginu</system:String>
     <system:String x:Key="updateAllPluginsButtonContent">Aktualizovať pluginy</system:String>
     <system:String x:Key="checkPluginUpdatesTooltip">Skontrolovať dostupnosť aktualizácií</system:String>
-    <system:String x:Key="PluginsUpdateSuccessNoRestart">Pluginy {0} boli úspešne aktualizované. Prosím, reštartuje Flow.</system:String>
+    <system:String x:Key="PluginsUpdateSuccessNoRestart">Pluginy boli úspešne aktualizované. Prosím, reštartuje Flow.</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Motív</system:String>
