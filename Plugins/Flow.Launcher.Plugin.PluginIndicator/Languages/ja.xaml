@@ -3,7 +3,7 @@
 
     <system:String x:Key="flowlauncher_plugin_pluginindicator_result_subtitle">{0} プラグインのアクションキーワード</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_name">Plugin Indicator</system:String>
-    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_description">Provides plugins action words suggestions</system:String>
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_name">プラグインインジケーター</system:String>
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_description">プラグインのアクションキーワードの一覧を検索します</system:String>
 
 </ResourceDictionary>
