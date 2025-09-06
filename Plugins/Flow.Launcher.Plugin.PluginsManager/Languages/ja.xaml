@@ -50,7 +50,7 @@
     <system:String x:Key="plugin_pluginsmanager_invalid_zip_subtitle">Please check if there is a plugin.json in {0}</system:String>
 
     <!--  Plugin Infos  -->
-    <system:String x:Key="plugin_pluginsmanager_plugin_name">Plugins Manager</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_name">プラグインマネージャー</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_description">Install, uninstall or update Flow Launcher plugins via the search window</system:String>
     <system:String x:Key="plugin_pluginsmanager_unknown_author">Unknown Author</system:String>
 
