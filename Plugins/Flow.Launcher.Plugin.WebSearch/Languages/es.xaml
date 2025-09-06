@@ -11,6 +11,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_edit">Editar</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">Añadir</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">Activado</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_private_mode_label">Modo privado</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_true">Activado</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_false">Desactivado</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">Confirmar</system:String>

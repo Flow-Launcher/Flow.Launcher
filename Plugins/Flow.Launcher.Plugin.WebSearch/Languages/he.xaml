@@ -11,6 +11,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_edit">ערו</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">הוסף</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">מופעל</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_private_mode_label">מצב פרטי</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_true">מופעל</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_false">מושבת</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">אישו</system:String>

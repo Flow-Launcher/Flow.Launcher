@@ -16,6 +16,26 @@
     <system:String x:Key="failedToInitializePluginsTitle">Fail to Init Plugins</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">Plugins: {0} - fail to load and would be disabled, please contact plugin creator for help</system:String>
 
+    <!--  Portable  -->
+    <system:String x:Key="restartToDisablePortableMode">Flow Launcher needs to restart to finish disabling portable mode, after the restart your portable data profile will be deleted and roaming data profile kept</system:String>
+    <system:String x:Key="restartToEnablePortableMode">Flow Launcher needs to restart to finish enabling portable mode, after the restart your roaming data profile will be deleted and portable data profile kept</system:String>
+    <system:String x:Key="moveToDifferentLocation">Flow Launcher has detected you enabled portable mode, would you like to move it to a different location?</system:String>
+    <system:String x:Key="shortcutsUninstallerCreated">Flow Launcher has detected you disabled portable mode, the relevant shortcuts and uninstaller entry have been created</system:String>
+    <system:String x:Key="userDataDuplicated">Flow Launcher detected your user data exists both in {0} and {1}. {2}{2}Please delete {1} in order to proceed. No changes have occurred.</system:String>
+
+    <!--  Plugin Loader  -->
+    <system:String x:Key="pluginHasErrored">The following plugin has errored and cannot be loaded:</system:String>
+    <system:String x:Key="pluginsHaveErrored">The following plugins have errored and cannot be loaded:</system:String>
+    <system:String x:Key="referToLogs">Please refer to the logs for more information</system:String>
+
+    <!--  Http  -->
+    <system:String x:Key="pleaseTryAgain">Probeer het opnieuw</system:String>
+    <system:String x:Key="parseProxyFailed">Unable to parse Http Proxy</system:String>
+
+    <!--  AbstractPluginEnvironment  -->
+    <system:String x:Key="failToInstallTypeScriptEnv">Failed to install TypeScript environment. Please try again later</system:String>
+    <system:String x:Key="failToInstallPythonEnv">Failed to install Python environment. Please try again later.</system:String>
+
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Sneltoets &quot;{0}&quot; registreren. De sneltoets kan in gebruik zijn door een ander programma. Verander naar een andere sneltoets of sluit een ander programma.</system:String>
     <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
@@ -43,7 +63,7 @@
     <system:String x:Key="GameModeToolTip">Stop het gebruik van Sneltoetsen.</system:String>
     <system:String x:Key="PositionReset">Positie resetten</system:String>
     <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
-    <system:String x:Key="queryTextBoxPlaceholder">Type here to search</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Type om te zoeken</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Instellingen</system:String>
@@ -91,6 +111,7 @@
     <system:String x:Key="typingStartEn">Begin altijd met typen in Engelse modus</system:String>
     <system:String x:Key="typingStartEnTooltip">Verander tijdelijk je invoermethode in de Engelse modus bij het activeren van Flow.</system:String>
     <system:String x:Key="autoUpdates">Automatische Update</system:String>
+    <system:String x:Key="autoUpdatesTooltip">Automatically check and update the app when available</system:String>
     <system:String x:Key="select">Selecteer</system:String>
     <system:String x:Key="hideOnStartup">Verberg Flow Launcher als systeem opstart</system:String>
     <system:String x:Key="hideOnStartupToolTip">Flow Launcher zoekvenster is verborgen in het systeemvak na het opstarten.</system:String>
@@ -102,16 +123,29 @@
     <system:String x:Key="SearchPrecisionLow">Laag</system:String>
     <system:String x:Key="SearchPrecisionRegular">Normaal</system:String>
     <system:String x:Key="ShouldUsePinyin">Zou Pinyin moeten gebruiken</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">Zorgt ervoor dat Pinyin gebruikt kan worden om te zoeken. Pinyin is het standaard systeem van geromaniseerde spelling voor het vertalen van Chinees.</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">Pinyin is het standaard systeem van geromaniseerde spelling voor Chinees vertalen. Let op, het inschakelen van dit systeem kan het geheugengebruik tijdens het zoeken aanzienlijk verhogen.</system:String>
+    <system:String x:Key="ShouldUseDoublePinyin">Dubbele Pinyin gebruiken</system:String>
+    <system:String x:Key="ShouldUseDoublePinyinToolTip">Gebruik Double Pinyin in plaats van Full Pinyin om te zoeken.</system:String>
+    <system:String x:Key="DoublePinyinSchema">Double Pinyin Schema</system:String>
+    <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao Hij</system:String>
+    <system:String x:Key="DoublePinyinSchemasZiRanMa">Zi Ran Ma</system:String>
+    <system:String x:Key="DoublePinyinSchemasWeiRuan">Wei Ruan</system:String>
+    <system:String x:Key="DoublePinyinSchemasZhiNengABC">Zhi Neng ABC</system:String>
+    <system:String x:Key="DoublePinyinSchemasZiGuangPinYin">Zi Guang Pin Yin</system:String>
+    <system:String x:Key="DoublePinyinSchemasPinYinJiaJia">Pin Yin Jia Jia</system:String>
+    <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
+    <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
+    <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
+
     <system:String x:Key="AlwaysPreview">Altijd voorbeeld</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Open altijd het voorbeeld paneel wanneer Flow activeert. Druk op {0} om voorbeeld te schakelen.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Schaduw effect is niet toegestaan omdat het huidige thema een vervagingseffect heeft</system:String>
-    <system:String x:Key="searchDelay">Search Delay</system:String>
-    <system:String x:Key="searchDelayToolTip">Adds a short delay while typing to reduce UI flicker and result load. Recommended if your typing speed is average.</system:String>
-    <system:String x:Key="searchDelayNumberBoxToolTip">Enter the wait time (in ms) until input is considered complete. This can only be edited if Search Delay is enabled.</system:String>
-    <system:String x:Key="searchDelayTime">Default Search Delay Time</system:String>
-    <system:String x:Key="searchDelayTimeToolTip">Wait time before showing results after typing stops. Higher values wait longer. (ms)</system:String>
-    <system:String x:Key="KoreanImeTitle">Information for Korean IME user</system:String>
+    <system:String x:Key="searchDelay">Vertraging voor zoeken</system:String>
+    <system:String x:Key="searchDelayToolTip">Voegt een korte vertraging toe tijdens het typen om flikkeren van de UI en systeembelasting te verminderen. Aanbevolen als uw typsnelheid gemiddeld is.</system:String>
+    <system:String x:Key="searchDelayNumberBoxToolTip">Voer de wachttijd in (in ms) totdat de invoer is voltooid. Dit kan alleen worden bewerkt als de Vertraging voor zoeken optie is ingeschakeld.</system:String>
+    <system:String x:Key="searchDelayTime">Standaard wachttijd Vertraging voor zoeken</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Wacht op het tonen van resultaten na het typen stopt. Hogere waarden wachten langer. (ms)</system:String>
+    <system:String x:Key="KoreanImeTitle">Informatie voor Koreaanse IME-gebruiker</system:String>
     <system:String x:Key="KoreanImeGuide">
         The Korean input method used in Windows 11 may cause some issues in Flow Launcher.
 
@@ -131,6 +165,8 @@
     <system:String x:Key="KoreanImeOpenLinkButton">Openen</system:String>
     <system:String x:Key="KoreanImeRegistry">Use Previous Korean IME</system:String>
     <system:String x:Key="KoreanImeRegistryTooltip">You can change the Previous Korean IME settings directly from here</system:String>
+    <system:String x:Key="KoreanImeSettingChangeFailTitle">Failed to change Korean IME setting</system:String>
+    <system:String x:Key="KoreanImeSettingChangeFailSubTitle">Please check your system registry access or contact support.</system:String>
     <system:String x:Key="homePage">Home Page</system:String>
     <system:String x:Key="homePageToolTip">Show home page results when query text is empty.</system:String>
     <system:String x:Key="historyResultsForHomePage">Show History Results in Home Page</system:String>
@@ -142,6 +178,8 @@
     <system:String x:Key="autoRestartAfterChangingToolTip">Restart Flow Launcher automatically after installing/uninstalling/updating plugin via Plugin Store</system:String>
     <system:String x:Key="showUnknownSourceWarning">Show unknown source warning</system:String>
     <system:String x:Key="showUnknownSourceWarningToolTip">Show warning when installing plugins from unknown sources</system:String>
+    <system:String x:Key="autoUpdatePlugins">Auto update plugins</system:String>
+    <system:String x:Key="autoUpdatePluginsToolTip">Automatically check plugin updates and notify if there are any updates available</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Plug-ins zoeken</system:String>
@@ -163,7 +201,7 @@
     <system:String x:Key="FilterComboboxLabel">Advanced Settings:</system:String>
     <system:String x:Key="DisplayModeOnOff">Enabled</system:String>
     <system:String x:Key="DisplayModePriority">Priority</system:String>
-    <system:String x:Key="DisplayModeSearchDelay">Search Delay</system:String>
+    <system:String x:Key="DisplayModeSearchDelay">Vertraging voor zoeken</system:String>
     <system:String x:Key="DisplayModeHomeOnOff">Home Page</system:String>
     <system:String x:Key="currentPriority">Huidige Prioriteit</system:String>
     <system:String x:Key="newPriority">Nieuwe Prioriteit</system:String>
@@ -223,6 +261,12 @@
     <system:String x:Key="ZipFiles">Zip files</system:String>
     <system:String x:Key="SelectZipFile">Please select zip file</system:String>
     <system:String x:Key="installLocalPluginTooltip">Install plugin from local path</system:String>
+    <system:String x:Key="updateNoResultTitle">No update available</system:String>
+    <system:String x:Key="updateNoResultSubtitle">All plugins are up to date</system:String>
+    <system:String x:Key="updateAllPluginsTitle">Plugin updates available</system:String>
+    <system:String x:Key="updateAllPluginsButtonContent">Update plugins</system:String>
+    <system:String x:Key="checkPluginUpdatesTooltip">Check plugin updates</system:String>
+    <system:String x:Key="PluginsUpdateSuccessNoRestart">Plugins are successfully updated. Please restart Flow.</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Thema</system:String>
@@ -288,6 +332,7 @@
     <system:String x:Key="PlaceholderTextTip">Change placeholder text. Input empty will use: {0}</system:String>
     <system:String x:Key="KeepMaxResults">Fixed Window Size</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">The window size is not adjustable by dragging.</system:String>
+    <system:String x:Key="MaxShowResultsCannotWorkWithAlwaysPreview">Since Always Preview is on, maximum results shown may not take effect because preview panel requires a certain minimum height</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Sneltoets</system:String>
@@ -350,6 +395,28 @@
     <system:String x:Key="showBadges">Show Result Badges</system:String>
     <system:String x:Key="showBadgesToolTip">For supported plugins, badges are displayed to help distinguish them more easily.</system:String>
     <system:String x:Key="showBadgesGlobalOnly">Show Result Badges for Global Query Only</system:String>
+    <system:String x:Key="showBadgesGlobalOnlyToolTip">Show badges for global query results only</system:String>
+    <system:String x:Key="dialogJumpHotkey">Dialog Jump</system:String>
+    <system:String x:Key="dialogJumpHotkeyToolTip">Enter shortcut to quickly navigate the Open/Save As dialog window to the path of the current file manager.</system:String>
+    <system:String x:Key="dialogJump">Dialog Jump</system:String>
+    <system:String x:Key="dialogJumpToolTip">When Open/Save As dialog window opens, quickly navigate to the current path of the file manager.</system:String>
+    <system:String x:Key="autoDialogJump">Dialog Jump Automatically</system:String>
+    <system:String x:Key="autoDialogJumpToolTip">When Open/Save As dialog window is displayed, automatically navigate to the path of the current file manager. (Experimental)</system:String>
+    <system:String x:Key="showDialogJumpWindow">Show Dialog Jump Window</system:String>
+    <system:String x:Key="showDialogJumpWindowToolTip">Display Dialog Jump search window when the open/save dialog window is shown to quickly navigate to file/folder locations.</system:String>
+    <system:String x:Key="dialogJumpWindowPosition">Dialog Jump Window Position</system:String>
+    <system:String x:Key="dialogJumpWindowPositionToolTip">Select position for the Dialog Jump search window</system:String>
+    <system:String x:Key="DialogJumpWindowPositionUnderDialog">Fixed under the Open/Save As dialog window. Displayed on open and stays until the window is closed</system:String>
+    <system:String x:Key="DialogJumpWindowPositionFollowDefault">Default search window position. Displayed when triggered by search window hotkey</system:String>
+    <system:String x:Key="dialogJumpResultBehaviour">Dialog Jump Result Navigation Behaviour</system:String>
+    <system:String x:Key="dialogJumpResultBehaviourToolTip">Behaviour to navigate Open/Save As dialog window to the selected result path</system:String>
+    <system:String x:Key="DialogJumpResultBehaviourLeftClick">Left click or Enter key</system:String>
+    <system:String x:Key="DialogJumpResultBehaviourRightClick">Right click</system:String>
+    <system:String x:Key="dialogJumpFileResultBehaviour">Dialog Jump File Navigation Behaviour</system:String>
+    <system:String x:Key="dialogJumpFileResultBehaviourToolTip">Behaviour to navigate Open/Save As dialog window when the result is a file path</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourFullPath">Fill full path in file name box</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourFullPathOpen">Fill full path in file name box and open</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourDirectory">Fill directory in path box</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP Proxy</system:String>
@@ -548,6 +615,11 @@ Als u een '@' voorvoegsel toevoegt tijdens het invoeren van een snelkoppeling, m
     <system:String x:Key="update_flowlauncher_update_update_files">Volgende bestanden zullen worden geüpdatet</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Update bestanden</system:String>
     <system:String x:Key="update_flowlauncher_update_update_description">Update beschrijving</system:String>
+
+    <!--  Plugin Update Window  -->
+    <system:String x:Key="restartAfterUpdating">Restart Flow Launcher after updating plugins</system:String>
+    <system:String x:Key="updatePluginCheckboxContent">{0}: Update from v{1} to v{2}</system:String>
+    <system:String x:Key="updatePluginNoSelected">No plugin selected</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Skip</system:String>
