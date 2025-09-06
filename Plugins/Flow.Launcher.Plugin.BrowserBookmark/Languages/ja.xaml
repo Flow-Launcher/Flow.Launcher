@@ -10,9 +10,9 @@
 
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Bookmark Data</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Open bookmarks in:</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newWindow">New window</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">New tab</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">ブックマークを開く場所：</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newWindow">新しいウインドウ</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">新しいタブ</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">Set browser from path:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">Choose</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">URLをコピー</system:String>
