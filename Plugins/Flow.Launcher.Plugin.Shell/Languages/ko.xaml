@@ -15,4 +15,6 @@
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">관리자 권한으로 실행</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_copy">명령어 복사</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_history">가장 많이 사용된 명령 표시 수</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_command_not_found">Command not found: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_error_running_command">Error running the command: {0}</system:String>
 </ResourceDictionary>

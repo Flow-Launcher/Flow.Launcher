@@ -5,6 +5,9 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">ブラウザブックマーク</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">ブラウザのブックマークを検索します</system:String>
 
+    <!--  Main  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">Failed to set url in clipboard</system:String>
+
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Bookmark Data</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Open bookmarks in:</system:String>
@@ -14,17 +17,17 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">Choose</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">URLをコピー</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">ブックマークのURLをクリップボードにコピー</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Load Browser From:</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Browser Name</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Data Directory Path</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">次のブラウザから読み込む：</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">ブラウザ名</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">データフォルダのパス</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">追加</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_editBrowserBookmark">編集</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">削除</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_browseBrowserBookmark">Browse</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browseBrowserBookmark">選択</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_others">その他のブラウザ</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Browser Engine</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">If you are not using Chrome, Firefox or Edge, or you are using their portable version, you need to add bookmarks data directory and select correct browser engine to make this plugin work.</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">For example: Brave's engine is Chromium; and its default bookmarks data location is: &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. For Firefox engine, the bookmarks directory is the userdata folder contains the places.sqlite file.</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Load favicons (can be time consuming during startup)</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">ブラウザー エンジン</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">Chrome、Firefox、Edgeを使用していない場合、またはそれらのポータブル版を使用している場合、 このプラグインを動作させるには、ブックマークデータのフォルダを指定し、正しいブラウザエンジンを選択する必要があります。</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">例: BraveのエンジンはChromiumで、デフォルトのブックマークデータは以下の場所にあります: &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;。 Firefox エンジンの場合、bookmarks ディレクトリは userdata フォルダにあって、places.sqlite ファイルが格納されています。</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">ファビコンを読み込む (起動時に時間がかかる場合があります)</system:String>
 
 </ResourceDictionary>

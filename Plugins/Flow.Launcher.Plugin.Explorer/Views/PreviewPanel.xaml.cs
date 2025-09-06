@@ -21,22 +21,22 @@ public partial class PreviewPanel : UserControl
 {
     private static readonly string ClassName = nameof(PreviewPanel);
 
-    private string FilePath { get; }
-    public string FileSize { get; private set; } = Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
-    public string CreatedAt { get; } = "";
-    public string LastModifiedAt { get; } = "";
-    private ImageSource _previewImage = new BitmapImage();
-    private Settings Settings { get; }
+    public string FilePath { get; }
+    public string FileName { get; }
 
-    public ImageSource PreviewImage
-    {
-        get => _previewImage;
-        private set
-        {
-            _previewImage = value;
-            OnPropertyChanged();
-        }
-    }
+    [ObservableProperty]
+    private string _fileSize = Main.Context.API.GetTranslation("plugin_explorer_plugin_tooltip_more_info_unknown");
+    
+    [ObservableProperty]
+    private string _createdAt = "";
+    
+    [ObservableProperty]
+    private string _lastModifiedAt = "";
+
+    [ObservableProperty]
+    private ImageSource _previewImage = new BitmapImage();
+
+    private Settings Settings { get; }
 
     public Visibility FileSizeVisibility => Settings.ShowFileSizeInPreviewPanel
         ? Visibility.Visible
@@ -57,11 +57,11 @@ public partial class PreviewPanel : UserControl
 
     public PreviewPanel(Settings settings, string filePath, ResultType type)
     {
-        InitializeComponent();
-
         Settings = settings;
-
         FilePath = filePath;
+        FileName = Path.GetFileName(filePath);
+
+        InitializeComponent();
 
         if (Settings.ShowFileSizeInPreviewPanel)
         {

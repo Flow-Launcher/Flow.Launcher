@@ -16,6 +16,26 @@
     <system:String x:Key="failedToInitializePluginsTitle">Échec de l'initialisation des plugins</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">Plugins : {0} - n'ont pas pu être chargés et doivent être désactivés, veuillez contacter le créateur du plugin pour obtenir de l'aide</system:String>
 
+    <!--  Portable  -->
+    <system:String x:Key="restartToDisablePortableMode">Flow Launcher doit redémarrer pour terminer la désactivation le mode portable, après le redémarrage, les données du profile portable seront supprimé et les données roaming conservé</system:String>
+    <system:String x:Key="restartToEnablePortableMode">Flow Launcher doit redémarrer pour terminer l'activation du mode portable, après le redémarrage, les données du profile roaming seront supprimé et les données du profile portable conservé</system:String>
+    <system:String x:Key="moveToDifferentLocation">Flow Launcher à détecter que vous avez activé le mode portable, voulez-vous le déplacer à un autre emplacement ?</system:String>
+    <system:String x:Key="shortcutsUninstallerCreated">Flow Launcher a détecté que vous avez désactivé le mode portable, les raccourcis liés et l'entrée de désinstallation ont été créés</system:String>
+    <system:String x:Key="userDataDuplicated">Flow Launcher a détecté que vos données utilisateur existent à la fois dans {0} et {1}. {2}{2}Veuillez supprimer {1} pour continuer. Aucune modification n'a été apportée.</system:String>
+
+    <!--  Plugin Loader  -->
+    <system:String x:Key="pluginHasErrored">Le plugin suivant a produit une erreur et ne peut être chargé :</system:String>
+    <system:String x:Key="pluginsHaveErrored">Les plugins suivants ont produit une erreur et ne peuvent pas être chargés :</system:String>
+    <system:String x:Key="referToLogs">Veuillez vous référer aux logs pour plus d'informations</system:String>
+
+    <!--  Http  -->
+    <system:String x:Key="pleaseTryAgain">Veuillez réessayer</system:String>
+    <system:String x:Key="parseProxyFailed">Impossible d'analyser le proxy Http</system:String>
+
+    <!--  AbstractPluginEnvironment  -->
+    <system:String x:Key="failToInstallTypeScriptEnv">Échec de l'installation de l'environnement TypeScript. Veuillez réessayer plus tard.</system:String>
+    <system:String x:Key="failToInstallPythonEnv">Échec de l'installation de l'environnement Python. Veuillez réessayer plus tard.</system:String>
+
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Échec lors de l'enregistrement du raccourci : {0}</system:String>
     <system:String x:Key="unregisterHotkeyFailed">Échec de la réinitialisation du raccourci &quot;{0}&quot;. Veuillez réessayer ou consulter le journal pour plus de détails</system:String>
@@ -91,6 +111,7 @@
     <system:String x:Key="typingStartEn">Toujours commencer à taper en mode anglais</system:String>
     <system:String x:Key="typingStartEnTooltip">Changez temporairement votre mode de saisie en mode anglais lors de l'activation de Flow.</system:String>
     <system:String x:Key="autoUpdates">Mettre à jour automatiquement</system:String>
+    <system:String x:Key="autoUpdatesTooltip">Vérifier et mettre à jour automatiquement l'application lorsqu'une nouvelle version est disponible</system:String>
     <system:String x:Key="select">Sélectionner</system:String>
     <system:String x:Key="hideOnStartup">Cacher Flow Launcher au démarrage</system:String>
     <system:String x:Key="hideOnStartupToolTip">La fenêtre de recherche de Flow Launcher est cachée dans la barre d’état après le démarrage.</system:String>
@@ -102,7 +123,20 @@
     <system:String x:Key="SearchPrecisionLow">Faible</system:String>
     <system:String x:Key="SearchPrecisionRegular">Normal</system:String>
     <system:String x:Key="ShouldUsePinyin">Devrait utiliser Pinyin</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">Permet d'utiliser Pinyin pour la recherche. Pinyin est le système standard d'orthographe romanisée pour la traduction du chinois</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">Pinyin est le système standard d'orthographe romanisée pour traduire le chinois. Veuillez noter que cela peut augmenter considérablement l'utilisation de la mémoire pendant la recherche.</system:String>
+    <system:String x:Key="ShouldUseDoublePinyin">Utiliser Double Pinyin</system:String>
+    <system:String x:Key="ShouldUseDoublePinyinToolTip">Utilisez Double Pinyin au lieu de Full Pinyin pour rechercher.</system:String>
+    <system:String x:Key="DoublePinyinSchema">Schéma double Pinyin</system:String>
+    <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao He</system:String>
+    <system:String x:Key="DoublePinyinSchemasZiRanMa">Zi Ran Ma</system:String>
+    <system:String x:Key="DoublePinyinSchemasWeiRuan">Wei Ruan</system:String>
+    <system:String x:Key="DoublePinyinSchemasZhiNengABC">Zhi Neng ABC</system:String>
+    <system:String x:Key="DoublePinyinSchemasZiGuangPinYin">Zi Guang Pin Yin</system:String>
+    <system:String x:Key="DoublePinyinSchemasPinYinJiaJia">Pin Yin Jia Jia</system:String>
+    <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
+    <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
+    <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
+
     <system:String x:Key="AlwaysPreview">Toujours prévisualiser</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Toujours ouvrir le panneau d'aperçu lorsque Flow s'active. Appuyez sur {0} pour activer/désactiver l'aperçu.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">L'effet d'ombre n'est pas autorisé lorsque le thème actuel à un effet de flou activé</system:String>
@@ -131,6 +165,8 @@
     <system:String x:Key="KoreanImeOpenLinkButton">Ouvrir</system:String>
     <system:String x:Key="KoreanImeRegistry">Utilisez l'IME coréenne précédente</system:String>
     <system:String x:Key="KoreanImeRegistryTooltip">Vous pouvez modifier les paramètres de l'IME coréen précédent directement à partir d'ici</system:String>
+    <system:String x:Key="KoreanImeSettingChangeFailTitle">Impossible de changer le paramètre IME coréen</system:String>
+    <system:String x:Key="KoreanImeSettingChangeFailSubTitle">Veuillez vérifier votre accès au registre du système ou contacter le support.</system:String>
     <system:String x:Key="homePage">Page d'accueil</system:String>
     <system:String x:Key="homePageToolTip">Afficher les résultats de la page d'accueil lorsque le texte de la requête est vide.</system:String>
     <system:String x:Key="historyResultsForHomePage">Afficher les résultats de l'historique sur la page d'accueil</system:String>
@@ -142,6 +178,8 @@
     <system:String x:Key="autoRestartAfterChangingToolTip">Redémarrez automatiquement Flow Launcher après l'installation / désinstallation / mise à jour du plugin via le magasin des plugins</system:String>
     <system:String x:Key="showUnknownSourceWarning">Afficher l'avertissement de source inconnue</system:String>
     <system:String x:Key="showUnknownSourceWarningToolTip">Afficher un avertissement lors de l'installation de plugins à partir de sources inconnues</system:String>
+    <system:String x:Key="autoUpdatePlugins">Mettre à jour automatiquement les plugins</system:String>
+    <system:String x:Key="autoUpdatePluginsToolTip">Vérifier automatiquement les mises à jour des plugins et notifier s'il y a des mises à jour disponibles</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Rechercher des plugins</system:String>
@@ -223,6 +261,12 @@
     <system:String x:Key="ZipFiles">Fichiers zip</system:String>
     <system:String x:Key="SelectZipFile">Veuillez sélectionner un fichier zip</system:String>
     <system:String x:Key="installLocalPluginTooltip">Installer le plugin depuis le chemin local</system:String>
+    <system:String x:Key="updateNoResultTitle">Aucune mise à jour disponible</system:String>
+    <system:String x:Key="updateNoResultSubtitle">Tous les plugins sont à jour</system:String>
+    <system:String x:Key="updateAllPluginsTitle">Mises à jour de plugins disponibles</system:String>
+    <system:String x:Key="updateAllPluginsButtonContent">Mettre à jour les plugins</system:String>
+    <system:String x:Key="checkPluginUpdatesTooltip">Vérifier les mises à jour des plugins</system:String>
+    <system:String x:Key="PluginsUpdateSuccessNoRestart">Plugins mis à jour avec succès. Veuillez redémarrer Flow.</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Thèmes</system:String>
@@ -288,6 +332,7 @@
     <system:String x:Key="PlaceholderTextTip">Modifier le texte de l'espace réservé. Les entrées vides utiliseront : {0}</system:String>
     <system:String x:Key="KeepMaxResults">Taille de la fenêtre fixe</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">La taille de la fenêtre n'est pas réglable par glissement.</system:String>
+    <system:String x:Key="MaxShowResultsCannotWorkWithAlwaysPreview">Étant donné que Always Preview est toujours activé, les résultats maximaux indiqués peuvent ne pas prendre effet car le panneau d'aperçu nécessite une certaine hauteur minimale</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Raccourcis</system:String>
@@ -350,6 +395,28 @@
     <system:String x:Key="showBadges">Afficher les badges de résultats</system:String>
     <system:String x:Key="showBadgesToolTip">Pour les plugins pris en charge, des badges sont affichés afin de les distinguer plus facilement.</system:String>
     <system:String x:Key="showBadgesGlobalOnly">Afficher les badges de résultats pour la requête globale uniquement</system:String>
+    <system:String x:Key="showBadgesGlobalOnlyToolTip">Afficher les badges pour les résultats des requêtes globales uniquement</system:String>
+    <system:String x:Key="dialogJumpHotkey">Dialog Jump</system:String>
+    <system:String x:Key="dialogJumpHotkeyToolTip">Entrez le raccourci pour naviguer rapidement dans la fenêtre de dialogue Ouvrir/Enregistrer sous, vers le chemin du gestionnaire de fichiers actuel.</system:String>
+    <system:String x:Key="dialogJump">Dialog Jump</system:String>
+    <system:String x:Key="dialogJumpToolTip">Lorsque la fenêtre de dialogue Ouvrir/Enregistrer sous s'ouvre, accédez rapidement au chemin d'accès actuel du gestionnaire de fichiers.</system:String>
+    <system:String x:Key="autoDialogJump">Dialog Jump Automatically</system:String>
+    <system:String x:Key="autoDialogJumpToolTip">Lorsque la fenêtre de dialogue Ouvrir/Enregistrer sous est affichée, naviguez automatiquement vers le chemin du gestionnaire de fichiers actuel. (Expérimental)</system:String>
+    <system:String x:Key="showDialogJumpWindow">Show Dialog Jump Window</system:String>
+    <system:String x:Key="showDialogJumpWindowToolTip">Display Dialog Jump search window when the open/save dialog window is shown to quickly navigate to file/folder locations.</system:String>
+    <system:String x:Key="dialogJumpWindowPosition">Dialog Jump Window Position</system:String>
+    <system:String x:Key="dialogJumpWindowPositionToolTip">Select position for the Dialog Jump search window</system:String>
+    <system:String x:Key="DialogJumpWindowPositionUnderDialog">Fixed under the Open/Save As dialog window. Displayed on open and stays until the window is closed</system:String>
+    <system:String x:Key="DialogJumpWindowPositionFollowDefault">Default search window position. Displayed when triggered by search window hotkey</system:String>
+    <system:String x:Key="dialogJumpResultBehaviour">Dialog Jump Result Navigation Behaviour</system:String>
+    <system:String x:Key="dialogJumpResultBehaviourToolTip">Behaviour to navigate Open/Save As dialog window to the selected result path</system:String>
+    <system:String x:Key="DialogJumpResultBehaviourLeftClick">Left click or Enter key</system:String>
+    <system:String x:Key="DialogJumpResultBehaviourRightClick">Clique droit</system:String>
+    <system:String x:Key="dialogJumpFileResultBehaviour">Dialog Jump File Navigation Behaviour</system:String>
+    <system:String x:Key="dialogJumpFileResultBehaviourToolTip">Behaviour to navigate Open/Save As dialog window when the result is a file path</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourFullPath">Remplir le chemin complet dans la zone de nom de fichier</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourFullPathOpen">Remplir le chemin complet dans la zone de nom de fichier et ouvrir</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourDirectory">Remplir le répertoire dans la zone de chemin</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">Proxy HTTP</system:String>
@@ -377,7 +444,7 @@
     <system:String x:Key="about_activate_times">Vous avez utilisé Flow Launcher {0} fois</system:String>
     <system:String x:Key="checkUpdates">Vérifier les mises à jour</system:String>
     <system:String x:Key="BecomeASponsor">Devenir un Sponsor</system:String>
-    <system:String x:Key="newVersionTips">Nouvelle version {0} disponible, veuillez redémarrer Flow Launcher</system:String>
+    <system:String x:Key="newVersionTips">Nouvelle version {0} disponible, souhaitez-vous redémarrer Flow Launcher pour l'installer ?</system:String>
     <system:String x:Key="checkUpdatesFailed">Échec de la vérification de la mise à jour, vérifiez votre connexion et vos paramètres de configuration proxy pour pouvoir acceder à api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
         Échec du téléchargement de la mise à jour, vérifiez votre connexion et vos paramètres de configuration proxy pour pouvoir acceder à github-cloud.s3.amazonaws.com, ou téléchargez manuelement la mise à jour sur https://github.com/Flow-Launcher/Flow.Launcher/releases.
@@ -536,8 +603,8 @@ Si vous ajoutez un préfixe &quot;@&quot; lors de la saisie d'un raccourci, celu
         Flow Launcher n'a pas pu déplacer les données de votre profil utilisateur vers la nouvelle version de mise à jour.
         Veuillez déplacer manuellement le dossier de données de votre profil de {0} vers {1}
     </system:String>
-    <system:String x:Key="update_flowlauncher_new_update">Nouvelle mise à jour</system:String>
-    <system:String x:Key="update_flowlauncher_update_new_version_available">Version v{0} de Flow Launcher disponible</system:String>
+    <system:String x:Key="update_flowlauncher_new_update">Mise à jour disponible</system:String>
+    <system:String x:Key="update_flowlauncher_update_new_version_available">La nouvelle version {0} de Flow Launcher est maintenant disponible</system:String>
     <system:String x:Key="update_flowlauncher_update_error">Une erreur s'est produite lors de l'installation de la mise à jour</system:String>
     <system:String x:Key="update_flowlauncher_update">Mettre à jour</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">Annuler</system:String>
@@ -547,6 +614,11 @@ Si vous ajoutez un préfixe &quot;@&quot; lors de la saisie d'un raccourci, celu
     <system:String x:Key="update_flowlauncher_update_update_files">Les fichiers suivants seront mis à jour</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Fichiers mis à jour</system:String>
     <system:String x:Key="update_flowlauncher_update_update_description">Description de la mise à jour</system:String>
+
+    <!--  Plugin Update Window  -->
+    <system:String x:Key="restartAfterUpdating">Redémarrer Flow Launcher après la mise à jour des plugins</system:String>
+    <system:String x:Key="updatePluginCheckboxContent">{0}: Mis à jour de v{1} vers v{2}</system:String>
+    <system:String x:Key="updatePluginNoSelected">Aucun plugin sélectionné</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Passer</system:String>

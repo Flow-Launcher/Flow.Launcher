@@ -4,4 +4,8 @@ ssh
 ubuntu
 runcount
 Firefox
+Português
+Português (Brasil)
+favicons
+moz
 workaround

@@ -12,6 +12,21 @@ namespace Flow.Launcher.Plugin.Calculator.ViewModels
 
         public Settings Settings { get; init; }
 
-        public IEnumerable<int> MaxDecimalPlacesRange => Enumerable.Range(1, 20);
+        public static IEnumerable<int> MaxDecimalPlacesRange => Enumerable.Range(1, 20);
+
+        public List<DecimalSeparatorLocalized> AllDecimalSeparator { get; } = DecimalSeparatorLocalized.GetValues();
+
+        public DecimalSeparator SelectedDecimalSeparator
+        {
+            get => Settings.DecimalSeparator;
+            set
+            {
+                if (Settings.DecimalSeparator != value)
+                {
+                    Settings.DecimalSeparator = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
     }
 }

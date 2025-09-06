@@ -20,7 +20,7 @@ jobs:
       NUGET_CERT_REVOCATION_MODE: offline
       BUILD_NUMBER: ${{ github.run_number }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Set Flow.Launcher.csproj version
         id: update
         uses: vers-one/dotnet-project-version-updater@v1.7
@@ -29,7 +29,7 @@ jobs:
             "**/SolutionAssemblyInfo.cs"
           version: ${{ env.FlowVersion }}.${{ env.BUILD_NUMBER }}
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 9.0.x
 #          cache: true

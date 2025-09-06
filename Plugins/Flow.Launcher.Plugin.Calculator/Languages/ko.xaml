@@ -1,15 +1,16 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <system:String x:Key="flowlauncher_plugin_caculator_plugin_name">계산기</system:String>
-    <system:String x:Key="flowlauncher_plugin_caculator_plugin_description">수학 계산을 할 수 있습니다. Flow Launcher에서 5*3-2를 입력해보세요.</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_plugin_name">계산기</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_plugin_description">수학 계산을 할 수 있습니다. Flow Launcher에서 5*3-2를 입력해보세요.</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_not_a_number">숫자가 아님 (NaN)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_expression_not_complete">표현식이 잘못되었거나 불완전합니다. (괄호를 깜빡하셨나요?)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_copy_number_to_clipboard">해당 숫자를 클립보드에 복사</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_seperator">소수 구분자</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_seperator_help">출력에 사용할 소수점 구분자</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_use_system_locale">시스템 설정 사용</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_comma">쉼표 (,)</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_decimal_seperator_dot">마침표 (.)</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_separator">소수 구분자</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_output_decimal_separator_help">출력에 사용할 소수점 구분자</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_use_system_locale">시스템 설정 사용</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_comma">쉼표 (,)</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_dot">마침표 (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">최대 소수점 아래 자릿 수</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Copy failed, please try later</system:String>
 </ResourceDictionary>

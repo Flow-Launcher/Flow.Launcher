@@ -61,6 +61,8 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">Êtes-vous sûr de vouloir redémarrer l'ordinateur ?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Êtes-vous sûr de vouloir redémarrer l'ordinateur avec les options de démarrage avancées ?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Êtes-vous sûr de vouloir vous déconnecter ?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_error">Erreur</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_empty_recycle_bin_failed">Impossible de vider la corbeille. Cela peut se produire si :{0}- Certains éléments sont actuellement en cours d'utilisation{0}- Certains éléments ne peuvent pas être supprimés en raison des permissions{0}. Veuillez fermer toutes les applications qui pourraient utiliser ces fichiers et réessayer.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Réglage du mot-clé de commande</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Mot-clé de commande personnalisé</system:String>
