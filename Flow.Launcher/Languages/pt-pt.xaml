@@ -331,7 +331,7 @@
     <system:String x:Key="PlaceholderTextTip">O texto do marcador de posição. Se vazio, será utilizado: {0}</system:String>
     <system:String x:Key="KeepMaxResults">Janela com tamanho fixo</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">Não pode ajustar o tamanho da janela por arrasto.</system:String>
-    <system:String x:Key="MaxShowResultsCannotWorkWithAlwaysPreview">Since Always Preview is on, maximum results shown may not take effect because preview panel requires a certain minimum height</system:String>
+    <system:String x:Key="MaxShowResultsCannotWorkWithAlwaysPreview">Como a opção &quot;Pré-visualizar sempre&quot; está ativa, os resultados máximos mostrados podem não ter efeito porque o painel de visualização requer uma altura mínima</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Tecla de atalho</system:String>
