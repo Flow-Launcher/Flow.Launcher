@@ -173,250 +173,300 @@
         </Setter>
     </Style>
 
-    <!--  Number Box  -->
-    <Thickness x:Key="NumberBoxPopupIndicatorMargin">0,0,8,0</Thickness>
-
-    <Style
-        x:Key="NumberBoxSpinButtonStyle"
-        BasedOn="{StaticResource DefaultRepeatButtonStyle}"
-        TargetType="RepeatButton">
-        <Style.Setters>
-            <Setter Property="IsTabStop" Value="False" />
-            <Setter Property="MinWidth" Value="34" />
-            <Setter Property="VerticalAlignment" Value="Stretch" />
-            <Setter Property="Background" Value="{DynamicResource TextControlBackground}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource TextControlBorderBrush}" />
-            <Setter Property="BorderThickness" Value="{DynamicResource NumberBoxSpinButtonBorderThickness}" />
-            <Setter Property="FontFamily" Value="{DynamicResource SymbolThemeFontFamily}" />
-            <Setter Property="ContentTemplate">
-                <Setter.Value>
-                    <DataTemplate>
-                        <ui:FontIconFallback Data="{Binding}" />
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style.Setters>
-    </Style>
-
-    <Style
-        x:Key="NumberBoxPopupSpinButtonStyle"
-        BasedOn="{StaticResource DefaultRepeatButtonStyle}"
-        TargetType="RepeatButton">
-        <Style.Setters>
-            <Setter Property="Focusable" Value="False" />
-            <Setter Property="Width" Value="40" />
-            <Setter Property="Height" Value="32" />
-            <Setter Property="Background" Value="{DynamicResource NumberBoxPopupSpinButtonBackground}" />
-            <Setter Property="BorderThickness" Value="{DynamicResource NumberBoxPopupSpinButtonBorderThickness}" />
-            <Setter Property="FontFamily" Value="{DynamicResource SymbolThemeFontFamily}" />
-            <Setter Property="ContentTemplate">
-                <Setter.Value>
-                    <DataTemplate>
-                        <ui:FontIconFallback Data="{Binding}" />
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style.Setters>
-    </Style>
-
-    <Style
-        x:Key="NumberBoxTextBoxStyle"
-        BasedOn="{StaticResource DefaultTextBoxStyle}"
-        TargetType="TextBox">
+    <!--  List View  -->
+    <Style x:Key="DefaultListViewItemStyle" TargetType="ListViewItem">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
+        <Setter Property="Background" Value="{DynamicResource ListViewItemBackground}" />
+        <Setter Property="Foreground" Value="{DynamicResource ListViewItemForeground}" />
+        <Setter Property="Padding" Value="12 0 12 0" />
+        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+        <Setter Property="MinWidth" Value="{DynamicResource ListViewItemMinWidth}" />
+        <Setter Property="MinHeight" Value="{DynamicResource ListViewItemMinHeight}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="ui:ControlHelper.CornerRadius" Value="{DynamicResource ListViewItemCornerRadius}" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource {x:Static SystemParameters.FocusVisualStyleKey}}" />
+        <Setter Property="ui:FocusVisualHelper.UseSystemFocusVisuals" Value="{DynamicResource UseSystemFocusVisuals}" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="TextBox">
-                    <ControlTemplate.Resources>
-                        <StreamGeometry x:Key="ScrollUpDown">M 10 2.138672 L 4.189453 7.939453 L 3.310547 7.060547 L 10 0.361328 L 16.689453 7.060547 L 15.810547 7.939453 Z M 10 17.861328 L 15.810547 12.060547 L 16.689453 12.939453 L 10 19.638672 L 3.310547 12.939453 L 4.189453 12.060547 Z</StreamGeometry>
-                        <Style x:Key="DeleteButtonStyle" TargetType="Button">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="Button">
-                                        <ControlTemplate.Resources>
-                                            <StreamGeometry x:Key="Cancel">M 10.888672 10 L 17.626953 16.748047 L 16.748047 17.626953 L 10 10.888672 L 3.251953 17.626953 L 2.373047 16.748047 L 9.111328 10 L 2.373047 3.251953 L 3.251953 2.373047 L 10 9.111328 L 16.748047 2.373047 L 17.626953 3.251953 Z</StreamGeometry>
-                                        </ControlTemplate.Resources>
-                                        <Border
-                                            x:Name="ButtonLayoutGrid"
-                                            Background="{DynamicResource TextControlButtonBackground}"
-                                            BorderBrush="{DynamicResource TextControlButtonBorderBrush}"
-                                            BorderThickness="{TemplateBinding BorderThickness}"
-                                            CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}">
-                                            <ui:FontIconFallback
-                                                x:Name="GlyphElement"
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center"
-                                                Data="{StaticResource Cancel}"
-                                                FontFamily="{DynamicResource SymbolThemeFontFamily}"
-                                                FontSize="12"
-                                                FontStyle="Normal"
-                                                Foreground="{DynamicResource TextControlButtonForeground}" />
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="true">
-                                                <Setter TargetName="ButtonLayoutGrid" Property="Background" Value="{DynamicResource TextControlButtonBackgroundPointerOver}" />
-                                                <Setter TargetName="ButtonLayoutGrid" Property="BorderBrush" Value="{DynamicResource TextControlButtonBorderBrushPointerOver}" />
-                                                <Setter TargetName="GlyphElement" Property="Foreground" Value="{DynamicResource TextControlButtonForegroundPointerOver}" />
-                                            </Trigger>
-                                            <Trigger Property="IsPressed" Value="true">
-                                                <Setter TargetName="ButtonLayoutGrid" Property="Background" Value="{DynamicResource TextControlButtonBackgroundPressed}" />
-                                                <Setter TargetName="ButtonLayoutGrid" Property="BorderBrush" Value="{DynamicResource TextControlButtonBorderBrushPressed}" />
-                                                <Setter TargetName="GlyphElement" Property="Foreground" Value="{DynamicResource TextControlButtonForegroundPressed}" />
-                                            </Trigger>
-                                            <Trigger Property="IsEnabled" Value="false">
-                                                <Setter TargetName="ButtonLayoutGrid" Property="Opacity" Value="0" />
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ControlTemplate.Resources>
-                    <Grid SnapsToDevicePixels="True">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <ui:ContentPresenterEx
-                            x:Name="HeaderContentPresenter"
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            Grid.ColumnSpan="2"
-                            Margin="{DynamicResource TextBoxTopHeaderMargin}"
-                            VerticalAlignment="Top"
-                            Content="{TemplateBinding ui:ControlHelper.Header}"
-                            ContentTemplate="{TemplateBinding ui:ControlHelper.HeaderTemplate}"
-                            FontWeight="Normal"
-                            Foreground="{DynamicResource TextControlHeaderForeground}"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                            TextWrapping="Wrap"
-                            Visibility="{TemplateBinding ui:ControlHelper.HeaderVisibility}" />
-                        <ui:ElevationBorder
-                            x:Name="BorderElement"
-                            Grid.Row="1"
-                            Grid.RowSpan="1"
-                            Grid.Column="0"
-                            Grid.ColumnSpan="3"
-                            MinWidth="{TemplateBinding MinWidth}"
-                            MinHeight="{TemplateBinding MinHeight}"
-                            ui:ValidationHelper.IsTemplateValidationAdornerSite="True"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}" />
-                        <ui:ScrollViewerEx
-                            x:Name="PART_ContentHost"
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            Margin="{TemplateBinding BorderThickness}"
-                            Padding="{TemplateBinding Padding}"
-                            Focusable="False"
-                            HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
-                            IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
-                            IsTabStop="False"
-                            Style="{DynamicResource TextControlContentHostStyle}"
-                            VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />
-                        <TextBlock
-                            x:Name="PlaceholderTextContentPresenter"
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            Grid.ColumnSpan="2"
-                            Margin="{TemplateBinding BorderThickness}"
-                            Padding="{TemplateBinding Padding}"
-                            Foreground="{TemplateBinding ui:ControlHelper.PlaceholderForeground}"
-                            IsHitTestVisible="False"
-                            Text="{TemplateBinding ui:ControlHelper.PlaceholderText}"
-                            TextAlignment="{TemplateBinding TextAlignment}"
-                            TextWrapping="{TemplateBinding TextWrapping}" />
-                        <Button
-                            x:Name="DeleteButton"
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            MinWidth="34"
-                            Padding="{DynamicResource HelperButtonThemePadding}"
-                            VerticalAlignment="Stretch"
-                            ui:ControlHelper.CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius,
-                                                                            Converter={StaticResource RightCornerRadiusFilterConverter}}"
-                            ui:TextBoxHelper.IsDeleteButton="True"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Focusable="False"
-                            FontSize="{TemplateBinding FontSize}"
-                            IsTabStop="False"
-                            Style="{StaticResource DeleteButtonStyle}"
-                            Visibility="Collapsed" />
-                        <ContentPresenter
-                            x:Name="DescriptionPresenter"
-                            Grid.Row="2"
-                            Grid.Column="0"
-                            Grid.ColumnSpan="2"
-                            Content="{TemplateBinding ui:ControlHelper.Description}"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                            TextElement.Foreground="{DynamicResource SystemControlDescriptionTextForegroundBrush}"
-                            Visibility="{TemplateBinding ui:ControlHelper.DescriptionVisibility}" />
-                        <ui:FontIconFallback
-                            Grid.Row="1"
-                            Grid.Column="2"
-                            Margin="{StaticResource NumberBoxPopupIndicatorMargin}"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Data="{StaticResource ScrollUpDown}"
-                            FontFamily="{DynamicResource SymbolThemeFontFamily}"
-                            FontSize="12"
-                            Foreground="{DynamicResource NumberBoxPopupIndicatorForeground}" />
+                <ControlTemplate TargetType="ListViewItem">
+                    <Border
+                        x:Name="LayoutRoot"
+                        Margin="{DynamicResource ListViewItemCompactSelectedBorderThemeThickness}"
+                        ui:PressHelper.IsEnabled="True"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
+                        SnapsToDevicePixels="true">
+                        <Grid>
+                            <Grid x:Name="PressedBackgroundGrid">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="0.5*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="0.5*" />
+                                </Grid.RowDefinitions>
+                                <Rectangle
+                                    x:Name="PressedBackground"
+                                    Grid.Row="1"
+                                    Width="3.5"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Stretch"
+                                    Fill="{DynamicResource ListViewItemSelectionIndicatorBrush}"
+                                    Opacity="0"
+                                    RadiusX="{Binding Value, Source={StaticResource ListViewItemSelectionIndicatorCornerRadiusProxy}, Converter={StaticResource TopLeftCornerRadiusDoubleValueConverter}}"
+                                    RadiusY="{Binding Value, Source={StaticResource ListViewItemSelectionIndicatorCornerRadiusProxy}, Converter={StaticResource BottomRightCornerRadiusDoubleValueConverter}}"
+                                    RenderTransformOrigin="0.5,0.5">
+                                    <Rectangle.RenderTransform>
+                                        <ScaleTransform x:Name="PillTransform" ScaleY="1" />
+                                    </Rectangle.RenderTransform>
+                                </Rectangle>
+                            </Grid>
+                            <Grid
+                                x:Name="ContentPresenterGrid"
+                                Margin="0 0 0 0"
+                                Background="Transparent">
+                                <Grid.RenderTransform>
+                                    <TranslateTransform x:Name="ContentPresenterTranslateTransform" />
+                                </Grid.RenderTransform>
+                                <ui:ContentPresenterEx
+                                    x:Name="ContentPresenter"
+                                    Margin="{TemplateBinding Padding}"
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </Grid>
+                            <Border
+                                x:Name="MultiSelectSquare"
+                                Width="{DynamicResource CheckBoxSize}"
+                                Height="{DynamicResource CheckBoxSize}"
+                                Margin="12 0 0 0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Background="{DynamicResource ListViewItemCheckBoxBrush}"
+                                BorderBrush="{DynamicResource ListViewItemCheckBoxBorderBrush}"
+                                BorderThickness="1"
+                                CornerRadius="{DynamicResource ListViewItemCheckBoxCornerRadius}"
+                                Visibility="Collapsed">
+                                <Border.Clip>
+                                    <RectangleGeometry Rect="0,0,20,20">
+                                        <RectangleGeometry.Transform>
+                                            <TranslateTransform x:Name="MultiSelectClipTransform" />
+                                        </RectangleGeometry.Transform>
+                                    </RectangleGeometry>
+                                </Border.Clip>
+                                <Border.RenderTransform>
+                                    <TranslateTransform x:Name="MultiSelectCheckBoxTransform" />
+                                </Border.RenderTransform>
+                                <ui:FontIcon
+                                    x:Name="MultiSelectCheck"
+                                    FontFamily="{DynamicResource FluentSystemIconsFilled}"
+                                    FontSize="{DynamicResource CheckBoxGlyphSize}"
+                                    Glyph="{DynamicResource CheckBoxCheckedGlyph}"
+                                    Opacity="0"
+                                    Visibility="Collapsed" />
+                            </Border>
+                        </Grid>
                         <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="ButtonStates">
-                                <VisualState x:Name="ButtonVisible">
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
                                     <Storyboard>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DeleteButton" Storyboard.TargetProperty="Visibility">
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PillTransform" Storyboard.TargetProperty="ScaleY">
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="1,0,0,0"
+                                                KeyTime="{DynamicResource ListViewItemScaleAnimationDuration}"
+                                                Value="1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PillTransform" Storyboard.TargetProperty="ScaleY">
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0,0,0,1"
+                                                KeyTime="{DynamicResource ListViewItemScaleAnimationDuration}"
+                                                Value="{DynamicResource ListViewItemPillMinScale}" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="SelectionStates">
+                                <VisualState x:Name="Selected">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PillTransform" Storyboard.TargetProperty="ScaleY">
+                                            <DiscreteDoubleKeyFrame KeyTime="0" Value="{DynamicResource ListViewItemPillMinScale}" />
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0,0,0,1"
+                                                KeyTime="{DynamicResource ListViewItemScaleAnimationDuration}"
+                                                Value="1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Unselected" />
+                                <VisualState x:Name="SelectedInactive" />
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="MultiSelectStates">
+                                <VisualState x:Name="MultiSelectDisabled">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MultiSelectCheckBoxTransform" Storyboard.TargetProperty="X">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.1,0.9,0.2,1"
+                                                KeyTime="0:0:0.333"
+                                                Value="-32" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MultiSelectClipTransform" Storyboard.TargetProperty="X">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.1,0.9,0.2,1"
+                                                KeyTime="0:0:0.333"
+                                                Value="32" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterTranslateTransform" Storyboard.TargetProperty="X">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0" Value="32" />
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.1,0.9,0.2,1"
+                                                KeyTime="0:0:0.333"
+                                                Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MultiSelectSquare" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.333" Value="{x:Static Visibility.Collapsed}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PressedBackgroundGrid" Storyboard.TargetProperty="Visibility">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
-                                <VisualState x:Name="ButtonCollapsed" />
+                                <VisualState x:Name="MultiSelectEnabled">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MultiSelectCheckBoxTransform" Storyboard.TargetProperty="X">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0" Value="-32" />
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.1,0.9,0.2,1"
+                                                KeyTime="0:0:0.333"
+                                                Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="MultiSelectClipTransform" Storyboard.TargetProperty="X">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0" Value="32" />
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.1,0.9,0.2,1"
+                                                KeyTime="0:0:0.333"
+                                                Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterTranslateTransform" Storyboard.TargetProperty="X">
+                                            <EasingDoubleKeyFrame KeyTime="0:0:0" Value="-32" />
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0.1,0.9,0.2,1"
+                                                KeyTime="0:0:0.333"
+                                                Value="0" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MultiSelectSquare" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="MultiSelectCheck" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PressedBackgroundGrid" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenterGrid" Storyboard.TargetProperty="Margin">
+                                            <DiscreteThicknessKeyFrame KeyTime="0" Value="32,0,0,0" />
+                                        </ThicknessAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                    </Grid>
+                    </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="ui:ControlHelper.PlaceholderForeground" Value="{x:Null}">
-                            <Setter TargetName="PlaceholderTextContentPresenter" Property="Foreground" Value="{DynamicResource TextControlPlaceholderForeground}" />
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="LayoutRoot" Property="Opacity" Value="{DynamicResource ListViewItemDisabledThemeOpacity}" />
+                            <Setter TargetName="MultiSelectSquare" Property="BorderBrush" Value="{DynamicResource ListViewItemCheckBoxDisabledBorderBrush}" />
+                            <Setter TargetName="MultiSelectSquare" Property="Background" Value="{DynamicResource ListViewItemCheckBoxDisabledBrush}" />
                         </Trigger>
-                        <Trigger Property="ui:TextBoxHelper.HasText" Value="True">
-                            <Setter TargetName="PlaceholderTextContentPresenter" Property="Visibility" Value="Collapsed" />
+                        <Trigger SourceName="LayoutRoot" Property="ui:PressHelper.IsPressed" Value="True">
+                            <Setter TargetName="LayoutRoot" Property="ui:ControlHelper.VisualState" Value="Pressed" />
                         </Trigger>
-                        <Trigger Property="IsEnabled" Value="false">
-                            <Setter TargetName="HeaderContentPresenter" Property="Foreground" Value="{DynamicResource TextControlHeaderForegroundDisabled}" />
-                            <Setter Property="Background" Value="{DynamicResource TextControlBackgroundDisabled}" />
-                            <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushDisabled}" />
-                            <Setter Property="Foreground" Value="{DynamicResource TextControlForegroundDisabled}" />
-                            <Setter TargetName="PlaceholderTextContentPresenter" Property="Foreground" Value="{DynamicResource TextControlPlaceholderForegroundDisabled}" />
+                        <Trigger SourceName="LayoutRoot" Property="ui:PressHelper.IsPressed" Value="False">
+                            <Setter TargetName="LayoutRoot" Property="ui:ControlHelper.VisualState" Value="Normal" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushPointerOver}" />
-                            <Setter Property="Background" Value="{DynamicResource TextControlBackgroundPointerOver}" />
-                            <Setter TargetName="PlaceholderTextContentPresenter" Property="Foreground" Value="{DynamicResource TextControlPlaceholderForegroundPointerOver}" />
-                            <Setter Property="Foreground" Value="{DynamicResource TextControlForegroundPointerOver}" />
-                        </Trigger>
-                        <Trigger Property="IsSelectionActive" Value="true">
-                            <Setter TargetName="PlaceholderTextContentPresenter" Property="Foreground" Value="{DynamicResource TextControlPlaceholderForegroundFocused}" />
-                            <Setter Property="Background" Value="{DynamicResource TextControlBackgroundFocused}" />
-                            <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushFocused}" />
-                            <Setter TargetName="BorderElement" Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThicknessFocused}" />
-                            <Setter Property="Foreground" Value="{DynamicResource TextControlForegroundFocused}" />
-                        </Trigger>
+                        <DataTrigger Binding="{Binding SelectionMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" Value="Single">
+                            <Setter TargetName="LayoutRoot" Property="ui:ControlHelper.VisualState" Value="MultiSelectDisabled" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding SelectionMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" Value="Extended">
+                            <Setter TargetName="LayoutRoot" Property="ui:ControlHelper.VisualState" Value="MultiSelectDisabled" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding SelectionMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" Value="Multiple">
+                            <Setter TargetName="LayoutRoot" Property="ui:ControlHelper.VisualState" Value="MultiSelectEnabled" />
+                        </DataTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
-                                <Condition Property="IsKeyboardFocused" Value="True" />
-                                <Condition Property="ui:TextBoxHelper.HasText" Value="True" />
-                                <Condition Property="IsReadOnly" Value="False" />
-                                <Condition Property="AcceptsReturn" Value="False" />
-                                <Condition Property="TextWrapping" Value="NoWrap" />
+                                <Condition Property="IsSelected" Value="False" />
+                                <Condition Property="IsMouseOver" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter Property="ui:TextBoxHelper.IsDeleteButtonVisible" Value="True" />
+                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource ListViewItemBackgroundPointerOver}" />
+                            <Setter Property="Foreground" Value="{DynamicResource ListViewItemForegroundPointerOver}" />
+                            <Setter TargetName="MultiSelectSquare" Property="BorderBrush" Value="{DynamicResource ListViewItemCheckBoxPointerOverBorderBrush}" />
+                            <Setter TargetName="MultiSelectSquare" Property="Background" Value="{DynamicResource ListViewItemCheckBoxPointerOverBrush}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="False" />
+                                <Condition SourceName="LayoutRoot" Property="ui:PressHelper.IsPressed" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource ListViewItemBackgroundPressed}" />
+                            <Setter Property="Foreground" Value="{DynamicResource ListViewItemForegroundPointerOver}" />
+                            <Setter TargetName="MultiSelectSquare" Property="BorderBrush" Value="{DynamicResource ListViewItemCheckBoxPressedBorderBrush}" />
+                            <Setter TargetName="MultiSelectSquare" Property="Background" Value="{DynamicResource ListViewItemCheckBoxPressedBrush}" />
+                        </MultiTrigger>
+                        <!--  Selected  -->
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="MultiSelectCheck" Property="Opacity" Value="1" />
+                            <Setter TargetName="PressedBackground" Property="Opacity" Value="1" />
+                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource ListViewItemBackgroundSelected}" />
+                            <Setter Property="Foreground" Value="{DynamicResource ListViewItemForegroundSelected}" />
+                            <Setter TargetName="MultiSelectSquare" Property="BorderBrush" Value="{DynamicResource ListViewItemCheckBoxSelectedBrush}" />
+                            <Setter TargetName="MultiSelectSquare" Property="Background" Value="{DynamicResource ListViewItemCheckBoxSelectedBrush}" />
+                            <Setter TargetName="MultiSelectCheck" Property="Foreground" Value="{DynamicResource ListViewItemCheckBrush}" />
+                        </Trigger>
+                        <!--  SelectedPointerOver  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource ListViewItemBackgroundSelectedPointerOver}" />
+                            <Setter Property="Foreground" Value="{DynamicResource ListViewItemForegroundSelectedPointerOver}" />
+                            <Setter TargetName="PressedBackground" Property="Fill" Value="{DynamicResource ListViewItemSelectionIndicatorPointerOverBrush}" />
+                            <Setter TargetName="MultiSelectSquare" Property="BorderBrush" Value="{DynamicResource ListViewItemCheckBoxSelectedPointerOverBrush}" />
+                            <Setter TargetName="MultiSelectSquare" Property="Background" Value="{DynamicResource ListViewItemCheckBoxSelectedPointerOverBrush}" />
+                            <Setter TargetName="MultiSelectCheck" Property="Foreground" Value="{DynamicResource ListViewItemCheckBrush}" />
+                        </MultiTrigger>
+                        <!--  SelectedPressed  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True" />
+                                <Condition SourceName="LayoutRoot" Property="ui:PressHelper.IsPressed" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource ListViewItemBackgroundSelectedPressed}" />
+                            <Setter Property="Foreground" Value="{DynamicResource ListViewItemForegroundSelectedPressed}" />
+                            <Setter TargetName="PressedBackground" Property="Fill" Value="{DynamicResource ListViewItemSelectionIndicatorPressedBrush}" />
+                            <Setter TargetName="MultiSelectSquare" Property="BorderBrush" Value="{DynamicResource ListViewItemCheckBoxSelectedPressedBrush}" />
+                            <Setter TargetName="MultiSelectSquare" Property="Background" Value="{DynamicResource ListViewItemCheckBoxSelectedPressedBrush}" />
+                            <Setter TargetName="MultiSelectCheck" Property="Foreground" Value="{DynamicResource ListViewItemCheckPressedBrush}" />
+                        </MultiTrigger>
+                        <!--  SelectedDisabled  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True" />
+                                <Condition Property="IsEnabled" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource ListViewItemBackgroundSelectedDisabled}" />
+                            <Setter TargetName="PressedBackground" Property="Fill" Value="{DynamicResource ListViewItemSelectionIndicatorDisabledBrush}" />
+                            <Setter TargetName="MultiSelectSquare" Property="BorderBrush" Value="{DynamicResource ListViewItemCheckBoxSelectedDisabledBrush}" />
+                            <Setter TargetName="MultiSelectSquare" Property="Background" Value="{DynamicResource ListViewItemCheckBoxSelectedDisabledBrush}" />
+                            <Setter TargetName="MultiSelectCheck" Property="Foreground" Value="{DynamicResource ListViewItemCheckDisabledBrush}" />
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -424,216 +474,477 @@
         </Setter>
     </Style>
 
-    <Style TargetType="ui:NumberBox">
-        <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="SelectionBrush" Value="{DynamicResource TextControlSelectionHighlightColor}" />
-        <Setter Property="FontFamily" Value="{DynamicResource ContentControlThemeFontFamily}" />
-        <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
-        <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
-        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem" />
+
+    <ControlTemplate x:Key="GridViewTemplate" TargetType="ListView">
+        <Border
+            x:Name="Bd"
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            SnapsToDevicePixels="true">
+            <ui:ScrollViewerEx
+                Padding="{TemplateBinding Padding}"
+                ui:ScrollViewerHelper.AutoHideScrollBars="{TemplateBinding ui:ScrollViewerHelper.AutoHideScrollBars}"
+                Focusable="false"
+                Style="{DynamicResource {x:Static GridView.GridViewScrollViewerStyleKey}}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <ContentPresenter
+                        Grid.Row="0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Content="{TemplateBinding ui:ListViewHelper.Header}"
+                        ContentTemplate="{TemplateBinding ui:ListViewHelper.HeaderTemplate}" />
+                    <ItemsPresenter Grid.Row="1" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    <ContentPresenter
+                        Grid.Row="2"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Content="{TemplateBinding ui:ListViewHelper.Footer}"
+                        ContentTemplate="{TemplateBinding ui:ListViewHelper.FooterTemplate}" />
+                </Grid>
+            </ui:ScrollViewerEx>
+        </Border>
+        <ControlTemplate.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsGrouping" Value="true" />
+                    <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false" />
+                </MultiTrigger.Conditions>
+                <Setter Property="ScrollViewer.CanContentScroll" Value="false" />
+            </MultiTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="BaseListViewStyle" TargetType="ListView">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true" />
+        <Setter Property="ScrollViewer.PanningMode" Value="Both" />
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource DefaultListViewItemStyle}" />
+        <Setter Property="ui:ScrollViewerHelper.AutoHideScrollBars" Value="{DynamicResource AutoHideScrollBars}" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ui:NumberBox">
-                    <ControlTemplate.Resources>
-                        <StreamGeometry x:Key="ChevronDown">M 18.935547 4.560547 L 19.814453 5.439453 L 10 15.253906 L 0.185547 5.439453 L 1.064453 4.560547 L 10 13.496094 Z</StreamGeometry>
-                        <StreamGeometry x:Key="ChevronUp">M 19.091797 14.970703 L 10 5.888672 L 0.908203 14.970703 L 0.029297 14.091797 L 10 4.111328 L 19.970703 14.091797 Z</StreamGeometry>
-                    </ControlTemplate.Resources>
+                <ControlTemplate TargetType="ListView">
+                    <Border
+                        x:Name="Bd"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="true">
+                        <ui:ScrollViewerEx
+                            Padding="{TemplateBinding Padding}"
+                            ui:ScrollViewerHelper.AutoHideScrollBars="{TemplateBinding ui:ScrollViewerHelper.AutoHideScrollBars}"
+                            Focusable="false"
+                            HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                            VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <ContentPresenter
+                                    Grid.Row="0"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Content="{TemplateBinding ui:ListViewHelper.Header}"
+                                    ContentTemplate="{TemplateBinding ui:ListViewHelper.HeaderTemplate}" />
+                                <ItemsPresenter Grid.Row="1" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                <ContentPresenter
+                                    Grid.Row="2"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Content="{TemplateBinding ui:ListViewHelper.Footer}"
+                                    ContentTemplate="{TemplateBinding ui:ListViewHelper.FooterTemplate}" />
+                            </Grid>
+                        </ui:ScrollViewerEx>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsGrouping" Value="true" />
+                                <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="false" />
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
-                    <Grid ui:ThemeManager.HasThemeResources="True">
-                        <Grid.Resources>
-                            <ui:ResourceDictionaryEx>
-                                <!--<ui:ResourceDictionaryEx.ThemeDictionaries>
-                                    <ResourceDictionary x:Key="Light" ui:ThemeDictionary.Key="Light">
-                                        <ui:StaticResource x:Key="RepeatButtonBorderBrushPointerOver" ResourceKey="TextControlBorderBrush" />
-                                        <ui:StaticResource x:Key="RepeatButtonBorderBrushPressed" ResourceKey="TextControlBorderBrush" />
-                                    </ResourceDictionary>
+    <Style
+        x:Key="DefaultListViewStyle"
+        BasedOn="{StaticResource BaseListViewStyle}"
+        TargetType="ListView">
+        <Style.Resources>
+            <ikw:IsGridViewConverter x:Key="IsGridViewConverter" />
+        </Style.Resources>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding View, RelativeSource={RelativeSource Self}, Converter={StaticResource IsGridViewConverter}}" Value="True">
+                <Setter Property="Template" Value="{StaticResource GridViewTemplate}" />
+                <Setter Property="ItemContainerStyle" Value="{DynamicResource {x:Static GridView.GridViewItemContainerStyleKey}}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
 
-                                    <ResourceDictionary x:Key="Dark" ui:ThemeDictionary.Key="Dark">
-                                        <ui:StaticResource x:Key="RepeatButtonBorderBrushPointerOver" ResourceKey="TextControlBorderBrush" />
-                                        <ui:StaticResource x:Key="RepeatButtonBorderBrushPressed" ResourceKey="TextControlBorderBrush" />
-                                    </ResourceDictionary>
+    <Style BasedOn="{StaticResource DefaultListViewStyle}" TargetType="ListView" />
 
-                                    <ResourceDictionary x:Key="HighContrast" ui:ThemeDictionary.Key="HighContrast">
-                                        <ui:StaticResource x:Key="RepeatButtonBorderBrushPointerOver" ResourceKey="SystemControlHighlightBaseMediumLowBrush" />
-                                        <ui:StaticResource x:Key="RepeatButtonBorderBrushPressed" ResourceKey="SystemControlHighlightTransparentBrush" />
-                                    </ResourceDictionary>
-                                </ui:ResourceDictionaryEx.ThemeDictionaries>-->
-                                <ui:StaticResource x:Key="RepeatButtonBorderBrushPointerOver" ResourceKey="TextControlBorderBrush" />
-                                <ui:StaticResource x:Key="RepeatButtonBorderBrushPressed" ResourceKey="TextControlBorderBrush" />
-
-
-                            </ui:ResourceDictionaryEx>
-                        </Grid.Resources>
-
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-
+    <!--  GridView ScrollViewer Style  -->
+    <Style x:Key="{x:Static GridView.GridViewScrollViewerStyleKey}" TargetType="ScrollViewer">
+        <Setter Property="Focusable" Value="false" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ScrollViewer">
+                    <Grid Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-
-                        <ui:ContentPresenterEx
-                            x:Name="HeaderContentPresenter"
-                            Grid.ColumnSpan="3"
-                            Margin="{DynamicResource TextBoxTopHeaderMargin}"
-                            VerticalAlignment="Top"
-                            Content="{TemplateBinding Header}"
-                            ContentTemplate="{TemplateBinding HeaderTemplate}"
-                            FontFamily="{TemplateBinding FontFamily}"
-                            FontSize="{TemplateBinding FontSize}"
-                            FontWeight="Normal"
-                            Foreground="{DynamicResource TextControlHeaderForeground}"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                            TextWrapping="Wrap"
-                            Visibility="Collapsed" />
-
-                        <TextBox
-                            x:Name="InputBox"
-                            Grid.Row="1"
-                            ui:ControlHelper.CornerRadius="{TemplateBinding CornerRadius}"
-                            ui:ControlHelper.PlaceholderText="{TemplateBinding PlaceholderText}"
-                            Background="Red"
-                            FontFamily="{TemplateBinding FontFamily}"
-                            FontSize="{TemplateBinding FontSize}"
-                            FontWeight="{TemplateBinding FontWeight}"
-                            InputScope="{TemplateBinding InputScope}"
-                            SelectionBrush="{TemplateBinding SelectionBrush}"
-                            TextAlignment="{TemplateBinding TextAlignment}" />
-
-                        <Popup
-                            x:Name="UpDownPopup"
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            HorizontalAlignment="Left"
-                            AllowsTransparency="True"
-                            CacheMode="{Binding RelativeSource={RelativeSource Self}, Path=(ui:ShadowAssist.CacheMode)}"
-                            HorizontalOffset="{DynamicResource NumberBoxPopupHorizonalOffset}"
-                            Placement="Right"
-                            VerticalOffset="{DynamicResource NumberBoxPopupVerticalOffset}">
-                            <ui:ThemeShadowChrome
-                                CornerRadius="{DynamicResource OverlayCornerRadius}"
-                                Depth="{DynamicResource NumberBoxPopupShadowDepth}"
-                                IsShadowEnabled="{DynamicResource {x:Static SystemParameters.DropShadowKey}}">
-                                <Border
-                                    x:Name="PopupContentRoot"
-                                    Background="{DynamicResource NumberBoxPopupBackground}"
-                                    BorderBrush="{DynamicResource NumberBoxPopupBorderBrush}"
-                                    BorderThickness="{DynamicResource NumberBoxPopupBorderThickness}"
-                                    CornerRadius="{DynamicResource OverlayCornerRadius}">
-                                    <Grid>
-
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*" />
-                                            <RowDefinition Height="*" />
-                                        </Grid.RowDefinitions>
-
-                                        <RepeatButton
-                                            x:Name="PopupUpSpinButton"
-                                            Content="{StaticResource ChevronUp}"
-                                            Style="{StaticResource NumberBoxPopupSpinButtonStyle}" />
-
-                                        <RepeatButton
-                                            x:Name="PopupDownSpinButton"
-                                            Grid.Row="1"
-                                            Content="{StaticResource ChevronDown}"
-                                            Style="{StaticResource NumberBoxPopupSpinButtonStyle}" />
-                                    </Grid>
-                                </Border>
-                            </ui:ThemeShadowChrome>
-                        </Popup>
-
-                        <RepeatButton
-                            x:Name="UpSpinButton"
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            ui:ControlHelper.CornerRadius="0"
-                            Content="{StaticResource ChevronUp}"
-                            FontSize="{TemplateBinding FontSize}"
-                            Style="{StaticResource NumberBoxSpinButtonStyle}"
-                            Visibility="Collapsed" />
-
-                        <RepeatButton
-                            x:Name="DownSpinButton"
-                            Grid.Row="1"
-                            Grid.Column="2"
-                            ui:ControlHelper.CornerRadius="{TemplateBinding CornerRadius,
-                                                                            Converter={StaticResource RightCornerRadiusFilterConverter}}"
-                            Content="{StaticResource ChevronDown}"
-                            FontSize="{TemplateBinding FontSize}"
-                            Style="{StaticResource NumberBoxSpinButtonStyle}"
-                            Visibility="Collapsed" />
-
-                        <ContentPresenter
-                            x:Name="DescriptionPresenter"
-                            Grid.Row="2"
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <!--  Grid.Column="0" Grid.Row="0"  -->
+                        <DockPanel
+                            Grid.RowSpan="2"
                             Grid.ColumnSpan="2"
-                            Content="{TemplateBinding Description}"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                            TextElement.Foreground="{DynamicResource SystemControlDescriptionTextForegroundBrush}"
-                            Visibility="{TemplateBinding ui:ControlHelper.DescriptionVisibility}" />
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="Disabled" />
-                            </VisualStateGroup>
-                            <VisualStateGroup x:Name="SpinButtonStates">
-                                <VisualState x:Name="SpinButtonsCollapsed" />
-                                <VisualState x:Name="SpinButtonsVisible" />
-                                <VisualState x:Name="SpinButtonsPopup" />
-                            </VisualStateGroup>
+                            Margin="{TemplateBinding Padding}">
+                            <!--  Column Headers Scroll Viewer  -->
+                            <ui:ScrollViewerEx
+                                DockPanel.Dock="Top"
+                                Focusable="false"
+                                HorizontalScrollBarVisibility="Hidden"
+                                VerticalScrollBarVisibility="Hidden">
+                                <GridViewHeaderRowPresenter
+                                    AllowsColumnReorder="{Binding Path=TemplatedParent.View.AllowsColumnReorder, RelativeSource={RelativeSource TemplatedParent}}"
+                                    ColumnHeaderContainerStyle="{Binding Path=TemplatedParent.View.ColumnHeaderContainerStyle, RelativeSource={RelativeSource TemplatedParent}}"
+                                    ColumnHeaderContextMenu="{Binding Path=TemplatedParent.View.ColumnHeaderContextMenu, RelativeSource={RelativeSource TemplatedParent}}"
+                                    ColumnHeaderStringFormat="{Binding Path=TemplatedParent.View.ColumnHeaderStringFormat, RelativeSource={RelativeSource TemplatedParent}}"
+                                    ColumnHeaderTemplate="{Binding Path=TemplatedParent.View.ColumnHeaderTemplate, RelativeSource={RelativeSource TemplatedParent}}"
+                                    ColumnHeaderTemplateSelector="{Binding Path=TemplatedParent.View.ColumnHeaderTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}"
+                                    ColumnHeaderToolTip="{Binding Path=TemplatedParent.View.ColumnHeaderToolTip, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Columns="{Binding Path=TemplatedParent.View.Columns, RelativeSource={RelativeSource TemplatedParent}}"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            </ui:ScrollViewerEx>
+                            <!--  Items Scroll Viewer  -->
+                            <ScrollContentPresenter
+                                Name="PART_ScrollContentPresenter"
+                                CanContentScroll="{TemplateBinding CanContentScroll}"
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                KeyboardNavigation.DirectionalNavigation="Local"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </DockPanel>
+                        <!--  Horizontal Scroll Bar  -->
+                        <ScrollBar
+                            Name="PART_HorizontalScrollBar"
+                            Grid.Row="1"
+                            Cursor="Arrow"
+                            Maximum="{TemplateBinding ScrollableWidth}"
+                            Minimum="0.0"
+                            Orientation="Horizontal"
+                            ViewportSize="{TemplateBinding ViewportWidth}"
+                            Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                            Value="{TemplateBinding HorizontalOffset}" />
+                        <!--  Vertical Scroll Bar  -->
+                        <ScrollBar
+                            Name="PART_VerticalScrollBar"
+                            Grid.Column="1"
+                            Cursor="Arrow"
+                            Maximum="{TemplateBinding ScrollableHeight}"
+                            Minimum="0.0"
+                            Orientation="Vertical"
+                            ViewportSize="{TemplateBinding ViewportHeight}"
+                            Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                            Value="{TemplateBinding VerticalOffset}" />
+                        <!--  Right Bottom Corner  -->
+                        <DockPanel
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Background="{Binding Path=Background, ElementName=PART_VerticalScrollBar}"
+                            LastChildFill="false">
+                            <Rectangle
+                                Width="1"
+                                DockPanel.Dock="Left"
+                                Fill="Transparent"
+                                Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" />
+                            <Rectangle
+                                Height="1"
+                                DockPanel.Dock="Top"
+                                Fill="Transparent"
+                                Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" />
+                        </DockPanel>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
-                            <VisualStateGroup x:Name="UpSpinButtonEnabledStates">
-                                <VisualState x:Name="UpSpinButtonEnabled" />
-                                <VisualState x:Name="UpSpinButtonDisabled">
-                                    <Storyboard>
-                                        <BooleanAnimationUsingKeyFrames Storyboard.TargetName="UpSpinButton" Storyboard.TargetProperty="IsEnabled">
-                                            <DiscreteBooleanKeyFrame KeyTime="0" Value="False" />
-                                        </BooleanAnimationUsingKeyFrames>
-                                        <BooleanAnimationUsingKeyFrames Storyboard.TargetName="PopupUpSpinButton" Storyboard.TargetProperty="IsEnabled">
-                                            <DiscreteBooleanKeyFrame KeyTime="0" Value="False" />
-                                        </BooleanAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
+    <Style x:Key="GridViewColumnHeaderGripper" TargetType="Thumb">
+        <Setter Property="Canvas.Right" Value="-9" />
+        <Setter Property="Width" Value="18" />
+        <Setter Property="Height" Value="{Binding Path=ActualHeight, RelativeSource={RelativeSource TemplatedParent}}" />
+        <Setter Property="Padding" Value="0 3 0 4" />
+        <Setter Property="Background" Value="#FF000000" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Thumb">
+                    <Border Padding="{TemplateBinding Padding}" Background="Transparent">
+                        <Rectangle
+                            Width="1"
+                            HorizontalAlignment="Center"
+                            Fill="{TemplateBinding Background}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
-                            <VisualStateGroup x:Name="DownSpinButtonEnabledStates">
-                                <VisualState x:Name="DownSpinButtonEnabled" />
-                                <VisualState x:Name="DownSpinButtonDisabled">
-                                    <Storyboard>
-                                        <BooleanAnimationUsingKeyFrames Storyboard.TargetName="DownSpinButton" Storyboard.TargetProperty="IsEnabled">
-                                            <DiscreteBooleanKeyFrame KeyTime="0" Value="False" />
-                                        </BooleanAnimationUsingKeyFrames>
-                                        <BooleanAnimationUsingKeyFrames Storyboard.TargetName="PopupDownSpinButton" Storyboard.TargetProperty="IsEnabled">
-                                            <DiscreteBooleanKeyFrame KeyTime="0" Value="False" />
-                                        </BooleanAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
+    <Style x:Key="{x:Type GridViewColumnHeader}" TargetType="GridViewColumnHeader">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Background" Value="{DynamicResource ListViewItemBackground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource MenuFlyoutSeparatorBackground}" />
+        <Setter Property="BorderThickness" Value="0 0 1 1" />
+        <Setter Property="Padding" Value="12 0 12 0" />
+        <Setter Property="Foreground" Value="{DynamicResource MenuFlyoutItemKeyboardAcceleratorTextForeground}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="GridViewColumnHeader">
+                    <Grid SnapsToDevicePixels="true">
+                        <!--  GridViewColumnHeader Content  -->
+                        <Border
+                            x:Name="ContentContainer"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                RecognizesAccessKey="True"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                        <Canvas>
+                            <Thumb
+                                x:Name="PART_HeaderGripper"
+                                Background="Transparent"
+                                Style="{StaticResource GridViewColumnHeaderGripper}" />
+                        </Canvas>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="ContentContainer" Property="Background" Value="{DynamicResource ListViewItemBackgroundPointerOver}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="ContentContainer" Property="Background" Value="{DynamicResource ListViewItemBackgroundPressed}" />
+                        </Trigger>
+                        <Trigger Property="Height" Value="Auto">
+                            <Setter Property="MinHeight" Value="{DynamicResource GridViewColumnHeaderMinHeight}" />
+                        </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter TargetName="HeaderContentPresenter" Property="Foreground" Value="{DynamicResource TextControlHeaderForegroundDisabled}" />
-                        </Trigger>
-                        <!--  SpinButtonsVisible  -->
-                        <Trigger Property="SpinButtonPlacementMode" Value="Inline">
-                            <Setter TargetName="DownSpinButton" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="UpSpinButton" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="InputBox" Property="ui:ControlHelper.CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CornerRadius, Converter={StaticResource LeftCornerRadiusFilterConverter}}" />
-                        </Trigger>
-                        <!--  SpinButtonsPopup  -->
-                        <Trigger Property="SpinButtonPlacementMode" Value="Compact">
-                            <Setter TargetName="InputBox" Property="Style" Value="{StaticResource NumberBoxTextBoxStyle}" />
+                            <Setter TargetName="ContentContainer" Property="Opacity" Value="{DynamicResource ListViewItemDisabledThemeOpacity}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="Role" Value="Padding">
+                <Setter Property="BorderThickness" Value="0 0 0 1" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <!--  The same as normal header, just no gripper.  -->
+                        <ControlTemplate TargetType="GridViewColumnHeader">
+                            <Border
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}" />
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="Height" Value="Auto">
+                                    <Setter Property="MinHeight" Value="{DynamicResource GridViewColumnHeaderMinHeight}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="Role" Value="Floating">
+                <Setter Property="Opacity" Value="{DynamicResource ListViewItemReorderTargetThemeOpacity}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="GridViewColumnHeader">
+                            <Canvas Name="PART_FloatingHeaderCanvas">
+                                <Rectangle
+                                    Width="{TemplateBinding ActualWidth}"
+                                    Height="{TemplateBinding ActualHeight}"
+                                    Fill="{DynamicResource SystemControlBackgroundBaseHighBrush}"
+                                    Opacity="0.3034" />
+                            </Canvas>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style
+        x:Key="{x:Static GridView.GridViewItemContainerStyleKey}"
+        BasedOn="{StaticResource DefaultListViewItemStyle}"
+        TargetType="ListViewItem">
+        <Setter Property="Padding" Value="6 0" />
+        <Setter Property="Background" Value="{DynamicResource GridViewItemBackground}" />
+        <Setter Property="Foreground" Value="{DynamicResource GridViewItemForeground}" />
+        <Setter Property="MinWidth" Value="{DynamicResource GridViewItemMinWidth}" />
+        <Setter Property="MinHeight" Value="{DynamicResource GridViewItemMinHeight}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListViewItem">
+                    <!--  Here we use 0 2 instead of 0 4 for Margin  -->
+                    <Border
+                        x:Name="LayoutRoot"
+                        Margin="0 2"
+                        ui:PressHelper.IsEnabled="True"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
+                        SnapsToDevicePixels="true">
+                        <Grid>
+                            <Rectangle
+                                x:Name="PressedBackground"
+                                Width="3.5"
+                                Margin="0 10"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Stretch"
+                                Fill="{DynamicResource GridViewItemSelectedBorderBrush}"
+                                Opacity="0"
+                                RadiusX="{Binding Value, Source={StaticResource ListViewItemSelectionIndicatorCornerRadiusProxy}, Converter={StaticResource TopLeftCornerRadiusDoubleValueConverter}}"
+                                RadiusY="{Binding Value, Source={StaticResource ListViewItemSelectionIndicatorCornerRadiusProxy}, Converter={StaticResource BottomRightCornerRadiusDoubleValueConverter}}"
+                                RenderTransformOrigin="0.5,0.5">
+                                <Rectangle.RenderTransform>
+                                    <ScaleTransform x:Name="PillTransform" ScaleY="1" />
+                                </Rectangle.RenderTransform>
+                            </Rectangle>
+                            <GridViewRowPresenter
+                                x:Name="ContentPresenter"
+                                Margin="{TemplateBinding Padding}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PillTransform" Storyboard.TargetProperty="ScaleY">
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="1,0,0,0"
+                                                KeyTime="{DynamicResource ListViewItemScaleAnimationDuration}"
+                                                Value="1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Pressed">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PillTransform" Storyboard.TargetProperty="ScaleY">
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0,0,0,1"
+                                                KeyTime="{DynamicResource ListViewItemScaleAnimationDuration}"
+                                                Value="{DynamicResource ListViewItemPillMinScale}" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="SelectionStates">
+                                <VisualState x:Name="Selected">
+                                    <Storyboard>
+                                        <DoubleAnimationUsingKeyFrames Storyboard.TargetName="PillTransform" Storyboard.TargetProperty="ScaleY">
+                                            <DiscreteDoubleKeyFrame KeyTime="0" Value="{DynamicResource ListViewItemPillMinScale}" />
+                                            <SplineDoubleKeyFrame
+                                                KeySpline="0,0,0,1"
+                                                KeyTime="{DynamicResource ListViewItemScaleAnimationDuration}"
+                                                Value="1" />
+                                        </DoubleAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Unselected" />
+                                <VisualState x:Name="SelectedInactive" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="LayoutRoot" Property="Opacity" Value="{DynamicResource ListViewItemDisabledThemeOpacity}" />
+                        </Trigger>
+                        <Trigger SourceName="LayoutRoot" Property="ui:PressHelper.IsPressed" Value="True">
+                            <Setter TargetName="LayoutRoot" Property="ui:ControlHelper.VisualState" Value="Pressed" />
+                        </Trigger>
+                        <Trigger SourceName="LayoutRoot" Property="ui:PressHelper.IsPressed" Value="False">
+                            <Setter TargetName="LayoutRoot" Property="ui:ControlHelper.VisualState" Value="Normal" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource GridViewItemBackgroundPointerOver}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource GridViewItemForegroundPointerOver}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="PressedBackground" Property="Opacity" Value="1" />
+                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource GridViewItemBackgroundSelected}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource GridViewItemForegroundSelected}" />
+                        </Trigger>
+                        <Trigger SourceName="LayoutRoot" Property="ui:PressHelper.IsPressed" Value="True">
+                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource GridViewItemBackgroundPressed}" />
+                        </Trigger>
+                        <!--  SelectedPointerOver  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource GridViewItemBackgroundSelectedPointerOver}" />
+                            <Setter TargetName="PressedBackground" Property="Fill" Value="{DynamicResource GridViewItemSelectedPointerOverBorderBrush}" />
+                        </MultiTrigger>
+                        <!--  SelectedPressed  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True" />
+                                <Condition SourceName="LayoutRoot" Property="ui:PressHelper.IsPressed" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource GridViewItemBackgroundSelectedPressed}" />
+                            <Setter TargetName="PressedBackground" Property="Fill" Value="{DynamicResource GridViewItemSelectedPressedBorderBrush}" />
+                        </MultiTrigger>
+                        <!--  SelectedDisabled  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True" />
+                                <Condition Property="IsEnabled" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource GridViewItemBackgroundSelectedDisabled}" />
+                            <Setter TargetName="PressedBackground" Property="Fill" Value="{DynamicResource GridViewItemSelectedDisabledBorderBrush}" />
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style
+        x:Key="{x:Static GridView.GridViewStyleKey}"
+        BasedOn="{StaticResource BaseListViewStyle}"
+        TargetType="ListView">
+        <Setter Property="ItemContainerStyle" Value="{DynamicResource {x:Static GridView.GridViewItemContainerStyleKey}}" />
+        <Setter Property="Template" Value="{StaticResource GridViewTemplate}" />
     </Style>
 
     <!--  Toggle Button  -->
