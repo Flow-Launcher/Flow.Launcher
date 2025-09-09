@@ -1,6 +1,6 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"    
     xmlns:converters="clr-namespace:Flow.Launcher.Converters"
     xmlns:helper="clr-namespace:Flow.Launcher.Helper"
     xmlns:ikw="http://schemas.inkore.net/lib/ui/wpf"
@@ -175,9 +175,468 @@
 
     <!--  // TODO: Make it work? How can I apply MinWidth to all ui:NumberBox?  -->
     <!--  Number Box  -->
-    <Style TargetType="ui:NumberBox">
-        <Setter Property="MinWidth" Value="120" />
+    <Thickness x:Key="NumberBoxPopupIndicatorMargin">0,0,8,0</Thickness>
+
+    <Style
+        x:Key="NumberBoxSpinButtonStyle"
+        BasedOn="{StaticResource DefaultRepeatButtonStyle}"
+        TargetType="RepeatButton">
+        <Style.Setters>
+            <Setter Property="IsTabStop" Value="False" />
+            <Setter Property="MinWidth" Value="34" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="Background" Value="{DynamicResource TextControlBackground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource TextControlBorderBrush}" />
+            <Setter Property="BorderThickness" Value="{DynamicResource NumberBoxSpinButtonBorderThickness}" />
+            <Setter Property="FontFamily" Value="{DynamicResource SymbolThemeFontFamily}" />
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <ui:FontIconFallback Data="{Binding}" />
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
     </Style>
+
+    <Style
+        x:Key="NumberBoxPopupSpinButtonStyle"
+        BasedOn="{StaticResource DefaultRepeatButtonStyle}"
+        TargetType="RepeatButton">
+        <Style.Setters>
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="Width" Value="40" />
+            <Setter Property="Height" Value="32" />
+            <Setter Property="Background" Value="{DynamicResource NumberBoxPopupSpinButtonBackground}" />
+            <Setter Property="BorderThickness" Value="{DynamicResource NumberBoxPopupSpinButtonBorderThickness}" />
+            <Setter Property="FontFamily" Value="{DynamicResource SymbolThemeFontFamily}" />
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <ui:FontIconFallback Data="{Binding}" />
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+
+    <Style
+        x:Key="NumberBoxTextBoxStyle"
+        BasedOn="{StaticResource DefaultTextBoxStyle}"
+        TargetType="TextBox">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <ControlTemplate.Resources>
+                        <StreamGeometry x:Key="ScrollUpDown">M 10 2.138672 L 4.189453 7.939453 L 3.310547 7.060547 L 10 0.361328 L 16.689453 7.060547 L 15.810547 7.939453 Z M 10 17.861328 L 15.810547 12.060547 L 16.689453 12.939453 L 10 19.638672 L 3.310547 12.939453 L 4.189453 12.060547 Z</StreamGeometry>
+                        <Style x:Key="DeleteButtonStyle" TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <ControlTemplate.Resources>
+                                            <StreamGeometry x:Key="Cancel">M 10.888672 10 L 17.626953 16.748047 L 16.748047 17.626953 L 10 10.888672 L 3.251953 17.626953 L 2.373047 16.748047 L 9.111328 10 L 2.373047 3.251953 L 3.251953 2.373047 L 10 9.111328 L 16.748047 2.373047 L 17.626953 3.251953 Z</StreamGeometry>
+                                        </ControlTemplate.Resources>
+                                        <Border
+                                            x:Name="ButtonLayoutGrid"
+                                            Background="{DynamicResource TextControlButtonBackground}"
+                                            BorderBrush="{DynamicResource TextControlButtonBorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}">
+                                            <ui:FontIconFallback
+                                                x:Name="GlyphElement"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Data="{StaticResource Cancel}"
+                                                FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                FontSize="12"
+                                                FontStyle="Normal"
+                                                Foreground="{DynamicResource TextControlButtonForeground}" />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="true">
+                                                <Setter TargetName="ButtonLayoutGrid" Property="Background" Value="{DynamicResource TextControlButtonBackgroundPointerOver}" />
+                                                <Setter TargetName="ButtonLayoutGrid" Property="BorderBrush" Value="{DynamicResource TextControlButtonBorderBrushPointerOver}" />
+                                                <Setter TargetName="GlyphElement" Property="Foreground" Value="{DynamicResource TextControlButtonForegroundPointerOver}" />
+                                            </Trigger>
+                                            <Trigger Property="IsPressed" Value="true">
+                                                <Setter TargetName="ButtonLayoutGrid" Property="Background" Value="{DynamicResource TextControlButtonBackgroundPressed}" />
+                                                <Setter TargetName="ButtonLayoutGrid" Property="BorderBrush" Value="{DynamicResource TextControlButtonBorderBrushPressed}" />
+                                                <Setter TargetName="GlyphElement" Property="Foreground" Value="{DynamicResource TextControlButtonForegroundPressed}" />
+                                            </Trigger>
+                                            <Trigger Property="IsEnabled" Value="false">
+                                                <Setter TargetName="ButtonLayoutGrid" Property="Opacity" Value="0" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ControlTemplate.Resources>
+                    <Grid SnapsToDevicePixels="True">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <ui:ContentPresenterEx
+                            x:Name="HeaderContentPresenter"
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Margin="{DynamicResource TextBoxTopHeaderMargin}"
+                            VerticalAlignment="Top"
+                            Content="{TemplateBinding ui:ControlHelper.Header}"
+                            ContentTemplate="{TemplateBinding ui:ControlHelper.HeaderTemplate}"
+                            FontWeight="Normal"
+                            Foreground="{DynamicResource TextControlHeaderForeground}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            TextWrapping="Wrap"
+                            Visibility="{TemplateBinding ui:ControlHelper.HeaderVisibility}" />
+                        <ui:ElevationBorder
+                            x:Name="BorderElement"
+                            Grid.Row="1"
+                            Grid.RowSpan="1"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="3"
+                            MinWidth="{TemplateBinding MinWidth}"
+                            MinHeight="{TemplateBinding MinHeight}"
+                            ui:ValidationHelper.IsTemplateValidationAdornerSite="True"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}" />
+                        <ui:ScrollViewerEx
+                            x:Name="PART_ContentHost"
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Margin="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}"
+                            Focusable="False"
+                            HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                            IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
+                            IsTabStop="False"
+                            Style="{DynamicResource TextControlContentHostStyle}"
+                            VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}" />
+                        <TextBlock
+                            x:Name="PlaceholderTextContentPresenter"
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Margin="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}"
+                            Foreground="{TemplateBinding ui:ControlHelper.PlaceholderForeground}"
+                            IsHitTestVisible="False"
+                            Text="{TemplateBinding ui:ControlHelper.PlaceholderText}"
+                            TextAlignment="{TemplateBinding TextAlignment}"
+                            TextWrapping="{TemplateBinding TextWrapping}" />
+                        <Button
+                            x:Name="DeleteButton"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            MinWidth="34"
+                            Padding="{DynamicResource HelperButtonThemePadding}"
+                            VerticalAlignment="Stretch"
+                            ui:ControlHelper.CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius,
+                                                                            Converter={StaticResource RightCornerRadiusFilterConverter}}"
+                            ui:TextBoxHelper.IsDeleteButton="True"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Focusable="False"
+                            FontSize="{TemplateBinding FontSize}"
+                            IsTabStop="False"
+                            Style="{StaticResource DeleteButtonStyle}"
+                            Visibility="Collapsed" />
+                        <ContentPresenter
+                            x:Name="DescriptionPresenter"
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Content="{TemplateBinding ui:ControlHelper.Description}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            TextElement.Foreground="{DynamicResource SystemControlDescriptionTextForegroundBrush}"
+                            Visibility="{TemplateBinding ui:ControlHelper.DescriptionVisibility}" />
+                        <ui:FontIconFallback
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            Margin="{StaticResource NumberBoxPopupIndicatorMargin}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="{StaticResource ScrollUpDown}"
+                            FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                            FontSize="12"
+                            Foreground="{DynamicResource NumberBoxPopupIndicatorForeground}" />
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="ButtonStates">
+                                <VisualState x:Name="ButtonVisible">
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="DeleteButton" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="ButtonCollapsed" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="ui:ControlHelper.PlaceholderForeground" Value="{x:Null}">
+                            <Setter TargetName="PlaceholderTextContentPresenter" Property="Foreground" Value="{DynamicResource TextControlPlaceholderForeground}" />
+                        </Trigger>
+                        <Trigger Property="ui:TextBoxHelper.HasText" Value="True">
+                            <Setter TargetName="PlaceholderTextContentPresenter" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="HeaderContentPresenter" Property="Foreground" Value="{DynamicResource TextControlHeaderForegroundDisabled}" />
+                            <Setter Property="Background" Value="{DynamicResource TextControlBackgroundDisabled}" />
+                            <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushDisabled}" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextControlForegroundDisabled}" />
+                            <Setter TargetName="PlaceholderTextContentPresenter" Property="Foreground" Value="{DynamicResource TextControlPlaceholderForegroundDisabled}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushPointerOver}" />
+                            <Setter Property="Background" Value="{DynamicResource TextControlBackgroundPointerOver}" />
+                            <Setter TargetName="PlaceholderTextContentPresenter" Property="Foreground" Value="{DynamicResource TextControlPlaceholderForegroundPointerOver}" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextControlForegroundPointerOver}" />
+                        </Trigger>
+                        <Trigger Property="IsSelectionActive" Value="true">
+                            <Setter TargetName="PlaceholderTextContentPresenter" Property="Foreground" Value="{DynamicResource TextControlPlaceholderForegroundFocused}" />
+                            <Setter Property="Background" Value="{DynamicResource TextControlBackgroundFocused}" />
+                            <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushFocused}" />
+                            <Setter TargetName="BorderElement" Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThicknessFocused}" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextControlForegroundFocused}" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsKeyboardFocused" Value="True" />
+                                <Condition Property="ui:TextBoxHelper.HasText" Value="True" />
+                                <Condition Property="IsReadOnly" Value="False" />
+                                <Condition Property="AcceptsReturn" Value="False" />
+                                <Condition Property="TextWrapping" Value="NoWrap" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="ui:TextBoxHelper.IsDeleteButtonVisible" Value="True" />
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="ui:NumberBox">
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="SelectionBrush" Value="{DynamicResource TextControlSelectionHighlightColor}" />
+        <Setter Property="FontFamily" Value="{DynamicResource ContentControlThemeFontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ui:NumberBox">
+                    <ControlTemplate.Resources>
+                        <StreamGeometry x:Key="ChevronDown">M 18.935547 4.560547 L 19.814453 5.439453 L 10 15.253906 L 0.185547 5.439453 L 1.064453 4.560547 L 10 13.496094 Z</StreamGeometry>
+                        <StreamGeometry x:Key="ChevronUp">M 19.091797 14.970703 L 10 5.888672 L 0.908203 14.970703 L 0.029297 14.091797 L 10 4.111328 L 19.970703 14.091797 Z</StreamGeometry>
+                    </ControlTemplate.Resources>
+
+                    <Grid ui:ThemeManager.HasThemeResources="True">
+                        <Grid.Resources>
+                            <ui:ResourceDictionaryEx>
+                                <!--<ui:ResourceDictionaryEx.ThemeDictionaries>
+                                    <ResourceDictionary x:Key="Light" ui:ThemeDictionary.Key="Light">
+                                        <ui:StaticResource x:Key="RepeatButtonBorderBrushPointerOver" ResourceKey="TextControlBorderBrush" />
+                                        <ui:StaticResource x:Key="RepeatButtonBorderBrushPressed" ResourceKey="TextControlBorderBrush" />
+                                    </ResourceDictionary>
+
+                                    <ResourceDictionary x:Key="Dark" ui:ThemeDictionary.Key="Dark">
+                                        <ui:StaticResource x:Key="RepeatButtonBorderBrushPointerOver" ResourceKey="TextControlBorderBrush" />
+                                        <ui:StaticResource x:Key="RepeatButtonBorderBrushPressed" ResourceKey="TextControlBorderBrush" />
+                                    </ResourceDictionary>
+
+                                    <ResourceDictionary x:Key="HighContrast" ui:ThemeDictionary.Key="HighContrast">
+                                        <ui:StaticResource x:Key="RepeatButtonBorderBrushPointerOver" ResourceKey="SystemControlHighlightBaseMediumLowBrush" />
+                                        <ui:StaticResource x:Key="RepeatButtonBorderBrushPressed" ResourceKey="SystemControlHighlightTransparentBrush" />
+                                    </ResourceDictionary>
+                                </ui:ResourceDictionaryEx.ThemeDictionaries>-->
+                                <ui:StaticResource x:Key="RepeatButtonBorderBrushPointerOver" ResourceKey="TextControlBorderBrush" />
+                                <ui:StaticResource x:Key="RepeatButtonBorderBrushPressed" ResourceKey="TextControlBorderBrush" />
+
+
+                            </ui:ResourceDictionaryEx>
+                        </Grid.Resources>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <ui:ContentPresenterEx
+                            x:Name="HeaderContentPresenter"
+                            Grid.ColumnSpan="3"
+                            Margin="{DynamicResource TextBoxTopHeaderMargin}"
+                            VerticalAlignment="Top"
+                            Content="{TemplateBinding Header}"
+                            ContentTemplate="{TemplateBinding HeaderTemplate}"
+                            FontFamily="{TemplateBinding FontFamily}"
+                            FontSize="{TemplateBinding FontSize}"
+                            FontWeight="Normal"
+                            Foreground="{DynamicResource TextControlHeaderForeground}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            TextWrapping="Wrap"
+                            Visibility="Collapsed" />
+
+                        <TextBox
+                            x:Name="InputBox"
+                            Grid.Row="1"
+                            ui:ControlHelper.CornerRadius="{TemplateBinding CornerRadius}"
+                            ui:ControlHelper.PlaceholderText="{TemplateBinding PlaceholderText}"
+                            Background="Red"
+                            FontFamily="{TemplateBinding FontFamily}"
+                            FontSize="{TemplateBinding FontSize}"
+                            FontWeight="{TemplateBinding FontWeight}"
+                            InputScope="{TemplateBinding InputScope}"
+                            SelectionBrush="{TemplateBinding SelectionBrush}"
+                            TextAlignment="{TemplateBinding TextAlignment}" />
+
+                        <Popup
+                            x:Name="UpDownPopup"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalAlignment="Left"
+                            AllowsTransparency="True"
+                            CacheMode="{Binding RelativeSource={RelativeSource Self}, Path=(ui:ShadowAssist.CacheMode)}"
+                            HorizontalOffset="{DynamicResource NumberBoxPopupHorizonalOffset}"
+                            Placement="Right"
+                            VerticalOffset="{DynamicResource NumberBoxPopupVerticalOffset}">
+                            <ui:ThemeShadowChrome
+                                CornerRadius="{DynamicResource OverlayCornerRadius}"
+                                Depth="{DynamicResource NumberBoxPopupShadowDepth}"
+                                IsShadowEnabled="{DynamicResource {x:Static SystemParameters.DropShadowKey}}">
+                                <Border
+                                    x:Name="PopupContentRoot"
+                                    Background="{DynamicResource NumberBoxPopupBackground}"
+                                    BorderBrush="{DynamicResource NumberBoxPopupBorderBrush}"
+                                    BorderThickness="{DynamicResource NumberBoxPopupBorderThickness}"
+                                    CornerRadius="{DynamicResource OverlayCornerRadius}">
+                                    <Grid>
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+
+                                        <RepeatButton
+                                            x:Name="PopupUpSpinButton"
+                                            Content="{StaticResource ChevronUp}"
+                                            Style="{StaticResource NumberBoxPopupSpinButtonStyle}" />
+
+                                        <RepeatButton
+                                            x:Name="PopupDownSpinButton"
+                                            Grid.Row="1"
+                                            Content="{StaticResource ChevronDown}"
+                                            Style="{StaticResource NumberBoxPopupSpinButtonStyle}" />
+                                    </Grid>
+                                </Border>
+                            </ui:ThemeShadowChrome>
+                        </Popup>
+
+                        <RepeatButton
+                            x:Name="UpSpinButton"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            ui:ControlHelper.CornerRadius="0"
+                            Content="{StaticResource ChevronUp}"
+                            FontSize="{TemplateBinding FontSize}"
+                            Style="{StaticResource NumberBoxSpinButtonStyle}"
+                            Visibility="Collapsed" />
+
+                        <RepeatButton
+                            x:Name="DownSpinButton"
+                            Grid.Row="1"
+                            Grid.Column="2"
+                            ui:ControlHelper.CornerRadius="{TemplateBinding CornerRadius,
+                                                                            Converter={StaticResource RightCornerRadiusFilterConverter}}"
+                            Content="{StaticResource ChevronDown}"
+                            FontSize="{TemplateBinding FontSize}"
+                            Style="{StaticResource NumberBoxSpinButtonStyle}"
+                            Visibility="Collapsed" />
+
+                        <ContentPresenter
+                            x:Name="DescriptionPresenter"
+                            Grid.Row="2"
+                            Grid.ColumnSpan="2"
+                            Content="{TemplateBinding Description}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            TextElement.Foreground="{DynamicResource SystemControlDescriptionTextForegroundBrush}"
+                            Visibility="{TemplateBinding ui:ControlHelper.DescriptionVisibility}" />
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="Disabled" />
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="SpinButtonStates">
+                                <VisualState x:Name="SpinButtonsCollapsed" />
+                                <VisualState x:Name="SpinButtonsVisible" />
+                                <VisualState x:Name="SpinButtonsPopup" />
+                            </VisualStateGroup>
+
+                            <VisualStateGroup x:Name="UpSpinButtonEnabledStates">
+                                <VisualState x:Name="UpSpinButtonEnabled" />
+                                <VisualState x:Name="UpSpinButtonDisabled">
+                                    <Storyboard>
+                                        <BooleanAnimationUsingKeyFrames Storyboard.TargetName="UpSpinButton" Storyboard.TargetProperty="IsEnabled">
+                                            <DiscreteBooleanKeyFrame KeyTime="0" Value="False" />
+                                        </BooleanAnimationUsingKeyFrames>
+                                        <BooleanAnimationUsingKeyFrames Storyboard.TargetName="PopupUpSpinButton" Storyboard.TargetProperty="IsEnabled">
+                                            <DiscreteBooleanKeyFrame KeyTime="0" Value="False" />
+                                        </BooleanAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+
+                            <VisualStateGroup x:Name="DownSpinButtonEnabledStates">
+                                <VisualState x:Name="DownSpinButtonEnabled" />
+                                <VisualState x:Name="DownSpinButtonDisabled">
+                                    <Storyboard>
+                                        <BooleanAnimationUsingKeyFrames Storyboard.TargetName="DownSpinButton" Storyboard.TargetProperty="IsEnabled">
+                                            <DiscreteBooleanKeyFrame KeyTime="0" Value="False" />
+                                        </BooleanAnimationUsingKeyFrames>
+                                        <BooleanAnimationUsingKeyFrames Storyboard.TargetName="PopupDownSpinButton" Storyboard.TargetProperty="IsEnabled">
+                                            <DiscreteBooleanKeyFrame KeyTime="0" Value="False" />
+                                        </BooleanAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="HeaderContentPresenter" Property="Foreground" Value="{DynamicResource TextControlHeaderForegroundDisabled}" />
+                        </Trigger>
+                        <!--  SpinButtonsVisible  -->
+                        <Trigger Property="SpinButtonPlacementMode" Value="Inline">
+                            <Setter TargetName="DownSpinButton" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="UpSpinButton" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="InputBox" Property="ui:ControlHelper.CornerRadius" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CornerRadius, Converter={StaticResource LeftCornerRadiusFilterConverter}}" />
+                        </Trigger>
+                        <!--  SpinButtonsPopup  -->
+                        <Trigger Property="SpinButtonPlacementMode" Value="Compact">
+                            <Setter TargetName="InputBox" Property="Style" Value="{StaticResource NumberBoxTextBoxStyle}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 
     <!--  Toggle Button  -->
     <Style x:Key="CustomToggleButtonStyle" TargetType="ToggleButton">
