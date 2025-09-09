@@ -124,9 +124,6 @@ namespace Flow.Launcher.Resources.Controls
                 {
                     e.Handled = true;
                 }
-                {
-                    e.Handled = true;
-                }
 
                 var WheelChange = e.Delta * (ViewportWidth / 1.5) / ActualWidth;
                 var newOffset = LastHorizontalLocation - WheelChange;
