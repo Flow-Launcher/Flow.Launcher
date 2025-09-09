@@ -42,6 +42,7 @@
             <sys:Double x:Key="GridViewItemMinHeight">40</sys:Double>
             <sys:Double x:Key="ListViewItemMinWidth">0</sys:Double>
             <sys:Double x:Key="ListViewItemMinHeight">36</sys:Double>
+            <SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground" Color="#FF0063B1" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>
