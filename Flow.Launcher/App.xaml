@@ -35,9 +35,13 @@
                 <ResourceDictionary Source="pack://application:,,,/Languages/en.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <!--  // TODO: Make it work? How can I use them to override values of resources of ui:XamlControlsResources?  -->
-            <Thickness x:Key="ListViewItemCompactSelectedBorderThemeThickness">0</Thickness>
+            <!--  Override styles in UI.Modern.WPF  -->
+            <Thickness x:Key="ListViewItemCompactSelectedBorderThemeThickness">2</Thickness>
             <sys:Double x:Key="CheckBoxMinWidth">0</sys:Double>
+            <sys:Double x:Key="GridViewItemMinWidth">0</sys:Double>
+            <sys:Double x:Key="GridViewItemMinHeight">40</sys:Double>
+            <sys:Double x:Key="ListViewItemMinWidth">0</sys:Double>
+            <sys:Double x:Key="ListViewItemMinHeight">36</sys:Double>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
