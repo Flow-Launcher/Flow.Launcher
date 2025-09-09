@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cc="clr-namespace:Flow.Launcher.Resources.Controls;assembly=Flow.Launcher"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure">
@@ -251,9 +252,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListBox">
-                    <ui:ScrollViewerEx Focusable="False" Template="{DynamicResource ScrollViewerControlTemplate}">
-                        <ui:ScrollViewerEx.Style>
-                            <Style TargetType="ScrollViewer">
+                    <cc:CustomScrollViewerEx
+                        x:Name="ListBoxScrollViewer"
+                        Focusable="False"
+                        Template="{DynamicResource ScrollViewerControlTemplate}">
+                        <cc:CustomScrollViewerEx.Style>
+                            <Style TargetType="cc:CustomScrollViewerEx">
                                 <Style.Triggers>
                                     <Trigger Property="ComputedVerticalScrollBarVisibility" Value="Visible">
                                         <Setter Property="Margin" Value="0 0 0 0" />
@@ -265,9 +269,9 @@
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
-                        </ui:ScrollViewerEx.Style>
+                        </cc:CustomScrollViewerEx.Style>
                         <VirtualizingStackPanel IsItemsHost="True" />
-                    </ui:ScrollViewerEx>
+                    </cc:CustomScrollViewerEx>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
