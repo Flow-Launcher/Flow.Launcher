@@ -55,6 +55,7 @@
             Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
             <ListView.View>
                 <GridView>
+                    <!--  Margin="0 4" is a workaround to set this TextBlock to vertially center  -->
                     <GridViewColumn Width="45">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -67,6 +68,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
+                    <!--  Margin="0 6" is a workaround to set this TextBlock to vertially center  -->
                     <GridViewColumn Width="112" Header="{DynamicResource flowlauncher_plugin_websearch_action_keyword}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
