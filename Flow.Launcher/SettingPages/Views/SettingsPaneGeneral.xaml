@@ -341,6 +341,7 @@
                     <ui:SettingsCard Description="{DynamicResource searchDelayTimeToolTip}" Header="{DynamicResource searchDelayTime}">
                         <ui:NumberBox
                             Width="120"
+                            MinWidth="120"
                             Margin="0 0 0 0"
                             Maximum="1000"
                             Minimum="0"
@@ -380,6 +381,7 @@
                     <ui:SettingsCard Header="{DynamicResource historyResultsCountForHomePage}">
                         <ui:NumberBox
                             Width="120"
+                            MinWidth="120"
                             Margin="0 0 0 0"
                             Maximum="100"
                             Minimum="0"

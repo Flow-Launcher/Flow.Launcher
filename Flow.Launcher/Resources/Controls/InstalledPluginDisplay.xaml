@@ -66,6 +66,7 @@
                                 Text="{DynamicResource priority}"
                                 ToolTip="{DynamicResource priorityToolTip}" />
                             <ui:NumberBox
+                                MinWidth="120"
                                 Margin="0 0 8 0"
                                 Maximum="999"
                                 Minimum="-999"
@@ -89,6 +90,7 @@
                                 ToolTip="{DynamicResource searchDelayToolTip}" />
                             <ui:NumberBox
                                 Width="120"
+                                MinWidth="120"
                                 Margin="0 0 8 0"
                                 IsEnabled="{Binding SearchDelayEnabled}"
                                 Maximum="1000"
