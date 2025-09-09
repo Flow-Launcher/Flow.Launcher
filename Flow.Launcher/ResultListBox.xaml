@@ -12,6 +12,7 @@
     d:DesignHeight="100"
     d:DesignWidth="100"
     Focusable="False"
+    ScrollViewer.CanContentScroll="False"
     IsSynchronizedWithCurrentItem="True"
     ItemsSource="{Binding Results}"
     KeyboardNavigation.DirectionalNavigation="Cycle"
