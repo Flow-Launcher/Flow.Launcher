@@ -5,7 +5,6 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media.Animation;
 
 namespace Flow.Launcher.Resources.Controls
 {
@@ -116,9 +115,7 @@ namespace Flow.Launcher.Resources.Controls
 
                 ScrollToVerticalOffset(LastVerticalLocation);
 
-                var scale = Math.Abs((LastVerticalLocation - newOffset) / WheelChange);
-
-                AnimateScroll(newOffset, Direction, scale);
+                ScrollToValue(newOffset, Direction);
                 LastVerticalLocation = newOffset;
             }
             else
@@ -151,9 +148,7 @@ namespace Flow.Launcher.Resources.Controls
 
                 ScrollToHorizontalOffset(LastHorizontalLocation);
 
-                var scale = Math.Abs((LastHorizontalLocation - newOffset) / WheelChange);
-
-                AnimateScroll(newOffset, Direction, scale);
+                ScrollToValue(newOffset, Direction);
                 LastHorizontalLocation = newOffset;
             }
         }
@@ -222,51 +217,33 @@ namespace Flow.Launcher.Resources.Controls
                 if (horizontalOffset.HasValue)
                 {
                     ScrollToHorizontalOffset(LastHorizontalLocation);
-                    AnimateScroll(Math.Min(ScrollableWidth, horizontalOffset.Value), Orientation.Horizontal, 1);
+                    ScrollToValue(Math.Min(ScrollableWidth, horizontalOffset.Value), Orientation.Horizontal);
                     LastHorizontalLocation = horizontalOffset.Value;
                 }
 
                 if (verticalOffset.HasValue)
                 {
                     ScrollToVerticalOffset(LastVerticalLocation);
-                    AnimateScroll(Math.Min(ScrollableHeight, verticalOffset.Value), Orientation.Vertical, 1);
+                    ScrollToValue(Math.Min(ScrollableHeight, verticalOffset.Value), Orientation.Vertical);
                     LastVerticalLocation = verticalOffset.Value;
                 }
             }
 
-            return true; // TODO
+            return true;
         }
 
-        private void AnimateScroll(double ToValue, Orientation Direction, double Scale)
+        private void ScrollToValue(double value, Orientation Direction)
         {
             if (Direction == Orientation.Vertical)
             {
-                BeginAnimation(ScrollViewerBehavior.VerticalOffsetProperty, null);
-                var Animation = new DoubleAnimation();
-                Animation.EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut };
-                Animation.From = VerticalOffset;
-                Animation.To = ToValue;
-                Animation.Duration = TimeSpan.FromMilliseconds(0);
-                //Timeline.SetDesiredFrameRate(Animation, 40);
-                BeginAnimation(ScrollViewerBehavior.VerticalOffsetProperty, Animation);
+                ScrollToVerticalOffset(value);
             }
             else
             {
-                BeginAnimation(ScrollViewerBehavior.HorizontalOffsetProperty, null);
-                var Animation = new DoubleAnimation();
-                Animation.EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseOut };
-                Animation.From = HorizontalOffset;
-                Animation.To = ToValue;
-                Animation.Duration = TimeSpan.FromMilliseconds(0);
-                //Timeline.SetDesiredFrameRate(Animation, 40);
-                BeginAnimation(ScrollViewerBehavior.HorizontalOffsetProperty, Animation);
+                ScrollToHorizontalOffset(value);
             }
 
-            BeginAnimation(ScrollViewerBehavior.IsAnimatingProperty, null);
-            var keyFramesAnimation = new BooleanAnimationUsingKeyFrames();
-            keyFramesAnimation.KeyFrames.Add(new DiscreteBooleanKeyFrame(true, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(0))));
-            keyFramesAnimation.KeyFrames.Add(new DiscreteBooleanKeyFrame(false, KeyTime.FromTimeSpan(TimeSpan.FromMilliseconds(0))));
-            BeginAnimation(ScrollViewerBehavior.IsAnimatingProperty, keyFramesAnimation);
+            ScrollViewerBehavior.SetIsAnimating(this, false);
         }
 
         private void UpdateVisualState(bool useTransitions = true)
