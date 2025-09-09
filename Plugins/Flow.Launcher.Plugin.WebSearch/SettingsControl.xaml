@@ -61,24 +61,30 @@
                                 <Image
                                     Width="20"
                                     Height="20"
-                                    Margin="6 0 0 0"
+                                    Margin="6 4 0 4"
                                     Source="{Binding Path=IconPath}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn
-                        Width="112"
-                        DisplayMemberBinding="{Binding ActionKeyword}"
-                        Header="{DynamicResource flowlauncher_plugin_websearch_action_keyword}" />
-                    <GridViewColumn
-                        Width="168"
-                        DisplayMemberBinding="{Binding Title}"
-                        Header="{DynamicResource flowlauncher_plugin_websearch_title}" />
+                    <GridViewColumn Width="112" Header="{DynamicResource flowlauncher_plugin_websearch_action_keyword}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="0 6" Text="{Binding ActionKeyword}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="168" Header="{DynamicResource flowlauncher_plugin_websearch_title}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Margin="0 6" Text="{Binding Title}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn Width="112" Header="{DynamicResource flowlauncher_plugin_websearch_enable}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock>
+                                <TextBlock Margin="0 6">
                                     <TextBlock.Style>
                                         <Style TargetType="TextBlock">
                                             <Setter Property="Text" Value="{DynamicResource flowlauncher_plugin_websearch_false}" />
