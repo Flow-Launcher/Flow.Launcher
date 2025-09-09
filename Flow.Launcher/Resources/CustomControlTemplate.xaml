@@ -1,6 +1,6 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"    
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="clr-namespace:Flow.Launcher.Converters"
     xmlns:helper="clr-namespace:Flow.Launcher.Helper"
     xmlns:ikw="http://schemas.inkore.net/lib/ui/wpf"
@@ -173,7 +173,6 @@
         </Setter>
     </Style>
 
-    <!--  // TODO: Make it work? How can I apply MinWidth to all ui:NumberBox?  -->
     <!--  Number Box  -->
     <Thickness x:Key="NumberBoxPopupIndicatorMargin">0,0,8,0</Thickness>
 
@@ -636,7 +635,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
 
     <!--  Toggle Button  -->
     <Style x:Key="CustomToggleButtonStyle" TargetType="ToggleButton">
