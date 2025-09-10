@@ -28,7 +28,10 @@
                 Text="{DynamicResource hotkeys}"
                 TextAlignment="left" />
 
-            <ui:SettingsCard Description="{DynamicResource flowlauncherHotkeyToolTip}" Header="{DynamicResource flowlauncherHotkey}">
+            <ui:SettingsCard
+                Margin="0 8 0 0"
+                Description="{DynamicResource flowlauncherHotkeyToolTip}"
+                Header="{DynamicResource flowlauncherHotkey}">
                 <ui:SettingsCard.HeaderIcon>
                     <ui:FontIcon Glyph="&#xeda7;" />
                 </ui:SettingsCard.HeaderIcon>
@@ -41,7 +44,10 @@
                     WindowTitle="{DynamicResource flowlauncherHotkey}" />
             </ui:SettingsCard>
 
-            <ui:SettingsCard Description="{DynamicResource previewHotkeyToolTip}" Header="{DynamicResource previewHotkey}">
+            <ui:SettingsCard
+                Margin="0 4 0 0"
+                Description="{DynamicResource previewHotkeyToolTip}"
+                Header="{DynamicResource previewHotkey}">
                 <ui:SettingsCard.HeaderIcon>
                     <ui:FontIcon Glyph="&#xe8a1;" />
                 </ui:SettingsCard.HeaderIcon>
@@ -54,7 +60,7 @@
             </ui:SettingsCard>
 
             <ui:SettingsCard
-                Margin="0 12 0 0"
+                Margin="0 14 0 0"
                 Description="{DynamicResource openResultModifiersToolTip}"
                 Header="{DynamicResource openResultModifiers}">
                 <ComboBox
@@ -64,7 +70,10 @@
                     SelectedValue="{Binding Settings.OpenResultModifiers}" />
             </ui:SettingsCard>
 
-            <ui:SettingsCard Description="{DynamicResource showOpenResultHotkeyToolTip}" Header="{DynamicResource showOpenResultHotkey}">
+            <ui:SettingsCard
+                Margin="0 4 0 0"
+                Description="{DynamicResource showOpenResultHotkeyToolTip}"
+                Header="{DynamicResource showOpenResultHotkey}">
                 <ui:ToggleSwitch
                     IsOn="{Binding Settings.ShowOpenResultHotkey}"
                     OffContent="{DynamicResource disable}"

@@ -51,7 +51,7 @@
                 </ikw:SimpleStackPanel>
             </ui:SettingsCard>
 
-            <ui:SettingsCard Header="{DynamicResource releaseNotes}">
+            <ui:SettingsCard Margin="0 4 0 0" Header="{DynamicResource releaseNotes}">
                 <ui:SettingsCard.HeaderIcon>
                     <ui:FontIcon Glyph="&#xe8fd;" />
                 </ui:SettingsCard.HeaderIcon>
@@ -82,7 +82,7 @@
                 </StackPanel>
             </ui:SettingsCard>
 
-            <ui:SettingsCard Header="{DynamicResource icons}">
+            <ui:SettingsCard Margin="0 4 0 0" Header="{DynamicResource icons}">
                 <ui:SettingsCard.HeaderIcon>
                     <ui:FontIcon Glyph="&#xE8FE;" />
                 </ui:SettingsCard.HeaderIcon>
@@ -137,7 +137,7 @@
                 </ikw:SimpleStackPanel>
             </ui:SettingsCard>
 
-            <ui:SettingsExpander Margin="0 14 0 0" Header="{DynamicResource advanced}">
+            <ui:SettingsExpander Margin="0 4 0 0" Header="{DynamicResource advanced}">
                 <ui:SettingsExpander.HeaderIcon>
                     <ui:FontIcon Glyph="&#xE8B7;" />
                 </ui:SettingsExpander.HeaderIcon>

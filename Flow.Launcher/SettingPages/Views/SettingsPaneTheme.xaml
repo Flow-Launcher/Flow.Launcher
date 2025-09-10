@@ -507,7 +507,7 @@
             </ui:SettingsCard>
 
             <!--  Drop shadow effect  -->
-            <ui:SettingsCard Margin="0 0 0 0" Header="{DynamicResource queryWindowShadowEffect}">
+            <ui:SettingsCard Margin="0 4 0 0" Header="{DynamicResource queryWindowShadowEffect}">
                 <ui:SettingsCard.HeaderIcon>
                     <ui:FontIcon Glyph="&#xeb91;" />
                 </ui:SettingsCard.HeaderIcon>
@@ -585,7 +585,7 @@
                 </StackPanel>
             </ui:SettingsCard>
 
-            <ui:SettingsCard Header="{DynamicResource Date}">
+            <ui:SettingsCard Margin="0 4 0 0" Header="{DynamicResource Date}">
                 <ui:SettingsCard.HeaderIcon>
                     <ui:FontIcon Glyph="&#xe787;" />
                 </ui:SettingsCard.HeaderIcon>

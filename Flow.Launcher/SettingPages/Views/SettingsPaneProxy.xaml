@@ -37,35 +37,35 @@
                     OnContent="{DynamicResource enable}" />
             </ui:SettingsCard>
 
-            <ui:SettingsCard Header="{DynamicResource server}">
+            <ui:SettingsCard Margin="0 4 0 0" Header="{DynamicResource server}">
                 <TextBox
                     Width="300"
                     IsEnabled="{Binding Settings.Proxy.Enabled}"
                     Text="{Binding Settings.Proxy.Server}" />
             </ui:SettingsCard>
 
-            <ui:SettingsCard Header="{DynamicResource port}">
+            <ui:SettingsCard Margin="0 4 0 0" Header="{DynamicResource port}">
                 <TextBox
                     Width="100"
                     IsEnabled="{Binding Settings.Proxy.Enabled}"
                     Text="{Binding Settings.Proxy.Port, TargetNullValue={x:Static sys:String.Empty}}" />
             </ui:SettingsCard>
 
-            <ui:SettingsCard Header="{DynamicResource userName}">
+            <ui:SettingsCard Margin="0 4 0 0" Header="{DynamicResource userName}">
                 <TextBox
                     Width="200"
                     IsEnabled="{Binding Settings.Proxy.Enabled}"
                     Text="{Binding Settings.Proxy.UserName}" />
             </ui:SettingsCard>
 
-            <ui:SettingsCard Header="{DynamicResource password}">
+            <ui:SettingsCard Margin="0 4 0 0" Header="{DynamicResource password}">
                 <TextBox
                     Width="200"
                     IsEnabled="{Binding Settings.Proxy.Enabled}"
                     Text="{Binding Settings.Proxy.Password}" />
             </ui:SettingsCard>
 
-            <ui:SettingsCard Margin="0 8 0 0" Header="{DynamicResource testProxy}">
+            <ui:SettingsCard Margin="0 14 0 0" Header="{DynamicResource testProxy}">
                 <Button
                     Width="150"
                     Command="{Binding TestProxyClickedCommand}"

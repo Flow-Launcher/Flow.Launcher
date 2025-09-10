@@ -72,43 +72,14 @@
                     Width="150"
                     Height="34"
                     Margin="0 0 26 0"
+                    VerticalContentAlignment="Center"
+                    ui:ControlHelper.PlaceholderText="{DynamicResource searchplugin}"
                     ContextMenu="{StaticResource TextBoxContextMenu}"
                     FontSize="14"
                     Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"
-                    TextAlignment="Left"
                     ToolTip="{DynamicResource searchpluginToolTip}"
                     ToolTipService.InitialShowDelay="200"
-                    ToolTipService.Placement="Top">
-                    <TextBox.Style>
-                        <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
-                            <Style.Resources>
-                                <VisualBrush
-                                    x:Key="CueBannerBrush"
-                                    AlignmentX="Left"
-                                    AlignmentY="Center"
-                                    Stretch="None">
-                                    <VisualBrush.Visual>
-                                        <Label
-                                            Padding="10 0 0 0"
-                                            Content="{DynamicResource searchplugin}"
-                                            Foreground="{DynamicResource CustomContextDisabled}" />
-                                    </VisualBrush.Visual>
-                                </VisualBrush>
-                            </Style.Resources>
-                            <Style.Triggers>
-                                <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
-                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
-                                </Trigger>
-                                <Trigger Property="Text" Value="{x:Null}">
-                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
-                                </Trigger>
-                                <Trigger Property="IsKeyboardFocused" Value="True">
-                                    <Setter Property="Background" Value="{DynamicResource Color02B}" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBox.Style>
-                </TextBox>
+                    ToolTipService.Placement="Top" />
             </ikw:SimpleStackPanel>
         </DockPanel>
 
