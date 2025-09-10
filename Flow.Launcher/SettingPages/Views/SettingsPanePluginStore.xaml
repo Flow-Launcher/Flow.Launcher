@@ -8,6 +8,7 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     xmlns:viewModels="clr-namespace:Flow.Launcher.SettingPages.ViewModels"
+    xmlns:wpftk="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
     Title="PluginStore"
     d:DataContext="{d:DesignInstance viewModels:SettingsPanePluginStoreViewModel}"
     d:DesignHeight="450"
@@ -123,7 +124,7 @@
             </ikw:SimpleStackPanel>
 
         </DockPanel>
-        <ui:GridView
+        <ListBox
             x:Name="StoreListBox"
             Grid.Row="1"
             Grid.Column="0"
@@ -141,25 +142,36 @@
             VirtualizingPanel.IsVirtualizingWhenGrouping="True"
             VirtualizingPanel.ScrollUnit="Pixel"
             VirtualizingPanel.VirtualizationMode="Recycling">
-            <ui:GridView.GroupStyle>
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <wpftk:VirtualizingWrapPanel
+                        x:Name="ItemWrapPanel"
+                        Margin="0 0 0 10"
+                        ItemSize="216,184"
+                        MouseWheelDelta="48"
+                        ScrollLineDelta="16"
+                        SpacingMode="None"
+                        StretchItems="True" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+
+            <ListBox.GroupStyle>
                 <GroupStyle HidesIfEmpty="True">
                     <GroupStyle.ContainerStyle>
                         <Style TargetType="{x:Type GroupItem}">
                             <Setter Property="Template">
                                 <Setter.Value>
-                                    <ControlTemplate>
-                                        <Grid>
-                                            <StackPanel Orientation="Vertical">
-                                                <TextBlock
-                                                    Margin="2 0 0 10"
-                                                    VerticalAlignment="Top"
-                                                    FontSize="16"
-                                                    FontWeight="Bold"
-                                                    Foreground="{DynamicResource Color05B}"
-                                                    Text="{Binding Name, Converter={StaticResource TextConverter}}" />
-                                                <ItemsPresenter />
-                                            </StackPanel>
-                                        </Grid>
+                                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock
+                                                Margin="2 0 0 10"
+                                                VerticalAlignment="Top"
+                                                FontSize="16"
+                                                FontWeight="Bold"
+                                                Foreground="{DynamicResource Color05B}"
+                                                Text="{Binding Name, Converter={StaticResource TextConverter}}" />
+                                            <ItemsPresenter />
+                                        </StackPanel>
                                     </ControlTemplate>
                                 </Setter.Value>
                             </Setter>
@@ -171,9 +183,9 @@
                         </ItemsPanelTemplate>
                     </GroupStyle.Panel>
                 </GroupStyle>
-            </ui:GridView.GroupStyle>
+            </ListBox.GroupStyle>
 
-            <ui:GridView.ItemTemplate>
+            <ListBox.ItemTemplate>
                 <DataTemplate>
                     <DataTemplate.Resources>
                         <Style x:Key="StoreListItemBtnStyle" TargetType="Button">
@@ -355,7 +367,7 @@
                         </Grid>
                     </Button>
                 </DataTemplate>
-            </ui:GridView.ItemTemplate>
-        </ui:GridView>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </ui:Page>

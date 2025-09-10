@@ -327,7 +327,7 @@
     </Style>
 
     <!--#region PluginStore Style-->
-    <Style x:Key="StoreList" TargetType="ui:GridViewItem">
+    <Style x:Key="StoreList" TargetType="ListBoxItem">
         <Setter Property="Padding" Value="0 0 0 0" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -385,7 +385,61 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="StoreListStyle" TargetType="ui:GridView">
+    <Style x:Key="StoreListStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Background" Value="{DynamicResource Color01B}" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="Margin" Value="{DynamicResource ResultMargin}" />
+        <Setter Property="Padding" Value="0 0 0 0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBox">
+                    <ui:ScrollViewerEx
+                        x:Name="ListBoxScrollViewer"
+                        Focusable="False"
+                        Template="{DynamicResource ScrollViewerControlTemplate}">
+                        <ui:ScrollViewerEx.Style>
+                            <Style TargetType="ui:ScrollViewerEx">
+                                <Style.Triggers>
+                                    <Trigger Property="ComputedVerticalScrollBarVisibility" Value="Visible">
+                                        <Setter Property="Margin" Value="0 0 0 0" />
+                                        <Setter Property="Padding" Value="0 0 0 0" />
+                                    </Trigger>
+                                    <Trigger Property="ComputedVerticalScrollBarVisibility" Value="Collapsed">
+                                        <Setter Property="Margin" Value="0 0 0 0" />
+                                        <Setter Property="Padding" Value="0 0 0 0" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ui:ScrollViewerEx.Style>
+                        <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </ui:ScrollViewerEx>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Items.Count}" Value="0">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid Margin="20 0 0 0">
+                                <StackPanel>
+                                    <TextBlock
+                                        Margin="0 20 0 4"
+                                        FontWeight="Bold"
+                                        Text="{DynamicResource searchplugin_Noresult_Title}" />
+                                    <TextBlock Text="{DynamicResource searchplugin_Noresult}" />
+                                </StackPanel>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--<Style x:Key="StoreListStyle" TargetType="ListBox">
         <Setter Property="Padding" Value="0 0 0 10" />
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="KeyboardNavigation.TabNavigation" Value="Once" />
@@ -485,7 +539,7 @@
                 </Setter>
             </DataTrigger>
         </Style.Triggers>
-    </Style>
+    </Style>-->
     <!--  For Tab Header responsive Width  -->
     <Style x:Key="NavTabControl" TargetType="{x:Type TabControl}">
         <Setter Property="Padding" Value="0" />
