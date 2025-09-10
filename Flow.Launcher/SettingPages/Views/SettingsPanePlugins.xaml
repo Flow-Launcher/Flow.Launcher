@@ -88,7 +88,8 @@
             Grid.Column="0"
             Background="{DynamicResource Color01B}">
             <ListBox
-                Margin="5 0 7 10"
+                Margin="5 0 0 10"
+                Padding="0 0 7 0"
                 Background="{DynamicResource Color01B}"
                 FontSize="14"
                 ItemContainerStyle="{StaticResource PluginList}"
