@@ -8,7 +8,6 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern"
     xmlns:viewModels="clr-namespace:Flow.Launcher.SettingPages.ViewModels"
-    xmlns:wpftk="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
     Title="PluginStore"
     d:DataContext="{d:DesignInstance viewModels:SettingsPanePluginStoreViewModel}"
     d:DesignHeight="450"
@@ -142,18 +141,6 @@
             VirtualizingPanel.IsVirtualizingWhenGrouping="True"
             VirtualizingPanel.ScrollUnit="Pixel"
             VirtualizingPanel.VirtualizationMode="Recycling">
-            <ui:GridView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <wpftk:VirtualizingWrapPanel
-                        x:Name="ItemWrapPanel"
-                        Margin="0 0 0 10"
-                        ItemSize="216,184"
-                        MouseWheelDelta="48"
-                        ScrollLineDelta="16"
-                        SpacingMode="None"
-                        StretchItems="True" />
-                </ItemsPanelTemplate>
-            </ui:GridView.ItemsPanel>
             <ui:GridView.GroupStyle>
                 <GroupStyle HidesIfEmpty="True">
                     <GroupStyle.ContainerStyle>
