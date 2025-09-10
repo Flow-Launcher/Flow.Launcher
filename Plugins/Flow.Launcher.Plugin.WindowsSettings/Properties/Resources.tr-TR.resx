@@ -1773,13 +1773,13 @@
     <value>Sorunları bul ve düzelt</value>
   </data>
   <data name="ChangeSettingsForContentReceivedUsingTapAndSend" xml:space="preserve">
-    <value>Change settings for content received using Tap and send</value>
+    <value>Dokun ve gönder kullanılarak alınan içerik için ayarları değiştir</value>
   </data>
   <data name="ChangeDefaultSettingsForMediaOrDevices" xml:space="preserve">
     <value>Medya veya cihazlar için varsayılan ayarları değiştir</value>
   </data>
   <data name="PrintTheSpeechReferenceCard" xml:space="preserve">
-    <value>Print the speech reference card</value>
+    <value>Konuşma referans kartını yazdır</value>
   </data>
   <data name="CalibrateDisplayColour" xml:space="preserve">
     <value>Ekran rengini kalibre et</value>
@@ -1815,13 +1815,13 @@
     <value>Fare düğmelerini özelleştir</value>
   </data>
   <data name="SetTabletButtonsToPerformCertainTasks" xml:space="preserve">
-    <value>Set tablet buttons to perform certain tasks</value>
+    <value>Belirli görevleri gerçekleştirmek için tablet düğmelerini ayarla</value>
   </data>
   <data name="ViewInstalledFonts" xml:space="preserve">
     <value>Yüklü yazı tiplerini görüntüle</value>
   </data>
   <data name="ChangeTheWayCurrencyIsDisplayed" xml:space="preserve">
-    <value>Change the way currency is displayed</value>
+    <value>Para biriminin görüntülenme şeklini değiştirme</value>
   </data>
   <data name="EditGroupPolicy" xml:space="preserve">
     <value>Grup ilkesini düzenle</value>
@@ -2064,7 +2064,7 @@
     <value>Microsoft ChangJie Ayarları</value>
   </data>
   <data name="ReplaceSoundsWithVisualCues" xml:space="preserve">
-    <value>Replace sounds with visual cues</value>
+    <value>Sesleri görsel ipuçlarıyla değiştirin</value>
   </data>
   <data name="ChangeTemporaryInternetFileSettings" xml:space="preserve">
     <value>Geçici İnternet dosyası ayarlarını değiştir</value>
@@ -2082,7 +2082,7 @@
     <value>Kurtarma anahtarınızı yedekleyin</value>
   </data>
   <data name="SaveBackupCopiesOfYourFilesWithFileHistory" xml:space="preserve">
-    <value>Save backup copies of your files with File History</value>
+    <value>Dosya Geçmişi ile dosyalarınızın yedek kopyalarını kaydedin</value>
   </data>
   <data name="ViewCurrentAccessibilitySettings" xml:space="preserve">
     <value>Geçerli erişilebilirlik ayarlarını görüntüle</value>
@@ -2103,7 +2103,7 @@
     <value>Sistem ses seviyesini ayarla</value>
   </data>
   <data name="DefragmentAndOptimiseYourDrives" xml:space="preserve">
-    <value>Defragment and optimise your drives</value>
+    <value>Sürücülerinizi birleştirin ve optimize edin</value>
   </data>
   <data name="SetUpODBCDataSources32Bit" xml:space="preserve">
     <value>ODBC veri kaynaklarını ayarla (32-bit)</value>
@@ -2112,16 +2112,16 @@
     <value>Yazı Tipi Ayarlarını Değiştir</value>
   </data>
   <data name="MagnifyPortionsOfTheScreenUsingMagnifier" xml:space="preserve">
-    <value>Magnify portions of the screen using Magnifier</value>
+    <value>Büyüteç kullanarak ekranın bazı bölümlerini büyütme</value>
   </data>
   <data name="ChangeTheFileTypeAssociatedWithAFileExtension" xml:space="preserve">
-    <value>Change the file type associated with a file extension</value>
+    <value>Bir dosya uzantısı ile ilişkili dosya türünü değiştir</value>
   </data>
   <data name="ViewEventLogs" xml:space="preserve">
     <value>Olay günlüklerini görüntüle</value>
   </data>
   <data name="ManageWindowsCredentials" xml:space="preserve">
-    <value>Manage Windows Credentials</value>
+    <value>Windows Kimlik Bilgilerini Yönet</value>
   </data>
   <data name="SetUpAMicrophone" xml:space="preserve">
     <value>Bir mikrofon ayarla</value>
@@ -2173,10 +2173,10 @@
     <value>Fare tıklama ayarlarını değiştir</value>
   </data>
   <data name="ChangeAdvancedColourManagementSettingsForDisplaysScannersAndPrinters" xml:space="preserve">
-    <value>Change advanced colour management settings for displays, scanners and printers</value>
+    <value>Ekranlar, tarayıcılar ve yazıcılar için gelişmiş renk yönetimi ayarlarını değiştirme</value>
   </data>
   <data name="LetWindowsSuggestEaseOfAccessSettings" xml:space="preserve">
-    <value>Let Windows suggest Ease of Access settings</value>
+    <value>Windows'un Erişim Kolaylığı ayarlarını önermesine izin verin</value>
   </data>
   <data name="ClearDiskSpaceByDeletingUnnecessaryFiles" xml:space="preserve">
     <value>Gereksiz dosyaları silerek disk alanını temizle</value>
@@ -2188,7 +2188,7 @@
     <value>Özel Karakter Düzenleyici</value>
   </data>
   <data name="RecordStepsToReproduceAProblem" xml:space="preserve">
-    <value>Record steps to reproduce a problem</value>
+    <value>Bir sorunu yeniden üretmek için adımları kaydedin</value>
   </data>
   <data name="AdjustTheAppearanceAndPerformanceOfWindows" xml:space="preserve">
     <value>Windows'un görünümünü ve performansını ayarla</value>
@@ -2254,7 +2254,7 @@
     <value>Ağ durumunu ve görevlerini görüntüle</value>
   </data>
   <data name="TurnMagnifierOnOrOff" xml:space="preserve">
-    <value>Turn Magnifier on or off</value>
+    <value>Büyüteci aç veya kapat</value>
   </data>
   <data name="SeeTheNameOfThisComputer" xml:space="preserve">
     <value>Bu bilgisayarın adına bakın</value>
@@ -2320,16 +2320,16 @@
     <value>Arama kurallarını ayarla</value>
   </data>
   <data name="EnableOrDisableSessionCookies" xml:space="preserve">
-    <value>Enable or disable session cookies</value>
+    <value>Oturum çerezlerini etkinleştir veya devre dışı bırak</value>
   </data>
   <data name="GiveAdministrativeRightsToADomainUser" xml:space="preserve">
-    <value>Give administrative rights to a domain user</value>
+    <value>Bir etki alanı kullanıcısına yönetici hakları verme</value>
   </data>
   <data name="ChooseWhenToTurnOffDisplay" xml:space="preserve">
-    <value>Choose when to turn off display</value>
+    <value>Ekranın ne zaman kapatılacağını seçin</value>
   </data>
   <data name="MoveThePointerWithTheKeypadUsingMousekeys" xml:space="preserve">
-    <value>Move the pointer with the keypad using MouseKeys</value>
+    <value>MouseKeys kullanarak imleci tuş takımıyla hareket ettirme</value>
   </data>
   <data name="ChangeWindowsSideshowCompatibleDeviceSettings" xml:space="preserve">
     <value>Change Windows SideShow-compatible device settings</value>
