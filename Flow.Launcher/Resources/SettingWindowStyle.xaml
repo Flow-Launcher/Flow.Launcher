@@ -535,8 +535,9 @@
                                     <TextBlock
                                         Margin="0 20 0 4"
                                         FontWeight="Bold"
+                                        Foreground="{DynamicResource Color05B}"
                                         Text="{DynamicResource searchplugin_Noresult_Title}" />
-                                    <TextBlock Text="{DynamicResource searchplugin_Noresult}" />
+                                    <TextBlock Foreground="{DynamicResource Color05B}" Text="{DynamicResource searchplugin_Noresult}" />
                                 </StackPanel>
                             </Grid>
                         </ControlTemplate>
