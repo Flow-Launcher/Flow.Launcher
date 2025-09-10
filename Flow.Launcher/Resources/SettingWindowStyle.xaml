@@ -326,7 +326,7 @@
     </Style>
 
     <!--#region PluginStore Style-->
-    <Style x:Key="StoreList" TargetType="ListViewItem">
+    <Style x:Key="StoreList" TargetType="ui:GridViewItem">
         <Setter Property="Padding" Value="0 0 0 0" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />

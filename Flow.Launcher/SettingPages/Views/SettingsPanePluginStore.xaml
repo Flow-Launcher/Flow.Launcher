@@ -124,7 +124,7 @@
             </ikw:SimpleStackPanel>
 
         </DockPanel>
-        <ListView
+        <ui:GridView
             x:Name="StoreListBox"
             Grid.Row="1"
             Grid.Column="0"
@@ -142,7 +142,7 @@
             VirtualizingPanel.IsVirtualizingWhenGrouping="True"
             VirtualizingPanel.ScrollUnit="Pixel"
             VirtualizingPanel.VirtualizationMode="Recycling">
-            <ListView.ItemsPanel>
+            <ui:GridView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <wpftk:VirtualizingWrapPanel
                         x:Name="ItemWrapPanel"
@@ -153,8 +153,8 @@
                         SpacingMode="None"
                         StretchItems="True" />
                 </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-            <ListView.GroupStyle>
+            </ui:GridView.ItemsPanel>
+            <ui:GridView.GroupStyle>
                 <GroupStyle HidesIfEmpty="True">
                     <GroupStyle.ContainerStyle>
                         <Style TargetType="{x:Type GroupItem}">
@@ -184,9 +184,9 @@
                         </ItemsPanelTemplate>
                     </GroupStyle.Panel>
                 </GroupStyle>
-            </ListView.GroupStyle>
+            </ui:GridView.GroupStyle>
 
-            <ListView.ItemTemplate>
+            <ui:GridView.ItemTemplate>
                 <DataTemplate>
                     <DataTemplate.Resources>
                         <Style x:Key="StoreListItemBtnStyle" TargetType="Button">
@@ -368,7 +368,7 @@
                         </Grid>
                     </Button>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            </ui:GridView.ItemTemplate>
+        </ui:GridView>
     </Grid>
 </ui:Page>
