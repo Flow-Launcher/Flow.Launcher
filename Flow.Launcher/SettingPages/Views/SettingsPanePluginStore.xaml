@@ -134,11 +134,14 @@
             FontSize="14"
             ItemContainerStyle="{StaticResource StoreList}"
             ItemsSource="{Binding Source={StaticResource PluginStoreCollectionView}}"
+            ScrollViewer.CanContentScroll="True"
             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
             SelectionMode="Single"
             Style="{DynamicResource StoreListStyle}"
+            VirtualizingPanel.IsVirtualizing="True"
             VirtualizingPanel.IsVirtualizingWhenGrouping="True"
-            VirtualizingPanel.ScrollUnit="Pixel">
+            VirtualizingPanel.ScrollUnit="Pixel"
+            VirtualizingPanel.VirtualizationMode="Recycling">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <wpftk:VirtualizingWrapPanel

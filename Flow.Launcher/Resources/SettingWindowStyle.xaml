@@ -2,7 +2,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="clr-namespace:Flow.Launcher.Converters"
-    xmlns:core="clr-namespace:Flow.Launcher.Core.Resource;assembly=Flow.Launcher.Core">
+    xmlns:core="clr-namespace:Flow.Launcher.Core.Resource;assembly=Flow.Launcher.Core"
+    xmlns:ui="http://schemas.inkore.net/lib/ui/wpf/modern">
     <converters:BorderClipConverter x:Key="BorderClipConverter" />
     <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     <converters:TextConverter x:Key="TextConverter" />
