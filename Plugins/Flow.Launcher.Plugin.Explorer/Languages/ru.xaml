@@ -57,14 +57,14 @@
     <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Quick Access:</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">Current Action Keyword</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_done">Подтвердить</system:String>
-    <system:String x:Key="plugin_explorer_actionkeyword_enabled">Enabled</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_enabled">Включено</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">When disabled Flow will not execute this search option, and will additionally revert back to '*' to free up the action keyword</system:String>
     <system:String x:Key="plugin_explorer_engine_everything">Everything</system:String>
     <system:String x:Key="plugin_explorer_engine_windows_index">Windows Index</system:String>
     <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Direct Enumeration</system:String>
     <system:String x:Key="plugin_explorer_file_editor_path">Путь к редактору файлов</system:String>
     <system:String x:Key="plugin_explorer_folder_editor_path">Путь к редактору папки</system:String>
-    <system:String x:Key="plugin_explorer_enabled">Enabled</system:String>
+    <system:String x:Key="plugin_explorer_enabled">Включено</system:String>
     <system:String x:Key="plugin_explorer_disabled">Отключён</system:String>
 
     <system:String x:Key="plugin_explorer_Content_Search_Engine">Content Search Engine</system:String>
