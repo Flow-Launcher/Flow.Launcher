@@ -123,7 +123,7 @@
     <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">Hızlı Erişim'e başarıyla eklendi</system:String>
     <system:String x:Key="plugin_explorer_removefilefoldersuccess">Başarıyla Kaldırıldı</system:String>
     <system:String x:Key="plugin_explorer_removefilefoldersuccess_detail">Hızlı Erişim'den başarıyla kaldırıldı</system:String>
-    <system:String x:Key="plugin_explorer_contextmenu_titletooltip">Add to Quick Access so it can be opened with Explorer's Search Activation action keyword</system:String>
+    <system:String x:Key="plugin_explorer_contextmenu_titletooltip">Dosya Gezgini'nin Arama Etkinleştirme anahtar sözcüğü ile açılabilmesi için Hızlı Erişim'e ekleyin</system:String>
     <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">Hızlı Erişimden Kaldır</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Hızlı Erişimden Kaldır</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Geçerli öğeyi Hızlı Erişim'den kaldır</system:String>
