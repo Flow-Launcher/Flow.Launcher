@@ -122,8 +122,8 @@
                     ToolTipService.InitialShowDelay="200"
                     ToolTipService.Placement="Top" />
             </ikw:SimpleStackPanel>
-
         </DockPanel>
+
         <ListBox
             x:Name="StoreListBox"
             Grid.Row="1"
