@@ -51,7 +51,10 @@
                 </ui:SettingsExpander.Items>
 
             </ui:SettingsExpander>
-            <ui:SettingsCard Description="{DynamicResource hideOnStartupToolTip}" Header="{DynamicResource hideOnStartup}">
+            <ui:SettingsCard
+                Margin="0 4 0 0"
+                Description="{DynamicResource hideOnStartupToolTip}"
+                Header="{DynamicResource hideOnStartup}">
                 <ui:SettingsCard.HeaderIcon>
                     <ui:FontIcon Glyph="&#xed1a;" />
                 </ui:SettingsCard.HeaderIcon>
@@ -62,14 +65,17 @@
                     OnContent="{DynamicResource enable}" />
             </ui:SettingsCard>
 
-            <ui:SettingsCard Margin="0 14 0 0" Header="{DynamicResource hideFlowLauncherWhenLoseFocus}">
+            <ui:SettingsCard Margin="0 12 0 0" Header="{DynamicResource hideFlowLauncherWhenLoseFocus}">
                 <ui:ToggleSwitch
                     IsOn="{Binding Settings.HideWhenDeactivated}"
                     OffContent="{DynamicResource disable}"
                     OnContent="{DynamicResource enable}" />
             </ui:SettingsCard>
 
-            <ui:SettingsCard Description="{DynamicResource hideNotifyIconToolTip}" Header="{DynamicResource hideNotifyIcon}">
+            <ui:SettingsCard
+                Margin="0 4 0 0"
+                Description="{DynamicResource hideNotifyIconToolTip}"
+                Header="{DynamicResource hideNotifyIcon}">
                 <ui:ToggleSwitch
                     IsOn="{Binding Settings.HideNotifyIcon}"
                     OffContent="{DynamicResource disable}"
@@ -115,7 +121,11 @@
                 </StackPanel>
             </ui:SettingsCard>
 
-            <ui:SettingsCard Header="{DynamicResource SearchWindowAlign}" Visibility="{ext:CollapsedWhen {Binding Settings.SearchWindowScreen}, IsEqualTo={x:Static userSettings:SearchWindowScreens.RememberLastLaunchLocation}}">
+            <ui:SettingsCard
+                Margin="0 4 0 0"
+                Header="{DynamicResource SearchWindowAlign}"
+                Visibility="{ext:CollapsedWhen {Binding Settings.SearchWindowScreen},
+                                               IsEqualTo={x:Static userSettings:SearchWindowScreens.RememberLastLaunchLocation}}">
                 <ui:SettingsCard.HeaderIcon>
                     <ui:FontIcon Glyph="&#xe7f4;" />
                 </ui:SettingsCard.HeaderIcon>
@@ -196,7 +206,10 @@
                     OnContent="{DynamicResource enable}" />
             </ui:SettingsCard>
 
-            <ui:SettingsCard Description="{DynamicResource portableModeToolTIp}" Header="{DynamicResource portableMode}">
+            <ui:SettingsCard
+                Margin="0 4 0 0"
+                Description="{DynamicResource portableModeToolTIp}"
+                Header="{DynamicResource portableMode}">
                 <ui:SettingsCard.HeaderIcon>
                     <ui:FontIcon Glyph="&#xe88e;" />
                 </ui:SettingsCard.HeaderIcon>
@@ -207,7 +220,10 @@
                     OnContent="{DynamicResource enable}" />
             </ui:SettingsCard>
 
-            <ui:SettingsCard Description="{DynamicResource querySearchPrecisionToolTip}" Header="{DynamicResource querySearchPrecision}">
+            <ui:SettingsCard
+                Margin="0 14 0 0"
+                Description="{DynamicResource querySearchPrecisionToolTip}"
+                Header="{DynamicResource querySearchPrecision}">
 
                 <ComboBox
                     MaxWidth="200"
@@ -217,7 +233,10 @@
                     SelectedValuePath="Value" />
             </ui:SettingsCard>
 
-            <ui:SettingsCard Description="{DynamicResource lastQueryModeToolTip}" Header="{DynamicResource lastQueryMode}">
+            <ui:SettingsCard
+                Margin="0 4 0 0"
+                Description="{DynamicResource lastQueryModeToolTip}"
+                Header="{DynamicResource lastQueryMode}">
                 <ComboBox
                     MinWidth="210"
                     DisplayMemberPath="Display"
@@ -240,7 +259,10 @@
                     OnContent="{DynamicResource enable}" />
             </ui:SettingsCard>
 
-            <ui:SettingsCard Description="{DynamicResource showUnknownSourceWarningToolTip}" Header="{DynamicResource showUnknownSourceWarning}">
+            <ui:SettingsCard
+                Margin="0 4 0 0"
+                Description="{DynamicResource showUnknownSourceWarningToolTip}"
+                Header="{DynamicResource showUnknownSourceWarning}">
                 <ui:SettingsCard.HeaderIcon>
                     <ui:FontIcon Glyph="&#xE7BA;" />
                 </ui:SettingsCard.HeaderIcon>
@@ -251,7 +273,10 @@
                     OnContent="{DynamicResource enable}" />
             </ui:SettingsCard>
 
-            <ui:SettingsCard Description="{DynamicResource autoUpdatePluginsToolTip}" Header="{DynamicResource autoUpdatePlugins}">
+            <ui:SettingsCard
+                Margin="0 4 0 0"
+                Description="{DynamicResource autoUpdatePluginsToolTip}"
+                Header="{DynamicResource autoUpdatePlugins}">
                 <ui:SettingsCard.HeaderIcon>
                     <ui:FontIcon Glyph="&#xecc5;" />
                 </ui:SettingsCard.HeaderIcon>
@@ -367,7 +392,7 @@
                     OnContent="{DynamicResource enable}" />
             </ui:SettingsCard>
 
-            <ui:SettingsExpander Header="{DynamicResource historyResultsForHomePage}">
+            <ui:SettingsExpander Margin="0 4 0 0" Header="{DynamicResource historyResultsForHomePage}">
                 <ui:SettingsExpander.HeaderIcon>
                     <ui:FontIcon Glyph="&#xE81C;" />
                 </ui:SettingsExpander.HeaderIcon>
@@ -409,7 +434,10 @@
                     Content="{Binding Settings.CustomExplorer.Name}" />
             </ui:SettingsCard>
 
-            <ui:SettingsCard Description="{DynamicResource defaultBrowserToolTip}" Header="{DynamicResource defaultBrowser}">
+            <ui:SettingsCard
+                Margin="0 4 0 0"
+                Description="{DynamicResource defaultBrowserToolTip}"
+                Header="{DynamicResource defaultBrowser}">
                 <ui:SettingsCard.HeaderIcon>
                     <ui:FontIcon Glyph="&#xf6fa;" />
                 </ui:SettingsCard.HeaderIcon>
@@ -436,7 +464,7 @@
                 </StackPanel>
             </ui:SettingsCard>
 
-            <ui:SettingsCard Header="{DynamicResource nodeFilePath}">
+            <ui:SettingsCard Margin="0 4 0 0" Header="{DynamicResource nodeFilePath}">
                 <StackPanel Orientation="Horizontal">
                     <TextBox
                         Width="300"
@@ -465,7 +493,7 @@
             </ui:SettingsCard>
 
             <ui:SettingsCard
-                Margin="0 4 0 0"
+                Margin="0 14 0 0"
                 Description="{DynamicResource ShouldUsePinyinToolTip}"
                 Header="{DynamicResource ShouldUsePinyin}">
                 <ui:SettingsCard.HeaderIcon>
@@ -480,6 +508,7 @@
             </ui:SettingsCard>
 
             <ui:SettingsExpander
+                Margin="0 4 0 0"
                 Description="{DynamicResource ShouldUseDoublePinyinToolTip}"
                 Header="{DynamicResource ShouldUseDoublePinyin}"
                 Visibility="{ext:VisibleWhen {Binding ShouldUsePinyin},
@@ -540,7 +569,10 @@
                         OffContent="{DynamicResource disable}"
                         OnContent="{DynamicResource enable}" />
                 </ui:SettingsCard>
-                <ui:SettingsCard Description="{DynamicResource KoreanImeOpenLinkToolTip}" Header="{DynamicResource KoreanImeOpenLink}">
+                <ui:SettingsCard
+                    Margin="0 4 0 0"
+                    Description="{DynamicResource KoreanImeOpenLinkToolTip}"
+                    Header="{DynamicResource KoreanImeOpenLink}">
                     <ui:SettingsCard.HeaderIcon>
                         <ui:FontIcon Glyph="&#xe8d3;" />
                     </ui:SettingsCard.HeaderIcon>
