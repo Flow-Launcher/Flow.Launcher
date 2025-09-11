@@ -132,7 +132,7 @@
             Margin="4 0 0 0"
             Padding="0 0 18 0"
             FontSize="14"
-            ItemContainerStyle="{StaticResource StoreList}"
+            ItemContainerStyle="{DynamicResource StoreList}"
             ItemsSource="{Binding Source={StaticResource PluginStoreCollectionView}}"
             ScrollViewer.CanContentScroll="True"
             ScrollViewer.HorizontalScrollBarVisibility="Disabled"

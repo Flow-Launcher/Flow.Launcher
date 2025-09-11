@@ -92,7 +92,7 @@
                 Padding="0 0 7 0"
                 Background="{DynamicResource Color01B}"
                 FontSize="14"
-                ItemContainerStyle="{StaticResource PluginList}"
+                ItemContainerStyle="{DynamicResource PluginList}"
                 ItemsSource="{Binding Source={StaticResource PluginCollectionView}}"
                 Loaded="PluginListBox_Loaded"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
