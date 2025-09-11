@@ -16,54 +16,6 @@
     <ui:Page.Resources>
         <ResourceDictionary>
             <CollectionViewSource x:Key="SortedFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}" />
-            <Style x:Key="AccentHyperLinkButtonStyle" TargetType="ui:HyperlinkButton">
-                <Setter Property="Foreground" Value="{DynamicResource AccentButtonForeground}" />
-                <Setter Property="Background" Value="{DynamicResource AccentButtonBackground}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource AccentButtonBorderBrush}" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="ui:HyperlinkButton">
-                            <Border
-                                x:Name="Background"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
-                                SnapsToDevicePixels="True">
-                                <Border
-                                    x:Name="Border"
-                                    Padding="{TemplateBinding Padding}"
-                                    CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}">
-                                    <ui:ContentPresenterEx
-                                        x:Name="ContentPresenter"
-                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                        Focusable="False"
-                                        RecognizesAccessKey="True"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                </Border>
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="Background" Property="Background" Value="{DynamicResource AccentButtonBackgroundPointerOver}" />
-                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource AccentButtonBorderBrushPointerOver}" />
-                                    <Setter Property="Foreground" Value="{DynamicResource AccentButtonForegroundPointerOver}" />
-                                </Trigger>
-                                <Trigger Property="IsPressed" Value="True">
-                                    <Setter TargetName="Background" Property="Background" Value="{DynamicResource AccentButtonBackgroundPressed}" />
-                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource AccentButtonBorderBrushPressed}" />
-                                    <Setter Property="Foreground" Value="{DynamicResource AccentButtonForegroundPressed}" />
-                                </Trigger>
-                                <Trigger Property="IsEnabled" Value="False">
-                                    <Setter TargetName="Background" Property="Background" Value="{DynamicResource AccentButtonBackgroundDisabled}" />
-                                    <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource AccentButtonBorderBrushDisabled}" />
-                                    <Setter Property="Foreground" Value="{DynamicResource AccentButtonForegroundDisabled}" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
         </ResourceDictionary>
     </ui:Page.Resources>
     <ui:ScrollViewerEx
@@ -88,11 +40,14 @@
                         x:Name="UpdateAppButton"
                         Command="{Binding UpdateAppCommand}"
                         Content="{DynamicResource checkUpdates}" />
-                    <ui:HyperlinkButton
-                        Height="{Binding ElementName=UpdateAppButton, Path=ActualHeight}"
-                        Content="{DynamicResource BecomeASponsor}"
-                        NavigateUri="{Binding SponsorPage}"
-                        Style="{DynamicResource AccentHyperLinkButtonStyle}" />
+                    <Button Height="{Binding ElementName=UpdateAppButton, Path=ActualHeight}" Style="{StaticResource AccentButtonStyle}">
+                        <Hyperlink
+                            NavigateUri="{Binding SponsorPage}"
+                            RequestNavigate="OnRequestNavigate"
+                            TextDecorations="None">
+                            <TextBlock Foreground="{StaticResource SystemControlForegroundAltHighBrush}" Text="{DynamicResource BecomeASponsor}" />
+                        </Hyperlink>
+                    </Button>
                 </ikw:SimpleStackPanel>
             </ui:SettingsCard>
 
