@@ -2150,14 +2150,6 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    <Style x:Key="HyperLinkBtnStyle" TargetType="Hyperlink">
-        <Setter Property="Foreground" Value="{DynamicResource PluginInfoColor}" />
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
-            </Trigger>
-        </Style.Triggers>
-    </Style>
 
     <!--  Content Dialog  -->
     <Style x:Key="ContentDialog" TargetType="ui:ContentDialog">
