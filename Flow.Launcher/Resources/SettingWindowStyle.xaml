@@ -11,6 +11,8 @@
 
     <!--  Icon for Theme Type Label  -->
     <Geometry x:Key="circle_half_stroke_solid">F1 M512,512z M0,0z M448,256C448,150,362,64,256,64L256,448C362,448,448,362,448,256z M0,256A256,256,0,1,1,512,256A256,256,0,1,1,0,256z</Geometry>
+
+    <!--  Setting Controls  -->
     <Style x:Key="SettingGrid" TargetType="ItemsControl">
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Margin" Value="0" />
@@ -31,6 +33,56 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style x:Key="SettingGroupBox" TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="{DynamicResource Color00B}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="Margin" Value="0 5 0 0" />
+        <Setter Property="Padding" Value="0 15 0 15" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+    </Style>
+    <Style x:Key="SettingTitleLabel" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
+        <Setter Property="Margin" Value="0 0 0 0" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+    <Style x:Key="SettingSubTitleLabel" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource Color04B}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Margin" Value="0 0 0 0" />
+        <Setter Property="Padding" Value="0 0 24 0" />
+        <Setter Property="TextWrapping" Value="WrapWithOverflow" />
+    </Style>
+
+    <Style x:Key="TextPanel" TargetType="{x:Type StackPanel}">
+        <Setter Property="Grid.Column" Value="1" />
+        <Setter Property="Margin" Value="0 0 0 0" />
+        <Setter Property="Width" Value="Auto" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+    </Style>
+
+    <Style
+        x:Key="SideControlCheckBox"
+        BasedOn="{StaticResource DefaultCheckBoxStyle}"
+        TargetType="{x:Type CheckBox}">
+        <Setter Property="Width" Value="24" />
+        <Setter Property="Grid.Column" Value="2" />
+        <Setter Property="Margin" Value="0 4 10 4" />
+        <Setter Property="LayoutTransform">
+            <Setter.Value>
+                <ScaleTransform ScaleX="1" ScaleY="1" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="SideTextAbout" TargetType="{x:Type TextBlock}">
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="Grid.Column" Value="1" />
+        <Setter Property="Margin" Value="0 0 -18 0" />
+    </Style>
+
+    <!--#region Theme Style-->
     <Style x:Key="ThemeList" TargetType="ListBoxItem">
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="HorizontalAlignment" Value="Left" />
@@ -71,54 +123,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
-    <Style x:Key="SettingGroupBox" TargetType="{x:Type Border}">
-        <Setter Property="Background" Value="{DynamicResource Color00B}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />
-        <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="CornerRadius" Value="5" />
-        <Setter Property="Margin" Value="0 5 0 0" />
-        <Setter Property="Padding" Value="0 15 0 15" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
-    </Style>
-    <Style x:Key="SettingTitleLabel" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
-        <Setter Property="Margin" Value="0 0 0 0" />
-        <Setter Property="TextWrapping" Value="Wrap" />
-    </Style>
-
-    <Style x:Key="SettingSubTitleLabel" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{DynamicResource Color04B}" />
-        <Setter Property="FontSize" Value="12" />
-        <Setter Property="Margin" Value="0 0 0 0" />
-        <Setter Property="Padding" Value="0 0 24 0" />
-        <Setter Property="TextWrapping" Value="WrapWithOverflow" />
-    </Style>
-    <Style x:Key="TextPanel" TargetType="{x:Type StackPanel}">
-        <Setter Property="Grid.Column" Value="1" />
-        <Setter Property="Margin" Value="0 0 0 0" />
-        <Setter Property="Width" Value="Auto" />
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="HorizontalAlignment" Value="Left" />
-    </Style>
-    <Style
-        x:Key="SideControlCheckBox"
-        BasedOn="{StaticResource DefaultCheckBoxStyle}"
-        TargetType="{x:Type CheckBox}">
-        <Setter Property="Width" Value="24" />
-        <Setter Property="Grid.Column" Value="2" />
-        <Setter Property="Margin" Value="0 4 10 4" />
-        <Setter Property="LayoutTransform">
-            <Setter.Value>
-                <ScaleTransform ScaleX="1" ScaleY="1" />
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="SideTextAbout" TargetType="{x:Type TextBlock}">
-        <Setter Property="HorizontalAlignment" Value="Right" />
-        <Setter Property="Grid.Column" Value="1" />
-        <Setter Property="Margin" Value="0 0 -18 0" />
     </Style>
 
     <!--#region Plugin Style-->
