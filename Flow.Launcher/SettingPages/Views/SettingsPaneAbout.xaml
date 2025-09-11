@@ -40,14 +40,12 @@
                         x:Name="UpdateAppButton"
                         Command="{Binding UpdateAppCommand}"
                         Content="{DynamicResource checkUpdates}" />
-                    <Button Height="{Binding ElementName=UpdateAppButton, Path=ActualHeight}" Style="{StaticResource AccentButtonStyle}">
-                        <Hyperlink
-                            NavigateUri="{Binding SponsorPage}"
-                            RequestNavigate="OnRequestNavigate"
-                            TextDecorations="None">
-                            <TextBlock Foreground="{StaticResource SystemControlForegroundAltHighBrush}" Text="{DynamicResource BecomeASponsor}" />
-                        </Hyperlink>
-                    </Button>
+                    <Button
+                        Height="{Binding ElementName=UpdateAppButton, Path=ActualHeight}"
+                        Command="{Binding OpenSponsorPageCommand}"
+                        Content="{DynamicResource BecomeASponsor}"
+                        Cursor="Hand"
+                        Style="{StaticResource AccentButtonStyle}" />
                 </ikw:SimpleStackPanel>
             </ui:SettingsCard>
 
