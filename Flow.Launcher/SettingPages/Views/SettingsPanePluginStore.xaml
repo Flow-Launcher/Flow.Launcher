@@ -235,7 +235,6 @@
                         HorizontalContentAlignment="Stretch"
                         VerticalContentAlignment="Stretch"
                         BorderThickness="0"
-                        FocusVisualStyle="{DynamicResource StoreItemFocusVisualStyleKey}"
                         Style="{DynamicResource StoreListItemBtnStyle}">
                         <ui:FlyoutService.Flyout>
                             <ui:Flyout x:Name="InstallFlyout" Placement="Bottom">

@@ -122,7 +122,10 @@
     </Style>
 
     <!--#region Plugin Style-->
-    <Style x:Key="PluginList" TargetType="ListBoxItem">
+    <Style
+        x:Key="PluginList"
+        BasedOn="{StaticResource DefaultListBoxItemStyle}"
+        TargetType="ListBoxItem">
         <Setter Property="Background" Value="{DynamicResource Color00B}" />
         <Setter Property="Padding" Value="0 0 0 0" />
         <Setter Property="UseLayoutRounding" Value="True" />
@@ -233,19 +236,10 @@
     </Style>
 
     <!--#region PluginStore Style-->
-    <Style x:Key="StoreItemFocusVisualStyleKey">
-        <Setter Property="Control.Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Rectangle
-                        Margin="0"
-                        Stroke="{DynamicResource Color05B}"
-                        StrokeThickness="2" />
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <Style x:Key="StoreList" TargetType="ListBoxItem">
+    <Style
+        x:Key="StoreList"
+        BasedOn="{StaticResource DefaultListBoxItemStyle}"
+        TargetType="ListBoxItem">
         <Setter Property="Padding" Value="0 0 0 0" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
