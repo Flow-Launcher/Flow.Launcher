@@ -43,8 +43,7 @@
             Text="{DynamicResource Welcome_Page3_Title}" />
         <ui:ScrollViewerEx
             Grid.Row="1"
-            Height="478"
-            Margin="0 0 0 0"
+            Height="483"
             HorizontalAlignment="Stretch"
             FontSize="13">
             <StackPanel Margin="24 0 24 0">
