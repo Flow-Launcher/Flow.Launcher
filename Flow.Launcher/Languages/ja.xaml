@@ -6,15 +6,15 @@
         {2}{2}
         {1}がすでにインストールされている場合は「いいえ」をクリックし、それが入っているフォルダーを選択してください
     </system:String>
-    <system:String x:Key="runtimePluginChooseRuntimeExecutable">Please select the {0} executable</system:String>
+    <system:String x:Key="runtimePluginChooseRuntimeExecutable">{0} の実行ファイルを選択してください</system:String>
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
-        Your selected {0} executable is invalid.
+        貴方が選択した {0} の実行ファイルが不正です。
         {2}{2}
-        Click yes if you would like select the {0} executable again. Click no if you would like to download {1}
+        {0} の実行ファイルをもう一度選択する場合は「はい」を、{1} をダウンロードする場合は「いいえ」を選択してください
     </system:String>
-    <system:String x:Key="runtimePluginUnableToSetExecutablePath">Unable to set {0} executable path, please try from Flow's settings (scroll down to the bottom).</system:String>
-    <system:String x:Key="failedToInitializePluginsTitle">Fail to Init Plugins</system:String>
-    <system:String x:Key="failedToInitializePluginsMessage">Plugins: {0} - fail to load and would be disabled, please contact plugin creator for help</system:String>
+    <system:String x:Key="runtimePluginUnableToSetExecutablePath">{0} の実行可能ファイルのパスを設定できません。Flow の設定から試してください（下までスクロールしてください）。</system:String>
+    <system:String x:Key="failedToInitializePluginsTitle">プラグインの起動失敗</system:String>
+    <system:String x:Key="failedToInitializePluginsMessage">プラグイン: {0} の読み込みに失敗したため、無効になりました。プラグインの作成者にお問い合わせください</system:String>
 
     <!--  Portable  -->
     <system:String x:Key="restartToDisablePortableMode">Flow Launcherはポータブルモードの無効化のために再起動する必要があります。再起動の後、ポータブルな形式の設定項目は削除され、あなたのパソコンのフォルダに保存されます</system:String>
@@ -24,21 +24,21 @@
     <system:String x:Key="userDataDuplicated">Flow Launcherはあなたのユーザーデータが{0} と {1} の両方に存在することを検知しました。{2}{2}続行するには、{1}を削除してください。処理は中断されました。</system:String>
 
     <!--  Plugin Loader  -->
-    <system:String x:Key="pluginHasErrored">The following plugin has errored and cannot be loaded:</system:String>
-    <system:String x:Key="pluginsHaveErrored">The following plugins have errored and cannot be loaded:</system:String>
-    <system:String x:Key="referToLogs">Please refer to the logs for more information</system:String>
+    <system:String x:Key="pluginHasErrored">以下のプラグインにエラーがあるためロードできません：</system:String>
+    <system:String x:Key="pluginsHaveErrored">以下のプラグインにエラーがあるためロードできません：</system:String>
+    <system:String x:Key="referToLogs">詳細はログを参照してください</system:String>
 
     <!--  Http  -->
-    <system:String x:Key="pleaseTryAgain">Please try again</system:String>
-    <system:String x:Key="parseProxyFailed">Unable to parse Http Proxy</system:String>
+    <system:String x:Key="pleaseTryAgain">もう一度お試しください</system:String>
+    <system:String x:Key="parseProxyFailed">Http プロキシをパースできません</system:String>
 
     <!--  AbstractPluginEnvironment  -->
-    <system:String x:Key="failToInstallTypeScriptEnv">Failed to install TypeScript environment. Please try again later</system:String>
-    <system:String x:Key="failToInstallPythonEnv">Failed to install Python environment. Please try again later.</system:String>
+    <system:String x:Key="failToInstallTypeScriptEnv">TypeScript環境のインストールに失敗しました。後でもう一度お試しください</system:String>
+    <system:String x:Key="failToInstallPythonEnv">Python 環境のインストールに失敗しました。後でもう一度お試しください。</system:String>
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">ホットキー &quot;{0}&quot; の登録に失敗しました。このホットキーは別のプログラムで使用されている可能性があります。別のホットキーに変更するか、このホットキーを使用しているプログラムを終了してください。</system:String>
-    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">ホットキー「{0}」の登録解除に失敗しました。もう一度試すか、ログを参照して詳細を確認してください</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">{0}の起動に失敗しました</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Flow Launcherプラグインの形式が正しくありません</system:String>
@@ -58,7 +58,7 @@
     <system:String x:Key="selectAll">全て選択</system:String>
     <system:String x:Key="fileTitle">ファイル</system:String>
     <system:String x:Key="folderTitle">フォルダー</system:String>
-    <system:String x:Key="textTitle">Text</system:String>
+    <system:String x:Key="textTitle">テキスト</system:String>
     <system:String x:Key="GameMode">ゲームモード</system:String>
     <system:String x:Key="GameModeToolTip">ホットキーの使用を一時停止します。</system:String>
     <system:String x:Key="PositionReset">位置のリセット</system:String>
@@ -145,7 +145,7 @@
     <system:String x:Key="searchDelayNumberBoxToolTip">Enter the wait time (in ms) until input is considered complete. This can only be edited if Search Delay is enabled.</system:String>
     <system:String x:Key="searchDelayTime">デフォルトの検索遅延時間</system:String>
     <system:String x:Key="searchDelayTimeToolTip">入力が停止した後に結果が表示されるまでの待ち時間。値が大きいほど長く待機します。(単位 ms)</system:String>
-    <system:String x:Key="KoreanImeTitle">Information for Korean IME user</system:String>
+    <system:String x:Key="KoreanImeTitle">韓国語IMEユーザーへの情報</system:String>
     <system:String x:Key="KoreanImeGuide">
         The Korean input method used in Windows 11 may cause some issues in Flow Launcher.
 
@@ -160,10 +160,10 @@
 
 
     </system:String>
-    <system:String x:Key="KoreanImeOpenLink">Open Language and Region System Settings</system:String>
+    <system:String x:Key="KoreanImeOpenLink">システムの言語と地域設定を開く</system:String>
     <system:String x:Key="KoreanImeOpenLinkToolTip">Opens the Korean IME setting location. Go to Korean &gt; Language Options &gt; Keyboard - Microsoft IME &gt; Compatibility</system:String>
     <system:String x:Key="KoreanImeOpenLinkButton">開く</system:String>
-    <system:String x:Key="KoreanImeRegistry">Use Previous Korean IME</system:String>
+    <system:String x:Key="KoreanImeRegistry">前の韓国語IMEを使用</system:String>
     <system:String x:Key="KoreanImeRegistryTooltip">You can change the Previous Korean IME settings directly from here</system:String>
     <system:String x:Key="KoreanImeSettingChangeFailTitle">Failed to change Korean IME setting</system:String>
     <system:String x:Key="KoreanImeSettingChangeFailSubTitle">Please check your system registry access or contact support.</system:String>
@@ -191,11 +191,11 @@
     <system:String x:Key="browserMorePlugins">プラグインを探す</system:String>
     <system:String x:Key="enable">有効</system:String>
     <system:String x:Key="disable">無効</system:String>
-    <system:String x:Key="actionKeywordsTitle">Action keyword Setting</system:String>
+    <system:String x:Key="actionKeywordsTitle">アクションキーワードの設定</system:String>
     <system:String x:Key="actionKeywords">キーワード</system:String>
-    <system:String x:Key="currentActionKeywords">Current action keyword</system:String>
-    <system:String x:Key="newActionKeyword">New action keyword</system:String>
-    <system:String x:Key="actionKeywordsTooltip">Change Action Keywords</system:String>
+    <system:String x:Key="currentActionKeywords">現在のアクションキーワード</system:String>
+    <system:String x:Key="newActionKeyword">新しいアクションキーワード</system:String>
+    <system:String x:Key="actionKeywordsTooltip">アクションキーワードの変更</system:String>
     <system:String x:Key="pluginSearchDelayTime">Plugin search delay time</system:String>
     <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Search Delay Time</system:String>
     <system:String x:Key="FilterComboboxLabel">詳細設定:</system:String>
@@ -203,8 +203,8 @@
     <system:String x:Key="DisplayModePriority">重要度</system:String>
     <system:String x:Key="DisplayModeSearchDelay">検索遅延</system:String>
     <system:String x:Key="DisplayModeHomeOnOff">ホームページ</system:String>
-    <system:String x:Key="currentPriority">Current Priority</system:String>
-    <system:String x:Key="newPriority">New Priority</system:String>
+    <system:String x:Key="currentPriority">現在の優先度</system:String>
+    <system:String x:Key="newPriority">新しい優先度</system:String>
     <system:String x:Key="priority">重要度</system:String>
     <system:String x:Key="priorityToolTip">プラグインの結果の優先度を変更します。</system:String>
     <system:String x:Key="pluginDirectory">プラグイン・ディレクトリ</system:String>
@@ -216,14 +216,14 @@
     <system:String x:Key="plugin_uninstall">アンインストール</system:String>
     <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
-    <system:String x:Key="failedToRemovePluginCacheTitle">Fail to remove plugin cache</system:String>
+    <system:String x:Key="failedToRemovePluginCacheTitle">プラグインキャッシュの削除に失敗</system:String>
     <system:String x:Key="failedToRemovePluginCacheMessage">Plugins: {0} - Fail to remove plugin cache files, please remove them manually</system:String>
     <system:String x:Key="pluginModifiedAlreadyTitle">{0} modified already</system:String>
     <system:String x:Key="pluginModifiedAlreadyMessage">Please restart Flow before making any further changes</system:String>
-    <system:String x:Key="failedToInstallPluginTitle">Fail to install {0}</system:String>
-    <system:String x:Key="failedToUninstallPluginTitle">Fail to uninstall {0}</system:String>
-    <system:String x:Key="fileNotFoundMessage">Unable to find plugin.json from the extracted zip file, or this path {0} does not exist</system:String>
-    <system:String x:Key="pluginExistAlreadyMessage">A plugin with the same ID and version already exists, or the version is greater than this downloaded plugin</system:String>
+    <system:String x:Key="failedToInstallPluginTitle">{0} のインストールに失敗</system:String>
+    <system:String x:Key="failedToUninstallPluginTitle">{0} のアンインストールに失敗</system:String>
+    <system:String x:Key="fileNotFoundMessage">展開されたzipファイルからplugin.jsonが見つからないか、このパス {0} が存在しません</system:String>
+    <system:String x:Key="pluginExistAlreadyMessage">同じIDとバージョンのプラグインがすでに存在するか、またはこのダウンロードしたプラグインよりもバージョンが大きいです</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">プラグインストア</system:String>
@@ -235,9 +235,9 @@
     <system:String x:Key="installbtn">インストール</system:String>
     <system:String x:Key="uninstallbtn">アンインストール</system:String>
     <system:String x:Key="updatebtn">更新</system:String>
-    <system:String x:Key="LabelInstalledToolTip">Plugin already installed</system:String>
-    <system:String x:Key="LabelNew">New Version</system:String>
-    <system:String x:Key="LabelNewToolTip">This plugin has been updated within the last 7 days</system:String>
+    <system:String x:Key="LabelInstalledToolTip">プラグインは既にインストールされています</system:String>
+    <system:String x:Key="LabelNew">新しいバージョン</system:String>
+    <system:String x:Key="LabelNewToolTip">このプラグインは過去1週間以内に更新されました</system:String>
     <system:String x:Key="LabelUpdateToolTip">新しいアップデートが利用可能です</system:String>
     <system:String x:Key="ErrorInstallingPlugin">プラグインのインストール失敗</system:String>
     <system:String x:Key="ErrorUninstallingPlugin">プラグインのアンインストール失敗</system:String>
@@ -246,7 +246,7 @@
     <system:String x:Key="KeepPluginSettingsSubtitle">再びインストールして使用するときのためにプラグインの設定を維持しますか？</system:String>
     <system:String x:Key="InstallSuccessNoRestart">Plugin {0} successfully installed. Please restart Flow.</system:String>
     <system:String x:Key="UninstallSuccessNoRestart">Plugin {0} successfully uninstalled. Please restart Flow.</system:String>
-    <system:String x:Key="UpdateSuccessNoRestart">Plugin {0} successfully updated. Please restart Flow.</system:String>
+    <system:String x:Key="UpdateSuccessNoRestart">プラグイン {0} が正常に更新されました。Flow を再起動してください。</system:String>
     <system:String x:Key="InstallPromptTitle">プラグインのインストール</system:String>
     <system:String x:Key="InstallPromptSubtitle">{0} by {1} {2}{2}このプラグインをインストールしますか？</system:String>
     <system:String x:Key="UninstallPromptTitle">プラグインのアンインストール</system:String>
@@ -254,19 +254,19 @@
     <system:String x:Key="UpdatePromptTitle">プラグインの更新</system:String>
     <system:String x:Key="UpdatePromptSubtitle">{0} by {1} {2}{2}このプラグインを更新しますか？</system:String>
     <system:String x:Key="DownloadingPlugin">プラグインをダウンロード中</system:String>
-    <system:String x:Key="AutoRestartAfterChange">Automatically restart after installing/uninstalling/updating plugins in plugin store</system:String>
-    <system:String x:Key="ZipFileNotHavePluginJson">Zip file does not have a valid plugin.json configuration</system:String>
+    <system:String x:Key="AutoRestartAfterChange">プラグインストア経由でのプラグインのインストール 、アンインストール、または更新後に自動的に再起動します</system:String>
+    <system:String x:Key="ZipFileNotHavePluginJson">Zipファイルに有効なplugin.jsonファイルがありません</system:String>
     <system:String x:Key="InstallFromUnknownSourceTitle">不明なソースからのインストール</system:String>
     <system:String x:Key="InstallFromUnknownSourceSubtitle">このプラグインは不明なソースから提供されており、潜在的なリスクを含んでいる可能性があります！{0}{0}このプラグインの開発元をよく調べ、安全であることをご自身で確かめてください。{0}{0}それでもあなたはこのプラグインをインストールしますか？{0}{0}(この警告は設定の「一般」セクションで無効にすることができます)</system:String>
-    <system:String x:Key="ZipFiles">Zip files</system:String>
-    <system:String x:Key="SelectZipFile">Please select zip file</system:String>
+    <system:String x:Key="ZipFiles">Zip ファイル</system:String>
+    <system:String x:Key="SelectZipFile">zipファイルを選択してください</system:String>
     <system:String x:Key="installLocalPluginTooltip">ローカルパスからプラグインをインストール</system:String>
-    <system:String x:Key="updateNoResultTitle">No update available</system:String>
-    <system:String x:Key="updateNoResultSubtitle">All plugins are up to date</system:String>
-    <system:String x:Key="updateAllPluginsTitle">Plugin updates available</system:String>
-    <system:String x:Key="updateAllPluginsButtonContent">Update plugins</system:String>
+    <system:String x:Key="updateNoResultTitle">利用可能な更新はありません</system:String>
+    <system:String x:Key="updateNoResultSubtitle">すべてのプラグインが最新です</system:String>
+    <system:String x:Key="updateAllPluginsTitle">プラグインの更新が利用可能</system:String>
+    <system:String x:Key="updateAllPluginsButtonContent">プラグインを更新</system:String>
     <system:String x:Key="checkPluginUpdatesTooltip">プラグインの更新を確認</system:String>
-    <system:String x:Key="PluginsUpdateSuccessNoRestart">Plugins are successfully updated. Please restart Flow.</system:String>
+    <system:String x:Key="PluginsUpdateSuccessNoRestart">プラグインが正常に更新されました。Flow を再起動してください。</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">テーマ</system:String>
@@ -291,7 +291,7 @@
     <system:String x:Key="resetCustomizeToolTip">Reset to the recommended font and size settings.</system:String>
     <system:String x:Key="ImportThemeSize">Import Theme Size</system:String>
     <system:String x:Key="ImportThemeSizeToolTip">If a size value intended by the theme designer is available, it will be retrieved and applied.</system:String>
-    <system:String x:Key="CustomizeToolTip">Customize</system:String>
+    <system:String x:Key="CustomizeToolTip">カスタマイズ</system:String>
     <system:String x:Key="windowMode">ウィンドウモード</system:String>
     <system:String x:Key="opacity">透過度</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">テーマ {0} が存在しません、デフォルトのテーマに戻します。</system:String>
@@ -306,7 +306,7 @@
     <system:String x:Key="SoundEffectTip">検索ウィンドウが開いたとき、小さな音を鳴らします</system:String>
     <system:String x:Key="SoundEffectVolume">効果音の音量</system:String>
     <system:String x:Key="SoundEffectVolumeTip">効果音の音量を調整します</system:String>
-    <system:String x:Key="SoundEffectWarning">Windows Media Player is unavailable and is required for Flow's volume adjustment. Please check your installation if you need to adjust volume.</system:String>
+    <system:String x:Key="SoundEffectWarning">Windows Media Player は Flow を使った音量調整に必要です。ボリュームを調整する必要がある場合は、Windows Media Player がインストールされているかどうか確認してください。</system:String>
     <system:String x:Key="Animation">アニメーション</system:String>
     <system:String x:Key="AnimationTip">UIでアニメーションを使用します</system:String>
     <system:String x:Key="AnimationSpeed">アニメーション速度</system:String>
@@ -324,7 +324,7 @@
     <system:String x:Key="BackdropTypesAcrylic">アクリル</system:String>
     <system:String x:Key="BackdropTypesMica">マイカ</system:String>
     <system:String x:Key="BackdropTypesMicaAlt">マイカ（代替）</system:String>
-    <system:String x:Key="TypeIsDarkToolTip">This theme supports two (light/dark) modes.</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">このテーマはライト／ダークの2モードに対応しています。</system:String>
     <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
     <system:String x:Key="ShowPlaceholder">プレースホルダーを表示</system:String>
     <system:String x:Key="ShowPlaceholderTip">クエリが空の場合にプレースホルダを表示します</system:String>
@@ -379,16 +379,16 @@
     <system:String x:Key="delete">削除</system:String>
     <system:String x:Key="edit">編集</system:String>
     <system:String x:Key="add">追加</system:String>
-    <system:String x:Key="none">None</system:String>
+    <system:String x:Key="none">なし</system:String>
     <system:String x:Key="pleaseSelectAnItem">項目を選択してください</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">{0} プラグインのホットキーを本当に削除しますか？</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">本当にこのショートカットを削除しますか？： {0} を {1} に展開</system:String>
     <system:String x:Key="shortcut_clipboard_description">クリップボードからテキストを取得します。</system:String>
     <system:String x:Key="shortcut_active_explorer_path">アクティブなエクスプローラーからパスを取得します。</system:String>
     <system:String x:Key="queryWindowShadowEffect">検索ウィンドウの落陰効果</system:String>
-    <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU. Not recommended if your computer performance is limited.</system:String>
-    <system:String x:Key="windowWidthSize">Window Width Size</system:String>
-    <system:String x:Key="windowWidthSizeToolTip">You can also quickly adjust this by using Ctrl+[ and Ctrl+].</system:String>
+    <system:String x:Key="shadowEffectCPUUsage">影の効果は GPU に大きな負荷をかけます。お使いのコンピューターの性能が限定的な場合、無効にすることをおすすめします。</system:String>
+    <system:String x:Key="windowWidthSize">ウィンドウ幅のサイズ</system:String>
+    <system:String x:Key="windowWidthSizeToolTip">Ctrl+Plus と Ctrl+Minus を使用すれば、簡単に調整することもできます。</system:String>
     <system:String x:Key="useGlyphUI">Segoe Fluent アイコンを使用する</system:String>
     <system:String x:Key="useGlyphUIEffect">サポートされているクエリ結果にSegoe Fluentアイコンを使用する</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Press Key</system:String>
@@ -400,8 +400,8 @@
     <system:String x:Key="dialogJumpHotkeyToolTip">ショートカットを入力して、「名前を付けて開く/保存」ダイアログ・ウィンドウを現在のファイルマネージャのパスにすばやくナビゲートします。</system:String>
     <system:String x:Key="dialogJump">ダイアログジャンプ</system:String>
     <system:String x:Key="dialogJumpToolTip">「名前を付けて開く/保存」ダイアログウィンドウが開いたら、すぐにファイルマネージャの現在のパスに移動します。</system:String>
-    <system:String x:Key="autoDialogJump">Dialog Jump Automatically</system:String>
-    <system:String x:Key="autoDialogJumpToolTip">When Open/Save As dialog window is displayed, automatically navigate to the path of the current file manager. (Experimental)</system:String>
+    <system:String x:Key="autoDialogJump">自動ダイアログジャンプ</system:String>
+    <system:String x:Key="autoDialogJumpToolTip">開く/名前を付けて保存ダイアログが表示されると、自動的に現在のファイルマネージャのパスに移動させます。 (実験的)</system:String>
     <system:String x:Key="showDialogJumpWindow">ダイアログジャンプウィンドウを表示</system:String>
     <system:String x:Key="showDialogJumpWindowToolTip">「名前をつけて保存/開く」ダイアログウィンドウが表示されたときにダイアログジャンプのウィンドウを開いて、ファイルやフォルダーを素早く開く。</system:String>
     <system:String x:Key="dialogJumpWindowPosition">ダイアログジャンプのウィンドウの位置</system:String>
@@ -472,11 +472,11 @@
     <system:String x:Key="settingWindowFontTitle">設定ウィンドウで使用するフォント</system:String>
 
     <!--  Release Notes Window  -->
-    <system:String x:Key="seeMoreReleaseNotes">See more release notes on GitHub</system:String>
-    <system:String x:Key="checkNetworkConnectionTitle">Failed to fetch release notes</system:String>
+    <system:String x:Key="seeMoreReleaseNotes">GitHub で詳細なリリース ノートを見る</system:String>
+    <system:String x:Key="checkNetworkConnectionTitle">リリースノートの取得に失敗</system:String>
     <system:String x:Key="checkNetworkConnectionSubTitle">Please check your network connection or ensure GitHub is accessible</system:String>
-    <system:String x:Key="appUpdateTitle">Flow Launcher has been updated to {0}</system:String>
-    <system:String x:Key="appUpdateButtonContent">Click here to view the release notes</system:String>
+    <system:String x:Key="appUpdateTitle">Flow Launcher が {0}に更新されました</system:String>
+    <system:String x:Key="appUpdateButtonContent">ここをクリックしてリリースノートを表示</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">デフォルトのファイルマネージャー</system:String>
@@ -502,7 +502,7 @@
     <system:String x:Key="defaultBrowser_parameter">プライベートモード</system:String>
 
     <!--  Priority Setting Dialog  -->
-    <system:String x:Key="changePriorityWindow">Change Priority</system:String>
+    <system:String x:Key="changePriorityWindow">優先度の変更</system:String>
     <system:String x:Key="priority_tips">Greater the number, the higher the result will be ranked. Try setting it as 5. If you want the results to be lower than any other plugin's, provide a negative number</system:String>
     <system:String x:Key="invalidPriority">Please provide an valid integer for Priority!</system:String>
 
@@ -517,30 +517,30 @@
     <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
     <system:String x:Key="success">成功しました</system:String>
     <system:String x:Key="completedSuccessfully">Completed successfully</system:String>
-    <system:String x:Key="failedToCopy">Failed to copy</system:String>
+    <system:String x:Key="failedToCopy">コピーに失敗</system:String>
     <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
 
     <!--  Search Delay Settings Dialog  -->
-    <system:String x:Key="searchDelayTimeTitle">Search Delay Time Setting</system:String>
-    <system:String x:Key="searchDelayTimeTips">Input the search delay time in ms you like to use for the plugin. Input empty if you don't want to specify any, and the plugin will use default search delay time.</system:String>
+    <system:String x:Key="searchDelayTimeTitle">検索の遅延時間の設定</system:String>
+    <system:String x:Key="searchDelayTimeTips">プラグインに使用したい検索の遅延時間をミリ秒で入力します。 何も指定したくない場合は空にしておくと、プラグインはデフォルトの検索の遅延時間を使用します。</system:String>
 
     <!--  Search Delay Settings Dialog  -->
     <system:String x:Key="homeTitle">ホームページ</system:String>
-    <system:String x:Key="homeTips">Enable the plugin home page state if you like to show the plugin results when query is empty.</system:String>
+    <system:String x:Key="homeTips">クエリが空のときにプラグインの結果を表示したい場合は、プラグインのホームページの設定を有効にします。</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">カスタムクエリのホットキー</system:String>
     <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Launcher and input the specified query automatically.</system:String>
     <system:String x:Key="preview">プレビュー</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">ホットキーは使用できません。新しいホットキーを選択してください</system:String>
-    <system:String x:Key="invalidPluginHotkey">Hotkey is invalid</system:String>
+    <system:String x:Key="invalidPluginHotkey">そのホットキーは無効です</system:String>
     <system:String x:Key="update">更新</system:String>
-    <system:String x:Key="hotkeyRegTitle">Binding Hotkey</system:String>
+    <system:String x:Key="hotkeyRegTitle">ホットキーの設定</system:String>
     <system:String x:Key="hotkeyUnavailable">Current hotkey is unavailable.</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for &quot;{0}&quot; and can't be used. Please choose another hotkey.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">This hotkey is already in use by &quot;{0}&quot;. If you press &quot;Overwrite&quot;, it will be removed from &quot;{0}&quot;.</system:String>
-    <system:String x:Key="hotkeyRegGuide">Press the keys you want to use for this function.</system:String>
-    <system:String x:Key="emptyPluginHotkey">Hotkey and action keyword are empty</system:String>
+    <system:String x:Key="hotkeyRegGuide">この機能に使用するキーを押してください。</system:String>
+    <system:String x:Key="emptyPluginHotkey">ホットキーとアクションキーワードが空です</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">カスタムクエリのショートカット</system:String>
@@ -593,33 +593,33 @@
     <system:String x:Key="browserOpenError">An error occurred while opening the URL in the browser. Please check your Default Web Browser configuration in the General section of the settings window</system:String>
 
     <!--  General Notice  -->
-    <system:String x:Key="pleaseWait">Please wait...</system:String>
+    <system:String x:Key="pleaseWait">しばらくお待ちください…</system:String>
 
     <!--  Update  -->
-    <system:String x:Key="update_flowlauncher_update_check">Checking for new update</system:String>
+    <system:String x:Key="update_flowlauncher_update_check">新しい更新を確認中</system:String>
     <system:String x:Key="update_flowlauncher_already_on_latest">Flow Launcherは既に最新です</system:String>
-    <system:String x:Key="update_flowlauncher_update_found">Update found</system:String>
-    <system:String x:Key="update_flowlauncher_updating">Updating...</system:String>
+    <system:String x:Key="update_flowlauncher_update_found">更新が見つかりました</system:String>
+    <system:String x:Key="update_flowlauncher_updating">更新中…</system:String>
     <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">
-        Flow Launcher was not able to move your user profile data to the new update version.
-        Please manually move your profile data folder from {0} to {1}
+        Flow Launcherはユーザープロファイルデータを新しいバージョンに移動できませんでした。
+        手動で {0} から {1}にプロフィールデータフォルダを移動してください
     </system:String>
-    <system:String x:Key="update_flowlauncher_new_update">New Update</system:String>
+    <system:String x:Key="update_flowlauncher_new_update">新しい更新</system:String>
     <system:String x:Key="update_flowlauncher_update_new_version_available">Flow Launcher の最新バージョン V{0} が入手可能です</system:String>
     <system:String x:Key="update_flowlauncher_update_error">Flow Launcherのアップデート中にエラーが発生しました</system:String>
     <system:String x:Key="update_flowlauncher_update">更新</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">キャンセル</system:String>
-    <system:String x:Key="update_flowlauncher_fail">Update Failed</system:String>
-    <system:String x:Key="update_flowlauncher_check_connection">Check your connection and try updating proxy settings to github-cloud.s3.amazonaws.com.</system:String>
+    <system:String x:Key="update_flowlauncher_fail">アップデート失敗</system:String>
+    <system:String x:Key="update_flowlauncher_check_connection">接続を確認し、その後プロキシ設定を github-cloud.s3.amazonaws.com に更新してみてください。</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">このアップデートでは、Flow Launcherの再起動が必要です</system:String>
     <system:String x:Key="update_flowlauncher_update_update_files">次のファイルがアップデートされます</system:String>
     <system:String x:Key="update_flowlauncher_update_files">更新ファイル一覧</system:String>
     <system:String x:Key="update_flowlauncher_update_update_description">アップデートの詳細</system:String>
 
     <!--  Plugin Update Window  -->
-    <system:String x:Key="restartAfterUpdating">Restart Flow Launcher after updating plugins</system:String>
+    <system:String x:Key="restartAfterUpdating">プラグインを更新した後、Flow Launcher を再起動する</system:String>
     <system:String x:Key="updatePluginCheckboxContent">{0}: v{1} から v{2} へ更新</system:String>
-    <system:String x:Key="updatePluginNoSelected">No plugin selected</system:String>
+    <system:String x:Key="updatePluginNoSelected">プラグインが選択されていません</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">スキップ</system:String>
@@ -642,18 +642,18 @@
     <system:String x:Key="HotkeyShiftEnterDesc">コンテキストメニューを開く</system:String>
     <system:String x:Key="HotkeyCtrlEnterDesc">ファイルのあるフォルダを開く</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">管理者として実行、または、 デフォルトのファイルマネージャでフォルダを開く</system:String>
-    <system:String x:Key="HotkeyCtrlHDesc">Query History</system:String>
+    <system:String x:Key="HotkeyCtrlHDesc">クエリの履歴</system:String>
     <system:String x:Key="HotkeyESCDesc">コンテキストメニューから検索結果に戻る</system:String>
-    <system:String x:Key="HotkeyTabDesc">Autocomplete</system:String>
+    <system:String x:Key="HotkeyTabDesc">自動補完</system:String>
     <system:String x:Key="HotkeyRunDesc">選択したアイテムを開く、または、実行する</system:String>
     <system:String x:Key="HotkeyCtrlIDesc">Flow Launcherの設定ウインドウを開く</system:String>
     <system:String x:Key="HotkeyF5Desc">プラグインデータのリロード</system:String>
 
-    <system:String x:Key="HotkeySelectFirstResult">Select first result</system:String>
-    <system:String x:Key="HotkeySelectLastResult">Select last result</system:String>
-    <system:String x:Key="HotkeyRequery">Run current query again</system:String>
+    <system:String x:Key="HotkeySelectFirstResult">最初の結果を選択</system:String>
+    <system:String x:Key="HotkeySelectLastResult">最後の結果を選択</system:String>
+    <system:String x:Key="HotkeyRequery">現在のクエリをもう一度実行</system:String>
     <system:String x:Key="HotkeyOpenResult">結果を開く</system:String>
-    <system:String x:Key="HotkeyOpenResultN">Open result #{0}</system:String>
+    <system:String x:Key="HotkeyOpenResultN">#{0} を開く</system:String>
 
     <system:String x:Key="RecommendWeather">天気</system:String>
     <system:String x:Key="RecommendWeatherDesc">天気についてのGoogle検索</system:String>
