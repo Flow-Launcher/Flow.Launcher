@@ -103,7 +103,7 @@
                                     ContentTemplate="{TemplateBinding HeaderTemplate}"
                                     ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
                                     DockPanel.Dock="Top"
-                                    FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}"
+                                    FocusVisualStyle="{DynamicResource ExpanderHeaderFocusVisual}"
                                     FontFamily="{TemplateBinding FontFamily}"
                                     FontSize="{TemplateBinding FontSize}"
                                     FontStretch="{TemplateBinding FontStretch}"

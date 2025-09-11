@@ -1167,7 +1167,7 @@
                         <Rectangle
                             Margin="0"
                             SnapsToDevicePixels="true"
-                            Stroke="Black"
+                            Stroke="{DynamicResource Color05B}"
                             StrokeDashArray="1 2"
                             StrokeThickness="1" />
                     </Border>
@@ -1346,7 +1346,7 @@
                                 ContentTemplate="{TemplateBinding HeaderTemplate}"
                                 ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
                                 DockPanel.Dock="Top"
-                                FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}"
+                                FocusVisualStyle="{DynamicResource ExpanderHeaderFocusVisual}"
                                 FontFamily="{TemplateBinding FontFamily}"
                                 FontSize="{TemplateBinding FontSize}"
                                 FontStretch="{TemplateBinding FontStretch}"
