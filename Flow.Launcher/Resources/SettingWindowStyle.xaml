@@ -11,18 +11,6 @@
 
     <!--  Icon for Theme Type Label  -->
     <Geometry x:Key="circle_half_stroke_solid">F1 M512,512z M0,0z M448,256C448,150,362,64,256,64L256,448C362,448,448,362,448,256z M0,256A256,256,0,1,1,512,256A256,256,0,1,1,0,256z</Geometry>
-    <Style x:Key="StoreItemFocusVisualStyleKey">
-        <Setter Property="Control.Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Rectangle
-                        Margin="0"
-                        Stroke="Black"
-                        StrokeThickness="2" />
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
     <Style x:Key="SwitchFocusVisualStyleKey">
         <Setter Property="Control.Template">
             <Setter.Value>
@@ -327,6 +315,18 @@
     </Style>
 
     <!--#region PluginStore Style-->
+    <Style x:Key="StoreItemFocusVisualStyleKey">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle
+                        Margin="0"
+                        Stroke="{DynamicResource Color05B}"
+                        StrokeThickness="2" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     <Style x:Key="StoreList" TargetType="ListBoxItem">
         <Setter Property="Padding" Value="0 0 0 0" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
