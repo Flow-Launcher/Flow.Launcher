@@ -174,60 +174,6 @@
         <!--#endregion-->
     </Style>
 
-    <Style x:Key="NavTabItem" TargetType="{x:Type TabItem}">
-        <Setter Property="DockPanel.Dock" Value="Top" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type TabItem}">
-                    <Grid>
-                        <Border
-                            x:Name="border"
-                            Height="40"
-                            Margin="14 4 8 4"
-                            Padding="0 0 0 0"
-                            HorizontalAlignment="Stretch"
-                            Background="{DynamicResource Color01B}"
-                            CornerRadius="5">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="4" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Rectangle
-                                    x:Name="Bullet"
-                                    Grid.Column="0"
-                                    Width="4"
-                                    Height="18"
-                                    Margin="0 11 0 11"
-                                    Fill="{DynamicResource ToggleSwitchFillOn}"
-                                    RadiusX="2"
-                                    RadiusY="2"
-                                    Visibility="Hidden" />
-                                <ContentPresenter
-                                    x:Name="ContentSite"
-                                    Grid.Column="1"
-                                    Margin="12 11 18 11"
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Center"
-                                    ContentSource="Header"
-                                    TextBlock.Foreground="#000" />
-                            </Grid>
-                        </Border>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource Color06B}" />
-                        </Trigger>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource Color06B}" />
-                            <Setter TargetName="Bullet" Property="Visibility" Value="Visible" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <!--#region Plugin Style-->
     <Style x:Key="PluginList" TargetType="ListBoxItem">
         <Setter Property="Background" Value="{DynamicResource Color00B}" />
