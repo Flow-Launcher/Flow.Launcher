@@ -121,7 +121,6 @@
         <Setter Property="Margin" Value="0 0 -18 0" />
     </Style>
 
-
     <Style x:Key="logo" TargetType="{x:Type TabItem}">
         <!--#region Logo Style-->
         <Setter Property="Margin" Value="0" />
@@ -174,6 +173,7 @@
         </Setter>
         <!--#endregion-->
     </Style>
+
     <Style x:Key="NavTabItem" TargetType="{x:Type TabItem}">
         <Setter Property="DockPanel.Dock" Value="Top" />
         <Setter Property="Template">
@@ -228,6 +228,7 @@
         </Setter>
     </Style>
 
+    <!--#region Plugin Style-->
     <Style x:Key="PluginList" TargetType="ListBoxItem">
         <Setter Property="Background" Value="{DynamicResource Color00B}" />
         <Setter Property="Padding" Value="0 0 0 0" />
@@ -264,7 +265,6 @@
                             <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Color07B}" />
                             <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Color03B}" />
                             <Setter TargetName="Bd" Property="CornerRadius" Value="5" />
-
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -274,8 +274,6 @@
                             <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Color00B}" />
                             <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Color03B}" />
                             <Setter TargetName="Bd" Property="Margin" Value="0 0 0 0" />
-
-
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -286,8 +284,6 @@
                             <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Color03B}" />
                             <Setter TargetName="Bd" Property="CornerRadius" Value="5" />
                             <Setter TargetName="Bd" Property="Margin" Value="0 0 0 0" />
-
-
                         </MultiTrigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="Bd" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
@@ -298,6 +294,49 @@
         </Setter>
         <!--#endregion-->
         <Setter Property="Height" Value="Auto" />
+    </Style>
+    <Style
+        x:Key="PluginListStyle"
+        BasedOn="{StaticResource DefaultListBoxStyle}"
+        TargetType="{x:Type ListBox}">
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Background" Value="{DynamicResource Color01B}" />
+        <Setter Property="Padding" Value="0 0 0 0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBox">
+                    <ui:ScrollViewerEx
+                        x:Name="ScrollViewer"
+                        AutoHideScrollBars="{TemplateBinding ui:ScrollViewerHelper.AutoHideScrollBars}"
+                        Focusable="false"
+                        HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                        IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
+                        KeyboardNavigation.TabNavigation="{TemplateBinding KeyboardNavigation.TabNavigation}"
+                        VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+                        <ItemsPresenter Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </ui:ScrollViewerEx>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Items.Count}" Value="0">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Grid Margin="20 0 0 0">
+                                <StackPanel>
+                                    <TextBlock
+                                        Margin="0 20 0 4"
+                                        FontWeight="Bold"
+                                        Text="{DynamicResource searchplugin_Noresult_Title}" />
+                                    <TextBlock Text="{DynamicResource searchplugin_Noresult_Subtitle}" />
+                                </StackPanel>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
     <!--#region PluginStore Style-->
@@ -345,51 +384,6 @@
         </Setter>
         <!--#endregion-->
     </Style>
-
-    <Style
-        x:Key="PluginListStyle"
-        BasedOn="{StaticResource DefaultListBoxStyle}"
-        TargetType="{x:Type ListBox}">
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="Background" Value="{DynamicResource Color01B}" />
-        <Setter Property="Padding" Value="0 0 0 0" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ListBox">
-                    <ui:ScrollViewerEx
-                        x:Name="ScrollViewer"
-                        AutoHideScrollBars="{TemplateBinding ui:ScrollViewerHelper.AutoHideScrollBars}"
-                        Focusable="false"
-                        HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
-                        IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
-                        KeyboardNavigation.TabNavigation="{TemplateBinding KeyboardNavigation.TabNavigation}"
-                        VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
-                        <ItemsPresenter Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                    </ui:ScrollViewerEx>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Items.Count}" Value="0">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate>
-                            <Grid Margin="20 0 0 0">
-                                <StackPanel>
-                                    <TextBlock
-                                        Margin="0 20 0 4"
-                                        FontWeight="Bold"
-                                        Text="{DynamicResource searchplugin_Noresult_Title}" />
-                                    <TextBlock Text="{DynamicResource searchplugin_Noresult_Subtitle}" />
-                                </StackPanel>
-                            </Grid>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
-
     <Style
         x:Key="StoreListStyle"
         BasedOn="{StaticResource DefaultListBoxStyle}"
