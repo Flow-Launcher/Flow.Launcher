@@ -3,16 +3,16 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">項目を選択してください</system:String>
-    <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Please select a folder path.</system:String>
-    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Please choose a different name or folder path.</system:String>
-    <system:String x:Key="plugin_explorer_delete_quick_access_link">Are you sure you want to delete this quick access link?</system:String>
-    <system:String x:Key="plugin_explorer_delete_index_search_excluded_path">Are you sure you want to delete this index search excluded path?</system:String>
-    <system:String x:Key="plugin_explorer_select_folder_link_warning">Please select a folder link</system:String>
-    <system:String x:Key="plugin_explorer_delete_folder_link">Are you sure you want to delete {0}?</system:String>
-    <system:String x:Key="plugin_explorer_deletefileconfirm">Are you sure you want to permanently delete this file?</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Are you sure you want to permanently delete this file/folder?</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Deletion successful</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Successfully deleted {0}</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">フォルダのパスを選択してください。</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">別の名前またはフォルダのパスを選択してください。</system:String>
+    <system:String x:Key="plugin_explorer_delete_quick_access_link">このクイックアクセスリンクを削除してもよろしいですか？</system:String>
+    <system:String x:Key="plugin_explorer_delete_index_search_excluded_path">このインデックス検索の除外パスを削除してもよろしいですか？</system:String>
+    <system:String x:Key="plugin_explorer_select_folder_link_warning">フォルダーのリンクを選択してください</system:String>
+    <system:String x:Key="plugin_explorer_delete_folder_link">{0} を削除してもよろしいですか？</system:String>
+    <system:String x:Key="plugin_explorer_deletefileconfirm">このファイルを完全に削除してもよろしいですか？</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">このファイルやフォルダーを完全に削除してもよろしいですか？</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefoldersuccess">削除に成功</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">{0} は正常に削除されました</system:String>
     <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Assigning the global action keyword could bring up too many results during search. Please choose a specific action keyword</system:String>
     <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">Quick Access can not be set to the global action keyword when enabled. Please choose a specific action keyword</system:String>
     <system:String x:Key="plugin_explorer_windowsSearchServiceNotRunning">The required service for Windows Index Search does not appear to be running</system:String>
@@ -31,7 +31,7 @@
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">アクションキーワードのカスタマイズ</system:String>
     <system:String x:Key="plugin_explorer_manage_quick_access_links_header">Customise Quick Access</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Quick Access Links</system:String>
-    <system:String x:Key="plugin_explorer_everything_setting_header">Everything Setting</system:String>
+    <system:String x:Key="plugin_explorer_everything_setting_header">Everything の設定</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">プレビューパネル</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">サイズ</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">作成日時</system:String>
@@ -147,21 +147,21 @@
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Failed to load Everything SDK</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">Warning: Everything service is not running</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_query_error">Error while querying Everything</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by">Sort By</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_name_ascending">Name ↑</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_name_descending">Name ↓</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_path_ascending">Path ↑</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_path_descending">Path ↓</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_size_ascending">Size ↑</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_size_descending">Size ↓</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension_ascending">Extension ↑</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension_descending">Extension ↓</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name_ascending">Type Name ↑</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name_descending">Type Name ↓</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created_ascending">Date Created ↑</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created_descending">Date Created ↓</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified_ascending">Date Modified ↑</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified_descending">Date Modified ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by">並べ替え順</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_name_ascending">名前 ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_name_descending">名前 ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_path_ascending">パス ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_path_descending">パス ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_size_ascending">サイズ ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_size_descending">サイズ ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension_ascending">拡張子 ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension_descending">拡張子 ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name_ascending">種類名 ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name_descending">種類名 ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created_ascending">作成日時 ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created_descending">作成日時 ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified_ascending">最終更新日時 ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified_descending">最終更新日時 ↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes_ascending">Attributes ↑</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes_descending">Attributes ↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename_ascending">File List FileName ↑</system:String>
@@ -188,14 +188,14 @@
     <system:String x:Key="flowlauncher_plugin_everything_installationfailed_subtitle">Failed to automatically install Everything service. Please manually install it from https://www.voidtools.com</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_run_service">Click here to start it</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_select">Everythingのインストールが見つかりませんでした。手動で場所を指定しますか？{0}{0}「いいえ」をクリックすると、Everythingが自動的にインストールされます。</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Do you want to enable content search for Everything?</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Everything でのコンテンツ検索を有効にしますか？</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">It can be very slow without index (which is only supported in Everything v1.5+)</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_everything_not_found">Unable to find Everything.exe</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_install_issue">Failed to install Everything, please install it manually</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_not_found">Everything.exe が見つかりません</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_install_issue">Everything のインストールに失敗しました。手動でインストールしてください</system:String>
 
     <!--  Native Context Menu  -->
-    <system:String x:Key="plugin_explorer_native_context_menu_header">Native Context Menu</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_header">Windowsのコンテキストメニュー</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Display native context menu (experimental)</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Below you can specify items you want to include in the context menu, they can be partial (e.g. 'pen wit') or complete ('Open with').</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Below you can specify items you want to exclude from context menu, they can be partial (e.g. 'pen wit') or complete ('Open with').</system:String>
