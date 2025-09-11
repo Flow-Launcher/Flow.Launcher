@@ -83,10 +83,14 @@
     </Style>
 
     <!--#region Theme Style-->
-    <Style x:Key="ThemeList" TargetType="ListBoxItem">
+    <Style
+        x:Key="ThemeList"
+        BasedOn="{StaticResource DefaultListBoxItemStyle}"
+        TargetType="ListBoxItem">
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="Padding" Value="0" />
+        <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="Margin" Value="4" />
         <Setter Property="Template">
             <Setter.Value>
@@ -247,6 +251,7 @@
         <Setter Property="Padding" Value="0 0 0 0" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="Margin" Value="0 0 8 8" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <!--#region Template for blue highlight win10-->
