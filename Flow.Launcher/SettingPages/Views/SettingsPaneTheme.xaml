@@ -89,7 +89,8 @@
                             </Style.Triggers>
                         </Style>
                     </Border.Style>
-                    <ui:ScrollViewerEx VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.ScrollUnit="Pixel">
+                    <!--  We need to keep this ScrollViewerEx because its height cannot be expanded to the whole page  -->
+                    <ui:ScrollViewerEx>
                         <StackPanel>
                             <Slider
                                 Name="WindowHeightValue"
