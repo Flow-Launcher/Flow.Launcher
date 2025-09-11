@@ -203,7 +203,7 @@
 
                 <!--  This Grid is for display progress ring and refresh button.  -->
                 <!--  And it is also for changing the size of the MarkdownViewer.  -->
-                <!--  Because VerticalAlignment="Stretch" can cause size issue with MarkdownScrollViewer.  -->
+                <!--  Because VerticalAlignment="Stretch" can cause height issue with MarkdownScrollViewer.  -->
                 <Grid
                     Grid.Row="2"
                     Grid.Column="0"

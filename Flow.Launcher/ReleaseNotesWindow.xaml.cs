@@ -147,7 +147,6 @@ namespace Flow.Launcher
         private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             MarkdownScrollViewer.Height = e.NewSize.Height;
-            MarkdownScrollViewer.Width = e.NewSize.Width;
         }
 
         private void MarkdownViewer_MouseWheel(object sender, MouseWheelEventArgs e)
