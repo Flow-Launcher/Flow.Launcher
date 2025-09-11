@@ -592,7 +592,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
         #region Everything FastSortWarning
 
-        public List<EverythingSortOptionLocalized> AllEverythingSortOptions = EverythingSortOptionLocalized.GetValues();
+        public List<EverythingSortOptionLocalized> AllEverythingSortOptions { get; } = EverythingSortOptionLocalized.GetValues();
 
         public EverythingSortOption SelectedEverythingSortOption
         {
