@@ -145,8 +145,8 @@
 
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Failed to load Everything SDK</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_is_not_running">Warning: Everything service is not running</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_query_error">Error while querying Everything</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_is_not_running">警告: Everythingのサービスが実行されていません</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_query_error">Everything へのクエリ中にエラーが発生しました</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by">並べ替え順</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_name_ascending">名前 ↑</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_name_descending">名前 ↓</system:String>
@@ -160,8 +160,8 @@
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name_descending">種類名 ↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created_ascending">作成日時 ↑</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created_descending">作成日時 ↓</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified_ascending">最終更新日時 ↑</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified_descending">最終更新日時 ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified_ascending">更新日時 ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified_descending">更新日時 ↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes_ascending">Attributes ↑</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes_descending">Attributes ↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename_ascending">File List FileName ↑</system:String>
