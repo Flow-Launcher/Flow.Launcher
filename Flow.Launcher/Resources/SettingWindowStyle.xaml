@@ -84,6 +84,15 @@
 
     <!--#region Theme Style-->
     <Style
+        x:Key="ThemeListStyle"
+        BasedOn="{StaticResource DefaultListBoxStyle}"
+        TargetType="{x:Type ListBox}">
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
+        <Setter Property="Padding" Value="0 0 0 0" />
+    </Style>
+    <Style
         x:Key="ThemeList"
         BasedOn="{StaticResource DefaultListBoxItemStyle}"
         TargetType="ListBoxItem">
@@ -137,7 +146,6 @@
         <Setter Property="Background" Value="{DynamicResource Color00B}" />
         <Setter Property="Padding" Value="0 0 0 0" />
         <Setter Property="UseLayoutRounding" Value="True" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Margin" Value="0 0 18 5" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />

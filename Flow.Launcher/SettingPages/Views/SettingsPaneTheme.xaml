@@ -431,7 +431,8 @@
                             ItemsSource="{Binding Themes}"
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                             ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                            SelectedValue="{Binding SelectedTheme}">
+                            SelectedValue="{Binding SelectedTheme}"
+                            Style="{DynamicResource ThemeListStyle}">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <WrapPanel />
