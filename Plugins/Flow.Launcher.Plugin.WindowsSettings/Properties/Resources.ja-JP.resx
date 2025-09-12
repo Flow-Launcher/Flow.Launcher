@@ -254,7 +254,7 @@
     <value>時計とリージョン</value>
   </data>
   <data name="AreaControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>コントロールパネル</value>
   </data>
   <data name="AreaCortana" xml:space="preserve">
     <value>Cortana</value>
@@ -468,7 +468,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="ControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>コントロールパネル</value>
     <comment>Type of the setting is a "(legacy) Control Panel setting"</comment>
   </data>
   <data name="CopyCommand" xml:space="preserve">
@@ -1667,7 +1667,7 @@
     <comment>Area UserAccounts</comment>
   </data>
   <data name="WindowsInsiderProgram" xml:space="preserve">
-    <value>Windows Insider Program</value>
+    <value>Windows Insider プログラム</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsMobilityCenter" xml:space="preserve">
@@ -2329,7 +2329,7 @@
     <value>表示をオフにするタイミングを選択</value>
   </data>
   <data name="MoveThePointerWithTheKeypadUsingMousekeys" xml:space="preserve">
-    <value>Move the pointer with the keypad using MouseKeys</value>
+    <value>マウスキーを使用してキーパッドでポインタを移動する</value>
   </data>
   <data name="ChangeWindowsSideshowCompatibleDeviceSettings" xml:space="preserve">
     <value>Change Windows SideShow-compatible device settings</value>
@@ -2338,16 +2338,16 @@
     <value>Adjust commonly used mobility settings</value>
   </data>
   <data name="ChangeTextToSpeechSettings" xml:space="preserve">
-    <value>Change text-to-speech settings</value>
+    <value>テキスト読み上げの設定を変更</value>
   </data>
   <data name="SetTheTimeAndDate" xml:space="preserve">
-    <value>Set the time and date</value>
+    <value>時刻と日付を設定</value>
   </data>
   <data name="ChangeLocationSettings" xml:space="preserve">
-    <value>Change location settings</value>
+    <value>位置情報の設定を変更</value>
   </data>
   <data name="ChangeMouseSettings" xml:space="preserve">
-    <value>Change mouse settings</value>
+    <value>マウスの設定を変更</value>
   </data>
   <data name="ManageStorageSpaces" xml:space="preserve">
     <value>Manage Storage Spaces</value>
@@ -2362,31 +2362,31 @@
     <value>Change system sounds</value>
   </data>
   <data name="AdjustCleartypeText" xml:space="preserve">
-    <value>Adjust ClearType text</value>
+    <value>ClearTypeテキストを調整</value>
   </data>
   <data name="TurnScreenSaverOnOrOff" xml:space="preserve">
     <value>スクリーンセーバーのオン/オフを切り替え</value>
   </data>
   <data name="FindAndFixWindowsUpdateProblems" xml:space="preserve">
-    <value>Find and fix windows update problems</value>
+    <value>Windows Update の問題を見つけて修正</value>
   </data>
   <data name="ChangeBluetoothSettings" xml:space="preserve">
-    <value>Change Bluetooth settings</value>
+    <value>Bluetooth 設定の変更</value>
   </data>
   <data name="ConnectToANetwork" xml:space="preserve">
-    <value>Connect to a network</value>
+    <value>ネットワークに接続</value>
   </data>
   <data name="ChangeTheSearchProviderInInternetExplorer" xml:space="preserve">
-    <value>Change the search provider in Internet Explorer</value>
+    <value>Internet Explorer の検索プロバイダを変更する</value>
   </data>
   <data name="JoinADomain" xml:space="preserve">
     <value>Join a domain</value>
   </data>
   <data name="AddADevice" xml:space="preserve">
-    <value>Add a device</value>
+    <value>端末を追加</value>
   </data>
   <data name="FindAndFixProblemsWithWindowsSearch" xml:space="preserve">
-    <value>Find and fix problems with Windows Search</value>
+    <value>Windows検索の問題を見つけて解決</value>
   </data>
   <data name="ChooseAPowerPlan" xml:space="preserve">
     <value>電源プランを選択</value>
@@ -2395,13 +2395,13 @@
     <value>Change how the mouse pointer looks when it’s moving</value>
   </data>
   <data name="UninstallAProgram" xml:space="preserve">
-    <value>Uninstall a program</value>
+    <value>プログラムのアンインストール</value>
   </data>
   <data name="CreateAndFormatHardDiskPartitions" xml:space="preserve">
     <value>Create and format hard disk partitions</value>
   </data>
   <data name="ChangeDateTimeOrNumberFormats" xml:space="preserve">
-    <value>Change date, time or number formats</value>
+    <value>日付、時刻、数の書式を変更</value>
   </data>
   <data name="ChangePCWakeUpSettings" xml:space="preserve">
     <value>Change PC wake-up settings</value>
@@ -2416,10 +2416,10 @@
     <value>Manage advanced sharing settings</value>
   </data>
   <data name="ChangeBatterySettings" xml:space="preserve">
-    <value>Change battery settings</value>
+    <value>バッテリー設定の変更</value>
   </data>
   <data name="RenameThisComputer" xml:space="preserve">
-    <value>Rename this computer</value>
+    <value>このコンピューターの名前を変更</value>
   </data>
   <data name="LockOrUnlockTheTaskbar" xml:space="preserve">
     <value>Lock or unlock the taskbar</value>
@@ -2431,7 +2431,7 @@
     <value>Change the time zone</value>
   </data>
   <data name="StartSpeechRecognition" xml:space="preserve">
-    <value>Start speech recognition</value>
+    <value>音声認識を開始</value>
   </data>
   <data name="ViewInstalledUpdates" xml:space="preserve">
     <value>View installed updates</value>
@@ -2470,7 +2470,7 @@
     <value>Manage user certificates</value>
   </data>
   <data name="ScheduleTasks" xml:space="preserve">
-    <value>Schedule tasks</value>
+    <value>タスクのスケジュール</value>
   </data>
   <data name="IgnoreRepeatedKeystrokesUsingFilterkeys" xml:space="preserve">
     <value>フィルタキーを使用して繰り返しのキー入力を無視</value>
