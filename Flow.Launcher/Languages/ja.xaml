@@ -217,7 +217,7 @@
     <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
     <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">プラグインキャッシュの削除に失敗</system:String>
-    <system:String x:Key="failedToRemovePluginCacheMessage">Plugins: {0} - Fail to remove plugin cache files, please remove them manually</system:String>
+    <system:String x:Key="failedToRemovePluginCacheMessage">プラグイン: {0} - プラグインキャッシュファイルの削除に失敗しました。手動で削除してください</system:String>
     <system:String x:Key="pluginModifiedAlreadyTitle">{0} modified already</system:String>
     <system:String x:Key="pluginModifiedAlreadyMessage">Please restart Flow before making any further changes</system:String>
     <system:String x:Key="failedToInstallPluginTitle">{0} のインストールに失敗</system:String>
@@ -241,11 +241,11 @@
     <system:String x:Key="LabelUpdateToolTip">新しいアップデートが利用可能です</system:String>
     <system:String x:Key="ErrorInstallingPlugin">プラグインのインストール失敗</system:String>
     <system:String x:Key="ErrorUninstallingPlugin">プラグインのアンインストール失敗</system:String>
-    <system:String x:Key="ErrorUpdatingPlugin">Error updating plugin</system:String>
+    <system:String x:Key="ErrorUpdatingPlugin">プラグインの更新に失敗</system:String>
     <system:String x:Key="KeepPluginSettingsTitle">プラグインの設定を維持</system:String>
     <system:String x:Key="KeepPluginSettingsSubtitle">再びインストールして使用するときのためにプラグインの設定を維持しますか？</system:String>
-    <system:String x:Key="InstallSuccessNoRestart">Plugin {0} successfully installed. Please restart Flow.</system:String>
-    <system:String x:Key="UninstallSuccessNoRestart">Plugin {0} successfully uninstalled. Please restart Flow.</system:String>
+    <system:String x:Key="InstallSuccessNoRestart">プラグイン {0} のインストールに成功しました。Flow を再起動してください。</system:String>
+    <system:String x:Key="UninstallSuccessNoRestart">プラグイン {0} のアンインストールに成功しました。Flow を再起動してください。</system:String>
     <system:String x:Key="UpdateSuccessNoRestart">プラグイン {0} が正常に更新されました。Flow を再起動してください。</system:String>
     <system:String x:Key="InstallPromptTitle">プラグインのインストール</system:String>
     <system:String x:Key="InstallPromptSubtitle">{0} by {1} {2}{2}このプラグインをインストールしますか？</system:String>
@@ -285,10 +285,10 @@
     <system:String x:Key="SearchBarHeight">検索バーの高さ</system:String>
     <system:String x:Key="ItemHeight">アイテムの高さ</system:String>
     <system:String x:Key="queryBoxFont">検索ボックスのフォント</system:String>
-    <system:String x:Key="resultItemFont">Result Title Font</system:String>
-    <system:String x:Key="resultSubItemFont">Result Subtitle Font</system:String>
+    <system:String x:Key="resultItemFont">結果のタイトルのフォント</system:String>
+    <system:String x:Key="resultSubItemFont">結果のサブタイトルのフォント</system:String>
     <system:String x:Key="resetCustomize">リセット</system:String>
-    <system:String x:Key="resetCustomizeToolTip">Reset to the recommended font and size settings.</system:String>
+    <system:String x:Key="resetCustomizeToolTip">推奨されるフォントとサイズの設定にリセットします。</system:String>
     <system:String x:Key="ImportThemeSize">Import Theme Size</system:String>
     <system:String x:Key="ImportThemeSizeToolTip">If a size value intended by the theme designer is available, it will be retrieved and applied.</system:String>
     <system:String x:Key="CustomizeToolTip">カスタマイズ</system:String>
@@ -325,7 +325,7 @@
     <system:String x:Key="BackdropTypesMica">マイカ</system:String>
     <system:String x:Key="BackdropTypesMicaAlt">マイカ（代替）</system:String>
     <system:String x:Key="TypeIsDarkToolTip">このテーマはライト／ダークの2モードに対応しています。</system:String>
-    <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
+    <system:String x:Key="TypeHasBlurToolTip">このテーマは背景をぼかした透明効果をサポートしています。</system:String>
     <system:String x:Key="ShowPlaceholder">プレースホルダーを表示</system:String>
     <system:String x:Key="ShowPlaceholderTip">クエリが空の場合にプレースホルダを表示します</system:String>
     <system:String x:Key="PlaceholderText">検索欄の案内文</system:String>
@@ -391,11 +391,11 @@
     <system:String x:Key="windowWidthSizeToolTip">Ctrl+Plus と Ctrl+Minus を使用すれば、簡単に調整することもできます。</system:String>
     <system:String x:Key="useGlyphUI">Segoe Fluent アイコンを使用する</system:String>
     <system:String x:Key="useGlyphUIEffect">サポートされているクエリ結果にSegoe Fluentアイコンを使用する</system:String>
-    <system:String x:Key="flowlauncherPressHotkey">Press Key</system:String>
+    <system:String x:Key="flowlauncherPressHotkey">キーを入力</system:String>
     <system:String x:Key="showBadges">結果のバッジを表示</system:String>
     <system:String x:Key="showBadgesToolTip">サポートされているプラグインでは、バッジが表示され、より簡単に区別できます。</system:String>
     <system:String x:Key="showBadgesGlobalOnly">グローバルクエリのみ、結果のバッジを表示</system:String>
-    <system:String x:Key="showBadgesGlobalOnlyToolTip">Show badges for global query results only</system:String>
+    <system:String x:Key="showBadgesGlobalOnlyToolTip">グローバルクエリの結果にのみバッジを表示する</system:String>
     <system:String x:Key="dialogJumpHotkey">ダイアログジャンプ</system:String>
     <system:String x:Key="dialogJumpHotkeyToolTip">ショートカットを入力して、「名前を付けて開く/保存」ダイアログ・ウィンドウを現在のファイルマネージャのパスにすばやくナビゲートします。</system:String>
     <system:String x:Key="dialogJump">ダイアログジャンプ</system:String>
@@ -474,7 +474,7 @@
     <!--  Release Notes Window  -->
     <system:String x:Key="seeMoreReleaseNotes">GitHub で詳細なリリース ノートを見る</system:String>
     <system:String x:Key="checkNetworkConnectionTitle">リリースノートの取得に失敗</system:String>
-    <system:String x:Key="checkNetworkConnectionSubTitle">Please check your network connection or ensure GitHub is accessible</system:String>
+    <system:String x:Key="checkNetworkConnectionSubTitle">ネットワーク接続を確認するか、GitHubにアクセスできることを確認してください</system:String>
     <system:String x:Key="appUpdateTitle">Flow Launcher が {0}に更新されました</system:String>
     <system:String x:Key="appUpdateButtonContent">ここをクリックしてリリースノートを表示</system:String>
 
@@ -488,8 +488,8 @@
     <system:String x:Key="fileManager_path">ファイルマネージャーのパス</system:String>
     <system:String x:Key="fileManager_directory_arg">フォルダー用の引数</system:String>
     <system:String x:Key="fileManager_file_arg">ファイル用の引数</system:String>
-    <system:String x:Key="fileManagerPathNotFound">The file manager '{0}' could not be located at '{1}'. Would you like to continue?</system:String>
-    <system:String x:Key="fileManagerPathError">File Manager Path Error</system:String>
+    <system:String x:Key="fileManagerPathNotFound">ファイルマネージャー '{0}' は、'{1}' に見つかりませんでした。続行しますか？</system:String>
+    <system:String x:Key="fileManagerPathError">ファイルマネージャのパスエラー</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">デフォルトのウェブブラウザー</system:String>
@@ -503,8 +503,8 @@
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">優先度の変更</system:String>
-    <system:String x:Key="priority_tips">Greater the number, the higher the result will be ranked. Try setting it as 5. If you want the results to be lower than any other plugin's, provide a negative number</system:String>
-    <system:String x:Key="invalidPriority">Please provide an valid integer for Priority!</system:String>
+    <system:String x:Key="priority_tips">数値が大きいほど、結果の上の方に表示されます。試しに5として設定してみてください。 結果を他のプラグインよりも低くしたい場合は、負の数字を入力してください</system:String>
+    <system:String x:Key="invalidPriority">優先度には有効な整数を入力してください！</system:String>
 
     <!--  Action Keyword Setting Dialog  -->
     <system:String x:Key="oldActionKeywords">古いアクションキーワード</system:String>
@@ -514,9 +514,9 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">指定されたプラグインが見つかりません</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">新しいアクションキーワードを空にすることはできません</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">新しいアクションキーワードは他のプラグインに割り当てられています。他のアクションキーワードを入力してください</system:String>
-    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">そのアクションキーワードは以前のものと同じです。他のアクションキーワードを入力してください</system:String>
     <system:String x:Key="success">成功しました</system:String>
-    <system:String x:Key="completedSuccessfully">Completed successfully</system:String>
+    <system:String x:Key="completedSuccessfully">正常に完了しました</system:String>
     <system:String x:Key="failedToCopy">コピーに失敗</system:String>
     <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
 
@@ -536,7 +536,7 @@
     <system:String x:Key="invalidPluginHotkey">そのホットキーは無効です</system:String>
     <system:String x:Key="update">更新</system:String>
     <system:String x:Key="hotkeyRegTitle">ホットキーの設定</system:String>
-    <system:String x:Key="hotkeyUnavailable">Current hotkey is unavailable.</system:String>
+    <system:String x:Key="hotkeyUnavailable">現在のホットキーは使用できません。</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for &quot;{0}&quot; and can't be used. Please choose another hotkey.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">This hotkey is already in use by &quot;{0}&quot;. If you press &quot;Overwrite&quot;, it will be removed from &quot;{0}&quot;.</system:String>
     <system:String x:Key="hotkeyRegGuide">この機能に使用するキーを押してください。</system:String>
@@ -551,11 +551,11 @@
     </system:String>
     <system:String x:Key="duplicateShortcut">そのショートカットは既に存在します。新しいショートカットを入力するか、既存のショートカットを編集してください。</system:String>
     <system:String x:Key="emptyShortcut">ショートカット、展開の少なくとも一方が空です。</system:String>
-    <system:String x:Key="invalidShortcut">Shortcut is invalid</system:String>
+    <system:String x:Key="invalidShortcut">ショートカットが無効です</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">保存</system:String>
-    <system:String x:Key="commonOverwrite">Overwrite</system:String>
+    <system:String x:Key="commonOverwrite">上書き</system:String>
     <system:String x:Key="commonCancel">キャンセル</system:String>
     <system:String x:Key="commonReset">リセット</system:String>
     <system:String x:Key="commonDelete">削除</system:String>
@@ -580,17 +580,17 @@
     <system:String x:Key="reportWindow_report_failed">クラッシュレポートの送信に失敗しました</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcherにエラーが発生しました</system:String>
     <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
-    <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
-    <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
+    <system:String x:Key="reportWindow_upload_log">1. ログファイルをアップロード: {0}</system:String>
+    <system:String x:Key="reportWindow_copy_below">2. 例外メッセージ以下をコピー</system:String>
 
     <!--  File Open Error  -->
-    <system:String x:Key="fileManagerNotFoundTitle">File Manager Error</system:String>
+    <system:String x:Key="fileManagerNotFoundTitle">ファイルマネージャのエラー</system:String>
     <system:String x:Key="fileManagerNotFound">
-        The specified file manager could not be found. Please check the Custom File Manager setting under Settings &gt; General.
+        指定されたファイルマネージャーが見つかりませんでした。設定 &gt; 一般でカスタムファイルマネージャの設定を確認してください。
     </system:String>
     <system:String x:Key="errorTitle">エラー</system:String>
-    <system:String x:Key="folderOpenError">An error occurred while opening the folder. {0}</system:String>
-    <system:String x:Key="browserOpenError">An error occurred while opening the URL in the browser. Please check your Default Web Browser configuration in the General section of the settings window</system:String>
+    <system:String x:Key="folderOpenError">フォルダを開く際にエラーが発生しました。 {0}</system:String>
+    <system:String x:Key="browserOpenError">ブラウザでURLを開く際にエラーが発生しました。設定ウィンドウの一般セクションでデフォルトのウェブブラウザ設定を確認してください</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">しばらくお待ちください…</system:String>
