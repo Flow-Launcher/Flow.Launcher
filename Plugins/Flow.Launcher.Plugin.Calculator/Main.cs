@@ -115,16 +115,15 @@ namespace Flow.Launcher.Plugin.Calculator
                     };
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
+                // Mages engine can throw various exceptions, for simplicity we catch them all and show a generic message.
                 return new List<Result>
                 {
                     new Result
                     {
-                        Title = e.Message,
-                        SubTitle = "Calculator Exception",
-                        IcoPath = "Images/calculator.png",
-                        Score = 300
+                        Title = Localize.flowlauncher_plugin_calculator_expression_not_complete(),
+                        IcoPath = "Images/calculator.png"
                     }
                 };
             }
@@ -201,14 +200,19 @@ namespace Flow.Launcher.Plugin.Calculator
 
         private string GetGroupSeparator(string decimalSeparator)
         {
+            if (_settings.DecimalSeparator == DecimalSeparator.UseSystemLocale)
+            {
+                return CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator;
+            }
+
             // This logic is now independent of the system's group separator
-            // to ensure consistent output for unit testing.
+            // to ensure consistent output when a specific separator is chosen.
             return decimalSeparator == Dot ? Comma : Dot;
         }
 
         private bool CanCalculate(Query query)
         {
-            if (query.Search.Length < 2)
+            if (string.IsNullOrWhiteSpace(query.Search))
             {
                 return false;
             }
