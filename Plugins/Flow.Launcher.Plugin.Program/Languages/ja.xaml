@@ -31,27 +31,27 @@
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">アプリのパスを非表示</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">UWPやlnkなどの実行可能ファイルについて、サブタイトル領域にファイルパスが表示されないようにします。</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers">アンインストーラーを非表示</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">unins000.exe のような一般的なアンインストーラ名のプログラムを非表示にします</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">unins000.exe のような一般的な名前のアンインストーラのプログラムを非表示にします</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">プログラムの説明で検索</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow はプログラムの説明を検索します</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp">重複したアプリを非表示</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp_tooltip">UWPリストに既に存在する重複したWin32プログラムを非表示にする</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Suffixes</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_max_depth_header">Max Depth</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp_tooltip">UWPリストに既に存在するアプリと同じ名前の、Win32プログラムを非表示にする</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_header">接尾辞</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_max_depth_header">最大の深さ</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_directory">フォルダー</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_browse">Browse</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_file_suffixes">File Suffixes:</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_max_search_depth">Maximum Search Depth (-1 is unlimited):</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_browse">選択</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_file_suffixes">ファイル名の末尾：</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_max_search_depth">最大の検索の深さ (-1に設定すると無制限)：</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">Please select a program source</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">プログラムのソースを選択してください</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">選択したプログラムソースを削除してもよろしいですか？</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_not_user_added">Please select program sources that are not added by you</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_user_added">Please select program sources that are added by you</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Another program source with the same location already exists.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_not_user_added">あなたが追加していないプログラムのソースを選択してください</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_user_added">あなたが追加したプログラムのソースを選択してください</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">同じ場所を持つ別のプログラムのソースが既に存在します。</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Program Source</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_tips">Edit directory and status of this program source.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">プログラムのソース</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_tips">このプログラムのソースのフォルダーとステータスを編集します。</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_update">更新</system:String>
     <system:String x:Key="flowlauncher_plugin_program_only_index_tip">プログラムプラグインは、選択されたファイル名の末尾と .url ファイルのみをインデックス化します。</system:String>
@@ -67,33 +67,33 @@
     <system:String x:Key="flowlauncher_plugin_program_suffixes_custom_urls">カスタムURLプロトコルを指定</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_custom_file_types">カスタムファイル名の末尾を指定</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_tooltip">
-        Insert file suffixes you want to index. Suffixes should be separated by ';'. (ex&gt;bat;py)
+        インデックスするファイル名の末尾を入力してください。サフィックスは';'で区切る必要があります。(例&gt;bat;py)
     </system:String>
     <system:String x:Key="flowlauncher_plugin_program_protocol_tooltip">
-        Insert protocols of .url files you want to index. Protocols should be separated by ';', and should end with &quot;://&quot;. (ex&gt;ftp://;mailto://)
+        インデックスしたい.urlファイルのプロトコルを入力してください。プロトコルは';'で区切られ、&quot;://&quot;で終了する必要があります。(例&gt;ftp://;mailto://)
     </system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">別のユーザーとして実行</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">管理者として実行</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">保存先のフォルダーを開く</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_program">非表示にする</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Open target folder</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_open_target_folder">ターゲットフォルダーを開く</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">プログラム</system:String>
     <system:String x:Key="flowlauncher_plugin_program_plugin_description">Flow Launcherでプログラムを検索</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_invalid_path">Invalid Path</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_invalid_path">不正なパス</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Customized Explorer</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_args">Args</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">You can customize the explorer used for opening the container folder by inputing the Environmental Variable of the explorer you want to use. It will be useful to use CMD to test whether the Environmental Variable is available.</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Enter the customized args you want to add for your customized explorer. %s for parent directory, %f for full path (which only works for win32). Check the explorer's website for details.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">カスタムされたエクスプローラー</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_args">引数</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">エクスプローラーで使用したい環境変数を入力することで、コンテナフォルダを開く際に使用するエクスプローラをカスタマイズできます。 環境変数が利用可能かどうかをテストするために、コマンドプロンプトを使用すると便利です。</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_args">カスタマイズされたエクスプローラに追加したいカスタムの引数を入力します。 %s は親ディレクトリ、 %f はフルパス (win32でのみ動作します)です。 詳細についてはエクスプローラのウェブサイトをご覧ください。</system:String>
 
     <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">成功しました</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_error">エラー</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">Successfully disabled this program from displaying in your query</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">This app is not intended to be run as administrator</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_run_failed">Unable to run {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">このプログラムは検索結果に表示されなくなりました</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">このアプリは管理者として実行されることを想定されていません</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_failed">{0} を実行できません</system:String>
 
 </ResourceDictionary>
