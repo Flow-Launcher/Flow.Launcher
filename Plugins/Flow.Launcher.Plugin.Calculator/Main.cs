@@ -139,6 +139,7 @@ namespace Flow.Launcher.Plugin.Calculator
         {
             var culture = CultureInfo.CurrentCulture;
             var groupSep = culture.NumberFormat.NumberGroupSeparator;
+            var decimalSep = culture.NumberFormat.NumberDecimalSeparator;
 
             // If the string contains the group separator, check if it's used correctly.
             if (!string.IsNullOrEmpty(groupSep) && numberStr.Contains(groupSep))
@@ -164,14 +165,11 @@ namespace Flow.Launcher.Plugin.Calculator
                 }
             }
 
-            // At this point, any group separators are in valid positions (or there are none).
-            // We can safely parse with the user's culture.
-            if (decimal.TryParse(numberStr, NumberStyles.Any, culture, out var number))
-            {
-                return number.ToString(CultureInfo.InvariantCulture);
-            }
+            // If validation passes, we can assume the separators are used correctly for numbers.
+            string processedStr = numberStr.Replace(groupSep, "");
+            processedStr = processedStr.Replace(decimalSep, ".");
 
-            return numberStr;
+            return processedStr;
         }
 
         private string FormatResult(decimal roundedResult)
