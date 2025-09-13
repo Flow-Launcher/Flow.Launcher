@@ -19,6 +19,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <OutputPath>..\..\Output\Release\Plugins\Flow.Launcher.Plugin.Explorer</OutputPath>
+    <NoWarn>$(NoWarn);FLSG0007</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -47,8 +48,8 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Droplex" Version="1.7.0" />
-    <PackageReference Include="Flow.Launcher.Localization" Version="0.0.4" />
-    <PackageReference Include="System.Data.OleDb" Version="9.0.7" />
+    <PackageReference Include="Flow.Launcher.Localization" Version="0.0.5" />
+    <PackageReference Include="System.Data.OleDb" Version="9.0.9" />
     <PackageReference Include="System.Linq.Async" Version="6.0.3" />
     <PackageReference Include="tlbimp-Microsoft.Search.Interop" Version="1.0.0" />
   </ItemGroup>
