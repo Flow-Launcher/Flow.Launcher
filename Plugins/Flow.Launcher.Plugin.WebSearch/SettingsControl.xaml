@@ -69,14 +69,14 @@
                     </GridViewColumn>
 
                     <!--  Margin="0 6" is a workaround to set this TextBlock to vertially center  -->
-                    <GridViewColumn Width="112" Header="{DynamicResource flowlauncher_plugin_websearch_action_keyword}">
+                    <GridViewColumn Width="135" Header="{DynamicResource flowlauncher_plugin_websearch_action_keyword}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Margin="0 6" Text="{Binding ActionKeyword}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="168" Header="{DynamicResource flowlauncher_plugin_websearch_title}">
+                    <GridViewColumn Width="145" Header="{DynamicResource flowlauncher_plugin_websearch_title}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Margin="0 6" Text="{Binding Title}" />
@@ -101,6 +101,8 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+
+                    <!--  CheckBox is vertially center by default  -->
                     <GridViewColumn Width="123" Header="{DynamicResource flowlauncher_plugin_websearch_private_mode_label}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>

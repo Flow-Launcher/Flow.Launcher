@@ -152,8 +152,8 @@ namespace Flow.Launcher.Plugin.WebSearch
             if (workingWidth <= 0) return;
 
             var col1 = 0.08;
-            var col2 = 0.20;
-            var col3 = 0.30;
+            var col2 = 0.24;
+            var col3 = 0.26;
             var col4 = 0.20;
             var col5 = 0.22;
 
