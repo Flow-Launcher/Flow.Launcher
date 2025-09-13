@@ -63,13 +63,13 @@
     <PackageReference Include="InputSimulator" Version="1.0.4" />
     <PackageReference Include="MemoryPack" Version="1.21.4" />
     <PackageReference Include="Microsoft.VisualStudio.Threading" Version="17.14.15" />
-    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.183">
+    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.205">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="NHotkey.Wpf" Version="3.0.0" />
-    <PackageReference Include="NLog" Version="6.0.3" />
-    <PackageReference Include="NLog.OutputDebugString" Version="6.0.3" />
+    <PackageReference Include="NLog" Version="6.0.4" />
+    <PackageReference Include="NLog.OutputDebugString" Version="6.0.4" />
     <PackageReference Include="PropertyChanged.Fody" Version="4.1.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
