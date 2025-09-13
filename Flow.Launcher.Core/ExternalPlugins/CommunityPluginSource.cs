@@ -73,9 +73,15 @@ namespace Flow.Launcher.Core.ExternalPlugins
                     return null;
                 }
             }
-            catch (OperationCanceledException)
+            catch (OperationCanceledException) when (token.IsCancellationRequested)
             {
-                API.LogInfo(ClassName, $"Fetching from {ManifestFileUrl} was cancelled. That is most likely OK.");
+                API.LogInfo(ClassName, $"Fetching from {ManifestFileUrl} was cancelled by caller.");
+                return null;
+            }
+            catch (TaskCanceledException)
+            {
+                // Likely an HttpClient timeout or external cancellation not requested by our token
+                API.LogWarn(ClassName, $"Fetching from {ManifestFileUrl} timed out.");
                 return null;
             }
             catch (Exception e)
