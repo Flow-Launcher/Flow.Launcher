@@ -340,7 +340,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public DialogJumpFileResultBehaviours DialogJumpFileResultBehaviour { get; set; } = DialogJumpFileResultBehaviours.FullPath;
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public LOGLEVEL LogLevel { get; set; } = LOGLEVEL.INFO;
+        public LOGLEVEL LogLevel { get; set; } = LOGLEVEL.Info;
 
         /// <summary>
         /// when false Alphabet static service will always return empty results
