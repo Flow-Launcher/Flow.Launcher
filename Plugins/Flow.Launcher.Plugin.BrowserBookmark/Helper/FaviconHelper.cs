@@ -106,12 +106,13 @@ public static class FaviconHelper
         {
             try
             {
-                using (var image = SKImage.FromBitmap(bitmap))
-                using (var webp = image.Encode(SKEncodedImageFormat.Webp, 65))
-                {
-                    if (webp != null)
-                        return webp.ToArray();
-                }
+                using var image = SKImage.FromBitmap(bitmap);
+                if (image is null)
+                    return null;
+
+                using var webp = image.Encode(SKEncodedImageFormat.Webp, 65);
+                if (webp != null)
+                    return webp.ToArray();
             }
             finally
             {
