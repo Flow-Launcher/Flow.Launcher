@@ -16,6 +16,8 @@ namespace Flow.Launcher.Plugin.Calculator
         private static readonly Regex RegBrackets = MainRegexHelper.GetRegBrackets();
         private static readonly Regex ThousandGroupRegex = MainRegexHelper.GetThousandGroupRegex();
         private static readonly Regex NumberRegex = MainRegexHelper.GetNumberRegex();
+        private static readonly Regex PowRegex = new(@"\bpow(\((?:[^()\[\]]|\((?<Depth>)|\)(?<-Depth>)|\[(?<Depth>)|\](?<-Depth>))*(?(Depth)(?!))\))", RegexOptions.Compiled | RegexOptions.RightToLeft);
+
 
         private static Engine MagesEngine;
         private const string Comma = ",";
@@ -43,9 +45,21 @@ namespace Flow.Launcher.Plugin.Calculator
 
         public List<Result> Query(Query query)
         {
-            if (!CanCalculate(query))
+            if (string.IsNullOrWhiteSpace(query.Search))
             {
                 return new List<Result>();
+            }
+
+            if (!IsBracketComplete(query.Search))
+            {
+                return new List<Result>
+                {
+                    new Result
+                    {
+                        Title = Localize.flowlauncher_plugin_calculator_expression_not_complete(),
+                        IcoPath = "Images/calculator.png"
+                    }
+                };
             }
 
             try
@@ -60,7 +74,7 @@ namespace Flow.Launcher.Plugin.Calculator
                 do
                 {
                     previous = expression;
-                    expression = Regex.Replace(previous, @"\bpow\s*\(\s*([^,]+?)\s*,\s*([^)]+?)\s*\)", "($1^$2)");
+                    expression = PowRegex.Replace(previous, PowMatchEvaluator);
                 } while (previous != expression);
                 // WORKAROUND END
 
@@ -129,6 +143,57 @@ namespace Flow.Launcher.Plugin.Calculator
             }
 
             return new List<Result>();
+        }
+
+        private static string PowMatchEvaluator(Match m)
+        {
+            // m.Groups[1].Value will be `(...)` with parens
+            var contentWithParen = m.Groups[1].Value;
+            // remove outer parens. `(min(2,3), 4)` becomes `min(2,3), 4`
+            var argsContent = contentWithParen.Substring(1, contentWithParen.Length - 2);
+
+            var bracketCount = 0;
+            var splitIndex = -1;
+
+            // Find the top-level comma that separates the two arguments of pow.
+            for (var i = 0; i < argsContent.Length; i++)
+            {
+                switch (argsContent[i])
+                {
+                    case '(':
+                    case '[':
+                        bracketCount++;
+                        break;
+                    case ')':
+                    case ']':
+                        bracketCount--;
+                        break;
+                    case ',' when bracketCount == 0:
+                        splitIndex = i;
+                        break;
+                }
+
+                if (splitIndex != -1)
+                    break;
+            }
+
+            if (splitIndex == -1)
+            {
+                // This indicates malformed arguments for pow, e.g., pow(5) or pow().
+                // Return original string to let Mages handle the error.
+                return m.Value;
+            }
+
+            var arg1 = argsContent.Substring(0, splitIndex).Trim();
+            var arg2 = argsContent.Substring(splitIndex + 1).Trim();
+
+            // Check for empty arguments which can happen with stray commas, e.g., pow(,5)
+            if (string.IsNullOrEmpty(arg1) || string.IsNullOrEmpty(arg2))
+            {
+                return m.Value;
+            }
+
+            return $"({arg1}^{arg2})";
         }
 
         /// <summary>
@@ -208,21 +273,6 @@ namespace Flow.Launcher.Plugin.Calculator
             return decimalSeparator == Dot ? Comma : Dot;
         }
 
-        private bool CanCalculate(Query query)
-        {
-            if (string.IsNullOrWhiteSpace(query.Search))
-            {
-                return false;
-            }
-
-            if (!IsBracketComplete(query.Search))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
         private string GetDecimalSeparator()
         {
             string systemDecimalSeparator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
@@ -248,6 +298,11 @@ namespace Flow.Launcher.Plugin.Calculator
                 else
                 {
                     leftBracketCount--;
+                }
+
+                if (leftBracketCount < 0)
+                {
+                    return false;
                 }
             }
 
