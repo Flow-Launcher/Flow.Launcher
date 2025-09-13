@@ -8,7 +8,7 @@
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">{0} の実行ファイルを選択してください</system:String>
     <system:String x:Key="runtimeExecutableInvalidChooseDownload">
-        貴方が選択した {0} の実行ファイルが不正です。
+        あなたが選択した {0} の実行ファイルが不正です。
         {2}{2}
         {0} の実行ファイルをもう一度選択する場合は「はい」を、{1} をダウンロードする場合は「いいえ」を選択してください
     </system:String>
@@ -73,7 +73,7 @@
     <system:String x:Key="startFlowLauncherOnSystemStartup">スタートアップ時にFlow Launcherを起動する</system:String>
     <system:String x:Key="useLogonTaskForStartup">起動の高速化のためにスタートアップではなくログオンタスクを使用</system:String>
     <system:String x:Key="useLogonTaskForStartupTooltip">アンインストール後は、「タスク スケジューラ」からこのタスク（Flow.Launcher Startup）を手動で削除する必要があります。</system:String>
-    <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
+    <system:String x:Key="setAutoStartFailed">スタートアップ時に起動の設定失敗</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">フォーカスを失った時にFlow Launcherを隠す</system:String>
     <system:String x:Key="dontPromptUpdateMsg">最新版が入手可能であっても、アップグレードメッセージを表示しない</system:String>
     <system:String x:Key="SearchWindowPosition">検索ウィンドウの位置</system:String>
@@ -124,9 +124,9 @@
     <system:String x:Key="SearchPrecisionRegular">標準</system:String>
     <system:String x:Key="ShouldUsePinyin">ピンインによる検索</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Pinyinは中国語を翻訳するためのローマ字入力の標準的な方法です。有効にすると、検索時のメモリ使用量が大幅に増加する可能性があります。</system:String>
-    <system:String x:Key="ShouldUseDoublePinyin">Use Double Pinyin</system:String>
-    <system:String x:Key="ShouldUseDoublePinyinToolTip">Use Double Pinyin instead of Full Pinyin to search.</system:String>
-    <system:String x:Key="DoublePinyinSchema">Double Pinyin Schema</system:String>
+    <system:String x:Key="ShouldUseDoublePinyin">双拼入力を使用</system:String>
+    <system:String x:Key="ShouldUseDoublePinyinToolTip">検索するときに全拼の代わりに双拼を使用する。</system:String>
+    <system:String x:Key="DoublePinyinSchema">双拼の入力方式</system:String>
     <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao He</system:String>
     <system:String x:Key="DoublePinyinSchemasZiRanMa">Zi Ran Ma</system:String>
     <system:String x:Key="DoublePinyinSchemasWeiRuan">Wei Ruan</system:String>
@@ -142,7 +142,7 @@
     <system:String x:Key="shadowEffectNotAllowed">現在のテーマでぼかしの効果が有効になっている場合、影の効果を有効にすることはできません</system:String>
     <system:String x:Key="searchDelay">検索遅延</system:String>
     <system:String x:Key="searchDelayToolTip">入力中に短い遅延を追加することで、UIのちらつきや結果の読み込みを軽減します。平均的なタイピング速度のユーザーにおすすめです。</system:String>
-    <system:String x:Key="searchDelayNumberBoxToolTip">Enter the wait time (in ms) until input is considered complete. This can only be edited if Search Delay is enabled.</system:String>
+    <system:String x:Key="searchDelayNumberBoxToolTip">入力中の結果表示までの待ち時間をミリ秒単位で入力します。これは、検索遅延が有効な場合にのみ編集できます。</system:String>
     <system:String x:Key="searchDelayTime">デフォルトの検索遅延時間</system:String>
     <system:String x:Key="searchDelayTimeToolTip">入力が停止した後に結果が表示されるまでの待ち時間。値が大きいほど長く待機します。(単位 ms)</system:String>
     <system:String x:Key="KoreanImeTitle">韓国語IMEユーザーへの情報</system:String>
@@ -166,12 +166,12 @@
     <system:String x:Key="KoreanImeRegistry">前の韓国語IMEを使用</system:String>
     <system:String x:Key="KoreanImeRegistryTooltip">You can change the Previous Korean IME settings directly from here</system:String>
     <system:String x:Key="KoreanImeSettingChangeFailTitle">Failed to change Korean IME setting</system:String>
-    <system:String x:Key="KoreanImeSettingChangeFailSubTitle">Please check your system registry access or contact support.</system:String>
+    <system:String x:Key="KoreanImeSettingChangeFailSubTitle">システムのレジストリへのアクセスが可能か確認するか、サポートにお問い合わせください。</system:String>
     <system:String x:Key="homePage">ホームページ</system:String>
     <system:String x:Key="homePageToolTip">検索文字列が空の場合、ホームページの結果を表示します。</system:String>
     <system:String x:Key="historyResultsForHomePage">クエリの履歴をホームページに表示</system:String>
     <system:String x:Key="historyResultsCountForHomePage">ホームページに表示される最大の履歴の数</system:String>
-    <system:String x:Key="homeToggleBoxToolTip">This can only be edited if plugin supports Home feature and Home Page is enabled.</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">これは、プラグインがホーム機能をサポートし、ホームページが有効な場合にのみ編集することができます。</system:String>
     <system:String x:Key="showAtTopmost">検索ウィンドウを最前面に表示</system:String>
     <system:String x:Key="showAtTopmostToolTip">他のプログラムの 'Always on Top' （最前面に表示）設定を上書きし、常に最前面のウィンドウで Flow を表示します。</system:String>
     <system:String x:Key="autoRestartAfterChanging">プラグインストアでプラグインを変更した後に再起動</system:String>
@@ -196,8 +196,8 @@
     <system:String x:Key="currentActionKeywords">現在のアクションキーワード</system:String>
     <system:String x:Key="newActionKeyword">新しいアクションキーワード</system:String>
     <system:String x:Key="actionKeywordsTooltip">アクションキーワードの変更</system:String>
-    <system:String x:Key="pluginSearchDelayTime">Plugin search delay time</system:String>
-    <system:String x:Key="pluginSearchDelayTimeTooltip">Change Plugin Search Delay Time</system:String>
+    <system:String x:Key="pluginSearchDelayTime">プラグインの検索遅延時間</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">プラグインの検索遅延時間を変更</system:String>
     <system:String x:Key="FilterComboboxLabel">詳細設定:</system:String>
     <system:String x:Key="DisplayModeOnOff">有効</system:String>
     <system:String x:Key="DisplayModePriority">重要度</system:String>
@@ -214,12 +214,12 @@
     <system:String x:Key="plugin_query_version">バージョン</system:String>
     <system:String x:Key="plugin_query_web">ウェブサイト</system:String>
     <system:String x:Key="plugin_uninstall">アンインストール</system:String>
-    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
-    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsTitle">プラグイン設定の削除に失敗</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">プラグイン: {0} - プラグイン設定ファイルの削除に失敗しました。手動で削除してください</system:String>
     <system:String x:Key="failedToRemovePluginCacheTitle">プラグインキャッシュの削除に失敗</system:String>
     <system:String x:Key="failedToRemovePluginCacheMessage">プラグイン: {0} - プラグインキャッシュファイルの削除に失敗しました。手動で削除してください</system:String>
-    <system:String x:Key="pluginModifiedAlreadyTitle">{0} modified already</system:String>
-    <system:String x:Key="pluginModifiedAlreadyMessage">Please restart Flow before making any further changes</system:String>
+    <system:String x:Key="pluginModifiedAlreadyTitle">{0} は既に変更されています</system:String>
+    <system:String x:Key="pluginModifiedAlreadyMessage">これ以上変更を加える前に Flow Launcher を再起動してください</system:String>
     <system:String x:Key="failedToInstallPluginTitle">{0} のインストールに失敗</system:String>
     <system:String x:Key="failedToUninstallPluginTitle">{0} のアンインストールに失敗</system:String>
     <system:String x:Key="fileNotFoundMessage">展開されたzipファイルからplugin.jsonが見つからないか、このパス {0} が存在しません</system:String>
@@ -289,8 +289,8 @@
     <system:String x:Key="resultSubItemFont">結果のサブタイトルのフォント</system:String>
     <system:String x:Key="resetCustomize">リセット</system:String>
     <system:String x:Key="resetCustomizeToolTip">推奨されるフォントとサイズの設定にリセットします。</system:String>
-    <system:String x:Key="ImportThemeSize">Import Theme Size</system:String>
-    <system:String x:Key="ImportThemeSizeToolTip">If a size value intended by the theme designer is available, it will be retrieved and applied.</system:String>
+    <system:String x:Key="ImportThemeSize">テーマ中のサイズをインポート</system:String>
+    <system:String x:Key="ImportThemeSizeToolTip">テーマのデザイナーによって意図されたサイズ値が利用可能なとき、それを取得して適用します。</system:String>
     <system:String x:Key="CustomizeToolTip">カスタマイズ</system:String>
     <system:String x:Key="windowMode">ウィンドウモード</system:String>
     <system:String x:Key="opacity">透過度</system:String>
@@ -518,7 +518,7 @@
     <system:String x:Key="success">成功しました</system:String>
     <system:String x:Key="completedSuccessfully">正常に完了しました</system:String>
     <system:String x:Key="failedToCopy">コピーに失敗</system:String>
-    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
+    <system:String x:Key="actionkeyword_tips">プラグインを起動するためのアクションキーワードを、空白区切りで入力してください。特定のキーワードを使用せずにプラグインを使用したい場合、* を入力してください。</system:String>
 
     <!--  Search Delay Settings Dialog  -->
     <system:String x:Key="searchDelayTimeTitle">検索の遅延時間の設定</system:String>
@@ -530,15 +530,15 @@
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">カスタムクエリのホットキー</system:String>
-    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Launcher and input the specified query automatically.</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">カスタムホットキーを押して Flow Launcher を開き、指定したクエリを自動的に入力します。</system:String>
     <system:String x:Key="preview">プレビュー</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">ホットキーは使用できません。新しいホットキーを選択してください</system:String>
     <system:String x:Key="invalidPluginHotkey">そのホットキーは無効です</system:String>
     <system:String x:Key="update">更新</system:String>
     <system:String x:Key="hotkeyRegTitle">ホットキーの設定</system:String>
     <system:String x:Key="hotkeyUnavailable">現在のホットキーは使用できません。</system:String>
-    <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for &quot;{0}&quot; and can't be used. Please choose another hotkey.</system:String>
-    <system:String x:Key="hotkeyUnavailableEditable">This hotkey is already in use by &quot;{0}&quot;. If you press &quot;Overwrite&quot;, it will be removed from &quot;{0}&quot;.</system:String>
+    <system:String x:Key="hotkeyUnavailableUneditable">このホットキーは &quot;{0}&quot; で予約されており、使用できません。別のホットキーを選択してください。</system:String>
+    <system:String x:Key="hotkeyUnavailableEditable">このホットキーは &quot;{0}&quot; によってすでに使用されています。「上書き」を押すと、&quot;{0}&quot;から削除されます。</system:String>
     <system:String x:Key="hotkeyRegGuide">この機能に使用するキーを押してください。</system:String>
     <system:String x:Key="emptyPluginHotkey">ホットキーとアクションキーワードが空です</system:String>
 
