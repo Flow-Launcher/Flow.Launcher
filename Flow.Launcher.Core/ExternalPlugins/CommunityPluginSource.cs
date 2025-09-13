@@ -73,6 +73,11 @@ namespace Flow.Launcher.Core.ExternalPlugins
                     return null;
                 }
             }
+            catch (OperationCanceledException)
+            {
+                API.LogInfo(ClassName, $"Fetching from {ManifestFileUrl} was cancelled. That is most likely OK.");
+                return null;
+            }
             catch (Exception e)
             {
                 if (e is HttpRequestException or WebException or SocketException || e.InnerException is TimeoutException)
