@@ -25,9 +25,9 @@
       },
       "Fody": {
         "type": "Direct",
-        "requested": "[6.9.2, )",
-        "resolved": "6.9.2",
-        "contentHash": "YBHobPGogb0vYhGYIxn/ndWqTjNWZveDi5jdjrcshL2vjwU3gQGyDeI7vGgye+2rAM5fGRvlLgNWLW3DpviS/w=="
+        "requested": "[6.9.3, )",
+        "resolved": "6.9.3",
+        "contentHash": "1CUGgFdyECDKgi5HaUBhdv6k+VG9Iy4OCforGfHyar3xQXAJypZkzymgKtWj/4SPd6nSG0Qi7NH71qHrDSZLaA=="
       },
       "InputSimulator": {
         "type": "Direct",
@@ -58,9 +58,9 @@
       },
       "Microsoft.Windows.CsWin32": {
         "type": "Direct",
-        "requested": "[0.3.183, )",
-        "resolved": "0.3.183",
-        "contentHash": "Ze3aE2y7xgzKxEWtNb4SH0CExXpCHr3sbmwnvMiWMzJhWDX/G4Rs5wgg2UNs3VN+qVHh/DkDWLCPaVQv/b//Nw==",
+        "requested": "[0.3.205, )",
+        "resolved": "0.3.205",
+        "contentHash": "U5wGAnyKd7/I2YMd43nogm81VMtjiKzZ9dsLMVI4eAB7jtv5IEj0gprj0q/F3iRmAIaGv5omOf8iSYx2+nE6BQ==",
         "dependencies": {
           "Microsoft.Windows.SDK.Win32Docs": "0.1.42-alpha",
           "Microsoft.Windows.SDK.Win32Metadata": "61.0.15-preview",
@@ -78,17 +78,17 @@
       },
       "NLog": {
         "type": "Direct",
-        "requested": "[6.0.1, )",
-        "resolved": "6.0.1",
-        "contentHash": "qDWiqy8/xdpZKtHna/645KbalwP86N2NFJEzfqhcv+Si4V2iNaEfR/dCneuF/4+Dcwl3f7jHMXj3ndWYftV3Ug=="
+        "requested": "[6.0.4, )",
+        "resolved": "6.0.4",
+        "contentHash": "Xr+lIk1ZlTTFXEqnxQVLxrDqZlt2tm5X+/AhJbaY2emb/dVtGDiU5QuEtj3gHtwV/SWlP/rJ922I/BPuOJXlRw=="
       },
       "NLog.OutputDebugString": {
         "type": "Direct",
-        "requested": "[6.0.1, )",
-        "resolved": "6.0.1",
-        "contentHash": "wwJCQLaHVzuRf8TsXB+EEdrzVvE3dnzCSMQMDgwkw3AXp8VSp3JSVF/Q/H0oEqggKgKhPs13hh3a7svyQr4s3A==",
+        "requested": "[6.0.4, )",
+        "resolved": "6.0.4",
+        "contentHash": "TOP2Ap9BbE98B/l/TglnguowOD0rXo8B/20xAgvj9shO/kf6IJ5M4QMhVxq72mrneJ/ANhHY7Jcd+xJbzuI5PA==",
         "dependencies": {
-          "NLog": "6.0.1"
+          "NLog": "6.0.4"
         }
       },
       "PropertyChanged.Fody": {
@@ -102,9 +102,9 @@
       },
       "SharpVectors.Wpf": {
         "type": "Direct",
-        "requested": "[1.8.4.2, )",
-        "resolved": "1.8.4.2",
-        "contentHash": "PNxLkMBJnV8A+6yH9OqOlhLJegvWP/dvh0rAJp2l0kcrR+rB4R2tQ9vhUqka+UilH4atN8T6zvjDOizVyfz2Ng=="
+        "requested": "[1.8.5, )",
+        "resolved": "1.8.5",
+        "contentHash": "WURdBDq5AE8RjKV9pFS7lNkJe81gxja9SaMGE4URq9GJUZ6M+5DGUL0Lm3B0iYW2/Meyowaz4ffGsyW+RBSTtg=="
       },
       "System.Drawing.Common": {
         "type": "Direct",
@@ -123,8 +123,8 @@
       },
       "JetBrains.Annotations": {
         "type": "Transitive",
-        "resolved": "2024.3.0",
-        "contentHash": "ox5pkeLQXjvJdyAB4b2sBYAlqZGLh3PjSnP1bQNVx72ONuTJ9+34/+Rq91Fc0dG29XG9RgZur9+NcP4riihTug=="
+        "resolved": "2025.2.2",
+        "contentHash": "0X56ZRizuHdrnPpgXjWV7f2tQO1FlQg5O1967OGKnI/4ZRNOK642J8L7brM1nYvrxTTU5TP1yRyXLRLaXLPQ8A=="
       },
       "MemoryPack.Core": {
         "type": "Transitive",
@@ -190,7 +190,7 @@
       "flow.launcher.plugin": {
         "type": "Project",
         "dependencies": {
-          "JetBrains.Annotations": "[2024.3.0, )"
+          "JetBrains.Annotations": "[2025.2.2, )"
         }
       }
     }
