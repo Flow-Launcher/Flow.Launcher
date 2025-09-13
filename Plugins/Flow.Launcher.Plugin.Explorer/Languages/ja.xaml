@@ -20,8 +20,8 @@
     <system:String x:Key="plugin_explorer_alternative">The warning message has been switched off. As an alternative for searching files and folders, would you like to install Everything plugin?{0}{0}Select 'Yes' to install Everything plugin, or 'No' to return</system:String>
     <system:String x:Key="plugin_explorer_alternative_title">Explorer Alternative</system:String>
     <system:String x:Key="plugin_explorer_directoryinfosearch_error">Error occurred during search: {0}</system:String>
-    <system:String x:Key="plugin_explorer_opendir_error">Could not open folder</system:String>
-    <system:String x:Key="plugin_explorer_openfile_error">Could not open file</system:String>
+    <system:String x:Key="plugin_explorer_opendir_error">フォルダーを開けませんでした</system:String>
+    <system:String x:Key="plugin_explorer_openfile_error">ファイルを開けませんでした</system:String>
 
     <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">削除</system:String>
@@ -39,8 +39,8 @@
     <system:String x:Key="plugin_explorer_previewpanel_display_file_age_checkbox">File Age</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_file_info_label">ファイル情報の表示</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">日付と時刻の形式</system:String>
-    <system:String x:Key="plugin_explorer_everything_sort_option">Sort Option:</system:String>
-    <system:String x:Key="plugin_explorer_everything_installed_path">Everything Path:</system:String>
+    <system:String x:Key="plugin_explorer_everything_sort_option">並べ替え方法：</system:String>
+    <system:String x:Key="plugin_explorer_everything_installed_path">Everything のパス：</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Launch Hidden</system:String>
     <system:String x:Key="plugin_explorer_editor_path">Editor Path</system:String>
     <system:String x:Key="plugin_explorer_shell_path">Shell Path</system:String>
@@ -64,7 +64,7 @@
     <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Direct Enumeration</system:String>
     <system:String x:Key="plugin_explorer_file_editor_path">ファイル エディターのパス</system:String>
     <system:String x:Key="plugin_explorer_folder_editor_path">フォルダー エディターのパス</system:String>
-    <system:String x:Key="plugin_explorer_enabled">Enabled</system:String>
+    <system:String x:Key="plugin_explorer_enabled">有効</system:String>
     <system:String x:Key="plugin_explorer_disabled">無効</system:String>
 
     <system:String x:Key="plugin_explorer_Content_Search_Engine">Content Search Engine</system:String>
@@ -72,8 +72,8 @@
     <system:String x:Key="plugin_explorer_Index_Search_Engine">Index Search Engine</system:String>
     <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Windowsのインデックスオプションを開く</system:String>
     <system:String x:Key="plugin_explorer_Excluded_File_Types">Excluded File Types (comma seperated)</system:String>
-    <system:String x:Key="plugin_explorer_Excluded_File_Types_Tooltip">For example: exe,jpg,png</system:String>
-    <system:String x:Key="plugin_explorer_Maximum_Results">Maximum results</system:String>
+    <system:String x:Key="plugin_explorer_Excluded_File_Types_Tooltip">例: exe,jpg,png</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results">結果の最大表示件数</system:String>
     <system:String x:Key="plugin_explorer_Maximum_Results_Tooltip">The maximum number of results requested from active search engine</system:String>
 
     <!--  Plugin Infos  -->
@@ -81,7 +81,7 @@
     <system:String x:Key="plugin_explorer_plugin_description">Windows SearchまたはEverythingを使って、ファイルやフォルダーを検索・管理します</system:String>
 
     <!--  Plugin Tooltip  -->
-    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter to open the directory</system:String>
+    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter でフォルダーを開く</system:String>
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Enter to open the containing folder</system:String>
     <system:String x:Key="plugin_explorer_plugin_tooltip_more_info">{0}{4}Size: {1}{4}Date created: {2}{4}Date modified: {3}</system:String>
     <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_unknown">不明</system:String>
@@ -90,8 +90,8 @@
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">パスをコピー</system:String>
     <system:String x:Key="plugin_explorer_copypath_subtitle">現在の項目のパスをコピー</system:String>
-    <system:String x:Key="plugin_explorer_copyname">Copy name</system:String>
-    <system:String x:Key="plugin_explorer_copyname_subtitle">Copy name of current item to clipboard</system:String>
+    <system:String x:Key="plugin_explorer_copyname">名前をコピー</system:String>
+    <system:String x:Key="plugin_explorer_copyname_subtitle">現在の項目の名前をクリップボードにコピーする</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">コピー</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">現在のファイルをコピー</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">現在のフォルダーをコピー</system:String>
@@ -99,13 +99,13 @@
     <system:String x:Key="plugin_explorer_deletefile_subtitle">現在のファイルを完全に削除</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">現在のフォルダーを完全に削除</system:String>
     <system:String x:Key="plugin_explorer_name">名前</system:String>
-    <system:String x:Key="plugin_explorer_type">Type</system:String>
-    <system:String x:Key="plugin_explorer_path">Path</system:String>
+    <system:String x:Key="plugin_explorer_type">種類</system:String>
+    <system:String x:Key="plugin_explorer_path">パス</system:String>
     <system:String x:Key="plugin_explorer_file">ファイル</system:String>
     <system:String x:Key="plugin_explorer_folder">フォルダー</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Delete the selected</system:String>
-    <system:String x:Key="plugin_explorer_runasdifferentuser">Run as different user</system:String>
-    <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Run the selected using a different user account</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">選択したものを削除する</system:String>
+    <system:String x:Key="plugin_explorer_runasdifferentuser">別のユーザーとして実行</system:String>
+    <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">別のユーザーアカウントを使用して選択したものを実行する</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder">フォルダーを開く</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">現在の項目が含まれている場所を開きます</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">エディターで開く:</system:String>
@@ -119,9 +119,9 @@
     <system:String x:Key="plugin_explorer_openindexingoptions_errormsg">Windowsインデックスオプションを開けませんでした</system:String>
     <system:String x:Key="plugin_explorer_add_to_quickaccess_title">クイックアクセスに追加</system:String>
     <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">現在の項目をクイックアクセスに追加</system:String>
-    <system:String x:Key="plugin_explorer_addfilefoldersuccess">Successfully Added</system:String>
+    <system:String x:Key="plugin_explorer_addfilefoldersuccess">正常に追加されました</system:String>
     <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">クイックアクセスに追加しました</system:String>
-    <system:String x:Key="plugin_explorer_removefilefoldersuccess">Successfully Removed</system:String>
+    <system:String x:Key="plugin_explorer_removefilefoldersuccess">削除に成功しました</system:String>
     <system:String x:Key="plugin_explorer_removefilefoldersuccess_detail">Successfully removed from Quick Access</system:String>
     <system:String x:Key="plugin_explorer_contextmenu_titletooltip">エクスプローラーの検索アクティベーション用アクションキーワードで開けるように、クイックアクセスに追加します</system:String>
     <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">クイックアクセスから削除</system:String>
@@ -130,21 +130,21 @@
     <system:String x:Key="plugin_explorer_show_contextmenu_title">Windowsの右クリックメニューを表示</system:String>
     <system:String x:Key="plugin_explorer_openwith">アプリで開く</system:String>
     <system:String x:Key="plugin_explorer_openwith_subtitle">開くためのプログラムを選択します</system:String>
-    <system:String x:Key="plugin_explorer_fail_to_delete">Fail to delete {0}</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_delete">{0} の削除に失敗しました</system:String>
     <system:String x:Key="plugin_explorer_file_not_found">File not found: {0}</system:String>
-    <system:String x:Key="plugin_explorer_fail_to_open">Fail to open {0}</system:String>
-    <system:String x:Key="plugin_explorer_fail_to_set_text">Fail to set text in clipboard</system:String>
-    <system:String x:Key="plugin_explorer_fail_to_set_files">Fail to set files/folders in clipboard</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_open">{0} の削除に失敗しました</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_set_text">クリップボードにテキストをコピーできませんでした</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_set_files">ファイル/フォルダのコピーに失敗しました</system:String>
 
     <!--  Special Results  -->
-    <system:String x:Key="plugin_explorer_diskfreespace">{0} free of {1}</system:String>
-    <system:String x:Key="plugin_explorer_openresultfolder">Open in Default File Manager</system:String>
+    <system:String x:Key="plugin_explorer_diskfreespace">空き領域 {1} 中の {0}</system:String>
+    <system:String x:Key="plugin_explorer_openresultfolder">デフォルトのファイルマネージャーで開く</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder_subtitle">
         Use '&gt;' to search in this directory, '*' to search for file extensions or '&gt;*' to combine both searches.
     </system:String>
 
     <!--  Everything  -->
-    <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Failed to load Everything SDK</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Everything SDK の読み込みに失敗しました</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">警告: Everythingのサービスが実行されていません</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_query_error">Everything へのクエリ中にエラーが発生しました</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by">並べ替え順</system:String>
@@ -166,39 +166,39 @@
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes_descending">Attributes ↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename_ascending">File List FileName ↑</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename_descending">File List FileName ↓</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count_ascending">Run Count ↑</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count_descending">Run Count ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count_ascending">実行回数 ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count_descending">実行回数 ↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed_ascending">Date Recently Changed ↑</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed_descending">Date Recently Changed ↓</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed_ascending">Date Accessed ↑</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed_descending">Date Accessed ↓</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run_ascending">Date Run ↑</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run_descending">Date Run ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed_ascending">アクセス日時 ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed_descending">アクセス日時 ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run_ascending">実行日時 ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run_descending">実行日時 ↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_ascending">↑</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">↓</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Warning: This is not a Fast Sort option, searches may be slow</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">警告：これは高速な並べ替えオプションではありません。検索が遅くなる場合があります</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Search Full Path</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Enable File/Folder Run Count</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">ファイル/フォルダの実行カウントを有効にする</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Click to launch or install Everything</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installing_title">Everything Installation</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">Installing Everything service. Please wait...</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installationsuccess_subtitle">Successfully installed Everything service</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installationfailed_subtitle">Failed to automatically install Everything service. Please manually install it from https://www.voidtools.com</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">クリックして Everything を起動またはインストール</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installing_title">Everything のインストール</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">Everything サービスをインストールしています。お待ちください…</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installationsuccess_subtitle">Everything サービスを正常にインストールしました</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installationfailed_subtitle">Everything サービスを自動的にインストールできませんでした。https://www.voidtools.com から手動でインストールしてください</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_run_service">Click here to start it</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_select">Everythingのインストールが見つかりませんでした。手動で場所を指定しますか？{0}{0}「いいえ」をクリックすると、Everythingが自動的にインストールされます。</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Everything でのコンテンツ検索を有効にしますか？</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">It can be very slow without index (which is only supported in Everything v1.5+)</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">インデックスなしでは非常に遅くなることがあります(Everything v1.5以降でのみサポートされています)</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_not_found">Everything.exe が見つかりません</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_install_issue">Everything のインストールに失敗しました。手動でインストールしてください</system:String>
 
     <!--  Native Context Menu  -->
     <system:String x:Key="plugin_explorer_native_context_menu_header">Windowsのコンテキストメニュー</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Display native context menu (experimental)</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Below you can specify items you want to include in the context menu, they can be partial (e.g. 'pen wit') or complete ('Open with').</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Below you can specify items you want to exclude from context menu, they can be partial (e.g. 'pen wit') or complete ('Open with').</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Windowsのコンテキストメニューを表示（実験的）</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">以下では、コンテキストメニューに表示する項目を指定することができます。部分的 (例: 「開」)、または完全な項目名を指定することができます (「開く」)。</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">以下では、コンテキストメニューから除外する項目を指定することができます。部分的 (例: 「開」)、または完全な項目名を指定することができます (「開く」)。</system:String>
 
     <!--  Preview Info  -->
     <system:String x:Key="Today">今日</system:String>
