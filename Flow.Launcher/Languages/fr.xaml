@@ -466,8 +466,10 @@
     <system:String x:Key="userdatapathButton">Ouvrir le dossier</system:String>
     <system:String x:Key="advanced">Avancé</system:String>
     <system:String x:Key="logLevel">Niveau de journalisation</system:String>
-    <system:String x:Key="LogLevelDEBUG">Débogage</system:String>
+    <system:String x:Key="LogLevelNONE">Silent</system:String>
+    <system:String x:Key="LogLevelERROR">Erreur</system:String>
     <system:String x:Key="LogLevelINFO">Info</system:String>
+    <system:String x:Key="LogLevelDEBUG">Débogage</system:String>
     <system:String x:Key="settingWindowFontTitle">Réglage de la police de la fenêtre</system:String>
 
     <!--  Release Notes Window  -->
