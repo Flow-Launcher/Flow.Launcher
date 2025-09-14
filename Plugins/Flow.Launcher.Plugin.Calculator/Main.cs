@@ -52,8 +52,15 @@ namespace Flow.Launcher.Plugin.Calculator
 
             try
             {
-                bool isFunctionPresent = FunctionRegex.IsMatch(query.Search);
-                var expression = NumberRegex.Replace(query.Search, m => NormalizeNumber(m.Value, isFunctionPresent));
+                var search = query.Search;
+                bool isFunctionPresent = FunctionRegex.IsMatch(search);
+                
+                // Mages is case sensitive, so we need to convert all function names to lower case.
+                search = FunctionRegex.Replace(search, m => m.Value.ToLowerInvariant());
+                
+                var decimalSep = GetDecimalSeparator();
+                var groupSep = GetGroupSeparator(decimalSep);
+                var expression = NumberRegex.Replace(search, m => NormalizeNumber(m.Value, isFunctionPresent, decimalSep, groupSep));
 
                 // WORKAROUND START: The 'pow' function in Mages v3.0.0 is broken.
                 // https://github.com/FlorianRappl/Mages/issues/132
@@ -185,48 +192,56 @@ namespace Flow.Launcher.Plugin.Calculator
             return $"({arg1}^{arg2})";
         }
 
-        private static string NormalizeNumber(string numberStr, bool isFunctionPresent)
+        private static string NormalizeNumber(string numberStr, bool isFunctionPresent, string decimalSep, string groupSep)
         {
-            var culture = CultureInfo.CurrentCulture;
-            var groupSep = culture.NumberFormat.NumberGroupSeparator;
-            var decimalSep = culture.NumberFormat.NumberDecimalSeparator;
-
             if (isFunctionPresent)
             {
                 // STRICT MODE: When functions are present, ',' is ALWAYS an argument separator.
-                // It must not be normalized.
                 if (numberStr.Contains(','))
                 {
                     return numberStr;
                 }
 
-                // The string has no commas. It could have a '.' group separator (e.g. in de-DE)
-                // or a '.' decimal separator (e.g. in en-US).
-                // Since Mages' decimal separator is '.', we only need to strip the group separator.
-                if (groupSep == ".")
+                string processedStr = numberStr;
+
+                // Handle group separator, with special care for ambiguous dot.
+                if (!string.IsNullOrEmpty(groupSep))
                 {
-                    var parts = numberStr.Split('.');
-                    // A number with a dot group separator, e.g., "1.234"
-                    if (parts.Length > 1)
+                    if (groupSep == ".")
                     {
-                        // Check if the parts after the first dot have the correct group length (usually 3).
-                        for (int i = 1; i < parts.Length; i++)
+                        var parts = processedStr.Split('.');
+                        if (parts.Length > 1)
                         {
-                            if (parts[i].Length != 3)
+                            bool isGrouped = true;
+                            for (var i = 1; i < parts.Length; i++)
                             {
-                                // Malformed grouping, e.g., "1.23". This is likely a decimal number.
-                                // Return as is and let Mages handle it.
-                                return numberStr;
+                                if (parts[i].Length != 3)
+                                {
+                                    isGrouped = false;
+                                    break;
+                                }
                             }
+
+                            if (isGrouped)
+                            {
+                                processedStr = processedStr.Replace(groupSep, "");
+                            }
+                            // If not grouped, it's likely a decimal number, so we don't strip dots.
                         }
-                        // Correct grouping, e.g., "1.234" or "1.234.567". Strip separators.
-                        return numberStr.Replace(".", "");
+                    }
+                    else
+                    {
+                        processedStr = processedStr.Replace(groupSep, "");
                     }
                 }
+
+                // Handle decimal separator.
+                if (decimalSep != ".")
+                {
+                    processedStr = processedStr.Replace(decimalSep, ".");
+                }
                 
-                // For any other case (e.g. en-US culture where group sep is ',' which was already handled),
-                // return the string as is.
-                return numberStr;
+                return processedStr;
             }
             else
             {
@@ -236,7 +251,10 @@ namespace Flow.Launcher.Plugin.Calculator
                 {
                     processedStr = processedStr.Replace(groupSep, "");
                 }
-                processedStr = processedStr.Replace(decimalSep, ".");
+                if (decimalSep != ".")
+                {
+                    processedStr = processedStr.Replace(decimalSep, ".");
+                }
                 return processedStr;
             }
         }
