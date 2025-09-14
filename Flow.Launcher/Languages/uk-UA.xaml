@@ -467,8 +467,10 @@
     <system:String x:Key="userdatapathButton">Відкрити теку</system:String>
     <system:String x:Key="advanced">Розширені</system:String>
     <system:String x:Key="logLevel">Рівень журналювання</system:String>
-    <system:String x:Key="LogLevelDEBUG">Налагодження</system:String>
+    <system:String x:Key="LogLevelNONE">Silent</system:String>
+    <system:String x:Key="LogLevelERROR">Помилка</system:String>
     <system:String x:Key="LogLevelINFO">Інформація</system:String>
+    <system:String x:Key="LogLevelDEBUG">Налагодження</system:String>
     <system:String x:Key="settingWindowFontTitle">Встановлення шрифту вікна</system:String>
 
     <!--  Release Notes Window  -->
