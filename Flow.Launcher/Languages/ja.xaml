@@ -467,8 +467,10 @@
     <system:String x:Key="userdatapathButton">フォルダーを開く</system:String>
     <system:String x:Key="advanced">上級者向け機能</system:String>
     <system:String x:Key="logLevel">ログレベル</system:String>
-    <system:String x:Key="LogLevelDEBUG">デバッグ</system:String>
+    <system:String x:Key="LogLevelNONE">Silent</system:String>
+    <system:String x:Key="LogLevelERROR">エラー</system:String>
     <system:String x:Key="LogLevelINFO">情報</system:String>
+    <system:String x:Key="LogLevelDEBUG">デバッグ</system:String>
     <system:String x:Key="settingWindowFontTitle">設定ウィンドウで使用するフォント</system:String>
 
     <!--  Release Notes Window  -->
