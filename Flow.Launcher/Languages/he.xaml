@@ -466,8 +466,10 @@
     <system:String x:Key="userdatapathButton">פתח תיקיה</system:String>
     <system:String x:Key="advanced">Advanced</system:String>
     <system:String x:Key="logLevel">רמת יומן</system:String>
-    <system:String x:Key="LogLevelDEBUG">ניפוי שגיאות</system:String>
+    <system:String x:Key="LogLevelNONE">Silent</system:String>
+    <system:String x:Key="LogLevelERROR">שגיאה</system:String>
     <system:String x:Key="LogLevelINFO">מידע</system:String>
+    <system:String x:Key="LogLevelDEBUG">ניפוי שגיאות</system:String>
     <system:String x:Key="settingWindowFontTitle">Setting Window Font</system:String>
 
     <!--  Release Notes Window  -->
