@@ -1,0 +1,119 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ProjectGuid>{9B130CC5-14FB-41FF-B310-0A95B6894C37}</ProjectGuid>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Flow.Launcher.Plugin.BrowserBookmarks</RootNamespace>
+    <AssemblyName>Flow.Launcher.Plugin.BrowserBookmarks</AssemblyName>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <UseWindowsForms>true</UseWindowsForms>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>portable</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Output\Debug\Plugins\Flow.Launcher.Plugin.BrowserBookmarks\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Output\Release\Plugins\Flow.Launcher.Plugin.BrowserBookmarks\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <NoWarn>$(NoWarn);FLSG0007</NoWarn>
+  </PropertyGroup>
+
+  <Target Name="RemoveUnnecessaryRuntimesAfterBuild" AfterTargets="Build">
+    <RemoveDir Directories="$(OutputPath)runtimes\browser-wasm;
+                            $(OutputPath)runtimes\linux-arm;
+                            $(OutputPath)runtimes\linux-arm64;
+                            $(OutputPath)runtimes\linux-armel;
+                            $(OutputPath)runtimes\linux-mips64;
+                            $(OutputPath)runtimes\linux-musl-arm;
+                            $(OutputPath)runtimes\linux-musl-arm64;
+                            $(OutputPath)runtimes\linux-musl-x64;
+                            $(OutputPath)runtimes\linux-musl-s390x;
+                            $(OutputPath)runtimes\linux-ppc6le;
+                            $(OutputPath)runtimes\linux-s390x;
+                            $(OutputPath)runtimes\linux-x64;
+                            $(OutputPath)runtimes\linux-x86;
+                            $(OutputPath)runtimes\maccatalyst-arm64;
+                            $(OutputPath)runtimes\maccatalyst-x64;
+                            $(OutputPath)runtimes\osx;
+                            $(OutputPath)runtimes\osx-arm64;
+                            $(OutputPath)runtimes\osx-x64;
+                            $(OutputPath)runtimes\win-arm;
+                            $(OutputPath)runtimes\win-arm64;" />
+  </Target>
+
+  <Target Name="RemoveUnnecessaryRuntimesAfterPublish" AfterTargets="Publish">
+    <RemoveDir Directories="$(PublishDir)runtimes\browser-wasm;
+                            $(PublishDir)runtimes\linux-arm;
+                            $(PublishDir)runtimes\linux-arm64;
+                            $(PublishDir)runtimes\linux-armel;
+                            $(PublishDir)runtimes\linux-mips64;
+                            $(PublishDir)runtimes\linux-musl-arm;
+                            $(PublishDir)runtimes\linux-musl-arm64;
+                            $(PublishDir)runtimes\linux-musl-x64;
+                            $(PublishDir)runtimes\linux-musl-s390x;
+                            $(PublishDir)runtimes\linux-ppc6le;
+                            $(PublishDir)runtimes\linux-s390x;
+                            $(PublishDir)runtimes\linux-x64;
+                            $(PublishDir)runtimes\linux-x86;
+                            $(PublishDir)runtimes\maccatalyst-arm64;
+                            $(PublishDir)runtimes\maccatalyst-x64;
+                            $(PublishDir)runtimes\osx;
+                            $(PublishDir)runtimes\osx-arm64;
+                            $(PublishDir)runtimes\osx-x64;
+                            $(PublishDir)runtimes\win-arm;
+                            $(PublishDir)runtimes\win-arm64;" />
+  </Target>
+
+  <ItemGroup>
+    <None Update="plugin.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Languages\en.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\bookmark.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Images\copylink.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Content Include="Languages\*.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="Flow.Launcher.Localization" Version="0.0.5" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.9" />
+    <PackageReference Include="Svg.Skia" Version="3.0.6" />
+    <PackageReference Include="SkiaSharp" Version="3.119.0" />
+  </ItemGroup>
+
+</Project>

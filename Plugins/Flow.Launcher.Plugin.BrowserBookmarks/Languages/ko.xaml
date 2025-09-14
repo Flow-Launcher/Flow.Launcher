@@ -1,0 +1,33 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!--  Plugin Info  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">브라우저 북마크</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">브라우저의 북마크 검색</system:String>
+
+    <!--  Main  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">Failed to set url in clipboard</system:String>
+
+    <!--  Settings  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">북마크 데이터</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Open bookmarks in:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newWindow">새 창</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">새 탭</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">Set browser from path:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">선택</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">URL 복사</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">북마크의 URL을 클립보드에 복사</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">데이터를 가져올 브라우저:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">브라우저 이름</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">데이터 디렉토리 위치</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">추가</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_editBrowserBookmark">편집</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">삭제</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browseBrowserBookmark">찾아보기</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Others</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">브라우저 엔진</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">크롬, 파이어폭스 또는 엣지를 사용하지 않거나 이들의 포터블 버전을 사용하고 있다면, 이 플러그인을 작동시키기 위해 북마크 데이터 디렉토리를 추가하고 올바른 브라우저 엔진을 선택해야 합니다.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">예를 들어: Brave의 엔진은 Chromium이며, 기본 북마크 데이터 위치는 &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;입니다. Firefox 엔진의 경우, 북마크 위치는 places.sqlite 파일이 포함된 userdata 폴더입니다.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Load favicons (can be time consuming during startup)</system:String>
+
+</ResourceDictionary>

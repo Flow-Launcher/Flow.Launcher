@@ -1,0 +1,33 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!--  Plugin Info  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Marcadores del Navegador</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Busca en los marcadores de tu navegador</system:String>
+
+    <!--  Main  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">Failed to set url in clipboard</system:String>
+
+    <!--  Settings  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Datos de Marcadores</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Abrir marcadores en:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newWindow">Nueva ventana</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">Nueva pestaña</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">Establecer navegador desde ruta:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">Elegir</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">Copiar url</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Copiar la url del marcador al portapapeles</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Cargar navegador desde:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Nombre del Navegador</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Ruta del Directorio de Datos</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Añadir</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_editBrowserBookmark">Editar</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Eliminar</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browseBrowserBookmark">Browse</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Others</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Browser Engine</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">If you are not using Chrome, Firefox or Edge, or you are using their portable version, you need to add bookmarks data directory and select correct browser engine to make this plugin work.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">For example: Brave's engine is Chromium; and its default bookmarks data location is: &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. For Firefox engine, the bookmarks directory is the userdata folder contains the places.sqlite file.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Load favicons (can be time consuming during startup)</system:String>
+
+</ResourceDictionary>

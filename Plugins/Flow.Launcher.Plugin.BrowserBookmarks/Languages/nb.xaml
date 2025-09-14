@@ -1,0 +1,33 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!--  Plugin Info  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Nettleserbokmerker</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Søk i nettleserbokmerker</system:String>
+
+    <!--  Main  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">Failed to set url in clipboard</system:String>
+
+    <!--  Settings  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Bokmerkedata</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Åpne bokmerker i:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newWindow">Nytt vindu</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">Ny fane</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">Angi nettleser fra banen:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">Velg</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">Kopier nettadresse</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Kopier bokmerkets nettadresse til utklippstavlen</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Last nettleser fra:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Nettlesernavn</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Sti til datakatalog</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Legg til</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_editBrowserBookmark">Rediger</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Slett</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browseBrowserBookmark">Bla</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Andre</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Nettlesermotor</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">Hvis du ikke bruker Chrome, Firefox eller Edge, eller hvis du bruker den bærbare versjonen, må du legge til bokmerkedatakatalog og velge riktig nettlesermotor for å få dette programtillegget til å fungere.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">For eksempel: Brave's motor er Chromium; og standardplasseringen av bokmerker er: &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. For Firefox-motoren er bokmerkekatalogen brukerdatamappen som inneholder places.sqlite-filen.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Load favicons (can be time consuming during startup)</system:String>
+
+</ResourceDictionary>

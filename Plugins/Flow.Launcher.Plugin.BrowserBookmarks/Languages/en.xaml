@@ -1,0 +1,34 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!--  Plugin Info  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Browser Bookmarks</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Search your browser bookmarks, retrieve favicons from the web.</system:String>
+
+    <!--  Main  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">Failed to copy URL to clipboard</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">Copy URL</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Copy the bookmark's URL to clipboard</system:String>
+
+    <!--  Settings  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Load bookmarks from:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Others...</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Add</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_editBrowserBookmark">Edit</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Delete</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Enable favicons (requires more memory)</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_fetch_favicons">Fetch missing favicons from the web (can be slow)</system:String>
+
+    <!--  Custom Browser Window  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Custom Browser Setting</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Browser Name</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Browser Engine</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Data Directory Path</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browseBrowserBookmark">Browse</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">Set your custom browser's information here.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">For Chromium browsers (Brave, Vivaldi, etc.), this is the 'User Data' folder.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage03">For Firefox browsers, this is the root profile folder (e.g., 'Mozilla\Firefox').</system:String>
+
+</ResourceDictionary>

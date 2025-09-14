@@ -1,0 +1,33 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!--  Plugin Info  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Закладки браузера</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Пошук у закладках браузера</system:String>
+
+    <!--  Main  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">Не вдалося вставити Url-адресу в буфер обміну</system:String>
+
+    <!--  Settings  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Дані закладок</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Відкрити закладки в:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newWindow">Нове вікно</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">Нова вкладка</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">Встановити браузер за шляхом:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">Обрати</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">Скопіювати URL-адресу</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Скопіюйте URL-адресу закладки в буфер обміну</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Завантажити браузер з:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Назва браузера</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Шлях до каталогу з даними</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Додати</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_editBrowserBookmark">Редагувати</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Видалити</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browseBrowserBookmark">Перегляд</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Інші</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Браузерний рушій</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">Якщо ви не використовуєте Chrome, Firefox або Edge, або використовуєте їхні портативні версії, вам потрібно додати каталог даних закладок і вибрати правильний рушій браузера, щоб цей плагін працював.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">Наприклад: рушій Brave — Chromium, і типово розташування даних закладок: «%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData». Для браузера Firefox директорія закладок — це тека userdata, що містить файл places.sqlite.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Завантажити піктограми (може зайняти багато часу під час запуску)</system:String>
+
+</ResourceDictionary>
