@@ -20,6 +20,7 @@ namespace Flow.Launcher.Plugin.Calculator
         private static Engine MagesEngine;
         private const string Comma = ",";
         private const string Dot = ".";
+        private const string IcoPath = "Images/calculator.png";
 
         internal static PluginInitContext Context { get; set; } = null!;
 
@@ -73,7 +74,7 @@ namespace Flow.Launcher.Plugin.Calculator
                         new Result
                         {
                             Title = Localize.flowlauncher_plugin_calculator_expression_not_complete(),
-                            IcoPath = "Images/calculator.png"
+                            IcoPath = IcoPath
                         }
                     };
                 }
@@ -94,7 +95,7 @@ namespace Flow.Launcher.Plugin.Calculator
                         new Result
                         {
                             Title = newResult,
-                            IcoPath = "Images/calculator.png",
+                            IcoPath = IcoPath,
                             Score = 300,
                             SubTitle = Localize.flowlauncher_plugin_calculator_copy_number_to_clipboard(),
                             CopyText = newResult,
@@ -123,7 +124,7 @@ namespace Flow.Launcher.Plugin.Calculator
                     new Result
                     {
                         Title = Localize.flowlauncher_plugin_calculator_expression_not_complete(),
-                        IcoPath = "Images/calculator.png"
+                        IcoPath = IcoPath
                     }
                 };
             }
