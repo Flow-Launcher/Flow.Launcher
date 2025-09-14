@@ -467,8 +467,10 @@
     <system:String x:Key="userdatapathButton">打开文件夹</system:String>
     <system:String x:Key="advanced">高级</system:String>
     <system:String x:Key="logLevel">日志等级</system:String>
-    <system:String x:Key="LogLevelDEBUG">调试</system:String>
+    <system:String x:Key="LogLevelNONE">Silent</system:String>
+    <system:String x:Key="LogLevelERROR">错误</system:String>
     <system:String x:Key="LogLevelINFO">信息</system:String>
+    <system:String x:Key="LogLevelDEBUG">调试</system:String>
     <system:String x:Key="settingWindowFontTitle">设置窗口字体</system:String>
 
     <!--  Release Notes Window  -->
