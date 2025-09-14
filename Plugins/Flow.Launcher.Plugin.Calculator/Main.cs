@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
@@ -16,8 +15,7 @@ namespace Flow.Launcher.Plugin.Calculator
         private static readonly Regex RegBrackets = MainRegexHelper.GetRegBrackets();
         private static readonly Regex ThousandGroupRegex = MainRegexHelper.GetThousandGroupRegex();
         private static readonly Regex NumberRegex = MainRegexHelper.GetNumberRegex();
-        private static readonly Regex PowRegex = new(@"\bpow(\((?:[^()\[\]]|\((?<Depth>)|\)(?<-Depth>)|\[(?<Depth>)|\](?<-Depth>))*(?(Depth)(?!))\))", RegexOptions.Compiled | RegexOptions.RightToLeft);
-
+        private static readonly Regex PowRegex = MainRegexHelper.GetPowRegex();
 
         private static Engine MagesEngine;
         private const string Comma = ",";
@@ -200,7 +198,7 @@ namespace Flow.Launcher.Plugin.Calculator
         /// Parses a string representation of a number using the system's current culture.
         /// </summary>
         /// <returns>A normalized number string with '.' as the decimal separator for the Mages engine.</returns>
-        private string NormalizeNumber(string numberStr)
+        private static string NormalizeNumber(string numberStr)
         {
             var culture = CultureInfo.CurrentCulture;
             var groupSep = culture.NumberFormat.NumberGroupSeparator;
