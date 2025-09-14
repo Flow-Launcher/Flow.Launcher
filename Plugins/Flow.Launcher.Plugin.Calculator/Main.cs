@@ -48,18 +48,6 @@ namespace Flow.Launcher.Plugin.Calculator
                 return new List<Result>();
             }
 
-            if (!IsBracketComplete(query.Search))
-            {
-                return new List<Result>
-                {
-                    new Result
-                    {
-                        Title = Localize.flowlauncher_plugin_calculator_expression_not_complete(),
-                        IcoPath = "Images/calculator.png"
-                    }
-                };
-            }
-
             try
             {
                 var expression = NumberRegex.Replace(query.Search, m => NormalizeNumber(m.Value));
@@ -281,30 +269,6 @@ namespace Flow.Launcher.Plugin.Calculator
                 DecimalSeparator.Comma => Comma,
                 _ => systemDecimalSeparator,
             };
-        }
-
-        private static bool IsBracketComplete(string query)
-        {
-            var matchs = RegBrackets.Matches(query);
-            var leftBracketCount = 0;
-            foreach (Match match in matchs)
-            {
-                if (match.Value == "(" || match.Value == "[")
-                {
-                    leftBracketCount++;
-                }
-                else
-                {
-                    leftBracketCount--;
-                }
-
-                if (leftBracketCount < 0)
-                {
-                    return false;
-                }
-            }
-
-            return leftBracketCount == 0;
         }
 
         public string GetTranslatedPluginTitle()
