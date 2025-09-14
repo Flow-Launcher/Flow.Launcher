@@ -466,8 +466,10 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="userdatapathButton">Otwórz folder</system:String>
     <system:String x:Key="advanced">Zaawansowane</system:String>
     <system:String x:Key="logLevel">Poziom logowania</system:String>
-    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelNONE">Silent</system:String>
+    <system:String x:Key="LogLevelERROR">Błąd</system:String>
     <system:String x:Key="LogLevelINFO">Info</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="settingWindowFontTitle">Ustawienia czcionki okna</system:String>
 
     <!--  Release Notes Window  -->
