@@ -34,7 +34,7 @@ namespace Flow.Launcher.Infrastructure.Logger
             
             var fileTarget = new FileTarget
             {
-                FileName = CurrentLogDirectory.Replace(@"\", "/") + "/Flow.Launcher.${date:format=yyyyMMdd}.log",
+                FileName = CurrentLogDirectory.Replace(@"\", "/") + "/Flow.Launcher.${date:format=yyyy-MM-dd}.log",
                 Layout = layout
             };
 
