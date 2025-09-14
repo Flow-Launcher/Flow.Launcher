@@ -465,7 +465,7 @@
     <system:String x:Key="userdatapathButton">Abrir pasta</system:String>
     <system:String x:Key="advanced">Avançado</system:String>
     <system:String x:Key="logLevel">Nível de registo</system:String>
-    <system:String x:Key="LogLevelNONE">Silent</system:String>
+    <system:String x:Key="LogLevelNONE">Silencioso</system:String>
     <system:String x:Key="LogLevelERROR">Erro</system:String>
     <system:String x:Key="LogLevelINFO">Informação</system:String>
     <system:String x:Key="LogLevelDEBUG">Depuração</system:String>
