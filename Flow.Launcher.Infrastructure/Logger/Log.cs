@@ -16,7 +16,7 @@ namespace Flow.Launcher.Infrastructure.Logger
 
         public static string CurrentLogDirectory { get; }
 
-static Log()
+        static Log()
         {
             CurrentLogDirectory = DataLocation.VersionLogDirectory;
             if (!Directory.Exists(CurrentLogDirectory))
@@ -45,8 +45,6 @@ static Log()
                 Layout = layout
             };
 
-
-
             configuration.AddTarget("file", fileTargetASyncWrapper);
             configuration.AddTarget("debug", debugTarget);
 
@@ -71,9 +69,9 @@ static Log()
 
             var nlogLevel = level switch
             {
-                LOGLEVEL.None => LogLevel.Off,
-                LOGLEVEL.Error => LogLevel.Error,
-                LOGLEVEL.Debug => LogLevel.Debug,
+                LOGLEVEL.NONE => LogLevel.Off,
+                LOGLEVEL.ERROR => LogLevel.Error,
+                LOGLEVEL.DEBUG => LogLevel.Debug,
                 _ => LogLevel.Info
             };
 
@@ -167,9 +165,9 @@ static Log()
 
     public enum LOGLEVEL
     {
-        None,
-        Error,
-        Info,
-        Debug
+        NONE,
+        ERROR,
+        INFO,
+        DEBUG
     }
 }

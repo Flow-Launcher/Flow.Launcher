@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 using System.Windows;
@@ -340,7 +340,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public DialogJumpFileResultBehaviours DialogJumpFileResultBehaviour { get; set; } = DialogJumpFileResultBehaviours.FullPath;
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public LOGLEVEL LogLevel { get; set; } = LOGLEVEL.Info;
+        public LOGLEVEL LogLevel { get; set; } = LOGLEVEL.INFO;
 
         /// <summary>
         /// when false Alphabet static service will always return empty results

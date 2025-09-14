@@ -459,13 +459,13 @@
     <system:String x:Key="welcomewindow">Wizard</system:String>
     <system:String x:Key="userdatapath">User Data Location</system:String>
     <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
-<system:String x:Key="userdatapathButton">Open Folder</system:String>
+    <system:String x:Key="userdatapathButton">Open Folder</system:String>
     <system:String x:Key="advanced">Advanced</system:String>
     <system:String x:Key="logLevel">Log Level</system:String>
-    <system:String x:Key="LogLevelNone">None</system:String>
-    <system:String x:Key="LogLevelError">Error</system:String>
-    <system:String x:Key="LogLevelInfo">Info</system:String>
-    <system:String x:Key="LogLevelDebug">Debug</system:String>
+    <system:String x:Key="LogLevelNONE">Silent</system:String>
+    <system:String x:Key="LogLevelERROR">Error</system:String>
+    <system:String x:Key="LogLevelINFO">Info</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="settingWindowFontTitle">Setting Window Font</system:String>
 
     <!--  Release Notes Window  -->
