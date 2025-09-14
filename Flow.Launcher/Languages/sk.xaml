@@ -468,7 +468,7 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="userdatapathButton">Otvoriť priečinok</system:String>
     <system:String x:Key="advanced">Rozšírené</system:String>
     <system:String x:Key="logLevel">Úroveň logovania</system:String>
-    <system:String x:Key="LogLevelNONE">Silent</system:String>
+    <system:String x:Key="LogLevelNONE">Žiadne</system:String>
     <system:String x:Key="LogLevelERROR">Chyba</system:String>
     <system:String x:Key="LogLevelINFO">Info</system:String>
     <system:String x:Key="LogLevelDEBUG">Debug</system:String>
