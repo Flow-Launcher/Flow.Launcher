@@ -468,8 +468,10 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="userdatapathButton">Otvoriť priečinok</system:String>
     <system:String x:Key="advanced">Rozšírené</system:String>
     <system:String x:Key="logLevel">Úroveň logovania</system:String>
-    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelNONE">Silent</system:String>
+    <system:String x:Key="LogLevelERROR">Chyba</system:String>
     <system:String x:Key="LogLevelINFO">Info</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="settingWindowFontTitle">Nastavenie písma okna</system:String>
 
     <!--  Release Notes Window  -->
