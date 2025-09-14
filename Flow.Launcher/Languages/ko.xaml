@@ -458,8 +458,10 @@
     <system:String x:Key="userdatapathButton">폴더 열기</system:String>
     <system:String x:Key="advanced">Advanced</system:String>
     <system:String x:Key="logLevel">로그 레벨</system:String>
-    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelNONE">Silent</system:String>
+    <system:String x:Key="LogLevelERROR">Error</system:String>
     <system:String x:Key="LogLevelINFO">Info</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="settingWindowFontTitle">설정창 글꼴</system:String>
 
     <!--  Release Notes Window  -->
