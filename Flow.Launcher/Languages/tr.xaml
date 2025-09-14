@@ -467,8 +467,10 @@
     <system:String x:Key="userdatapathButton">Klasörü Aç</system:String>
     <system:String x:Key="advanced">Gelişmiş</system:String>
     <system:String x:Key="logLevel">Günlük Düzeyi</system:String>
-    <system:String x:Key="LogLevelDEBUG">Hata ayıklama</system:String>
+    <system:String x:Key="LogLevelNONE">Silent</system:String>
+    <system:String x:Key="LogLevelERROR">Hata</system:String>
     <system:String x:Key="LogLevelINFO">Bilgi</system:String>
+    <system:String x:Key="LogLevelDEBUG">Hata ayıklama</system:String>
     <system:String x:Key="settingWindowFontTitle">Pencere Yazı Tipini Ayarla</system:String>
 
     <!--  Release Notes Window  -->
