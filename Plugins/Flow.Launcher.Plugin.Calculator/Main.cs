@@ -212,17 +212,8 @@ namespace Flow.Launcher.Plugin.Calculator
                         var parts = processedStr.Split('.');
                         if (parts.Length > 1)
                         {
-                            bool isGrouped = true;
-                            for (var i = 1; i < parts.Length; i++)
-                            {
-                                if (parts[i].Length != 3)
-                                {
-                                    isGrouped = false;
-                                    break;
-                                }
-                            }
-
-                            if (isGrouped)
+                            var culture = CultureInfo.CurrentCulture;
+                            if (IsValidGrouping(parts, culture.NumberFormat.NumberGroupSizes))
                             {
                                 processedStr = processedStr.Replace(groupSep, "");
                             }
@@ -299,7 +290,6 @@ namespace Flow.Launcher.Plugin.Calculator
 
             return true;
         }
-
 
         private string FormatResult(decimal roundedResult)
         {
