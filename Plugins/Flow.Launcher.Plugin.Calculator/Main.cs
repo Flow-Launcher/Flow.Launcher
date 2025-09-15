@@ -79,6 +79,7 @@ namespace Flow.Launcher.Plugin.Calculator
 
                 if (result == null || string.IsNullOrEmpty(result.ToString()))
                 {
+                    if (!_settings.ShowErrorMessage) return EmptyResults;
                     return new List<Result>
                     {
                         new Result
@@ -90,10 +91,14 @@ namespace Flow.Launcher.Plugin.Calculator
                 }
 
                 if (result.ToString() == "NaN")
+                {
                     result = Localize.flowlauncher_plugin_calculator_not_a_number();
+                }
 
                 if (result is Function)
+                {
                     result = Localize.flowlauncher_plugin_calculator_expression_not_complete();
+                }
 
                 if (!string.IsNullOrEmpty(result.ToString()))
                 {
@@ -129,6 +134,7 @@ namespace Flow.Launcher.Plugin.Calculator
             catch (Exception)
             {
                 // Mages engine can throw various exceptions, for simplicity we catch them all and show a generic message.
+                if (!_settings.ShowErrorMessage) return EmptyResults;
                 return new List<Result>
                 {
                     new Result

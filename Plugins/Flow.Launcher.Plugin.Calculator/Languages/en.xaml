@@ -15,4 +15,5 @@
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_dot">Dot (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">Max. decimal places</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Copy failed, please try later</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_show_error_message">Show error message when calculation fails</system:String>
 </ResourceDictionary>
