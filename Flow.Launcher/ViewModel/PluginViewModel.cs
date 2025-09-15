@@ -131,10 +131,44 @@ namespace Flow.Launcher.ViewModel
             => IsExpanded
                 ? _settingControl
                     ??= HasSettingControl
-                        ? ((ISettingProvider)PluginPair.Plugin).CreateSettingPanel()
+                        ? TryCreateSettingPanel(PluginPair)
                         : null
                 : null;
         private ImageSource _image = ImageLoader.MissingImage;
+
+        private static readonly Thickness SettingPanelMargin = (Thickness)Application.Current.FindResource("SettingPanelMargin");
+        private static readonly Thickness SettingPanelItemTopBottomMargin = (Thickness)Application.Current.FindResource("SettingPanelItemTopBottomMargin");
+        private static Control TryCreateSettingPanel(PluginPair pair)
+        {
+            try
+            {
+                // We can safely cast here as we already check this in HasSettingControl
+                return ((ISettingProvider)pair.Plugin).CreateSettingPanel();
+            }
+            catch (System.Exception e)
+            {
+                var errorMsg = $"Error creating setting panel for plugin {pair.Metadata}\n{e.Message}";
+                var grid = new Grid()
+                {
+                    Margin = SettingPanelMargin
+                };
+                var textBox = new TextBox
+                {
+                    Text = errorMsg,
+                    IsReadOnly = true,
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    VerticalAlignment = VerticalAlignment.Top,
+                    TextWrapping = TextWrapping.Wrap,
+                    Margin = SettingPanelItemTopBottomMargin
+                };
+                textBox.SetResourceReference(TextBlock.ForegroundProperty, "Color04B");
+                grid.Children.Add(textBox);
+                return new UserControl
+                {
+                    Content = grid
+                };
+            }
+        }
 
         public Visibility ActionKeywordsVisibility => PluginPair.Metadata.HideActionKeywordPanel ?
             Visibility.Collapsed : Visibility.Visible;
