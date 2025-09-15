@@ -161,8 +161,7 @@ namespace Flow.Launcher.Core.Plugin
             var mainPanel = new Grid { Margin = SettingPanelMargin, VerticalAlignment = VerticalAlignment.Center };
             mainPanel.ColumnDefinitions.Add(new ColumnDefinition()
             {
-                Width = new GridLength(0, GridUnitType.Auto),
-                MaxWidth = MainGridColumn0MaxWidthRatio * 560 // 560 is the default available width
+                Width = new GridLength(0, GridUnitType.Auto)
             });
             mainPanel.ColumnDefinitions.Add(new ColumnDefinition()
             {
