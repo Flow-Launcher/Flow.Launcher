@@ -519,9 +519,6 @@ namespace Flow.Launcher.Core.Plugin
             {
                 if (child is FrameworkElement element && Grid.GetColumn(element) == 0 && Grid.GetColumnSpan(element) == 1)
                 {
-                    if (element.MaxWidth < constrainedWidth)
-                        continue;
-
                     element.MaxWidth = constrainedWidth;
                 }
             }
