@@ -15,6 +15,8 @@ namespace Flow.Launcher.ViewModel
 {
     public partial class PluginViewModel : BaseModel
     {
+        private static readonly string ClassName = nameof(PluginViewModel);
+
         private static readonly Settings Settings = Ioc.Default.GetRequiredService<Settings>();
 
         private readonly PluginPair _pluginPair;
@@ -148,6 +150,10 @@ namespace Flow.Launcher.ViewModel
             }
             catch (Exception e)
             {
+                // Log exception
+                App.API.LogException(ClassName, $"Failed to create setting panel for {pair.Metadata.Name}", e);
+
+                // Show error message in UI
                 var errorMsg = string.Format(App.API.GetTranslation("errorCreatingSettingPanel"),
                     pair.Metadata.Name, Environment.NewLine, e.Message);
                 var grid = new Grid()
