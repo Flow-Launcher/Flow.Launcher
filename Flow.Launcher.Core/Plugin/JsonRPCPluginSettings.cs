@@ -27,6 +27,7 @@ namespace Flow.Launcher.Core.Plugin
 
         private JsonStorage<ConcurrentDictionary<string, object?>> _storage = null!;
 
+        private static readonly double MainGridColumn0MaxWidthRatio = 0.6;
         private static readonly Thickness SettingPanelMargin = (Thickness)Application.Current.FindResource("SettingPanelMargin");
         private static readonly Thickness SettingPanelItemLeftMargin = (Thickness)Application.Current.FindResource("SettingPanelItemLeftMargin");
         private static readonly Thickness SettingPanelItemTopBottomMargin = (Thickness)Application.Current.FindResource("SettingPanelItemTopBottomMargin");
@@ -156,11 +157,12 @@ namespace Flow.Launcher.Core.Plugin
         {
             if (!NeedCreateSettingPanel()) return null!;
 
-            // Create main grid with two columns (Column 1: Auto, Column 2: *)
+            // Create main grid with two columns (Column 0: Auto, Column 1: *)
             var mainPanel = new Grid { Margin = SettingPanelMargin, VerticalAlignment = VerticalAlignment.Center };
             mainPanel.ColumnDefinitions.Add(new ColumnDefinition()
             {
-                Width = new GridLength(0, GridUnitType.Auto)
+                Width = new GridLength(0, GridUnitType.Auto),
+                MaxWidth = MainGridColumn0MaxWidthRatio * 560 // 560 is the default available width
             });
             mainPanel.ColumnDefinitions.Add(new ColumnDefinition()
             {
@@ -488,11 +490,25 @@ namespace Flow.Launcher.Core.Plugin
                 rowCount++;
             }
 
+            mainPanel.SizeChanged += MainPanel_SizeChanged;
+
             // Wrap the main grid in a user control
             return new UserControl()
             {
                 Content = mainPanel
             };
+        }
+
+        private void MainPanel_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (sender is not Grid grid) return;
+
+            var workingWidth =
+                (int)(grid.ActualWidth - SystemParameters.VerticalScrollBarWidth); // take into account vertical scrollbar
+
+            if (workingWidth <= 0) return;
+
+            grid.ColumnDefinitions[0].MaxWidth = MainGridColumn0MaxWidthRatio * workingWidth;
         }
 
         private static bool NeedSaveInSettings(string type)
