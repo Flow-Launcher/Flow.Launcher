@@ -512,8 +512,8 @@ namespace Flow.Launcher.Core.Plugin
 
             var constrainedWidth = MainGridColumn0MaxWidthRatio * workingWidth;
 
-            // Set MaxWidth of column 0 and its childrens
-            // We must set MaxWidth of its childrens to make text wrapping work correctly
+            // Set MaxWidth of column 0 and its children
+            // We must set MaxWidth of its children to make text wrapping work correctly
             grid.ColumnDefinitions[0].MaxWidth = constrainedWidth;
             foreach (var child in grid.Children)
             {
