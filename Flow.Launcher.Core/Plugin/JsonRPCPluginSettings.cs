@@ -202,7 +202,7 @@ namespace Flow.Launcher.Core.Plugin
                     {
                         Text = attributes.Label,
                         VerticalAlignment = VerticalAlignment.Center,
-                        TextWrapping = TextWrapping.WrapWithOverflow
+                        TextWrapping = TextWrapping.Wrap
                     };
 
                     // Create a text block for description
@@ -213,7 +213,7 @@ namespace Flow.Launcher.Core.Plugin
                         {
                             Text = attributes.Description,
                             VerticalAlignment = VerticalAlignment.Center,
-                            TextWrapping = TextWrapping.WrapWithOverflow
+                            TextWrapping = TextWrapping.Wrap
                         };
 
                         desc.SetResourceReference(TextBlock.StyleProperty, "SettingPanelTextBlockDescriptionStyle"); // for theme change
@@ -249,7 +249,8 @@ namespace Flow.Launcher.Core.Plugin
                                 VerticalAlignment = VerticalAlignment.Center,
                                 Margin = SettingPanelItemLeftTopBottomMargin,
                                 Text = Settings[attributes.Name] as string ?? string.Empty,
-                                ToolTip = attributes.Description
+                                ToolTip = attributes.Description,
+                                TextWrapping = TextWrapping.Wrap
                             };
 
                             textBox.TextChanged += (_, _) =>
@@ -271,7 +272,8 @@ namespace Flow.Launcher.Core.Plugin
                                 VerticalAlignment = VerticalAlignment.Center,
                                 Margin = SettingPanelItemLeftMargin,
                                 Text = Settings[attributes.Name] as string ?? string.Empty,
-                                ToolTip = attributes.Description
+                                ToolTip = attributes.Description,
+                                TextWrapping = TextWrapping.Wrap
                             };
 
                             textBox.TextChanged += (_, _) =>
@@ -335,7 +337,7 @@ namespace Flow.Launcher.Core.Plugin
                                 HorizontalAlignment = HorizontalAlignment.Stretch,
                                 VerticalAlignment = VerticalAlignment.Center,
                                 Margin = SettingPanelItemLeftTopBottomMargin,
-                                TextWrapping = TextWrapping.WrapWithOverflow,
+                                TextWrapping = TextWrapping.Wrap,
                                 AcceptsReturn = true,
                                 Text = Settings[attributes.Name] as string ?? string.Empty,
                                 ToolTip = attributes.Description
@@ -508,7 +510,21 @@ namespace Flow.Launcher.Core.Plugin
 
             if (workingWidth <= 0) return;
 
-            grid.ColumnDefinitions[0].MaxWidth = MainGridColumn0MaxWidthRatio * workingWidth;
+            var constrainedWidth = MainGridColumn0MaxWidthRatio * workingWidth;
+
+            // Set MaxWidth of column 0 and its childrens
+            // We must set MaxWidth of its childrens to make text wrapping work correctly
+            grid.ColumnDefinitions[0].MaxWidth = constrainedWidth;
+            foreach (var child in grid.Children)
+            {
+                if (child is FrameworkElement element && Grid.GetColumn(element) == 0 && Grid.GetColumnSpan(element) == 1)
+                {
+                    if (element.MaxWidth < constrainedWidth)
+                        continue;
+
+                    element.MaxWidth = constrainedWidth;
+                }
+            }
         }
 
         private static bool NeedSaveInSettings(string type)
