@@ -5,7 +5,7 @@ namespace Flow.Launcher.Plugin.Calculator.ViewModels;
 
 public class SettingsViewModel(Settings settings) : BaseModel
 {
-    public Settings Settings { get; init; } = settings;
+    public Settings Settings { get; } = settings;
 
     public static IEnumerable<int> MaxDecimalPlacesRange => Enumerable.Range(1, 20);
 
