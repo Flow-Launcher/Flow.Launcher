@@ -447,7 +447,6 @@ namespace Flow.Launcher.Plugin.Program
                 var program = _win32s.First(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier);
                 program.Enabled = false;
                 _settings.DisabledProgramSources.Add(new ProgramSource(program));
-                _win32sLock.Release();
             }
             finally
             {
