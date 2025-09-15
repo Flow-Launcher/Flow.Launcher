@@ -22,6 +22,7 @@ namespace Flow.Launcher.Plugin.Calculator
         private const string Comma = ",";
         private const string Dot = ".";
         private const string IcoPath = "Images/calculator.png";
+        private static readonly List<Result> EmptyResults = [];
 
         internal static PluginInitContext Context { get; set; } = null!;
 
@@ -47,7 +48,7 @@ namespace Flow.Launcher.Plugin.Calculator
         {
             if (string.IsNullOrWhiteSpace(query.Search))
             {
-                return new List<Result>();
+                return EmptyResults;
             }
 
             try
@@ -138,7 +139,7 @@ namespace Flow.Launcher.Plugin.Calculator
                 };
             }
 
-            return new List<Result>();
+            return EmptyResults;
         }
 
         private static string PowMatchEvaluator(Match m)
