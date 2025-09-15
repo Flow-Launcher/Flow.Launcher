@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -145,9 +146,10 @@ namespace Flow.Launcher.ViewModel
                 // We can safely cast here as we already check this in HasSettingControl
                 return ((ISettingProvider)pair.Plugin).CreateSettingPanel();
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                var errorMsg = $"Error creating setting panel for plugin {pair.Metadata}\n{e.Message}";
+                var errorMsg = string.Format(App.API.GetTranslation("errorCreatingSettingPanel"),
+                    pair.Metadata.Name, Environment.NewLine, e.Message);
                 var grid = new Grid()
                 {
                     Margin = SettingPanelMargin
