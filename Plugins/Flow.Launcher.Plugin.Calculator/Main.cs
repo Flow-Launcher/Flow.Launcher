@@ -181,8 +181,8 @@ namespace Flow.Launcher.Plugin.Calculator
                 return m.Value;
             }
 
-            var arg1 = argsContent.Substring(0, splitIndex).Trim();
-            var arg2 = argsContent.Substring(splitIndex + 1).Trim();
+            var arg1 = argsContent[..splitIndex].Trim();
+            var arg2 = argsContent[(splitIndex + 1)..].Trim();
 
             // Check for empty arguments which can happen with stray commas, e.g., pow(,5)
             if (string.IsNullOrEmpty(arg1) || string.IsNullOrEmpty(arg2))
@@ -259,7 +259,7 @@ namespace Flow.Launcher.Plugin.Calculator
                 return false; // has groups, but culture defines none.
 
             var firstPart = parts[0];
-            if (firstPart.StartsWith("-")) firstPart = firstPart.Substring(1);
+            if (firstPart.StartsWith('-')) firstPart = firstPart[1..];
             if (firstPart.Length == 0) return false; // e.g. ",123"
 
             if (firstPart.Length > groupSizes[0]) return false;
