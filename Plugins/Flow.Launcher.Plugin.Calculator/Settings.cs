@@ -1,12 +1,11 @@
 ﻿
-namespace Flow.Launcher.Plugin.Calculator
+namespace Flow.Launcher.Plugin.Calculator;
+
+public class Settings
 {
-    public class Settings
-    {
-        public DecimalSeparator DecimalSeparator { get; set; } = DecimalSeparator.UseSystemLocale;
+    public DecimalSeparator DecimalSeparator { get; set; } = DecimalSeparator.UseSystemLocale;
 
-        public int MaxDecimalPlaces { get; set; } = 10;
+    public int MaxDecimalPlaces { get; set; } = 10;
 
-        public bool ShowErrorMessage { get; set; } = false;
-    }
+    public bool ShowErrorMessage { get; set; } = false;
 }

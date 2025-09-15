@@ -80,14 +80,14 @@ namespace Flow.Launcher.Plugin.Calculator
                 if (result == null || string.IsNullOrEmpty(result.ToString()))
                 {
                     if (!_settings.ShowErrorMessage) return EmptyResults;
-                    return new List<Result>
-                    {
+                    return
+                    [
                         new Result
                         {
                             Title = Localize.flowlauncher_plugin_calculator_expression_not_complete(),
                             IcoPath = IcoPath
                         }
-                    };
+                    ];
                 }
 
                 if (result.ToString() == "NaN")
@@ -105,8 +105,8 @@ namespace Flow.Launcher.Plugin.Calculator
                     decimal roundedResult = Math.Round(Convert.ToDecimal(result), _settings.MaxDecimalPlaces, MidpointRounding.AwayFromZero);
                     string newResult = FormatResult(roundedResult);
 
-                    return new List<Result>
-                    {
+                    return
+                    [
                         new Result
                         {
                             Title = newResult,
@@ -128,21 +128,21 @@ namespace Flow.Launcher.Plugin.Calculator
                                 }
                             }
                         }
-                    };
+                    ];
                 }
             }
             catch (Exception)
             {
                 // Mages engine can throw various exceptions, for simplicity we catch them all and show a generic message.
                 if (!_settings.ShowErrorMessage) return EmptyResults;
-                return new List<Result>
-                {
+                return
+                [
                     new Result
                     {
                         Title = Localize.flowlauncher_plugin_calculator_expression_not_complete(),
                         IcoPath = IcoPath
                     }
-                };
+                ];
             }
 
             return EmptyResults;
@@ -153,7 +153,7 @@ namespace Flow.Launcher.Plugin.Calculator
             // m.Groups[1].Value will be `(...)` with parens
             var contentWithParen = m.Groups[1].Value;
             // remove outer parens. `(min(2,3), 4)` becomes `min(2,3), 4`
-            var argsContent = contentWithParen.Substring(1, contentWithParen.Length - 2);
+            var argsContent = contentWithParen[1..^1];
 
             var bracketCount = 0;
             var splitIndex = -1;
