@@ -504,8 +504,7 @@ namespace Flow.Launcher.Core.Plugin
         {
             if (sender is not Grid grid) return;
 
-            var workingWidth =
-                (int)(grid.ActualWidth - SystemParameters.VerticalScrollBarWidth); // take into account vertical scrollbar
+            var workingWidth = grid.ActualWidth;
 
             if (workingWidth <= 0) return;
 
