@@ -5,7 +5,7 @@ namespace Flow.Launcher.Plugin.Url;
 
 public partial class SettingsControl : UserControl
 {
-    public Settings Settings => Main.Settings;
+    public Settings Settings { get; } = Main.Settings;
 
     public SettingsControl()
     {
