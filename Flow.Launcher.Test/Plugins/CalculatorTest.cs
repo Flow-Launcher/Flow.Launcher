@@ -12,6 +12,19 @@ namespace Flow.Launcher.Test.Plugins
     public class CalculatorPluginTest
     {
         private readonly Main _plugin;
+        private readonly Settings _settings = new()
+        {
+            DecimalSeparator = DecimalSeparator.UseSystemLocale,
+            MaxDecimalPlaces = 10,
+            ShowErrorMessage = false // Make sure we return the empty results when error occurs
+        };
+        private readonly Engine _engine = new(new Configuration
+        {
+            Scope = new Dictionary<string, object>
+                {
+                    { "e", Math.E }, // e is not contained in the default mages engine
+                }
+        });
 
         public CalculatorPluginTest()
         {
@@ -20,21 +33,12 @@ namespace Flow.Launcher.Test.Plugins
             var settingField = typeof(Main).GetField("_settings", BindingFlags.NonPublic | BindingFlags.Instance);
             if (settingField == null)
                 Assert.Fail("Could not find field '_settings' on Flow.Launcher.Plugin.Calculator.Main");
-            settingField.SetValue(_plugin, new Settings
-            {
-                ShowErrorMessage = false // Make sure we return the empty results when error occurs
-            });
+            settingField.SetValue(_plugin, _settings);
 
             var engineField = typeof(Main).GetField("MagesEngine", BindingFlags.NonPublic | BindingFlags.Static);
             if (engineField == null)
                 Assert.Fail("Could not find static field 'MagesEngine' on Flow.Launcher.Plugin.Calculator.Main");
-            engineField.SetValue(null, new Engine(new Configuration
-            {
-                Scope = new Dictionary<string, object>
-                {
-                    { "e", Math.E }, // e is not contained in the default mages engine
-                }
-            }));
+            engineField.SetValue(null, _engine);
         }
 
         // Basic operations
