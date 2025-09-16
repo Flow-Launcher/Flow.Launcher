@@ -213,7 +213,7 @@
                                 Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer,
                                                                               TypeInTargetAssembly={x:Type FrameworkElement}}}">
                                 <ItemsPresenter
-                                    KeyboardNavigation.DirectionalNavigation="None"
+                                    KeyboardNavigation.DirectionalNavigation="Cycle"
                                     KeyboardNavigation.TabNavigation="None"
                                     RenderOptions.ClearTypeHint="Enabled"
                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
@@ -243,8 +243,6 @@
         <Setter Property="Padding" Value="{DynamicResource MenuFlyoutItemThemePadding}" />
         <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="KeyboardNavigation.IsTabStop" Value="False" />
         <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="ScrollViewer.PanningMode" Value="Both" />
