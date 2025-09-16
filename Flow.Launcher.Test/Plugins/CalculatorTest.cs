@@ -53,10 +53,12 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase(@"min(1,-1,-2)", "-2")]
         [TestCase(@"max(1,-1,-2)", "1")]
         [TestCase(@"sqrt(16)", "4")]
-        [TestCase(@"sin(pi)", "0")]
+        [TestCase(@"sin(pi)", "0.0000000000")]
         [TestCase(@"cos(0)", "1")]
         [TestCase(@"tan(0)", "0")]
+        [TestCase(@"log10(100)", "2")]
         [TestCase(@"log(100)", "2")]
+        [TestCase(@"log2(8)", "3")]
         [TestCase(@"ln(e)", "1")]
         [TestCase(@"abs(-5)", "5")]
         // Constants

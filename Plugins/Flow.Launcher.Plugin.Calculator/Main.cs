@@ -16,6 +16,8 @@ namespace Flow.Launcher.Plugin.Calculator
         private static readonly Regex ThousandGroupRegex = MainRegexHelper.GetThousandGroupRegex();
         private static readonly Regex NumberRegex = MainRegexHelper.GetNumberRegex();
         private static readonly Regex PowRegex = MainRegexHelper.GetPowRegex();
+        private static readonly Regex LogRegex = MainRegexHelper.GetLogRegex();
+        private static readonly Regex LnRegex = MainRegexHelper.GetLnRegex();
         private static readonly Regex FunctionRegex = MainRegexHelper.GetFunctionRegex();
 
         private static Engine MagesEngine;
@@ -67,12 +69,36 @@ namespace Flow.Launcher.Plugin.Calculator
                 // https://github.com/FlorianRappl/Mages/issues/132
                 // We bypass it by rewriting any pow(x,y) expression to the equivalent (x^y) expression
                 // before the engine sees it. This loop handles nested calls.
-                string previous;
-                do
                 {
-                    previous = expression;
-                    expression = PowRegex.Replace(previous, PowMatchEvaluator);
-                } while (previous != expression);
+                    string previous;
+                    do
+                    {
+                        previous = expression;
+                        expression = PowRegex.Replace(previous, PowMatchEvaluator);
+                    } while (previous != expression);
+                }
+                // WORKAROUND END
+
+                // WORKAROUND START: The 'log' & 'ln' function in Mages v3.0.0 are broken.
+                // https://github.com/FlorianRappl/Mages/issues/137
+                // We bypass it by rewriting any log & ln expression to the equivalent (log10 & log) expression
+                // before the engine sees it. This loop handles nested calls.
+                {
+                    string previous;
+                    do
+                    {
+                        previous = expression;
+                        expression = LogRegex.Replace(previous, LogMatchEvaluator);
+                    } while (previous != expression);
+                }
+                {
+                    string previous;
+                    do
+                    {
+                        previous = expression;
+                        expression = LnRegex.Replace(previous, LnMatchEvaluator);
+                    } while (previous != expression);
+                }
                 // WORKAROUND END
 
                 var result = MagesEngine.Interpret(expression);
@@ -200,6 +226,33 @@ namespace Flow.Launcher.Plugin.Calculator
             return $"({arg1}^{arg2})";
         }
 
+        private static string LogMatchEvaluator(Match m)
+        {
+            // m.Groups[1].Value will be `(...)` with parens
+            var contentWithParen = m.Groups[1].Value;
+            var argsContent = contentWithParen[1..^1];
+
+            // log is unary — if malformed, return original to let Mages handle it
+            var arg = argsContent.Trim();
+            if (string.IsNullOrEmpty(arg)) return m.Value;
+
+            // log(x) -> log10(x)   (natural log)
+            return $"(log10({arg}))";
+        }
+
+        private static string LnMatchEvaluator(Match m)
+        {
+            // m.Groups[1].Value will be `(...)` with parens
+            var contentWithParen = m.Groups[1].Value;
+            var argsContent = contentWithParen[1..^1];
+
+            // ln is unary — if malformed, return original to let Mages handle it
+            var arg = argsContent.Trim();
+            if (string.IsNullOrEmpty(arg)) return m.Value;
+
+            // ln(x) -> log(x)   (natural log)
+            return $"(log({arg}))";
+        }
         private static string NormalizeNumber(string numberStr, bool isFunctionPresent, string decimalSep, string groupSep)
         {
             if (isFunctionPresent)
