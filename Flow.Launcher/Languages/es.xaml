@@ -24,8 +24,8 @@
     <system:String x:Key="userDataDuplicated">Flow Launcher ha detectado que los datos de usario existen tanto en {0} como en {1}. {2}{2}Por favor, elimine {1} para continuar. No se han producido cambios.</system:String>
 
     <!--  Plugin Loader  -->
-    <system:String x:Key="pluginHasErrored">El siguiente complemento ha sufrido un error y no puede cargarse:</system:String>
-    <system:String x:Key="pluginsHaveErrored">Los siguientes complementos han sufrido un error y no pueden cargarse:</system:String>
+    <system:String x:Key="pluginHasErrored">El siguiente complemento ha sufrido un fallo y no se puede cargar:</system:String>
+    <system:String x:Key="pluginsHaveErrored">Los siguientes complementos han sufrido un fallo y no se pueden cargar:</system:String>
     <system:String x:Key="referToLogs">Por favor, consulte los registros para más información</system:String>
 
     <!--  Http  -->
@@ -395,7 +395,7 @@
     <system:String x:Key="showBadges">Mostrar distintivos en resultados</system:String>
     <system:String x:Key="showBadgesToolTip">Para los complementos compatibles, se muestran distintivos que ayudan a distinguirlos más fácilmente.</system:String>
     <system:String x:Key="showBadgesGlobalOnly">Mostrar distintivos en resultados solo para consulta global</system:String>
-    <system:String x:Key="showBadgesGlobalOnlyToolTip">Mostrar distintivos solo para los resultados de consultas globales</system:String>
+    <system:String x:Key="showBadgesGlobalOnlyToolTip">Muestra distintivos solo para los resultados de consultas globales</system:String>
     <system:String x:Key="dialogJumpHotkey">Salto de diálogo</system:String>
     <system:String x:Key="dialogJumpHotkeyToolTip">Introducir atajo de teclado para acceder rápidamente a la ventana de diálogo Abrir/Guardar como en la ruta del administrador de archivos actual.</system:String>
     <system:String x:Key="dialogJump">Salto de diálogo</system:String>
