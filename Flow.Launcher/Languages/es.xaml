@@ -467,7 +467,7 @@
     <system:String x:Key="userdatapathButton">Abrir carpeta</system:String>
     <system:String x:Key="advanced">Avanzado</system:String>
     <system:String x:Key="logLevel">Nivel de registro</system:String>
-    <system:String x:Key="LogLevelNONE">Silent</system:String>
+    <system:String x:Key="LogLevelNONE">Silencioso</system:String>
     <system:String x:Key="LogLevelERROR">Error</system:String>
     <system:String x:Key="LogLevelINFO">Información</system:String>
     <system:String x:Key="LogLevelDEBUG">Depuración</system:String>
