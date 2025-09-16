@@ -112,7 +112,8 @@ namespace Flow.Launcher.Plugin.Calculator
                             Title = newResult,
                             IcoPath = IcoPath,
                             Score = 300,
-                            SubTitle = Localize.flowlauncher_plugin_calculator_copy_number_to_clipboard(),
+                            // Check context nullability for unit testing
+                            SubTitle = Context == null ? string.Empty : Localize.flowlauncher_plugin_calculator_copy_number_to_clipboard(),
                             CopyText = newResult,
                             Action = c =>
                             {
