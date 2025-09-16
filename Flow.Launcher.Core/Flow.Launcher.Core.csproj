@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net9.0-windows</TargetFramework>
@@ -56,10 +56,11 @@
   <ItemGroup>
     <PackageReference Include="Droplex" Version="1.7.0" />
     <PackageReference Include="FSharp.Core" Version="9.0.303" />
-    <PackageReference Include="Meziantou.Framework.Win32.Jobs" Version="3.4.4" />
+    <PackageReference Include="Meziantou.Framework.Win32.Jobs" Version="3.4.5" />
     <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />
     <PackageReference Include="SemanticVersioning" Version="3.0.0" />
-    <PackageReference Include="squirrel.windows" Version="1.5.2" NoWarn="NU1701" />
+    <!-- Do not upgrade this to higher version since higher version removes UpdateManager instance -->
+    <PackageReference Include="squirrel.windows" Version="1.9.0" NoWarn="NU1701" />
     <PackageReference Include="StreamJsonRpc" Version="2.22.11" />
   </ItemGroup>
   
