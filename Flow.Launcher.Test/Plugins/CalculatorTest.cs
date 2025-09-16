@@ -64,7 +64,7 @@ namespace Flow.Launcher.Test.Plugins
         // Constants
         [TestCase(@"pi", "3.1415926536")]
         // Complex expressions
-        [TestCase(@"(2+3)*sqrt(16)-log(100)/ln(e)", "19")]
+        [TestCase(@"(2+3)*sqrt(16)-log(100)/ln(e)", "18")]
         [TestCase(@"sin(pi/2)+cos(0)+tan(0)", "2")]
         // Error handling (should return empty result)
         [TestCase(@"10/0", "")]
