@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -16,7 +17,7 @@ public static class WallpaperPathRetrieval
 
     private const int MaxCacheSize = 3;
     private static readonly Dictionary<(string, DateTime), ImageBrush> WallpaperCache = new();
-    private static readonly object CacheLock = new();
+    private static readonly Lock CacheLock = new();
 
     public static Brush GetWallpaperBrush()
     {
@@ -56,7 +57,7 @@ public static class WallpaperPathRetrieval
 
             if (originalWidth == 0 || originalHeight == 0)
             {
-                App.API.LogInfo(ClassName, $"Failed to load bitmap: Width={originalWidth}, Height={originalHeight}");
+                App.API.LogError(ClassName, $"Failed to load bitmap: Width={originalWidth}, Height={originalHeight}");
                 return new SolidColorBrush(Colors.Transparent);
             }
 
@@ -104,13 +105,13 @@ public static class WallpaperPathRetrieval
 
     private static Color GetWallpaperColor()
     {
-        RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Colors", false);
+        using var key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Colors", false);
         var result = key?.GetValue("Background", null);
         if (result is string strResult)
         {
             try
             {
-                var parts = strResult.Trim().Split(new[] { ' ' }, 3).Select(byte.Parse).ToList();
+                var parts = strResult.Trim().Split([' '], 3).Select(byte.Parse).ToList();
                 return Color.FromRgb(parts[0], parts[1], parts[2]);
             }
             catch (Exception ex)
