@@ -48,12 +48,15 @@ public static class WallpaperPathRetrieval
                     return cachedWallpaper;
                 }
             }
-            
-            using var fileStream = File.OpenRead(wallpaperPath);
-            var decoder = BitmapDecoder.Create(fileStream, BitmapCreateOptions.DelayCreation, BitmapCacheOption.None);
-            var frame = decoder.Frames[0];
-            var originalWidth = frame.PixelWidth;
-            var originalHeight = frame.PixelHeight;
+
+            int originalWidth, originalHeight;
+            using (var fileStream = File.OpenRead(wallpaperPath))
+            {
+                var decoder = BitmapDecoder.Create(fileStream, BitmapCreateOptions.DelayCreation, BitmapCacheOption.None);
+                var frame = decoder.Frames[0];
+                originalWidth = frame.PixelWidth;
+                originalHeight = frame.PixelHeight;
+            }
 
             if (originalWidth == 0 || originalHeight == 0)
             {
