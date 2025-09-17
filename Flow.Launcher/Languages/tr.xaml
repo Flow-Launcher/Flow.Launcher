@@ -405,14 +405,14 @@
     <system:String x:Key="showDialogJumpWindow">Diyalog Atlama Penceresini Göster</system:String>
     <system:String x:Key="showDialogJumpWindowToolTip">Dosya/klasör konumlarına hızlı erişim için aç/kaydet penceresi gösterildiğinde Diyalog Atlama arama penceresini görüntüle.</system:String>
     <system:String x:Key="dialogJumpWindowPosition">Diyalog Atlama Penceresi Konumu</system:String>
-    <system:String x:Key="dialogJumpWindowPositionToolTip">Select position for the Dialog Jump search window</system:String>
+    <system:String x:Key="dialogJumpWindowPositionToolTip">Diyalog Atlama arama penceresi için konum seçin</system:String>
     <system:String x:Key="DialogJumpWindowPositionUnderDialog">Farklı Aç/Kaydet iletişim penceresinin altında düzeltildi. Açıldığında görüntülenir ve pencere kapatılana kadar kalır</system:String>
     <system:String x:Key="DialogJumpWindowPositionFollowDefault">Varsayılan arama penceresi konumu. Arama penceresi kısayol tuşu tarafından tetiklendiğinde görüntülenir</system:String>
-    <system:String x:Key="dialogJumpResultBehaviour">Dialog Jump Result Navigation Behaviour</system:String>
+    <system:String x:Key="dialogJumpResultBehaviour">Diyalog Atlama Sonucu Gezinme Davranışı</system:String>
     <system:String x:Key="dialogJumpResultBehaviourToolTip">Farklı Aç/Kaydet iletişim penceresini seçilen sonuç yoluna yönlendirmek için davranış</system:String>
     <system:String x:Key="DialogJumpResultBehaviourLeftClick">Sol tık veya Enter tuşu</system:String>
     <system:String x:Key="DialogJumpResultBehaviourRightClick">Sağ tık</system:String>
-    <system:String x:Key="dialogJumpFileResultBehaviour">Dialog Jump File Navigation Behaviour</system:String>
+    <system:String x:Key="dialogJumpFileResultBehaviour">Dialog Jump Dosya Gezinme Davranışı</system:String>
     <system:String x:Key="dialogJumpFileResultBehaviourToolTip">Sonuç bir dosya yolu olduğunda Farklı Aç/Kaydet iletişim penceresinde gezinme davranışı</system:String>
     <system:String x:Key="DialogJumpFileResultBehaviourFullPath">Dosya adı kutusuna tam yolu girin</system:String>
     <system:String x:Key="DialogJumpFileResultBehaviourFullPathOpen">Dosya adı kutusuna tam yolu girin ve açın</system:String>
@@ -467,7 +467,7 @@
     <system:String x:Key="userdatapathButton">Klasörü Aç</system:String>
     <system:String x:Key="advanced">Gelişmiş</system:String>
     <system:String x:Key="logLevel">Günlük Düzeyi</system:String>
-    <system:String x:Key="LogLevelNONE">Silent</system:String>
+    <system:String x:Key="LogLevelNONE">Sessiz</system:String>
     <system:String x:Key="LogLevelERROR">Hata</system:String>
     <system:String x:Key="LogLevelINFO">Bilgi</system:String>
     <system:String x:Key="LogLevelDEBUG">Hata ayıklama</system:String>
