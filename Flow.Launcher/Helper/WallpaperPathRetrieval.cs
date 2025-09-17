@@ -32,7 +32,7 @@ public static class WallpaperPathRetrieval
             var wallpaperPath = Win32Helper.GetWallpaperPath();
             if (string.IsNullOrEmpty(wallpaperPath) || !File.Exists(wallpaperPath))
             {
-                App.API.LogInfo(ClassName, $"Wallpaper path is invalid: {wallpaperPath}");
+                App.API.LogError(ClassName, $"Wallpaper path is invalid: {wallpaperPath}");
                 var wallpaperColor = GetWallpaperColor();
                 return new SolidColorBrush(wallpaperColor);
             }
@@ -61,7 +61,8 @@ public static class WallpaperPathRetrieval
             if (originalWidth == 0 || originalHeight == 0)
             {
                 App.API.LogError(ClassName, $"Failed to load bitmap: Width={originalWidth}, Height={originalHeight}");
-                return new SolidColorBrush(Colors.Transparent);
+                var wallpaperColor = GetWallpaperColor();
+                return new SolidColorBrush(wallpaperColor);
             }
 
             // Calculate the scaling factor to fit the image within 800x600 while preserving aspect ratio
