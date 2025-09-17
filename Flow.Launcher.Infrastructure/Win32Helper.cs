@@ -152,7 +152,7 @@ namespace Flow.Launcher.Infrastructure
         }
 
         /// <summary>
-        /// Brings the app window to foreground. From https://github.com/files-community/Files.
+        /// Brings the window to foreground if window is visible. From https://github.com/files-community/Files.
         /// </summary>
         /// <remarks>
         /// For more information, visit
@@ -161,8 +161,7 @@ namespace Flow.Launcher.Infrastructure
         /// <br/>
         /// - <a href="https://stackoverflow.com/questions/916259/win32-bring-a-window-to-top" />
         /// </remarks>
-        /// <param name="hWnd">The window handle to bring.</param>
-        /// <param name="topMost">If true, the window will be set as topmost before bringing it to the foreground.</param>
+        /// <param name="window">The window to bring.</param>
         public static unsafe void BringToForegroundEx(Window window)
         {
             var hWnd = GetWindowHandle(window);
