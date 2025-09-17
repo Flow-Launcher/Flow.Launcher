@@ -50,6 +50,7 @@ public static class WallpaperPathRetrieval
             }
 
             int originalWidth, originalHeight;
+            // Use `using ()` instead of `using var` sentence here to ensure the wallpaper file is not locked
             using (var fileStream = File.OpenRead(wallpaperPath))
             {
                 var decoder = BitmapDecoder.Create(fileStream, BitmapCreateOptions.DelayCreation, BitmapCacheOption.None);
