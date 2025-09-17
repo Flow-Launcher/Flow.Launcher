@@ -87,3 +87,12 @@ EVENT_SYSTEM_DIALOGEND
 
 WM_POWERBROADCAST
 PBT_APMRESUMEAUTOMATIC
+
+SetForegroundWindow
+GetForegroundWindow
+GetCurrentThreadId
+GetWindowThreadProcessId
+AttachThreadInput
+SetWindowPos
+SetFocus
+SetActiveWindow

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -149,6 +149,41 @@ namespace Flow.Launcher.Infrastructure
         internal static bool IsForegroundWindow(HWND handle)
         {
             return handle.Equals(PInvoke.GetForegroundWindow());
+        }
+
+        /// <summary>
+        /// Brings the app window to foreground. From https://github.com/files-community/Files.
+        /// </summary>
+        /// <remarks>
+        /// For more information, visit
+        /// <br/>
+        /// - <a href="https://stackoverflow.com/questions/1544179/what-are-the-differences-between-bringwindowtotop-setforegroundwindow-setwindo" />
+        /// <br/>
+        /// - <a href="https://stackoverflow.com/questions/916259/win32-bring-a-window-to-top" />
+        /// </remarks>
+        /// <param name="hWnd">The window handle to bring.</param>
+        /// <param name="topMost">If true, the window will be set as topmost before bringing it to the foreground.</param>
+        public static unsafe void BringToForegroundEx(Window window)
+        {
+            var hWnd = GetWindowHandle(window);
+            var topMost = window.Topmost;
+            var hCurWnd = PInvoke.GetForegroundWindow();
+            var dwMyID = PInvoke.GetCurrentThreadId();
+            var dwCurID = PInvoke.GetWindowThreadProcessId(hCurWnd);
+
+            PInvoke.AttachThreadInput(dwCurID, dwMyID, true);
+
+            // Set the window to be the topmost window
+            PInvoke.SetWindowPos(hWnd, (HWND)(-1), 0, 0, 0, 0, SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOMOVE);
+            if (!topMost)
+            {
+                // Restore the window to its original position
+                PInvoke.SetWindowPos(hWnd, (HWND)(-2), 0, 0, 0, 0, SET_WINDOW_POS_FLAGS.SWP_SHOWWINDOW | SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOMOVE);
+            }
+            PInvoke.SetForegroundWindow(hWnd);
+            PInvoke.SetFocus(hWnd);
+            PInvoke.SetActiveWindow(hWnd);
+            PInvoke.AttachThreadInput(dwCurID, dwMyID, false);
         }
 
         #endregion

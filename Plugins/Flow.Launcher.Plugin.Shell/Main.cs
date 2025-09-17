@@ -412,7 +412,7 @@ namespace Flow.Launcher.Plugin.Shell
             _ = Task.Run(async () =>
             {
                 Context.API.ChangeQuery($"{Context.CurrentPluginMetadata.ActionKeywords[0]}{Plugin.Query.TermSeparator}");
-
+                
                 // Win+R is a system-reserved shortcut, and though the plugin intercepts the keyboard event and
                 // shows the main window, Windows continues to process the Win key and briefly reclaims focus.
                 // So we need to wait until the keyboard event processing is completed and then set focus

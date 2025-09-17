@@ -2249,6 +2249,7 @@ namespace Flow.Launcher.ViewModel
                 // When application is exiting, the Application.Current will be null
                 if (Application.Current?.MainWindow is MainWindow window)
                 {
+                    Win32Helper.BringToForegroundEx(window);
                     window.QueryTextBox.Focus();
                     Keyboard.Focus(window.QueryTextBox);
                 }
