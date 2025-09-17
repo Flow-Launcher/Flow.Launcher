@@ -76,7 +76,7 @@ public static class WallpaperPathRetrieval
             // Set DecodePixelWidth and DecodePixelHeight to resize the image while preserving aspect ratio
             var bitmap = new BitmapImage();
             bitmap.BeginInit();
-            bitmap.CacheOption = BitmapCacheOption.OnLoad;  // Use OnLoaded to ensure the wallpaper file is not locked
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;  // Use OnLoad to ensure the wallpaper file is not locked
             bitmap.UriSource = new Uri(wallpaperPath);
             bitmap.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
             bitmap.DecodePixelWidth = decodedPixelWidth;
