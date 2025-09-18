@@ -21,6 +21,8 @@ public partial class SelectFileManagerViewModel : BaseModel
         get => selectedCustomExplorerIndex;
         set
         {
+            // When one custom file manager is selected and removed, the index will become -1, so we need to ignore this change
+            if (value < 0) return;
             if (selectedCustomExplorerIndex != value)
             {
                 selectedCustomExplorerIndex = value;
@@ -98,27 +100,12 @@ public partial class SelectFileManagerViewModel : BaseModel
         }
     }
 
-    internal void OpenUrl(string absoluteUri)
-    {
-        App.API.OpenUrl(absoluteUri);
-    }
-
-    internal string SelectFile()
-    {
-        var dlg = new Microsoft.Win32.OpenFileDialog();
-        var result = dlg.ShowDialog();
-        if (result == true)
-            return dlg.FileName;
-
-        return string.Empty;
-    }
-
     [RelayCommand]
     private void Add()
     {
         CustomExplorers.Add(new()
         {
-            Name = "New Profile"
+            Name = App.API.GetTranslation("defaultBrowser_new_profile")
         });
         SelectedCustomExplorerIndex = CustomExplorers.Count - 1;
     }
