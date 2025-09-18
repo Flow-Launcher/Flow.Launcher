@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -256,6 +256,7 @@ namespace Flow.Launcher.Core.Resource
             foreach (var r in _oldResources)
             {
                 dicts.Remove(r);
+                _oldResources.Remove(r);
             }
         }
 
