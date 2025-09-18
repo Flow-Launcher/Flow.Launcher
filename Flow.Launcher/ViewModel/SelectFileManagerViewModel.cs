@@ -98,21 +98,6 @@ public partial class SelectFileManagerViewModel : BaseModel
         }
     }
 
-    internal void OpenUrl(string absoluteUri)
-    {
-        App.API.OpenUrl(absoluteUri);
-    }
-
-    internal string SelectFile()
-    {
-        var dlg = new Microsoft.Win32.OpenFileDialog();
-        var result = dlg.ShowDialog();
-        if (result == true)
-            return dlg.FileName;
-
-        return string.Empty;
-    }
-
     [RelayCommand]
     private void Add()
     {

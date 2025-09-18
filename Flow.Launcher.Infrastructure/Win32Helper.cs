@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -901,6 +901,20 @@ namespace Flow.Launcher.Infrastructure
             {
                 // Ignore errors on unsupported OS
             }
+        }
+
+        #endregion
+
+        #region File / Folder Dialog
+
+        public static string SelectFile()
+        {
+            var dlg = new OpenFileDialog();
+            var result = dlg.ShowDialog();
+            if (result == true)
+                return dlg.FileName;
+
+            return string.Empty;
         }
 
         #endregion
