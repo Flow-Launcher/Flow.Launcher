@@ -17,6 +17,8 @@ public partial class SelectBrowserViewModel : BaseModel
         get => selectedCustomBrowserIndex;
         set
         {
+            // When one custom browser is selected and removed, the index will become -1, so we need to ignore this change
+            if (value < 0) return;
             if (selectedCustomBrowserIndex != value)
             {
                 selectedCustomBrowserIndex = value;

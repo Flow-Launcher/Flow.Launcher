@@ -21,6 +21,8 @@ public partial class SelectFileManagerViewModel : BaseModel
         get => selectedCustomExplorerIndex;
         set
         {
+            // When one custom file manager is selected and removed, the index will become -1, so we need to ignore this change
+            if (value < 0) return;
             if (selectedCustomExplorerIndex != value)
             {
                 selectedCustomExplorerIndex = value;
