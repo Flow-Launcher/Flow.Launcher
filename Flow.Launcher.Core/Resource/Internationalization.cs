@@ -14,7 +14,7 @@ using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core.Resource
 {
-    public class Internationalization
+    public class Internationalization : IDisposable
     {
         private static readonly string ClassName = nameof(Internationalization);
 
@@ -376,6 +376,16 @@ namespace Flow.Launcher.Core.Resource
                     API.LogException(ClassName, $"Failed for <{p.Metadata.Name}>", e);
                 }
             }
+        }
+
+        #endregion
+
+        #region IDisposable
+
+        public void Dispose()
+        {
+            RemoveOldLanguageFiles();
+            _langChangeLock.Dispose();
         }
 
         #endregion
