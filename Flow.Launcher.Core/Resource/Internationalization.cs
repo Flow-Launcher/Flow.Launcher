@@ -256,8 +256,8 @@ namespace Flow.Launcher.Core.Resource
             foreach (var r in _oldResources)
             {
                 dicts.Remove(r);
-                _oldResources.Remove(r);
             }
+            _oldResources.Clear();
         }
 
         private void LoadLanguage(Language language)
