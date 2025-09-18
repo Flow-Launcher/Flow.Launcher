@@ -206,6 +206,10 @@ namespace Flow.Launcher.Core.Resource
                     await Task.Run(UpdatePluginMetadataTranslations);
                 }
             }
+            catch (Exception e)
+            {
+                API.LogException(ClassName, $"Failed to change language to <{language.LanguageCode}>", e);
+            }
             finally
             {
                 _langChangeLock.Release();
