@@ -492,6 +492,7 @@
     <system:String x:Key="fileManager_file_arg">Dosya Açarken</system:String>
     <system:String x:Key="fileManagerPathNotFound">'{0}' dosya yöneticisi '{1}' konumunda bulunamadı. Devam etmek ister misiniz?</system:String>
     <system:String x:Key="fileManagerPathError">Dosya Yöneticisi Yol Hatası</system:String>
+    <system:String x:Key="fileManagerExplorer">File Explorer</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">İnternet Tarayıcı Seçenekleri</system:String>
@@ -502,6 +503,8 @@
     <system:String x:Key="defaultBrowser_newWindow">Yeni Pencere</system:String>
     <system:String x:Key="defaultBrowser_newTab">Yeni Sekme</system:String>
     <system:String x:Key="defaultBrowser_parameter">Gizli Mod için Bağımsız Değişken</system:String>
+    <system:String x:Key="defaultBrowser_default">Default</system:String>
+    <system:String x:Key="defaultBrowser_new_profile">New Profile</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Önceliği Ayarla</system:String>
