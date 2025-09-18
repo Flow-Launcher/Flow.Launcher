@@ -492,6 +492,7 @@
     <system:String x:Key="fileManager_file_arg">ファイル用の引数</system:String>
     <system:String x:Key="fileManagerPathNotFound">ファイルマネージャー '{0}' は、'{1}' に見つかりませんでした。続行しますか？</system:String>
     <system:String x:Key="fileManagerPathError">ファイルマネージャのパスエラー</system:String>
+    <system:String x:Key="fileManagerExplorer">File Explorer</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">デフォルトのウェブブラウザー</system:String>
@@ -502,6 +503,8 @@
     <system:String x:Key="defaultBrowser_newWindow">新しいウィンドウ</system:String>
     <system:String x:Key="defaultBrowser_newTab">新しいタブ</system:String>
     <system:String x:Key="defaultBrowser_parameter">プライベートモード</system:String>
+    <system:String x:Key="defaultBrowser_default">Default</system:String>
+    <system:String x:Key="defaultBrowser_new_profile">New Profile</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">優先度の変更</system:String>
