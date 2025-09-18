@@ -492,6 +492,7 @@
     <system:String x:Key="fileManager_file_arg">Argumentos del archivo</system:String>
     <system:String x:Key="fileManagerPathNotFound">El administrador de archivos '{0}' no pudo ser localizado en '{1}'. ¿Desea continuar?</system:String>
     <system:String x:Key="fileManagerPathError">Error de ruta del administrador de archivos</system:String>
+    <system:String x:Key="fileManagerExplorer">File Explorer</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Navegador web predeterminado</system:String>
@@ -502,6 +503,8 @@
     <system:String x:Key="defaultBrowser_newWindow">Nueva ventana</system:String>
     <system:String x:Key="defaultBrowser_newTab">Nueva pestaña</system:String>
     <system:String x:Key="defaultBrowser_parameter">Modo privado</system:String>
+    <system:String x:Key="defaultBrowser_default">Default</system:String>
+    <system:String x:Key="defaultBrowser_new_profile">New Profile</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Cambiar la prioridad</system:String>
