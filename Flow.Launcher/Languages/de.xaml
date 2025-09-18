@@ -492,6 +492,7 @@
     <system:String x:Key="fileManager_file_arg">Arg For File</system:String>
     <system:String x:Key="fileManagerPathNotFound">Der Dateimanager '{0}' konnte nicht unter '{1}' gefunden werden. Möchten Sie fortfahren?</system:String>
     <system:String x:Key="fileManagerPathError">Pfadfehler bei Dateimanager</system:String>
+    <system:String x:Key="fileManagerExplorer">File Explorer</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Webbrowser per Default</system:String>
@@ -502,6 +503,8 @@
     <system:String x:Key="defaultBrowser_newWindow">Neues Fenster</system:String>
     <system:String x:Key="defaultBrowser_newTab">Neuer Tab</system:String>
     <system:String x:Key="defaultBrowser_parameter">Privater Modus</system:String>
+    <system:String x:Key="defaultBrowser_default">Default</system:String>
+    <system:String x:Key="defaultBrowser_new_profile">New Profile</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Priorität ändern</system:String>
