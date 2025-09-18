@@ -491,6 +491,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="fileManager_file_arg">Arg dla pliku</system:String>
     <system:String x:Key="fileManagerPathNotFound">Menedżer plików „{0}” nie został znaleziony w lokalizacji „{1}”. Czy chcesz kontynuować?</system:String>
     <system:String x:Key="fileManagerPathError">Błąd ścieżki do menedżera plików</system:String>
+    <system:String x:Key="fileManagerExplorer">File Explorer</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Domyślna przeglądarka</system:String>
@@ -501,6 +502,8 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="defaultBrowser_newWindow">Nowe okno</system:String>
     <system:String x:Key="defaultBrowser_newTab">Nowa zakładka</system:String>
     <system:String x:Key="defaultBrowser_parameter">Tryb prywatny</system:String>
+    <system:String x:Key="defaultBrowser_default">Default</system:String>
+    <system:String x:Key="defaultBrowser_new_profile">New Profile</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Zmień priorytet</system:String>
