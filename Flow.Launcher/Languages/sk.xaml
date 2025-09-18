@@ -493,7 +493,7 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="fileManager_file_arg">Arg. pre súbor</system:String>
     <system:String x:Key="fileManagerPathNotFound">Správca súborov '{0}' sa nenachádza na '{1}'. Chcete pokračovať?</system:String>
     <system:String x:Key="fileManagerPathError">Chyba v ceste k správcovi súborov</system:String>
-    <system:String x:Key="fileManagerExplorer">File Explorer</system:String>
+    <system:String x:Key="fileManagerExplorer">Prieskumník</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Predvolený webový prehliadač</system:String>
@@ -504,8 +504,8 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="defaultBrowser_newWindow">Nové okno</system:String>
     <system:String x:Key="defaultBrowser_newTab">Nová karta</system:String>
     <system:String x:Key="defaultBrowser_parameter">Privátny režim</system:String>
-    <system:String x:Key="defaultBrowser_default">Default</system:String>
-    <system:String x:Key="defaultBrowser_new_profile">New Profile</system:String>
+    <system:String x:Key="defaultBrowser_default">Predvolené</system:String>
+    <system:String x:Key="defaultBrowser_new_profile">Nový profil</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Zmena priority</system:String>
