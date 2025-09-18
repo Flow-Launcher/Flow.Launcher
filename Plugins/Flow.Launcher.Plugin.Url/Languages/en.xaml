@@ -12,7 +12,7 @@
     <system:String x:Key="flowlauncher_plugin_url_plugin_choose">Choose</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_filter">Application(*.exe)|*.exe|All files|*.*</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_url_use_custom_browser">Use custom web browser instead of Flow default web browser</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_use_custom_browser">Use custom instead of Flow's default web browser</system:String>
     <system:String x:Key="flowlauncher_plugin_url_browser_path">Browser path</system:String>
 
     <system:String x:Key="flowlauncher_plugin_url_new_tab">New tab</system:String>
