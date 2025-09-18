@@ -40,22 +40,12 @@ public partial class SelectBrowserViewModel : BaseModel
         return true;
     }
 
-    internal string SelectFile()
-    {
-        var dlg = new Microsoft.Win32.OpenFileDialog();
-        var result = dlg.ShowDialog();
-        if (result == true)
-            return dlg.FileName;
-
-        return string.Empty;
-    }
-
     [RelayCommand]
     private void Add()
     {
         CustomBrowsers.Add(new()
         {
-            Name = "New Profile"
+            Name = App.API.GetTranslation("defaultBrowser_new_profile")
         });
         SelectedCustomBrowserIndex = CustomBrowsers.Count - 1;
     }

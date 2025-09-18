@@ -31,7 +31,7 @@ namespace Flow.Launcher
 
         private void btnBrowseFile_Click(object sender, RoutedEventArgs e)
         {
-            var selectedFilePath = _viewModel.SelectFile();
+            var selectedFilePath = SelectFile();
 
             if (!string.IsNullOrEmpty(selectedFilePath))
             {
@@ -40,6 +40,16 @@ namespace Flow.Launcher
                 path.Focus();
                 ((Button)sender).Focus();
             }
+        }
+
+        private static string SelectFile()
+        {
+            var dlg = new Microsoft.Win32.OpenFileDialog();
+            var result = dlg.ShowDialog();
+            if (result == true)
+                return dlg.FileName;
+
+            return string.Empty;
         }
     }
 }
