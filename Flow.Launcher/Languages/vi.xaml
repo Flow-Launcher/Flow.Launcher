@@ -494,6 +494,7 @@
     <system:String x:Key="fileManager_file_arg">Đối số cho tệp</system:String>
     <system:String x:Key="fileManagerPathNotFound">The file manager '{0}' could not be located at '{1}'. Would you like to continue?</system:String>
     <system:String x:Key="fileManagerPathError">File Manager Path Error</system:String>
+    <system:String x:Key="fileManagerExplorer">File Explorer</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Trình duyệt web tiêu chuẩn</system:String>
@@ -504,6 +505,8 @@
     <system:String x:Key="defaultBrowser_newWindow">Cửa sổ mới</system:String>
     <system:String x:Key="defaultBrowser_newTab">Thẻ Mới</system:String>
     <system:String x:Key="defaultBrowser_parameter">Chế độ riêng tư</system:String>
+    <system:String x:Key="defaultBrowser_default">Default</system:String>
+    <system:String x:Key="defaultBrowser_new_profile">New Profile</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Thay đổi mức độ ưu tiên</system:String>
