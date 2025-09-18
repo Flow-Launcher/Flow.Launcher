@@ -105,7 +105,7 @@ public partial class SelectFileManagerViewModel : BaseModel
     {
         CustomExplorers.Add(new()
         {
-            Name = "New Profile"
+            Name = App.API.GetTranslation("defaultBrowser_new_profile")
         });
         SelectedCustomExplorerIndex = CustomExplorers.Count - 1;
     }
