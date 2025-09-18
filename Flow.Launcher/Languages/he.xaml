@@ -491,6 +491,7 @@
     <system:String x:Key="fileManager_file_arg">ארגומנט לקובץ</system:String>
     <system:String x:Key="fileManagerPathNotFound">לא ניתן היה לאתר את מנהל הקבצים '{0}' ב-'{1}'. האם ברצונך להמשיך?</system:String>
     <system:String x:Key="fileManagerPathError">שגיאת נתיב למנהל הקבצים</system:String>
+    <system:String x:Key="fileManagerExplorer">File Explorer</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">דפדפן ברירת מחדל</system:String>
@@ -501,6 +502,8 @@
     <system:String x:Key="defaultBrowser_newWindow">חלון חדש</system:String>
     <system:String x:Key="defaultBrowser_newTab">כרטיסייה חדשה</system:String>
     <system:String x:Key="defaultBrowser_parameter">מצב פרטיות</system:String>
+    <system:String x:Key="defaultBrowser_default">Default</system:String>
+    <system:String x:Key="defaultBrowser_new_profile">New Profile</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">שנה עדיפות</system:String>
