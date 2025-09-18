@@ -227,7 +227,7 @@ namespace Flow.Launcher.ViewModel
                 TextWrapping = TextWrapping.Wrap,
                 Margin = SettingPanelItemTopBottomMargin
             };
-            textBox.SetResourceReference(TextBlock.ForegroundProperty, "Color04B");
+            textBox.SetResourceReference(TextBox.ForegroundProperty, "Color04B");
             grid.Children.Add(textBox);
             return new UserControl
             {
