@@ -492,6 +492,7 @@
     <system:String x:Key="fileManager_file_arg">حجة للملف</system:String>
     <system:String x:Key="fileManagerPathNotFound">The file manager '{0}' could not be located at '{1}'. Would you like to continue?</system:String>
     <system:String x:Key="fileManagerPathError">File Manager Path Error</system:String>
+    <system:String x:Key="fileManagerExplorer">File Explorer</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">متصفح الويب الافتراضي</system:String>
@@ -502,6 +503,8 @@
     <system:String x:Key="defaultBrowser_newWindow">نافذة جديدة</system:String>
     <system:String x:Key="defaultBrowser_newTab">تبويب جديد</system:String>
     <system:String x:Key="defaultBrowser_parameter">الوضع الخاص</system:String>
+    <system:String x:Key="defaultBrowser_default">Default</system:String>
+    <system:String x:Key="defaultBrowser_new_profile">New Profile</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">تغيير الأولوية</system:String>
