@@ -263,9 +263,9 @@ public partial class SettingsPaneAboutViewModel : BaseModel
                 App.API.LogException(ClassName, $"Failed to delete cache directory: {dir.Name}", e);
                 success = false;
             }
-
-            OnPropertyChanged(nameof(CacheFolderSize));
         }
+
+        OnPropertyChanged(nameof(CacheFolderSize));
 
         return success;
     }
