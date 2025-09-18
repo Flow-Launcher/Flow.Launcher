@@ -265,6 +265,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
             }
         }
 
+        // Raise regardless to cover scenario where size needs to be recalculated if the folder is manually removed on disk.
         OnPropertyChanged(nameof(CacheFolderSize));
 
         return success;
