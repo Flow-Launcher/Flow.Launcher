@@ -2,7 +2,7 @@
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Plugin;
 
-namespace Flow.Launcher.ViewModel
+namespace Flow.Launcher.Infrastructure.UserSettings
 {
     public class CustomExplorerViewModel : BaseModel
     {
