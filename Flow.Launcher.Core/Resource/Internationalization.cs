@@ -30,6 +30,7 @@ namespace Flow.Launcher.Core.Resource
         private readonly List<string> _languageDirectories = [];
         private readonly List<ResourceDictionary> _oldResources = [];
         private static string SystemLanguageCode;
+        private readonly SemaphoreSlim _langChangeLock = new(1, 1);
 
         public Internationalization(Settings settings)
         {
@@ -185,20 +186,29 @@ namespace Flow.Launcher.Core.Resource
 
         private async Task ChangeLanguageAsync(Language language, bool updateMetadata = true)
         {
-            // Remove old language files and load language
-            RemoveOldLanguageFiles();
-            if (language != AvailableLanguages.English)
+            await _langChangeLock.WaitAsync();
+
+            try
             {
-                LoadLanguage(language);
+                // Remove old language files and load language
+                RemoveOldLanguageFiles();
+                if (language != AvailableLanguages.English)
+                {
+                    LoadLanguage(language);
+                }
+
+                // Change culture info
+                ChangeCultureInfo(language.LanguageCode);
+
+                if (updateMetadata)
+                {
+                    // Raise event for plugins after culture is set
+                    await Task.Run(UpdatePluginMetadataTranslations);
+                }
             }
-
-            // Change culture info
-            ChangeCultureInfo(language.LanguageCode);
-
-            if (updateMetadata)
+            finally
             {
-                // Raise event for plugins after culture is set
-                await Task.Run(UpdatePluginMetadataTranslations);
+                _langChangeLock.Release();
             }
         }
 
