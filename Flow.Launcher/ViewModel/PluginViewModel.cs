@@ -19,6 +19,9 @@ namespace Flow.Launcher.ViewModel
 
         private static readonly Settings Settings = Ioc.Default.GetRequiredService<Settings>();
 
+        private static readonly Thickness SettingPanelMargin = (Thickness)Application.Current.FindResource("SettingPanelMargin");
+        private static readonly Thickness SettingPanelItemTopBottomMargin = (Thickness)Application.Current.FindResource("SettingPanelItemTopBottomMargin");
+
         private readonly PluginPair _pluginPair;
         public PluginPair PluginPair
         {
@@ -139,8 +142,6 @@ namespace Flow.Launcher.ViewModel
                 : null;
         private ImageSource _image = ImageLoader.MissingImage;
 
-        private static readonly Thickness SettingPanelMargin = (Thickness)Application.Current.FindResource("SettingPanelMargin");
-        private static readonly Thickness SettingPanelItemTopBottomMargin = (Thickness)Application.Current.FindResource("SettingPanelItemTopBottomMargin");
         private static Control TryCreateSettingPanel(PluginPair pair)
         {
             try
@@ -156,25 +157,7 @@ namespace Flow.Launcher.ViewModel
                 // Show error message in UI
                 var errorMsg = string.Format(App.API.GetTranslation("errorCreatingSettingPanel"),
                     pair.Metadata.Name, Environment.NewLine, e.Message);
-                var grid = new Grid()
-                {
-                    Margin = SettingPanelMargin
-                };
-                var textBox = new TextBox
-                {
-                    Text = errorMsg,
-                    IsReadOnly = true,
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
-                    VerticalAlignment = VerticalAlignment.Top,
-                    TextWrapping = TextWrapping.Wrap,
-                    Margin = SettingPanelItemTopBottomMargin
-                };
-                textBox.SetResourceReference(TextBlock.ForegroundProperty, "Color04B");
-                grid.Children.Add(textBox);
-                return new UserControl
-                {
-                    Content = grid
-                };
+                return CreateErrorSettingPanel(errorMsg);
             }
         }
 
@@ -227,6 +210,29 @@ namespace Flow.Launcher.ViewModel
         {
             var changeKeywordsWindow = new ActionKeywords(this);
             changeKeywordsWindow.ShowDialog();
+        }
+
+        private static UserControl CreateErrorSettingPanel(string text)
+        {
+            var grid = new Grid()
+            {
+                Margin = SettingPanelMargin
+            };
+            var textBox = new TextBox
+            {
+                Text = text,
+                IsReadOnly = true,
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                VerticalAlignment = VerticalAlignment.Top,
+                TextWrapping = TextWrapping.Wrap,
+                Margin = SettingPanelItemTopBottomMargin
+            };
+            textBox.SetResourceReference(TextBlock.ForegroundProperty, "Color04B");
+            grid.Children.Add(textBox);
+            return new UserControl
+            {
+                Content = grid
+            };
         }
     }
 }
