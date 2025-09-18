@@ -492,6 +492,7 @@
     <system:String x:Key="fileManager_file_arg">Аргумент для файлу</system:String>
     <system:String x:Key="fileManagerPathNotFound">Не вдалося знайти файловий менеджер «{0}» за адресою «{1}». Чи бажаєте продовжити?</system:String>
     <system:String x:Key="fileManagerPathError">Помилка шляху до файлового менеджера</system:String>
+    <system:String x:Key="fileManagerExplorer">File Explorer</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Типовий веббраузер</system:String>
@@ -502,6 +503,8 @@
     <system:String x:Key="defaultBrowser_newWindow">Нове вікно</system:String>
     <system:String x:Key="defaultBrowser_newTab">Нова вкладка</system:String>
     <system:String x:Key="defaultBrowser_parameter">Приватний режим</system:String>
+    <system:String x:Key="defaultBrowser_default">Default</system:String>
+    <system:String x:Key="defaultBrowser_new_profile">New Profile</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Змінити пріоритет</system:String>
