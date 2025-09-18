@@ -490,7 +490,7 @@
     <system:String x:Key="fileManager_file_arg">Argumento para ficheiro</system:String>
     <system:String x:Key="fileManagerPathNotFound">Não foi possível encontrar o gestor de ficheiros '{0}' em '{1}'. Deseja continuar?</system:String>
     <system:String x:Key="fileManagerPathError">Erro no caminho do gestor de ficheiros</system:String>
-    <system:String x:Key="fileManagerExplorer">File Explorer</system:String>
+    <system:String x:Key="fileManagerExplorer">Gestor de ficheiros</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Navegador web padrão</system:String>
@@ -501,8 +501,8 @@
     <system:String x:Key="defaultBrowser_newWindow">Nova janela</system:String>
     <system:String x:Key="defaultBrowser_newTab">Novo separador</system:String>
     <system:String x:Key="defaultBrowser_parameter">Modo privado</system:String>
-    <system:String x:Key="defaultBrowser_default">Default</system:String>
-    <system:String x:Key="defaultBrowser_new_profile">New Profile</system:String>
+    <system:String x:Key="defaultBrowser_default">Padrão</system:String>
+    <system:String x:Key="defaultBrowser_new_profile">Novo perfil</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Alterar prioridade</system:String>
