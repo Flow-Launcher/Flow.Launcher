@@ -15,8 +15,9 @@ public static class WallpaperPathRetrieval
 {
     private static readonly string ClassName = nameof(WallpaperPathRetrieval);
 
-    private const int MaxCacheSize = 3;
-    private static readonly Dictionary<(string, DateTime), ImageBrush> WallpaperCache = new();
+    // Disable cache feature because some wallpaper applications (like Wallpaper Engine) may change wallpaper frequently
+    private const int MaxCacheSize = 0;//3;
+    private static readonly Dictionary<(string, DateTime), ImageBrush> WallpaperCache = [];
     private static readonly Lock CacheLock = new();
 
     public static Brush GetWallpaperBrush()
