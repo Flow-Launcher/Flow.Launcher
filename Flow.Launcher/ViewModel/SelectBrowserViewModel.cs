@@ -17,8 +17,11 @@ public partial class SelectBrowserViewModel : BaseModel
         get => selectedCustomBrowserIndex;
         set
         {
-            selectedCustomBrowserIndex = value;
-            OnPropertyChanged(nameof(CustomBrowser));
+            if (selectedCustomBrowserIndex != value)
+            {
+                selectedCustomBrowserIndex = value;
+                OnPropertyChanged(nameof(CustomBrowser));
+            }
         }
     }
 
