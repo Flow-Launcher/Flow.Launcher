@@ -224,6 +224,7 @@
     <system:String x:Key="failedToUninstallPluginTitle">Не вдалося видалити {0}</system:String>
     <system:String x:Key="fileNotFoundMessage">Не вдалося знайти файл plugin.json у розпакованому zip-файлі або цей шлях {0} не існує.</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">Вже існує плагін з таким самим ідентифікатором та версією, або версія цього плагіну вища за версію завантаженого.</system:String>
+    <system:String x:Key="errorCreatingSettingPanel">Error creating setting panel for plugin {0}:{1}{2}</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Магазин плагінів</system:String>
