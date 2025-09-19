@@ -224,6 +224,7 @@
     <system:String x:Key="failedToUninstallPluginTitle">Fallo al desinstalar {0}</system:String>
     <system:String x:Key="fileNotFoundMessage">No se puede encontrar plugin.json en el archivo zip extraído, o esta ruta {0} no existe</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">Ya existe un complemento con el mismo ID y versión, o la versión es superior a la de este complemento descargado</system:String>
+    <system:String x:Key="errorCreatingSettingPanel">Error creating setting panel for plugin {0}:{1}{2}</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Tienda complementos</system:String>
