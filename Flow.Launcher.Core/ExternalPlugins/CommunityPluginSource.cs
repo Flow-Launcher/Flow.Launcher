@@ -75,7 +75,7 @@ namespace Flow.Launcher.Core.ExternalPlugins
             }
             catch (OperationCanceledException) when (token.IsCancellationRequested)
             {
-                API.LogInfo(ClassName, $"Fetching from {ManifestFileUrl} was cancelled by caller.");
+                API.LogDebug(ClassName, $"Fetching from {ManifestFileUrl} was cancelled by caller.");
                 return null;
             }
             catch (TaskCanceledException)
