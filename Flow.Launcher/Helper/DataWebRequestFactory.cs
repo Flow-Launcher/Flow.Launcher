@@ -28,18 +28,18 @@ public class DataWebRequestFactory : IWebRequestCreate
 
         public DataWebResponse(Uri uri)
         {
-            string uriString = uri.AbsoluteUri;
+            var uriString = uri.AbsoluteUri;
 
-            int commaIndex = uriString.IndexOf(',');
-            var headers = uriString.Substring(0, commaIndex).Split(';');
+            var commaIndex = uriString.IndexOf(',');
+            var headers = uriString[..commaIndex].Split(';');
             _contentType = headers[0];
-            string dataString = uriString.Substring(commaIndex + 1);
+            var dataString = uriString[(commaIndex + 1)..];
             _data = Convert.FromBase64String(dataString);
         }
 
         public override string ContentType
         {
-            get { return _contentType; }
+            get => _contentType;
             set
             {
                 throw new NotSupportedException();
@@ -48,7 +48,7 @@ public class DataWebRequestFactory : IWebRequestCreate
 
         public override long ContentLength
         {
-            get { return _data.Length; }
+            get => _data.Length;
             set
             {
                 throw new NotSupportedException();

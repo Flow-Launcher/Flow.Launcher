@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net7.0-windows</TargetFramework>
+    <TargetFramework>net9.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
     <ProjectGuid>{9B130CC5-14FB-41FF-B310-0A95B6894C37}</ProjectGuid>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -34,6 +34,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <NoWarn>$(NoWarn);FLSG0007</NoWarn>
   </PropertyGroup>
 
   <Target Name="RemoveUnnecessaryRuntimesAfterBuild" AfterTargets="Build">
@@ -45,14 +46,18 @@
                             $(OutputPath)runtimes\linux-musl-arm;
                             $(OutputPath)runtimes\linux-musl-arm64;
                             $(OutputPath)runtimes\linux-musl-x64;
+                            $(OutputPath)runtimes\linux-musl-s390x;
                             $(OutputPath)runtimes\linux-ppc64le;
                             $(OutputPath)runtimes\linux-s390x;
                             $(OutputPath)runtimes\linux-x64;
                             $(OutputPath)runtimes\linux-x86;
                             $(OutputPath)runtimes\maccatalyst-arm64;
                             $(OutputPath)runtimes\maccatalyst-x64;
+                            $(OutputPath)runtimes\osx;
                             $(OutputPath)runtimes\osx-arm64;
-                            $(OutputPath)runtimes\osx-x64"/>
+                            $(OutputPath)runtimes\osx-x64;
+                            $(OutputPath)runtimes\win-arm;
+                            $(OutputPath)runtimes\win-arm64;"/>
   </Target>
 
   <Target Name="RemoveUnnecessaryRuntimesAfterPublish" AfterTargets="Publish">
@@ -64,14 +69,18 @@
                             $(PublishDir)runtimes\linux-musl-arm;
                             $(PublishDir)runtimes\linux-musl-arm64;
                             $(PublishDir)runtimes\linux-musl-x64;
+                            $(PublishDir)runtimes\linux-musl-s390x;
                             $(PublishDir)runtimes\linux-ppc64le;
                             $(PublishDir)runtimes\linux-s390x;
                             $(PublishDir)runtimes\linux-x64;
                             $(PublishDir)runtimes\linux-x86;
                             $(PublishDir)runtimes\maccatalyst-arm64;
                             $(PublishDir)runtimes\maccatalyst-x64;
+                            $(PublishDir)runtimes\osx;
                             $(PublishDir)runtimes\osx-arm64;
-                            $(PublishDir)runtimes\osx-x64"/>
+                            $(PublishDir)runtimes\osx-x64;
+                            $(PublishDir)runtimes\win-arm;
+                            $(PublishDir)runtimes\win-arm64;"/>
   </Target>
 
   <ItemGroup>
@@ -81,7 +90,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Flow.Launcher.Infrastructure\Flow.Launcher.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj" />
   </ItemGroup>
 
@@ -95,7 +103,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.1" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="Flow.Launcher.Localization" Version="0.0.5" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.9" />
+    <PackageReference Include="Svg.Skia" Version="3.0.6" />
+    <PackageReference Include="SkiaSharp" Version="3.119.0" />
   </ItemGroup>
 
 </Project>

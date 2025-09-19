@@ -11,13 +11,14 @@
     <system:String x:Key="flowlauncher_plugin_websearch_edit">Edytuj</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">Dodaj</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">Aktywny</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_private_mode_label">Tryb prywatny</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_true">Aktywny</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_false">Wyłączony</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">Potwierdź</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Wyzwalacz</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">Adres URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">Szukaj</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Pokazuj podpowiedzi wyszukiwania</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Użyj autouzupełniania zapytań wyszukiwania</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Autouzupełnianie danych z:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Musisz wybrać coś z listy</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Czy jesteś pewien że chcesz usunąć {0}?</system:String>
@@ -29,8 +30,8 @@
         W ten sposób ogólna formuła wyszukiwania na Netflix to https://www.netflix.com/search?q={q}
     </system:String>
 
-    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">Copy URL</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">Copy search URL to clipboard</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">Kopiuj adres URL</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">Skopiuj adres URL wyszukiwania do schowka</system:String>
 
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">Tytuł</system:String>

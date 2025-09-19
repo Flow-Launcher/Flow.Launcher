@@ -8,23 +8,26 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
 using Flow.Launcher.Plugin.Explorer.Exceptions;
+using System.Linq;
+using System.Globalization;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
-    public class Main : ISettingProvider, IAsyncPlugin, IContextMenu, IPluginI18n
+    public class Main : ISettingProvider, IAsyncPlugin, IContextMenu, IPluginI18n, IAsyncDialogJump
     {
         internal static PluginInitContext Context { get; set; }
 
-        internal Settings Settings;
+        internal static Settings Settings { get; set; }
 
         private SettingsViewModel viewModel;
 
-        private IContextMenu contextMenu;
+        private ContextMenu contextMenu;
 
         private SearchManager searchManager;
+
+        private static readonly List<DialogJumpResult> _emptyDialogJumpResultList = new();
 
         public Control CreateSettingPanel()
         {
@@ -36,14 +39,12 @@ namespace Flow.Launcher.Plugin.Explorer
             Context = context;
 
             Settings = context.API.LoadSettingJsonStorage<Settings>();
+            FillQuickAccessLinkNames();
 
             viewModel = new SettingsViewModel(context, Settings);
-
-            contextMenu = new ContextMenu(Context, Settings, viewModel);
+            contextMenu = new ContextMenu(Context, Settings);
             searchManager = new SearchManager(Settings, Context);
             ResultManager.Init(Context, Settings);
-            
-            SortOptionTranslationHelper.API = context.API;
 
             EverythingApiDllImport.Load(Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "EverythingSDK",
                 Environment.Is64BitProcess ? "x64" : "x86"));
@@ -95,6 +96,37 @@ namespace Flow.Launcher.Plugin.Explorer
         public string GetTranslatedPluginDescription()
         {
             return Context.API.GetTranslation("plugin_explorer_plugin_description");
+        }
+
+        public void OnCultureInfoChanged(CultureInfo newCulture)
+        {
+            // Update labels for setting view model
+            EverythingSortOptionLocalized.UpdateLabels(viewModel.AllEverythingSortOptions);
+        }
+
+        private static void FillQuickAccessLinkNames()
+        {
+            // Legacy version does not have names for quick access links, so we fill them with the path name.
+            foreach (var link in Settings.QuickAccessLinks)
+            {
+                if (string.IsNullOrWhiteSpace(link.Name))
+                {
+                    link.Name = link.Path.GetPathName();
+                }
+            }
+        }
+
+        public async Task<List<DialogJumpResult>> QueryDialogJumpAsync(Query query, CancellationToken token)
+        {
+            try
+            {
+                var results = await searchManager.SearchAsync(query, token);
+                return results.Select(r => DialogJumpResult.From(r, r.CopyText)).ToList();
+            }
+            catch (Exception e) when (e is SearchException or EngineNotAvailableException)
+            {
+                return _emptyDialogJumpResultList;
+            }
         }
     }
 }

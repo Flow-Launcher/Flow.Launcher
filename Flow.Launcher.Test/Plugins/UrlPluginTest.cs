@@ -1,7 +1,8 @@
 ﻿using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Flow.Launcher.Plugin.Url;
 
-namespace Flow.Launcher.Test
+namespace Flow.Launcher.Test.Plugins
 {
     [TestFixture]
     public class UrlPluginTest
@@ -10,23 +11,23 @@ namespace Flow.Launcher.Test
         public void URLMatchTest()
         {
             var plugin = new Main();
-            Assert.IsTrue(plugin.IsURL("http://www.google.com"));
-            Assert.IsTrue(plugin.IsURL("https://www.google.com"));
-            Assert.IsTrue(plugin.IsURL("http://google.com"));
-            Assert.IsTrue(plugin.IsURL("www.google.com"));
-            Assert.IsTrue(plugin.IsURL("google.com"));
-            Assert.IsTrue(plugin.IsURL("http://localhost"));
-            Assert.IsTrue(plugin.IsURL("https://localhost"));
-            Assert.IsTrue(plugin.IsURL("http://localhost:80"));
-            Assert.IsTrue(plugin.IsURL("https://localhost:80"));
-            Assert.IsTrue(plugin.IsURL("http://110.10.10.10"));
-            Assert.IsTrue(plugin.IsURL("110.10.10.10"));
-            Assert.IsTrue(plugin.IsURL("ftp://110.10.10.10"));
+            ClassicAssert.IsTrue(plugin.IsURL("http://www.google.com"));
+            ClassicAssert.IsTrue(plugin.IsURL("https://www.google.com"));
+            ClassicAssert.IsTrue(plugin.IsURL("http://google.com"));
+            ClassicAssert.IsTrue(plugin.IsURL("www.google.com"));
+            ClassicAssert.IsTrue(plugin.IsURL("google.com"));
+            ClassicAssert.IsTrue(plugin.IsURL("http://localhost"));
+            ClassicAssert.IsTrue(plugin.IsURL("https://localhost"));
+            ClassicAssert.IsTrue(plugin.IsURL("http://localhost:80"));
+            ClassicAssert.IsTrue(plugin.IsURL("https://localhost:80"));
+            ClassicAssert.IsTrue(plugin.IsURL("http://110.10.10.10"));
+            ClassicAssert.IsTrue(plugin.IsURL("110.10.10.10"));
+            ClassicAssert.IsTrue(plugin.IsURL("ftp://110.10.10.10"));
 
 
-            Assert.IsFalse(plugin.IsURL("wwww"));
-            Assert.IsFalse(plugin.IsURL("wwww.c"));
-            Assert.IsFalse(plugin.IsURL("wwww.c"));
+            ClassicAssert.IsFalse(plugin.IsURL("wwww"));
+            ClassicAssert.IsFalse(plugin.IsURL("wwww.c"));
+            ClassicAssert.IsFalse(plugin.IsURL("wwww.c"));
         }
     }
 }

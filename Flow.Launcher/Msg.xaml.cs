@@ -1,25 +1,23 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Windows;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
-using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Image;
+using Flow.Launcher.Plugin.SharedModels;
 
 namespace Flow.Launcher
 {
     public partial class Msg : Window
     {
-        Storyboard fadeOutStoryboard = new Storyboard();
+        private readonly Storyboard fadeOutStoryboard = new();
         private bool closing;
 
         public Msg()
         {
             InitializeComponent();
-            var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
-            var dipWorkingArea = WindowsInteropHelper.TransformPixelsToDIP(this,
+            var screen = MonitorInfo.GetCursorDisplayMonitor();
+            var dipWorkingArea = Win32Helper.TransformPixelsToDIP(this,
                 screen.WorkingArea.Width,
                 screen.WorkingArea.Height);
             Left = dipWorkingArea.X - Width;
@@ -44,7 +42,7 @@ namespace Flow.Launcher
 
         private async System.Threading.Tasks.Task LoadImageAsync()
         {
-            imgClose.Source = await ImageLoader.LoadAsync(Path.Combine(Infrastructure.Constant.ProgramDirectory, "Images\\close.png"));
+            imgClose.Source = await App.API.LoadImageAsync(Path.Combine(Constant.ProgramDirectory, "Images\\close.png"));
         }
 
         void imgClose_MouseUp(object sender, MouseButtonEventArgs e)
@@ -61,6 +59,7 @@ namespace Flow.Launcher
             Close();
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         public async void Show(string title, string subTitle, string iconPath)
         {
             tbTitle.Text = title;
@@ -72,23 +71,23 @@ namespace Flow.Launcher
             
             if (!File.Exists(iconPath))
             {
-                imgIco.Source = await ImageLoader.LoadAsync(Path.Combine(Constant.ProgramDirectory, "Images\\app.png"));
+                imgIco.Source = await App.API.LoadImageAsync(Path.Combine(Constant.ProgramDirectory, "Images\\app.png"));
             }
             else 
             {
-                imgIco.Source = await ImageLoader.LoadAsync(iconPath);
+                imgIco.Source = await App.API.LoadImageAsync(iconPath);
             }
 
             Show();
 
             await Dispatcher.InvokeAsync(async () =>
-                                   {
-                                       if (!closing)
-                                       {
-                                           closing = true;
-                                           await Dispatcher.InvokeAsync(fadeOutStoryboard.Begin);
-                                       }
-                                   });
+            {
+                if (!closing)
+                {
+                    closing = true;
+                    await Dispatcher.InvokeAsync(fadeOutStoryboard.Begin);
+                }
+            });
         }
     }
 }

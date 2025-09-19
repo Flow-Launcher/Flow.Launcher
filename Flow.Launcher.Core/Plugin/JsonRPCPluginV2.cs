@@ -10,19 +10,19 @@ using Microsoft.VisualStudio.Threading;
 using StreamJsonRpc;
 using IAsyncDisposable = System.IAsyncDisposable;
 
-
 namespace Flow.Launcher.Core.Plugin
 {
     internal abstract class JsonRPCPluginV2 : JsonRPCPluginBase, IAsyncDisposable, IAsyncReloadable, IResultUpdated
     {
         public const string JsonRpc = "JsonRPC";
 
+        private static readonly string ClassName = nameof(JsonRPCPluginV2);
+
         protected abstract IDuplexPipe ClientPipe { get; set; }
 
         protected StreamReader ErrorStream { get; set; }
 
         private JsonRpc RPC { get; set; }
-
 
         protected override async Task<bool> ExecuteResultAsync(JsonRPCResult result)
         {
@@ -54,7 +54,6 @@ namespace Flow.Launcher.Core.Plugin
 
             return results;
         }
-
 
         public override async Task InitAsync(PluginInitContext context)
         {
@@ -88,7 +87,6 @@ namespace Flow.Launcher.Core.Plugin
 
         protected abstract MessageHandlerType MessageHandler { get; }
 
-
         private void SetupJsonRPC()
         {
             var formatter = new SystemTextJsonFormatter { JsonSerializerOptions = RequestSerializeOption };
@@ -112,10 +110,24 @@ namespace Flow.Launcher.Core.Plugin
             RPC.StartListening();
         }
 
-        public virtual Task ReloadDataAsync()
+        public virtual async Task ReloadDataAsync()
         {
-            SetupJsonRPC();
-            return Task.CompletedTask;
+            try
+            {
+                await RPC.InvokeAsync("reload_data", Context);
+            }
+            catch (RemoteMethodNotFoundException)
+            {
+                // Ignored
+            }
+            catch (ConnectionLostException)
+            {
+                // Ignored
+            }
+            catch (Exception e)
+            {
+                Context.API.LogException(ClassName, $"Failed to call reload_data for plugin {Context.CurrentPluginMetadata.Name}", e);
+            }
         }
 
         public virtual async ValueTask DisposeAsync()
@@ -124,8 +136,17 @@ namespace Flow.Launcher.Core.Plugin
             {
                 await RPC.InvokeAsync("close");
             }
-            catch (RemoteMethodNotFoundException e)
+            catch (RemoteMethodNotFoundException)
             {
+                // Ignored
+            }
+            catch (ConnectionLostException)
+            {
+                // Ignored
+            }
+            catch (Exception e)
+            {
+                Context.API.LogException(ClassName, $"Failed to call close for plugin {Context.CurrentPluginMetadata.Name}", e);
             }
             finally
             {

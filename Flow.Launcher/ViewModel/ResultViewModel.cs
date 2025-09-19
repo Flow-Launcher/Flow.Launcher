@@ -1,30 +1,29 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Image;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using System.IO;
-using System.Drawing.Text;
-using System.Collections.Generic;
 
 namespace Flow.Launcher.ViewModel
 {
     public class ResultViewModel : BaseModel
     {
-        private static PrivateFontCollection fontCollection = new();
-        private static Dictionary<string, string> fonts = new();
+        private static readonly string ClassName = nameof(ResultViewModel);
+
+        private static readonly PrivateFontCollection FontCollection = new();
+        private static readonly Dictionary<string, string> Fonts = new();
 
         public ResultViewModel(Result result, Settings settings)
         {
             Settings = settings;
 
-            if (result == null)
-            {
-                return;
-            }
+            if (result == null) return;
+
             Result = result;
 
             if (Result.Glyph is { FontFamily: not null } glyph)
@@ -39,20 +38,20 @@ namespace Flow.Launcher.ViewModel
                         fontFamilyPath = Path.Combine(Result.PluginDirectory, fontFamilyPath);
                     }
 
-                    if (fonts.ContainsKey(fontFamilyPath))
+                    if (Fonts.TryGetValue(fontFamilyPath, out var value))
                     {
                         Glyph = glyph with
                         {
-                            FontFamily = fonts[fontFamilyPath]
+                            FontFamily = value
                         };
                     }
                     else
                     {
-                        fontCollection.AddFontFile(fontFamilyPath);
-                        fonts[fontFamilyPath] = $"{Path.GetDirectoryName(fontFamilyPath)}/#{fontCollection.Families[^1].Name}";
+                        FontCollection.AddFontFile(fontFamilyPath);
+                        Fonts[fontFamilyPath] = $"{Path.GetDirectoryName(fontFamilyPath)}/#{FontCollection.Families[^1].Name}";
                         Glyph = glyph with
                         {
-                            FontFamily = fonts[fontFamilyPath]
+                            FontFamily = Fonts[fontFamilyPath]
                         };
                     }
                 }
@@ -61,17 +60,11 @@ namespace Flow.Launcher.ViewModel
                     Glyph = glyph;
                 }
             }
-
         }
 
         public Settings Settings { get; }
 
-        public Visibility ShowOpenResultHotkey =>
-            Settings.ShowOpenResultHotkey ? Visibility.Visible : Visibility.Collapsed;
-
         public Visibility ShowDefaultPreview => Result.PreviewPanel == null ? Visibility.Visible : Visibility.Collapsed;
-
-        public Visibility ShowCustomizedPreview => Result.PreviewPanel == null ? Visibility.Collapsed : Visibility.Visible;
 
         public Visibility ShowIcon
         {
@@ -95,14 +88,10 @@ namespace Flow.Launcher.ViewModel
             get
             {
                 if (PreviewImageAvailable)
-                {
                     return Visibility.Visible;
-                }
-                else
-                {
-                    // Fall back to icon
-                    return ShowIcon;
-                }
+                
+                // Fall back to icon
+                return ShowIcon;
             }
         }
 
@@ -111,12 +100,10 @@ namespace Flow.Launcher.ViewModel
             get
             {
                 if (Result.RoundedIcon)
-                {
                     return IconXY / 2;
-                }
+                
                 return IconXY;
             }
-
         }
 
         public Visibility ShowGlyph
@@ -132,13 +119,33 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public Visibility ShowBadge
+        {
+            get
+            {
+                // If results do not allow badges, or user has disabled badges in settings,
+                // or badge icon is not available, then do not show badge
+                if (!Result.ShowBadge || !Settings.ShowBadges || !BadgeIconAvailable)
+                    return Visibility.Collapsed;
+
+                // If user has set to show badges only for global results, and this is not a global result,
+                // then do not show badge
+                if (Settings.ShowBadgesGlobalOnly && !IsGlobalQuery)
+                    return Visibility.Collapsed;
+
+                return Visibility.Visible;
+            }
+        }
+
+        public bool IsGlobalQuery => string.IsNullOrEmpty(Result.OriginQuery.ActionKeyword);
+
         private bool GlyphAvailable => Glyph is not null;
 
         private bool ImgIconAvailable => !string.IsNullOrEmpty(Result.IcoPath) || Result.Icon is not null;
 
-        private bool PreviewImageAvailable => !string.IsNullOrEmpty(Result.Preview.PreviewImagePath) || Result.Preview.PreviewDelegate != null;
+        private bool BadgeIconAvailable => !string.IsNullOrEmpty(Result.BadgeIcoPath) || Result.BadgeIcon is not null;
 
-        public string OpenResultModifiers => Settings.OpenResultModifiers;
+        private bool PreviewImageAvailable => !string.IsNullOrEmpty(Result.Preview.PreviewImagePath) || Result.Preview.PreviewDelegate != null;
 
         public string ShowTitleToolTip => string.IsNullOrEmpty(Result.TitleToolTip)
             ? Result.Title
@@ -148,31 +155,57 @@ namespace Flow.Launcher.ViewModel
             ? Result.SubTitle
             : Result.SubTitleToolTip;
 
-        private volatile bool ImageLoaded;
-        private volatile bool PreviewImageLoaded;
+        private volatile bool _imageLoaded;
+        private volatile bool _badgeImageLoaded;
+        private volatile bool _previewImageLoaded;
 
-        private ImageSource image = ImageLoader.LoadingImage;
-        private ImageSource previewImage = ImageLoader.LoadingImage;
+        private ImageSource _image = ImageLoader.LoadingImage;
+        private ImageSource _badgeImage = ImageLoader.LoadingImage;
+        private ImageSource _previewImage = ImageLoader.LoadingImage;
 
         public ImageSource Image
         {
             get
             {
-                if (!ImageLoaded)
+                if (!_imageLoaded)
                 {
-                    ImageLoaded = true;
+                    _imageLoaded = true;
                     _ = LoadImageAsync();
                 }
 
-                return image;
+                return _image;
             }
-            private set => image = value;
+            private set => _image = value;
+        }
+
+        public ImageSource BadgeImage
+        {
+            get
+            {
+                if (!_badgeImageLoaded)
+                {
+                    _badgeImageLoaded = true;
+                    _ = LoadBadgeImageAsync();
+                }
+
+                return _badgeImage;
+            }
+            private set => _badgeImage = value;
         }
 
         public ImageSource PreviewImage
         {
-            get => previewImage;
-            private set => previewImage = value;
+            get
+            {
+                if (!_previewImageLoaded)
+                {
+                    _previewImageLoaded = true;
+                    _ = LoadPreviewImageAsync();
+                }
+
+                return _previewImage;
+            }
+            private set => _previewImage = value;
         }
 
         /// <summary>
@@ -188,27 +221,26 @@ namespace Flow.Launcher.ViewModel
             {
                 try
                 {
-                    var image = icon();
-                    return image;
+                    return icon();
                 }
                 catch (Exception e)
                 {
-                    Log.Exception(
-                        $"|ResultViewModel.LoadImageInternalAsync|IcoPath is empty and exception when calling IconDelegate for result <{Result.Title}> of plugin <{Result.PluginDirectory}>",
+                    App.API.LogException(ClassName,
+                        $"IcoPath is empty and exception when calling IconDelegate for result <{Result.Title}> of plugin <{Result.PluginDirectory}>",
                         e);
                 }
             }
 
-            return await ImageLoader.LoadAsync(imagePath, loadFullImage).ConfigureAwait(false);
+            return await App.API.LoadImageAsync(imagePath, loadFullImage).ConfigureAwait(false);
         }
 
         private async Task LoadImageAsync()
         {
             var imagePath = Result.IcoPath;
             var iconDelegate = Result.Icon;
-            if (ImageLoader.TryGetValue(imagePath, false, out ImageSource img))
+            if (ImageLoader.TryGetValue(imagePath, false, out var img))
             {
-                image = img;
+                _image = img;
             }
             else
             {
@@ -217,13 +249,28 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        private async Task LoadBadgeImageAsync()
+        {
+            var badgeImagePath = Result.BadgeIcoPath;
+            var badgeIconDelegate = Result.BadgeIcon;
+            if (ImageLoader.TryGetValue(badgeImagePath, false, out var img))
+            {
+                _badgeImage = img;
+            }
+            else
+            {
+                // We need to modify the property not field here to trigger the OnPropertyChanged event
+                BadgeImage = await LoadImageInternalAsync(badgeImagePath, badgeIconDelegate, false).ConfigureAwait(false);
+            }
+        }
+
         private async Task LoadPreviewImageAsync()
         {
             var imagePath = Result.Preview.PreviewImagePath ?? Result.IcoPath;
             var iconDelegate = Result.Preview.PreviewDelegate ?? Result.Icon;
-            if (ImageLoader.TryGetValue(imagePath, true, out ImageSource img))
+            if (ImageLoader.TryGetValue(imagePath, true, out var img))
             {
-                previewImage = img;
+                _previewImage = img;
             }
             else
             {
@@ -234,13 +281,10 @@ namespace Flow.Launcher.ViewModel
 
         public void LoadPreviewImage()
         {
-            if (ShowDefaultPreview == Visibility.Visible)
+            if (ShowDefaultPreview == Visibility.Visible && !_previewImageLoaded && ShowPreviewImage == Visibility.Visible)
             {
-                if (!PreviewImageLoaded && ShowPreviewImage == Visibility.Visible)
-                {
-                    PreviewImageLoaded = true;
-                    _ = LoadPreviewImageAsync();
-                }
+                _previewImageLoaded = true;
+                _ = LoadPreviewImageAsync();
             }
         }
 

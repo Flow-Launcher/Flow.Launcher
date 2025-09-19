@@ -2,8 +2,9 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Command List  -->
-    <system:String x:Key="flowlauncher_plugin_sys_command">Příkaz</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_name">Jméno</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_desc">Popis</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_command">Příkaz</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer_cmd">Shutdown</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_computer_cmd">Restart</system:String>
@@ -25,6 +26,9 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips_cmd">Flow Launcher Tips</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location_cmd">Flow Launcher UserData Folder</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode_cmd">Toggle Game Mode</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector_cmd">Set the Flow Launcher Theme</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_sys_edit">Editovat</system:String>
 
     <!--  Command Descriptions  -->
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">Vypnout počítač</system:String>
@@ -47,8 +51,9 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">Další nápovědu a tipy k jeho používání najdete v dokumentaci ke službě Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Otevře místo, kde jsou uložena nastavení Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode">Toggle Game Mode</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector">Quickly change the Flow Launcher theme</system:String>
 
-        <!--  Dialogs  -->
+    <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">Úspěšné</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">Uložení všech nastavení Flow Launcheru</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Aktualizace všech dat pluginů</system:String>
@@ -56,6 +61,17 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">Opravdu chcete počítač restartovat?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Opravdu chcete restartovat počítač s rozšířenými možnostmi spouštění?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Opravdu se chcete odhlásit?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_error">Chyba</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_empty_recycle_bin_failed">Failed to empty the recycle bin. This might happen if:{0}- Some items are currently in use{0}- Some items can't be deleted due to permissions{0}Please close any applications that might be using these files and try again.</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Command Keyword Setting</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Custom Command Keyword</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword_tip">Enter a keyword to search for command: {0}. This keyword is used to match your query.</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_command_keyword">Command Keyword</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_reset">Reset</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_confirm">Potvrdit</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_cancel">Zrušit</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_input_command_keyword">Please enter a non-empty command keyword</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">Systémové příkazy</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Poskytuje příkazy související se systémem, jako je vypnutí, uzamčení počítače atd.</system:String>

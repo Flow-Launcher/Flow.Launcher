@@ -6,6 +6,7 @@
     <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">Toto okno zatvoríte stlačením ľubovoľného klávesu…</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">Nezatvárať príkazový riadok po dokončení príkazu</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">Spustiť vždy ako správca</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_use_windows_terminal">Použiť Windows Terminál</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">Spustiť ako iný používateľ</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">Shell</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Umožňuje vykonávať systémové príkazy z Flow Launchera</system:String>
@@ -14,4 +15,6 @@
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">Spustiť ako správca</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_copy">Kopírovať príkaz</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_history">Zobraziť iba počet najpoužívanejších príkazov:</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_command_not_found">Príkaz sa nenašiel: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_error_running_command">Neporadilo sa spustiť príkaz: {0}</system:String>
 </ResourceDictionary>

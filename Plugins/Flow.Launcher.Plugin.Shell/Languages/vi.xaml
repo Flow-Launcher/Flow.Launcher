@@ -6,6 +6,7 @@
     <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">Nhấn phím bất kỳ để đóng cửa sổ này...</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">Không đóng dấu nhắc lệnh sau khi thực hiện lệnh</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">Luôn chạy với tư cách quản trị viên</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_use_windows_terminal">Use Windows Terminal</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">Xóa lựa chọn đã chọn</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">Vỏ</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Allows to execute system commands from Flow Launcher</system:String>
@@ -14,4 +15,6 @@
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">Chạy với quyền quản trị</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_copy">Sao chép lệnh</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_history">Chỉ hiển thị số lượng lệnh được sử dụng nhiều nhất:</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_command_not_found">Command not found: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_error_running_command">Error running the command: {0}</system:String>
 </ResourceDictionary>

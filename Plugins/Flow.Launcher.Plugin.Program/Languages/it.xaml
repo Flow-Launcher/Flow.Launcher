@@ -34,6 +34,8 @@
     <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">Nasconde programmi con nomi comuni di disinstallatori, come unins000.exe</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">Cerca nella Descrizione del Programma</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow cercherà nella descrizione del programma</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp">Hide duplicated apps</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp_tooltip">Hide duplicated Win32 programs that are already in the UWP list</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Suffissi</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">Profondità max</system:String>
 
@@ -44,6 +46,8 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">Seleziona la sorgente del programma</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">Sei sicuro di voler cancellare le sorgenti dei programmi selezionate?</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_not_user_added">Please select program sources that are not added by you</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete_program_source_select_user_added">Please select program sources that are added by you</system:String>
     <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Another program source with the same location already exists.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Program Source</system:String>
@@ -72,7 +76,7 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Esegui Come Utente Differente</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Esegui Come Amministratore</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Apri percorso file</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">Disabilita questo programma dalla visualizzazione</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">Hide</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Open target folder</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Programma</system:String>

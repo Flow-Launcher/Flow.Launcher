@@ -5,6 +5,9 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Nettleserbokmerker</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Søk i nettleserbokmerker</system:String>
 
+    <!--  Main  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">Failed to set url in clipboard</system:String>
+
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Bokmerkedata</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Åpne bokmerker i:</system:String>
@@ -25,4 +28,6 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Nettlesermotor</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">Hvis du ikke bruker Chrome, Firefox eller Edge, eller hvis du bruker den bærbare versjonen, må du legge til bokmerkedatakatalog og velge riktig nettlesermotor for å få dette programtillegget til å fungere.</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">For eksempel: Brave's motor er Chromium; og standardplasseringen av bokmerker er: &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. For Firefox-motoren er bokmerkekatalogen brukerdatamappen som inneholder places.sqlite-filen.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Load favicons (can be time consuming during startup)</system:String>
+
 </ResourceDictionary>

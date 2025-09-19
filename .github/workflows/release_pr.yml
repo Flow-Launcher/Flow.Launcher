@@ -1,0 +1,25 @@
+name: Update release PR
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  update-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+      
+      - name: Run release PR update
+        env:
+          GITHUB_TOKEN: ${{ secrets.PR_TOKEN }}
+        run: |
+          pip install requests -q
+          python3 ./.github/update_release_pr.py

@@ -6,6 +6,7 @@
     <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">Appuyez sur n'importe quelle touche pour fermer cette fenêtre...</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">Ne pas fermer l'invite de commandes après l'exécution de la commande</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">Toujours exécuter en tant qu'administrateur</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_use_windows_terminal">Utiliser le Terminal Windows</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">Exécuter en tant qu'utilisateur différent</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">Shell</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Permet d'exécuter des commandes système depuis Flow Launcher</system:String>
@@ -14,4 +15,6 @@
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">Exécuter en tant qu'administrateur</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_copy">Copier la commande</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_history">Afficher uniquement le nombre de commandes les plus utilisées :</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_command_not_found">Commande introuvable : {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_error_running_command">Erreur lors de l'exécution de la commande : {0}</system:String>
 </ResourceDictionary>

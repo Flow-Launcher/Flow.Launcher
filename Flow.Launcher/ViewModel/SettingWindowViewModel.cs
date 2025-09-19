@@ -1,66 +1,61 @@
-﻿using Flow.Launcher.Core;
-using Flow.Launcher.Core.Configuration;
-using Flow.Launcher.Infrastructure.Storage;
+﻿using System;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.ViewModel;
 
-public class SettingWindowViewModel : BaseModel
+public partial class SettingWindowViewModel : BaseModel
 {
-    private readonly FlowLauncherJsonStorage<Settings> _storage;
+    private readonly Settings _settings;
 
-    public Updater Updater { get; }
-
-    public IPortable Portable { get; }
-
-    public Settings Settings { get; }
-
-    public SettingWindowViewModel(Updater updater, IPortable portable)
+    public SettingWindowViewModel(Settings settings)
     {
-        _storage = new FlowLauncherJsonStorage<Settings>();
-
-        Updater = updater;
-        Portable = portable;
-        Settings = _storage.Load();
+        _settings = settings;
     }
 
-    public async void UpdateApp()
+    public bool SetPageType(Type pageType)
     {
-        await Updater.UpdateAppAsync(App.API, false);
+        if (_pageType == pageType) return false;
+
+        _pageType = pageType;
+        return true;
     }
 
-
-
-    /// <summary>
-    /// Save Flow settings. Plugins settings are not included.
-    /// </summary>
-    public void Save()
+    private Type _pageType = null;
+    public Type PageType
     {
-        _storage.Save();
+        get => _pageType;
+        set
+        {
+            if (_pageType != value)
+            {
+                _pageType = value;
+                OnPropertyChanged();
+            }
+        }
     }
 
     public double SettingWindowWidth
     {
-        get => Settings.SettingWindowWidth;
-        set => Settings.SettingWindowWidth = value;
+        get => _settings.SettingWindowWidth;
+        set => _settings.SettingWindowWidth = value;
     }
 
     public double SettingWindowHeight
     {
-        get => Settings.SettingWindowHeight;
-        set => Settings.SettingWindowHeight = value;
+        get => _settings.SettingWindowHeight;
+        set => _settings.SettingWindowHeight = value;
     }
 
     public double? SettingWindowTop
     {
-        get => Settings.SettingWindowTop;
-        set => Settings.SettingWindowTop = value;
+        get => _settings.SettingWindowTop;
+        set => _settings.SettingWindowTop = value;
     }
 
     public double? SettingWindowLeft
     {
-        get => Settings.SettingWindowLeft;
-        set => Settings.SettingWindowLeft = value;
+        get => _settings.SettingWindowLeft;
+        set => _settings.SettingWindowLeft = value;
     }
 }

@@ -1,27 +1,36 @@
-﻿using Flow.Launcher.Infrastructure.Hotkey;
-using Flow.Launcher.Infrastructure.UserSettings;
-using System;
-using Flow.Launcher.Core.Resource;
-using Flow.Launcher.ViewModel;
-using Flow.Launcher.Core;
+﻿using System;
 using ChefKeys;
-using System.Windows.Input;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.DialogJump;
+using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.ViewModel;
+using NHotkey;
+using NHotkey.Wpf;
 
 namespace Flow.Launcher.Helper;
 
 internal static class HotKeyMapper
 {
+    private static readonly string ClassName = nameof(HotKeyMapper);
+
     private static Settings _settings;
     private static MainViewModel _mainViewModel;
-    
-    internal static void Initialize(MainViewModel mainVM)
+
+    internal static void Initialize()
     {
-        _mainViewModel = mainVM;
-        _settings = _mainViewModel.Settings;
+        _mainViewModel = Ioc.Default.GetRequiredService<MainViewModel>();
+        _settings = Ioc.Default.GetService<Settings>();
 
         ChefKeysManager.RegisterHotkey(_settings.Hotkey, ToggleHotkey);
         ChefKeysManager.Start();
-        
+
+        // TODO: Resolve this
+        if (_settings.EnableDialogJump)
+        {
+            SetHotkey(_settings.DialogJumpHotkey, DialogJump.OnToggleHotkey);
+        }
+
         LoadCustomPluginHotkey();
     }
 
@@ -33,13 +42,46 @@ internal static class HotKeyMapper
 
     internal static void RegisterHotkey(string hotkey, string previousHotkey, Action action)
     {
-        ChefKeysManager.RegisterHotkey(hotkey, previousHotkey, action);
+        try
+        {
+            ChefKeysManager.RegisterHotkey(hotkey, previousHotkey, action);
+        }
+        catch (Exception e)
+        {
+            App.API.LogError(ClassName,
+                string.Format("|HotkeyMapper.SetHotkey|Error registering hotkey {2}: {0} \nStackTrace:{1}",
+                              e.Message,
+                              e.StackTrace,
+                              hotkeyStr));
+            string errorMsg = string.Format(App.API.GetTranslation("registerHotkeyFailed"), hotkeyStr);
+            string errorMsgTitle = App.API.GetTranslation("MessageBoxTitle");
+            App.API.ShowMsgBox(errorMsg, errorMsgTitle);
+        }
     }
 
     internal static void UnregisterHotkey(string hotkey)
     {
-        if (!string.IsNullOrEmpty(hotkey))
-            ChefKeysManager.UnregisterHotkey(hotkey);
+        try
+        {
+            if (!string.IsNullOrEmpty(hotkey))
+                ChefKeysManager.UnregisterHotkey(hotkey);
+        }
+        catch (Exception e)
+        {
+            App.API.LogError(ClassName,
+                string.Format("|HotkeyMapper.RemoveHotkey|Error removing hotkey: {0} \nStackTrace:{1}",
+                              e.Message,
+                              e.StackTrace));
+            string errorMsg = string.Format(App.API.GetTranslation("unregisterHotkeyFailed"), hotkeyStr);
+            string errorMsgTitle = App.API.GetTranslation("MessageBoxTitle");
+            App.API.ShowMsgBox(errorMsg, errorMsgTitle);
+        }
+    }
+
+    private static void RemoveWithChefKeys(string hotkeyStr)
+    {
+        ChefKeysManager.UnregisterHotkey(hotkeyStr);
+        ChefKeysManager.Stop();
     }
 
     internal static void LoadCustomPluginHotkey()
@@ -57,8 +99,8 @@ internal static class HotKeyMapper
             if (_mainViewModel.ShouldIgnoreHotkeys())
                 return;
 
-            _mainViewModel.Show();
-            _mainViewModel.ChangeQueryText(hotkey.ActionKeyword, true);
+            App.API.ShowMainWindow();
+            App.API.ChangeQuery(hotkey.ActionKeyword, true);
         });
     }
 

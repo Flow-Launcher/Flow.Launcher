@@ -1,52 +1,53 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <system:String x:Key="flowlauncher_plugin_websearch_window_title">Search Source Setting</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_open_search_in">Open search in:</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_new_window">New Window</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_new_tab">New Tab</system:String>
-    <system:String x:Key="flowlaucnher_plugin_websearch_set_browser_path">Set browser from path:</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_choose">Choose</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_window_title">הגדרת מקור חיפו</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_open_search_in">פתח חיפוש ב:</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_new_window">חלון חד</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_new_tab">לשונית חדשה</system:String>
+    <system:String x:Key="flowlaucnher_plugin_websearch_set_browser_path">הגדר דפדפן מנתיב:</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_choose">בח</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete">מחק</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_edit">ערוך</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_edit">ערו</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">הוסף</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">Enabled</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_true">Enabled</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_false">Disabled</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_confirm">Confirm</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Action Keyword</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_search">Search</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Use Search Query Autocomplete:</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Autocomplete Data from:</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Please select a web search</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Are you sure you want to delete {0}?</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_guide_1">If you want to add a search for a particular website to Flow, first enter a dummy text string in the search bar of that website, and launch the search. Now copy the contents of the browser's address bar, and paste it in the URL field below. Replace your test string with {q}. For example, if you search for casino on Netflix, its address bar reads</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">מופעל</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_private_mode_label">מצב פרטי</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_true">מופעל</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_false">מושבת</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_confirm">אישו</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">מילת מפתח לפעולה</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_url">כתובת URL</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_search">חיפו</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">השתמש בהשלמה אוטומטית לשאילתת חיפוש</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">השלמה אוטומטית מתוך:</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">בחר שירות חיפוש אינטרנטי</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">האם אתה בטוח שברצונך למחוק את {0}?</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_guide_1">אם ברצונך להוסיף חיפוש לאתר מסוים ב-Flow, ראשית הזן טקסט לדוגמה בשורת החיפוש של האתר והפעל את החיפוש. כעת העתק את הכתובת משורת הכתובת של הדפדפן והדבק אותה בשדה ה-URL למטה. החלף את מחרוזת הבדיקה שלך ב-{q}. לדוגמה, אם תחפש 'casino' ב-Netflix, שורת הכתובת תיראה כך:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_2">https://www.netflix.com/search?q=Casino</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_3">
-        Now copy this entire string and paste it in the URL field below.
-        Then replace casino with {q}.
-        Thus, the generic formula for a search on Netflix is https://www.netflix.com/search?q={q}
+        כעת העתק מחרוזת זו והדבק אותה בשדה ה-URL למטה.
+        לאחר מכן, החלף את המילה 'casino' ב-{q}.
+        כך מתקבלת תבנית כללית לחיפוש ב-Netflix: https://www.netflix.com/search?q={q}
     </system:String>
 
-    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">Copy URL</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">Copy search URL to clipboard</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">העתק כתובת URL</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">העתק את כתובת החיפוש ללוח</system:String>
 
     <!--  web search edit  -->
-    <system:String x:Key="flowlauncher_plugin_websearch_title">Title</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable">Status</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_select_icon">Select Icon</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_icon">Icon</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_title">כותרת</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable">סטטוס</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_select_icon">בחר סמל</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_icon">סמל</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_cancel">ביטול</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_invalid_web_search">Invalid web search</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_input_title">Please enter a title</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_input_action_keyword">Please enter an action keyword</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_input_url">Please enter a URL</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_action_keyword_exist">Action keyword already exists, please enter a different one</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_invalid_web_search">חיפוש אינטרנט לא תקף</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_input_title">הזן כותרת</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_input_action_keyword">הזן מילת מפתח לפעולה</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_input_url">הזן כתובת URL</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_action_keyword_exist">מילת המפתח כבר קיימת, הזן אחת אחרת</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_succeed">הצליח</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">Hint: You do not need to place custom images in this directory, if Flow's version is updated they will be lost. Flow will automatically copy any images outside of this directory across to WebSearch's custom image location.</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">רמז: אין צורך להוסיף תמונות מותאמות אישית לתיקייה זו, כיוון שבעדכון הבא של Flow הן יאבדו. Flow יעתיק אוטומטית תמונות שנמצאות מחוץ לתיקייה זו למיקום התמונות המותאמות אישית של WebSearch.</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_websearch_plugin_name">Web Searches</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_plugin_description">Allows to perform web searches</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_plugin_name">חיפושי אינטרנט</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_plugin_description">מאפשר לבצע חיפושים באינטרנט</system:String>
 
 </ResourceDictionary>

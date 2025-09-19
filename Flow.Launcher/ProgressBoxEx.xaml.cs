@@ -2,52 +2,53 @@
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher
 {
     public partial class ProgressBoxEx : Window
     {
-        private readonly Action _forceClosed;
+        private static readonly string ClassName = nameof(ProgressBoxEx);
 
-        private ProgressBoxEx(Action forceClosed)
+        private readonly Action _cancelProgress;
+
+        private ProgressBoxEx(Action cancelProgress)
         {
-            _forceClosed = forceClosed;
+            _cancelProgress = cancelProgress;
             InitializeComponent();
         }
 
-        public static async Task ShowAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action forceClosed = null)
+        public static async Task ShowAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action cancelProgress = null)
         {
-            ProgressBoxEx prgBox = null;
+            ProgressBoxEx progressBox = null;
             try
             {
                 if (!Application.Current.Dispatcher.CheckAccess())
                 {
                     await Application.Current.Dispatcher.InvokeAsync(() =>
                     {
-                        prgBox = new ProgressBoxEx(forceClosed)
+                        progressBox = new ProgressBoxEx(cancelProgress)
                         {
                             Title = caption
                         };
-                        prgBox.TitleTextBlock.Text = caption;
-                        prgBox.Show();
+                        progressBox.TitleTextBlock.Text = caption;
+                        progressBox.Show();
                     });
                 }
                 else
                 {
-                    prgBox = new ProgressBoxEx(forceClosed)
+                    progressBox = new ProgressBoxEx(cancelProgress)
                     {
                         Title = caption
                     };
-                    prgBox.TitleTextBlock.Text = caption;
-                    prgBox.Show();
+                    progressBox.TitleTextBlock.Text = caption;
+                    progressBox.Show();
                 }
 
-                await reportProgressAsync(prgBox.ReportProgress).ConfigureAwait(false);
+                await reportProgressAsync(progressBox.ReportProgress).ConfigureAwait(false);
             }
             catch (Exception e)
             {
-                Log.Error($"|ProgressBoxEx.Show|An error occurred: {e.Message}");
+                App.API.LogError(ClassName, $"An error occurred: {e.Message}");
 
                 await reportProgressAsync(null).ConfigureAwait(false);
             }
@@ -57,12 +58,12 @@ namespace Flow.Launcher
                 {
                     await Application.Current.Dispatcher.InvokeAsync(() =>
                     {
-                        prgBox?.Close();
+                        progressBox?.Close();
                     });
                 }
                 else
                 {
-                    prgBox?.Close();
+                    progressBox?.Close();
                 }
             }
         }
@@ -95,20 +96,25 @@ namespace Flow.Launcher
             ForceClose();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            ForceClose();
-        }
-
         private void Button_Cancel(object sender, RoutedEventArgs e)
         {
             ForceClose();
         }
 
+        private void Button_Minimize(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void Button_Background(object sender, RoutedEventArgs e)
+        {
+            Hide();
+        }
+
         private void ForceClose()
         {
             Close();
-            _forceClosed?.Invoke();
+            _cancelProgress?.Invoke();
         }
     }
 }

@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using Microsoft.Win32;
-using Flow.Launcher.Core.Plugin;
 
 namespace Flow.Launcher.Plugin.WebSearch
 {
@@ -16,7 +17,6 @@ namespace Flow.Launcher.Plugin.WebSearch
         private SearchSourceViewModel _viewModel;
         private string selectedNewIconImageFullPath;
 
-
         public SearchSourceSettingWindow(IList<SearchSource> sources, PluginInitContext context, SearchSource old)
         {
             _oldSearchSource = old;
@@ -30,6 +30,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             Initialize(sources, context, Action.Add);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         private async void Initialize(IList<SearchSource> sources, PluginInitContext context, Action action)
         {
             InitializeComponent();
@@ -80,10 +81,10 @@ namespace Flow.Launcher.Plugin.WebSearch
         private void AddSearchSource()
         {
             var keyword = _searchSource.ActionKeyword;
-            if (!PluginManager.ActionKeywordRegistered(keyword))
+            if (!_context.API.ActionKeywordAssigned(keyword))
             {
                 var id = _context.CurrentPluginMetadata.ID;
-                PluginManager.AddActionKeyword(id, keyword);
+                _context.API.AddActionKeyword(id, keyword);
 
                 _searchSources.Add(_searchSource);
 
@@ -100,10 +101,11 @@ namespace Flow.Launcher.Plugin.WebSearch
         {
             var newKeyword = _searchSource.ActionKeyword;
             var oldKeyword = _oldSearchSource.ActionKeyword;
-            if (!PluginManager.ActionKeywordRegistered(newKeyword) || oldKeyword == newKeyword)
+            if (!_context.API.ActionKeywordAssigned(newKeyword) || oldKeyword == newKeyword)
             {
                 var id = _context.CurrentPluginMetadata.ID;
-                PluginManager.ReplaceActionKeyword(id, oldKeyword, newKeyword);
+                _context.API.RemoveActionKeyword(id, oldKeyword);
+                _context.API.AddActionKeyword(id, newKeyword);
 
                 var index = _searchSources.IndexOf(_oldSearchSource);
                 _searchSources[index] = _searchSource;
@@ -125,6 +127,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "VSTHRD100:Avoid async void methods", Justification = "<Pending>")]
         private async void OnSelectIconClick(object sender, RoutedEventArgs e)
         {
             const string filter = "Image files (*.jpg, *.jpeg, *.gif, *.png, *.bmp) |*.jpg; *.jpeg; *.gif; *.png; *.bmp";
@@ -142,6 +145,30 @@ namespace Flow.Launcher.Plugin.WebSearch
                     
                     imgPreviewIcon.Source = await _viewModel.LoadPreviewIconAsync(selectedNewIconImageFullPath);
                 }
+            }
+        }
+
+        //Block Space Input
+        private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true;
+            }
+        }
+        private void TextBox_Pasting(object sender, DataObjectPastingEventArgs e)
+        {
+            if (e.DataObject.GetDataPresent(DataFormats.Text))
+            {
+                string text = e.DataObject.GetData(DataFormats.Text) as string;
+                if (!string.IsNullOrEmpty(text) && text.Any(char.IsWhiteSpace))
+                {
+                    e.CancelCommand();
+                }
+            }
+            else
+            {
+                e.CancelCommand();
             }
         }
     }

@@ -2,34 +2,38 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Command List  -->
-    <system:String x:Key="flowlauncher_plugin_sys_command">Komut</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_name">Ad</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_desc">Açıklama</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_command">Komut</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer_cmd">Shutdown</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart_computer_cmd">Restart</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart_advanced_cmd">Restart With Advanced Boot Options</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_log_off_cmd">Log Off/Sign Out</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_lock_cmd">Lock</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_sleep_cmd">Sleep</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_hibernate_cmd">Hibernate</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_indexoption_cmd">Index Option</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin_cmd">Empty Recycle Bin</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin_cmd">Open Recycle Bin</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_exit_cmd">Çıkı</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_save_all_settings_cmd">Save Settings</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer_cmd">Bilgisayarı Kapat</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_computer_cmd">Yeniden Başlat</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_advanced_cmd">Gelişmiş Önyükleme Seçenekleri ile Yeniden Başlat</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_log_off_cmd">Oturumu Kapat</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_lock_cmd">Kilitle</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_sleep_cmd">Uyku Moduna Geç</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_hibernate_cmd">Hazırda Beklet</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_indexoption_cmd">Dizin Seçeneği</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin_cmd">Geri Dönüşüm Kutusunu Boşalt</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin_cmd">Geri Dönüşüm Kutusunu Aç</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_exit_cmd">Çıkış</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_save_all_settings_cmd">Ayarları Kaydet</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_cmd">Flow Launcher'u Yeniden Başlat</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_setting_cmd">Ayarlar</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data_cmd">Reload Plugin Data</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_check_for_update_cmd">Check For Update</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_open_log_location_cmd">Open Log Location</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips_cmd">Flow Launcher Tips</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location_cmd">Flow Launcher UserData Folder</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode_cmd">Toggle Game Mode</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data_cmd">Eklenti Verisini Yenile</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_check_for_update_cmd">Güncellemeleri Denetle</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_log_location_cmd">Günlük Konumunu Aç</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips_cmd">Flow Launcher İpuçları</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location_cmd">Flow Launcher UserData Klasörü</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode_cmd">Oyun Modunu Aç/Kapat</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector_cmd">Flow Launcher Temasını Ayarla</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_sys_edit">Düzenle</system:String>
 
     <!--  Command Descriptions  -->
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">Bilgisayarı Kapat</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_computer">Yeniden Başlat</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart_advanced">Restart the computer with Advanced Boot Options for Safe and Debugging modes, as well as other options</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_advanced">Gelişmiş Başlatma Seçenekleri ile bilgisayarı yeniden başlatın, Güvenli Mod ve Hata Ayıklama Modu da dahil olmak üzere diğer seçenekler için</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_log_off">Oturumu Kapat</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_lock">Bilgisayarı Kilitle</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_exit">Flow Launcher'u Kapat</system:String>
@@ -37,25 +41,37 @@
     <system:String x:Key="flowlauncher_plugin_sys_setting">Flow Launcher Ayarlarını Aç</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_sleep">Bilgisayarı Uyku Moduna Al</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin">Geri Dönüşüm Kutusunu Boşalt</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin">Open recycle bin</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_indexoption">Indexing Options</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin">Geri dönüşüm kutusunu aç</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_indexoption">Dizin Oluşturma Seçenekleri</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_hibernate">Bilgisayarı Askıya Al</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_save_all_settings">Tüm Flow Launcher Ayarlarını Kaydet</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data">Eklentilerin verilerini Flow Launcher'un açılışından sonra yapılan değişiklikleri için günceller. Eklentilerin bu özelliği zaten eklemiş olması gerekir.</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_open_log_location">Open Flow Launcher's log location</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_check_for_update">Check for new Flow Launcher update</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">Visit Flow Launcher's documentation for more help and how to use tips</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Open the location where Flow Launcher's settings are stored</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode">Toggle Game Mode</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_log_location">Flow Launcher'ın günlük konumunu aç</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_check_for_update">Yeni Flow Launcher güncellemelerini kontrol et</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">Daha fazla yardım ve ipuçları için Flow Launcher'ın dokümantasyonunu ziyaret edin</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Flow Launcher'ın ayarlarının depolandığı dosya konumunu açın</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode">Oyun Modunu Aç/Kapat</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector">Flow Launcher temasını hızlıca değiştir</system:String>
 
-        <!--  Dialogs  -->
+    <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">Başarılı</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">Tüm Flow Launcher ayarları kaydedildi.</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Reloaded all applicable plugin data</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Geçerli tüm eklenti verileri yeniden yüklendi</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_shutdown_computer">Bilgisayarı kapatmak istediğinize emin misiniz?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">Bilgisayarı yeniden başlatmak istediğinize emin misiniz?</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Are you sure you want to restart the computer with Advanced Boot Options?</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Are you sure you want to log off?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Gelişmiş Başlatma Seçenekleri ile bilgisayarı yeniden başlatmak istediğinizden emin misiniz?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Oturumu kapatmayı istediğinizden emin misiniz?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_error">Hata</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_empty_recycle_bin_failed">Geri dönüşüm kutusu boşaltılamadı. Bu durum şu durumlarda meydana gelebilir:{0}- Bazı öğeler şu anda kullanımda{0}- Bazı öğeler izinler nedeniyle silinemiyor{0}Lütfen bu dosyaları kullanıyor olabilecek tüm uygulamaları kapatın ve tekrar deneyin.</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Komut Anahtar Kelimesi Ayarı</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Özel Komut Anahtar Kelimesi</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword_tip">Komut aramak için bir anahtar kelimesi girin: {0}. Bu anahtar kelime, sorgunuzu eşleştirmek için kullanılır.</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_command_keyword">Komut Anahtar Kelimesi</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_reset">Sıfırla</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_confirm">Onayla</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_cancel">İptal</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_input_command_keyword">Lütfen boş olmayan bir komut anahtar kelimesini girin</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">Sistem Komutları</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Sistem ile ilgili komutlara erişim sağlar. ör. shutdown, lock, settings vb.</system:String>

@@ -1,4 +1,6 @@
 # See https://github.com/check-spelling/check-spelling/wiki/Configuration-Examples:-patterns
+# This file should contain strings that contain a mix of letters and numbers, or specific symbols
+
 
 # Questionably acceptable forms of `in to`
 # Personally, I prefer `log into`, but people object
@@ -121,3 +123,28 @@
 
 # version suffix <word>v#
 (?:(?<=[A-Z]{2})V|(?<=[a-z]{2}|[A-Z]{2})v)\d+(?:\b|(?=[a-zA-Z_]))
+
+# Non-English
+[a-zA-Z]*[ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýÿĀāŁłŃńŅņŒœŚśŠšŜŝŸŽžź][a-zA-Z]{3}[a-zA-ZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýÿĀāŁłŃńŅņŒœŚśŠšŜŝŸŽžź]*
+
+
+\bjjw24\b
+\bappref-ms\b
+\bTobiasSekan\b
+\bJsonRPC\b
+\bJsonRPCV2\b
+\bTiếng Việt\b
+\bPortuguês (Brasil)\b
+\bčeština\b
+\bPortuguês\b
+\bIoc\b
+\bXiao\s*He\b
+\bZi\s*Ran\s*Ma\b
+\bWei\s*Ruan\b
+\bZhi\s*Neng\s*ABC\b
+\bZi\s*Guang\s*Pin\s*Yin\b
+\bPin\s*Yin\s*Jia\s*Jia\b
+\bXing\s*Kong\s*Jian\s*Dao\b
+\bDa\s*Niu\b
+\bXiao\s*Lang\b
+\b[Ss]ettings [Ss]ettings\b

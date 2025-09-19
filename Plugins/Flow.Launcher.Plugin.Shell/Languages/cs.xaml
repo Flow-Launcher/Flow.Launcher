@@ -6,6 +6,7 @@
     <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">Press any key to close this window...</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">Po dokončení příkazu příkazový řádek nezavírejte</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">Vždy spustit jako správce</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_use_windows_terminal">Use Windows Terminal</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">Spustit jako jiný uživatel</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">Shell</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Umožní spouštět systémové příkazy z Flow Launcheru</system:String>
@@ -14,4 +15,6 @@
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">Spustit jako správce</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_copy">Kopírovat příkaz</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_history">Zobrazit pouze počet nejpoužívanějších příkazů:</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_command_not_found">Command not found: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_error_running_command">Error running the command: {0}</system:String>
 </ResourceDictionary>

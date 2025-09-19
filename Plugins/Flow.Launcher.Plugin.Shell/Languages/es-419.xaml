@@ -6,6 +6,7 @@
     <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">Press any key to close this window...</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">No cerrar Símbolo del Sistema tras ejecutar el comando</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">Siempre ejecutar como administrador</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_use_windows_terminal">Use Windows Terminal</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">Ejecutar como otro usuario</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">Shell</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Allows to execute system commands from Flow Launcher</system:String>
@@ -14,4 +15,6 @@
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">Ejecutar como administrador</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_copy">Copiar comando</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_history">Sólo mostrar el número de comandos más usados:</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_command_not_found">Command not found: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_error_running_command">Error running the command: {0}</system:String>
 </ResourceDictionary>

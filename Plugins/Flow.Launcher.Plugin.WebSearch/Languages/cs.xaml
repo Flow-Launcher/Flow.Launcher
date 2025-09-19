@@ -11,13 +11,14 @@
     <system:String x:Key="flowlauncher_plugin_websearch_edit">Editovat</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">Přidat</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">Povoleno</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_private_mode_label">Soukromý režim</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_true">Povoleno</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_false">Deaktivován</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">Potvrdit</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Aktivační příkaz</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">Hledat</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Používejte automatické dokončování vyhledávaných výrazů:</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Use Search Query Autocomplete</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Automatické doplnění údajů z:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Vyberte webové vyhledávání</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Opravdu chcete odstranit {0}?</system:String>

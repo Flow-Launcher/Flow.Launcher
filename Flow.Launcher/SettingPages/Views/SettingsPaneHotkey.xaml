@@ -34,8 +34,7 @@
                 <flowlauncher:HotkeyControl
                     ChangeHotkey="{Binding SetTogglingHotkeyCommand}"
                     DefaultHotkey="LeftAlt+Space"
-                    Hotkey="{Binding Settings.Hotkey}"
-                    HotkeySettings="{Binding Settings}"
+                    Type="Hotkey"
                     ValidateKeyGesture="True"
                     WindowTitle="{DynamicResource flowlauncherHotkey}"
                     IsWPFHotkeyControl="False" />
@@ -47,14 +46,16 @@
                 Sub="{DynamicResource previewHotkeyToolTip}">
                 <flowlauncher:HotkeyControl
                     DefaultHotkey="F1"
-                    Hotkey="{Binding Settings.PreviewHotkey}"
-                    HotkeySettings="{Binding Settings}"
+                    Type="PreviewHotkey"
                     ValidateKeyGesture="False"
                     WindowTitle="{DynamicResource previewHotkey}" />
             </cc:Card>
 
             <cc:CardGroup Margin="0 12 0 0">
-                <cc:Card Title="{DynamicResource openResultModifiers}" Sub="{DynamicResource openResultModifiersToolTip}">
+                <cc:Card
+                    Title="{DynamicResource openResultModifiers}"
+                    Sub="{DynamicResource openResultModifiersToolTip}"
+                    Type="First">
                     <ComboBox
                         Width="120"
                         FontSize="14"
@@ -62,13 +63,29 @@
                         SelectedValue="{Binding Settings.OpenResultModifiers}" />
                 </cc:Card>
 
-                <cc:Card Title="{DynamicResource showOpenResultHotkey}" Sub="{DynamicResource showOpenResultHotkeyToolTip}">
+                <cc:Card
+                    Title="{DynamicResource showOpenResultHotkey}"
+                    Sub="{DynamicResource showOpenResultHotkeyToolTip}"
+                    Type="Last">
                     <ui:ToggleSwitch
                         IsOn="{Binding Settings.ShowOpenResultHotkey}"
                         OffContent="{DynamicResource disable}"
                         OnContent="{DynamicResource enable}" />
                 </cc:Card>
             </cc:CardGroup>
+
+            <cc:Card
+                Title="{DynamicResource dialogJumpHotkey}"
+                Margin="0 14 0 0"
+                Icon="&#xE8AB;"
+                Sub="{DynamicResource dialogJumpHotkeyToolTip}">
+                <flowlauncher:HotkeyControl
+                    ChangeHotkey="{Binding SetDialogJumpHotkeyCommand}"
+                    DefaultHotkey="Alt+G"
+                    Type="DialogJumpHotkey"
+                    ValidateKeyGesture="False"
+                    WindowTitle="{DynamicResource dialogJumpHotkey}" />
+            </cc:Card>
 
             <cc:ExCard
                 Title="{DynamicResource hotkeyPresets}"
@@ -92,7 +109,10 @@
                         Title="{DynamicResource ToggleHistoryHotkey}"
                         Icon="&#xf738;"
                         Type="Inside">
-                        <cc:HotkeyDisplay Keys="Ctrl+H" />
+                        <flowlauncher:HotkeyControl
+                            DefaultHotkey="Ctrl+H"
+                            Type="OpenHistoryHotkey"
+                            ValidateKeyGesture="False" />
                     </cc:Card>
                     <cc:Card
                         Title="{DynamicResource CopyFilePathHotkey}"
@@ -106,8 +126,7 @@
                         Type="Inside">
                         <flowlauncher:HotkeyControl
                             DefaultHotkey="Ctrl+I"
-                            Hotkey="{Binding Settings.OpenContextMenuHotkey}"
-                            HotkeySettings="{Binding Settings}"
+                            Type="OpenContextMenuHotkey"
                             ValidateKeyGesture="False" />
                     </cc:Card>
                     <cc:Card
@@ -128,8 +147,7 @@
                         Type="Inside">
                         <flowlauncher:HotkeyControl
                             DefaultHotkey="Ctrl+I"
-                            Hotkey="{Binding Settings.SettingWindowHotkey}"
-                            HotkeySettings="{Binding Settings}"
+                            Type="SettingWindowHotkey"
                             ValidateKeyGesture="False" />
                     </cc:Card>
                     <cc:Card
@@ -150,8 +168,7 @@
                         Type="Inside">
                         <flowlauncher:HotkeyControl
                             DefaultHotkey="Alt+Up"
-                            Hotkey="{Binding Settings.CycleHistoryUpHotkey}"
-                            HotkeySettings="{Binding Settings}"
+                            Type="CycleHistoryUpHotkey"
                             ValidateKeyGesture="False" />
                     </cc:Card>
                     <cc:Card
@@ -160,8 +177,7 @@
                         Type="Inside">
                         <flowlauncher:HotkeyControl
                             DefaultHotkey="Alt+Down"
-                            Hotkey="{Binding Settings.CycleHistoryDownHotkey}"
-                            HotkeySettings="{Binding Settings}"
+                            Type="CycleHistoryDownHotkey"
                             ValidateKeyGesture="False" />
                     </cc:Card>
                     <cc:Card
@@ -177,8 +193,7 @@
                         Type="Inside">
                         <flowlauncher:HotkeyControl
                             DefaultHotkey=""
-                            Hotkey="{Binding Settings.SelectPrevPageHotkey}"
-                            HotkeySettings="{Binding Settings}"
+                            Type="SelectPrevPageHotkey"
                             ValidateKeyGesture="False" />
                     </cc:Card>
                     <cc:Card
@@ -187,8 +202,7 @@
                         Type="Inside">
                         <flowlauncher:HotkeyControl
                             DefaultHotkey=""
-                            Hotkey="{Binding Settings.SelectNextPageHotkey}"
-                            HotkeySettings="{Binding Settings}"
+                            Type="SelectNextPageHotkey"
                             ValidateKeyGesture="False" />
                     </cc:Card>
 
@@ -222,8 +236,7 @@
                 <cc:ExCard.SideContent>
                     <flowlauncher:HotkeyControl
                         DefaultHotkey="Ctrl+Tab"
-                        Hotkey="{Binding Settings.AutoCompleteHotkey}"
-                        HotkeySettings="{Binding Settings}"
+                        Type="AutoCompleteHotkey"
                         ValidateKeyGesture="False" />
                 </cc:ExCard.SideContent>
                 <cc:Card
@@ -232,8 +245,7 @@
                     Type="InsideFit">
                     <flowlauncher:HotkeyControl
                         DefaultHotkey=""
-                        Hotkey="{Binding Settings.AutoCompleteHotkey2}"
-                        HotkeySettings="{Binding Settings}"
+                        Type="AutoCompleteHotkey2"
                         ValidateKeyGesture="False" />
                 </cc:Card>
             </cc:ExCard>
@@ -245,8 +257,7 @@
                 <cc:ExCard.SideContent>
                     <flowlauncher:HotkeyControl
                         DefaultHotkey="Shift+Tab"
-                        Hotkey="{Binding Settings.SelectPrevItemHotkey}"
-                        HotkeySettings="{Binding Settings}"
+                        Type="SelectPrevItemHotkey"
                         ValidateKeyGesture="False" />
                 </cc:ExCard.SideContent>
                 <cc:Card
@@ -255,8 +266,7 @@
                     Type="InsideFit">
                     <flowlauncher:HotkeyControl
                         DefaultHotkey=""
-                        Hotkey="{Binding Settings.SelectPrevItemHotkey2}"
-                        HotkeySettings="{Binding Settings}"
+                        Type="SelectPrevItemHotkey2"
                         ValidateKeyGesture="False" />
                 </cc:Card>
             </cc:ExCard>
@@ -268,8 +278,7 @@
                 <cc:ExCard.SideContent>
                     <flowlauncher:HotkeyControl
                         DefaultHotkey="Tab"
-                        Hotkey="{Binding Settings.SelectNextItemHotkey}"
-                        HotkeySettings="{Binding Settings}"
+                        Type="SelectNextItemHotkey"
                         ValidateKeyGesture="False" />
                 </cc:ExCard.SideContent>
                 <cc:Card
@@ -278,8 +287,7 @@
                     Type="InsideFit">
                     <flowlauncher:HotkeyControl
                         DefaultHotkey=""
-                        Hotkey="{Binding Settings.SelectNextItemHotkey2}"
-                        HotkeySettings="{Binding Settings}"
+                        Type="SelectNextItemHotkey2"
                         ValidateKeyGesture="False" />
                 </cc:Card>
             </cc:ExCard>
@@ -439,7 +447,7 @@
                                     <GridViewColumn Width="430" Header="{DynamicResource builtinShortcutDescription}">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate DataType="{x:Type userSettings:BuiltinShortcutModel}">
-                                                <TextBlock Text="{Binding Description, Converter={StaticResource TranslationConverter}}" />
+                                                <TextBlock Text="{Binding LocalizedDescription}" />
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>

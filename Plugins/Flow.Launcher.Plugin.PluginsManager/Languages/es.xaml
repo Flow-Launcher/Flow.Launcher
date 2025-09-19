@@ -13,6 +13,8 @@
     <system:String x:Key="plugin_pluginsmanager_installing_plugin">Instalando complemento</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Descargar e instalar {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Desinstalar complemento</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_title">Mantener la configuración del complemento</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_subtitle">¿Desea mantener la configuración del complemento para el próximo uso?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_success_restart">Complemento {0} instalado correctamente. Reiniciando Flow, por favor espere...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">No se ha podido encontrar el archivo de metadatos plugin.json del archivo zip extraído.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Error: Ya existe un complemento que tiene la misma o mayor versión con {0}.</system:String>
@@ -25,7 +27,7 @@
     <system:String x:Key="plugin_pluginsmanager_update_prompt_no_restart">{0} por {1} {2}{2}¿Desea actualizar este complemento?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_title">Actualizar complemento</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Este complemento ya está instalado</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_failed_title">La descarga del manifiesto del complemento ha fallado</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_failed_title">Ha fallado la descarga del manifiesto del complemento</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Por favor, compruebe que puede establecer conexión con github.com. Este error significa que es posible que no pueda instalar o actualizar complementos.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_title">Actualizar todos los complementos</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_subtitle">¿Desea actualizar todos los complementos?</system:String>
@@ -35,16 +37,21 @@
     <system:String x:Key="plugin_pluginsmanager_update_success_restart">Complemento {0} actualizado correctamente. Reiniciando Flow, por favor espere...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Instalando desde una fuente desconocida</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">¡Está instalando este complemento desde una fuente desconocida y puede contener riesgos potenciales!{0}{0}Por favor, asegúrese de saber de dónde procede este complemento y de que es seguro.{0}{0}¿Aún así desea continuar?{0}{0}(Puede desactivar esta advertencia en la configuración)</system:String>
-    
+
     <system:String x:Key="plugin_pluginsmanager_install_success_no_restart">Complemento {0} instalado correctamente. Por favor, reinicie Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_success_no_restart">Complemento {0} desinstalado correctamente. Por favor, reinicie Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">Complemento {0} actualizado correctamente. Por favor, reinicie Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">{0} complementos se han actualizado correctamente. Por favor, reinicie Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">El complemento {0} ya ha sido modificado. Por favor, reinicie Flow antes de realizar más cambios.</system:String>
-   
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_title">{0} ya está modificado</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error_message">Reiniciar Flow antes de realizar más cambios</system:String>
+
+    <system:String x:Key="plugin_pluginsmanager_invalid_zip_title">Archivo de instalación zip no válido</system:String>
+    <system:String x:Key="plugin_pluginsmanager_invalid_zip_subtitle">Por favor, compruebe si hay un plugin.json en {0}</system:String>
+
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_name">Administrador de complementos</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_description">Administración de instalación, desinstalación o actualización de los complementos de Flow Launcher</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_description">Instalar, desinstalar o actualizar complementos de Flow Launcher desde la ventana de búsqueda</system:String>
     <system:String x:Key="plugin_pluginsmanager_unknown_author">Autor desconocido</system:String>
 
     <!--  Context menu items  -->
@@ -59,5 +66,5 @@
 
     <!--  Settings menu items  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Aviso de instalación desde fuentes desconocidas</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Reiniciar automáticamente Flow Launcher después de instalar/desinstalar/actualizar complementos</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Reiniciar Flow Launcher automáticamente después de instalar/desinstalar/actualizar el complemento a través del Administrador de complementos</system:String>
 </ResourceDictionary>

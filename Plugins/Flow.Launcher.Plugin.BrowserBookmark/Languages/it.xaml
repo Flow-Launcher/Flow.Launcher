@@ -5,6 +5,9 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Segnalibri del Browser</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Cerca nei segnalibri del tuo browser</system:String>
 
+    <!--  Main  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">Failed to set url in clipboard</system:String>
+
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Dati del segnalibro</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Apri preferiti in:</system:String>
@@ -25,4 +28,6 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Motore di Navigazione</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">Se non si utilizza Chrome, Firefox o Edge, o si utilizza la loro versione portatile, è necessario aggiungere la cartella dei segnalibri e selezionare il motore di navigazione corretto per far funzionare questo plugin.</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">Per esempio: il motore di Brave è Chromium, e la sua posizione predefinita dei segnalibri è: &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. Per il motore di Firefox, la directory dei segnalibri è la cartella dei dati utente che contiene il file places.sqlite.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Load favicons (can be time consuming during startup)</system:String>
+
 </ResourceDictionary>

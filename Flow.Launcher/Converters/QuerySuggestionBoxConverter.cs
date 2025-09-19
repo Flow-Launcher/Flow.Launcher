@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.Converters;
 
 public class QuerySuggestionBoxConverter : IMultiValueConverter
 {
+    private static readonly string ClassName = nameof(QuerySuggestionBoxConverter);
+
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
         // values[0] is TextBox: The textbox displaying the autocomplete suggestion
@@ -31,20 +33,52 @@ public class QuerySuggestionBoxConverter : IMultiValueConverter
         {
             var selectedResult = selectedItem.Result;
             var selectedResultActionKeyword = string.IsNullOrEmpty(selectedResult.ActionKeywordAssigned) ? "" : selectedResult.ActionKeywordAssigned + " ";
-            var selectedResultPossibleSuggestion = selectedResultActionKeyword + selectedResult.Title;
 
-            if (!selectedResultPossibleSuggestion.StartsWith(queryText, StringComparison.CurrentCultureIgnoreCase))
+            string selectedResultPossibleSuggestion = null;
+            
+            // Firstly check if the result has QuerySuggestionText
+            if (!string.IsNullOrEmpty(selectedResult.QuerySuggestionText))
+            {
+                selectedResultPossibleSuggestion = selectedResultActionKeyword + selectedResult.QuerySuggestionText;
+
+                // If this QuerySuggestionText does not start with the queryText, set it to null
+                if (!selectedResultPossibleSuggestion.StartsWith(queryText, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    selectedResultPossibleSuggestion = null;
+                }
+            }
+
+            // Then check Title as suggestion
+            if (string.IsNullOrEmpty(selectedResultPossibleSuggestion))
+            {
+                selectedResultPossibleSuggestion = selectedResultActionKeyword + selectedResult.Title;
+
+                // If this QuerySuggestionText does not start with the queryText, set it to null
+                if (!selectedResultPossibleSuggestion.StartsWith(queryText, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    selectedResultPossibleSuggestion = null;
+                }
+            }
+
+            if (string.IsNullOrEmpty(selectedResultPossibleSuggestion))
                 return string.Empty;
-
 
             // For AutocompleteQueryCommand.
             // When user typed lower case and result title is uppercase, we still want to display suggestion
-            selectedItem.QuerySuggestionText = queryText + selectedResultPossibleSuggestion.Substring(queryText.Length);
+            selectedItem.QuerySuggestionText = string.Concat(queryText, selectedResultPossibleSuggestion.AsSpan(queryText.Length));
 
             // Check if Text will be larger than our QueryTextBox
             Typeface typeface = new Typeface(queryTextBox.FontFamily, queryTextBox.FontStyle, queryTextBox.FontWeight, queryTextBox.FontStretch);
-            // TODO: Obsolete warning?
-            var ft = new FormattedText(queryTextBox.Text, CultureInfo.CurrentCulture, System.Windows.FlowDirection.LeftToRight, typeface, queryTextBox.FontSize, Brushes.Black);
+            var dpi = VisualTreeHelper.GetDpi(queryTextBox);
+            var ft = new FormattedText(
+                queryTextBox.Text,
+                CultureInfo.CurrentCulture,
+                FlowDirection.LeftToRight,
+                typeface,
+                queryTextBox.FontSize,
+                Brushes.Black,
+                dpi.PixelsPerDip
+            );
 
             var offset = queryTextBox.Padding.Right;
 
@@ -55,7 +89,7 @@ public class QuerySuggestionBoxConverter : IMultiValueConverter
         }
         catch (Exception e)
         {
-            Log.Exception(nameof(QuerySuggestionBoxConverter), "fail to convert text for suggestion box", e);
+            App.API.LogException(ClassName, "fail to convert text for suggestion box", e);
             return string.Empty;
         }
     }

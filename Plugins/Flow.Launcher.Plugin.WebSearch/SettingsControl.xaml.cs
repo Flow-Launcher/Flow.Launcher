@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using Flow.Launcher.Core.Plugin;
 using System.ComponentModel;
 using System.Windows.Data;
 
@@ -40,7 +39,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                 if (result == MessageBoxResult.Yes)
                 {
                     var id = _context.CurrentPluginMetadata.ID;
-                    PluginManager.RemoveActionKeyword(id, selected.ActionKeyword);
+                    _context.API.RemoveActionKeyword(id, selected.ActionKeyword);
                     _settings.SearchSources.Remove(selected);
                 }
             }
@@ -95,7 +94,8 @@ namespace Flow.Launcher.Plugin.WebSearch
             var columnBinding = headerClicked.Column.DisplayMemberBinding as Binding;
             var sortBy = columnBinding?.Path.Path ?? headerClicked.Column.Header as string;
 
-            if(sortBy != null) { 
+            if (sortBy != null)
+            {
                 Sort(sortBy, direction);
 
                 if (direction == ListSortDirection.Ascending)

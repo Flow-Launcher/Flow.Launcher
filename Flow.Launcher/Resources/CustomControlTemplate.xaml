@@ -1,8 +1,30 @@
-﻿<ResourceDictionary
+<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mdagif="clr-namespace:MdXaml.AnimatedGif;assembly=MdXaml.AnimatedGif"
+    xmlns:mdhtml="clr-namespace:MdXaml.Html;assembly=MdXaml.Html"
+    xmlns:mdplugins="clr-namespace:MdXaml.Plugins;assembly=MdXaml.Plugins"
+    xmlns:mdsvg="clr-namespace:MdXaml.Svg;assembly=MdXaml.Svg"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:ui="http://schemas.modernwpf.com/2019">
+
+    <!--  Setting Window Font  -->
+    <FontFamily x:Key="SettingWindowFont">Segoe UI</FontFamily>
+    <Style TargetType="ui:FontIcon">
+        <Setter Property="FontFamily" Value="/Resources/#Segoe Fluent Icons" />
+    </Style>
+    <Style TargetType="Control">
+        <Setter Property="FontFamily" Value="{DynamicResource SettingWindowFont}" />
+    </Style>
+    <Style TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="{DynamicResource SettingWindowFont}" />
+    </Style>
+    <Style TargetType="Window">
+        <Setter Property="FontFamily" Value="{DynamicResource SettingWindowFont}" />
+    </Style>
+    <FontFamily x:Key="ContentControlThemeFontFamily">
+        {DynamicResource SettingWindowFont}
+    </FontFamily>
 
     <ContextMenu x:Key="TextBoxContextMenu">
         <MenuItem Command="ApplicationCommands.Cut" Header="{DynamicResource cut}">
@@ -755,17 +777,33 @@
                 <ControlTemplate TargetType="ComboBoxItem">
                     <Border
                         x:Name="LayoutRoot"
+                        Margin="0 2 0 2"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="4"
                         SnapsToDevicePixels="True">
-                        <ContentPresenter
-                            x:Name="ContentPresenter"
-                            Margin="{TemplateBinding Padding}"
-                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                            TextElement.Foreground="{TemplateBinding Foreground}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Border
+                                x:Name="ComboBullet"
+                                Grid.Column="0"
+                                Width="3"
+                                Height="14"
+                                Background="Transparent"
+                                CornerRadius="2" />
+                            <ContentPresenter
+                                x:Name="ContentPresenter"
+                                Grid.Column="1"
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                TextElement.Foreground="{TemplateBinding Foreground}" />
+                        </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <MultiTrigger>
@@ -773,7 +811,7 @@
                                 <Condition Property="IsSelected" Value="False" />
                                 <Condition Property="IsMouseOver" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource ComboBoxItemBackgroundPointerOver}" />
+                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource CustomComboItemHoverBG}" />
                             <Setter TargetName="LayoutRoot" Property="BorderBrush" Value="{DynamicResource ComboBoxItemBorderBrushPointerOver}" />
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ComboBoxItemForegroundPointerOver}" />
                         </MultiTrigger>
@@ -792,7 +830,8 @@
                                 <Condition Property="IsSelected" Value="True" />
                                 <Condition Property="IsFocused" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource ComboBoxItemBackgroundSelected}" />
+                            <Setter TargetName="ComboBullet" Property="Background" Value="{StaticResource SystemControlBackgroundAccentBrush}" />
+                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource CustomComboItemHoverBG}" />
                             <Setter TargetName="LayoutRoot" Property="BorderBrush" Value="{DynamicResource ComboBoxItemBorderBrushSelected}" />
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ComboBoxItemForegroundSelected}" />
                         </MultiTrigger>
@@ -802,7 +841,8 @@
                                 <Condition Property="IsSelected" Value="True" />
                                 <Condition Property="IsFocused" Value="False" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource ComboBoxItemBackgroundSelectedUnfocused}" />
+                            <Setter TargetName="ComboBullet" Property="Background" Value="{StaticResource SystemControlBackgroundAccentBrush}" />
+                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource CustomComboItemHoverBG}" />
                             <Setter TargetName="LayoutRoot" Property="BorderBrush" Value="{DynamicResource ComboBoxItemBorderBrushSelectedUnfocused}" />
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ComboBoxItemForegroundSelectedUnfocused}" />
                         </MultiTrigger>
@@ -822,7 +862,7 @@
                                 <Condition Property="IsSelected" Value="True" />
                                 <Condition Property="IsMouseOver" Value="True" />
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource ComboBoxItemBackgroundSelectedPointerOver}" />
+                            <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource CustomComboItemSelectedHoverBG}" />
                             <Setter TargetName="LayoutRoot" Property="BorderBrush" Value="{DynamicResource ComboBoxItemBorderBrushSelectedPointerOver}" />
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ComboBoxItemForegroundSelectedPointerOver}" />
                         </MultiTrigger>
@@ -1103,7 +1143,8 @@
                             IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
                             Placement="Bottom"
                             PlacementTarget="{Binding ElementName=Background}"
-                            PopupAnimation="None">
+                            PopupAnimation="None"
+                            VerticalOffset="-1">
                             <Popup.PlacementRectangle>
                                 <MultiBinding>
                                     <MultiBinding.Converter>
@@ -1123,11 +1164,11 @@
                                 <Border
                                     x:Name="PopupBorder"
                                     HorizontalAlignment="Stretch"
-                                    Background="{DynamicResource PopUpBorderBG}"
-                                    CornerRadius="{DynamicResource OverlayCornerRadius}">
+                                    Background="{DynamicResource CustomPopUpBorderBG}"
+                                    CornerRadius="5">
                                     <Border
-                                        Padding="{DynamicResource ComboBoxDropdownBorderPadding}"
-                                        BorderBrush="{DynamicResource ComboBoxDropDownBorderBrush}"
+                                        Padding="5"
+                                        BorderBrush="{DynamicResource CustomComboBorder}"
                                         BorderThickness="{DynamicResource ComboBoxDropdownBorderThickness}"
                                         CornerRadius="{Binding ElementName=PopupBorder, Path=CornerRadius}">
                                         <ScrollViewer
@@ -1137,7 +1178,7 @@
                                             IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
                                             VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
                                             <ItemsPresenter
-                                                Margin="{DynamicResource ComboBoxDropdownContentMargin}"
+                                                Margin="0"
                                                 KeyboardNavigation.DirectionalNavigation="Contained"
                                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                         </ScrollViewer>
@@ -1157,8 +1198,8 @@
                         <!--  Pressed  -->
                         <Trigger SourceName="ToggleButton" Property="IsPressed" Value="True">
                             <Setter TargetName="Background" Property="Background" Value="{DynamicResource CustomComboPressedBG}" />
-                            <Setter TargetName="Background" Property="BorderThickness" Value="0" />
-                            <Setter TargetName="Background" Property="BorderBrush" Value="{DynamicResource ComboBoxBorderBrushPressed}" />
+                            <Setter TargetName="Background" Property="BorderThickness" Value="0 0 0 1" />
+                            <Setter TargetName="Background" Property="BorderBrush" Value="{DynamicResource CustomComboPressedOutLine}" />
                             <Setter TargetName="OutLine" Property="BorderBrush" Value="{DynamicResource CustomComboPressedOutLine}" />
                             <Setter TargetName="OutLine" Property="BorderThickness" Value="{DynamicResource PressedCustomComboOutlineThickness}" />
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource CustomComboPressedText}" />
@@ -1285,7 +1326,6 @@
         BasedOn="{StaticResource DefaultComboBoxStyle}"
         TargetType="ComboBox">
         <Setter Property="Padding" Value="12 0 0 0" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="ui:ControlHelper.CornerRadius" Value="0" />
@@ -1503,7 +1543,7 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="ui:ControlHelper.PlaceholderForeground" Value="{x:Null}">
-                            <Setter TargetName="PlaceholderTextContentPresenter" Property="Foreground" Value="{DynamicResource TextControlPlaceholderForeground}" />
+                            <Setter TargetName="PlaceholderTextContentPresenter" Property="Foreground" Value="{DynamicResource CustomContextDisabled}" />
                         </Trigger>
                         <Trigger Property="ui:TextBoxHelper.HasText" Value="True">
                             <Setter TargetName="PlaceholderTextContentPresenter" Property="Visibility" Value="Collapsed" />
@@ -1550,6 +1590,7 @@
 
     <Style BasedOn="{StaticResource DefaultPasswordBoxStyle}" TargetType="PasswordBox">
         <Setter Property="ContextMenu" Value="{StaticResource TextBoxContextMenu}" />
+        <Setter Property="FontFamily" Value="{DynamicResource SettingWindowFont}" />
     </Style>
 
     <Style
@@ -2370,6 +2411,84 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!--  Explorer Plugin Expander  -->
+    <Style x:Key="ExpanderHeaderRightArrowStyle" TargetType="ToggleButton">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border
+                        x:Name="RootBorder"
+                        Padding="16 15 16 15"
+                        Background="Transparent">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <ContentPresenter
+                                Grid.Column="0"
+                                Margin="8 0 0 0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Content="{TemplateBinding Content}"
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                RecognizesAccessKey="True"
+                                SnapsToDevicePixels="True" />
+
+                            <Grid
+                                x:Name="ChevronGrid"
+                                Grid.Column="1"
+                                Width="20"
+                                Height="20"
+                                Margin="8 0 4 0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Background="Transparent"
+                                RenderTransformOrigin="0.5,0.5">
+                                <Grid.RenderTransform>
+                                    <RotateTransform Angle="0" />
+                                </Grid.RenderTransform>
+                                <Ellipse
+                                    x:Name="circle"
+                                    Width="19"
+                                    Height="19"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Stroke="Transparent" />
+                                <Path
+                                    x:Name="arrow"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Data="M 1,1.5 L 4.5,5 L 8,1.5"
+                                    SnapsToDevicePixels="False"
+                                    Stroke="#666"
+                                    StrokeThickness="1" />
+                            </Grid>
+                        </Grid>
+                    </Border>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="RootBorder" Property="Background" Value="{DynamicResource CustomExpanderHover}" />
+                            <Setter TargetName="circle" Property="Stroke" Value="Transparent" />
+                            <Setter TargetName="arrow" Property="Stroke" Value="{DynamicResource Color05B}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="circle" Property="Stroke" Value="Transparent" />
+                            <Setter TargetName="circle" Property="StrokeThickness" Value="1.5" />
+                            <Setter TargetName="arrow" Property="Stroke" Value="{DynamicResource Color17B}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="ExpanderStyle1" TargetType="{x:Type Expander}">
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
         <Setter Property="Background" Value="Transparent" />
@@ -2689,10 +2808,20 @@
                             MinWidth="{TemplateBinding MinWidth}"
                             MinHeight="{TemplateBinding MinHeight}"
                             ui:ValidationHelper.IsTemplateValidationAdornerSite="True"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}" />
+                            Background="{DynamicResource CustomTextBoxBG}"
+                            BorderBrush="{DynamicResource CustomTextBoxOutline}"
+                            BorderThickness="{DynamicResource CustomTextBoxOutlineThickness}"
+                            CornerRadius="4">
+                            <Border
+                                x:Name="BorderElementInline"
+                                MinWidth="{TemplateBinding MinWidth}"
+                                MinHeight="{TemplateBinding MinHeight}"
+                                ui:ValidationHelper.IsTemplateValidationAdornerSite="True"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{DynamicResource CustomTextBoxInline}"
+                                BorderThickness="{DynamicResource CustomTextBoxInlineThickness}"
+                                CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}" />
+                        </Border>
                         <ScrollViewer
                             x:Name="PART_ContentHost"
                             Grid.Row="1"
@@ -2700,6 +2829,7 @@
                             Margin="{TemplateBinding BorderThickness}"
                             Padding="{TemplateBinding Padding}"
                             Focusable="False"
+                            FontFamily="{DynamicResource ContentControlThemeFontFamily}"
                             HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
                             IsDeferredScrollingEnabled="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}"
                             IsTabStop="False"
@@ -2712,6 +2842,7 @@
                             Grid.ColumnSpan="2"
                             Margin="{TemplateBinding BorderThickness}"
                             Padding="{TemplateBinding Padding}"
+                            FontFamily="{DynamicResource ContentControlThemeFontFamily}"
                             Foreground="{TemplateBinding ui:ControlHelper.PlaceholderForeground}"
                             IsHitTestVisible="False"
                             Text="{TemplateBinding ui:ControlHelper.PlaceholderText}"
@@ -2767,20 +2898,22 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="ui:ControlHelper.PlaceholderForeground" Value="{x:Null}">
-                            <Setter TargetName="PlaceholderTextContentPresenter" Property="Foreground" Value="{DynamicResource TextControlPlaceholderForeground}" />
+                            <Setter TargetName="PlaceholderTextContentPresenter" Property="Foreground" Value="{DynamicResource NumberBoxPlaceHolder}" />
                         </Trigger>
                         <Trigger Property="ui:TextBoxHelper.HasText" Value="True">
                             <Setter TargetName="PlaceholderTextContentPresenter" Property="Visibility" Value="Collapsed" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter TargetName="HeaderContentPresenter" Property="Foreground" Value="{DynamicResource TextControlHeaderForegroundDisabled}" />
-                            <Setter Property="Background" Value="{DynamicResource TextControlBackgroundDisabled}" />
+                            <Setter TargetName="BorderElementInline" Property="Background" Value="{DynamicResource TextControlBackgroundDisabled}" />
                             <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushDisabled}" />
-                            <Setter Property="Foreground" Value="{DynamicResource TextControlForegroundDisabled}" />
+                            <Setter TargetName="BorderElement" Property="BorderThickness" Value="0 0 0 0" />
+                            <Setter TargetName="BorderElementInline" Property="BorderThickness" Value="0 0 0 0" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextControlPlaceholderForegroundDisabled}" />
                             <Setter TargetName="PlaceholderTextContentPresenter" Property="Foreground" Value="{DynamicResource TextControlPlaceholderForegroundDisabled}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushPointerOver}" />
+                            <Setter TargetName="BorderElementInline" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushPointerOver}" />
                             <Setter Property="Background" Value="{DynamicResource TextControlBackgroundPointerOver}" />
                             <Setter TargetName="PlaceholderTextContentPresenter" Property="Foreground" Value="{DynamicResource TextControlPlaceholderForegroundPointerOver}" />
                             <Setter Property="Foreground" Value="{DynamicResource TextControlForegroundPointerOver}" />
@@ -2788,8 +2921,10 @@
                         <Trigger Property="IsSelectionActive" Value="true">
                             <Setter TargetName="PlaceholderTextContentPresenter" Property="Foreground" Value="{DynamicResource TextControlPlaceholderForegroundFocused}" />
                             <Setter Property="Background" Value="{DynamicResource TextControlBackgroundFocused}" />
-                            <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushFocused}" />
-                            <Setter TargetName="BorderElement" Property="BorderThickness" Value="{DynamicResource TextControlBorderThemeThicknessFocused}" />
+                            <Setter TargetName="BorderElementInline" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushFocused}" />
+                            <Setter TargetName="BorderElementInline" Property="BorderThickness" Value="0 0 0 2" />
+                            <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource CustomTextBoxOutline}" />
+                            <Setter TargetName="BorderElement" Property="BorderThickness" Value="2 2 2 0" />
                             <Setter Property="Foreground" Value="{DynamicResource TextControlForegroundFocused}" />
                         </Trigger>
                         <MultiTrigger>
@@ -2860,7 +2995,6 @@
                             FontFamily="{TemplateBinding FontFamily}"
                             FontSize="{TemplateBinding FontSize}"
                             FontWeight="{TemplateBinding FontWeight}"
-                            Foreground="{DynamicResource Color05B}"
                             InputScope="{TemplateBinding InputScope}"
                             SelectionBrush="{TemplateBinding SelectionBrush}"
                             TextAlignment="{TemplateBinding TextAlignment}" />
@@ -3523,8 +3657,8 @@
 
     <!--  Content Dialog  -->
     <Style x:Key="ContentDialog" TargetType="ui:ContentDialog">
-        <Setter Property="Foreground" Value="{DynamicResource ContentDialogForeground}" />
-        <Setter Property="Background" Value="{DynamicResource ContentDialogBackground}" />
+        <Setter Property="Foreground" Value="{DynamicResource PopupTextColor}" />
+        <Setter Property="Background" Value="{DynamicResource PopupBGColor}" />
         <Setter Property="BorderThickness" Value="{DynamicResource ContentDialogBorderWidth}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ContentDialogBorderBrush}" />
         <Setter Property="IsTabStop" Value="False" />
@@ -3571,11 +3705,11 @@
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}"
                                     CornerRadius="{TemplateBinding CornerRadius}">
-                                    <Border x:Name="DialogSpace" Padding="{DynamicResource ContentDialogPadding}">
+                                    <Border x:Name="DialogSpace" Padding="0">
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="*" />
-                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition x:Name="CommandSpaceRow" Height="80" />
                                             </Grid.RowDefinitions>
                                             <ScrollViewer
                                                 x:Name="ContentScrollViewer"
@@ -3583,7 +3717,7 @@
                                                 HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
                                                 IsTabStop="False"
                                                 VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
-                                                <Grid>
+                                                <Grid Margin="{DynamicResource ContentDialogPadding}">
                                                     <Grid.RowDefinitions>
                                                         <RowDefinition Height="Auto" />
                                                         <RowDefinition Height="*" />
@@ -3626,47 +3760,54 @@
                                                         TextWrapping="Wrap" />
                                                 </Grid>
                                             </ScrollViewer>
-                                            <Grid
-                                                x:Name="CommandSpace"
+                                            <Border
+                                                x:Name="ButtonAreaBorder"
                                                 Grid.Row="1"
-                                                Margin="{DynamicResource ContentDialogCommandSpaceMargin}"
-                                                HorizontalAlignment="Stretch"
-                                                VerticalAlignment="Bottom"
-                                                KeyboardNavigation.DirectionalNavigation="Contained">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition />
-                                                    <ColumnDefinition Width="0.5*" />
-                                                    <ColumnDefinition Width="0.5*" />
-                                                    <ColumnDefinition />
-                                                </Grid.ColumnDefinitions>
-                                                <Button
-                                                    x:Name="PrimaryButton"
-                                                    Grid.Column="0"
-                                                    Margin="0 0 2 0"
+                                                Padding="26 0 26 0"
+                                                Background="{DynamicResource PopupButtonAreaBGColor}"
+                                                BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
+                                                BorderThickness="0 1 0 0"
+                                                CornerRadius="0 0 8 8">
+                                                <Grid
+                                                    x:Name="CommandSpace"
                                                     HorizontalAlignment="Stretch"
-                                                    VerticalAlignment="Stretch"
-                                                    Content="{TemplateBinding PrimaryButtonText}"
-                                                    IsEnabled="{TemplateBinding IsPrimaryButtonEnabled}"
-                                                    Style="{TemplateBinding PrimaryButtonStyle}" />
-                                                <Button
-                                                    x:Name="SecondaryButton"
-                                                    Grid.Column="1"
-                                                    Grid.ColumnSpan="2"
-                                                    Margin="2 0 2 0"
-                                                    HorizontalAlignment="Stretch"
-                                                    VerticalAlignment="Stretch"
-                                                    Content="{TemplateBinding SecondaryButtonText}"
-                                                    IsEnabled="{TemplateBinding IsSecondaryButtonEnabled}"
-                                                    Style="{TemplateBinding SecondaryButtonStyle}" />
-                                                <Button
-                                                    x:Name="CloseButton"
-                                                    Grid.Column="3"
-                                                    Margin="2 0 0 0"
-                                                    HorizontalAlignment="Stretch"
-                                                    VerticalAlignment="Stretch"
-                                                    Content="{TemplateBinding CloseButtonText}"
-                                                    Style="{TemplateBinding CloseButtonStyle}" />
-                                            </Grid>
+                                                    VerticalAlignment="Center"
+                                                    KeyboardNavigation.DirectionalNavigation="Contained">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition />
+                                                        <ColumnDefinition Width="0.5*" />
+                                                        <ColumnDefinition Width="0.5*" />
+                                                        <ColumnDefinition />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Button
+                                                        x:Name="PrimaryButton"
+                                                        Grid.Column="0"
+                                                        Margin="0 0 2 0"
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Stretch"
+                                                        Content="{TemplateBinding PrimaryButtonText}"
+                                                        IsEnabled="{TemplateBinding IsPrimaryButtonEnabled}"
+                                                        Style="{TemplateBinding PrimaryButtonStyle}" />
+                                                    <Button
+                                                        x:Name="SecondaryButton"
+                                                        Grid.Column="1"
+                                                        Grid.ColumnSpan="2"
+                                                        Margin="2 0 2 0"
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Stretch"
+                                                        Content="{TemplateBinding SecondaryButtonText}"
+                                                        IsEnabled="{TemplateBinding IsSecondaryButtonEnabled}"
+                                                        Style="{TemplateBinding SecondaryButtonStyle}" />
+                                                    <Button
+                                                        x:Name="CloseButton"
+                                                        Grid.Column="3"
+                                                        Margin="2 0 0 0"
+                                                        HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Stretch"
+                                                        Content="{TemplateBinding CloseButtonText}"
+                                                        Style="{TemplateBinding CloseButtonStyle}" />
+                                                </Grid>
+                                            </Border>
                                         </Grid>
                                     </Border>
                                 </Border>
@@ -3774,18 +3915,28 @@
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CommandSpace" Storyboard.TargetProperty="Visibility">
                                             <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
                                         </ObjectAnimationUsingKeyFrames>
+                                        <!--
+                                            If the window has no buttons, it's assumed that the buttons are drawn directly within the window itself (as in the case of the HotkeyDialog).
+                                            In this case, the command space area is completely hidden.
+                                        -->
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ButtonAreaBorder" Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CommandSpaceRow" Storyboard.TargetProperty="Height">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static GridLength.Auto}" />
+                                        </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="PrimaryVisible">
                                     <Storyboard>
                                         <Int32AnimationUsingKeyFrames Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="(Grid.Column)">
-                                            <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="2" />
+                                            <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="1" />
                                         </Int32AnimationUsingKeyFrames>
                                         <Int32AnimationUsingKeyFrames Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="(Grid.ColumnSpan)">
                                             <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="2" />
                                         </Int32AnimationUsingKeyFrames>
                                         <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="Margin">
-                                            <DiscreteThicknessKeyFrame KeyTime="0:0:0" Value="2,0,0,0" />
+                                            <DiscreteThicknessKeyFrame KeyTime="0:0:0" Value="0,0,0,0" />
                                         </ThicknessAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SecondaryButton" Storyboard.TargetProperty="Visibility">
                                             <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
@@ -3797,16 +3948,16 @@
                                 </VisualState>
                                 <VisualState x:Name="SecondaryVisible">
                                     <Storyboard>
-                                        <Int32AnimationUsingKeyFrames Storyboard.TargetName="SecondaryButton" Storyboard.TargetProperty="(Grid.Column)">
+                                        <Int32AnimationUsingKeyFrames Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="(Grid.Column)">
+                                            <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="1" />
+                                        </Int32AnimationUsingKeyFrames>
+                                        <Int32AnimationUsingKeyFrames Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="(Grid.ColumnSpan)">
                                             <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="2" />
                                         </Int32AnimationUsingKeyFrames>
-                                        <Int32AnimationUsingKeyFrames Storyboard.TargetName="SecondaryButton" Storyboard.TargetProperty="(Grid.ColumnSpan)">
-                                            <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="2" />
-                                        </Int32AnimationUsingKeyFrames>
-                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="SecondaryButton" Storyboard.TargetProperty="Margin">
-                                            <DiscreteThicknessKeyFrame KeyTime="0:0:0" Value="2,0,0,0" />
+                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="Margin">
+                                            <DiscreteThicknessKeyFrame KeyTime="0:0:0" Value="0,0,0,0" />
                                         </ThicknessAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="Visibility">
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SecondaryButton" Storyboard.TargetProperty="Visibility">
                                             <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
                                         </ObjectAnimationUsingKeyFrames>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CloseButton" Storyboard.TargetProperty="Visibility">
@@ -3816,19 +3967,19 @@
                                 </VisualState>
                                 <VisualState x:Name="CloseVisible">
                                     <Storyboard>
-                                        <Int32AnimationUsingKeyFrames Storyboard.TargetName="CloseButton" Storyboard.TargetProperty="(Grid.Column)">
+                                        <Int32AnimationUsingKeyFrames Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="(Grid.Column)">
+                                            <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="1" />
+                                        </Int32AnimationUsingKeyFrames>
+                                        <Int32AnimationUsingKeyFrames Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="(Grid.ColumnSpan)">
                                             <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="2" />
                                         </Int32AnimationUsingKeyFrames>
-                                        <Int32AnimationUsingKeyFrames Storyboard.TargetName="CloseButton" Storyboard.TargetProperty="(Grid.ColumnSpan)">
-                                            <DiscreteInt32KeyFrame KeyTime="0:0:0" Value="2" />
-                                        </Int32AnimationUsingKeyFrames>
-                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="CloseButton" Storyboard.TargetProperty="Margin">
-                                            <DiscreteThicknessKeyFrame KeyTime="0:0:0" Value="2,0,0,0" />
+                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="Margin">
+                                            <DiscreteThicknessKeyFrame KeyTime="0:0:0" Value="0,0,0,0" />
                                         </ThicknessAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PrimaryButton" Storyboard.TargetProperty="Visibility">
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SecondaryButton" Storyboard.TargetProperty="Visibility">
                                             <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
                                         </ObjectAnimationUsingKeyFrames>
-                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="SecondaryButton" Storyboard.TargetProperty="Visibility">
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CloseButton" Storyboard.TargetProperty="Visibility">
                                             <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{x:Static Visibility.Collapsed}" />
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
@@ -5584,5 +5735,368 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <!--  Settings Panel  -->
+    <Thickness x:Key="SettingPanelMargin">70,13.5,18,13.5</Thickness>
+
+    <Thickness x:Key="SettingPanelItemLeftMargin">9,0,0,0</Thickness>
+    <Thickness x:Key="SettingPanelItemRightMargin">0,0,9,0</Thickness>
+    <Thickness x:Key="SettingPanelItemTopBottomMargin">0,4.5,0,4.5</Thickness>
+
+    <Thickness x:Key="SettingPanelItemLeftTopBottomMargin">9,4.5,0,4.5</Thickness>
+    <Thickness x:Key="SettingPanelItemRightTopBottomMargin">0,4.5,9,4.5</Thickness>
+
+    <Style x:Key="SettingPanelSeparatorStyle" TargetType="Separator">
+        <Setter Property="Margin" Value="-70 13.5 -18 13.5" />
+        <Setter Property="Height" Value="1" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Background" Value="{DynamicResource Color03B}" />
+    </Style>
+
+    <system:Double x:Key="SettingPanelTextBoxMinWidth">180</system:Double>
+    <system:Double x:Key="SettingPanelPathTextBoxWidth">240</system:Double>
+    <system:Double x:Key="SettingPanelAreaTextBoxMinHeight">150</system:Double>
+
+    <Style x:Key="SettingPanelTextBlockDescriptionStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Margin" Value="0 2 0 0" />
+        <Setter Property="Foreground" Value="{DynamicResource Color04B}" />
+    </Style>
+
+    <!--  Release Notes  -->
+    <mdplugins:MdXamlPlugins x:Key="MdXamlPlugins">
+        <mdhtml:HtmlPluginSetup />
+        <mdsvg:SvgPluginSetup />
+        <mdagif:AnimatedGifPluginSetup />
+    </mdplugins:MdXamlPlugins>
+
+    <Style x:Key="DocumentStyleGithubLikeLight" TargetType="FlowDocument">
+        <Setter Property="FontFamily" Value="Calibri" />
+        <Setter Property="TextAlignment" Value="Left" />
+        <Setter Property="PagePadding" Value="0" />
+        <Setter Property="FontSize" Value="14" />
+
+        <Style.Resources>
+            <Style TargetType="Section">
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="Blockquote">
+                        <Setter Property="Padding" Value="10 5" />
+                        <Setter Property="BorderBrush" Value="#DEDEDE" />
+                        <Setter Property="BorderThickness" Value="5 0 0 0" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit" TargetType="avalonEdit:TextEditor">
+                <Setter Property="Background" Value="#EEEEEE" />
+                <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
+                <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+                <Setter Property="Margin" Value="2 0 2 0" />
+                <Setter Property="Padding" Value="3" />
+            </Style>
+
+            <Style TargetType="Paragraph">
+                <Setter Property="Margin" Value="0 7 0 0" />
+
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="Heading1">
+                        <Setter Property="Margin" Value="0 0 15 0" />
+
+                        <Setter Property="Foreground" Value="#ff000000" />
+                        <Setter Property="FontSize" Value="28" />
+                        <Setter Property="FontWeight" Value="UltraBold" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="Heading2">
+                        <Setter Property="Margin" Value="0 0 15 0" />
+
+                        <Setter Property="Foreground" Value="#ff000000" />
+                        <Setter Property="FontSize" Value="21" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="Heading3">
+                        <Setter Property="Margin" Value="0 0 10 0" />
+
+                        <Setter Property="Foreground" Value="#ff000000" />
+                        <Setter Property="FontSize" Value="17.5" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="Heading4">
+                        <Setter Property="Margin" Value="0 0 5 0" />
+
+                        <Setter Property="Foreground" Value="#ff000000" />
+                        <Setter Property="FontSize" Value="14" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="CodeBlock">
+                        <Setter Property="FontFamily" Value="Courier New" />
+                        <Setter Property="FontSize" Value="11.9" />
+                        <Setter Property="Background" Value="#12181F25" />
+                        <Setter Property="Padding" Value="20 10" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="Note">
+                        <Setter Property="Margin" Value="5 0 5 0" />
+                        <Setter Property="Padding" Value="10 5" />
+                        <Setter Property="BorderBrush" Value="#DEDEDE" />
+                        <Setter Property="BorderThickness" Value="3 3 3 3" />
+                        <Setter Property="Background" Value="#FAFAFA" />
+                    </Trigger>
+
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="Run">
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="CodeSpan">
+                        <Setter Property="FontFamily" Value="Courier New" />
+                        <Setter Property="FontSize" Value="11.9" />
+                        <Setter Property="Background" Value="#12181F25" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style TargetType="Span">
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="CodeSpan">
+                        <Setter Property="FontFamily" Value="Courier New" />
+                        <Setter Property="FontSize" Value="11.9" />
+                        <Setter Property="Background" Value="#12181F25" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="Hyperlink">
+                <Setter Property="TextDecorations" Value="None" />
+            </Style>
+
+            <Style TargetType="Image">
+                <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor" />
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="imageright">
+                        <Setter Property="Margin" Value="20 0 0 0" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <!--
+                The Table's style don't seem to support border-collapse.
+                By making the ruled line width 0.5 and applying it to cell and table,
+                it looks like the ruled lines are not doubled.
+            -->
+            <Style TargetType="Table">
+                <Setter Property="CellSpacing" Value="0" />
+                <Setter Property="BorderThickness" Value="0.5" />
+                <Setter Property="BorderBrush" Value="#DFE2E5" />
+                <Style.Resources>
+                    <Style TargetType="TableCell">
+                        <Setter Property="BorderThickness" Value="0.5" />
+                        <Setter Property="BorderBrush" Value="#DFE2E5" />
+                        <Setter Property="Padding" Value="13 6" />
+                    </Style>
+                </Style.Resources>
+            </Style>
+
+            <Style TargetType="TableRowGroup">
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="TableHeader">
+                        <Setter Property="FontWeight" Value="DemiBold" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                        <Setter Property="Background" Value="#FFFFFF" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="TableRow">
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="EvenTableRow">
+                        <Setter Property="Background" Value="#F6F8FA" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="BlockUIContainer">
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="RuleSingle">
+                        <Setter Property="Margin" Value="0 3" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="RuleDouble">
+                        <Setter Property="Margin" Value="0 3" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="RuleBold">
+                        <Setter Property="Margin" Value="0 3" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="RuleBoldWithSingle">
+                        <Setter Property="Margin" Value="0 3" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Style.Resources>
+    </Style>
+
+    <Style x:Key="DocumentStyleGithubLikeDark" TargetType="FlowDocument">
+        <Setter Property="FontFamily" Value="Calibri" />
+        <Setter Property="TextAlignment" Value="Left" />
+        <Setter Property="PagePadding" Value="0" />
+        <Setter Property="FontSize" Value="14" />
+
+        <Style.Resources>
+            <Style TargetType="Section">
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="Blockquote">
+                        <Setter Property="Padding" Value="10 5" />
+                        <Setter Property="BorderBrush" Value="#212121" />
+                        <Setter Property="BorderThickness" Value="5 0 0 0" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit" TargetType="avalonEdit:TextEditor">
+                <Setter Property="Background" Value="#111111" />
+                <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
+                <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+                <Setter Property="Margin" Value="2 0 2 0" />
+                <Setter Property="Padding" Value="3" />
+            </Style>
+
+            <Style TargetType="Paragraph">
+                <Setter Property="Margin" Value="0 7 0 0" />
+
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="Heading1">
+                        <Setter Property="Margin" Value="0 0 15 0" />
+                        <Setter Property="Foreground" Value="#FFFFFFFF" />
+                        <Setter Property="FontSize" Value="28" />
+                        <Setter Property="FontWeight" Value="UltraBold" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="Heading2">
+                        <Setter Property="Margin" Value="0 0 15 0" />
+                        <Setter Property="Foreground" Value="#FFFFFFFF" />
+                        <Setter Property="FontSize" Value="21" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="Heading3">
+                        <Setter Property="Margin" Value="0 0 10 0" />
+                        <Setter Property="Foreground" Value="#FFFFFFFF" />
+                        <Setter Property="FontSize" Value="17.5" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="Heading4">
+                        <Setter Property="Margin" Value="0 0 5 0" />
+                        <Setter Property="Foreground" Value="#FFFFFFFF" />
+                        <Setter Property="FontSize" Value="14" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="CodeBlock">
+                        <Setter Property="FontFamily" Value="Courier New" />
+                        <Setter Property="FontSize" Value="11.9" />
+                        <Setter Property="Background" Value="#E0E7DFDA" />
+                        <Setter Property="Padding" Value="20 10" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="Note">
+                        <Setter Property="Margin" Value="5 0 5 0" />
+                        <Setter Property="Padding" Value="10 5" />
+                        <Setter Property="BorderBrush" Value="#212121" />
+                        <Setter Property="BorderThickness" Value="3 3 3 3" />
+                        <Setter Property="Background" Value="#050505" />
+                    </Trigger>
+
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="Run">
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="CodeSpan">
+                        <Setter Property="FontFamily" Value="Courier New" />
+                        <Setter Property="FontSize" Value="11.9" />
+                        <Setter Property="Background" Value="#E0E7DFDA" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="Span">
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="CodeSpan">
+                        <Setter Property="FontFamily" Value="Courier New" />
+                        <Setter Property="FontSize" Value="11.9" />
+                        <Setter Property="Background" Value="#E0E7DFDA" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="Hyperlink">
+                <Setter Property="TextDecorations" Value="None" />
+            </Style>
+
+            <Style TargetType="Image">
+                <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor" />
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="imageright">
+                        <Setter Property="Margin" Value="20 0 0 0" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="Table">
+                <Setter Property="CellSpacing" Value="0" />
+                <Setter Property="BorderThickness" Value="0.5" />
+                <Setter Property="BorderBrush" Value="#202020" />
+                <Style.Resources>
+                    <Style TargetType="TableCell">
+                        <Setter Property="BorderThickness" Value="0.5" />
+                        <Setter Property="BorderBrush" Value="#202020" />
+                        <Setter Property="Padding" Value="13 6" />
+                    </Style>
+                </Style.Resources>
+            </Style>
+
+            <Style TargetType="TableRowGroup">
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="TableHeader">
+                        <Setter Property="FontWeight" Value="Bold" />
+                        <Setter Property="Background" Value="#000000" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="TableRow">
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="EvenTableRow">
+                        <Setter Property="Background" Value="#090708" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="BlockUIContainer">
+                <Style.Triggers>
+                    <Trigger Property="Tag" Value="RuleSingle">
+                        <Setter Property="Margin" Value="0 3" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="RuleDouble">
+                        <Setter Property="Margin" Value="0 3" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="RuleBold">
+                        <Setter Property="Margin" Value="0 3" />
+                    </Trigger>
+
+                    <Trigger Property="Tag" Value="RuleBoldWithSingle">
+                        <Setter Property="Margin" Value="0 3" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Style.Resources>
     </Style>
 </ResourceDictionary>

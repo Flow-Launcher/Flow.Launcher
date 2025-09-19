@@ -121,6 +121,7 @@ namespace Flow.Launcher.Plugin.Program
         public bool EnableRegistrySource { get; set; } = true;
         public bool EnablePathSource { get; set; } = false;
         public bool EnableUWP { get; set; } = true;
+        public bool HideDuplicatedWindowsApp { get; set; } = false;
 
         internal const char SuffixSeparator = ';';
     }

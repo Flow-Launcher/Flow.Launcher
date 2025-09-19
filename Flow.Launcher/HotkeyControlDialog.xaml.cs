@@ -3,9 +3,12 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using Flow.Launcher.Core.Resource;
+using ChefKeys;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
 using ModernWpf.Controls;
 using ChefKeys;
 using System.Collections.Generic;
@@ -16,7 +19,7 @@ namespace Flow.Launcher;
 
 public partial class HotkeyControlDialog : ContentDialog
 {
-    private IHotkeySettings _hotkeySettings;
+    private static readonly IHotkeySettings _hotkeySettings = Ioc.Default.GetRequiredService<Settings>();
     private Action? _overwriteOtherHotkey;
     private string DefaultHotkey { get; }
     public string WindowTitle { get; }
@@ -40,12 +43,11 @@ public partial class HotkeyControlDialog : ContentDialog
 
     public EResultType ResultType { get; private set; } = EResultType.Cancel;
     public string ResultValue { get; private set; } = string.Empty;
-    public static string EmptyHotkey => InternationalizationManager.Instance.GetTranslation("none");
+    public static string EmptyHotkey => App.API.GetTranslation("none");
 
     public HotkeyControlDialog(
         string hotkey,
         string defaultHotkey,
-        IHotkeySettings hotkeySettings,
         bool isWPFHotkeyControl,
         string windowTitle = "")
     {
@@ -53,7 +55,7 @@ public partial class HotkeyControlDialog : ContentDialog
 
         WindowTitle = windowTitle switch
         {
-            "" or null => InternationalizationManager.Instance.GetTranslation("hotkeyRegTitle"),
+            "" or null => App.API.GetTranslation("hotkeyRegTitle"),
             _ => windowTitle
         };
         DefaultHotkey = defaultHotkey;
@@ -63,7 +65,7 @@ public partial class HotkeyControlDialog : ContentDialog
         HotkeyToUpdate = new HotkeyModel(hotkey);
 
         _hotkeySettings = hotkeySettings;
-        
+
         SetKeysToDisplay(CurrentHotkey);
         clearKeysOnFirstType = true;
 
@@ -175,14 +177,14 @@ public partial class HotkeyControlDialog : ContentDialog
                 is { } registeredHotkeyData)
         {
             var description = string.Format(
-                InternationalizationManager.Instance.GetTranslation(registeredHotkeyData.DescriptionResourceKey),
+                App.API.GetTranslation(registeredHotkeyData.DescriptionResourceKey),
                 registeredHotkeyData.DescriptionFormatVariables
             );
             Alert.Visibility = Visibility.Visible;
             if (registeredHotkeyData.RemoveHotkey is not null)
             {
                 tbMsg.Text = string.Format(
-                    InternationalizationManager.Instance.GetTranslation("hotkeyUnavailableEditable"),
+                    App.API.GetTranslation("hotkeyUnavailableEditable"),
                     description
                 );
                 SaveBtn.IsEnabled = false;
@@ -195,7 +197,7 @@ public partial class HotkeyControlDialog : ContentDialog
             else
             {
                 tbMsg.Text = string.Format(
-                    InternationalizationManager.Instance.GetTranslation("hotkeyUnavailableUneditable"),
+                    App.API.GetTranslation("hotkeyUnavailableUneditable"),
                     description
                 );
                 SaveBtn.IsEnabled = false;
@@ -215,7 +217,7 @@ public partial class HotkeyControlDialog : ContentDialog
 
         if (!isHotkeyAvailable)
         {
-            tbMsg.Text = InternationalizationManager.Instance.GetTranslation("hotkeyUnavailable");
+            tbMsg.Text = App.API.GetTranslation("hotkeyUnavailable");
             Alert.Visibility = Visibility.Visible;
             SaveBtn.IsEnabled = false;
             SaveBtn.Visibility = Visibility.Visible;

@@ -2,8 +2,9 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Command List  -->
-    <system:String x:Key="flowlauncher_plugin_sys_command">Komenda</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_name">Nazwa</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_desc">Opis</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_command">Komenda</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer_cmd">Wyłącz komputer</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_computer_cmd">Restart</system:String>
@@ -25,6 +26,9 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips_cmd">Wskazówki Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location_cmd">Folder danych użytkownika Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode_cmd">Przełącz tryb gry</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector_cmd">Set the Flow Launcher Theme</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_sys_edit">Edytuj</system:String>
 
     <!--  Command Descriptions  -->
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">Wyłącz komputer</system:String>
@@ -47,8 +51,9 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">Odwiedź dokumentację Flow Launcher, aby uzyskać więcej pomocy i wskazówek dotyczących użytkowania</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Otwórz lokalizację, w której przechowywane są ustawienia Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode">Przełącz tryb gry</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector">Quickly change the Flow Launcher theme</system:String>
 
-        <!--  Dialogs  -->
+    <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">Sukces</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">Wszystkie ustawienia Flow Launcher zostały zapisane</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Przeładowano dane wszystkich odpowiednich wtyczek</system:String>
@@ -56,6 +61,17 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">Czy na pewno chcesz zrestartować komputer?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Czy na pewno chcesz ponownie uruchomić komputer z Zaawansowanymi opcjami rozruchu?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Czy na pewno chcesz się wylogować?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_error">Błąd</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_empty_recycle_bin_failed">Failed to empty the recycle bin. This might happen if:{0}- Some items are currently in use{0}- Some items can't be deleted due to permissions{0}Please close any applications that might be using these files and try again.</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Command Keyword Setting</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Custom Command Keyword</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword_tip">Enter a keyword to search for command: {0}. This keyword is used to match your query.</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_command_keyword">Command Keyword</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_reset">Zresetuj</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_confirm">Potwierdź</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_cancel">Anuluj</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_input_command_keyword">Proszę wprowadzić niepuste słowo kluczowe polecenia</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">Komendy systemowe</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Wykonywanie komend systemowych, np. wyłącz, zablokuj komputer, otwórz ustawienia itp.</system:String>

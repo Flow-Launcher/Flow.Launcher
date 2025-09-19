@@ -11,13 +11,14 @@
     <system:String x:Key="flowlauncher_plugin_websearch_edit">Editar</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">Añadir</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">Activado</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_private_mode_label">Modo privado</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_true">Activado</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_false">Desactivado</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">Confirmar</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Palabra clave de acción</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">Busca en</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Usar autocompletado en consultas de búsqueda:</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Usar autocompletado en consultas de búsqueda</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Autocompletar datos desde:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Por favor, seleccione una búsqueda web</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">¿Está seguro de que desea eliminar {0}?</system:String>

@@ -2,17 +2,43 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  Startup  -->
     <system:String x:Key="runtimePluginInstalledChooseRuntimePrompt">
-        Flow detected you have installed {0} plugins, which will require {1} to run. Would you like to download {1}?
+        Flow, {0} eklenti yüklediğinizi tespit etti, bu eklentilerin çalışması için {1} gerekir. {1} indirilsin mi?
         {2}{2}
-        Click no if it's already installed, and you will be prompted to select the folder that contains the {1} executable
+        Zaten yüklüyse hayır'a tıklayın ve {1} yürütülebilir dosyasının bulunduğu klasörü seçin
     </system:String>
-    <system:String x:Key="runtimePluginChooseRuntimeExecutable">Please select the {0} executable</system:String>
-    <system:String x:Key="runtimePluginUnableToSetExecutablePath">Unable to set {0} executable path, please try from Flow's settings (scroll down to the bottom).</system:String>
-    <system:String x:Key="failedToInitializePluginsTitle">Fail to Init Plugins</system:String>
-    <system:String x:Key="failedToInitializePluginsMessage">Plugins: {0} - fail to load and would be disabled, please contact plugin creator for help</system:String>
+    <system:String x:Key="runtimePluginChooseRuntimeExecutable">Lütfen {0} dosyasını seçin</system:String>
+    <system:String x:Key="runtimeExecutableInvalidChooseDownload">
+        Seçtiğiniz {0} yürütülebilir dosyası geçersiz.
+        {2}{2}
+        {0} yürütülebilir dosyasını tekrar seçmek istiyorsanız evet'e tıklayın. {1} dosyasını indirmek istiyorsanız hayır'a tıklayın
+    </system:String>
+    <system:String x:Key="runtimePluginUnableToSetExecutablePath">{0} dosya yolu ayarlanamadı, lütfen Flow’un ayarlarından deneyin (en alta inerek).</system:String>
+    <system:String x:Key="failedToInitializePluginsTitle">Eklentiler başlatılamıyor</system:String>
+    <system:String x:Key="failedToInitializePluginsMessage">Eklentiler: {0} - yüklenemedi ve devre dışı bırakılacak, lütfen eklenti geliştiricisi ile iletişime geçin</system:String>
+
+    <!--  Portable  -->
+    <system:String x:Key="restartToDisablePortableMode">Flow Launcher'ın taşınabilir modu devre dışı bırakmayı bitirmek için yeniden başlatılması gerekir, yeniden başlatmanın ardından taşınabilir veri profiliniz silinecek ve dolaşımdaki veri profiliniz saklanacaktır</system:String>
+    <system:String x:Key="restartToEnablePortableMode">Flow Launcher'ın taşınabilir modu etkinleştirmeyi tamamlamak için yeniden başlatılması gerekir, yeniden başlatmadan sonra dolaşım veri profiliniz silinecek ve taşınabilir veri profili saklanacaktır</system:String>
+    <system:String x:Key="moveToDifferentLocation">Flow Launcher taşınabilir modu etkinleştirdiğinizi tespit etti, farklı bir konuma taşımak ister misiniz?</system:String>
+    <system:String x:Key="shortcutsUninstallerCreated">Flow Launcher taşınabilir modu devre dışı bıraktığınızı algıladı, ilgili kısayollar ve kaldırıcı girişi oluşturuldu</system:String>
+    <system:String x:Key="userDataDuplicated">Flow Launcher, kullanıcı verilerinizin hem {0} hem de {1}'de bulunduğunu algıladı. {2}{2} Devam etmek için lütfen {1}'i silin. Hiçbir değişiklik olmadı.</system:String>
+
+    <!--  Plugin Loader  -->
+    <system:String x:Key="pluginHasErrored">Aşağıdaki eklentide hata oluştu ve yüklenemiyor:</system:String>
+    <system:String x:Key="pluginsHaveErrored">Aşağıdaki eklentilerde hata oluştu ve yüklenemiyor:</system:String>
+    <system:String x:Key="referToLogs">Daha fazla bilgi için günlüklere bakın</system:String>
+
+    <!--  Http  -->
+    <system:String x:Key="pleaseTryAgain">Lütfen tekrar deneyin</system:String>
+    <system:String x:Key="parseProxyFailed">Http Proxy verisi ayrıştırılamadı</system:String>
+
+    <!--  AbstractPluginEnvironment  -->
+    <system:String x:Key="failToInstallTypeScriptEnv">TypeScript ortamı yüklenemedi. Lütfen daha sonra tekrar deneyin</system:String>
+    <system:String x:Key="failToInstallPythonEnv">Python ortamı yüklenemedi. Lütfen daha sonra tekrar deneyin.</system:String>
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">&quot;{0}&quot; kısayolunu atama başarısız oldu. Kısayolu başka bir program kullanıyorsa kapatmayı deneyin veya kısayolu değiştirin.</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">&quot;{0}&quot; kısayolu kaldırılamadı. Lütfen tekrar deneyin ya da ayrıntılar için log dosyasını kontrol edin</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">{0} başlatılamıyor</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Geçersiz Flow Launcher eklenti dosyası formatı</system:String>
@@ -37,6 +63,7 @@
     <system:String x:Key="GameModeToolTip">Kısayol tuşlarının kullanımını durdurun.</system:String>
     <system:String x:Key="PositionReset">Pencere Konumunu Sıfırla</system:String>
     <system:String x:Key="PositionResetToolTip">Arama penceresinin konumunu sıfırla</system:String>
+    <system:String x:Key="queryTextBoxPlaceholder">Aramak için buraya yazın</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Ayarlar</system:String>
@@ -44,6 +71,8 @@
     <system:String x:Key="portableMode">Taşınabilir Mod</system:String>
     <system:String x:Key="portableModeToolTIp">Tüm ayarları ve kullanıcı verilerini tek bir klasörde saklayın (Çıkarılabilir sürücüler veya bulut hizmetleri ile kullanıldığında kullanışlıdır).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Sistem ile Başlat</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Daha hızlı bir başlatma deneyimi için başlangıç girişini yerine oturum açma görevini kullanın</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">Kaldırma işleminden sonra, bu görevi (Flow.Launcher Startup) Görev Zamanlayıcı üzerinden elle kaldırmanız gerekmektedir</system:String>
     <system:String x:Key="setAutoStartFailed">Sistemle başlatma ayarı başarısız oldu</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Odak Pencereden Ayrıldığında Gizle</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Güncelleme bildirimlerini gösterme</system:String>
@@ -65,10 +94,8 @@
     <system:String x:Key="LastQueryPreserved">Son Sorguyu Sakla</system:String>
     <system:String x:Key="LastQuerySelected">Son Sorguyu Sakla ve Tümünü Seç</system:String>
     <system:String x:Key="LastQueryEmpty">Sorgu Kutusunu Temizle</system:String>
-    <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
-    <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
-    <system:String x:Key="KeepMaxResults">Sabit Pencere Yükseliği</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">Pencere yüksekliği sürükleme ile ayarlanamaz.</system:String>
+    <system:String x:Key="LastQueryActionKeywordPreserved">Son İşlem Anahtar Kelimesini Koru</system:String>
+    <system:String x:Key="LastQueryActionKeywordSelected">Son İşlem Anahtar Kelimesini Seç</system:String>
     <system:String x:Key="maxShowResults">Maksimum Sonuç Sayısı</system:String>
     <system:String x:Key="maxShowResultsToolTip">Bunu CTRL + ve CTRL - kısayollarıyla da ayarlayabilirsiniz.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Tam Ekran Modunda Kısayol Tuşunu Gözardı Et</system:String>
@@ -84,6 +111,7 @@
     <system:String x:Key="typingStartEn">İngilizce Klayve Düzeni Kullan</system:String>
     <system:String x:Key="typingStartEnTooltip">Arama yaparken klayve düzenini geçici olarak İngilizce yap.</system:String>
     <system:String x:Key="autoUpdates">Otomatik Güncelle</system:String>
+    <system:String x:Key="autoUpdatesTooltip">Uygulamanın güncellemelerini otomatik kontrol eder ve günceller</system:String>
     <system:String x:Key="select">Seç</system:String>
     <system:String x:Key="hideOnStartup">Başlangıçta Pencereyi Gizle</system:String>
     <system:String x:Key="hideOnStartupToolTip">Arama kutusu başlangıçtan sonra sistem tepsisinde gizlenir.</system:String>
@@ -95,10 +123,63 @@
     <system:String x:Key="SearchPrecisionLow">Düşük</system:String>
     <system:String x:Key="SearchPrecisionRegular">Normal</system:String>
     <system:String x:Key="ShouldUsePinyin">Pinyin</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">Arama yapmak için Pinyin'in kullanılmasına izin ver. Pinyin, Çince'yi çevirmek için standart romanlaştırılmış yazım sistemidir.</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">Pinyin, Çince'yi çevirmek için kullanılan standart romanize yazım sistemidir. Bunu etkinleştirmenin arama sırasında bellek kullanımını önemli ölçüde artırabileceğini lütfen unutmayın.</system:String>
+    <system:String x:Key="ShouldUseDoublePinyin">Çift Pinyin kullanın</system:String>
+    <system:String x:Key="ShouldUseDoublePinyinToolTip">Arama yapmak için Tam Pinyin yerine Çift Pinyin kullanın.</system:String>
+    <system:String x:Key="DoublePinyinSchema">Çift Pinyin Şeması</system:String>
+    <system:String x:Key="DoublePinyinSchemasXiaoHe">Xiao He</system:String>
+    <system:String x:Key="DoublePinyinSchemasZiRanMa">Zi Ran Ma</system:String>
+    <system:String x:Key="DoublePinyinSchemasWeiRuan">Wei Ruan</system:String>
+    <system:String x:Key="DoublePinyinSchemasZhiNengABC">Zhi Neng ABC</system:String>
+    <system:String x:Key="DoublePinyinSchemasZiGuangPinYin">Zi Guang Pin Yin</system:String>
+    <system:String x:Key="DoublePinyinSchemasPinYinJiaJia">Pin Yin Jia Jia</system:String>
+    <system:String x:Key="DoublePinyinSchemasXingKongJianDao">Xing Kong Jian Dao</system:String>
+    <system:String x:Key="DoublePinyinSchemasDaNiu">Da Niu</system:String>
+    <system:String x:Key="DoublePinyinSchemasXiaoLang">Xiao Lang</system:String>
+
     <system:String x:Key="AlwaysPreview">Önizleme</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Önizleme panelini her zaman aç. Önizlemeyi bu ayardan bağımsız {0} kısayolu ile açıp kapatabilirsiniz.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Mevcut temada bulanıklık efekti etkinken gölgelendirme efektine izin verilmez</system:String>
+    <system:String x:Key="searchDelay">Arama Gecikmesi</system:String>
+    <system:String x:Key="searchDelayToolTip">UI titreşimini ve sonuç yükünü azaltmak için yazma sırasında kısa bir gecikme eklenir. Yazma hızınız ortalama ise önerilir.</system:String>
+    <system:String x:Key="searchDelayNumberBoxToolTip">Girdi tamamlanmış sayılmadan önce beklenecek süreyi milisaniye (ms) olarak girin. Sadece Arama Gecikmesi açık olduğunda değiştirilebilir.</system:String>
+    <system:String x:Key="searchDelayTime">Varsayılan Arama Gecikme Süresi</system:String>
+    <system:String x:Key="searchDelayTimeToolTip">Yazmayı bıraktıktan sonra sonuçların görünmesi için geçecek süre. Daha yüksek değerler daha fazla bekleme anlamına gelir. (ms)</system:String>
+    <system:String x:Key="KoreanImeTitle">Korece IME kullanıcısı için bilgiler</system:String>
+    <system:String x:Key="KoreanImeGuide">
+        Windows 11'de kullanılan Korece giriş yöntemi Flow Launcher'da bazı sorunlara neden olabilir.
+
+        Herhangi bir sorunla karşılaşırsanız, &quot;Korece IME'nin önceki sürümünü kullan&quot; seçeneğini etkinleştirmeniz gerekebilir.
+
+
+        Windows 11'de Ayarlar'ı açın ve şuraya gidin:
+
+        Saat ve Dil &gt; Dil ve Bölge &gt; Korece &gt; Dil Seçenekleri &gt; Klavye - Microsoft IME &gt; Uyumluluk,
+
+        ve &quot;Microsoft IME'nin önceki sürümünü kullan&quot; seçeneğini etkinleştirin.
+
+
+    </system:String>
+    <system:String x:Key="KoreanImeOpenLink">Dil ve Bölge Sistem Ayarlarını Aç</system:String>
+    <system:String x:Key="KoreanImeOpenLinkToolTip">Korece IME ayar konumunu açar. Korece &gt; Dil Seçenekleri &gt; Klavye - Microsoft IME &gt; Uyumluluk seçeneğine gidin</system:String>
+    <system:String x:Key="KoreanImeOpenLinkButton">Aç</system:String>
+    <system:String x:Key="KoreanImeRegistry">Önceki Korece IME'sini Kullan</system:String>
+    <system:String x:Key="KoreanImeRegistryTooltip">Önceki Korece IME ayarlarını doğrudan buradan değiştirebilirsiniz</system:String>
+    <system:String x:Key="KoreanImeSettingChangeFailTitle">Korece IME ayarı değiştirilemedi</system:String>
+    <system:String x:Key="KoreanImeSettingChangeFailSubTitle">Lütfen sistem kayıt defteri erişiminizi kontrol edin veya destekle iletişime geçin.</system:String>
+    <system:String x:Key="homePage">Ana Sayfa</system:String>
+    <system:String x:Key="homePageToolTip">Sorgu metni boş olduğunda ana sayfa sonuçlarını gösterin.</system:String>
+    <system:String x:Key="historyResultsForHomePage">Geçmiş Sonuçlarını Ana Sayfada Göster</system:String>
+    <system:String x:Key="historyResultsCountForHomePage">Ana Sayfada Gösterilen Maksimum Geçmiş Sonuçları</system:String>
+    <system:String x:Key="homeToggleBoxToolTip">Bu sadece eklenti Ana Sayfa özelliğini destekliyorsa ve Ana Sayfa etkinleştirilmiş ise düzenlenebilir.</system:String>
+    <system:String x:Key="showAtTopmost">Arama Penceresini En Üstte Göster</system:String>
+    <system:String x:Key="showAtTopmostToolTip">Diğer programların 'Her Zaman Üstte' ayarını geçersiz kılar ve Flow’u en önde gösterir.</system:String>
+    <system:String x:Key="autoRestartAfterChanging">Eklenti Mağazası üzerinden eklenti değiştirdikten sonra uygulamayı yeniden başlatın</system:String>
+    <system:String x:Key="autoRestartAfterChangingToolTip">Eklenti Mağazası aracılığıyla eklenti yükledikten/kaldırdıktan/güncelleştirdikten sonra Flow Launcher'ı otomatik olarak yeniden başlatın</system:String>
+    <system:String x:Key="showUnknownSourceWarning">Bilinmeyen kaynak uyarısını göster</system:String>
+    <system:String x:Key="showUnknownSourceWarningToolTip">Bilinmeyen kaynaklardan eklenti yüklerken uyarı göster</system:String>
+    <system:String x:Key="autoUpdatePlugins">Eklentileri otomatik güncelle</system:String>
+    <system:String x:Key="autoUpdatePluginsToolTip">Eklenti güncellemelerini otomatik kontrol et ve eğer herhangi bir güncelleme varsa bildir</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Eklenti Ara</system:String>
@@ -115,6 +196,13 @@
     <system:String x:Key="currentActionKeywords">Geçerli anahtar kelime</system:String>
     <system:String x:Key="newActionKeyword">Yeni anahtar kelime</system:String>
     <system:String x:Key="actionKeywordsTooltip">Anahtar kelimeyi değiştir</system:String>
+    <system:String x:Key="pluginSearchDelayTime">Eklenti arama gecikme süresi</system:String>
+    <system:String x:Key="pluginSearchDelayTimeTooltip">Eklenti Arama Gecikme Süresini Değiştir</system:String>
+    <system:String x:Key="FilterComboboxLabel">Gelişmiş Ayarlar:</system:String>
+    <system:String x:Key="DisplayModeOnOff">Aktif</system:String>
+    <system:String x:Key="DisplayModePriority">Öncelik</system:String>
+    <system:String x:Key="DisplayModeSearchDelay">Arama Gecikmesi</system:String>
+    <system:String x:Key="DisplayModeHomeOnOff">Ana Sayfa</system:String>
     <system:String x:Key="currentPriority">Mevcut öncelik</system:String>
     <system:String x:Key="newPriority">Yeni Öncelik</system:String>
     <system:String x:Key="priority">Öncelik</system:String>
@@ -126,7 +214,16 @@
     <system:String x:Key="plugin_query_version">Sürüm</system:String>
     <system:String x:Key="plugin_query_web">İnternet Sitesi</system:String>
     <system:String x:Key="plugin_uninstall">Kaldır</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Eklenti ayarları kaldırılamıyor</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Eklentiler: {0} - Ayar dosyaları kaldırılamadı, lütfen elle silin</system:String>
+    <system:String x:Key="failedToRemovePluginCacheTitle">Eklenti ön belleği kaldırılamıyor</system:String>
+    <system:String x:Key="failedToRemovePluginCacheMessage">Eklentiler: {0} - Önbellek dosyaları kaldırılamadı, lütfen elle silin</system:String>
+    <system:String x:Key="pluginModifiedAlreadyTitle">{0} zaten değiştirilmiş</system:String>
+    <system:String x:Key="pluginModifiedAlreadyMessage">Lütfen başka değişiklikler yapmadan önce Flow'u yeniden başlatın</system:String>
+    <system:String x:Key="failedToInstallPluginTitle">{0} yüklenemiyor</system:String>
+    <system:String x:Key="failedToUninstallPluginTitle">{0} kaldırılamıyor</system:String>
+    <system:String x:Key="fileNotFoundMessage">plugin.json dosyası çıkarılan zip dosyasında bulunamadı veya {0} yolu mevcut değil</system:String>
+    <system:String x:Key="pluginExistAlreadyMessage">Bu eklentiyle aynı ID ve sürüme sahip bir eklenti zaten var, ya da mevcut sürüm daha yüksek</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Eklenti Mağazası</system:String>
@@ -142,8 +239,34 @@
     <system:String x:Key="LabelNew">Yeni Sürüm</system:String>
     <system:String x:Key="LabelNewToolTip">Bu eklenti son 7 gün içerisinde güncellenmiş.</system:String>
     <system:String x:Key="LabelUpdateToolTip">Yeni Bir Güncelleme Mevcut</system:String>
-
-
+    <system:String x:Key="ErrorInstallingPlugin">Eklenti yüklenirken bir hata oluştu</system:String>
+    <system:String x:Key="ErrorUninstallingPlugin">Eklenti kaldırılırken bir hata oluştu</system:String>
+    <system:String x:Key="ErrorUpdatingPlugin">Eklenti güncellenirken bir hata oluştu</system:String>
+    <system:String x:Key="KeepPluginSettingsTitle">Eklenti ayarlarını sakla</system:String>
+    <system:String x:Key="KeepPluginSettingsSubtitle">Eklentinin ayarlarını bir sonraki kullanım için saklamak istiyor musunuz?</system:String>
+    <system:String x:Key="InstallSuccessNoRestart">{0} eklentisi başarıyla yüklendi. Lütfen Flow'u yeniden başlatın.</system:String>
+    <system:String x:Key="UninstallSuccessNoRestart">{0} eklentisi başarıyla kaldırıldı. Lütfen Flow'u yeniden başlatın.</system:String>
+    <system:String x:Key="UpdateSuccessNoRestart">{0} eklentisi başarıyla güncellendi. Lütfen Flow'u yeniden başlatın.</system:String>
+    <system:String x:Key="InstallPromptTitle">Eklenti yükleme</system:String>
+    <system:String x:Key="InstallPromptSubtitle">{0} - {1} tarafından geliştirildi {2}{2}Bu eklentiyi yüklemek ister misiniz?</system:String>
+    <system:String x:Key="UninstallPromptTitle">Eklenti kaldırma</system:String>
+    <system:String x:Key="UninstallPromptSubtitle">{0} - {1} tarafından geliştirildi {2}{2}Bu eklentiyi kaldırmak ister misiniz?</system:String>
+    <system:String x:Key="UpdatePromptTitle">Eklenti güncellemesi</system:String>
+    <system:String x:Key="UpdatePromptSubtitle">{0} - {1} tarafından geliştirildi {2}{2}Bu eklentiyi güncellemek ister misiniz?</system:String>
+    <system:String x:Key="DownloadingPlugin">Eklenti indiriliyor</system:String>
+    <system:String x:Key="AutoRestartAfterChange">Eklenti mağazasındaki eklentileri yükledikten/kaldırdıktan/güncelleştirdikten sonra otomatik olarak yeniden başlat</system:String>
+    <system:String x:Key="ZipFileNotHavePluginJson">Zip dosyası geçerli bir plugin.json yapılandırmasına sahip değil</system:String>
+    <system:String x:Key="InstallFromUnknownSourceTitle">Bilinmeyen bir kaynaktan yükleniyor</system:String>
+    <system:String x:Key="InstallFromUnknownSourceSubtitle">Bu eklenti bilinmeyen bir kaynaktan geliyor ve potansiyel riskler içerebilir!{0}{0}Lütfen eklentinin nereden geldiğini bildiğinizden ve güvenli olduğundan emin olun.{0}{0}Yine de devam etmek istiyor musunuz?{0}{0}(Bu uyarıyı ayarlar penceresinin Genel bölümünden kapatabilirsiniz)</system:String>
+    <system:String x:Key="ZipFiles">Zip dosyaları</system:String>
+    <system:String x:Key="SelectZipFile">Lütfen zip dosyasını seçin</system:String>
+    <system:String x:Key="installLocalPluginTooltip">Eklentiyi yerel yoldan yükle</system:String>
+    <system:String x:Key="updateNoResultTitle">Güncelleme mevcut değil</system:String>
+    <system:String x:Key="updateNoResultSubtitle">Bütün eklentiler güncel</system:String>
+    <system:String x:Key="updateAllPluginsTitle">Eklenti güncellemeleri mevcut</system:String>
+    <system:String x:Key="updateAllPluginsButtonContent">Eklentileri güncelle</system:String>
+    <system:String x:Key="checkPluginUpdatesTooltip">Eklenti güncellemelerini kontrol et</system:String>
+    <system:String x:Key="PluginsUpdateSuccessNoRestart">Eklentiler başarıyla güncellendi. Lütfen Flow'u yeniden başlatın.</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Temalar</system:String>
@@ -165,6 +288,9 @@
     <system:String x:Key="resultItemFont">Arama Sonuçları Yazı Tipi</system:String>
     <system:String x:Key="resultSubItemFont">Arama Sonuçları Yazı Tipi</system:String>
     <system:String x:Key="resetCustomize">Sıfırla</system:String>
+    <system:String x:Key="resetCustomizeToolTip">Önerilen yazı tipi ve boyut ayarlarına sıfırlayın.</system:String>
+    <system:String x:Key="ImportThemeSize">Tema Boyutunu İçe Aktar</system:String>
+    <system:String x:Key="ImportThemeSizeToolTip">Tasarımcının belirlediği boyut değeri varsa, bu değer alınır ve uygulanır.</system:String>
     <system:String x:Key="CustomizeToolTip">Kişiselleştir</system:String>
     <system:String x:Key="windowMode">Pencere Modu</system:String>
     <system:String x:Key="opacity">Saydamlık</system:String>
@@ -191,9 +317,22 @@
     <system:String x:Key="AnimationSpeedCustom">Özel</system:String>
     <system:String x:Key="Clock">Saat</system:String>
     <system:String x:Key="Date">Tarih</system:String>
-    <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
-    <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
-
+    <system:String x:Key="BackdropType">Arka Plan Türü</system:String>
+    <system:String x:Key="BackdropInfo">Arka plan efekti önizlemede etkin değildir.</system:String>
+    <system:String x:Key="BackdropTypeDisabledToolTip">Arka plan efekti, Windows 11 build 22000 ve üzeri sürümlerde desteklenir</system:String>
+    <system:String x:Key="BackdropTypesNone">Hiçbiri</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Akrilik</system:String>
+    <system:String x:Key="BackdropTypesMica">Mika</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">Bu tema iki (açık/koyu) modu destekler.</system:String>
+    <system:String x:Key="TypeHasBlurToolTip">Bu tema Bulanık Şeffaf Arka Planı destekler.</system:String>
+    <system:String x:Key="ShowPlaceholder">Yer tutucuyu göster</system:String>
+    <system:String x:Key="ShowPlaceholderTip">Sorgu boş olduğunda yer tutucuyu görüntüle</system:String>
+    <system:String x:Key="PlaceholderText">Yer tutucu metin</system:String>
+    <system:String x:Key="PlaceholderTextTip">Yer tutucu metnini değiştirin. Boş bırakılırsa şu kullanılacak: {0}</system:String>
+    <system:String x:Key="KeepMaxResults">Sabit Pencere Boyutu</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">Pencere boyutu sürüklenerek ayarlanamaz.</system:String>
+    <system:String x:Key="MaxShowResultsCannotWorkWithAlwaysPreview">Since Always Preview is on, maximum results shown may not take effect because preview panel requires a certain minimum height</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Kısayol Tuşu</system:String>
@@ -217,7 +356,7 @@
     <system:String x:Key="CycleHistoryUpHotkey">Bir Önceki Sorguya Geç</system:String>
     <system:String x:Key="CycleHistoryDownHotkey">Sonraki Sorguya Geç</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Bağlam Menüsünü Aç</system:String>
-    <system:String x:Key="OpenNativeContextMenuHotkey">Open Native Context Menu</system:String>
+    <system:String x:Key="OpenNativeContextMenuHotkey">Yerel Bağlam Menüsünü Aç</system:String>
     <system:String x:Key="SettingWindowHotkey">Ayarlar Penceresini Aç</system:String>
     <system:String x:Key="CopyFilePathHotkey">Dosya Yolunu Kopyala</system:String>
     <system:String x:Key="ToggleGameModeHotkey">Oyun Modunu Aç/Kapat</system:String>
@@ -253,6 +392,31 @@
     <system:String x:Key="useGlyphUI">Segoe Fluent Simgeleri</system:String>
     <system:String x:Key="useGlyphUIEffect">Arama sonuçlarında mümkünse Segoe Fluent simgelerini kullan.</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Tuşa basın</system:String>
+    <system:String x:Key="showBadges">Sonuç Rozetlerini Göster</system:String>
+    <system:String x:Key="showBadgesToolTip">Desteklenen eklentilere, kolayca ayırt edilebilmeleri için rozet eklenir.</system:String>
+    <system:String x:Key="showBadgesGlobalOnly">Yalnızca Global Sorgular için Sonuç Rozetlerini Göster</system:String>
+    <system:String x:Key="showBadgesGlobalOnlyToolTip">Yalnızca global sorgu sonuçları için rozetleri göster</system:String>
+    <system:String x:Key="dialogJumpHotkey">Diyalog Atlama</system:String>
+    <system:String x:Key="dialogJumpHotkeyToolTip">Farklı Aç/Kaydet iletişim penceresinde geçerli dosya yöneticisinin yoluna hızlıca gitmek için kısayol girin.</system:String>
+    <system:String x:Key="dialogJump">Diyalog Atlama</system:String>
+    <system:String x:Key="dialogJumpToolTip">Farklı Aç/Kaydet iletişim penceresi açıldığında, hızlı bir şekilde dosya yöneticisinin geçerli yoluna gidin.</system:String>
+    <system:String x:Key="autoDialogJump">Otomatik Olarak Diyalog Atlama</system:String>
+    <system:String x:Key="autoDialogJumpToolTip">Farklı Aç/Kaydet iletişim penceresi görüntülendiğinde, otomatik olarak geçerli dosya yöneticisinin yoluna gidin. (Deneysel)</system:String>
+    <system:String x:Key="showDialogJumpWindow">Diyalog Atlama Penceresini Göster</system:String>
+    <system:String x:Key="showDialogJumpWindowToolTip">Dosya/klasör konumlarına hızlı erişim için aç/kaydet penceresi gösterildiğinde Diyalog Atlama arama penceresini görüntüle.</system:String>
+    <system:String x:Key="dialogJumpWindowPosition">Diyalog Atlama Penceresi Konumu</system:String>
+    <system:String x:Key="dialogJumpWindowPositionToolTip">Select position for the Dialog Jump search window</system:String>
+    <system:String x:Key="DialogJumpWindowPositionUnderDialog">Farklı Aç/Kaydet iletişim penceresinin altında düzeltildi. Açıldığında görüntülenir ve pencere kapatılana kadar kalır</system:String>
+    <system:String x:Key="DialogJumpWindowPositionFollowDefault">Varsayılan arama penceresi konumu. Arama penceresi kısayol tuşu tarafından tetiklendiğinde görüntülenir</system:String>
+    <system:String x:Key="dialogJumpResultBehaviour">Dialog Jump Result Navigation Behaviour</system:String>
+    <system:String x:Key="dialogJumpResultBehaviourToolTip">Farklı Aç/Kaydet iletişim penceresini seçilen sonuç yoluna yönlendirmek için davranış</system:String>
+    <system:String x:Key="DialogJumpResultBehaviourLeftClick">Sol tık veya Enter tuşu</system:String>
+    <system:String x:Key="DialogJumpResultBehaviourRightClick">Sağ tık</system:String>
+    <system:String x:Key="dialogJumpFileResultBehaviour">Dialog Jump File Navigation Behaviour</system:String>
+    <system:String x:Key="dialogJumpFileResultBehaviourToolTip">Sonuç bir dosya yolu olduğunda Farklı Aç/Kaydet iletişim penceresinde gezinme davranışı</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourFullPath">Dosya adı kutusuna tam yolu girin</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourFullPathOpen">Dosya adı kutusuna tam yolu girin ve açın</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourDirectory">Dizini yol kutusuna girin</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">Vekil Sunucu</system:String>
@@ -293,20 +457,39 @@
     <system:String x:Key="logfolder">Günlük Klasörü</system:String>
     <system:String x:Key="clearlogfolder">Günlükleri Temizle</system:String>
     <system:String x:Key="clearlogfolderMessage">Tüm günlük kayıtlarını silmek istediğinize emin misiniz?</system:String>
+    <system:String x:Key="cachefolder">Önbellek Klasörü</system:String>
+    <system:String x:Key="clearcachefolder">Önbelleği Temizle</system:String>
+    <system:String x:Key="clearcachefolderMessage">Tüm önbellekleri silmek istediğinizden emin misiniz?</system:String>
+    <system:String x:Key="clearfolderfailMessage">Bazı klasör ve dosyalar silinemedi. Daha fazla bilgi için log dosyasına bakın</system:String>
     <system:String x:Key="welcomewindow">Kurulum Sihirbazı</system:String>
     <system:String x:Key="userdatapath">Kullanıcı Verisi Dizini</system:String>
     <system:String x:Key="userdatapathToolTip">Kullanıcı ayarları ve yüklü eklentiler bu klasörde saklanır. Klasörün konumu taşınabilir moda bağlı olarak değişebilir.</system:String>
     <system:String x:Key="userdatapathButton">Klasörü Aç</system:String>
+    <system:String x:Key="advanced">Gelişmiş</system:String>
+    <system:String x:Key="logLevel">Günlük Düzeyi</system:String>
+    <system:String x:Key="LogLevelDEBUG">Hata ayıklama</system:String>
+    <system:String x:Key="LogLevelINFO">Bilgi</system:String>
+    <system:String x:Key="settingWindowFontTitle">Pencere Yazı Tipini Ayarla</system:String>
+
+    <!--  Release Notes Window  -->
+    <system:String x:Key="seeMoreReleaseNotes">GitHub'da daha fazla sürüm notlarını gör</system:String>
+    <system:String x:Key="checkNetworkConnectionTitle">Sürüm notları alınamadı</system:String>
+    <system:String x:Key="checkNetworkConnectionSubTitle">Lütfen internet bağlantınızı kontrol edin veya GitHub'a erişiminizin olduğundan emin olun</system:String>
+    <system:String x:Key="appUpdateTitle">Flow Launcher {0} sürümüne güncellendi</system:String>
+    <system:String x:Key="appUpdateButtonContent">Sürüm notlarını görüntülemek için buraya tıklayın</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Dosya Yöneticisi Seçenekleri</system:String>
-    <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments as required. The &quot;%d&quot; represents the directory path to open for, used by the Arg for Folder field and for commands opening specific directories. The &quot;%f&quot; represents the file path to open for, used by the Arg for File field and for commands opening specific files.</system:String>
-    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fileds blank.</system:String>
+    <system:String x:Key="fileManager_learnMore">Daha fazla bilgi</system:String>
+    <system:String x:Key="fileManager_tips">Lütfen kullandığınız dosya yöneticisinin dosya konumunu belirtin ve gerektiği şekilde argümanlar ekleyin. &quot;%d&quot;, Arg for Folder alanı tarafından ve belirli dizinleri açan komutlar için kullanılan açılacak dizin yolunu temsil eder. &quot;%f&quot;, Dosya için Arg alanı tarafından ve belirli dosyaları açan komutlar için kullanılan açılacak dosya yolunu temsil eder.</system:String>
+    <system:String x:Key="fileManager_tips2">Örneğin, dosya yöneticisi c:\windows dizinini açmak için &quot;totalcmd.exe /A c:\windows&quot; gibi bir komut kullanıyorsa, Dosya Yöneticisi Yolu totalcmd.exe ve Arg Klasör için /A &quot;%d&quot; olacaktır. QTTabBar gibi bazı dosya yöneticileri sadece bir yol sağlanmasını gerektirebilir, bu durumda Dosya Yöneticisi Yolu olarak &quot;%d&quot; kullanın ve geri kalan alanları boş bırakın.</system:String>
     <system:String x:Key="fileManager_name">Dosya Yöneticisi</system:String>
     <system:String x:Key="fileManager_profile_name">Profil Adı</system:String>
     <system:String x:Key="fileManager_path">Dosya Yöneticisi Yolu</system:String>
     <system:String x:Key="fileManager_directory_arg">Klasör Açarken</system:String>
     <system:String x:Key="fileManager_file_arg">Dosya Açarken</system:String>
+    <system:String x:Key="fileManagerPathNotFound">'{0}' dosya yöneticisi '{1}' konumunda bulunamadı. Devam etmek ister misiniz?</system:String>
+    <system:String x:Key="fileManagerPathError">Dosya Yöneticisi Yol Hatası</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">İnternet Tarayıcı Seçenekleri</system:String>
@@ -331,22 +514,33 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Belirtilen eklenti bulunamadı</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Yeni anahtar kelime boş olamaz</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Yeni anahtar kelime başka bir eklentiye atanmış durumda. Lütfen başka bir anahtar kelime seçin.</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">Bu yeni Anahtar Kelimesi eskisiyle aynı, lütfen farklı bir tane seçin</system:String>
     <system:String x:Key="success">Başarılı</system:String>
     <system:String x:Key="completedSuccessfully">Başarıyla tamamlandı</system:String>
-    <system:String x:Key="actionkeyword_tips">Herhangi bir anahtar kelime belirlemek istemiyorsanız * kullanın</system:String>
+    <system:String x:Key="failedToCopy">Kopyalanamadı</system:String>
+    <system:String x:Key="actionkeyword_tips">Eklentiyi başlatmak için kullanmak istediğiniz anahtar kelimelerini girin ve bunları bölmek için boşluk kullanın. Herhangi bir anahtar kelime belirtmek istemiyorsanız * kullanın, eklenti herhangi bir anahtar kelimesi olmadan tetiklenecektir.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="searchDelayTimeTitle">Arama Gecikme Süresi Ayarı</system:String>
+    <system:String x:Key="searchDelayTimeTips">Eklenti için kullanmak istediğiniz arama gecikme süresini ms cinsinden girin. Herhangi bir şey belirtmek istemiyorsanız boş girin, eklenti varsayılan arama gecikme süresini kullanacaktır.</system:String>
+
+    <!--  Search Delay Settings Dialog  -->
+    <system:String x:Key="homeTitle">Ana Sayfa</system:String>
+    <system:String x:Key="homeTips">Sorgu boşken eklenti sonuçlarını göstermek istiyorsanız eklentinin ana sayfa durumunu etkinleştirin.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Özel Sorgu Kısayolları</system:String>
     <system:String x:Key="customeQueryHotkeyTips">Flow Launcher'ı açıp otomatik olarak girdiğiniz sorguyu aratması için bir kısayol atayın.</system:String>
     <system:String x:Key="preview">Önizleme</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Kısayol tuşu kullanılamıyor, lütfen başka bir kombinasyon girin.</system:String>
-    <system:String x:Key="invalidPluginHotkey">Geçersiz eklenti kısayol tuşu</system:String>
+    <system:String x:Key="invalidPluginHotkey">Kısayol tuşu geçersiz</system:String>
     <system:String x:Key="update">Güncelle</system:String>
     <system:String x:Key="hotkeyRegTitle">Kısayol Atanıyor</system:String>
     <system:String x:Key="hotkeyUnavailable">Kullanılamıyor</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">Bu kısayol &quot;{0}&quot; için ayrılmıştır, lütfen başka bir kısayol deneyin.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">Bu kısayol zaten &quot;{0}&quot; için kullanılıyor. Eğer &quot;Üstüne Yaz&quot;'ı seçerseniz, &quot;{0}&quot; sorgusu bu kısayol ile kullanılamayacak.</system:String>
     <system:String x:Key="hotkeyRegGuide">Bu işleve atamak istediğiniz kısayol tuşlarına basın.</system:String>
+    <system:String x:Key="emptyPluginHotkey">Kısayol tuşu ve eylem anahtar kelimesi boş</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Özel Kısaltmalar</system:String>
@@ -355,6 +549,7 @@
     </system:String>
     <system:String x:Key="duplicateShortcut">Anahtar kelime zaten mevcut. Yeni bir kısaltma girin veya mevcut kısaltmayı düzenleyin.</system:String>
     <system:String x:Key="emptyShortcut">Kısaltma ve/veya sorgu eksik.</system:String>
+    <system:String x:Key="invalidShortcut">Kısayol geçersiz</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Kaydet</system:String>
@@ -363,8 +558,9 @@
     <system:String x:Key="commonReset">Sıfırla</system:String>
     <system:String x:Key="commonDelete">Sil</system:String>
     <system:String x:Key="commonOK">Güncelle</system:String>
-    <system:String x:Key="commonYes">Yes</system:String>
-    <system:String x:Key="commonNo">No</system:String>
+    <system:String x:Key="commonYes">Evet</system:String>
+    <system:String x:Key="commonNo">Hayır</system:String>
+    <system:String x:Key="commonBackground">Arka plan</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Sürüm</system:String>
@@ -381,6 +577,18 @@
     <system:String x:Key="reportWindow_report_succeed">Hata raporu başarıyla gönderildi</system:String>
     <system:String x:Key="reportWindow_report_failed">Hata raporu gönderimi başarısız oldu</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher'da bir hata oluştu</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">Lütfen yeni bir konu açın</system:String>
+    <system:String x:Key="reportWindow_upload_log">1. Log dosyasını buraya yükleyin: {0}</system:String>
+    <system:String x:Key="reportWindow_copy_below">2. Aşağıdaki istisna mesajını kopyalayın</system:String>
+
+    <!--  File Open Error  -->
+    <system:String x:Key="fileManagerNotFoundTitle">Dosya Yöneticisi Hatası</system:String>
+    <system:String x:Key="fileManagerNotFound">
+        Belirtilen dosya yöneticisi bulunamadı. Lütfen Ayarlar &gt; Genel bölümündeki Özel Dosya Yöneticisi ayarını kontrol edin.
+    </system:String>
+    <system:String x:Key="errorTitle">Hata</system:String>
+    <system:String x:Key="folderOpenError">Klasör açılırken bir hata oluştu. {0}</system:String>
+    <system:String x:Key="browserOpenError">URL tarayıcıda açılırken bir hata oluştu. Lütfen ayarlar penceresindeki Genel bölümden Varsayılan Web Tarayıcısı ayarını kontrol edin</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Lütfen bekleyin...</system:String>
@@ -405,6 +613,11 @@
     <system:String x:Key="update_flowlauncher_update_update_files">Aşağıdaki dosyalar güncelleştirilecek</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Güncellenecek dosyalar</system:String>
     <system:String x:Key="update_flowlauncher_update_update_description">Güncelleme açıklaması</system:String>
+
+    <!--  Plugin Update Window  -->
+    <system:String x:Key="restartAfterUpdating">Eklentileri güncelledikten sonra Flow Launcher'ı yeniden başlat</system:String>
+    <system:String x:Key="updatePluginCheckboxContent">{0}: v{1}'den v{2}'ye güncelleme</system:String>
+    <system:String x:Key="updatePluginNoSelected">Seçilen eklenti yok</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Atla</system:String>

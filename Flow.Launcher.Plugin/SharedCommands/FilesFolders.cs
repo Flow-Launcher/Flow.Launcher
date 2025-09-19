@@ -264,12 +264,12 @@ namespace Flow.Launcher.Plugin.SharedCommands
             var index = path.LastIndexOf('\\');
             if (index > 0 && index < (path.Length - 1))
             {
-                string previousDirectoryPath = path.Substring(0, index + 1);
-                return locationExists(previousDirectoryPath) ? previousDirectoryPath : "";
+                string previousDirectoryPath = path[..(index + 1)];
+                return locationExists(previousDirectoryPath) ? previousDirectoryPath : string.Empty;
             }
             else
             {
-                return "";
+                return string.Empty;
             }
         }
 
@@ -285,7 +285,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 // not full path, get previous level directory string
                 var indexOfSeparator = path.LastIndexOf('\\');
 
-                return path.Substring(0, indexOfSeparator + 1);
+                return path[..(indexOfSeparator + 1)];
             }
 
             return path;
@@ -317,6 +317,52 @@ namespace Flow.Launcher.Plugin.SharedCommands
         public static string EnsureTrailingSlash(this string path)
         {
             return path.TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar;
+        }
+
+        /// <summary>
+        /// Validates a directory, creating it if it doesn't exist
+        /// </summary>
+        /// <param name="path"></param>
+        public static void ValidateDirectory(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+        }
+
+        /// <summary>
+        /// Validates a data directory, synchronizing it by ensuring all files from a bundled source directory exist in it.
+        /// If files are missing or outdated, they are copied from the bundled directory to the data directory.
+        /// </summary>
+        /// <param name="bundledDataDirectory"></param>
+        /// <param name="dataDirectory"></param>
+        public static void ValidateDataDirectory(string bundledDataDirectory, string dataDirectory)
+        {
+            if (!Directory.Exists(dataDirectory))
+            {
+                Directory.CreateDirectory(dataDirectory);
+            }
+
+            foreach (var bundledDataPath in Directory.GetFiles(bundledDataDirectory))
+            {
+                var data = Path.GetFileName(bundledDataPath);
+                if (data == null) continue;
+                var dataPath = Path.Combine(dataDirectory, data);
+                if (!File.Exists(dataPath))
+                {
+                    File.Copy(bundledDataPath, dataPath);
+                }
+                else
+                {
+                    var time1 = new FileInfo(bundledDataPath).LastWriteTimeUtc;
+                    var time2 = new FileInfo(dataPath).LastWriteTimeUtc;
+                    if (time1 != time2)
+                    {
+                        File.Copy(bundledDataPath, dataPath, true);
+                    }
+                }
+            }
         }
     }
 }

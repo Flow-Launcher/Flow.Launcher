@@ -6,6 +6,7 @@
     <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">Naciśnij dowolny przycisk, aby zamknąć to okno...</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">Nie zamykaj wiersza poleceń po wykonaniu polecenia</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">Zawsze uruchamiaj jako administrator</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_use_windows_terminal">Użyj Windows Terminal</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">Uruchom jako inny użytkownik</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">Wiersz poleceń</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Umożliwia wykonywanie poleceń systemowych z poziomu Flow Launcher</system:String>
@@ -14,4 +15,6 @@
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">Uruchom jako administrator</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_copy">Skopiuj komendę</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_history">Pokaż tylko liczbę najczęściej używanych poleceń:</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_command_not_found">Command not found: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_error_running_command">Error running the command: {0}</system:String>
 </ResourceDictionary>

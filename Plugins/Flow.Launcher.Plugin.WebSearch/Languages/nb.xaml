@@ -11,13 +11,14 @@
     <system:String x:Key="flowlauncher_plugin_websearch_edit">Rediger</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">Legg til</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">Aktivert</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_private_mode_label">Privat modus</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_true">Aktivert</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_false">Deaktivert</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">Bekreft</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Nøkkelord for handling</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">Nettadresse</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">Søk</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Bruk autofullføring av søkespørring:</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Use Search Query Autocomplete</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Autofullfør data fra:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Vennligst velg et websøk</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Er du sikker på at du ønsker å slette {0}?</system:String>

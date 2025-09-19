@@ -9,11 +9,8 @@
     d:DesignHeight="300"
     d:DesignWidth="500"
     mc:Ignorable="d">
+
     <UserControl.Resources>
-        <Style x:Key="BrowserPathBoxStyle" TargetType="TextBox">
-            <Setter Property="Height" Value="28" />
-            <Setter Property="VerticalContentAlignment" Value="Center" />
-        </Style>
         <DataTemplate x:Key="HeaderTemplateArrowUp">
             <DockPanel>
                 <TextBlock HorizontalAlignment="Center" Text="{Binding}" />
@@ -35,16 +32,19 @@
             </DockPanel>
         </DataTemplate>
     </UserControl.Resources>
-    <Grid Margin="0,4,0,0">
+
+    <Grid Margin="{StaticResource SettingPanelMargin}">
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition Height="56" />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+
         <ListView
             x:Name="SearchSourcesListView"
             Grid.Row="0"
-            Margin="18,18,18,0"
+            Margin="{StaticResource SettingPanelItemTopBottomMargin}"
             BorderBrush="DarkGray"
             BorderThickness="1"
             GridViewColumnHeader.Click="SortByColumn"
@@ -60,7 +60,7 @@
                                 <Image
                                     Width="20"
                                     Height="20"
-                                    Margin="6,0,0,0"
+                                    Margin="6 0 0 0"
                                     Source="{Binding Path=IconPath}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -69,11 +69,11 @@
                     <GridViewColumn
                         Width="130"
                         DisplayMemberBinding="{Binding ActionKeyword}"
-                        Header="{DynamicResource flowlauncher_plugin_websearch_action_keyword}"/>
+                        Header="{DynamicResource flowlauncher_plugin_websearch_action_keyword}" />
                     <GridViewColumn
-                        Width="350"
+                        Width="239"
                         DisplayMemberBinding="{Binding Title}"
-                        Header="{DynamicResource flowlauncher_plugin_websearch_title}"/>
+                        Header="{DynamicResource flowlauncher_plugin_websearch_title}" />
                     <GridViewColumn Width="140" Header="{DynamicResource flowlauncher_plugin_websearch_enable}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -92,62 +92,73 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
+                    <GridViewColumn
+                        Width="120"
+                        Header="{DynamicResource flowlauncher_plugin_websearch_private_mode_label}">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    IsChecked="{Binding IsPrivateMode}"
+                                    IsEnabled="False"
+                                    />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
+
         <StackPanel
             Grid.Row="1"
+            Margin="{StaticResource SettingPanelItemTopBottomMargin}"
             HorizontalAlignment="Right"
             Orientation="Horizontal">
             <Button
                 Width="100"
-                Margin="10"
+                Margin="{StaticResource SettingPanelItemLeftMargin}"
                 Click="OnDeleteSearchSearchClick"
                 Content="{DynamicResource flowlauncher_plugin_websearch_delete}" />
             <Button
                 Width="100"
-                Margin="10"
+                Margin="{StaticResource SettingPanelItemLeftMargin}"
                 Click="OnEditSearchSourceClick"
                 Content="{DynamicResource flowlauncher_plugin_websearch_edit}" />
             <Button
                 Width="100"
-                Margin="10,10,18,10"
+                Margin="{StaticResource SettingPanelItemLeftMargin}"
                 Click="OnAddSearchSearchClick"
                 Content="{DynamicResource flowlauncher_plugin_websearch_add}" />
         </StackPanel>
-        <Border
-            Grid.Row="2"
-            Margin="0,0,0,0"
-            HorizontalAlignment="Stretch"
-            BorderBrush="{DynamicResource Color03B}"
-            BorderThickness="0,1,0,0">
-            <DockPanel HorizontalAlignment="Right">
-                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-                    <Label
-                        Margin="14,0,10,0"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Content="{DynamicResource flowlauncher_plugin_websearch_enable_suggestion_provider}" />
-                    <ComboBox
-                        Height="30"
-                        Margin="0,0,20,0"
-                        VerticalAlignment="Center"
-                        FontSize="11"
-                        IsEnabled="{Binding ElementName=EnableSuggestion, Path=IsChecked}"
-                        ItemsSource="{Binding Settings.Suggestions}"
-                        SelectedItem="{Binding Settings.SelectedSuggestion}" />
-                    <Label
-                        Margin="0,0,10,0"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Content="{DynamicResource flowlauncher_plugin_websearch_enable_suggestion}" />
-                    <CheckBox
-                        Name="EnableSuggestion"
-                        Margin="0,0,8,0"
-                        IsChecked="{Binding Settings.EnableSuggestion}" />
-                </StackPanel>
-                <!--  Not sure why binding IsEnabled directly to Settings.EnableWebSearchSuggestion is not working  -->
-            </DockPanel>
-        </Border>
+
+        <Separator Grid.Row="2" Style="{StaticResource SettingPanelSeparatorStyle}" />
+
+        <DockPanel
+            Grid.Row="3"
+            Margin="{StaticResource SettingPanelItemTopBottomMargin}"
+            HorizontalAlignment="Right">
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <Label
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Content="{DynamicResource flowlauncher_plugin_websearch_enable_suggestion_provider}" />
+                <ComboBox
+                    Height="30"
+                    Margin="{StaticResource SettingPanelItemLeftMargin}"
+                    VerticalAlignment="Center"
+                    FontSize="11"
+                    IsEnabled="{Binding Settings.EnableSuggestion}"
+                    ItemsSource="{Binding Settings.Suggestions}"
+                    SelectedItem="{Binding Settings.SelectedSuggestion}" />
+                <CheckBox
+                    Name="EnableSuggestion"
+                    Margin="{StaticResource SettingPanelItemLeftMargin}"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Content="{DynamicResource flowlauncher_plugin_websearch_enable_suggestion}"
+                    IsChecked="{Binding Settings.EnableSuggestion}" />
+            </StackPanel>
+        </DockPanel>
     </Grid>
 </UserControl>

@@ -5,6 +5,9 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Yer İmleri</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Tarayıcınızdaki yer işaretlerini arayın</system:String>
 
+    <!--  Main  -->
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copy_failed">Panoya url ayarlanamadı</system:String>
+
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Yer İmleri Verisi</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Yer imlerini şurada aç:</system:String>
@@ -25,4 +28,6 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Tarayıcı Motoru</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">Eğer Chrome, Firefox veya Edge kullanmıyor veya bu tarayıcıların taşınabilir sürümlerini kullanıyorsanız tarayıcı motorunu ve yer imlerinin saklandığı dizini elle girmeniz gerekir.</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">Örneğin: Brave tarayıcısı Chromium tabanlıdır ve yer imleri varsayılan olarak &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot; klasöründe saklanır. Firefox tabanlı tarayıcılar için bu places.sqlite dosyasının bulunduğu kullanıcı verisi klasörüdür.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Site simgelerini yükle (başlangıç sırasında zaman alabilir)</system:String>
+
 </ResourceDictionary>

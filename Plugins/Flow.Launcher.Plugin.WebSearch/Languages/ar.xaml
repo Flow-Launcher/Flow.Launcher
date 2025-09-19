@@ -11,13 +11,14 @@
     <system:String x:Key="flowlauncher_plugin_websearch_edit">تعديل</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">إضافة</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">مفعل</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_private_mode_label">الوضع الخاص</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_true">مفعل</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_false">مُعطّل</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">تأكيد</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">كلمة مفتاحية للعمل</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">الرابط</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">بحث</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">استخدام الإكمال التلقائي لاستعلام البحث:</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Use Search Query Autocomplete</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">بيانات الإكمال التلقائي من:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">يرجى اختيار بحث على الويب</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">هل أنت متأكد أنك تريد حذف {0}؟</system:String>

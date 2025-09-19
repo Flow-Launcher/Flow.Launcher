@@ -59,6 +59,9 @@ namespace Flow.Launcher.Plugin
                    (WinPressed ? ModifierKeys.Windows : ModifierKeys.None);
         }
 
+        /// <summary>
+        /// Default <see cref="SpecialKeyState"/> object with all keys not pressed.
+        /// </summary>
         public static readonly SpecialKeyState Default = new () {
             CtrlPressed = false,
             ShiftPressed = false,

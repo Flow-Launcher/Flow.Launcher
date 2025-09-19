@@ -3,6 +3,10 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">Najprv vyberte položku</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Vyberte cestu k priečinku.</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Vyberte iný názov alebo cestu k priečinku.</system:String>
+    <system:String x:Key="plugin_explorer_delete_quick_access_link">Naozaj chcete odstrániť tento odkaz na rýchly prístup?</system:String>
+    <system:String x:Key="plugin_explorer_delete_index_search_excluded_path">Naozaj chcete odstrániť vylúčenú adresu na tento vyhľadávací index?</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Vyberte odkaz na priečinok</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">Naozaj chcete odstrániť {0}?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">Naozaj chcete natrvalo odstrániť tento súbor?</system:String>
@@ -25,12 +29,14 @@
     <system:String x:Key="plugin_explorer_add">Pridať</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">Všeobecné nastavenia</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Upraviť aktivačný príkaz</system:String>
+    <system:String x:Key="plugin_explorer_manage_quick_access_links_header">Prispôsobenie Rýchleho prístupu</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Odkazy Rýchleho prístupu</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Nastavenia Everything</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">Panel náhľadu</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Veľkosť</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Dátum vytvorenia</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Dátum úpravy</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_age_checkbox">Čas od vytvorenia</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Zobraziť informácie o súbore</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Formát dátumu a času</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Zoradenie:</system:String>
@@ -40,6 +46,7 @@
     <system:String x:Key="plugin_explorer_shell_path">Cesta k príkazovému riadku</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Vylúčené umiestnenia indexovania</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Použiť umiestnenie výsledku vyhľadávania ako pracovný priečinok spustiteľného súboru</system:String>
+    <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Zobraziť viac informácií v popise ako veľkosť a dátumy</system:String>
     <system:String x:Key="plugin_explorer_default_open_in_file_manager">Stlačením klávesu Enter otvoriť priečinok v predvolenom správcovi súborov</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Na vyhľadanie cesty použiť vyhľadávanie v indexe</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Možnosti indexovania</system:String>
@@ -76,17 +83,26 @@
     <!--  Plugin Tooltip  -->
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter na otvorenie priečinka</system:String>
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Enter na otvorenie umiestnenia priečinka</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info">{0}{4}Veľkosť: {1}{4}Dátum vytvorenia: {2}{4}Dátum úpravy: {3}</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_unknown">Neznáma</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_volume">{0}{3}Voľné miesto: {1}{3}Celková veľkosť: {2}</system:String>
 
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">Kopírovať cestu</system:String>
     <system:String x:Key="plugin_explorer_copypath_subtitle">Skopírovať cestu k aktuálnej položke do schránky</system:String>
+    <system:String x:Key="plugin_explorer_copyname">Kopírovať názov</system:String>
+    <system:String x:Key="plugin_explorer_copyname_subtitle">Skopírovať názov aktuálnej položky do schránky</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">Kopírovať</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">Skopírovať aktuálny súbor do schránky</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">Skopírovať aktuálny priečinok do schránky</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder">Odstrániť</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Natrvalo odstrániť aktuálny súbor</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Natrvalo odstrániť aktuálny priečinok</system:String>
-    <system:String x:Key="plugin_explorer_path">Cesta:</system:String>
+    <system:String x:Key="plugin_explorer_name">Názov</system:String>
+    <system:String x:Key="plugin_explorer_type">Typ</system:String>
+    <system:String x:Key="plugin_explorer_path">Cesta</system:String>
+    <system:String x:Key="plugin_explorer_file">Súbor</system:String>
+    <system:String x:Key="plugin_explorer_folder">Priečinok</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Odstrániť vybraný</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Spustiť ako iný používateľ</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Spustí vybranú položku ako používateľ s iným kontom</system:String>
@@ -114,6 +130,11 @@
     <system:String x:Key="plugin_explorer_show_contextmenu_title">Zobraziť kontextovú ponuku Windowsu</system:String>
     <system:String x:Key="plugin_explorer_openwith">Otvoriť s</system:String>
     <system:String x:Key="plugin_explorer_openwith_subtitle">Vyberte program, ktorým chcete otvoriť súbor</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_delete">Odstránenie {0} zlyhalo</system:String>
+    <system:String x:Key="plugin_explorer_file_not_found">Súbor sa nenašiel: {0}</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_open">Nepodarilo sa otvoriť {0}</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_set_text">Nepodarilo sa nastaviť text v schránke</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_set_files">Nepodarilo sa nastaviť súbory/priečinky v schránke</system:String>
 
     <!--  Special Results  -->
     <system:String x:Key="plugin_explorer_diskfreespace">Voľných {0} z {1}</system:String>
@@ -127,19 +148,32 @@
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">Upozornenie: Služba Everything nie je spustená</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_query_error">Chyba pri dopytovaní Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by">Zoradiť podľa</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_name">Názov</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_path">Cesta</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_size">Veľkosť</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension">Prípona</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name">Typ</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created">Dátum vytvorenia</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified">Dátum úpravy</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes">Atribúty</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename">Zoznam názvov súborov</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count">Počet spustení</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed">Nedávno zmenený dátum</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed">Dátum prístupu</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run">Dátum spustenia</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_name_ascending">Názov ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_name_descending">Názov ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_path_ascending">Cesta ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_path_descending">Cesta ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_size_ascending">Veľkosť ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_size_descending">Veľkosť ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension_ascending">Prípona ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension_descending">Prípona ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name_ascending">Typ ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name_descending">Typ ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created_ascending">Dátum vytvorenia ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created_descending">Dátum vytvorenia ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified_ascending">Dátum úpravy ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified_descending">Dátum úpravy ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes_ascending">Atribúty ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes_descending">Atribúty ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename_ascending">Názov súboru zoznamu súborov ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename_descending">Názov súboru zoznamu súborov ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count_ascending">Počet spustení ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count_descending">Počet spustení ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed_ascending">Dátum nedávnej zmeny ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed_descending">Dátum nedávnej zmeny ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed_ascending">Dátum prístupu ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed_descending">Dátum prístupu ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run_ascending">Dátum spustenia ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run_descending">Dátum spustenia ↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_ascending">↑</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Upozornenie: Toto nie je voľba Fast Sort, vyhľadávanie môže byť pomalé</system:String>
@@ -157,9 +191,20 @@
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Chcete povoliť vyhľadávanie obsahu cez Everything?</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">Bez indexu (ktorý je podporovaný len v Everything v1.5+) to môže byť veľmi pomalé</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_everything_not_found">Nedá sa nájsť Everything.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_install_issue">Nepodarilo sa nainštalovať Everything, nainštalujte ho manuálne</system:String>
+
     <!--  Native Context Menu  -->
     <system:String x:Key="plugin_explorer_native_context_menu_header">Natívna kontextová ponuka</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Zobraziť natívnu kontextovú ponuku (experimentálne)</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Nižšie môžete určiť položky, ktoré chcete zahrnúť do kontextovej ponuky, môžu byť čiastočné (napr. &quot;tvoriť v program&quot;) alebo úplné (&quot;Otvoriť v programe&quot;).</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Nižšie môžete určiť položky, ktoré chcete vylúčiť z kontextovej ponuky, môžu byť čiastočné (napr. &quot;tvoriť v program&quot;) alebo úplné (&quot;Otvoriť v programe&quot;).</system:String>
+
+    <!--  Preview Info  -->
+    <system:String x:Key="Today">Dnes</system:String>
+    <system:String x:Key="DaysAgo">pred {0} dňami</system:String>
+    <system:String x:Key="OneMonthAgo">pred mesiacom</system:String>
+    <system:String x:Key="MonthsAgo">pred {0} mesiacmi</system:String>
+    <system:String x:Key="OneYearAgo">pred rokom</system:String>
+    <system:String x:Key="YearsAgo">pred {0} rokmi</system:String>
 </ResourceDictionary>

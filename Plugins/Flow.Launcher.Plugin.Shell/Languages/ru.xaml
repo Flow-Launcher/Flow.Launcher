@@ -6,6 +6,7 @@
     <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">Press any key to close this window...</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">Не закрывать командную строку после выполнения команды</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">Всегда запускать с правами администратора</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_use_windows_terminal">Use Windows Terminal</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">Запустить от имени другого пользователя</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">Оболочка</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Allows to execute system commands from Flow Launcher</system:String>
@@ -14,4 +15,6 @@
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">Run As Administrator</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_copy">Скопировать команду</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_history">Показывать только самые используемые команды:</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_command_not_found">Command not found: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_error_running_command">Error running the command: {0}</system:String>
 </ResourceDictionary>

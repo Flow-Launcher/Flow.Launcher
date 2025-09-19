@@ -1,4 +1,7 @@
-version: '1.19.5.{build}'
+version: '2.0.0.{build}'
+
+# Do not build on tags because we create a release on merge to master. Otherwise will upload artifacts twice changing the hash, as well as triggering duplicate GitHub release action & NuGet deployments.
+skip_tags: true
 
 init:
 - ps: |
@@ -14,7 +17,6 @@ init:
 cache:
   - '%USERPROFILE%\.nuget\packages -> **.sln, **.csproj'  # preserve nuget folder (packages) unless the solution or projects change
 
-
 assembly_info:
   patch: true
   file: SolutionAssemblyInfo.cs
@@ -26,7 +28,16 @@ image: Visual Studio 2022
 platform: Any CPU
 configuration: Release
 before_build:
-- ps: nuget restore
+- ps: |
+      nuget restore
+
+      $jsonFiles = Get-ChildItem -Path ".\Plugins\*\plugin.json"
+      foreach ($file in $jsonFiles) {
+          $plugin_old_ver = Get-Content $file.FullName -Raw | ConvertFrom-Json
+          (Get-Content $file) -replace '"Version"\s*:\s*".*?"', "`"Version`": `"$env:flowVersion`"" | Set-Content $file
+          $plugin_new_ver = Get-Content $file.FullName -Raw | ConvertFrom-Json
+          Write-Host "Updated" $plugin_old_ver.Name "version from" $plugin_old_ver.Version "to" $plugin_new_ver.Version
+      }
 build:
   project: Flow.Launcher.sln
   verbosity: minimal
@@ -51,14 +62,24 @@ deploy:
   - provider: NuGet
     artifact: Plugin nupkg
     api_key:
-      secure: sCSd5JWgdzJWDa9kpqECut5ACPKZqcoxKU8ERKC00k7VIjig3/+nFV5zzTcGb0w3
+      secure: en+/GPSgfUVARoX0+lOeAAlbzvcCZAyBeVQaNq1AeXuRjjHgMwhBnt0PHVJXOepS
     on:
-      APPVEYOR_REPO_TAG: true
+      branch: master
 
   - provider: GitHub
     repository: Flow-Launcher/Prereleases
     release: v$(prereleaseTag)
-    description: 'This is the early access build of our upcoming release. All changes contained here are reviewed, tested and stable to use.\n\nSee our [release](https://github.com/Flow-Launcher/Flow.Launcher/pulls?q=is%3Aopen+is%3Apr+label%3Arelease) Pull Request for details.\n\nFor latest production release visit [here](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest)\n\nPlease report any bugs or issues over at the [main repository](https://github.com/Flow-Launcher/Flow.Launcher/issues)'
+    description: |
+      This is the early access build of our upcoming release.
+      All changes contained here are reviewed, tested and stable to use.
+      
+      This build includes new changes from commit:
+      $(APPVEYOR_REPO_COMMIT_MESSAGE)
+      
+      See all changes in this early access by going to the [milestones](https://github.com/Flow-Launcher/Flow.Launcher/milestones?sort=title&direction=asc) section and choosing the upcoming milestone.
+      For latest production release visit [here](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest)
+      
+      Please report any bugs or issues over at the [main repository](https://github.com/Flow-Launcher/Flow.Launcher/issues)'
     auth_token:
       secure: ij4UeXUYQBDJxn2YRAAhUOjklOGVKDB87Hn5J8tKIzj13yatoI7sLM666QDQFEgv
     artifact: Squirrel Installer, Portable Version, Squirrel nupkg, Squirrel RELEASES
@@ -75,12 +96,3 @@ deploy:
     force_update: true
     on:
       branch: master
-
-  - provider: GitHub
-    release: v$(flowVersion)
-    auth_token:
-      secure: ij4UeXUYQBDJxn2YRAAhUOjklOGVKDB87Hn5J8tKIzj13yatoI7sLM666QDQFEgv
-    artifact: Squirrel Installer, Portable Version, Squirrel nupkg, Squirrel RELEASES
-    force_update: true
-    on:
-      APPVEYOR_REPO_TAG: true

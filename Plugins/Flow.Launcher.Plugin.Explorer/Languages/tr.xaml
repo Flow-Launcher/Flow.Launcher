@@ -2,19 +2,23 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Dialogues  -->
-    <system:String x:Key="plugin_explorer_make_selection_warning">Please make a selection first</system:String>
+    <system:String x:Key="plugin_explorer_make_selection_warning">Lütfen önce bir seçim yapın</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_no_folder_selected">Lütfen bir klasör yolu seçin.</system:String>
+    <system:String x:Key="plugin_explorer_quick_access_link_path_already_exists">Lütfen farklı bir isim veya klasör yolu seçin.</system:String>
+    <system:String x:Key="plugin_explorer_delete_quick_access_link">Bu hızlı erişim bağlantısını silmek istediğinizden emin misiniz?</system:String>
+    <system:String x:Key="plugin_explorer_delete_index_search_excluded_path">Are you sure you want to delete this index search excluded path?</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Lütfen bir klasör bağlantısı seçin</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">{0} bağlantısını silmek istediğinize emin misiniz?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">Bu dosyayı kalıcı olarak silmek istediğinizden emin misiniz?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Bu öğeyi kalıcı olarak silmek istediğinizden emin misiniz?</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Deletion successful</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Silme işlemi başarılı</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Başarıyla silindi: {0}</system:String>
-    <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Assigning the global action keyword could bring up too many results during search. Please choose a specific action keyword</system:String>
-    <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">Quick Access can not be set to the global action keyword when enabled. Please choose a specific action keyword</system:String>
-    <system:String x:Key="plugin_explorer_windowsSearchServiceNotRunning">The required service for Windows Index Search does not appear to be running</system:String>
-    <system:String x:Key="plugin_explorer_windowsSearchServiceFix">To fix this, start the Windows Search service. Select here to remove this warning</system:String>
-    <system:String x:Key="plugin_explorer_alternative">The warning message has been switched off. As an alternative for searching files and folders, would you like to install Everything plugin?{0}{0}Select 'Yes' to install Everything plugin, or 'No' to return</system:String>
-    <system:String x:Key="plugin_explorer_alternative_title">Explorer Alternative</system:String>
+    <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Genel eylem anahtar sözcüğünü atamak, arama sırasında çok fazla sonuç getirebilir. Lütfen belirli bir eylem anahtar sözcüğü seçin</system:String>
+    <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">Hızlı Erişim etkinleştirildiğinde genel eylem anahtar sözcüğüne ayarlanamaz. Lütfen belirli bir eylem anahtar sözcüğü seçin</system:String>
+    <system:String x:Key="plugin_explorer_windowsSearchServiceNotRunning">Windows Dizin Araması için gerekli hizmet çalışıyor gibi görünmüyor</system:String>
+    <system:String x:Key="plugin_explorer_windowsSearchServiceFix">Bunu düzeltmek için Windows Arama hizmetini başlatın. Bu uyarıyı kaldırmak için burayı seçin</system:String>
+    <system:String x:Key="plugin_explorer_alternative">Uyarı mesajı kapatıldı. Dosya ve klasörleri aramak için bir alternatif olarak Everything eklentisini yüklemek ister misiniz?{0}{0}Everything eklentisini yüklemek için 'Evet'i veya geri dönmek için 'Hayır'ı seçin</system:String>
+    <system:String x:Key="plugin_explorer_alternative_title">Explorer Alternatifi</system:String>
     <system:String x:Key="plugin_explorer_directoryinfosearch_error">Arama sırasında hata oluştu: {0}</system:String>
     <system:String x:Key="plugin_explorer_opendir_error">Klasör açılamadı</system:String>
     <system:String x:Key="plugin_explorer_openfile_error">Dosya açılamadı</system:String>
@@ -25,101 +29,118 @@
     <system:String x:Key="plugin_explorer_add">Ekle</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">Genel Ayarlar</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Anahtar Kelimeler</system:String>
-    <system:String x:Key="plugin_explorer_quickaccesslinks_header">Quick Access Links</system:String>
+    <system:String x:Key="plugin_explorer_manage_quick_access_links_header">Hızlı Erişim'i Özelleştirin</system:String>
+    <system:String x:Key="plugin_explorer_quickaccesslinks_header">Hızlı Erişim Bağlantıları</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Everything Ayarları</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">Önizleme Paneli</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Boyut</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Oluşturma Tarihi</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Değiştirme Tarihi</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_age_checkbox">Dosya Yaşı</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Dosya Özelliklerini Göster</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Tarih ve saat biçimi</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Sıralama Seçeneği:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Everything Kurulumu:</system:String>
-    <system:String x:Key="plugin_explorer_launch_hidden">Launch Hidden</system:String>
+    <system:String x:Key="plugin_explorer_launch_hidden">Gizli Başlat</system:String>
     <system:String x:Key="plugin_explorer_editor_path">Metin Düzenleyici</system:String>
     <system:String x:Key="plugin_explorer_shell_path">Komut İstemi</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Hariç Tutulan Dizinler</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Programın çalışma klasörü olarak sonuç klasörünü kullan</system:String>
-    <system:String x:Key="plugin_explorer_default_open_in_file_manager">Hit Enter to open folder in Default File Manager</system:String>
-    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Use Index Search For Path Search</system:String>
-    <system:String x:Key="plugin_explorer_manageindexoptions">Indexing Options</system:String>
+    <system:String x:Key="plugin_explorer_display_more_info_in_tooltip">Araç ipuçlarında boyut ve yaş gibi daha fazla bilgi göster</system:String>
+    <system:String x:Key="plugin_explorer_default_open_in_file_manager">Klasörü varsayılan Dosya Yöneticisi'nde açmak için Enter tuşuna basın</system:String>
+    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Yol Araması İçin Dizin Aramasını Kullan</system:String>
+    <system:String x:Key="plugin_explorer_manageindexoptions">Dizin Oluşturma Seçenekleri</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Ara:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">Yolu Ara:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">Dosya İçeriğini Ara:</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Index Search:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Dizin Araması:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Hızlı Erişim:</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">Geçerli Anahtar Kelime</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_done">Tamam</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">Etkin</system:String>
-    <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">When disabled Flow will not execute this search option, and will additionally revert back to '*' to free up the action keyword</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">Devre dışı bırakıldığında Flow bu arama seçeneğini yürütmez ve eylem anahtar sözcüğünü serbest bırakmak için ek olarak '*' değerine geri döner</system:String>
     <system:String x:Key="plugin_explorer_engine_everything">Everything</system:String>
     <system:String x:Key="plugin_explorer_engine_windows_index">Windows Arama</system:String>
     <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Doğrudan Sayım</system:String>
     <system:String x:Key="plugin_explorer_file_editor_path">Metin Düzenleyici</system:String>
     <system:String x:Key="plugin_explorer_folder_editor_path">Klasör Düzenleyici</system:String>
-    <system:String x:Key="plugin_explorer_enabled">Enabled</system:String>
-    <system:String x:Key="plugin_explorer_disabled">Disabled</system:String>
+    <system:String x:Key="plugin_explorer_enabled">Aktif</system:String>
+    <system:String x:Key="plugin_explorer_disabled">Devre dışı</system:String>
 
     <system:String x:Key="plugin_explorer_Content_Search_Engine">Dosya İçeriği Arama Motoru</system:String>
-    <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Directory Recursive Search Engine</system:String>
+    <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Dizin Yinelemeli Arama Motoru</system:String>
     <system:String x:Key="plugin_explorer_Index_Search_Engine">Arama Motoru</system:String>
     <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Windows Dizin Oluşturma Ayarları</system:String>
-    <system:String x:Key="plugin_explorer_Excluded_File_Types">Excluded File Types (comma seperated)</system:String>
-    <system:String x:Key="plugin_explorer_Excluded_File_Types_Tooltip">For example: exe,jpg,png</system:String>
-    <system:String x:Key="plugin_explorer_Maximum_Results">Maximum results</system:String>
-    <system:String x:Key="plugin_explorer_Maximum_Results_Tooltip">The maximum number of results requested from active search engine</system:String>
+    <system:String x:Key="plugin_explorer_Excluded_File_Types">Hariç Tutulan Dosya Türleri (virgülle ayrılmış)</system:String>
+    <system:String x:Key="plugin_explorer_Excluded_File_Types_Tooltip">Örneğin: exe,jpg,png</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results">Maksimum sonuç</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results_Tooltip">Etkin arama motorundan istenen maksimum sonuç sayısı</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">Dosya Gezgini</system:String>
-    <system:String x:Key="plugin_explorer_plugin_description">Find and manage files and folders via Windows Search or Everything</system:String>
+    <system:String x:Key="plugin_explorer_plugin_description">Windows Arama veya Everything aracılığıyla dosya ve klasörleri bulun ve yönetin</system:String>
 
     <!--  Plugin Tooltip  -->
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Dizini açmak içi Ctrl + Enter</system:String>
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Dosya konumunu açmak için Ctrl + Enter</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info">{0}{4}Boyut: {1}{4}Oluşturulma tarihi: {2}{4}Değiştirildiği tarih: {3}</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_unknown">Bilinmeyen</system:String>
+    <system:String x:Key="plugin_explorer_plugin_tooltip_more_info_volume">{0}{3}Boş alan: {1}{3}Toplam boyut: {2}</system:String>
 
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">Yolu kopyala</system:String>
     <system:String x:Key="plugin_explorer_copypath_subtitle">Mevcut dosya konumunu panoya kopyala</system:String>
+    <system:String x:Key="plugin_explorer_copyname">İsmi kopyala</system:String>
+    <system:String x:Key="plugin_explorer_copyname_subtitle">Mevcut dosyanın adını panoya kopyala</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">Kopyala</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">Mevcut dosyayı panoya kopyala</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">Mevcut klasörü panoya kopyala</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder">Sil</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Mevcut dosyayı kalıcı olarak sil</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Mevcut klasörü kalıcı olarak sil</system:String>
-    <system:String x:Key="plugin_explorer_path">Yol:</system:String>
+    <system:String x:Key="plugin_explorer_name">İsim</system:String>
+    <system:String x:Key="plugin_explorer_type">Tür</system:String>
+    <system:String x:Key="plugin_explorer_path">Yol</system:String>
+    <system:String x:Key="plugin_explorer_file">Dosya</system:String>
+    <system:String x:Key="plugin_explorer_folder">Klasör</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Seçileni sil</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Başka bir kullanıcı olarak çalıştır</system:String>
-    <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Run the selected using a different user account</system:String>
+    <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Seçileni farklı bir kullanıcı hesabı kullanarak çalıştır</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder">Dosya konumunu aç</system:String>
-    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Open the location that contains current item</system:String>
+    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Geçerli öğeyi içeren konumu aç</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Metin Düzenleyici ile Aç:</system:String>
-    <system:String x:Key="plugin_explorer_openwitheditor_error">Failed to open file at {0} with Editor {1} at {2}</system:String>
+    <system:String x:Key="plugin_explorer_openwitheditor_error">{0} dosyası, {1} Düzenleyicisi ile {2} konumunda açılamadı</system:String>
     <system:String x:Key="plugin_explorer_openwithshell">Komut İstemi ile Aç:</system:String>
-    <system:String x:Key="plugin_explorer_openwithshell_error">Failed to open folder {0} with Shell {1} at {2}</system:String>
-    <system:String x:Key="plugin_explorer_excludefromindexsearch">Exclude current and sub-directories from Index Search</system:String>
-    <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Excluded from Index Search</system:String>
+    <system:String x:Key="plugin_explorer_openwithshell_error">{0} klasörü, {1} Kabuğu ile {2} konumunda açılamadı</system:String>
+    <system:String x:Key="plugin_explorer_excludefromindexsearch">Mevcut ve alt dizinleri Dizin Araması'ndan hariç tut</system:String>
+    <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Dizin Araması'ndan hariç tutuldu</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions">Windows Dizin Oluşturma Ayarları</system:String>
-    <system:String x:Key="plugin_explorer_openindexingoptions_subtitle">Manage indexed files and folders</system:String>
+    <system:String x:Key="plugin_explorer_openindexingoptions_subtitle">Dizinlenmiş dosya ve klasörleri yönet</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions_errormsg">Windows Dizin Oluşturma ayarlarını açma başarısız oldu</system:String>
     <system:String x:Key="plugin_explorer_add_to_quickaccess_title">Hızlı Erişime Sabitle</system:String>
-    <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Add current item to Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Geçerli öğeyi Hızlı Erişim'e ekle</system:String>
     <system:String x:Key="plugin_explorer_addfilefoldersuccess">Başarıyla Eklendi</system:String>
-    <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">Successfully added to Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">Hızlı Erişim'e başarıyla eklendi</system:String>
     <system:String x:Key="plugin_explorer_removefilefoldersuccess">Başarıyla Kaldırıldı</system:String>
-    <system:String x:Key="plugin_explorer_removefilefoldersuccess_detail">Successfully removed from Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_removefilefoldersuccess_detail">Hızlı Erişim'den başarıyla kaldırıldı</system:String>
     <system:String x:Key="plugin_explorer_contextmenu_titletooltip">Add to Quick Access so it can be opened with Explorer's Search Activation action keyword</system:String>
     <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">Hızlı Erişimden Kaldır</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Hızlı Erişimden Kaldır</system:String>
-    <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Remove current item from Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Geçerli öğeyi Hızlı Erişim'den kaldır</system:String>
     <system:String x:Key="plugin_explorer_show_contextmenu_title">Windows Bağlam Menüsünü Aç</system:String>
     <system:String x:Key="plugin_explorer_openwith">Birlikte Aç</system:String>
-    <system:String x:Key="plugin_explorer_openwith_subtitle">Select a program to open with</system:String>
+    <system:String x:Key="plugin_explorer_openwith_subtitle">Birlikte açmak için bir program seç</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_delete">{0} silinemedi</system:String>
+    <system:String x:Key="plugin_explorer_file_not_found">Dosya bulunamadı: {0}</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_open">{0} açılamadı</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_set_text">Panodaki metin ayarlanamıyor</system:String>
+    <system:String x:Key="plugin_explorer_fail_to_set_files">Panodaki dosyalar/klasörler ayarlanamıyor</system:String>
 
     <!--  Special Results  -->
-    <system:String x:Key="plugin_explorer_diskfreespace">{0} free of {1}</system:String>
+    <system:String x:Key="plugin_explorer_diskfreespace">{0} / {1} boş</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder">Dosya Yöneticisinde Aç</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder_subtitle">
-        Use '&gt;' to search in this directory, '*' to search for file extensions or '&gt;*' to combine both searches.
+        Bu dizinde arama yapmak için '&gt;', dosya uzantılarını aramak için '*' veya her iki aramayı birleştirmek için '&gt;*' kullanın.
     </system:String>
 
     <!--  Everything  -->
@@ -127,25 +148,38 @@
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">Everything Servisi çalışmıyor</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_query_error">Sorgu Everything üzerinde çalıştırılırken hata oluştu</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by">Şuna Göre Sırala</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_name">Name</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_path">Yol</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_size">Boyut</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension">Uzantı</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name">Tür</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created">Oluşturma Tarihi</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified">Değiştirme Tarihi</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes">Özellikler</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename">File List FileName</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count">Erişim Sayısı</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed">Date Recently Changed</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed">Erişim Tarihi</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run">Date Run</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_name_ascending">İsim ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_name_descending">İsim ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_path_ascending">Yol ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_path_descending">Yol ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_size_ascending">Boyut ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_size_descending">Boyut ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension_ascending">Uzantı ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension_descending">Uzantı ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name_ascending">Tür Adı ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name_descending">Tür Adı ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created_ascending">Oluşturma Tarihi ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created_descending">Oluşturma Tarihi ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified_ascending">Değiştirme Tarihi ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified_descending">Değiştirme Tarihi ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes_ascending">Özellikler ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes_descending">Özellikler ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename_ascending">Dosya Listesi DosyaAdı ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename_descending">Dosya Listesi DosyaAdı ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count_ascending">Çalıştırma Sayısı ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count_descending">Çalıştırma Sayısı ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed_ascending">Son Değişiklik Tarihi ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed_descending">Son Değişiklik Tarihi ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed_ascending">Erişim Tarihi ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed_descending">Erişim Tarihi ↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run_ascending">Çalıştırma Tarihi ↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run_descending">Çalıştırma Tarihi ↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_ascending">↑</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">↓</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Warning: This is not a Fast Sort option, searches may be slow</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Uyarı: Bu, Hızlı Sıralama seçeneği değildir, aramalar yavaş olabilir</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Tam Yolu Ara</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Enable File/Folder Run Count</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Dosya/Klasör Çalıştırma Sayısını Aç</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Everything'i yükle veya başlat</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Everything Kurulumu</system:String>
@@ -153,13 +187,24 @@
     <system:String x:Key="flowlauncher_plugin_everything_installationsuccess_subtitle">Everything hizmeti başarıyla yüklendi</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installationfailed_subtitle">Everything hizmetini otomatik olarak yükleme başarısız oldu. Lütfen https://www.voidtools.com adresinden elle yükleyin.</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_run_service">Başlat</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installing_select">Unable to find an Everything installation, would you like to manually select a location?{0}{0}Click no and Everything will be automatically installed for you</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Do you want to enable content search for Everything?</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">It can be very slow without index (which is only supported in Everything v1.5+)</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installing_select">Herhangi bir Everything kurulumu bulunamadı, bir konum seçmek ister misiniz? {0}{0} Hayır'a tıkladığınızda, Everything otomatik olarak sizin için yüklenecektir</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Everything için içerik aramasını açmak ister misiniz?</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">Dizin olmadan çok yavaş olabilir (yalnızca Everything v1.5+ sürümünde desteklenir)</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_everything_not_found">Everything.exe bulunamadı</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_install_issue">Everything yüklenemedi, lütfen manuel olarak yükleyin</system:String>
 
     <!--  Native Context Menu  -->
-    <system:String x:Key="plugin_explorer_native_context_menu_header">Native Context Menu</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Display native context menu (experimental)</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Below you can specify items you want to include in the context menu, they can be partial (e.g. 'pen wit') or complete ('Open with').</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Below you can specify items you want to exclude from context menu, they can be partial (e.g. 'pen wit') or complete ('Open with').</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_header">Yerel Bağlam Menüsünü Aç</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Yerel bağlam menüsünü göster (deneysel)</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Aşağıda, içerik menüsüne dahil etmek istediğiniz öğeleri belirtebilirsiniz, bunlar kısmi ('irlikte a' gibi) veya tam ('Birlikte aç') olabilir.</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Aşağıda, içerik menüsünden hariç tutmak istediğiniz öğeleri belirtebilirsiniz, bunlar kısmi ('irlikte a' gibi) veya tam ('Birlikte aç') olabilir.</system:String>
+
+    <!--  Preview Info  -->
+    <system:String x:Key="Today">Bugün</system:String>
+    <system:String x:Key="DaysAgo">{0} gün önce</system:String>
+    <system:String x:Key="OneMonthAgo">1 ay önce</system:String>
+    <system:String x:Key="MonthsAgo">{0} ay önce</system:String>
+    <system:String x:Key="OneYearAgo">1 yıl önce</system:String>
+    <system:String x:Key="YearsAgo">{0} yıl önce</system:String>
 </ResourceDictionary>

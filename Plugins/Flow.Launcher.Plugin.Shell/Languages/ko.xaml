@@ -6,12 +6,15 @@
     <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">Press any key to close this window...</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">명령 실행 후 명령 프롬프트를 닫지 않음</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">항상 관리자 권한으로 실행</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_use_windows_terminal">Use Windows Terminal</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">다른 유저 권한으로 실행</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">쉘</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Allows to execute system commands from Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Flow Launcher를 통해 시스템 명령어를 실행할 수 있습니다</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_cmd_has_been_executed_times">이 명령은 {0}회 실행되었습니다.</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_execute_through_shell">쉘을 통해 명령 실행</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">관리자 권한으로 실행</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_copy">명령어 복사</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_history">가장 많이 사용된 명령 표시 수</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_command_not_found">Command not found: {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_error_running_command">Error running the command: {0}</system:String>
 </ResourceDictionary>
