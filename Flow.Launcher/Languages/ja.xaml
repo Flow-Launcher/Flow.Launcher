@@ -224,6 +224,7 @@
     <system:String x:Key="failedToUninstallPluginTitle">{0} のアンインストールに失敗</system:String>
     <system:String x:Key="fileNotFoundMessage">展開されたzipファイルからplugin.jsonが見つからないか、このパス {0} が存在しません</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">同じIDとバージョンのプラグインがすでに存在するか、またはこのダウンロードしたプラグインよりもバージョンが大きいです</system:String>
+    <system:String x:Key="errorCreatingSettingPanel">Error creating setting panel for plugin {0}:{1}{2}</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">プラグインストア</system:String>
