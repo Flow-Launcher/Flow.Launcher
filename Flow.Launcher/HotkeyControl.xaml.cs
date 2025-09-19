@@ -1,4 +1,4 @@
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows;
@@ -273,7 +273,7 @@ namespace Flow.Launcher
 
         private async Task OpenHotkeyDialogAsync()
         {
-            hotkeyControlDialog = new HotkeyControlDialog(Hotkey, DefaultHotkey, HotkeySettings, IsWPFHotkeyControl, WindowTitle);
+            hotkeyControlDialog = new HotkeyControlDialog(Hotkey, DefaultHotkey, IsWPFHotkeyControl, WindowTitle);
             await hotkeyControlDialog.ShowAsync();
             switch (hotkeyControlDialog.ResultType)
             {

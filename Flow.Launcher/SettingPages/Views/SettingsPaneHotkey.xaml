@@ -34,10 +34,10 @@
                 <flowlauncher:HotkeyControl
                     ChangeHotkey="{Binding SetTogglingHotkeyCommand}"
                     DefaultHotkey="LeftAlt+Space"
+                    IsWPFHotkeyControl="False"
                     Type="Hotkey"
                     ValidateKeyGesture="True"
-                    WindowTitle="{DynamicResource flowlauncherHotkey}"
-                    IsWPFHotkeyControl="False" />
+                    WindowTitle="{DynamicResource flowlauncherHotkey}" />
             </cc:Card>
 
             <cc:Card

@@ -64,8 +64,6 @@ public partial class HotkeyControlDialog : ContentDialog
         // This is a requirement to be set with current hotkey for the WPF hotkey control when saving without any new changes
         HotkeyToUpdate = new HotkeyModel(hotkey);
 
-        _hotkeySettings = hotkeySettings;
-
         SetKeysToDisplay(CurrentHotkey);
         clearKeysOnFirstType = true;
 

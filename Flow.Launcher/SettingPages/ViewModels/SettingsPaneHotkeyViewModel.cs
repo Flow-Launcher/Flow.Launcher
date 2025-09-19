@@ -40,7 +40,7 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
     {
         if (Settings.EnableDialogJump)
         {
-            HotKeyMapper.SetHotkey(hotkey, DialogJump.OnToggleHotkey);
+            HotKeyMapper.RegisterHotkey(hotkey.HotkeyRaw, hotkey.PreviousHotkey, DialogJump.ToggleHotkey);
         }
     }
 
@@ -92,7 +92,7 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
 
         var index = Settings.CustomPluginHotkeys.IndexOf(settingItem);
         Settings.CustomPluginHotkeys[index] = new CustomPluginHotkey(window.Hotkey, window.ActionKeyword);
-        HotKeyMapper.RemoveHotkey(settingItem.Hotkey); // remove origin hotkey
+        HotKeyMapper.UnregisterHotkey(settingItem.Hotkey); // remove origin hotkey
         HotKeyMapper.SetCustomQueryHotkey(Settings.CustomPluginHotkeys[index]); // set new hotkey
     }
 

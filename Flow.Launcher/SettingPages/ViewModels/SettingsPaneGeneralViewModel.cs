@@ -158,11 +158,12 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
                 DialogJump.SetupDialogJump(value);
                 if (Settings.EnableDialogJump)
                 {
-                    HotKeyMapper.SetHotkey(new(Settings.DialogJumpHotkey), DialogJump.OnToggleHotkey);
+                    // TODO: How can we parse the previousHotkey parameter here?
+                    HotKeyMapper.RegisterHotkey(Settings.DialogJumpHotkey, string.Empty, DialogJump.ToggleHotkey);
                 }
                 else
                 {
-                    HotKeyMapper.RemoveHotkey(Settings.DialogJumpHotkey);
+                    HotKeyMapper.UnregisterHotkey(Settings.DialogJumpHotkey);
                 }
             }
         }

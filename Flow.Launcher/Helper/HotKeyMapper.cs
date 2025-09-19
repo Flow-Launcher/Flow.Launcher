@@ -23,13 +23,11 @@ internal static class HotKeyMapper
         _settings = Ioc.Default.GetService<Settings>();
 
         ChefKeysManager.RegisterHotkey(_settings.Hotkey, ToggleHotkey);
-        ChefKeysManager.Start();
-
-        // TODO: Resolve this
         if (_settings.EnableDialogJump)
         {
-            SetHotkey(_settings.DialogJumpHotkey, DialogJump.OnToggleHotkey);
+            ChefKeysManager.RegisterHotkey(_settings.DialogJumpHotkey, DialogJump.ToggleHotkey);
         }
+        ChefKeysManager.Start();
 
         LoadCustomPluginHotkey();
     }
@@ -52,8 +50,8 @@ internal static class HotKeyMapper
                 string.Format("|HotkeyMapper.SetHotkey|Error registering hotkey {2}: {0} \nStackTrace:{1}",
                               e.Message,
                               e.StackTrace,
-                              hotkeyStr));
-            string errorMsg = string.Format(App.API.GetTranslation("registerHotkeyFailed"), hotkeyStr);
+                              hotkey));
+            string errorMsg = string.Format(App.API.GetTranslation("registerHotkeyFailed"), hotkey);
             string errorMsgTitle = App.API.GetTranslation("MessageBoxTitle");
             App.API.ShowMsgBox(errorMsg, errorMsgTitle);
         }
@@ -69,19 +67,14 @@ internal static class HotKeyMapper
         catch (Exception e)
         {
             App.API.LogError(ClassName,
-                string.Format("|HotkeyMapper.RemoveHotkey|Error removing hotkey: {0} \nStackTrace:{1}",
+                string.Format("|HotkeyMapper.RemoveHotkey|Error removing hotkey {2}: {0} \nStackTrace:{1}",
                               e.Message,
-                              e.StackTrace));
-            string errorMsg = string.Format(App.API.GetTranslation("unregisterHotkeyFailed"), hotkeyStr);
+                              e.StackTrace,
+                              hotkey));
+            string errorMsg = string.Format(App.API.GetTranslation("unregisterHotkeyFailed"), hotkey);
             string errorMsgTitle = App.API.GetTranslation("MessageBoxTitle");
             App.API.ShowMsgBox(errorMsg, errorMsgTitle);
         }
-    }
-
-    private static void RemoveWithChefKeys(string hotkeyStr)
-    {
-        ChefKeysManager.UnregisterHotkey(hotkeyStr);
-        ChefKeysManager.Stop();
     }
 
     internal static void LoadCustomPluginHotkey()
