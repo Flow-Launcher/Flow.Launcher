@@ -224,6 +224,7 @@
     <system:String x:Key="failedToUninstallPluginTitle">{0} kaldırılamıyor</system:String>
     <system:String x:Key="fileNotFoundMessage">plugin.json dosyası çıkarılan zip dosyasında bulunamadı veya {0} yolu mevcut değil</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">Bu eklentiyle aynı ID ve sürüme sahip bir eklenti zaten var, ya da mevcut sürüm daha yüksek</system:String>
+    <system:String x:Key="errorCreatingSettingPanel">Error creating setting panel for plugin {0}:{1}{2}</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Eklenti Mağazası</system:String>
