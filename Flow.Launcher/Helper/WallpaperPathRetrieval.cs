@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -16,7 +17,7 @@ public static class WallpaperPathRetrieval
 
     private const int MaxCacheSize = 3;
     private static readonly Dictionary<(string, DateTime), ImageBrush> WallpaperCache = new();
-    private static readonly object CacheLock = new();
+    private static readonly Lock CacheLock = new();
 
     public static Brush GetWallpaperBrush()
     {
@@ -31,7 +32,7 @@ public static class WallpaperPathRetrieval
             var wallpaperPath = Win32Helper.GetWallpaperPath();
             if (string.IsNullOrEmpty(wallpaperPath) || !File.Exists(wallpaperPath))
             {
-                App.API.LogInfo(ClassName, $"Wallpaper path is invalid: {wallpaperPath}");
+                App.API.LogError(ClassName, $"Wallpaper path is invalid: {wallpaperPath}");
                 var wallpaperColor = GetWallpaperColor();
                 return new SolidColorBrush(wallpaperColor);
             }
@@ -47,17 +48,22 @@ public static class WallpaperPathRetrieval
                     return cachedWallpaper;
                 }
             }
-            
-            using var fileStream = File.OpenRead(wallpaperPath);
-            var decoder = BitmapDecoder.Create(fileStream, BitmapCreateOptions.DelayCreation, BitmapCacheOption.None);
-            var frame = decoder.Frames[0];
-            var originalWidth = frame.PixelWidth;
-            var originalHeight = frame.PixelHeight;
+
+            int originalWidth, originalHeight;
+            // Use `using ()` instead of `using var` sentence here to ensure the wallpaper file is not locked
+            using (var fileStream = File.OpenRead(wallpaperPath))
+            {
+                var decoder = BitmapDecoder.Create(fileStream, BitmapCreateOptions.DelayCreation, BitmapCacheOption.None);
+                var frame = decoder.Frames[0];
+                originalWidth = frame.PixelWidth;
+                originalHeight = frame.PixelHeight;
+            }
 
             if (originalWidth == 0 || originalHeight == 0)
             {
-                App.API.LogInfo(ClassName, $"Failed to load bitmap: Width={originalWidth}, Height={originalHeight}");
-                return new SolidColorBrush(Colors.Transparent);
+                App.API.LogError(ClassName, $"Failed to load bitmap: Width={originalWidth}, Height={originalHeight}");
+                var wallpaperColor = GetWallpaperColor();
+                return new SolidColorBrush(wallpaperColor);
             }
 
             // Calculate the scaling factor to fit the image within 800x600 while preserving aspect ratio
@@ -70,7 +76,9 @@ public static class WallpaperPathRetrieval
             // Set DecodePixelWidth and DecodePixelHeight to resize the image while preserving aspect ratio
             var bitmap = new BitmapImage();
             bitmap.BeginInit();
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;  // Use OnLoad to ensure the wallpaper file is not locked
             bitmap.UriSource = new Uri(wallpaperPath);
+            bitmap.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
             bitmap.DecodePixelWidth = decodedPixelWidth;
             bitmap.DecodePixelHeight = decodedPixelHeight;
             bitmap.EndInit();
@@ -104,13 +112,13 @@ public static class WallpaperPathRetrieval
 
     private static Color GetWallpaperColor()
     {
-        RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Colors", false);
+        using var key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Colors", false);
         var result = key?.GetValue("Background", null);
         if (result is string strResult)
         {
             try
             {
-                var parts = strResult.Trim().Split(new[] { ' ' }, 3).Select(byte.Parse).ToList();
+                var parts = strResult.Trim().Split([' '], 3).Select(byte.Parse).ToList();
                 return Color.FromRgb(parts[0], parts[1], parts[2]);
             }
             catch (Exception ex)
