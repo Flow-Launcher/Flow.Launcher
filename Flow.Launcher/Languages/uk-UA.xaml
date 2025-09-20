@@ -224,7 +224,7 @@
     <system:String x:Key="failedToUninstallPluginTitle">Не вдалося видалити {0}</system:String>
     <system:String x:Key="fileNotFoundMessage">Не вдалося знайти файл plugin.json у розпакованому zip-файлі або цей шлях {0} не існує.</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">Вже існує плагін з таким самим ідентифікатором та версією, або версія цього плагіну вища за версію завантаженого.</system:String>
-    <system:String x:Key="errorCreatingSettingPanel">Error creating setting panel for plugin {0}:{1}{2}</system:String>
+    <system:String x:Key="errorCreatingSettingPanel">Помилка створення панелі налаштувань для плагіну {0}: {1}{2}</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Магазин плагінів</system:String>
@@ -468,7 +468,7 @@
     <system:String x:Key="userdatapathButton">Відкрити теку</system:String>
     <system:String x:Key="advanced">Розширені</system:String>
     <system:String x:Key="logLevel">Рівень журналювання</system:String>
-    <system:String x:Key="LogLevelNONE">Silent</system:String>
+    <system:String x:Key="LogLevelNONE">Без звуку</system:String>
     <system:String x:Key="LogLevelERROR">Помилка</system:String>
     <system:String x:Key="LogLevelINFO">Інформація</system:String>
     <system:String x:Key="LogLevelDEBUG">Налагодження</system:String>
@@ -493,7 +493,7 @@
     <system:String x:Key="fileManager_file_arg">Аргумент для файлу</system:String>
     <system:String x:Key="fileManagerPathNotFound">Не вдалося знайти файловий менеджер «{0}» за адресою «{1}». Чи бажаєте продовжити?</system:String>
     <system:String x:Key="fileManagerPathError">Помилка шляху до файлового менеджера</system:String>
-    <system:String x:Key="fileManagerExplorer">File Explorer</system:String>
+    <system:String x:Key="fileManagerExplorer">Файловий провідник</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Типовий веббраузер</system:String>
@@ -504,8 +504,8 @@
     <system:String x:Key="defaultBrowser_newWindow">Нове вікно</system:String>
     <system:String x:Key="defaultBrowser_newTab">Нова вкладка</system:String>
     <system:String x:Key="defaultBrowser_parameter">Приватний режим</system:String>
-    <system:String x:Key="defaultBrowser_default">Default</system:String>
-    <system:String x:Key="defaultBrowser_new_profile">New Profile</system:String>
+    <system:String x:Key="defaultBrowser_default">Типово</system:String>
+    <system:String x:Key="defaultBrowser_new_profile">Новий профіль</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Змінити пріоритет</system:String>
