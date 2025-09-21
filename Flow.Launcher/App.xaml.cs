@@ -198,7 +198,7 @@ namespace Flow.Launcher
                 // Clean up after portability updates
                 Ioc.Default.GetRequiredService<Portable>().PreStartCleanUpAfterPortabilityUpdate();
 
-                // Initialize logger after data path initialization during portable clean up
+                // Initialize logger after data path initialization during portable clean up to ensure correct log directory path is used
                 Log.SetLogLevel(_settings.LogLevel);
 
                 API.LogInfo(ClassName, "Begin Flow Launcher startup ----------------------------------------------------");
