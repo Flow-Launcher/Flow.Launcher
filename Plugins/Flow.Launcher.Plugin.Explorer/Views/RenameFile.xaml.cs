@@ -1,5 +1,5 @@
-﻿using System.IO;
-using System.Linq;
+﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -37,8 +37,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
 
             ShowInTaskbar = false;
             RenameTb.Focus();
-            var window = Window.GetWindow(this);
-            window.KeyDown += (s, e) =>
+            KeyDown += (s, e) =>
             {
                 if (e.Key == Key.Escape)
                 {
