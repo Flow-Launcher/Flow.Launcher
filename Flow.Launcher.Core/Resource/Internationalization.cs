@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -14,7 +14,7 @@ using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core.Resource
 {
-    public class Internationalization
+    public class Internationalization : IDisposable
     {
         private static readonly string ClassName = nameof(Internationalization);
 
@@ -30,6 +30,7 @@ namespace Flow.Launcher.Core.Resource
         private readonly List<string> _languageDirectories = [];
         private readonly List<ResourceDictionary> _oldResources = [];
         private static string SystemLanguageCode;
+        private readonly SemaphoreSlim _langChangeLock = new(1, 1);
 
         public Internationalization(Settings settings)
         {
@@ -185,20 +186,33 @@ namespace Flow.Launcher.Core.Resource
 
         private async Task ChangeLanguageAsync(Language language, bool updateMetadata = true)
         {
-            // Remove old language files and load language
-            RemoveOldLanguageFiles();
-            if (language != AvailableLanguages.English)
+            await _langChangeLock.WaitAsync();
+
+            try
             {
-                LoadLanguage(language);
+                // Remove old language files and load language
+                RemoveOldLanguageFiles();
+                if (language != AvailableLanguages.English)
+                {
+                    LoadLanguage(language);
+                }
+
+                // Change culture info
+                ChangeCultureInfo(language.LanguageCode);
+
+                if (updateMetadata)
+                {
+                    // Raise event for plugins after culture is set
+                    await Task.Run(UpdatePluginMetadataTranslations);
+                }
             }
-
-            // Change culture info
-            ChangeCultureInfo(language.LanguageCode);
-
-            if (updateMetadata)
+            catch (Exception e)
             {
-                // Raise event for plugins after culture is set
-                await Task.Run(UpdatePluginMetadataTranslations);
+                API.LogException(ClassName, $"Failed to change language to <{language.LanguageCode}>", e);
+            }
+            finally
+            {
+                _langChangeLock.Release();
             }
         }
 
@@ -257,6 +271,7 @@ namespace Flow.Launcher.Core.Resource
             {
                 dicts.Remove(r);
             }
+            _oldResources.Clear();
         }
 
         private void LoadLanguage(Language language)
@@ -368,6 +383,16 @@ namespace Flow.Launcher.Core.Resource
 
             // Update plugin hotkey name & description
             PluginManager.UpdatePluginHotkeyInfoTranslations();
+        }
+
+        #endregion
+
+        #region IDisposable
+
+        public void Dispose()
+        {
+            RemoveOldLanguageFiles();
+            _langChangeLock.Dispose();
         }
 
         #endregion

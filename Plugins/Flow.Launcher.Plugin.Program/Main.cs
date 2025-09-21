@@ -31,7 +31,7 @@ namespace Flow.Launcher.Plugin.Program
 
         internal static PluginInitContext Context { get; private set; }
 
-        private static readonly List<Result> emptyResults = new();
+        private static readonly List<Result> emptyResults = [];
 
         private static readonly MemoryCacheOptions cacheOptions = new() { SizeLimit = 1560 };
         private static MemoryCache cache = new(cacheOptions);
@@ -84,7 +84,6 @@ namespace Flow.Launcher.Plugin.Program
                 {
                     await _win32sLock.WaitAsync(token);
                     await _uwpsLock.WaitAsync(token);
-
                     try
                     {
                         // Collect all UWP Windows app directories
@@ -117,7 +116,7 @@ namespace Flow.Launcher.Plugin.Program
                     }
                 }, token);
 
-                resultList = resultList.Any() ? resultList : emptyResults;
+                resultList = resultList.Count != 0 ? resultList : emptyResults;
 
                 entry.SetSize(resultList.Count);
                 entry.SetSlidingExpiration(TimeSpan.FromHours(8));
@@ -250,14 +249,26 @@ namespace Flow.Launcher.Plugin.Program
                 }
 
                 await _win32sLock.WaitAsync();
-                _win32s = await context.API.LoadCacheBinaryStorageAsync(Win32CacheName, pluginCacheDirectory, new List<Win32>());
-                _win32sCount = _win32s.Count;
-                _win32sLock.Release();
+                try
+                {
+                    _win32s = await context.API.LoadCacheBinaryStorageAsync(Win32CacheName, pluginCacheDirectory, new List<Win32>());
+                    _win32sCount = _win32s.Count;
+                }
+                finally
+                {
+                    _win32sLock.Release();
+                }
 
                 await _uwpsLock.WaitAsync();
-                _uwps = await context.API.LoadCacheBinaryStorageAsync(UwpCacheName, pluginCacheDirectory, new List<UWPApp>());
-                _uwpsCount = _uwps.Count;
-                _uwpsLock.Release();
+                try
+                {
+                    _uwps = await context.API.LoadCacheBinaryStorageAsync(UwpCacheName, pluginCacheDirectory, new List<UWPApp>());
+                    _uwpsCount = _uwps.Count;
+                }
+                finally
+                {
+                    _uwpsLock.Release();
+                }
             });
             Context.API.LogInfo(ClassName, $"Number of preload win32 programs <{_win32sCount}>");
             Context.API.LogInfo(ClassName, $"Number of preload uwps <{_uwpsCount}>");
@@ -408,37 +419,45 @@ namespace Flow.Launcher.Plugin.Program
                 return;
 
             await _uwpsLock.WaitAsync();
-            if (_uwps.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
+            var reindexUwps = true;
+            try
             {
+                reindexUwps = _uwps.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier);
                 var program = _uwps.First(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier);
                 program.Enabled = false;
                 _settings.DisabledProgramSources.Add(new ProgramSource(program));
+            }
+            finally
+            {
                 _uwpsLock.Release();
+            }
 
-                // Reindex UWP programs
+            // Reindex UWP programs
+            if (reindexUwps)
+            {
                 _ = Task.Run(IndexUwpProgramsAsync);
                 return;
             }
-            else
-            {
-                _uwpsLock.Release();
-            }
 
             await _win32sLock.WaitAsync();
-            if (_win32s.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
+            var reindexWin32s = true;
+            try
             {
+                reindexWin32s = _win32s.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier);
                 var program = _win32s.First(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier);
                 program.Enabled = false;
                 _settings.DisabledProgramSources.Add(new ProgramSource(program));
-                _win32sLock.Release();
-
-                // Reindex Win32 programs
-                _ = Task.Run(IndexWin32ProgramsAsync);
-                return;
             }
-            else
+            finally
             {
                 _win32sLock.Release();
+            }
+
+            // Reindex Win32 programs
+            if (reindexWin32s)
+            {
+                _ = Task.Run(IndexWin32ProgramsAsync);
+                return;
             }
         }
 
