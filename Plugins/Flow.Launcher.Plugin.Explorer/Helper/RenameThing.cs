@@ -62,7 +62,7 @@ public static class RenameThing
     public static void Rename(string NewFileName, FileSystemInfo oldInfo)
     {
         // if it's just whitespace and nothing else
-        if (string.IsNullOrEmpty(NewFileName.Trim()) || string.IsNullOrEmpty(NewFileName))
+        if (string.IsNullOrWhiteSpace(NewFileName))
         {
             Main.Context.API.ShowMsgError(Localize.plugin_explorer_field_may_not_be_empty());
             return;
