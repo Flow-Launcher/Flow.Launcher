@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -47,10 +47,10 @@ namespace Flow.Launcher.Core.Plugin
         /// <summary>
         /// Directories that will hold Flow Launcher plugin directory
         /// </summary>
-        public static readonly string[] Directories =
-        {
+        public static string[] Directories =>
+        [
             Constant.PreinstalledDirectory, DataLocation.PluginsDirectory
-        };
+        ];
 
         private static void DeletePythonBinding()
         {
