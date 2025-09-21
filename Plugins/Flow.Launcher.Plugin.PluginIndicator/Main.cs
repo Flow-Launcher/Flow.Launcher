@@ -5,7 +5,7 @@ namespace Flow.Launcher.Plugin.PluginIndicator
 {
     public class Main : IPlugin, IPluginI18n, IHomeQuery
     {
-        internal PluginInitContext Context { get; private set; }
+        internal static PluginInitContext Context { get; private set; }
 
         public List<Result> Query(Query query)
         {
@@ -34,7 +34,7 @@ namespace Flow.Launcher.Plugin.PluginIndicator
                 select new Result
                 {
                     Title = keyword,
-                    SubTitle = string.Format(Context.API.GetTranslation("flowlauncher_plugin_pluginindicator_result_subtitle"), plugin.Name),
+                    SubTitle = Localize.flowlauncher_plugin_pluginindicator_result_subtitle(plugin.Name),
                     Score = score,
                     IcoPath = plugin.IcoPath,
                     AutoCompleteText = $"{keyword}{Plugin.Query.TermSeparator}",
@@ -44,7 +44,7 @@ namespace Flow.Launcher.Plugin.PluginIndicator
                         return false;
                     }
                 };
-            return results.ToList();
+            return [.. results];
         }
 
         private Dictionary<string, PluginPair> GetNonGlobalPlugins()
@@ -73,12 +73,12 @@ namespace Flow.Launcher.Plugin.PluginIndicator
 
         public string GetTranslatedPluginTitle()
         {
-            return Context.API.GetTranslation("flowlauncher_plugin_pluginindicator_plugin_name");
+            return Localize.flowlauncher_plugin_pluginindicator_plugin_name();
         }
 
         public string GetTranslatedPluginDescription()
         {
-            return Context.API.GetTranslation("flowlauncher_plugin_pluginindicator_plugin_description");
+            return Localize.flowlauncher_plugin_pluginindicator_plugin_description();
         }
     }
 }
