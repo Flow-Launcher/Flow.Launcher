@@ -123,7 +123,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     }
 
     // This is only required to set at startup. When portable mode enabled/disabled a restart is always required
-    private static bool _portableMode = DataLocation.PortableDataLocationInUse();
+    private static readonly bool _portableMode = DataLocation.PortableDataLocationInUse();
 
     public bool PortableMode
     {
