@@ -7,6 +7,7 @@
     <authors>Flow-Launcher Team</authors>
     <projectUrl>https://github.com/Flow-Launcher/Flow.Launcher</projectUrl>
     <icon>images\app.png</icon>
+    <iconUrl>https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher/master/Flow.Launcher/Resources/app.ico</iconUrl>
     <readme>README.md</readme>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Flow Launcher - Quick file search and app launcher for Windows with community-made plugins</description>
