@@ -908,6 +908,20 @@ namespace Flow.Launcher.Infrastructure
 
         #endregion
 
+        #region File / Folder Dialog
+
+        public static string SelectFile()
+        {
+            var dlg = new OpenFileDialog();
+            var result = dlg.ShowDialog();
+            if (result == true)
+                return dlg.FileName;
+
+            return string.Empty;
+        }
+
+        #endregion
+
         #region Administrator Mode
 
         public static bool IsAdministrator()
@@ -1063,20 +1077,6 @@ cleanup:
             if (hShellProcess != HANDLE.Null) PInvoke.CloseHandle(hShellProcess);
             return false;
 
-        }
-
-        #endregion
-
-        #region File / Folder Dialog
-
-        public static string SelectFile()
-        {
-            var dlg = new OpenFileDialog();
-            var result = dlg.ShowDialog();
-            if (result == true)
-                return dlg.FileName;
-
-            return string.Empty;
         }
 
         #endregion
