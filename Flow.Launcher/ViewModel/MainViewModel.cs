@@ -1623,7 +1623,7 @@ namespace Flow.Launcher.ViewModel
             // Applying builtin shortcuts
             await BuildQueryAsync(builtInShortcuts, queryBuilder, queryBuilderTmp);
 
-            return QueryBuilder.Build(QueryText, queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
+            return QueryBuilder.Build(queryText, queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
         }
 
         private async Task BuildQueryAsync(IEnumerable<BaseBuiltinShortcutModel> builtInShortcuts,
