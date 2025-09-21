@@ -223,6 +223,7 @@
     <system:String x:Key="failedToUninstallPluginTitle">Falha ao desinstalar {0}</system:String>
     <system:String x:Key="fileNotFoundMessage">Não foi possível encontrar plugin.json no ficheiro zip ou, então, o caminho {0} não existe.</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">Já existe um plugin com a mesma ID e versão ou, então, a versão instalada é superior à do plugin descarregado.</system:String>
+    <system:String x:Key="errorCreatingSettingPanel">Erro ao criar o painel de definição para o plugin {0}:{1}{2}</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Loja de plugins</system:String>
@@ -331,7 +332,7 @@
     <system:String x:Key="PlaceholderTextTip">O texto do marcador de posição. Se vazio, será utilizado: {0}</system:String>
     <system:String x:Key="KeepMaxResults">Janela com tamanho fixo</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">Não pode ajustar o tamanho da janela por arrasto.</system:String>
-    <system:String x:Key="MaxShowResultsCannotWorkWithAlwaysPreview">Since Always Preview is on, maximum results shown may not take effect because preview panel requires a certain minimum height</system:String>
+    <system:String x:Key="MaxShowResultsCannotWorkWithAlwaysPreview">Como a opção &quot;Pré-visualizar sempre&quot; está ativa, os resultados máximos mostrados podem não ter efeito porque o painel de visualização requer uma altura mínima</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Tecla de atalho</system:String>
@@ -465,8 +466,10 @@
     <system:String x:Key="userdatapathButton">Abrir pasta</system:String>
     <system:String x:Key="advanced">Avançado</system:String>
     <system:String x:Key="logLevel">Nível de registo</system:String>
-    <system:String x:Key="LogLevelDEBUG">Depuração</system:String>
+    <system:String x:Key="LogLevelNONE">Silencioso</system:String>
+    <system:String x:Key="LogLevelERROR">Erro</system:String>
     <system:String x:Key="LogLevelINFO">Informação</system:String>
+    <system:String x:Key="LogLevelDEBUG">Depuração</system:String>
     <system:String x:Key="settingWindowFontTitle">Tipo de letra da aplicação</system:String>
 
     <!--  Release Notes Window  -->
@@ -488,6 +491,7 @@
     <system:String x:Key="fileManager_file_arg">Argumento para ficheiro</system:String>
     <system:String x:Key="fileManagerPathNotFound">Não foi possível encontrar o gestor de ficheiros '{0}' em '{1}'. Deseja continuar?</system:String>
     <system:String x:Key="fileManagerPathError">Erro no caminho do gestor de ficheiros</system:String>
+    <system:String x:Key="fileManagerExplorer">Gestor de ficheiros</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Navegador web padrão</system:String>
@@ -498,6 +502,8 @@
     <system:String x:Key="defaultBrowser_newWindow">Nova janela</system:String>
     <system:String x:Key="defaultBrowser_newTab">Novo separador</system:String>
     <system:String x:Key="defaultBrowser_parameter">Modo privado</system:String>
+    <system:String x:Key="defaultBrowser_default">Padrão</system:String>
+    <system:String x:Key="defaultBrowser_new_profile">Novo perfil</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Alterar prioridade</system:String>

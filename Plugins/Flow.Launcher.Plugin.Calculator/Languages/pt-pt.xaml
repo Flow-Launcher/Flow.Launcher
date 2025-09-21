@@ -1,8 +1,8 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <system:String x:Key="flowlauncher_plugin_calculator_plugin_name">Calculadora</system:String>
-    <system:String x:Key="flowlauncher_plugin_calculator_plugin_description">Execução de cálculos matemáticos (incluindo valores hexadecimais). Utilize ',' ou '.' como separador de milhares ou de casas decimais.</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_plugin_description">Execute cálculos matemáticos, incluindo valores hexadecimais e funções avançadas como 'min(1,2,3)', 'sqrt(123)' e 'cos(123)'.</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_not_a_number">Não é número (NN)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_expression_not_complete">Expressão errada ou incompleta (esqueceu-se de algum parêntese?)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_copy_number_to_clipboard">Copiar número para a área de transferência</system:String>
@@ -13,4 +13,5 @@
     <system:String x:Key="flowlauncher_plugin_calculator_decimal_separator_dot">Ponto (.)</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_max_decimal_places">Número máximo de casas decimais</system:String>
     <system:String x:Key="flowlauncher_plugin_calculator_failed_to_copy">Falha ao copiar. Por favor tente mais tarde.</system:String>
+    <system:String x:Key="flowlauncher_plugin_calculator_show_error_message">Mostrar mensagem de erro se o cálculo falhar</system:String>
 </ResourceDictionary>

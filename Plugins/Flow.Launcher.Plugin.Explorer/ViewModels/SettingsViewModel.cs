@@ -577,8 +577,8 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             }
         }
 
-        public int MaxResultLowerLimit => 1;
-        public int MaxResultUpperLimit => 100000;
+        public int MaxResultLowerLimit { get; } = 1;
+        public int MaxResultUpperLimit { get; } = 100000;
 
         public int MaxResult
         {
@@ -592,7 +592,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
         #region Everything FastSortWarning
 
-        public List<EverythingSortOptionLocalized> AllEverythingSortOptions = EverythingSortOptionLocalized.GetValues();
+        public List<EverythingSortOptionLocalized> AllEverythingSortOptions { get; } = EverythingSortOptionLocalized.GetValues();
 
         public EverythingSortOption SelectedEverythingSortOption
         {

@@ -22,6 +22,7 @@
     <system:String x:Key="plugin_explorer_directoryinfosearch_error">Počas vyhľadávania došlo k chybe: {0}</system:String>
     <system:String x:Key="plugin_explorer_opendir_error">Nepodarilo sa otvoriť priečinok</system:String>
     <system:String x:Key="plugin_explorer_openfile_error">Nepodarilo sa otvoriť súbor</system:String>
+    <system:String x:Key="plugin_explorer_new_action_keyword_assigned">Nový aktivačný príkaz už bol priradený inému pluginu, prosím, zvoľte iný aktivačný príkaz</system:String>
 
     <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">Odstrániť</system:String>

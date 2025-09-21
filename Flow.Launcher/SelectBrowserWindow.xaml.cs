@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher
@@ -31,7 +32,7 @@ namespace Flow.Launcher
 
         private void btnBrowseFile_Click(object sender, RoutedEventArgs e)
         {
-            var selectedFilePath = _viewModel.SelectFile();
+            var selectedFilePath = Win32Helper.SelectFile();
 
             if (!string.IsNullOrEmpty(selectedFilePath))
             {
