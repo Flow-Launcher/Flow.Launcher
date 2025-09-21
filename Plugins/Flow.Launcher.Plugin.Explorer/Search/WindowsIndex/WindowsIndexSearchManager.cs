@@ -105,8 +105,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 
             throw new EngineNotAvailableException(
                 "Windows Index",
-                Main.Context.API.GetTranslation("plugin_explorer_windowsSearchServiceFix"),
-                Main.Context.API.GetTranslation("plugin_explorer_windowsSearchServiceNotRunning"),
+                Localize.plugin_explorer_windowsSearchServiceFix(),
+                Localize.plugin_explorer_windowsSearchServiceNotRunning(),
                 Constants.WindowsIndexErrorImagePath,
                 c =>
                 {
