@@ -231,35 +231,41 @@ public partial class SettingsPaneAboutViewModel : BaseModel
             }
         });
 
-        // Firstly, delete plugin cache directories
-        pluginCacheDirectory.EnumerateDirectories("*", SearchOption.TopDirectoryOnly)
-            .ToList()
-            .ForEach(dir =>
+        // Check if plugin cache directory exists before attempting to delete
+        // Or it will throw DirectoryNotFoundException in `pluginCacheDirectory.EnumerateDirectories`
+        if (pluginCacheDirectory.Exists)
+        {
+            // Firstly, delete plugin cache directories
+            pluginCacheDirectory.EnumerateDirectories("*", SearchOption.TopDirectoryOnly)
+                .ToList()
+                .ForEach(dir =>
+                {
+                    try
+                    {
+                        // Plugin may create directories in its cache directory
+                        dir.Delete(recursive: true);
+                    }
+                    catch (Exception e)
+                    {
+                        App.API.LogException(ClassName, $"Failed to delete cache directory: {dir.Name}", e);
+                        success = false;
+                    }
+                });
+
+            // Then, delete plugin directory
+            var dir = pluginCacheDirectory;
+            try
             {
-                try
-                {
-                    // Plugin may create directories in its cache directory
-                    dir.Delete(recursive: true);
-                }
-                catch (Exception e)
-                {
-                    App.API.LogException(ClassName, $"Failed to delete cache directory: {dir.Name}", e);
-                    success = false;
-                }
-            });
-
-        // Then, delete plugin directory
-        var dir = GetPluginCacheDir();
-        try
-        {
-            dir.Delete(recursive: false);
-        }
-        catch (Exception e)
-        {
-            App.API.LogException(ClassName, $"Failed to delete cache directory: {dir.Name}", e);
-            success = false;
+                dir.Delete(recursive: false);
+            }
+            catch (Exception e)
+            {
+                App.API.LogException(ClassName, $"Failed to delete cache directory: {dir.Name}", e);
+                success = false;
+            }
         }
 
+        // Raise regardless to cover scenario where size needs to be recalculated if the folder is manually removed on disk.
         OnPropertyChanged(nameof(CacheFolderSize));
 
         return success;

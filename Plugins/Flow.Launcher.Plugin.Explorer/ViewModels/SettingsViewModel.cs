@@ -296,7 +296,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 return;
             }
 
-            var actionKeywordWindow = new ActionKeywordSetting(actionKeyword, Context.API);
+            var actionKeywordWindow = new ActionKeywordSetting(actionKeyword);
 
             if (!(actionKeywordWindow.ShowDialog() ?? false))
             {
@@ -432,8 +432,8 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 case "QuickAccessLink":
                     if (SelectedQuickAccessLink == null) return;
                     if (Context.API.ShowMsgBox(
-                            Context.API.GetTranslation("plugin_explorer_delete_quick_access_link"),
-                            Context.API.GetTranslation("plugin_explorer_delete"),
+                            Localize.plugin_explorer_delete_quick_access_link(),
+                            Localize.plugin_explorer_delete(),
                             MessageBoxButton.OKCancel,
                             MessageBoxImage.Warning)
                         == MessageBoxResult.Cancel)
@@ -443,8 +443,8 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 case "IndexSearchExcludedPaths":
                     if (SelectedIndexSearchExcludedPath == null) return;
                     if (Context.API.ShowMsgBox(
-                            Context.API.GetTranslation("plugin_explorer_delete_index_search_excluded_path"),
-                            Context.API.GetTranslation("plugin_explorer_delete"),
+                            Localize.plugin_explorer_delete_index_search_excluded_path(),
+                            Localize.plugin_explorer_delete(),
                             MessageBoxButton.OKCancel,
                             MessageBoxImage.Warning)
                         == MessageBoxResult.Cancel)
@@ -457,7 +457,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         
         private void ShowUnselectedMessage()
         {
-            var warning = Context.API.GetTranslation("plugin_explorer_make_selection_warning");
+            var warning = Localize.plugin_explorer_make_selection_warning();
             Context.API.ShowMsgBox(warning);
         }
 
