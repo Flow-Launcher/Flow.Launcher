@@ -224,6 +224,7 @@
     <system:String x:Key="failedToUninstallPluginTitle">Fail to uninstall {0}</system:String>
     <system:String x:Key="fileNotFoundMessage">Unable to find plugin.json from the extracted zip file, or this path {0} does not exist</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">A plugin with the same ID and version already exists, or the version is greater than this downloaded plugin</system:String>
+    <system:String x:Key="errorCreatingSettingPanel">Error creating setting panel for plugin {0}:{1}{2}</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Plug-in-Store</system:String>
@@ -467,8 +468,10 @@
     <system:String x:Key="userdatapathButton">Ordner öffnen</system:String>
     <system:String x:Key="advanced">Erweitert</system:String>
     <system:String x:Key="logLevel">Log-Ebene</system:String>
-    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelNONE">Silent</system:String>
+    <system:String x:Key="LogLevelERROR">Fehler</system:String>
     <system:String x:Key="LogLevelINFO">Info</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="settingWindowFontTitle">Einstellung der Fensterschriftart</system:String>
 
     <!--  Release Notes Window  -->
@@ -490,6 +493,7 @@
     <system:String x:Key="fileManager_file_arg">Arg For File</system:String>
     <system:String x:Key="fileManagerPathNotFound">Der Dateimanager '{0}' konnte nicht unter '{1}' gefunden werden. Möchten Sie fortfahren?</system:String>
     <system:String x:Key="fileManagerPathError">Pfadfehler bei Dateimanager</system:String>
+    <system:String x:Key="fileManagerExplorer">File Explorer</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Webbrowser per Default</system:String>
@@ -500,6 +504,8 @@
     <system:String x:Key="defaultBrowser_newWindow">Neues Fenster</system:String>
     <system:String x:Key="defaultBrowser_newTab">Neuer Tab</system:String>
     <system:String x:Key="defaultBrowser_parameter">Privater Modus</system:String>
+    <system:String x:Key="defaultBrowser_default">Default</system:String>
+    <system:String x:Key="defaultBrowser_new_profile">New Profile</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Priorität ändern</system:String>

@@ -176,7 +176,7 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="showAtTopmost">Zobraziť vyhľadávacie okno v popredí</system:String>
     <system:String x:Key="showAtTopmostToolTip">Prepíše nastavenie &quot;Vždy na vrchu&quot; ostatných programov a zobrazí navrchu Flow.</system:String>
     <system:String x:Key="autoRestartAfterChanging">Reštartovať po úprave pluginu cez Repozitár pluginov</system:String>
-    <system:String x:Key="autoRestartAfterChangingToolTip">Automaticky reštartovať Flow Launcher po inštalácii/odinštalácii/aktualizáciu pluginu cez Repozitár pluginov</system:String>
+    <system:String x:Key="autoRestartAfterChangingToolTip">Automaticky reštartovať Flow Launcher po inštalácii/odinštalácii/aktualizácii pluginu cez Repozitár pluginov</system:String>
     <system:String x:Key="showUnknownSourceWarning">Zobraziť upozornenie na neznámy zdroj</system:String>
     <system:String x:Key="showUnknownSourceWarningToolTip">Zobraziť upozornenie pri inštalácii z neznámych zdrojov</system:String>
     <system:String x:Key="autoUpdatePlugins">Automaticky aktualizovať pluginy</system:String>
@@ -225,6 +225,7 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="failedToUninstallPluginTitle">Nepodarilo sa odinštalovať {0}</system:String>
     <system:String x:Key="fileNotFoundMessage">Súbor plugin.json sa nenašiel v rozbalenom zip súbore, alebo táto cesta {0} neexistuje</system:String>
     <system:String x:Key="pluginExistAlreadyMessage">Plugin s rovnakým ID už existuje, alebo ide o vyššiu verziu ako stiahnutý plugin</system:String>
+    <system:String x:Key="errorCreatingSettingPanel">Chyba pri vytváraní panelu nastavení pre plugin {0}:{1}{2}</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Repozitár pluginov</system:String>
@@ -255,7 +256,7 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="UpdatePromptTitle">Aktualizácia pluginu</system:String>
     <system:String x:Key="UpdatePromptSubtitle">{0} od {1} {2}{2}Chcete aktualizovať tento plugin?</system:String>
     <system:String x:Key="DownloadingPlugin">Sťahovanie pluginu</system:String>
-    <system:String x:Key="AutoRestartAfterChange">Automaticky reštartovať po inštalácii/odinštalácii/aktualizáciu pluginov cez Repozitár pluginov</system:String>
+    <system:String x:Key="AutoRestartAfterChange">Automaticky reštartovať po inštalácii/odinštalácii/aktualizácii pluginov cez Repozitár pluginov</system:String>
     <system:String x:Key="ZipFileNotHavePluginJson">V zipe sa nenachádza platná konfigurácia plugin.json</system:String>
     <system:String x:Key="InstallFromUnknownSourceTitle">Inštalácia z neznámeho zdroja</system:String>
     <system:String x:Key="InstallFromUnknownSourceSubtitle">Tento plugin pochádza z neznámeho zdroja a môže predstavovať potenciálne riziká!{0}{0}Uistite sa, že viete, odkiaľ tento plugin pochádza, a že je bezpečný.{0}{0}Stále chcete pokračovať?{0}{0}(Toto upozornenie môžete vypnúť sekcii Všeobecné v nastaveniach)</system:String>
@@ -267,7 +268,7 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="updateAllPluginsTitle">Dostupná aktualizácia pluginu</system:String>
     <system:String x:Key="updateAllPluginsButtonContent">Aktualizovať pluginy</system:String>
     <system:String x:Key="checkPluginUpdatesTooltip">Skontrolovať dostupnosť aktualizácií</system:String>
-    <system:String x:Key="PluginsUpdateSuccessNoRestart">Pluginy {0} boli úspešne aktualizované. Prosím, reštartuje Flow.</system:String>
+    <system:String x:Key="PluginsUpdateSuccessNoRestart">Pluginy boli úspešne aktualizované. Prosím, reštartuje Flow.</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Motív</system:String>
@@ -396,28 +397,28 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="showBadges">Zobraziť výsledok v odznaku</system:String>
     <system:String x:Key="showBadgesToolTip">Ak to plugin podporuje, zobrazí sa jeho ikona v odznaku na jednoduchšie odlíšenie.</system:String>
     <system:String x:Key="showBadgesGlobalOnly">Zobraziť výsledok v odznaku len pre globálne vyhľadávanie</system:String>
-    <system:String x:Key="showBadgesGlobalOnlyToolTip">Show badges for global query results only</system:String>
-    <system:String x:Key="dialogJumpHotkey">Dialog Jump</system:String>
-    <system:String x:Key="dialogJumpHotkeyToolTip">Enter shortcut to quickly navigate the Open/Save As dialog window to the path of the current file manager.</system:String>
-    <system:String x:Key="dialogJump">Dialog Jump</system:String>
-    <system:String x:Key="dialogJumpToolTip">When Open/Save As dialog window opens, quickly navigate to the current path of the file manager.</system:String>
-    <system:String x:Key="autoDialogJump">Dialog Jump Automatically</system:String>
-    <system:String x:Key="autoDialogJumpToolTip">When Open/Save As dialog window is displayed, automatically navigate to the path of the current file manager. (Experimental)</system:String>
-    <system:String x:Key="showDialogJumpWindow">Show Dialog Jump Window</system:String>
-    <system:String x:Key="showDialogJumpWindowToolTip">Display Dialog Jump search window when the open/save dialog window is shown to quickly navigate to file/folder locations.</system:String>
-    <system:String x:Key="dialogJumpWindowPosition">Dialog Jump Window Position</system:String>
-    <system:String x:Key="dialogJumpWindowPositionToolTip">Select position for the Dialog Jump search window</system:String>
-    <system:String x:Key="DialogJumpWindowPositionUnderDialog">Fixed under the Open/Save As dialog window. Displayed on open and stays until the window is closed</system:String>
-    <system:String x:Key="DialogJumpWindowPositionFollowDefault">Default search window position. Displayed when triggered by search window hotkey</system:String>
-    <system:String x:Key="dialogJumpResultBehaviour">Dialog Jump Result Navigation Behaviour</system:String>
-    <system:String x:Key="dialogJumpResultBehaviourToolTip">Behaviour to navigate Open/Save As dialog window to the selected result path</system:String>
-    <system:String x:Key="DialogJumpResultBehaviourLeftClick">Left click or Enter key</system:String>
-    <system:String x:Key="DialogJumpResultBehaviourRightClick">Right click</system:String>
-    <system:String x:Key="dialogJumpFileResultBehaviour">Dialog Jump File Navigation Behaviour</system:String>
-    <system:String x:Key="dialogJumpFileResultBehaviourToolTip">Behaviour to navigate Open/Save As dialog window when the result is a file path</system:String>
-    <system:String x:Key="DialogJumpFileResultBehaviourFullPath">Fill full path in file name box</system:String>
-    <system:String x:Key="DialogJumpFileResultBehaviourFullPathOpen">Fill full path in file name box and open</system:String>
-    <system:String x:Key="DialogJumpFileResultBehaviourDirectory">Fill directory in path box</system:String>
+    <system:String x:Key="showBadgesGlobalOnlyToolTip">Zobrazí výsledok v odznaku len pre výsledky globálneho vyhľadávania</system:String>
+    <system:String x:Key="dialogJumpHotkey">Rýchly prechod</system:String>
+    <system:String x:Key="dialogJumpHotkeyToolTip">Zadajte skratku na rýchly prechod na aktuálnu cestu správcu súborov v dialógovom okne Otvoriť/Uložiť.</system:String>
+    <system:String x:Key="dialogJump">Rýchly prechod</system:String>
+    <system:String x:Key="dialogJumpToolTip">Keď sa otvorí dialógové okno Otvoriť/Uložiť, rýchlo prejdete na aktuálnu cestu správcu súborov.</system:String>
+    <system:String x:Key="autoDialogJump">Automatický rýchly prechod</system:String>
+    <system:String x:Key="autoDialogJumpToolTip">Keď je otvorené dialógové okno Otvoriť/Uložiť, automaticky prejsť na cestu v aktuálnom správcovi súborov (Experimentálne)</system:String>
+    <system:String x:Key="showDialogJumpWindow">Zobraziť okno na rýchly prechod</system:String>
+    <system:String x:Key="showDialogJumpWindowToolTip">Zobraziť okno rýchleho prechodu, keď je zobrazené dialógové okno Ovoriť/Uložiť na rýchlu navigáciu do umiestnenia súborov/priečinkov.</system:String>
+    <system:String x:Key="dialogJumpWindowPosition">Umiestnenie okna &quot;rýchly prechod&quot;</system:String>
+    <system:String x:Key="dialogJumpWindowPositionToolTip">Vyberte umiestnenie vyhľadávacieho okna pre &quot;rýchly prechod&quot;</system:String>
+    <system:String x:Key="DialogJumpWindowPositionUnderDialog">Fixné pod oknom Otvoriť/Uložiť. Zostane zobrazené po otvorení až do uzavretia okna</system:String>
+    <system:String x:Key="DialogJumpWindowPositionFollowDefault">Predvolená pozícia vyhľadávacieho okna. Zobrazí sa po zadaní skratky na otvorenie vyhľadávacieho okna</system:String>
+    <system:String x:Key="dialogJumpResultBehaviour">Akcia na prechod k výsledku rýchleho prechodu</system:String>
+    <system:String x:Key="dialogJumpResultBehaviourToolTip">Ako prejsť na vybranú cestu v otvorenom dialógovom okne Otvoriť/Uložiť</system:String>
+    <system:String x:Key="DialogJumpResultBehaviourLeftClick">Kliknutie ľavým tlačidlom myši alebo klávesom Enter</system:String>
+    <system:String x:Key="DialogJumpResultBehaviourRightClick">Kliknutie pravým tlačidlom myši</system:String>
+    <system:String x:Key="dialogJumpFileResultBehaviour">Akcia na prechod k súboru rýchleho prechodu</system:String>
+    <system:String x:Key="dialogJumpFileResultBehaviourToolTip">Akcia, ktorá sa vykoná na navigáciu v dialógovom okne Otvoriť/Uložiť, ak výsledkom je súbor</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourFullPath">Vložiť celú cestu k súboru do poľa názvu súboru</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourFullPathOpen">Vložiť celú cestu k súboru do poľa názvu súboru a otvoriť</system:String>
+    <system:String x:Key="DialogJumpFileResultBehaviourDirectory">Vložiť priečinok do poľa s cestou</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP proxy</system:String>
@@ -468,8 +469,10 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="userdatapathButton">Otvoriť priečinok</system:String>
     <system:String x:Key="advanced">Rozšírené</system:String>
     <system:String x:Key="logLevel">Úroveň logovania</system:String>
-    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelNONE">Žiadne</system:String>
+    <system:String x:Key="LogLevelERROR">Chyba</system:String>
     <system:String x:Key="LogLevelINFO">Info</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="settingWindowFontTitle">Nastavenie písma okna</system:String>
 
     <!--  Release Notes Window  -->
@@ -482,8 +485,8 @@ Nevykonali sa žiadne zmeny.</system:String>
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Vyberte správcu súborov</system:String>
     <system:String x:Key="fileManager_learnMore">Viac informácií</system:String>
-    <system:String x:Key="fileManager_tips">Zadajte umiestnenie súboru správcu súborov, ktorý používate, a podľa potreby pridajte argumenty. &quot;%d&quot; predstavuje cestu k priečinku, ktorý sa má otvoriť, používa sa v poli Arg pre priečinok a pri príkazoch na otvorenie konkrétnych priečinkov. &quot;%f&quot; predstavuje cestu k súboru, ktorá sa má otvoriť a používa sa v poli Arg pre súbor a pri príkazoch na otvorenie konkrétnych súborov.</system:String>
-    <system:String x:Key="fileManager_tips2">Napríklad, ak správca súborov používa príkaz ako &quot;totalcmd.exe /A c:\windows&quot; na otvorenie priečinka c:\windows, cesta správcu súborov bude totalcmd.exe a Arg pre priečinok bude /A &quot;%d&quot;. Niektorí správcovia súborov, ako napríklad QTTabBar, môžu vyžadovať len zadanie cesty, v tomto prípade použite &quot;%d&quot; ako cestu správcu súborov a zvyšok súborov nechajte prázdny.</system:String>
+    <system:String x:Key="fileManager_tips">Zadajte umiestnenie súboru správcu súborov, ktorý používate, a podľa potreby pridajte argumenty. &quot;%d&quot; predstavuje cestu k priečinku, ktorý sa má otvoriť, používa sa v poli Arg. pre priečinok a pri príkazoch na otvorenie konkrétnych priečinkov. &quot;%f&quot; predstavuje cestu k súboru, ktorá sa má otvoriť a používa sa v poli Arg. pre súbor a pri príkazoch na otvorenie konkrétnych súborov.</system:String>
+    <system:String x:Key="fileManager_tips2">Napríklad, ak správca súborov používa príkaz ako &quot;totalcmd.exe /A c:\windows&quot; na otvorenie priečinka c:\windows, cesta správcu súborov bude totalcmd.exe a Arg. pre priečinok bude /A &quot;%d&quot;. Niektorí správcovia súborov, ako napríklad QTTabBar, môžu vyžadovať len zadanie cesty, v tomto prípade použite &quot;%d&quot; ako cestu správcu súborov a zvyšok súborov nechajte prázdny.</system:String>
     <system:String x:Key="fileManager_name">Správca súborov</system:String>
     <system:String x:Key="fileManager_profile_name">Názov profilu</system:String>
     <system:String x:Key="fileManager_path">Cesta k správcovi súborov</system:String>
@@ -491,6 +494,7 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="fileManager_file_arg">Arg. pre súbor</system:String>
     <system:String x:Key="fileManagerPathNotFound">Správca súborov '{0}' sa nenachádza na '{1}'. Chcete pokračovať?</system:String>
     <system:String x:Key="fileManagerPathError">Chyba v ceste k správcovi súborov</system:String>
+    <system:String x:Key="fileManagerExplorer">Prieskumník</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Predvolený webový prehliadač</system:String>
@@ -501,6 +505,8 @@ Nevykonali sa žiadne zmeny.</system:String>
     <system:String x:Key="defaultBrowser_newWindow">Nové okno</system:String>
     <system:String x:Key="defaultBrowser_newTab">Nová karta</system:String>
     <system:String x:Key="defaultBrowser_parameter">Privátny režim</system:String>
+    <system:String x:Key="defaultBrowser_default">Predvolené</system:String>
+    <system:String x:Key="defaultBrowser_new_profile">Nový profil</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Zmena priority</system:String>
