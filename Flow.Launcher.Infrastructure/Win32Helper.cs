@@ -1062,6 +1062,21 @@ cleanup:
             if (hPrimaryToken != HANDLE.Null) PInvoke.CloseHandle(hPrimaryToken);
             if (hShellProcess != HANDLE.Null) PInvoke.CloseHandle(hShellProcess);
             return false;
+
+        }
+
+        #endregion
+
+        #region File / Folder Dialog
+
+        public static string SelectFile()
+        {
+            var dlg = new OpenFileDialog();
+            var result = dlg.ShowDialog();
+            if (result == true)
+                return dlg.FileName;
+
+            return string.Empty;
         }
 
         #endregion

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -282,6 +282,8 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         DropdownDataGeneric<DialogJumpFileResultBehaviours>.UpdateLabels(DialogJumpFileResultBehaviours);
         // Since we are using Binding instead of DynamicResource, we need to manually trigger the update
         OnPropertyChanged(nameof(AlwaysPreviewToolTip));
+        Settings.CustomExplorer.OnDisplayNameChanged();
+        Settings.CustomBrowser.OnDisplayNameChanged();
     }
 
     public string Language

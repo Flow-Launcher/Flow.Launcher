@@ -19,18 +19,30 @@ namespace Flow.Launcher.Plugin.Program.Views.Commands
         internal static async Task DisplayAllProgramsAsync()
         {
             await Main._win32sLock.WaitAsync();
-            var win32 = Main._win32s
+            try
+            {
+                var win32 = Main._win32s
                             .Where(t1 => !ProgramSetting.ProgramSettingDisplayList.Any(x => x.UniqueIdentifier == t1.UniqueIdentifier))
                             .Select(x => new ProgramSource(x));
-            ProgramSetting.ProgramSettingDisplayList.AddRange(win32);
-            Main._win32sLock.Release();
+                ProgramSetting.ProgramSettingDisplayList.AddRange(win32);
+            }
+            finally
+            {
+                Main._win32sLock.Release();
+            }
 
             await Main._uwpsLock.WaitAsync();
-            var uwp = Main._uwps
+            try
+            {
+                var uwp = Main._uwps
                             .Where(t1 => !ProgramSetting.ProgramSettingDisplayList.Any(x => x.UniqueIdentifier == t1.UniqueIdentifier))
                             .Select(x => new ProgramSource(x));
-            ProgramSetting.ProgramSettingDisplayList.AddRange(uwp);
-            Main._uwpsLock.Release();
+                ProgramSetting.ProgramSettingDisplayList.AddRange(uwp);
+            }
+            finally
+            {
+                Main._uwpsLock.Release();
+            }
         }
 
         internal static async Task SetProgramSourcesStatusAsync(List<ProgramSource> selectedProgramSourcesToDisable, bool status)
@@ -44,24 +56,36 @@ namespace Flow.Launcher.Plugin.Program.Views.Commands
             }
 
             await Main._win32sLock.WaitAsync();
-            foreach (var program in Main._win32s)
+            try
             {
-                if (selectedProgramSourcesToDisable.Any(x => x.UniqueIdentifier == program.UniqueIdentifier && program.Enabled != status))
+                foreach (var program in Main._win32s)
                 {
-                    program.Enabled = status;
+                    if (selectedProgramSourcesToDisable.Any(x => x.UniqueIdentifier == program.UniqueIdentifier && program.Enabled != status))
+                    {
+                        program.Enabled = status;
+                    }
                 }
             }
-            Main._win32sLock.Release();
+            finally
+            {
+                Main._win32sLock.Release();
+            }
 
             await Main._uwpsLock.WaitAsync();
-            foreach (var program in Main._uwps)
+            try
             {
-                if (selectedProgramSourcesToDisable.Any(x => x.UniqueIdentifier == program.UniqueIdentifier && program.Enabled != status))
+                foreach (var program in Main._uwps)
                 {
-                    program.Enabled = status;
+                    if (selectedProgramSourcesToDisable.Any(x => x.UniqueIdentifier == program.UniqueIdentifier && program.Enabled != status))
+                    {
+                        program.Enabled = status;
+                    }
                 }
             }
-            Main._uwpsLock.Release();
+            finally
+            {
+                Main._uwpsLock.Release();
+            }
         }
 
         internal static void StoreDisabledInSettings()
