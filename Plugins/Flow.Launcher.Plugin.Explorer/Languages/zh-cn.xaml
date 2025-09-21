@@ -22,6 +22,7 @@
     <system:String x:Key="plugin_explorer_directoryinfosearch_error">搜索时发生错误：{0}</system:String>
     <system:String x:Key="plugin_explorer_opendir_error">无法打开文件夹</system:String>
     <system:String x:Key="plugin_explorer_openfile_error">无法打开文件</system:String>
+    <system:String x:Key="plugin_explorer_new_action_keyword_assigned">This new action keyword is already assigned to another plugin, please choose a different one</system:String>
 
     <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">删除</system:String>
