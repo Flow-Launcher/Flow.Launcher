@@ -1,3 +1,4 @@
+#nullable enable
 using Flow.Launcher.Plugin.BrowserBookmarks.Models;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ public class ChromiumBookmarkLoader : IBookmarkLoader
     private readonly string _browserDataPath;
     private readonly Action<string, string, Exception?> _logException;
     private readonly List<string> _discoveredFiles;
+
+    public string Name => _browserName;
 
     public ChromiumBookmarkLoader(string browserName, string browserDataPath, Action<string, string, Exception?> logException, List<string> discoveredFiles)
     {
@@ -57,7 +60,7 @@ public class ChromiumBookmarkLoader : IBookmarkLoader
             }
             catch(JsonException ex)
             {
-                _logException(nameof(ChromiumBookmarkLoader), $"Failed to parse bookmarks file: {bookmarkPath}", ex);
+                _logException(nameof(ChromiumBookmarkLoader), $"Failed to parse bookmarks file for {_browserName}: {bookmarkPath}", ex);
             }
 
             foreach (var bookmark in bookmarks)
@@ -94,7 +97,7 @@ public class ChromiumBookmarkLoader : IBookmarkLoader
                         EnumerateFolderBookmark(subElement, bookmarks, source, profilePath);
                         break;
                     case "url":
-                         if (subElement.TryGetProperty("name", out var name) &&
+                        if (subElement.TryGetProperty("name", out var name) &&
                             subElement.TryGetProperty("url", out var url) &&
                             !string.IsNullOrEmpty(name.GetString()) &&
                             !string.IsNullOrEmpty(url.GetString()))

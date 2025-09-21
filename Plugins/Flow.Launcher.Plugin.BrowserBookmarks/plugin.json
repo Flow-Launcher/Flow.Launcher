@@ -4,7 +4,7 @@
     "Name": "Browser Bookmarks",
     "Description": "Search your browser bookmarks, retrieve their favicons from the web.",
     "Author": "dcog989",
-    "Version": "3.0.0",
+    "Version": "1.0.0",
     "Language": "csharp",
     "Website": "https://github.com/Flow-Launcher/Flow.Launcher",
     "ExecuteFileName": "Flow.Launcher.Plugin.BrowserBookmarks.dll",

@@ -18,8 +18,8 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Add</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_editBrowserBookmark">Edit</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Delete</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Enable favicons (requires more memory)</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_fetch_favicons">Fetch missing favicons from the web (can be slow)</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_enable_favicons">Enable favicons</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_fetch_favicons">Fetch missing favicons from the web</system:String>
 
     <!--  Custom Browser Window  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Custom Browser Setting</system:String>

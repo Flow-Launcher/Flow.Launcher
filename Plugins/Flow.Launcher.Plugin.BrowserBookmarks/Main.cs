@@ -1,3 +1,4 @@
+#nullable enable
 using Flow.Launcher.Plugin.BrowserBookmarks.Models;
 using System;
 using System.Collections.Generic;
@@ -16,12 +17,12 @@ namespace Flow.Launcher.Plugin.BrowserBookmarks;
 
 public class Main : ISettingProvider, IPlugin, IAsyncReloadable, IPluginI18n, IContextMenu, IDisposable
 {
-    internal static PluginInitContext Context { get; set; }
-    private static Settings _settings;
+    internal static PluginInitContext Context { get; set; } = null!;
+    private static Settings _settings = null!;
     
-    private BookmarkLoaderService _bookmarkLoader;
-    private FaviconService _faviconService;
-    private BookmarkWatcherService _bookmarkWatcher;
+    private BookmarkLoaderService _bookmarkLoader = null!;
+    private FaviconService _faviconService = null!;
+    private BookmarkWatcherService _bookmarkWatcher = null!;
 
     private List<Bookmark> _bookmarks = new();
     private readonly CancellationTokenSource _cancellationTokenSource = new();
@@ -33,10 +34,10 @@ public void Init(PluginInitContext context)
         _settings.PropertyChanged += OnSettingsPropertyChanged;
         _settings.CustomBrowsers.CollectionChanged += OnCustomBrowsersChanged;
 
-        CleanupOrphanedCacheFiles();
+        var tempPath = SetupTempDirectory();
         
-        _bookmarkLoader = new BookmarkLoaderService(Context, _settings);
-        _faviconService = new FaviconService(Context, _settings);
+        _bookmarkLoader = new BookmarkLoaderService(Context, _settings, tempPath);
+        _faviconService = new FaviconService(Context, _settings, tempPath);
         _bookmarkWatcher = new BookmarkWatcherService();
         _bookmarkWatcher.OnBookmarkFileChanged += OnBookmarkFileChanged;
 
@@ -44,27 +45,22 @@ public void Init(PluginInitContext context)
         _ = ReloadDataAsync();
     }
 
-    private void CleanupOrphanedCacheFiles()
+    private string SetupTempDirectory()
     {
+        var tempPath = Path.Combine(Context.CurrentPluginMetadata.PluginCacheDirectoryPath, "Temp");
         try
         {
-            var cachePath = Context.CurrentPluginMetadata.PluginCacheDirectoryPath;
-            if (!Directory.Exists(cachePath)) return;
-            
-            var files = Directory.GetFiles(cachePath);
-            foreach (var file in files)
+            if (Directory.Exists(tempPath))
             {
-                var extension = Path.GetExtension(file);
-                if (extension is ".db" or ".sqlite" or ".db-shm" or ".db-wal" or ".sqlite-shm" or ".sqlite-wal")
-                {
-                    File.Delete(file);
-                }
+                Directory.Delete(tempPath, true);
             }
+            Directory.CreateDirectory(tempPath);
         }
         catch (Exception e)
         {
-            Context.API.LogException(nameof(Main), "Failed to clean up orphaned cache files.", e);
+            Context.API.LogException(nameof(Main), "Failed to set up temporary directory.", e);
         }
+        return tempPath;
     }
 
 public List<Result> Query(Query query)
@@ -95,7 +91,7 @@ public List<Result> Query(Query query)
     {
         Title = bookmark.Name,
         SubTitle = bookmark.Url,
-        IcoPath = !string.IsNullOrEmpty(bookmark.FaviconPath) && File.Exists(bookmark.FaviconPath)
+        IcoPath = !string.IsNullOrEmpty(bookmark.FaviconPath)
             ? bookmark.FaviconPath
             : @"Images\bookmark.png",
         Score = score,
@@ -142,12 +138,12 @@ public List<Result> Query(Query query)
     
     public string GetTranslatedPluginTitle()
     {
-        return Context.API.GetTranslation("flowlauncher_plugin_browserbookmark_plugin_name");
+        return Localize.flowlauncher_plugin_browserbookmark_plugin_name();
     }
 
     public string GetTranslatedPluginDescription()
     {
-        return Context.API.GetTranslation("flowlauncher_plugin_browserbookmark_plugin_description");
+        return Localize.flowlauncher_plugin_browserbookmark_plugin_description();
     }
     
     public List<Result> LoadContextMenus(Result selectedResult)
@@ -159,8 +155,8 @@ public List<Result> Query(Query query)
         {
             new()
             {
-                Title = Context.API.GetTranslation("flowlauncher_plugin_browserbookmark_copyurl_title"),
-                SubTitle = Context.API.GetTranslation("flowlauncher_plugin_browserbookmark_copyurl_subtitle"),
+                Title = Localize.flowlauncher_plugin_browserbookmark_copyurl_title(),
+                SubTitle = Localize.flowlauncher_plugin_browserbookmark_copyurl_subtitle(),
                 Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue8c8"),
                 IcoPath = @"Images\copylink.png",
                 Action = _ =>
@@ -173,7 +169,7 @@ public List<Result> Query(Query query)
                     catch(Exception ex)
                     {
                         Context.API.LogException(nameof(Main), "Failed to copy URL to clipboard", ex);
-                        Context.API.ShowMsgError(Context.API.GetTranslation("flowlauncher_plugin_browserbookmark_copy_failed"));
+                        Context.API.ShowMsgError(Localize.flowlauncher_plugin_browserbookmark_copy_failed());
                         return false;
                     }
                 }

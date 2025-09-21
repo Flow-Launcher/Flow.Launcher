@@ -2,12 +2,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
 using Flow.Launcher.Plugin.BrowserBookmarks.Models;
 
 namespace Flow.Launcher.Plugin.BrowserBookmarks.Views;
 
-[INotifyPropertyChanged]
 public partial class SettingsControl : UserControl
 {
     public Settings Settings { get; }
@@ -25,7 +23,7 @@ public partial class SettingsControl : UserControl
     private void NewCustomBrowser(object sender, RoutedEventArgs e)
     {
         var newBrowser = new CustomBrowser();
-        var window = new CustomBrowserSettingWindow(newBrowser);
+        var window = new CustomBrowserSetting(newBrowser);
         if (window.ShowDialog() == true)
         {
             Settings.CustomBrowsers.Add(newBrowser);
@@ -64,7 +62,7 @@ public partial class SettingsControl : UserControl
         if (SelectedCustomBrowser is null)
             return;
 
-        var window = new CustomBrowserSettingWindow(SelectedCustomBrowser);
+        var window = new CustomBrowserSetting(SelectedCustomBrowser);
         window.ShowDialog();
     }
 }

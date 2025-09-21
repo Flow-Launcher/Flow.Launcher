@@ -6,5 +6,6 @@ namespace Flow.Launcher.Plugin.BrowserBookmarks.Services;
 
 public interface IBookmarkLoader
 {
+    string Name { get; }
     IAsyncEnumerable<Bookmark> GetBookmarksAsync(CancellationToken cancellationToken = default);
 }

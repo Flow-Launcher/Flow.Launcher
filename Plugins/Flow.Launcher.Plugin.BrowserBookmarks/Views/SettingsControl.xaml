@@ -28,6 +28,10 @@
                 IsChecked="{Binding Settings.LoadChromeBookmark}" />
             <CheckBox
                 Margin="{StaticResource SettingPanelItemRightMargin}"
+                Content="Chromium"
+                IsChecked="{Binding Settings.LoadChromiumBookmark}" />
+            <CheckBox
+                Margin="{StaticResource SettingPanelItemRightMargin}"
                 Content="Edge"
                 IsChecked="{Binding Settings.LoadEdgeBookmark}" />
             <CheckBox

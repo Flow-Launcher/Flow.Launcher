@@ -1,3 +1,4 @@
+#nullable enable
 using Flow.Launcher.Plugin.BrowserBookmarks.Models;
 using Microsoft.Data.Sqlite;
 using System;
@@ -15,6 +16,8 @@ public class FirefoxBookmarkLoader : IBookmarkLoader
     private readonly string _placesPath;
     private readonly Action<string, string, Exception?> _logException;
     private readonly string _tempPath;
+
+    public string Name => _browserName;
 
     private const string QueryAllBookmarks = """
         SELECT moz_places.url, moz_bookmarks.title
@@ -57,17 +60,15 @@ public class FirefoxBookmarkLoader : IBookmarkLoader
             }
             catch (Exception copyEx)
             {
-                _logException(nameof(FirefoxBookmarkLoader), $"Failed to load from fallback copy: {_placesPath}", copyEx);
+                _logException(nameof(FirefoxBookmarkLoader), $"Failed to load {_browserName} bookmarks from fallback copy: {_placesPath}", copyEx);
             }
         }
         catch (Exception e)
         {
-            _logException(nameof(FirefoxBookmarkLoader), $"Failed to load bookmarks: {_placesPath}", e);
+            _logException(nameof(FirefoxBookmarkLoader), $"Failed to load {_browserName} bookmarks: {_placesPath}", e);
         }
         finally
         {
-            // Ensure connection pools are cleared and temporary files are deleted
-            SqliteConnection.ClearAllPools();
             if (tempDbPath != null && File.Exists(tempDbPath))
             {
                 try { File.Delete(tempDbPath); } 
@@ -84,7 +85,7 @@ public class FirefoxBookmarkLoader : IBookmarkLoader
     private async Task ReadBookmarksFromDb(string dbPath, ICollection<Bookmark> bookmarks, CancellationToken cancellationToken)
     {
         var profilePath = Path.GetDirectoryName(dbPath) ?? string.Empty;
-        var connectionString = $"Data Source={dbPath};Mode=ReadOnly";
+        var connectionString = $"Data Source={dbPath};Mode=ReadOnly;Pooling=false;";
         
         await using var dbConnection = new SqliteConnection(connectionString);
         await dbConnection.OpenAsync(cancellationToken);
@@ -93,9 +94,13 @@ public class FirefoxBookmarkLoader : IBookmarkLoader
 
         while (await reader.ReadAsync(cancellationToken))
         {
-            var title = reader["title"] is DBNull ? string.Empty : reader["title"].ToString();
-            var url = reader["url"].ToString();
-            bookmarks.Add(new Bookmark(title, url, _browserName, profilePath));
+            var title = reader["title"]?.ToString() ?? string.Empty;
+            var url = reader["url"]?.ToString();
+
+            if (!string.IsNullOrEmpty(url))
+            {
+                bookmarks.Add(new Bookmark(title, url, _browserName, profilePath));
+            }
         }
     }
 }

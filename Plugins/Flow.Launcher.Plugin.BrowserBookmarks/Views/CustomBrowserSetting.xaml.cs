@@ -8,11 +8,11 @@ namespace Flow.Launcher.Plugin.BrowserBookmarks.Views;
 /// <summary>
 /// Interaction logic for CustomBrowserSetting.xaml
 /// </summary>
-public partial class CustomBrowserSettingWindow : Window
+public partial class CustomBrowserSetting : Window
 {
     private readonly CustomBrowser _currentCustomBrowser;
     
-    public CustomBrowserSettingWindow(CustomBrowser browser)
+    public CustomBrowserSetting(CustomBrowser browser)
     {
         InitializeComponent();
         _currentCustomBrowser = browser;

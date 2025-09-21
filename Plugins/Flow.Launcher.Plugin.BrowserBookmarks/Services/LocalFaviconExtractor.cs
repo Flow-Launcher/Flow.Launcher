@@ -1,3 +1,4 @@
+#nullable enable
 using Flow.Launcher.Plugin.BrowserBookmarks.Models;
 using Microsoft.Data.Sqlite;
 using System;
@@ -13,10 +14,10 @@ public class LocalFaviconExtractor
     private readonly PluginInitContext _context;
     private readonly string _tempPath;
 
-    public LocalFaviconExtractor(PluginInitContext context)
+    public LocalFaviconExtractor(PluginInitContext context, string tempPath)
     {
         _context = context;
-        _tempPath = context.CurrentPluginMetadata.PluginCacheDirectoryPath;
+        _tempPath = tempPath;
     }
 
     public async Task<byte[]?> GetFaviconDataAsync(Bookmark bookmark, CancellationToken token)
@@ -61,7 +62,7 @@ public class LocalFaviconExtractor
         }
         catch (Exception ex)
         {
-            _context.API.LogException(nameof(LocalFaviconExtractor), $"Failed to extract Chromium favicon for {bookmark.Url}", ex);
+            _context.API.LogException(nameof(LocalFaviconExtractor), $"Failed to extract Chromium favicon for {bookmark.Url} from {bookmark.Source}", ex);
             return null;
         }
         finally
@@ -114,7 +115,7 @@ public class LocalFaviconExtractor
         }
         catch (Exception ex)
         {
-            _context.API.LogException(nameof(LocalFaviconExtractor), $"Failed to extract Firefox favicon for {bookmark.Url}", ex);
+            _context.API.LogException(nameof(LocalFaviconExtractor), $"Failed to extract Firefox favicon for {bookmark.Url} from {bookmark.Source}", ex);
             return null;
         }
         finally

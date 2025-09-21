@@ -1,3 +1,4 @@
+#nullable enable
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 

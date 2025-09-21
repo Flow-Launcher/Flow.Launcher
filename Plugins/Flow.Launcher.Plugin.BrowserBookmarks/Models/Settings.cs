@@ -7,6 +7,7 @@ public class Settings : BaseModel
     private bool _loadChromeBookmark = true;
     private bool _loadFirefoxBookmark = true;
     private bool _loadEdgeBookmark = true;
+    private bool _loadChromiumBookmark = true;
     private bool _enableFavicons = true;
     private bool _fetchMissingFavicons = false;
 
@@ -26,6 +27,12 @@ public class Settings : BaseModel
     {
         get => _loadEdgeBookmark;
         set { _loadEdgeBookmark = value; OnPropertyChanged(); }
+    }
+
+    public bool LoadChromiumBookmark
+    {
+        get => _loadChromiumBookmark;
+        set { _loadChromiumBookmark = value; OnPropertyChanged(); }
     }
 
     public bool EnableFavicons
